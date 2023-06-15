@@ -1,7 +1,6 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -25,7 +24,6 @@ class ServerResponseReader with ByteReader {
   ServerResponseReader({required this.gamestream, required this.isometric});
 
   var previousServerResponse = -1;
-
 
 
   void read(Uint8List values) {

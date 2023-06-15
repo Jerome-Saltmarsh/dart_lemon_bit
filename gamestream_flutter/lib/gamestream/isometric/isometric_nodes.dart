@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_position.dart';
@@ -212,13 +212,13 @@ class IsometricNodes {
     var zTotal = zMin * area;
 
     const r = 4;
-    final dstXLeft = GameIsometricRenderer.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
+    final dstXLeft = IsometricRender.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
     if (dstXLeft < engine.Screen_Left)    return;
-    final dstXRight = GameIsometricRenderer.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
+    final dstXRight = IsometricRender.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
     if (dstXRight > engine.Screen_Right)   return;
-    final dstYTop = GameIsometricRenderer.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
+    final dstYTop = IsometricRender.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
     if (dstYTop <  engine.Screen_Top) return;
-    final dstYBottom = GameIsometricRenderer.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
+    final dstYBottom = IsometricRender.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
     if (dstYBottom >  engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
@@ -986,10 +986,10 @@ class IsometricNodes {
 
 
   double getIndexRenderX(int index) =>
-      GameIsometricRenderer.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));
+      IsometricRender.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));
 
   double getIndexRenderY(int index) =>
-      GameIsometricRenderer.rowColumnZToRenderY(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
+      IsometricRender.rowColumnZToRenderY(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
 
   void applyAmbient({
     required int index,
@@ -1106,11 +1106,11 @@ class IsometricNodes {
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
 
-    final renderX = GameIsometricRenderer.rowColumnToRenderX(row, column);
+    final renderX = IsometricRender.rowColumnToRenderX(row, column);
     if (renderX < engine.Screen_Left) return false;
     if (renderX > engine.Screen_Right) return false;
 
-    final renderY = GameIsometricRenderer.rowColumnZToRenderY(row, column, getIndexZ(index));
+    final renderY = IsometricRender.rowColumnZToRenderY(row, column, getIndexZ(index));
     if (renderY < engine.Screen_Top) return false;
     if (renderY > engine.Screen_Bottom) return false;
 

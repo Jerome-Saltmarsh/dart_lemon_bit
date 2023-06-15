@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../games/isometric/game_isometric_renderer.dart';
+import 'isometric_render.dart';
 import 'enums/game_dialog.dart';
 import 'isometric_position.dart';
 
@@ -68,8 +68,8 @@ class IsometricPlayer {
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
-  double get renderX => GameIsometricRenderer.convertV3ToRenderX(position);
-  double get renderY => GameIsometricRenderer.convertV3ToRenderY(position);
+  double get renderX => IsometricRender.convertV3ToRenderX(position);
+  double get renderY => IsometricRender.convertV3ToRenderY(position);
   double get positionScreenX => engine.worldToScreenX(gamestream.isometric.player.position.renderX);
   double get positionScreenY => engine.worldToScreenY(gamestream.isometric.player.position.renderY);
 

@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
@@ -257,8 +257,8 @@ class RendererCharacters extends IsometricRenderer {
       srcY: character.renderDirection * 64,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: GameIsometricRenderer.getRenderX(shadowX, shadowY, shadowZ),
-      dstY: GameIsometricRenderer.getRenderY(shadowX, shadowY, shadowZ),
+      dstX: IsometricRender.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: IsometricRender.getRenderY(shadowX, shadowY, shadowZ),
       anchorY: 0.66,
       scale: 0.7,
       color: character.color,

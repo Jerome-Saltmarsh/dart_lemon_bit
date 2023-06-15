@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_mouse.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -81,7 +81,7 @@ class RendererNodes extends IsometricRenderer {
   static var transparencyGridStackIndex = 0;
 
   // GETTERS
-  static double get currentNodeRenderY => GameIsometricRenderer.rowColumnZToRenderY(row, column, currentNodeZ);
+  static double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
   static int get currentNodeColor => gamestream.isometric.nodes.node_colors[currentNodeIndex];
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeWind => gamestream.isometric.server.windTypeAmbient.value;

@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 
@@ -135,8 +135,8 @@ void renderCharacterTemplate(IsometricCharacter character, {
 
   final invisible = character.buffInvisible;
 
-  final dstX = GameIsometricRenderer.convertV3ToRenderX(character);
-  final dstY = GameIsometricRenderer.convertV3ToRenderY(character);
+  final dstX = IsometricRender.convertV3ToRenderX(character);
+  final dstY = IsometricRender.convertV3ToRenderY(character);
 
   const Color_Invisible = GameIsometricColors.White38_Value;
   final color = invisible ? Color_Invisible : gamestream.isometric.nodes.getV3RenderColor(character);
@@ -167,8 +167,8 @@ void renderCharacterTemplate(IsometricCharacter character, {
       srcY: upperBodyDirection * 64,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: GameIsometricRenderer.getRenderX(shadowX, shadowY, shadowZ),
-      dstY: GameIsometricRenderer.getRenderY(shadowX, shadowY, shadowZ),
+      dstX: IsometricRender.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: IsometricRender.getRenderY(shadowX, shadowY, shadowZ),
       scale: Scale,
       color: color,
       anchorY: Anchor_Y,

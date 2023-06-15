@@ -1,12 +1,12 @@
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
 
 import '../../library.dart';
 
 void renderBarBlue(double x, double y, double z, double percentage) {
   engine.renderSprite(
     image: GameImages.atlas_gameobjects,
-    dstX: GameIsometricRenderer.getRenderX(x, y, z) - 26,
-    dstY: GameIsometricRenderer.getRenderY(x, y, z) - 55,
+    dstX: IsometricRender.getRenderX(x, y, z) - 26,
+    dstY: IsometricRender.getRenderY(x, y, z) - 55,
     srcX: 171,
     srcY: 48,
     srcWidth: 51.0 * percentage,

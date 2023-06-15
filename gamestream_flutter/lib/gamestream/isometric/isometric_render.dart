@@ -11,15 +11,15 @@ import 'package:gamestream_flutter/isometric/render/render_character_health_bar.
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'game_isometric_constants.dart';
-import '../../isometric/isometric_mouse.dart';
-import 'render/renderer_characters.dart';
-import 'render/renderer_gameobjects.dart';
-import 'render/renderer_nodes.dart';
-import 'render/renderer_particles.dart';
-import 'render/renderer_projectiles.dart';
+import '../games/isometric/game_isometric_constants.dart';
+import 'isometric_mouse.dart';
+import '../games/isometric/render/renderer_characters.dart';
+import '../games/isometric/render/renderer_gameobjects.dart';
+import '../games/isometric/render/renderer_nodes.dart';
+import '../games/isometric/render/renderer_particles.dart';
+import '../games/isometric/render/renderer_projectiles.dart';
 
-class GameIsometricRenderer {
+class IsometricRender {
   var totalRemaining = 0;
   var totalIndex = 0;
   final rendererNodes        = RendererNodes();
@@ -30,7 +30,7 @@ class GameIsometricRenderer {
   late IsometricRenderer next = rendererNodes;
   var renderDebug = false;
 
-  GameIsometricRenderer({
+  IsometricRender({
     required this.rendererGameObjects,
     required this.rendererParticles,
   }); // ACTIONS
@@ -148,8 +148,8 @@ class GameIsometricRenderer {
   void renderTextV3(IsometricPosition v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
-      x: GameIsometricRenderer.convertV3ToRenderX(v3),
-      y: GameIsometricRenderer.convertV3ToRenderY(v3) + offsetY,
+      x: IsometricRender.convertV3ToRenderX(v3),
+      y: IsometricRender.convertV3ToRenderY(v3) + offsetY,
     );
   }
 
@@ -161,8 +161,8 @@ class GameIsometricRenderer {
   }) =>
       renderText(
         text: text.toString(),
-        x: GameIsometricRenderer.getRenderX(x, y, z),
-        y: GameIsometricRenderer.getRenderY(x, y, z),
+        x: IsometricRender.getRenderX(x, y, z),
+        y: IsometricRender.getRenderY(x, y, z),
       );
 
   void renderWireFrameBlue(
@@ -557,8 +557,8 @@ class GameIsometricRenderer {
   void renderBarGreen(double x, double y, double z, double percentage) {
     engine.renderSprite(
       image: GameImages.atlas_gameobjects,
-      dstX: GameIsometricRenderer.getRenderX(x, y, z) - 26,
-      dstY: GameIsometricRenderer.getRenderY(x, y, z) - 45,
+      dstX: IsometricRender.getRenderX(x, y, z) - 26,
+      dstY: IsometricRender.getRenderY(x, y, z) - 45,
       srcX: 171,
       srcY: 16,
       srcWidth: 51.0 * percentage,

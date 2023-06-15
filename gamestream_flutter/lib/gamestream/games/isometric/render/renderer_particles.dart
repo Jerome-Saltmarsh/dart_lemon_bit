@@ -1,8 +1,8 @@
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_particle.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -21,10 +21,10 @@ class RendererParticles extends IsometricRenderer {
   void renderFunction() {
       assert (particle.active);
       assert (particle.delay <= 0);
-      final dstX = GameIsometricRenderer.convertV3ToRenderX(particle);
+      final dstX = IsometricRender.convertV3ToRenderX(particle);
       assert (dstX > engine.Screen_Left - 50);
       assert (dstX < engine.Screen_Right + 50);
-      final dstY = GameIsometricRenderer.convertV3ToRenderY(particle);
+      final dstY = IsometricRender.convertV3ToRenderY(particle);
       assert (dstY > engine.Screen_Top - 50);
       assert (dstY < engine.Screen_Bottom + 50);
 
@@ -536,10 +536,10 @@ class RendererParticles extends IsometricRenderer {
       particle = particles[index++];
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
-      final dstX = GameIsometricRenderer.convertV3ToRenderX(particle);
+      final dstX = IsometricRender.convertV3ToRenderX(particle);
       if (dstX < engine.Screen_Left - 50) continue;
       if (dstX > engine.Screen_Right + 50) continue;
-      final dstY = GameIsometricRenderer.convertV3ToRenderY(particle);
+      final dstY = IsometricRender.convertV3ToRenderY(particle);
       if (dstY < engine.Screen_Top - 50) continue;
       if (dstY > engine.Screen_Bottom + 50) continue;
       if (!particle.nodePerceptible) continue;
