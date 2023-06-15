@@ -32,11 +32,6 @@ class IsometricIO {
       return;
     }
 
-    if (key == KeyCode.Tab) {
-      gamestream.isometric.clientState.edit.value = true;
-      return;
-    }
-
     if (engine.isLocalHost){
       if (key == Key_Settings) {
         gamestream.isometric.actions.toggleWindowSettings();

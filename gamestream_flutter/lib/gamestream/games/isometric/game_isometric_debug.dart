@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -41,7 +42,7 @@ class GameIsometricDebug {
                                     "touches: ${engine.touches}\n"
                                     "touch down id: ${engine.touchDownId}\n"
                                     "touch update id: ${engine.touchDownId}\n"
-                                    "mouse-grid: x: ${gamestream.io.mouseGridX.toInt()}, y: ${gamestream.io.mouseGridY.toInt()}\n"
+                                    "isometric-mouse-position: x: ${IsometricMouse.positionX.toInt()}, y: ${IsometricMouse.positionY.toInt()}\n"
                                     "mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n"
                                     'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                                     "player-alive: ${gamestream.isometric.player.alive.value}\n"

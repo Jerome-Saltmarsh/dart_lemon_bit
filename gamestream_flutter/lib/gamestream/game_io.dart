@@ -9,6 +9,12 @@ import 'isometric/isometric.dart';
 
 
 class GameIO {
+
+  var joystickLeftX = 0.0;
+  var joystickLeftY = 0.0;
+  var joystickLeftDown = false;
+  var touchscreenAimX = 0.0;
+  var touchscreenAimY = 0.0;
   var _touchCursorTapX = 0.0;
   var _touchCursorTapY = 0.0;
   var touchCursorWorldX = 100.0;
@@ -27,6 +33,8 @@ class GameIO {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
+  final panDistance = Watch(0.0);
+  final panDirection = Watch(0.0);
   final touchController = TouchController();
   final Isometric isometric;
 
@@ -35,18 +43,6 @@ class GameIO {
   late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.events.onChangedInputMode);
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
   bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
-
-  var joystickLeftX = 0.0;
-  var joystickLeftY = 0.0;
-  var joystickLeftDown = false;
-  var touchscreenAimX = 0.0;
-  var touchscreenAimY = 0.0;
-  var panDistance = Watch(0.0);
-  var panDirection = Watch(0.0);
-
-  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + isometric.player.position.z;
-  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + isometric.player.position.z;
-  double get mouseGridZ => isometric.player.position.z;
 
   void recenterCursor(){
     touchCursorWorldX = isometric.player.renderX;

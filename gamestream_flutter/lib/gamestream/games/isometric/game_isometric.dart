@@ -95,6 +95,12 @@ class GameIsometric extends Game {
 
   @override
   void onKeyPressed(int key) {
+
+    if (key == KeyCode.Tab) {
+      gamestream.isometric.clientState.edit.value = true;
+      return;
+    }
+
     if (isometric.clientState.editMode){
       isometric.io.onKeyPressedModeEdit(key);
     } else {
