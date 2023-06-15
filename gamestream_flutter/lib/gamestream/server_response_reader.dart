@@ -474,7 +474,7 @@ class ServerResponseReader with ByteReader {
         isometric.clientState.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
-        isometric.camera.centerOnPlayer();
+        isometric.camera.centerOnChaseTarget();
         gamestream.io.recenterCursor();
         break;
       case ApiPlayer.Damage:

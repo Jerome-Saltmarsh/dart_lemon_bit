@@ -13,7 +13,7 @@ class IsometricCamera {
 
   IsometricCamera();
 
-  void centerOnPlayer() {
+  void centerOnChaseTarget() {
     if (chaseTarget != null){
       centerOnV3(chaseTarget!);
     }

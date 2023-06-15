@@ -66,7 +66,6 @@ class GameIO {
       engine.onTap = onTap;
       engine.onLongPressDown = onLongPressDown;
       engine.onSecondaryTapDown = onSecondaryTapDown;
-      engine.onLeftClicked = onMouseClickedLeft;
       engine.onRightClicked = onMouseClickedRight;
       engine.onPointerSignalEvent = onPointerSignalEvent;
       engine.onKeyPressed = gamestream.isometric.io.onKeyPressed;
@@ -231,30 +230,8 @@ class GameIO {
     return false;
   }
 
-  void onMouseClickedLeft(){
-    if (isometric.clientState.edit.value) {
-      onMouseClickedEditMode();
-    }
-  }
-
   void onMouseClickedRight(){
     isometric.actions.attackAuto();
-  }
-
-  void onMouseClickedEditMode(){
-    switch (isometric.editor.editTab.value) {
-      case EditTab.File:
-        isometric.editor.setTabGrid();
-        isometric.editor.selectMouseBlock();
-        break;
-      case EditTab.Grid:
-        isometric.editor.selectMouseBlock();
-        isometric.editor.actionRecenterCamera();
-        break;
-      case EditTab.Objects:
-        isometric.editor.selectMouseGameObject();
-        break;
-    }
   }
 
   void readPlayerInput() {

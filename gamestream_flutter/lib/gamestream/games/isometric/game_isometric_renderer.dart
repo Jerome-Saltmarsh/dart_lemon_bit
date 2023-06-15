@@ -544,7 +544,10 @@ class GameIsometricRenderer {
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
   static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
 
-
+  /// converts grid coordinates to screen space
+  double getScreenX(double x, double y, double z) => engine.worldToScreenX(getRenderX(x, y, z));
+  /// converts grid coordinates to screen space
+  double getScreenY(double x, double y, double z) => engine.worldToScreenX(getRenderY(x, y, z));
 
 
   void renderCharacterHealthBar(IsometricCharacter character){

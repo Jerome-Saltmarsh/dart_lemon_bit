@@ -103,7 +103,7 @@ class IsometricEvents {
         gamestream.audio.metal_struck.playXYZ(x, y, z);
         return;
       case GameEventType.Player_Spawn_Started:
-        gamestream.isometric.camera.centerOnPlayer();
+        gamestream.isometric.camera.centerOnChaseTarget();
         gamestream.audio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
@@ -368,7 +368,7 @@ class IsometricEvents {
     if (value) {
       gamestream.isometric.camera.setModeFree();
       gamestream.isometric.editor.cursorSetToPlayer();
-      gamestream.isometric.camera.centerOnPlayer();
+      gamestream.isometric.camera.centerOnChaseTarget();
       gamestream.isometric.player.message.value = "-press arrow keys to move\n\n-press tab to play";
       gamestream.isometric.player.messageTimer = 300;
     } else {
@@ -432,7 +432,7 @@ class IsometricEvents {
       case PlayerEvent.Loot_Collected:
         return gamestream.audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        gamestream.isometric.camera.centerOnPlayer();
+        gamestream.isometric.camera.centerOnChaseTarget();
         break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
@@ -452,7 +452,7 @@ class IsometricEvents {
           gamestream.isometric.editor.column = gamestream.isometric.player.indexColumn;
           gamestream.isometric.editor.z = gamestream.isometric.player.indexZ;
         }
-        gamestream.isometric.camera.centerOnPlayer();
+        gamestream.isometric.camera.centerOnChaseTarget();
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
@@ -592,7 +592,7 @@ class IsometricEvents {
 
   void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
-      gamestream.isometric.camera.centerOnPlayer();
+      gamestream.isometric.camera.centerOnChaseTarget();
       gamestream.io.recenterCursor();
     }
   }

@@ -38,7 +38,13 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         Positioned(
             bottom: 16,
             left: 16,
-            child: buildWindowSelectedCharacter()),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                buildWindowCameraProperties(),
+                buildWindowSelectedCharacter(),
+              ],
+            )),
       ],
     );
   }
@@ -237,6 +243,32 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   Widget buildDebugMode({required Widget child}) =>
       WatchBuilder(debugMode, (t) => t ? child : nothing);
+
+  Widget buildWindowCameraProperties(){
+    return buildWindow(child: Column(
+      children: [
+        text("GAMEOBJECTS"),
+        height8,
+        Container(
+          height: 200,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: gamestream.isometric.server.gameObjects.map((e){
+                return onPressed(
+                    action: () {
+
+                    },
+                    child: text(ItemType.getName(e.type))
+                );
+              }).toList(growable: false),
+            ),
+          ),
+        )
+      ],
+    ));
+  }
 
   Widget buildWindowSelectedCharacter() =>
       buildDebugMode(

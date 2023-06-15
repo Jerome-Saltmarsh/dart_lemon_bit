@@ -39,14 +39,15 @@ class GameIsometric extends Game {
 
   @override
   void onActivated() {
+    isometric.clientState.control_visible_player_weapons.value = true;
+    isometric.clientState.control_visible_scoreboard.value = true;
+    isometric.clientState.control_visible_player_power.value = true;
     isometric.clientState.window_visible_player_creation.value = false;
     isometric.clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
     engine.onLeftClicked = gamestream.io.touchController.onClick;
     engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
-    isometric.clientState.control_visible_player_weapons.value = true;
-    isometric.clientState.control_visible_scoreboard.value = true;
-    isometric.clientState.control_visible_player_power.value = true;
+    isometric.io.addListeners();
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
