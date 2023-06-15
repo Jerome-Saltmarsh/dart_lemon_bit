@@ -14,4 +14,8 @@ abstract class Game {
   void onRightClicked(){
 
   }
+
+  void onKeyPressed(int key) {
+
+  }
 }

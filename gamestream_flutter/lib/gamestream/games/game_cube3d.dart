@@ -109,6 +109,11 @@ class GameCube3D implements Game {
   void onRightClicked() {
     // TODO: implement onRightClicked
   }
+
+  @override
+  void onKeyPressed(int key) {
+    // TODO: implement onKeyPressed
+  }
 }
 
 class Polygon {

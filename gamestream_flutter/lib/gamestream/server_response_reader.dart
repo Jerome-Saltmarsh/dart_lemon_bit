@@ -510,11 +510,6 @@ class ServerResponseReader with ByteReader {
   }
 
   void readApiPlayerPosition() {
-    final game = gamestream.game.value;
-
-    if (game is! GameIsometric){
-       throw Exception('game is! GameIsometric: $game');
-    }
     final player = isometric.player;
     player.previousPosition.x = player.position.x;
     player.previousPosition.y = player.position.y;

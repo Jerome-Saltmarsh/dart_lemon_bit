@@ -14,28 +14,6 @@ class IsometricIO {
   var Key_Toggle_Map         = KeyCode.M;
   var Mouse_Translation_Sensitivity = 0.1;
 
-  void onKeyPressed(int key){
-
-    if (key == Key_Toggle_Debug_Mode) {
-      gamestream.isometric.actions.toggleDebugMode();
-      return;
-    }
-
-    if (key == KeyCode.Tab) {
-      gamestream.isometric.actions.actionToggleEdit();
-      return;
-    }
-
-    if (key == KeyCode.Escape) {
-      gamestream.isometric.clientState.window_visible_menu.toggle();
-    }
-
-    if (gamestream.isometric.clientState.playMode) {
-      onKeyPressedModePlay(key);
-    } else {
-      onKeyPressedModeEdit(key);
-    }
-  }
 
   void onKeyPressedModePlay(int key) {
 
@@ -51,6 +29,11 @@ class IsometricIO {
 
     if (key == KeyCode.Enter) {
       gamestream.network.sendClientRequest(ClientRequest.Suicide);
+      return;
+    }
+
+    if (key == KeyCode.Tab) {
+      gamestream.isometric.clientState.edit.value = true;
       return;
     }
 

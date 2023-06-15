@@ -39,11 +39,17 @@ class GameIsometric extends Game {
 
   @override
   void onActivated() {
+    gamestream.isometric.particles.clearParticles();
     isometric.clientState.control_visible_player_weapons.value = true;
     isometric.clientState.control_visible_scoreboard.value = true;
     isometric.clientState.control_visible_player_power.value = true;
     isometric.clientState.window_visible_player_creation.value = false;
     isometric.clientState.control_visible_respawn_timer.value = false;
+    isometric.clientState.control_visible_player_weapons.value = false;
+    isometric.clientState.window_visible_player_creation.value = false;
+    isometric.clientState.control_visible_respawn_timer.value = false;
+    isometric.clientState.window_visible_menu.setFalse();
+
     gamestream.audio.musicStop();
     engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
 
@@ -67,10 +73,10 @@ class GameIsometric extends Game {
           gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
           GameIsometricUI.buildDialogFramesSinceUpdate,
       ),
-      WatchBuilder(gamestream.isometric.clientState.edit, (edit) =>
+      WatchBuilder(isometric.clientState.edit, (edit) =>
         edit ? GameIsometricUI.buildEditor() : customBuildUI(context)),
-      buildWatchBool(gamestream.isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
-      buildWatchBool(gamestream.isometric.clientState.window_visible_light_settings,
+      buildWatchBool(isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
+      buildWatchBool(isometric.clientState.window_visible_light_settings,
           GameIsometricUI.buildWindowLightSettings),
       Positioned(top: 16, right: 16, child: GameIsometricUI.buildMainMenu(children: buildMenuItems())),
 
@@ -82,8 +88,17 @@ class GameIsometric extends Game {
     if (gamestream.io.inputModeTouch){
       gamestream.io.touchController.onClick();
     }
-    if (gamestream.isometric.clientState.edit.value) {
-      gamestream.isometric.editor.onMouseLeftClicked();
+    if (isometric.clientState.edit.value) {
+      isometric.editor.onMouseLeftClicked();
+    }
+  }
+
+  @override
+  void onKeyPressed(int key) {
+    if (isometric.clientState.editMode){
+      isometric.io.onKeyPressedModeEdit(key);
+    } else {
+      isometric.io.onKeyPressedModePlay(key);
     }
   }
 

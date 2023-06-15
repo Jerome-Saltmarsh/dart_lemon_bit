@@ -68,7 +68,6 @@ class GameIO {
       engine.onSecondaryTapDown = onSecondaryTapDown;
       engine.onRightClicked = onMouseClickedRight;
       engine.onPointerSignalEvent = onPointerSignalEvent;
-      engine.onKeyPressed = gamestream.isometric.io.onKeyPressed;
   }
 
   void onPointerSignalEvent(PointerSignalEvent event){

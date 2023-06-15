@@ -115,6 +115,7 @@ class Gamestream {
      engine.buildUI = game.buildUI;
      engine.onLeftClicked = game.onLeftClicked;
      engine.onRightClicked = game.onRightClicked;
+     engine.onKeyPressed = game.onKeyPressed;
      game.onActivated();
    }
 
