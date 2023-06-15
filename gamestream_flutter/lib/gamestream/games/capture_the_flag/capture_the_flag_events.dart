@@ -2,6 +2,7 @@ import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';
+import 'capture_the_flag_properties.dart';
 
 extension CaptureTheFlagEvents on CaptureTheFlagGame {
   void onChangedFlagRedStatus(int flagStatus) {

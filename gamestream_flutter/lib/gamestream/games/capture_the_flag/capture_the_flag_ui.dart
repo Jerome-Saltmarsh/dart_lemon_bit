@@ -1,4 +1,6 @@
 
+import 'capture_the_flag_actions.dart';
+
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';

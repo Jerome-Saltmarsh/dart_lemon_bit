@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';
+import 'capture_the_flag_properties.dart';
 
 extension CaptureTheFlagRender on CaptureTheFlagGame {
 

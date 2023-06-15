@@ -18,36 +18,28 @@ class CaptureTheFlagGame extends GameIsometric {
   var characterTargetTotal = 0;
 
   final Gamestream gamestream;
-  final scoreRed = Watch(0);
-  final scoreBlue = Watch(0);
   final flagPositionRed = IsometricPosition();
   final flagPositionBlue = IsometricPosition();
   final basePositionRed = IsometricPosition();
   final basePositionBlue = IsometricPosition();
+  final characterPaths = <Uint16List>[];
+  final characterTargets = Float32List(2000);
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
+  final scoreRed = Watch(0);
+  final scoreBlue = Watch(0);
+  final debugMode = Watch(false);
   final selectClass = Watch(false);
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
-  final characterPaths = <Uint16List>[];
-  final characterTargets = Float32List(2000);
-  final debugMode = Watch(false);
   final characterSelected = Watch(false);
+  final characterSelectedX = Watch(0.0);
+  final characterSelectedY = Watch(0.0);
+  final characterSelectedZ = Watch(0.0);
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
 
   CaptureTheFlagGame({required this.gamestream}) : super(isometric: gamestream.isometric);
-
-  bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;
-  bool get playerIsTeamBlue => player.team.value == CaptureTheFlagTeam.Blue;
-
-  final characterSelectedX = Watch(0.0);
-  final characterSelectedY = Watch(0.0);
-  final characterSelectedZ = Watch(0.0);
-
-  bool get teamFlagIsAtBase => flagStatusAlly == CaptureTheFlagFlagStatus.At_Base;
-  int get flagStatusAlly => playerIsTeamRed ? flagRedStatus.value : flagBlueStatus.value;
-  int get flagStatusEnemy => playerIsTeamRed ? flagBlueStatus.value : flagRedStatus.value;
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -57,22 +49,4 @@ class CaptureTheFlagGame extends GameIsometric {
 
   @override
   Widget customBuildUI(BuildContext context) => buildCaptureTheFlagGameUI();
-
-
-  void selectCharacterClass(CaptureTheFlagCharacterClass value) =>
-      gamestream.network.sendClientRequest(
-        ClientRequest.Capture_The_Flag,
-        '${CaptureTheFlagRequest.selectClass.index} ${value.index}'
-      );
-
-  void toggleDebugMode() => sendCaptureTheFlagRequest(
-      CaptureTheFlagRequest.toggleDebug
-    );
-
-  void sendCaptureTheFlagRequest(CaptureTheFlagRequest value, [dynamic message]){
-    gamestream.network.sendClientRequest(
-        ClientRequest.Capture_The_Flag,
-        '${value.index} $message'
-    );
-  }
 }
