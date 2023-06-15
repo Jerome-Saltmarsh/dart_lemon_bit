@@ -57,19 +57,6 @@ class GameIO {
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
-  static int convertRadianToDirection(double radian) {
-    radian = radian < 0 ? radian + Engine.PI_2 : radian % Engine.PI_2;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 3)) return Direction.West;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 4)) return Direction.North_West;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 5)) return Direction.North;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 6)) return Direction.North_East;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 7)) return Direction.East;
-     return Direction.South_East;
-  }
-
   void onTap(){
     touchCursorWorldX = engine.screenToWorldX(_touchCursorTapX);
     touchCursorWorldY = engine.screenToWorldY(_touchCursorTapY);
@@ -118,13 +105,6 @@ class GameIO {
     return hex;
   }
 
-  double getCursorWorldX() {
-    return engine.mouseWorldX;
-  }
-  double getCursorWorldY() {
-    return engine.mouseWorldY;
-  }
-
   double getCursorScreenX() {
      if (inputModeTouch){
        return engine.worldToScreenX(touchCursorWorldX);
@@ -141,9 +121,7 @@ class GameIO {
     }
   }
 
-  int getDirection() {
-    return inputModeKeyboard ? getInputDirectionKeyboard() : getDirectionTouchScreen();
-  }
+  int getDirection() => inputModeKeyboard ? getInputDirectionKeyboard() : getDirectionTouchScreen();
 
   int getDirectionTouchScreen() {
     return touchController.getDirection();
@@ -257,10 +235,8 @@ class TouchController {
     joystickY = joystickCenterY;
   }
 
-  int getDirection(){
-    if (engine.touches == 0) return Direction.None;
-    return GameIO.convertRadianToDirection(angle);
-  }
+  int getDirection() =>
+      engine.touches == 0 ? Direction.None : Direction.fromRadian(angle);
 
   void onMouseMoved(double x, double y){
     joystickX = engine.mousePositionX;

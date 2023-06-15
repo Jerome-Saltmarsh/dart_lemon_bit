@@ -89,8 +89,8 @@ class GameNetwork {
   /// [7] Space
   applyKeyboardInputToUpdateBuffer() {
     updateBuffer[1] = gamestream.io.getInputAsByte();
-    writeNumberToByteArray(number: gamestream.io.getCursorWorldX(), list: updateBuffer, index: 2);
-    writeNumberToByteArray(number: gamestream.io.getCursorWorldY(), list: updateBuffer, index: 4);
+    writeNumberToByteArray(number: engine.mouseWorldX, list: updateBuffer, index: 2);
+    writeNumberToByteArray(number: engine.mouseWorldY, list: updateBuffer, index: 4);
     writeNumberToByteArray(number: engine.Screen_Left, list: updateBuffer, index: 6);
     writeNumberToByteArray(number: engine.Screen_Top, list: updateBuffer, index: 8);
     writeNumberToByteArray(number: engine.Screen_Right, list: updateBuffer, index: 10);
