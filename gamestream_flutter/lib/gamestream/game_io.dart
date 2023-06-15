@@ -157,21 +157,9 @@ class GameIO {
     return InputDirection.None;
   }
 
-
   void setCursorAction(int cursorAction) {
     touchscreenCursorAction = CursorAction.None;
   }
-
-  bool getActionSecondary(){
-    if (isometric.clientState.editMode) return false;
-    return false;
-  }
-
-  bool getActionTertiary(){
-    if (isometric.clientState.editMode) return false;
-    return false;
-  }
-
 
   void readPlayerInput() {
     if (isometric.clientState.edit.value) {

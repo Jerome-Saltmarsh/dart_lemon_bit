@@ -1,5 +1,6 @@
 
-import 'package:gamestream_flutter/gamestream/ui/widgets/GSCheckBox.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 
 import 'capture_the_flag_actions.dart';
 
@@ -336,7 +337,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     double? height,
     Alignment? alignment,
   }) =>
-      GameIsometricUI.buildDialogUIControl(child: Container(
+      GSDialog(child: Container(
         alignment: alignment,
         padding: GameStyle.Container_Padding,
         color: GameStyle.Container_Color,
