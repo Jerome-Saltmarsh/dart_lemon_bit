@@ -20,7 +20,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   int get nodeIndex => game.scene.getNodeIndexV3(this);
   int get pathNodeIndex => path[pathIndex];
-  double get destinationDistanceSquared => getDistanceXYZSquared(destinationX, destinationY, destinationZ);
+  double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
 
   IsometricPosition? targetPrevious;
 
@@ -172,13 +172,14 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     setPathToIsometricPosition(game.scene, target!);
   }
 
+  double getDestinationDistanceSquared () =>
+      getDistanceSquaredXYZ(destinationX, destinationY, z);
+
   void updateDestination() {
     if (pathIndex >= pathEnd) return;
     final scene = game.scene;
 
-    final destinationDistanceSquared = getDistanceXYZSquared(destinationX, destinationY, z);
-
-    if (destinationDistanceSquared < 500) {
+    if (getDestinationDistanceSquared() < 500) {
       pathIndex++;
       if (pathIndex >= pathEnd){
         pathIndex = 0;

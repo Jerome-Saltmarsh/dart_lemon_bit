@@ -210,7 +210,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     var nearestEnemyDistanceSquared = 100000000.0;
     final characters = game.characters;
     for (final character in characters){
-      final distanceSquared = character.getDistanceXYZSquared(x, y, z);
+      final distanceSquared = character.getDistanceSquaredXYZ(x, y, z);
       if (distanceSquared > nearestEnemyDistanceSquared) continue;
       nearestEnemyDistanceSquared = distanceSquared;
       nearestCharacter = character;
