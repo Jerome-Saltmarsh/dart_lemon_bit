@@ -276,7 +276,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   /// METHODS
   void refreshDamage() {
-    damage = game.getPlayerWeaponDamage(this);
+    weaponDamage = game.getPlayerWeaponDamage(this);
   }
 
   void unequipWeapon(){
@@ -956,7 +956,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   void writePlayerDamage() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Damage);
-    writeUInt16(damage);
+    writeUInt16(weaponDamage);
   }
 
   void writePlayerAlive(){
@@ -1634,7 +1634,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   @override
-  void onWeaponChanged() {
+  void onWeaponTypeChanged() {
     refreshDamage();
     writePlayerWeapons();
   }

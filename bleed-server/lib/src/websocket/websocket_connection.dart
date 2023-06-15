@@ -220,7 +220,7 @@ class WebSocketConnection with ByteReader {
         }
         player.weaponPrimary = value;
         player.weaponType = value;
-        player.onWeaponChanged();
+        player.onWeaponTypeChanged();
         break;
 
       case ClientRequest.Select_Weapon_Secondary:
@@ -233,7 +233,7 @@ class WebSocketConnection with ByteReader {
         }
         player.weaponSecondary = value;
         player.weaponType = value;
-        player.onWeaponChanged();
+        player.onWeaponTypeChanged();
         break;
 
       case ClientRequest.Select_Power:

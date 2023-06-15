@@ -42,7 +42,7 @@ class IsometricCollider extends IsometricPosition {
   }
 
   IsometricCharacter? owner;
-  var damage = 0;
+  var weaponDamage = 0;
 
   /// CONSTRUCTOR
   IsometricCollider({

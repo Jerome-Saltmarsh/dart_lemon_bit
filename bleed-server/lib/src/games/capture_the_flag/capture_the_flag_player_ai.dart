@@ -44,6 +44,16 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       bodyType = ItemType.Body_Shirt_Blue;
       legsType = ItemType.Legs_Blue;
     }
+
+    switch (characterClass) {
+      case CaptureTheFlagCharacterClass.scout:
+        weaponType = ItemType.Weapon_Ranged_Bow;
+        break;
+      default:
+        break;
+    }
+
+    updateWeaponRange();
   }
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
@@ -89,7 +99,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
     for (final character in game.characters){
         if (!isEnemy(character)) continue;
-        final distanceSquared = getDistanceIsoPosSquared(character);
+        final distanceSquared = getDistanceSquared(character);
         if (distanceSquared > nearestEnemyDistanceSquared) continue;
         nearestEnemyDistanceSquared = distanceSquared;
         nearestEnemy = character;
@@ -113,14 +123,16 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       updatePath();
     }
 
-
-
-    if (target != null){
-      final targetDistanceSquared = getDistanceIsoPosSquared(target);
+    if (target != null) {
+      final targetDistanceSquared = getDistanceSquared(target);
       if (targetDistanceSquared < 10000){
         face(target);
         if (isEnemy(target)){
-          attackMelee();
+          if (targetDistanceSquared < weaponRangeSquared){
+            game.characterUseWeapon(this);
+          } else {
+            setCharacterStateRunning();
+          }
         } else {
           if (targetDistanceSquared > 10){
             setCharacterStateRunning();
@@ -220,7 +232,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      final characters = game.characters;
      for (final character in characters) {
         if (!isEnemy(character)) continue;
-        final characterDistanceSquared = getDistanceIsoPosSquared(character);
+        final characterDistanceSquared = getDistanceSquared(character);
         if (characterDistanceSquared > distanceSquared) continue;
         return true;
      }
@@ -251,6 +263,17 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void attackMelee(){
     game.characterAttackMelee(this);
+  }
+
+  @override
+  void onWeaponTypeChanged() {
+     updateWeaponRange();
+  }
+
+  void updateWeaponRange(){
+    if (weaponType == ItemType.Weapon_Ranged_Bow){
+      weaponRange = 200;
+    }
   }
 }
 

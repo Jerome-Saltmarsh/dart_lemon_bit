@@ -25,7 +25,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   CaptureTheFlagPlayer({required this.game}) : super(game: game) {
     writeScore();
     writeDebugMode();
-    damage = 1;
+    weaponDamage = 1;
     weaponType = ItemType.Empty;
   }
 

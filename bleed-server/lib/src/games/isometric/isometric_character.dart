@@ -28,14 +28,15 @@ abstract class IsometricCharacter extends IsometricCollider {
   var _weaponType = ItemType.Empty;
   var _characterType = 0;
 
-  var damage = 1;
+  var weaponDamage = 1;
+  var weaponRange = 20.0;
+  var weaponState = WeaponState.Idle;
+  var weaponStateDuration = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
-  var weaponState = WeaponState.Idle;
-  var weaponStateDuration = 0;
   var buffDuration = 0;
   var lookRadian = 0.0;
   var runSpeed = 1.0;
@@ -62,6 +63,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   var destinationX = 0.0;
   var destinationY = 0.0;
   var destinationZ = 0.0;
+
+  double get weaponRangeSquared => weaponRange * weaponRange;
 
   void setPathToIsometricPosition(
       IsometricScene scene,
@@ -254,7 +257,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     this.characterType = characterType;
     this.health = health;
     this.team = team;
-    this.damage = damage;
+    this.weaponDamage = damage;
     if (name != null){
       this.name = name;
     }
@@ -286,7 +289,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
     if (_weaponType == value) return;
     _weaponType = value;
-    onWeaponChanged();
+    onWeaponTypeChanged();
   }
 
   int get weaponStateDurationTotal => _weaponStateDurationTotal;
@@ -543,7 +546,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   void onEquipmentChanged() {}
 
   /// safe to override
-  void onWeaponChanged() {}
+  void onWeaponTypeChanged() {}
 
   /// safe to override
   void customUpdate() {}

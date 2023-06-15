@@ -314,24 +314,6 @@ mixin class IsometricClientState {
     }
   }
 
-  // void setNodeType(int z, int row, int column, int type){
-  //   if (z < 0)
-  //     return;
-  //   if (row < 0)
-  //     return;
-  //   if (column < 0)
-  //     return;
-  //   if (z >= gamestream.isometric.nodes.totalZ)
-  //     return;
-  //   if (row >= gamestream.isometric.nodes.totalRows)
-  //     return;
-  //   if (column >= gamestream.isometric.nodes.totalColumns)
-  //     return;
-  //
-  //   gamestream.isometric.nodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;
-  // }
-
-
   // PROPERTIES
 
   void update(){

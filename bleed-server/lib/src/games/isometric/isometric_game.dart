@@ -606,7 +606,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
-          damage: character.damage,
+          damage: character.weaponDamage,
           range: ItemType.getRange(weaponType),
           src: character,
           angle: character.lookRadian,
@@ -623,7 +623,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
           src: character,
-          damage: character.damage,
+          damage: character.weaponDamage,
           range: ItemType.getRange(weaponType),
           angle: character.lookRadian,
         );
@@ -778,7 +778,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..interactable = false
       ..velocityZ = velocityZ
       ..owner = player
-      ..damage = damage;
+      ..weaponDamage = damage;
 
     performJob(IsometricSettings.Grenade_Cook_Duration, () {
       deactivateCollider(instance);
@@ -852,7 +852,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterAttackMelee(IsometricCharacter character) {
     assert (character.active);
     assert (character.alive);
-    assert (character.damage >= 0);
+    assert (character.weaponDamage >= 0);
 
     if (character.deadBusyOrWeaponStateBusy) return;
 
@@ -913,7 +913,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       applyHit(
           angle: radiansV2(character, other),
           target: other,
-          damage: character.damage,
+          damage: character.weaponDamage,
           srcCharacter: character,
           hitType: IsometricHitType.Melee
       );
@@ -944,7 +944,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       applyHit(
           angle: radiansV2(character, gameObject),
           target: gameObject,
-          damage: character.damage,
+          damage: character.weaponDamage,
           srcCharacter: character,
           hitType: IsometricHitType.Melee
       );
@@ -955,7 +955,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       applyHit(
           angle: radiansV2(character, nearest),
           target: nearest,
-          damage: character.damage,
+          damage: character.weaponDamage,
           srcCharacter: character,
           hitType: IsometricHitType.Melee);
     }
@@ -1020,7 +1020,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   bool characterMeleeAttackTargetInRange(IsometricCharacter character) {
     assert (character.active);
     assert (character.alive);
-    assert (character.damage >= 0);
+    assert (character.weaponDamage >= 0);
 
     if (character.deadBusyOrWeaponStateBusy) return false;
 
@@ -1086,7 +1086,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       angle: angle,
       range: character.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
-      damage: character.damage,
+      damage: character.weaponDamage,
     );
 
     if (character.buffDoubleDamage) {
@@ -1097,7 +1097,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: angle - angleOffset,
         range: character.weaponTypeRange,
         projectileType: ProjectileType.Bullet,
-        damage: character.damage,
+        damage: character.weaponDamage,
       );
     }
 
@@ -1109,7 +1109,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: angle + angleOffset,
         range: character.weaponTypeRange,
         projectileType: ProjectileType.Bullet,
-        damage: character.damage,
+        damage: character.weaponDamage,
       );
     }
 
@@ -2034,7 +2034,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: projectile.velocityAngle,
         srcCharacter: owner,
         target: target,
-        damage: projectile.damage,
+        damage: projectile.weaponDamage,
         hitType: IsometricHitType.Projectile,
       );
     }
@@ -2125,7 +2125,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         target: attackTarget,
         angle: radiansV2(character, attackTarget),
         srcCharacter: character,
-        damage: character.damage,
+        damage: character.weaponDamage,
         hitType: IsometricHitType.Projectile,
       );
       clearCharacterTarget(character);
@@ -2367,7 +2367,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: angle + giveOrTake(0.25),
         range: src.weaponTypeRange,
         projectileType: ProjectileType.Bullet,
-        damage: src.damage,
+        damage: src.weaponDamage,
       );
     }
     src.assignWeaponStateFiring();
@@ -2404,7 +2404,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       const accuracyAngleDeviation = pi * 0.1;
       finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
-    projectile.damage = damage;
+    projectile.weaponDamage = damage;
     projectile.hitable = true;
     projectile.active = true;
     if (target is IsometricCollider) {

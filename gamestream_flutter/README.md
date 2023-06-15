@@ -37,6 +37,7 @@ alt + m             : go to declaration
 [ ] ai heroes
 [ ] destroyable terrain
 [ ] ai pathfinding 3d
+[ ] ai weapons
 [x] ai pathfinding
 [x] render objective lines
 [x] render bases on mini map
