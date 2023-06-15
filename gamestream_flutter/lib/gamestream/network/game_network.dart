@@ -111,14 +111,6 @@ class GameNetwork {
     connectionStatus.value = ConnectionStatus.None;
   }
 
-  void send(dynamic message) {
-    if (!connected) {
-      print("warning cannot send because not connected");
-      return;
-    }
-    sink.add(message);
-  }
-
   void _onEvent(dynamic response) {
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Connected;
@@ -155,56 +147,6 @@ class GameNetwork {
     }
     sink.close();
   }
-
-  // void onChangedConnectionStatus(ConnectionStatus connection) {
-  //   engine.onDrawForeground = null;
-  //   gamestream.serverResponseReader.bufferSizeTotal.value = 0;
-  //
-  //   switch (connection) {
-  //     case ConnectionStatus.Connected:
-  //       engine.cursorType.value = CursorType.None;
-  //       engine.drawCanvasAfterUpdate = true;
-  //       engine.zoomOnScroll = true;
-  //       engine.zoom = 1.0;
-  //       engine.targetZoom = 1.0;
-  //       gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
-  //       gamestream.isometric.clientState.timeConnectionEstablished = DateTime.now();
-  //       gamestream.audio.enabledSound.value = true;
-  //       if (!engine.isLocalHost) {
-  //         engine.fullScreenEnter();
-  //       }
-  //       break;
-  //
-  //     case ConnectionStatus.Done:
-  //       gamestream.isometric.player.active.value = false;
-  //       gamestream.isometric.clientState.timeConnectionEstablished = null;
-  //       engine.cameraX = 0;
-  //       engine.cameraY = 0;
-  //       engine.zoom = 1.0;
-  //       engine.drawCanvasAfterUpdate = true;
-  //       engine.cursorType.value = CursorType.Basic;
-  //       engine.drawCanvasAfterUpdate = true;
-  //       engine.fullScreenExit();
-  //       gamestream.isometric.clientState.clear();
-  //       gamestream.isometric.server.clean();
-  //       gamestream.gameType.value = GameType.Website;
-  //       gamestream.isometric.server.sceneEditable.value = false;
-  //       gamestream.audio.enabledSound.value = false;
-  //       break;
-  //     case ConnectionStatus.Failed_To_Connect:
-  //       WebsiteState.error.value = "Failed to connect";
-  //       break;
-  //     case ConnectionStatus.Invalid_Connection:
-  //       WebsiteState.error.value = "Invalid Connection";
-  //       break;
-  //     case ConnectionStatus.Error:
-  //       WebsiteState.error.value = "Connection Error";
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
 
   void sendRequestSpeak(String message){
     if (message.trim().isEmpty) return;
@@ -411,15 +353,18 @@ class GameNetwork {
     sendClientRequest(ClientRequest.GameObject, request.index);
   }
 
-  void sendClientRequest(int value, [dynamic message]){
-    if (message != null){
-      return gamestream.network.send('${value} $message');
+  void sendClientRequest(int value, [dynamic message]) =>
+      message != null ? send('${value} $message') : send(value);
+
+  void sendUpdateBuffer() => send(updateBuffer);
+
+  void send(dynamic message) {
+    if (!connected) {
+      print("warning cannot send because not connected");
+      return;
     }
-    gamestream.network.send(value);
+    sink.add(message);
   }
 
-  void sendUpdateBuffer(){
-    sink.add(updateBuffer);
-  }
 }
 
