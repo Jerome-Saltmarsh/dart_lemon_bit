@@ -159,12 +159,12 @@ abstract class IsometricCharacter extends IsometricCollider {
     pathIndex = cachePathIndex;
 
     for (var i = 1; i <= 3; i++){
-      final dirLess = (direction - 1) % 8;
+      final dirLess = (direction - i) % 8;
       if (visitNode(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
-      final dirMore = (direction + 1) % 8;
+      final dirMore = (direction + i) % 8;
       if (visitNode(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
         return true;
       }
