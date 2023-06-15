@@ -280,6 +280,25 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
             WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
             WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
+            const SizedBox(height: 1,),
+            WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
+               if (!characterSelectedTarget) return nothing;
+               return Container(
+                 margin: const EdgeInsets.only(left: 8),
+                 color: Colors.white12,
+                 padding: GameStyle.Container_Padding,
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                      text("TARGET"),
+                     WatchBuilder(characterSelectedTargetType, (type) => text("type: $type")),
+                     WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
+                     WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
+                     WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
+                   ],
+                 ),
+               );
+            }),
           ],
         ),
       );

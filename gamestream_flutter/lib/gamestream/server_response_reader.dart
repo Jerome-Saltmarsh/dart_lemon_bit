@@ -221,6 +221,15 @@ class ServerResponseReader with ByteReader {
         captureTheFlag.characterSelectedX.value = readDouble();
         captureTheFlag.characterSelectedY.value = readDouble();
         captureTheFlag.characterSelectedZ.value = readDouble();
+
+        final characterSelectedTarget = readBool();
+        captureTheFlag.characterSelectedTarget.value = characterSelectedTarget;
+        if (characterSelectedTarget) {
+          captureTheFlag.characterSelectedTargetType.value = readString();
+          captureTheFlag.characterSelectedTargetX.value = readDouble();
+          captureTheFlag.characterSelectedTargetY.value = readDouble();
+          captureTheFlag.characterSelectedTargetZ.value = readDouble();
+        }
         break;
     }
   }

@@ -184,6 +184,15 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     }
     writeBool(true);
     writeIsometricPosition(selectedCharacter);
+
+    final selectedCharacterTarget = selectedCharacter.target;
+    if (selectedCharacterTarget == null){
+      writeBool(false);
+    } else {
+      writeBool(true);
+      writeString(selectedCharacterTarget.runtimeType.toString());
+      writeIsometricPosition(selectedCharacterTarget);
+    }
   }
 
   void toggleDebugMode() {
