@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/library.dart';
 
-extension CaptureTheFlagGameUI on CaptureTheFlagGame {
+extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   Widget buildCaptureTheFlagGameUI(){
     return Stack(
@@ -265,4 +265,22 @@ extension CaptureTheFlagGameUI on CaptureTheFlagGame {
       ),
     ),
   );
+
+  Widget buildWindowSelectedCharacter(){
+    return WatchBuilder(characterSelected, (characterSelected){
+      if (!characterSelected) return nothing;
+      return Container(
+        color: GameStyle.Container_Color,
+        padding: GameStyle.Container_Padding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
+            WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
+            WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
+          ],
+        ),
+      );
+    });
+  }
 }
