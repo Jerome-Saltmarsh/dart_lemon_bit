@@ -86,13 +86,12 @@ abstract class IsometricCharacter extends IsometricCollider {
       pathIndex = 0;
       destinationX = scene.getNodePositionX(path[0]);
       destinationY = scene.getNodePositionY(path[0]);
-
       assert(validatePath(scene));
-
-
     } else {
       pathIndex = 0;
       pathEnd = 0;
+      destinationX = x;
+      destinationY = y;
     }
   }
 
@@ -202,10 +201,10 @@ abstract class IsometricCharacter extends IsometricCollider {
         5 => 1,
         6 => 0,
         7 => -1,
-        _ => 0,
+        _ => throw Exception('invalid direction $direction'),
      };
 
-  int convertDirectionToRowVel(int direction)=> switch(direction){
+  int convertDirectionToRowVel(int direction) => switch(direction){
     0 => 0,
     1 => 1,
     2 => 1,
@@ -214,7 +213,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     5 => -1,
     6 => -1,
     7 => -1,
-    _ => 0,
+    _ => throw Exception('invalid direction $direction'),
   };
 
 
