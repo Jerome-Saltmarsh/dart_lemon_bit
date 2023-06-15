@@ -283,7 +283,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
             WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
             WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
-            WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-length: $pathEnd")),
+            WatchBuilder(characterSelectedPathIndex, (pathIndex) => text("path-index: $pathIndex")),
+            WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-end: $pathEnd")),
             buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
             const SizedBox(height: 1,),
             WatchBuilder(characterSelectedTarget, (characterSelectedTarget){

@@ -167,6 +167,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   }
 
   void writeCharacterPath(IsometricCharacter character){
+    writeUInt16(character.pathIndex);
     writeUInt16(character.pathEnd);
     for (var j = 0; j < character.pathEnd; j++){
       writeUInt16(character.path[j]);

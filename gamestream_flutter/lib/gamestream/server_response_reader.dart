@@ -194,6 +194,7 @@ class ServerResponseReader with ByteReader {
         captureTheFlag.characterPaths.clear();
         final total = readUInt16();
         for (var i = 0; i < total; i++){
+           final pathIndex = readUInt16(); // DELETE NOT DELETE
            final pathLength = readUInt16();
            final path = readUint16List(pathLength);
            captureTheFlag.characterPaths.add(path);
@@ -220,6 +221,7 @@ class ServerResponseReader with ByteReader {
         captureTheFlag.characterSelectedX.value = readDouble();
         captureTheFlag.characterSelectedY.value = readDouble();
         captureTheFlag.characterSelectedZ.value = readDouble();
+        captureTheFlag.characterSelectedPathIndex.value = readUInt16();
         final pathEnd = readUInt16();
         captureTheFlag.characterSelectedPathEnd.value = pathEnd;
         for (var i = 0; i < pathEnd; i++){
