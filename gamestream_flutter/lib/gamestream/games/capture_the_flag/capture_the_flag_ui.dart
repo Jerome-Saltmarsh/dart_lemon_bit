@@ -1,4 +1,6 @@
 
+import 'package:gamestream_flutter/gamestream/ui/widgets/GSCheckBox.dart';
+
 import 'capture_the_flag_actions.dart';
 
 import 'package:bleed_common/src/capture_the_flag/src.dart';
@@ -274,6 +276,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       return Container(
         color: GameStyle.Container_Color,
         padding: GameStyle.Container_Padding,
+        width: 300,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -284,7 +287,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
                if (!characterSelectedTarget) return nothing;
                return Container(
-                 margin: const EdgeInsets.only(left: 8),
                  color: Colors.white12,
                  padding: GameStyle.Container_Padding,
                  child: Column(
@@ -295,6 +297,16 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                      WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
                      WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
                      WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
+                     WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         text("render line"),
+                         const SizedBox(width: 8,),
+                         onPressed(
+                             action: characterSelectedTargetRenderLine.toggle,
+                             child: GSCheckBox(value)),
+                       ],
+                     )),
                    ],
                  ),
                );
