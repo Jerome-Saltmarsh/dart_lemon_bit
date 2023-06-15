@@ -23,6 +23,8 @@ class IsometricNodes {
   late var ambient_alp        = (ambient_color_hsv.alpha * 255).round();
   var ambient_color      = 0;
 
+  var nodesLightSources = Uint16List(0);
+  var nodesLightSourcesTotal = 0;
   var node_colors = Uint32List(0);
   var hsv_hue = Uint16List(0);
   var hsv_saturation = Uint8List(0);
@@ -52,6 +54,7 @@ class IsometricNodes {
 
   var offscreenNodes = 0;
   var onscreenNodes = 0;
+  var torch_emission_intensity = 1.0;
 
   // CONSTANTS
 
@@ -1284,6 +1287,41 @@ class IsometricNodes {
       vector3.outOfBounds
           ? ambient_color
           : node_colors[vector3.nodeIndex];
+
+  void applyEmissionsLightSources() {
+    for (var i = 0; i < nodesLightSourcesTotal; i++){
+      final nodeIndex = nodesLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+
+      switch (nodeType){
+        case NodeType.Torch:
+          emitLightAmbient(
+            index: nodeIndex,
+            alpha: Engine.linerInterpolationInt(
+              ambient_hue,
+              0,
+              torch_emission_intensity,
+            ),
+          );
+          break;
+      }
+    }
+  }
+
+  void refreshBakeMapLightSources() {
+    nodesLightSourcesTotal = 0;
+    for (var i = 0; i < total; i++){
+      if (!NodeType.emitsLight(nodeTypes[i])) continue;
+      if (nodesLightSourcesTotal >= nodesLightSources.length) {
+        nodesLightSources = Uint16List(nodesLightSources.length + 100);
+        refreshBakeMapLightSources();
+        return;
+      }
+      nodesLightSources[nodesLightSourcesTotal] = i;
+      nodesLightSourcesTotal++;
+    }
+  }
+
 }
 
 

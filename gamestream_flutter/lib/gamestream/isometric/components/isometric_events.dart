@@ -45,7 +45,7 @@ class IsometricEvents {
     gamestream.isometric.nodes.generateHeightMap();
     gamestream.isometric.nodes.generateMiniMap();
     gamestream.isometric.minimap.generateSrcDst();
-    gamestream.isometric.clientState.refreshBakeMapLightSources();
+    gamestream.isometric.nodes.refreshBakeMapLightSources();
 
     if (clientState.raining.value) {
       gamestream.isometric.actions.rainStop();

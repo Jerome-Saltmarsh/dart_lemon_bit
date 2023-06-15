@@ -44,8 +44,6 @@ mixin class IsometricClientState {
   var srcXRainLanding = 6739.0;
   var messageStatusDuration = 0;
   var areaTypeVisibleDuration = 0;
-  var nodesLightSources = Uint16List(0);
-  var nodesLightSourcesTotal = 0;
   var nextLightingUpdate = 0;
   var lights_active = 0;
   var interpolation_padding = 0.0;
@@ -55,7 +53,6 @@ mixin class IsometricClientState {
   var torch_emission_end = 1.0;
   var torch_emission_vel = 0.061;
   var torch_emission_t = 0.0;
-  var torch_emission_intensity = 1.0;
   var nodesRaycast = 0;
   var windLine = 0;
 
@@ -83,7 +80,7 @@ mixin class IsometricClientState {
 
   void applyEmissions(){
     lights_active = 0;
-    applyEmissionsLightSources();
+    gamestream.isometric.nodes.applyEmissionsLightSources();
     applyEmissionsCharacters();
     gamestream.isometric.server.applyEmissionGameObjects();
     applyEmissionsProjectiles();
@@ -104,28 +101,6 @@ mixin class IsometricClientState {
       );
     }
   }
-
-  void applyEmissionsLightSources() {
-    final nodes = gamestream.isometric.nodes;
-    for (var i = 0; i < nodesLightSourcesTotal; i++){
-      final nodeIndex = nodesLightSources[i];
-      final nodeType = nodes.nodeTypes[nodeIndex];
-
-      switch (nodeType){
-        case NodeType.Torch:
-          nodes.emitLightAmbient(
-            index: nodeIndex,
-            alpha: Engine.linerInterpolationInt(
-              nodes.ambient_hue,
-              0,
-              torch_emission_intensity,
-            ),
-          );
-          break;
-      }
-    }
-  }
-
 
   void applyCharacterColors(){
     for (var i = 0; i < gamestream.isometric.server.totalCharacters; i++){
@@ -317,7 +292,7 @@ mixin class IsometricClientState {
       torch_emission_vel = -torch_emission_vel;
     }
 
-    torch_emission_intensity = interpolateDouble(
+    gamestream.isometric.nodes.torch_emission_intensity = interpolateDouble(
       start: torch_emission_start,
       end: torch_emission_end,
       t: torch_emission_t,
@@ -506,20 +481,6 @@ mixin class IsometricClientState {
   void clearHoverIndex() =>
       hoverIndex.value = -1;
 
-
-  void refreshBakeMapLightSources() {
-    nodesLightSourcesTotal = 0;
-    for (var i = 0; i < gamestream.isometric.nodes.total; i++){
-      if (!NodeType.emitsLight(gamestream.isometric.nodes.nodeTypes[i])) continue;
-      if (nodesLightSourcesTotal >= nodesLightSources.length) {
-        nodesLightSources = Uint16List(nodesLightSources.length + 100);
-        refreshBakeMapLightSources();
-        return;
-      }
-      nodesLightSources[nodesLightSourcesTotal] = i;
-      nodesLightSourcesTotal++;
-    }
-  }
 
   void showMessage(String message){
     messageStatus.value = "";
