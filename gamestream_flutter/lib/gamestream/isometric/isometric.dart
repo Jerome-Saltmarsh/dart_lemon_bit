@@ -72,15 +72,15 @@ class Isometric {
       sendClientRequestUpdate();
       return;
     }
-    clientState.updateTorchEmissionIntensity();
+    gamestream.audio.update();
     gamestream.animation.updateAnimationFrame();
-    clientState.updateParticleEmitters();
+    gamestream.io.readPlayerInput();
     server.updateProjectiles();
     server.updateGameObjects();
-    gamestream.audio.update();
+    clientState.updateTorchEmissionIntensity();
+    clientState.updateParticleEmitters();
     clientState.update();
     clientState.updatePlayerMessageTimer();
-    gamestream.io.readPlayerInput();
     sendClientRequestUpdate();
   }
 
