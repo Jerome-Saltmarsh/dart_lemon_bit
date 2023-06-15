@@ -59,6 +59,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   var targetIndexRow = 0;
   var targetIndexColumn = 0;
 
+  var pathNodeX = 0.0;
+  var pathNodeY = 0.0;
+  var pathNodeZ = 0.0;
+
   void setPathToIsometricPosition(
       IsometricScene scene,
       IsometricPosition position,

@@ -19,6 +19,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   CaptureTheFlagCharacterClass characterClass;
   late final CaptureTheFlagGame game;
 
+  int get pathNodeIndex => path[pathIndex];
+
   CaptureTheFlagPlayerAI({
     required this.game,
     required super.team,
@@ -129,15 +131,19 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   void followPath() {
+    assert (pathIndex < pathEnd);
     final scene = game.scene;
-    final pathNodeIndex = path[pathIndex];
-    assert (scene.nodeOrientations[pathNodeIndex] == NodeOrientation.None);
 
     if (scene.getNodeIndexV3(this) == pathNodeIndex) {
       pathIndex++;
+      if (pathIndex >= pathEnd){
+        pathIndex = 0;
+        pathEnd = 0;
+      } else {
+        pathNodeX = scene.getNodePositionX(pathNodeIndex);
+        pathNodeY = scene.getNodePositionY(pathNodeIndex);
+      }
     } else {
-      final pathNodeX = scene.getNodePositionX(pathNodeIndex);
-      final pathNodeY = scene.getNodePositionY(pathNodeIndex);
       faceXY(pathNodeX, pathNodeY);
       setCharacterStateRunning();
     }
