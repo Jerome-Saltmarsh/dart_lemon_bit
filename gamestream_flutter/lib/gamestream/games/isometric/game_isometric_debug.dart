@@ -63,7 +63,7 @@ class GameIsometricDebug {
                                     "aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n"
                                     "target-category: ${TargetCategory.getName(gamestream.isometric.player.targetCategory)}\n"
                                     "target-position: ${gamestream.isometric.player.targetPosition}\n"
-                                    "dialog-type: ${DialogType.getName(gamestream.isometric.clientState.hoverDialogType.value)}\n"
+                                    "dialog-type: ${DialogType.getName(gamestream.isometric.ui.hoverDialogType.value)}\n"
                                     "scene-light-sources: ${gamestream.isometric.clientState.nodesLightSourcesTotal}\n"
                                     "scene-light-active: ${gamestream.isometric.clientState.lights_active}\n"
                                     "total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n"

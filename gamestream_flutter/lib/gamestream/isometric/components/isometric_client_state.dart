@@ -19,7 +19,6 @@ mixin class IsometricClientState {
   final readsHotKeys = Watch(0);
   final hoverTargetType = Watch(ClientType.Hover_Target_None);
   final hoverIndex = Watch(-1);
-  final hoverDialogType = Watch(DialogType.None);
   final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final dragStart = Watch(-1);
@@ -367,8 +366,6 @@ mixin class IsometricClientState {
 
 
   // PROPERTIES
-  bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
-  bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
 
   void update(){
     interpolation_padding = ((gamestream.isometric.nodes.interpolation_length + 1) * Node_Size) / engine.zoom;
@@ -507,9 +504,6 @@ mixin class IsometricClientState {
   void redrawInventory() => inventoryReads.value++;
   void redrawHotKeys() => readsHotKeys.value++;
 
-  void clearMouseOverDialogType() =>
-      hoverDialogType.value = DialogType.None;
-
   void clearHoverIndex() =>
       hoverIndex.value = -1;
 
@@ -526,10 +520,6 @@ mixin class IsometricClientState {
       nodesLightSources[nodesLightSourcesTotal] = i;
       nodesLightSourcesTotal++;
     }
-  }
-
-  void clearHoverDialogType() {
-    hoverDialogType.value = DialogType.None;
   }
 
   void showMessage(String message){
@@ -615,7 +605,7 @@ mixin class IsometricClientState {
   }
 
   void onItemIndexPrimary(int itemIndex) {
-    if (gamestream.isometric.clientState.hoverDialogDialogIsTrade){
+    if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
@@ -623,7 +613,7 @@ mixin class IsometricClientState {
   }
 
   void onItemIndexSecondary(int itemIndex){
-    if (gamestream.isometric.clientState.hoverDialogDialogIsTrade){
+    if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }

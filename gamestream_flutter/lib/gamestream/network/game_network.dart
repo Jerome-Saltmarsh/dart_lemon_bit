@@ -194,7 +194,7 @@ class GameNetwork {
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
-        gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
+        gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
         gamestream.isometric.clientState.timeConnectionEstablished = DateTime.now();
         gamestream.audio.enabledSound.value = true;
         if (!engine.isLocalHost) {

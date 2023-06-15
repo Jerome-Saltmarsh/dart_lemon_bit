@@ -942,10 +942,10 @@ class GameIsometricUI {
   static Widget buildDialog({required Widget child, required int dialogType}) =>
       MouseRegion(
         onEnter: (PointerEnterEvent event) {
-          gamestream.isometric.clientState.hoverDialogType.value = dialogType;
+          gamestream.isometric.ui.hoverDialogType.value = dialogType;
         },
         onExit: (PointerExitEvent event) {
-          gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
+          gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
         },
         child: child,
       );

@@ -19,17 +19,17 @@ class _GSDialogState extends State<GSDialog> {
   @override
   void dispose() {
     super.dispose();
-    gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
+    gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
   }
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
-        gamestream.isometric.clientState.hoverDialogType.value = DialogType.UI_Control;
+        gamestream.isometric.ui.hoverDialogType.value = DialogType.UI_Control;
       },
       onExit: (PointerExitEvent event) {
-        gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
+        gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
       },
       child: widget.child,
     );

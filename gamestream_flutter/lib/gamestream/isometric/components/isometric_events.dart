@@ -373,7 +373,7 @@ class IsometricEvents {
       gamestream.isometric.player.messageTimer = 300;
     } else {
       gamestream.isometric.editor.deselectGameObject();
-      gamestream.isometric.clientState.clearMouseOverDialogType();
+      gamestream.isometric.ui.clearMouseOverDialogType();
       gamestream.isometric.camera.setModeChase();
       if (gamestream.isometric.server.sceneEditable.value){
         gamestream.isometric.player.message.value = "press tab to edit";
@@ -613,7 +613,7 @@ class IsometricEvents {
       case InteractMode.None:
         camera.translateX = 0;
         gamestream.isometric.clientState.clearHoverIndex();
-        gamestream.isometric.clientState.clearMouseOverDialogType();
+        gamestream.isometric.ui.clearMouseOverDialogType();
         break;
     }
   }

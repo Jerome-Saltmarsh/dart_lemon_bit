@@ -581,7 +581,7 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return GameStyle.Null;
 
-    final itemType = gamestream.isometric.clientState.hoverDialogType.value == DialogType.Trade ? gamestream.isometric.player.storeItems.value[itemIndex] : gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex);
+    final itemType = gamestream.isometric.ui.hoverDialogType.value == DialogType.Trade ? gamestream.isometric.player.storeItems.value[itemIndex] : gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex);
 
     if (itemType == ItemType.Empty) return GameStyle.Null;
 
@@ -653,18 +653,18 @@ class GameInventoryUI {
                   text("${ItemType.getName(itemTypeConsumeType)} x${ItemType.getConsumeAmount(itemType)}", color: Colors.white70),
                 ],)),
               height16,
-              if (gamestream.isometric.clientState.hoverDialogDialogIsTrade)
+              if (gamestream.isometric.ui.hoverDialogDialogIsTrade)
               height16,
 
-              if (gamestream.isometric.clientState.hoverDialogDialogIsTrade)
+              if (gamestream.isometric.ui.hoverDialogDialogIsTrade)
                 text("left click to buy", color: GameIsometricColors.inventoryHint),
-              if (gamestream.isometric.clientState.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
+              if (gamestream.isometric.ui.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
                 text("left click to equip", color: GameIsometricColors.inventoryHint),
-              if (gamestream.isometric.clientState.hoverDialogIsInventory && ItemType.isFood(itemType))
+              if (gamestream.isometric.ui.hoverDialogIsInventory && ItemType.isFood(itemType))
                 text("left click to eat", color: GameIsometricColors.inventoryHint),
-              if (gamestream.isometric.player.interactModeTrading && gamestream.isometric.clientState.hoverDialogIsInventory)
+              if (gamestream.isometric.player.interactModeTrading && gamestream.isometric.ui.hoverDialogIsInventory)
                 text("right click to sell", color: GameIsometricColors.inventoryHint),
-              if (!gamestream.isometric.player.interactModeTrading && gamestream.isometric.clientState.hoverDialogIsInventory)
+              if (!gamestream.isometric.player.interactModeTrading && gamestream.isometric.ui.hoverDialogIsInventory)
                 text("right click to drop", color: GameIsometricColors.inventoryHint),
             ],
           ),
