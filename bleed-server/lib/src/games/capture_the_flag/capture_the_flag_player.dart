@@ -3,6 +3,8 @@ import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player_ai.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 
@@ -10,6 +12,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   @override
   final CaptureTheFlagGame game;
+
+  IsometricCharacter? selectedCharacter;
 
   late final debugMode = ChangeNotifier(false, onChangedDebugMode);
 
@@ -31,7 +35,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   @override
   void customUpdate() {
     if (game.scene.inboundsXYZ(mouseGridX, mouseGridY, z)){
-      updatePath(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, z));
+      setPathToNodeIndex(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, z));
     }
   }
 
@@ -54,6 +58,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     super.writePlayerGame();
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
+
+    if (selectedCharacter != null){
+
+    }
 
     if (debugMode.value) {
       writeAIPath();
@@ -136,6 +144,21 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeBool(false);
   }
 
+  void writeAIList(){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.AI_List);
+    final characters = game.characters;
+    for (final character in characters){
+       if (!character.active) continue;
+       if (character is! CaptureTheFlagPlayerAI) continue;
+       final characterTarget = character.target;
+       if (characterTarget == null) continue;
+       writeBool(true);
+       writeUInt24(character.id);
+    }
+    writeBool(false);
+  }
+
   void writeAIPath(){
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.AI_Paths);
@@ -153,7 +176,37 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     }
   }
 
+  void writeSelectedCharacter() {
+    final selectedCharacter = this.selectedCharacter;
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Selected_Character);
+
+    if (selectedCharacter == null) {
+      writeBool(false);
+      return;
+    }
+    writeBool(true);
+    writeIsometricPosition(selectedCharacter);
+  }
+
   void toggleDebugMode() {
     debugMode.value = !debugMode.value;
+  }
+
+  void selectAINearestToMouse(){
+     selectedCharacter = getNearestCharacter(mouseGridX, mouseGridY, z);
+  }
+
+  IsometricCharacter? getNearestCharacter(double x, double y, double z){
+    IsometricCharacter? nearestCharacter;
+    var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
+    final characters = game.characters;
+    for (final character in characters){
+      final distanceSquared = character.getDistanceXYZSquared(x, y, z);
+      if (distanceSquared > nearestEnemyDistanceSquared) continue;
+      nearestEnemyDistanceSquared = distanceSquared;
+      nearestCharacter = character;
+    }
+    return nearestCharacter;
   }
 }

@@ -12,4 +12,6 @@ class CaptureTheFlagResponse {
   static const AI_Paths = 10;
   static const AI_Targets = 11;
   static const Debug_Mode = 12;
+  static const AI_List = 13;
+  static const Selected_Character = 14;
 }

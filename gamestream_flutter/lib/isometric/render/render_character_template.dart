@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart
 import 'package:gamestream_flutter/language_utils.dart';
 
 import '../../library.dart';
-import 'render_character_health_bar.dart';
 
 void renderTemplateWeapon(
     int weaponType,
@@ -45,7 +44,7 @@ void renderCharacterTemplate(IsometricCharacter character, {
 
   if (renderHealthBar) {
     if (character.allie){
-      renderCharacterHealthBar(character);
+       gamestream.isometric.renderer.renderCharacterHealthBar(character);
     }
   }
 

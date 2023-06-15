@@ -213,6 +213,12 @@ class ServerResponseReader with ByteReader {
       case CaptureTheFlagResponse.Debug_Mode:
          captureTheFlag.debugMode.value = readBool();
          break;
+      case CaptureTheFlagResponse.Selected_Character:
+        final characterSelected = readBool();
+        captureTheFlag.characterSelected.value = characterSelected;
+        if (!characterSelected) break;
+        readIsometricPosition(captureTheFlag.characterSelectedPosition);
+        break;
     }
   }
 
@@ -776,6 +782,12 @@ class ServerResponseReader with ByteReader {
   }
 
   void readVector3(IsometricPosition value){
+    value.x = readDouble();
+    value.y = readDouble();
+    value.z = readDouble();
+  }
+
+  void readIsometricPosition(IsometricPosition value){
     value.x = readDouble();
     value.y = readDouble();
     value.z = readDouble();

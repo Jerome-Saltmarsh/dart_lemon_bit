@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
@@ -537,6 +538,27 @@ class GameIsometricRenderer {
 
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
   static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
+
+
+
+
+  void renderCharacterHealthBar(IsometricCharacter character){
+    renderBarGreen(character.x, character.y, character.z, character.health);
+  }
+
+  void renderBarGreen(double x, double y, double z, double percentage) {
+    engine.renderSprite(
+      image: GameImages.atlas_gameobjects,
+      dstX: GameIsometricRenderer.getRenderX(x, y, z) - 26,
+      dstY: GameIsometricRenderer.getRenderY(x, y, z) - 45,
+      srcX: 171,
+      srcY: 16,
+      srcWidth: 51.0 * percentage,
+      srcHeight: 8,
+      anchorX: 0.0,
+      color: 1,
+    );
+  }
 }
 
 

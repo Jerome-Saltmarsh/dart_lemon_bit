@@ -5,7 +5,6 @@ import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_job.dart';
-import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 import 'package:lemon_math/functions/give_or_take.dart';
 
@@ -103,8 +102,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       players.where((player) => player.team == team).length;
 
   @override
-  void onPlayerUpdateRequestReceived(
-      {required IsometricPlayer player,
+  void onPlayerUpdateRequestReceived({
+      required CaptureTheFlagPlayer player,
       required int direction,
       required bool mouseLeftDown,
       required bool mouseRightDown,
@@ -118,8 +117,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseLeftDown) {
-      // characterAttackMelee(player);
       characterUseWeapon(player);
+    }
+
+    if (mouseRightDown){
+      player.selectAINearestToMouse();
     }
 
     playerRunInDirection(player, Direction.fromInputDirection(direction));

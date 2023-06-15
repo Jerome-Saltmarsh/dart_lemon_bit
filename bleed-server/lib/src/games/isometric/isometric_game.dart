@@ -265,7 +265,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// @inputTypeKeyboard keyboard = true, touchscreen = false
   void onPlayerUpdateRequestReceived({
-    required IsometricPlayer player,
+    required T player,
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,

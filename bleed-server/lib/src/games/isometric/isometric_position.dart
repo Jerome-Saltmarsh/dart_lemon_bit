@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:lemon_math/library.dart';
@@ -91,4 +93,9 @@ class IsometricPosition with Position {
     y = value.y;
     z = value.z;
   }
+
+  double getDistanceXYZSquared(double x1, double y1, double z1) =>
+      pow(this.x - x, 2) +
+      pow(this.y - y, 2) +
+      pow(this.z - z, 2).toDouble();
 }
