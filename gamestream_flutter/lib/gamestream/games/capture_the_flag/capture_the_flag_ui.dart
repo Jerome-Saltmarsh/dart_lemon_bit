@@ -52,11 +52,9 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     return WatchBuilder(gameStatus, (value){
       if (value == CaptureTheFlagGameStatus.In_Progress) return nothing;
       return buildFullscreen(
-        child: Container(
+        child: buildWindow(
           width: 300,
           height: 200,
-          color: GameStyle.Container_Color,
-          padding: GameStyle.Container_Padding,
           alignment: Alignment.center,
           child: Column(
             children: [
@@ -70,18 +68,14 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     });
   }
 
-
-
   Widget buildWindowMap() => buildMiniMap(mapSize: 200);
 
-  Widget buildWindowMenu() {
-    return GameIsometricUI.buildRowMainMenu(children: [
+  Widget buildWindowMenu() => GameIsometricUI.buildRowMainMenu(children: [
       GameIsometricUI.buildWindowMenuItem(
         title: "DEBUG",
         child: watch(debugMode, GameIsometricUI.buildIconCheckbox),
       )
     ]);
-  }
 
   Container buildWindowFlagStatus() {
     return Container(
@@ -107,31 +101,22 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     );
   }
 
-  Container buildWindowScore() {
-    return Container(
-      padding: GameStyle.Container_Padding,
-      color: GameStyle.Container_Color,
+  Widget buildWindowScore() => buildWindow(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // WatchBuilder(debugMode, (playerFlagStatus) => text("Debug Mode: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
-          WatchBuilder(playerFlagStatus, (playerFlagStatus) => text("Player Flag Status: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
-          WatchBuilder(isometric.player.team, (team) => text("TEAM: $team")),
           text("SCORE"),
           WatchBuilder(scoreRed, (score) => text("RED: $score")),
           WatchBuilder(scoreBlue, (score) => text("BlUE: $score")),
         ],
       ),
     );
-  }
 
   WatchBuilder<bool> buildWindowSelectClass() {
     return WatchBuilder(selectClass, (value){
       if (!value) return const SizedBox();
       return buildFullscreen(
-        child: Container(
-          color: GameStyle.Container_Color,
-          padding: GameStyle.Container_Padding,
+        child: buildWindow(
           width: 300,
           height: 400,
           child: Column(
@@ -270,12 +255,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     ),
   );
 
-  Widget buildWindowSelectedCharacter(){
-    return WatchBuilder(characterSelected, (characterSelected){
+  Widget buildWindowSelectedCharacter() =>
+      WatchBuilder(characterSelected, (characterSelected){
       if (!characterSelected) return nothing;
-      return Container(
-        color: GameStyle.Container_Color,
-        padding: GameStyle.Container_Padding,
+      return buildWindow(
         width: 300,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +300,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         ),
       );
     });
-  }
 
   Widget buildToggleRow({required String title, required WatchBool watchBool}) => onPressed(
       action: watchBool.toggle,
@@ -330,4 +312,20 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         ),
       ),
     );
+
+  Widget buildWindow({
+    required Widget child,
+    double? width,
+    double? height,
+    Alignment? alignment,
+  }) =>
+      GameIsometricUI.buildDialogUIControl(child: Container(
+        alignment: alignment,
+        padding: GameStyle.Container_Padding,
+        color: GameStyle.Container_Color,
+        child: child,
+        width: width,
+        height: height,
+      ));
+
 }

@@ -36,7 +36,7 @@ alt + m             : go to declaration
 [ ] hero classes  
 [ ] ai heroes
 [ ] destroyable terrain
-[ ] ai pathfinding
+[x] ai pathfinding
 [x] render objective lines
 [x] render bases on mini map
 [x] render flags on mini map

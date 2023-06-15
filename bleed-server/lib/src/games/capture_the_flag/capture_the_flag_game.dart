@@ -80,7 +80,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Defense));
     }
-    for (var i = 1; i <= 2; i++) {
+    for (var i = 1; i <= 5; i++) {
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
