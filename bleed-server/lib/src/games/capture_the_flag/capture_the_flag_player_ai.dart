@@ -14,12 +14,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   static var _idCount = 0;
 
   var id = _idCount++;
-  var _updatePathToTargetUpdate = 0;
   CaptureTheFlagAIRole role;
   CaptureTheFlagCharacterClass characterClass;
   late final CaptureTheFlagGame game;
 
+  int get nodeIndex => game.scene.getNodeIndexV3(this);
   int get pathNodeIndex => path[pathIndex];
+  double get destinationDistanceSquared => getDistanceXYZSquared(destinationX, destinationY, destinationZ);
 
   IsometricPosition? targetPrevious;
 
@@ -100,37 +101,56 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void customUpdate() {
     if (deadOrBusy) return;
 
-
-
     final target = this.target;
 
+    // TODO Optimize
     if (targetPrevious != target){
       targetPrevious = target;
-      updatePathToTarget();
+      updatePath();
     }
 
-    if (target != null) {
-      if (pathIndex >= pathEnd) {
-        updatePathToTarget();
+    if (pathIndex >= pathEnd) {
+      updatePath();
+    }
+
+
+
+    if (target != null){
+      final targetDistanceSquared = getDistanceIsoPosSquared(target);
+      if (targetDistanceSquared < 10000){
+        face(target);
+        if (isEnemy(target)){
+          attackMelee();
+        } else {
+          if (targetDistanceSquared > 10){
+            setCharacterStateRunning();
+          } else {
+            setCharacterStateIdle();
+          }
+        }
+      } else  {
+        updateDestination();
+        if (destinationDistanceSquared > 10){
+          runToDestination();
+        } else {
+          setCharacterStateIdle();
+        }
       }
-    } else {
-      pathIndex = pathEnd;
-    }
-
-    _updatePathToTargetUpdate--;
-    if (_updatePathToTargetUpdate == 0){
-      updatePathToTarget();
-      _updatePathToTargetUpdate = 100;
-    }
-
-    if (pathIndex < pathEnd) {
-      followPath();
     }
 
     updateBehaviorTree();
   }
 
-  void updatePathToTarget() {
+  void runToDestination(){
+    faceDestination();
+    setCharacterStateRunning();
+  }
+
+  void faceDestination() {
+    faceXY(destinationX, destinationY);
+  }
+
+  void updatePath() {
     if (target == null){
       pathEnd = 0;
       pathIndex = 0;
@@ -139,51 +159,34 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     setPathToIsometricPosition(game.scene, target!);
   }
 
-  void followPath() {
-    assert (pathIndex < pathEnd);
+  void updateDestination() {
+    if (pathIndex >= pathEnd) return;
     final scene = game.scene;
 
-    if (scene.getNodeIndexV3(this) == pathNodeIndex) {
+    final destinationDistanceSquared = getDistanceXYZSquared(destinationX, destinationY, z);
+
+    if (destinationDistanceSquared < 500) {
       pathIndex++;
       if (pathIndex >= pathEnd){
         pathIndex = 0;
         pathEnd = 0;
+        destinationX = x;
+        destinationY = y;
+        destinationZ = z;
       } else {
-        pathNodeX = scene.getNodePositionX(pathNodeIndex);
-        pathNodeY = scene.getNodePositionY(pathNodeIndex);
+        destinationX = scene.getNodePositionX(pathNodeIndex);
+        destinationY = scene.getNodePositionY(pathNodeIndex);
       }
-    } else {
-      faceXY(pathNodeX, pathNodeY);
-      setCharacterStateRunning();
     }
   }
 
   void updateBehaviorTree(){
 
-    // if (enemyWithinRange(50))
-    //   return attackNearestEnemy();
-
-    final target = this.target;
-    if (target != null) {
-      if (target is CaptureTheFlagGameObjectFlag){
-        if (distanceFromPos2(target) < 100){
-          face(target);
-          setCharacterStateRunning();
-          return;
-        }
-      }
-
-      if (isEnemy(target)){
-        if (distanceFromPos2(target) < 50){
-          face(target);
-          attackMelee();
-          return;
-        }
-      }
-    }
-
     if (holdingFlagAny())
       return moveToBaseOwn();
+
+    if (enemyWithinRange(100))
+      return attackNearestEnemy();
 
     if (role == CaptureTheFlagAIRole.Offense) {
       updateRoleOffense();
@@ -202,7 +205,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   void updateRoleOffense() {
-    if (enemyWithinRange(100))
+    if (enemyWithinRange(500))
       return attackNearestEnemy();
     if (enemyFlagCapturable)
       return captureEnemyFlag();

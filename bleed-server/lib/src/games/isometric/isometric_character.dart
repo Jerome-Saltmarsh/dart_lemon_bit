@@ -59,9 +59,9 @@ abstract class IsometricCharacter extends IsometricCollider {
   var targetIndexRow = 0;
   var targetIndexColumn = 0;
 
-  var pathNodeX = 0.0;
-  var pathNodeY = 0.0;
-  var pathNodeZ = 0.0;
+  var destinationX = 0.0;
+  var destinationY = 0.0;
+  var destinationZ = 0.0;
 
   void setPathToIsometricPosition(
       IsometricScene scene,
@@ -84,6 +84,8 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (visitNode(indexRow, indexColumn, indexZ, scene)){
       pathEnd = pathIndex;
       pathIndex = 0;
+      destinationX = scene.getNodePositionX(path[0]);
+      destinationY = scene.getNodePositionY(path[0]);
     } else {
       pathIndex = 0;
       pathEnd = 0;
