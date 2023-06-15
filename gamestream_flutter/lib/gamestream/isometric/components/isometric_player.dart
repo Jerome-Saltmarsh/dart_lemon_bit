@@ -131,6 +131,15 @@ class IsometricPlayer {
         "gamestream.isometricEngine.player.getItemTypeWatch(${ItemType.getName(itemType)})"
     );
   }
+
+  void updateMessageTimer() {
+    if (messageTimer <= 0)
+      return;
+    messageTimer--;
+    if (messageTimer > 0)
+      return;
+    message.value = "";
+  }
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

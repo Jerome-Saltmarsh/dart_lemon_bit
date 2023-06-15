@@ -80,7 +80,7 @@ class Isometric {
     clientState.updateTorchEmissionIntensity();
     clientState.updateParticleEmitters();
     clientState.update();
-    clientState.updatePlayerMessageTimer();
+    player.updateMessageTimer();
     sendClientRequestUpdate();
   }
 

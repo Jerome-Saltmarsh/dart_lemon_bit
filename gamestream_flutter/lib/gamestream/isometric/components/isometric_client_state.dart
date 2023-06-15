@@ -299,13 +299,6 @@ mixin class IsometricClientState {
     );
   }
 
-  void updatePlayerMessageTimer() {
-    if (gamestream.isometric.player.messageTimer <= 0) return;
-    gamestream.isometric.player.messageTimer--;
-    if (gamestream.isometric.player.messageTimer > 0) return;
-    gamestream.isometric.player.message.value = "";
-  }
-
   void toggleShadows () => gridShadows.value = !gridShadows.value;
 
   var nextEmissionSmoke = 0;
