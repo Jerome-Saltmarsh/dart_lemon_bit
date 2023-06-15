@@ -224,15 +224,15 @@ class IsometricEditor {
 
   void actionAddGameObject(int type) =>
       gamestream.network.sendClientRequestAddGameObject(
-        index: gamestream.isometric.editor.nodeSelectedIndex.value,
+        index: nodeSelectedIndex.value,
         type: type,
       );
 
   void actionRecenterCamera() =>
       gamestream.isometric.camera.cameraSetPositionGrid(
-        gamestream.isometric.editor.row,
-        gamestream.isometric.editor.column,
-        gamestream.isometric.editor.z,
+        row,
+        column,
+        z,
       );
 
   void onChangedPaintType(int type) {
@@ -262,11 +262,11 @@ class IsometricEditor {
   }
 
   void actionGameDialogShowSceneSave(){
-    gamestream.isometric.editor.editorDialog.value = EditorDialog.Scene_Save;
+    editorDialog.value = EditorDialog.Scene_Save;
   }
 
   void actionGameDialogClose(){
-    gamestream.isometric.editor.editorDialog.value = null;
+    editorDialog.value = null;
   }
 
   void setTabGrid(){
@@ -281,5 +281,21 @@ class IsometricEditor {
 
   void setSelectedObjectedIntensity(double value){
     gameObject.value?.emission_intensity = value;
+  }
+
+  void onMouseLeftClicked() {
+    switch (editTab.value) {
+      case EditTab.File:
+        setTabGrid();
+        selectMouseBlock();
+        break;
+      case EditTab.Grid:
+        selectMouseBlock();
+        actionRecenterCamera();
+        break;
+      case EditTab.Objects:
+        selectMouseGameObject();
+        break;
+    }
   }
 }

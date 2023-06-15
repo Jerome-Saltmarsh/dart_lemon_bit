@@ -6,4 +6,12 @@ abstract class Game {
   void update();
   void onActivated();
   Widget buildUI(BuildContext context);
+
+  void onLeftClicked(){
+
+  }
+
+  void onRightClicked(){
+
+  }
 }

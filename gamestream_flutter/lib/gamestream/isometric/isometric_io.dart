@@ -14,10 +14,6 @@ class IsometricIO {
   var Key_Toggle_Map         = KeyCode.M;
   var Mouse_Translation_Sensitivity = 0.1;
 
-  void addListeners(){
-    engine.onLeftClicked = onMouseClickedLeft;
-  }
-
   void onKeyPressed(int key){
 
     if (key == Key_Toggle_Debug_Mode) {
@@ -127,28 +123,4 @@ class IsometricIO {
         break;
     }
   }
-
-  void onMouseClickedLeft() {
-    if (gamestream.isometric.clientState.edit.value) {
-      onMouseClickedEditMode();
-    }
-  }
-
-  void onMouseClickedEditMode(){
-    final isometric = gamestream.isometric;
-    switch (isometric.editor.editTab.value) {
-      case EditTab.File:
-        isometric.editor.setTabGrid();
-        isometric.editor.selectMouseBlock();
-        break;
-      case EditTab.Grid:
-        isometric.editor.selectMouseBlock();
-        isometric.editor.actionRecenterCamera();
-        break;
-      case EditTab.Objects:
-        isometric.editor.selectMouseGameObject();
-        break;
-    }
-  }
-
 }

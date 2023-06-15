@@ -45,9 +45,7 @@ class GameIsometric extends Game {
     isometric.clientState.window_visible_player_creation.value = false;
     isometric.clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
-    engine.onLeftClicked = gamestream.io.touchController.onClick;
     engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
-    isometric.io.addListeners();
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
@@ -79,6 +77,16 @@ class GameIsometric extends Game {
 
     ]);  }
 
+  @override
+  void onLeftClicked() {
+    if (gamestream.io.inputModeTouch){
+      gamestream.io.touchController.onClick();
+    }
+    if (gamestream.isometric.clientState.edit.value) {
+      gamestream.isometric.editor.onMouseLeftClicked();
+    }
+  }
+
   // TODO Remove
   static double convertWorldToGridX(double x, double y) =>
       x + y;
@@ -94,4 +102,5 @@ class GameIsometric extends Game {
   // TODO Remove
   static int convertWorldToColumn(double x, double y, double z) =>
       (y - x + z) ~/ Node_Size;
+
 }

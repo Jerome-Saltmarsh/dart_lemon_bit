@@ -99,6 +99,16 @@ class GameCube3D implements Game {
   void update() {
     // TODO: implement update
   }
+
+  @override
+  void onLeftClicked() {
+    // TODO: implement onLeftClicked
+  }
+
+  @override
+  void onRightClicked() {
+    // TODO: implement onRightClicked
+  }
 }
 
 class Polygon {

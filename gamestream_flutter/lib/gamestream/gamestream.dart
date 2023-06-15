@@ -113,6 +113,8 @@ class Gamestream {
      engine.onDrawForeground = game.renderForeground;
      engine.onUpdate = game.update;
      engine.buildUI = game.buildUI;
+     engine.onLeftClicked = game.onLeftClicked;
+     engine.onRightClicked = game.onRightClicked;
      game.onActivated();
    }
 
