@@ -64,7 +64,6 @@ class Gamestream {
      engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
      engine.cursorType.value = CursorType.Basic;
-     io.addListeners();
      io.detectInputMode();
 
      error.onChanged((GameError? error) {

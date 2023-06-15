@@ -61,36 +61,6 @@ class GameIO {
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
-  void addListeners() {
-      engine.onTapDown = onTapDown;
-      engine.onTap = onTap;
-      engine.onLongPressDown = onLongPressDown;
-      engine.onSecondaryTapDown = onSecondaryTapDown;
-      engine.onRightClicked = onMouseClickedRight;
-      engine.onPointerSignalEvent = onPointerSignalEvent;
-  }
-
-  void onPointerSignalEvent(PointerSignalEvent event){
-    // print("onPointerSignalEvent($event)");
-  }
-
-  void removeListeners() {
-      engine.onTapDown = null;
-      engine.onLongPressDown = null;
-      engine.onSecondaryTapDown = null;
-      engine.onKeyDown = null;
-      engine.onKeyUp = null;
-      engine.onLeftClicked = null;
-  }
-
-  void onSecondaryTapDown(TapDownDetails details){
-     // print("onSecondaryTapDown()");
-  }
-
-  void onLongPressDown(LongPressDownDetails details){
-    // print("onLongPressDown()");
-  }
-
   static int convertRadianToDirection(double radian) {
     radian = radian < 0 ? radian + Engine.PI_2 : radian % Engine.PI_2;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
@@ -105,7 +75,6 @@ class GameIO {
   }
 
   void onTap(){
-    // print("onTap()");
     touchCursorWorldX = engine.screenToWorldX(_touchCursorTapX);
     touchCursorWorldY = engine.screenToWorldY(_touchCursorTapY);
 
@@ -229,9 +198,6 @@ class GameIO {
     return false;
   }
 
-  void onMouseClickedRight(){
-    isometric.actions.attackAuto();
-  }
 
   void readPlayerInput() {
     if (isometric.clientState.edit.value) {

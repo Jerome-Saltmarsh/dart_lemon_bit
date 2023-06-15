@@ -189,7 +189,6 @@ class GameNetwork {
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        gamestream.io.addListeners();
         engine.cursorType.value = CursorType.None;
         engine.drawCanvasAfterUpdate = true;
         engine.zoomOnScroll = true;
