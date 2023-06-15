@@ -201,7 +201,7 @@ class Gamestream {
 
    void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
      engine.onDrawForeground = null;
-     gamestream.serverResponseReader.bufferSizeTotal.value = 0;
+     serverResponseReader.bufferSizeTotal.value = 0;
 
      switch (connection) {
        case ConnectionStatus.Connected:
@@ -210,17 +210,15 @@ class Gamestream {
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
-         gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
-         gamestream.isometric.clientState.timeConnectionEstablished = DateTime.now();
-         gamestream.audio.enabledSound.value = true;
+         isometric.ui.hoverDialogType.value = DialogType.None;
+         isometric.clientState.timeConnectionEstablished = DateTime.now();
+         audio.enabledSound.value = true;
          if (!engine.isLocalHost) {
            engine.fullScreenEnter();
          }
          break;
 
        case ConnectionStatus.Done:
-         gamestream.isometric.player.active.value = false;
-         gamestream.isometric.clientState.timeConnectionEstablished = null;
          engine.cameraX = 0;
          engine.cameraY = 0;
          engine.zoom = 1.0;
@@ -228,11 +226,13 @@ class Gamestream {
          engine.cursorType.value = CursorType.Basic;
          engine.drawCanvasAfterUpdate = true;
          engine.fullScreenExit();
-         gamestream.isometric.clientState.clear();
-         gamestream.isometric.server.clean();
-         gamestream.gameType.value = GameType.Website;
-         gamestream.isometric.server.sceneEditable.value = false;
-         gamestream.audio.enabledSound.value = false;
+         isometric.player.active.value = false;
+         isometric.clientState.timeConnectionEstablished = null;
+         isometric.clientState.clear();
+         isometric.server.clean();
+         isometric.server.sceneEditable.value = false;
+         gameType.value = GameType.Website;
+         audio.enabledSound.value = false;
          break;
        case ConnectionStatus.Failed_To_Connect:
          WebsiteState.error.value = "Failed to connect";
