@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_isometric_constants.dart';
-import 'game_isometric_mouse.dart';
+import '../../isometric/isometric_mouse.dart';
 import 'render/renderer_characters.dart';
 import 'render/renderer_gameobjects.dart';
 import 'render/renderer_nodes.dart';
@@ -490,8 +490,8 @@ class GameIsometricRenderer {
   }
 
   void drawMouse() {
-    final mouseAngle = GameIsometricMouse.playerAngle;
-    final mouseDistance = min(200.0, GameIsometricMouse.playerDistance);
+    final mouseAngle = IsometricMouse.playerAngle;
+    final mouseDistance = min(200.0, IsometricMouse.playerDistance);
 
     final jumps = mouseDistance ~/ Node_Height_Half;
 

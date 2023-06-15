@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_mouse.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
@@ -343,8 +343,8 @@ class RendererNodes extends IsometricRenderer {
       ensureIndexPerceptible(gamestream.isometric.player.nodeIndex);
     }
 
-    if (GameIsometricMouse.inBounds){
-      ensureIndexPerceptible(GameIsometricMouse.nodeIndex);
+    if (IsometricMouse.inBounds){
+      ensureIndexPerceptible(IsometricMouse.nodeIndex);
     }
 
     zMin = max(gamestream.isometric.player.indexZ - 1, 0);
