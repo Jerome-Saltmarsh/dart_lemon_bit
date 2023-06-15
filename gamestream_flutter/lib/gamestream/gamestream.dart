@@ -9,8 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'enums/operation_status.dart';
 import 'game.dart';
 import 'games.dart';
+import 'isometric/enums/dialog_type.dart';
 import 'isometric/isometric.dart';
 import 'network/enums/connection_region.dart';
+import 'network/enums/connection_status.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';
 
@@ -38,6 +40,7 @@ class Gamestream {
   Gamestream() {
     games = Games(this);
     network = GameNetwork(this);
+    network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
     serverResponseReader = ServerResponseReader(
         gamestream: this,
         isometric: isometric,
@@ -195,4 +198,54 @@ class Gamestream {
        final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
      }
    }
+
+   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
+     engine.onDrawForeground = null;
+     gamestream.serverResponseReader.bufferSizeTotal.value = 0;
+
+     switch (connection) {
+       case ConnectionStatus.Connected:
+         engine.cursorType.value = CursorType.None;
+         engine.drawCanvasAfterUpdate = true;
+         engine.zoomOnScroll = true;
+         engine.zoom = 1.0;
+         engine.targetZoom = 1.0;
+         gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
+         gamestream.isometric.clientState.timeConnectionEstablished = DateTime.now();
+         gamestream.audio.enabledSound.value = true;
+         if (!engine.isLocalHost) {
+           engine.fullScreenEnter();
+         }
+         break;
+
+       case ConnectionStatus.Done:
+         gamestream.isometric.player.active.value = false;
+         gamestream.isometric.clientState.timeConnectionEstablished = null;
+         engine.cameraX = 0;
+         engine.cameraY = 0;
+         engine.zoom = 1.0;
+         engine.drawCanvasAfterUpdate = true;
+         engine.cursorType.value = CursorType.Basic;
+         engine.drawCanvasAfterUpdate = true;
+         engine.fullScreenExit();
+         gamestream.isometric.clientState.clear();
+         gamestream.isometric.server.clean();
+         gamestream.gameType.value = GameType.Website;
+         gamestream.isometric.server.sceneEditable.value = false;
+         gamestream.audio.enabledSound.value = false;
+         break;
+       case ConnectionStatus.Failed_To_Connect:
+         WebsiteState.error.value = "Failed to connect";
+         break;
+       case ConnectionStatus.Invalid_Connection:
+         WebsiteState.error.value = "Invalid Connection";
+         break;
+       case ConnectionStatus.Error:
+         WebsiteState.error.value = "Connection Error";
+         break;
+       default:
+         break;
+     }
+   }
+
 }
