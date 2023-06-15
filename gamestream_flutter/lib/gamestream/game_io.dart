@@ -33,6 +33,7 @@ class GameIO {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
+  final updateBuffer = Uint8List(15);
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
   final touchController = TouchController();
@@ -212,7 +213,7 @@ class GameIO {
   /// [6] Shift
   /// [7] Space
   void applyKeyboardInputToUpdateBuffer() {
-    final updateBuffer = gamestream.network.updateBuffer;
+    // final updateBuffer = gamestream.network.updateBuffer;
     updateBuffer[1] = gamestream.io.getInputAsByte();
     writeNumberToByteArray(number: engine.mouseWorldX, list: updateBuffer, index: 2);
     writeNumberToByteArray(number: engine.mouseWorldY, list: updateBuffer, index: 4);
@@ -221,6 +222,8 @@ class GameIO {
     writeNumberToByteArray(number: engine.Screen_Right, list: updateBuffer, index: 10);
     writeNumberToByteArray(number: engine.Screen_Bottom, list: updateBuffer, index: 12);
   }
+
+  void sendUpdateBuffer() => gamestream.network.send(updateBuffer);
 }
 
 class TouchController {

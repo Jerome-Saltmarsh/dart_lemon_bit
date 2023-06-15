@@ -13,7 +13,6 @@ class GameNetwork {
   
   late WebSocketChannel webSocketChannel;
   late WebSocketSink sink;
-  final updateBuffer = Uint8List(15);
   late final connectionStatus = Watch(ConnectionStatus.None);
   String connectionUri = "";
   DateTime? connectionEstablished;
@@ -355,8 +354,6 @@ class GameNetwork {
 
   void sendClientRequest(int value, [dynamic message]) =>
       message != null ? send('${value} $message') : send(value);
-
-  void sendUpdateBuffer() => send(updateBuffer);
 
   void send(dynamic message) {
     if (!connected) {
