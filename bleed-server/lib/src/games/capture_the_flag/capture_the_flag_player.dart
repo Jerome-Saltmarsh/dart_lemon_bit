@@ -60,10 +60,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeBasePositions(); // todo optimize
     writeSelectedCharacter();
 
-    if (debugMode.value) {
-      writeAIPath();
-      writeAITarget();
-    }
+    // if (debugMode.value) {
+    //   writeAIPath();
+    //   writeAITarget();
+    // }
   }
 
   void writeFlagPositions() {

@@ -235,51 +235,56 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     ),
   );
 
+  Widget buildDebugMode({required Widget child}) =>
+      WatchBuilder(debugMode, (t) => t ? child : nothing);
+
   Widget buildWindowSelectedCharacter() =>
-      WatchBuilder(characterSelected, (characterSelected){
-      if (!characterSelected) return nothing;
-      return buildWindow(
-        width: 300,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
-            WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
-            WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
-            WatchBuilder(characterSelectedPathIndex, (pathIndex) => text("path-index: $pathIndex")),
-            WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-end: $pathEnd")),
-            buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
-            const SizedBox(height: 1,),
-            WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
-               if (!characterSelectedTarget) return nothing;
-               return Container(
-                 color: Colors.white12,
-                 padding: GameStyle.Container_Padding,
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                      text("TARGET"),
-                     WatchBuilder(characterSelectedTargetType, (type) => text("type: $type")),
-                     WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
-                     WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
-                     WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
-                     WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         text("render-line"),
-                         onPressed(
-                             action: characterSelectedTargetRenderLine.toggle,
-                             child: GSCheckBox(value)),
-                       ],
-                     )),
-                   ],
-                 ),
-               );
-            }),
-          ],
-        ),
+      buildDebugMode(
+        child: WatchBuilder(characterSelected, (characterSelected){
+        if (!characterSelected) return nothing;
+        return buildWindow(
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
+              WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
+              WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
+              WatchBuilder(characterSelectedPathIndex, (pathIndex) => text("path-index: $pathIndex")),
+              WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-end: $pathEnd")),
+              buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
+              const SizedBox(height: 1,),
+              WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
+                 if (!characterSelectedTarget) return nothing;
+                 return Container(
+                   color: Colors.white12,
+                   padding: GameStyle.Container_Padding,
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                        text("TARGET"),
+                       WatchBuilder(characterSelectedTargetType, (type) => text("type: $type")),
+                       WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
+                       WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
+                       WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
+                       WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                           text("render-line"),
+                           onPressed(
+                               action: characterSelectedTargetRenderLine.toggle,
+                               child: GSCheckBox(value)),
+                         ],
+                       )),
+                     ],
+                   ),
+                 );
+              }),
+            ],
+          ),
+        );
+    }),
       );
-    });
 
   Widget buildToggleRow({required String title, required WatchBool watchBool}) => onPressed(
       action: watchBool.toggle,
