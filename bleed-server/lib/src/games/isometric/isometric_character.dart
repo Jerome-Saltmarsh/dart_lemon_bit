@@ -86,10 +86,23 @@ abstract class IsometricCharacter extends IsometricCollider {
       pathIndex = 0;
       destinationX = scene.getNodePositionX(path[0]);
       destinationY = scene.getNodePositionY(path[0]);
+
+      assert(validatePath(scene));
+
+
     } else {
       pathIndex = 0;
       pathEnd = 0;
     }
+  }
+
+  bool validatePath(IsometricScene scene) {
+    if (pathEnd <= 0) return true;
+    for (var i = 0; i < pathEnd; i++){
+      if (scene.nodeOrientations[path[i]] == NodeOrientation.None) continue;
+      return false;
+    }
+    return true;
   }
 
   bool visitNode(int row, int column, int z, IsometricScene scene){

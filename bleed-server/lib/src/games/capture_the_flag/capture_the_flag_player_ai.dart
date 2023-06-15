@@ -156,6 +156,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       pathIndex = 0;
       return;
     }
+    if (indexZ != 1) return;
     setPathToIsometricPosition(game.scene, target!);
   }
 
