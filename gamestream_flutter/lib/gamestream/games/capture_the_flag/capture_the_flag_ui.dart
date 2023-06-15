@@ -39,11 +39,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             bottom: 16,
             left: 16,
             child: buildWindowSelectedCharacter()),
-        Positioned(
-          top: 16,
-          right: 16,
-          child: buildWindowMenu(),
-        ),
       ],
     );
   }
@@ -70,13 +65,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   Widget buildWindowMap() => buildMiniMap(mapSize: 200);
 
-  Widget buildWindowMenu() => GameIsometricUI.buildRowMainMenu(children: [
-      GameIsometricUI.buildWindowMenuItem(
-        title: "DEBUG",
-        child: watch(debugMode, GameIsometricUI.buildIconCheckbox),
-      )
-    ]);
-
   Container buildWindowFlagStatus() {
     return Container(
       padding: GameStyle.Container_Padding,
@@ -84,15 +72,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          onPressed(
-            action: toggleDebugMode,
-            child: GameIsometricUI.buildWindowMenuItem(
-              title: "DEBUG",
-              child: Container(
-                  margin: const EdgeInsets.only(left: 16),
-                  child: watch(debugMode, GameIsometricUI.buildIconCheckbox)),
-            ),
-          ),
+          buildDebugModeToggle(),
           text("FLAG STATUS"),
           WatchBuilder(flagRedStatus, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
           WatchBuilder(flagBlueStatus, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
@@ -328,4 +308,15 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         height: height,
       ));
 
+  Widget buildDebugModeToggle() {
+    return onPressed(
+      action: toggleDebugMode,
+      child: GameIsometricUI.buildWindowMenuItem(
+        title: "DEBUG",
+        child: Container(
+            margin: const EdgeInsets.only(left: 16),
+            child: watch(debugMode, GameIsometricUI.buildIconCheckbox)),
+      ),
+    );
+  }
 }

@@ -57,6 +57,10 @@ class GameIsometric extends Game {
     return const SizedBox();
   }
 
+  List<Widget> buildMenuItems(){
+    return [];
+  }
+
   @override
   Widget buildUI(BuildContext context) {
     return StackFullscreen(children: [
@@ -69,7 +73,7 @@ class GameIsometric extends Game {
       buildWatchBool(gamestream.isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
       buildWatchBool(gamestream.isometric.clientState.window_visible_light_settings,
           GameIsometricUI.buildWindowLightSettings),
-      Positioned(top: 16, right: 16, child: GameIsometricUI.buildRowMainMenu()),
+      Positioned(top: 16, right: 16, child: GameIsometricUI.buildMainMenu(children: buildMenuItems())),
 
 
     ]);  }

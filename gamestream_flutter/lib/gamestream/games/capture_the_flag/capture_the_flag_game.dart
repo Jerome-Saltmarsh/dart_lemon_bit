@@ -28,7 +28,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
   final scoreRed = Watch(0);
   final scoreBlue = Watch(0);
-  final debugMode = Watch(false);
+  final debugMode = WatchBool(false);
   final selectClass = Watch(false);
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
@@ -60,4 +60,7 @@ class CaptureTheFlagGame extends GameIsometric {
 
   @override
   Widget customBuildUI(BuildContext context) => buildCaptureTheFlagGameUI();
+
+  @override
+  List<Widget> buildMenuItems()=> [buildDebugModeToggle()];
 }
