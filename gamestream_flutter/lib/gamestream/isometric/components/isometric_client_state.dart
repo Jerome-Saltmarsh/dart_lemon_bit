@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../atlases/atlas_nodes.dart';
-import '../enums/dialog_type.dart';
 import '../enums/emission_type.dart';
 import '../enums/touch_button_side.dart';
 import '../classes/isometric_character.dart';

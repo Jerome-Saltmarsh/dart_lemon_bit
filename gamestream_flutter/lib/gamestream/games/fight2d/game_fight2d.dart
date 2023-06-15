@@ -145,9 +145,9 @@ class GameFight2D extends Game {
 
   @override
   void update() {
-    gamestream.network.sendClientRequestUpdate();
+    gamestream.io.applyKeyboardInputToUpdateBuffer();
+    gamestream.network.sendUpdateBuffer();
     engine.cameraFollow(player.x, player.y);
-    // applyCharacterAudio();
   }
 
   void applyCharacterAudio() {

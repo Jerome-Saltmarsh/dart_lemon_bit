@@ -74,30 +74,6 @@ class GameNetwork {
     connectToRegion(regionValue, '${gameType.index} $message');
   }
 
-  Future sendClientRequestUpdate() async {
-    applyKeyboardInputToUpdateBuffer();
-    gamestream.io.setCursorAction(CursorAction.None);
-  }
-
-  /// [0] Direction
-  /// [1] Direction
-  /// [2] Direction
-  /// [3] Direction
-  /// [4] Mouse_Left
-  /// [5] Mouse_Right
-  /// [6] Shift
-  /// [7] Space
-  applyKeyboardInputToUpdateBuffer() {
-    updateBuffer[1] = gamestream.io.getInputAsByte();
-    writeNumberToByteArray(number: engine.mouseWorldX, list: updateBuffer, index: 2);
-    writeNumberToByteArray(number: engine.mouseWorldY, list: updateBuffer, index: 4);
-    writeNumberToByteArray(number: engine.Screen_Left, list: updateBuffer, index: 6);
-    writeNumberToByteArray(number: engine.Screen_Top, list: updateBuffer, index: 8);
-    writeNumberToByteArray(number: engine.Screen_Right, list: updateBuffer, index: 10);
-    writeNumberToByteArray(number: engine.Screen_Bottom, list: updateBuffer, index: 12);
-    sink.add(updateBuffer);
-  }
-
   void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
     connectionStatus.value = ConnectionStatus.Connecting;
@@ -443,6 +419,10 @@ class GameNetwork {
       return gamestream.network.send('${value} $message');
     }
     gamestream.network.send(value);
+  }
+
+  void sendUpdateBuffer(){
+    sink.add(updateBuffer);
   }
 }
 

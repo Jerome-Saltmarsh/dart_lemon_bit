@@ -202,6 +202,25 @@ class GameIO {
       return;
     }
   }
+
+  /// [0] Direction
+  /// [1] Direction
+  /// [2] Direction
+  /// [3] Direction
+  /// [4] Mouse_Left
+  /// [5] Mouse_Right
+  /// [6] Shift
+  /// [7] Space
+  void applyKeyboardInputToUpdateBuffer() {
+    final updateBuffer = gamestream.network.updateBuffer;
+    updateBuffer[1] = gamestream.io.getInputAsByte();
+    writeNumberToByteArray(number: engine.mouseWorldX, list: updateBuffer, index: 2);
+    writeNumberToByteArray(number: engine.mouseWorldY, list: updateBuffer, index: 4);
+    writeNumberToByteArray(number: engine.Screen_Left, list: updateBuffer, index: 6);
+    writeNumberToByteArray(number: engine.Screen_Top, list: updateBuffer, index: 8);
+    writeNumberToByteArray(number: engine.Screen_Right, list: updateBuffer, index: 10);
+    writeNumberToByteArray(number: engine.Screen_Bottom, list: updateBuffer, index: 12);
+  }
 }
 
 class TouchController {

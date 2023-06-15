@@ -69,7 +69,7 @@ class Isometric {
   
   void update(){
     if (!server.gameRunning.value) {
-      gamestream.network.sendClientRequestUpdate();
+      sendClientRequestUpdate();
       return;
     }
     clientState.updateTorchEmissionIntensity();
@@ -81,6 +81,12 @@ class Isometric {
     clientState.update();
     clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
-    gamestream.network.sendClientRequestUpdate();
+    sendClientRequestUpdate();
+  }
+
+  Future sendClientRequestUpdate() async {
+    gamestream.io.applyKeyboardInputToUpdateBuffer();
+    gamestream.network.sendUpdateBuffer();
+    gamestream.io.setCursorAction(CursorAction.None);
   }
 }
