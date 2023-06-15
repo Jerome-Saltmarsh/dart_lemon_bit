@@ -144,7 +144,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     visitedNodes[visitedNodesIndex] = index;
     visitedNodesIndex++;
 
-    final cachePathIndex = pathIndex;
 
     if (pathIndex > 0){
       final pathI = path[pathIndex - 1];
@@ -163,6 +162,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     path[pathIndex] = index;
     pathIndex++;
+    final cachePathIndex = pathIndex;
 
     if (pathIndex >= path.length)
       return true;
