@@ -85,9 +85,9 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     renderCharacterTargets();
   }
 
-  void renderPath({required Uint16List path, required int length}){
+  void renderPath({required Uint16List path, required int start, required int end}){
     final nodes = gamestream.isometric.nodes;
-    for (var i = 0; i < length - 1; i++){
+    for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];
       engine.drawLine(
@@ -160,7 +160,19 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     }
 
     if (characterSelectedPathRender.value){
-      renderPath(path: characterSelectedPath, length: characterSelectedPathEnd.value);
+      engine.setPaintColor(Colors.blue);
+      renderPath(
+        path: characterSelectedPath,
+        start: 0,
+        end: characterSelectedPathIndex.value,
+      );
+
+      engine.setPaintColor(Colors.yellow);
+      renderPath(
+          path: characterSelectedPath,
+          start: characterSelectedPathIndex.value,
+          end: characterSelectedPathEnd.value,
+      );
     }
   }
 }
