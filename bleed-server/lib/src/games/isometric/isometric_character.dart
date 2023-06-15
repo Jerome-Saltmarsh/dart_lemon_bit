@@ -145,33 +145,49 @@ abstract class IsometricCharacter extends IsometricCollider {
     visitedNodesIndex++;
 
     final cachePathIndex = pathIndex;
+
+    if (pathIndex > 0){
+      final pathI = path[pathIndex - 1];
+      final pathIRow = scene.getNodeIndexRow(pathI);
+      final pathJRow = scene.getNodeIndexRow(index);
+      final pathIColumn = scene.getNodeIndexRow(pathI);
+      final pathJColumn = scene.getNodeIndexRow(index);
+
+      if ((pathIRow - pathJRow).abs() > 1){
+        return false;
+      }
+      if ((pathIColumn - pathJColumn).abs() > 1){
+        return false;
+      }
+    }
+
     path[pathIndex] = index;
     pathIndex++;
 
     if (pathIndex >= path.length)
       return true;
 
-    final direction = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
+    final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
 
-    if (visitNode(row + convertDirectionToRowVel(direction), column + convertDirectionToColumnVel(direction), z, scene)){
+    if (visitNode(row + convertDirectionToRowVel(targetDirection), column + convertDirectionToColumnVel(targetDirection), z, scene)){
       return true;
     }
     pathIndex = cachePathIndex;
 
     for (var i = 1; i <= 3; i++){
-      final dirLess = (direction - i) % 8;
+      final dirLess = (targetDirection - i) % 8;
       if (visitNode(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
-      final dirMore = (direction + i) % 8;
+      final dirMore = (targetDirection + i) % 8;
       if (visitNode(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
     }
 
-    final dirOpp = (direction + 4) % 8;
+    final dirOpp = (targetDirection + 4) % 8;
     return visitNode(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
   }
 
