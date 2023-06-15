@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_render.dart';
 import 'capture_the_flag_ui.dart';
+import 'capture_the_flag_events.dart';
 
 class CaptureTheFlagGame extends GameIsometric {
 
@@ -44,81 +45,6 @@ class CaptureTheFlagGame extends GameIsometric {
   final characterSelectedY = Watch(0.0);
   final characterSelectedZ = Watch(0.0);
 
-  void onChangedFlagRedStatus(int flagStatus) {
-    if (playerIsTeamRed) {
-       switch (flagStatus) {
-         case CaptureTheFlagFlagStatus.Carried_By_Allie:
-           gamestream.audio.voiceYourTeamHasYourFlag.play();
-           break;
-         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-           gamestream.audio.voiceTheEnemyHasYourFlag.play();
-           break;
-         case CaptureTheFlagFlagStatus.At_Base:
-           gamestream.audio.voiceYourFlagIsAtYourBase.play();
-           break;
-         case CaptureTheFlagFlagStatus.Dropped:
-           gamestream.audio.voiceYourFlagHasBeenDropped.play();
-           break;
-       }
-       return;
-    }
-
-    assert (playerIsTeamBlue);
-
-    switch (flagStatus) {
-      case CaptureTheFlagFlagStatus.Carried_By_Allie:
-        gamestream.audio.voiceTheEnemyHasTheirFlag.play();
-        break;
-      case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        gamestream.audio.voiceYourTeamHasTheEnemyFlag.play();
-        break;
-      case CaptureTheFlagFlagStatus.At_Base:
-        gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
-        break;
-      case CaptureTheFlagFlagStatus.Dropped:
-        gamestream.audio.voiceTheEnemyFlagHasBeenDropped.play();
-        break;
-    }
-  }
-
-  void onChangedFlagBlueStatus(int flagStatus) {
-    if (playerIsTeamBlue) {
-       switch (flagStatus) {
-         case CaptureTheFlagFlagStatus.Carried_By_Allie:
-           gamestream.audio.voiceYourTeamHasYourFlag.play();
-           break;
-         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-           gamestream.audio.voiceTheEnemyHasYourFlag.play();
-           break;
-         case CaptureTheFlagFlagStatus.At_Base:
-           gamestream.audio.voiceYourFlagIsAtYourBase.play();
-           break;
-         case CaptureTheFlagFlagStatus.Dropped:
-           gamestream.audio.voiceYourFlagHasBeenDropped.play();
-           break;
-       }
-       return;
-    }
-
-    assert (playerIsTeamRed);
-
-    switch (flagStatus) {
-      case CaptureTheFlagFlagStatus.Carried_By_Allie:
-        gamestream.audio.voiceTheEnemyHasTheirFlag.play();
-        break;
-      case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        gamestream.audio.voiceYourTeamHasTheEnemyFlag.play();
-        break;
-      case CaptureTheFlagFlagStatus.At_Base:
-        gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
-        break;
-      case CaptureTheFlagFlagStatus.Dropped:
-        gamestream.audio.voiceTheEnemyFlagHasBeenDropped.play();
-        break;
-    }
-  }
-
-
   bool get teamFlagIsAtBase => flagStatusAlly == CaptureTheFlagFlagStatus.At_Base;
   int get flagStatusAlly => playerIsTeamRed ? flagRedStatus.value : flagBlueStatus.value;
   int get flagStatusEnemy => playerIsTeamRed ? flagBlueStatus.value : flagRedStatus.value;
@@ -126,38 +52,12 @@ class CaptureTheFlagGame extends GameIsometric {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
-
-    engine.paint.color = Colors.orange;
-
-    if (debugMode.value){
-      renderDebugMode(gamestream.isometric.nodes);
-    }
-    if (objectiveLinesEnabled){
-      renderObjectiveLines();
-    }
+    renderCaptureTheFlag();
   }
-
 
   @override
   Widget customBuildUI(BuildContext context) => buildCaptureTheFlagGameUI();
 
-  void onRedTeamScore(){
-    print("onRedTeamScore()");
-    if (playerIsTeamRed){
-      gamestream.audio.voiceYourTeamHasScoredAPoint.play();
-    } else {
-      gamestream.audio.voiceTheEnemyHasScored.play();
-    }
-  }
-
-  void onBlueTeamScore() {
-    print("onBlueTeamScore()");
-    if (playerIsTeamBlue){
-      gamestream.audio.voiceYourTeamHasScoredAPoint.play();
-    } else {
-      gamestream.audio.voiceTheEnemyHasScored.play();
-    }
-  }
 
   void selectCharacterClass(CaptureTheFlagCharacterClass value) =>
       gamestream.network.sendClientRequest(

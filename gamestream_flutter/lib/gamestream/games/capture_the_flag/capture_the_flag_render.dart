@@ -1,12 +1,24 @@
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
-import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';
 
 extension CaptureTheFlagRender on CaptureTheFlagGame {
+
+
+  void renderCaptureTheFlag() {
+    engine.paint.color = Colors.orange;
+
+    if (debugMode.value){
+      renderDebugMode(gamestream.isometric.nodes);
+    }
+    if (objectiveLinesEnabled){
+      renderObjectiveLines();
+    }
+  }
+
   void renderLineToRedFlag() {
     if (flagRedStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
     engine.paint.color = Colors.red;

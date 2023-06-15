@@ -1,4 +1,5 @@
 import 'package:archive/archive.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
