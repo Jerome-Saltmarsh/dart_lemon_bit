@@ -35,6 +35,11 @@ class GameIsometricRenderer {
     required this.rendererParticles,
   }); // ACTIONS
 
+  void renderCircleAtIsometricPosition({
+    required IsometricPosition position,
+    required double radius,
+  })=> renderCircle(position.x, position.y, position.z, radius);
+
   void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
     engine.paint.color = Colors.white;
     final anglePerSection = pi2 / sections;
@@ -46,7 +51,7 @@ class GameIsometricRenderer {
       final a = i * anglePerSection;
       lineX2 = adj(a, radius);
       lineY2 = opp(a, radius);
-      gamestream.isometric.renderer.renderLine(
+      renderLine(
         x + lineX1,
         y + lineY1,
         z,

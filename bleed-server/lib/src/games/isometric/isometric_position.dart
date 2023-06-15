@@ -94,7 +94,7 @@ class IsometricPosition with Position {
     z = value.z;
   }
 
-  double getDistanceXYZSquared(double x1, double y1, double z1) =>
+  double getDistanceXYZSquared(double x, double y, double z) =>
       pow(this.x - x, 2) +
       pow(this.y - y, 2) +
       pow(this.z - z, 2).toDouble();

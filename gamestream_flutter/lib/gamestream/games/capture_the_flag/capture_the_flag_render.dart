@@ -1,6 +1,7 @@
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
+import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';
@@ -18,6 +19,11 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     if (objectiveLinesEnabled){
       renderObjectiveLines();
     }
+
+    if (characterSelected.value){
+      renderCharacterSelected();
+    }
+
   }
 
   void renderLineToRedFlag() {
@@ -118,5 +124,14 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
   void renderLineToBlueBase() {
     engine.paint.color = Colors.blue;
     engine.drawLine(player.renderX, player.renderY, basePositionBlue.renderX, basePositionBlue.renderY);
+  }
+
+  void renderCharacterSelected() {
+    isometric.renderer.renderCircle(
+        characterSelectedX.value,
+        characterSelectedY.value,
+        characterSelectedZ.value,
+        40,
+    );
   }
 }
