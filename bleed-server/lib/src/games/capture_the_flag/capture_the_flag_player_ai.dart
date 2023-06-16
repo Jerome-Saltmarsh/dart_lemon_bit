@@ -129,25 +129,16 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void customUpdate() {
     if (deadOrBusy) return;
 
-    final target = this.target;
-
-    // TODO Optimize
-    if (targetPrevious != target){
-      targetPrevious = target;
-      updatePathToTarget();
-    }
-
-    if (pathIndex >= pathEnd) {
-      updatePathToTarget();
-    }
-
+    // perceive and make a decision
+    updateBehaviorTree();
     updatePathIndexAndDestination();
 
+    // execute the decision made
+    if (enemyTargetAttackable)
+      return attackTargetEnemy();
     if (!atDestination) {
-      runToDestination();
+      return runToDestination();
     }
-
-    updateBehaviorTree();
   }
 
   bool get enemyVeryCloseBy {
@@ -186,7 +177,17 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
 
   void updatePathIndexAndDestination() {
+
     final target = this.target;
+
+    if (targetPrevious != target){
+      targetPrevious = target;
+      updatePathToTarget();
+    }
+    if (pathIndex >= pathEnd) {
+      updatePathToTarget();
+    }
+
 
     if (target == null) return;
 
@@ -218,12 +219,6 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void updateBehaviorTree(){
 
-    if (enemyVeryCloseBy) {
-      targetNearestEnemy();
-    }
-
-    if (enemyTargetAttackable)
-      return attackTargetEnemy();
 
     if (holdingFlagAny)
       return runToBaseOwn();
@@ -312,6 +307,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      }
      return false;
   }
+
   bool get enemyFlagCapturable => enemyFlagStatusAtBase || enemyFlagStatusDropped;
 
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
@@ -359,7 +355,6 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     return getDistanceSquared(target) < weaponRangeSquared;
   }
 
-  // conditions
   bool get flagOwnCapturedByEnemy => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
   bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Allie;
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
@@ -378,10 +373,6 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void runToBaseOwn(){
     target = baseOwn;
-  }
-
-  void attackMelee(){
-    game.characterAttackMelee(this);
   }
 
   @override
