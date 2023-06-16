@@ -232,6 +232,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return null;
   }
 
+  /// throws and exception if the given type is not found
+  IsometricGameObject findGameObjectByTypeOrFail(int type) {
+    for (final gameObject in gameObjects) {
+      if (gameObject.type == type) return gameObject;
+    }
+    throw Exception('findGameObjectByTypeOrFail(${ItemType.getName(type)})');
+  }
+
   IsometricGameObject? findGameObjectById(int id) {
     for (final gameObject in gameObjects) {
       if (gameObject.id == id) return gameObject;

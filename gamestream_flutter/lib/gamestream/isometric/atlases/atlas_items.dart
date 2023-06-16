@@ -5,20 +5,6 @@ import 'package:golden_ratio/constants.dart';
 class AtlasItems {
   static const size = 32.0;
 
-  static List<double> getSrc(int type){
-
-
-
-     final value = const <int, List<double>> {
-         /// srcX, srcY, srcWidth, srcHeight, anchorX, scale
-         ItemType.GameObjects_Flag_Red: [224, 20, 32, 32, 0.5, 1],
-     }[type];
-     if (value == null){
-       throw Exception();
-     }
-     return value;
-  }
-
   static double getSrcX(int itemType) =>
       itemType == ItemType.GameObjects_Barrel_Flaming ? 34.0 * gamestream.animation.animationFrame6 :
 
@@ -55,6 +41,8 @@ class AtlasItems {
         ItemType.GameObjects_Flag_Blue: 416,
         ItemType.GameObjects_Base_Red: 368,
         ItemType.GameObjects_Base_Blue: 368,
+        ItemType.GameObjects_Flag_Spawn_Red: 368,
+        ItemType.GameObjects_Flag_Spawn_Blue: 368,
         ItemType.Resource_Credit: 448,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
@@ -159,6 +147,8 @@ class AtlasItems {
         ItemType.GameObjects_Flag_Blue: 224,
         ItemType.GameObjects_Base_Red: 272,
         ItemType.GameObjects_Base_Blue: 401,
+        ItemType.GameObjects_Flag_Spawn_Red: 272,
+        ItemType.GameObjects_Flag_Spawn_Blue: 401,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 243,
@@ -257,6 +247,8 @@ class AtlasItems {
         ItemType.GameObjects_Flag_Blue: 32,
         ItemType.GameObjects_Base_Red: 128,
         ItemType.GameObjects_Base_Blue: 128,
+        ItemType.GameObjects_Flag_Spawn_Red: 128,
+        ItemType.GameObjects_Flag_Spawn_Blue: 128,
         ItemType.Weapon_Ranged_Sniper_Rifle: 121,
         ItemType.Weapon_Ranged_Flamethrower: 114,
         ItemType.Weapon_Ranged_Bazooka: 117,
@@ -307,6 +299,8 @@ class AtlasItems {
     ItemType.GameObjects_Flag_Blue: 32,
     ItemType.GameObjects_Base_Red: 128,
     ItemType.GameObjects_Base_Blue: 128,
+    ItemType.GameObjects_Flag_Spawn_Red: 128,
+    ItemType.GameObjects_Flag_Spawn_Blue: 128,
     ItemType.Weapon_Ranged_Sniper_Rifle: 37,
     ItemType.Weapon_Ranged_Bazooka: 52,
     ItemType.Weapon_Ranged_Minigun: 12,
@@ -337,6 +331,8 @@ class AtlasItems {
     ItemType.GameObjects_Car_Tire: 0.5,
     ItemType.GameObjects_Bottle: 0.4,
     ItemType.GameObjects_Computer: 0.61,
+    ItemType.GameObjects_Flag_Spawn_Red: 0.5,
+    ItemType.GameObjects_Flag_Spawn_Blue: 0.5,
     ItemType.Resource_Credit: goldenRatio_0618,
     ItemType.Weapon_Thrown_Grenade: 0.5,
     ItemType.Consumables_Ammo_Box: goldenRatio_0381,

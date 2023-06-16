@@ -31,12 +31,12 @@ alt + m             : go to declaration
     - Can all structures be repaired?
     - Can buildings be repaired once they are destroyed?
 
-
 [CAPTURE THE FLAG]
 [ ] hero classes  
 [ ] ai heroes
 [ ] destroyable terrain
 [ ] ai pathfinding 3d
+[x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding
 [x] render objective lines

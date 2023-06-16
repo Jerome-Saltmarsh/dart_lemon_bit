@@ -16,6 +16,7 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject {
     fixed = false;
     physical = false;
     collidable = true;
+    persistable = false;
   }
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;

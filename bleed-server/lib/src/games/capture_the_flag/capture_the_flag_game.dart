@@ -25,6 +25,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final IsometricGameObject baseRed;
   late final IsometricGameObject baseBlue;
 
+  late final IsometricGameObject redFlagSpawn;
+  late final IsometricGameObject blueFlagSpawn;
+
   late final gameStatus = ChangeNotifier(CaptureTheFlagGameStatus.In_Progress, onChangedGameStatus);
   late final scoreRed = ChangeNotifier(0, onChangedScoreRed);
   late final scoreBlue = ChangeNotifier(0, onChangedScoreBlue);
@@ -35,6 +38,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Capture_The_Flag) {
+
+
     flagRed = CaptureTheFlagGameObjectFlag(
         x: 200,
         y: 200,
@@ -53,20 +58,26 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     gameObjects.add(flagRed);
     gameObjects.add(flagBlue);
 
-    baseRed = spawnGameObject(
+    redFlagSpawn = findGameObjectByTypeOrFail(ItemType.GameObjects_Flag_Spawn_Red);
+    blueFlagSpawn = findGameObjectByTypeOrFail(ItemType.GameObjects_Flag_Spawn_Blue);
+
+    baseRed = (findGameObjectByType(ItemType.GameObjects_Base_Red) ?? spawnGameObject(
         x: scene.gridRowLength * 0.5, y: scene.gridColumnLength - 150, z: 25, type: ItemType.GameObjects_Base_Red)
+    )
       ..fixed = true
       ..team = CaptureTheFlagTeam.Red;
-    baseBlue = spawnGameObject(
-        x: scene.gridRowLength * 0.5, y: 150, z: 25, type: ItemType.GameObjects_Base_Blue)
+
+    baseBlue = (findGameObjectByType(ItemType.GameObjects_Base_Blue) ?? spawnGameObject(
+        x: scene.gridRowLength * 0.5, y: 150, z: 25, type: ItemType.GameObjects_Base_Blue))
       ..fixed = true
       ..team = CaptureTheFlagTeam.Blue;
 
     flagRed.status = CaptureTheFlagFlagStatus.At_Base;
     flagBlue.status = CaptureTheFlagFlagStatus.At_Base;
 
-    flagRed.moveTo(baseRed);
-    flagBlue.moveTo(baseBlue);
+
+    flagRed.moveTo(redFlagSpawn);
+    flagBlue.moveTo(blueFlagSpawn);
 
     for (var i = 1; i < 2; i++) {
       characters.add(CaptureTheFlagPlayerAI(
@@ -225,7 +236,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     if (flag.team == base.team) {
       if (flag.team != flagHeldBy.team) return;
-      returnFlagToBase(flag);
+      returnFlagToRespawn(flag);
       return;
     }
 
@@ -284,16 +295,19 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
-  void returnFlagToBase(CaptureTheFlagGameObjectFlag flag) {
+  void returnFlagToRespawn(CaptureTheFlagGameObjectFlag flag) {
     activateCollider(flag);
     if (flag.statusAtBase) return;
     clearFlagHeldBy(flag);
     flag.status = CaptureTheFlagFlagStatus.At_Base;
-    flag.moveTo(getFlagBase(flag));
+    flag.moveTo(getFlagSpawn(flag));
   }
 
   IsometricGameObject getFlagBase(CaptureTheFlagGameObjectFlag flag) =>
       (flag == flagRed) ? baseRed : baseBlue;
+
+  IsometricGameObject getFlagSpawn(CaptureTheFlagGameObjectFlag flag) =>
+      (flag == flagRed) ? redFlagSpawn : blueFlagSpawn;
 
   CaptureTheFlagGameObjectFlag getOtherFlag(
           CaptureTheFlagGameObjectFlag flag) =>
@@ -351,7 +365,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (flag.respawnDuration > 0) {
       flag.respawnDuration--;
       if (flag.respawnDuration <= 0) {
-        returnFlagToBase(flag);
+        returnFlagToRespawn(flag);
         return;
       }
     }

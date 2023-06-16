@@ -381,21 +381,6 @@ class EditorUI {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // container(
-                //     child: 'Spawn Zombie',
-                //     action: () {
-                //       GameNetwork.sendClientRequestEdit(
-                //         EditRequest.Spawn_Zombie,
-                //         gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                //       );
-                //     }),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Rifle),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Pistol),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Shotgun),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Bazooka),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Flamethrower),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Sniper_Rifle),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Teleport),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: ItemType.GameObjectTypes

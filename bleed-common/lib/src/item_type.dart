@@ -92,7 +92,9 @@ class ItemType {
   static const GameObjects_Flag_Blue            = Index_GameObjects + 39;
   static const GameObjects_Base_Red             = Index_GameObjects + 40;
   static const GameObjects_Base_Blue            = Index_GameObjects + 41;
-  static const GameObjects_Guard_Tower          = Index_GameObjects + 42;
+  static const GameObjects_Flag_Spawn_Red       = Index_GameObjects + 42;
+  static const GameObjects_Flag_Spawn_Blue      = Index_GameObjects + 43;
+  static const GameObjects_Guard_Tower          = Index_GameObjects + 44;
 
   static const Resource_Wood                    = Index_Resources + 01;
   static const Resource_Stone                   = Index_Resources + 02;
@@ -168,14 +170,14 @@ class ItemType {
 
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
-  static bool isPersistable(int value) => (isTypeGameObject(value) || isTypeWeapon(value)) && !notPersistable.contains(value);
+  static bool isPersistable(int value) => (isTypeGameObject(value) || isTypeWeapon(value));
 
-  static const notPersistable = [
-     GameObjects_Flag_Blue,
-     GameObjects_Flag_Red,
-     GameObjects_Base_Blue,
-     GameObjects_Base_Red,
-  ];
+  // static const notPersistable = [
+  //    GameObjects_Flag_Blue,
+  //    GameObjects_Flag_Red,
+  //    GameObjects_Base_Blue,
+  //    GameObjects_Base_Red,
+  // ];
 
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
@@ -668,6 +670,8 @@ class ItemType {
      GameObjects_Base_Blue: "Base Red",
      GameObjects_Flag_Red: "Flag Red",
      GameObjects_Flag_Blue: "Flag Blue",
+     GameObjects_Flag_Spawn_Blue: "Flag Spawn Blue",
+     GameObjects_Flag_Spawn_Red: "Flag Spawn Red",
      GameObjects_Guard_Tower: "Guard Tower",
      Buff_Infinite_Ammo: "Ammo",
      Buff_Double_Damage: "Damage",
@@ -772,13 +776,9 @@ class ItemType {
      GameObjects_Barrel_Explosive,
      GameObjects_Barrel_Purple,
      GameObjects_Barrel_Flaming,
-     // GameObjects_Tavern_Sign,
-     // GameObjects_Crystal_Small_Blue,
-     // GameObjects_Crystal_Small_Red,
      GameObjects_Toilet,
      GameObjects_Crate_Wooden,
      GameObjects_Desk,
-     // GameObjects_Vending_Machine,
      GameObjects_Bed,
      GameObjects_Firehydrant,
      GameObjects_Car,
@@ -794,6 +794,12 @@ class ItemType {
      GameObjects_Neon_Sign_02,
      GameObjects_Vending_Upgrades,
      GameObjects_Pipe_Vertical,
+     GameObjects_Flag_Red,
+     GameObjects_Flag_Blue,
+     GameObjects_Base_Red,
+     GameObjects_Base_Blue,
+     GameObjects_Flag_Spawn_Red,
+     GameObjects_Flag_Spawn_Blue,
   ];
 
   static bool isTypeBarrel(int type)=> const [
