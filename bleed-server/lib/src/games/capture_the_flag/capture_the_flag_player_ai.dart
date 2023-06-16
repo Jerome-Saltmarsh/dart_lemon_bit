@@ -123,32 +123,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       updatePath();
     }
 
-    if (target != null) {
-      final targetDistanceSquared = getDistanceSquared(target);
-      if (targetDistanceSquared < 10000){
-        face(target);
-        if (isEnemy(target)){
-          if (targetDistanceSquared < weaponRangeSquared){
-            game.characterUseWeapon(this);
-          } else {
-            setCharacterStateRunning();
-          }
-        } else {
-          if (targetDistanceSquared > 10){
-            setCharacterStateRunning();
-          } else {
-            setCharacterStateIdle();
-          }
-        }
-      } else  {
-        updateDestination();
-        if (destinationDistanceSquared > 10){
-          runToDestination();
-        } else {
-          setCharacterStateIdle();
-        }
-      }
-    }
+    updatePathIndexAndDestination();
 
     updateBehaviorTree();
   }
@@ -175,26 +150,67 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   double getDestinationDistanceSquared () =>
       getDistanceSquaredXYZ(destinationX, destinationY, z);
 
-  void updateDestination() {
-    if (pathIndex >= pathEnd) return;
-    final scene = game.scene;
 
-    if (getDestinationDistanceSquared() < 500) {
-      pathIndex++;
-      if (pathIndex >= pathEnd){
-        pathIndex = 0;
-        pathEnd = 0;
-        destinationX = x;
-        destinationY = y;
-        destinationZ = z;
-      } else {
-        destinationX = scene.getNodePositionX(pathNodeIndex);
-        destinationY = scene.getNodePositionY(pathNodeIndex);
-      }
+  void updatePathIndexAndDestination() {
+    if (pathIndex >= pathEnd) return;
+    if (!atDestination) return;
+    pathIndex++;
+    if (pathIndex >= pathEnd) {
+      pathIndex = 0;
+      pathEnd = 0;
+      destinationX = x;
+      destinationY = y;
+      destinationZ = z;
+    } else {
+      final scene = game.scene;
+      destinationX = scene.getNodePositionX(pathNodeIndex);
+      destinationY = scene.getNodePositionY(pathNodeIndex);
     }
   }
 
+  bool get atDestination => getDestinationDistanceSquared() < 100;
+
   void updateBehaviorTree(){
+
+    // final target = this.target;
+
+    // if (target != null) {
+    //   final targetDistanceSquared = getDistanceSquared(target);
+    //   if (targetDistanceSquared < 10000){
+    //     face(target);
+    //     if (isEnemy(target)){
+    //       if (targetDistanceSquared < weaponRangeSquared){
+    //         setCharacterStateIdle();
+    //         game.characterUseWeapon(this);
+    //         return;
+    //       } else {
+    //         setCharacterStateRunning();
+    //       }
+    //     } else {
+    //       if (targetDistanceSquared > 10){
+    //         setCharacterStateRunning();
+    //       } else {
+    //         setCharacterStateIdle();
+    //       }
+    //     }
+    //   } else  {
+    //     updateDestination();
+    //     if (destinationDistanceSquared > 10){
+    //       runToDestination();
+    //     } else {
+    //       setCharacterStateIdle();
+    //     }
+    //   }
+    // }
+
+    if (enemyTargetWithinAttackRange)
+      return attackTargetEnemy();
+
+    if (!atDestination) {
+      runToDestination();
+    } else {
+
+    }
 
     if (holdingFlagAny())
       return moveToBaseOwn();
@@ -202,12 +218,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     if (enemyWithinRange(100))
       return attackNearestEnemy();
 
-    if (role == CaptureTheFlagAIRole.Offense) {
+    if (roleOffensive) {
       updateRoleOffense();
     } else {
       updateRoleDefense();
     }
   }
+
 
   void updateRoleDefense(){
     if (flagOwnDropped())
@@ -228,6 +245,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     setCharacterStateIdle();
   }
 
+  void attackTargetEnemy(){
+    assert (target != null);
+    face(target!);
+    useWeapon();
+    setCharacterStateIdle();
+  }
+
   bool enemyWithinRange(double range){
      final distanceSquared = range * range;
      final characters = game.characters;
@@ -240,6 +264,14 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      return false;
   }
   bool get enemyFlagCapturable => enemyFlagStatusAtBase() || enemyFlagStatusDropped();
+
+  bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
+  bool get enemyTargetWithinAttackRange {
+    final target = this.target;
+    if (target == null) return false;
+    if (!isEnemy(target)) return false;
+    return getDistanceSquared(target) < weaponRangeSquared;
+  }
 
   bool flagOwnDropped() => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
   bool holdingFlagAny() => holdingFlagEnemy() || holdingFlagOwn();
@@ -273,9 +305,11 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void updateWeaponRange(){
     if (weaponType == ItemType.Weapon_Ranged_Bow){
-      weaponRange = 200;
+      weaponRange = 300;
     }
   }
+
+  void useWeapon() => game.characterUseWeapon(this);
 }
 
 enum CaptureTheFlagAIRole {

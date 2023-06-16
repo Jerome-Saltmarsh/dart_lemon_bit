@@ -39,13 +39,13 @@ class CaptureTheFlagGame extends GameIsometric {
   final characterSelectedPath = Uint16List(500);
   final characterSelectedPathIndex = Watch(0);
   final characterSelectedPathEnd = Watch(0);
-  final characterSelectedPathRender = WatchBool(false);
+  final characterSelectedPathRender = WatchBool(true);
   final characterSelectedTarget = Watch(false);
   final characterSelectedTargetType = Watch("");
   final characterSelectedTargetX = Watch(0.0);
   final characterSelectedTargetY = Watch(0.0);
   final characterSelectedTargetZ = Watch(0.0);
-  final characterSelectedTargetRenderLine = WatchBool(false);
+  final characterSelectedTargetRenderLine = WatchBool(true);
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
