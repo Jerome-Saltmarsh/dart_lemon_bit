@@ -66,12 +66,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
-  void setPathToIsometricPosition(
-      IsometricScene scene,
-      IsometricPosition position,
-  ) =>
-      setPathToNodeIndex(scene, scene.getNodeIndexV3(position));
-
   void setPathToNodeIndex(IsometricScene scene, int targetIndex) {
 
     this.targetIndex = targetIndex;

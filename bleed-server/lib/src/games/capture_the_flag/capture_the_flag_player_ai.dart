@@ -121,11 +121,11 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     // TODO Optimize
     if (targetPrevious != target){
       targetPrevious = target;
-      updatePath();
+      updatePathToTarget();
     }
 
     if (pathIndex >= pathEnd) {
-      updatePath();
+      updatePathToTarget();
     }
 
     updatePathIndexAndDestination();
@@ -152,14 +152,20 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     faceXY(destinationX, destinationY);
   }
 
-  void updatePath() {
+  void updatePathToTarget() {
     if (target == null){
       pathEnd = 0;
       pathIndex = 0;
       return;
     }
     if (indexZ != 1) return;
-    setPathToIsometricPosition(game.scene, target!);
+    setPathToIsometricTarget();
+  }
+
+  void setPathToIsometricTarget() {
+    final target = this.target;
+    if (target == null) return;
+    setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
   }
 
   double getDestinationDistanceSquared () =>
@@ -167,6 +173,18 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
 
   void updatePathIndexAndDestination() {
+    final target = this.target;
+
+    if (target == null) return;
+
+    if (getDistanceSquared(target) < 3000){
+      pathEnd = 0;
+      pathIndex = 0;
+      destinationX = target.x;
+      destinationY = target.y;
+      return;
+    }
+
     if (pathIndex >= pathEnd) return;
     if (!atDestination) return;
     pathIndex++;
