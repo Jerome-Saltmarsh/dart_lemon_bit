@@ -84,7 +84,17 @@ abstract class IsometricCharacter extends IsometricCollider {
     visitedNodesIndex = 0;
     pathIndex = 0;
     pathEnd = 0;
-    if (visitNode(indexRow, indexColumn, indexZ, scene)){
+
+    var pathFound = visitNodeLeft(indexRow, indexColumn, indexZ, scene);
+
+    if (!pathFound){
+      visitedNodesIndex = 0;
+      pathIndex = 0;
+      pathEnd = 0;
+      pathFound = visitNodeRight(indexRow, indexColumn, indexZ, scene);
+    }
+
+    if (pathFound){
       pathEnd = pathIndex;
       pathIndex = 0;
       destinationX = scene.getNodePositionX(path[0]);
@@ -107,7 +117,94 @@ abstract class IsometricCharacter extends IsometricCollider {
     return true;
   }
 
-  bool visitNode(int row, int column, int z, IsometricScene scene){
+  bool visitNodeLeft(int row, int column, int z, IsometricScene scene){
+    if (row < 0)
+      return false;
+    if (column < 0)
+      return false;
+    if (z < 0)
+      return false;
+    if (row >= scene.gridRows)
+      return false;
+    if (column >= scene.gridColumns)
+      return false;
+    if (z >= scene.gridHeight)
+      return false;
+
+    final index = scene.getNodeIndex(z, row, column);
+
+    assert (scene.getNodeIndexRow(index) == row);
+    assert (scene.getNodeIndexColumn(index) == column);
+
+    if (index == targetIndex) {
+      return true;
+    }
+
+    if (index < 0) return false;
+    if (index >= scene.nodeOrientations.length) return false;
+
+    final nodeOrientation = scene.nodeOrientations[index];
+    if (nodeOrientation != NodeOrientation.None) {
+      return false;
+    }
+
+    for (var i = 0; i < visitedNodesIndex; i++){
+      if (visitedNodes[i] == index) {
+        return false;
+      }
+    }
+
+    visitedNodes[visitedNodesIndex] = index;
+    visitedNodesIndex++;
+
+
+    if (pathIndex > 0){
+      final pathI = path[pathIndex - 1];
+      final pathIRow = scene.getNodeIndexRow(pathI);
+      final pathJRow = scene.getNodeIndexRow(index);
+      final pathIColumn = scene.getNodeIndexRow(pathI);
+      final pathJColumn = scene.getNodeIndexRow(index);
+
+      if ((pathIRow - pathJRow).abs() > 1){
+        return false;
+      }
+      if ((pathIColumn - pathJColumn).abs() > 1){
+        return false;
+      }
+    }
+
+    path[pathIndex] = index;
+    pathIndex++;
+    final cachePathIndex = pathIndex;
+
+    if (pathIndex >= path.length)
+      return false;
+
+    final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
+
+    if (visitNodeLeft(row + convertDirectionToRowVel(targetDirection), column + convertDirectionToColumnVel(targetDirection), z, scene)){
+      return true;
+    }
+    pathIndex = cachePathIndex;
+
+    for (var i = 1; i <= 3; i++){
+      final dirLess = (targetDirection - i) % 8;
+      if (visitNodeLeft(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
+        return true;
+      }
+      pathIndex = cachePathIndex;
+      final dirMore = (targetDirection + i) % 8;
+      if (visitNodeLeft(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
+        return true;
+      }
+      pathIndex = cachePathIndex;
+    }
+
+    final dirOpp = (targetDirection + 4) % 8;
+    return visitNodeLeft(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
+  }
+
+  bool visitNodeRight(int row, int column, int z, IsometricScene scene){
     if (row < 0)
       return false;
     if (column < 0)
@@ -172,26 +269,26 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
 
-    if (visitNode(row + convertDirectionToRowVel(targetDirection), column + convertDirectionToColumnVel(targetDirection), z, scene)){
+    if (visitNodeRight(row + convertDirectionToRowVel(targetDirection), column + convertDirectionToColumnVel(targetDirection), z, scene)){
       return true;
     }
     pathIndex = cachePathIndex;
 
     for (var i = 1; i <= 3; i++){
-      final dirLess = (targetDirection - i) % 8;
-      if (visitNode(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
+      final dirMore = (targetDirection + i) % 8;
+      if (visitNodeRight(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
-      final dirMore = (targetDirection + i) % 8;
-      if (visitNode(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
+      final dirLess = (targetDirection - i) % 8;
+      if (visitNodeRight(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
     }
 
     final dirOpp = (targetDirection + 4) % 8;
-    return visitNode(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
+    return visitNodeRight(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
   }
 
   int convertToDirection(int diffRows, int diffCols){
