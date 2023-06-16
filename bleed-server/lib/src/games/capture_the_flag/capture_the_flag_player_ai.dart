@@ -95,7 +95,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     captureFlag(flagOwn);
   }
 
-  void attackNearestEnemy(){
+  void targetNearestEnemy(){
     target = getNearestEnemy();
   }
 
@@ -134,16 +134,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       runToDestination();
     }
 
-    updatePerception();
     updateBehaviorTree();
   }
 
-  void updatePerception(){
+  bool get enemyVeryCloseBy {
     final nearestEnemy = getNearestEnemy();
-
-    if (nearestEnemy != null && getDistanceSquared(nearestEnemy) < 10000) {
-       target = nearestEnemy;
-    }
+    if (nearestEnemy == null) return false;
+    return getDistanceSquared(nearestEnemy) < 10000;
   }
 
   void runToDestination(){
@@ -186,9 +183,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     }
   }
 
-  bool get atDestination => getDestinationDistanceSquared() < 100;
+  bool get atDestination => getDestinationDistanceSquared() < 150;
 
   void updateBehaviorTree(){
+
+    if (enemyVeryCloseBy) {
+      targetNearestEnemy();
+    }
 
     if (enemyTargetAttackable)
       return attackTargetEnemy();
@@ -208,14 +209,14 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     if (flagOwnDropped())
       return captureFlagOwn();
     if (enemyWithinRange(500))
-      return attackNearestEnemy();
+      return targetNearestEnemy();
 
     setCharacterStateIdle();
   }
 
   void updateRoleOffense() {
     if (enemyWithinRange(500))
-      return attackNearestEnemy();
+      return targetNearestEnemy();
     if (enemyFlagCapturable)
       return captureEnemyFlag();
 
@@ -248,6 +249,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   bool get enemyTargetAttackable {
     final target = this.target;
     if (target == null) return false;
+    if (target is! IsometricCollider) return false;
+    if (!target.hitable) return false;
     if (!targetIsEnemy) return false;
     if (!enemyTargetWithinAttackRange) return false;
     return targetIsPerceptible;
