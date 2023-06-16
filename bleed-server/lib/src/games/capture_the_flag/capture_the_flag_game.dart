@@ -475,7 +475,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
          player.weaponType = ItemType.Weapon_Ranged_Smg;
          break;
        case CaptureTheFlagCharacterClass.scout:
-         player.weaponType = ItemType.Weapon_Ranged_Handgun;
+         player.weaponType = ItemType.Weapon_Ranged_Bow;
          break;
        case CaptureTheFlagCharacterClass.shotgun:
          player.weaponType = ItemType.Weapon_Ranged_Shotgun;

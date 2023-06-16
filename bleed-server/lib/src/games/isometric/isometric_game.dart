@@ -2014,7 +2014,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (projectile.z - projectile.radius > collider.z + Character_Height)
           continue;
         if (projectile.owner == collider) continue;
-        if (IsometricCollider.onSameTeam(projectile, collider)) continue;
+        if (!projectile.isEnemy(collider) && !projectile.friendlyFire) continue;
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -2420,6 +2420,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     projectile.startZ = projectile.z;
     projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
     projectile.owner = src;
+    projectile.team = src.team;
     projectile.range = range;
     projectile.type = projectileType;
     projectile.radius = ProjectileType.getRadius(projectileType);

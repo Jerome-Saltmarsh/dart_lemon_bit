@@ -7,6 +7,7 @@ import 'isometric_position.dart';
 class IsometricProjectile extends IsometricCollider {
   var range = 0.0;
   var type = 0; // ProjectileType.dart
+  var friendlyFire = false;
   IsometricPosition? target = null;
 
   IsometricProjectile() : super(x: 0, y: 0, z: 0, radius: IsometricPhysics.Projectile_Radius);
