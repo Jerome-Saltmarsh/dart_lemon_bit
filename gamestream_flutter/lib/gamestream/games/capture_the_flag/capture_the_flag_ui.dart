@@ -11,6 +11,8 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/library.dart';
 
+
+
 extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   Widget buildCaptureTheFlagGameUI(){
@@ -39,16 +41,30 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         Positioned(
             bottom: 16,
             left: 16,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                buildWindowCameraProperties(),
-                buildWindowSelectedCharacter(),
-              ],
-            )),
+            child: buildDebugWindow(),
+        ),
       ],
     );
   }
+
+  Widget buildDebugWindow() => buildDebugMode(
+    child: GSDialog(
+      child: WatchBuilder(tab, (selectedTab) => Column(children: [
+              Row(children: CaptureTheFlagUITabs.values.map((e) => onPressed(
+                    action: () => tab.value = e,
+                    child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: text(e.name)))).toList(growable: false),
+              ),
+             if (selectedTab == CaptureTheFlagUITabs.Selected_Character)
+               buildWindowSelectedCharacter(),
+             if (selectedTab == CaptureTheFlagUITabs.GameObjects)
+               buildWindowGameObjects(),
+             if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
+               buildWindowFlagStatus(),
+           ],)),
+    ),
+  );
 
   WatchBuilder<CaptureTheFlagGameStatus> buildWindowGameStatus() {
     return WatchBuilder(gameStatus, (value){
@@ -99,8 +115,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       ),
     );
 
-  WatchBuilder<bool> buildWindowSelectClass() {
-    return WatchBuilder(selectClass, (value){
+  WatchBuilder<bool> buildWindowSelectClass() => WatchBuilder(selectClass, (value){
       if (!value) return const SizedBox();
       return buildFullscreen(
         child: buildWindow(
@@ -119,7 +134,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         ),
       );
     });
-  }
 
 
   Widget buildMiniMap({required double mapSize}) => IgnorePointer(
@@ -245,7 +259,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildDebugMode({required Widget child}) =>
       WatchBuilder(debugMode, (t) => t ? child : nothing);
 
-  Widget buildWindowCameraProperties(){
+  Widget buildWindowGameObjects(){
     return buildWindow(child: Column(
       children: [
         text("GAMEOBJECTS"),
@@ -272,8 +286,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   }
 
   Widget buildWindowSelectedCharacter() =>
-      buildDebugMode(
-        child: WatchBuilder(characterSelected, (characterSelected){
+      WatchBuilder(characterSelected, (characterSelected){
         if (!characterSelected) return nothing;
         return buildWindow(
           width: 300,
@@ -288,36 +301,35 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
               buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
               const SizedBox(height: 1,),
               WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
-                 if (!characterSelectedTarget) return nothing;
-                 return Container(
-                   color: Colors.white12,
-                   padding: GameStyle.Container_Padding,
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                        text("TARGET"),
-                       WatchBuilder(characterSelectedTargetType, (type) => text("type: $type")),
-                       WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
-                       WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
-                       WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
-                       WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           text("render-line"),
-                           onPressed(
-                               action: characterSelectedTargetRenderLine.toggle,
-                               child: GSCheckBox(value)),
-                         ],
-                       )),
-                     ],
-                   ),
-                 );
+                if (!characterSelectedTarget) return nothing;
+                return Container(
+                  color: Colors.white12,
+                  padding: GameStyle.Container_Padding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      text("TARGET"),
+                      WatchBuilder(characterSelectedTargetType, (type) => text("type: $type")),
+                      WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
+                      WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
+                      WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
+                      WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          text("render-line"),
+                          onPressed(
+                              action: characterSelectedTargetRenderLine.toggle,
+                              child: GSCheckBox(value)),
+                        ],
+                      )),
+                    ],
+                  ),
+                );
               }),
             ],
           ),
         );
-    }),
-      );
+      });
 
   Widget buildToggleRow({required String title, required WatchBool watchBool}) => onPressed(
       action: watchBool.toggle,
@@ -357,4 +369,11 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       ),
     );
   }
+}
+
+
+enum CaptureTheFlagUITabs {
+   Selected_Character,
+   GameObjects,
+   Flag_Status,
 }

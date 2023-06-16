@@ -17,8 +17,8 @@ class CaptureTheFlagGame extends GameIsometric {
   var objectiveLinesEnabled = false;
   var characterTargetTotal = 0;
 
-
   final Gamestream gamestream;
+  final tab = Watch(CaptureTheFlagUITabs.Selected_Character);
   final flagPositionRed = IsometricPosition();
   final flagPositionBlue = IsometricPosition();
   final basePositionRed = IsometricPosition();

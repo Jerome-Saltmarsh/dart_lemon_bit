@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/game_style.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 
@@ -23,15 +24,17 @@ class _GSDialogState extends State<GSDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (PointerEnterEvent event) {
-        gamestream.isometric.ui.hoverDialogType.value = DialogType.UI_Control;
-      },
-      onExit: (PointerExitEvent event) {
-        gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
-      },
-      child: widget.child,
+  Widget build(BuildContext context) => Container(
+      color: GameStyle.Container_Color,
+      padding: GameStyle.Container_Padding,
+      child: MouseRegion(
+        onEnter: (PointerEnterEvent event) {
+          gamestream.isometric.ui.hoverDialogType.value = DialogType.UI_Control;
+        },
+        onExit: (PointerExitEvent event) {
+          gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
+        },
+        child: widget.child,
+      ),
     );
-  }
 }
