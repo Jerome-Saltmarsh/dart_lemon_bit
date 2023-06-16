@@ -6,6 +6,8 @@ import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobj
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
+import 'package:lemon_math/functions/adjacent.dart';
+import 'package:lemon_math/functions/opposite.dart';
 
 import 'capture_the_flag_game.dart';
 
@@ -128,7 +130,20 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
     updatePathIndexAndDestination();
 
+    if (!atDestination) {
+      runToDestination();
+    }
+
+    updatePerception();
     updateBehaviorTree();
+  }
+
+  void updatePerception(){
+    final nearestEnemy = getNearestEnemy();
+
+    if (nearestEnemy != null && getDistanceSquared(nearestEnemy) < 10000) {
+       target = nearestEnemy;
+    }
   }
 
   void runToDestination(){
@@ -175,51 +190,11 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void updateBehaviorTree(){
 
-    // final target = this.target;
-
-    // if (target != null) {
-    //   final targetDistanceSquared = getDistanceSquared(target);
-    //   if (targetDistanceSquared < 10000){
-    //     face(target);
-    //     if (isEnemy(target)){
-    //       if (targetDistanceSquared < weaponRangeSquared){
-    //         setCharacterStateIdle();
-    //         game.characterUseWeapon(this);
-    //         return;
-    //       } else {
-    //         setCharacterStateRunning();
-    //       }
-    //     } else {
-    //       if (targetDistanceSquared > 10){
-    //         setCharacterStateRunning();
-    //       } else {
-    //         setCharacterStateIdle();
-    //       }
-    //     }
-    //   } else  {
-    //     updateDestination();
-    //     if (destinationDistanceSquared > 10){
-    //       runToDestination();
-    //     } else {
-    //       setCharacterStateIdle();
-    //     }
-    //   }
-    // }
-
-    if (enemyTargetWithinAttackRange)
+    if (enemyTargetAttackable)
       return attackTargetEnemy();
 
-    if (!atDestination) {
-      runToDestination();
-    } else {
-
-    }
-
-    if (holdingFlagAny())
-      return moveToBaseOwn();
-
-    if (enemyWithinRange(100))
-      return attackNearestEnemy();
+    if (holdingFlagAny)
+      return runToBaseOwn();
 
     if (roleOffensive) {
       updateRoleOffense();
@@ -269,6 +244,39 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   bool get enemyFlagCapturable => enemyFlagStatusAtBase() || enemyFlagStatusDropped();
 
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
+
+  bool get enemyTargetAttackable {
+    final target = this.target;
+    if (target == null) return false;
+    if (!targetIsEnemy) return false;
+    if (!enemyTargetWithinAttackRange) return false;
+    return targetIsPerceptible;
+  }
+
+  bool get targetIsPerceptible {
+    final target = this.target;
+    if (target == null) return false;
+    final distance = getDistance3(target);
+    final jumpSize = Node_Size_Half;
+    final jumps = distance ~/ jumpSize;
+
+    var positionX = x;
+    var positionY = y;
+    var angle = target.getAngle(this);
+    final velX = getAdjacent(angle, jumpSize);
+    final velY = getOpposite(angle, jumpSize);
+
+    for (var i = 0; i < jumps; i++){
+      positionX += velX;
+      positionY += velY;
+      final nodeOrientation = game.scene.getNodeOrientationXYZ(positionX, positionY, z);
+      if (nodeOrientation != NodeOrientation.None){
+        return false;
+      }
+    }
+    return true;
+  }
+
   bool get enemyTargetWithinAttackRange {
     final target = this.target;
     if (target == null) return false;
@@ -277,7 +285,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   bool flagOwnDropped() => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
-  bool holdingFlagAny() => holdingFlagEnemy() || holdingFlagOwn();
+  bool get holdingFlagAny => holdingFlagEnemy() || holdingFlagOwn();
   bool holdingFlagEnemy() => flagEnemy.heldBy == this;
   bool holdingFlagOwn() => flagOwn.heldBy == this;
   bool enemyFlagStatusAtBase() => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
@@ -293,7 +301,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     target = flagEnemy;
   }
 
-  void moveToBaseOwn(){
+  void runToBaseOwn(){
     target = baseOwn;
   }
 

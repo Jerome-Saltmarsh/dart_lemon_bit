@@ -320,21 +320,15 @@ abstract class IsometricCharacter extends IsometricCollider {
   bool get dead => state == CharacterState.Dead;
   bool get alive => !dead;
   bool get targetIsNull => target == null;
+
   bool get targetIsEnemy {
     if (target == null) return false;
-    if (target == this) return false;
-    if (target is IsometricCollider == false) return false;
-    final targetTeam = (target as IsometricCollider).team;
-    if (targetTeam == 0) return true;
-    return team != targetTeam;
+    return isEnemy(target);
   }
+
   bool get targetIsAlly {
     if (target == null) return false;
-    if (target == this) return true;
-    if (target is! IsometricCollider) return false;
-    final targetTeam = (target as IsometricCollider).team;
-    if (targetTeam == 0) return false;
-    return team == targetTeam;
+    return isAlly(target);
   }
   bool get weaponStateBusy => weaponStateDuration > 0 && weaponState != WeaponState.Aiming;
   bool get running => state == CharacterState.Running;

@@ -129,7 +129,7 @@ class Engine {
 
     return joinGame(CaptureTheFlagGame(
       scene: isometricScenes.captureTheFlag,
-      time: IsometricTime(enabled: false, hour: 12),
+      time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
     )
     );
