@@ -49,6 +49,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       case CaptureTheFlagCharacterClass.scout:
         weaponType = ItemType.Weapon_Ranged_Bow;
         break;
+      case CaptureTheFlagCharacterClass.knight:
+        weaponType = ItemType.Weapon_Melee_Sword;
+        break;
       default:
         break;
     }
@@ -303,9 +306,12 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      updateWeaponRange();
   }
 
-  void updateWeaponRange(){
+  void updateWeaponRange() {
     if (weaponType == ItemType.Weapon_Ranged_Bow){
       weaponRange = 300;
+    }
+    if (weaponType == ItemType.Weapon_Melee_Sword){
+      weaponRange = 60;
     }
   }
 

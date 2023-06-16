@@ -68,7 +68,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flagRed.moveTo(baseRed);
     flagBlue.moveTo(baseBlue);
 
-    for (var i = 1; i <= 3; i++) {
+    for (var i = 1; i < 2; i++) {
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
@@ -80,7 +80,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Defense));
     }
-    for (var i = 1; i <= 5; i++) {
+    for (var i = 0; i < 2; i++) {
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
@@ -90,6 +90,19 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           game: this,
           team: CaptureTheFlagTeam.Blue,
           characterClass: CaptureTheFlagCharacterClass.scout,
+          role: CaptureTheFlagAIRole.Offense));
+    }
+
+    for (var i = 0; i < 1; i++) {
+      characters.add(CaptureTheFlagPlayerAI(
+          game: this,
+          team: CaptureTheFlagTeam.Red,
+          characterClass: CaptureTheFlagCharacterClass.knight,
+          role: CaptureTheFlagAIRole.Offense));
+      characters.add(CaptureTheFlagPlayerAI(
+          game: this,
+          team: CaptureTheFlagTeam.Blue,
+          characterClass: CaptureTheFlagCharacterClass.knight,
           role: CaptureTheFlagAIRole.Offense));
     }
   }
@@ -466,6 +479,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
          break;
        case CaptureTheFlagCharacterClass.shotgun:
          player.weaponType = ItemType.Weapon_Ranged_Shotgun;
+         break;
+       case CaptureTheFlagCharacterClass.knight:
+         player.weaponType = ItemType.Weapon_Melee_Sword;
          break;
      }
      player.writeSelectClass(false);

@@ -4,4 +4,5 @@ enum CaptureTheFlagCharacterClass {
   machineGun,
   medic,
   scout,
+  knight,
 }
