@@ -257,7 +257,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     final target = this.target;
     if (target == null) return false;
     final distance = getDistance3(target);
-    final jumpSize = Node_Size_Half;
+    final jumpSize = Node_Size_Quarter;
     final jumps = distance ~/ jumpSize;
 
     var positionX = x;
@@ -266,10 +266,12 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     final velX = getAdjacent(angle, jumpSize);
     final velY = getOpposite(angle, jumpSize);
 
+    final scene = game.scene;
+
     for (var i = 0; i < jumps; i++){
       positionX += velX;
       positionY += velY;
-      final nodeOrientation = game.scene.getNodeOrientationXYZ(positionX, positionY, z);
+      final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, z);
       if (nodeOrientation != NodeOrientation.None){
         return false;
       }

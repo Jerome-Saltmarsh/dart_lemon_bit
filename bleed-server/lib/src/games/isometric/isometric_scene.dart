@@ -135,11 +135,6 @@ class IsometricScene {
      if (y >= gridColumnLength) return NodeOrientation.Solid;
      if (z >= gridHeightLength) return NodeOrientation.None;
      if (z < 0) return NodeOrientation.None;
-
-     if (getNodeIndexXYZ(x, y, z) >= nodeOrientations.length) {
-       throw Exception();
-     }
-
      return nodeOrientations[getNodeIndexXYZ(x, y, z)];
   }
 
