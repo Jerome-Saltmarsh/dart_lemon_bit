@@ -47,24 +47,38 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     );
   }
 
-  Widget buildDebugWindow() => buildDebugMode(
-    child: GSDialog(
-      child: WatchBuilder(tab, (selectedTab) => Column(children: [
-              Row(children: CaptureTheFlagUITabs.values.map((e) => onPressed(
-                    action: () => tab.value = e,
-                    child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: text(e.name)))).toList(growable: false),
-              ),
-             if (selectedTab == CaptureTheFlagUITabs.Selected_Character)
-               buildWindowSelectedCharacter(),
-             if (selectedTab == CaptureTheFlagUITabs.GameObjects)
-               buildWindowGameObjects(),
-             if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
-               buildWindowFlagStatus(),
-           ],)),
-    ),
-  );
+  Widget buildDebugWindow() =>
+      buildDebugMode(
+        child: GSDialog(
+          child: WatchBuilder(
+              tab,
+              (selectedTab) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (selectedTab ==
+                          CaptureTheFlagUITabs.Selected_Character)
+                        buildWindowSelectedCharacter(),
+                      if (selectedTab == CaptureTheFlagUITabs.GameObjects)
+                        buildWindowGameObjects(),
+                      if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
+                        buildWindowFlagStatus(),
+                      height8,
+                      Row(
+                        children: CaptureTheFlagUITabs.values
+                            .map((e) => onPressed(
+                                action: () => tab.value = e,
+                                child: Container(
+                                    color: e == selectedTab
+                                        ? Colors.white12
+                                        : null,
+                                    padding: const EdgeInsets.all(8),
+                                    child: text(e.name))))
+                            .toList(growable: false),
+                      )
+                    ],
+                  )),
+        ),
+      );
 
   WatchBuilder<CaptureTheFlagGameStatus> buildWindowGameStatus() {
     return WatchBuilder(gameStatus, (value){
@@ -88,21 +102,13 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   Widget buildWindowMap() => buildMiniMap(mapSize: 200);
 
-  Container buildWindowFlagStatus() {
-    return Container(
-      padding: GameStyle.Container_Padding,
-      color: GameStyle.Container_Color,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildDebugModeToggle(),
-          text("FLAG STATUS"),
-          WatchBuilder(flagRedStatus, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
-          WatchBuilder(flagBlueStatus, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
-        ],
-      ),
-    );
-  }
+  Widget buildWindowFlagStatus() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      WatchBuilder(flagRedStatus, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+      WatchBuilder(flagBlueStatus, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+    ],
+  );
 
   Widget buildWindowScore() => buildWindow(
       child: Column(
@@ -259,11 +265,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildDebugMode({required Widget child}) =>
       WatchBuilder(debugMode, (t) => t ? child : nothing);
 
-  Widget buildWindowGameObjects(){
-    return buildWindow(child: Column(
+  Widget buildWindowGameObjects()=> Column(
       children: [
-        text("GAMEOBJECTS"),
-        height8,
         Container(
           height: 200,
           child: SingleChildScrollView(
@@ -282,13 +285,12 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
           ),
         )
       ],
-    ));
-  }
+    );
 
   Widget buildWindowSelectedCharacter() =>
       WatchBuilder(characterSelected, (characterSelected){
         if (!characterSelected) return nothing;
-        return buildWindow(
+        return Container(
           width: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
