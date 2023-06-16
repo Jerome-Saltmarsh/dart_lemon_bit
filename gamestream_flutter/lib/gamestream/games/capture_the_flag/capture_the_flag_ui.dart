@@ -253,8 +253,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     dstY: basePositionBlue.renderY * ratio,
                     scale: 0.05
                 );
-
-
               });
             })
         ),

@@ -391,7 +391,7 @@ class GameIsometricUI {
     });
 
     final buttonPlay = onPressed(
-      action: gamestream.network.sendClientRequestRevive,
+      action: gamestream.isometric.revive,
       child: MouseOver(
           builder: (mouseOver) {
             return Container(
@@ -1625,7 +1625,7 @@ class GameIsometricUI {
               container(
                 alignment: Alignment.center,
                 child: "RESPAWN",
-                action: gamestream.network.sendClientRequestRevive,
+                action: gamestream.isometric.revive,
                 color: GameIsometricColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )

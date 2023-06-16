@@ -1,10 +1,7 @@
 class ClientRequest {
   static const Update                   = 00;
   static const Join                     = 01;
-  static const Revive                   = 02;
   static const Version                  = 03;
-  static const Speak                    = 04;
-  static const Teleport                 = 05;
   static const Weather_Set_Rain         = 06;
   static const Weather_Set_Wind         = 07;
   static const Weather_Set_Lightning    = 08;

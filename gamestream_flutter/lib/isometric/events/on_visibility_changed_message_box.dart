@@ -7,7 +7,6 @@ void onVisibilityChangedMessageBox(bool visible){
     GameIsometricUI.textFieldMessage.requestFocus();
     return;
   }
-  gamestream.network.sendRequestSpeak(GameIsometricUI.textEditingControllerMessage.text);
   GameIsometricUI.textFieldMessage.unfocus();
   GameIsometricUI.textEditingControllerMessage.text = "";
 }

@@ -89,4 +89,8 @@ class Isometric {
     gamestream.io.sendUpdateBuffer();
     gamestream.io.setCursorAction(CursorAction.None);
   }
+
+  void revive(){
+    gamestream.network.sendClientRequest(ClientRequest.Isometric, IsometricRequest.Revive);
+  }
 }

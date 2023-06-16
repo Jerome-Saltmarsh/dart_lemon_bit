@@ -18,7 +18,7 @@ import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/gameobject_request.dart';
 import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/inventory_request.dart';
-import 'package:bleed_server/common/src/isometric/isometric_client_request.dart';
+import 'package:bleed_server/common/src/isometric/isometric_request.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/lightning_type.dart';
 import 'package:bleed_server/common/src/maths.dart';
@@ -165,12 +165,6 @@ class WebSocketConnection with ByteReader {
         if (player is! IsometricPlayer) return;
         handleRequestInventory(player, arguments);
         break;
-
-      case ClientRequest.Teleport:
-        if (!isLocalMachine && game is! GameEditor) return;
-        if (player is! IsometricPlayer) return;
-        handleClientRequestTeleport(player);
-        return;
 
       case ClientRequest.Reload:
         // final game = player.game;
@@ -333,20 +327,6 @@ class WebSocketConnection with ByteReader {
 
         break;
 
-      case ClientRequest.Revive:
-        if (player is! IsometricPlayer) return;
-        if (player.aliveAndActive) {
-          sendGameError(GameError.PlayerStillAlive);
-          return;
-        }
-        if (player.respawnTimer > 0) {
-          player.writeGameError(GameError.Respawn_Duration_Remaining);
-          return;
-        }
-        if (game is! IsometricGame) return;
-        game.revive(player);
-        return;
-
       case ClientRequest.GameObject:
         if (!isLocalMachine && game is! GameEditor) return;
         return handleGameObjectRequest(arguments);
@@ -362,13 +342,6 @@ class WebSocketConnection with ByteReader {
       case ClientRequest.Npc_Talk_Select_Option:
         if (player is! IsometricPlayer) return;
         return handleNpcTalkSelectOption(player, arguments);
-
-      case ClientRequest.Speak:
-        // player.text = arguments
-        //     .sublist(1, arguments.length)
-        //     .fold("", (previousValue, element) => '$previousValue $element');
-        // player.textDuration = 150;
-        break;
 
       case ClientRequest.Teleport_Scene:
         final sceneIndex = parse(arguments[1]);
@@ -397,31 +370,7 @@ class WebSocketConnection with ByteReader {
           break;
 
       case ClientRequest.Isometric:
-        if (player is! IsometricPlayer) {
-          errorInvalidPlayerType();
-          return;
-        }
-        if (arguments.length < 2){
-          errorInvalidClientRequest();
-          return;
-        }
-        final isometricClientRequest = parseArg1(arguments);
-        if (isometricClientRequest == null){
-          errorInvalidClientRequest();
-          return;
-        }
-
-        switch (isometricClientRequest){
-          case IsometricClientRequest.Spawn_Zombie:
-            player.game.spawnAIXYZ(
-              x: player.mouseGridX,
-              y: player.mouseGridY,
-              z: player.game.scene.gridHeightLength - 50,
-              characterType: CharacterType.Zombie,
-            );
-            break;
-        }
-
+        handleIsometricClientRequest(arguments);
         break;
 
       case ClientRequest.Capture_The_Flag:
@@ -1034,14 +983,6 @@ class WebSocketConnection with ByteReader {
     subscription.cancel();
   }
 
-  void handleClientRequestTeleport(IsometricPlayer player) {
-      player.x = player.mouseGridX;
-      player.y = player.mouseGridY;
-      player.health = player.maxHealth;
-      player.state = CharacterState.Idle;
-      player.active = true;
-  }
-
   int? parseArg0(List<String> arguments,) => parseArg(arguments, 0);
   int? parseArg1(List<String> arguments,) => parseArg(arguments, 1);
   int? parseArg2(List<String> arguments,) => parseArg(arguments, 2);
@@ -1084,5 +1025,54 @@ class WebSocketConnection with ByteReader {
     if (values.isEmpty) return false;
     if (index < 0) return false;
     return index < values.length;
+  }
+
+  void handleIsometricClientRequest(List<String> arguments){
+    final player = _player;
+
+    if (player is! IsometricPlayer) {
+      errorInvalidPlayerType();
+      return;
+    }
+    final isometricClientRequestIndex = parseArg1(arguments);
+    if (isometricClientRequestIndex == null)
+      return;
+
+    if (isValidIndex(isometricClientRequestIndex, IsometricRequest.values)){
+      errorInvalidClientRequest();
+      return;
+    }
+
+    switch (IsometricRequest.values[isometricClientRequestIndex]){
+      case IsometricRequest.Spawn_Zombie:
+        player.game.spawnAIXYZ(
+          x: player.mouseGridX,
+          y: player.mouseGridY,
+          z: player.game.scene.gridHeightLength - 50,
+          characterType: CharacterType.Zombie,
+        );
+        break;
+
+      case IsometricRequest.Teleport:
+        if (!isLocalMachine && player.game is! GameEditor) return;
+        player.x = player.mouseGridX;
+        player.y = player.mouseGridY;
+        player.health = player.maxHealth;
+        player.state = CharacterState.Idle;
+        player.active = true;
+        break;
+
+      case IsometricRequest.Revive:
+        if (player.aliveAndActive) {
+          sendGameError(GameError.PlayerStillAlive);
+          return;
+        }
+        if (player.respawnTimer > 0) {
+          player.writeGameError(GameError.Respawn_Duration_Remaining);
+          return;
+        }
+        player.game.revive(player);
+        return;
+    }
   }
 }

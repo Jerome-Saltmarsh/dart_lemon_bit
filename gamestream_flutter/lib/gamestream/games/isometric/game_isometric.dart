@@ -123,5 +123,4 @@ class GameIsometric extends Game {
   // TODO Remove
   static int convertWorldToColumn(double x, double y, double z) =>
       (y - x + z) ~/ Node_Size;
-
 }

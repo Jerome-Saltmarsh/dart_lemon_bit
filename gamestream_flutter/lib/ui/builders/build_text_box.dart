@@ -59,6 +59,5 @@ Widget buildPanelWriteMessage() {
 }
 
 void sendAndCloseTextBox(){
-  gamestream.network.sendRequestSpeak(GameIsometricUI.textEditingControllerMessage.text);
   gamestream.isometric.actions.messageBoxHide();
 }

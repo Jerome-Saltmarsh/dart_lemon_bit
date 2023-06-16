@@ -8,7 +8,7 @@ export 'src/enums/item_group.dart';
 export 'src/enums/tag_type.dart';
 export 'src/enums/teams_rock_paper_scissors.dart';
 export 'src/fight2d/fight2d.dart';
-export 'src/isometric/isometric_client_request.dart';
+export 'src/isometric/isometric_request.dart';
 export 'src/enums/character_attribute.dart';
 export 'src/input_type.dart';
 export 'src/enums/game_status.dart';

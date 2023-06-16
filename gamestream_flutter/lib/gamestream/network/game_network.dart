@@ -147,15 +147,6 @@ class GameNetwork {
     sink.close();
   }
 
-  void sendRequestSpeak(String message){
-    if (message.trim().isEmpty) return;
-    sendClientRequest(ClientRequest.Speak, message);
-  }
-
-  void sendClientRequestTeleport(){
-    sendClientRequest(ClientRequest.Teleport);
-  }
-
   void sendClientRequestReload(){
     sendClientRequest(ClientRequest.Reload);
   }
@@ -200,10 +191,6 @@ class GameNetwork {
     assert(hour >= 0);
     assert(hour <= 24);
     sendClientRequest(ClientRequest.Time_Set_Hour, hour);
-  }
-
-  void sendClientRequestRevive(){
-    sendClientRequest(ClientRequest.Revive);
   }
 
   void sendClientRequestSetBlock({
