@@ -3,6 +3,7 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
@@ -83,7 +84,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
     final heldBy = flag.heldBy;
     if (heldBy == null){
-      target = flag;
+      target = heldBy;
       return;
     }
     if (heldBy == this) {
@@ -94,6 +95,12 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       target = heldBy;
       return;
     }
+
+    if (isAlly(heldBy)){
+      target = heldBy;
+      return;
+    }
+
     setCharacterStateIdle();
   }
 
@@ -221,17 +228,45 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     if (holdingFlagAny)
       return runToBaseOwn();
 
-    if (roleOffensive) {
-      updateRoleOffense();
-    } else {
-      updateRoleDefense();
+    if (targetIsAlliedCharacter){
+      return protectAllyTarget();
     }
+
+    if (roleOffensive) {
+      return updateRoleOffense();
+    }
+
+    updateRoleDefense();
   }
 
+  bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
+
+  void protectAllyTarget(){
+
+  }
+
+  void protectAllyCarryingOwnFlag(){
+
+     if (flagOwnFurtherThan200()){
+        return targetFlagOwn();
+     }
+     if (enemyWithinRange(200))
+       return targetNearestEnemy();
+
+     setCharacterStateIdle();
+  }
+
+  bool flagOwnFurtherThan200() => !withinRadius(flagOwn, 200);
+
+  void targetFlagOwn() {
+    target = flagOwn;
+  }
 
   void updateRoleDefense(){
-    if (flagOwnCaptured)
+    if (flagOwnCapturedByEnemy)
       return captureFlagOwn();
+    if (flagOwnCapturedByAlly)
+      return protectAllyCarryingOwnFlag();
     if (flagOwnDropped)
       return captureFlagOwn();
     if (awayFromFlagOwnSpawn)
@@ -247,6 +282,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   void updateRoleOffense() {
+    if (enemyFlagRespawning)
+      return updateRoleDefense();
+
     if (enemyWithinRange(500))
       return targetNearestEnemy();
     if (enemyFlagCapturable)
@@ -274,7 +312,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      }
      return false;
   }
-  bool get enemyFlagCapturable => enemyFlagStatusAtBase() || enemyFlagStatusDropped();
+  bool get enemyFlagCapturable => enemyFlagStatusAtBase || enemyFlagStatusDropped;
 
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
 
@@ -321,21 +359,19 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     return getDistanceSquared(target) < weaponRangeSquared;
   }
 
-  bool get flagOwnCaptured => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+  // conditions
+  bool get flagOwnCapturedByEnemy => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+  bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Allie;
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
   bool get awayFromFlagOwnSpawn => !withinRadius(flagSpawnOwn, 100);
-  bool get holdingFlagAny => holdingFlagEnemy() || holdingFlagOwn();
-  bool holdingFlagEnemy() => flagEnemy.heldBy == this;
-  bool holdingFlagOwn() => flagOwn.heldBy == this;
-  bool enemyFlagStatusAtBase() => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
-  bool enemyFlagStatusDropped() => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
-  bool isEnemyFlagCaptured() => flagEnemy.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
-  bool enemyFlagCaptured() => flagEnemy.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
-  bool enemyFlagRespawning() => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
-  bool isEnemyFlagNear() => getDistance3(flagEnemy) < 500;
-  bool isEnemyNearBase() => getDistance3(baseEnemy) < 500;
-  bool isFriendlyFlagCaptured() => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+  bool get enemyFlagRespawning => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
+  bool get holdingFlagAny => holdingFlagEnemy || holdingFlagOwn;
+  bool get holdingFlagEnemy => flagEnemy.heldBy == this;
+  bool get holdingFlagOwn => flagOwn.heldBy == this;
+  bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
+  bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
+  // actions
   void captureEnemyFlag() {
     target = flagEnemy;
   }
