@@ -77,9 +77,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   double get baseEnemyDistance => getDistance3(baseEnemy);
 
   void captureFlag(CaptureTheFlagGameObjectFlag flag){
+
     if (flag.statusRespawning) {
-      setCharacterStateIdle();
-      return;
+       throw Exception('cannot capture flag as it is respawning');
     }
 
     final heldBy = flag.heldBy;
@@ -217,8 +217,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   bool get atDestination => getDestinationDistanceSquared() < 150;
 
+  /// essentially it just sets the target
   void updateBehaviorTree(){
-
 
     if (holdingFlagAny)
       return runToBaseOwn();
