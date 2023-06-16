@@ -282,18 +282,6 @@ class WebSocketConnection with ByteReader {
         game.setCharacterStateDead(player);
         break;
 
-      case ClientRequest.Weather_Set_Rain:
-        if (!isLocalMachine && game is! GameEditor) return;
-        final rainType = parse(arguments[1]);
-        if (rainType == null || !isValidIndex(rainType, RainType.values)) {
-          sendGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-
-        if (game is! IsometricGame) return;
-        game.environment.rainType = rainType;
-        break;
-
       case ClientRequest.Weather_Toggle_Breeze:
         if (!isLocalMachine && game is! GameEditor) return;
         if (game is! IsometricGame) return;
@@ -1034,18 +1022,19 @@ class WebSocketConnection with ByteReader {
       errorInvalidPlayerType();
       return;
     }
+    final game = player.game;
     final isometricClientRequestIndex = parseArg1(arguments);
     if (isometricClientRequestIndex == null)
       return;
 
-    if (isValidIndex(isometricClientRequestIndex, IsometricRequest.values)){
+    if (!isValidIndex(isometricClientRequestIndex, IsometricRequest.values)){
       errorInvalidClientRequest();
       return;
     }
 
     switch (IsometricRequest.values[isometricClientRequestIndex]){
       case IsometricRequest.Spawn_Zombie:
-        player.game.spawnAIXYZ(
+        game.spawnAIXYZ(
           x: player.mouseGridX,
           y: player.mouseGridY,
           z: player.game.scene.gridHeightLength - 50,
@@ -1054,7 +1043,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricRequest.Teleport:
-        if (!isLocalMachine && player.game is! GameEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         player.x = player.mouseGridX;
         player.y = player.mouseGridY;
         player.health = player.maxHealth;
@@ -1071,8 +1060,17 @@ class WebSocketConnection with ByteReader {
           player.writeGameError(GameError.Respawn_Duration_Remaining);
           return;
         }
-        player.game.revive(player);
+        game.revive(player);
         return;
+
+      case IsometricRequest.Weather_Set_Rain:
+        final rainType = parseArg2(arguments);
+        if (rainType == null || !isValidIndex(rainType, RainType.values)) {
+          sendGameError(GameError.Invalid_Client_Request);
+          return;
+        }
+        game.environment.rainType = rainType;
+        break;
     }
   }
 }

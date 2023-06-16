@@ -468,7 +468,7 @@ class EditorUI {
       gamestream.isometric.server.rainType,
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
-            action: () => gamestream.network.sendClientRequestWeatherSetRain(rain),
+            action: () => gamestream.isometric.setRain(rain),
             icon: GameIsometricUI.buildAtlasIconType(convertRainToIconType(rain)),
             isActive: rain == activeRain,
           ));

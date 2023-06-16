@@ -2,7 +2,6 @@ class ClientRequest {
   static const Update                   = 00;
   static const Join                     = 01;
   static const Version                  = 03;
-  static const Weather_Set_Rain         = 06;
   static const Weather_Set_Wind         = 07;
   static const Weather_Set_Lightning    = 08;
   static const Weather_Toggle_Breeze    = 09;

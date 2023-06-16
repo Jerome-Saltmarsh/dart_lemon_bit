@@ -93,4 +93,12 @@ class Isometric {
   void revive(){
     gamestream.network.sendClientRequest(ClientRequest.Isometric, IsometricRequest.Revive);
   }
+
+
+  void setRain(int value){
+    gamestream.network.sendClientRequest(
+        ClientRequest.Isometric,
+        '${IsometricRequest.Weather_Set_Rain.index} $value',
+    );
+  }
 }

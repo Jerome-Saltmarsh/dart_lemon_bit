@@ -352,6 +352,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   void customWriteGame() {
+    super.customWriteGame();
     dispatchFlagStatus(); // optimized
   }
 

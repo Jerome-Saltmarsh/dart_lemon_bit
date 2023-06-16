@@ -155,10 +155,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
 
-  void sendClientRequestWeatherSetRain(int value){
-    sendClientRequest(ClientRequest.Weather_Set_Rain, value);
-  }
-
   void sendClientRequestWeatherToggleBreeze(){
     sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
   }
