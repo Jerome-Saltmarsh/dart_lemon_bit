@@ -13,7 +13,7 @@ import 'capture_the_flag_player.dart';
 import 'capture_the_flag_player_ai.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
-  static const Target_Points = 3;
+  static const Target_Points = 11;
   static const Players_Per_Team = 5;
   static const Base_Radius = 64.0;
   static const Flag_Respawn_Duration = 500;
