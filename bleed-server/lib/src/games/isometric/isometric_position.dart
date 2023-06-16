@@ -31,16 +31,18 @@ class IsometricPosition with Position {
      ((this.y - position3.y).abs() < radius) ;
 
   bool withinDistance(double x, double y, double z, double radius){
-    final xDiff = (this.x - x).abs();
-    if (xDiff > radius) return false;
+    final radiusSquared = pow(radius, 2);
 
-    final yDiff = (this.y - y).abs();
-    if (yDiff > radius) return false;
+    final xDiffSquared = pow(this.x - x, 2);
+    if (xDiffSquared > radiusSquared) return false;
 
-    final zDiff = (this.z - z).abs();
-    if (zDiff > radius) return false;
+    final yDiffSquared = pow(this.y - y, 2);
+    if (yDiffSquared > radiusSquared) return false;
 
-    return ((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius * radius;
+    final zDiffSquared = pow(this.z - z, 2);
+    if (zDiffSquared > radiusSquared) return false;
+
+    return xDiffSquared + yDiffSquared + zDiffSquared <= radiusSquared;
   }
 
   static bool compare(IsometricPosition a, IsometricPosition b){

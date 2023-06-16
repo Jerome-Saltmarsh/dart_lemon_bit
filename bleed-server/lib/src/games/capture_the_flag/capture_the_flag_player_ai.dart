@@ -177,7 +177,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
     if (target == null) return;
 
-    if (getDistanceSquared(target) < 3000){
+    if (withinRadius(target, Node_Size)){
       pathEnd = 0;
       pathIndex = 0;
       destinationX = target.x;
