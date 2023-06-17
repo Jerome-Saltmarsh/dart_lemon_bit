@@ -62,7 +62,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var initialized = false;
   var id = 0;
 
-  var _experience = 0;
   var _level = 1;
   var _attributes = 0;
   var _energy = 10;
@@ -143,7 +142,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricCollider? get aimTarget => _aimTarget;
   int get level => _level;
   int get lookDirection => Direction.fromRadian(lookRadian);
-  int get experience => _experience;
   int get energy => _energy;
   int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
 
@@ -157,11 +155,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     if (_energy == 0) return 0;
     if (maxEnergy == 0) return 0;
     return _energy / maxEnergy;
-  }
-
-  double get experiencePercentage {
-    if (experienceRequiredForNextLevel <= 0) return 1.0;
-    return _experience / experienceRequiredForNextLevel;
   }
 
   set level(int value){
@@ -199,19 +192,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     if (_interactMode == value) return;
     _interactMode = value;
     writePlayerInteractMode();
-  }
-
-  set experience(int value) {
-    if (_experience == value) return;
-    assert (value >= 0);
-    _experience = value;
-    while (value >= experienceRequiredForNextLevel) {
-      value -= experienceRequiredForNextLevel;
-      level++;
-      game.customOnPlayerLevelGained(this);
-      writePlayerEvent(PlayerEvent.Level_Increased);
-    }
-    writePlayerExperiencePercentage();
   }
 
   void endInteraction(){
@@ -303,10 +283,10 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeBool(active);
   }
 
-  void writePlayerExperiencePercentage(){
+  void writePlayerExperiencePercentage(double value){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Experience_Percentage);
-    writePercentage(experiencePercentage);
+    writePercentage(value);
   }
 
   void writePlayerLevel(){
@@ -341,7 +321,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       writePlayerPosition();
       writePlayerSpawned();
       writePlayerLevel();
-      writePlayerExperiencePercentage();
       writePlayerHealth();
       writePlayerAlive();
       writePlayerInteractMode();
@@ -355,14 +334,12 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   void writeHighScore(){
     writeByte(ServerResponse.High_Score);
-    // writeUInt24(game.engine.highScore);
     writeUInt24(0);
   }
 
   void writePlayerStats(){
     refreshDamage();
     writePlayerLevel();
-    writePlayerExperiencePercentage();
     writePlayerHealth();
     writePlayerEnergy();
     writePlayerAlive();
