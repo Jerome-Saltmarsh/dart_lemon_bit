@@ -90,9 +90,15 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     if (pathFound){
       pathEnd = pathIndex;
-      pathIndex = 0;
-      destinationX = scene.getNodePositionX(path[0]);
-      destinationY = scene.getNodePositionY(path[0]);
+      // prevents the ai from running backwards initially
+      if (pathEnd > 1){
+        pathIndex = 1;
+      } else {
+        pathIndex = 0;
+      }
+
+      destinationX = scene.getNodePositionX(path[pathIndex]);
+      destinationY = scene.getNodePositionY(path[pathIndex]);
       assert(validatePath(scene));
     } else {
       pathIndex = 0;
