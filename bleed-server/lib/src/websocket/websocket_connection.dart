@@ -32,6 +32,7 @@ import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/combat/combat_player.dart';
+import 'package:bleed_server/src/games/survival/survival_player.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
@@ -355,22 +356,26 @@ class WebSocketConnection with ByteReader {
       case InventoryRequest.Deposit:
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (player is! SurvivalPlayer) return;
         player.inventoryDeposit(index);
         break;
       case InventoryRequest.Unequip:
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (player is! SurvivalPlayer) return;
         player.inventoryUnequip(index);
         break;
       case InventoryRequest.Buy:
         if (insufficientArgs(arguments, 3)) return;
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (player is! SurvivalPlayer) return;
         player.inventoryBuy(index);
         break;
       case InventoryRequest.Sell:
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (player is! SurvivalPlayer) return;
         player.inventorySell(index);
         break;
       case InventoryRequest.Toggle:
@@ -388,6 +393,7 @@ class WebSocketConnection with ByteReader {
           player.writeErrorInvalidInventoryIndex(index);
           return;
         }
+        if (player is! SurvivalPlayer) return;
         player.inventoryDrop(index);
         break;
       case InventoryRequest.Move:
@@ -398,11 +404,13 @@ class WebSocketConnection with ByteReader {
         if (indexTo == null) return errorInvalidClientRequest();
         if (indexFrom < 0) return errorInvalidClientRequest();
         if (indexTo < 0) return errorInvalidClientRequest();
+        if (player is! SurvivalPlayer) return;
         player.inventorySwapIndexes(indexFrom, indexTo);
         break;
       case InventoryRequest.Equip:
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (player is! SurvivalPlayer) return;
         if (index == player.equippedWeaponIndex){
           player.unequipWeapon();
           break;

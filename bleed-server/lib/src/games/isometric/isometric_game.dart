@@ -674,27 +674,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void playerReload(IsometricPlayer player) {
-    final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
-    final totalAmmoRemaining = player.inventoryGetTotalQuantityOfItemType(
-        equippedWeaponAmmoType);
-
-    if (totalAmmoRemaining == 0) {
-      player.writeGameError(GameError.Insufficient_Ammunition);
-      return;
-    }
-    var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
-    player.inventoryReduceItemTypeQuantity(
-      itemType: equippedWeaponAmmoType,
-      reduction: total,
-    );
-    player.inventorySetQuantityAtIndex(
-      quantity: total,
-      index: player.equippedWeaponIndex,
-    );
-    player.assignWeaponStateReloading();
-  }
-
   void playerThrowGrenade(IsometricPlayer player, {int damage = 10}) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
@@ -3098,47 +3077,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void customOnPlayerCollectGameObject(T player,
-      IsometricGameObject target) {
-
-    var quantityRemaining = target.quantity > 0 ? target.quantity : 1;
-    final maxQuantity = ItemType.getMaxQuantity(target.type);
-    if (maxQuantity > 1) {
-      for (var i = 0; i < player.inventory.length; i++) {
-        if (player.inventory[i] != target.type) continue;
-        if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity) {
-          player.inventoryQuantity[i] += quantityRemaining;
-          player.inventoryDirty = true;
-          deactivateCollider(target);
-          player.writePlayerEventItemAcquired(target.type);
-          clearCharacterTarget(player);
-          return;
-        }
-        quantityRemaining -= maxQuantity - player.inventoryQuantity[i];
-        player.inventoryQuantity[i] = maxQuantity;
-        player.inventoryDirty = true;
-      }
-    }
-
-    assert (quantityRemaining >= 0);
-    if (quantityRemaining <= 0) return;
-
-    final emptyInventoryIndex = player.getEmptyInventoryIndex();
-    if (emptyInventoryIndex != null) {
-      player.inventory[emptyInventoryIndex] = target.type;
-      player.inventoryQuantity[emptyInventoryIndex] =
-          min(quantityRemaining, maxQuantity);
-      player.inventoryDirty = true;
-      deactivateCollider(target);
-      player.writePlayerEventItemAcquired(target.type);
-      clearCharacterTarget(player);
-    } else {
-      clearCharacterTarget(player);
-      player.writePlayerEventInventoryFull();
-      return;
-    }
-    clearCharacterTarget(player);
-    return;
-  }
+      IsometricGameObject target) {}
 
   void reset() {
     for (var i = 0; i < gameObjects.length; i++) {
