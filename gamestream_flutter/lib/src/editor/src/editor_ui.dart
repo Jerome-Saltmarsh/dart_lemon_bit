@@ -478,7 +478,7 @@ class EditorUI {
       (int activeLightning) => buildIconWeatherControl(
             tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
-                gamestream.network.sendClientRequestWeatherSetLightning(lightning),
+                gamestream.isometric.setLightning(lightning),
             icon: GameIsometricUI.buildAtlasIconType(
                 convertLightningToIconType(lightning)),
             isActive: lightning == activeLightning,

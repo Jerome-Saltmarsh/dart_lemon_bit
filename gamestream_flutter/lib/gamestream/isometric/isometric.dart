@@ -90,15 +90,22 @@ class Isometric {
     gamestream.io.setCursorAction(CursorAction.None);
   }
 
-  void revive() => request(IsometricRequest.Revive);
+  void revive() =>
+      request(IsometricRequest.Revive);
 
-  void setRain(int value) => request(IsometricRequest.Weather_Set_Rain, value);
+  void setRain(int value) =>
+      request(IsometricRequest.Weather_Set_Rain, value);
 
-  void setWind(int value) => request(IsometricRequest.Weather_Set_Wind, value);
+  void setWind(int value) =>
+      request(IsometricRequest.Weather_Set_Wind, value);
+
+  void setLightning(int value) =>
+      request(IsometricRequest.Weather_Set_Lightning, value);
 
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,
         '${request.index} $message',
       );
+
 }

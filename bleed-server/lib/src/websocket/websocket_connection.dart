@@ -288,22 +288,6 @@ class WebSocketConnection with ByteReader {
         game.environment.toggleBreeze();
         break;
 
-      case ClientRequest.Weather_Set_Lightning:
-        if (!isLocalMachine && game is! GameEditor) return;
-        final index = parse(arguments[1]);
-        if (index == null || !isValidIndex(index, LightningType.values)) {
-          sendGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-        if (game is! IsometricGame) return;
-        game.environment.lightningType = LightningType.values[index];
-
-        if (game.environment.lightningType == LightningType.On){
-          game.environment.nextLightningFlash = 1;
-        }
-
-        break;
-
       case ClientRequest.GameObject:
         if (!isLocalMachine && game is! GameEditor) return;
         return handleGameObjectRequest(arguments);
@@ -1068,6 +1052,18 @@ class WebSocketConnection with ByteReader {
           return;
         }
         game.environment.windType = index;
+        break;
+
+      case IsometricRequest.Weather_Set_Lightning:
+        final index = parseArg2(arguments);
+        if (index == null || !isValidIndex(index, LightningType.values)) {
+          sendGameError(GameError.Invalid_Client_Request);
+          return;
+        }
+        game.environment.lightningType = LightningType.values[index];
+        if (game.environment.lightningType == LightningType.On){
+          game.environment.nextLightningFlash = 1;
+        }
         break;
     }
   }

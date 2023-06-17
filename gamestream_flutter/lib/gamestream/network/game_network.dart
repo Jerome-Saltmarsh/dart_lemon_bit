@@ -159,10 +159,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
   }
 
-  void sendClientRequestWeatherSetLightning(int value){
-    sendClientRequest(ClientRequest.Weather_Set_Lightning, value);
-  }
-
   void sendClientRequestEditorLoadGame(String name){
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }
