@@ -26,6 +26,7 @@ class SurvivalPlayer extends IsometricPlayer {
   var inventoryOpen = false;
   var inventoryDirty = false;
   var energy = 0;
+  var npcOptions = <String, Function> {};
 
   var storeItems = <int>[];
   var belt1_itemType = ItemType.Empty; // 1
@@ -764,8 +765,8 @@ class SurvivalPlayer extends IsometricPlayer {
       storeItems = [];
       writeStoreItems();
     }
-    if (options.isNotEmpty) {
-      options.clear();
+    if (npcOptions.isNotEmpty) {
+      npcOptions.clear();
     }
     if (inventoryOpen) {
       interactMode = InteractMode.Inventory;
@@ -780,11 +781,11 @@ class SurvivalPlayer extends IsometricPlayer {
 
   void writeNpcTalk({required String text, Map<String, Function>? options}){
     interactMode = InteractMode.Talking;
-    this.options = options ?? {'Goodbye' : endInteraction};
+    this.npcOptions = options ?? {'Goodbye' : endInteraction};
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);
-    writeByte(this.options.length);
-    for (final option in this.options.keys){
+    writeByte(this.npcOptions.length);
+    for (final option in this.npcOptions.keys){
       writeString(option);
     }
   }

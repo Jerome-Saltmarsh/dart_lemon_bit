@@ -59,7 +59,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// Warning - do not reference
   IsometricCollider? _aimTarget; // the currently highlighted character
   Account? account;
-  var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
   var nextEnergyGain = 0;
 

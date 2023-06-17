@@ -998,14 +998,15 @@ class WebSocketConnection with ByteReader {
       case IsometricRequest.Npc_Talk_Select_Option:
         if (player.dead) return errorPlayerDead();
         if (arguments.length != 2) return errorInvalidClientRequest();
+        if (player is! SurvivalPlayer) return;
         final index = parseArg2(arguments);
         if (index == null) {
           return errorInvalidClientRequest();
         }
-        if (index < 0 || index >= player.options.length){
+        if (index < 0 || index >= player.npcOptions.length){
           return errorInvalidClientRequest();
         }
-        final action = player.options.values.toList()[index];
+        final action = player.npcOptions.values.toList()[index];
         action.call();
         break;
 
