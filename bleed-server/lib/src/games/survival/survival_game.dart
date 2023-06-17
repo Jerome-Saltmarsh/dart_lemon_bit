@@ -1,9 +1,13 @@
 
 import 'dart:math';
 
+import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
+import 'package:bleed_server/src/games/isometric/isometric_ai.dart';
+import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
+import 'package:bleed_server/src/games/isometric/isometric_settings.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
 
 class SurvivalGame extends IsometricGame<SurvivalPlayer> {
@@ -21,6 +25,12 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
 
   @override
   int get maxPlayers => 12;
+
+  @override
+  void customOnPlayerDead(SurvivalPlayer player) {
+    super.customOnPlayerDead(player);
+    player.interactMode = InteractMode.None;
+  }
 
   @override
   void customOnPlayerCollectGameObject(
@@ -65,5 +75,79 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
     }
     clearCharacterTarget(player);
     return;
+  }
+
+  @override
+  void updatePlayer(SurvivalPlayer player) {
+    super.updatePlayer(player);
+
+    final target = player.target;
+
+    if (target is IsometricCollider) {
+      if (target is IsometricGameObject) {
+        if (!target.active) {
+          clearCharacterTarget(player);
+          return;
+        }
+        if (target.collectable || target.interactable) {
+          // if (getDistanceBetweenV3(player, target) >
+          if (player.getDistance3(target) >
+              IsometricSettings.Interact_Radius) {
+            setCharacterStateRunning(player);
+            return;
+          }
+          if (target.interactable) {
+            player.setCharacterStateIdle();
+            customOnPlayerInteractWithGameObject(player, target);
+            player.target = null;
+            return;
+          }
+          if (target.collectable) {
+            player.setCharacterStateIdle();
+            customOnPlayerCollectGameObject(player, target);
+            player.target = null;
+            return;
+          }
+        }
+      } else {
+        if (!target.active || !target.hitable) {
+          clearCharacterTarget(player);
+          return;
+        }
+      }
+
+      if (player.targetIsEnemy) {
+        player.lookAt(target);
+        if (player.withinAttackRange(target)) {
+          if (!player.weaponStateBusy) {
+            characterUseWeapon(player);
+          }
+          clearCharacterTarget(player);
+          return;
+        }
+        setCharacterStateRunning(player);
+        return;
+      }
+
+      if (target is IsometricAI && player.targetIsAlly) {
+        if (player.withinRadius(target, 100)) {
+          if (!target.deadOrBusy) {
+            target.face(player);
+          }
+          final onInteractedWith = target.onInteractedWith;
+          if (onInteractedWith != null) {
+            player.interactMode = InteractMode.Talking;
+            onInteractedWith(player);
+          }
+          clearCharacterTarget(player);
+          player.setCharacterStateIdle();
+          return;
+        }
+        setCharacterStateRunning(player);
+        return;
+      }
+      return;
+    }
+
   }
 }

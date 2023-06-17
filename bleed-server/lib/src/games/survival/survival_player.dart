@@ -43,6 +43,7 @@ class SurvivalPlayer extends IsometricPlayer {
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
+  var _interactMode = InteractMode.Inventory;
   var _equippedWeaponIndex = 0;
 
   final SurvivalGame game;
@@ -60,6 +61,7 @@ class SurvivalPlayer extends IsometricPlayer {
   int get equippedWeaponQuantity =>
       inventoryGetItemQuantity(equippedWeaponIndex);
 
+  int get interactMode => _interactMode;
 
   set equippedWeaponIndex(int index){
     if (_equippedWeaponIndex == index) return;
@@ -83,6 +85,12 @@ class SurvivalPlayer extends IsometricPlayer {
 
     unequipWeapon();
     return;
+  }
+
+  set interactMode(int value){
+    if (_interactMode == value) return;
+    _interactMode = value;
+    writePlayerInteractMode();
   }
 
   void playerReload(SurvivalPlayer player) {
@@ -803,4 +811,11 @@ class SurvivalPlayer extends IsometricPlayer {
     this.storeItems = values;
     writeStoreItems();
   }
+
+  void writePlayerInteractMode() {
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Interact_Mode);
+    writeByte(interactMode);
+  }
+
 }

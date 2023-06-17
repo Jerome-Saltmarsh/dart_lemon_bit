@@ -6,7 +6,6 @@ import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
-import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/common/src/node_orientation.dart';
@@ -116,6 +115,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// @override
   void customOnPlayerRevived(T player) {}
+
+  /// @override
+  void customOnCharacterDead(IsometricCharacter character) {}
 
   /// @override
   void customOnPlayerDead(T player) {}
@@ -1620,11 +1622,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.animationFrame = 0;
     deactivateCollider(character);
     clearCharacterTarget(character);
-
+    customOnCharacterDead(character);
     if (character is T) {
-      character.interactMode = InteractMode.None;
-      character.writePlayerAlive();
       customOnPlayerDead(character);
+      character.writePlayerAlive();
     }
   }
 
@@ -1759,72 +1760,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (target == null) return;
     if (!player.busy) {
       player.face(target);
-    }
-
-    if (target is IsometricCollider) {
-      if (target is IsometricGameObject) {
-        if (!target.active) {
-          clearCharacterTarget(player);
-          return;
-        }
-        if (target.collectable || target.interactable) {
-          // if (getDistanceBetweenV3(player, target) >
-          if (player.getDistance3(target) >
-              IsometricSettings.Interact_Radius) {
-            setCharacterStateRunning(player);
-            return;
-          }
-          if (target.interactable) {
-            player.setCharacterStateIdle();
-            customOnPlayerInteractWithGameObject(player, target);
-            player.target = null;
-            return;
-          }
-          if (target.collectable) {
-            player.setCharacterStateIdle();
-            customOnPlayerCollectGameObject(player, target);
-            player.target = null;
-            return;
-          }
-        }
-      } else {
-        if (!target.active || !target.hitable) {
-          clearCharacterTarget(player);
-          return;
-        }
-      }
-
-      if (player.targetIsEnemy) {
-        player.lookAt(target);
-        if (player.withinAttackRange(target)) {
-          if (!player.weaponStateBusy) {
-            characterUseWeapon(player);
-          }
-          clearCharacterTarget(player);
-          return;
-        }
-        setCharacterStateRunning(player);
-        return;
-      }
-
-      if (target is IsometricAI && player.targetIsAlly) {
-        if (player.withinRadius(target, 100)) {
-          if (!target.deadOrBusy) {
-            target.face(player);
-          }
-          final onInteractedWith = target.onInteractedWith;
-          if (onInteractedWith != null) {
-            player.interactMode = InteractMode.Talking;
-            onInteractedWith(player);
-          }
-          clearCharacterTarget(player);
-          player.setCharacterStateIdle();
-          return;
-        }
-        setCharacterStateRunning(player);
-        return;
-      }
-      return;
     }
 
     if (player.distanceFromPos2(target) <= player.velocitySpeed) {

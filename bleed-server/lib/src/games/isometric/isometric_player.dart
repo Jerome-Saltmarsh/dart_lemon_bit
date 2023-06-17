@@ -8,7 +8,6 @@ import 'package:bleed_server/common/src/enums/input_mode.dart';
 import 'package:bleed_server/common/src/environment_response.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
-import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
@@ -48,8 +47,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   late IsometricGame game;
   final runTarget = IsometricPosition();
   IsometricGameObject? editorSelectedGameObject;
-  /// Frames per energy rejuvenation
-  var debug = false;
   var name = generateRandomName();
   var sceneDownloaded = false;
   var initialized = false;
@@ -58,17 +55,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// Warning - do not reference
   IsometricCollider? _aimTarget; // the currently highlighted character
   Account? account;
-  var _interactMode = InteractMode.Inventory;
-
-  /// the key is the item_type and the value is its level
-  // final item_level = <int, int> {};
-  final item_quantity = <int, int> {};
-
-  var actionItemId = -1;
-
-  bool get aimTargetWithinInteractRadius => aimTarget != null
-      ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
-      : false;
 
   /// CONSTRUCTOR
   IsometricPlayer({
@@ -88,13 +74,17 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   /// GETTERS
-  ///
+
+  bool get aimTargetWithinInteractRadius => aimTarget != null
+      ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
+      : false;
+
+
   IsometricCollider? get aimTarget => _aimTarget;
   int get lookDirection => Direction.fromRadian(lookRadian);
 
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
-  int get interactMode => _interactMode;
   /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
   IsometricScene get scene => game.scene;
@@ -115,12 +105,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// METHODS
   void refreshDamage() {
     weaponDamage = game.getPlayerWeaponDamage(this);
-  }
-
-  set interactMode(int value){
-    if (_interactMode == value) return;
-    _interactMode = value;
-    writePlayerInteractMode();
   }
 
   void runToMouse(){
@@ -217,7 +201,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       writePlayerSpawned();
       writePlayerHealth();
       writePlayerAlive();
-      writePlayerInteractMode();
       writeHighScore();
     }
 
@@ -235,7 +218,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     refreshDamage();
     writePlayerHealth();
     writePlayerAlive();
-    writePlayerInteractMode();
   }
 
   void writePlayerWeaponCooldown() {
@@ -564,12 +546,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   void writeAngle(double radians){
     writeDouble(radians * radiansToDegrees);
-  }
-
-  void writePlayerInteractMode() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Interact_Mode);
-    writeByte(interactMode);
   }
 
   void writeGameProperties() {
