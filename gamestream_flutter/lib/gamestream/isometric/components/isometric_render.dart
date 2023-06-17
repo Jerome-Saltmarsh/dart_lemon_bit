@@ -415,22 +415,20 @@ class IsometricRender {
       case TargetCategory.Enemy:
         gamestream.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
 
-        if (gamestream.isometric.server.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (gamestream.isometric.server.getEquippedWeaponQuantity() <= 0){
-            engine.renderExternalCanvas(
-              canvas: canvas,
-              image: GameImages.atlas_icons,
-              srcX: 272,
-              srcY: 0,
-              srcWidth: 128,
-              srcHeight: 32,
-              dstX: engine.mousePositionX,
-              dstY: engine.mousePositionY - 70,
-            );
-          }
-        }
-
-
+        // if (gamestream.isometric.server.getEquippedWeaponConsumeType() != ItemType.Empty){
+        //   if (gamestream.isometric.server.getEquippedWeaponQuantity() <= 0){
+        //     engine.renderExternalCanvas(
+        //       canvas: canvas,
+        //       image: GameImages.atlas_icons,
+        //       srcX: 272,
+        //       srcY: 0,
+        //       srcWidth: 128,
+        //       srcHeight: 32,
+        //       dstX: engine.mousePositionX,
+        //       dstY: engine.mousePositionY - 70,
+        //     );
+        //   }
+        // }
         break;
     }
   }
