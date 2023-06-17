@@ -1331,14 +1331,6 @@ class GameIsometricUI {
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
       watch(gamestream.isometric.clientState.inventoryReads, (int reads) => builder());
 
-  static Widget buildWatchPlayerLevel() => watch(
-      gamestream.isometric.server.playerLevel,
-          (int level) => Tooltip(
-        child: watch(
-            gamestream.isometric.server.playerExperiencePercentage, buildPlayerExperienceBar),
-        message: "Level $level",
-      ));
-
   static Widget buildPlayerExperienceBar(double experience) =>
       buildDialogUIControl(
         child: Container(

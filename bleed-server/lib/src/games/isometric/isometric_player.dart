@@ -59,7 +59,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var initialized = false;
   var id = 0;
 
-  var _level = 1;
   var _attributes = 0;
   var _respawnTimer = 0;
 
@@ -122,9 +121,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// GETTERS
   ///
   IsometricCollider? get aimTarget => _aimTarget;
-  int get level => _level;
   int get lookDirection => Direction.fromRadian(lookRadian);
-  int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
 
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
@@ -133,13 +130,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
   IsometricScene get scene => game.scene;
 
-
-  set level(int value){
-    assert (value >= 1);
-    if (_level == value) return;
-    _level = value;
-    writePlayerLevel();
-  }
 
   set aimTarget(IsometricCollider? collider) {
     if (_aimTarget == collider) return;
@@ -259,12 +249,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writePercentage(value);
   }
 
-  void writePlayerLevel(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Level);
-    writeUInt16(level);
-  }
-
   void writePlayerAimAngle(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Angle);
@@ -290,7 +274,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       game.customInitPlayer(this);
       writePlayerPosition();
       writePlayerSpawned();
-      writePlayerLevel();
       writePlayerHealth();
       writePlayerAlive();
       writePlayerInteractMode();
@@ -309,7 +292,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   void writePlayerStats(){
     refreshDamage();
-    writePlayerLevel();
     writePlayerHealth();
     writePlayerAlive();
     writePlayerInteractMode();

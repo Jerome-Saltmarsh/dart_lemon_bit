@@ -393,9 +393,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Accuracy:
         isometric.server.playerAccuracy.value = readPercentage();
         break;
-      case ApiPlayer.Level:
-        isometric.server.playerLevel.value = readUInt16();
-        break;
       case ApiPlayer.Attributes:
         isometric.server.playerAttributes.value = readUInt16();
         break;

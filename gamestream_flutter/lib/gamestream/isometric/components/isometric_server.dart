@@ -33,7 +33,6 @@ class IsometricServer {
   final playerDamage = Watch(0);
   final playerCredits = Watch(0);
   final playerExperiencePercentage = Watch(0.0);
-  final playerLevel = Watch(1);
   final playerAccuracy = Watch(1.0);
   final playerAttributes = Watch(0);
   final sceneEditable = Watch(false);

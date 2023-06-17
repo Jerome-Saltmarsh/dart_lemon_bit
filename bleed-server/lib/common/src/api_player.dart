@@ -5,7 +5,6 @@ class ApiPlayer {
   static const Experience             = 02;
   static const Alive                  = 03;
   static const Experience_Percentage  = 04;
-  static const Level                  = 05;
   static const Aim_Angle              = 06;
   static const Message                = 07;
   static const Weapon_Cooldown        = 08;
