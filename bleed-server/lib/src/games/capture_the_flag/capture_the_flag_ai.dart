@@ -178,8 +178,16 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       case CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own:
         target = flagSpawnOwn;
         break;
-      case CaptureTheFlagAIDecision.Support_Ally_Carrying_Flag_Own:
-        target = flagOwn.heldBy;
+      case CaptureTheFlagAIDecision.Run_To_Flag_Own:
+        if (flagOwnRespawning) {
+          target = flagSpawnOwn;
+          break;
+        }
+        if (withinRadius(flagOwn, 50)) {
+          idle();
+        } else {
+          target = flagOwn;
+        }
         break;
       default:
         throw Exception('not implemented');
@@ -269,8 +277,13 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   CaptureTheFlagAIDecision getDecisionOffensive(){
     if (flagOwnCapturedByEnemy)
       return CaptureTheFlagAIDecision.Capture_Flag_Own;
-    if (flagOwnCapturedByAlly)
-      return CaptureTheFlagAIDecision.Support_Ally_Carrying_Flag_Own;
+    if (flagOwnCapturedByAlly) {
+      if (withinRadius(flagOwn, 250)){
+        return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
+      }
+      return CaptureTheFlagAIDecision.Run_To_Flag_Own;
+    }
+
     if (flagOwnDropped)
       return CaptureTheFlagAIDecision.Capture_Flag_Own;
     if (awayFromFlagOwnSpawn)
@@ -282,7 +295,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   CaptureTheFlagAIDecision getDecisionDefensive() {
-    if (enemyFlagRespawning)
+    if (flagEnemyRespawning)
       return getDecisionOffensive();
     if (enemyWithinViewRange)
       return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
@@ -370,7 +383,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Allie;
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
   bool get awayFromFlagOwnSpawn => !withinRadius(flagSpawnOwn, 100);
-  bool get enemyFlagRespawning => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
+  bool get flagOwnRespawning => flagOwn.status == CaptureTheFlagFlagStatus.Respawning;
+  bool get flagEnemyRespawning => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
   bool get holdingFlagAny => holdingFlagEnemy || holdingFlagOwn;
   bool get holdingFlagEnemy => flagEnemy.heldBy == this;
   bool get holdingFlagOwn => flagOwn.heldBy == this;
