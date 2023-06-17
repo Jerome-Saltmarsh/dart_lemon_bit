@@ -8,28 +8,36 @@ import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
+import 'package:lemon_math/functions/clamp.dart';
 
 import 'game_combat.dart';
 
 class CombatPlayer extends IsometricPlayer {
 
+  var energyGainRate = 16;
   var powerCooldown = 0;
   var weaponPrimary = ItemType.Empty;
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
+  var maxEnergy = 10;
 
+  var _energy = 10;
   var _powerType = PowerType.None;
   var _credits = 0;
 
   final GameCombat game;
 
-  CombatPlayer(this.game) : super(game: game);
+  CombatPlayer(this.game) : super(game: game) {
+    maxEnergy = energy;
+    _energy = maxEnergy;
+  }
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
   bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
 
   int get score => _credits;
   int get powerType => _powerType;
+  int get energy => _energy;
 
   set powerType(int value) {
     if (_powerType == value) return;
@@ -44,6 +52,19 @@ class CombatPlayer extends IsometricPlayer {
     _credits = max(value, 0);
     writePlayerCredits();
     game.customOnPlayerCreditsChanged(this);
+  }
+
+  set energy(int value) {
+    final clampedValue = clamp(value, 0, maxEnergy);
+    if (_energy == clampedValue) return;
+    _energy = clampedValue;
+    writePlayerEnergy();
+  }
+
+  double get magicPercentage {
+    if (_energy == 0) return 0;
+    if (maxEnergy == 0) return 0;
+    return _energy / maxEnergy;
   }
 
   void writePlayerWeapons() {
@@ -164,5 +185,12 @@ class CombatPlayer extends IsometricPlayer {
     writeUInt8(ApiPlayers.Score);
     writeUInt24(player.id);
     writeUInt24(player.score);
+  }
+
+  void writePlayerEnergy() {
+    writeUInt8(ServerResponse.Api_Player);
+    writeUInt8(ApiPlayer.Energy);
+    if (maxEnergy == 0) return writeByte(0);
+    writePercentage(energy / maxEnergy);
   }
 }

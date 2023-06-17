@@ -7,7 +7,6 @@ import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/enums/perk_type.dart';
-import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
@@ -27,7 +26,6 @@ import 'package:bleed_server/src/utilities/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
-import '../../game/player.dart';
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
@@ -179,9 +177,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// @override
   void customOnPlayerAimTargetChanged(IsometricPlayer player,
       IsometricCollider? collider) {}
-
-  /// @override
-  void customOnPlayerPerkTypeChanged(IsometricPlayer player) {}
 
   /// @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
@@ -484,24 +479,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.deadBusyOrWeaponStateBusy) return;
 
     final weaponType = character.weaponType;
-
-    if (character is IsometricPlayer) {
-        final cost = getCharacterWeaponEnergyCost(character);
-        if (character.energy < cost) {
-          character.writeGameError(GameError.Insufficient_Energy);
-          return;
-        }
-        character.energy -= cost;
-    } else if (character is IsometricAI) {
-      if (ItemType.isTypeWeaponFirearm(weaponType)) {
-        if (character.rounds <= 0) {
-          character.assignWeaponStateReloading();
-          character.rounds = ItemType.getMaxQuantity(weaponType);
-          return;
-        }
-        character.rounds--;
-      }
-    }
 
     if (character.buffInvisible) {
       character.buffInvisible = false;
@@ -1413,7 +1390,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.setCharacterStateSpawning();
     activateCollider(player);
     player.health = player.maxHealth;
-    player.energy = player.maxEnergy;
     clearCharacterTarget(player);
 
     if (player.inventoryOpen) {
@@ -1800,28 +1776,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (player.dead) return;
     if (!player.active) return;
-
-    if (player.energy < player.maxEnergy) {
-      player.nextEnergyGain--;
-      if (player.nextEnergyGain <= 0) {
-        player.energy++;
-        player.nextEnergyGain = player.energyGainRate;
-      }
-    }
-
-    // if (player.buffDuration > 0) {
-    //   player.buffDuration--;
-    //   if (player.buffDuration == 0) {
-    //     switch (player.powerType) {
-    //       case PowerType.Shield:
-    //         player.buffInvincible = false;
-    //         break;
-    //       case PowerType.Invisible:
-    //         player.buffInvisible = false;
-    //         break;
-    //     }
-    //   }
-    // }
 
 
     if (player.idling && !player.weaponStateBusy) {

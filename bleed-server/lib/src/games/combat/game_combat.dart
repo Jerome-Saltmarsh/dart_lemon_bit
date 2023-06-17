@@ -104,6 +104,14 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       }
     }
 
+    if (player.energy < player.maxEnergy) {
+      player.nextEnergyGain--;
+      if (player.nextEnergyGain <= 0) {
+        player.energy++;
+        player.nextEnergyGain = player.energyGainRate;
+      }
+    }
+
     if (player.buffDuration > 0) {
       player.buffDuration--;
       if (player.buffDuration == 0) {
@@ -584,8 +592,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     }
   }
 
-  @override
-  void customOnPlayerPerkTypeChanged(IsometricPlayer player) {
+  void customOnPlayerPerkTypeChanged(CombatPlayer player) {
     player.maxHealth = player.perkType == PerkType.Health
         ? Player_Health_Perk
         : Player_Health;
@@ -659,6 +666,119 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   void customOnPlayerCreditsChanged(CombatPlayer player) {
     for (final otherPlayer in players) {
       otherPlayer.writeApiPlayersPlayerScore(player);
+    }
+  }
+
+  @override
+  void characterUseWeapon(IsometricCharacter character) {
+    if (character.deadBusyOrWeaponStateBusy) return;
+
+    final weaponType = character.weaponType;
+
+    if (character is CombatPlayer) {
+      final cost = getCharacterWeaponEnergyCost(character);
+      if (character.energy < cost) {
+        character.writeGameError(GameError.Insufficient_Energy);
+        return;
+      }
+      character.energy -= cost;
+    } else if (character is IsometricAI) {
+      if (ItemType.isTypeWeaponFirearm(weaponType)) {
+        if (character.rounds <= 0) {
+          character.assignWeaponStateReloading();
+          character.rounds = ItemType.getMaxQuantity(weaponType);
+          return;
+        }
+        character.rounds--;
+      }
+    }
+
+    if (character.buffInvisible) {
+      character.buffInvisible = false;
+    }
+
+    if (weaponType == ItemType.Weapon_Thrown_Grenade) {
+      if (character is IsometricPlayer) {
+        playerThrowGrenade(character, damage: 10);
+        return;
+      }
+      throw Exception('ai cannot throw grenades');
+    }
+
+    if (weaponType == ItemType.Weapon_Ranged_Teleport) {
+      if (character is IsometricPlayer) {
+        characterTeleport(
+          character: character,
+          x: character.mouseGridX,
+          y: character.mouseGridY,
+          range: ItemType.getRange(ItemType.Weapon_Ranged_Teleport),
+        );
+      }
+      return;
+    }
+
+    if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
+      if (character is IsometricPlayer) {
+        playerUseFlamethrower(character);
+        return;
+      }
+      throw Exception('ai cannot use flamethrower');
+    }
+
+    if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
+      if (character is IsometricPlayer) {
+        playerUseBazooka(character);
+      }
+      return;
+    }
+
+    if (weaponType == ItemType.Weapon_Ranged_Minigun) {
+      if (character is IsometricPlayer) {
+        playerUseMinigun(character);
+      }
+      return;
+    }
+
+    if (ItemType.isTypeWeaponFirearm(weaponType)) {
+      characterFireWeapon(character);
+      // if (character is Player){
+      //   if (character.buffNoRecoil > 0) return;
+      // }
+      character.accuracy += 0.25;
+      return;
+    }
+
+    if (ItemType.isTypeWeaponMelee(weaponType)) {
+      characterAttackMelee(character);
+      return;
+    }
+
+    switch (weaponType) {
+      case ItemType.Weapon_Ranged_Crossbow:
+        spawnProjectileArrow(
+          damage: character.weaponDamage,
+          range: ItemType.getRange(weaponType),
+          src: character,
+          angle: character.lookRadian,
+        );
+        character.assignWeaponStateFiring();
+        return;
+      case ItemType.Weapon_Melee_Staff:
+        characterSpawnProjectileFireball(
+          character,
+          angle: character.lookRadian,
+        );
+        character.assignWeaponStateFiring();
+        break;
+      case ItemType.Weapon_Ranged_Bow:
+        spawnProjectileArrow(
+          src: character,
+          damage: character.weaponDamage,
+          range: ItemType.getRange(weaponType),
+          angle: character.lookRadian,
+        );
+        character.assignWeaponStateFiring();
+        break;
     }
   }
 }

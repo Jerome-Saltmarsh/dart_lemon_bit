@@ -52,10 +52,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   final runTarget = IsometricPosition();
   IsometricGameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
-  var energyGainRate = 16;
   var debug = false;
   var textDuration = 0;
-  var maxEnergy = 10;
   var text = "";
   var name = generateRandomName();
   var sceneDownloaded = false;
@@ -64,7 +62,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   var _level = 1;
   var _attributes = 0;
-  var _energy = 10;
   var _respawnTimer = 0;
 
   int get respawnTimer => _respawnTimer;
@@ -91,7 +88,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
      if (!PerkType.values.contains(value)) return;
      if (_perkType == value) return;
      _perkType = value;
-     game.customOnPlayerPerkTypeChanged(this);
      writeApiPlayerPerkType();
   }
 
@@ -133,8 +129,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeGameType();
     writePlayerTeam();
     id = game.playerId++;
-    maxEnergy = energy;
-    _energy = maxEnergy;
   }
 
   /// GETTERS
@@ -142,7 +136,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricCollider? get aimTarget => _aimTarget;
   int get level => _level;
   int get lookDirection => Direction.fromRadian(lookRadian);
-  int get energy => _energy;
   int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
 
   double get mouseGridX => (mouse.x + mouse.y) + z;
@@ -151,11 +144,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
   IsometricScene get scene => game.scene;
-  double get magicPercentage {
-    if (_energy == 0) return 0;
-    if (maxEnergy == 0) return 0;
-    return _energy / maxEnergy;
-  }
+
 
   set level(int value){
     assert (value >= 1);
@@ -174,13 +163,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writePlayerAimTargetName();
     writePlayerAimTargetQuantity();
     game.customOnPlayerAimTargetChanged(this, collider);
-  }
-
-  set energy(int value) {
-    final clampedValue = clamp(value, 0, maxEnergy);
-    if (_energy == clampedValue) return;
-    _energy = clampedValue;
-    writePlayerEnergy();
   }
 
   /// METHODS
@@ -341,7 +323,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     refreshDamage();
     writePlayerLevel();
     writePlayerHealth();
-    writePlayerEnergy();
     writePlayerAlive();
     writePlayerInteractMode();
   }
@@ -788,18 +769,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeInt16(value.toInt());
   }
 
-  void writePlayerEnergy() {
-    writeUInt8(ServerResponse.Api_Player);
-    writeUInt8(ApiPlayer.Energy);
-    if (maxEnergy == 0) return writeByte(0);
-    writePercentage(energy / maxEnergy);
-    // if (maxEnergy <= 0) {
-    //   writeByte(0);
-    // }
-    // writePercentage(value)
-    // writeUInt16(energy);
-    // writeUInt16(maxEnergy);
-  }
 
   void writeGameObject(IsometricGameObject gameObject){
     writeUInt8(ServerResponse.GameObject);

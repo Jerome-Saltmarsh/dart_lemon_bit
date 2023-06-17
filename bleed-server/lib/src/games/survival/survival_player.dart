@@ -24,6 +24,7 @@ class SurvivalPlayer extends IsometricPlayer {
   final inventoryUpgrades = Uint16List(inventory_size);
 
   var inventoryDirty = false;
+  var energy = 0;
 
   var belt1_itemType = ItemType.Empty; // 1
   var belt2_itemType = ItemType.Empty; // 2
