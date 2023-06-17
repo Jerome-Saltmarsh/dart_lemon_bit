@@ -516,4 +516,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void resetNextGameCountDown() {
     nextGameCountDown.value = Next_Game_Duration;
   }
+
+  @override
+  void customOnCharacterDead(IsometricCharacter character) {
+    super.customOnCharacterDead(character);
+
+    if (character is CaptureTheFlagPlayerAI){
+      character.onDeath();
+    }
+  }
 }

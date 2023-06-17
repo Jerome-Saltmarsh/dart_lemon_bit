@@ -16,15 +16,11 @@ import 'capture_the_flag_game.dart';
 class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   static var _idCount = 0;
 
+  var viewRange = 500.0;
   var id = _idCount++;
   CaptureTheFlagAIRole role;
   CaptureTheFlagCharacterClass characterClass;
   late final CaptureTheFlagGame game;
-
-  int get nodeIndex => game.scene.getNodeIndexV3(this);
-  int get pathNodeIndex => path[pathIndex];
-  double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
-
   IsometricPosition? targetPrevious;
 
   CaptureTheFlagPlayerAI({
@@ -61,6 +57,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
     updateWeaponRange();
   }
+  int get nodeIndex => game.scene.getNodeIndexV3(this);
+  int get pathNodeIndex => path[pathIndex];
+  double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
@@ -101,14 +100,14 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       return;
     }
 
-    setCharacterStateIdle();
+    throw Exception();
   }
 
   void captureFlagOwn(){
     captureFlag(flagOwn);
   }
 
-  void targetNearestEnemy(){
+  void attackNearestEnemy(){
     target = getNearestEnemy();
   }
 
@@ -129,11 +128,30 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void customUpdate() {
     if (deadOrBusy) return;
 
-    // perceive and make a decision
-    updateBehaviorTree();
+    perceive();
+    decide();
+    execute();
+  }
+
+  void perceive(){
+
+  }
+
+  void decide(){
+
+    if (holdingFlagAny)
+      return runToBaseOwn();
+
+    if (roleOffensive)
+      return behaveDefensively();
+
+    if (roleDefensive)
+      return behaveOffensively();
+  }
+
+  void execute() {
     updatePathIndexAndDestination();
 
-    // execute the decision made
     if (enemyTargetAttackable)
       return attackTargetEnemy();
     if (!atDestination) {
@@ -217,36 +235,19 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   bool get atDestination => getDestinationDistanceSquared() < 150;
 
-  /// essentially it just sets the target
-  void updateBehaviorTree(){
-
-    if (holdingFlagAny)
-      return runToBaseOwn();
-
-    if (targetIsAlliedCharacter){
-      return protectAllyTarget();
-    }
-
-    if (roleOffensive) {
-      return updateRoleOffense();
-    }
-
-    updateRoleDefense();
-  }
-
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
 
   void protectAllyTarget(){
 
   }
 
-  void protectAllyCarryingOwnFlag(){
+  void protectAllyCarryingFlagOwn(){
 
      if (flagOwnFurtherThan200()){
         return targetFlagOwn();
      }
      if (enemyWithinRange(200))
-       return targetNearestEnemy();
+       return attackNearestEnemy();
 
      setCharacterStateIdle();
   }
@@ -257,31 +258,32 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     target = flagOwn;
   }
 
-  void updateRoleDefense(){
+  void behaveOffensively(){
     if (flagOwnCapturedByEnemy)
       return captureFlagOwn();
     if (flagOwnCapturedByAlly)
-      return protectAllyCarryingOwnFlag();
+      return protectAllyCarryingFlagOwn();
     if (flagOwnDropped)
       return captureFlagOwn();
     if (awayFromFlagOwnSpawn)
-      return targetFlagOwnSpawn();
-    if (enemyWithinRange(500))
-      return targetNearestEnemy();
+      return defendFlagOwnSpawn();
+    if (enemyWithinViewRange)
+      return attackNearestEnemy();
 
     setCharacterStateIdle();
   }
 
-  void targetFlagOwnSpawn() {
+
+  void defendFlagOwnSpawn() {
     target = flagSpawnOwn;
   }
 
-  void updateRoleOffense() {
+  void behaveDefensively() {
     if (enemyFlagRespawning)
-      return updateRoleDefense();
+      return behaveOffensively();
 
-    if (enemyWithinRange(500))
-      return targetNearestEnemy();
+    if (enemyWithinViewRange)
+      return attackNearestEnemy();
     if (enemyFlagCapturable)
       return captureEnemyFlag();
 
@@ -311,6 +313,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   bool get enemyFlagCapturable => enemyFlagStatusAtBase || enemyFlagStatusDropped;
 
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
+  bool get roleDefensive => role == CaptureTheFlagAIRole.Defense;
 
   bool get enemyTargetAttackable {
     final target = this.target;
@@ -355,6 +358,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     return getDistanceSquared(target) < weaponRangeSquared;
   }
 
+  bool get enemyWithinViewRange => enemyWithinRange(viewRange);
   bool get flagOwnCapturedByEnemy => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
   bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Allie;
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
@@ -390,6 +394,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   void useWeapon() => game.characterUseWeapon(this);
+
+  void onDeath() {
+    pathIndex = 0;
+    pathEnd = 0;
+    target = null;
+    targetPrevious = null;
+  }
 }
 
 enum CaptureTheFlagAIRole {
