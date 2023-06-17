@@ -51,8 +51,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricGameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
   var debug = false;
-  var textDuration = 0;
-  var text = "";
   var name = generateRandomName();
   var sceneDownloaded = false;
   var initialized = false;
@@ -61,7 +59,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// Warning - do not reference
   IsometricCollider? _aimTarget; // the currently highlighted character
   Account? account;
-  var storeItems = <int>[];
   var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
   var nextEnergyGain = 0;
@@ -129,14 +126,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     if (_interactMode == value) return;
     _interactMode = value;
     writePlayerInteractMode();
-  }
-
-  void setStoreItems(List<int> values){
-    if (values.isNotEmpty){
-      interactMode = InteractMode.Trading;
-    }
-    this.storeItems = values;
-    writeStoreItems();
   }
 
   void runToMouse(){
@@ -586,12 +575,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   void writeAngle(double radians){
     writeDouble(radians * radiansToDegrees);
-  }
-
-  void writeStoreItems(){
-    writeByte(ServerResponse.Store_Items);
-    writeUInt16(storeItems.length);
-    storeItems.forEach(writeUInt16);
   }
 
   void writePlayerInteractMode() {

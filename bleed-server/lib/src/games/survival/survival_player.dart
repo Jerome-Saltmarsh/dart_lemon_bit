@@ -27,6 +27,7 @@ class SurvivalPlayer extends IsometricPlayer {
   var inventoryDirty = false;
   var energy = 0;
 
+  var storeItems = <int>[];
   var belt1_itemType = ItemType.Empty; // 1
   var belt2_itemType = ItemType.Empty; // 2
   var belt3_itemType = ItemType.Empty; // 3
@@ -57,6 +58,7 @@ class SurvivalPlayer extends IsometricPlayer {
 
   int get equippedWeaponQuantity =>
       inventoryGetItemQuantity(equippedWeaponIndex);
+
 
   set equippedWeaponIndex(int index){
     if (_equippedWeaponIndex == index) return;
@@ -787,4 +789,17 @@ class SurvivalPlayer extends IsometricPlayer {
     }
   }
 
+  void writeStoreItems(){
+    writeByte(ServerResponse.Store_Items);
+    writeUInt16(storeItems.length);
+    storeItems.forEach(writeUInt16);
+  }
+
+  void setStoreItems(List<int> values){
+    if (values.isNotEmpty){
+      interactMode = InteractMode.Trading;
+    }
+    this.storeItems = values;
+    writeStoreItems();
+  }
 }
