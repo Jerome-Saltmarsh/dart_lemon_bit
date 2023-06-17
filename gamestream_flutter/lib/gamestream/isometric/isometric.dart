@@ -102,6 +102,12 @@ class Isometric {
   void setLightning(int value) =>
       request(IsometricRequest.Weather_Set_Lightning, value);
 
+  void toggleBreeze() =>
+      request(IsometricRequest.Weather_Toggle_Breeze);
+
+  void setHour(int value) =>
+      request(IsometricRequest.Time_Set_Hour, value);
+
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,

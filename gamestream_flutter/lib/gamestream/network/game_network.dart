@@ -155,10 +155,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
 
-  void sendClientRequestWeatherToggleBreeze(){
-    sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
-  }
-
   void sendClientRequestEditorLoadGame(String name){
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }
@@ -174,12 +170,6 @@ class GameNetwork {
 
   void sendClientRequestNpcSelectTopic(int index) =>
       sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);
-
-  void sendClientRequestTimeSetHour(int hour){
-    assert(hour >= 0);
-    assert(hour <= 24);
-    sendClientRequest(ClientRequest.Time_Set_Hour, hour);
-  }
 
   void sendClientRequestSetBlock({
     required int index,

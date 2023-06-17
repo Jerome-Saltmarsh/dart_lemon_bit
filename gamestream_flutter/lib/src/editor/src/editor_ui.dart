@@ -569,7 +569,7 @@ class EditorUI {
             child: container(
               width: buttonWidth,
               color: purple4,
-              action: () => gamestream.network.sendClientRequestTimeSetHour(i),
+              action: () => gamestream.isometric.setHour(i),
             ),
           ),
         );
@@ -581,7 +581,7 @@ class EditorUI {
             child: container(
               width: buttonWidth,
               color: purple3,
-              action: () => gamestream.network.sendClientRequestTimeSetHour(i),
+              action: () => gamestream.isometric.setHour(i),
             ),
           ),
         );

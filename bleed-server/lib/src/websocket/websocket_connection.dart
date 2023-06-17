@@ -282,12 +282,6 @@ class WebSocketConnection with ByteReader {
         game.setCharacterStateDead(player);
         break;
 
-      case ClientRequest.Weather_Toggle_Breeze:
-        if (!isLocalMachine && game is! GameEditor) return;
-        if (game is! IsometricGame) return;
-        game.environment.toggleBreeze();
-        break;
-
       case ClientRequest.GameObject:
         if (!isLocalMachine && game is! GameEditor) return;
         return handleGameObjectRequest(arguments);
@@ -320,14 +314,6 @@ class WebSocketConnection with ByteReader {
 
       case ClientRequest.Editor_Load_Game:
           _player = engine.joinGameEditor(name: arguments[1]);
-          break;
-
-      case ClientRequest.Time_Set_Hour:
-        if (!isLocalMachine && game is! GameEditor) return;
-          final hour = parse(arguments[1]);
-          if (hour == null) return errorInvalidClientRequest();
-          if (game is! IsometricGame) return;
-          game.setHourMinutes(hour, 0);
           break;
 
       case ClientRequest.Isometric:
@@ -1064,6 +1050,16 @@ class WebSocketConnection with ByteReader {
         if (game.environment.lightningType == LightningType.On){
           game.environment.nextLightningFlash = 1;
         }
+        break;
+
+      case IsometricRequest.Weather_Toggle_Breeze:
+        game.environment.toggleBreeze();
+        break;
+
+      case IsometricRequest.Time_Set_Hour:
+        final hour = parseArg2(arguments);
+        if (hour == null) return;
+        game.setHourMinutes(hour, 0);
         break;
     }
   }

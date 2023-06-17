@@ -2,9 +2,7 @@ class ClientRequest {
   static const Update                   = 00;
   static const Join                     = 01;
   static const Version                  = 03;
-  static const Weather_Toggle_Breeze    = 09;
   static const Editor_Load_Game         = 10;
-  static const Time_Set_Hour            = 11;
   static const Npc_Talk_Select_Option   = 12;
   static const GameObject               = 13;
   static const Node                     = 14;
