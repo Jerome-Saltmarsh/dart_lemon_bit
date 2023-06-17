@@ -534,7 +534,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   void playerUsePower(CombatPlayer player){
     if (player.powerCooldown > 0) return;
     if (player.deadBusyOrWeaponStateBusy) return;
-    player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
+    player.powerCooldown = player.getPlayerPowerTypeCooldownTotal();
     player.writePlayerPower();
     player.writePlayerEvent(PlayerEvent.Power_Used);
 

@@ -4,9 +4,11 @@ import 'dart:math';
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/api_players.dart';
 import 'package:bleed_server/common/src/enums/item_group.dart';
+import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
+import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:lemon_math/functions/clamp.dart';
 
@@ -24,6 +26,7 @@ class CombatPlayer extends IsometricPlayer {
   var _energy = 10;
   var _powerType = PowerType.None;
   var _credits = 0;
+  var _perkType = PerkType.None;
 
   final GameCombat game;
 
@@ -38,6 +41,15 @@ class CombatPlayer extends IsometricPlayer {
   int get score => _credits;
   int get powerType => _powerType;
   int get energy => _energy;
+  int get perkType => _perkType;
+
+  set perkType(int value) {
+    assert (PerkType.values.contains(value));
+    if (!PerkType.values.contains(value)) return;
+    if (_perkType == value) return;
+    _perkType = value;
+    writeApiPlayerPerkType();
+  }
 
   set powerType(int value) {
     if (_powerType == value) return;
@@ -192,5 +204,18 @@ class CombatPlayer extends IsometricPlayer {
     writeUInt8(ApiPlayer.Energy);
     if (maxEnergy == 0) return writeByte(0);
     writePercentage(energy / maxEnergy);
+  }
+
+  void writeApiPlayerPerkType(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.PerkType);
+    writeByte(perkType);
+  }
+
+  int getPlayerPowerTypeCooldownTotal() {
+    if (perkType == PerkType.Power) {
+      return Engine.Frames_Per_Second * 8;
+    }
+    return Engine.Frames_Per_Second * 10;
   }
 }

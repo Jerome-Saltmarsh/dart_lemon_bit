@@ -6,7 +6,6 @@ import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/enums/input_mode.dart';
 import 'package:bleed_server/common/src/enums/item_group.dart';
-import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/environment_response.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
@@ -79,17 +78,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
      writeApiPlayerRespawnTimer();
   }
 
-  var _perkType = PerkType.None;
-
-  int get perkType => _perkType;
-
-  set perkType(int value) {
-     assert (PerkType.values.contains(value));
-     if (!PerkType.values.contains(value)) return;
-     if (_perkType == value) return;
-     _perkType = value;
-     writeApiPlayerPerkType();
-  }
 
   /// Warning - do not reference
   // GameIsometric game;
@@ -855,12 +843,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       angle: gameObject.velocityAngle,
     );
     writeUInt16(gameObject.type);
-  }
-
-  void writeApiPlayerPerkType(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.PerkType);
-    writeByte(perkType);
   }
 
   void writeApiPlayerRespawnTimer(){

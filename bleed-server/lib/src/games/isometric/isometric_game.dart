@@ -6,7 +6,6 @@ import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/enums/item_group.dart';
-import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
@@ -3077,13 +3076,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchGameEventGameObjectDestroyed(gameObject);
     deactivateCollider(gameObject);
     customOnGameObjectDestroyed(gameObject);
-  }
-
-  int getPlayerPowerTypeCooldownTotal(IsometricPlayer player) {
-    if (player.perkType == PerkType.Power) {
-      return Engine.Frames_Per_Second * 8;
-    }
-    return Engine.Frames_Per_Second * 10;
   }
 
   void deactivatePlayer(IsometricPlayer player) {
