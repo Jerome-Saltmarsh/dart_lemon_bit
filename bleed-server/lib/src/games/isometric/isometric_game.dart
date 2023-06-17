@@ -88,10 +88,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customInitPlayer(IsometricPlayer player) {}
 
   /// @override
-  void customUpdatePlayer(IsometricPlayer player) {}
+  void customUpdatePlayer(T player) {}
 
   /// @override
-  void customOnPlayerInteractWithGameObject(IsometricPlayer player,
+  void customOnPlayerInteractWithGameObject(T player,
       IsometricGameObject gameObject) {}
 
   /// @override
@@ -141,11 +141,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {}
 
   /// @override
-  void customOnCollisionBetweenPlayerAndOther(IsometricPlayer player,
+  void customOnCollisionBetweenPlayerAndOther(T player,
       IsometricCollider collider) {}
 
   /// @override
-  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player,
+  void customOnCollisionBetweenPlayerAndGameObject(T player,
       IsometricGameObject gameObject) {}
 
   /// @override
@@ -399,50 +399,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
     characterUseWeapon(character);
-  }
-
-  void playerEquipNextItemGroup(IsometricPlayer player, ItemGroup itemGroup) {
-    if (!player.canChangeEquipment) return;
-
-    final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
-
-    if (equippedItemType == ItemType.Empty) {
-      playerEquipFirstItemTypeFromItemGroup(player, itemGroup);
-      return;
-    }
-
-    final equippedWeaponItemGroup = ItemType.getItemGroup(player.weaponType);
-
-    if (equippedWeaponItemGroup != itemGroup) {
-      characterEquipItemType(
-          player, player.getEquippedItemGroupItem(itemGroup));
-      return;
-    }
-
-    final equippedItemIndex = player.getItemIndex(equippedItemType);
-    assert (equippedItemType != -1);
-
-    final itemEntries = player.item_level.entries.toList(growable: false);
-    final itemEntriesLength = itemEntries.length;
-    for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++) {
-      final entry = itemEntries[i];
-      if (entry.value <= 0) continue;
-      final entryItemType = entry.key;
-      final entryItemGroup = ItemType.getItemGroup(entryItemType);
-      if (entryItemGroup != itemGroup) continue;
-      characterEquipItemType(player, entryItemType);
-      return;
-    }
-
-    for (var i = 0; i < equippedItemIndex; i++) {
-      final entry = itemEntries[i];
-      if (entry.value <= 0) continue;
-      final entryItemType = entry.key;
-      final entryItemGroup = ItemType.getItemGroup(entryItemType);
-      if (entryItemGroup != itemGroup) continue;
-      characterEquipItemType(player, entryItemType);
-      return;
-    }
   }
 
   void playerEquipFirstItemTypeFromItemGroup(IsometricPlayer player,
@@ -1597,7 +1553,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < characterLength; i++) {
       final character = characters[i];
       updateIsometricCharacter(character);
-      if (character is IsometricPlayer) {
+      if (character is T) {
         updatePlayer(character);
         customUpdatePlayer(character);
       }
@@ -1658,13 +1614,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       resolveCollisionPhysics(a, b);
     }
 
-    if (a is IsometricPlayer) {
+    if (a is T) {
       if (b is IsometricGameObject) {
         customOnCollisionBetweenPlayerAndGameObject(a, b);
       }
       customOnCollisionBetweenPlayerAndOther(a, b);
     }
-    if (b is IsometricPlayer) {
+    if (b is T) {
       if (a is IsometricGameObject) {
         customOnCollisionBetweenPlayerAndGameObject(b, a);
       }
@@ -1860,7 +1816,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     throw Exception();
   }
 
-  void updatePlayer(IsometricPlayer player) {
+  void updatePlayer(T player) {
     player.framesSinceClientRequest++;
 
     _updateIsometricPlayerAimTarget(player);
@@ -3149,7 +3105,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return scene.getNodeIndexXYZ(x, y, z);
   }
 
-  void customOnPlayerCollectGameObject(IsometricPlayer player,
+  void customOnPlayerCollectGameObject(T player,
       IsometricGameObject target) {
 
     var quantityRemaining = target.quantity > 0 ? target.quantity : 1;

@@ -5,7 +5,6 @@ enum GameType {
   Rock_Paper_Scissors,
   Mobile_Aeon,
   Fight2D,
-  Aeon,
   Cube3D,
   CastleStorm,
   Capture_The_Flag,

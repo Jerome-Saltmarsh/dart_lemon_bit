@@ -10,12 +10,10 @@ import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scenes.dart';
 
 import 'game/game.dart';
-import 'games/aeon/aeon_game.dart';
 import 'games/capture_the_flag/capture_the_flag_game.dart';
 import 'games/fight2d/game_fight2d.dart';
 import 'games/fight2d/game_fight2d_scene_generator.dart';
 import 'games/combat/game_combat.dart';
-import 'games/game_mobile_aoen.dart';
 import 'games/isometric/isometric_environment.dart';
 import 'games/isometric/isometric_player.dart';
 import 'games/isometric/isometric_time.dart';
@@ -150,15 +148,6 @@ class Engine {
     return joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate()));
   }
 
-  Player joinGameAeon() {
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game is! AeonGame) continue;
-      return joinGame(game);
-    }
-    return joinGame(AeonGame(scene: isometricScenes.town));
-  }
-
   Player joinGame(Game game) {
     if (!games.contains(game)) {
       games.add(game);
@@ -178,14 +167,5 @@ class Engine {
       return joinGame(game);
     }
     return joinGame(GameCombat(scene: isometricScenes.warehouse02));
-  }
-
-  Player joinGameAeonMobile() {
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game is! GameMobileAeon) continue;
-      return joinGame(game);
-    }
-    return joinGame(GameMobileAeon(scene: isometricScenes.town));
   }
 }

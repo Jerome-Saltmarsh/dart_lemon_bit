@@ -54,7 +54,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// Variables
   late IsometricGame game;
   final runTarget = IsometricPosition();
-  late Function sendBufferToClient;
   IsometricGameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
   var energyGainRate = 16;
@@ -83,9 +82,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
-  var weaponPrimary = ItemType.Empty;
-  var weaponSecondary = ItemType.Empty;
-  var weaponTertiary = ItemType.Empty;
   var powerCooldown = 0;
 
   var _credits = 0;
@@ -161,9 +157,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
       : false;
-
-  bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
-  bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
 
   /// CONSTRUCTOR
   IsometricPlayer({
@@ -1368,14 +1361,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeMap(item_level);
   }
 
-  void writePlayerWeapons() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Weapons);
-    writeUInt16(weaponType);
-    writeUInt16(weaponPrimary);
-    writeUInt16(weaponSecondary);
-  }
-
   void writePlayerInventory() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Inventory);
@@ -1608,25 +1593,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     return -1;
   }
 
-  int getEquippedItemGroupItem(ItemGroup itemGroup) {
-     switch (itemGroup){
-       case ItemGroup.Primary_Weapon:
-         return weaponPrimary;
-       case ItemGroup.Secondary_Weapon:
-         return weaponSecondary;
-       case ItemGroup.Tertiary_Weapon:
-         return weaponTertiary;
-       case ItemGroup.Head_Type:
-         return headType;
-       case ItemGroup.Body_Type:
-         return bodyType;
-       case ItemGroup.Legs_Type:
-         return legsType;
-       case ItemGroup.Unknown:
-         throw Exception('player.getEquippedItemGroupItem($itemGroup)');
-     }
-  }
-
   @override
   void onEquipmentChanged() {
     refreshDamage();
@@ -1636,7 +1602,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   @override
   void onWeaponTypeChanged() {
     refreshDamage();
-    writePlayerWeapons();
   }
 
   void writePlayerEquipment(){
@@ -1656,50 +1621,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       writeUInt16(entry.value.length);
       writeUint16List(entry.value);
     }
-  }
-
-  int getNextItemFromItemGroup(ItemGroup itemGroup){
-
-    final equippedItemType = getEquippedItemGroupItem(itemGroup);
-    assert (equippedItemType != -1);
-    final equippedItemIndex = getItemIndex(equippedItemType);
-    assert (equippedItemType != -1);
-
-    final itemEntries = item_level.entries.toList(growable: false);
-    final itemEntriesLength = itemEntries.length;
-    for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++){
-      final entry = itemEntries[i];
-      if (entry.value <= 0) continue;
-      final entryItemType = entry.key;
-      final entryItemGroup = ItemType.getItemGroup(entryItemType);
-      if (entryItemGroup != itemGroup) continue;
-      return entryItemType;
-    }
-
-    for (var i = 0; i < equippedItemIndex; i++){
-      final entry = itemEntries[i];
-      if (entry.value <= 0) continue;
-      final entryItemType = entry.key;
-      final entryItemGroup = ItemType.getItemGroup(entryItemType);
-      if (entryItemGroup != itemGroup) continue;
-      return entryItemType;
-    }
-
-    return ItemType.Empty;
-  }
-
-  void swapWeapons() {
-    if (!canChangeEquipment) {
-      return;
-    }
-
-    final a = weaponPrimary;
-    final b = weaponSecondary;
-
-    weaponPrimary = b;
-    weaponSecondary = a;
-    game.setCharacterStateChanging(this);
-    writePlayerEquipment();
   }
 
   int getItemLevel(int itemType) => item_level[itemType] ?? 0;

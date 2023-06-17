@@ -17,7 +17,6 @@ class ClientRequest {
   static const Select_PerkType          = 30;
   static const Suicide                  = 31;
   static const Attack                   = 32;
-  static const Select_Attribute         = 33;
   static const Fight2D                  = 34;
   static const Isometric                = 35;
   static const Capture_The_Flag         = 36;

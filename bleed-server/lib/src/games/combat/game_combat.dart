@@ -2,6 +2,7 @@
 
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
+import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
@@ -117,7 +118,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
 
   @override
   void onPlayerUpdateRequestReceived({
-    required IsometricPlayer player,
+    required CombatPlayer player,
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,
@@ -251,7 +252,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
      }
   }
 
-  void playerEquipPrimary(IsometricPlayer player, int itemType) {
+  void playerEquipPrimary(CombatPlayer player, int itemType) {
     if (player.weaponPrimary == itemType) return;
 
     if (player.canChangeEquipment) {
@@ -263,7 +264,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     player.writePlayerEquipment();
   }
 
-  void playerEquipSecondary(IsometricPlayer player, int itemType) {
+  void playerEquipSecondary(CombatPlayer player, int itemType) {
     if (player.weaponSecondary == itemType) return;
 
     if (player.canChangeEquipment) {
@@ -295,7 +296,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   }
 
   @override
-  void customOnPlayerInteractWithGameObject(IsometricPlayer player, IsometricGameObject gameObject){
+  void customOnPlayerInteractWithGameObject(CombatPlayer player, IsometricGameObject gameObject){
     final gameObjectType = gameObject.type;
 
     if (player.weaponPrimary == gameObjectType) {
@@ -333,7 +334,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   } [itemType] ?? 0;
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(CombatPlayer player, IsometricGameObject gameObject) {
        if (!gameObject.collectable) return;
        customOnPlayerCollectGameObject(player, gameObject);
   }
@@ -383,7 +384,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   }
 
   @override
-  void customOnPlayerCollectGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
+  void customOnPlayerCollectGameObject(CombatPlayer player, IsometricGameObject gameObject) {
     if (!gameObject.collectable) return;
 
     if (gameObject.type == ItemType.Resource_Credit) {
@@ -432,7 +433,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   }
 
   @override
-  void customOnPlayerJoined(IsometricPlayer player) {
+  void customOnPlayerJoined(CombatPlayer player) {
     player.writePlayerApiId();
     writePlayerScoresAll();
     player.powerCooldown = 0;
@@ -580,6 +581,52 @@ class GameCombat extends IsometricGame<CombatPlayer> {
 
   @override
   CombatPlayer buildPlayer() => CombatPlayer(this);
+
+
+  void playerEquipNextItemGroup(CombatPlayer player, ItemGroup itemGroup) {
+    if (!player.canChangeEquipment) return;
+
+    final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
+
+    if (equippedItemType == ItemType.Empty) {
+      playerEquipFirstItemTypeFromItemGroup(player, itemGroup);
+      return;
+    }
+
+    final equippedWeaponItemGroup = ItemType.getItemGroup(player.weaponType);
+
+    if (equippedWeaponItemGroup != itemGroup) {
+      characterEquipItemType(
+          player, player.getEquippedItemGroupItem(itemGroup));
+      return;
+    }
+
+    final equippedItemIndex = player.getItemIndex(equippedItemType);
+    assert (equippedItemType != -1);
+
+    final itemEntries = player.item_level.entries.toList(growable: false);
+    final itemEntriesLength = itemEntries.length;
+    for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++) {
+      final entry = itemEntries[i];
+      if (entry.value <= 0) continue;
+      final entryItemType = entry.key;
+      final entryItemGroup = ItemType.getItemGroup(entryItemType);
+      if (entryItemGroup != itemGroup) continue;
+      characterEquipItemType(player, entryItemType);
+      return;
+    }
+
+    for (var i = 0; i < equippedItemIndex; i++) {
+      final entry = itemEntries[i];
+      if (entry.value <= 0) continue;
+      final entryItemType = entry.key;
+      final entryItemGroup = ItemType.getItemGroup(entryItemType);
+      if (entryItemGroup != itemGroup) continue;
+      characterEquipItemType(player, entryItemType);
+      return;
+    }
+  }
+
 
   @override
   int get maxPlayers => 12;

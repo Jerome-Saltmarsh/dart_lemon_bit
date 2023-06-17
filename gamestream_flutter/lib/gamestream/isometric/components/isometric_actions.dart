@@ -176,23 +176,5 @@ class IsometricActions {
         ..setSpeed(randomAngle(), giveOrTake(3));
     }
   }
-
-  void selectAttributeHealth() =>
-      gamestream.network.sendClientRequest(
-          ClientRequest.Select_Attribute,
-          CharacterAttribute.Health,
-      );
-
-  void selectAttributeDamage() =>
-      gamestream.network.sendClientRequest(
-        ClientRequest.Select_Attribute,
-        CharacterAttribute.Damage,
-      );
-
-  void selectAttributeMagic() =>
-      gamestream.network.sendClientRequest(
-        ClientRequest.Select_Attribute,
-        CharacterAttribute.Magic,
-      );
 }
 

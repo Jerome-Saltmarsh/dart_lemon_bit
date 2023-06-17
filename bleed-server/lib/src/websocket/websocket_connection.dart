@@ -9,7 +9,6 @@ import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/client_request.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/edit_request.dart';
-import 'package:bleed_server/common/src/enums/character_attribute.dart';
 import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/fight2d/game_fight2d_client_request.dart';
@@ -32,13 +31,12 @@ import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
+import 'package:bleed_server/src/games/combat/combat_player.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/games/aeon/aeon_player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
-import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
@@ -185,7 +183,7 @@ class WebSocketConnection with ByteReader {
         return;
 
       case ClientRequest.Select_Weapon_Primary:
-        if (player is! IsometricPlayer) return;
+        if (player is! CombatPlayer) return;
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!ItemType.isTypeWeapon(value)) {
@@ -198,7 +196,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case ClientRequest.Select_Weapon_Secondary:
-        if (player is! IsometricPlayer) return;
+        if (player is! CombatPlayer) return;
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!ItemType.isTypeWeapon(value)) {
@@ -231,29 +229,6 @@ class WebSocketConnection with ByteReader {
         //   weaponType: player.weaponPrimary,
         //   characterStateChange: false,
         // );
-        break;
-
-      case ClientRequest.Select_Attribute:
-        if (game is! GameMobileAeon) return;
-        if (player is! PlayerAeon) return;
-        final attributeId = parseArg1(arguments);
-        if (attributeId == null) {
-          sendGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-
-        switch (attributeId) {
-          case CharacterAttribute.Magic:
-            game.playerAttributesAddMagic(player);
-            break;
-          case CharacterAttribute.Damage:
-            game.playerAttributesAddDamage(player);
-            break;
-          case CharacterAttribute.Health:
-            game.playerAttributesAddHealth(player);
-            break;
-        }
-
         break;
 
       case ClientRequest.Suicide:
@@ -861,15 +836,11 @@ class WebSocketConnection with ByteReader {
       case GameType.Combat:
         _player = engine.joinGameCombat();
         break;
-      case GameType.Aeon:
-        _player = engine.joinGameAeon();
-        break;
       case GameType.Capture_The_Flag:
         _player = engine.joinGameCaptureTheFlag();
         break;
       case GameType.Mobile_Aeon:
-        _player = engine.joinGameAeonMobile();
-        break;
+       throw Exception('GameType.Mobile_Aeon not supported');
       case GameType.Rock_Paper_Scissors:
         joinGame(engine.getGameRockPaperScissors());
         break;
