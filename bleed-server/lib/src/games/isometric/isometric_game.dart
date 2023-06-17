@@ -360,13 +360,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.faceDirection = direction;
     setCharacterStateRunning(player);
     clearCharacterTarget(player);
-
-    if (
-    player.interactMode == InteractMode.Trading ||
-        player.interactMode != InteractMode.Talking
-    ) {
-      return player.endInteraction();
-    }
   }
 
   void characterWeaponAim(IsometricCharacter character) {
@@ -1390,11 +1383,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     activateCollider(player);
     player.health = player.maxHealth;
     clearCharacterTarget(player);
-
-    if (player.inventoryOpen) {
-      player.interactMode = InteractMode.Inventory;
-    }
-
     player.buffInvincible = false;
     player.buffDoubleDamage = false;
 
@@ -2894,7 +2882,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.target == target) return;
     character.target = target;
     if (character is IsometricPlayer) {
-      character.endInteraction();
       character.writePlayerTargetCategory();
       character.writePlayerTargetPosition();
     }

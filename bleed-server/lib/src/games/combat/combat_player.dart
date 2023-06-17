@@ -10,6 +10,7 @@ import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
+import 'package:bleed_server/src/games/isometric/isometric_side.dart';
 import 'package:lemon_math/functions/clamp.dart';
 
 import 'game_combat.dart';
@@ -22,6 +23,7 @@ class CombatPlayer extends IsometricPlayer {
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
   var maxEnergy = 10;
+  var aimTargetWeaponSide = IsometricSide.Left;
 
   var _energy = 10;
   var _powerType = PowerType.None;

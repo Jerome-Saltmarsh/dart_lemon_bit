@@ -379,6 +379,7 @@ class WebSocketConnection with ByteReader {
         player.inventorySell(index);
         break;
       case InventoryRequest.Toggle:
+        if (player is! SurvivalPlayer) return;
         player.inventoryOpen = !player.inventoryOpen;
         if (player.inventoryOpen){
           player.interactMode = InteractMode.Inventory;

@@ -23,6 +23,7 @@ class SurvivalPlayer extends IsometricPlayer {
   final inventoryQuantity = Uint16List(inventory_size);
   final inventoryUpgrades = Uint16List(inventory_size);
 
+  var inventoryOpen = false;
   var inventoryDirty = false;
   var energy = 0;
 
@@ -753,6 +754,37 @@ class SurvivalPlayer extends IsometricPlayer {
       return ItemType.isTypeWeapon(itemType);
     }
     return false;
+  }
+
+  void endInteraction(){
+    if (interactMode == InteractMode.None) return;
+    if (storeItems.isNotEmpty) {
+      storeItems = [];
+      writeStoreItems();
+    }
+    if (options.isNotEmpty) {
+      options.clear();
+    }
+    if (inventoryOpen) {
+      interactMode = InteractMode.Inventory;
+    } else {
+      interactMode = InteractMode.None;
+    }
+  }
+
+  void interact({required String message, Map<String, Function>? responses}){
+    writeNpcTalk(text: message, options: responses);
+  }
+
+  void writeNpcTalk({required String text, Map<String, Function>? options}){
+    interactMode = InteractMode.Talking;
+    this.options = options ?? {'Goodbye' : endInteraction};
+    writeByte(ServerResponse.Npc_Talk);
+    writeString(text);
+    writeByte(this.options.length);
+    for (final option in this.options.keys){
+      writeString(option);
+    }
   }
 
 }
