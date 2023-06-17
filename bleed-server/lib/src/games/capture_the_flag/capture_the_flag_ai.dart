@@ -76,39 +76,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   double get baseOwnDistance => getDistance3(baseOwn);
   double get baseEnemyDistance => getDistance3(baseEnemy);
 
-  void captureFlag(CaptureTheFlagGameObjectFlag flag){
-
-    if (flag.statusRespawning) {
-       throw Exception('cannot capture flag as it is respawning');
-    }
-
-    final heldBy = flag.heldBy;
-    if (heldBy == null){
-      target = heldBy;
-      return;
-    }
-    if (heldBy == this) {
-      target = baseOwn;
-      return;
-    }
-    if (isEnemy(heldBy)){
-      target = heldBy;
-      return;
-    }
-
-    if (isAlly(heldBy)){
-      target = heldBy;
-      return;
-    }
-
-    throw Exception();
-  }
-
-  void captureFlagOwn(){
-    decision = CaptureTheFlagAIDecision.Capture_Flag_Own;
-    captureFlag(flagOwn);
-  }
-
   IsometricCollider? getNearestEnemy(){
     IsometricCollider? nearestEnemy;
     var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
@@ -225,9 +192,14 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void updatePathIndexAndDestination() {
     final target = this.target;
-    if (targetPrevious != target){
+
+    if (targetPrevious != target) {
       targetPrevious = target;
       updatePathToTarget();
+    } else if (target != null) {
+      if (game.scene.getNodeIndexV3(target) != targetIndex) {
+        updatePathToTarget();
+      }
     }
 
     if (!atDestination) {

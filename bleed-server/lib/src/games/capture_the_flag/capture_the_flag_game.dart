@@ -119,6 +119,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
+  int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
+
+  int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
+
   void removeFlags() {
      for (var i = 0; i < gameObjects.length; i++){
       final gameObject = gameObjects[i];
@@ -129,10 +133,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
     }
   }
-
-  int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
-
-  int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
 
   int countPlayersOnTeam(int team) =>
       players.where((player) => player.team == team).length;
