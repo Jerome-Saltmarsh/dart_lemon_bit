@@ -159,10 +159,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
   }
 
-  void sendClientRequestWeatherSetWind(int windType){
-    sendClientRequest(ClientRequest.Weather_Set_Wind, windType);
-  }
-
   void sendClientRequestWeatherSetLightning(int value){
     sendClientRequest(ClientRequest.Weather_Set_Lightning, value);
   }
@@ -321,6 +317,8 @@ class GameNetwork {
   void sendGameObjectRequestMoveToMouse() {
     sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
   }
+
+
 
   void sendClientRequestSelectWeaponPrimary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
