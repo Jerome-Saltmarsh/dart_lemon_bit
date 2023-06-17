@@ -88,10 +88,6 @@ class WebSocketConnection with ByteReader {
     print(stackTrace);
   }
 
-  void reply(String response) {
-    sink.add(response);
-  }
-
   void sendBufferToClient(){
     final player = _player;
     if (player == null) return;
@@ -121,9 +117,6 @@ class WebSocketConnection with ByteReader {
           } catch (err){
             sendGameError(GameError.Save_Scene_Failed);
           }
-          return;
-        case ClientRequest.Unequip:
-          // _player?.unequipWeapon();
           return;
         default:
           break;
@@ -166,11 +159,6 @@ class WebSocketConnection with ByteReader {
         handleRequestInventory(player, arguments);
         break;
 
-      case ClientRequest.Reload:
-        // final game = player.game;
-        // game.playerReload(player);
-        return;
-
       case ClientRequest.Select_PerkType:
         final value = parseArg1(arguments);
         if (value == null) return;
@@ -195,14 +183,6 @@ class WebSocketConnection with ByteReader {
         }
         // game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
         return;
-
-      case ClientRequest.Swap_Weapons:
-        // player.swapWeapons();
-        break;
-
-      case ClientRequest.Player_Throw_Grenade:
-        // game.playerThrowGrenade(player);
-        break;
 
       case ClientRequest.Select_Weapon_Primary:
         if (player is! IsometricPlayer) return;
@@ -294,10 +274,6 @@ class WebSocketConnection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
         return handleRequestEdit(arguments);
 
-      case ClientRequest.Npc_Talk_Select_Option:
-        if (player is! IsometricPlayer) return;
-        return handleNpcTalkSelectOption(player, arguments);
-
       case ClientRequest.Teleport_Scene:
         final sceneIndex = parse(arguments[1]);
 
@@ -311,10 +287,6 @@ class WebSocketConnection with ByteReader {
           return;
         }
         break;
-
-      case ClientRequest.Editor_Load_Game:
-          _player = engine.joinGameEditor(name: arguments[1]);
-          break;
 
       case ClientRequest.Isometric:
         handleIsometricRequest(arguments);
@@ -661,21 +633,6 @@ class WebSocketConnection with ByteReader {
       }
     }
 
-  }
-
-  void handleNpcTalkSelectOption(IsometricPlayer player, List<String> arguments) {
-    if (player.dead) return errorPlayerDead();
-    if (arguments.length != 2) return errorInvalidClientRequest();
-    final index = parse(arguments[1]);
-    if (index == null) {
-      return errorInvalidClientRequest();
-    }
-    if (index < 0 || index >= player.options.length){
-      return errorInvalidClientRequest();
-    }
-    final action = player.options.values.toList()[index];
-    action.call();
-    return;
   }
 
   void handleGameObjectRequest(List<String> arguments) {
@@ -1060,6 +1017,24 @@ class WebSocketConnection with ByteReader {
         final hour = parseArg2(arguments);
         if (hour == null) return;
         game.setHourMinutes(hour, 0);
+        break;
+
+      case IsometricRequest.Npc_Talk_Select_Option:
+        if (player.dead) return errorPlayerDead();
+        if (arguments.length != 2) return errorInvalidClientRequest();
+        final index = parseArg2(arguments);
+        if (index == null) {
+          return errorInvalidClientRequest();
+        }
+        if (index < 0 || index >= player.options.length){
+          return errorInvalidClientRequest();
+        }
+        final action = player.options.values.toList()[index];
+        action.call();
+        break;
+
+      case IsometricRequest.Editor_Load_Game:
+        _player = engine.joinGameEditor(name: arguments[2]);
         break;
     }
   }

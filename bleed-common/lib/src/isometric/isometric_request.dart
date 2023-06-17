@@ -8,4 +8,6 @@ enum IsometricRequest {
    Weather_Set_Lightning,
    Weather_Toggle_Breeze,
    Time_Set_Hour,
+   Npc_Talk_Select_Option,
+   Editor_Load_Game,
 }

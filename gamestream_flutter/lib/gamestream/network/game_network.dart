@@ -147,16 +147,8 @@ class GameNetwork {
     sink.close();
   }
 
-  void sendClientRequestReload(){
-    sendClientRequest(ClientRequest.Reload);
-  }
-
   void sendClientRequestTeleportScene(TeleportScenes scene){
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
-  }
-
-  void sendClientRequestEditorLoadGame(String name){
-    sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }
 
   void uploadScene(List<int> bytes) {
@@ -167,9 +159,6 @@ class GameNetwork {
     }
     gamestream.network.sink.add(package);
   }
-
-  void sendClientRequestNpcSelectTopic(int index) =>
-      sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);
 
   void sendClientRequestSetBlock({
     required int index,
@@ -199,16 +188,6 @@ class GameNetwork {
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Toggle}",
       );
-
-
-  final unequipRequest = (){
-    final list = Uint8List(1);
-    list[0] = ClientRequest.Unequip;
-    return list;
-  }();
-
-  void sendClientRequestUnequip() =>
-      gamestream.network.send(unequipRequest);
 
   void sendClientRequestInventoryDrop(int index) =>
       sendClientRequest(
@@ -272,8 +251,6 @@ class GameNetwork {
   void sendGameObjectRequestDelete() {
     sendGameObjectRequest(GameObjectRequest.Delete);
   }
-
-  void sendRequestThrowGrenade() => sendClientRequest(ClientRequest.Player_Throw_Grenade);
 
   void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);

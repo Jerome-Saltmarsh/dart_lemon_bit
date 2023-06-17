@@ -18,7 +18,7 @@ class IsometricActions {
   void loadSelectedSceneName(){
     final sceneName = isometric.editor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
-    gamestream.network.sendClientRequestEditorLoadGame(sceneName);
+    gamestream.isometric.editorLoadGame(sceneName);
     isometric.editor.actionGameDialogClose();
   }
 

@@ -108,6 +108,11 @@ class Isometric {
   void setHour(int value) =>
       request(IsometricRequest.Time_Set_Hour, value);
 
+  void selectNpcTalkOption(int index) =>
+      request(IsometricRequest.Npc_Talk_Select_Option, index);
+
+  void editorLoadGame(String name)=> request(IsometricRequest.Editor_Load_Game, name);
+
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,
