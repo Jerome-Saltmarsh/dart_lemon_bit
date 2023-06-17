@@ -94,12 +94,39 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   );
 
   @override
+  void updatePlayer(CombatPlayer player) {
+    super.updatePlayer(player);
+
+    if (player.powerCooldown > 0) {
+      player.powerCooldown--;
+      if (player.powerCooldown == 0) {
+        player.writePlayerPower();
+      }
+    }
+
+    if (player.buffDuration > 0) {
+      player.buffDuration--;
+      if (player.buffDuration == 0) {
+        switch (player.powerType) {
+          case PowerType.Shield:
+            player.buffInvincible = false;
+            break;
+          case PowerType.Invisible:
+            player.buffInvisible = false;
+            break;
+        }
+      }
+    }
+
+  }
+
+  @override
   void customInitPlayer(IsometricPlayer player) {
     moveToRandomPlayerSpawnPoint(player);
   }
 
   @override
-  void customOnPlayerRevived(IsometricPlayer player) {
+  void customOnPlayerRevived(CombatPlayer player) {
     moveToRandomPlayerSpawnPoint(player);
     player.item_level.clear();
     player.team = TeamType.Alone;
@@ -216,7 +243,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   }
 
   @override
-  void customOnPlayerDead(IsometricPlayer player) {
+  void customOnPlayerDead(CombatPlayer player) {
     player.powerCooldown = 0;
     player.buffDuration = 0;
     player.respawnTimer = Player_Respawn_Duration;
@@ -503,7 +530,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
 
-  void playerUsePower(IsometricPlayer player){
+  void playerUsePower(CombatPlayer player){
     if (player.powerCooldown > 0) return;
     if (player.deadBusyOrWeaponStateBusy) return;
     player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);

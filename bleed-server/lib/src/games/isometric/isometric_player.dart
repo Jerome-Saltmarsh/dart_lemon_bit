@@ -16,7 +16,6 @@ import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
@@ -82,7 +81,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
-  var powerCooldown = 0;
 
   var _credits = 0;
   var _experience = 0;
@@ -90,7 +88,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var _attributes = 0;
   var _energy = 10;
   var _equippedWeaponIndex = 0;
-  var _powerType = PowerType.None;
   var _respawnTimer = 0;
 
   int get respawnTimer => _respawnTimer;
@@ -141,18 +138,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   var actionItemId = -1;
 
-  int get powerType => _powerType;
-
-  set powerType(int value) {
-     if (_powerType == value) return;
-     assert (PowerType.values.contains(value));
-     if (!PowerType.values.contains(value)) return;
-     _powerType = value;
-     writePlayerPower();
-  }
-
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
-  int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
@@ -1627,12 +1613,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   int getItemQuantity(int itemType) => item_quantity[itemType] ?? 0;
 
-  void writePlayerGrenades() {
-      writeByte(ServerResponse.Api_Player);
-      writeByte(ApiPlayer.Grenades);
-      writeUInt16(grenades);
-  }
-
   writePlayerApiId(){
     writeUInt8(ServerResponse.Api_Player);
     writeUInt8(ApiPlayer.Id);
@@ -1686,13 +1666,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       angle: gameObject.velocityAngle,
     );
     writeUInt16(gameObject.type);
-  }
-
-  void writePlayerPower() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Power);
-    writeByte(powerType);
-    writeBool(powerCooldown <= 0);
   }
 
   void writeApiPlayerPerkType(){

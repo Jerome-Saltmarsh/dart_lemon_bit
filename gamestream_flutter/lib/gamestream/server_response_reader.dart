@@ -485,9 +485,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Equipment:
         readPlayerEquipped();
         break;
-      case ApiPlayer.Grenades:
-        isometric.player.totalGrenades.value = readUInt16();
-        break;
       case ApiPlayer.Id:
         isometric.player.id.value = readUInt24();
         break;

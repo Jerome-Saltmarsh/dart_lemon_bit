@@ -27,7 +27,6 @@ class ApiPlayer {
   static const Items                  = 25;
   static const Weapons                = 26;
   static const Equipment              = 27;
-  static const Grenades               = 28;
   static const Id                     = 29;
   static const Power                  = 30;
   static const PerkType               = 31;

@@ -37,7 +37,6 @@ class IsometricPlayer {
   final body = Watch(0);
   final head = Watch(0);
   final legs = Watch(0);
-  final totalGrenades = Watch(0);
   final previousPosition = IsometricPosition();
   final storeItems = Watch(<int>[]);
   final items = <int, int> {};

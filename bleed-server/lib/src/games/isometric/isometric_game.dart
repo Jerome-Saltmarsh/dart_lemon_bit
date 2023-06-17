@@ -16,7 +16,6 @@ import 'package:bleed_server/common/src/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/node_type.dart';
 import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/team_type.dart';
@@ -120,13 +119,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       int amount) {}
 
   /// @override
-  void customOnPlayerRevived(IsometricPlayer player) {}
+  void customOnPlayerRevived(T player) {}
 
   /// @override
   void customOnPlayerCreditsChanged(IsometricPlayer player) {}
 
   /// @override
-  void customOnPlayerDead(IsometricPlayer player) {}
+  void customOnPlayerDead(T player) {}
 
   /// @override
   void customOnGameStarted() {}
@@ -1432,7 +1431,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void revive(IsometricPlayer player) {
+  void revive(T player) {
     if (player.aliveAndActive) return;
 
     player.setCharacterStateSpawning();
@@ -1701,7 +1700,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     deactivateCollider(character);
     clearCharacterTarget(character);
 
-    if (character is IsometricPlayer) {
+    if (character is T) {
       character.interactMode = InteractMode.None;
       character.writePlayerAlive();
       customOnPlayerDead(character);
@@ -1836,26 +1835,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    if (player.powerCooldown > 0) {
-      player.powerCooldown--;
-      if (player.powerCooldown == 0) {
-        player.writePlayerPower();
-      }
-    }
-
-    if (player.buffDuration > 0) {
-      player.buffDuration--;
-      if (player.buffDuration == 0) {
-        switch (player.powerType) {
-          case PowerType.Shield:
-            player.buffInvincible = false;
-            break;
-          case PowerType.Invisible:
-            player.buffInvisible = false;
-            break;
-        }
-      }
-    }
+    // if (player.buffDuration > 0) {
+    //   player.buffDuration--;
+    //   if (player.buffDuration == 0) {
+    //     switch (player.powerType) {
+    //       case PowerType.Shield:
+    //         player.buffInvincible = false;
+    //         break;
+    //       case PowerType.Invisible:
+    //         player.buffInvisible = false;
+    //         break;
+    //     }
+    //   }
+    // }
 
 
     if (player.idling && !player.weaponStateBusy) {

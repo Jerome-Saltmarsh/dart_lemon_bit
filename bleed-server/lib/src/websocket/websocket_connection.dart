@@ -209,7 +209,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case ClientRequest.Select_Power:
-        if (player is! IsometricPlayer) return;
+        if (player is! CombatPlayer) return;
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!PowerType.values.contains(value)) {

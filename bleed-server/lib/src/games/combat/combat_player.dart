@@ -2,6 +2,7 @@
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/item_type.dart';
+import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 
@@ -9,9 +10,12 @@ import 'game_combat.dart';
 
 class CombatPlayer extends IsometricPlayer {
 
+  var powerCooldown = 0;
   var weaponPrimary = ItemType.Empty;
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
+
+  var _powerType = PowerType.None;
 
   final GameCombat game;
 
@@ -19,6 +23,17 @@ class CombatPlayer extends IsometricPlayer {
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
   bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
+
+  int get powerType => _powerType;
+
+  set powerType(int value) {
+    if (_powerType == value) return;
+    assert (PowerType.values.contains(value));
+    if (!PowerType.values.contains(value)) return;
+    _powerType = value;
+    writePlayerPower();
+  }
+
 
   void writePlayerWeapons() {
     writeByte(ServerResponse.Api_Player);
@@ -98,5 +113,10 @@ class CombatPlayer extends IsometricPlayer {
     writePlayerEquipment();
   }
 
-
+  void writePlayerPower() {
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Power);
+    writeByte(powerType);
+    writeBool(powerCooldown <= 0);
+  }
 }

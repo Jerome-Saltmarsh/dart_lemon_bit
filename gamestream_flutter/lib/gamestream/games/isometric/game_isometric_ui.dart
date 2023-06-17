@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/isometric/events/on_visibility_changed_messag
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/widgets/animated_widget.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'game_isometric_colors.dart';
@@ -972,23 +971,6 @@ class GameIsometricUI {
       return !powerReady ? width64 :
       watch(gamestream.isometric.player.powerType, buildIconPowerType);
     });
-  }
-
-  static Widget buildPanelTotalGrenades() {
-    final icon = Container(
-      width: 48,
-      height: 48,
-      child: buildAtlasItemType(
-          ItemType.Weapon_Thrown_Grenade),
-    );
-    return buildDialogUIControl(
-      child: Tooltip(
-        message: 'SPACE-BAR',
-        child: watch(gamestream.isometric.player.totalGrenades, (int totalGrenades) => Row(
-            children: List.generate(totalGrenades, (index) => icon))
-        ),
-      ),
-    );
   }
 
   static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
