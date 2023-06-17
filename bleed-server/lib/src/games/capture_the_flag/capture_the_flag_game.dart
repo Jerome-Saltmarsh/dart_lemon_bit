@@ -39,6 +39,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     required super.environment,
   }) : super(gameType: GameType.Capture_The_Flag) {
 
+    removeFlags();
 
     flagRed = CaptureTheFlagGameObjectFlag(
         x: 200,
@@ -115,6 +116,17 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           team: CaptureTheFlagTeam.Blue,
           characterClass: CaptureTheFlagCharacterClass.knight,
           role: CaptureTheFlagAIRole.Offense));
+    }
+  }
+
+  void removeFlags() {
+     for (var i = 0; i < gameObjects.length; i++){
+      final gameObject = gameObjects[i];
+      if (const [ItemType.GameObjects_Flag_Blue, ItemType.GameObjects_Flag_Red]
+          .contains(gameObject.type)) {
+        gameObjects.removeAt(i);
+        i--;
+      }
     }
   }
 
