@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/api_player.dart';
-import 'package:bleed_server/common/src/api_players.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/enums/input_mode.dart';
@@ -65,7 +64,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var initialized = false;
   var id = 0;
 
-  var _credits = 0;
   var _experience = 0;
   var _level = 1;
   var _attributes = 0;
@@ -148,7 +146,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// GETTERS
   ///
   IsometricCollider? get aimTarget => _aimTarget;
-  int get score => _credits;
   int get level => _level;
   int get lookDirection => Direction.fromRadian(lookRadian);
   int get experience => _experience;
@@ -177,17 +174,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     if (_level == value) return;
     _level = value;
     writePlayerLevel();
-  }
-
-  set score(int value) {
-    if (_credits == value) return;
-    _credits = max(value, 0);
-    // todo
-    // if (game.engine.highScore < value) {
-    //   game.engine.highScore = value;
-    // }
-    writePlayerCredits();
-    game.customOnPlayerCreditsChanged(this);
   }
 
   set aimTarget(IsometricCollider? collider) {
@@ -743,12 +729,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeBytes(compiled);
   }
 
-  void writePlayerCredits() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Credits);
-    writeUInt16(score);
-  }
-
   void writePlayerItems() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Items);
@@ -961,39 +941,10 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   @override
   bool get isPlayer => true;
 
-  void writeApiPlayersAll() {
-     writeUInt8(ServerResponse.Api_Players);
-     writeUInt8(ApiPlayers.All);
-     writeUInt16(game.players.length);
-     for (final player in game.players) {
-        writeUInt24(player.id);
-        writeString(player.name);
-        writeUInt24(player.score);
-     }
-  }
-
-  void writeApiPlayersScore() {
-    writeUInt8(ServerResponse.Api_Players);
-    writeUInt8(ApiPlayers.All);
-    writeUInt16(game.players.length);
-    for (final player in game.players) {
-      writeUInt24(player.id);
-      writeString(player.name);
-      writeUInt24(player.score);
-    }
-  }
-
   void writeApiPlayerAttributes(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Attributes);
     writeUInt16(_attributes);
-  }
-
-  void writeApiPlayersPlayerScore(IsometricPlayer player) {
-    writeUInt8(ServerResponse.Api_Players);
-    writeUInt8(ApiPlayers.Score);
-    writeUInt24(player.id);
-    writeUInt24(player.score);
   }
 
   void writeGameEventGameObjectDestroyed(IsometricGameObject gameObject){

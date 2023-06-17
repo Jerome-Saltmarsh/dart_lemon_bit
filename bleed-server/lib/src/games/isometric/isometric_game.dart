@@ -122,9 +122,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnPlayerRevived(T player) {}
 
   /// @override
-  void customOnPlayerCreditsChanged(IsometricPlayer player) {}
-
-  /// @override
   void customOnPlayerDead(T player) {}
 
   /// @override
@@ -1417,7 +1414,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     activateCollider(player);
     player.health = player.maxHealth;
     player.energy = player.maxEnergy;
-    player.score = 0;
     clearCharacterTarget(player);
 
     if (player.inventoryOpen) {
@@ -1433,7 +1429,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.writeApiPlayerSpawned();
     player.writePlayerAlive();
     player.writePlayerStats();
-    player.writePlayerCredits();
     player.writeGameTime();
     player.health = player.maxHealth;
   }
@@ -3122,12 +3117,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       } [player.weaponType] ?? 0;
 
   int getExperienceForLevel(int level) => (((level - 1) * (level - 1))) * 6;
-
-  void writePlayerScoresAll() {
-    for (final player in players) {
-      player.writeApiPlayersAll();
-    }
-  }
 
   void destroyGameObject(IsometricGameObject gameObject) {
     if (!gameObject.active) return;

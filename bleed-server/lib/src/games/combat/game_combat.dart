@@ -128,6 +128,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   @override
   void customOnPlayerRevived(CombatPlayer player) {
     moveToRandomPlayerSpawnPoint(player);
+    player.score = 0;
     player.item_level.clear();
     player.team = TeamType.Alone;
     player.buffInvisible = false;
@@ -141,6 +142,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     player.score = 0;
     player.writePlayerEquipment();
     player.writePlayerPower();
+    player.writePlayerCredits();
   }
 
   @override
@@ -252,11 +254,9 @@ class GameCombat extends IsometricGame<CombatPlayer> {
 
   @override
   void customOnCharacterKilled(IsometricCharacter target, dynamic src) {
-     if (src is IsometricPlayer) {
+     if (src is CombatPlayer) {
        src.score += Credits_Per_Kill;
      }
-
-
 
      if (target is IsometricAI && scene.spawnPoints.isNotEmpty) {
        final spawnNodeIndex = randomItem(scene.spawnPoints);
@@ -483,13 +483,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   }
 
   @override
-  void customOnPlayerCreditsChanged(IsometricPlayer player) {
-    for (final otherPlayer in players) {
-      otherPlayer.writeApiPlayersPlayerScore(player);
-    }
-  }
-
-  @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     if (nodeType == NodeType.Grass_Long && randomBool()) {
       spawnRandomGemsAtIndex(nodeIndex);
@@ -654,9 +647,20 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     }
   }
 
+  void writePlayerScoresAll() {
+    for (final player in players) {
+      player.writeApiPlayersAll();
+    }
+  }
 
   @override
   int get maxPlayers => 12;
+
+  void customOnPlayerCreditsChanged(CombatPlayer player) {
+    for (final otherPlayer in players) {
+      otherPlayer.writeApiPlayersPlayerScore(player);
+    }
+  }
 }
 
 
