@@ -1,6 +1,5 @@
 
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
@@ -47,7 +46,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var framesSinceClientRequest = 0;
-  static const inventory_size = 6 * 5;
 
   /// Variables
   late IsometricGame game;
@@ -103,9 +101,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricCollider? _aimTarget; // the currently highlighted character
   var aimTargetWeaponSide = IsometricSide.Left;
   Account? account;
-  final inventory = Uint16List(inventory_size);
-  final inventoryQuantity = Uint16List(inventory_size);
-  final inventoryUpgrades = Uint16List(inventory_size);
   var storeItems = <int>[];
   var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
@@ -206,14 +201,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writePlayerInteractMode();
   }
 
-  int? getEmptyInventoryIndex(){
-    for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] != ItemType.Empty) continue;
-      return i;
-    }
-    return null;
-  }
-
   set experience(int value) {
     if (_experience == value) return;
     assert (value >= 0);
@@ -246,16 +233,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   void interact({required String message, Map<String, Function>? responses}){
     writeNpcTalk(text: message, options: responses);
   }
-
-  bool isValidInventoryIndex(int? index) =>
-      index != null &&
-      index >= 0 &&
-      (
-          ItemType.isTypeEquipped(index) ||
-          ItemType.isIndexBelt(index) ||
-          index < inventory.length
-      );
-
 
   void setStoreItems(List<int> values){
     if (values.isNotEmpty){
@@ -293,30 +270,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   void writeInfo(String info){
     writeByte(ServerResponse.Info);
     writeString(info);
-  }
-
-  bool itemTypeCanBeAssignedToIndex({
-    required int itemType,
-    required int index,
-  }) {
-    if (!isValidInventoryIndex(index)) return false;
-    if (itemType == ItemType.Empty) return true;
-    if (index < inventory.length) return true;
-    if (ItemType.isIndexBelt(index)) return true;
-
-    if (index == ItemType.Equipped_Head){
-      return ItemType.isTypeHead(itemType);
-    }
-    if (index == ItemType.Equipped_Body){
-      return ItemType.isTypeBody(itemType);
-    }
-    if (index == ItemType.Equipped_Legs){
-      return ItemType.isTypeLegs(itemType);
-    }
-    if (index == ItemType.Equipped_Weapon){
-      return ItemType.isTypeWeapon(itemType);
-    }
-    return false;
   }
 
   void writePlayerPosition(){

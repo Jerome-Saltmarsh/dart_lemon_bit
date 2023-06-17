@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/game_error.dart';
@@ -15,6 +16,12 @@ import 'package:lemon_math/functions/clamp.dart';
 import 'survival_game.dart';
 
 class SurvivalPlayer extends IsometricPlayer {
+
+  static const inventory_size = 6 * 5;
+
+  final inventory = Uint16List(inventory_size);
+  final inventoryQuantity = Uint16List(inventory_size);
+  final inventoryUpgrades = Uint16List(inventory_size);
 
   var inventoryDirty = false;
 
@@ -704,5 +711,47 @@ class SurvivalPlayer extends IsometricPlayer {
   static bool removeOnEmpty(int itemType) =>
       itemType == ItemType.Weapon_Thrown_Grenade ||
       ItemType.isTypeConsumable(itemType);
+
+  int? getEmptyInventoryIndex(){
+    for (var i = 0; i < inventory.length; i++){
+      if (inventory[i] != ItemType.Empty) continue;
+      return i;
+    }
+    return null;
+  }
+
+
+  bool isValidInventoryIndex(int? index) =>
+      index != null &&
+          index >= 0 &&
+          (
+              ItemType.isTypeEquipped(index) ||
+                  ItemType.isIndexBelt(index) ||
+                  index < inventory.length
+          );
+
+  bool itemTypeCanBeAssignedToIndex({
+    required int itemType,
+    required int index,
+  }) {
+    if (!isValidInventoryIndex(index)) return false;
+    if (itemType == ItemType.Empty) return true;
+    if (index < inventory.length) return true;
+    if (ItemType.isIndexBelt(index)) return true;
+
+    if (index == ItemType.Equipped_Head){
+      return ItemType.isTypeHead(itemType);
+    }
+    if (index == ItemType.Equipped_Body){
+      return ItemType.isTypeBody(itemType);
+    }
+    if (index == ItemType.Equipped_Legs){
+      return ItemType.isTypeLegs(itemType);
+    }
+    if (index == ItemType.Equipped_Weapon){
+      return ItemType.isTypeWeapon(itemType);
+    }
+    return false;
+  }
 
 }

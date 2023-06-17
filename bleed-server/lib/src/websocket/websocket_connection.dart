@@ -389,11 +389,11 @@ class WebSocketConnection with ByteReader {
       case InventoryRequest.Drop:
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (player is! SurvivalPlayer) return;
         if (!player.isValidInventoryIndex(index)){
           player.writeErrorInvalidInventoryIndex(index);
           return;
         }
-        if (player is! SurvivalPlayer) return;
         player.inventoryDrop(index);
         break;
       case InventoryRequest.Move:
