@@ -225,14 +225,20 @@ class ServerResponseReader with ByteReader {
         for (var i = 0; i < pathEnd; i++){
            captureTheFlag.characterSelectedPath[i] = readUInt16();
         }
+
+        final characterSelectedIsAI = readBool();
+        captureTheFlag.characterSelectedIsAI.value = characterSelectedIsAI;
+        if (characterSelectedIsAI) {
+          captureTheFlag.characterSelectedAIDecision.value = readCaptureTheFlagAIDecision();
+        }
+
         final characterSelectedTarget = readBool();
         captureTheFlag.characterSelectedTarget.value = characterSelectedTarget;
-        if (characterSelectedTarget) {
-          captureTheFlag.characterSelectedTargetType.value = readString();
-          captureTheFlag.characterSelectedTargetX.value = readDouble();
-          captureTheFlag.characterSelectedTargetY.value = readDouble();
-          captureTheFlag.characterSelectedTargetZ.value = readDouble();
-        }
+        if (!characterSelectedTarget) break;
+        captureTheFlag.characterSelectedTargetType.value = readString();
+        captureTheFlag.characterSelectedTargetX.value = readDouble();
+        captureTheFlag.characterSelectedTargetY.value = readDouble();
+        captureTheFlag.characterSelectedTargetZ.value = readDouble();
         break;
     }
   }
@@ -899,5 +905,7 @@ class ServerResponseReader with ByteReader {
     }
   }
 
+
+  CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
 }
 

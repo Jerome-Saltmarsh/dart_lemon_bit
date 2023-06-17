@@ -299,6 +299,13 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
               WatchBuilder(characterSelectedPathIndex, (pathIndex) => text("path-index: $pathIndex")),
               WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-end: $pathEnd")),
               buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
+              WatchBuilder(characterSelectedIsAI, (isAI) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isAI)
+                    WatchBuilder(characterSelectedAIDecision, (aiDecision) => text("ai-decision: ${aiDecision.name}")),
+                ],
+              )),
               const SizedBox(height: 1,),
               WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
                 if (!characterSelectedTarget) return nothing;

@@ -33,6 +33,8 @@ class CaptureTheFlagGame extends GameIsometric {
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
   final characterSelected = Watch(false);
+  final characterSelectedIsAI = Watch(false);
+  final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedX = Watch(0.0);
   final characterSelectedY = Watch(0.0);
   final characterSelectedZ = Watch(0.0);

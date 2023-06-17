@@ -10,7 +10,7 @@ import 'package:lemon_math/functions/give_or_take.dart';
 
 import 'capture_the_flag_gameobject_flag.dart';
 import 'capture_the_flag_player.dart';
-import 'capture_the_flag_player_ai.dart';
+import 'capture_the_flag_ai.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   static const Target_Points = 11;
@@ -80,24 +80,24 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flagBlue.moveTo(blueFlagSpawn);
 
     for (var i = 1; i < 2; i++) {
-      characters.add(CaptureTheFlagPlayerAI(
+      characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
           characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Defense));
-      characters.add(CaptureTheFlagPlayerAI(
+      characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
           characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Defense));
     }
     for (var i = 0; i < 2; i++) {
-      characters.add(CaptureTheFlagPlayerAI(
+      characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
           characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Offense));
-      characters.add(CaptureTheFlagPlayerAI(
+      characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
           characterClass: CaptureTheFlagCharacterClass.scout,
@@ -105,12 +105,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     for (var i = 0; i < 1; i++) {
-      characters.add(CaptureTheFlagPlayerAI(
+      characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
           characterClass: CaptureTheFlagCharacterClass.knight,
           role: CaptureTheFlagAIRole.Offense));
-      characters.add(CaptureTheFlagPlayerAI(
+      characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
           characterClass: CaptureTheFlagCharacterClass.knight,
@@ -428,13 +428,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   int get totalAIOnTeamRed => characters
       .where((character) =>
           character.team == CaptureTheFlagTeam.Red &&
-          character is CaptureTheFlagPlayerAI)
+          character is CaptureTheFlagAI)
       .length;
 
   int get totalAIOnTeamBlue => characters
       .where((character) =>
           character.team == CaptureTheFlagTeam.Blue &&
-          character is CaptureTheFlagPlayerAI)
+          character is CaptureTheFlagAI)
       .length;
 
   void balanceTeams() {
@@ -450,7 +450,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
       for (var i = 0; i < characters.length; i++) {
         if (characters[i].team != CaptureTheFlagTeam.Red) continue;
-        if (characters[i] is! CaptureTheFlagPlayerAI) continue;
+        if (characters[i] is! CaptureTheFlagAI) continue;
         removeInstance(characters[i]);
         amountToRemove--;
         if (amountToRemove == 0) break;
@@ -470,7 +470,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
       for (var i = 0; i < characters.length; i++) {
         if (characters[i].team != CaptureTheFlagTeam.Blue) continue;
-        if (characters[i] is! CaptureTheFlagPlayerAI) continue;
+        if (characters[i] is! CaptureTheFlagAI) continue;
         removeInstance(characters[i]);
         amountToRemove--;
         if (amountToRemove == 0) break;
@@ -521,7 +521,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void customOnCharacterDead(IsometricCharacter character) {
     super.customOnCharacterDead(character);
 
-    if (character is CaptureTheFlagPlayerAI){
+    if (character is CaptureTheFlagAI){
       character.onDeath();
     }
   }

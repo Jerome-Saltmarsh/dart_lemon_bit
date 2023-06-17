@@ -3,7 +3,7 @@ import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player_ai.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
@@ -147,7 +147,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     final characters = game.characters;
     for (final character in characters){
        if (!character.active) continue;
-       if (character is! CaptureTheFlagPlayerAI) continue;
+       if (character is! CaptureTheFlagAI) continue;
        final characterTarget = character.target;
        if (characterTarget == null) continue;
        writeBool(true);
@@ -187,6 +187,13 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeIsometricPosition(selectedCharacter);
     writeCharacterPath(selectedCharacter);
 
+    if (selectedCharacter is CaptureTheFlagAI){
+      writeBool(true);
+      writeByte(selectedCharacter.decision.index);
+    } else {
+      writeBool(false);
+    }
+
     final selectedCharacterTarget = selectedCharacter.target;
     if (selectedCharacterTarget == null){
       writeBool(false);
@@ -195,6 +202,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
       writeString(selectedCharacterTarget.runtimeType.toString());
       writeIsometricPosition(selectedCharacterTarget);
     }
+
+
+
   }
 
   void toggleDebugMode() {

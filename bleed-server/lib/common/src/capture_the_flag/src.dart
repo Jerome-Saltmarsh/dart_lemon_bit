@@ -8,3 +8,5 @@ export 'capture_the_flag_player_status.dart';
 export 'capture_the_flag_character_class.dart';
 export 'capture_the_flag_request.dart';
 export 'capture_the_flag_game_status.dart';
+export 'capture_the_flag_ai_decision.dart';
+export 'capture_the_flag_ai_role.dart';

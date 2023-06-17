@@ -13,7 +13,7 @@ import 'package:lemon_math/functions/opposite.dart';
 import 'capture_the_flag_game.dart';
 
 
-class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
+class CaptureTheFlagAI extends IsometricCharacterTemplate {
   static var _idCount = 0;
 
   var viewRange = 500.0;
@@ -22,8 +22,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   CaptureTheFlagCharacterClass characterClass;
   late final CaptureTheFlagGame game;
   IsometricPosition? targetPrevious;
+  var decision = CaptureTheFlagAIDecision.Idle;
 
-  CaptureTheFlagPlayerAI({
+  CaptureTheFlagAI({
     required this.game,
     required super.team,
     required this.characterClass,
@@ -104,11 +105,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   void captureFlagOwn(){
+    decision = CaptureTheFlagAIDecision.Capture_Flag_Own;
     captureFlag(flagOwn);
-  }
-
-  void attackNearestEnemy(){
-    target = getNearestEnemy();
   }
 
   IsometricCollider? getNearestEnemy(){
@@ -128,34 +126,52 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void customUpdate() {
     if (deadOrBusy) return;
 
-    perceive();
-    decide();
-    execute();
+    decision = getDecision();
+    executeDecision();
+    updatePathIndexAndDestination();
   }
 
-  void perceive(){
-
-  }
-
-  void decide(){
-
+  CaptureTheFlagAIDecision getDecision(){
     if (holdingFlagAny)
-      return runToBaseOwn();
+      return CaptureTheFlagAIDecision.Run_To_Base_Own;
 
     if (roleOffensive)
-      return behaveDefensively();
+      return getDecisionDefensive();
 
     if (roleDefensive)
-      return behaveOffensively();
+      return getDecisionOffensive();
+
+    return CaptureTheFlagAIDecision.Idle;
   }
 
-  void execute() {
-    updatePathIndexAndDestination();
+  void executeDecision() {
 
-    if (enemyTargetAttackable)
-      return attackTargetEnemy();
-    if (!atDestination) {
-      return runToDestination();
+    switch (decision){
+      case CaptureTheFlagAIDecision.Idle:
+        setCharacterStateIdle();
+        break;
+      case CaptureTheFlagAIDecision.Capture_Flag_Own:
+        target = flagOwn;
+        break;
+      case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
+        target = flagEnemy;
+        break;
+      case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
+        target = getNearestEnemy();
+        if (enemyTargetAttackable) {
+          attackTargetEnemy();
+        }
+        break;
+      case CaptureTheFlagAIDecision.Run_To_Base_Own:
+        target = baseOwn;
+      case CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own:
+        target = flagSpawnOwn;
+        break;
+      case CaptureTheFlagAIDecision.Support_Ally_Carrying_Flag_Own:
+        target = flagOwn.heldBy;
+        break;
+      default:
+        throw Exception('not implemented');
     }
   }
 
@@ -195,13 +211,16 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
 
   void updatePathIndexAndDestination() {
-
     final target = this.target;
-
     if (targetPrevious != target){
       targetPrevious = target;
       updatePathToTarget();
     }
+
+    if (!atDestination) {
+      return runToDestination();
+    }
+
     if (pathIndex >= pathEnd) {
       updatePathToTarget();
     }
@@ -237,19 +256,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
 
-  void protectAllyTarget(){
-
-  }
-
-  void protectAllyCarryingFlagOwn(){
-
-     if (flagOwnFurtherThan200()){
-        return targetFlagOwn();
-     }
-     if (enemyWithinRange(200))
-       return attackNearestEnemy();
-
-     setCharacterStateIdle();
+  void supportAllyCarryingFlagOwn() {
+    decision = CaptureTheFlagAIDecision.Support_Ally_Carrying_Flag_Own;
   }
 
   bool flagOwnFurtherThan200() => !withinRadius(flagOwn, 200);
@@ -258,38 +266,43 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     target = flagOwn;
   }
 
-  void behaveOffensively(){
+  CaptureTheFlagAIDecision getDecisionOffensive(){
     if (flagOwnCapturedByEnemy)
-      return captureFlagOwn();
+      return CaptureTheFlagAIDecision.Capture_Flag_Own;
     if (flagOwnCapturedByAlly)
-      return protectAllyCarryingFlagOwn();
+      return CaptureTheFlagAIDecision.Support_Ally_Carrying_Flag_Own;
     if (flagOwnDropped)
-      return captureFlagOwn();
+      return CaptureTheFlagAIDecision.Capture_Flag_Own;
     if (awayFromFlagOwnSpawn)
-      return defendFlagOwnSpawn();
+      return CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own;
     if (enemyWithinViewRange)
-      return attackNearestEnemy();
+      return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
 
-    setCharacterStateIdle();
+    return CaptureTheFlagAIDecision.Idle;
   }
 
-
-  void defendFlagOwnSpawn() {
+  void defendFlagSpawnOwn() {
+    decision = CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own;
     target = flagSpawnOwn;
   }
 
-  void behaveDefensively() {
+  CaptureTheFlagAIDecision getDecisionDefensive() {
     if (enemyFlagRespawning)
-      return behaveOffensively();
-
+      return getDecisionOffensive();
     if (enemyWithinViewRange)
-      return attackNearestEnemy();
+      return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
     if (enemyFlagCapturable)
-      return captureEnemyFlag();
+      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
 
-
-    setCharacterStateIdle();
+    return CaptureTheFlagAIDecision.Idle;
   }
+
+  void idle() {
+    setCharacterStateIdle();
+    decision = CaptureTheFlagAIDecision.Idle;
+  }
+
+
 
   void attackTargetEnemy(){
     assert (target != null);
@@ -371,12 +384,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
   // actions
-  void captureEnemyFlag() {
+  void captureFlagEnemy() {
+    decision = CaptureTheFlagAIDecision.Capture_Flag_Enemy;
     target = flagEnemy;
   }
 
   void runToBaseOwn(){
-    target = baseOwn;
+    decision = CaptureTheFlagAIDecision.Run_To_Base_Own;
   }
 
   @override
@@ -403,7 +417,3 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 }
 
-enum CaptureTheFlagAIRole {
-  Defense,
-  Offense,
-}
