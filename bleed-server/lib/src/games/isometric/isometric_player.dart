@@ -5,7 +5,6 @@ import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/enums/input_mode.dart';
-import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/environment_response.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
@@ -60,15 +59,12 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricCollider? _aimTarget; // the currently highlighted character
   Account? account;
   var _interactMode = InteractMode.Inventory;
-  var nextEnergyGain = 0;
 
   /// the key is the item_type and the value is its level
-  final item_level = <int, int> {};
+  // final item_level = <int, int> {};
   final item_quantity = <int, int> {};
 
   var actionItemId = -1;
-
-  ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
@@ -555,12 +551,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeBytes(compiled);
   }
 
-  void writePlayerItems() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Items);
-    writeMap(item_level);
-  }
-
   void writePlayerTarget() {
     writeByte(ServerResponse.Player_Target);
     writePosition(target != null ? target! : mouse);
@@ -685,16 +675,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     }
   }
 
-  int getItemIndex(int itemType) {
-    final itemEntries = item_level.entries;
-    var index = 0;
-    for (var item in itemEntries){
-      if (item.key == itemType) return index;
-      index++;
-    }
-    return -1;
-  }
-
   @override
   void onEquipmentChanged() {
     refreshDamage();
@@ -724,10 +704,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       writeUint16List(entry.value);
     }
   }
-
-  int getItemLevel(int itemType) => item_level[itemType] ?? 0;
-
-  int getItemQuantity(int itemType) => item_quantity[itemType] ?? 0;
 
   writePlayerApiId(){
     writeUInt8(ServerResponse.Api_Player);

@@ -5,7 +5,6 @@ import 'package:bleed_server/common/src/character_action.dart';
 import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
-import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
@@ -382,21 +381,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
     characterUseWeapon(character);
-  }
-
-  void playerEquipFirstItemTypeFromItemGroup(IsometricPlayer player,
-      ItemGroup itemGroup) {
-    final itemEntries = player.item_level.entries.toList(growable: false);
-    final itemEntriesLength = itemEntries.length;
-    for (var i = 0 + 1; i < itemEntriesLength; i++) {
-      final entry = itemEntries[i];
-      if (entry.value <= 0) continue;
-      final entryItemType = entry.key;
-      final entryItemGroup = ItemType.getItemGroup(entryItemType);
-      if (entryItemGroup != itemGroup) continue;
-      characterEquipItemType(player, entryItemType);
-      return;
-    }
   }
 
   void characterEquipItemType(IsometricCharacterTemplate character, int itemType) {

@@ -9,7 +9,6 @@ import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/client_request.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/edit_request.dart';
-import 'package:bleed_server/common/src/enums/item_group.dart';
 import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/fight2d/game_fight2d_client_request.dart';
 import 'package:bleed_server/common/src/game_error.dart';
@@ -172,15 +171,6 @@ class WebSocketConnection with ByteReader {
         final itemType = parseArg1(arguments);
         if (itemType == null) return;
         // player.game.characterEquipItemType(player, itemType);
-        return;
-
-      case ClientRequest.Equip_Next:
-        final itemGroupIndex = parseArg1(arguments);
-        if (itemGroupIndex == null) return;
-        if (!isValidIndex(itemGroupIndex, ItemGroup.values)){
-          return;
-        }
-        // game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
         return;
 
       case ClientRequest.Select_Weapon_Primary:

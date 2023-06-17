@@ -618,13 +618,7 @@ class IsometricEvents {
     }
   }
 
-  void onChangedPlayerWeaponRanged(int weaponType) {
-    clientState.itemGroup.value = ItemGroup.Primary_Weapon;
-  }
-
   void onChangedPlayerWeapon(int itemType){
-    clientState.itemGroup.value = ItemType.getItemGroup(itemType);
-
     if (itemType == ItemType.Empty) return;
 
     switch (itemType) {
@@ -661,14 +655,6 @@ class IsometricEvents {
       clientState.window_visible_player_creation.value = respawnTimer <= 0;
       clientState.control_visible_respawn_timer.value = respawnTimer > 0;
     }
-  }
-
-  void onChangedPlayerWeaponMelee(int weaponType) {
-     clientState.itemGroup.value = ItemGroup.Secondary_Weapon;
-  }
-
-  void onChangedPlayerTertiaryWeapon(int weaponType) {
-    clientState.itemGroup.value = ItemGroup.Tertiary_Weapon;
   }
 
   void readPlayerEventItemAcquired() {

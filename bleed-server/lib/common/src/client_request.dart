@@ -9,7 +9,6 @@ class ClientRequest {
   static const Edit                     = 17;
   static const Inventory                = 18;
   static const Equip                    = 22;
-  static const Equip_Next               = 23;
   static const Purchase_Item            = 25;
   static const Select_Weapon_Primary    = 27;
   static const Select_Weapon_Secondary  = 28;

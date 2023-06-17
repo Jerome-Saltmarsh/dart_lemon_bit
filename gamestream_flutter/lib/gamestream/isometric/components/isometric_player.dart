@@ -39,8 +39,6 @@ class IsometricPlayer {
   final legs = Watch(0);
   final previousPosition = IsometricPosition();
   final storeItems = Watch(<int>[]);
-  final items = <int, int> {};
-  final items_reads = Watch(0);
   final energy = Watch(0);
   final energyMax = Watch(0);
   final abilityTarget = IsometricPosition();
@@ -96,29 +94,6 @@ class IsometricPlayer {
       return true;
     }
     return false;
-  }
-
-  void Refresh_Items(){
-    items_reads.value++;
-  }
-
-  Watch<int> getItemGroupWatch(ItemGroup itemGroup){
-    switch (itemGroup) {
-      case ItemGroup.Primary_Weapon:
-        return weaponPrimary;
-      case ItemGroup.Secondary_Weapon:
-        return weaponSecondary;
-      case ItemGroup.Tertiary_Weapon:
-        return weaponTertiary;
-      case ItemGroup.Head_Type:
-        return head;
-      case ItemGroup.Body_Type:
-        return body;
-      case ItemGroup.Legs_Type:
-        return legs;
-      default:
-        throw Exception('gamestream.isometricEngine.player.getItemGroupWatch($itemGroup)');
-    }
   }
 
   Watch<int> getItemTypeWatch(int itemType){

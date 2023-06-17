@@ -32,7 +32,6 @@ mixin class IsometricClientState {
   final control_visible_scoreboard = WatchBool(false);
   final control_visible_respawn_timer = WatchBool(false);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-  final itemGroup = Watch(ItemGroup.Primary_Weapon);
   final mouseOverItemType = Watch(-1);
   final buff_active_infinite_ammo = Watch(false);
   final buff_active_double_damage = Watch(false);

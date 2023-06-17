@@ -23,7 +23,6 @@ class ApiPlayer {
   static const Credits                = 21;
   static const Damage                 = 23;
   static const Energy                 = 24;
-  static const Items                  = 25;
   static const Weapons                = 26;
   static const Equipment              = 27;
   static const Id                     = 29;

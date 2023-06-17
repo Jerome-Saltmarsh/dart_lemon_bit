@@ -470,10 +470,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Damage:
         isometric.server.playerDamage.value = readUInt16();
         break;
-      case ApiPlayer.Items:
-        readMap(isometric.player.items);
-        isometric.player.Refresh_Items();
-        break;
       case ApiPlayer.Equipment:
         readPlayerEquipped();
         break;
