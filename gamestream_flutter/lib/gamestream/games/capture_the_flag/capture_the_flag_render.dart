@@ -148,15 +148,17 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
         40,
     );
 
-    if (characterSelectedTargetRenderLine.value) {
-       isometric.renderer.renderLine(
-         characterSelectedX.value,
-         characterSelectedY.value,
-         characterSelectedZ.value,
-         characterSelectedTargetX.value,
-         characterSelectedTargetY.value,
-         characterSelectedTargetZ.value,
-       );
+    if (characterSelectedTarget.value &&
+        characterSelectedTargetRenderLine.value
+    ) {
+      isometric.renderer.renderLine(
+        characterSelectedX.value,
+        characterSelectedY.value,
+        characterSelectedZ.value,
+        characterSelectedTargetX.value,
+        characterSelectedTargetY.value,
+        characterSelectedTargetZ.value,
+      );
     }
 
     if (characterSelectedPathRender.value){
