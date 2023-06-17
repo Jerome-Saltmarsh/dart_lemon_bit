@@ -151,13 +151,24 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         idle();
         break;
       case CaptureTheFlagAIDecision.Capture_Flag_Own:
-        target = flagOwn;
+        final heldBy = flagOwn.heldBy;
+        if (heldBy == null){
+          target = flagOwn;
+          break;
+        }
+        if (isEnemy(heldBy)){
+          target = heldBy;
+        }
         break;
       case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
         target = flagEnemy;
         break;
       case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
         target = getNearestEnemy();
+        if (target == null){
+          idle();
+          break;
+        }
         if (enemyTargetAttackable) {
           attackTargetEnemy();
         }
