@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/api_players.dart';
-import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
@@ -28,7 +27,6 @@ class CombatPlayer extends IsometricPlayer {
   var _energy = 10;
   var _powerType = PowerType.None;
   var _credits = 0;
-  var _perkType = PerkType.None;
   var _respawnTimer = 0;
 
   final GameCombat game;
@@ -44,7 +42,6 @@ class CombatPlayer extends IsometricPlayer {
   int get score => _credits;
   int get powerType => _powerType;
   int get energy => _energy;
-  int get perkType => _perkType;
   int get respawnTimer => _respawnTimer;
 
   double get magicPercentage {
@@ -58,14 +55,6 @@ class CombatPlayer extends IsometricPlayer {
     if (_respawnTimer == value) return;
     _respawnTimer = value;
     writeApiPlayerRespawnTimer();
-  }
-
-  set perkType(int value) {
-    assert (PerkType.values.contains(value));
-    if (!PerkType.values.contains(value)) return;
-    if (_perkType == value) return;
-    _perkType = value;
-    writeApiPlayerPerkType();
   }
 
   set powerType(int value) {
@@ -167,16 +156,7 @@ class CombatPlayer extends IsometricPlayer {
     writePercentage(energy / maxEnergy);
   }
 
-  void writeApiPlayerPerkType(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.PerkType);
-    writeByte(perkType);
-  }
-
   int getPlayerPowerTypeCooldownTotal() {
-    if (perkType == PerkType.Power) {
-      return Engine.Frames_Per_Second * 8;
-    }
     return Engine.Frames_Per_Second * 10;
   }
 

@@ -27,7 +27,6 @@ class ApiPlayer {
   static const Equipment              = 27;
   static const Id                     = 29;
   static const Power                  = 30;
-  static const PerkType               = 31;
   static const Respawn_Timer          = 32;
   static const Active                 = 33;
   static const Attribute_Values       = 35;

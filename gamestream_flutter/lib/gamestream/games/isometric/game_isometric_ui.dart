@@ -806,35 +806,6 @@ class GameIsometricUI {
       )
   );
 
-  static Widget buildItemRow2({
-    required Watch<int> watch,
-    required int itemType,
-    required int amount,
-    required bool active,
-  }){
-    return onPressed(
-      action: () =>
-          gamestream.network.sendClientRequest(ClientRequest.Equip, itemType),
-      child: Container(
-        color: active ? Colors.white24 : Colors.transparent,
-        padding: GameStyle.Padding_6,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                buildAtlasItemType(itemType),
-                width8,
-                text(ItemType.getName(itemType)),
-              ],
-            ),
-            text(amount),
-          ],
-        ),
-      ),
-    );
-  }
-
   static Widget buildIconPlayerPowerType(){
     return watch(gamestream.isometric.player.powerReady, (bool powerReady) {
       return !powerReady ? width64 :

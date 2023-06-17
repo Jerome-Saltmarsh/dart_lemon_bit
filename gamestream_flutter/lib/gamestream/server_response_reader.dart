@@ -374,9 +374,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Respawn_Timer:
         isometric.player.respawnTimer.value = readUInt16();
         break;
-      case ApiPlayer.PerkType:
-        isometric.player.perkType.value = readByte();
-        break;
       case ApiPlayer.Target_Position:
         isometric.player.runningToTarget = true;
         readVector3(isometric.player.targetPosition);

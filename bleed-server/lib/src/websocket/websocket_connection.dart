@@ -9,7 +9,6 @@ import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/client_request.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/edit_request.dart';
-import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/fight2d/game_fight2d_client_request.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_type.dart';
@@ -26,7 +25,6 @@ import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/rain_type.dart';
 import 'package:bleed_server/common/src/request_modify_canvas_size.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
@@ -157,22 +155,6 @@ class WebSocketConnection with ByteReader {
         handleRequestInventory(player, arguments);
         break;
 
-      case ClientRequest.Select_PerkType:
-        final value = parseArg1(arguments);
-        if (value == null) return;
-        if (!PerkType.values.contains(value)) {
-          // player.writeError('invalid perk type');
-          return;
-        }
-        // player.perkType = value;
-        return;
-
-      case ClientRequest.Equip:
-        final itemType = parseArg1(arguments);
-        if (itemType == null) return;
-        // player.game.characterEquipItemType(player, itemType);
-        return;
-
       case ClientRequest.Select_Weapon_Primary:
         if (player is! CombatPlayer) return;
         final value = parseArg1(arguments);
@@ -239,20 +221,6 @@ class WebSocketConnection with ByteReader {
       case ClientRequest.Edit:
         if (!isLocalMachine && game is! GameEditor) return;
         return handleRequestEdit(arguments);
-
-      case ClientRequest.Teleport_Scene:
-        final sceneIndex = parse(arguments[1]);
-
-        if (sceneIndex == null) {
-          sendGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-
-        if (!isValidIndex(sceneIndex, teleportScenes)) {
-          sendGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-        break;
 
       case ClientRequest.Isometric:
         handleIsometricRequest(arguments);

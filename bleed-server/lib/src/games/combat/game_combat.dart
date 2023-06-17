@@ -2,7 +2,6 @@
 
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
-import 'package:bleed_server/common/src/enums/perk_type.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/game_type.dart';
@@ -476,7 +475,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     player.powerCooldown = 0;
     player.buffDuration = 0;
     player.respawnTimer = 0;
-    player.perkType         = PerkType.None;
     player.powerType        = PowerType.Bomb;
     player.weaponPrimary    = ItemType.Weapon_Ranged_Plasma_Pistol;
     player.weaponSecondary  = ItemType.Weapon_Melee_Crowbar;
@@ -592,20 +590,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
         }
         break;
     }
-  }
-
-  void customOnPlayerPerkTypeChanged(CombatPlayer player) {
-    player.maxHealth = player.perkType == PerkType.Health
-        ? Player_Health_Perk
-        : Player_Health;
-
-    player.maxEnergy = player.perkType == PerkType.Energy
-        ? Player_Energy_Perk
-        : Player_Energy;
-
-    player.runSpeed = player.perkType == PerkType.Speed
-        ? Player_Run_Speed_Perk
-        : Player_Run_Speed;
   }
 
   @override

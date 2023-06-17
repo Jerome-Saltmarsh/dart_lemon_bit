@@ -147,10 +147,6 @@ class GameNetwork {
     sink.close();
   }
 
-  void sendClientRequestTeleportScene(TeleportScenes scene){
-    sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
-  }
-
   void uploadScene(List<int> bytes) {
     final package = Uint8List(bytes.length + 1);
     package[0] = ClientRequest.Editor_Load_Scene;
