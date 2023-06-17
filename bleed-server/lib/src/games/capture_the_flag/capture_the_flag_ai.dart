@@ -148,7 +148,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
     switch (decision){
       case CaptureTheFlagAIDecision.Idle:
-        setCharacterStateIdle();
+        idle();
         break;
       case CaptureTheFlagAIDecision.Capture_Flag_Own:
         target = flagOwn;
@@ -173,12 +173,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       default:
         throw Exception('not implemented');
     }
-  }
-
-  bool get enemyVeryCloseBy {
-    final nearestEnemy = getNearestEnemy();
-    if (nearestEnemy == null) return false;
-    return getDistanceSquared(nearestEnemy) < 10000;
   }
 
   void runToDestination(){
@@ -256,11 +250,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
 
-  void supportAllyCarryingFlagOwn() {
-    decision = CaptureTheFlagAIDecision.Support_Ally_Carrying_Flag_Own;
-  }
-
-  bool flagOwnFurtherThan200() => !withinRadius(flagOwn, 200);
 
   void targetFlagOwn() {
     target = flagOwn;
@@ -281,11 +270,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return CaptureTheFlagAIDecision.Idle;
   }
 
-  void defendFlagSpawnOwn() {
-    decision = CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own;
-    target = flagSpawnOwn;
-  }
-
   CaptureTheFlagAIDecision getDecisionDefensive() {
     if (enemyFlagRespawning)
       return getDecisionOffensive();
@@ -299,16 +283,16 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void idle() {
     setCharacterStateIdle();
-    decision = CaptureTheFlagAIDecision.Idle;
+    destinationX = x;
+    destinationY = y;
+    destinationZ = z;
   }
-
-
 
   void attackTargetEnemy(){
     assert (target != null);
+    idle();
     face(target!);
     useWeapon();
-    setCharacterStateIdle();
   }
 
   bool enemyWithinRange(double range){
@@ -324,7 +308,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   bool get enemyFlagCapturable => enemyFlagStatusAtBase || enemyFlagStatusDropped;
-
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
   bool get roleDefensive => role == CaptureTheFlagAIRole.Defense;
 
@@ -383,15 +366,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
-  // actions
-  void captureFlagEnemy() {
-    decision = CaptureTheFlagAIDecision.Capture_Flag_Enemy;
-    target = flagEnemy;
-  }
-
-  void runToBaseOwn(){
-    decision = CaptureTheFlagAIDecision.Run_To_Base_Own;
-  }
 
   @override
   void onWeaponTypeChanged() {
