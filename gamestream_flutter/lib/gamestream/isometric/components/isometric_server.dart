@@ -34,7 +34,6 @@ class IsometricServer {
   final playerCredits = Watch(0);
   final playerExperiencePercentage = Watch(0.0);
   final playerAccuracy = Watch(1.0);
-  final playerAttributes = Watch(0);
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);

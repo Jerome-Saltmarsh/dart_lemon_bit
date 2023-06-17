@@ -104,6 +104,10 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       }
     }
 
+    if (player.respawnTimer > 0) {
+      player.respawnTimer--;
+    }
+
     if (player.energy < player.maxEnergy) {
       player.nextEnergyGain--;
       if (player.nextEnergyGain <= 0) {
@@ -780,6 +784,15 @@ class GameCombat extends IsometricGame<CombatPlayer> {
         character.assignWeaponStateFiring();
         break;
     }
+  }
+
+  @override
+  void revive(CombatPlayer player) {
+    if (player.respawnTimer > 0) {
+      player.writeGameError(GameError.Respawn_Duration_Remaining);
+      return;
+    }
+    super.revive(player);
   }
 }
 

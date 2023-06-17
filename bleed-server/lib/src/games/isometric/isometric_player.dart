@@ -59,23 +59,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var initialized = false;
   var id = 0;
 
-  var _attributes = 0;
-  var _respawnTimer = 0;
-
-  int get respawnTimer => _respawnTimer;
-
-  int get attributes => _attributes;
-
-  set attributes(int value) {
-    _attributes = max(value, 0);
-    writeApiPlayerAttributes();
-  }
-
-  set respawnTimer(int value){
-     if (_respawnTimer == value) return;
-     _respawnTimer = value;
-     writeApiPlayerRespawnTimer();
-  }
 
 
   /// Warning - do not reference
@@ -810,12 +793,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   @override
   bool get isPlayer => true;
 
-  void writeApiPlayerAttributes(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Attributes);
-    writeUInt16(_attributes);
-  }
-
   void writeGameEventGameObjectDestroyed(IsometricGameObject gameObject){
     writeGameEvent(
       type: GameEventType.Game_Object_Destroyed,
@@ -825,12 +802,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       angle: gameObject.velocityAngle,
     );
     writeUInt16(gameObject.type);
-  }
-
-  void writeApiPlayerRespawnTimer(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Respawn_Timer);
-    writeUInt16(_respawnTimer);
   }
 
   @override

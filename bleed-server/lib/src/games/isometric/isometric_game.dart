@@ -1769,10 +1769,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     _updateIsometricPlayerAimTarget(player);
 
-    if (player.respawnTimer > 0) {
-      player.respawnTimer--;
-    }
-
     if (player.dead) return;
     if (!player.active) return;
 

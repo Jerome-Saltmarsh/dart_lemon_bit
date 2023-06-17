@@ -27,6 +27,7 @@ class CombatPlayer extends IsometricPlayer {
   var _powerType = PowerType.None;
   var _credits = 0;
   var _perkType = PerkType.None;
+  var _respawnTimer = 0;
 
   final GameCombat game;
 
@@ -42,6 +43,20 @@ class CombatPlayer extends IsometricPlayer {
   int get powerType => _powerType;
   int get energy => _energy;
   int get perkType => _perkType;
+  int get respawnTimer => _respawnTimer;
+
+  double get magicPercentage {
+    if (_energy == 0) return 0;
+    if (maxEnergy == 0) return 0;
+    return _energy / maxEnergy;
+  }
+
+
+  set respawnTimer(int value){
+    if (_respawnTimer == value) return;
+    _respawnTimer = value;
+    writeApiPlayerRespawnTimer();
+  }
 
   set perkType(int value) {
     assert (PerkType.values.contains(value));
@@ -71,12 +86,6 @@ class CombatPlayer extends IsometricPlayer {
     if (_energy == clampedValue) return;
     _energy = clampedValue;
     writePlayerEnergy();
-  }
-
-  double get magicPercentage {
-    if (_energy == 0) return 0;
-    if (maxEnergy == 0) return 0;
-    return _energy / maxEnergy;
   }
 
   void writePlayerWeapons() {
@@ -217,5 +226,11 @@ class CombatPlayer extends IsometricPlayer {
       return Engine.Frames_Per_Second * 8;
     }
     return Engine.Frames_Per_Second * 10;
+  }
+
+  void writeApiPlayerRespawnTimer(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Respawn_Timer);
+    writeUInt16(_respawnTimer);
   }
 }

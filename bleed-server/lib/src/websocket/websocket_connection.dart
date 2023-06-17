@@ -951,10 +951,6 @@ class WebSocketConnection with ByteReader {
           sendGameError(GameError.PlayerStillAlive);
           return;
         }
-        if (player.respawnTimer > 0) {
-          player.writeGameError(GameError.Respawn_Duration_Remaining);
-          return;
-        }
         game.revive(player);
         return;
 

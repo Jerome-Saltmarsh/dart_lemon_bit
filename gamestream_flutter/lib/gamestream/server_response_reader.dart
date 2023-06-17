@@ -393,15 +393,10 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Accuracy:
         isometric.server.playerAccuracy.value = readPercentage();
         break;
-      case ApiPlayer.Attributes:
-        isometric.server.playerAttributes.value = readUInt16();
-        break;
       case ApiPlayer.Credits:
         isometric.server.playerCredits.value = readUInt16();
         break;
       case ApiPlayer.Energy:
-        // isometricEngine.player.energy.value = readUInt16();
-        // isometricEngine.player.energyMax.value = readUInt16();
         readApiPlayerEnergy();
         break;
       case ApiPlayer.Weapons:
