@@ -348,7 +348,7 @@ class GameIsometricUI {
       top: 8,
       left: 8,
       child: watch(
-          gamestream.isometric.clientState.rendersSinceUpdate,
+          gamestream.rendersSinceUpdate,
               (int frames) =>
               buildText("Warning: No message received from server $frames")));
 
@@ -359,7 +359,7 @@ class GameIsometricUI {
       if (!value)
         return buildText("Interpolation Off",
             onPressed: () => gamestream.isometric.player.interpolating.value = true);
-      return watch(gamestream.isometric.clientState.rendersSinceUpdate, (int frames) {
+      return watch(gamestream.rendersSinceUpdate, (int frames) {
         return buildText("Frames: $frames",
             onPressed: () => gamestream.isometric.player.interpolating.value = false);
       });

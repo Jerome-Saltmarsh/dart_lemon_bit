@@ -51,7 +51,7 @@ class Isometric {
     clientState.renderEditMode();
     renderer.renderMouseTargetName();
     renderer.renderPlayerEnergy();
-    clientState.rendersSinceUpdate.value++;
+    gamestream.rendersSinceUpdate.value++;
   }
 
   double get windLineRenderX {

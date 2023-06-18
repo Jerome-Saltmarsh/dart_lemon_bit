@@ -53,7 +53,6 @@ mixin class IsometricClientState {
 
   DateTime? timeConnectionEstablished;
 
-  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
   late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
   late final messageStatus = Watch("", onChanged: onChangedMessageStatus);
   late final debugMode = Watch(false, onChanged: onChangedDebugMode);
@@ -209,10 +208,6 @@ mixin class IsometricClientState {
     );
   }
 
-  void onChangedUpdateFrame(int value){
-    rendersSinceUpdate.value = 0;
-  }
-
   void clear() {
     gamestream.isometric.player.position.x = -1;
     gamestream.isometric.player.position.y = -1;
@@ -235,10 +230,10 @@ mixin class IsometricClientState {
   void interpolatePlayer(){
 
     if (!gamestream.isometric.player.interpolating.value) return;
-    if (rendersSinceUpdate.value == 0) {
+    if (gamestream.rendersSinceUpdate.value == 0) {
       return;
     }
-    if (rendersSinceUpdate.value != 1) return;
+    if (gamestream.rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = gamestream.isometric.server.getPlayerCharacter();
     if (playerCharacter == null) return;

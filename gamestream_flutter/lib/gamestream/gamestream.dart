@@ -19,28 +19,29 @@ import 'network/game_network.dart';
 
 class Gamestream with ByteReader {
   var previousServerResponse = -1;
+
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
   final decoder = ZLibDecoder();
+  final audio = GameAudio();
+  final animation = GameAnimation();
+  final operationStatus = Watch(OperationStatus.None);
+  final isometric = Isometric();
 
-   final audio = GameAudio();
-   final animation = GameAnimation();
-   final operationStatus = Watch(OperationStatus.None);
-   final isometric = Isometric();
+  late final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
+  late final io = GameIO(isometric);
+  late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
+  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
+  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
+  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
+  late final accountService = AccountService(this);
+  late final GameNetwork network;
+  late final Games games;
+  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
 
-   late final updateFrame = Watch(0, onChanged: isometric.clientState.onChangedUpdateFrame);
-   late final io = GameIO(isometric);
-   late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
-   late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
-   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
-   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
-   late final accountService = AccountService(this);
-   late final GameNetwork network;
-   late final Games games;
-
-   void refreshGame(){
-     _onChangedGameType(gameType.value);
-   }
+  void refreshGame() {
+    _onChangedGameType(gameType.value);
+  }
 
   Gamestream() {
     games = Games(this);
@@ -249,4 +250,7 @@ class Gamestream with ByteReader {
      }
    }
 
+  void onChangedUpdateFrame(int value){
+    rendersSinceUpdate.value = 0;
+  }
 }
