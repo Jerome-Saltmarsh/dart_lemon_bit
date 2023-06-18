@@ -6,7 +6,6 @@ import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_charac
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_request.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
-import 'package:bleed_server/src/games/combat/combat_player.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
@@ -17,7 +16,9 @@ import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
+import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:bleed_server/src/utilities/system.dart';
+import 'package:bleed_server/src/websocket/handlers/handle_client_request_combat.dart';
 import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene_generator.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -128,41 +129,8 @@ class WebSocketConnection with ByteReader {
         handleClientRequestSurvival(player, arguments);
         break;
 
-      case ClientRequest.Select_Weapon_Primary:
-        if (player is! CombatPlayer) return;
-        final value = parseArg1(arguments);
-        if (value == null) return;
-        if (!ItemType.isTypeWeapon(value)) {
-          player.writeGameError(GameError.Invalid_Weapon_Type);
-          return;
-        }
-        player.weaponPrimary = value;
-        player.weaponType = value;
-        player.onWeaponTypeChanged();
-        break;
-
-      case ClientRequest.Select_Weapon_Secondary:
-        if (player is! CombatPlayer) return;
-        final value = parseArg1(arguments);
-        if (value == null) return;
-        if (!ItemType.isTypeWeapon(value)) {
-          player.writeGameError(GameError.Invalid_Weapon_Type);
-          return;
-        }
-        player.weaponSecondary = value;
-        player.weaponType = value;
-        player.onWeaponTypeChanged();
-        break;
-
-      case ClientRequest.Select_Power:
-        if (player is! CombatPlayer) return;
-        final value = parseArg1(arguments);
-        if (value == null) return;
-        if (!PowerType.values.contains(value)) {
-          player.writeGameError(GameError.Invalid_Power_Type);
-          return;
-        }
-        player.powerType = value;
+      case ClientRequest.Combat:
+        handleClientRequestCombat(player, arguments);
         break;
 
       case ClientRequest.Attack:
@@ -805,13 +773,6 @@ class WebSocketConnection with ByteReader {
    sendGameError(GameError.Invalid_Player_Type);
   }
 
-  static bool isValidIndex(int? index, List values){
-    if (index == null) return false;
-    if (values.isEmpty) return false;
-    if (index < 0) return false;
-    return index < values.length;
-  }
-
   void handleIsometricRequest(List<String> arguments){
     final player = _player;
 
@@ -917,3 +878,4 @@ class WebSocketConnection with ByteReader {
     }
   }
 }
+

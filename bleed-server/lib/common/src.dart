@@ -65,3 +65,4 @@ export 'src/wind_type.dart';
 export 'src/interact_mode.dart';
 export 'src/isometric_editor/isometric_editor_request.dart';
 export 'src/survival/survival_request.dart';
+export 'src/combat/combat_request.dart';
