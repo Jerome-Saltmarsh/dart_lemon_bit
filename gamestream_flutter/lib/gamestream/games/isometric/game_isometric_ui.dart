@@ -58,172 +58,6 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildWindowCharacterCreation() {
-
-    const textSize = 22;
-
-    const weaponTypes = const [
-      ItemType.Weapon_Ranged_Plasma_Rifle,
-      ItemType.Weapon_Ranged_Plasma_Pistol,
-      ItemType.Weapon_Ranged_Shotgun,
-      ItemType.Weapon_Ranged_Bazooka,
-      ItemType.Weapon_Ranged_Sniper_Rifle,
-      ItemType.Weapon_Ranged_Flamethrower,
-      ItemType.Weapon_Ranged_Teleport,
-      // ItemType.Weapon_Melee_Knife,
-      ItemType.Weapon_Melee_Crowbar,
-      ItemType.Weapon_Melee_Sword,
-    ];
-
-    const titleFontSize = 22;
-    const titleFontColor = Colors.white24;
-
-    const containerWidth = 150.0;
-    const containerHeight = 300.0;
-
-    final columnPowers = Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        text('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
-        height12,
-        buildIconPlayerPowerType(),
-        height24,
-        Container(
-          width: containerWidth,
-          height: containerHeight,
-          child: SingleChildScrollView(
-            child: Column(
-                children: const <int> [
-                  PowerType.Bomb,
-                  PowerType.Stun,
-                  PowerType.Invisible,
-                  PowerType.Shield,
-                  PowerType.Teleport,
-                ].map((int powerType){
-                  return onPressed(
-                    action: () => gamestream.network.sendClientRequest(ClientRequest.Select_Power, powerType),
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 6),
-                      child: watch(gamestream.isometric.player.powerType, (int playerPowerType){
-                        return text(PowerType.getName(powerType),
-                          color: powerType == playerPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
-                          size: textSize,
-                        );
-                      }),
-                    ),
-                  );
-                }).toList(growable: false)
-            ),
-          ),
-        ),
-      ],
-    );
-
-    final columnSelectWeaponLeft = watch(gamestream.isometric.player.weaponPrimary, (int weaponPrimary) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          text('left-click', size: titleFontSize, color: titleFontColor, italic: true),
-          height12,
-          buildIconPlayerWeaponPrimary(),
-          height24,
-          Container(
-            height: containerHeight,
-            width: containerWidth,
-            child: SingleChildScrollView(
-              child: Column(
-                children: (weaponTypes).map((int itemType) => Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  child: onPressed(
-                      action: () => gamestream.network.sendClientRequestSelectWeaponPrimary(itemType),
-                      child: text(ItemType.getName(itemType),
-                        color: weaponPrimary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
-                        size: textSize,
-                      )),
-                ),
-                ).toList(growable: false),
-              ),
-            ),
-          ),
-          // buildIconPlayerWeaponPrimary(),
-        ],
-      );
-    });
-
-    final columnSelectWeaponRight = watch(gamestream.isometric.player.weaponSecondary, (int weaponSecondary) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          text('right-click', size: titleFontSize, color: titleFontColor, italic: true),
-          height12,
-          buildIconPlayerWeaponSecondary(),
-          height24,
-          Container(
-            width: containerWidth,
-            height: containerHeight,
-            child: SingleChildScrollView(
-              child: Column(
-                children: (weaponTypes).map((int itemType) => Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  child: onPressed(
-                      action: () => gamestream.network.sendClientRequestSelectWeaponSecondary(itemType),
-                      child: text(ItemType.getName(itemType),
-                        color: weaponSecondary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
-                        size: textSize,
-                      )),
-                ),
-                ).toList(growable: false),
-              ),
-            ),
-          ),
-        ],
-      );
-    });
-
-    final buttonPlay = onPressed(
-      action: gamestream.isometric.revive,
-      child: MouseOver(
-          builder: (mouseOver) {
-            return Container(
-              width: 150,
-              height: 150 * goldenRatio_0381,
-              alignment: Alignment.center,
-              color: GameIsometricColors.green.withAlpha(mouseOver ? 140 : 100),
-              child: text("START", size: 45, color: GameIsometricColors.green),
-            );
-          }
-      ),
-    );
-
-    return buildFullscreen(
-      child: buildDialogUIControl(
-        child: Container(
-          width: 600,
-          padding: GameStyle.Padding_6,
-          color: GameStyle.Container_Color,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              height32,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  columnSelectWeaponLeft,
-                  columnPowers,
-                  columnSelectWeaponRight,
-                ],
-              ),
-              height64,
-              buttonPlay,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   static Widget buildWindowMenuItem({
     required String title,
     required  Widget child,
@@ -533,21 +367,6 @@ class GameIsometricUI {
     }),
   );
 
-  static Widget buildWindowPlayerRespawnTimer(){
-    return buildWatchBool(gamestream.isometric.clientState.control_visible_respawn_timer, () {
-      return Container(
-        width: 240,
-        height: 240 * goldenRatio_0381,
-        color: GameStyle.Container_Color,
-        padding: GameStyle.Container_Padding,
-        alignment: Alignment.center,
-        child: watch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
-          return text("RESPAWN: ${respawnTimer ~/ Server_FPS}", size: 25);
-        }),
-      );
-    });
-  }
-
   static Widget buildPlayersScore(){
     return IgnorePointer(
       child: Column(
@@ -737,38 +556,9 @@ class GameIsometricUI {
         child: child,
       );
 
-  static Widget buildPlayMode(bool edit) =>
-      edit ? buildEditor() : watch(gamestream.gameType, buildStackPlay);
-
   static Widget buildEditor(){
     return watch(gamestream.isometric.editor.editTab, EditorUI.buildUI);
   }
-
-  static Widget buildStackPlay(GameType gameType) => StackFullscreen(children: [
-    if (gameType == GameType.Combat)
-      buildWatchBool(gamestream.isometric.clientState.window_visible_player_creation, buildWindowCharacterCreation),
-    if (gameType == GameType.Combat)
-      buildWatchBool(gamestream.isometric.clientState.control_visible_respawn_timer, () =>
-          Positioned(
-            bottom: GameStyle.Default_Padding,
-            left: 0,
-            child: Container(
-                width: engine.screen.width,
-                alignment: Alignment.center,
-                child: buildWindowPlayerRespawnTimer()),
-          )
-      ),
-    buildWatchBool(gamestream.isometric.clientState.control_visible_player_power, (){
-      return buildWatchBool(gamestream.isometric.player.powerReady, () =>
-          Positioned(
-            child: buildIconPlayerPowerType(),
-            left: GameStyle.Default_Padding,
-            bottom: GameStyle.Default_Padding,
-          )
-      );
-    }),
-
-  ]);
 
   static Widget buildPanelCredits() {
     return Column(
@@ -802,13 +592,6 @@ class GameIsometricUI {
       )
       )
   );
-
-  static Widget buildIconPlayerPowerType(){
-    return watch(gamestream.isometric.player.powerReady, (bool powerReady) {
-      return !powerReady ? width64 :
-      watch(gamestream.isometric.player.powerType, buildIconPowerType);
-    });
-  }
 
   static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
 
@@ -851,14 +634,6 @@ class GameIsometricUI {
   //     ),
   // );
 
-  static Container buildIconPlayerWeaponSecondary() {
-    return Container(
-      constraints: BoxConstraints(maxWidth: 120),
-      height: 64,
-      child: watch(gamestream.isometric.player.weaponSecondary, buildAtlasItemType),
-    );
-  }
-
   static Widget buildIconPowerType(int powerType){
     assert (PowerType.values.contains(powerType));
     final powerTypeIcon = const <int, int> {
@@ -874,14 +649,6 @@ class GameIsometricUI {
       height: 64,
       constraints: BoxConstraints(maxWidth: 120),
       child: buildAtlasIconType(powerTypeIcon),
-    );
-  }
-
-  static Container buildIconPlayerWeaponPrimary() {
-    return Container(
-      constraints: BoxConstraints(maxWidth: 120, maxHeight: 64),
-      height: 64,
-      child: watch(gamestream.isometric.player.weaponPrimary, buildAtlasItemType),
     );
   }
 

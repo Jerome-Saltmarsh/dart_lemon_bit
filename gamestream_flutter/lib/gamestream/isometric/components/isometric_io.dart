@@ -5,7 +5,6 @@ class IsometricIO {
 
   var Key_Inventory          = KeyCode.I;
   var Key_Zoom               = KeyCode.F;
-  var Key_Suicide            = KeyCode.Backspace;
   var Key_Settings           = KeyCode.Digit_0;
   var Key_Duplicate          = KeyCode.V;
   var Key_Auto_Attack        = KeyCode.Space;
@@ -19,16 +18,6 @@ class IsometricIO {
 
     if (key == Key_Zoom) {
       gamestream.isometric.actions.toggleZoom();
-      return;
-    }
-
-    if (key == Key_Suicide) {
-      gamestream.network.sendClientRequest(ClientRequest.Suicide);
-      return;
-    }
-
-    if (key == KeyCode.Enter) {
-      gamestream.network.sendClientRequest(ClientRequest.Suicide);
       return;
     }
 

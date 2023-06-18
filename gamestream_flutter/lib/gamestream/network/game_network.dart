@@ -147,12 +147,6 @@ class GameNetwork {
     sink.close();
   }
 
-  void sendClientRequestSelectWeaponPrimary(int value) =>
-      sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
-
-  void sendClientRequestSelectWeaponSecondary(int value) =>
-      sendClientRequest(ClientRequest.Select_Weapon_Secondary, value);
-
   void sendClientRequest(int value, [dynamic message]) =>
       message != null ? send('${value} $message') : send(value);
 

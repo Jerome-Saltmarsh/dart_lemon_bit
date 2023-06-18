@@ -140,12 +140,6 @@ class WebSocketConnection with ByteReader {
         game.characterAttackMelee(player);
         break;
 
-      case ClientRequest.Suicide:
-        if (game is! IsometricGame) return;
-        if (player is! IsometricPlayer) return;
-        game.setCharacterStateDead(player);
-        break;
-
       case ClientRequest.Isometric_Editor:
         if (game is! IsometricGame)
           return errorInvalidPlayerType();
