@@ -126,12 +126,13 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         break;
       case CaptureTheFlagAIDecision.Capture_Flag_Own:
         final heldBy = flagOwn.heldBy;
-        if (heldBy == null){
+        if (heldBy == null) {
           target = flagOwn;
-          break;
+          return;
         }
         if (isEnemy(heldBy)){
           target = heldBy;
+          return;
         }
         if (awayFromFlagOwnSpawn){
           target = flagOwn;
@@ -145,9 +146,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         if (target == null){
           idle();
           break;
-        }
-        if (enemyTargetAttackable) {
-          attackTargetEnemy();
         }
         break;
       case CaptureTheFlagAIDecision.Run_To_Base_Own:
@@ -202,6 +200,11 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void updatePathIndexAndDestination() {
     final target = this.target;
+
+    if (enemyTargetAttackable) {
+      attackTargetEnemy();
+      return;
+    }
 
     if (targetPrevious != target) {
       targetPrevious = target;
