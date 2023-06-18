@@ -290,16 +290,14 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WatchBuilder(characterSelectedRuntimeType, (runtimeType) => buildText("type: $runtimeType")),
-              WatchBuilder(characterSelectedX, (x) => buildText("x: ${x.toInt()}")),
-              WatchBuilder(characterSelectedY, (y) => buildText("y: ${y.toInt()}")),
-              WatchBuilder(characterSelectedZ, (z) => buildText("z: ${z.toInt()}")),
+              WatchBuilder(characterSelectedX, (x) => buildText("position-x: ${x.toInt()}")),
+              WatchBuilder(characterSelectedY, (y) => buildText("position-y: ${y.toInt()}")),
+              WatchBuilder(characterSelectedZ, (z) => buildText("position-z: ${z.toInt()}")),
               WatchBuilder(characterSelectedPathIndex, (pathIndex) => buildText("path-index: $pathIndex")),
               WatchBuilder(characterSelectedPathEnd, (pathEnd) => buildText("path-end: $pathEnd")),
-              // buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
-              WatchBuilder(characterSelectedIsAI, (isAI) => Column(
+              WatchBuilder(characterSelectedIsAI, (isAI) => !isAI ? nothing : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (isAI)
                     WatchBuilder(characterSelectedAIDecision, (decision) => buildText("ai-decision: ${decision.name}")),
                     WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}")),
                 ],
@@ -318,15 +316,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                       WatchBuilder(characterSelectedTargetX, (x) => buildText("x: ${x.toInt()}")),
                       WatchBuilder(characterSelectedTargetY, (y) => buildText("y: ${y.toInt()}")),
                       WatchBuilder(characterSelectedTargetZ, (z) => buildText("z: ${z.toInt()}")),
-                      // WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     buildText("render-line"),
-                      //     onPressed(
-                      //         action: characterSelectedTargetRenderLine.toggle,
-                      //         child: GSCheckBox(value)),
-                      //   ],
-                      // )),
                     ],
                   ),
                 );
