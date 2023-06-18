@@ -8,6 +8,8 @@ import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'inventory_type.dart';
+
 extension SurvivalGameUI on SurvivalGame {
 
   static final atlasIconSlotEmpty = GameIsometricUI.buildAtlasIconType(IconType.Slot, scale: Slot_Scale);
@@ -441,7 +443,7 @@ extension SurvivalGameUI on SurvivalGame {
     const height = 30.0;
     return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
-        hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
+        hoverTargetType: InventoryType.Hover_Target_Player_Stats_Health,
         child: watch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
           return watch(gamestream.isometric.server.playerHealth, (int currentHealth) {
             return Stack(
@@ -480,11 +482,11 @@ extension SurvivalGameUI on SurvivalGame {
   Widget buildHoverTarget({required Widget child, required int hoverTargetType}) =>
       MouseRegion(
         onEnter: (_){
-          gamestream.isometric.clientState.hoverTargetType.value = hoverTargetType;
+          this.hoverTargetType.value = hoverTargetType;
         },
         onExit: (_){
-          if (gamestream.isometric.clientState.hoverTargetType.value == hoverTargetType){
-            gamestream.isometric.clientState.hoverTargetType.value = ClientType.Hover_Target_None;
+          if (this.hoverTargetType.value == hoverTargetType){
+            this.hoverTargetType.value = InventoryType.Hover_Target_None;
           }
         },
         child: child,
@@ -493,7 +495,7 @@ extension SurvivalGameUI on SurvivalGame {
   Widget buildPlayerDamageBar() {
     return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
-        hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
+        hoverTargetType: InventoryType.Hover_Target_Player_Stats_Damage,
         child: watch(gamestream.isometric.server.playerDamage, (int damage) {
           return Container(
             color: Colors.white24,
@@ -524,7 +526,7 @@ extension SurvivalGameUI on SurvivalGame {
 
     return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
-        hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
+        hoverTargetType: InventoryType.Hover_Target_Player_Stats_Energy,
         child: watch(gamestream.isometric.player.energyMax, (int energyMax) {
           return watch(gamestream.isometric.player.energy, (int energy) {
             return Stack(

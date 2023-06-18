@@ -16,7 +16,6 @@ import '../classes/isometric_projectile.dart';
 mixin class IsometricClientState {
   final sceneChanged = Watch(0);
   final readsHotKeys = Watch(0);
-  final hoverTargetType = Watch(ClientType.Hover_Target_None);
   final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final overrideColor = WatchBool(false);

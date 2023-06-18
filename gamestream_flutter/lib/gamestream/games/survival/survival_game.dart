@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'inventory_type.dart';
+
 class SurvivalGame extends GameIsometric {
+  final hoverTargetType = Watch(InventoryType.Hover_Target_None);
   final dragStart = Watch(-1);
   final dragEnd = Watch(-1);
   final hoverIndex = Watch(-1);
