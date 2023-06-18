@@ -8,7 +8,7 @@ import 'library.dart';
 class GameInventoryUI {
 
   static Widget buildTableRowDifference2(String key, num itemTypeValue, num? equippedTypeValue, {bool swap = false}){
-    if (itemTypeValue == 0) return GameStyle.Null;
+    if (itemTypeValue == 0) return nothing;
 
      if (equippedTypeValue == null || itemTypeValue == equippedTypeValue){
        return buildTableRow(key, itemTypeValue);

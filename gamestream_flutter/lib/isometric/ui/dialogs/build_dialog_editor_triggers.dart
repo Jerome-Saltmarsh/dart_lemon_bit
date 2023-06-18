@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/widgets/build_text.dart';
 
 Widget buildDialogEditorTriggers(){

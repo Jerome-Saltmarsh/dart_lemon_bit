@@ -93,7 +93,7 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildWatchErrorMessage() =>
       WatchBuilder(gamestream.games.website.error, (String? message) {
-        if (message == null) return GameStyle.Null;
+        if (message == null) return nothing;
         return buildErrorDialog(message);
       });
 

@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/widgets/build_text.dart';
+import 'package:gamestream_flutter/widgets/on_pressed.dart';
 import 'package:gamestream_flutter/widgets/stack_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -83,8 +84,7 @@ extension CombatUI on CombatGame {
                   PowerType.Invisible,
                   PowerType.Shield,
                   PowerType.Teleport,
-                ].map((int powerType){
-                  return onPressed(
+                ].map((int powerType) => onPressed(
                     action: () => sendClientRequestSelectPower(powerType),
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
@@ -95,8 +95,7 @@ extension CombatUI on CombatGame {
                         );
                       }),
                     ),
-                  );
-                }).toList(growable: false)
+                  )).toList(growable: false)
             ),
           ),
         ),

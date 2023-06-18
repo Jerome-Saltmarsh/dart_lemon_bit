@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
 Widget buildWatchEditorDialog(EditorDialog? activeEditorDialog){
-  if (activeEditorDialog == null) return GameStyle.Null;
+  if (activeEditorDialog == null) return nothing;
 
   return Container(
     width: engine.screen.width,

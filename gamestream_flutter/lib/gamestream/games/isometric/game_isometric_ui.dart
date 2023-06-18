@@ -254,7 +254,7 @@ class GameIsometricUI {
 
   static Widget buildWatchGameStatus() {
     return watch(gamestream.isometric.server.gameStatus, (int gameStatus) {
-      if (gameStatus == GameStatus.Playing) return GameStyle.Null;
+      if (gameStatus == GameStatus.Playing) return nothing;
       return IgnorePointer(
         child: Positioned(
           top: 60,
@@ -289,7 +289,7 @@ class GameIsometricUI {
 
 
   static Widget buildMessageStatus(String message){
-    if (message.isEmpty) return GameStyle.Null;
+    if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
         gamestream.isometric.clientState.messageClear();
@@ -341,7 +341,7 @@ class GameIsometricUI {
 
   static Widget buildStackInputMode(int inputMode) =>
       inputMode == InputMode.Keyboard
-          ? GameStyle.Null
+          ? nothing
           : watch(gamestream.isometric.clientState.touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildDialogFramesSinceUpdate() => Positioned(
@@ -610,24 +610,10 @@ class GameIsometricUI {
     );
 
     return watch(buffDuration, (int duration) {
-      if (duration <= 0) return GameStyle.Null;
+      if (duration <= 0) return nothing;
       return container;
     });
   }
-
-  // static Widget buildRowPlayerWeapons() => IgnorePointer(
-  //   child: Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //       crossAxisAlignment: CrossAxisAlignment.end,
-  //       children: [
-  //         buildIconPlayerWeaponPrimary(),
-  //         width96,
-  //         buildIconPlayerPowerType(),
-  //         width96,
-  //         buildIconPlayerWeaponSecondary(),
-  //       ],
-  //     ),
-  // );
 
   static Widget buildIconPowerType(int powerType){
     assert (PowerType.values.contains(powerType));

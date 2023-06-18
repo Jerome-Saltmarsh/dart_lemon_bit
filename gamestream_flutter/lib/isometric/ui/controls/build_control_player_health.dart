@@ -17,7 +17,7 @@ Widget buildControlPlayerHealth() {
     child: WatchBuilder(gamestream.isometric.server.playerHealth, (int health) {
 
       final maxHealth = gamestream.isometric.server.playerMaxHealth;
-      if (maxHealth.value <= 0) return GameStyle.Null;
+      if (maxHealth.value <= 0) return nothing;
       final percentage = health / maxHealth.value;
       return Container(
         width: width,

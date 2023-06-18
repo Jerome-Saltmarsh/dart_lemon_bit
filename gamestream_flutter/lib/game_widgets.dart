@@ -7,6 +7,7 @@ import 'package:lemon_watch/src.dart';
 import 'game_style.dart';
 import 'instances/engine.dart';
 import 'widgets/build_text.dart';
+import 'widgets/nothing.dart';
 
 class _FlutterKitConfiguration {
   Color defaultTextColor = Colors.white;
@@ -75,35 +76,6 @@ Widget button(dynamic value, Function onPressed, {
   return _button;
 }
 
-Widget onPressed({
-    required Widget child,
-    Function? action,
-    Function? onRightClick,
-    dynamic hint,
-}) {
-  final widget = MouseRegion(
-      cursor: action != null
-          ? SystemMouseCursors.click
-          : SystemMouseCursors.forbidden,
-      child: GestureDetector(
-         behavior: HitTestBehavior.opaque,
-          child: child,
-          onSecondaryTap: onRightClick != null ? (){
-            onRightClick.call();
-          } : null,
-          onTap: (){
-            if (action == null) return;
-            action();
-          }
-      ));
-
-  if (hint == null) return widget;
-
-  return Tooltip(
-    message: hint.toString(),
-    child: widget,
-  );
-}
 
 
 typedef RefreshBuilder = Widget Function();
@@ -301,11 +273,11 @@ Widget buildDecorationImage({
 }
 
 Widget visibleBuilder(Watch<bool> watch, Widget widget) =>
-    WatchBuilder(watch, (bool visible) => visible ? widget : GameStyle.Null);
+    WatchBuilder(watch, (bool visible) => visible ? widget : nothing);
 
 Widget buildWatchBool(Watch<bool> watch, Widget Function() builder, [bool match = true]) =>
   WatchBuilder(watch, (bool value) =>
-    value == match ? builder() : GameStyle.Null
+    value == match ? builder() : nothing
   );
 
 Widget textBuilder(Watch watch){
