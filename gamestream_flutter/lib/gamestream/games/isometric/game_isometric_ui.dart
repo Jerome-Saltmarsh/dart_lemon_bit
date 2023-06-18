@@ -556,10 +556,6 @@ class GameIsometricUI {
         child: child,
       );
 
-  static Widget buildEditor(){
-    return watch(gamestream.isometric.editor.editTab, EditorUI.buildUI);
-  }
-
   static Widget buildPanelCredits() {
     return Column(
       children: [

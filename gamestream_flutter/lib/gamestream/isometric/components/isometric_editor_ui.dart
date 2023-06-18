@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
@@ -5,27 +6,66 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class EditorUI {
+extension IsometricEditorUI on IsometricEditor {
 
-  static Widget buildPage({required List<Widget> children}) =>
+  static const editorGridTypesColumn1 = [
+    NodeType.Water,
+    NodeType.Brick,
+    NodeType.Bricks_Red,
+    NodeType.Bricks_Brown,
+    NodeType.Soil,
+    NodeType.Wood,
+    NodeType.Wooden_Plank,
+    NodeType.Bau_Haus,
+    NodeType.Concrete,
+    NodeType.Torch,
+    NodeType.Tree_Top,
+    NodeType.Tree_Bottom,
+    NodeType.Road,
+    NodeType.Road_2,
+    NodeType.Scaffold,
+  ];
+
+  static const editorGridTypesColumn2 = [
+    NodeType.Spawn,
+    NodeType.Spawn_Player,
+    NodeType.Grass,
+    NodeType.Grass_Long,
+    NodeType.Metal,
+    NodeType.Sunflower,
+    NodeType.Window,
+    NodeType.Sandbag,
+    NodeType.Boulder,
+    NodeType.Shopping_Shelf,
+    NodeType.Bookshelf,
+    NodeType.Tile,
+    NodeType.Glass,
+  ];
+
+
+  Widget buildEditor(){
+    return watch(gamestream.isometric.editor.editTab, buildUI);
+  }
+
+  Widget buildPage({required List<Widget> children}) =>
       Container(
           width: engine.screen.width,
           height: engine.screen.height,
           child: Stack(children: children)
       );
 
-  static Widget buildUI(EditTab activeEditTab) => buildPage(
+  Widget buildUI(EditTab activeEditTab) => buildPage(
     children: [
       watch(gamestream.isometric.editor.editorDialog, buildWatchEditorDialog),
       Positioned(
@@ -33,7 +73,7 @@ class EditorUI {
           child: Container(
               alignment: Alignment.center,
               width: engine.screen.width,
-              child: EditorUI.buildRowWeatherControls()
+              child: buildRowWeatherControls()
           )
       ),
       buildWindowAIControls(),
@@ -96,7 +136,7 @@ class EditorUI {
                         ),
 
                       if (NodeType.supportsOrientationHalfVertical(
-                            selectedNodeType
+                          selectedNodeType
                       ))
                         buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
                       if (NodeType.supportsOrientationColumn(selectedNodeType))
@@ -133,23 +173,23 @@ class EditorUI {
     ],
   );
 
-  static Column buildColumnFile() {
+  Column buildColumnFile() {
     return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                container(child: "DOWNLOAD", action: gamestream.isometric.editor.downloadScene),
-                container(child: "LOAD", action: gamestream.isometric.editor.uploadScene),
-                container(child: "EDIT", action: gamestream.isometric.editor.toggleWindowEnabledScene),
-                container(child: "MAP SIZE", action: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
-                container(child: "GENERATE", action: gamestream.isometric.editor.windowEnabledGenerate.toggle),
-                if (engine.isLocalHost)
-                  container(child: "SAVE", action: gamestream.isometric.editor.saveScene),
-              ],
-            );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        container(child: "DOWNLOAD", action: gamestream.isometric.editor.downloadScene),
+        container(child: "LOAD", action: gamestream.isometric.editor.uploadScene),
+        container(child: "EDIT", action: gamestream.isometric.editor.toggleWindowEnabledScene),
+        container(child: "MAP SIZE", action: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
+        container(child: "GENERATE", action: gamestream.isometric.editor.windowEnabledGenerate.toggle),
+        if (engine.isLocalHost)
+          container(child: "SAVE", action: gamestream.isometric.editor.saveScene),
+      ],
+    );
   }
 
-  static Widget buildWindowEditCanvasSize() => Center(
+  Widget buildWindowEditCanvasSize() => Center(
     child: GameIsometricUI.buildDialogUIControl(
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -160,11 +200,11 @@ class EditorUI {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 text("CANVAS SIZE"),
-                 text("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
-               ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                text("CANVAS SIZE"),
+                text("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
+              ],
             ),
             // watch(GameNodes.totalRows)
             Expanded(
@@ -180,11 +220,11 @@ class EditorUI {
                       scale: 2.0,
                     ),
                     buildPositionedIconButton(
-                       top: 0,
-                       left: 0,
-                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
-                       iconType: IconType.Plus,
-                       hint: "Add Row",
+                      top: 0,
+                      left: 0,
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
+                      iconType: IconType.Plus,
+                      hint: "Add Row",
                     ),
                     buildPositionedIconButton(
                       top: 0,
@@ -274,7 +314,7 @@ class EditorUI {
     ),
   );
 
-  static Widget buildWindowGenerateScene() => Center(
+  Widget buildWindowGenerateScene() => Center(
     child: GameIsometricUI.buildDialogUIControl(
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -304,136 +344,136 @@ class EditorUI {
     ),
   );
 
-  static Widget buildRowGenerate(WatchInt value, String name) => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(child: text(name), alignment: Alignment.centerLeft, width: 100),
-            watch(value, text),
-          ],
-        ),
-        Row(
-          children: [
-            container(child: "-", width: 50, action: value.decrement, alignment: Alignment.center),
-            width6,
-            container(child: "+", width: 50, action: value.increment, alignment: Alignment.center),
-          ],
-        ),
-      ],
-    );
+  Widget buildRowGenerate(WatchInt value, String name) => Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Container(child: text(name), alignment: Alignment.centerLeft, width: 100),
+          watch(value, text),
+        ],
+      ),
+      Row(
+        children: [
+          container(child: "-", width: 50, action: value.decrement, alignment: Alignment.center),
+          width6,
+          container(child: "+", width: 50, action: value.increment, alignment: Alignment.center),
+        ],
+      ),
+    ],
+  );
 
 
-  static Widget buildWindowEditScene()=> Center(
-       child: GameIsometricUI.buildDialogUIControl(
-         child: Container(
-            padding: const EdgeInsets.all(10),
-            width: 400,
-            height: 300,
-            color: GameIsometricColors.brownLight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildWindowEditScene()=> Center(
+    child: GameIsometricUI.buildDialogUIControl(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 400,
+        height: 300,
+        color: GameIsometricColors.brownLight,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                text("Edit Scene"),
+                text("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledScene),
+              ],
+            ),
+            height16,
+            onPressed(
+              action: gamestream.isometric.editor.sendClientRequestEditSceneToggleUnderground,
+              child: Container(
+                color: Colors.white12,
+                padding: const EdgeInsets.all(5),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("Edit Scene"),
-                    text("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledScene),
+                    text("Underground"),
+                    watch(gamestream.isometric.server.sceneUnderground, text),
                   ],
                 ),
-                height16,
-                onPressed(
-                  action: gamestream.isometric.editor.sendClientRequestEditSceneToggleUnderground,
-                  child: Container(
-                    color: Colors.white12,
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        text("Underground"),
-                        watch(gamestream.isometric.server.sceneUnderground, text),
-                      ],
-                    ),
-                  ),
-                ),
-                height8,
-                onPressed(
-                  action: gamestream.isometric.editor.sendClientRequestEditSceneSetFloorTypeStone,
-                  child: Container(
-                    color: Colors.white12,
-                    padding: const EdgeInsets.all(5),
-                    child: text("Set Floor Stone"),
-                  ),
-                ),
-              ],
+              ),
             ),
-         ),
-       ),
-     );
-
-  static Widget buildEditorTabGameObjects() =>
-
-      watch(gamestream.isometric.editor.gameObjectSelected, (bool objectSelected){
-          if (objectSelected){
-            return buildColumnSelectedGameObject();
-          }
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: ItemType.GameObjectTypes
-                      .map(buildRowAddGameObject)
-                      .toList(),
-                )
-              ],
+            height8,
+            onPressed(
+              action: gamestream.isometric.editor.sendClientRequestEditSceneSetFloorTypeStone,
+              child: Container(
+                color: Colors.white12,
+                padding: const EdgeInsets.all(5),
+                child: text("Set Floor Stone"),
+              ),
             ),
-          );
-      });
-
-  static Widget buildRowAddGameObject(int gameObjectType, {int color = 1}) =>
-    Tooltip(
-      message: ItemType.getName(gameObjectType),
-      child: Container(
-        width: 70,
-        height: 70,
-        color: Colors.white,
-        child: FittedBox(
-          child: engine.buildAtlasImageButton(
-              image: ItemType.isTypeGameObject(gameObjectType)
-                  ? GameImages.atlas_gameobjects
-                  : GameImages.atlas_items,
-              srcX: AtlasItems.getSrcX(gameObjectType),
-              srcY: AtlasItems.getSrcY(gameObjectType),
-              srcWidth: AtlasItems.getSrcWidth(gameObjectType),
-              srcHeight: AtlasItems.getSrcHeight(gameObjectType),
-              color: color,
-              action: () =>
-                  gamestream.isometric.editor.actionAddGameObject(gameObjectType)
-          ),
+          ],
         ),
       ),
-    );
+    ),
+  );
 
+  Widget buildEditorTabGameObjects() =>
 
+      watch(gamestream.isometric.editor.gameObjectSelected, (bool objectSelected){
+        if (objectSelected){
+          return buildColumnSelectedGameObject();
+        }
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: ItemType.GameObjectTypes
+                    .map(buildRowAddGameObject)
+                    .toList(),
+              )
+            ],
+          ),
+        );
+      });
 
-  static Widget buildRowWeatherControls() => Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildControlTime(),
-          width2,
-          buildRowRainIcons(),
-          width2,
-          buildRowLightningIcons(),
-          width2,
-          buildRowWindIcons(),
-          width2,
-        ],
+  Widget buildRowAddGameObject(int gameObjectType, {int color = 1}) =>
+      Tooltip(
+        message: ItemType.getName(gameObjectType),
+        child: Container(
+          width: 70,
+          height: 70,
+          color: Colors.white,
+          child: FittedBox(
+            child: engine.buildAtlasImageButton(
+                image: ItemType.isTypeGameObject(gameObjectType)
+                    ? GameImages.atlas_gameobjects
+                    : GameImages.atlas_items,
+                srcX: AtlasItems.getSrcX(gameObjectType),
+                srcY: AtlasItems.getSrcY(gameObjectType),
+                srcWidth: AtlasItems.getSrcWidth(gameObjectType),
+                srcHeight: AtlasItems.getSrcHeight(gameObjectType),
+                color: color,
+                action: () =>
+                    gamestream.isometric.editor.actionAddGameObject(gameObjectType)
+            ),
+          ),
+        ),
       );
 
-  static Widget buildIconWeatherControl({
+
+
+  Widget buildRowWeatherControls() => Row(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      buildControlTime(),
+      width2,
+      buildRowRainIcons(),
+      width2,
+      buildRowLightningIcons(),
+      width2,
+      buildRowWindIcons(),
+      width2,
+    ],
+  );
+
+  Widget buildIconWeatherControl({
     required String tooltip,
     required Function action,
     required Widget icon,
@@ -462,36 +502,36 @@ class EditorUI {
         ),
       );
 
-  static Widget buildIconRain(int rain) => watch(
+  Widget buildIconRain(int rain) => watch(
       gamestream.isometric.server.rainType,
-      (int activeRain) => buildIconWeatherControl(
-            tooltip: '${RainType.getName(rain)} Rain',
-            action: () => gamestream.isometric.setRain(rain),
-            icon: GameIsometricUI.buildAtlasIconType(convertRainToIconType(rain)),
-            isActive: rain == activeRain,
-          ));
+          (int activeRain) => buildIconWeatherControl(
+        tooltip: '${RainType.getName(rain)} Rain',
+        action: () => gamestream.isometric.setRain(rain),
+        icon: GameIsometricUI.buildAtlasIconType(convertRainToIconType(rain)),
+        isActive: rain == activeRain,
+      ));
 
-  static Widget buildIconLightning(int lightning) => watch(
+  Widget buildIconLightning(int lightning) => watch(
       gamestream.isometric.server.lightningType,
-      (int activeLightning) => buildIconWeatherControl(
-            tooltip: '${LightningType.getName(lightning)} Lightning',
-            action: () =>
-                gamestream.isometric.setLightning(lightning),
-            icon: GameIsometricUI.buildAtlasIconType(
-                convertLightningToIconType(lightning)),
-            isActive: lightning == activeLightning,
-          ));
+          (int activeLightning) => buildIconWeatherControl(
+        tooltip: '${LightningType.getName(lightning)} Lightning',
+        action: () =>
+            gamestream.isometric.setLightning(lightning),
+        icon: GameIsometricUI.buildAtlasIconType(
+            convertLightningToIconType(lightning)),
+        isActive: lightning == activeLightning,
+      ));
 
-  static Widget buildIconWind(int windType) => watch(
+  Widget buildIconWind(int windType) => watch(
       gamestream.isometric.server.windTypeAmbient,
-      (int activeWindType) => buildIconWeatherControl(
-            tooltip: '${WindType.getName(windType)} Wind',
-            action: () => gamestream.isometric.setWind(windType),
-            icon: GameIsometricUI.buildAtlasIconType(convertWindToIconType(windType)),
-            isActive: windType == activeWindType,
-          ));
+          (int activeWindType) => buildIconWeatherControl(
+        tooltip: '${WindType.getName(windType)} Wind',
+        action: () => gamestream.isometric.setWind(windType),
+        icon: GameIsometricUI.buildAtlasIconType(convertWindToIconType(windType)),
+        isActive: windType == activeWindType,
+      ));
 
-  static int convertRainToIconType(int rain) {
+  int convertRainToIconType(int rain) {
     switch (rain) {
       case RainType.None:
         return IconType.Rain_None;
@@ -504,7 +544,7 @@ class EditorUI {
     }
   }
 
-  static int convertLightningToIconType(int lightning) {
+  int convertLightningToIconType(int lightning) {
     switch (lightning) {
       case LightningType.Off:
         return IconType.Lightning_Off;
@@ -517,7 +557,7 @@ class EditorUI {
     }
   }
 
-  static int convertWindToIconType(int windType) {
+  int convertWindToIconType(int windType) {
     switch (windType) {
       case WindType.Calm:
         return IconType.Wind_Calm;
@@ -530,16 +570,16 @@ class EditorUI {
     }
   }
 
-  static Widget buildRowRainIcons() =>
+  Widget buildRowRainIcons() =>
       Row(children: RainType.values.map(buildIconRain).toList());
 
-  static Widget buildRowLightningIcons() =>
+  Widget buildRowLightningIcons() =>
       Row(children: LightningType.values.map(buildIconLightning).toList());
 
-  static Widget buildRowWindIcons() =>
+  Widget buildRowWindIcons() =>
       Row(children: WindType.values.map(buildIconWind).toList());
 
-  static String convertHourToString(int hour) {
+  String convertHourToString(int hour) {
     if (hour < 0) return 'invalid time';
     if (hour == 0) return 'midnight';
     if (hour < 3) return 'night';
@@ -553,7 +593,7 @@ class EditorUI {
     return 'night';
   }
 
-  static Widget buildControlTime() {
+  Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
     final buttons = watch(gamestream.isometric.server.hours, (int hours) {
@@ -622,7 +662,7 @@ class EditorUI {
     );
   }
 
-  static Widget buildButtonSelectNodeType(int nodeType) {
+  Widget buildButtonSelectNodeType(int nodeType) {
     final canvas = engine.buildAtlasImage(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
@@ -651,7 +691,7 @@ class EditorUI {
     });
   }
 
-  static Widget buildColumnEditNodeOrientation(int nodeOrientation) =>
+  Widget buildColumnEditNodeOrientation(int nodeOrientation) =>
       Column(
         children: [
           if (NodeOrientation.isSlopeSymmetric(nodeOrientation))
@@ -671,7 +711,7 @@ class EditorUI {
         ],
       );
 
-  static Positioned buildWindowAIControls() {
+  Positioned buildWindowAIControls() {
     return Positioned(
       top: 70,
       right: 70,
@@ -695,7 +735,7 @@ class EditorUI {
   }
 
 
-  static Widget buildOrientationIcon(int orientation) {
+  Widget buildOrientationIcon(int orientation) {
 
     final canvas = engine.buildAtlasImage(
       image: GameImages.atlas_nodes,
@@ -717,101 +757,101 @@ class EditorUI {
         );
       },
       child: watch(gamestream.isometric.editor.nodeSelectedOrientation,
-          (int selectedNodeOrientation) {
-        return Container(
-            width: 72,
-            height: 72,
-            alignment: Alignment.center,
-            color: selectedNodeOrientation == orientation ? purple3 : brownDark,
-            child: canvas);
-      }),
+              (int selectedNodeOrientation) {
+            return Container(
+                width: 72,
+                height: 72,
+                alignment: Alignment.center,
+                color: selectedNodeOrientation == orientation ? purple3 : brownDark,
+                child: canvas);
+          }),
     );
   }
 
-  static Widget buildColumnNodeOrientationSlopeSymmetric() => Row(
+  Widget buildColumnNodeOrientationSlopeSymmetric() => Row(
+    children: [
+      Column(
         children: [
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_South),
-              buildOrientationIcon(NodeOrientation.Slope_East),
-            ],
-          ),
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_West),
-              buildOrientationIcon(NodeOrientation.Slope_North),
-            ],
-          )
+          buildOrientationIcon(NodeOrientation.Slope_South),
+          buildOrientationIcon(NodeOrientation.Slope_East),
         ],
-      );
-
-  static Widget buildColumnNodeOrientationCorner() => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
+      Column(
         children: [
-          buildOrientationIcon(NodeOrientation.Corner_Top),
-          Row(
-            children: [
-              buildOrientationIcon(NodeOrientation.Corner_Left),
-              width(48),
-              buildOrientationIcon(NodeOrientation.Corner_Right),
-            ],
-          ),
-          buildOrientationIcon(NodeOrientation.Corner_Bottom),
+          buildOrientationIcon(NodeOrientation.Slope_West),
+          buildOrientationIcon(NodeOrientation.Slope_North),
         ],
-      );
+      )
+    ],
+  );
 
-  static Widget buildColumnNodeOrientationHalf() => Row(
+  Widget buildColumnNodeOrientationCorner() => Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      buildOrientationIcon(NodeOrientation.Corner_Top),
+      Row(
         children: [
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Half_North),
-              buildOrientationIcon(NodeOrientation.Half_West),
-            ],
-          ),
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Half_East),
-              buildOrientationIcon(NodeOrientation.Half_South),
-            ],
-          )
+          buildOrientationIcon(NodeOrientation.Corner_Left),
+          width(48),
+          buildOrientationIcon(NodeOrientation.Corner_Right),
         ],
-      );
+      ),
+      buildOrientationIcon(NodeOrientation.Corner_Bottom),
+    ],
+  );
 
-  static Widget buildColumnNodeOrientationSlopeCornerInner() => Row(
+  Widget buildColumnNodeOrientationHalf() => Row(
+    children: [
+      Column(
         children: [
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_Inner_North_West),
-              buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
-            ],
-          ),
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_Inner_South_West),
-              buildOrientationIcon(NodeOrientation.Slope_Inner_South_East),
-            ],
-          )
+          buildOrientationIcon(NodeOrientation.Half_North),
+          buildOrientationIcon(NodeOrientation.Half_West),
         ],
-      );
-
-  static Widget buildColumnNodeOrientationSlopeCornerOuter() => Row(
+      ),
+      Column(
         children: [
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_Outer_North_West),
-              buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
-            ],
-          ),
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_Outer_South_West),
-              buildOrientationIcon(NodeOrientation.Slope_Outer_South_East),
-            ],
-          )
+          buildOrientationIcon(NodeOrientation.Half_East),
+          buildOrientationIcon(NodeOrientation.Half_South),
         ],
-      );
+      )
+    ],
+  );
 
-  static Widget buildColumnHalfVertical(){
+  Widget buildColumnNodeOrientationSlopeCornerInner() => Row(
+    children: [
+      Column(
+        children: [
+          buildOrientationIcon(NodeOrientation.Slope_Inner_North_West),
+          buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
+        ],
+      ),
+      Column(
+        children: [
+          buildOrientationIcon(NodeOrientation.Slope_Inner_South_West),
+          buildOrientationIcon(NodeOrientation.Slope_Inner_South_East),
+        ],
+      )
+    ],
+  );
+
+  Widget buildColumnNodeOrientationSlopeCornerOuter() => Row(
+    children: [
+      Column(
+        children: [
+          buildOrientationIcon(NodeOrientation.Slope_Outer_North_West),
+          buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
+        ],
+      ),
+      Column(
+        children: [
+          buildOrientationIcon(NodeOrientation.Slope_Outer_South_West),
+          buildOrientationIcon(NodeOrientation.Slope_Outer_South_East),
+        ],
+      )
+    ],
+  );
+
+  Widget buildColumnHalfVertical(){
     return Column(
       children: [
         buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
@@ -821,23 +861,23 @@ class EditorUI {
     );
   }
 
-  static void renderIconSquareEmpty({
+  void renderIconSquareEmpty({
     required Canvas canvas,
     required double x,
     required double y,
   }) =>
       engine.renderExternalCanvas(
-      canvas: canvas,
-      image: GameImages.atlas_icons,
-      srcX: 304,
-      srcY: 32,
-      srcWidth: 48,
-      srcHeight: 48,
-      dstX: x,
-      dstY: y,
-    );
+        canvas: canvas,
+        image: GameImages.atlas_icons,
+        srcX: 304,
+        srcY: 32,
+        srcWidth: 48,
+        srcHeight: 48,
+        dstX: x,
+        dstY: y,
+      );
 
-  static void renderIconSquareFull({
+  void renderIconSquareFull({
     required Canvas canvas,
     required double x,
     required double y,
@@ -854,15 +894,15 @@ class EditorUI {
       );
 
 
-  static double projectX(num x, num y){
+  double projectX(num x, num y){
     return ((x - y) * 0.5 * 48) + 72;
   }
 
-  static double projectY(num x, num y){
+  double projectY(num x, num y){
     return ((y + x) * 0.5 * 48) + 24;
   }
 
-  static Widget buildColumnColumns(){
+  Widget buildColumnColumns(){
     return watch(gamestream.isometric.editor.nodeSelectedOrientation, (int nodeOrientation){
       var mousePosX = 0.0;
       var mousePosY = 0.0;
@@ -910,8 +950,8 @@ class EditorUI {
 
       return MouseRegion(
         onHover: (event){
-            mousePosX = event.localPosition.dx;
-            mousePosY = event.localPosition.dy;
+          mousePosX = event.localPosition.dx;
+          mousePosY = event.localPosition.dy;
         },
         child: GestureDetector(
           onTap: (){
@@ -1025,39 +1065,39 @@ class EditorUI {
     });
   }
 
-  static Widget buildColumnSelectedGameObject() => GameIsometricUI.buildDialogUIControl(
-      child: Container(
-        color: brownLight,
-        width: 220,
-        padding: GameStyle.Padding_10,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              watch(gamestream.isometric.editor.gameObjectSelectedType, (int type) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        alignment: Alignment.centerRight,
-                        child: text("X", onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
+  Widget buildColumnSelectedGameObject() => GameIsometricUI.buildDialogUIControl(
+    child: Container(
+      color: brownLight,
+      width: 220,
+      padding: GameStyle.Padding_10,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            watch(gamestream.isometric.editor.gameObjectSelectedType, (int type) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: text("X", onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 80,
+                      maxHeight: 80,
                     ),
-                    Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 80,
-                          maxHeight: 80,
-                        ),
-                        child: GameIsometricUI.buildAtlasItemType(type),
-                    ),
-                    height8,
-                      Row(
-                      children: [
-                        text(ItemType.getName(type), size: 22),
-                        width8,
-                        text("Duplicate", onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
-                      ],
-                    ),
-                    height8,
-                    watch(gamestream.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
+                    child: GameIsometricUI.buildAtlasItemType(type),
+                  ),
+                  height8,
+                  Row(
+                    children: [
+                      text(ItemType.getName(type), size: 22),
+                      width8,
+                      text("Duplicate", onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
+                    ],
+                  ),
+                  height8,
+                  watch(gamestream.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(
                         action: () => gamestream.isometric.editor.sendGameObjectRequestToggleStrikable,
                         child: Row(
@@ -1068,124 +1108,124 @@ class EditorUI {
                           ],
                         ),
                       )
-                    ),
-                    watch(gamestream.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
-                        onPressed(
-                          action: () => gamestream.isometric.editor.sendGameObjectRequestToggleGravity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              text("Gravity"),
-                              text(enabled),
-                            ],
-                          ),
-                        )
-                    ),
-                    watch(gamestream.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
-                        onPressed(
-                          action: gamestream.isometric.editor.sendGameObjectRequestToggleFixed,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              text("Fixed"),
-                              text(enabled),
-                            ],
-                          ),
-                        )
-                    ),
-                    watch(gamestream.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
-                        onPressed(
-                          action: gamestream.isometric.editor.sendGameObjectRequestToggleCollectable,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              text("Collectable"),
-                              text(enabled),
-                            ],
-                          ),
-                        )
-                    ),
-                    watch(gamestream.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
-                        onPressed(
-                          action: gamestream.isometric.editor.selectedGameObjectTogglePhysical,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              text("Physical"),
-                              text(enabled),
-                            ],
-                          ),
-                        )
-                    ),
-                    watch(gamestream.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
-                        onPressed(
-                          action: gamestream.isometric.editor.selectedGameObjectTogglePersistable,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              text("Persistable"),
-                              text(enabled),
-                            ],
-                          ),
-                        )
-                    ),
-                    watch(gamestream.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
-                        onPressed(
-                          action: () => gamestream.isometric.editor.gameObject.value!.emission_type = ((gamestream.isometric.editor.gameObject.value!.emission_type + 1) % 3),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  text("Emission"),
-                                  text(emissionType),
-                                ],
-                              ),
-                              text("Intensity"),
-                              watch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
-                                  value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
-                                  onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
-                                )),
-                              if (emissionType == IsometricEmissionType.Color)
-                                ColorPicker(
-                                    portraitOnly: true,
-                                    pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emission_col),
-                                    onColorChanged: (color){
-                                      final gameObject = gamestream.isometric.editor.gameObject.value!;
-                                      final hsv = HSVColor.fromColor(color);
-                                      gameObject.emission_alp = (hsv.alpha * 255).round();
-                                      gameObject.emission_hue = (hsv.hue).round();
-                                      gameObject.emission_sat = (hsv.saturation * 100).round();
-                                      gameObject.emission_val = (hsv.value * 100).round();
-                                      gameObject.refreshEmissionColor();
-                                    },
-                                )
-                            ],
-                          ),
-                        )
-                    ),
-                  ],
-                );
-              }),
-            ],
-          ),
+                  ),
+                  watch(gamestream.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
+                      onPressed(
+                        action: () => gamestream.isometric.editor.sendGameObjectRequestToggleGravity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Gravity"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  watch(gamestream.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
+                      onPressed(
+                        action: gamestream.isometric.editor.sendGameObjectRequestToggleFixed,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Fixed"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  watch(gamestream.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
+                      onPressed(
+                        action: gamestream.isometric.editor.sendGameObjectRequestToggleCollectable,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Collectable"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  watch(gamestream.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
+                      onPressed(
+                        action: gamestream.isometric.editor.selectedGameObjectTogglePhysical,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Physical"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  watch(gamestream.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
+                      onPressed(
+                        action: gamestream.isometric.editor.selectedGameObjectTogglePersistable,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Persistable"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  watch(gamestream.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
+                      onPressed(
+                        action: () => gamestream.isometric.editor.gameObject.value!.emission_type = ((gamestream.isometric.editor.gameObject.value!.emission_type + 1) % 3),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                text("Emission"),
+                                text(emissionType),
+                              ],
+                            ),
+                            text("Intensity"),
+                            watch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
+                              value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
+                              onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
+                            )),
+                            if (emissionType == IsometricEmissionType.Color)
+                              ColorPicker(
+                                portraitOnly: true,
+                                pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emission_col),
+                                onColorChanged: (color){
+                                  final gameObject = gamestream.isometric.editor.gameObject.value!;
+                                  final hsv = HSVColor.fromColor(color);
+                                  gameObject.emission_alp = (hsv.alpha * 255).round();
+                                  gameObject.emission_hue = (hsv.hue).round();
+                                  gameObject.emission_sat = (hsv.saturation * 100).round();
+                                  gameObject.emission_val = (hsv.value * 100).round();
+                                  gameObject.refreshEmissionColor();
+                                },
+                              )
+                          ],
+                        ),
+                      )
+                  ),
+                ],
+              );
+            }),
+          ],
         ),
       ),
-    );
+    ),
+  );
 
-  static Widget buildColumnEditParticleEmitter() {
+  Widget buildColumnEditParticleEmitter() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         watch(gamestream.isometric.editor.gameObjectSelectedParticleType,
-            (int particleType) => text("Particle Type: $particleType")),
+                (int particleType) => text("Particle Type: $particleType")),
         watch(gamestream.isometric.editor.gameObjectSelectedParticleSpawnRate,
-            (int rate) => text("Rate: $rate")),
+                (int rate) => text("Rate: $rate")),
       ],
     );
   }
 
-  static Column buildControlPaint() {
+  Column buildControlPaint() {
     return Column(
       children: [
         watch(gamestream.isometric.editor.paintType, buildPaintType),
@@ -1193,25 +1233,25 @@ class EditorUI {
     );
   }
 
-  static Widget buildPaintType(int type) =>
+  Widget buildPaintType(int type) =>
       container(child: NodeType.getName(type));
 
-  static Row buildEditorMenu(EditTab activeEditTab) => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: EditTab.values
-            .map((editTab) => container(
-                  child: editTab.name,
-                  width: 150,
-                  color: activeEditTab == editTab
-                      ? GameIsometricColors.brownDark
-                      : GameIsometricColors.brownLight,
-                  action: () => gamestream.isometric.editor.editTab.value = editTab,
-                ))
-            .toList(),
-      );
+  Row buildEditorMenu(EditTab activeEditTab) => Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: EditTab.values
+        .map((editTab) => container(
+      child: editTab.name,
+      width: 150,
+      color: activeEditTab == editTab
+          ? GameIsometricColors.brownDark
+          : GameIsometricColors.brownLight,
+      action: () => gamestream.isometric.editor.editTab.value = editTab,
+    ))
+        .toList(),
+  );
 
-  static Widget buildMenu(
+  Widget buildMenu(
       {required String text, required List<Widget> children}) {
     final child = container(child: text, color: brownLight);
     return MouseOver(builder: (over) {
@@ -1232,5 +1272,29 @@ class EditorUI {
       }
       return child;
     });
+  }
+
+  Widget buildColumnSelectNodeType() =>
+      Container(
+        height: engine.screen.height - 70,
+        child: SingleChildScrollView(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: editorGridTypesColumn1.map(buildButtonSelectNodeType).toList(),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: editorGridTypesColumn2.map(buildButtonSelectNodeType).toList(),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget buildColumnSelectObjectType(){
+    return Column();
   }
 }
