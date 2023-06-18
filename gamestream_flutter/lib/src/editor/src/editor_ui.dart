@@ -138,13 +138,13 @@ class EditorUI {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                container(child: "SAVE", action: EditorActions.downloadScene),
+                container(child: "DOWNLOAD", action: gamestream.isometric.editor.downloadScene),
                 container(child: "LOAD", action: EditorActions.uploadScene),
                 container(child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
                 container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),
                 container(child: "GENERATE", action: EditorState.windowEnabledGenerate.toggle),
                 if (engine.isLocalHost)
-                  container(child: "SAVE SERVER FILE", action: gamestream.isometric.server.saveScene),
+                  container(child: "SAVE", action: gamestream.isometric.editor.saveScene),
               ],
             );
   }
@@ -182,70 +182,70 @@ class EditorUI {
                     buildPositionedIconButton(
                        top: 0,
                        left: 0,
-                       action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
+                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
                        iconType: IconType.Plus,
                        hint: "Add Row",
                     ),
                     buildPositionedIconButton(
                       top: 0,
                       left: 40,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_Start),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_Start),
                       iconType: IconType.Minus,
                       hint: "Remove Row",
                     ),
                     buildPositionedIconButton(
                       top: 0,
                       left: 150,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_Start),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_Start),
                       iconType: IconType.Plus,
                       hint: "Add Column",
                     ),
                     buildPositionedIconButton(
                       top: 20,
                       left: 160,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_Start),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_Start),
                       iconType: IconType.Minus,
                       hint: "Remove Column",
                     ),
                     buildPositionedIconButton(
                       top: 160,
                       left: 120,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_End),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_End),
                       iconType: IconType.Minus,
                       hint: "Remove Row",
                     ),
                     buildPositionedIconButton(
                       top: 160,
                       left: 160,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_End),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_End),
                       iconType: IconType.Plus,
                       hint: "Add Row",
                     ),
                     buildPositionedIconButton(
                       top: 140,
                       left: 0,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_End),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_End),
                       iconType: IconType.Plus,
                       hint: "Add Column",
                     ),
                     buildPositionedIconButton(
                       top: 140,
                       left: 40,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_End),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_End),
                       iconType: IconType.Minus,
                       hint: "Remove Column",
                     ),
                     buildPositionedIconButton(
                       top: 80,
                       left: 60,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Z),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Z),
                       iconType: IconType.Plus,
                       hint: "Add Z",
                     ),
                     buildPositionedIconButton(
                       top: 80,
                       left: 100,
-                      action: () => gamestream.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Z),
+                      action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Z),
                       iconType: IconType.Minus,
                       hint: "Remove Z",
                     ),
@@ -343,7 +343,7 @@ class EditorUI {
                 ),
                 height16,
                 onPressed(
-                  action: gamestream.network.sendClientRequestEditSceneToggleUnderground,
+                  action: gamestream.isometric.editor.sendClientRequestEditSceneToggleUnderground,
                   child: Container(
                     color: Colors.white12,
                     padding: const EdgeInsets.all(5),
@@ -358,7 +358,7 @@ class EditorUI {
                 ),
                 height8,
                 onPressed(
-                  action: gamestream.network.sendClientRequestEditSceneSetFloorTypeStone,
+                  action: gamestream.isometric.editor.sendClientRequestEditSceneSetFloorTypeStone,
                   child: Container(
                     color: Colors.white12,
                     padding: const EdgeInsets.all(5),
@@ -682,13 +682,12 @@ class EditorUI {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             watch(gamestream.isometric.server.gameRunning, (gameRunning) {
-              return text("Game Running: $gameRunning", onPressed: () => gamestream.network.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
+              return text("Game Running: $gameRunning", onPressed: () => gamestream.isometric.editor.toggleGameRunning);
             }),
-            text ("Reset", onPressed: gamestream.isometric.server.editSceneReset),
-            text("Spawn AI", onPressed: gamestream.isometric.server.editSceneSpawnAI),
+            text ("Reset", onPressed: gamestream.isometric.editor.editSceneReset),
+            text("Spawn AI", onPressed: gamestream.isometric.editor.editSceneSpawnAI),
             text("Clear Spawned AI",
-                onPressed: gamestream.isometric.server.editSceneClearSpawnedAI),
-            text("Pause AI", onPressed: gamestream.isometric.server.editSceneClearSpawnedAI),
+                onPressed: gamestream.isometric.editor.editSceneClearSpawnedAI),
           ],
         ),
       ),

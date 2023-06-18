@@ -400,23 +400,6 @@ class IsometricServer {
         indexTo: gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBelt),
       );
 
-  void saveScene(){
-    gamestream.network.sendClientRequest(ClientRequest.Edit, EditRequest.Save.index);
-  }
-
-  void editSceneSpawnAI() =>
-      gamestream.network.sendClientRequest(
-        ClientRequest.Edit,
-        EditRequest.Spawn_AI.index,
-      );
-
-  void editSceneReset() =>
-      gamestream.network.sendClientRequestEdit(EditRequest.Scene_Reset);
-
-  void editSceneClearSpawnedAI(){
-    gamestream.network.sendClientRequest(ClientRequest.Edit, EditRequest.Clear_Spawned.index);
-  }
-
   void onChangedAreaType(int areaType) {
     gamestream.isometric.clientState.areaTypeVisible.value = true;
   }

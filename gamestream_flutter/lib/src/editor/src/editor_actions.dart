@@ -5,9 +5,6 @@ import 'package:gamestream_flutter/library.dart';
 class EditorActions {
 
 
-  static void downloadScene() =>
-      gamestream.network.sendClientRequestEdit(EditRequest.Download);
-
   static void uploadScene() async {
     final result = await FilePicker.platform.pickFiles(
         withData: true,
@@ -42,7 +39,7 @@ class EditorActions {
   }
 
   static void generateScene() =>
-      gamestream.network.sendClientRequestEditGenerateScene(
+      gamestream.isometric.editor.sendClientRequestEditGenerateScene(
         rows: EditorState.generateRows.value,
         columns: EditorState.generateColumns.value,
         height: EditorState.generateHeight.value,

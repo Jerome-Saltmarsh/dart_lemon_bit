@@ -176,5 +176,7 @@ class IsometricActions {
         ..setSpeed(randomAngle(), giveOrTake(3));
     }
   }
+
+
 }
 

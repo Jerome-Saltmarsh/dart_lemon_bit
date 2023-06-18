@@ -191,31 +191,6 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Move} $indexFrom $indexTo",
       );
 
-  void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
-      sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
-
-  void sendClientRequestEditSceneToggleUnderground() =>
-      sendClientRequestEdit(EditRequest.Scene_Toggle_Underground);
-
-  void sendClientRequestEditGenerateScene({
-    required int rows,
-    required int columns,
-    required int height,
-    required int octaves,
-    required int frequency,
-  }) => sendClientRequestEdit(
-      EditRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
-  );
-
-  void sendClientRequestEditSceneSetFloorTypeStone() =>
-      sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
-
-  void sendClientRequestEditSceneSetFloorType(int nodeType) =>
-      sendClientRequestEdit(EditRequest.Scene_Set_Floor_Type, nodeType);
-
-  void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
-      sendClientRequest(ClientRequest.Edit, '${request.index} $message');
-
   void sendClientRequestSelectWeaponPrimary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
 

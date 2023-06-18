@@ -2,7 +2,6 @@ class ClientRequest {
   static const Update                   = 00;
   static const Join                     = 01;
   static const Version                  = 03;
-  static const Edit                     = 17;
   static const Inventory                = 18;
   static const Select_Weapon_Primary    = 27;
   static const Select_Weapon_Secondary  = 28;

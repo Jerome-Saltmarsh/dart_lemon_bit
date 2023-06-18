@@ -428,9 +428,50 @@ class IsometricEditor {
         '$index $type $orientation',
       );
 
+  void downloadScene() =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Download);
+
+  void toggleGameRunning() =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Toggle_Game_Running);
+
+  void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Modify_Canvas_Size, request.index);
+
+  void sendClientRequestEditSceneToggleUnderground() =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Scene_Toggle_Underground);
+
+  void sendClientRequestEditGenerateScene({
+    required int rows,
+    required int columns,
+    required int height,
+    required int octaves,
+    required int frequency,
+  }) => sendIsometricEditorRequest(
+      IsometricEditorRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
+  );
+
+  void sendClientRequestEditSceneSetFloorTypeStone() =>
+      sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
+
+  void sendClientRequestEditSceneSetFloorType(int nodeType) =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Scene_Set_Floor_Type, nodeType);
+
+  void editSceneReset() =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Scene_Reset);
+
+  void editSceneClearSpawnedAI(){
+    sendIsometricEditorRequest(IsometricEditorRequest.Clear_Spawned);
+  }
+
+  void editSceneSpawnAI() =>
+      sendIsometricEditorRequest(IsometricEditorRequest.Spawn_AI);
+
+  void saveScene()=> sendIsometricEditorRequest(IsometricEditorRequest.Save);
+
   void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric_Editor,
         '${request.index} $message',
       );
+
 }

@@ -8,7 +8,6 @@ import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/client_request.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
-import 'package:bleed_server/common/src/edit_request.dart';
 import 'package:bleed_server/common/src/fight2d/game_fight2d_client_request.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_type.dart';
@@ -232,12 +231,116 @@ class WebSocketConnection with ByteReader {
               sendGameError(GameError.Load_Scene_Failed);
             }
             return;
+          case IsometricEditorRequest.Toggle_Game_Running:
+            if (!isLocalMachine && game is! GameEditor) return;
+            game.running = !game.running;
+            break;
+
+          case IsometricEditorRequest.Scene_Reset:
+            if (!isLocalMachine && game is! GameEditor) return;
+            game.reset();
+            break;
+
+          case IsometricEditorRequest.Generate_Scene:
+            const min = 5;
+            final rows = parseArg2(arguments);
+            if (rows == null) return;
+            if (rows < min) errorInvalidClientRequest();
+            final columns = parseArg3(arguments);
+            if (columns == null) return;
+            if (columns < min) errorInvalidClientRequest();
+            final height = parseArg4(arguments);
+            if (height == null) return;
+            if (height < min) errorInvalidClientRequest();
+            final altitude = parseArg5(arguments);
+            if (altitude == null) return;
+            final frequency = parseArg6(arguments);
+            if (frequency == null) return;
+            final sceneName = game.scene.name;
+            final scene = IsometricSceneGenerator.generate(
+              height: height,
+              rows: rows,
+              columns: columns,
+              altitude: altitude,
+              frequency: frequency * 0.005,
+            );
+            scene.name = sceneName;
+            game.scene = scene;
+            game.playersDownloadScene();
+            if (player is! IsometricPlayer) return;
+            player.z = Node_Height * altitude + 24;
+            break;
+
+          case IsometricEditorRequest.Download:
+            if (player is! IsometricPlayer) return;
+            final compiled = IsometricSceneWriter.compileScene(player.scene, gameObjects: true);
+            player.writeByte(ServerResponse.Download_Scene);
+
+            if (player.scene.name.isEmpty){
+              player.scene.name = generateRandomName();
+            }
+
+            player.writeString(player.scene.name);
+            player.writeUInt16(compiled.length);
+            player.writeBytes(compiled);
+            break;
+
+          case IsometricEditorRequest.Scene_Set_Floor_Type:
+            final nodeType = parseArg2(arguments);
+            if (nodeType == null) return;
+            for (var i = 0; i < game.scene.gridArea; i++){
+              game.scene.nodeTypes[i] = nodeType;
+            }
+            game.playersDownloadScene();
+            break;
+          case IsometricEditorRequest.Clear_Spawned:
+            game.clearSpawnedAI();
+            break;
+          case IsometricEditorRequest.Scene_Toggle_Underground:
+            break;
+          case IsometricEditorRequest.Spawn_AI:
+            game.clearSpawnedAI();
+            game.scene.refreshSpawnPoints();
+            game.triggerSpawnPoints();
+            break;
+
+          case IsometricEditorRequest.Save:
+            if (game.scene.name.isEmpty){
+              player.writeGameError(GameError.Save_Scene_Failed);
+              return;
+            }
+            engine.isometricScenes.saveSceneToFileBytes(game.scene);
+            break;
+
+          case IsometricEditorRequest.Modify_Canvas_Size:
+            if (arguments.length < 3) {
+              return errorInvalidClientRequest();
+            }
+            final modifyCanvasSizeIndex = parse(arguments[2]);
+            if (modifyCanvasSizeIndex == null) return;
+            if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
+              return errorInvalidClientRequest();
+            }
+            final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
+            if (player is! IsometricPlayer) return;
+            handleRequestModifyCanvasSize(request, player);
+            return;
+
+          case IsometricEditorRequest.Spawn_Zombie:
+            if (arguments.length < 3) {
+              return errorInvalidClientRequest();
+            }
+            final spawnIndex = parse(arguments[2]);
+            if (spawnIndex == null) {
+              return errorInvalidClientRequest();
+            }
+            game.spawnAI(
+              nodeIndex: spawnIndex,
+              characterType: CharacterType.Zombie,
+            );
+            break;
         }
         break;
-
-      case ClientRequest.Edit:
-        if (!isLocalMachine && game is! GameEditor) return;
-        return handleRequestEdit(arguments);
 
       case ClientRequest.Isometric:
         handleIsometricRequest(arguments);
@@ -399,158 +502,158 @@ class WebSocketConnection with ByteReader {
     }
   }
 
-  void handleRequestEdit(List<String> arguments) {
-    final player = _player;
-    if (player == null) return;
-    final game = player.game;
-
-    if (arguments.length < 2){
-      return errorInvalidClientRequest();
-    }
-
-    final editRequestIndex = parse(arguments[1]);
-    if (editRequestIndex == null){
-      return errorInvalidClientRequest();
-    }
-    if (!isValidIndex(editRequestIndex, EditRequest.values)){
-       return errorInvalidClientRequest();
-    }
-    final editRequest = EditRequest.values[editRequestIndex];
-
-    if (editRequest != EditRequest.Download
-        && !isLocalMachine
-        && game is GameEditor == false
-    ) {
-      player.writeGameError(GameError.Cannot_Edit_Scene);
-      return;
-    }
-
-    switch (editRequest) {
-      case EditRequest.Toggle_Game_Running:
-        if (!isLocalMachine && game is! GameEditor) return;
-        if (game is! IsometricGame) return;
-        game.running = !game.running;
-        break;
-
-      case EditRequest.Scene_Reset:
-        if (!isLocalMachine && game is! GameEditor) return;
-        if (game is! IsometricGame) return;
-        game.reset();
-        break;
-
-      case EditRequest.Generate_Scene:
-        const min = 5;
-        final rows = parseArg2(arguments);
-        if (rows == null) return;
-        if (rows < min) errorInvalidClientRequest();
-        final columns = parseArg3(arguments);
-        if (columns == null) return;
-        if (columns < min) errorInvalidClientRequest();
-        final height = parseArg4(arguments);
-        if (height == null) return;
-        if (height < min) errorInvalidClientRequest();
-        final altitude = parseArg5(arguments);
-        if (altitude == null) return;
-        final frequency = parseArg6(arguments);
-        if (frequency == null) return;
-        if (game is! IsometricGame) return;
-        final sceneName = game.scene.name;
-        final scene = IsometricSceneGenerator.generate(
-            height: height,
-            rows: rows,
-            columns: columns,
-            altitude: altitude,
-            frequency: frequency * 0.005,
-        );
-        scene.name = sceneName;
-        game.scene = scene;
-        game.playersDownloadScene();
-        if (player is! IsometricPlayer) return;
-        player.z = Node_Height * altitude + 24;
-        break;
-
-      case EditRequest.Download:
-        if (player is! IsometricPlayer) return;
-        final compiled = IsometricSceneWriter.compileScene(player.scene, gameObjects: true);
-        player.writeByte(ServerResponse.Download_Scene);
-
-        if (player.scene.name.isEmpty){
-          player.scene.name = generateRandomName();
-        }
-
-        player.writeString(player.scene.name);
-        player.writeUInt16(compiled.length);
-        player.writeBytes(compiled);
-        break;
-
-      case EditRequest.Scene_Set_Floor_Type:
-        final nodeType = parseArg2(arguments);
-        if (nodeType == null) return;
-        if (game is! IsometricGame) return;
-        for (var i = 0; i < game.scene.gridArea; i++){
-          game.scene.nodeTypes[i] = nodeType;
-        }
-        game.playersDownloadScene();
-        break;
-      case EditRequest.Clear_Spawned:
-        if (game is! IsometricGame) return;
-        game.clearSpawnedAI();
-        break;
-      case EditRequest.Scene_Toggle_Underground:
-        // if (player.game is! GameDarkAge) {
-        //   errorInvalidArg('game is not GameDarkAge');
-        //   return;
-        // }
-        // final gameDarkAge = player.game as GameDarkAge;
-        // gameDarkAge.underground = !gameDarkAge.underground;
-        break;
-      case EditRequest.Spawn_AI:
-        if (game is! IsometricGame) return;
-        game.clearSpawnedAI();
-        game.scene.refreshSpawnPoints();
-        game.triggerSpawnPoints();
-        break;
-      case EditRequest.Save:
-        if (game is! IsometricGame) return;
-        if (game.scene.name.isEmpty){
-          player.writeGameError(GameError.Save_Scene_Failed);
-          return;
-        }
-        // game.saveSceneToFileBytes();
-        engine.isometricScenes.saveSceneToFileBytes(game.scene);
-        break;
-
-      case EditRequest.Modify_Canvas_Size:
-        if (arguments.length < 3) {
-          return errorInvalidClientRequest();
-        }
-        final modifyCanvasSizeIndex = parse(arguments[2]);
-        if (modifyCanvasSizeIndex == null) return;
-        if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
-          return errorInvalidClientRequest();
-        }
-        final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
-        if (player is! IsometricPlayer) return;
-        handleRequestModifyCanvasSize(request, player);
-        return;
-
-      case EditRequest.Spawn_Zombie:
-        if (arguments.length < 3) {
-          return errorInvalidClientRequest();
-        }
-        final spawnIndex = parse(arguments[2]);
-        if (spawnIndex == null) {
-          return errorInvalidClientRequest();
-        }
-        if (game is! IsometricGame) return;
-        game.spawnAI(
-            nodeIndex: spawnIndex,
-            characterType: CharacterType.Zombie,
-        );
-        break;
-    }
-
-  }
+  // void handleRequestEdit(List<String> arguments) {
+  //   final player = _player;
+  //   if (player == null) return;
+  //   final game = player.game;
+  //
+  //   if (arguments.length < 2){
+  //     return errorInvalidClientRequest();
+  //   }
+  //
+  //   final editRequestIndex = parse(arguments[1]);
+  //   if (editRequestIndex == null){
+  //     return errorInvalidClientRequest();
+  //   }
+  //   if (!isValidIndex(editRequestIndex, EditRequest.values)){
+  //      return errorInvalidClientRequest();
+  //   }
+  //   final editRequest = EditRequest.values[editRequestIndex];
+  //
+  //   if (editRequest != EditRequest.Download
+  //       && !isLocalMachine
+  //       && game is GameEditor == false
+  //   ) {
+  //     player.writeGameError(GameError.Cannot_Edit_Scene);
+  //     return;
+  //   }
+  //
+  //   switch (editRequest) {
+  //     case EditRequest.Toggle_Game_Running:
+  //       if (!isLocalMachine && game is! GameEditor) return;
+  //       if (game is! IsometricGame) return;
+  //       game.running = !game.running;
+  //       break;
+  //
+  //     case EditRequest.Scene_Reset:
+  //       if (!isLocalMachine && game is! GameEditor) return;
+  //       if (game is! IsometricGame) return;
+  //       game.reset();
+  //       break;
+  //
+  //     case EditRequest.Generate_Scene:
+  //       const min = 5;
+  //       final rows = parseArg2(arguments);
+  //       if (rows == null) return;
+  //       if (rows < min) errorInvalidClientRequest();
+  //       final columns = parseArg3(arguments);
+  //       if (columns == null) return;
+  //       if (columns < min) errorInvalidClientRequest();
+  //       final height = parseArg4(arguments);
+  //       if (height == null) return;
+  //       if (height < min) errorInvalidClientRequest();
+  //       final altitude = parseArg5(arguments);
+  //       if (altitude == null) return;
+  //       final frequency = parseArg6(arguments);
+  //       if (frequency == null) return;
+  //       if (game is! IsometricGame) return;
+  //       final sceneName = game.scene.name;
+  //       final scene = IsometricSceneGenerator.generate(
+  //           height: height,
+  //           rows: rows,
+  //           columns: columns,
+  //           altitude: altitude,
+  //           frequency: frequency * 0.005,
+  //       );
+  //       scene.name = sceneName;
+  //       game.scene = scene;
+  //       game.playersDownloadScene();
+  //       if (player is! IsometricPlayer) return;
+  //       player.z = Node_Height * altitude + 24;
+  //       break;
+  //
+  //     case EditRequest.Download:
+  //       if (player is! IsometricPlayer) return;
+  //       final compiled = IsometricSceneWriter.compileScene(player.scene, gameObjects: true);
+  //       player.writeByte(ServerResponse.Download_Scene);
+  //
+  //       if (player.scene.name.isEmpty){
+  //         player.scene.name = generateRandomName();
+  //       }
+  //
+  //       player.writeString(player.scene.name);
+  //       player.writeUInt16(compiled.length);
+  //       player.writeBytes(compiled);
+  //       break;
+  //
+  //     case EditRequest.Scene_Set_Floor_Type:
+  //       final nodeType = parseArg2(arguments);
+  //       if (nodeType == null) return;
+  //       if (game is! IsometricGame) return;
+  //       for (var i = 0; i < game.scene.gridArea; i++){
+  //         game.scene.nodeTypes[i] = nodeType;
+  //       }
+  //       game.playersDownloadScene();
+  //       break;
+  //     case EditRequest.Clear_Spawned:
+  //       if (game is! IsometricGame) return;
+  //       game.clearSpawnedAI();
+  //       break;
+  //     case EditRequest.Scene_Toggle_Underground:
+  //       // if (player.game is! GameDarkAge) {
+  //       //   errorInvalidArg('game is not GameDarkAge');
+  //       //   return;
+  //       // }
+  //       // final gameDarkAge = player.game as GameDarkAge;
+  //       // gameDarkAge.underground = !gameDarkAge.underground;
+  //       break;
+  //     case EditRequest.Spawn_AI:
+  //       if (game is! IsometricGame) return;
+  //       game.clearSpawnedAI();
+  //       game.scene.refreshSpawnPoints();
+  //       game.triggerSpawnPoints();
+  //       break;
+  //     case EditRequest.Save:
+  //       if (game is! IsometricGame) return;
+  //       if (game.scene.name.isEmpty){
+  //         player.writeGameError(GameError.Save_Scene_Failed);
+  //         return;
+  //       }
+  //       // game.saveSceneToFileBytes();
+  //       engine.isometricScenes.saveSceneToFileBytes(game.scene);
+  //       break;
+  //
+  //     case EditRequest.Modify_Canvas_Size:
+  //       if (arguments.length < 3) {
+  //         return errorInvalidClientRequest();
+  //       }
+  //       final modifyCanvasSizeIndex = parse(arguments[2]);
+  //       if (modifyCanvasSizeIndex == null) return;
+  //       if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
+  //         return errorInvalidClientRequest();
+  //       }
+  //       final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
+  //       if (player is! IsometricPlayer) return;
+  //       handleRequestModifyCanvasSize(request, player);
+  //       return;
+  //
+  //     case EditRequest.Spawn_Zombie:
+  //       if (arguments.length < 3) {
+  //         return errorInvalidClientRequest();
+  //       }
+  //       final spawnIndex = parse(arguments[2]);
+  //       if (spawnIndex == null) {
+  //         return errorInvalidClientRequest();
+  //       }
+  //       if (game is! IsometricGame) return;
+  //       game.spawnAI(
+  //           nodeIndex: spawnIndex,
+  //           characterType: CharacterType.Zombie,
+  //       );
+  //       break;
+  //   }
+  //
+  // }
 
   void handleIsometricEditorRequestSetNode(List<String> arguments) {
     final player = _player;
