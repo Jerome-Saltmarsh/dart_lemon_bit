@@ -225,7 +225,7 @@ class IsometricEditor {
   }
 
   void setNodeType(int type, int orientation) =>
-      gamestream.network.sendClientRequestSetBlock(
+      sendClientRequestSetBlock(
         index: nodeSelectedIndex.value,
         type: type,
         orientation: orientation,
@@ -235,7 +235,7 @@ class IsometricEditor {
     final nodeIndex = nodeSelectedIndex.value;
     if (nodeIndex <= gamestream.isometric.nodes.area) return;
     final nodeIndexBelow = nodeIndex - gamestream.isometric.nodes.area;
-    gamestream.network.sendClientRequestSetBlock(
+    sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
       type: gamestream.isometric.nodes.nodeTypes[nodeIndexBelow],
       orientation: gamestream.isometric.nodes.nodeOrientations[nodeIndexBelow],
@@ -264,7 +264,7 @@ class IsometricEditor {
       orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
-    return gamestream.network.sendClientRequestSetBlock(
+    return sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
       type: nodeType,
       orientation: orientation,
@@ -402,6 +402,16 @@ class IsometricEditor {
       sendIsometricEditorRequest(
         IsometricEditorRequest.GameObject,
         '${gameObjectRequest.index} $message',
+      );
+
+  void sendClientRequestSetBlock({
+    required int index,
+    required int type,
+    required int orientation,
+  }) =>
+      sendIsometricEditorRequest(
+        IsometricEditorRequest.Set_Node,
+        '$index $type $orientation',
       );
 
   void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>

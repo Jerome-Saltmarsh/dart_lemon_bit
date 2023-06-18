@@ -711,7 +711,7 @@ class EditorUI {
       hint: NodeOrientation.getName(orientation),
       action: () {
         gamestream.isometric.editor.paintOrientation.value = orientation;
-        gamestream.network.sendClientRequestSetBlock(
+        gamestream.isometric.editor.sendClientRequestSetBlock(
           index: gamestream.isometric.editor.nodeSelectedIndex.value,
           type: gamestream.isometric.editor.nodeSelectedType.value,
           orientation: orientation,
@@ -926,7 +926,7 @@ class EditorUI {
             indexX = row;
             indexY = column;
             if (row == 0 && column == 2){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Left,
@@ -934,7 +934,7 @@ class EditorUI {
               return;
             }
             if (row == 0 && column == 1){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Center,
@@ -942,7 +942,7 @@ class EditorUI {
               return;
             }
             if (row == 0 && column == 0){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Right,
@@ -951,7 +951,7 @@ class EditorUI {
             }
 
             if (row == 1 && column == 2){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Left,
@@ -959,7 +959,7 @@ class EditorUI {
               return;
             }
             if (row == 1 && column == 1){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Center,
@@ -967,7 +967,7 @@ class EditorUI {
               return;
             }
             if (row == 1 && column == 0){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Right,
@@ -976,7 +976,7 @@ class EditorUI {
             }
 
             if (row == 2 && column == 2){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Left,
@@ -984,7 +984,7 @@ class EditorUI {
               return;
             }
             if (row == 2 && column == 1){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Center,
@@ -992,7 +992,7 @@ class EditorUI {
               return;
             }
             if (row == 2 && column == 0){
-              gamestream.network.sendClientRequestSetBlock(
+              gamestream.isometric.editor.sendClientRequestSetBlock(
                 index: gamestream.isometric.editor.nodeSelectedIndex.value,
                 type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Right,

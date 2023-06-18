@@ -156,24 +156,6 @@ class GameNetwork {
     gamestream.network.sink.add(package);
   }
 
-  void sendClientRequestSetBlock({
-    required int index,
-    required int type,
-    required int orientation,
-  }) =>
-      sendClientRequest(
-        ClientRequest.Node,
-        '$index $type $orientation',
-      );
-
-  // void sendClientRequestAddGameObject({
-  //   required int index,
-  //   required int type,
-  // }) =>
-  //     sendClientRequest(
-  //       ClientRequest.Isometric_Editor, "${IsometricEditorRequest.GameObject} ${IsometricEditorGameObjectRequest.Add.index} $index $type",
-  //     );
-
   void sendClientRequestInventoryEquip(int index) {
     sendClientRequest(
       ClientRequest.Inventory, "${InventoryRequest.Equip} $index",

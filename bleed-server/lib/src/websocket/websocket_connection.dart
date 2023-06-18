@@ -230,14 +230,13 @@ class WebSocketConnection with ByteReader {
           case IsometricEditorRequest.GameObject:
             handleIsometricEditorGameObjectRequest(arguments);
             break;
+          case IsometricEditorRequest.Set_Node:
+            handleNodeRequestSetBlock(arguments);
+            break;
           default:
             break;
         }
         break;
-
-      case ClientRequest.Node:
-        if (!isLocalMachine && game is! GameEditor) return;
-        return handleNodeRequestSetBlock(arguments);
 
       case ClientRequest.Edit:
         if (!isLocalMachine && game is! GameEditor) return;
@@ -559,27 +558,27 @@ class WebSocketConnection with ByteReader {
   void handleNodeRequestSetBlock(List<String> arguments) {
     final player = _player;
     if (player == null) return;
-    if (!isLocalMachine && player.game is GameEditor == false) return;
+    final game = player.game;
+    if (game is! IsometricGame) return;
+    if (!isLocalMachine && game is GameEditor == false) return;
 
-    if (arguments.length < 4) return errorInvalidClientRequest();
+    var nodeIndex = parseArg2(arguments);
+    var nodeType = parseArg3(arguments);
+    var nodeOrientation = parseArg4(arguments);
 
-    var nodeIndex = parse(arguments[1]);
-    var nodeType = parse(arguments[2]);
-    var nodeOrientation = parse(arguments[3]);
     if (nodeIndex == null) {
-      return errorInvalidClientRequest();
+      return;
     }
     if (nodeType == null) {
-      return errorInvalidClientRequest();
+      return;
     }
     if (nodeOrientation == null) {
-      return errorInvalidClientRequest();
+      return;
     }
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
-    final game = player.game;
-    if (game is! IsometricGame) return;
+
     game.setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,
@@ -595,12 +594,12 @@ class WebSocketConnection with ByteReader {
         );
       }
     }
-
   }
 
   void handleIsometricEditorGameObjectRequest(List<String> arguments) {
     final player = _player;
     if (player == null) return;
+    if (!isLocalMachine && player.game is! GameEditor) return;
 
     final gameObjectRequestIndex = parseArg2(arguments);
 
