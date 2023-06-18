@@ -14,10 +14,6 @@ extension CaptureTheFlagActions on CaptureTheFlagGame {
           '${CaptureTheFlagRequest.selectClass.index} ${value.index}'
       );
 
-  void toggleDebugMode() => sendCaptureTheFlagRequest(
-      CaptureTheFlagRequest.toggleDebug
-  );
-
   void sendCaptureTheFlagRequest(CaptureTheFlagRequest value, [dynamic message]){
     gamestream.network.sendClientRequest(
         ClientRequest.Capture_The_Flag,

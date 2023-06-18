@@ -15,8 +15,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   IsometricCharacter? selectedCharacter;
 
-  late final debugMode = ChangeNotifier(false, onChangedDebugMode);
-
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
       onChangedFlagStatus,
@@ -24,7 +22,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   CaptureTheFlagPlayer({required this.game}) : super(game: game) {
     writeScore();
-    writeDebugMode();
     weaponDamage = 1;
     weaponType = ItemType.Empty;
   }
@@ -43,27 +40,12 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writePlayerFlagStatus(value);
   }
 
-  void onChangedDebugMode(bool value){
-    writeDebugMode();
-  }
-
-  void writeDebugMode() {
-    writeByte(ServerResponse.Capture_The_Flag);
-    writeByte(CaptureTheFlagResponse.Debug_Mode);
-    writeBool(debugMode.value);
-  }
-
   @override
   void writePlayerGame() {
     super.writePlayerGame();
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
     writeSelectedCharacter();
-
-    // if (debugMode.value) {
-    //   writeAIPath();
-    //   writeAITarget();
-    // }
   }
 
   void writeFlagPositions() {
@@ -203,13 +185,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
       writeString(selectedCharacterTarget.runtimeType.toString());
       writeIsometricPosition(selectedCharacterTarget);
     }
-
-
-
-  }
-
-  void toggleDebugMode() {
-    debugMode.value = !debugMode.value;
   }
 
   void selectAINearestToMouse(){

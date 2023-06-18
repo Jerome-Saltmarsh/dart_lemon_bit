@@ -7,16 +7,13 @@ import 'capture_the_flag_actions.dart';
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
-
 extension CaptureTheFlagUI on CaptureTheFlagGame {
 
-  Widget buildCaptureTheFlagGameUI(){
-    return Stack(
+  Widget buildCaptureTheFlagGameUI() => Stack(
       children: [
         Positioned(
           bottom: 0,
@@ -45,7 +42,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         ),
       ],
     );
-  }
 
   Widget buildDebugWindow() =>
       buildDebugMode(
@@ -298,7 +294,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
               WatchBuilder(characterSelectedZ, (z) => buildText("z: ${z.toInt()}")),
               WatchBuilder(characterSelectedPathIndex, (pathIndex) => buildText("path-index: $pathIndex")),
               WatchBuilder(characterSelectedPathEnd, (pathEnd) => buildText("path-end: $pathEnd")),
-              buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
+              // buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
               WatchBuilder(characterSelectedIsAI, (isAI) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -321,15 +317,15 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                       WatchBuilder(characterSelectedTargetX, (x) => buildText("x: ${x.toInt()}")),
                       WatchBuilder(characterSelectedTargetY, (y) => buildText("y: ${y.toInt()}")),
                       WatchBuilder(characterSelectedTargetZ, (z) => buildText("z: ${z.toInt()}")),
-                      WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText("render-line"),
-                          onPressed(
-                              action: characterSelectedTargetRenderLine.toggle,
-                              child: GSCheckBox(value)),
-                        ],
-                      )),
+                      // WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     buildText("render-line"),
+                      //     onPressed(
+                      //         action: characterSelectedTargetRenderLine.toggle,
+                      //         child: GSCheckBox(value)),
+                      //   ],
+                      // )),
                     ],
                   ),
                 );
@@ -365,18 +361,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         width: width,
         height: height,
       ));
-
-  Widget buildDebugModeToggle() {
-    return onPressed(
-      action: toggleDebugMode,
-      child: GameIsometricUI.buildWindowMenuItem(
-        title: "DEBUG",
-        child: Container(
-            margin: const EdgeInsets.only(left: 16),
-            child: watch(debugMode, GameIsometricUI.buildIconCheckbox)),
-      ),
-    );
-  }
 }
 
 

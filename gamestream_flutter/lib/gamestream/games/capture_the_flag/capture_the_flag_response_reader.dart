@@ -65,9 +65,7 @@ extension CaptureTheFlagResponseReader on Gamestream {
           }
         }
         break;
-      case CaptureTheFlagResponse.Debug_Mode:
-        captureTheFlag.debugMode.value = readBool();
-        break;
+
       case CaptureTheFlagResponse.Selected_Character:
         final characterSelected = readBool();
         captureTheFlag.characterSelected.value = characterSelected;

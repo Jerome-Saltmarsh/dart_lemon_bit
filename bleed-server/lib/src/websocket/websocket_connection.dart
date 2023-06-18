@@ -305,9 +305,6 @@ class WebSocketConnection with ByteReader {
             final characterClass = CaptureTheFlagCharacterClass.values[characterClassIndex];
             player.game.playerSelectCharacterClass(player, characterClass);
             break;
-          case CaptureTheFlagRequest.toggleDebug:
-            player.toggleDebugMode();
-            break;
         }
 
         break;

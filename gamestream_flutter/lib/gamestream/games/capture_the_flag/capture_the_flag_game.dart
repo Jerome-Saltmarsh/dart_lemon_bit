@@ -24,11 +24,11 @@ class CaptureTheFlagGame extends GameIsometric {
   final basePositionRed = IsometricPosition();
   final basePositionBlue = IsometricPosition();
   final characterPaths = <Uint16List>[];
-  final characterTargets = Float32List(2000);
+  final characterTargets = Float32List(1000);
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
   final scoreRed = Watch(0);
   final scoreBlue = Watch(0);
-  final debugMode = WatchBool(false);
+  final debugMode = WatchBool(true);
   final selectClass = Watch(false);
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
@@ -64,6 +64,4 @@ class CaptureTheFlagGame extends GameIsometric {
   @override
   Widget customBuildUI(BuildContext context) => buildCaptureTheFlagGameUI();
 
-  @override
-  List<Widget> buildMenuItems()=> [buildDebugModeToggle()];
 }
