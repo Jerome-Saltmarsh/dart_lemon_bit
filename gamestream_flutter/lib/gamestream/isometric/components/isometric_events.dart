@@ -2,10 +2,8 @@
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game_ui.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client_state.dart';
-import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../../../isometric/events/on_character_hurt.dart';
 import '../isometric.dart';
 
 class IsometricEvents {
@@ -733,5 +731,82 @@ class IsometricEvents {
         }
 
       }
+  }
+
+  void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
+
+    randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
+
+    gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
+
+    for (var i = 0; i < 4; i++){
+      gamestream.isometric.particles.spawnParticleBlood(
+        x: x,
+        y: y,
+        z: z,
+        zv: randomBetween(1.5, 2),
+        angle: angle + giveOrTake(piQuarter),
+        speed: randomBetween(1.5, 2.5),
+      );
+    }
+
+
+    switch (type) {
+      case CharacterType.Zombie:
+        if (randomBool()){
+          gamestream.audio.zombie_hurt_1.playXYZ(x, y, z);
+        } else {
+          gamestream.audio.zombie_hurt_4.playXYZ(x, y, z);
+        }
+        break;
+      case CharacterType.Rat:
+        gamestream.audio.rat_squeak.playXYZ(x, y, z);
+        break;
+      case CharacterType.Slime:
+        gamestream.audio.bloody_punches_3.playXYZ(x, y, z);
+        break;
+      case CharacterType.Dog:
+        gamestream.audio.dog_woolf_howl_4();
+        break;
+    }
+  }
+
+  void onGameEventGameObjectDestroyed(
+      double x,
+      double y,
+      double z,
+      double angle,
+      int type,
+      ){
+    switch (type){
+      case ItemType.GameObjects_Barrel:
+        gamestream.audio.crate_breaking.playXYZ(x, y, z);
+        for (var i = 0; i < 5; i++) {
+          gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
+        }
+        break;
+      case ItemType.GameObjects_Toilet:
+        gamestream.audio.crate_breaking.playXYZ(x, y, z);
+        for (var i = 0; i < 5; i++) {
+          gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
+        }
+        break;
+      case ItemType.GameObjects_Crate_Wooden:
+        gamestream.audio.crate_breaking.playXYZ(x, y, z);
+        for (var i = 0; i < 5; i++) {
+          gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
+        }
+        break;
+
+      case ItemType.Resource_Credit:
+        for (var i = 0; i < 8; i++){
+          gamestream.isometric.particles.spawnParticleConfettiByType(
+            x,
+            y,
+            z,
+            ParticleType.Confetti_Cyan,
+          );
+        }
+    }
   }
 }

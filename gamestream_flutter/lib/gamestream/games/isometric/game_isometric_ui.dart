@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -19,7 +18,7 @@ import 'package:golden_ratio/constants.dart';
 import 'game_isometric_colors.dart';
 
 
-const nothing = SizedBox();
+
 
 class GameIsometricUI {
   static const Server_FPS = 45;
@@ -859,4 +858,13 @@ class GameIsometricUI {
     width: 32,
     child: buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
   );
+
+  static void onVisibilityChangedMessageBox(bool visible){
+    if (visible) {
+      GameIsometricUI.textFieldMessage.requestFocus();
+      return;
+    }
+    GameIsometricUI.textFieldMessage.unfocus();
+    GameIsometricUI.textEditingControllerMessage.text = "";
+  }
 }

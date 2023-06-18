@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
+import 'package:gamestream_flutter/widgets/nothing.dart';
 
 import 'capture_the_flag_actions.dart';
 
