@@ -133,13 +133,6 @@ class WebSocketConnection with ByteReader {
         handleClientRequestCombat(player, arguments);
         break;
 
-      case ClientRequest.Attack:
-        if (game is! IsometricGame) return;
-        if (player is! IsometricPlayer) return;
-        game.playerAutoAim(player);
-        game.characterAttackMelee(player);
-        break;
-
       case ClientRequest.Isometric_Editor:
         if (game is! IsometricGame)
           return errorInvalidPlayerType();
