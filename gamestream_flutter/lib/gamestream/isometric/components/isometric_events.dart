@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/games/survival/survival_game_ui.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
@@ -602,17 +603,18 @@ class IsometricEvents {
     gamestream.isometric.clientState.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
-        camera.translateX = GameInventoryUI.Inventory_Width * 0.5;
+        camera.translateX = SurvivalGameUI.Inventory_Width * 0.5;
         break;
       case InteractMode.Talking:
-        camera.translateX = -GameInventoryUI.Inventory_Width * 0.5;
+        camera.translateX = SurvivalGameUI.Inventory_Width * 0.5;
         break;
       case InteractMode.Trading:
         camera.translateX = 0;
         break;
       case InteractMode.None:
         camera.translateX = 0;
-        gamestream.isometric.clientState.clearHoverIndex();
+        // todo doesn't belong
+        gamestream.games.survival.clearHoverIndex();
         gamestream.isometric.ui.clearMouseOverDialogType();
         break;
     }

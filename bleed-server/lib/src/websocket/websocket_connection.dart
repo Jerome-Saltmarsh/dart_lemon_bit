@@ -1,31 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/byte_hex.dart';
+import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_request.dart';
-import 'package:bleed_server/common/src/character_state.dart';
-import 'package:bleed_server/common/src/character_type.dart';
-import 'package:bleed_server/common/src/client_request.dart';
-import 'package:bleed_server/common/src/compile_util.dart';
-import 'package:bleed_server/common/src/fight2d/game_fight2d_client_request.dart';
-import 'package:bleed_server/common/src/game_error.dart';
-import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/isometric_editor/isometric_editor_gameobject_request.dart';
-import 'package:bleed_server/common/src/interact_mode.dart';
-import 'package:bleed_server/common/src/inventory_request.dart';
-import 'package:bleed_server/common/src/isometric/isometric_request.dart';
-import 'package:bleed_server/common/src/isometric_editor/isometric_editor_request.dart';
-import 'package:bleed_server/common/src/item_type.dart';
-import 'package:bleed_server/common/src/lightning_type.dart';
-import 'package:bleed_server/common/src/maths.dart';
-import 'package:bleed_server/common/src/node_size.dart';
-import 'package:bleed_server/common/src/node_type.dart';
-import 'package:bleed_server/common/src/power_type.dart';
-import 'package:bleed_server/common/src/rain_type.dart';
-import 'package:bleed_server/common/src/request_modify_canvas_size.dart';
-import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/combat/combat_player.dart';
@@ -142,9 +120,12 @@ class WebSocketConnection with ByteReader {
 
     switch (clientRequest) {
 
-      case ClientRequest.Inventory:
-        if (player is! IsometricPlayer) return;
-        handleRequestInventory(player, arguments);
+      case ClientRequest.Survival:
+        if (player is! SurvivalPlayer) {
+          errorInvalidPlayerType();
+          return;
+        }
+        handleClientRequestSurvival(player, arguments);
         break;
 
       case ClientRequest.Select_Weapon_Primary:
@@ -422,42 +403,43 @@ class WebSocketConnection with ByteReader {
     }
   }
 
-  void handleRequestInventory(IsometricPlayer player, List<String> arguments){
-    if (insufficientArgs(arguments, 2)) return;
-    if (player.deadBusyOrWeaponStateBusy) return;
-    final inventoryRequest = parse(arguments[1]);
+  void handleClientRequestSurvival(SurvivalPlayer player, List<String> arguments){
+    final survivalRequestIndex = parseArg2(arguments);
 
-    if (inventoryRequest == null) return errorInvalidClientRequest();
+    if (survivalRequestIndex == null)
+      return;
 
-    switch (inventoryRequest) {
+    if (!isValidIndex(survivalRequestIndex, SurvivalRequest.values)){
+       errorInvalidClientRequest();
+       return;
+    }
 
-      case InventoryRequest.Deposit:
+    final survivalRequest = SurvivalRequest.values[survivalRequestIndex];
+
+    switch (survivalRequest) {
+
+      case SurvivalRequest.Deposit:
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (player is! SurvivalPlayer) return;
         player.inventoryDeposit(index);
         break;
-      case InventoryRequest.Unequip:
+      case SurvivalRequest.Unequip:
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (player is! SurvivalPlayer) return;
         player.inventoryUnequip(index);
         break;
-      case InventoryRequest.Buy:
+      case SurvivalRequest.Buy:
         if (insufficientArgs(arguments, 3)) return;
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (player is! SurvivalPlayer) return;
         player.inventoryBuy(index);
         break;
-      case InventoryRequest.Sell:
+      case SurvivalRequest.Sell:
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (player is! SurvivalPlayer) return;
         player.inventorySell(index);
         break;
-      case InventoryRequest.Toggle:
-        if (player is! SurvivalPlayer) return;
+      case SurvivalRequest.Toggle:
         player.inventoryOpen = !player.inventoryOpen;
         if (player.inventoryOpen){
           player.interactMode = InteractMode.Inventory;
@@ -465,17 +447,16 @@ class WebSocketConnection with ByteReader {
           player.interactMode = InteractMode.None;
         }
         break;
-      case InventoryRequest.Drop:
+      case SurvivalRequest.Drop:
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (player is! SurvivalPlayer) return;
         if (!player.isValidInventoryIndex(index)){
           player.writeErrorInvalidInventoryIndex(index);
           return;
         }
         player.inventoryDrop(index);
         break;
-      case InventoryRequest.Move:
+      case SurvivalRequest.Move:
         if (insufficientArgs(arguments, 4)) return;
         final indexFrom = parse(arguments[2]);
         final indexTo = parse(arguments[3]);
@@ -483,13 +464,11 @@ class WebSocketConnection with ByteReader {
         if (indexTo == null) return errorInvalidClientRequest();
         if (indexFrom < 0) return errorInvalidClientRequest();
         if (indexTo < 0) return errorInvalidClientRequest();
-        if (player is! SurvivalPlayer) return;
         player.inventorySwapIndexes(indexFrom, indexTo);
         break;
-      case InventoryRequest.Equip:
+      case SurvivalRequest.Equip:
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (player is! SurvivalPlayer) return;
         if (index == player.equippedWeaponIndex){
           player.unequipWeapon();
           break;
@@ -501,159 +480,6 @@ class WebSocketConnection with ByteReader {
         return;
     }
   }
-
-  // void handleRequestEdit(List<String> arguments) {
-  //   final player = _player;
-  //   if (player == null) return;
-  //   final game = player.game;
-  //
-  //   if (arguments.length < 2){
-  //     return errorInvalidClientRequest();
-  //   }
-  //
-  //   final editRequestIndex = parse(arguments[1]);
-  //   if (editRequestIndex == null){
-  //     return errorInvalidClientRequest();
-  //   }
-  //   if (!isValidIndex(editRequestIndex, EditRequest.values)){
-  //      return errorInvalidClientRequest();
-  //   }
-  //   final editRequest = EditRequest.values[editRequestIndex];
-  //
-  //   if (editRequest != EditRequest.Download
-  //       && !isLocalMachine
-  //       && game is GameEditor == false
-  //   ) {
-  //     player.writeGameError(GameError.Cannot_Edit_Scene);
-  //     return;
-  //   }
-  //
-  //   switch (editRequest) {
-  //     case EditRequest.Toggle_Game_Running:
-  //       if (!isLocalMachine && game is! GameEditor) return;
-  //       if (game is! IsometricGame) return;
-  //       game.running = !game.running;
-  //       break;
-  //
-  //     case EditRequest.Scene_Reset:
-  //       if (!isLocalMachine && game is! GameEditor) return;
-  //       if (game is! IsometricGame) return;
-  //       game.reset();
-  //       break;
-  //
-  //     case EditRequest.Generate_Scene:
-  //       const min = 5;
-  //       final rows = parseArg2(arguments);
-  //       if (rows == null) return;
-  //       if (rows < min) errorInvalidClientRequest();
-  //       final columns = parseArg3(arguments);
-  //       if (columns == null) return;
-  //       if (columns < min) errorInvalidClientRequest();
-  //       final height = parseArg4(arguments);
-  //       if (height == null) return;
-  //       if (height < min) errorInvalidClientRequest();
-  //       final altitude = parseArg5(arguments);
-  //       if (altitude == null) return;
-  //       final frequency = parseArg6(arguments);
-  //       if (frequency == null) return;
-  //       if (game is! IsometricGame) return;
-  //       final sceneName = game.scene.name;
-  //       final scene = IsometricSceneGenerator.generate(
-  //           height: height,
-  //           rows: rows,
-  //           columns: columns,
-  //           altitude: altitude,
-  //           frequency: frequency * 0.005,
-  //       );
-  //       scene.name = sceneName;
-  //       game.scene = scene;
-  //       game.playersDownloadScene();
-  //       if (player is! IsometricPlayer) return;
-  //       player.z = Node_Height * altitude + 24;
-  //       break;
-  //
-  //     case EditRequest.Download:
-  //       if (player is! IsometricPlayer) return;
-  //       final compiled = IsometricSceneWriter.compileScene(player.scene, gameObjects: true);
-  //       player.writeByte(ServerResponse.Download_Scene);
-  //
-  //       if (player.scene.name.isEmpty){
-  //         player.scene.name = generateRandomName();
-  //       }
-  //
-  //       player.writeString(player.scene.name);
-  //       player.writeUInt16(compiled.length);
-  //       player.writeBytes(compiled);
-  //       break;
-  //
-  //     case EditRequest.Scene_Set_Floor_Type:
-  //       final nodeType = parseArg2(arguments);
-  //       if (nodeType == null) return;
-  //       if (game is! IsometricGame) return;
-  //       for (var i = 0; i < game.scene.gridArea; i++){
-  //         game.scene.nodeTypes[i] = nodeType;
-  //       }
-  //       game.playersDownloadScene();
-  //       break;
-  //     case EditRequest.Clear_Spawned:
-  //       if (game is! IsometricGame) return;
-  //       game.clearSpawnedAI();
-  //       break;
-  //     case EditRequest.Scene_Toggle_Underground:
-  //       // if (player.game is! GameDarkAge) {
-  //       //   errorInvalidArg('game is not GameDarkAge');
-  //       //   return;
-  //       // }
-  //       // final gameDarkAge = player.game as GameDarkAge;
-  //       // gameDarkAge.underground = !gameDarkAge.underground;
-  //       break;
-  //     case EditRequest.Spawn_AI:
-  //       if (game is! IsometricGame) return;
-  //       game.clearSpawnedAI();
-  //       game.scene.refreshSpawnPoints();
-  //       game.triggerSpawnPoints();
-  //       break;
-  //     case EditRequest.Save:
-  //       if (game is! IsometricGame) return;
-  //       if (game.scene.name.isEmpty){
-  //         player.writeGameError(GameError.Save_Scene_Failed);
-  //         return;
-  //       }
-  //       // game.saveSceneToFileBytes();
-  //       engine.isometricScenes.saveSceneToFileBytes(game.scene);
-  //       break;
-  //
-  //     case EditRequest.Modify_Canvas_Size:
-  //       if (arguments.length < 3) {
-  //         return errorInvalidClientRequest();
-  //       }
-  //       final modifyCanvasSizeIndex = parse(arguments[2]);
-  //       if (modifyCanvasSizeIndex == null) return;
-  //       if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
-  //         return errorInvalidClientRequest();
-  //       }
-  //       final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
-  //       if (player is! IsometricPlayer) return;
-  //       handleRequestModifyCanvasSize(request, player);
-  //       return;
-  //
-  //     case EditRequest.Spawn_Zombie:
-  //       if (arguments.length < 3) {
-  //         return errorInvalidClientRequest();
-  //       }
-  //       final spawnIndex = parse(arguments[2]);
-  //       if (spawnIndex == null) {
-  //         return errorInvalidClientRequest();
-  //       }
-  //       if (game is! IsometricGame) return;
-  //       game.spawnAI(
-  //           nodeIndex: spawnIndex,
-  //           characterType: CharacterType.Zombie,
-  //       );
-  //       break;
-  //   }
-  //
-  // }
 
   void handleIsometricEditorRequestSetNode(List<String> arguments) {
     final player = _player;

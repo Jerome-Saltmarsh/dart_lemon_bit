@@ -17,11 +17,8 @@ mixin class IsometricClientState {
   final sceneChanged = Watch(0);
   final readsHotKeys = Watch(0);
   final hoverTargetType = Watch(ClientType.Hover_Target_None);
-  final hoverIndex = Watch(-1);
   final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
-  final dragStart = Watch(-1);
-  final dragEnd = Watch(-1);
   final overrideColor = WatchBool(false);
   final window_visible_light_settings = WatchBool(false);
   final window_visible_menu = WatchBool(false);
@@ -62,7 +59,6 @@ mixin class IsometricClientState {
   late final messageStatus = Watch("", onChanged: onChangedMessageStatus);
   late final debugMode = Watch(false, onChanged: onChangedDebugMode);
   late final raining = Watch(false, onChanged: onChangedRaining);
-  late final inventoryReads = Watch(0, onChanged: onInventoryReadsChanged);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
   late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
 
@@ -449,12 +445,7 @@ mixin class IsometricClientState {
 
 
   void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
-  void redrawInventory() => inventoryReads.value++;
   void redrawHotKeys() => readsHotKeys.value++;
-
-  void clearHoverIndex() =>
-      hoverIndex.value = -1;
-
 
   void showMessage(String message){
     messageStatus.value = "";
@@ -471,29 +462,8 @@ mixin class IsometricClientState {
     }
   }
 
-  void inventorySwapDragTarget(){
-    if (dragStart.value == -1) return;
-    if (hoverIndex.value == -1) return;
-    gamestream.network.sendClientRequestInventoryMove(
-      indexFrom: dragStart.value,
-      indexTo: hoverIndex.value,
-    );
-  }
-
    void playSoundWindow() =>
       gamestream.audio.click_sound_8(1);
-
-   void dragStartSetNone(){
-    gamestream.isometric.clientState.dragStart.value = -1;
-  }
-
-   void setDragItemIndex(int index) =>
-          () => gamestream.isometric.clientState.dragStart.value = index;
-
-   void dropDraggedItem(){
-    if (gamestream.isometric.clientState.dragStart.value == -1) return;
-    gamestream.network.sendClientRequestInventoryDrop(gamestream.isometric.clientState.dragStart.value);
-  }
 
    void messageClear(){
     writeMessage("");
@@ -507,10 +477,6 @@ mixin class IsometricClientState {
     gamestream.audio.errorSound15();
   }
 
-  void onInventoryReadsChanged(int value){
-    gamestream.isometric.clientState.clearHoverIndex();
-  }
-
   void onChangedAttributesWindowVisible(bool value){
     gamestream.isometric.clientState.playSoundWindow();
   }
@@ -522,71 +488,6 @@ mixin class IsometricClientState {
   void onChangedRaining(bool raining){
     raining ? gamestream.isometric.actions.rainStart() : gamestream.isometric.actions.rainStop();
     gamestream.isometric.nodes.resetNodeColorsToAmbient();
-  }
-
-  void onDragStarted(int itemIndex){
-    // print("onDragStarted()");
-    gamestream.isometric.clientState.dragStart.value = itemIndex;
-    gamestream.isometric.clientState.dragEnd.value = -1;
-  }
-
-  void onDragCompleted(){
-    // print("onDragCompleted()");
-  }
-
-  void onDragEnd(DraggableDetails details){
-    // print("onDragEnd()");
-  }
-
-  void onItemIndexPrimary(int itemIndex) {
-    if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
-      gamestream.network.sendClientRequestInventoryBuy(itemIndex);
-      return;
-    }
-    gamestream.network.sendClientRequestInventoryEquip(itemIndex);
-  }
-
-  void onItemIndexSecondary(int itemIndex){
-    if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
-      gamestream.network.sendClientRequestInventoryBuy(itemIndex);
-      return;
-    }
-    gamestream.isometric.player.interactModeTrading
-        ? gamestream.network.sendClientRequestInventorySell(itemIndex)
-        : gamestream.network.sendClientRequestInventoryDrop(itemIndex);
-  }
-
-  void onDragAcceptEquippedItemContainer(int? i){
-    if (i == null) return;
-    gamestream.network.sendClientRequestInventoryEquip(i);
-  }
-
-  void onDragCancelled(Velocity velocity, Offset offset){
-    // print("onDragCancelled()");
-    if (gamestream.isometric.clientState.hoverIndex.value == -1){
-      gamestream.isometric.clientState.dropDraggedItem();
-    } else {
-      gamestream.isometric.clientState.inventorySwapDragTarget();
-    }
-    gamestream.isometric.clientState.dragStart.value = -1;
-    gamestream.isometric.clientState.dragEnd.value = -1;
-  }
-
-  void onDragAcceptWatchBelt(Watch<int> watchBelt, int index) =>
-      gamestream.isometric.server.inventoryMoveToWatchBelt(index, watchBelt);
-
-  void onButtonPressedWatchBelt(Watch<int> watchBeltType) =>
-      gamestream.isometric.server.equipWatchBeltType(watchBeltType);
-
-  void onRightClickedWatchBelt(Watch<int> watchBelt){
-     gamestream.isometric.server.inventoryUnequip(
-        gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBelt)
-    );
-  }
-
-  void onAcceptDragInventoryIcon(){
-    if (gamestream.isometric.clientState.dragStart.value == -1) return;
-    gamestream.network.sendClientRequestInventoryDeposit(gamestream.isometric.clientState.dragStart.value);
   }
 
   void onChangedMessageStatus(String value){

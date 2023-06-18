@@ -382,24 +382,6 @@ class IsometricServer {
   int getEquippedWeaponConsumeType() =>
       ItemType.getConsumeType(getEquippedWeaponType());
 
-
-  void dropEquippedWeapon() =>
-      gamestream.network.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon);
-
-  void equipWatchBeltType(Watch<int> watchBeltType) =>
-      gamestream.network.sendClientRequestInventoryEquip(
-          gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBeltType)
-      );
-
-  void inventoryUnequip(int index) =>
-      gamestream.network.sendClientRequestInventoryUnequip(index);
-
-  void inventoryMoveToWatchBelt(int index, Watch<int> watchBelt)=>
-      gamestream.network.sendClientRequestInventoryMove(
-        indexFrom: index,
-        indexTo: gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBelt),
-      );
-
   void onChangedAreaType(int areaType) {
     gamestream.isometric.clientState.areaTypeVisible.value = true;
   }

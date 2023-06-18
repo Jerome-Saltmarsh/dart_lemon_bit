@@ -147,50 +147,6 @@ class GameNetwork {
     sink.close();
   }
 
-  void sendClientRequestInventoryEquip(int index) {
-    sendClientRequest(
-      ClientRequest.Inventory, "${InventoryRequest.Equip} $index",
-    );
-  }
-
-  void sendClientRequestInventoryToggle() =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Toggle}",
-      );
-
-  void sendClientRequestInventoryDrop(int index) =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Drop} $index",
-      );
-
-  void sendClientRequestInventoryUnequip(int index) =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Unequip} $index",
-      );
-
-  void sendClientRequestInventoryBuy(int index) =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Buy} $index",
-      );
-
-  void sendClientRequestInventoryDeposit(int index) =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Deposit} $index",
-      );
-
-  void sendClientRequestInventorySell(int index) =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Sell} $index",
-      );
-
-  void sendClientRequestInventoryMove({
-    required int indexFrom,
-    required int indexTo,
-  }) =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Move} $indexFrom $indexTo",
-      );
-
   void sendClientRequestSelectWeaponPrimary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
 
