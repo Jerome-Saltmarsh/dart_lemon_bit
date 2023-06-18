@@ -30,11 +30,11 @@ class GameIsometricDebug {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            watch(gamestream.serverResponseReader.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${IsometricClientState.formatBytes(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
+                            watch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+                            watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${IsometricClientState.formatBytes(bytes)}')),
+                            watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
+                            watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
+                            watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  buildText(
                                 "connection-duration: ${gamestream.isometric..clientState.formattedConnectionDuration}\n"
                                 // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
@@ -84,7 +84,7 @@ class GameIsometricDebug {
                             Refresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
                             Refresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
                             Refresh(() => buildText('engine-frame: ${engine.paintFrame}')),
-                            watch(gamestream.serverResponseReader.updateFrame, (t) => buildText("update-frame: $t")),
+                            watch(gamestream.updateFrame, (t) => buildText("update-frame: $t")),
                             watch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText("interpolating: $interpolating", onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
                             watch(gamestream.gameType, (GameType value) => buildText("game-type: ${value.name}")),
                             watch(engine.deviceType, (int deviceType) => buildText("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),

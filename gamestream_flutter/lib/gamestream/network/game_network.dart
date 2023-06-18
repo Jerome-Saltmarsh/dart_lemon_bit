@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -116,7 +117,7 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return gamestream.serverResponseReader.read(response);
+      return gamestream.read(response);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){

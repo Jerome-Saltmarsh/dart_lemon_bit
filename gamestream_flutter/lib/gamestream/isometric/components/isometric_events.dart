@@ -109,10 +109,10 @@ class IsometricEvents {
         onGameEventExplosion(x, y, z);
         return;
       case GameEventType.Power_Used:
-        onGameEventPowerUsed(x, y, z, gamestream.serverResponseReader.readByte());
+        onGameEventPowerUsed(x, y, z, gamestream.readByte());
         break;
       case GameEventType.AI_Target_Acquired:
-        final characterType = gamestream.serverResponseReader.readByte();
+        final characterType = gamestream.readByte();
         switch (characterType){
           case CharacterType.Zombie:
             Engine.randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
@@ -133,7 +133,7 @@ class IsometricEvents {
         gamestream.audio.hover_over_button_sound_30.playXYZ(x, y, z);
         break;
       case GameEventType.Weapon_Type_Equipped:
-        final attackType =  gamestream.serverResponseReader.readByte();
+        final attackType =  gamestream.readByte();
         return onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
@@ -185,7 +185,7 @@ class IsometricEvents {
       case GameEventType.EnemyTargeted:
         break;
       case GameEventType.Attack_Missed:
-        final attackType = gamestream.serverResponseReader.readUInt16();
+        final attackType = gamestream.readUInt16();
         switch (attackType) {
           case ItemType.Empty:
             gamestream.audio.arm_swing_whoosh_11.playXYZ(x, y, z);
@@ -223,11 +223,11 @@ class IsometricEvents {
         break;
 
       case GameEventType.Character_Death:
-        onCharacterDeath(gamestream.serverResponseReader.readByte(), x, y, z, angle);
+        onCharacterDeath(gamestream.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Character_Hurt:
-        onGameEventCharacterHurt(gamestream.serverResponseReader.readByte(), x, y, z, angle);
+        onGameEventCharacterHurt(gamestream.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Game_Object_Destroyed:
@@ -236,7 +236,7 @@ class IsometricEvents {
             y,
             z,
             angle,
-          gamestream.serverResponseReader.readUInt16(),
+          gamestream.readUInt16(),
         );
         return;
     }
@@ -300,7 +300,7 @@ class IsometricEvents {
   }
 
   void onAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = gamestream.serverResponseReader.readUInt16();
+    final attackType = gamestream.readUInt16();
     final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttack[attackType];
 
     if (attackTypeAudio != null) {
@@ -338,7 +338,7 @@ class IsometricEvents {
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = gamestream.serverResponseReader.readUInt16();
+    final attackType = gamestream.readUInt16();
     final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
@@ -494,7 +494,7 @@ class IsometricEvents {
   }
 
   void readPlayerEventItemConsumed() {
-    switch (gamestream.serverResponseReader.readUInt16()){
+    switch (gamestream.readUInt16()){
       case ItemType.Consumables_Potion_Red:
         gamestream.audio.drink();
         gamestream.audio.reviveHeal1();
@@ -658,7 +658,7 @@ class IsometricEvents {
   }
 
   void readPlayerEventItemAcquired() {
-    final itemType = gamestream.serverResponseReader.readUInt16();
+    final itemType = gamestream.readUInt16();
     if (itemType == ItemType.Empty) return;
 
     switch (itemType) {

@@ -1,9 +1,11 @@
 
+import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/account/account_service.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_byte/byte_reader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'operation_status.dart';
@@ -14,22 +16,25 @@ import 'isometric/isometric.dart';
 import 'network/enums/connection_region.dart';
 import 'network/enums/connection_status.dart';
 import 'network/game_network.dart';
-import 'server_response_reader.dart';
 
-class Gamestream {
+class Gamestream with ByteReader {
+  var previousServerResponse = -1;
+  final bufferSize = Watch(0);
+  final bufferSizeTotal = Watch(0);
+  final decoder = ZLibDecoder();
 
    final audio = GameAudio();
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
    final isometric = Isometric();
 
+   late final updateFrame = Watch(0, onChanged: isometric.clientState.onChangedUpdateFrame);
    late final io = GameIO(isometric);
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
    late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
    late final account = Watch<Account?>(null, onChanged: onChangedAccount);
    late final accountService = AccountService(this);
-   late final ServerResponseReader serverResponseReader;
    late final GameNetwork network;
    late final Games games;
 
@@ -41,10 +46,6 @@ class Gamestream {
     games = Games(this);
     network = GameNetwork(this);
     network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
-    serverResponseReader = ServerResponseReader(
-        gamestream: this,
-        isometric: isometric,
-    );
   }
 
    Future init(SharedPreferences sharedPreferences) async {
@@ -201,7 +202,7 @@ class Gamestream {
 
    void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
      engine.onDrawForeground = null;
-     serverResponseReader.bufferSizeTotal.value = 0;
+     bufferSizeTotal.value = 0;
 
      switch (connection) {
        case ConnectionStatus.Connected:
