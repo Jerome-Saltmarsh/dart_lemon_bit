@@ -39,6 +39,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final characterSelectedX = Watch(0.0);
   final characterSelectedY = Watch(0.0);
   final characterSelectedZ = Watch(0.0);
+  final characterSelectedRuntimeType = Watch("");
   final characterSelectedPath = Uint16List(500);
   final characterSelectedPathIndex = Watch(0);
   final characterSelectedPathEnd = Watch(0);

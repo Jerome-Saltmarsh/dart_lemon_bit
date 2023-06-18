@@ -289,6 +289,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              WatchBuilder(characterSelectedRuntimeType, (runtimeType) => buildText("type: $runtimeType")),
               WatchBuilder(characterSelectedX, (x) => buildText("x: ${x.toInt()}")),
               WatchBuilder(characterSelectedY, (y) => buildText("y: ${y.toInt()}")),
               WatchBuilder(characterSelectedZ, (z) => buildText("z: ${z.toInt()}")),

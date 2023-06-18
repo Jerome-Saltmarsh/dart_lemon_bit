@@ -166,6 +166,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
       return;
     }
     writeBool(true);
+    writeString(selectedCharacter.runtimeType.toString());
     writeIsometricPosition(selectedCharacter);
     writeCharacterPath(selectedCharacter);
 

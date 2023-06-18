@@ -70,6 +70,7 @@ extension CaptureTheFlagResponseReader on Gamestream {
         final characterSelected = readBool();
         captureTheFlag.characterSelected.value = characterSelected;
         if (!characterSelected) break;
+        captureTheFlag.characterSelectedRuntimeType.value = readString();
         captureTheFlag.characterSelectedX.value = readDouble();
         captureTheFlag.characterSelectedY.value = readDouble();
         captureTheFlag.characterSelectedZ.value = readDouble();
