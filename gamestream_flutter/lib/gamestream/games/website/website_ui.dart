@@ -1,12 +1,18 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/website/enums/website_page.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/ui/style.dart';
+import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/website/widgets/game_type_column.dart';
 import 'package:gamestream_flutter/website/widgets/region_column.dart';
+import 'package:gamestream_flutter/widgets/build_fullscreen.dart';
 
 extension WebsiteUI on WebsiteGame {
 
@@ -87,5 +93,115 @@ extension WebsiteUI on WebsiteGame {
     );
 
   }
+
+  Widget buildWatchErrorMessage() =>
+      WatchBuilder(gamestream.games.website.error, (String? message) {
+        if (message == null) return GameStyle.Null;
+        return buildErrorDialog(message);
+      });
+
+  Widget buildOperationStatus(OperationStatus operationStatus) =>
+      operationStatus != OperationStatus.None
+          ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
+          : watch(gamestream.network.connectionStatus, buildConnectionStatus);
+
+  Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
+      switch (connectionStatus) {
+        ConnectionStatus.Connected =>
+            buildPageConnectionStatus(connectionStatus.name),
+        ConnectionStatus.Connecting =>
+            buildPageConnectionStatus(connectionStatus.name),
+        _ => buildNotConnected()
+      };
+
+  Widget buildPageLoading(BuildContext context) {
+    final _width = 300.0;
+    final _height = 50.0;
+    return buildFullscreen(
+      color: GameIsometricColors.black,
+      child: watch(download, (double value) {
+        value = 0.6182;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                text("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.white),
+                height8,
+                Container(
+                  width: _width,
+                  height: _height,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    color: Colors.white,
+                    width: _width * value,
+                    height: _height,
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+      }),
+    );
+  }
+
+  Widget buildNotConnected()  => watch(engine.deviceType, buildPageWebsite);
+
+  Widget buildPageWebsite(int deviceType) =>
+      deviceType == DeviceType.Computer
+          ? buildPageWebsiteDesktop()
+          : buildPageWebsiteMobile();
+
+  Widget buildPageWebsiteMobile() =>
+      Container(
+        // width: 300,
+        width: engine.screen.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildLogoGameStream(),
+            height16,
+            buildButtonJoinGameType(
+              gameType: GameType.Mobile_Aeon,
+              gameName: "AEON",
+            ),
+            height16,
+            buildButtonJoinGameType(
+              gameType: GameType.Rock_Paper_Scissors,
+              gameName: "CHASE",
+            ),
+            height16,
+          ],
+        ),
+      );
+
+  Widget buildButtonJoinGameType({required GameType gameType, required String gameName}){
+    return onPressed(
+      action: () => gamestream.network.connectToGame(gameType),
+      child: text(gameName, size: 26, color: Colors.white70),
+    );
+  }
+
+  Widget buildLogoGameStream(){
+    return text("GAMESTREAM.ONLINE", size: FontSize.VeryLarge);
+  }
+
+  Widget buildPageConnectionStatus(String message) =>
+      buildFullScreen(
+        child: text(message, color: GameIsometricColors.white80, align: TextAlign.center),
+      );
+
+  Widget buildLoadingPage() =>
+      Container(
+        color: GameIsometricColors.black,
+        alignment: Alignment.center,
+        child: text("LOADING GAMESTREAM"),
+      );
 
 }

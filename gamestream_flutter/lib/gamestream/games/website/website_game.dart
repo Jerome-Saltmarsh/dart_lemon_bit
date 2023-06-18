@@ -1,40 +1,30 @@
 
-import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
+import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui/dialogs.dart';
-import 'package:gamestream_flutter/ui/style.dart';
-import 'package:gamestream_flutter/ui/views.dart';
-import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
 class WebsiteGame extends Game {
-  static const Icon_Size = 25.0;
-  static const Padding = 16.0;
-
   final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
-  late final visitCount = Watch(0, onChanged: onChangedVisitCount);
   final download = Watch(0.0);
   final debug = true;
   final isVisibleDialogCustomRegion = Watch(false);
   final colorRegion = Colors.orange;
   final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
   final errorMessageEnabled = Watch(true);
+
+  late final visitCount = Watch(0, onChanged: onChangedVisitCount);
   
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -73,13 +63,6 @@ class WebsiteGame extends Game {
 
   }
 
-  Widget buildLoadingPage() =>
-      Container(
-        color: GameIsometricColors.black,
-        alignment: Alignment.center,
-        child: text("LOADING GAMESTREAM"),
-      );
-
   @override
   Widget buildUI(BuildContext context) => Stack(
       children: [
@@ -87,75 +70,12 @@ class WebsiteGame extends Game {
         buildWatchErrorMessage(),
       ]);
 
-  Widget buildWatchErrorMessage() =>
-      WatchBuilder(gamestream.games.website.error, (String? message) {
-        if (message == null) return GameStyle.Null;
-        return buildErrorDialog(message);
-      });
-
-  Widget buildOperationStatus(OperationStatus operationStatus) =>
-      operationStatus != OperationStatus.None
-          ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
-          : watch(gamestream.network.connectionStatus, buildConnectionStatus);
-
-  Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
-      switch (connectionStatus) {
-        ConnectionStatus.Connected =>
-          buildPageConnectionStatus(connectionStatus.name),
-        ConnectionStatus.Connecting =>
-          buildPageConnectionStatus(connectionStatus.name),
-        _ => buildNotConnected()
-      };
-
-  Widget buildPageLoading(BuildContext context) {
-    final _width = 300.0;
-    final _height = 50.0;
-    return buildFullscreen(
-      color: GameIsometricColors.black,
-      child: watch(download, (double value) {
-        value = 0.6182;
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                text("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.white),
-                height8,
-                Container(
-                  width: _width,
-                  height: _height,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    color: Colors.white,
-                    width: _width * value,
-                    height: _height,
-                  ),
-                )
-              ],
-            ),
-          ],
-        );
-      }),
-    );
-  }
-
-  Widget buildNotConnected()  => watch(engine.deviceType, buildPageWebsite);
 
   void toggleWebsitePage() =>
       websitePage.value =
       websitePage.value == WebsitePage.Region
           ? WebsitePage.Games
           : WebsitePage.Region;
-
-  Widget buildPageWebsite(int deviceType) =>
-      deviceType == DeviceType.Computer
-          ? buildPageWebsiteDesktop()
-          : buildPageWebsiteMobile();
 
   void showWebsitePageRegion(){
      websitePage.value = WebsitePage.Region;
@@ -170,82 +90,6 @@ class WebsiteGame extends Game {
 
   void openUrlDiscord() =>
       launchUrl(Uri.parse('https://discord.com/channels/888728235653885962/888728235653885965'));
-
-  Widget buildRowSocialLinks() => Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      onPressed(
-          action: openUrlYoutube,
-          child: text("youtube", color: Colors.white70, underline: true)),
-      width16,
-      onPressed(
-          action: openUrlDiscord,
-          child: text("discord", color: Colors.white70, underline: true)),
-    ],
-  );
-
-  Widget buildPageWebsiteMobile() =>
-      Container(
-        // width: 300,
-        width: engine.screen.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildLogoGameStream(),
-            height16,
-            buildButtonJoinGameType(
-              gameType: GameType.Mobile_Aeon,
-              gameName: "AEON",
-            ),
-            height16,
-            buildButtonJoinGameType(
-              gameType: GameType.Rock_Paper_Scissors,
-              gameName: "CHASE",
-            ),
-            height16,
-          ],
-        ),
-      );
-
-  Widget buildButtonJoinGameType({required GameType gameType, required String gameName}){
-    return onPressed(
-      action: () => gamestream.network.connectToGame(gameType),
-      child: text(gameName, size: 26, color: Colors.white70),
-    );
-  }
-
-  Widget buildLogoGameStream(){
-    return text("GAMESTREAM.ONLINE", size: FontSize.VeryLarge);
-  }
-
-  Widget buildPageConnectionStatus(String message) =>
-      buildFullScreen(
-        child: text(message, color: GameIsometricColors.white80, align: TextAlign.center),
-      );
-
-  Widget buildFullScreen({required Widget child, Alignment alignment = Alignment.center}) =>
-      Container(
-        width: engine.screen.width,
-        height: engine.screen.height,
-        alignment: alignment,
-        child: child,
-      );
-
-  Widget buildInputCustomConnectionString() =>
-      Container(
-        width: 280,
-        margin: const EdgeInsets.only(left: 12),
-        child: TextField(
-          autofocus: true,
-          controller: gamestream.games.website.customConnectionStrongController,
-          decoration: InputDecoration(
-              labelText: 'ws connection string'
-          ),
-        ),
-      );
-
-  Widget buildTextVersion() =>
-      text('gamestream.online - v$version', color:  Colors.white60, size: FontSize.Regular);
 
   void showDialogChangePublicName(){
     gamestream.games.website.dialog.value = WebsiteDialog.Change_Public_Name;
@@ -286,9 +130,6 @@ class WebsiteGame extends Game {
 
   void connectToCustomGame(String customGame){
     _log("connectToCustomGame");
-    // game.type.value = GameType.Custom;
-    // game.customGameName = customGame;
-    // connectToWebSocketServer(core.state.region.value, GameType.Custom);
   }
 
   void _log(String value){
@@ -309,69 +150,6 @@ class WebsiteGame extends Game {
 
   void showDialogGames(){
     dialog.value = WebsiteDialog.Games;
-  }
-
-  Widget buttonRegion(){
-    return Tooltip(
-      message: "Change Region",
-      child: button(
-        text(engine.enumString(gamestream.network.region.value),
-            color: GameIsometricColors.white80),
-        gamestream.games.website.showDialogChangeRegion,
-        borderColor: GameIsometricColors.none,
-        fillColor: GameIsometricColors.black20,
-      ),
-    );
-  }
-
-  Widget buttonCustomMap(){
-    return buildMenuButton("Custom", gamestream.games.website.showDialogCustomMaps);
-  }
-
-  Widget dialogCustomMaps() {
-    print("website.builders.dialogCustomMaps()");
-
-    return FutureBuilder(future: firestoreService.getMapNames(), builder: (context, snapshot){
-
-      if (snapshot.hasError){
-        buildErrorDialog(snapshot.error.toString());
-      }
-
-      if (snapshot.connectionState == ConnectionState.waiting){
-        return buildDialogMessage("Loading Games");
-      }
-
-      final games = snapshot.data;
-
-      if (games == null){
-        return buildDialogMessage("No games found");
-      }
-
-      return buildDialog(
-          width: style.dialogWidthMedium,
-          height: style.dialogHeightLarge,
-          bottomRight: closeDialogButton,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                buttonRegion(),
-                height16,
-                Column(
-                  children: games.map((mapName) => margin(
-                    bottom: 16,
-                    child: button(text(mapName, color: GameIsometricColors.white618), (){
-                      // connect to custom game
-                      gamestream.games.website.connectToCustomGame(mapName);
-                    },
-                        alignment: Alignment.centerLeft,
-                        fillColor: GameIsometricColors.white05, fillColorMouseOver: GameIsometricColors.white10, borderColor: GameIsometricColors.none, borderColorMouseOver: GameIsometricColors.none),
-                  )).toList(),
-                ),
-              ],
-            ),
-          )
-      );
-    },);
   }
 
   void closeErrorMessage(){
