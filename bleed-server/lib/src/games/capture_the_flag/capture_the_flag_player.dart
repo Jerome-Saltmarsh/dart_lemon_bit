@@ -190,6 +190,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     if (selectedCharacter is CaptureTheFlagAI){
       writeBool(true);
       writeByte(selectedCharacter.decision.index);
+      writeByte(selectedCharacter.role.index);
     } else {
       writeBool(false);
     }

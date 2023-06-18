@@ -303,7 +303,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (isAI)
-                    WatchBuilder(characterSelectedAIDecision, (aiDecision) => buildText("ai-decision: ${aiDecision.name}")),
+                    WatchBuilder(characterSelectedAIDecision, (decision) => buildText("ai-decision: ${decision.name}")),
+                    WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}")),
                 ],
               )),
               const SizedBox(height: 1,),
