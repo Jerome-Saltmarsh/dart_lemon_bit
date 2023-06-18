@@ -10,8 +10,6 @@ import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/style.dart';
-import 'package:gamestream_flutter/ui/views.dart';
-import 'package:gamestream_flutter/widgets/build_fullscreen.dart';
 
 extension WebsiteUI on WebsiteGame {
 
@@ -259,4 +257,16 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
+  Widget buildErrorDialog(String message, {Widget? bottomRight}) => dialog(
+        width: style.dialogWidthMedium,
+        height: style.dialogHeightVerySmall,
+        color: GameIsometricColors.brownDark,
+        borderColor: GameIsometricColors.none,
+        child: buildLayout(
+            child: Center(
+              child: buildText(message, color: GameIsometricColors.white),
+            ),
+            bottomRight: bottomRight ?? buildText("okay", onPressed: () => gamestream.games.website.error.value = null)
+        )
+    );
 }

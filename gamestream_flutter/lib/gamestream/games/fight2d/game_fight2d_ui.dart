@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/bool_watch_builder_checkbox.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/widgets/nothing.dart';
 
 class GameFight2DUI extends StatelessWidget {
   final GameFight2D game;

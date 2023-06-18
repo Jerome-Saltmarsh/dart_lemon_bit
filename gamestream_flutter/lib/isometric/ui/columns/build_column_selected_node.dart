@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/widgets/build_text.dart';
 
 const _shiftX = 17.0;
 const _shiftY = 20.0;

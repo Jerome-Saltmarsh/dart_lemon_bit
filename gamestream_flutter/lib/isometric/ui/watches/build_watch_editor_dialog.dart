@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/widgets/build_text.dart';
 
 Widget buildWatchEditorDialog(EditorDialog? activeEditorDialog){
   if (activeEditorDialog == null) return GameStyle.Null;
