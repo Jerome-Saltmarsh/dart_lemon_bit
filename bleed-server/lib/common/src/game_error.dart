@@ -58,6 +58,7 @@ enum GameError {
   Character_Select_Not_Required,
   Choose_Card,
   Save_Scene_Failed,
+  Load_Scene_Failed,
 }
 
 GameError parseIndexToGameError(int index) {

@@ -19,12 +19,12 @@ class EditorActions {
       gamestream.isometric.clientState.showMessage('result == null');
       return;
     }
-    final contents = result.files[0].bytes;
-    if (contents == null) {
+    final sceneBytes = result.files[0].bytes;
+    if (sceneBytes == null) {
       gamestream.isometric.clientState.showMessage('contents == null');
       return;
     }
-    gamestream.network.uploadScene(contents);
+    gamestream.isometric.editor.loadScene(sceneBytes);
   }
 
 

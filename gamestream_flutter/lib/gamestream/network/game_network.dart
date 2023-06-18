@@ -147,15 +147,6 @@ class GameNetwork {
     sink.close();
   }
 
-  void uploadScene(List<int> bytes) {
-    final package = Uint8List(bytes.length + 1);
-    package[0] = ClientRequest.Editor_Load_Scene;
-    for (var i = 0; i < bytes.length; i++){
-      package[i + 1] = bytes[i];
-    }
-    gamestream.network.sink.add(package);
-  }
-
   void sendClientRequestInventoryEquip(int index) {
     sendClientRequest(
       ClientRequest.Inventory, "${InventoryRequest.Equip} $index",

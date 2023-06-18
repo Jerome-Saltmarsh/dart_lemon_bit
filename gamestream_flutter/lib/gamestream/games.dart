@@ -12,10 +12,12 @@ class Games {
   late final fight2D = GameFight2D();
   late final cube3D = GameCube3D();
   late final website = GameWebsite();
+  late final GameIsometric isometricEditor;
   late final CaptureTheFlagGame captureTheFlag;
 
   Games(Gamestream gamestream) {
      isometric = GameIsometric(isometric: gamestream.isometric);
      captureTheFlag = CaptureTheFlagGame(gamestream: gamestream);
+     isometricEditor = GameIsometric(isometric: gamestream.isometric);
   }
 }

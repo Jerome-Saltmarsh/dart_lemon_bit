@@ -105,16 +105,6 @@ class WebSocketConnection with ByteReader {
         case ClientRequest.Update:
           handleClientRequestUpdate(args);
           return;
-        case ClientRequest.Editor_Load_Scene:
-          try {
-            final scene = SceneReader.readScene(
-              Uint8List.fromList(args.sublist(1, args.length)),
-            );
-            joinGameEditorScene(scene);
-          } catch (err){
-            sendGameError(GameError.Save_Scene_Failed);
-          }
-          return;
         default:
           break;
       }
@@ -208,10 +198,6 @@ class WebSocketConnection with ByteReader {
         game.setCharacterStateDead(player);
         break;
 
-      // case ClientRequest.GameObject:
-      //   if (!isLocalMachine && game is! GameEditor) return;
-      //   return handleGameObjectRequest(arguments);
-
       case ClientRequest.Isometric_Editor:
         if (game is! IsometricGame)
           return errorInvalidPlayerType();
@@ -224,17 +210,28 @@ class WebSocketConnection with ByteReader {
           return errorInvalidClientRequest();
         }
 
-        final isometricEditorRequest = IsometricEditorRequest.values[isometricEditorRequestIndex];
+        final isometricEditorRequest = IsometricEditorRequest.values[
+          isometricEditorRequestIndex
+        ];
 
         switch (isometricEditorRequest){
           case IsometricEditorRequest.GameObject:
-            handleIsometricEditorGameObjectRequest(arguments);
+            handleIsometricEditorRequestGameObject(arguments);
             break;
           case IsometricEditorRequest.Set_Node:
-            handleNodeRequestSetBlock(arguments);
+            handleIsometricEditorRequestSetNode(arguments);
             break;
-          default:
-            break;
+          case IsometricEditorRequest.Load_Scene:
+            try {
+              final args = arguments.map(int.parse).toList(growable: false);
+              final scene = SceneReader.readScene(
+                Uint8List.fromList(args.sublist(2, args.length)),
+              );
+              joinGameEditorScene(scene);
+            } catch (err) {
+              sendGameError(GameError.Load_Scene_Failed);
+            }
+            return;
         }
         break;
 
@@ -555,7 +552,7 @@ class WebSocketConnection with ByteReader {
 
   }
 
-  void handleNodeRequestSetBlock(List<String> arguments) {
+  void handleIsometricEditorRequestSetNode(List<String> arguments) {
     final player = _player;
     if (player == null) return;
     final game = player.game;
@@ -596,7 +593,7 @@ class WebSocketConnection with ByteReader {
     }
   }
 
-  void handleIsometricEditorGameObjectRequest(List<String> arguments) {
+  void handleIsometricEditorRequestGameObject(List<String> arguments) {
     final player = _player;
     if (player == null) return;
     if (!isLocalMachine && player.game is! GameEditor) return;
