@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/network/functions/detect_connectio
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'enums/operation_status.dart';
+import 'operation_status.dart';
 import 'game.dart';
 import 'games.dart';
 import 'isometric/enums/dialog_type.dart';

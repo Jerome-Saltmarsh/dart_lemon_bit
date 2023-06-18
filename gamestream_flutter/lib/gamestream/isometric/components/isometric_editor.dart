@@ -1,4 +1,5 @@
 
+import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../enums/editor_dialog.dart';
@@ -7,8 +8,17 @@ import '../classes/isometric_gameobject.dart';
 
 
 class IsometricEditor {
-  late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
-  late final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
+
+  final windowEnabledScene = Watch(false);
+  final windowEnabledCanvasSize = Watch(false);
+  final windowEnabledGenerate = WatchBool(false);
+
+  final generateRows = WatchInt(50, min: 5, max: 200);
+  final generateColumns = WatchInt(50, min: 5, max: 200);
+  final generateHeight = WatchInt(8, min: 5, max: 20);
+  final generateOctaves = WatchInt(8, min: 0, max: 100);
+  final generateFrequency = WatchInt(1, min: 0, max: 100);
+
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<IsometricGameObject?>(null);
   final gameObjectSelected = Watch(false);
@@ -29,6 +39,8 @@ class IsometricEditor {
     gameObject.value?.emission_intensity = value;
   });
 
+  late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
+  late final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
   late final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
@@ -474,4 +486,46 @@ class IsometricEditor {
         '${request.index} $message',
       );
 
+  void uploadScene() async {
+    final result = await FilePicker.platform.pickFiles(
+      withData: true,
+      dialogTitle: "Load Scene",
+      type: FileType.custom,
+      allowedExtensions: ['scene'],
+    );
+    if (result == null) {
+      gamestream.isometric.clientState.showMessage('result == null');
+      return;
+    }
+    final sceneBytes = result.files[0].bytes;
+    if (sceneBytes == null) {
+      gamestream.isometric.clientState.showMessage('contents == null');
+      return;
+    }
+    loadScene(sceneBytes);
+  }
+
+
+
+  void toggleWindowEnabledScene(){
+    windowEnabledScene.value = !windowEnabledScene.value;
+  }
+
+  void toggleWindowEnabledCanvasSize(){
+    windowEnabledCanvasSize.value = !windowEnabledCanvasSize.value;
+  }
+
+
+  void exportSceneToJson(){
+
+  }
+
+  void generateScene() =>
+      sendClientRequestEditGenerateScene(
+        rows: generateRows.value,
+        columns: generateColumns.value,
+        height: generateHeight.value,
+        octaves: generateOctaves.value,
+        frequency: generateFrequency.value,
+      );
 }
