@@ -126,6 +126,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         if (isEnemy(heldBy)){
           target = heldBy;
         }
+        if (awayFromFlagOwnSpawn){
+          target = flagOwn;
+        }
         break;
       case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
         target = flagEnemy;
@@ -246,11 +249,15 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     target = flagOwn;
   }
 
-  CaptureTheFlagAIDecision getDecisionOffensive(){
+  CaptureTheFlagAIDecision getDecisionOffensive() {
+
+    if (flagEnemyCapturable)
+      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
+
     if (flagOwnCapturedByEnemy)
       return CaptureTheFlagAIDecision.Capture_Flag_Own;
     if (flagOwnCapturedByAlly) {
-      if (withinRadius(flagOwn, 250)){
+      if (closeToFlagOwn) {
         return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
       }
       return CaptureTheFlagAIDecision.Run_To_Flag_Own;
@@ -265,6 +272,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
     return CaptureTheFlagAIDecision.Idle;
   }
+
+  bool get flagEnemyCapturable => flagEnemy.statusAtBase || flagEnemy.statusDropped;
 
   CaptureTheFlagAIDecision getDecisionDefensive() {
     if (flagEnemyRespawning)
@@ -350,9 +359,10 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return getDistanceSquared(target) < weaponRangeSquared;
   }
 
+  bool get closeToFlagOwn => withinRadius(flagOwn, 250);
   bool get enemyWithinViewRange => enemyWithinRange(viewRange);
   bool get flagOwnCapturedByEnemy => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
-  bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Allie;
+  bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Ally;
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
   bool get awayFromFlagOwnSpawn => !withinRadius(flagSpawnOwn, 100);
   bool get flagOwnRespawning => flagOwn.status == CaptureTheFlagFlagStatus.Respawning;

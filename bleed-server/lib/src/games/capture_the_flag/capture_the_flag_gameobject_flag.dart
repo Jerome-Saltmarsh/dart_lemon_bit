@@ -23,5 +23,8 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject {
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
 
   bool get statusAtBase => status == CaptureTheFlagFlagStatus.At_Base;
+  bool get statusCarriedByEnemy => status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+  bool get statusCarriedByAlly => status == CaptureTheFlagFlagStatus.Carried_By_Ally;
+  bool get statusDropped => status == CaptureTheFlagFlagStatus.Dropped;
   bool get statusRespawning => status == CaptureTheFlagFlagStatus.Respawning;
 }

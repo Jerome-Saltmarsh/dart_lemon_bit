@@ -220,7 +220,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (flag.team == character.team) {
       if (flag.statusAtBase) return;
       flag.heldBy = character;
-      flag.status = CaptureTheFlagFlagStatus.Carried_By_Allie;
+      flag.status = CaptureTheFlagFlagStatus.Carried_By_Ally;
       if (character.target == flag){
         character.target = null;
       }
