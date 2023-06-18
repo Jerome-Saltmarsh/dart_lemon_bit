@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:firestore_client/firestoreService.dart';
@@ -6,23 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
-import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
-import 'package:gamestream_flutter/website/widgets/game_type_column.dart';
-import 'package:gamestream_flutter/website/widgets/region_column.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
-class GameWebsite extends Game {
+class WebsiteGame extends Game {
   static const Icon_Size = 25.0;
   static const Padding = 16.0;
 
@@ -90,28 +87,25 @@ class GameWebsite extends Game {
         buildWatchErrorMessage(),
       ]);
 
-  Widget buildWatchErrorMessage(){
-    return WatchBuilder(gamestream.games.website.error, (String? message){
-      if (message == null) return GameStyle.Null;
-      return buildErrorDialog(message);
-    });
-  }
+  Widget buildWatchErrorMessage() =>
+      WatchBuilder(gamestream.games.website.error, (String? message) {
+        if (message == null) return GameStyle.Null;
+        return buildErrorDialog(message);
+      });
 
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
           : watch(gamestream.network.connectionStatus, buildConnectionStatus);
 
-  Widget buildConnectionStatus(ConnectionStatus connectionStatus) {
-    switch (connectionStatus) {
-      case ConnectionStatus.Connected:
-        return buildPageConnectionStatus(connectionStatus.name);
-      case ConnectionStatus.Connecting:
-        return buildPageConnectionStatus(connectionStatus.name);
-      default:
-        return buildNotConnected();
-    }
-  }
+  Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
+      switch (connectionStatus) {
+        ConnectionStatus.Connected =>
+          buildPageConnectionStatus(connectionStatus.name),
+        ConnectionStatus.Connecting =>
+          buildPageConnectionStatus(connectionStatus.name),
+        _ => buildNotConnected()
+      };
 
   Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
@@ -169,55 +163,6 @@ class GameWebsite extends Game {
 
   void showWebsitePageGames(){
     websitePage.value = WebsitePage.Games;
-  }
-
-  Widget buildPageWebsiteDesktop() {
-    return Center(
-      child: WatchBuilder(websitePage, (websitePage){
-        if (websitePage == WebsitePage.Region){
-          return SelectRegionColumn();
-        }
-        return WatchBuilder(gamestream.network.region, (ConnectionRegion? region) {
-          if (region == null) return SelectRegionColumn();
-
-          final regionButton = onPressed(
-            action: showWebsitePageRegion,
-            child: Container(
-              color: Colors.white12,
-              alignment: Alignment.center,
-              padding: GameStyle.Container_Padding,
-              child: Row(
-                children: [
-                  text(formatEnumName(region.name)),
-                ],
-              ),
-            ),
-          );
-
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 500,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildLogoGameStream(),
-                    // width32,
-                    regionButton,
-                  ],
-                ),
-              ),
-              height32,
-              SelectGameTypeColumn(),
-            ],
-          );
-        }
-        );
-      }),
-    );
-
   }
 
   void openUrlYoutube() =>

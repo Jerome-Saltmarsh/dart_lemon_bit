@@ -3,40 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
-class SelectGameTypeColumn extends StatelessWidget {
-
-  static const gameTypes = [
-    GameType.Combat,
-    GameType.Fight2D,
-    GameType.Capture_The_Flag,
-    // GameType.Aeon,
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return WatchBuilder(
-        gamestream.gameType,
-        (activeGameType) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: gameTypes
-                .map((gameType) => onPressed(
-                  action: () => gamestream.startGameType(gameType),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                            width: 256,
-                            child: GameTypeImage(gameType: gameType)),
-                        text(gameType.name, size: 25),
-                      ],
-                    ),
-                  ),
-                ))
-                .toList()));
-  }
-}
 
 class GameTypeImage extends StatelessWidget {
    final GameType gameType;
