@@ -571,7 +571,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final r = radian(x1: character.x, y1: character.y, x2: x, y2: y);
     var completed = false;
 
-    if (!character.withinDistance(x, y, z, range)) {
+    if (!character.withinRadiusXYZ(x, y, z, range)) {
       x = character.x + getAdjacent(r, range);
       y = character.y + getOpposite(r, range);
     }
@@ -788,7 +788,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!other.active) continue;
       if (!other.hitable) continue;
       if (IsometricCollider.onSameTeam(character, other)) continue;
-      if (!other.withinDistance(
+      if (!other.withinRadiusXYZ(
         performX,
         performY,
         performZ,
@@ -819,7 +819,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       final gameObject = gameObjects[i];
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
-      if (!gameObject.withinDistance(
+      if (!gameObject.withinRadiusXYZ(
         performX,
         performY,
         performZ,
@@ -935,7 +935,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!other.active) continue;
       if (!other.hitable) continue;
       if (IsometricCollider.onSameTeam(character, other)) continue;
-      if (other.withinDistance(
+      if (other.withinRadiusXYZ(
         performX,
         performY,
         performZ,
@@ -946,7 +946,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
-      if (gameObject.withinDistance(
+      if (gameObject.withinRadiusXYZ(
         performX,
         performY,
         performZ,
@@ -1284,7 +1284,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       final gameObject = gameObjects[i];
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
-      if (!gameObject.withinDistance(x, y, z, radius)) continue;
+      if (!gameObject.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
         angle: radian(x1: x, y1: y, x2: gameObject.x, y2: gameObject.y),
         target: gameObject,
@@ -1300,7 +1300,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!character.hitable) continue;
       if (!character.active) continue;
       if (character.dead) continue;
-      if (!character.withinDistance(x, y, z, radius)) continue;
+      if (!character.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
         angle: radian(x1: x, y1: y, x2: character.x, y2: character.y),
         target: character,
@@ -1782,7 +1782,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!projectile.hitable) continue;
       final target = projectile.target;
       if (target != null) {
-        if (projectile.withinRadius(target, projectile.radius)) {
+        if (projectile.withinRadiusPosition(target, projectile.radius)) {
           handleProjectileHit(projectile, target);
         }
         continue;

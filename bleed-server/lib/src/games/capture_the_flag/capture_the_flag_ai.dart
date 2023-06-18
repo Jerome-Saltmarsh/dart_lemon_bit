@@ -99,8 +99,15 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   CaptureTheFlagAIDecision getDecision(){
+
     if (holdingFlagAny)
       return CaptureTheFlagAIDecision.Run_To_Base_Own;
+
+    if (flagOwnDropped && flagOwnWithinRadius(300))
+      return CaptureTheFlagAIDecision.Capture_Flag_Own;
+
+    if (flagEnemyCapturable && flagEnemyWithinRadius(300))
+      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
 
     if (roleOffensive)
       return getDecisionDefensive();
@@ -153,7 +160,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
           target = flagSpawnOwn;
           break;
         }
-        if (withinRadius(flagOwn, 50)) {
+        if (withinRadiusPosition(flagOwn, 50)) {
           idle();
         } else {
           target = flagOwn;
@@ -216,7 +223,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
     if (target == null) return;
 
-    if (withinRadius(target, Node_Size)){
+    if (withinRadiusPosition(target, Node_Size)){
       pathEnd = 0;
       pathIndex = 0;
       destinationX = target.x;
@@ -250,9 +257,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   CaptureTheFlagAIDecision getDecisionOffensive() {
-
-    if (flagEnemyCapturable)
-      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
 
     if (flagOwnCapturedByEnemy)
       return CaptureTheFlagAIDecision.Capture_Flag_Own;
@@ -359,12 +363,12 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return getDistanceSquared(target) < weaponRangeSquared;
   }
 
-  bool get closeToFlagOwn => withinRadius(flagOwn, 250);
+  bool get closeToFlagOwn => withinRadiusPosition(flagOwn, 250);
   bool get enemyWithinViewRange => enemyWithinRange(viewRange);
   bool get flagOwnCapturedByEnemy => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
   bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Ally;
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
-  bool get awayFromFlagOwnSpawn => !withinRadius(flagSpawnOwn, 100);
+  bool get awayFromFlagOwnSpawn => !withinRadiusPosition(flagSpawnOwn, 100);
   bool get flagOwnRespawning => flagOwn.status == CaptureTheFlagFlagStatus.Respawning;
   bool get flagEnemyRespawning => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
   bool get holdingFlagAny => holdingFlagEnemy || holdingFlagOwn;
@@ -396,5 +400,11 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     target = null;
     targetPrevious = null;
   }
+
+  bool flagOwnWithinRadius(double radius) =>
+      flagOwnRespawning ? false : withinRadiusPosition(flagOwn, radius);
+
+  bool flagEnemyWithinRadius(double radius) =>
+      flagEnemyRespawning ? false : withinRadiusPosition(flagEnemy, radius);
 }
 

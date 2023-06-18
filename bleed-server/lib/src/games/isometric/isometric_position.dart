@@ -22,15 +22,10 @@ class IsometricPosition with Position {
      return this;
   }
 
-  bool withinRadius(IsometricPosition position3, double radius){
-    return withinDistance(position3.x, position3.y, position3.z, radius);
-  }
+  bool withinRadiusPosition(IsometricPosition position3, double radius) =>
+      withinRadiusXYZ(position3.x, position3.y, position3.z, radius);
 
-  bool withinRadiusCheap(IsometricPosition position3, double radius) =>
-     ((this.x - position3.x).abs() < radius) &&
-     ((this.y - position3.y).abs() < radius) ;
-
-  bool withinDistance(double x, double y, double z, double radius){
+  bool withinRadiusXYZ(double x, double y, double z, double radius){
     final radiusSquared = pow(radius, 2);
 
     final xDiffSquared = pow(this.x - x, 2);
@@ -44,6 +39,10 @@ class IsometricPosition with Position {
 
     return xDiffSquared + yDiffSquared + zDiffSquared <= radiusSquared;
   }
+
+  bool withinRadiusCheap(IsometricPosition position3, double radius) =>
+     ((this.x - position3.x).abs() < radius) &&
+     ((this.y - position3.y).abs() < radius) ;
 
   static bool compare(IsometricPosition a, IsometricPosition b){
     final aRowColumn = a.indexRow + a.indexColumn;

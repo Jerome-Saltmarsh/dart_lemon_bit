@@ -130,7 +130,7 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
       }
 
       if (target is IsometricAI && player.targetIsAlly) {
-        if (player.withinRadius(target, 100)) {
+        if (player.withinRadiusPosition(target, 100)) {
           if (!target.deadOrBusy) {
             target.face(player);
           }
