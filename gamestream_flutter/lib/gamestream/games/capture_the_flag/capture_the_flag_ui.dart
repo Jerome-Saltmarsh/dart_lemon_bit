@@ -73,7 +73,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                                         ? Colors.white12
                                         : null,
                                     padding: const EdgeInsets.all(8),
-                                    child: text(e.name))))
+                                    child: buildText(e.name))))
                             .toList(growable: false),
                       )
                     ],
@@ -91,9 +91,9 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
           alignment: Alignment.center,
           child: Column(
             children: [
-              text(value.name),
+              buildText(value.name),
               WatchBuilder(nextGameCountDown, (nextGameCountDown) =>
-                  text("NEXT GAME STARTS IN $nextGameCountDown")),
+                  buildText("NEXT GAME STARTS IN $nextGameCountDown")),
             ],
           ),
         ),
@@ -106,8 +106,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildWindowFlagStatus() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      WatchBuilder(flagRedStatus, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
-      WatchBuilder(flagBlueStatus, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+      WatchBuilder(flagRedStatus, (status) => buildText("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+      WatchBuilder(flagBlueStatus, (status) => buildText("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
     ],
   );
 
@@ -115,9 +115,9 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          text("SCORE"),
-          WatchBuilder(scoreRed, (score) => text("RED: $score")),
-          WatchBuilder(scoreBlue, (score) => text("BlUE: $score")),
+          buildText("SCORE"),
+          WatchBuilder(scoreRed, (score) => buildText("RED: $score")),
+          WatchBuilder(scoreBlue, (score) => buildText("BlUE: $score")),
         ],
       ),
     );
@@ -134,7 +134,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 child: Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(bottom: 12),
-                    child: text(characterClass.name, size: 20)),
+                    child: buildText(characterClass.name, size: 20)),
                 action: () => selectCharacterClass(characterClass)))
                 .toList(growable: false),
           ),
@@ -277,7 +277,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     action: () {
 
                     },
-                    child: text(ItemType.getName(e.type))
+                    child: buildText(ItemType.getName(e.type))
                 );
               }).toList(growable: false),
             ),
@@ -294,17 +294,17 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
-              WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
-              WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
-              WatchBuilder(characterSelectedPathIndex, (pathIndex) => text("path-index: $pathIndex")),
-              WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-end: $pathEnd")),
+              WatchBuilder(characterSelectedX, (x) => buildText("x: ${x.toInt()}")),
+              WatchBuilder(characterSelectedY, (y) => buildText("y: ${y.toInt()}")),
+              WatchBuilder(characterSelectedZ, (z) => buildText("z: ${z.toInt()}")),
+              WatchBuilder(characterSelectedPathIndex, (pathIndex) => buildText("path-index: $pathIndex")),
+              WatchBuilder(characterSelectedPathEnd, (pathEnd) => buildText("path-end: $pathEnd")),
               buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
               WatchBuilder(characterSelectedIsAI, (isAI) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (isAI)
-                    WatchBuilder(characterSelectedAIDecision, (aiDecision) => text("ai-decision: ${aiDecision.name}")),
+                    WatchBuilder(characterSelectedAIDecision, (aiDecision) => buildText("ai-decision: ${aiDecision.name}")),
                 ],
               )),
               const SizedBox(height: 1,),
@@ -316,15 +316,15 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text("TARGET"),
-                      WatchBuilder(characterSelectedTargetType, (type) => text("type: $type")),
-                      WatchBuilder(characterSelectedTargetX, (x) => text("x: ${x.toInt()}")),
-                      WatchBuilder(characterSelectedTargetY, (y) => text("y: ${y.toInt()}")),
-                      WatchBuilder(characterSelectedTargetZ, (z) => text("z: ${z.toInt()}")),
+                      buildText("TARGET"),
+                      WatchBuilder(characterSelectedTargetType, (type) => buildText("type: $type")),
+                      WatchBuilder(characterSelectedTargetX, (x) => buildText("x: ${x.toInt()}")),
+                      WatchBuilder(characterSelectedTargetY, (y) => buildText("y: ${y.toInt()}")),
+                      WatchBuilder(characterSelectedTargetZ, (z) => buildText("z: ${z.toInt()}")),
                       WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          text("render-line"),
+                          buildText("render-line"),
                           onPressed(
                               action: characterSelectedTargetRenderLine.toggle,
                               child: GSCheckBox(value)),
@@ -344,7 +344,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       child: watch(watchBool, (value)=> Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text(title),
+            buildText(title),
             GSCheckBox(value),
           ],
         ),

@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 Widget buildColumnQuests(List<Quest> quests) =>
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: quests.isEmpty ? [text("No active quests")] : quests.map(buildQuest).toList(),
+      children: quests.isEmpty ? [buildText("No active quests")] : quests.map(buildQuest).toList(),
     );
 
 Widget buildQuest(Quest quest) =>
@@ -15,11 +15,11 @@ Widget buildQuest(Quest quest) =>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          text(questName[quest], bold: true),
+          buildText(questName[quest], bold: true),
           height8,
           Container(
               constraints: BoxConstraints(maxWidth: 600),
-              child: text(questDescription[quest])),
+              child: buildText(questDescription[quest])),
         ],
       ),
     );

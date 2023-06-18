@@ -30,12 +30,12 @@ class GameIsometricDebug {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            watch(gamestream.serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${IsometricClientState.formatBytes(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
-                            Refresh(() =>  text(
+                            watch(gamestream.serverResponseReader.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${IsometricClientState.formatBytes(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
+                            Refresh(() =>  buildText(
                                 "connection-duration: ${gamestream.isometric..clientState.formattedConnectionDuration}\n"
                                 // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
                                 // "onscreen-nodes: ${gamestream.isometricEngine.nodes.onscreenNodes}\n"
@@ -72,32 +72,32 @@ class GameIsometricDebug {
                                     'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
                                     "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
-                            Refresh(() => text('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
-                            Refresh(() => text('engine-render-batches: ${engine.batchesRendered}')),
-                            Refresh(() => text('engine-render-batch-1: ${engine.batches1Rendered}')),
-                            Refresh(() => text('engine-render-batch-2: ${engine.batches2Rendered}')),
-                            Refresh(() => text('engine-render-batch-4: ${engine.batches4Rendered}')),
-                            Refresh(() => text('engine-render-batch-8: ${engine.batches8Rendered}')),
-                            Refresh(() => text('engine-render-batch-16: ${engine.batches16Rendered}')),
-                            Refresh(() => text('engine-render-batch-32: ${engine.batches32Rendered}')),
-                            Refresh(() => text('engine-render-batch-64: ${engine.batches64Rendered}')),
-                            Refresh(() => text('engine-render-batch-128: ${engine.batches128Rendered}')),
-                            Refresh(() => text('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
-                            Refresh(() => text('engine-frame: ${engine.paintFrame}')),
-                            watch(gamestream.serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
-                            watch(gamestream.isometric.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
-                            watch(gamestream.gameType, (GameType value) => text("game-type: ${value.name}")),
-                            watch(engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
-                            watch(gamestream.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
-                            watch(engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
-                            watch(engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
+                            Refresh(() => buildText('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
+                            Refresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
+                            Refresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
+                            Refresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
+                            Refresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
+                            Refresh(() => buildText('engine-frame: ${engine.paintFrame}')),
+                            watch(gamestream.serverResponseReader.updateFrame, (t) => buildText("update-frame: $t")),
+                            watch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText("interpolating: $interpolating", onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
+                            watch(gamestream.gameType, (GameType value) => buildText("game-type: ${value.name}")),
+                            watch(engine.deviceType, (int deviceType) => buildText("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
+                            watch(gamestream.io.inputMode, (int inputMode) => buildText("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
+                            watch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText("mouse-left-down: $mouseLeftDown")),
+                            watch(engine.mouseRightDown, (bool rightDown) => buildText("mouse-right-down: $rightDown")),
                             // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                           ],
                         ),
                       ),
                     ),
                     height24,
-                    text("close x", onPressed: () => gamestream.isometric.clientState.debugMode.value = false, bold: true),
+                    buildText("close x", onPressed: () => gamestream.isometric.clientState.debugMode.value = false, bold: true),
                   ],
                 ),
               )),
@@ -126,7 +126,7 @@ Future<double> getFutureDouble(double initial) async =>
                   autofocus: true,
                 ),
               ),
-              text("Enter", onPressed: () =>
+              buildText("Enter", onPressed: () =>
                   Navigator.pop(
                       context,
                       double.tryParse(controller.text) ?? initial
@@ -146,7 +146,7 @@ Widget buildColumnLightingControls(){
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          text("Override Color"),
+          buildText("Override Color"),
           watch(gamestream.isometric.clientState.overrideColor, (bool overrideColor){
             return Checkbox(value: overrideColor, onChanged: (bool? value){
               if (value == null) return;

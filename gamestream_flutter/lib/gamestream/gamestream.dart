@@ -74,7 +74,7 @@ class Gamestream {
 
          final controller = ScaffoldMessenger.of(engine.buildContext).showSnackBar(
            SnackBar(
-             content: text(error.name),
+             content: buildText(error.name),
              duration: const Duration(milliseconds: 500),
            ),
          );

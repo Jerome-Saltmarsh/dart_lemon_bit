@@ -63,7 +63,7 @@ class GameIsometricUI {
   }) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          text(title, size: 20, color: Colors.white70),
+          buildText(title, size: 20, color: Colors.white70),
           child,
         ],
       );
@@ -86,7 +86,7 @@ class GameIsometricUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("SOUND", size: 20, color: Colors.white70),
+                    buildText("SOUND", size: 20, color: Colors.white70),
                     watch(gamestream.audio.enabledSound, buildIconCheckbox),
                   ],
                 ),
@@ -99,7 +99,7 @@ class GameIsometricUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("MUSIC", size: 20, color: Colors.white70),
+                    buildText("MUSIC", size: 20, color: Colors.white70),
                     watch(gamestream.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
                   ],
                 ),
@@ -112,7 +112,7 @@ class GameIsometricUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("FULLSCREEN", size: 20, color: Colors.white70),
+                    buildText("FULLSCREEN", size: 20, color: Colors.white70),
                     watch(engine.fullScreen, buildIconCheckbox),
                   ],
                 ),
@@ -125,7 +125,7 @@ class GameIsometricUI {
             height24,
             onPressed(
               action: gamestream.network.disconnect,
-              child: text("DISCONNECT", size: 25),
+              child: buildText("DISCONNECT", size: 25),
             ),
             height24,
           ],
@@ -141,14 +141,14 @@ class GameIsometricUI {
       width: 300,
       child: Column(
         children: [
-          text("Light-Settings", bold: true),
+          buildText("Light-Settings", bold: true),
           height8,
           onPressed(
               action: gamestream.isometric.clientState.toggleDynamicShadows,
-              child: Refresh(() => text('dynamic-shadows-enabled: ${gamestream.isometric.clientState.dynamicShadows}'))
+              child: Refresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.clientState.dynamicShadows}'))
           ),
           onPressed(
-              child: Refresh(() => text('blend-mode: ${engine.bufferBlendMode.name}')),
+              child: Refresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
               action: (){
                 final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
                 final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
@@ -159,11 +159,11 @@ class GameIsometricUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              text("<-", onPressed: (){
+              buildText("<-", onPressed: (){
                 gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length - 1);
               }),
-              Refresh(() => text('light-size: ${gamestream.isometric.nodes.interpolation_length}')),
-              text("->", onPressed: (){
+              Refresh(() => buildText('light-size: ${gamestream.isometric.nodes.interpolation_length}')),
+              buildText("->", onPressed: (){
                 gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length + 1);
               }),
             ],
@@ -171,13 +171,13 @@ class GameIsometricUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              text("<-", onPressed: (){
+              buildText("<-", onPressed: (){
                 final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
                 final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
                 gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
               }),
-              watch(gamestream.isometric.nodes.interpolation_ease_type, text),
-              text("->", onPressed: (){
+              watch(gamestream.isometric.nodes.interpolation_ease_type, buildText),
+              buildText("->", onPressed: (){
                 final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
                 final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
                 gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
@@ -186,7 +186,7 @@ class GameIsometricUI {
           ),
 
           height16,
-          text("ambient-color"),
+          buildText("ambient-color"),
           ColorPicker(
             portraitOnly: true,
             pickerColor: HSVColor.fromAHSV(
@@ -261,7 +261,7 @@ class GameIsometricUI {
           child: Container(
               alignment: Alignment.center,
               width: engine.screen.width,
-              child: text("Waiting for more players to join")),
+              child: buildText("Waiting for more players to join")),
         ),
       );
     });
@@ -297,7 +297,7 @@ class GameIsometricUI {
       child: Container(
         padding: const EdgeInsets.all(10),
         color: Colors.black12,
-        child: text(message, onPressed: gamestream.isometric.clientState.messageClear),),
+        child: buildText(message, onPressed: gamestream.isometric.clientState.messageClear),),
     );
   }
 
@@ -308,7 +308,7 @@ class GameIsometricUI {
             child: AnimatedOpacity(
               opacity: areaTypeVisible ? 1.0 : 0.0,
               duration: const Duration(seconds: 1),
-              child: text(AreaType.getName(areaType), size: 30),
+              child: buildText(AreaType.getName(areaType), size: 30),
             ),
           );
         });
@@ -350,17 +350,17 @@ class GameIsometricUI {
       child: watch(
           gamestream.isometric.clientState.rendersSinceUpdate,
               (int frames) =>
-              text("Warning: No message received from server $frames")));
+              buildText("Warning: No message received from server $frames")));
 
   static Positioned buildWatchInterpolation() => Positioned(
     bottom: 0,
     left: 0,
     child: watch(gamestream.isometric.player.interpolating, (bool value) {
       if (!value)
-        return text("Interpolation Off",
+        return buildText("Interpolation Off",
             onPressed: () => gamestream.isometric.player.interpolating.value = true);
       return watch(gamestream.isometric.clientState.rendersSinceUpdate, (int frames) {
-        return text("Frames: $frames",
+        return buildText("Frames: $frames",
             onPressed: () => gamestream.isometric.player.interpolating.value = false);
       });
     }),
@@ -372,7 +372,7 @@ class GameIsometricUI {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           watch(gamestream.isometric.server.highScore, (int highScore){
-            return text('WORLD RECORD: $highScore');
+            return buildText('WORLD RECORD: $highScore');
           }),
           height8,
           watch(gamestream.isometric.server.playerScoresReads, (_) => Container(
@@ -405,8 +405,8 @@ class GameIsometricUI {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text(playerScore.name, bold: playerScore.id == gamestream.isometric.player.id.value),
-            text(playerScore.credits, bold: playerScore.id == gamestream.isometric.player.id.value),
+            buildText(playerScore.name, bold: playerScore.id == gamestream.isometric.player.id.value),
+            buildText(playerScore.credits, bold: playerScore.id == gamestream.isometric.player.id.value),
           ],
         ),
       );
@@ -563,7 +563,7 @@ class GameIsometricUI {
             height: 64,
             child: buildAtlasItemType(ItemType.Resource_Credit)),
         width4,
-        watch(gamestream.isometric.clientState.playerCreditsAnimation, (value) => text(value, size: 25)),
+        watch(gamestream.isometric.clientState.playerCreditsAnimation, (value) => buildText(value, size: 25)),
       ],
     );
   }
@@ -604,7 +604,7 @@ class GameIsometricUI {
           //   color: Colors.black26,
           //   child: watch(buffDuration, text),
           // ),
-          text(ItemType.getName(buffType)),
+          buildText(ItemType.getName(buffType)),
         ],
       ),
     );
@@ -819,7 +819,7 @@ class GameIsometricUI {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              text('YOU DIED', size: 30),
+              buildText('YOU DIED', size: 30),
               height8,
               container(
                 alignment: Alignment.center,
@@ -839,11 +839,11 @@ class GameIsometricUI {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       WatchBuilder(gamestream.isometric.server.hours, (int hours){
-        return text(padZero(hours), size: 22);
+        return buildText(padZero(hours), size: 22);
       }),
-      text(":", size: 22),
+      buildText(":", size: 22),
       WatchBuilder(gamestream.isometric.server.minutes, (int minutes){
-        return text(padZero(minutes), size: 22);
+        return buildText(padZero(minutes), size: 22);
       }),
     ],
   );

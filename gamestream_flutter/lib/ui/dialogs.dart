@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../game_widgets.dart';
@@ -23,9 +24,9 @@ Widget buildDialogAccount(){
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                border(child: text("ACCOUNT")),
+                border(child: buildText("ACCOUNT")),
                 height16,
-                text("Authentication Required"),
+                buildText("Authentication Required"),
               ],
             )
         ),
@@ -42,7 +43,7 @@ Widget buildDialogAccount(){
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         height32,
-        text("MY ACCOUNT",
+        buildText("MY ACCOUNT",
             size: 30,
             weight: bold,
             color: GameIsometricColors.white85
@@ -57,7 +58,7 @@ Widget buildDialogAccount(){
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // buildIconEdit(),
-                    text(account.publicName,
+                    buildText(account.publicName,
                         color: GameIsometricColors.white60, size: 16)
                   ],
                 )),
@@ -84,13 +85,13 @@ Widget _buildSubscriptionPanel(Account account){
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          text("PREMIUM", bold: true, color: GameIsometricColors.white80),
+          buildText("PREMIUM", bold: true, color: GameIsometricColors.white80),
           if (!account.subscriptionActive) widgets.textReactivateSubscription,
           if (account.subscriptionActive)
             panelDark(
               expand: false,
               child: MouseOver(builder: (hovering) {
-                return text("Cancel",
+                return buildText("Cancel",
                     color: hovering ? GameIsometricColors.orange : GameIsometricColors.white80,
                     onPressed: gamestream.games.website.showDialogConfirmCancelSubscription,
                 );
@@ -101,7 +102,7 @@ Widget _buildSubscriptionPanel(Account account){
       height16,
       _buildRow(
           "Status",
-          text(formatSubscriptionStatus(account.subscriptionStatus),
+          buildText(formatSubscriptionStatus(account.subscriptionStatus),
               color: getSubscriptionStatusColor(account.subscriptionStatus)
           )
       ),
@@ -137,7 +138,7 @@ Widget _buildRow(String title, dynamic value){
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      text(title, color: GameIsometricColors.white85),
+      buildText(title, color: GameIsometricColors.white85),
       Container(
         height: 40,
           alignment: Alignment.centerRight,
@@ -147,7 +148,7 @@ Widget _buildRow(String title, dynamic value){
             color: GameIsometricColors.black382,
             borderRadius: borderRadius4,
           ),
-          child: value is Widget ? value : text(value, color: GameIsometricColors.white60, size: 16)),
+          child: value is Widget ? value : buildText(value, color: GameIsometricColors.white60, size: 16)),
     ],
   );
 }
@@ -214,7 +215,7 @@ Widget buildDialogSmall({required Widget child, Widget? bottomLeft, Widget? bott
 }
 
 Widget buildDialogTitle(String value){
-  return text(value.toUpperCase(), size: 20, color: GameIsometricColors.white85);
+  return buildText(value.toUpperCase(), size: 20, color: GameIsometricColors.white85);
 }
 
 Widget buildDialogSubscriptionCancelled(){
@@ -267,19 +268,19 @@ Widget buildDialogWelcome2(){
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text("Many of our games can be played for free.", color: GameIsometricColors.white80),
+                  buildText("Many of our games can be played for free.", color: GameIsometricColors.white80),
                   height16,
-                  text("A premium membership costs \$9.99 per month", color: GameIsometricColors.white80),
+                  buildText("A premium membership costs \$9.99 per month", color: GameIsometricColors.white80),
                   height8,
-                  text("and will unlock every game in our library", color: GameIsometricColors.white80),
+                  buildText("and will unlock every game in our library", color: GameIsometricColors.white80),
                 ],
               )),
         ],
       ),
-      bottomRight: button(text("PREMIUM MEMBERSHIP", color: GameIsometricColors.green), gamestream.accountService.openStripeCheckout, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green),
+      bottomRight: button(buildText("PREMIUM MEMBERSHIP", color: GameIsometricColors.green), gamestream.accountService.openStripeCheckout, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green),
       bottomLeft: Container(
           padding: padding8,
-          child: text("Perhaps Later", onPressed: gamestream.games.website.showDialogGames, color: GameIsometricColors.white80)),
+          child: buildText("Perhaps Later", onPressed: gamestream.games.website.showDialogGames, color: GameIsometricColors.white80)),
   );
 }
 
@@ -333,7 +334,7 @@ Widget buildDialogMessage(dynamic message, {Widget? bottomRight}) {
   return buildDialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightSmall,
-      child: Center(child: message is Widget ? message : text(message, color: GameIsometricColors.white95)),
+      child: Center(child: message is Widget ? message : buildText(message, color: GameIsometricColors.white95)),
       bottomRight: bottomRight ?? widgets.buttonOkay
   );
 }
@@ -342,9 +343,9 @@ Widget buildDialogConfirmCancelSubscription(){
   return buildDialog(
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
-    child: Center(child: text("Cancel premium subscription?", color: GameIsometricColors.white90)),
-    bottomLeft: button(text("YES", color: GameIsometricColors.red, bold: false), gamestream.accountService.cancelSubscription, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.none, width: 100),
-    bottomRight: button(text("NO", color: GameIsometricColors.green, bold: true), gamestream.games.website.showDialogAccount, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green, width: 100, borderWidth: 2),
+    child: Center(child: buildText("Cancel premium subscription?", color: GameIsometricColors.white90)),
+    bottomLeft: button(buildText("YES", color: GameIsometricColors.red, bold: false), gamestream.accountService.cancelSubscription, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.none, width: 100),
+    bottomRight: button(buildText("NO", color: GameIsometricColors.green, bold: true), gamestream.games.website.showDialogAccount, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green, width: 100, borderWidth: 2),
   );
 }
 
@@ -356,7 +357,7 @@ Widget buildButton(String value, Function action, {bool underline = false}){
   return Container(
     padding: padding16,
     child: MouseOver(builder: (hovering){
-      return text(value, color: hovering ? GameIsometricColors.white80 : GameIsometricColors.white618, underline: underline, onPressed: action);
+      return buildText(value, color: hovering ? GameIsometricColors.white80 : GameIsometricColors.white618, underline: underline, onPressed: action);
     }),
   );
 }
@@ -365,7 +366,7 @@ Widget buildButtonPrimary(String value, Function action){
   return Container(
     padding: padding16,
     child: MouseOver(builder: (hovering){
-      return text(value, color: GameIsometricColors.green, underline: true, onPressed: action, bold: true);
+      return buildText(value, color: GameIsometricColors.green, underline: true, onPressed: action, bold: true);
     }),
   );
 }

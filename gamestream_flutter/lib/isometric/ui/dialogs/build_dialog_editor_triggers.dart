@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 
 Widget buildDialogEditorTriggers(){
    return Container(
@@ -10,10 +11,10 @@ Widget buildDialogEditorTriggers(){
          mainAxisAlignment: MainAxisAlignment.start,
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
-           text("Edit Triggers"),
-           text("ON_COLLISION_BETWEEN"),
-           text("ON_COLLISION_BETWEEN_GAMEOBJECT_AND_ALL_EXCEPT_GAMEOBJECTS"),
-           text("ON_COLLISION_BETWEEN_GAMEOBJECT_AND_GAMEOBJECT"),
+           buildText("Edit Triggers"),
+           buildText("ON_COLLISION_BETWEEN"),
+           buildText("ON_COLLISION_BETWEEN_GAMEOBJECT_AND_ALL_EXCEPT_GAMEOBJECTS"),
+           buildText("ON_COLLISION_BETWEEN_GAMEOBJECT_AND_GAMEOBJECT"),
          ],
        ),
      ),

@@ -33,7 +33,7 @@ extension SurvivalGameUI on SurvivalGame {
               Positioned(
                 left: 5,
                 top: 5,
-                child: text(mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
+                child: buildText(mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
               ),
               if (beltItemType != ItemType.Empty)
                 Container(
@@ -51,7 +51,7 @@ extension SurvivalGameUI on SurvivalGame {
                     right: 5,
                     bottom: 5,
                     child: buildInventoryAware(
-                        builder: () => text(
+                        builder: () => buildText(
                           gamestream.isometric.server.getWatchBeltTypeWatchQuantity(watchBeltType).value,
                           italic: true,
                           color: Colors.white70,
@@ -143,7 +143,7 @@ extension SurvivalGameUI on SurvivalGame {
             );
           },
         ),
-        Positioned(top: 5, left: 5, child: text("R"))
+        Positioned(top: 5, left: 5, child: buildText("R"))
       ],
     );
   }
@@ -309,7 +309,7 @@ extension SurvivalGameUI on SurvivalGame {
                   itemType ?? gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex),
                 ),
                 if (itemQuantity != null && itemQuantity > 1)
-                  Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
+                  Positioned(child: buildText(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
               ],
             ),
           ),
@@ -411,14 +411,14 @@ extension SurvivalGameUI on SurvivalGame {
       Positioned(
         left: 5,
         top: 5,
-        child: text(hotKey),
+        child: buildText(hotKey),
       ),
       if (ItemType.getConsumeType(itemType) != ItemType.Empty)
         Positioned(
             right: 5,
             bottom: 5,
             child: buildInventoryAware(
-                builder: () => text(
+                builder: () => buildText(
                   gamestream.isometric.server.getItemTypeConsumesRemaining(itemType),
                   italic: true,
                   color: Colors.white70,
@@ -462,7 +462,7 @@ extension SurvivalGameUI on SurvivalGame {
                             child: GameIsometricUI.buildAtlasIconType(IconType.Heart)
                         ),
                       ),
-                      text(
+                      buildText(
                           "$currentHealth / ${padSpace(maxHealth, length: 3)}",
                           color: GameStyle.Player_Stats_Text_Color
                       ),
@@ -509,7 +509,7 @@ extension SurvivalGameUI on SurvivalGame {
                     child: FittedBox(
                         child:
                         GameIsometricUI.buildAtlasIconType(IconType.Damage))),
-                text(damage, color: GameStyle.Player_Stats_Text_Color),
+                buildText(damage, color: GameStyle.Player_Stats_Text_Color),
               ],
             ),
           );
@@ -544,7 +544,7 @@ extension SurvivalGameUI on SurvivalGame {
                           child: FittedBox(
                               child:
                               GameIsometricUI.buildAtlasIconType(IconType.Energy))),
-                      text("$energy / ${padSpace(energyMax, length: 3)}",
+                      buildText("$energy / ${padSpace(energyMax, length: 3)}",
                           color: GameStyle.Player_Stats_Text_Color),
                     ],
                   ),

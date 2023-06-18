@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 
 import '../constants/colors.dart';
 import '../widgets/build_container.dart';
@@ -46,7 +47,7 @@ Widget buildGameDialog(GameDialog? gameDialog) =>
 Widget buildButtonCloseGameDialog() =>
     container(
       toolTip: "(Press T)",
-      child: text("x"),
+      child: buildText("x"),
       alignment: Alignment.center,
       action: actionCloseGameDialog,
     );

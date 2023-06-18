@@ -16,14 +16,14 @@ Widget buildControlSceneName(){
           color: brownDark,
           child: Column(
             children: [
-              text("Enter a name"),
+              buildText("Enter a name"),
               buildTextFieldName(),
               // buildButtonSubmit(),
             ],
           ),
         );
       }
-      return text(sceneName);
+      return buildText(sceneName);
   });
 }
 

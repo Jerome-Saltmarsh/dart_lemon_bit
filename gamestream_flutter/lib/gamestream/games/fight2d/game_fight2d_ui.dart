@@ -34,7 +34,7 @@ class GameFight2DUI extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          text("TUTORIAL", size: 20, color: Colors.white70),
+                          buildText("TUTORIAL", size: 20, color: Colors.white70),
                           watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                         ],
                       ),
@@ -49,7 +49,7 @@ class GameFight2DUI extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("EDIT", size: 20, color: Colors.white70),
+                            buildText("EDIT", size: 20, color: Colors.white70),
                             BoolWatchBuilderCheckBox(watchBool: game.player.edit),
                           ],
                         ),
@@ -64,7 +64,7 @@ class GameFight2DUI extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("DEBUG", size: 20, color: Colors.white70),
+                            buildText("DEBUG", size: 20, color: Colors.white70),
                             watch(game.renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                           ],
                         ),
@@ -91,7 +91,7 @@ class GameFight2DUI extends StatelessWidget {
         children: [
           onPressed(
               action: tutorialVisible.setFalse,
-              child: text("CLOSE"),
+              child: buildText("CLOSE"),
           ),
           gap,
           Row(
@@ -139,6 +139,6 @@ class GameFight2DUI extends StatelessWidget {
         height: 20,
         alignment: Alignment.center,
         color: Colors.white12,
-        child: text(value, color: Colors.white70));
+        child: buildText(value, color: Colors.white70));
   }
 }

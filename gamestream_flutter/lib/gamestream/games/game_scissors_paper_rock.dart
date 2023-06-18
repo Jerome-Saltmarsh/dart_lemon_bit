@@ -76,7 +76,7 @@ class GameScissorsPaperRock {
   }
 
   static Widget buildUI(BuildContext context){
-    return onPressed(child: text("EXIT"), action: gamestream.network.disconnect);
+    return onPressed(child: buildText("EXIT"), action: gamestream.network.disconnect);
   }
 }
 

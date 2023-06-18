@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 import 'package:golden_ratio/constants.dart';
 
 
@@ -41,7 +42,7 @@ Widget buildControlPlayerHealth() {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${health.toInt()} | ${gamestream.isometric.server.playerMaxHealth}'),
+              child: buildText('${health.toInt()} | ${gamestream.isometric.server.playerMaxHealth}'),
             ),
           ],
         ),

@@ -17,15 +17,15 @@ class GameInventoryUI {
      final percentage = getPercentageDifference(itemTypeValue, equippedTypeValue);
      final changeColor = getValueColor(percentage, swap: swap);
      return buildTableRow(
-         text(key, color: changeColor),
+         buildText(key, color: changeColor),
          Row(
            mainAxisAlignment: MainAxisAlignment.end,
            children: [
-            text('${percentage > 0 ? "+" : ""}${formatPercentage(percentage)}', color: changeColor, italic: true),
+            buildText('${percentage > 0 ? "+" : ""}${formatPercentage(percentage)}', color: changeColor, italic: true),
             Container(
                 width: 150,
                 alignment: Alignment.centerRight,
-                child: text('${equippedTypeValue.toInt()} -> ${padSpace(itemTypeValue.toInt(), length: 3)}', color: Colors.white70)),
+                child: buildText('${equippedTypeValue.toInt()} -> ${padSpace(itemTypeValue.toInt(), length: 3)}', color: Colors.white70)),
           ],
          )
      );
@@ -46,8 +46,8 @@ class GameInventoryUI {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          key is Widget ? key : text(key, color: color, bold: true),
-          value is Widget ? value : text(value, color: color),
+          key is Widget ? key : buildText(key, color: color, bold: true),
+          value is Widget ? value : buildText(value, color: color),
         ],
       ),
     );

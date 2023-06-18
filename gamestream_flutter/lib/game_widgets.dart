@@ -7,6 +7,7 @@ import 'package:lemon_watch/src.dart';
 import 'game_style.dart';
 import 'instances/engine.dart';
 import 'ui/style.dart';
+import 'widgets/build_text.dart';
 
 class _FlutterKitConfiguration {
   Color defaultTextColor = Colors.white;
@@ -24,47 +25,6 @@ Widget buildWatch<T>(Watch<T> watch, Widget Function(T t) builder){
 }
 
 
-Widget text(dynamic value, {
-    num? size,
-    Function? onPressed,
-    TextDecoration decoration = TextDecoration.none,
-    FontWeight weight = FontWeight.normal,
-    bool italic = false,
-    bool bold = false,
-    bool underline = false,
-    Color? color,
-    String? family,
-    TextAlign? align,
-    String Function(dynamic t)? format,
-    double height = 1.0,
-}) {
-  final _text = Text(
-
-      value.toString(),
-      textAlign: align,
-      style: TextStyle(
-          color: color ?? flutterKitConfiguration.defaultTextColor,
-          fontSize: size?.toDouble() ?? flutterKitConfiguration.defaultTextFontSize,
-          decoration: underline ? TextDecoration.underline : decoration,
-          fontWeight: bold ? FontWeight.bold : weight,
-          fontFamily: family,
-          fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-          height: height
-      )
-  );
-
-  if (onPressed == null) return _text;
-
-  return MouseRegion(
-    cursor: SystemMouseCursors.click,
-    child: GestureDetector(
-      child: _text,
-      onTap: (){
-        onPressed();
-      },
-    ),
-  );
-}
 
 Widget border({
   required Widget child,
@@ -104,7 +64,7 @@ Widget button(dynamic value, Function onPressed, {
         return border(
             radius: borderRadius,
             width: borderWidth,
-            child: value is Widget ? value : text(value, size: fontSize, bold: mouseOver && boldOnHover),
+            child: value is Widget ? value : buildText(value, size: fontSize, bold: mouseOver && boldOnHover),
             color: mouseOver ? borderColorMouseOver : borderColor,
             fillColor: mouseOver ? fillColorMouseOver : fillColor,
         );
@@ -351,7 +311,7 @@ Widget buildWatchBool(Watch<bool> watch, Widget Function() builder, [bool match 
 
 Widget textBuilder(Watch watch){
   return WatchBuilder(watch, (dynamic value){
-    return text(value);
+    return buildText(value);
   });
 }
 
@@ -367,15 +327,15 @@ Widget loadingText(String value, Function onPressed){
      frame = (frame + 1) % 4;
      switch(frame){
        case 0:
-         return text('-- $value --', size: FontSize.Large, bold: true, onPressed: onPressed);
+         return buildText('-- $value --', size: FontSize.Large, bold: true, onPressed: onPressed);
        case 1:
-         return text('/- $value -\\', size: FontSize.Large, bold: true, onPressed: onPressed);
+         return buildText('/- $value -\\', size: FontSize.Large, bold: true, onPressed: onPressed);
        case 2:
-         return text('|- $value -|', size: FontSize.Large, bold: true, onPressed: onPressed);
+         return buildText('|- $value -|', size: FontSize.Large, bold: true, onPressed: onPressed);
        case 3:
-         return text('\\- $value -/', size: FontSize.Large, bold: true, onPressed: onPressed);
+         return buildText('\\- $value -/', size: FontSize.Large, bold: true, onPressed: onPressed);
        default:
-          return text(value);
+          return buildText(value);
      }
   }, milliseconds: 100);
 }
@@ -397,7 +357,7 @@ Widget buildTextButton(
       Color? colorRegular,
     }) =>
     MouseOver(builder: (bool mouseOver) =>
-        text(value,
+        buildText(value,
             onPressed: action,
             size: size,
             color: mouseOver ? colorMouseOver ?? Colors.white70 : colorRegular ?? Colors.white54

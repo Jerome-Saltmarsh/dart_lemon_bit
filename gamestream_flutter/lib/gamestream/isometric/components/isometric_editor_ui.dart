@@ -203,8 +203,8 @@ extension IsometricEditorUI on IsometricEditor {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                text("CANVAS SIZE"),
-                text("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
+                buildText("CANVAS SIZE"),
+                buildText("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
               ],
             ),
             // watch(GameNodes.totalRows)
@@ -327,8 +327,8 @@ extension IsometricEditorUI on IsometricEditor {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                text("Generate"),
-                text("Close", onPressed: gamestream.isometric.editor.windowEnabledGenerate.toggle),
+                buildText("Generate"),
+                buildText("Close", onPressed: gamestream.isometric.editor.windowEnabledGenerate.toggle),
               ],
             ),
             height32,
@@ -350,8 +350,8 @@ extension IsometricEditorUI on IsometricEditor {
     children: [
       Row(
         children: [
-          Container(child: text(name), alignment: Alignment.centerLeft, width: 100),
-          watch(value, text),
+          Container(child: buildText(name), alignment: Alignment.centerLeft, width: 100),
+          watch(value, buildText),
         ],
       ),
       Row(
@@ -378,8 +378,8 @@ extension IsometricEditorUI on IsometricEditor {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                text("Edit Scene"),
-                text("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledScene),
+                buildText("Edit Scene"),
+                buildText("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledScene),
               ],
             ),
             height16,
@@ -391,8 +391,8 @@ extension IsometricEditorUI on IsometricEditor {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("Underground"),
-                    watch(gamestream.isometric.server.sceneUnderground, text),
+                    buildText("Underground"),
+                    watch(gamestream.isometric.server.sceneUnderground, buildText),
                   ],
                 ),
               ),
@@ -403,7 +403,7 @@ extension IsometricEditorUI on IsometricEditor {
               child: Container(
                 color: Colors.white12,
                 padding: const EdgeInsets.all(5),
-                child: text("Set Floor Stone"),
+                child: buildText("Set Floor Stone"),
               ),
             ),
           ],
@@ -638,9 +638,9 @@ extension IsometricEditorUI on IsometricEditor {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        watch(gamestream.isometric.server.hours, (num hour) => text(padZero(hour))),
-        text(":"),
-        watch(gamestream.isometric.server.minutes, (num hour) => text(padZero(hour))),
+        watch(gamestream.isometric.server.hours, (num hour) => buildText(padZero(hour))),
+        buildText(":"),
+        watch(gamestream.isometric.server.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
     return Container(
@@ -723,11 +723,11 @@ extension IsometricEditorUI on IsometricEditor {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             watch(gamestream.isometric.server.gameRunning, (gameRunning) {
-              return text("Game Running: $gameRunning", onPressed: () => gamestream.isometric.editor.toggleGameRunning);
+              return buildText("Game Running: $gameRunning", onPressed: () => gamestream.isometric.editor.toggleGameRunning);
             }),
-            text ("Reset", onPressed: gamestream.isometric.editor.editSceneReset),
-            text("Spawn AI", onPressed: gamestream.isometric.editor.editSceneSpawnAI),
-            text("Clear Spawned AI",
+            buildText ("Reset", onPressed: gamestream.isometric.editor.editSceneReset),
+            buildText("Spawn AI", onPressed: gamestream.isometric.editor.editSceneSpawnAI),
+            buildText("Clear Spawned AI",
                 onPressed: gamestream.isometric.editor.editSceneClearSpawnedAI),
           ],
         ),
@@ -1080,7 +1080,7 @@ extension IsometricEditorUI on IsometricEditor {
                 children: [
                   Container(
                     alignment: Alignment.centerRight,
-                    child: text("X", onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
+                    child: buildText("X", onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
                   ),
                   Container(
                     constraints: BoxConstraints(
@@ -1092,9 +1092,9 @@ extension IsometricEditorUI on IsometricEditor {
                   height8,
                   Row(
                     children: [
-                      text(ItemType.getName(type), size: 22),
+                      buildText(ItemType.getName(type), size: 22),
                       width8,
-                      text("Duplicate", onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
+                      buildText("Duplicate", onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
                     ],
                   ),
                   height8,
@@ -1104,8 +1104,8 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Strikable"),
-                            text(enabled),
+                            buildText("Strikable"),
+                            buildText(enabled),
                           ],
                         ),
                       )
@@ -1116,8 +1116,8 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Gravity"),
-                            text(enabled),
+                            buildText("Gravity"),
+                            buildText(enabled),
                           ],
                         ),
                       )
@@ -1128,8 +1128,8 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Fixed"),
-                            text(enabled),
+                            buildText("Fixed"),
+                            buildText(enabled),
                           ],
                         ),
                       )
@@ -1140,8 +1140,8 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Collectable"),
-                            text(enabled),
+                            buildText("Collectable"),
+                            buildText(enabled),
                           ],
                         ),
                       )
@@ -1152,8 +1152,8 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Physical"),
-                            text(enabled),
+                            buildText("Physical"),
+                            buildText(enabled),
                           ],
                         ),
                       )
@@ -1164,8 +1164,8 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Persistable"),
-                            text(enabled),
+                            buildText("Persistable"),
+                            buildText(enabled),
                           ],
                         ),
                       )
@@ -1178,11 +1178,11 @@ extension IsometricEditorUI on IsometricEditor {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                text("Emission"),
-                                text(emissionType),
+                                buildText("Emission"),
+                                buildText(emissionType),
                               ],
                             ),
-                            text("Intensity"),
+                            buildText("Intensity"),
                             watch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
                               value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
                               onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
@@ -1219,9 +1219,9 @@ extension IsometricEditorUI on IsometricEditor {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         watch(gamestream.isometric.editor.gameObjectSelectedParticleType,
-                (int particleType) => text("Particle Type: $particleType")),
+                (int particleType) => buildText("Particle Type: $particleType")),
         watch(gamestream.isometric.editor.gameObjectSelectedParticleSpawnRate,
-                (int rate) => text("Rate: $rate")),
+                (int rate) => buildText("Rate: $rate")),
       ],
     );
   }

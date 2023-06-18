@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_col
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 
 
 final nameController = TextEditingController();
@@ -17,9 +18,9 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
       borderColor: GameIsometricColors.none,
       child: buildLayout(
           child: Center(
-            child: text(message, color: GameIsometricColors.white),
+            child: buildText(message, color: GameIsometricColors.white),
           ),
-          bottomRight: bottomRight ?? text("okay", onPressed: () => gamestream.games.website.error.value = null)
+          bottomRight: bottomRight ?? buildText("okay", onPressed: () => gamestream.games.website.error.value = null)
       )
   );
 }

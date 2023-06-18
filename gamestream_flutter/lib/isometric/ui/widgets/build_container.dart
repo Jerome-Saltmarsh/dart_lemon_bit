@@ -31,7 +31,7 @@ Widget container({
           color: mouseOver ? hoverColor : color ?? Colors.grey,
           margin: margin,
           child: child == null
-              ? null : child is Widget ? child : text(child),
+              ? null : child is Widget ? child : buildText(child),
         );
       }
     );
@@ -45,7 +45,7 @@ Widget container({
       color: color ?? Colors.grey,
       margin: margin,
       child: child == null
-          ? null : child is Widget ? child : text(child),
+          ? null : child is Widget ? child : buildText(child),
     );
   }
 

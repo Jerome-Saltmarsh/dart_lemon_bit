@@ -10,10 +10,9 @@ export 'game_inventory_ui.dart';
 export 'game_style.dart';
 export 'package:bleed_common/src.dart';
 export 'dart:typed_data';
-export 'widgets/library_widgets.dart';
+export 'widgets/src.dart';
 export 'instances/engine.dart';
 export 'package:lemon_engine/lemon_engine.dart';
 export 'package:lemon_watch/src.dart';
 export 'package:lemon_math/src.dart';
-
 export 'package:gamestream_flutter/instances/gamestream.dart';

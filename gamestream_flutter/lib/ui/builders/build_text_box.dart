@@ -45,9 +45,9 @@ Widget buildPanelWriteMessage() {
                   margin: EdgeInsets.only(left: 8, bottom: 16),
                   child: Row(
                     children: [
-                      onPressed(action: sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
+                      onPressed(action: sendAndCloseTextBox, child: border(child: buildText("Send")), hint: "(Press Enter)"),
                       width16,
-                      onPressed(action: gamestream.isometric.actions.messageBoxHide, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
+                      onPressed(action: gamestream.isometric.actions.messageBoxHide, child: buildText("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
                     ],
                   ),
                 )

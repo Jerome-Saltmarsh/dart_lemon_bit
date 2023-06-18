@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 
 const _shiftX = 17.0;
 const _shiftY = 20.0;
@@ -20,7 +21,7 @@ Widget buildEditorSelectedNode() =>
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            watch(gamestream.isometric.editor.nodeSelectedIndex, text),
+            watch(gamestream.isometric.editor.nodeSelectedIndex, buildText),
             onPressed(
               hint: "Delete",
               action: gamestream.isometric.editor.delete,
@@ -45,7 +46,7 @@ Widget buildEditorSelectedNode() =>
             child: watch(
                 gamestream.isometric.editor.nodeSelectedType,
                     (int nodeType) =>
-                        text(NodeType.getName(nodeType), align: TextAlign.center)
+                        buildText(NodeType.getName(nodeType), align: TextAlign.center)
             )
         ),
         Container(

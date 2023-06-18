@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/account/data_authentication.dart';
+import 'package:gamestream_flutter/gamestream/account/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/website/enums/website_dialog.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/gamestream/account/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -22,7 +22,7 @@ class _Widgets {
   final Widget timeZone = build.timeZone();
 
   final textUpgrade = button(
-    text("PURCHASE", color: GameIsometricColors.green, bold: true),
+    buildText("PURCHASE", color: GameIsometricColors.green, bold: true),
     gamestream.accountService.openStripeCheckout,
     fillColor: GameIsometricColors.none,
     borderColor: GameIsometricColors.green,
@@ -31,7 +31,7 @@ class _Widgets {
   );
 
   final textReactivateSubscription = button(
-    text("Activate", color: GameIsometricColors.green, underline: true),
+    buildText("Activate", color: GameIsometricColors.green, underline: true),
     gamestream.accountService.openStripeCheckout,
     fillColor: GameIsometricColors.none,
     borderColorMouseOver: GameIsometricColors.green,
@@ -42,13 +42,13 @@ class _Widgets {
   final buttonOkay = buildButton("Okay",gamestream.games.website.showDialogGames);
   final buttonGreat = buildButton("Great",gamestream.games.website.showDialogGames);
 
-  final buttonNo = button(text("No", color: GameIsometricColors.white80),gamestream.games.website.showDialogGames, fillColor: GameIsometricColors.none,
+  final buttonNo = button(buildText("No", color: GameIsometricColors.white80),gamestream.games.website.showDialogGames, fillColor: GameIsometricColors.none,
     fillColorMouseOver: GameIsometricColors.none,
     borderColor: GameIsometricColors.none,
     width: 100,
   );
 
-  final buttonChangeDisplayName = button(text("Change Public Name", color: GameIsometricColors.green),gamestream.games.website.showDialogChangePublicName, borderColor: GameIsometricColors.green);
+  final buttonChangeDisplayName = button(buildText("Change Public Name", color: GameIsometricColors.green),gamestream.games.website.showDialogChangePublicName, borderColor: GameIsometricColors.green);
 }
 
 final authenticationRequired = Exception("Authentication Required");
@@ -68,7 +68,7 @@ class _Buttons {
   final Widget login = button(Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      text("LOGIN", size: 20, weight: bold),
+      buildText("LOGIN", size: 20, weight: bold),
     ],
   ), (){
     gamestream.games.website.dialog.value = WebsiteDialog.Login;
@@ -98,9 +98,9 @@ class _Buttons {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        text("Facebook"),
+        buildText("Facebook"),
         width16,
-        text("Continue", color: Colors.white),
+        buildText("Continue", color: Colors.white),
       ],
     ),
   ), getAuthenticationFacebook,
@@ -151,7 +151,7 @@ Widget _buildFakeLoginButton(String userId, String text){
   });
 }
 
-final backButton = button(text("Back", color: GameIsometricColors.white618), () {
+final backButton = button(buildText("Back", color: GameIsometricColors.white618), () {
   gamestream.games.website.dialog.value = WebsiteDialog.Games;
 }, fillColor: GameIsometricColors.none,
   fillColorMouseOver: GameIsometricColors.none,

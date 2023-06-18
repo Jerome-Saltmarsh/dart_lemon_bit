@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/widgets/build_text.dart';
 import 'package:gamestream_flutter/widgets/stack_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -67,7 +68,7 @@ extension CombatUI on CombatGame {
     final columnPowers = Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        text('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
+        buildText('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
         height12,
         buildIconPlayerPowerType(),
         height24,
@@ -88,7 +89,7 @@ extension CombatUI on CombatGame {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
                       child: watch(gamestream.isometric.player.powerType, (int playerPowerType){
-                        return text(PowerType.getName(powerType),
+                        return buildText(PowerType.getName(powerType),
                           color: powerType == playerPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
                           size: textSize,
                         );
@@ -106,7 +107,7 @@ extension CombatUI on CombatGame {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          text('left-click', size: titleFontSize, color: titleFontColor, italic: true),
+          buildText('left-click', size: titleFontSize, color: titleFontColor, italic: true),
           height12,
           buildIconPlayerWeaponPrimary(),
           height24,
@@ -119,7 +120,7 @@ extension CombatUI on CombatGame {
                   margin: const EdgeInsets.only(bottom: 6),
                   child: onPressed(
                       action: () => sendClientRequestSelectWeaponPrimary(itemType),
-                      child: text(ItemType.getName(itemType),
+                      child: buildText(ItemType.getName(itemType),
                         color: weaponPrimary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
                         size: textSize,
                       )),
@@ -137,7 +138,7 @@ extension CombatUI on CombatGame {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          text('right-click', size: titleFontSize, color: titleFontColor, italic: true),
+          buildText('right-click', size: titleFontSize, color: titleFontColor, italic: true),
           height12,
           buildIconPlayerWeaponSecondary(),
           height24,
@@ -150,7 +151,7 @@ extension CombatUI on CombatGame {
                   margin: const EdgeInsets.only(bottom: 6),
                   child: onPressed(
                       action: () => sendClientRequestSelectWeaponSecondary(itemType),
-                      child: text(ItemType.getName(itemType),
+                      child: buildText(ItemType.getName(itemType),
                         color: weaponSecondary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
                         size: textSize,
                       )),
@@ -172,7 +173,7 @@ extension CombatUI on CombatGame {
               height: 150 * goldenRatio_0381,
               alignment: Alignment.center,
               color: GameIsometricColors.green.withAlpha(mouseOver ? 140 : 100),
-              child: text("START", size: 45, color: GameIsometricColors.green),
+              child: buildText("START", size: 45, color: GameIsometricColors.green),
             );
           }
       ),
@@ -216,7 +217,7 @@ extension CombatUI on CombatGame {
         padding: GameStyle.Container_Padding,
         alignment: Alignment.center,
         child: watch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
-          return text("RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}", size: 25);
+          return buildText("RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}", size: 25);
         }),
       );
     });

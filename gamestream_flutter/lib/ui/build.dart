@@ -7,7 +7,7 @@ final build = _Build();
 class _Build {
 
   Widget timeZone(){
-    return text(DateTime.now().timeZoneName);
+    return buildText(DateTime.now().timeZoneName);
   }
 
   // Widget totalZombies(){
