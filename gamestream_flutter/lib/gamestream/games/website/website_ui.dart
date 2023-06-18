@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui/style.dart';
+import 'package:golden_ratio/constants.dart';
 
 extension WebsiteUI on WebsiteGame {
 
@@ -258,8 +258,8 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildErrorDialog(String message, {Widget? bottomRight}) => dialog(
-        width: style.dialogWidthMedium,
-        height: style.dialogHeightVerySmall,
+        width: 200,
+        height: 200 * goldenRatio_0618,
         color: GameIsometricColors.brownDark,
         borderColor: GameIsometricColors.none,
         child: buildLayout(

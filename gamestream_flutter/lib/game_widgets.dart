@@ -6,7 +6,6 @@ import 'package:lemon_watch/src.dart';
 
 import 'game_style.dart';
 import 'instances/engine.dart';
-import 'ui/style.dart';
 import 'widgets/build_text.dart';
 
 class _FlutterKitConfiguration {

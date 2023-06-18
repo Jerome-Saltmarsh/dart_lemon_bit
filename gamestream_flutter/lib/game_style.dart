@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 import 'gamestream/games/isometric/game_isometric_colors.dart';
 
@@ -24,4 +25,12 @@ class GameStyle {
   static const Padding_6 = EdgeInsets.all(6);
   static const Padding_10 = EdgeInsets.all(10);
   static const Null = SizedBox();
+}
+
+class FontSize {
+  static const VerySmall = Regular * Engine.GoldenRatio_0_381;
+  static const Small = Regular * Engine.GoldenRatio_0_618;
+  static const Regular = 18.0;
+  static const Large = Regular * Engine.GoldenRatio_1_381;
+  static const VeryLarge = Large * Engine.GoldenRatio_1_618;
 }
