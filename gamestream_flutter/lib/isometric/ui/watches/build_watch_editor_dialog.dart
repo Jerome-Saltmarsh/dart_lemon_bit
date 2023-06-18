@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_button_game_dialog_close.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -49,4 +48,9 @@ Widget buildDialog({required Widget child, double width = 350, double height = 4
           child,
         ],
       ));
+}
+
+
+Widget buildButtonGameDialogClose(){
+  return text("x", onPressed: gamestream.isometric.editor.actionGameDialogClose);
 }

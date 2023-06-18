@@ -6,12 +6,11 @@ import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
-import 'package:gamestream_flutter/website/widgets/game_type_column.dart';
-import 'package:gamestream_flutter/website/widgets/region_column.dart';
 import 'package:gamestream_flutter/widgets/build_fullscreen.dart';
 
 extension WebsiteUI on WebsiteGame {
@@ -35,7 +34,7 @@ extension WebsiteUI on WebsiteGame {
                   children: [
                     SizedBox(
                         width: 256,
-                        child: GameTypeImage(gameType: gameType)),
+                        child: buildGameTypeImage(gameType)),
                     text(gameType.name, size: 25),
                   ],
                 ),
@@ -49,10 +48,10 @@ extension WebsiteUI on WebsiteGame {
     return Center(
       child: WatchBuilder(websitePage, (websitePage){
         if (websitePage == WebsitePage.Region){
-          return SelectRegionColumn();
+          return buildSelectRegionColumn();
         }
         return WatchBuilder(gamestream.network.region, (ConnectionRegion? region) {
-          if (region == null) return SelectRegionColumn();
+          if (region == null) return buildSelectRegionColumn();
 
           final regionButton = onPressed(
             action: showWebsitePageRegion,
@@ -203,5 +202,61 @@ extension WebsiteUI on WebsiteGame {
         alignment: Alignment.center,
         child: text("LOADING GAMESTREAM"),
       );
+
+  Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
+      GameType.Fight2D: 'images/website/game-fight2d.png',
+      GameType.Combat: 'images/website/game-isometric.png',
+      GameType.Capture_The_Flag: 'images/website/game-isometric.png',
+    }[gameType] ?? ''), fit: BoxFit.fitWidth,);
+
+  @override
+  Widget buildSelectRegionColumn() {
+    return SizedBox(
+      width: 300,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          text("Select Your Region", size: FontSize.Large),
+          height16,
+          WatchBuilder(gamestream.network.region, (activeRegion) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: (engine.isLocalHost ? ConnectionRegion.values : const [
+                  ConnectionRegion.America_North,
+                  ConnectionRegion.America_South,
+                  ConnectionRegion.Asia_North,
+                  ConnectionRegion.Asia_South,
+                  ConnectionRegion.Europe,
+                  ConnectionRegion.Oceania,
+                ])
+                    .map((ConnectionRegion region) =>
+                    onPressed(
+                      action: () {
+                        gamestream.network.region.value = region;
+                        gamestream.games.website.websitePage.value = WebsitePage.Games;
+                      },
+                      child: MouseOver(builder: (bool mouseOver) {
+                        return Container(
+                          padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
+                          margin: const EdgeInsets.symmetric(vertical: 4),
+                          color: activeRegion == region ? Colors.greenAccent : mouseOver ? Colors.green : Colors.white10,
+                          child: text(
+                              '${engine.enumString(region)}',
+                              size: 24,
+                              color: mouseOver ? Colors.white : Colors.white60
+                          ),
+                        );
+                      }),
+                    ))
+                    .toList(),
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
 
 }
