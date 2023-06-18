@@ -1,6 +1,5 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
-import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/gamestream/account/sign_in_with_facebook.dart';
 
 import '../operation_status.dart';
@@ -163,9 +162,5 @@ class AccountService {
       return;
     }
     login(facebookAuthentication);
-  }
-
-  void closeErrorMessage(){
-    WebsiteState.error.value = null;
   }
 }

@@ -19,7 +19,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
           child: Center(
             child: text(message, color: GameIsometricColors.white),
           ),
-          bottomRight: bottomRight ?? text("okay", onPressed: () => WebsiteState.error.value = null)
+          bottomRight: bottomRight ?? text("okay", onPressed: () => gamestream.games.website.error.value = null)
       )
   );
 }

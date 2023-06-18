@@ -1,4 +1,5 @@
 
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class GameWebsite extends Game {
   static const Icon_Size = 25.0;
   static const Padding = 16.0;
 
+  final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
@@ -67,7 +69,7 @@ class GameWebsite extends Game {
   }
 
   void setError(String message){
-    WebsiteState.error.value = message;
+    gamestream.games.website.error.value = message;
   }
 
   void renderCanvas(Canvas canvas, Size size) {
@@ -89,7 +91,7 @@ class GameWebsite extends Game {
       ]);
 
   Widget buildWatchErrorMessage(){
-    return WatchBuilder(WebsiteState.error, (String? message){
+    return WatchBuilder(gamestream.games.website.error, (String? message){
       if (message == null) return GameStyle.Null;
       return buildErrorDialog(message);
     });
@@ -426,5 +428,24 @@ class GameWebsite extends Game {
       );
     },);
   }
+
+  void closeErrorMessage(){
+    error.value = null;
+  }
+
+  void checkForLatestVersion() async {
+    await saveVisitDateTime();
+    gamestream.operationStatus.value = OperationStatus.Checking_For_Updates;
+    engine.refreshPage();
+  }
+
+  Future saveVisitDateTime() async =>
+      save('visit-datetime', DateTime.now().toIso8601String());
+
+  Future saveVersion() async =>
+      await save('version', version);
+
+  Future save(String key, dynamic value) async =>
+      (await SharedPreferences.getInstance()).putAny(key, value);
 
 }

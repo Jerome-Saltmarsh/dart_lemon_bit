@@ -55,9 +55,9 @@ class Gamestream {
        final visitDateTime = DateTime.parse(visitDateTimeString);
        final durationSinceLastVisit = DateTime.now().difference(visitDateTime);
        print("duration since last visit: ${durationSinceLastVisit.inSeconds} seconds");
-       WebsiteActions.saveVisitDateTime();
+       games.website.saveVisitDateTime();
        if (durationSinceLastVisit.inSeconds > 45){
-         WebsiteActions.checkForLatestVersion();
+         games.website.checkForLatestVersion();
          return;
        }
      }
@@ -173,7 +173,7 @@ class Gamestream {
      }
      print(error.toString());
      print(stack);
-     WebsiteState.error.value = error.toString();
+     gamestream.games.website.error.value = error.toString();
    }
 
    void _onChangedGameError(GameError? gameError){
@@ -182,7 +182,7 @@ class Gamestream {
      gamestream.isometric.clientState.playAudioError();
      switch (gameError) {
        case GameError.Unable_To_Join_Game:
-         WebsiteState.error.value = 'unable to join game';
+         gamestream.games.website.error.value = 'unable to join game';
          network.disconnect();
          break;
        default:
@@ -235,13 +235,13 @@ class Gamestream {
          audio.enabledSound.value = false;
          break;
        case ConnectionStatus.Failed_To_Connect:
-         WebsiteState.error.value = "Failed to connect";
+         gamestream.games.website.error.value = "Failed to connect";
          break;
        case ConnectionStatus.Invalid_Connection:
-         WebsiteState.error.value = "Invalid Connection";
+         gamestream.games.website.error.value = "Invalid Connection";
          break;
        case ConnectionStatus.Error:
-         WebsiteState.error.value = "Connection Error";
+         gamestream.games.website.error.value = "Connection Error";
          break;
        default:
          break;

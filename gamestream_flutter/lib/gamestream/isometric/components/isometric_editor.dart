@@ -1,5 +1,6 @@
 
 import 'package:file_picker/file_picker.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../enums/editor_dialog.dart';

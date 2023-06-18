@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';

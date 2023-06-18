@@ -92,7 +92,7 @@ class GameNetwork {
         }
 
         if (webSocketChannel.closeCode != null){
-          WebsiteState.error.value = "Lost Connection";
+          gamestream.games.website.error.value = "Lost Connection";
         }
       });
       connectionUri = uri;
@@ -124,7 +124,7 @@ class GameNetwork {
         sink.add('pong');
         return;
       }
-      WebsiteState.error.value = response;
+      gamestream.games.website.error.value = response;
       return;
     }
     throw Exception("cannot parse response: $response");
