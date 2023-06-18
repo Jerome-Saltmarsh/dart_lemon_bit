@@ -1,0 +1,4 @@
+
+enum IsometricEditorRequest {
+   GameObject,
+}

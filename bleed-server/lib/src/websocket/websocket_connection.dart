@@ -12,10 +12,11 @@ import 'package:bleed_server/common/src/edit_request.dart';
 import 'package:bleed_server/common/src/fight2d/game_fight2d_client_request.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/gameobject_request.dart';
+import 'package:bleed_server/common/src/isometric_editor/isometric_editor_gameobject_request.dart';
 import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/inventory_request.dart';
 import 'package:bleed_server/common/src/isometric/isometric_request.dart';
+import 'package:bleed_server/common/src/isometric_editor/isometric_editor_request.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/lightning_type.dart';
 import 'package:bleed_server/common/src/maths.dart';
@@ -145,7 +146,9 @@ class WebSocketConnection with ByteReader {
 
     final player = _player;
 
-    if (player == null) return errorPlayerNotFound();
+    if (player == null)
+      return errorPlayerNotFound();
+
     final game = player.game;
 
     switch (clientRequest) {
@@ -197,11 +200,6 @@ class WebSocketConnection with ByteReader {
         if (player is! IsometricPlayer) return;
         game.playerAutoAim(player);
         game.characterAttackMelee(player);
-        // game.characterUseOrEquipWeapon(
-        //   character: player,
-        //   weaponType: player.weaponPrimary,
-        //   characterStateChange: false,
-        // );
         break;
 
       case ClientRequest.Suicide:
@@ -210,9 +208,32 @@ class WebSocketConnection with ByteReader {
         game.setCharacterStateDead(player);
         break;
 
-      case ClientRequest.GameObject:
-        if (!isLocalMachine && game is! GameEditor) return;
-        return handleGameObjectRequest(arguments);
+      // case ClientRequest.GameObject:
+      //   if (!isLocalMachine && game is! GameEditor) return;
+      //   return handleGameObjectRequest(arguments);
+
+      case ClientRequest.Isometric_Editor:
+        if (game is! IsometricGame)
+          return errorInvalidPlayerType();
+
+        final isometricEditorRequestIndex = parseArg1(arguments);
+
+        if (isometricEditorRequestIndex == null) return;
+
+        if (!isValidIndex(isometricEditorRequestIndex, IsometricEditorRequest.values)) {
+          return errorInvalidClientRequest();
+        }
+
+        final isometricEditorRequest = IsometricEditorRequest.values[isometricEditorRequestIndex];
+
+        switch (isometricEditorRequest){
+          case IsometricEditorRequest.GameObject:
+            handleIsometricEditorGameObjectRequest(arguments);
+            break;
+          default:
+            break;
+        }
+        break;
 
       case ClientRequest.Node:
         if (!isLocalMachine && game is! GameEditor) return;
@@ -577,14 +598,11 @@ class WebSocketConnection with ByteReader {
 
   }
 
-  void handleGameObjectRequest(List<String> arguments) {
+  void handleIsometricEditorGameObjectRequest(List<String> arguments) {
     final player = _player;
     if (player == null) return;
 
-    if (arguments.length <= 1)
-      return errorInvalidClientRequest();
-
-    final gameObjectRequestIndex = parse(arguments[1]);
+    final gameObjectRequestIndex = parseArg2(arguments);
 
     if (gameObjectRequestIndex == null)
       return errorInvalidClientRequest();
@@ -599,7 +617,7 @@ class WebSocketConnection with ByteReader {
     switch (gameObjectRequest) {
 
 
-      case GameObjectRequest.Select:
+      case IsometricEditorGameObjectRequest.Select:
         final gameObjects = player.scene.gameObjects;
         if (gameObjects.isEmpty) return;
         final mouseX = player.mouse.x;
@@ -620,16 +638,16 @@ class WebSocketConnection with ByteReader {
         }
         break;
 
-      case GameObjectRequest.Deselect:
+      case IsometricEditorGameObjectRequest.Deselect:
         player.game.playerDeselectEditorSelectedGameObject(player);
         break;
 
-      case GameObjectRequest.Translate:
+      case IsometricEditorGameObjectRequest.Translate:
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
-        final tx = double.tryParse(arguments[2]);
-        final ty = double.tryParse(arguments[3]);
-        final tz = double.tryParse(arguments[4]);
+        final tx = double.tryParse(arguments[3]);
+        final ty = double.tryParse(arguments[4]);
+        final tz = double.tryParse(arguments[5]);
         if (tx == null) return;
         if (ty == null) return;
         if (tz == null) return;
@@ -639,9 +657,9 @@ class WebSocketConnection with ByteReader {
         selectedGameObject.saveStartAsCurrentPosition();
         break;
 
-      case GameObjectRequest.Add:
-        final index = parse(arguments[2]);
-        final type = parse(arguments[3]);
+      case IsometricEditorGameObjectRequest.Add:
+        final index = parse(arguments[3]);
+        final type = parse(arguments[4]);
         if (index == null) return errorInvalidClientRequest();
         if (type == null) return errorInvalidClientRequest();
         if (index < 0) return errorInvalidClientRequest();
@@ -658,11 +676,11 @@ class WebSocketConnection with ByteReader {
         player.editorSelectedGameObject = instance;
         break;
 
-      case GameObjectRequest.Delete:
+      case IsometricEditorGameObjectRequest.Delete:
         player.game.playerDeleteEditorSelectedGameObject(player);
         break;
 
-      case GameObjectRequest.Move_To_Mouse:
+      case IsometricEditorGameObjectRequest.Move_To_Mouse:
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
         selectedGameObject.x = player.mouseGridX;
@@ -671,36 +689,36 @@ class WebSocketConnection with ByteReader {
         selectedGameObject.saveStartAsCurrentPosition();
         break;
 
-      case GameObjectRequest.Set_Type:
+      case IsometricEditorGameObjectRequest.Set_Type:
         // TODO: Handle this case.
         break;
 
-      case GameObjectRequest.Toggle_Strikable:
+      case IsometricEditorGameObjectRequest.Toggle_Strikable:
         if (selectedGameObject == null) return;
         selectedGameObject.hitable = !selectedGameObject.hitable;
         selectedGameObject.velocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
 
-      case GameObjectRequest.Toggle_Fixed:
+      case IsometricEditorGameObjectRequest.Toggle_Fixed:
         if (selectedGameObject == null) return;
         selectedGameObject.fixed = !selectedGameObject.fixed;
         player.writeEditorGameObjectSelected();
         break;
 
-      case GameObjectRequest.Toggle_Collectable:
+      case IsometricEditorGameObjectRequest.Toggle_Collectable:
         if (selectedGameObject == null) return;
         selectedGameObject.collectable = !selectedGameObject.collectable;
         player.writeEditorGameObjectSelected();
         break;
 
-      case GameObjectRequest.Toggle_Gravity:
+      case IsometricEditorGameObjectRequest.Toggle_Gravity:
         if (selectedGameObject == null) return;
         selectedGameObject.gravity = !selectedGameObject.gravity;
         player.writeEditorGameObjectSelected();
         break;
 
-      case GameObjectRequest.Duplicate:
+      case IsometricEditorGameObjectRequest.Duplicate:
         if (selectedGameObject == null) return;
         final duplicated = player.game.spawnGameObject(
             x: selectedGameObject.x,
@@ -711,13 +729,13 @@ class WebSocketConnection with ByteReader {
         player.editorSelectedGameObject = duplicated;
         break;
 
-      case GameObjectRequest.Toggle_Physical:
+      case IsometricEditorGameObjectRequest.Toggle_Physical:
         if (selectedGameObject == null) return;
         selectedGameObject.physical = !selectedGameObject.physical;
         player.writeEditorGameObjectSelected();
         break;
 
-      case GameObjectRequest.Toggle_Persistable:
+      case IsometricEditorGameObjectRequest.Toggle_Persistable:
         if (selectedGameObject == null) return;
         selectedGameObject.persistable = !selectedGameObject.persistable;
         player.writeEditorGameObjectSelected();

@@ -1,5 +1,5 @@
 
-enum GameObjectRequest {
+enum IsometricEditorGameObjectRequest {
   Add,
   Select,
   Deselect,
@@ -16,4 +16,4 @@ enum GameObjectRequest {
   Duplicate,
 }
 
-const gameObjectRequests = GameObjectRequest.values;
+const gameObjectRequests = IsometricEditorGameObjectRequest.values;

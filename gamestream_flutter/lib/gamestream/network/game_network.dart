@@ -166,13 +166,13 @@ class GameNetwork {
         '$index $type $orientation',
       );
 
-  void sendClientRequestAddGameObject({
-    required int index,
-    required int type,
-  }) =>
-      sendClientRequest(
-        ClientRequest.GameObject, "${GameObjectRequest.Add.index} $index $type",
-      );
+  // void sendClientRequestAddGameObject({
+  //   required int index,
+  //   required int type,
+  // }) =>
+  //     sendClientRequest(
+  //       ClientRequest.Isometric_Editor, "${IsometricEditorRequest.GameObject} ${IsometricEditorGameObjectRequest.Add.index} $index $type",
+  //     );
 
   void sendClientRequestInventoryEquip(int index) {
     sendClientRequest(
@@ -218,36 +218,6 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Move} $indexFrom $indexTo",
       );
 
-  void sendClientRequestGameObjectTranslate({
-    required double tx,
-    required double ty,
-    required double tz,
-  }) {
-    sendClientRequest(
-      ClientRequest.GameObject,
-      "${GameObjectRequest.Translate.index} $tx $ty $tz",
-    );
-  }
-
-  void sendGameObjectRequestDuplicate() {
-    sendClientRequest(
-      ClientRequest.GameObject,
-      "${GameObjectRequest.Duplicate.index}",
-    );
-  }
-
-  void sendGameObjectRequestSelect() {
-    sendGameObjectRequest(GameObjectRequest.Select);
-  }
-
-  void sendGameObjectRequestDeselect() {
-    sendGameObjectRequest(GameObjectRequest.Deselect);
-  }
-
-  void sendGameObjectRequestDelete() {
-    sendGameObjectRequest(GameObjectRequest.Delete);
-  }
-
   void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
 
@@ -273,24 +243,11 @@ class GameNetwork {
   void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
       sendClientRequest(ClientRequest.Edit, '${request.index} $message');
 
-  void sendGameObjectRequestMoveToMouse() {
-    sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
-  }
-
-
-
   void sendClientRequestSelectWeaponPrimary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
 
   void sendClientRequestSelectWeaponSecondary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Secondary, value);
-
-  void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
-    if (message != null){
-      sendClientRequest(ClientRequest.GameObject, '${request.index} $message');
-    }
-    sendClientRequest(ClientRequest.GameObject, request.index);
-  }
 
   void sendClientRequest(int value, [dynamic message]) =>
       message != null ? send('${value} $message') : send(value);

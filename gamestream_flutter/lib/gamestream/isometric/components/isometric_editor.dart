@@ -73,18 +73,82 @@ class IsometricEditor {
   double get posY => column * Node_Size + Node_Size_Half;
   double get posZ => z * Node_Height;
 
+
+  void onKeyPressedModeEdit(int key){
+
+    switch (key){
+      case KeyCode.V:
+        sendGameObjectRequestDuplicate();
+        break;
+      case KeyCode.F:
+        gamestream.isometric.editor.paint();
+        break;
+      case KeyCode.G:
+        if (gamestream.isometric.editor.gameObjectSelected.value) {
+          sendGameObjectRequestMoveToMouse();
+        } else {
+          gamestream.isometric.camera.cameraSetPositionGrid(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
+        }
+        break;
+      case KeyCode.R:
+        gamestream.isometric.editor.selectPaintType();
+        break;
+      case KeyCode.Arrow_Up:
+        if (engine.keyPressedShiftLeft) {
+          if (gamestream.isometric.editor.gameObjectSelected.value){
+            gamestream.isometric.editor.translate(x: 0, y: 0, z: 1);
+            return;
+          }
+          gamestream.isometric.editor.cursorZIncrease();
+          return;
+        }
+        if (gamestream.isometric.editor.gameObjectSelected.value) {
+          gamestream.isometric.editor.translate(x: -1, y: -1, z: 0);
+          return;
+        }
+        gamestream.isometric.editor.cursorRowDecrease();
+        return;
+      case KeyCode.Arrow_Right:
+        if (gamestream.isometric.editor.gameObjectSelected.value){
+          return gamestream.isometric.editor.translate(x: 1, y: -1, z: 0);
+        }
+        gamestream.isometric.editor.cursorColumnDecrease();
+        break;
+      case KeyCode.Arrow_Down:
+        if (engine.keyPressedShiftLeft) {
+          if (gamestream.isometric.editor.gameObjectSelected.value){
+            return gamestream.isometric.editor.translate(x: 0, y: 0, z: -1);
+          }
+          gamestream.isometric.editor.cursorZDecrease();
+        } else {
+          if (gamestream.isometric.editor.gameObjectSelected.value){
+            return gamestream.isometric.editor.translate(x: 1, y: 1, z: 0);
+          }
+          gamestream.isometric.editor.cursorRowIncrease();
+        }
+        break;
+      case KeyCode.Arrow_Left:
+        if (gamestream.isometric.editor.gameObjectSelected.value){
+          return gamestream.isometric.editor.translate(x: -1, y: 1, z: 0);
+        }
+        gamestream.isometric.editor.cursorColumnIncrease();
+        break;
+    }
+  }
+
+
   void refreshNodeSelectedIndex(){
     nodeSelectedType.value = gamestream.isometric.nodes.nodeTypes[nodeSelectedIndex.value];
     nodeSelectedOrientation.value = gamestream.isometric.nodes.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
-    gamestream.network.sendGameObjectRequestDeselect();
+    sendGameObjectRequestDeselect();
   }
 
   void translate({ double x = 0, double y = 0, double z = 0}){
     assert (gameObjectSelected.value);
-    return gamestream.network.sendClientRequestGameObjectTranslate(
+    return sendClientRequestGameObjectTranslate(
       tx: x,
       ty: y,
       tz: z,
@@ -113,7 +177,7 @@ class IsometricEditor {
   }
 
   void selectMouseGameObject(){
-    gamestream.network.sendGameObjectRequestSelect();
+    sendGameObjectRequestSelect();
   }
 
   void paintTorch(){
@@ -145,7 +209,7 @@ class IsometricEditor {
   }
 
   void deleteGameObjectSelected(){
-    gamestream.network.sendGameObjectRequestDelete();
+    sendGameObjectRequestDelete();
   }
 
   void cameraCenterSelectedObject() =>
@@ -222,12 +286,6 @@ class IsometricEditor {
     selectedSceneName.value = value;
   }
 
-  void actionAddGameObject(int type) =>
-      gamestream.network.sendClientRequestAddGameObject(
-        index: nodeSelectedIndex.value,
-        type: type,
-      );
-
   void actionRecenterCamera() =>
       gamestream.isometric.camera.cameraSetPositionGrid(
         row,
@@ -298,4 +356,57 @@ class IsometricEditor {
         break;
     }
   }
+
+  void sendClientRequestGameObjectTranslate({
+    required double tx,
+    required double ty,
+    required double tz,
+  }) => sendGameObjectRequest(IsometricEditorGameObjectRequest.Translate, "$tx $ty $tz");
+
+  void sendGameObjectRequestDuplicate() => sendGameObjectRequest(IsometricEditorGameObjectRequest.Duplicate);
+
+  void sendGameObjectRequestSelect() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Select);
+
+  void sendGameObjectRequestDeselect() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Deselect);
+
+  void sendGameObjectRequestDelete() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Delete);
+
+  void sendGameObjectRequestMoveToMouse() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Move_To_Mouse);
+
+  void sendGameObjectRequestToggleStrikable() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Strikable);
+
+  void sendGameObjectRequestToggleGravity() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Gravity);
+
+  void sendGameObjectRequestToggleFixed() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Fixed);
+
+  void sendGameObjectRequestToggleCollectable() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Collectable);
+
+  void selectedGameObjectTogglePhysical() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Physical);
+
+  void selectedGameObjectTogglePersistable() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Persistable);
+
+  void actionAddGameObject(int type) =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Add, '${nodeSelectedIndex.value} $type');
+
+  void sendGameObjectRequest(IsometricEditorGameObjectRequest gameObjectRequest, [dynamic message]) =>
+      sendIsometricEditorRequest(
+        IsometricEditorRequest.GameObject,
+        '${gameObjectRequest.index} $message',
+      );
+
+  void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
+      gamestream.network.sendClientRequest(
+        ClientRequest.Isometric_Editor,
+        '${request.index} $message',
+      );
 }

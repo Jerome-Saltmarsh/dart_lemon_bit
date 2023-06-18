@@ -410,10 +410,8 @@ class EditorUI {
               srcHeight: AtlasItems.getSrcHeight(gameObjectType),
               color: color,
               action: () =>
-                  gamestream.network.sendClientRequestAddGameObject(
-                    index: gamestream.isometric.editor.nodeSelectedIndex.value,
-                    type: gameObjectType,
-                  )),
+                  gamestream.isometric.editor.actionAddGameObject(gameObjectType)
+          ),
         ),
       ),
     );
@@ -1042,7 +1040,7 @@ class EditorUI {
                   children: [
                     Container(
                         alignment: Alignment.centerRight,
-                        child: text("X", onPressed: gamestream.network.sendGameObjectRequestDeselect),
+                        child: text("X", onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
                     ),
                     Container(
                         constraints: BoxConstraints(
@@ -1056,13 +1054,13 @@ class EditorUI {
                       children: [
                         text(ItemType.getName(type), size: 22),
                         width8,
-                        text("Duplicate", onPressed: gamestream.network.sendGameObjectRequestDuplicate)
+                        text("Duplicate", onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
                       ],
                     ),
                     height8,
                     watch(gamestream.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(
-                        action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
+                        action: () => gamestream.isometric.editor.sendGameObjectRequestToggleStrikable,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -1074,7 +1072,7 @@ class EditorUI {
                     ),
                     watch(gamestream.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
                         onPressed(
-                          action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
+                          action: () => gamestream.isometric.editor.sendGameObjectRequestToggleGravity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1086,7 +1084,7 @@ class EditorUI {
                     ),
                     watch(gamestream.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
                         onPressed(
-                          action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
+                          action: gamestream.isometric.editor.sendGameObjectRequestToggleFixed,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1098,7 +1096,7 @@ class EditorUI {
                     ),
                     watch(gamestream.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
                         onPressed(
-                          action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
+                          action: gamestream.isometric.editor.sendGameObjectRequestToggleCollectable,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1110,7 +1108,7 @@ class EditorUI {
                     ),
                     watch(gamestream.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
                         onPressed(
-                          action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
+                          action: gamestream.isometric.editor.selectedGameObjectTogglePhysical,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1122,7 +1120,7 @@ class EditorUI {
                     ),
                     watch(gamestream.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
                         onPressed(
-                          action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
+                          action: gamestream.isometric.editor.selectedGameObjectTogglePersistable,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
