@@ -92,6 +92,7 @@ class Engine {
       removeEmptyGames();
     }
     for (final game in games) {
+      game.updateJobs();
       game.update();
       game.writePlayerResponses();
     }

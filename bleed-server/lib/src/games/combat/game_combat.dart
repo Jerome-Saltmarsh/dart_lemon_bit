@@ -496,7 +496,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       spawnRandomGemsAtIndex(nodeIndex);
     }
 
-    performJob(1000, (){
+    createJob(timer: 1000, action: (){
       setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,

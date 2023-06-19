@@ -29,7 +29,6 @@ import 'isometric_collider.dart';
 import 'isometric_environment.dart';
 import 'isometric_gameobject.dart';
 import 'isometric_hit_type.dart';
-import 'isometric_job.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_position.dart';
@@ -47,7 +46,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   IsometricScene scene;
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
-  final jobs = <IsometricJob>[];
   final scripts = <IsometricScript>[];
   final scriptReader = ByteReader();
   var _timerUpdateAITargets = 0;
@@ -181,7 +179,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     // default behavior is to respawn after a period however this can be safely overriden
-    performJob(1000, () {
+    createJob(timer: 1000, action: () {
       setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,
@@ -674,7 +672,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..owner = player
       ..weaponDamage = damage;
 
-    performJob(IsometricSettings.Grenade_Cook_Duration, () {
+    createJob(timer: IsometricSettings.Grenade_Cook_Duration, action: () {
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;
@@ -1094,28 +1092,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     playersWriteWeather();
   }
 
-  void performJob(int timer, Function action) {
-    assert (timer > 0);
-    for (final job in jobs) {
-      if (job.timer > 0) continue;
-      job.timer = timer;
-      job.action = action;
-      return;
-    }
-    final job = IsometricJob(timer, action);
-    jobs.add(job);
-  }
-
-  void internalUpdateJobs() {
-    for (var i = 0; i < jobs.length; i++) {
-      final job = jobs[i];
-      if (job.timer <= 0) continue;
-      job.timer--;
-      if (job.timer > 0) continue;
-      job.action();
-    }
-  }
-
   void internalUpdateScripts() {
     for (final script in scripts) {
       if (script.timer <= 0) continue;
@@ -1329,7 +1305,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     environment.update();
 
     updateAITargets();
-    internalUpdateJobs();
     internalUpdateScripts();
     customUpdate();
     updateGameObjects();
