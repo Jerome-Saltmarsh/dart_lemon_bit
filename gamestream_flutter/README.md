@@ -33,6 +33,7 @@ alt + m             : go to declaration
 
 [CAPTURE THE FLAG]
 [ ] hero classes  
+  [ ] sniper power 
 [ ] ai heroes
 [ ] destroyable terrain
 [ ] ai pathfinding 3d

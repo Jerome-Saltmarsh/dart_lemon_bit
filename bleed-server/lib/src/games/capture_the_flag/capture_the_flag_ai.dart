@@ -59,6 +59,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     updateWeaponRange();
   }
 
+  bool get atDestination => getDestinationDistanceSquared() < 150;
+
+  bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
   int get nodeIndex => game.scene.getNodeIndexV3(this);
   int get pathNodeIndex => path[pathIndex];
   double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
@@ -77,248 +80,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   double get baseOwnDistance => getDistance3(baseOwn);
   double get baseEnemyDistance => getDistance3(baseEnemy);
 
-  IsometricCollider? getNearestEnemy(){
-    IsometricCollider? nearestEnemy;
-    var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
-    for (final character in game.characters){
-        if (!isEnemy(character)) continue;
-        final distanceSquared = getDistanceSquared(character);
-        if (distanceSquared > nearestEnemyDistanceSquared) continue;
-        nearestEnemyDistanceSquared = distanceSquared;
-        nearestEnemy = character;
-    }
-    return nearestEnemy;
-  }
-
-  @override
-  void customUpdate() {
-    if (deadOrBusy) return;
-
-    decision = getDecision();
-    executeDecision();
-    updatePathIndexAndDestination();
-  }
-
-  CaptureTheFlagAIDecision getDecision(){
-
-    if (holdingFlagAny)
-      return CaptureTheFlagAIDecision.Run_To_Base_Own;
-
-    if (flagOwnDropped && flagOwnWithinRadius(300))
-      return CaptureTheFlagAIDecision.Capture_Flag_Own;
-
-    if (flagEnemyCapturable && flagEnemyWithinRadius(300))
-      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
-
-    if (roleOffensive)
-      return getDecisionDefensive();
-
-    if (roleDefensive)
-      return getDecisionOffensive();
-
-    return CaptureTheFlagAIDecision.Idle;
-  }
-
-  void executeDecision() {
-
-    switch (decision){
-      case CaptureTheFlagAIDecision.Idle:
-        idle();
-        break;
-      case CaptureTheFlagAIDecision.Capture_Flag_Own:
-        final heldBy = flagOwn.heldBy;
-        if (heldBy == null) {
-          target = flagOwn;
-          return;
-        }
-        if (isEnemy(heldBy)){
-          target = heldBy;
-          return;
-        }
-        if (awayFromFlagOwnSpawn){
-          target = flagOwn;
-        }
-        break;
-      case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
-        target = flagEnemy;
-        break;
-      case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
-        target = getNearestEnemy();
-        if (target == null){
-          idle();
-          break;
-        }
-        break;
-      case CaptureTheFlagAIDecision.Run_To_Base_Own:
-        target = baseOwn;
-      case CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own:
-        target = flagSpawnOwn;
-        break;
-      case CaptureTheFlagAIDecision.Run_To_Flag_Own:
-        if (flagOwnRespawning) {
-          target = flagSpawnOwn;
-          break;
-        }
-        if (withinRadiusPosition(flagOwn, 50)) {
-          idle();
-        } else {
-          target = flagOwn;
-        }
-        break;
-      default:
-        throw Exception('not implemented');
-    }
-  }
-
-  void runToDestination(){
-    faceDestination();
-    setCharacterStateRunning();
-  }
-
-  void faceDestination() {
-    faceXY(destinationX, destinationY);
-  }
-
-  void updatePathToTarget() {
-    if (target == null){
-      pathEnd = 0;
-      pathIndex = 0;
-      return;
-    }
-    if (indexZ != 1) return;
-    setPathToIsometricTarget();
-  }
-
-  void setPathToIsometricTarget() {
-    final target = this.target;
-    if (target == null) return;
-    setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
-  }
-
-  double getDestinationDistanceSquared () =>
-      getDistanceSquaredXYZ(destinationX, destinationY, z);
-
-
-  void updatePathIndexAndDestination() {
-    final target = this.target;
-
-    if (enemyTargetAttackable) {
-      attackTargetEnemy();
-      return;
-    }
-
-    if (targetPrevious != target) {
-      targetPrevious = target;
-      updatePathToTarget();
-    } else if (target != null) {
-      if (game.scene.getNodeIndexV3(target) != targetIndex) {
-        updatePathToTarget();
-      }
-    }
-
-    if (!atDestination) {
-      return runToDestination();
-    }
-
-    if (pathIndex >= pathEnd) {
-      updatePathToTarget();
-    }
-
-
-    if (target == null) return;
-
-    if (withinRadiusPosition(target, Node_Size)){
-      pathEnd = 0;
-      pathIndex = 0;
-      destinationX = target.x;
-      destinationY = target.y;
-      return;
-    }
-
-    if (pathIndex >= pathEnd) return;
-    if (!atDestination) return;
-    pathIndex++;
-    if (pathIndex >= pathEnd) {
-      pathIndex = 0;
-      pathEnd = 0;
-      destinationX = x;
-      destinationY = y;
-      destinationZ = z;
-    } else {
-      final scene = game.scene;
-      destinationX = scene.getNodePositionX(pathNodeIndex);
-      destinationY = scene.getNodePositionY(pathNodeIndex);
-    }
-  }
-
-  bool get atDestination => getDestinationDistanceSquared() < 150;
-
-  bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
-
-
-  void targetFlagOwn() {
-    target = flagOwn;
-  }
-
-  CaptureTheFlagAIDecision getDecisionOffensive() {
-
-    if (flagOwnCapturedByEnemy)
-      return CaptureTheFlagAIDecision.Capture_Flag_Own;
-    if (flagOwnCapturedByAlly) {
-      if (closeToFlagOwn) {
-        return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
-      }
-      return CaptureTheFlagAIDecision.Run_To_Flag_Own;
-    }
-
-    if (flagOwnDropped)
-      return CaptureTheFlagAIDecision.Capture_Flag_Own;
-    if (awayFromFlagOwnSpawn)
-      return CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own;
-    if (enemyWithinViewRange)
-      return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
-
-    return CaptureTheFlagAIDecision.Idle;
-  }
-
   bool get flagEnemyCapturable => flagEnemy.statusAtBase || flagEnemy.statusDropped;
 
-  CaptureTheFlagAIDecision getDecisionDefensive() {
-    if (flagEnemyRespawning)
-      return getDecisionOffensive();
-    if (enemyWithinViewRange)
-      return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
-    if (enemyFlagCapturable)
-      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
-
-    return CaptureTheFlagAIDecision.Idle;
-  }
-
-  void idle() {
-    setCharacterStateIdle();
-    destinationX = x;
-    destinationY = y;
-    destinationZ = z;
-  }
-
-  void attackTargetEnemy(){
-    assert (target != null);
-    idle();
-    face(target!);
-    useWeapon();
-  }
-
-  bool enemyWithinRange(double range){
-     final distanceSquared = range * range;
-     final characters = game.characters;
-     for (final character in characters) {
-        if (!isEnemy(character)) continue;
-        final characterDistanceSquared = getDistanceSquared(character);
-        if (characterDistanceSquared > distanceSquared) continue;
-        return true;
-     }
-     return false;
-  }
 
   bool get enemyFlagCapturable => enemyFlagStatusAtBase || enemyFlagStatusDropped;
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
@@ -381,10 +144,46 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
+  IsometricCollider? getNearestEnemy(){
+    IsometricCollider? nearestEnemy;
+    var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
+    for (final character in game.characters){
+        if (!isEnemy(character)) continue;
+        final distanceSquared = getDistanceSquared(character);
+        if (distanceSquared > nearestEnemyDistanceSquared) continue;
+        nearestEnemyDistanceSquared = distanceSquared;
+        nearestEnemy = character;
+    }
+    return nearestEnemy;
+  }
+
+  CaptureTheFlagAIDecision getDecision(){
+
+    if (holdingFlagAny)
+      return CaptureTheFlagAIDecision.Run_To_Base_Own;
+
+    if (flagOwnDropped && flagOwnWithinRadius(300))
+      return CaptureTheFlagAIDecision.Capture_Flag_Own;
+
+    if (flagEnemyCapturable && flagEnemyWithinRadius(300))
+      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
+
+    if (roleOffensive)
+      return getDecisionDefensive();
+
+    if (roleDefensive)
+      return getDecisionOffensive();
+
+    return CaptureTheFlagAIDecision.Idle;
+  }
 
   @override
-  void onWeaponTypeChanged() {
-     updateWeaponRange();
+  void customUpdate() {
+    if (deadOrBusy) return;
+
+    decision = getDecision();
+    executeDecision();
+    updatePathIndexAndDestination();
   }
 
   void updateWeaponRange() {
@@ -394,6 +193,206 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     if (weaponType == ItemType.Weapon_Melee_Sword){
       weaponRange = 60;
     }
+  }
+
+  void updatePathToTarget() {
+    if (target == null){
+      pathEnd = 0;
+      pathIndex = 0;
+      return;
+    }
+    if (indexZ != 1) return;
+    setPathToIsometricTarget();
+  }
+
+  void updatePathIndexAndDestination() {
+    final target = this.target;
+
+    if (enemyTargetAttackable) {
+      attackTargetEnemy();
+      return;
+    }
+
+    if (targetPrevious != target) {
+      targetPrevious = target;
+      updatePathToTarget();
+    } else if (target != null) {
+      if (game.scene.getNodeIndexV3(target) != targetIndex) {
+        updatePathToTarget();
+      }
+    }
+
+    if (!atDestination) {
+      return runToDestination();
+    }
+
+    if (pathIndex >= pathEnd) {
+      updatePathToTarget();
+    }
+
+
+    if (target == null) return;
+
+    if (withinRadiusPosition(target, Node_Size)){
+      pathEnd = 0;
+      pathIndex = 0;
+      destinationX = target.x;
+      destinationY = target.y;
+      return;
+    }
+
+    if (pathIndex >= pathEnd) return;
+    if (!atDestination) return;
+    pathIndex++;
+    if (pathIndex >= pathEnd) {
+      pathIndex = 0;
+      pathEnd = 0;
+      destinationX = x;
+      destinationY = y;
+      destinationZ = z;
+    } else {
+      final scene = game.scene;
+      destinationX = scene.getNodePositionX(pathNodeIndex);
+      destinationY = scene.getNodePositionY(pathNodeIndex);
+    }
+  }
+
+
+  void executeDecision() {
+
+    switch (decision){
+      case CaptureTheFlagAIDecision.Idle:
+        idle();
+        break;
+      case CaptureTheFlagAIDecision.Capture_Flag_Own:
+        final heldBy = flagOwn.heldBy;
+        if (heldBy == null) {
+          target = flagOwn;
+          return;
+        }
+        if (isEnemy(heldBy)){
+          target = heldBy;
+          return;
+        }
+        if (awayFromFlagOwnSpawn){
+          target = flagOwn;
+        }
+        break;
+      case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
+        target = flagEnemy;
+        break;
+      case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
+        target = getNearestEnemy();
+        if (target == null){
+          idle();
+          break;
+        }
+        break;
+      case CaptureTheFlagAIDecision.Run_To_Base_Own:
+        target = baseOwn;
+      case CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own:
+        target = flagSpawnOwn;
+        break;
+      case CaptureTheFlagAIDecision.Run_To_Flag_Own:
+        if (flagOwnRespawning) {
+          target = flagSpawnOwn;
+          break;
+        }
+        if (withinRadiusPosition(flagOwn, 50)) {
+          idle();
+        } else {
+          target = flagOwn;
+        }
+        break;
+      default:
+        throw Exception('not implemented');
+    }
+  }
+
+  void runToDestination(){
+    faceDestination();
+    setCharacterStateRunning();
+  }
+
+  void faceDestination() {
+    faceXY(destinationX, destinationY);
+  }
+
+  void setPathToIsometricTarget() {
+    final target = this.target;
+    if (target == null) return;
+    setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
+  }
+
+  double getDestinationDistanceSquared () =>
+      getDistanceSquaredXYZ(destinationX, destinationY, z);
+
+
+  void targetFlagOwn() {
+    target = flagOwn;
+  }
+
+  CaptureTheFlagAIDecision getDecisionOffensive() {
+
+    if (flagOwnCapturedByEnemy)
+      return CaptureTheFlagAIDecision.Capture_Flag_Own;
+    if (flagOwnCapturedByAlly) {
+      if (closeToFlagOwn) {
+        return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
+      }
+      return CaptureTheFlagAIDecision.Run_To_Flag_Own;
+    }
+
+    if (flagOwnDropped)
+      return CaptureTheFlagAIDecision.Capture_Flag_Own;
+    if (awayFromFlagOwnSpawn)
+      return CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own;
+    if (enemyWithinViewRange)
+      return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
+
+    return CaptureTheFlagAIDecision.Idle;
+  }
+
+  CaptureTheFlagAIDecision getDecisionDefensive() {
+    if (flagEnemyRespawning)
+      return getDecisionOffensive();
+    if (enemyWithinViewRange)
+      return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
+    if (enemyFlagCapturable)
+      return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
+
+    return CaptureTheFlagAIDecision.Idle;
+  }
+
+  void idle() {
+    setCharacterStateIdle();
+    destinationX = x;
+    destinationY = y;
+    destinationZ = z;
+  }
+
+  void attackTargetEnemy(){
+    assert (target != null);
+    idle();
+    face(target!);
+    useWeapon();
+  }
+
+  bool enemyWithinRange(double range){
+     final distanceSquared = range * range;
+     final characters = game.characters;
+     for (final character in characters) {
+        if (!isEnemy(character)) continue;
+        final characterDistanceSquared = getDistanceSquared(character);
+        if (characterDistanceSquared > distanceSquared) continue;
+        return true;
+     }
+     return false;
+  }
+
+  @override
+  void onWeaponTypeChanged() {
+     updateWeaponRange();
   }
 
   void useWeapon() => game.characterUseWeapon(this);
