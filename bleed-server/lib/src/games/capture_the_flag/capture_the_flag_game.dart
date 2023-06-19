@@ -531,18 +531,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     nextGameCountDown.value = Next_Game_Duration;
   }
 
-  @override
-  void customOnCharacterDead(IsometricCharacter character) {
-    super.customOnCharacterDead(character);
-
-    if (character is CaptureTheFlagAI){
-      character.onDeath();
-    }
-  }
-
   double getWeaponTypeRange(int weaponType) => const <int, double>{
-    ItemType.Weapon_Ranged_Bow: 300,
     ItemType.Weapon_Melee_Sword: 60,
-    ItemType.Weapon_Ranged_Smg: 200,
+    ItemType.Weapon_Ranged_Bow: 300,
+    ItemType.Weapon_Ranged_Smg: 190,
+    ItemType.Weapon_Ranged_Shotgun: 150,
+    ItemType.Weapon_Ranged_Handgun: 200,
   }[weaponType] ?? (throw Exception('getWeaponTypeRange(${ItemType.getName(weaponType)})'));
 }

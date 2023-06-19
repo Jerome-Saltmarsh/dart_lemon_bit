@@ -373,13 +373,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void useWeapon() => game.characterUseWeapon(this);
 
-  void onDeath() {
-    pathIndex = 0;
-    pathEnd = 0;
-    target = null;
-    targetPrevious = null;
-  }
-
   bool flagOwnWithinRadius(double radius) =>
       flagOwnRespawning ? false : withinRadiusPosition(flagOwn, radius);
 
