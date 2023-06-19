@@ -76,32 +76,32 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flagRed.status = CaptureTheFlagFlagStatus.At_Base;
     flagBlue.status = CaptureTheFlagFlagStatus.At_Base;
 
-
     flagRed.moveTo(redFlagSpawn);
     flagBlue.moveTo(blueFlagSpawn);
 
-    for (var i = 1; i < 2; i++) {
+    for (var i = 1; i < 1; i++) {
       characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
-          characterClass: CaptureTheFlagCharacterClass.scout,
+           weaponType: ItemType.Weapon_Ranged_Sniper_Rifle,
           role: CaptureTheFlagAIRole.Defense));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
-          characterClass: CaptureTheFlagCharacterClass.scout,
+          weaponType: ItemType.Weapon_Ranged_Sniper_Rifle,
           role: CaptureTheFlagAIRole.Defense));
     }
-    for (var i = 0; i < 2; i++) {
+
+    for (var i = 0; i < 1; i++) {
       characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
-          characterClass: CaptureTheFlagCharacterClass.scout,
+          weaponType: ItemType.Weapon_Ranged_Smg,
           role: CaptureTheFlagAIRole.Offense));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
-          characterClass: CaptureTheFlagCharacterClass.scout,
+          weaponType: ItemType.Weapon_Ranged_Smg,
           role: CaptureTheFlagAIRole.Offense));
     }
 
@@ -109,13 +109,15 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
-          characterClass: CaptureTheFlagCharacterClass.knight,
-          role: CaptureTheFlagAIRole.Offense));
+          weaponType: ItemType.Weapon_Melee_Sword,
+          role: CaptureTheFlagAIRole.Offense,
+      ));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
-          characterClass: CaptureTheFlagCharacterClass.knight,
-          role: CaptureTheFlagAIRole.Offense));
+          weaponType: ItemType.Weapon_Melee_Sword,
+          role: CaptureTheFlagAIRole.Offense,
+      ));
     }
   }
 
@@ -537,4 +539,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       character.onDeath();
     }
   }
+
+  double getWeaponTypeRange(int weaponType) => const <int, double>{
+    ItemType.Weapon_Ranged_Bow: 300,
+    ItemType.Weapon_Melee_Sword: 60,
+    ItemType.Weapon_Ranged_Smg: 200,
+  }[weaponType] ?? (throw Exception('getWeaponTypeRange(${ItemType.getName(weaponType)})'));
 }

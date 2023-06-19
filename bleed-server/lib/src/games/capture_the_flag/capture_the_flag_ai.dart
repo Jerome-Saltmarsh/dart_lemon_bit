@@ -18,7 +18,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   var decision = CaptureTheFlagAIDecision.Idle;
   var viewRange = 500.0;
   CaptureTheFlagAIRole role;
-  CaptureTheFlagCharacterClass characterClass;
   IsometricPosition? targetPrevious;
   late int id;
   late final CaptureTheFlagGame game;
@@ -26,11 +25,10 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   CaptureTheFlagAI({
     required this.game,
     required super.team,
-    required this.characterClass,
+    required super.weaponType,
     this.role = CaptureTheFlagAIRole.Defense,
   }) : super(
     health: 10,
-    weaponType: ItemType.Empty,
     damage: 1,
     x: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).x,
     y: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).y,
@@ -44,19 +42,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       bodyType = ItemType.Body_Shirt_Blue;
       legsType = ItemType.Legs_Blue;
     }
-
-    switch (characterClass) {
-      case CaptureTheFlagCharacterClass.scout:
-        weaponType = ItemType.Weapon_Ranged_Bow;
-        break;
-      case CaptureTheFlagCharacterClass.knight:
-        weaponType = ItemType.Weapon_Melee_Sword;
-        break;
-      default:
-        break;
-    }
-
-    updateWeaponRange();
   }
 
   bool get atDestination => getDestinationDistanceSquared() < 150;
@@ -184,15 +169,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     decision = getDecision();
     executeDecision();
     updatePathIndexAndDestination();
-  }
-
-  void updateWeaponRange() {
-    if (weaponType == ItemType.Weapon_Ranged_Bow){
-      weaponRange = 300;
-    }
-    if (weaponType == ItemType.Weapon_Melee_Sword){
-      weaponRange = 60;
-    }
   }
 
   void updatePathToTarget() {
@@ -392,7 +368,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   @override
   void onWeaponTypeChanged() {
-     updateWeaponRange();
+    weaponRange = game.getWeaponTypeRange(weaponType);
   }
 
   void useWeapon() => game.characterUseWeapon(this);
