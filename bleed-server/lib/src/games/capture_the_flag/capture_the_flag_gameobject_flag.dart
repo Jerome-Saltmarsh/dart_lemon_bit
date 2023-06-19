@@ -1,10 +1,10 @@
 
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
+import 'package:bleed_server/src/games/capture_the_flag/mixins/i_capture_the_flag_team.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 
-class CaptureTheFlagGameObjectFlag extends IsometricGameObject {
+class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheFlagTeam {
 
   var status = 0;
   var respawnDuration = 0;
@@ -18,9 +18,6 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject {
     collidable = true;
     persistable = false;
   }
-
-  bool get isTeamRed => team == CaptureTheFlagTeam.Red;
-  bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
 
   bool get statusAtBase => status == CaptureTheFlagFlagStatus.At_Base;
   bool get statusCarriedByEnemy => status == CaptureTheFlagFlagStatus.Carried_By_Enemy;

@@ -14,15 +14,14 @@ import 'capture_the_flag_game.dart';
 
 
 class CaptureTheFlagAI extends IsometricCharacterTemplate {
-  static var _idCount = 0;
 
+  var decision = CaptureTheFlagAIDecision.Idle;
   var viewRange = 500.0;
-  var id = _idCount++;
   CaptureTheFlagAIRole role;
   CaptureTheFlagCharacterClass characterClass;
-  late final CaptureTheFlagGame game;
   IsometricPosition? targetPrevious;
-  var decision = CaptureTheFlagAIDecision.Idle;
+  late int id;
+  late final CaptureTheFlagGame game;
 
   CaptureTheFlagAI({
     required this.game,
@@ -37,6 +36,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     y: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).y,
     z: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).z,
   ) {
+    id = game.generateUniqueId();
     if (isTeamRed) {
       bodyType = ItemType.Body_Shirt_Red;
       legsType = ItemType.Legs_Red;
@@ -58,6 +58,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
     updateWeaponRange();
   }
+
   int get nodeIndex => game.scene.getNodeIndexV3(this);
   int get pathNodeIndex => path[pathIndex];
   double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);

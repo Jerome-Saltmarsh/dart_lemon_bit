@@ -8,7 +8,7 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
   void onChangedFlagRedStatus(int flagStatus) {
     if (playerIsTeamRed) {
       switch (flagStatus) {
-        case CaptureTheFlagFlagStatus.Carried_By_Allie:
+        case CaptureTheFlagFlagStatus.Carried_By_Ally:
           gamestream.audio.voiceYourTeamHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
@@ -27,7 +27,7 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
     assert (playerIsTeamBlue);
 
     switch (flagStatus) {
-      case CaptureTheFlagFlagStatus.Carried_By_Allie:
+      case CaptureTheFlagFlagStatus.Carried_By_Ally:
         gamestream.audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
@@ -45,7 +45,7 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
   void onChangedFlagBlueStatus(int flagStatus) {
     if (playerIsTeamBlue) {
       switch (flagStatus) {
-        case CaptureTheFlagFlagStatus.Carried_By_Allie:
+        case CaptureTheFlagFlagStatus.Carried_By_Ally:
           gamestream.audio.voiceYourTeamHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
@@ -64,7 +64,7 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
     assert (playerIsTeamRed);
 
     switch (flagStatus) {
-      case CaptureTheFlagFlagStatus.Carried_By_Allie:
+      case CaptureTheFlagFlagStatus.Carried_By_Ally:
         gamestream.audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:

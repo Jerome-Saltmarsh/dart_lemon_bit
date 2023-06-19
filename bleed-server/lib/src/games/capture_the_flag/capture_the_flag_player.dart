@@ -8,7 +8,10 @@ import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 
-class CaptureTheFlagPlayer extends IsometricPlayer {
+import 'mixins/i_capture_the_flag_team.dart';
+
+
+class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   @override
   final CaptureTheFlagGame game;
@@ -25,9 +28,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     weaponDamage = 1;
     weaponType = ItemType.Empty;
   }
-
-  bool get isTeamRed => team == CaptureTheFlagTeam.Red;
-  bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
 
   @override
   void customUpdate() {

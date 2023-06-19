@@ -10,6 +10,10 @@ abstract class Game <T extends Player> {
   int get maxPlayers;
   bool get isFull => players.length >= maxPlayers;
 
+  var _id = 0;
+
+  int generateUniqueId() => _id++;
+
   Game({required this.gameType});
 
   void update();
