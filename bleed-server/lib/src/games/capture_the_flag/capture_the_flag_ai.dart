@@ -130,6 +130,24 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
+  bool get shouldIncrementPathIndex =>
+      !arrivedAtPathEnd && nodeIndex == pathNodeIndex;
+
+  bool get arrivedAtPathEnd => pathIndex >= pathEnd;
+
+  bool get pathNeedsToBeUpdated {
+    if (targetPrevious != target) {
+      targetPrevious = target;
+      return true;
+    }
+    if (target == null) return false;
+
+    if (arrivedAtPathEnd) return true;
+
+    return pathEnd == 0 || game.scene.getNodeIndexV3(target!) != targetIndex;
+  }
+
+
   IsometricCollider? getNearestEnemy(){
     IsometricCollider? nearestEnemy;
     var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
@@ -198,11 +216,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
   }
 
-  bool get shouldIncrementPathIndex {
-     if (arrivedAtPathEnd) return false;
-     return nodeIndex == pathNodeIndex;
-  }
-
   void incrementPathIndex() {
     pathIndex++;
     if (arrivedAtPathEnd) {
@@ -225,21 +238,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       destinationY = scene.getNodePositionY(pathNodeIndex);
     }
   }
-
-  bool get arrivedAtPathEnd => pathIndex >= pathEnd;
-
-  bool get pathNeedsToBeUpdated {
-    if (targetPrevious != target) {
-      targetPrevious = target;
-      return true;
-    }
-    if (target == null) return false;
-
-    if (arrivedAtPathEnd) return true;
-
-    return pathEnd == 0 || game.scene.getNodeIndexV3(target!) != targetIndex;
-  }
-
 
   void executeDecision() {
 
