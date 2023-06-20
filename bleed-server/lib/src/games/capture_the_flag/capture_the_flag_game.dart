@@ -161,10 +161,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     if (mouseLeftDown) {
       if (!player.ignoreMouseLeftClick){
-        if (player.activatedPower.value == null){
+        if (player.powerActivated.value == null){
           characterUseWeapon(player);
         } else {
-          playerUseActivatedPower(player);
+          player.setCharacterStatePerforming(duration: 30);
           player.ignoreMouseLeftClick = true;
         }
       }
@@ -173,8 +173,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseRightDown) {
-      if (player.activatedPower.value != null) {
-           player.activatedPower.value = null;
+      if (player.powerActivated.value != null) {
+           player.powerActivated.value = null;
       } else {
         player.selectAINearestToMouse();
       }
@@ -185,8 +185,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   void playerUseActivatedPower(CaptureTheFlagPlayer player) {
-    final activatedPower = player.activatedPower.value;
+    final activatedPower = player.powerActivated.value;
     if (activatedPower == null) return;
+
+    player.setCharacterStatePerforming(duration: 30);
 
     switch (activatedPower.type) {
 
@@ -212,7 +214,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     activatedPower.activated();
-    player.activatedPower.value = null;
+    player.powerActivated.value = null;
   }
 
   @override
@@ -460,8 +462,14 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   void updatePlayer(CaptureTheFlagPlayer player) {
-    final activatedPower = player.activatedPower.value;
 
+    if (player.performing) {
+       if (player.powerActivated.value != null && player.stateDuration == 20){
+          playerUseActivatedPower(player);
+       }
+    }
+
+    final activatedPower = player.powerActivated.value;
     if (activatedPower == null) return;
 
     switch (activatedPower.type.mode){

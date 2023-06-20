@@ -21,6 +21,7 @@ import 'isometric_settings.dart';
 abstract class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _accuracy = 0.0;
+  /// TODO BELONGS IN isometric_character_template.dart
   var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;

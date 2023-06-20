@@ -1862,50 +1862,45 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateCharacterStatePerforming(IsometricCharacter character) {
-    if (character.isTemplate) {
-      if (!character.weaponStateBusy) {
-        characterUseWeapon(character);
-      }
-      return;
-    }
-    const framePerformStrike = 10;
-    if (character.stateDuration != framePerformStrike) return;
-
-    dispatchAttackPerformed(
-      character.weaponType,
-      character.x + getAdjacent(character.faceAngle, 30),
-      character.y + getOpposite(character.faceAngle, 30),
-      character.z,
-      character.faceAngle,
-    );
-
-    final attackTarget = character.target;
-    if (attackTarget == null) return;
-    if (attackTarget is IsometricCollider) {
-      applyHit(
-        target: attackTarget,
-        angle: radiansV2(character, attackTarget),
-        srcCharacter: character,
-        damage: character.weaponDamage,
-        hitType: IsometricHitType.Projectile,
-      );
-      clearCharacterTarget(character);
-    }
+    // if (character.isTemplate) {
+    //   if (!character.weaponStateBusy) {
+    //     characterUseWeapon(character);
+    //   }
+    //   return;
+    // }
+    // const framePerformStrike = 10;
+    // if (character.stateDuration != framePerformStrike) return;
+    //
+    // dispatchAttackPerformed(
+    //   character.weaponType,
+    //   character.x + getAdjacent(character.faceAngle, 30),
+    //   character.y + getOpposite(character.faceAngle, 30),
+    //   character.z,
+    //   character.faceAngle,
+    // );
+    //
+    // final attackTarget = character.target;
+    // if (attackTarget == null) return;
+    // if (attackTarget is IsometricCollider) {
+    //   applyHit(
+    //     target: attackTarget,
+    //     angle: radiansV2(character, attackTarget),
+    //     srcCharacter: character,
+    //     damage: character.weaponDamage,
+    //     hitType: IsometricHitType.Projectile,
+    //   );
+    //   clearCharacterTarget(character);
+    // }
   }
 
   void updateIsometricCharacter(IsometricCharacter character) {
     if (character.dead) return;
     if (!character.active) return;
 
+    // TODO INVALID LOCATION
     if (!character.isPlayer) {
       character.lookRadian = character.faceAngle;
     }
-
-    // final characterTarget = character.target;
-    // if (characterTarget != null) {
-    //    character.face(characterTarget);
-    //    character.setCharacterStateRunning();
-    // }
 
     character.updateAccuracy();
 
@@ -1925,6 +1920,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
+    /// TODO INVALID HIERARCHY
     if (character is IsometricAI) {
       character.updateAI();
       character.applyBehaviorWander(this);
@@ -1960,17 +1956,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {
-        return character.setCharacterStateIdle();
+        character.setCharacterStateIdle();
+        return;
       }
     }
     switch (character.state) {
       case CharacterAction.Idle:
-      // only do this if not struck or recovering
-      // speed *= 0.75;
         break;
       case CharacterState.Running:
         character.applyForce(
-            force: character.runSpeed, angle: character.faceAngle);
+            force: character.runSpeed,
+            angle: character.faceAngle,
+        );
         if (character.nextFootstep++ >= 10) {
           dispatch(
             GameEventType.Footstep,
@@ -1983,14 +1980,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         }
         break;
       case CharacterState.Performing:
-        updateCharacterStatePerforming(character);
+        // updateCharacterStatePerforming(character);
         break;
       case CharacterState.Spawning:
         if (character.stateDurationRemaining == 1) {
           customOnCharacterSpawned(character);
-        }
-        if (character.stateDuration == 0 && character is IsometricPlayer) {
-          // character.writePlayerEvent(PlayerEvent.Spawn_Started);
         }
         break;
     }

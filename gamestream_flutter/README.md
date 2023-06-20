@@ -35,11 +35,15 @@ alt + m             : go to declaration
 [ ] destroyable terrain
 [ai system]
   [ ] pathfinding 3d 
+[refactor]
+  [ ] isometric_character
 [power system]
   [x] right click to cancel active power 
   [x] caste power blink
   [x] prevent attack on caste power
-  [ ] caste power slow
+  [x] caste power slow
+  [ ] perform caste
+  [ ] fix perform animation
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding
