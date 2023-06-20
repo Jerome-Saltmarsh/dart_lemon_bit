@@ -1,7 +1,6 @@
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
+import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_power.dart';

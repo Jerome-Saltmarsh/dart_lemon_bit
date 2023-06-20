@@ -1,16 +1,7 @@
-enum CaptureTheFlagPowerMode {
-  Self,
-  Positional,
-  Targeted,
-}
 
-enum CaptureTheFlagPowerType {
-   Blink(CaptureTheFlagPowerMode.Positional),
-   Slow(CaptureTheFlagPowerMode.Targeted);
 
-   final CaptureTheFlagPowerMode mode;
-   const CaptureTheFlagPowerType(this.mode);
-}
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_power_mode.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_power_type.dart';
 
 class CaptureTheFlagPower {
   final CaptureTheFlagPowerType type;

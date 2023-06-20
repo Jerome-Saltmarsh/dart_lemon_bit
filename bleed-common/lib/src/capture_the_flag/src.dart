@@ -10,3 +10,5 @@ export 'capture_the_flag_request.dart';
 export 'capture_the_flag_game_status.dart';
 export 'capture_the_flag_ai_decision.dart';
 export 'capture_the_flag_ai_role.dart';
+export 'capture_the_flag_power_mode.dart';
+export 'capture_the_flag_power_type.dart';

@@ -1,7 +1,6 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/job.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
