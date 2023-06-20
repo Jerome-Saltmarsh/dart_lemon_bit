@@ -152,6 +152,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       required bool mouseRightDown,
       required bool keySpaceDown,
       required bool inputTypeKeyboard}) {
+
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
@@ -176,8 +177,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseRightDown) {
-      if (player.powerActivated.value != null) {
-           player.powerActivated.value = null;
+      if (player.canDeselectActivatedPower) {
+        player.deselectActivatedPower();
       } else {
         player.selectAINearestToMouse();
       }

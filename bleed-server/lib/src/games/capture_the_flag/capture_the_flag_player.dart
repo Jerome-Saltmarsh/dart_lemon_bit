@@ -301,4 +301,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void performActivatedPower() =>
       setCharacterStatePerforming(duration: 30);
+
+  bool get canDeselectActivatedPower => powerActivated.value != null;
+
+  void deselectActivatedPower(){
+     powerActivated.value = null;
+  }
 }
