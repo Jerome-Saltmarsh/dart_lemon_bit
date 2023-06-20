@@ -289,4 +289,16 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeUInt16(power.cooldownRemaining);
     writeBool(powerActivated.value == power);
   }
+
+  bool get canPerformActivatedPower {
+    final power = powerActivated.value;
+    if (power == null)
+      return false;
+    if (power.isTargeted && activatedPowerTarget == null)
+       return false;
+    return true;
+  }
+
+  void performActivatedPower() =>
+      setCharacterStatePerforming(duration: 30);
 }

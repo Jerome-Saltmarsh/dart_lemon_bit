@@ -161,11 +161,14 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     if (mouseLeftDown) {
       if (!player.ignoreMouseLeftClick){
-        if (player.powerActivated.value == null){
+        final powerActivated = player.powerActivated.value;
+        if (powerActivated == null){
           characterUseWeapon(player);
         } else {
-          player.setCharacterStatePerforming(duration: 30);
           player.ignoreMouseLeftClick = true;
+          if (player.canPerformActivatedPower) {
+            player.performActivatedPower();
+          }
         }
       }
     } else if (player.ignoreMouseLeftClick){
