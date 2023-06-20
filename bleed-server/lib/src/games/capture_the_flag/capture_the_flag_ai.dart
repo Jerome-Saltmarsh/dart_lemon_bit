@@ -44,7 +44,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
   }
 
-  bool get atDestination => getDestinationDistanceSquared() < 150;
+  bool get shouldRunToDestination =>
+      !deadOrBusy && getDestinationDistanceSquared() > 150;
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
   int get nodeIndex => game.scene.getNodeIndexV3(this);
@@ -171,7 +172,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     updatePathIndexAndDestination();
   }
 
-  void updatePathToTarget() {
+  void updatePath() {
     if (target == null){
       pathEnd = 0;
       pathIndex = 0;
@@ -182,45 +183,42 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   void updatePathIndexAndDestination() {
-    final target = this.target;
 
     if (enemyTargetAttackable) {
       attackTargetEnemy();
-      return;
     }
-
     if (pathNeedsToBeUpdated) {
-      updatePathToTarget();
+      updatePath();
     }
-
-    if (!atDestination) {
-      return runToDestination();
+    if (shouldRunToDestination) {
+      runToDestination();
     }
-
-    if (pathIndex >= pathEnd) {
-      updatePathToTarget();
+    if (shouldIncrementPathIndex) {
+      incrementPathIndex();
     }
+  }
 
+  bool get shouldIncrementPathIndex {
+     if (arrivedAtPathEnd) return false;
+     return nodeIndex == pathNodeIndex;
+  }
 
-    if (target == null) return;
-
-    if (withinRadiusPosition(target, Node_Size)){
-      pathEnd = 0;
-      pathIndex = 0;
-      destinationX = target.x;
-      destinationY = target.y;
-      return;
-    }
-
-    if (pathIndex >= pathEnd) return;
-    if (!atDestination) return;
+  void incrementPathIndex() {
     pathIndex++;
-    if (pathIndex >= pathEnd) {
+    if (arrivedAtPathEnd) {
       pathIndex = 0;
       pathEnd = 0;
-      destinationX = x;
-      destinationY = y;
-      destinationZ = z;
+
+      final target = this.target;
+      if (target != null) {
+        destinationX = target.x;
+        destinationY = target.y;
+        destinationZ = target.z;
+      } else {
+        destinationX = x;
+        destinationY = y;
+        destinationZ = z;
+      }
     } else {
       final scene = game.scene;
       destinationX = scene.getNodePositionX(pathNodeIndex);
@@ -228,12 +226,16 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
   }
 
+  bool get arrivedAtPathEnd => pathIndex >= pathEnd;
+
   bool get pathNeedsToBeUpdated {
     if (targetPrevious != target) {
       targetPrevious = target;
       return true;
     }
     if (target == null) return false;
+
+    if (arrivedAtPathEnd) return true;
 
     return pathEnd == 0 || game.scene.getNodeIndexV3(target!) != targetIndex;
   }
