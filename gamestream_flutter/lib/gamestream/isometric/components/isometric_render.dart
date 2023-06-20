@@ -41,6 +41,9 @@ class IsometricRender {
   })=> renderCircle(position.x, position.y, position.z, radius);
 
   void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
+    if (radius <= 0) return;
+    if (sections < 3) return;
+
     engine.paint.color = Colors.white;
     final anglePerSection = pi2 / sections;
     var lineX1 = adj(0, radius);

@@ -2,7 +2,6 @@ import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_nodes.dart';
-import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';
@@ -26,6 +25,16 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     }
 
     if (playerActivatedPowerType.value != null) {
+      if (playerActivatedPowerRange.value > 0) {
+        isometric.renderer.renderCircle(
+          player.x,
+          player.y,
+          player.z,
+          playerActivatedPowerRange.value,
+          sections: 24,
+        );
+      }
+
       isometric.renderer.renderCircle(
         IsometricMouse.positionX,
         IsometricMouse.positionY,

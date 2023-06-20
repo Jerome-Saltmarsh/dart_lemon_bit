@@ -103,6 +103,7 @@ extension CaptureTheFlagResponseReader on Gamestream {
           captureTheFlag.playerActivatedPowerType.value = null;
         } else {
           captureTheFlag.playerActivatedPowerType.value = readPowerType();
+          captureTheFlag.playerActivatedPowerRange.value = readUInt16().toDouble();
         }
         break;
     }

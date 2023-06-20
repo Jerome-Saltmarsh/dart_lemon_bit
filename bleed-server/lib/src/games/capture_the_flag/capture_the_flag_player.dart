@@ -16,7 +16,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   @override
   final CaptureTheFlagGame game;
 
-  final CaptureTheFlagPower power1 = CaptureTheFlagPower(CaptureTheFlagPowerType.Blink);
+  final CaptureTheFlagPower power1 = CaptureTheFlagPower(type: CaptureTheFlagPowerType.Blink, range: 400);
 
   late final activatedPower = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
 
@@ -209,5 +209,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     }
     writeBool(true);
     writeByte(value.type.index);
+    writeUInt16(value.range.toInt());
   }
 }
