@@ -136,6 +136,7 @@ extension CaptureTheFlagResponseReader on Gamestream {
     power.type.value = readPowerType();
     power.cooldown.value = readUInt16();
     power.cooldownRemaining.value = readUInt16();
+    power.activated.value = readBool();
   }
 
   CaptureTheFlagPowerType readPowerType() =>

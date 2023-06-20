@@ -375,15 +375,20 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       ),
     );
 
-  Widget buildControlPower(CaptureTheFlagPower power) => Column(
-      children: [
-        watch(power.type, (powerType) =>
-            buildText(powerType.name)),
-        watch(power.cooldown, (cooldown) =>
-            watch(power.cooldownRemaining, (cooldownRemaining) =>
-                buildText('$cooldownRemaining / $cooldown'))),
-      ],
-    );
+  Widget buildControlPower(CaptureTheFlagPower power) => watch(power.activated, (activated) =>
+    Container(
+      color: activated ? Colors.white12 : Colors.transparent,
+      child: Column(
+          children: [
+            watch(power.type, (powerType) =>
+                buildText(powerType.name)),
+            watch(power.cooldown, (cooldown) =>
+                watch(power.cooldownRemaining, (cooldownRemaining) =>
+                    buildText('$cooldownRemaining / $cooldown'))),
+          ],
+        ),
+    ),
+  );
 }
 
 

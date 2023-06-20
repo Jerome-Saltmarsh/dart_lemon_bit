@@ -281,9 +281,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writePower(power2);
   }
 
-  void writePower(CaptureTheFlagPower power){
+  void writePower(CaptureTheFlagPower power) {
     writeByte(power.type.index);
     writeUInt16(power.cooldown);
     writeUInt16(power.cooldownRemaining);
+    writeBool(activatedPower.value == power);
   }
 }
