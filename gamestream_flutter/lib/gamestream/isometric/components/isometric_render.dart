@@ -38,7 +38,8 @@ class IsometricRender {
   void renderCircleAtIsometricPosition({
     required IsometricPosition position,
     required double radius,
-  })=> renderCircle(position.x, position.y, position.z, radius);
+    int sections = 12,
+  })=> renderCircle(position.x, position.y, position.z, radius, sections: sections);
 
   void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
     if (radius <= 0) return;

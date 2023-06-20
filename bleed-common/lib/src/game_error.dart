@@ -14,6 +14,7 @@ enum GameError {
   Insufficient_Resources,
   Insufficient_Credits,
   Already_Equipped,
+  Target_Required,
   CharacterTypeAlreadySelected,
   Cannot_Purchase_At_The_Moment,
   Inventory_Equip_Failed_Belt_Full,

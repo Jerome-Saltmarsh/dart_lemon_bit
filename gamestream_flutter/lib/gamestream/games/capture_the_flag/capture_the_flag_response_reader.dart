@@ -113,6 +113,15 @@ extension CaptureTheFlagResponseReader on Gamestream {
         captureTheFlag.playerActivatedPowerY.value = readUInt24().toDouble();
         break;
 
+      case CaptureTheFlagResponse.Activated_Power_Target:
+        final playerActivatedTargetPositionSet = readBool();;
+        captureTheFlag.playerActivatedTargetSet = playerActivatedTargetPositionSet;
+        if (!playerActivatedTargetPositionSet)
+          break;
+
+        readIsometricPosition(captureTheFlag.playerActivatedTarget);
+        break;
+
       case CaptureTheFlagResponse.Power_1:
         readPower(captureTheFlag.playerPower1);
         break;

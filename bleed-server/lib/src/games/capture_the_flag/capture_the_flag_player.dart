@@ -7,6 +7,7 @@ import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
+import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 
 import 'mixins/i_capture_the_flag_team.dart';
@@ -18,6 +19,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
+  IsometricPosition? activatedPowerTarget;
 
   @override
   final CaptureTheFlagGame game;
@@ -67,10 +69,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     super.writePlayerGame();
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
-    writeSelectedCharacter();
-    writeActivatedPowerPosition();
-    writePower1();
-    writePower2();
+    writeSelectedCharacter(); // todo optimize
+    writeActivatedPowerPosition(); // todo optimize
+    writeActivatedPowerTarget(); // todo optimize
+    writePower1(); // todo optimize
+    writePower2(); // todo optimize
   }
 
   void writeActivatedPowerPosition() {
@@ -79,6 +82,22 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(CaptureTheFlagResponse.Activated_Power_Position);
     writeUInt24(activatedPowerX.toInt());
     writeUInt24(activatedPowerY.toInt());
+  }
+
+  void writeActivatedPowerTarget() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Activated_Power_Target);
+    if (activatedPower.value == null) {
+      writeBool(false);
+      return;
+    }
+    final activatedPowerTarget = this.activatedPowerTarget;
+    if (activatedPowerTarget == null) {
+      writeBool(false);
+      return;
+    }
+    writeBool(true);
+    writeIsometricPosition(activatedPowerTarget);
   }
 
   void writeFlagPositions() {

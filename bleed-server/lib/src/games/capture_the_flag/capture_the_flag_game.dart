@@ -1,6 +1,7 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/job.dart';
+import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
@@ -159,14 +160,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseLeftDown) {
-      final activatedPower = player.activatedPower.value;
-      if (activatedPower == null){
+      if (player.activatedPower.value == null){
         characterUseWeapon(player);
-      } else if (activatedPower.type == CaptureTheFlagPowerType.Blink){
-        player.x = player.activatedPowerX;
-        player.y = player.activatedPowerY;
-        activatedPower.activated();
-        player.activatedPower.value = null;
+      } else {
+        useActivatedPower(player);
       }
     }
 
@@ -175,6 +172,27 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     playerRunInDirection(player, Direction.fromInputDirection(direction));
+  }
+
+  void useActivatedPower(CaptureTheFlagPlayer player) {
+    final activatedPower = player.activatedPower.value;
+    if (activatedPower == null) return;
+
+    switch (activatedPower.type) {
+      case CaptureTheFlagPowerType.Blink:
+        player.x = player.activatedPowerX;
+        player.y = player.activatedPowerY;
+        break;
+      case CaptureTheFlagPowerType.Slow:
+        if (player.activatedPowerTarget == null){
+          player.writeGameError(GameError.Target_Required);
+          return;
+        }
+        break;
+    }
+
+    activatedPower.activated();
+    player.activatedPower.value = null;
   }
 
   @override
@@ -426,16 +444,44 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     if (activatedPower == null) return;
 
-    if (activatedPower.type.mode == CaptureTheFlagPowerMode.Positional){
-      final range = activatedPower.range;
-      if (player.mouseDistance <= range){
-        player.activatedPowerX = player.mouseGridX;
-        player.activatedPowerY = player.mouseGridY;
-      } else {
-        final angle = player.mouseAngle;
-        player.activatedPowerX = player.x + getAdjacent(angle, range);
-        player.activatedPowerY = player.y + getOpposite(angle, range);
-      }
+    switch (activatedPower.type.mode){
+      case CaptureTheFlagPowerMode.Self:
+        break;
+      case CaptureTheFlagPowerMode.Positional:
+        updatePlayerActivatedPowerPosition(activatedPower, player);
+        break;
+      case CaptureTheFlagPowerMode.Targeted:
+        updatePlayerActivatedPowerTarget(player, activatedPower);
+        break;
+    }
+
+  }
+
+  void updatePlayerActivatedPowerPosition(CaptureTheFlagPower activatedPower, CaptureTheFlagPlayer player) {
+    final range = activatedPower.range;
+    if (player.mouseDistance <= range){
+      player.activatedPowerX = player.mouseGridX;
+      player.activatedPowerY = player.mouseGridY;
+    } else {
+      final angle = player.mouseAngle;
+      player.activatedPowerX = player.x + getAdjacent(angle, range);
+      player.activatedPowerY = player.y + getOpposite(angle, range);
+    }
+  }
+
+  void updatePlayerActivatedPowerTarget(CaptureTheFlagPlayer player, CaptureTheFlagPower activatedPower) {
+    var nearestSquared = 10000.0;
+    player.activatedPowerTarget = null;
+    for (final character in characters) {
+      if (character.dead) continue;
+      if (!character.active) continue;
+      if (!player.isEnemy(character)) continue;
+      if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
+      if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 25)) continue;
+      final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+      if (characterDistanceSquared > nearestSquared) continue;
+      nearestSquared = characterDistanceSquared;
+      player.activatedPowerTarget = character;
     }
   }
 

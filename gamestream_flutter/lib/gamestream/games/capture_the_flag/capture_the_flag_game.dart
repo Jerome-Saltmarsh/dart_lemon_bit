@@ -18,6 +18,7 @@ class CaptureTheFlagGame extends GameIsometric {
 
   var objectiveLinesEnabled = false;
   var characterTargetTotal = 0;
+  var playerActivatedTargetSet = false;
 
   final Gamestream gamestream;
   final tab = Watch(CaptureTheFlagUITabs.Selected_Character);
@@ -57,6 +58,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerActivatedPowerRange = Watch(0.0);
   final playerActivatedPowerX = Watch(0.0);
   final playerActivatedPowerY = Watch(0.0);
+  final playerActivatedTarget = IsometricPosition();
   final playerPower1 = CaptureTheFlagPower();
   final playerPower2 = CaptureTheFlagPower();
 

@@ -24,6 +24,13 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
       renderCharacterSelected();
     }
 
+    if (playerActivatedTargetSet){
+      isometric.renderer.renderCircleAtIsometricPosition(
+        position: playerActivatedTarget,
+        radius: 40,
+      );
+    }
+
     if (playerActivatedPowerType.value != null) {
       if (playerActivatedPowerRange.value > 0) {
         isometric.renderer.renderCircle(
