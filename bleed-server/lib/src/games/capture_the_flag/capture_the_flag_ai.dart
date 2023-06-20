@@ -189,13 +189,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       return;
     }
 
-    if (targetPrevious != target) {
-      targetPrevious = target;
+    if (pathNeedsToBeUpdated) {
       updatePathToTarget();
-    } else if (target != null) {
-      if (game.scene.getNodeIndexV3(target) != targetIndex) {
-        updatePathToTarget();
-      }
     }
 
     if (!atDestination) {
@@ -231,6 +226,16 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       destinationX = scene.getNodePositionX(pathNodeIndex);
       destinationY = scene.getNodePositionY(pathNodeIndex);
     }
+  }
+
+  bool get pathNeedsToBeUpdated {
+    if (targetPrevious != target) {
+      targetPrevious = target;
+      return true;
+    }
+    if (target == null) return false;
+
+    return pathEnd == 0 || game.scene.getNodeIndexV3(target!) != targetIndex;
   }
 
 
