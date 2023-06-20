@@ -89,6 +89,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
   IsometricScene get scene => game.scene;
 
+  double get mouseDistance => getDistanceXY(mouseGridX, mouseGridY);
+
 
   set aimTarget(IsometricCollider? collider) {
     if (_aimTarget == collider) return;

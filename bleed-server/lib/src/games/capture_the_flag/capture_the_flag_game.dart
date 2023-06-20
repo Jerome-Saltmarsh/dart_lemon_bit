@@ -6,7 +6,9 @@ import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
+import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/give_or_take.dart';
+import 'package:lemon_math/functions/opposite.dart';
 
 import 'capture_the_flag_gameobject_flag.dart';
 import 'capture_the_flag_player.dart';
@@ -160,8 +162,15 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (activatedPower == null){
         characterUseWeapon(player);
       } else if (activatedPower.type == CaptureTheFlagPowerType.Blink){
-         player.x = player.mouseGridX;
-         player.y = player.mouseGridY;
+         if (player.mouseDistance <= activatedPower.range){
+           player.x = player.mouseGridX;
+           player.y = player.mouseGridY;
+         } else {
+           final angle = player.mouseAngle;
+           player.x += getAdjacent(angle, activatedPower.range);
+           player.y += getOpposite(angle, activatedPower.range);
+         }
+
          player.activatedPower.value = null;
       }
     }
