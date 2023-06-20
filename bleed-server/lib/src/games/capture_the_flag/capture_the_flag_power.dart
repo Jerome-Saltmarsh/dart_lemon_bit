@@ -1,36 +1,23 @@
-import 'package:bleed_server/src/games/isometric/isometric_position.dart';
-
-enum CaptureTheFlagPowerType {
-   Blink,
-   Slow,
-}
-
-abstract class CaptureTheFlagPower {
-  final CaptureTheFlagPowerMode mode;
-  CaptureTheFlagPower(this.mode);
-}
-
-abstract class CaptureTheFlagPowerPositional extends CaptureTheFlagPower {
-
-  void activate({
-    required IsometricPosition src,
-    required double x,
-    required double y,
-    required double z,
-  });
-
-  CaptureTheFlagPowerPositional() : super(CaptureTheFlagPowerMode.Positional);
-}
-
-class CaptureTheFlagPowerBlink extends CaptureTheFlagPowerPositional {
-  @override
-  void activate({required IsometricPosition src, required double x, required double y, required double z}) {
-    // TODO: implement activate
-  }
-}
-
 enum CaptureTheFlagPowerMode {
   Self,
   Positional,
   Targeted,
 }
+
+enum CaptureTheFlagPowerType {
+   Blink(CaptureTheFlagPowerMode.Positional),
+   Slow(CaptureTheFlagPowerMode.Targeted);
+
+   final CaptureTheFlagPowerMode mode;
+   const CaptureTheFlagPowerType(this.mode);
+}
+
+class CaptureTheFlagPower {
+  final CaptureTheFlagPowerType type;
+  CaptureTheFlagPower(this.type);
+
+  bool get isPositional => type.mode == CaptureTheFlagPowerMode.Positional;
+  bool get isTargeted => type.mode == CaptureTheFlagPowerMode.Targeted;
+  bool get isSelf => type.mode == CaptureTheFlagPowerMode.Self;
+}
+

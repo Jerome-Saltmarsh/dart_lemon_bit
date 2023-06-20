@@ -17,7 +17,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   @override
   final CaptureTheFlagGame game;
 
-  final CaptureTheFlagPower power1 = CaptureTheFlagPowerBlink();
+  final CaptureTheFlagPower power1 = CaptureTheFlagPower(CaptureTheFlagPowerType.Blink);
 
   CaptureTheFlagPower? activatedPower;
 
