@@ -477,7 +477,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (!character.active) continue;
       if (!player.isEnemy(character)) continue;
       if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
-      if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 25)) continue;
+      if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
       final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
       if (characterDistanceSquared > nearestSquared) continue;
       nearestSquared = characterDistanceSquared;

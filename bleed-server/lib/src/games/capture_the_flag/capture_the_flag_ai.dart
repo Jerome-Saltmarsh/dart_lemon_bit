@@ -130,10 +130,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
-  bool get shouldIncrementPathIndex =>
-      !arrivedAtPathEnd && nodeIndex == pathNodeIndex;
+  bool get shouldIncrementPathIndex => nodeIndex == pathNodeIndex;
 
-  bool get arrivedAtPathEnd => pathIndex >= pathEnd;
+  bool get arrivedAtPathEnd => pathEnd > 0 && pathIndex >= pathEnd;
 
   bool get pathNeedsToBeUpdated {
     if (indexZ != 1) return false;
@@ -144,10 +143,18 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
     if (target == null) return false;
 
-    if (arrivedAtPathEnd) return true;
+    if (pathEnd <= 0) {
+      return game.scene.getNodeIndexV3(target!) != game.scene.getNodeIndexV3(this);
+    }
 
-    return pathEnd == 0 || game.scene.getNodeIndexV3(target!) != targetIndex;
+    if (arrivedAtPathEnd) {
+      return true;
+    }
+
+    return targetIndexChanged;
   }
+
+  bool get targetIndexChanged => target != null && game.scene.getNodeIndexV3(target!) != targetIndex;
 
 
   IsometricCollider? getNearestEnemy(){
@@ -220,21 +227,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void incrementPathIndex() {
     pathIndex++;
-    if (arrivedAtPathEnd) {
-      pathIndex = 0;
-      pathEnd = 0;
-
-      final target = this.target;
-      if (target != null) {
-        destinationX = target.x;
-        destinationY = target.y;
-        destinationZ = target.z;
-      } else {
-        destinationX = x;
-        destinationY = y;
-        destinationZ = z;
-      }
-    } else {
+    if (!arrivedAtPathEnd) {
       final scene = game.scene;
       destinationX = scene.getNodePositionX(pathNodeIndex);
       destinationY = scene.getNodePositionY(pathNodeIndex);
