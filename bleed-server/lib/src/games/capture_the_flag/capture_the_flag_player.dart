@@ -14,29 +14,28 @@ import 'mixins/i_capture_the_flag_team.dart';
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
+  IsometricCharacter? selectedCharacter;
+
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
 
   @override
   final CaptureTheFlagGame game;
-
-  final CaptureTheFlagPower power1 = CaptureTheFlagPower(
-      type: CaptureTheFlagPowerType.Blink,
-      range: 300,
-      cooldown: 400,
-  );
+  final CaptureTheFlagPower power1;
+  final CaptureTheFlagPower power2;
 
   late final activatedPower = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
-
-
-  IsometricCharacter? selectedCharacter;
 
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
       onChangedFlagStatus,
   );
 
-  CaptureTheFlagPlayer({required this.game}) : super(game: game) {
+  CaptureTheFlagPlayer({
+    required this.game,
+    required this.power1,
+    required this.power2,
+  }) : super(game: game) {
     writeScore();
     weaponDamage = 1;
     weaponType = ItemType.Empty;
@@ -50,16 +49,18 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
       updatePathToMouse();
     }
 
+    updatePowers();
+  }
+
+  void updatePowers() {
     power1.update();
+    power2.update();
   }
 
-  void updatePathToMouse() {
-    setPathToNodeIndex(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, 25));
-  }
+  void updatePathToMouse() =>
+      setPathToNodeIndex(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, 25));
 
-  void onChangedFlagStatus(int value){
-    writePlayerFlagStatus(value);
-  }
+  void onChangedFlagStatus(int value) => writePlayerFlagStatus(value);
 
   @override
   void writePlayerGame() {
@@ -69,6 +70,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeSelectedCharacter();
     writeActivatedPowerPosition();
     writePower1();
+    writePower2();
   }
 
   void writeActivatedPowerPosition() {
@@ -223,13 +225,18 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
      selectedCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
   }
 
-  void activatePower1() {
-    if (!power1.ready) {
+  void activatePower1() => activatePower(power1);
+
+  void activatePower2() => activatePower(power2);
+
+  void activatePower(CaptureTheFlagPower value) {
+    if (!value.ready) {
       writeGameError(GameError.Power_Not_Ready);
       return;
     }
-    activatedPower.value = power1;
+    activatedPower.value = value;
   }
+
 
   void onActivatedPowerChanged(CaptureTheFlagPower? value){
     writeByte(ServerResponse.Capture_The_Flag);
@@ -247,6 +254,12 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_1);
     writePower(power1);
+  }
+
+  void writePower2() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Power_2);
+    writePower(power2);
   }
 
   void writePower(CaptureTheFlagPower power){

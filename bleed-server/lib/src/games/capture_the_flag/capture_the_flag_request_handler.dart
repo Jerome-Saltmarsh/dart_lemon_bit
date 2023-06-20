@@ -44,6 +44,9 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case CaptureTheFlagRequest.Activate_Power_1:
         player.activatePower1();
         break;
+      case CaptureTheFlagRequest.Activate_Power_2:
+        player.activatePower2();
+        break;
     }
   }
 }

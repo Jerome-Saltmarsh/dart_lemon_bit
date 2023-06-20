@@ -13,6 +13,7 @@ import 'package:lemon_math/functions/opposite.dart';
 import 'capture_the_flag_gameobject_flag.dart';
 import 'capture_the_flag_player.dart';
 import 'capture_the_flag_ai.dart';
+import 'capture_the_flag_power.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   static const Target_Points = 11;
@@ -436,12 +437,23 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         player.activatedPowerY = player.y + getOpposite(angle, range);
       }
     }
-
   }
 
   @override
   CaptureTheFlagPlayer buildPlayer() {
-    final player = CaptureTheFlagPlayer(game: this);
+    final player = CaptureTheFlagPlayer(
+      game: this,
+      power1: CaptureTheFlagPower(
+        type: CaptureTheFlagPowerType.Blink,
+        range: 300,
+        cooldown: 400,
+      ),
+      power2: CaptureTheFlagPower(
+        type: CaptureTheFlagPowerType.Slow,
+        range: 300,
+        cooldown: 300,
+      ),
+    );
     player.team = countPlayersOnTeamBlue > countPlayersOnTeamRed
         ? CaptureTheFlagTeam.Red
         : CaptureTheFlagTeam.Blue;

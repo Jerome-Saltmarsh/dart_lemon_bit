@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 
@@ -362,17 +363,26 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       width: engine.screen.width,
       alignment: Alignment.center,
       child: buildWindow(
-          child: Column(
+          width: 300,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildText("Power 1"),
-              watch(playerPower1.type, (powerType) =>
-                  buildText(powerType.name)),
-              watch(playerPower1.cooldown, (cooldown) =>
-                  watch(playerPower1.cooldownRemaining, (cooldownRemaining) =>
-                      buildText('$cooldownRemaining / $cooldown'))),
+              buildControlPower(playerPower1),
+              width8,
+              buildControlPower(playerPower2),
             ],
           ),
       ),
+    );
+
+  Widget buildControlPower(CaptureTheFlagPower power) => Column(
+      children: [
+        watch(power.type, (powerType) =>
+            buildText(powerType.name)),
+        watch(power.cooldown, (cooldown) =>
+            watch(power.cooldownRemaining, (cooldownRemaining) =>
+                buildText('$cooldownRemaining / $cooldown'))),
+      ],
     );
 }
 

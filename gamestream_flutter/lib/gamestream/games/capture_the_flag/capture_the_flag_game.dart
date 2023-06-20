@@ -58,6 +58,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerActivatedPowerX = Watch(0.0);
   final playerActivatedPowerY = Watch(0.0);
   final playerPower1 = CaptureTheFlagPower();
+  final playerPower2 = CaptureTheFlagPower();
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
@@ -75,17 +76,22 @@ class CaptureTheFlagGame extends GameIsometric {
 
   @override
   void onKeyPressed(int key) {
-    print("onKeyPressed($key)");
     super.onKeyPressed(key);
 
     switch (key){
       case KeyCode.Digit_1:
         activatePower1();
         break;
+      case KeyCode.Digit_2:
+        activatePower2();
+        break;
     }
   }
 
   void activatePower1() =>
       sendCaptureTheFlagRequest(CaptureTheFlagRequest.Activate_Power_1);
+
+  void activatePower2() =>
+      sendCaptureTheFlagRequest(CaptureTheFlagRequest.Activate_Power_2);
 
 }
