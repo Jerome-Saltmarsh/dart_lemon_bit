@@ -189,19 +189,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void selectAINearestToMouse() {
-     selectedCharacter = getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
-  }
-
-  IsometricCharacter? getNearestCharacter(double x, double y, double z, {double maxRadius = 10000}){
-    IsometricCharacter? nearestCharacter;
-    var nearestEnemyDistanceSquared = maxRadius * maxRadius;
-    final characters = game.characters;
-    for (final character in characters){
-      final distanceSquared = character.getDistanceSquaredXYZ(x, y, z);
-      if (distanceSquared > nearestEnemyDistanceSquared) continue;
-      nearestEnemyDistanceSquared = distanceSquared;
-      nearestCharacter = character;
-    }
-    return nearestCharacter;
+     selectedCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
   }
 }

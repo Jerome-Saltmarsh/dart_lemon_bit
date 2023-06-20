@@ -45,7 +45,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   bool get shouldRunToDestination =>
-      !deadOrBusy && getDestinationDistanceSquared() > 150;
+      !deadBusyOrWeaponStateBusy && getDestinationDistanceSquared() > 150;
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
   int get nodeIndex => game.scene.getNodeIndexV3(this);

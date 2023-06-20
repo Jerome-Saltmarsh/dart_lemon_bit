@@ -79,16 +79,29 @@ abstract class IsometricCharacter extends IsometricCollider {
     pathIndex = 0;
     pathEnd = 0;
 
-    var pathFound = visitNodeLeft(indexRow, indexColumn, indexZ, scene);
+    final pathLeftFound = visitNodeLeft(indexRow, indexColumn, indexZ, scene);
+    final pathLeftLength = pathIndex;
+    visitedNodesIndex = 0;
+    pathIndex = 0;
+    pathEnd = 0;
+    final pathRightFound = visitNodeRight(indexRow, indexColumn, indexZ, scene);
+    final pathRightLength = pathIndex;
 
-    if (!pathFound){
+    if (pathLeftFound && pathLeftLength < pathRightLength){
       visitedNodesIndex = 0;
       pathIndex = 0;
       pathEnd = 0;
-      pathFound = visitNodeRight(indexRow, indexColumn, indexZ, scene);
+      visitNodeLeft(indexRow, indexColumn, indexZ, scene);
     }
 
-    if (pathFound){
+    // if (!pathFound){
+    //   visitedNodesIndex = 0;
+    //   pathIndex = 0;
+    //   pathEnd = 0;
+    //   pathFound = visitNodeRight(indexRow, indexColumn, indexZ, scene);
+    // }
+
+    if (pathLeftFound || pathRightFound){
       pathEnd = pathIndex;
       // prevents the ai from running backwards initially
       if (pathEnd > 1){
