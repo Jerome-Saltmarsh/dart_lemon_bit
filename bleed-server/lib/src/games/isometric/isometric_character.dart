@@ -582,10 +582,15 @@ abstract class IsometricCharacter extends IsometricCollider {
   void setCharacterStateHurt(){
     if (dead) return;
     if (state == CharacterState.Hurt) return;
+    if (!canSetCharacterStateHurt) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;
     onCharacterStateChanged();
+    customOnHurt();
   }
+
+  /// can be safely overridden for custom logic
+  bool get canSetCharacterStateHurt => true;
 
   void setCharacterStateIdle(){
     if (deadOrBusy) return;
@@ -655,4 +660,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   /// safe to override
   void customUpdate() {}
+
+  void customOnHurt(){ }
 }

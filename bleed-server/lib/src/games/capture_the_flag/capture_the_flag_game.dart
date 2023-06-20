@@ -480,16 +480,25 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       case CaptureTheFlagPowerMode.Self:
         break;
       case CaptureTheFlagPowerMode.Positional:
-        updatePlayerActivatedPowerPosition(activatedPower, player);
+        if (player.canUpdatePowerPosition) {
+          updatePlayerActivatedPowerPosition(player);
+        }
         break;
       case CaptureTheFlagPowerMode.Targeted:
-        updatePlayerActivatedPowerTarget(player, activatedPower);
+        if (player.canUpdatePowerTarget) {
+          updatePlayerActivatedPowerTarget(player);
+        }
         break;
     }
 
   }
 
-  void updatePlayerActivatedPowerPosition(CaptureTheFlagPower activatedPower, CaptureTheFlagPlayer player) {
+  void updatePlayerActivatedPowerPosition(CaptureTheFlagPlayer player) {
+
+    final activatedPower = player.powerActivated.value;
+    assert (activatedPower != null);
+    if (activatedPower == null) return;
+
     final range = activatedPower.range;
     if (player.mouseDistance <= range){
       player.activatedPowerX = player.mouseGridX;
@@ -501,7 +510,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
-  void updatePlayerActivatedPowerTarget(CaptureTheFlagPlayer player, CaptureTheFlagPower activatedPower) {
+  void updatePlayerActivatedPowerTarget(CaptureTheFlagPlayer player) {
+
+    final activatedPower = player.powerActivated.value;
+    assert (activatedPower != null);
+    if (activatedPower == null) return;
+
     var nearestSquared = 10000.0;
     player.activatedPowerTarget = null;
     for (final character in characters) {
@@ -663,5 +677,4 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     ItemType.Weapon_Ranged_Handgun: 200,
     ItemType.Weapon_Ranged_Sniper_Rifle: 350,
   }[weaponType] ?? (throw Exception('getWeaponTypeRange(${ItemType.getName(weaponType)})'));
-
 }

@@ -307,4 +307,16 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   void deselectActivatedPower(){
      powerActivated.value = null;
   }
+
+  bool get canUpdatePowerPosition => powerActivated.value != null && !performing;
+
+  bool get canUpdatePowerTarget {
+    final power = powerActivated.value;
+    if (power == null) return false;
+    if (performing) return false;
+    return power.isTargeted;
+  }
+
+  @override
+  bool get canSetCharacterStateHurt => !performing;
 }
