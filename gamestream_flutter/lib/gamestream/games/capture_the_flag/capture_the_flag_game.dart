@@ -4,6 +4,7 @@
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_actions.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
@@ -56,6 +57,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerActivatedPowerRange = Watch(0.0);
   final playerActivatedPowerX = Watch(0.0);
   final playerActivatedPowerY = Watch(0.0);
+  final playerPower1 = CaptureTheFlagPower();
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);

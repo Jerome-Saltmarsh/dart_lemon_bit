@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:bleed_common/src/capture_the_flag/src.dart';
@@ -111,7 +112,17 @@ extension CaptureTheFlagResponseReader on Gamestream {
         captureTheFlag.playerActivatedPowerX.value = readUInt24().toDouble();
         captureTheFlag.playerActivatedPowerY.value = readUInt24().toDouble();
         break;
+
+      case CaptureTheFlagResponse.Power_1:
+        readPower(captureTheFlag.playerPower1);
+        break;
     }
+  }
+
+  void readPower(CaptureTheFlagPower power){
+    power.type.value = readByte();
+    power.cooldown.value = readUInt16();
+    power.cooldownRemaining.value = readUInt16();
   }
 
   CaptureTheFlagPowerType readPowerType() =>

@@ -15,5 +15,6 @@ class CaptureTheFlagResponse {
   static const Selected_Character = 14;
   static const Activated_Power = 15;
   static const Activated_Power_Position = 16;
+  static const Power_1 = 17;
 
 }

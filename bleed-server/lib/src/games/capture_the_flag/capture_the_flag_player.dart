@@ -68,6 +68,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBasePositions(); // todo optimize
     writeSelectedCharacter();
     writeActivatedPowerPosition();
+    writePower1();
   }
 
   void writeActivatedPowerPosition() {
@@ -240,5 +241,17 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(true);
     writeByte(value.type.index);
     writeUInt16(value.range.toInt());
+  }
+
+  void writePower1() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Power_1);
+    writePower(power1);
+  }
+
+  void writePower(CaptureTheFlagPower power){
+    writeByte(power.type.index);
+    writeUInt16(power.cooldown);
+    writeUInt16(power.cooldownRemaining);
   }
 }
