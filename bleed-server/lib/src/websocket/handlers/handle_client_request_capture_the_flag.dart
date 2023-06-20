@@ -41,7 +41,8 @@ extension HandleClientRequestCaptureTheFlag on WebSocketConnection {
         }
         selectedCharacter.toggleRole();
         break;
-      case CaptureTheFlagRequest.Caste_Power_Blink:
+      case CaptureTheFlagRequest.Activate_Power_1:
+        player.activatePower1();
         break;
     }
   }

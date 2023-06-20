@@ -3,6 +3,7 @@
 
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
@@ -64,5 +65,20 @@ class CaptureTheFlagGame extends GameIsometric {
 
   @override
   Widget customBuildUI(BuildContext context) => buildCaptureTheFlagGameUI();
+
+  @override
+  void onKeyPressed(int key) {
+    print("onKeyPressed($key)");
+    super.onKeyPressed(key);
+
+    switch (key){
+      case KeyCode.Digit_1:
+        activatePower1();
+        break;
+    }
+  }
+
+  void activatePower1() =>
+      sendCaptureTheFlagRequest(CaptureTheFlagRequest.Activate_Power_1);
 
 }

@@ -2,5 +2,5 @@
 enum CaptureTheFlagRequest {
    selectClass,
    toggleSelectedAIRole,
-   Caste_Power_Blink,
+   Activate_Power_1,
 }

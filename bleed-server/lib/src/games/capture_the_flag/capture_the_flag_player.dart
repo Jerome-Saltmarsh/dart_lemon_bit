@@ -4,6 +4,7 @@ import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_s
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
@@ -15,6 +16,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   @override
   final CaptureTheFlagGame game;
+
+  final CaptureTheFlagPower power1 = CaptureTheFlagPowerBlink();
+
+  CaptureTheFlagPower? activatedPower;
 
   IsometricCharacter? selectedCharacter;
 
@@ -190,5 +195,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void selectAINearestToMouse() {
      selectedCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
+  }
+
+  void activatePower1() {
+    activatedPower = power1;
   }
 }
