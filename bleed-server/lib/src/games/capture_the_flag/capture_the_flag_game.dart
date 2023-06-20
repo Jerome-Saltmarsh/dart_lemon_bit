@@ -160,11 +160,16 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseLeftDown) {
-      if (player.activatedPower.value == null){
-        characterUseWeapon(player);
-      } else {
-        playerUseActivatedPower(player);
+      if (!player.ignoreMouseLeftClick){
+        if (player.activatedPower.value == null){
+          characterUseWeapon(player);
+        } else {
+          playerUseActivatedPower(player);
+          player.ignoreMouseLeftClick = true;
+        }
       }
+    } else if (player.ignoreMouseLeftClick){
+      player.ignoreMouseLeftClick = false;
     }
 
     if (mouseRightDown) {
@@ -176,6 +181,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     playerRunInDirection(player, Direction.fromInputDirection(direction));
+
   }
 
   void playerUseActivatedPower(CaptureTheFlagPlayer player) {

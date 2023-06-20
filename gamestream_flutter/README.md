@@ -38,6 +38,7 @@ alt + m             : go to declaration
 [power system]
   [x] right click to cancel active power 
   [x] caste power blink
+  [x] prevent attack on caste power
   [ ] caste power slow
 [x] separate flag spawn location
 [x] ai weapons

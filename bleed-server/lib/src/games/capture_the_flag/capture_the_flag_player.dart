@@ -17,6 +17,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   IsometricCharacter? selectedCharacter;
 
+  var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
   IsometricPosition? activatedPowerTarget;
