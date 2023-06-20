@@ -45,7 +45,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   bool get shouldRunToDestination =>
-      !deadBusyOrWeaponStateBusy && getDestinationDistanceSquared() > 150;
+      !deadBusyOrWeaponStateBusy && getDestinationDistanceSquared() > 80;
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
   int get nodeIndex => game.scene.getNodeIndexV3(this);
@@ -156,6 +156,11 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get targetIndexChanged => target != null && game.scene.getNodeIndexV3(target!) != targetIndex;
 
+  bool get shouldSetDestinationToTarget {
+    final target = this.target;
+    if (target == null) return false;
+    return withinRadiusPosition(target, Node_Size);
+  }
 
   IsometricCollider? getNearestEnemy(){
     IsometricCollider? nearestEnemy;
@@ -216,6 +221,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
     if (pathNeedsToBeUpdated) {
       updatePath();
+    }
+    if (shouldSetDestinationToTarget) {
+      setDestinationToTarget();
     }
     if (shouldRunToDestination) {
       runToDestination();
@@ -374,6 +382,14 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool flagEnemyWithinRadius(double radius) =>
       flagEnemyRespawning ? false : withinRadiusPosition(flagEnemy, radius);
+
+  void setDestinationToTarget() {
+    final target = this.target;
+    if (target == null) return;
+    destinationX = target.x;
+    destinationY = target.y;
+    destinationZ = target.z;
+  }
 
 }
 
