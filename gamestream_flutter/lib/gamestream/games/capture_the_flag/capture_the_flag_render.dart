@@ -36,9 +36,9 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
       }
 
       isometric.renderer.renderCircle(
-        IsometricMouse.positionX,
-        IsometricMouse.positionY,
-        IsometricMouse.positionZ,
+        playerActivatedPowerX.value,
+        playerActivatedPowerY.value,
+        player.z,
         40,
       );
 

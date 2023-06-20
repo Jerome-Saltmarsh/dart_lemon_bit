@@ -13,12 +13,16 @@ import 'mixins/i_capture_the_flag_team.dart';
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
+  var activatedPowerX = 0.0;
+  var activatedPowerY = 0.0;
+
   @override
   final CaptureTheFlagGame game;
 
   final CaptureTheFlagPower power1 = CaptureTheFlagPower(type: CaptureTheFlagPowerType.Blink, range: 300);
 
   late final activatedPower = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
+
 
   IsometricCharacter? selectedCharacter;
 
@@ -50,6 +54,15 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
     writeSelectedCharacter();
+    writeActivatedPowerPosition();
+  }
+
+  void writeActivatedPowerPosition() {
+    if (activatedPower.value == null) return;
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Activated_Power_Position);
+    writeUInt24(activatedPowerX.toInt());
+    writeUInt24(activatedPowerY.toInt());
   }
 
   void writeFlagPositions() {

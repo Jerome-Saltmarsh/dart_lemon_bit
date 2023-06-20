@@ -106,9 +106,12 @@ extension CaptureTheFlagResponseReader on Gamestream {
           captureTheFlag.playerActivatedPowerRange.value = readUInt16().toDouble();
         }
         break;
+
+      case CaptureTheFlagResponse.Activated_Power_Position:
+        captureTheFlag.playerActivatedPowerX.value = readUInt24().toDouble();
+        captureTheFlag.playerActivatedPowerY.value = readUInt24().toDouble();
+        break;
     }
-
-
   }
 
   CaptureTheFlagPowerType readPowerType() =>

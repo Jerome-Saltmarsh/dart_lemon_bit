@@ -162,16 +162,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (activatedPower == null){
         characterUseWeapon(player);
       } else if (activatedPower.type == CaptureTheFlagPowerType.Blink){
-         if (player.mouseDistance <= activatedPower.range){
-           player.x = player.mouseGridX;
-           player.y = player.mouseGridY;
-         } else {
-           final angle = player.mouseAngle;
-           player.x += getAdjacent(angle, activatedPower.range);
-           player.y += getOpposite(angle, activatedPower.range);
-         }
-
-         player.activatedPower.value = null;
+        player.x = player.activatedPowerX;
+        player.y = player.activatedPowerY;
+        player.activatedPower.value = null;
       }
     }
 
@@ -423,6 +416,26 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     updateFlag(flagRed);
     updateFlag(flagBlue);
+  }
+
+  @override
+  void updatePlayer(CaptureTheFlagPlayer player) {
+    final activatedPower = player.activatedPower.value;
+
+    if (activatedPower == null) return;
+
+    if (activatedPower.type.mode == CaptureTheFlagPowerMode.Positional){
+      final range = activatedPower.range;
+      if (player.mouseDistance <= range){
+        player.activatedPowerX = player.mouseGridX;
+        player.activatedPowerY = player.mouseGridY;
+      } else {
+        final angle = player.mouseAngle;
+        player.activatedPowerX = player.x + getAdjacent(angle, range);
+        player.activatedPowerY = player.y + getOpposite(angle, range);
+      }
+    }
+
   }
 
   @override
