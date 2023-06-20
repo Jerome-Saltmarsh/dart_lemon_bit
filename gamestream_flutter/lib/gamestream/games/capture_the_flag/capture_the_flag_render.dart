@@ -1,6 +1,5 @@
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -24,33 +23,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
       renderCharacterSelected();
     }
 
-    if (playerActivatedTargetSet){
-      isometric.renderer.renderCircleAtIsometricPosition(
-        position: playerActivatedTarget,
-        radius: 40,
-      );
-    }
-
-    if (playerActivatedPowerType.value != null) {
-      if (playerActivatedPowerRange.value > 0) {
-        isometric.renderer.renderCircle(
-          player.x,
-          player.y,
-          player.z,
-          playerActivatedPowerRange.value,
-          sections: 24,
-        );
-      }
-
-      isometric.renderer.renderCircle(
-        playerActivatedPowerX.value,
-        playerActivatedPowerY.value,
-        player.z,
-        40,
-      );
-
-    }
-
+    renderPlayerActivatedPower();
   }
 
   void renderLineToRedFlag() {
@@ -205,4 +178,42 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
       );
     }
   }
+
+  void renderPlayerActivatedPower() {
+    final activatedPowerType = playerActivatedPowerType.value;
+
+    if (activatedPowerType == null) return;
+
+    if (playerActivatedPowerRange.value > 0) {
+      isometric.renderer.renderCircle(
+        player.x,
+        player.y,
+        player.z,
+        playerActivatedPowerRange.value,
+        sections: 24,
+      );
+    }
+
+    switch (activatedPowerType.mode) {
+      case CaptureTheFlagPowerMode.Self:
+        break;
+      case CaptureTheFlagPowerMode.Targeted:
+        if (playerActivatedTargetSet) {
+          isometric.renderer.renderCircleAtIsometricPosition(
+            position: playerActivatedTarget,
+            radius: 40,
+          );
+        }
+        break;
+      case CaptureTheFlagPowerMode.Positional:
+        isometric.renderer.renderCircle(
+          playerActivatedPowerX.value,
+          playerActivatedPowerY.value,
+          player.z,
+          40,
+        );
+        break;
+    }
+  }
 }
+
