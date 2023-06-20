@@ -7,6 +7,7 @@ class CaptureTheFlagPower {
 
   var cooldownRemaining = 0;
 
+  final int duration;
   final int cooldown;
   final double range;
   final CaptureTheFlagPowerType type;
@@ -15,6 +16,7 @@ class CaptureTheFlagPower {
     required this.type,
     required this.range,
     required this.cooldown,
+    this.duration = 0,
   });
 
   bool get isPositional => type.mode == CaptureTheFlagPowerMode.Positional;

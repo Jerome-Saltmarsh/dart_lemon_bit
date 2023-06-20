@@ -37,7 +37,7 @@ alt + m             : go to declaration
   [ ] pathfinding 3d 
 [power system]
   [x] right click to cancel active power 
-  [ ] caste power blink
+  [x] caste power blink
   [ ] caste power slow
 [x] separate flag spawn location
 [x] ai weapons

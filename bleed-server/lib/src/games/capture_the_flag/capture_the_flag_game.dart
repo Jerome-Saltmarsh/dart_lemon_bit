@@ -163,7 +163,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (player.activatedPower.value == null){
         characterUseWeapon(player);
       } else {
-        useActivatedPower(player);
+        playerUseActivatedPower(player);
       }
     }
 
@@ -178,20 +178,30 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     playerRunInDirection(player, Direction.fromInputDirection(direction));
   }
 
-  void useActivatedPower(CaptureTheFlagPlayer player) {
+  void playerUseActivatedPower(CaptureTheFlagPlayer player) {
     final activatedPower = player.activatedPower.value;
     if (activatedPower == null) return;
 
     switch (activatedPower.type) {
+
       case CaptureTheFlagPowerType.Blink:
         player.x = player.activatedPowerX;
         player.y = player.activatedPowerY;
         break;
+
       case CaptureTheFlagPowerType.Slow:
-        if (player.activatedPowerTarget == null){
+        final target = player.activatedPowerTarget;
+
+        if (target == null) {
           player.writeGameError(GameError.Target_Required);
           return;
         }
+
+        if (target is CaptureTheFlagAI) {
+           target.slowed = true;
+           target.slowedDuration = activatedPower.duration;
+        }
+
         break;
     }
 
@@ -502,6 +512,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         type: CaptureTheFlagPowerType.Slow,
         range: 300,
         cooldown: 300,
+        duration: 120,
       ),
     );
     player.team = countPlayersOnTeamBlue > countPlayersOnTeamRed

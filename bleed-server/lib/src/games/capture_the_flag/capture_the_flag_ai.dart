@@ -15,6 +15,9 @@ import 'capture_the_flag_game.dart';
 
 class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
+  var slowed = false;
+  var slowedDuration = 0;
+
   var decision = CaptureTheFlagAIDecision.Idle;
   var viewRange = 500.0;
   CaptureTheFlagAIRole role;
@@ -162,6 +165,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return withinRadiusPosition(target, Node_Size);
   }
 
+  @override
+  double get runSpeed => slowed ? super.runSpeed * 0.5 : super.runSpeed;
+
   IsometricCollider? getNearestEnemy(){
     IsometricCollider? nearestEnemy;
     var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
@@ -198,6 +204,13 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   @override
   void customUpdate() {
     if (deadOrBusy) return;
+
+    if (slowed) {
+       slowedDuration--;
+       if (slowedDuration <= 0){
+         slowed = false;
+       }
+    }
 
     decision = getDecision();
     executeDecision();
