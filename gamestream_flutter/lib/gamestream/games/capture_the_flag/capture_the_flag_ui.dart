@@ -40,6 +40,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             left: 16,
             child: buildDebugWindow(),
         ),
+        Positioned(
+          bottom: 16,
+          child: buildWindowPlayer(),
+        ),
       ],
     );
 
@@ -353,6 +357,23 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         width: width,
         height: height,
       ));
+
+  buildWindowPlayer() => Container(
+      width: engine.screen.width,
+      alignment: Alignment.center,
+      child: buildWindow(
+          child: Column(
+            children: [
+              buildText("Power 1"),
+              watch(playerPower1.type, (powerType) =>
+                  buildText(powerType.name)),
+              watch(playerPower1.cooldown, (cooldown) =>
+                  watch(playerPower1.cooldownRemaining, (cooldownRemaining) =>
+                      buildText('$cooldownRemaining / $cooldown'))),
+            ],
+          ),
+      ),
+    );
 }
 
 
