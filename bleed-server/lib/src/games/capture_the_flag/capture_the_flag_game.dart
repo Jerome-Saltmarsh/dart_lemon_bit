@@ -164,6 +164,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       } else if (activatedPower.type == CaptureTheFlagPowerType.Blink){
         player.x = player.activatedPowerX;
         player.y = player.activatedPowerY;
+        activatedPower.activated();
         player.activatedPower.value = null;
       }
     }

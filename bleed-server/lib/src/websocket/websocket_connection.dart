@@ -17,7 +17,7 @@ import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
-import 'package:bleed_server/src/websocket/handlers/handle_client_request_capture_the_flag.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_request_handler.dart';
 import 'package:bleed_server/src/websocket/handlers/handle_client_request_combat.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';

@@ -7,7 +7,7 @@ import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.
 import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:bleed_server/src/websocket/websocket_connection.dart';
 
-extension HandleClientRequestCaptureTheFlag on WebSocketConnection {
+extension CaptureTheFlagRequestHandler on WebSocketConnection {
 
   void handleClientRequestCaptureTheFlag(List<String> arguments){
     final player = this.player;

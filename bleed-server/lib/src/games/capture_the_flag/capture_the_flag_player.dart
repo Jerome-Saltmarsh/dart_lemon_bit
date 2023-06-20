@@ -1,6 +1,7 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
+import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_power.dart';
@@ -19,7 +20,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   @override
   final CaptureTheFlagGame game;
 
-  final CaptureTheFlagPower power1 = CaptureTheFlagPower(type: CaptureTheFlagPowerType.Blink, range: 300);
+  final CaptureTheFlagPower power1 = CaptureTheFlagPower(
+      type: CaptureTheFlagPowerType.Blink,
+      range: 300,
+      cooldown: 400,
+  );
 
   late final activatedPower = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
 
@@ -37,11 +42,19 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     weaponType = ItemType.Empty;
   }
 
+  bool get shouldUpdatePathToMouse => game.scene.inboundsXYZ(mouseGridX, mouseGridY, 25);
+
   @override
   void customUpdate() {
-    if (game.scene.inboundsXYZ(mouseGridX, mouseGridY, 25)){
-      setPathToNodeIndex(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, 25));
+    if (shouldUpdatePathToMouse){
+      updatePathToMouse();
     }
+
+    power1.update();
+  }
+
+  void updatePathToMouse() {
+    setPathToNodeIndex(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, 25));
   }
 
   void onChangedFlagStatus(int value){
@@ -210,6 +223,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void activatePower1() {
+    if (!power1.ready) {
+      writeGameError(GameError.Power_Not_Ready);
+      return;
+    }
     activatedPower.value = power1;
   }
 
