@@ -24,4 +24,8 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheF
   bool get statusCarriedByAlly => status == CaptureTheFlagFlagStatus.Carried_By_Ally;
   bool get statusDropped => status == CaptureTheFlagFlagStatus.Dropped;
   bool get statusRespawning => status == CaptureTheFlagFlagStatus.Respawning;
+
+  void setStatusDropped(){
+    status = CaptureTheFlagFlagStatus.Dropped;
+  }
 }

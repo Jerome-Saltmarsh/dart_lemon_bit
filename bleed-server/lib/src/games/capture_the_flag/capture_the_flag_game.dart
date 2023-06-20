@@ -170,9 +170,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void customOnCharacterKilled(IsometricCharacter target, src) {
     if (target == flagRed.heldBy) {
       clearFlagHeldBy(flagRed);
+      flagRed.setStatusDropped();
     }
     if (target == flagBlue.heldBy) {
       clearFlagHeldBy(flagBlue);
+      flagBlue.setStatusDropped();
     }
     jobs.add(GameJob(200, () {
       reviveCharacter(target);
