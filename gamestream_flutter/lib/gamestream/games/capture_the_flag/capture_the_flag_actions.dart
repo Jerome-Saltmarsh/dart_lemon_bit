@@ -14,6 +14,12 @@ extension CaptureTheFlagActions on CaptureTheFlagGame {
           '${CaptureTheFlagRequest.selectClass.index} ${value.index}'
       );
 
+  void toggleSelectedCharacterAIRole() =>
+      gamestream.network.sendClientRequest(
+          ClientRequest.Capture_The_Flag,
+          CaptureTheFlagRequest.toggleSelectedAIRole.index
+      );
+
   void sendCaptureTheFlagRequest(CaptureTheFlagRequest value, [dynamic message]){
     gamestream.network.sendClientRequest(
         ClientRequest.Capture_The_Flag,

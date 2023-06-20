@@ -299,7 +299,9 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                     WatchBuilder(characterSelectedAIDecision, (decision) => buildText("ai-decision: ${decision.name}")),
-                    WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}")),
+                    onPressed(
+                        action: toggleSelectedCharacterAIRole,
+                        child: WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}"))),
                 ],
               )),
               const SizedBox(height: 1,),

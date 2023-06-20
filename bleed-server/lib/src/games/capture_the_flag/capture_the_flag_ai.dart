@@ -136,6 +136,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get arrivedAtPathEnd => pathIndex >= pathEnd;
 
   bool get pathNeedsToBeUpdated {
+    if (indexZ != 1) return false;
+
     if (targetPrevious != target) {
       targetPrevious = target;
       return true;
@@ -173,10 +175,10 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       return CaptureTheFlagAIDecision.Capture_Flag_Enemy;
 
     if (roleOffensive)
-      return getDecisionDefensive();
+      return getDecisionOffensive();
 
     if (roleDefensive)
-      return getDecisionOffensive();
+      return getDecisionDefensive();
 
     return CaptureTheFlagAIDecision.Idle;
   }
@@ -191,13 +193,13 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   void updatePath() {
+    final target = this.target;
     if (target == null){
       pathEnd = 0;
       pathIndex = 0;
       return;
     }
-    if (indexZ != 1) return;
-    setPathToIsometricTarget();
+    setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
   }
 
   void updatePathIndexAndDestination() {
@@ -299,12 +301,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     faceXY(destinationX, destinationY);
   }
 
-  void setPathToIsometricTarget() {
-    final target = this.target;
-    if (target == null) return;
-    setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
-  }
-
   double getDestinationDistanceSquared () =>
       getDistanceSquaredXYZ(destinationX, destinationY, z);
 
@@ -313,7 +309,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     target = flagOwn;
   }
 
-  CaptureTheFlagAIDecision getDecisionOffensive() {
+  CaptureTheFlagAIDecision getDecisionDefensive() {
 
     if (flagOwnCapturedByEnemy)
       return CaptureTheFlagAIDecision.Capture_Flag_Own;
@@ -334,9 +330,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return CaptureTheFlagAIDecision.Idle;
   }
 
-  CaptureTheFlagAIDecision getDecisionDefensive() {
+  CaptureTheFlagAIDecision getDecisionOffensive() {
     if (flagEnemyRespawning)
-      return getDecisionOffensive();
+      return getDecisionDefensive();
     if (enemyWithinViewRange)
       return CaptureTheFlagAIDecision.Attack_Nearest_Enemy;
     if (enemyFlagCapturable)
@@ -378,10 +374,13 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void useWeapon() => game.characterUseWeapon(this);
 
+  void toggleRole() => role = roleDefensive ? CaptureTheFlagAIRole.Offense : CaptureTheFlagAIRole.Defense;
+
   bool flagOwnWithinRadius(double radius) =>
       flagOwnRespawning ? false : withinRadiusPosition(flagOwn, radius);
 
   bool flagEnemyWithinRadius(double radius) =>
       flagEnemyRespawning ? false : withinRadiusPosition(flagEnemy, radius);
+
 }
 

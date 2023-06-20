@@ -5,6 +5,7 @@ import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_request.dart';
 import 'package:bleed_server/src/engine.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
@@ -304,6 +305,14 @@ class WebSocketConnection with ByteReader {
             }
             final characterClass = CaptureTheFlagCharacterClass.values[characterClassIndex];
             player.game.playerSelectCharacterClass(player, characterClass);
+            break;
+
+          case CaptureTheFlagRequest.toggleSelectedAIRole:
+            final selectedCharacter = player.selectedCharacter;
+            if (selectedCharacter is! CaptureTheFlagAI){
+              return errorInvalidClientRequest();
+            }
+            selectedCharacter.toggleRole();
             break;
         }
 
