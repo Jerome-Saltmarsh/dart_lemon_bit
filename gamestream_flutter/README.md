@@ -32,13 +32,13 @@ alt + m             : go to declaration
     - Can buildings be repaired once they are destroyed?
 
 [CAPTURE THE FLAG]
-[ ] hero classes  
-  [ ] sniper power 
-[ ] ai heroes
 [ ] destroyable terrain
-[ ] ai pathfinding 3d
-[ ] caste power blink
-[ ] caste power slow
+[ai system]
+  [ ] pathfinding 3d 
+[power system]
+  [x] right click to cancel active power 
+  [ ] caste power blink
+  [ ] caste power slow
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding

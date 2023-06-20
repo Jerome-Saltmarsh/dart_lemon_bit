@@ -167,8 +167,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
     }
 
-    if (mouseRightDown){
-      player.selectAINearestToMouse();
+    if (mouseRightDown) {
+      if (player.activatedPower.value != null) {
+           player.activatedPower.value = null;
+      } else {
+        player.selectAINearestToMouse();
+      }
     }
 
     playerRunInDirection(player, Direction.fromInputDirection(direction));
