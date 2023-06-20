@@ -96,7 +96,21 @@ extension CaptureTheFlagResponseReader on Gamestream {
         captureTheFlag.characterSelectedTargetY.value = readDouble();
         captureTheFlag.characterSelectedTargetZ.value = readDouble();
         break;
+
+      case CaptureTheFlagResponse.Activated_Power:
+        final powerSet = readBool();
+        if (!powerSet) {
+          captureTheFlag.playerActivatedPowerType.value = null;
+        } else {
+          captureTheFlag.playerActivatedPowerType.value = readPowerType();
+        }
+        break;
     }
+
+
   }
+
+  CaptureTheFlagPowerType readPowerType() =>
+      CaptureTheFlagPowerType.values[readByte()];
 
 }

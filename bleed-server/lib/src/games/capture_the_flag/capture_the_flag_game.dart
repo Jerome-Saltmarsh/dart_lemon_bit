@@ -156,13 +156,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseLeftDown) {
-      final activatedPower = player.activatedPower;
+      final activatedPower = player.activatedPower.value;
       if (activatedPower == null){
         characterUseWeapon(player);
       } else if (activatedPower.type == CaptureTheFlagPowerType.Blink){
          player.x = player.mouseGridX;
          player.y = player.mouseGridY;
-         player.activatedPower = null;
+         player.activatedPower.value = null;
       }
     }
 

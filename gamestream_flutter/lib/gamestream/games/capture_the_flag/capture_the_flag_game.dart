@@ -52,6 +52,8 @@ class CaptureTheFlagGame extends GameIsometric {
   final characterSelectedTargetZ = Watch(0.0);
   final characterSelectedTargetRenderLine = WatchBool(true);
 
+  final playerActivatedPowerType = Watch<CaptureTheFlagPowerType?>(null);
+
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
 

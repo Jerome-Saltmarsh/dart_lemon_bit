@@ -18,7 +18,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   final CaptureTheFlagPower power1 = CaptureTheFlagPower(CaptureTheFlagPowerType.Blink);
 
-  CaptureTheFlagPower? activatedPower;
+  late final activatedPower = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
 
   IsometricCharacter? selectedCharacter;
 
@@ -197,6 +197,17 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void activatePower1() {
-    activatedPower = power1;
+    activatedPower.value = power1;
+  }
+
+  void onActivatedPowerChanged(CaptureTheFlagPower? value){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Activated_Power);
+    if (value == null) {
+      writeBool(false);
+      return;
+    }
+    writeBool(true);
+    writeByte(value.type.index);
   }
 }
