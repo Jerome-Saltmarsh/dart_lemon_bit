@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricPosition with Position {

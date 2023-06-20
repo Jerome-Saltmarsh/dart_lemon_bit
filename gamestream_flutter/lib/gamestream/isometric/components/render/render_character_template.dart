@@ -8,7 +8,8 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ren
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 
-import '../../library.dart';
+import '../../../../library.dart';
+
 
 void renderTemplateWeapon(
     int weaponType,

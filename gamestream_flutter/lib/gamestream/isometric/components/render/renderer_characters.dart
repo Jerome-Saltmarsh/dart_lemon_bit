@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ren
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 

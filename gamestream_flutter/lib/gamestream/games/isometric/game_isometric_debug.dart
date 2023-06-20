@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_cli
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'render/renderer_nodes.dart';
+import '../../isometric/components/render/renderer_nodes.dart';
 
 
 class GameIsometricDebug {

@@ -13,11 +13,11 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../../games/isometric/game_isometric_constants.dart';
 import 'isometric_mouse.dart';
-import '../../games/isometric/render/renderer_characters.dart';
-import '../../games/isometric/render/renderer_gameobjects.dart';
-import '../../games/isometric/render/renderer_nodes.dart';
-import '../../games/isometric/render/renderer_particles.dart';
-import '../../games/isometric/render/renderer_projectiles.dart';
+import 'render/renderer_characters.dart';
+import 'render/renderer_gameobjects.dart';
+import 'render/renderer_nodes.dart';
+import 'render/renderer_particles.dart';
+import 'render/renderer_projectiles.dart';
 
 class IsometricRender {
   var totalRemaining = 0;
