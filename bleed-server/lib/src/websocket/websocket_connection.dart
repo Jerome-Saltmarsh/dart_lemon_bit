@@ -2,13 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_request.dart';
 import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
-import 'package:bleed_server/src/games/survival/survival_player.dart';
-import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
@@ -16,16 +10,18 @@ import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene_generator.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
+import 'package:bleed_server/src/games/survival/survival_player.dart';
+import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:bleed_server/src/utilities/system.dart';
-import 'package:bleed_server/src/websocket/handlers/handle_client_request_combat.dart';
 import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
-import 'package:bleed_server/src/games/isometric/isometric_scene_generator.dart';
+import 'package:bleed_server/src/websocket/handlers/handle_client_request_capture_the_flag.dart';
+import 'package:bleed_server/src/websocket/handlers/handle_client_request_combat.dart';
+import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
-import 'package:lemon_byte/byte_reader.dart';
 
 
 class WebSocketConnection with ByteReader {
@@ -284,38 +280,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case ClientRequest.Capture_The_Flag:
-        if (player is! CaptureTheFlagPlayer) {
-          errorInvalidPlayerType();
-          return;
-        }
-        final captureTheFlagRequestIndex = parseArg1(arguments);
-        if (captureTheFlagRequestIndex == null) return;
-        if (!isValidIndex(captureTheFlagRequestIndex, CaptureTheFlagRequest.values)){
-          errorInvalidClientRequest();
-          return;
-        }
-        final captureTheFlagClientRequest = CaptureTheFlagRequest.values[captureTheFlagRequestIndex];
-
-        switch (captureTheFlagClientRequest){
-          case CaptureTheFlagRequest.selectClass:
-            final characterClassIndex = parseArg2(arguments);
-            if (characterClassIndex == null) return;
-            if (!isValidIndex(characterClassIndex, CaptureTheFlagCharacterClass.values)){
-              return errorInvalidClientRequest();
-            }
-            final characterClass = CaptureTheFlagCharacterClass.values[characterClassIndex];
-            player.game.playerSelectCharacterClass(player, characterClass);
-            break;
-
-          case CaptureTheFlagRequest.toggleSelectedAIRole:
-            final selectedCharacter = player.selectedCharacter;
-            if (selectedCharacter is! CaptureTheFlagAI){
-              return errorInvalidClientRequest();
-            }
-            selectedCharacter.toggleRole();
-            break;
-        }
-
+        handleClientRequestCaptureTheFlag(arguments);
         break;
 
       case ClientRequest.Fight2D:

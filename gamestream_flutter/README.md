@@ -37,6 +37,8 @@ alt + m             : go to declaration
 [ ] ai heroes
 [ ] destroyable terrain
 [ ] ai pathfinding 3d
+[ ] caste power blink
+[ ] caste power slow
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding
