@@ -16,11 +16,11 @@ import 'mixins/i_capture_the_flag_team.dart';
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   IsometricCharacter? selectedCharacter;
+  IsometricPosition? activatedPowerTarget;
 
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
-  IsometricPosition? activatedPowerTarget;
 
   @override
   final CaptureTheFlagGame game;
@@ -29,6 +29,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   /// The power the places has selected but must still caste
   late final powerActivated = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
+  CaptureTheFlagPower? powerPerforming;
 
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
@@ -313,8 +314,12 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(powerActivated.value == power);
   }
 
-  void performActivatedPower() =>
-      setCharacterStatePerforming(duration: 30);
+  void performActivatedPower() {
+    assert (canPerformActivatedPower);
+    powerPerforming = powerActivated.value;
+    deselectActivatedPower();
+    setCharacterStatePerforming(duration: 30);
+  }
 
   void deselectActivatedPower(){
      powerActivated.value = null;
@@ -323,5 +328,17 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   @override
   void onWeaponTypeChanged() {
     weaponRange = game.getWeaponTypeRange(weaponType);
+  }
+
+
+  bool get shouldUsePowerPerforming {
+    if (!performing)
+      return false;
+    if (stateDuration != 20)
+      return false;
+    if (powerPerforming == null)
+      return false;
+    return true;
+
   }
 }

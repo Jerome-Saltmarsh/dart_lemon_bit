@@ -188,13 +188,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   }
 
-  void playerUseActivatedPower(CaptureTheFlagPlayer player) {
-    final activatedPower = player.powerActivated.value;
-    if (activatedPower == null) return;
+  void playerUsePower(CaptureTheFlagPlayer player, CaptureTheFlagPower power) {
 
-    player.setCharacterStatePerforming(duration: 30);
-
-    switch (activatedPower.type) {
+    switch (power.type) {
 
       case CaptureTheFlagPowerType.Blink:
         player.x = player.activatedPowerX;
@@ -211,14 +207,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
         if (target is CaptureTheFlagAI) {
            target.slowed = true;
-           target.slowedDuration = activatedPower.duration;
+           target.slowedDuration = power.duration;
         }
 
         break;
     }
-
-    activatedPower.activated();
-    player.powerActivated.value = null;
+    power.activated();
   }
 
   @override
@@ -467,10 +461,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void updatePlayer(CaptureTheFlagPlayer player) {
 
-    if (player.performing) {
-       if (player.powerActivated.value != null && player.stateDuration == 20){
-          playerUseActivatedPower(player);
-       }
+    if (player.shouldUsePowerPerforming) {
+      playerUsePowerPerforming(player);
     }
 
     final activatedPower = player.powerActivated.value;
@@ -491,6 +483,15 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         break;
     }
 
+  }
+
+  void playerUsePowerPerforming(CaptureTheFlagPlayer player){
+    assert(player.shouldUsePowerPerforming);
+
+    final powerPerforming = player.powerPerforming;
+    if (powerPerforming == null) return;
+    playerUsePower(player, powerPerforming);
+    player.powerPerforming = null;
   }
 
   void updatePlayerActivatedPowerPosition(CaptureTheFlagPlayer player) {

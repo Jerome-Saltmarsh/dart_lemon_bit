@@ -42,8 +42,8 @@ alt + m             : go to declaration
   [x] caste power blink
   [x] prevent attack on caste power
   [x] caste power slow
-  [ ] perform caste
-  [ ] fix perform animation
+  [x] perform caste
+  [x] do not render power circles while player is performing the power
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding
