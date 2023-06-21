@@ -48,7 +48,7 @@ class Isometric {
     clientState.interpolatePlayer();
     camera.update();
     renderer.render3D();
-    clientState.renderEditMode();
+    renderer.renderEditMode();
     renderer.renderMouseTargetName();
     renderer.renderPlayerEnergy();
     gamestream.rendersSinceUpdate.value++;

@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game_style.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 

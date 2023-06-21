@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
-import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../atlases/atlas_nodes.dart';
@@ -244,30 +242,6 @@ mixin class IsometricClientState {
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;
-  }
-
-  void renderEditMode() {
-    if (playMode) return;
-    if (gamestream.isometric.editor.gameObjectSelected.value){
-      engine.renderCircleOutline(
-        sides: 24,
-        radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
-        x: gamestream.isometric.editor.gameObject.value!.renderX,
-        y: gamestream.isometric.editor.gameObject.value!.renderY,
-        color: Colors.white,
-      );
-      return renderCircleV3(gamestream.isometric.editor.gameObject.value!);
-    }
-
-    renderEditWireFrames();
-    gamestream.isometric.renderer.renderMouseWireFrame();
-  }
-
-  void renderEditWireFrames() {
-    for (var z = 0; z < gamestream.isometric.editor.z; z++) {
-      gamestream.isometric.renderer.renderWireFrameBlue(z, gamestream.isometric.editor.row, gamestream.isometric.editor.column);
-    }
-    gamestream.isometric.renderer.renderWireFrameRed(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
   }
 
   void updateTorchEmissionIntensity(){

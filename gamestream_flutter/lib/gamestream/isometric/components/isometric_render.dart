@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -567,6 +566,45 @@ class IsometricRender {
       anchorX: 0.0,
       color: 1,
     );
+  }
+
+  void renderBarBlue(double x, double y, double z, double percentage) {
+    engine.renderSprite(
+      image: GameImages.atlas_gameobjects,
+      dstX: getRenderX(x, y, z) - 26,
+      dstY: getRenderY(x, y, z) - 55,
+      srcX: 171,
+      srcY: 48,
+      srcWidth: 51.0 * percentage,
+      srcHeight: 8,
+      anchorX: 0.0,
+      color: 1,
+    );
+  }
+
+  void renderEditMode() {
+    if (gamestream.isometric.clientState.playMode) return;
+    if (gamestream.isometric.editor.gameObjectSelected.value){
+      engine.renderCircleOutline(
+        sides: 24,
+        radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
+        x: gamestream.isometric.editor.gameObject.value!.renderX,
+        y: gamestream.isometric.editor.gameObject.value!.renderY,
+        color: Colors.white,
+      );
+      renderCircleAtIsometricPosition(position: gamestream.isometric.editor.gameObject.value!, radius: 50);
+      return;
+    }
+
+    renderEditWireFrames();
+    gamestream.isometric.renderer.renderMouseWireFrame();
+  }
+
+  void renderEditWireFrames() {
+    for (var z = 0; z < gamestream.isometric.editor.z; z++) {
+      gamestream.isometric.renderer.renderWireFrameBlue(z, gamestream.isometric.editor.row, gamestream.isometric.editor.column);
+    }
+    gamestream.isometric.renderer.renderWireFrameRed(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
   }
 }
 
