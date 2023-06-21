@@ -361,7 +361,7 @@ extension ServerResponseReader on Gamestream {
         break;
       case ApiPlayer.Alive:
         isometric.player.alive.value = readBool();
-        isometric.ui.clearHoverDialogType();
+        gamestream.isometric.ui.mouseOverDialog.setFalse();
         break;
       case ApiPlayer.Spawned:
         isometric.camera.centerOnChaseTarget();

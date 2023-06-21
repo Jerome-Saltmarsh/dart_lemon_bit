@@ -372,7 +372,7 @@ class IsometricEvents {
       gamestream.isometric.player.messageTimer = 300;
     } else {
       gamestream.isometric.editor.deselectGameObject();
-      gamestream.isometric.ui.clearMouseOverDialogType();
+      gamestream.isometric.ui.mouseOverDialog.setFalse();
       gamestream.isometric.camera.setModeChase();
       if (gamestream.isometric.server.sceneEditable.value){
         gamestream.isometric.player.message.value = "press tab to edit";
@@ -613,7 +613,7 @@ class IsometricEvents {
         camera.translateX = 0;
         // todo doesn't belong
         gamestream.games.survival.clearHoverIndex();
-        gamestream.isometric.ui.clearMouseOverDialogType();
+        gamestream.isometric.ui.mouseOverDialog.setFalse();
         break;
     }
   }

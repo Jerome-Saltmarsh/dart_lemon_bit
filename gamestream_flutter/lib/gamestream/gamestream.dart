@@ -212,7 +212,7 @@ class Gamestream with ByteReader {
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
-         isometric.ui.clearHoverDialogType();
+         gamestream.isometric.ui.mouseOverDialog.setFalse();
          isometric.clientState.timeConnectionEstablished = DateTime.now();
          audio.enabledSound.value = true;
          if (!engine.isLocalHost) {

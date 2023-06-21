@@ -7,16 +7,8 @@ import 'functions/format_bytes.dart';
 import 'isometric_mouse.dart';
 
 class IsometricUI {
-
-  final hoverDialogType = Watch(false);
-
-
-  void clearMouseOverDialogType() =>
-      hoverDialogType.value = false;
-
-  void clearHoverDialogType() {
-    hoverDialogType.value = false;
-  }
+  final menuOpen = WatchBool(false);
+  final mouseOverDialog = WatchBool(false);
 
   Widget buildStackDebug() =>
       Stack(

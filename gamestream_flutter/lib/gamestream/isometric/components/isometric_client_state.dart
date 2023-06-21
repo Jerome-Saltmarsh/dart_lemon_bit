@@ -20,7 +20,6 @@ mixin class IsometricClientState {
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final overrideColor = WatchBool(false);
   final window_visible_light_settings = WatchBool(false);
-  final window_visible_menu = WatchBool(false);
   final window_visible_player_creation = WatchBool(false);
   final window_visible_attributes = WatchBool(false);
   final control_visible_player_weapons = WatchBool(false);

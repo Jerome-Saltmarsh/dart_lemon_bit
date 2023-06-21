@@ -49,7 +49,7 @@ class GameIsometric extends Game {
     isometric.clientState.control_visible_player_weapons.value = false;
     isometric.clientState.window_visible_player_creation.value = false;
     isometric.clientState.control_visible_respawn_timer.value = false;
-    isometric.clientState.window_visible_menu.setFalse();
+    isometric.ui.menuOpen.setFalse();
 
     gamestream.audio.musicStop();
     engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
