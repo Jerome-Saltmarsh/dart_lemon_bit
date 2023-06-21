@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../atlases/atlas_nodes.dart';
@@ -34,6 +35,7 @@ mixin class IsometricClientState {
   final buff_active_invincible = Watch(false);
   final buff_active_no_recoil = Watch(false);
 
+  var cursorType = IsometricCursorType.Hand;
   var srcXRainFalling = 6640.0;
   var srcXRainLanding = 6739.0;
   var messageStatusDuration = 0;

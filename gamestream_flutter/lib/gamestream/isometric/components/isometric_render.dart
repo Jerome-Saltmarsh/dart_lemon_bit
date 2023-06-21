@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../games/isometric/game_isometric_constants.dart';
@@ -388,18 +389,18 @@ class IsometricRender {
     final accuracy = gamestream.isometric.server.playerAccuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 
-    switch (gamestream.isometric.player.aimTargetCategory) {
-      case TargetCategory.Nothing:
-        gamestream.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
+    switch (gamestream.isometric.clientState.cursorType) {
+      case IsometricCursorType.CrossHair_White:
+        canvasRenderCursorCrossHair(canvas, distance);
         break;
-      case TargetCategory.Collect:
-        gamestream.isometric.renderer.canvasRenderCursorHand(canvas);
+      case IsometricCursorType.Hand:
+        canvasRenderCursorHand(canvas);
         return;
-      case TargetCategory.Allie:
-        gamestream.isometric.renderer.canvasRenderCursorTalk(canvas);
+      case IsometricCursorType.Talk:
+        canvasRenderCursorTalk(canvas);
         return;
-      case TargetCategory.Enemy:
-        gamestream.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
+      case IsometricCursorType.CrossHair_Red:
+        canvasRenderCursorCrossHairRed(canvas, distance);
         break;
     }
   }
