@@ -65,6 +65,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequiredForNextLevel = Watch(0);
+  final skillPoints = Watch(0);
 
   late final audioOnLevelGain = gamestream.audio.collect_star_3;
 

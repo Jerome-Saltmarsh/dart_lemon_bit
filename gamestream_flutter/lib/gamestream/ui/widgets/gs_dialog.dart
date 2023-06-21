@@ -24,17 +24,13 @@ class _GSDialogState extends State<GSDialog> {
   }
 
   @override
-  Widget build(BuildContext context) => Container(
-      color: GameStyle.Container_Color,
-      padding: GameStyle.Container_Padding,
-      child: MouseRegion(
-        onEnter: (PointerEnterEvent event) {
-          gamestream.isometric.ui.hoverDialogType.value = DialogType.UI_Control;
-        },
-        onExit: (PointerExitEvent event) {
-          gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
-        },
-        child: widget.child,
-      ),
-    );
+  Widget build(BuildContext context) => MouseRegion(
+    onEnter: (PointerEnterEvent event) {
+      gamestream.isometric.ui.hoverDialogType.value = DialogType.UI_Control;
+    },
+    onExit: (PointerExitEvent event) {
+      gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
+    },
+    child: widget.child,
+  );
 }

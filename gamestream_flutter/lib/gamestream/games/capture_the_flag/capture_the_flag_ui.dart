@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 
 import 'capture_the_flag_actions.dart';
@@ -51,33 +52,35 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildDebugWindow() =>
       buildDebugMode(
         child: GSDialog(
-          child: WatchBuilder(
-              tab,
-              (selectedTab) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (selectedTab ==
-                          CaptureTheFlagUITabs.Selected_Character)
-                        buildWindowSelectedCharacter(),
-                      if (selectedTab == CaptureTheFlagUITabs.GameObjects)
-                        buildWindowGameObjects(),
-                      if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
-                        buildWindowFlagStatus(),
-                      height8,
-                      Row(
-                        children: CaptureTheFlagUITabs.values
-                            .map((e) => onPressed(
-                                action: () => tab.value = e,
-                                child: Container(
-                                    color: e == selectedTab
-                                        ? Colors.white12
-                                        : null,
-                                    padding: const EdgeInsets.all(8),
-                                    child: buildText(e.name))))
-                            .toList(growable: false),
-                      )
-                    ],
-                  )),
+          child: GSContainer(
+            child: WatchBuilder(
+                tab,
+                (selectedTab) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (selectedTab ==
+                            CaptureTheFlagUITabs.Selected_Character)
+                          buildWindowSelectedCharacter(),
+                        if (selectedTab == CaptureTheFlagUITabs.GameObjects)
+                          buildWindowGameObjects(),
+                        if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
+                          buildWindowFlagStatus(),
+                        height8,
+                        Row(
+                          children: CaptureTheFlagUITabs.values
+                              .map((e) => onPressed(
+                                  action: () => tab.value = e,
+                                  child: Container(
+                                      color: e == selectedTab
+                                          ? Colors.white12
+                                          : null,
+                                      padding: const EdgeInsets.all(8),
+                                      child: buildText(e.name))))
+                              .toList(growable: false),
+                        )
+                      ],
+                    )),
+          ),
         ),
       );
 
@@ -397,39 +400,58 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       ],
     );
 
-  Widget buildControlPower(CaptureTheFlagPower power, {double size = 100}) =>
-      watch(power.activated, (activated) =>
-        Stack(
-            alignment: Alignment.center,
-            children: [
-              watch(power.cooldown, (cooldown) =>
-                  watch(power.cooldownRemaining, (cooldownRemaining) =>
-                      Container(
-                        decoration: BoxDecoration(
-                          color: GameStyle.Container_Color,
-                          shape: BoxShape.circle,
-                        ),
-                         width: size,
-                         height: size * power.cooldownPercentage,
-                      ))),
-              watch(power.type, (powerType) =>
-                  watch(power.coolingDown, (coolingDown) => buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green))),
-              Container(
-                  width: size,
-                  height: size,
+  Widget buildControlPower(CaptureTheFlagPower power, {double size = 80}) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          watch(skillPoints, (skillPoints) => (skillPoints <= 0) ? nothing :
+             GSDialog(
+               child: Container(
+                  color: GameStyle.Container_Color,
+                  width: 40,
+                  height: 40,
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      // color: GameStyle.Container_Color,
-                      border: Border.all(
-                        color: activated ? Colors.white : Colors.transparent,
-                        width: 2,
-                      )
-                  )
-              ),
-            ],
+                  child: buildText("+"),
+                 margin: const EdgeInsets.only(bottom: 6),
+               ),
+             )
           ),
-  );
+          watch(power.activated, (activated) =>
+            GSDialog(
+              child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    watch(power.cooldown, (cooldown) =>
+                        watch(power.cooldownRemaining, (cooldownRemaining) =>
+                            Container(
+                              decoration: BoxDecoration(
+                                color: GameStyle.Container_Color,
+                                shape: BoxShape.circle,
+                              ),
+                               width: size,
+                               height: size * power.cooldownPercentage,
+                            ))),
+                    watch(power.type, (powerType) =>
+                        watch(power.coolingDown, (coolingDown) => buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green))),
+                    Container(
+                        width: size,
+                        height: size,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            // color: GameStyle.Container_Color,
+                            border: Border.all(
+                              color: activated ? Colors.white : Colors.transparent,
+                              width: 2,
+                            )
+                        )
+                    ),
+                  ],
+                ),
+            ),
+  ),
+        ],
+      );
 
 
   Widget buildControlPlayerPowers() => Row(

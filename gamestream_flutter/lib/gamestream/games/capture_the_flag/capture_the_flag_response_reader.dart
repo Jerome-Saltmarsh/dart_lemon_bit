@@ -141,6 +141,7 @@ extension CaptureTheFlagResponseReader on Gamestream {
       case CaptureTheFlagResponse.Player_Level:
         captureTheFlag.playerLevel.value = readByte();
         captureTheFlag.playerExperienceRequiredForNextLevel.value = readUInt24();
+        captureTheFlag.skillPoints.value = readByte();
         break;
 
       case CaptureTheFlagResponse.Player_Event_Level_Gained:

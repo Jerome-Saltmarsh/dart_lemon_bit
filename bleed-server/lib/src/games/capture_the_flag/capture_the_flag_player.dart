@@ -23,6 +23,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
+  var skillPoints = 3;
 
   late final experience = ChangeNotifier(0, onChangedExperience);
   late final level = ChangeNotifier(1, onChangedLevel);
@@ -88,6 +89,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void onChangedLevel(int value){
+    skillPoints++;
     writePlayerLevel();
   }
 
@@ -375,6 +377,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(CaptureTheFlagResponse.Player_Level);
     writeByte(level.value);
     writeUInt24(experienceRequiredForNextLevel);
+    writeByte(skillPoints);
   }
 
   void writePlayerExperience() {
