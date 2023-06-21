@@ -11,6 +11,7 @@ import '../enums/touch_button_side.dart';
 import '../classes/isometric_character.dart';
 import '../classes/isometric_position.dart';
 import '../classes/isometric_projectile.dart';
+import 'functions/format_bytes.dart';
 
 
 mixin class IsometricClientState {
@@ -431,11 +432,6 @@ mixin class IsometricClientState {
     return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
 
-  static String formatBytes(int bytes){
-    final kb = bytes ~/ 1000;
-    final mb = kb ~/ 1000;
-    return 'mb: $mb, kb: ${kb % 1000}';
-  }
 
 
   void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;

@@ -8,12 +8,10 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
-import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -607,7 +605,7 @@ extension IsometricEditorUI on IsometricEditor {
             message: '$i - ${convertHourToString(i)}',
             child: container(
               width: buttonWidth,
-              color: purple4,
+              color: style.purple4,
               action: () => gamestream.isometric.setHour(i),
             ),
           ),
@@ -619,7 +617,7 @@ extension IsometricEditorUI on IsometricEditor {
             message: '$i - ${convertHourToString(i)}',
             child: container(
               width: buttonWidth,
-              color: purple3,
+              color: style.purple3,
               action: () => gamestream.isometric.setHour(i),
             ),
           ),
@@ -647,7 +645,7 @@ extension IsometricEditorUI on IsometricEditor {
       child: Row(
         children: [
           Container(
-              color: brownLight,
+              color: style.brownLight,
               alignment: Alignment.center,
               padding: const EdgeInsets.all(8),
               height: 50,
@@ -688,7 +686,7 @@ extension IsometricEditorUI on IsometricEditor {
             }
             gamestream.isometric.editor.paint(nodeType: nodeType);
           },
-          color: selectedNodeType == nodeType ? greyDark : grey);
+          color: selectedNodeType == nodeType ? style.greyDark : style.grey);
     });
   }
 
@@ -763,7 +761,7 @@ extension IsometricEditorUI on IsometricEditor {
                 width: 72,
                 height: 72,
                 alignment: Alignment.center,
-                color: selectedNodeOrientation == orientation ? purple3 : brownDark,
+                color: selectedNodeOrientation == orientation ? style.purple3 : style.brownDark,
                 child: canvas);
           }),
     );
@@ -1068,7 +1066,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildColumnSelectedGameObject() => GameIsometricUI.buildDialogUIControl(
     child: Container(
-      color: brownLight,
+      color: style.brownLight,
       width: 220,
       padding: GameStyle.Padding_10,
       child: SingleChildScrollView(
@@ -1254,7 +1252,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildMenu(
       {required String text, required List<Widget> children}) {
-    final child = container(child: text, color: brownLight);
+    final child = container(child: text, color: style.brownLight);
     return MouseOver(builder: (over) {
       if (over) {
         return Column(
@@ -1298,4 +1296,158 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildColumnSelectObjectType(){
     return Column();
   }
+
+  Widget buildEditorSelectedNode({double shiftX = 17, double shiftY = 20.0}) =>
+      Container(
+        width: 130,
+        height: 220,
+        padding: const EdgeInsets.all(6),
+        color: style.brownDark,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                watch(gamestream.isometric.editor.nodeSelectedIndex, buildText),
+                onPressed(
+                  hint: "Delete",
+                  action: gamestream.isometric.editor.delete,
+                  child: Container(
+                    width: 16,
+                    height: 16,
+                    child: engine.buildAtlasImageButton(
+                      image: GameImages.atlas_icons,
+                      srcX: 80,
+                      srcY: 96,
+                      srcWidth: 16,
+                      srcHeight: 16,
+                      action: gamestream.isometric.editor.delete,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+                height: 70,
+                alignment: Alignment.center,
+                child: watch(
+                    gamestream.isometric.editor.nodeSelectedType,
+                        (int nodeType) =>
+                        buildText(NodeType.getName(nodeType), align: TextAlign.center)
+                )
+            ),
+            Container(
+              width: 120,
+              height: 120,
+              alignment: Alignment.center,
+              color: Colors.green,
+              child: Stack(
+                fit: StackFit.expand,
+                alignment: Alignment.center,
+                children: [
+                  buildPositionedIconButton(
+                    top: 65 + shiftY,
+                    left: 27 + shiftX,
+                    action: gamestream.isometric.editor.cursorZDecrease,
+                    iconType: IconType.Arrows_Down,
+                    hint: "Shift + Arrow Down",
+                  ),
+                  buildPositionedIconButton(
+                    top: 3 + shiftY,
+                    left: 3 + shiftY,
+                    action: gamestream.isometric.editor.cursorRowDecrease,
+                    iconType: IconType.Arrows_North,
+                    hint: "Arrow Up",
+                  ),
+                  buildPositionedIconButton(
+                    top: 5 + shiftY,
+                    left: 50 + shiftX,
+                    action: gamestream.isometric.editor.cursorColumnDecrease,
+                    iconType: IconType.Arrows_East,
+                    hint: "Arrow Right",
+                  ),
+                  Container(
+                      height: 72,
+                      width: 72,
+                      alignment: Alignment.center,
+                      child: watch(gamestream.isometric.editor.nodeSelectedType, GameIsometricUI.buildAtlasNodeType)
+                  ),
+                  buildPositionedIconButton(
+                      top: 50 + shiftY,
+                      left: 50 + shiftX,
+                      action: gamestream.isometric.editor.cursorRowIncrease,
+                      iconType: IconType.Arrows_South,
+                      hint: "Arrow Down"
+                  ),
+                  buildPositionedIconButton(
+                      top: -10 + shiftY,
+                      left: 27 + shiftX,
+                      action: gamestream.isometric.editor.cursorZIncrease,
+                      iconType: IconType.Arrows_Up,
+                      hint: "Shift + Arrow Up"
+                  ),
+                  buildPositionedIconButton(
+                      top: 50 + shiftY,
+                      left: 0 + shiftX,
+                      action: gamestream.isometric.editor.cursorColumnIncrease,
+                      iconType: IconType.Arrows_West,
+                      hint: "Arrow Left"
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget buildPositionedIconButton({
+    required double top,
+    required double left,
+    required Function action,
+    required int iconType,
+    required String hint,
+  }) =>
+      Positioned(
+        top: top,
+        left: left,
+        child: onPressed(
+          action: action,
+          child: MouseOver(builder: (bool mouseOver) =>
+              GameIsometricUI.buildAtlasIconType(
+                iconType,
+                color: mouseOver ? Colors.black38.value : Colors.white.value,
+              )
+          ),
+          hint: hint,
+        ),
+      );
+
+  Widget buildWatchEditorDialog(EditorDialog? activeEditorDialog){
+    if (activeEditorDialog == null) return nothing;
+
+    return Container(
+      width: engine.screen.width,
+      height: engine.screen.height,
+      alignment: Alignment.center,
+      child: Container(
+          width: 350,
+          height: 400,
+          color: style.brownLight,
+          padding: const EdgeInsets.all(6),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  buildButtonGameDialogClose(),
+                ],
+              ),
+              height8,
+            ],
+          )),
+    );
+  }
+
+  Widget buildButtonGameDialogClose() =>
+      buildText("x", onPressed: gamestream.isometric.editor.actionGameDialogClose);
 }

@@ -853,4 +853,6 @@ class GameIsometricUI {
     GameIsometricUI.textFieldMessage.unfocus();
     GameIsometricUI.textEditingControllerMessage.text = "";
   }
+
+
 }

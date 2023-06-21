@@ -6,10 +6,12 @@ import 'package:gamestream_flutter/library.dart';
 import '../enums/editor_dialog.dart';
 import '../enums/emission_type.dart';
 import '../classes/isometric_gameobject.dart';
+import 'isometric_editor_style.dart';
 
 
 class IsometricEditor {
 
+  final style = IsometricEditorStyle();
   final windowEnabledScene = Watch(false);
   final windowEnabledCanvasSize = Watch(false);
   final windowEnabledGenerate = WatchBool(false);

@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'game_isometric_debug.dart';
 import 'game_isometric_ui.dart';
 
 class GameIsometric extends Game {
@@ -76,7 +75,7 @@ class GameIsometric extends Game {
       ),
       WatchBuilder(isometric.clientState.edit, (edit) =>
         edit ? gamestream.isometric.editor.buildEditor() : customBuildUI(context)),
-      buildWatchBool(isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
+      buildWatchBool(isometric.clientState.debugMode, gamestream.isometric.ui.buildStackDebug),
       buildWatchBool(isometric.clientState.window_visible_light_settings,
           GameIsometricUI.buildWindowLightSettings),
       Positioned(top: 16, right: 16, child: GameIsometricUI.buildMainMenu(children: buildMenuItems())),
