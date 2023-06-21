@@ -365,14 +365,14 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          buildRowPlayerPowers(),
+          buildControlPlayerPowers(),
+          height6,
           buildControlPlayerLevel(),
         ],
       ),
     );
 
-  Widget buildControlPlayerLevel({double width = 100, double height = 20}) {
-    return Row(
+  Widget buildControlPlayerLevel({double width = 200, double height = 20}) => Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         watch(playerLevel, (t) => buildText("LEVEL: $t")),
@@ -380,20 +380,22 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         watch(playerExperienceRequiredForNextLevel, (experienceRequired) =>
           (experienceRequired <= 0) ? nothing :
             watch(playerExperience, (experience) =>
-                Container(
-                  width: width,
-                  height: height,
-                  color: Colors.white38,
-                  alignment: Alignment.centerLeft,
+                Tooltip(
+                  message: '$experience / $experienceRequired',
                   child: Container(
-                    height: height - 2,
-                    width: width * (experience / experienceRequired),
-                    color: Colors.white,
-                  ),
-              ))),
+                    width: width,
+                    height: height,
+                    color: Colors.white38,
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: height - 2,
+                      width: width * (experience / experienceRequired),
+                      color: Colors.white,
+                    ),
+              ),
+                ))),
       ],
     );
-  }
 
   Widget buildControlPower(CaptureTheFlagPower power, {double size = 100}) =>
       watch(power.activated, (activated) =>
@@ -430,7 +432,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   );
 
 
-  Widget buildRowPlayerPowers() => Row(
+  Widget buildControlPlayerPowers() => Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildControlPower(playerPower1),

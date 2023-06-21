@@ -24,7 +24,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
 
-  late final experience = ChangeNotifier(1, onChangedExperience);
+  late final experience = ChangeNotifier(0, onChangedExperience);
   late final level = ChangeNotifier(1, onChangedLevel);
 
   @override
