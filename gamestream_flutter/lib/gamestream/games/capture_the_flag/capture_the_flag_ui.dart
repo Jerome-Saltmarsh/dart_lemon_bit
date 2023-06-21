@@ -377,16 +377,16 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         alignment: Alignment.center,
         children: [
           watch(power.cooldown, (cooldown) =>
-              watch(power.cooldownRemaining, (cooldownRemaining) =>
-                  // buildText('$cooldownRemaining / $cooldown'))),
-                  Container(
+              watch(power.cooldownRemaining, (cooldownRemaining) {
+                return Container(
                     decoration: BoxDecoration(
-                      color: GameStyle.Container_Color,
+                      color: GameStyle.Container_Color.withOpacity(power.cooldownPercentage),
                       shape: BoxShape.circle,
                     ),
                      width: 100,
-                     height: cooldownRemaining == 0 ? 100 : 100 * ((cooldown - cooldownRemaining) / cooldown),
-                  ))),
+                     height: 100 * power.cooldownPercentage,
+                  );
+              })),
           watch(power.type, (powerType) =>
               watch(power.coolingDown, (coolingDown) => buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green))),
           Container(

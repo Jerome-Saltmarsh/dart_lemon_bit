@@ -12,4 +12,6 @@ class CaptureTheFlagPower {
    void onChangedCooldownRemaining(int value){
       coolingDown.value = value > 0;
    }
+
+   double get cooldownPercentage => (cooldown.value - cooldownRemaining.value) / cooldown.value;
 }
