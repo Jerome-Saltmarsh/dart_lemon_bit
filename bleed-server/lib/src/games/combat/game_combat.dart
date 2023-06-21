@@ -646,18 +646,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       throw Exception('ai cannot throw grenades');
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Teleport) {
-      if (character is IsometricPlayer) {
-        characterTeleport(
-          character: character,
-          x: character.mouseGridX,
-          y: character.mouseGridY,
-          range: ItemType.getRange(ItemType.Weapon_Ranged_Teleport),
-        );
-      }
-      return;
-    }
-
     if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
       if (character is IsometricPlayer) {
         playerUseFlamethrower(character);
@@ -698,7 +686,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
           damage: character.weaponDamage,
-          range: ItemType.getRange(weaponType),
+          range: character.weaponRange,
           src: character,
           angle: character.lookRadian,
         );
@@ -715,7 +703,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
         spawnProjectileArrow(
           src: character,
           damage: character.weaponDamage,
-          range: ItemType.getRange(weaponType),
+          range: character.weaponRange,
           angle: character.lookRadian,
         );
         character.assignWeaponStateFiring();
@@ -731,6 +719,15 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     }
     super.revive(player);
   }
+
+  void playerTeleport(IsometricPlayer player) =>
+      characterTeleport(
+        character: player,
+        x: player.mouseGridX,
+        y: player.mouseGridY,
+        range: 500,
+      );
+
 }
 
 

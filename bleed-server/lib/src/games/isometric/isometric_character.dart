@@ -446,17 +446,12 @@ abstract class IsometricCharacter extends IsometricCollider {
   bool get performing => state == CharacterState.Performing;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
+  bool get characterStateHurt => state == CharacterState.Hurt;
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
-  bool get busy => stateDurationRemaining > 0;
+  bool get busy => stateDurationRemaining > 0 && !characterStateHurt;
   bool get deadOrBusy => dead || busy;
   bool get deadBusyOrWeaponStateBusy => dead || weaponStateBusy;
   bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging || weaponStateAiming;
-  bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
-  bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
-  bool get unarmed => weaponType == ItemType.Empty;
-  bool get equippedTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
-  bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);
-  bool get equippedIsEmpty => false;
   bool get targetSet => target != null;
 
   bool get weaponStateIdle => weaponState == WeaponState.Idle;
@@ -466,7 +461,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get healthPercentage => health / maxHealth;
   double get faceAngle => _faceAngle;
-  double get weaponTypeRange => ItemType.getRange(weaponType);
   double get weaponTypeRangeMelee => ItemType.getMeleeAttackRadius(weaponType);
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
@@ -617,10 +611,10 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool withinAttackRange(IsometricPosition target){
     if ((target.z - z).abs() > Character_Height) return false;
-    if (target is IsometricCollider){
-      return withinRadiusCheap(target, weaponTypeRange + target.radius);
+    if (target is IsometricCollider) {
+      return withinRadiusPosition(target, weaponRange + target.radius);
     }
-    return withinRadiusCheap(target, weaponTypeRange);
+    return withinRadiusPosition(target, weaponRange);
   }
 
   void face(Position position) {

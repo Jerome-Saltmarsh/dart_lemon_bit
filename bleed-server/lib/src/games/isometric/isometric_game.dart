@@ -468,18 +468,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       throw Exception('ai cannot throw grenades');
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Teleport) {
-      if (character is IsometricPlayer) {
-        characterTeleport(
-          character: character,
-          x: character.mouseGridX,
-          y: character.mouseGridY,
-          range: ItemType.getRange(ItemType.Weapon_Ranged_Teleport),
-        );
-      }
-      return;
-    }
-
     if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
       if (character is IsometricPlayer) {
         playerUseFlamethrower(character);
@@ -520,7 +508,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
           damage: character.weaponDamage,
-          range: ItemType.getRange(weaponType),
+          range: character.weaponRange,
           src: character,
           angle: character.lookRadian,
         );
@@ -537,21 +525,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         spawnProjectileArrow(
           src: character,
           damage: character.weaponDamage,
-          range: ItemType.getRange(weaponType),
+          range: character.weaponRange,
           angle: character.lookRadian,
         );
         character.assignWeaponStateFiring();
         break;
     }
   }
-
-  void playerTeleport(IsometricPlayer player) =>
-      characterTeleport(
-        character: player,
-        x: player.mouseGridX,
-        y: player.mouseGridY,
-        range: ItemType.getRange(ItemType.Weapon_Ranged_Teleport),
-      );
 
   void characterTeleport({
     required IsometricCharacter character,
@@ -688,13 +668,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void playerUseFlamethrower(IsometricPlayer player) {
     dispatchPlayerAttackPerformed(player);
     player.assignWeaponStateFiring();
-    spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
+    spawnProjectileFireball(player, damage: 3, range: player.weaponRange);
   }
 
   void playerUseBazooka(IsometricPlayer player) {
     dispatchPlayerAttackPerformed(player);
     player.assignWeaponStateFiring();
-    spawnProjectileRocket(player, damage: 3, range: player.weaponTypeRange);
+    spawnProjectileRocket(player, damage: 3, range: player.weaponRange);
   }
 
   void playerUseMinigun(IsometricPlayer player) {
@@ -708,7 +688,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void playerAutoAim(IsometricPlayer player) {
     if (player.deadOrBusy) return;
-    var closestTargetDistance = player.weaponTypeRange * 1.5;
+    var closestTargetDistance = player.weaponRange * 1.5;
     IsometricCollider? closestTarget = null;
     for (final character in characters) {
       if (character.dead) continue;
@@ -976,7 +956,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       src: character,
       accuracy: character.accuracy,
       angle: angle,
-      range: character.weaponTypeRange,
+      range: character.weaponRange,
       projectileType: ProjectileType.Bullet,
       damage: character.weaponDamage,
     );
@@ -987,7 +967,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         src: character,
         accuracy: character.accuracy,
         angle: angle - angleOffset,
-        range: character.weaponTypeRange,
+        range: character.weaponRange,
         projectileType: ProjectileType.Bullet,
         damage: character.weaponDamage,
       );
@@ -999,7 +979,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         src: character,
         accuracy: character.accuracy,
         angle: angle + angleOffset,
-        range: character.weaponTypeRange,
+        range: character.weaponRange,
         projectileType: ProjectileType.Bullet,
         damage: character.weaponDamage,
       );
@@ -2120,7 +2100,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         src: src,
         accuracy: 0,
         angle: angle + giveOrTake(0.25),
-        range: src.weaponTypeRange,
+        range: src.weaponRange,
         projectileType: ProjectileType.Bullet,
         damage: src.weaponDamage,
       );

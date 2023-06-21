@@ -47,6 +47,29 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   bool get shouldUpdatePathToMouse => game.scene.inboundsXYZ(mouseGridX, mouseGridY, 25);
 
+  bool get canDeselectActivatedPower => powerActivated.value != null;
+
+  @override
+  bool get canSetCharacterStateHurt => !performing && !weaponStateBusy;
+
+  bool get canUpdatePowerPosition => powerActivated.value != null && !performing;
+
+  bool get canUpdatePowerTarget {
+    final power = powerActivated.value;
+    if (power == null) return false;
+    if (performing) return false;
+    return power.isTargeted;
+  }
+
+  bool get canPerformActivatedPower {
+    final power = powerActivated.value;
+    if (power == null)
+      return false;
+    if (power.isTargeted && activatedPowerTarget == null)
+      return false;
+    return true;
+  }
+
   @override
   void customUpdate() {
     if (shouldUpdatePathToMouse){
@@ -290,33 +313,15 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(powerActivated.value == power);
   }
 
-  bool get canPerformActivatedPower {
-    final power = powerActivated.value;
-    if (power == null)
-      return false;
-    if (power.isTargeted && activatedPowerTarget == null)
-       return false;
-    return true;
-  }
-
   void performActivatedPower() =>
       setCharacterStatePerforming(duration: 30);
-
-  bool get canDeselectActivatedPower => powerActivated.value != null;
 
   void deselectActivatedPower(){
      powerActivated.value = null;
   }
 
-  bool get canUpdatePowerPosition => powerActivated.value != null && !performing;
-
-  bool get canUpdatePowerTarget {
-    final power = powerActivated.value;
-    if (power == null) return false;
-    if (performing) return false;
-    return power.isTargeted;
-  }
-
   @override
-  bool get canSetCharacterStateHurt => !performing;
+  void onWeaponTypeChanged() {
+    weaponRange = game.getWeaponTypeRange(weaponType);
+  }
 }

@@ -40,10 +40,6 @@ class IsometricPosition with Position {
     return xDiffSquared + yDiffSquared + zDiffSquared <= radiusSquared;
   }
 
-  bool withinRadiusCheap(IsometricPosition position3, double radius) =>
-     ((this.x - position3.x).abs() < radius) &&
-     ((this.y - position3.y).abs() < radius) ;
-
   static bool compare(IsometricPosition a, IsometricPosition b){
     final aRowColumn = a.indexRow + a.indexColumn;
     final bRowColumn = b.indexRow + b.indexColumn;
