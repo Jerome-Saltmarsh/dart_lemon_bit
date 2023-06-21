@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/library.dart';
 
-Widget container({
+Widget buildButton({
   dynamic child,
   Color? color,
   Color? hoverColor,

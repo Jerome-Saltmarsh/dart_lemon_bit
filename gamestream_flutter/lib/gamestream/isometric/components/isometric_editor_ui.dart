@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
+import 'package:gamestream_flutter/widgets/build_button.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -177,13 +177,13 @@ extension IsometricEditorUI on IsometricEditor {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        container(child: "DOWNLOAD", action: gamestream.isometric.editor.downloadScene),
-        container(child: "LOAD", action: gamestream.isometric.editor.uploadScene),
-        container(child: "EDIT", action: gamestream.isometric.editor.toggleWindowEnabledScene),
-        container(child: "MAP SIZE", action: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
-        container(child: "GENERATE", action: gamestream.isometric.editor.windowEnabledGenerate.toggle),
+        buildButton(child: "DOWNLOAD", action: gamestream.isometric.editor.downloadScene),
+        buildButton(child: "LOAD", action: gamestream.isometric.editor.uploadScene),
+        buildButton(child: "EDIT", action: gamestream.isometric.editor.toggleWindowEnabledScene),
+        buildButton(child: "MAP SIZE", action: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
+        buildButton(child: "GENERATE", action: gamestream.isometric.editor.windowEnabledGenerate.toggle),
         if (engine.isLocalHost)
-          container(child: "SAVE", action: gamestream.isometric.editor.saveScene),
+          buildButton(child: "SAVE", action: gamestream.isometric.editor.saveScene),
       ],
     );
   }
@@ -336,7 +336,7 @@ extension IsometricEditorUI on IsometricEditor {
             buildRowGenerate(gamestream.isometric.editor.generateOctaves, "Octaves"),
             buildRowGenerate(gamestream.isometric.editor.generateFrequency, "Frequency"),
             height16,
-            container(child: "Generate", action: gamestream.isometric.editor.generateScene, color: GameIsometricColors.blue, alignment: Alignment.center),
+            buildButton(child: "Generate", action: gamestream.isometric.editor.generateScene, color: GameIsometricColors.blue, alignment: Alignment.center),
           ],
         ),
       ),
@@ -354,9 +354,9 @@ extension IsometricEditorUI on IsometricEditor {
       ),
       Row(
         children: [
-          container(child: "-", width: 50, action: value.decrement, alignment: Alignment.center),
+          buildButton(child: "-", width: 50, action: value.decrement, alignment: Alignment.center),
           width6,
-          container(child: "+", width: 50, action: value.increment, alignment: Alignment.center),
+          buildButton(child: "+", width: 50, action: value.increment, alignment: Alignment.center),
         ],
       ),
     ],
@@ -603,7 +603,7 @@ extension IsometricEditorUI on IsometricEditor {
         buttons1.add(
           Tooltip(
             message: '$i - ${convertHourToString(i)}',
-            child: container(
+            child: buildButton(
               width: buttonWidth,
               color: style.purple4,
               action: () => gamestream.isometric.setHour(i),
@@ -615,7 +615,7 @@ extension IsometricEditorUI on IsometricEditor {
         buttons2.add(
           Tooltip(
             message: '$i - ${convertHourToString(i)}',
-            child: container(
+            child: buildButton(
               width: buttonWidth,
               color: style.purple3,
               action: () => gamestream.isometric.setHour(i),
@@ -671,7 +671,7 @@ extension IsometricEditorUI on IsometricEditor {
     );
 
     return WatchBuilder(gamestream.isometric.editor.nodeSelectedType, (int selectedNodeType) {
-      return container(
+      return buildButton(
           height: 78,
           width: 78,
           alignment: Alignment.center,
@@ -1233,13 +1233,13 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildPaintType(int type) =>
-      container(child: NodeType.getName(type));
+      buildButton(child: NodeType.getName(type));
 
   Row buildEditorMenu(EditTab activeEditTab) => Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: EditTab.values
-        .map((editTab) => container(
+        .map((editTab) => buildButton(
       child: editTab.name,
       width: 150,
       color: activeEditTab == editTab
@@ -1252,7 +1252,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildMenu(
       {required String text, required List<Widget> children}) {
-    final child = container(child: text, color: style.brownLight);
+    final child = buildButton(child: text, color: style.brownLight);
     return MouseOver(builder: (over) {
       if (over) {
         return Column(

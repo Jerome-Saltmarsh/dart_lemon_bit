@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
+import 'package:gamestream_flutter/widgets/build_button.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
@@ -782,7 +782,7 @@ class GameIsometricUI {
     return watch(gamestream.isometric.server.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
       return watch(gamestream.isometric.clientState.edit, (bool edit) {
-        return container(
+        return buildButton(
             toolTip: "Tab",
             child: edit ? "PLAY" : "EDIT",
             action: gamestream.isometric.actions.actionToggleEdit,
@@ -807,7 +807,7 @@ class GameIsometricUI {
             children: [
               buildText('YOU DIED', size: 30),
               height8,
-              container(
+              buildButton(
                 alignment: Alignment.center,
                 child: "RESPAWN",
                 action: gamestream.isometric.revive,
