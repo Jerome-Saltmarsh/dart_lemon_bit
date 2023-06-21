@@ -142,6 +142,11 @@ extension CaptureTheFlagResponseReader on Gamestream {
         captureTheFlag.playerLevel.value = readByte();
         captureTheFlag.playerExperienceRequiredForNextLevel.value = readUInt24();
         break;
+
+      case CaptureTheFlagResponse.Player_Event_Level_Gained:
+        captureTheFlag.audioOnLevelGain.play();
+        gamestream.isometric.clientState.spawnConfettiPlayer();
+        break;
     }
   }
 

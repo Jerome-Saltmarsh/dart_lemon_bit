@@ -66,6 +66,8 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerExperience = Watch(0);
   final playerExperienceRequiredForNextLevel = Watch(0);
 
+  late final audioOnLevelGain = gamestream.audio.collect_star_3;
+
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
 

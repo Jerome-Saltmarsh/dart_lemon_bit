@@ -382,4 +382,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(CaptureTheFlagResponse.Player_Experience);
     writeUInt24(experience.value);
   }
+
+  void writePlayerEventLevelGained() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Player_Event_Level_Gained);
+  }
+
+
 }

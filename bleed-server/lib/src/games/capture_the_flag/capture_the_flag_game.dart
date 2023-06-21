@@ -241,6 +241,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       experience -= getExperienceForLevel(player.level.value) - player.experience.value;
       player.experience.value = 0;
       player.level.value++;
+      player.writePlayerEventLevelGained();
     }
 
     player.experience.value += experience;
