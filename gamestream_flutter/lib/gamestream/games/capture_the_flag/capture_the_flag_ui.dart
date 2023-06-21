@@ -388,7 +388,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                      height: cooldownRemaining == 0 ? 100 : 100 * ((cooldown - cooldownRemaining) / cooldown),
                   ))),
           watch(power.type, (powerType) =>
-              buildText(powerType.name)),
+              watch(power.coolingDown, (coolingDown) => buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green))),
           Container(
               width: 100,
               height: 100,
