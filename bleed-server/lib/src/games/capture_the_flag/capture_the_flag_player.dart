@@ -96,6 +96,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   void updatePowers() {
     power1.update();
     power2.update();
+    power3.update();
   }
 
   void updatePathToMouse() =>
