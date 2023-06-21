@@ -1,11 +1,10 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
@@ -219,9 +218,9 @@ class RendererNodes extends IsometricRenderer {
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
-    var screenTopLeftColumn = GameIsometric.convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(GameIsometric.convertWorldToRow(screenRight, screenBottom, 0), 0, gamestream.isometric.nodes.totalRows - 1);
-    nodesScreenTopLeftRow = GameIsometric.convertWorldToRow(screenLeft, screenTop, 0);
+    var screenTopLeftColumn = IsometricRender.convertWorldToColumn(screenLeft, screenTop, 0);
+    nodesScreenBottomRightRow = clamp(IsometricRender.convertWorldToRow(screenRight, screenBottom, 0), 0, gamestream.isometric.nodes.totalRows - 1);
+    nodesScreenTopLeftRow = IsometricRender.convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
       screenTopLeftColumn += nodesScreenTopLeftRow;

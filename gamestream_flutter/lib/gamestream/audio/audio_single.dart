@@ -40,9 +40,6 @@ class AudioSingle {
     if (!gamestream.audio.enabledSound.value) return;
     // TODO calculate distance from camera
 
-    final screenX = gamestream.isometric.renderer.getScreenX(x, y, z);
-    final screenY = gamestream.isometric.renderer.getScreenY(x, y, z);
-
     final distanceFromPlayer = gamestream.isometric.player.position.distance3(x, y, z);
     final distanceVolume = gamestream.audio.convertDistanceToVolume(
         distanceFromPlayer,

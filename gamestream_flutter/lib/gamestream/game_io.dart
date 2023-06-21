@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 
 import '../library.dart';
 import 'games/isometric/game_isometric.dart';
+import 'isometric/components/isometric_render.dart';
 import 'isometric/isometric.dart';
 
 
@@ -187,8 +188,8 @@ class GameIO {
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
-      final row = GameIsometric.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
-      final column = GameIsometric.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
+      final row = IsometricRender.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
+      final column = IsometricRender.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
       if (row >= nodes.totalRows) break;

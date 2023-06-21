@@ -107,20 +107,4 @@ class GameIsometric extends Game {
       isometric.io.onKeyPressedModePlay(key);
     }
   }
-
-  // TODO Remove
-  static double convertWorldToGridX(double x, double y) =>
-      x + y;
-
-  // TODO Remove
-  static double convertWorldToGridY(double x, double y) =>
-      y - x;
-
-  // TODO Remove
-  static int convertWorldToRow(double x, double y, double z) =>
-      (x + y + z) ~/ Node_Size;
-
-  // TODO Remove
-  static int convertWorldToColumn(double x, double y, double z) =>
-      (y - x + z) ~/ Node_Size;
 }

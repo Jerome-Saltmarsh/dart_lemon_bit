@@ -491,34 +491,6 @@ class IsometricRender {
     }
   }
 
-  static double rowColumnZToRenderX(int row, int column) =>
-      (row - column) * Node_Size_Half;
-
-  static double rowColumnToRenderX(int row, int column) =>
-      (row - column) * Node_Size_Half;
-
-  static double rowColumnZToRenderY(int row, int column, int z) =>
-      (row + column - z) * Node_Size_Half;
-
-  static double rowColumnToRenderY(int row, int column) =>
-      (row + column) * Node_Size_Half;
-
-
-  static double renderX(double x, double y, double z) => (x - y) * 0.5;
-  static double renderY(double x, double y, double z) => ((y + x) * 0.5) - z;
-
-  static double convertV3ToRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
-  static double convertV3ToRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
-
-  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
-  static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
-
-  /// converts grid coordinates to screen space
-  double getScreenX(double x, double y, double z) => engine.worldToScreenX(getRenderX(x, y, z));
-  /// converts grid coordinates to screen space
-  double getScreenY(double x, double y, double z) => engine.worldToScreenX(getRenderY(x, y, z));
-
-
   void renderCharacterHealthBar(IsometricCharacter character){
     renderBarGreen(character.x, character.y, character.z, character.health);
   }
@@ -580,6 +552,40 @@ class IsometricRender {
     const charWidth = 4.5;
     engine.writeText(text, x - charWidth * text.length, y);
   }
+
+  static double rowColumnZToRenderX(int row, int column) =>
+      (row - column) * Node_Size_Half;
+
+  static double rowColumnToRenderX(int row, int column) =>
+      (row - column) * Node_Size_Half;
+
+  static double rowColumnZToRenderY(int row, int column, int z) =>
+      (row + column - z) * Node_Size_Half;
+
+  static double rowColumnToRenderY(int row, int column) =>
+      (row + column) * Node_Size_Half;
+
+
+  static double renderX(double x, double y, double z) => (x - y) * 0.5;
+  static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
+
+  static double convertV3ToRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double convertV3ToRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
+
+  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+  static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
+
+  static double convertWorldToGridX(double x, double y) => x + y;
+  static double convertWorldToGridY(double x, double y) => y - x;
+
+  static int convertWorldToRow(double x, double y, double z) => (x + y + z) ~/ Node_Size;
+  static int convertWorldToColumn(double x, double y, double z) => (y - x + z) ~/ Node_Size;
+
+  /// converts grid coordinates to screen space
+  double getScreenX(double x, double y, double z) => engine.worldToScreenX(getRenderX(x, y, z));
+  /// converts grid coordinates to screen space
+  double getScreenY(double x, double y, double z) => engine.worldToScreenX(getRenderY(x, y, z));
+
 }
 
 
