@@ -16,7 +16,8 @@ import 'mixins/i_capture_the_flag_team.dart';
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   IsometricCharacter? selectedCharacter;
-  IsometricPosition? activatedPowerTarget;
+  IsometricPosition? powerTargetActivated;
+  IsometricPosition? powerTargetPerforming;
 
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
@@ -66,7 +67,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     final power = powerActivated.value;
     if (power == null)
       return false;
-    if (power.isTargeted && activatedPowerTarget == null)
+    if (power.isTargeted && powerTargetActivated == null)
       return false;
     return true;
   }
@@ -117,7 +118,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
       writeBool(false);
       return;
     }
-    final activatedPowerTarget = this.activatedPowerTarget;
+    final activatedPowerTarget = this.powerTargetActivated;
     if (activatedPowerTarget == null) {
       writeBool(false);
       return;
@@ -316,6 +317,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void performActivatedPower() {
     assert (canPerformActivatedPower);
+    powerTargetPerforming = powerTargetActivated;
     powerPerforming = powerActivated.value;
     deselectActivatedPower();
     setCharacterStatePerforming(duration: 30);
@@ -323,6 +325,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void deselectActivatedPower(){
      powerActivated.value = null;
+     powerTargetActivated = null;
   }
 
   @override

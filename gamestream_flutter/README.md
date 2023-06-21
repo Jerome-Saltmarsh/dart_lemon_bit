@@ -44,6 +44,9 @@ alt + m             : go to declaration
   [x] caste power slow
   [x] perform caste
   [x] do not render power circles while player is performing the power
+  [ ] heal ally
+  [ ] power strong arrow
+  [ ] capture the flag player slowable
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding

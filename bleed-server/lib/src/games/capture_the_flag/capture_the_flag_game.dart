@@ -1,7 +1,6 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/job.dart';
-import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
@@ -198,10 +197,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         break;
 
       case CaptureTheFlagPowerType.Slow:
-        final target = player.activatedPowerTarget;
+        final target = player.powerTargetPerforming;
 
+        assert (target != null);
         if (target == null) {
-          player.writeGameError(GameError.Target_Required);
           return;
         }
 
@@ -211,7 +210,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         }
 
         break;
+
+      case CaptureTheFlagPowerType.Heal:
+        break;
     }
+    player.powerTargetPerforming = null;
     power.activated();
   }
 
@@ -481,6 +484,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           updatePlayerActivatedPowerTarget(player);
         }
         break;
+      case CaptureTheFlagPowerMode.Targeted_Ally:
+        if (player.canUpdatePowerTarget) {
+          updatePlayerActivatedPowerTargetAlly(player);
+        }
+        break;
     }
 
   }
@@ -518,7 +526,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (activatedPower == null) return;
 
     var nearestSquared = 10000.0;
-    player.activatedPowerTarget = null;
+    player.powerTargetActivated = null;
     for (final character in characters) {
       if (character.dead) continue;
       if (!character.active) continue;
@@ -528,7 +536,28 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
       if (characterDistanceSquared > nearestSquared) continue;
       nearestSquared = characterDistanceSquared;
-      player.activatedPowerTarget = character;
+      player.powerTargetActivated = character;
+    }
+  }
+
+  void updatePlayerActivatedPowerTargetAlly(CaptureTheFlagPlayer player) {
+
+    final activatedPower = player.powerActivated.value;
+    assert (activatedPower != null);
+    if (activatedPower == null) return;
+
+    var nearestSquared = 10000.0;
+    player.powerTargetActivated = null;
+    for (final character in characters) {
+      if (character.dead) continue;
+      if (!character.active) continue;
+      if (!player.isAlly(character)) continue;
+      if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
+      if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
+      final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+      if (characterDistanceSquared > nearestSquared) continue;
+      nearestSquared = characterDistanceSquared;
+      player.powerTargetActivated = character;
     }
   }
 
