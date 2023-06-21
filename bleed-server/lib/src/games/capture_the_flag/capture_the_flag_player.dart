@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/player.dart';
@@ -16,8 +18,9 @@ import 'mixins/i_capture_the_flag_team.dart';
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   IsometricCharacter? selectedCharacter;
-  IsometricPosition? powerTargetActivated;
-  IsometricPosition? powerTargetPerforming;
+  IsometricPosition? powerActivatedTarget;
+  IsometricPosition? powerPerformingTarget;
+  CaptureTheFlagPower? powerPerforming;
 
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
@@ -30,7 +33,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   /// The power the places has selected but must still caste
   late final powerActivated = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
-  CaptureTheFlagPower? powerPerforming;
 
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
@@ -65,9 +67,15 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   bool get canPerformActivatedPower {
     final power = powerActivated.value;
-    if (power == null)
+    return power != null && power.isTargeted && powerActivatedTarget == null;
+  }
+
+  bool get shouldUsePowerPerforming {
+    if (!performing)
       return false;
-    if (power.isTargeted && powerTargetActivated == null)
+    if (stateDuration != 20)
+      return false;
+    if (powerPerforming == null)
       return false;
     return true;
   }
@@ -107,8 +115,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     if (powerActivated.value == null) return;
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Activated_Power_Position);
-    writeUInt24(activatedPowerX.toInt());
-    writeUInt24(activatedPowerY.toInt());
+    writeUInt24(max(0, activatedPowerX.toInt()));
+    writeUInt24(max(0, activatedPowerY.toInt()));
   }
 
   void writeActivatedPowerTarget() {
@@ -118,7 +126,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
       writeBool(false);
       return;
     }
-    final activatedPowerTarget = this.powerTargetActivated;
+    final activatedPowerTarget = this.powerActivatedTarget;
     if (activatedPowerTarget == null) {
       writeBool(false);
       return;
@@ -317,7 +325,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void performActivatedPower() {
     assert (canPerformActivatedPower);
-    powerTargetPerforming = powerTargetActivated;
+    powerPerformingTarget = powerActivatedTarget;
     powerPerforming = powerActivated.value;
     deselectActivatedPower();
     setCharacterStatePerforming(duration: 30);
@@ -325,23 +333,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void deselectActivatedPower(){
      powerActivated.value = null;
-     powerTargetActivated = null;
+     powerActivatedTarget = null;
   }
 
   @override
   void onWeaponTypeChanged() {
     weaponRange = game.getWeaponTypeRange(weaponType);
-  }
-
-
-  bool get shouldUsePowerPerforming {
-    if (!performing)
-      return false;
-    if (stateDuration != 20)
-      return false;
-    if (powerPerforming == null)
-      return false;
-    return true;
-
   }
 }

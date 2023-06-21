@@ -197,13 +197,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         break;
 
       case CaptureTheFlagPowerType.Slow:
-        final target = player.powerTargetPerforming;
-
+        final target = player.powerPerformingTarget;
         assert (target != null);
         if (target == null) {
           return;
         }
-
         if (target is CaptureTheFlagAI) {
            target.slowed = true;
            target.slowedDuration = power.duration;
@@ -212,9 +210,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         break;
 
       case CaptureTheFlagPowerType.Heal:
+        final target = player.powerPerformingTarget;
+        assert (target != null);
+        if (target is! IsometricCharacter) return;
+        target.health = target.maxHealth;
         break;
     }
-    player.powerTargetPerforming = null;
+    player.powerPerformingTarget = null;
     power.activated();
   }
 
@@ -479,7 +481,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           updatePlayerActivatedPowerPosition(player);
         }
         break;
-      case CaptureTheFlagPowerMode.Targeted:
+      case CaptureTheFlagPowerMode.Targeted_Enemy:
         if (player.canUpdatePowerTarget) {
           updatePlayerActivatedPowerTarget(player);
         }
@@ -524,20 +526,40 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     final activatedPower = player.powerActivated.value;
     assert (activatedPower != null);
     if (activatedPower == null) return;
+    assert (activatedPower.isTargeted);
 
     var nearestSquared = 10000.0;
-    player.powerTargetActivated = null;
-    for (final character in characters) {
-      if (character.dead) continue;
-      if (!character.active) continue;
-      if (!player.isEnemy(character)) continue;
-      if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
-      if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
-      final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
-      if (characterDistanceSquared > nearestSquared) continue;
-      nearestSquared = characterDistanceSquared;
-      player.powerTargetActivated = character;
+    player.powerActivatedTarget = null;
+    if (!activatedPower.isTargeted) return;
+
+
+    if (activatedPower.isTargetedEnemy){
+      for (final character in characters) {
+        if (character.dead) continue;
+        if (!character.active) continue;
+        if (!player.isEnemy(character)) continue;
+        if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
+        if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
+        final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+        if (characterDistanceSquared > nearestSquared) continue;
+        nearestSquared = characterDistanceSquared;
+        player.powerActivatedTarget = character;
+      }
     }
+    if (activatedPower.isTargetedAlly){
+      for (final character in characters) {
+        if (character.dead) continue;
+        if (!character.active) continue;
+        if (!player.isAlly(character)) continue;
+        if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
+        if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
+        final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+        if (characterDistanceSquared > nearestSquared) continue;
+        nearestSquared = characterDistanceSquared;
+        player.powerActivatedTarget = character;
+      }
+    }
+
   }
 
   void updatePlayerActivatedPowerTargetAlly(CaptureTheFlagPlayer player) {
@@ -547,7 +569,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (activatedPower == null) return;
 
     var nearestSquared = 10000.0;
-    player.powerTargetActivated = null;
+    player.powerActivatedTarget = null;
     for (final character in characters) {
       if (character.dead) continue;
       if (!character.active) continue;
@@ -557,7 +579,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
       if (characterDistanceSquared > nearestSquared) continue;
       nearestSquared = characterDistanceSquared;
-      player.powerTargetActivated = character;
+      player.powerActivatedTarget = character;
     }
   }
 
@@ -571,7 +593,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         cooldown: 400,
       ),
       power2: CaptureTheFlagPower(
-        type: CaptureTheFlagPowerType.Slow,
+        type: CaptureTheFlagPowerType.Heal,
         range: 300,
         cooldown: 300,
         duration: 120,

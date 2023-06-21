@@ -197,8 +197,18 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     switch (activatedPowerType.mode) {
       case CaptureTheFlagPowerMode.Self:
         break;
-      case CaptureTheFlagPowerMode.Targeted:
+      case CaptureTheFlagPowerMode.Targeted_Enemy:
         if (playerActivatedTargetSet) {
+          engine.setPaintColor(Colors.red);
+          isometric.renderer.renderCircleAtIsometricPosition(
+            position: playerActivatedTarget,
+            radius: 40,
+          );
+        }
+        break;
+      case CaptureTheFlagPowerMode.Targeted_Ally:
+        if (playerActivatedTargetSet) {
+          engine.setPaintColor(Colors.green);
           isometric.renderer.renderCircleAtIsometricPosition(
             position: playerActivatedTarget,
             radius: 40,

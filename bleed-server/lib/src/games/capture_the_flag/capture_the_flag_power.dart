@@ -21,7 +21,11 @@ class CaptureTheFlagPower {
 
   bool get isPositional => type.mode == CaptureTheFlagPowerMode.Positional;
 
-  bool get isTargeted => type.mode == CaptureTheFlagPowerMode.Targeted;
+  bool get isTargeted => isTargetedEnemy || isTargetedAlly;
+
+  bool get isTargetedEnemy => type.mode == CaptureTheFlagPowerMode.Targeted_Enemy;
+
+  bool get isTargetedAlly => type.mode == CaptureTheFlagPowerMode.Targeted_Ally;
 
   bool get isSelf => type.mode == CaptureTheFlagPowerMode.Self;
 
