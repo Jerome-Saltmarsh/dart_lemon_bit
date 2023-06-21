@@ -37,6 +37,9 @@ alt + m             : go to declaration
   [ ] pathfinding 3d 
 [refactor]
   [ ] isometric_character
+[level system]
+  [ ] player experience
+  [ ] player level
 [power system]
   [x] right click to cancel active power 
   [x] caste power blink

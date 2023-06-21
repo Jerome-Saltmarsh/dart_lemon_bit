@@ -133,6 +133,15 @@ extension CaptureTheFlagResponseReader on Gamestream {
       case CaptureTheFlagResponse.Power_3:
         readPower(captureTheFlag.playerPower3);
         break;
+
+      case CaptureTheFlagResponse.Player_Experience:
+        captureTheFlag.playerExperience.value = readUInt24();
+        break;
+
+      case CaptureTheFlagResponse.Player_Level:
+        captureTheFlag.playerLevel.value = readByte();
+        captureTheFlag.playerExperienceRequiredForNextLevel.value = readUInt24();
+        break;
     }
   }
 

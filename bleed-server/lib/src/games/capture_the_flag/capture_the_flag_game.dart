@@ -10,9 +10,9 @@ import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/give_or_take.dart';
 import 'package:lemon_math/functions/opposite.dart';
 
+import 'capture_the_flag_ai.dart';
 import 'capture_the_flag_gameobject_flag.dart';
 import 'capture_the_flag_player.dart';
-import 'capture_the_flag_ai.dart';
 import 'capture_the_flag_power.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
@@ -220,6 +220,32 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     power.activated();
   }
 
+  int getExperience(IsometricCharacter target){
+    return 1;
+  }
+
+  int getExperienceRequiredForLevel(int level){
+    return 100;
+  }
+
+  void playerGainExperience(CaptureTheFlagPlayer player, int experience){
+    const maxLevel = 5;
+    if (player.level.value >= maxLevel) return;
+
+    if (player.experience.value + experience < getExperienceForLevel(player.level.value)){
+      player.experience.value += experience;
+      return;
+    }
+
+    while (player.experience.value + experience > getExperienceForLevel(player.level.value)) {
+      experience -= getExperienceForLevel(player.level.value) - player.experience.value;
+      player.experience.value = 0;
+      player.level.value++;
+    }
+
+    player.experience.value += experience;
+  }
+
   @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
     if (target == flagRed.heldBy) {
@@ -230,6 +256,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       clearFlagHeldBy(flagBlue);
       flagBlue.setStatusDropped();
     }
+    if (src is CaptureTheFlagPlayer) {
+      playerGainExperience(src, getExperience(target));
+    }
+
     jobs.add(GameJob(200, () {
       reviveCharacter(target);
     }));
@@ -620,7 +650,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     player.writeFlagStatus();
-
+    player.writePlayerLevel();
+    player.writePlayerExperience();
     return player;
   }
 
@@ -735,4 +766,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     ItemType.Weapon_Ranged_Handgun: 200,
     ItemType.Weapon_Ranged_Sniper_Rifle: 350,
   }[weaponType] ?? (throw Exception('getWeaponTypeRange(${ItemType.getName(weaponType)})'));
+
+  @override
+  int getExperienceForLevel(int level){
+    return level * 3;
+  }
 }

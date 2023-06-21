@@ -24,6 +24,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   var activatedPowerX = 0.0;
   var activatedPowerY = 0.0;
 
+  late final experience = ChangeNotifier(1, onChangedExperience);
+  late final level = ChangeNotifier(1, onChangedLevel);
+
   @override
   final CaptureTheFlagGame game;
   final CaptureTheFlagPower power1;
@@ -82,6 +85,14 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     if (powerPerforming == null)
       return false;
     return true;
+  }
+
+  void onChangedLevel(int value){
+    writePlayerLevel();
+  }
+
+  void onChangedExperience(int value){
+    writePlayerExperience();
   }
 
   @override
@@ -353,5 +364,22 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   @override
   void onWeaponTypeChanged() {
     weaponRange = game.getWeaponTypeRange(weaponType);
+  }
+
+  int get experienceRequiredForNextLevel {
+    return game.getExperienceForLevel(level.value + 1);
+  }
+
+  void writePlayerLevel(){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Player_Level);
+    writeByte(level.value);
+    writeUInt24(experienceRequiredForNextLevel);
+  }
+
+  void writePlayerExperience() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Player_Experience);
+    writeUInt24(experience.value);
   }
 }

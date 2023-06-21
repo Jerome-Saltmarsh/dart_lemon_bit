@@ -19,4 +19,6 @@ class CaptureTheFlagResponse {
   static const Power_1 = 18;
   static const Power_2 = 19;
   static const Power_3 = 20;
+  static const Player_Experience = 21;
+  static const Player_Level = 22;
 }

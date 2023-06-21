@@ -62,6 +62,9 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerPower1 = CaptureTheFlagPower();
   final playerPower2 = CaptureTheFlagPower();
   final playerPower3 = CaptureTheFlagPower();
+  final playerLevel = Watch(0);
+  final playerExperience = Watch(0);
+  final playerExperienceRequiredForNextLevel = Watch(0);
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
