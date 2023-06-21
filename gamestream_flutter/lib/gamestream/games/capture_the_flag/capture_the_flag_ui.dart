@@ -1,9 +1,12 @@
 
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_button.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 
 import 'capture_the_flag_actions.dart';
 

@@ -6,8 +6,8 @@ import 'package:lemon_watch/src.dart';
 
 import 'game_style.dart';
 import 'instances/engine.dart';
-import 'widgets/build_text.dart';
-import 'widgets/nothing.dart';
+import 'gamestream/ui/widgets/build_text.dart';
+import 'gamestream/ui/widgets/nothing.dart';
 
 class _FlutterKitConfiguration {
   Color defaultTextColor = Colors.white;

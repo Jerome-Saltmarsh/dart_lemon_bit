@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_isometric_ui.dart';
@@ -67,8 +68,7 @@ class GameIsometric extends Game {
   }
 
   @override
-  Widget buildUI(BuildContext context) {
-    return StackFullscreen(children: [
+  Widget buildUI(BuildContext context) => StackFullscreen(children: [
       buildWatchBool(
           gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
           GameIsometricUI.buildDialogFramesSinceUpdate,
@@ -81,7 +81,7 @@ class GameIsometric extends Game {
       Positioned(top: 16, right: 16, child: GameIsometricUI.buildMainMenu(children: buildMenuItems())),
 
 
-    ]);  }
+    ]);
 
   @override
   void onLeftClicked() {

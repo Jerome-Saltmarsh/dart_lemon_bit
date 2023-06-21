@@ -4,7 +4,9 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_col
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 

@@ -15,6 +15,7 @@ import 'isometric/isometric.dart';
 import 'network/enums/connection_region.dart';
 import 'network/enums/connection_status.dart';
 import 'network/game_network.dart';
+import 'ui/widgets/build_text.dart';
 
 class Gamestream with ByteReader {
   var previousServerResponse = -1;

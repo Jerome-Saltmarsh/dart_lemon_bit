@@ -11,9 +11,12 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/widgets/build_button.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/build_button.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 

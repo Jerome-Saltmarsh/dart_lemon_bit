@@ -10,9 +10,9 @@ import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
-import 'package:gamestream_flutter/widgets/build_text.dart';
-import 'package:gamestream_flutter/widgets/on_pressed.dart';
-import 'package:gamestream_flutter/widgets/stack_fullscreen.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 
 extension CombatUI on CombatGame {
