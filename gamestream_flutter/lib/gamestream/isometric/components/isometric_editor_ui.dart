@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/widgets/build_button.dart';
 import 'package:gamestream_flutter/language_utils.dart';
@@ -189,7 +190,7 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildWindowEditCanvasSize() => Center(
-    child: GameIsometricUI.buildDialogUIControl(
+    child: GSDialog(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -314,7 +315,7 @@ extension IsometricEditorUI on IsometricEditor {
   );
 
   Widget buildWindowGenerateScene() => Center(
-    child: GameIsometricUI.buildDialogUIControl(
+    child: GSDialog(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -364,7 +365,7 @@ extension IsometricEditorUI on IsometricEditor {
 
 
   Widget buildWindowEditScene()=> Center(
-    child: GameIsometricUI.buildDialogUIControl(
+    child: GSDialog(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -1064,7 +1065,7 @@ extension IsometricEditorUI on IsometricEditor {
     });
   }
 
-  Widget buildColumnSelectedGameObject() => GameIsometricUI.buildDialogUIControl(
+  Widget buildColumnSelectedGameObject() => GSDialog(
     child: Container(
       color: style.brownLight,
       width: 220,

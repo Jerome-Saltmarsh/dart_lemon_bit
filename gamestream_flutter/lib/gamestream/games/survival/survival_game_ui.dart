@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -163,8 +163,7 @@ extension SurvivalGameUI on SurvivalGame {
 
 
   Widget buildInventoryUI() =>
-      GameIsometricUI.buildDialog(
-        dialogType: DialogType.Inventory,
+      GSDialog(
         child: Container(
           width: Inventory_Width,
           color: GameIsometricColors.brownDark,
@@ -441,7 +440,7 @@ extension SurvivalGameUI on SurvivalGame {
   Widget buildPlayerHealthBar() {
     const width = 150.0;
     const height = 30.0;
-    return GameIsometricUI.buildDialogUIControl(
+    return GSDialog(
       child: buildHoverTarget(
         hoverTargetType: InventoryType.Hover_Target_Player_Stats_Health,
         child: watch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
@@ -493,7 +492,7 @@ extension SurvivalGameUI on SurvivalGame {
       );
 
   Widget buildPlayerDamageBar() {
-    return GameIsometricUI.buildDialogUIControl(
+    return GSDialog(
       child: buildHoverTarget(
         hoverTargetType: InventoryType.Hover_Target_Player_Stats_Damage,
         child: watch(gamestream.isometric.server.playerDamage, (int damage) {
@@ -524,7 +523,7 @@ extension SurvivalGameUI on SurvivalGame {
     const width = 150.0;
     const height = 30.0;
 
-    return GameIsometricUI.buildDialogUIControl(
+    return GSDialog(
       child: buildHoverTarget(
         hoverTargetType: InventoryType.Hover_Target_Player_Stats_Energy,
         child: watch(gamestream.isometric.player.energyMax, (int energyMax) {

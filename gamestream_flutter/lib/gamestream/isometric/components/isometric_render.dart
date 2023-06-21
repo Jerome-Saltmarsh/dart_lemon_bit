@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
@@ -359,7 +358,7 @@ class IsometricRender {
   void renderForeground(Canvas canvas, Size size) {
 
     if (gamestream.io.inputModeKeyboard){
-      if (gamestream.isometric.ui.hoverDialogType.value == DialogType.None){
+      if (!gamestream.isometric.ui.hoverDialogType.value){
         renderCursor(canvas);
       }
     }
@@ -393,21 +392,6 @@ class IsometricRender {
     switch (gamestream.isometric.player.aimTargetCategory) {
       case TargetCategory.Nothing:
         gamestream.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
-        // if (gamestream.isometric.server.getEquippedWeaponConsumeType() != ItemType.Empty){
-        //   if (gamestream.isometric.server.getEquippedWeaponQuantity() <= 0){
-        //     engine.renderExternalCanvas(
-        //       canvas: canvas,
-        //       image: GameImages.atlas_icons,
-        //       srcX: 272,
-        //       srcY: 0,
-        //       srcWidth: 128,
-        //       srcHeight: 32,
-        //       dstX: engine.mousePositionX,
-        //       dstY: engine.mousePositionY - 70,
-        //     );
-        //   }
-        // }
-
         break;
       case TargetCategory.Collect:
         gamestream.isometric.renderer.canvasRenderCursorHand(canvas);
@@ -417,21 +401,6 @@ class IsometricRender {
         return;
       case TargetCategory.Enemy:
         gamestream.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
-
-        // if (gamestream.isometric.server.getEquippedWeaponConsumeType() != ItemType.Empty){
-        //   if (gamestream.isometric.server.getEquippedWeaponQuantity() <= 0){
-        //     engine.renderExternalCanvas(
-        //       canvas: canvas,
-        //       image: GameImages.atlas_icons,
-        //       srcX: 272,
-        //       srcY: 0,
-        //       srcWidth: 128,
-        //       srcHeight: 32,
-        //       dstX: engine.mousePositionX,
-        //       dstY: engine.mousePositionY - 70,
-        //     );
-        //   }
-        // }
         break;
     }
   }

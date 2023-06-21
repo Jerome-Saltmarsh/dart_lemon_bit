@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/format_bytes.dart';
@@ -8,17 +7,14 @@ import 'isometric_mouse.dart';
 
 class IsometricUI {
 
-  final hoverDialogType = Watch(DialogType.None);
-
-  bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
-  bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
+  final hoverDialogType = Watch(false);
 
 
   void clearMouseOverDialogType() =>
-      hoverDialogType.value = DialogType.None;
+      hoverDialogType.value = false;
 
   void clearHoverDialogType() {
-    hoverDialogType.value = DialogType.None;
+    hoverDialogType.value = false;
   }
 
   Widget buildStackDebug() =>
@@ -72,7 +68,6 @@ class IsometricUI {
                                     "aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n"
                                     "target-category: ${TargetCategory.getName(gamestream.isometric.player.targetCategory)}\n"
                                     "target-position: ${gamestream.isometric.player.targetPosition}\n"
-                                    "dialog-type: ${DialogType.getName(gamestream.isometric.ui.hoverDialogType.value)}\n"
                                     "scene-light-sources: ${gamestream.isometric.nodes.nodesLightSourcesTotal}\n"
                                     "scene-light-active: ${gamestream.isometric.clientState.lights_active}\n"
                                     "total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n"

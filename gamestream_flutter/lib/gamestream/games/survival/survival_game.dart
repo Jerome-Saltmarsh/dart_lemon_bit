@@ -86,18 +86,18 @@ class SurvivalGame extends GameIsometric {
   }
 
   void onItemIndexPrimary(int itemIndex) {
-    if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
-      sendClientRequestInventoryBuy(itemIndex);
-      return;
-    }
+    // if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
+    //   sendClientRequestInventoryBuy(itemIndex);
+    //   return;
+    // }
     sendClientRequestInventoryEquip(itemIndex);
   }
 
   void onItemIndexSecondary(int itemIndex){
-    if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
-      sendClientRequestInventoryBuy(itemIndex);
-      return;
-    }
+    // if (gamestream.isometric.ui.hoverDialogDialogIsTrade){
+    //   sendClientRequestInventoryBuy(itemIndex);
+    //   return;
+    // }
     gamestream.isometric.player.interactModeTrading
         ? sendClientRequestInventorySell(itemIndex)
         : sendClientRequestInventoryDrop(itemIndex);

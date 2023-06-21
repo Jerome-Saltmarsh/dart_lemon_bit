@@ -1,23 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/widgets/build_button.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'game_isometric_colors.dart';
-
-
 
 
 class GameIsometricUI {
@@ -68,71 +64,69 @@ class GameIsometricUI {
         ],
       );
 
-  static Widget buildWindowMenu({List<Widget>? children}){
-    const width = 200.0;
-    return buildDialogUIControl(
-      child: Container(
-        width: width,
-        alignment: Alignment.center,
-        color: GameStyle.Container_Color,
-        padding: GameStyle.Container_Padding,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            onPressed(
-              action: gamestream.audio.toggleMutedSound,
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildText("SOUND", size: 20, color: Colors.white70),
-                    watch(gamestream.audio.enabledSound, buildIconCheckbox),
-                  ],
+  static Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
+      GSDialog(
+        child: Container(
+          width: width,
+          alignment: Alignment.center,
+          color: GameStyle.Container_Color,
+          padding: GameStyle.Container_Padding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              onPressed(
+                action: gamestream.audio.toggleMutedSound,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText("SOUND", size: 20, color: Colors.white70),
+                      watch(gamestream.audio.enabledSound, buildIconCheckbox),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            height6,
-            onPressed(
-              action: gamestream.audio.toggleMutedMusic,
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildText("MUSIC", size: 20, color: Colors.white70),
-                    watch(gamestream.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
-                  ],
-                ),
-              ),
-            ),
-            height6,
-            onPressed(
-              action: engine.fullscreenToggle,
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildText("FULLSCREEN", size: 20, color: Colors.white70),
-                    watch(engine.fullScreen, buildIconCheckbox),
-                  ],
-                ),
-              ),
-            ),
-            if (children != null)
               height6,
-            if (children != null)
-              ...children,
-            height24,
-            onPressed(
-              action: gamestream.network.disconnect,
-              child: buildText("DISCONNECT", size: 25),
-            ),
-            height24,
-          ],
+              onPressed(
+                action: gamestream.audio.toggleMutedMusic,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText("MUSIC", size: 20, color: Colors.white70),
+                      watch(gamestream.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
+                    ],
+                  ),
+                ),
+              ),
+              height6,
+              onPressed(
+                action: engine.fullscreenToggle,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText("FULLSCREEN", size: 20, color: Colors.white70),
+                      watch(engine.fullScreen, buildIconCheckbox),
+                    ],
+                  ),
+                ),
+              ),
+              if (children != null)
+                height6,
+              if (children != null)
+                ...children,
+              height24,
+              onPressed(
+                action: gamestream.network.disconnect,
+                child: buildText("DISCONNECT", size: 25),
+              ),
+              height24,
+            ],
+          ),
         ),
-      ),
     );
-  }
 
   static Widget buildWindowLightSettings(){
     return Container(
@@ -413,36 +407,29 @@ class GameIsometricUI {
 
   static Widget buildMainMenu({List<Widget>? children}) {
     final controlTime = buildTime();
-
-    final panel = watch(gamestream.isometric.clientState.window_visible_menu, (bool menuVisible){
-      return Container(
-        color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            height16,
-            Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  controlTime,
-                  width32,
-                  menuVisible ? buildIconCogTurned() : buildIconCog(),
-                  width16,
-                ]
-            ),
-            if (menuVisible)
-              buildWindowMenu(children: children),
-          ],
-        ),
-      );
-    });
-
-    return GameIsometricUI.buildDialogUIControl(
-      child: MouseOver(
-        onEnter: gamestream.isometric.clientState.window_visible_menu.setTrue,
-        onExit: gamestream.isometric.clientState.window_visible_menu.setFalse,
-        builder: (bool mouseOver) => panel,
-      ),
+    return GSDialog(
+      child: watch(gamestream.isometric.clientState.window_visible_menu, (bool menuVisible){
+        return Container(
+          color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              height16,
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    controlTime,
+                    width32,
+                    menuVisible ? buildIconCogTurned() : buildIconCog(),
+                    width16,
+                  ]
+              ),
+              if (menuVisible)
+                buildWindowMenu(children: children),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -541,20 +528,6 @@ class GameIsometricUI {
     srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
   );
 
-  static Widget buildDialogUIControl({required Widget child}) =>
-      buildDialog(child: child, dialogType: DialogType.UI_Control);
-
-  static Widget buildDialog({required Widget child, required int dialogType}) =>
-      MouseRegion(
-        onEnter: (PointerEnterEvent event) {
-          gamestream.isometric.ui.hoverDialogType.value = dialogType;
-        },
-        onExit: (PointerExitEvent event) {
-          gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
-        },
-        child: child,
-      );
-
   static Widget buildPanelCredits() {
     return Column(
       children: [
@@ -569,7 +542,7 @@ class GameIsometricUI {
   }
 
   static Widget buildContainer({required Widget child, double? width}) =>
-      buildDialogUIControl(
+      GSDialog(
           child: Container(
             padding: GameStyle.Padding_6,
             color: GameStyle.Container_Color,
@@ -752,7 +725,7 @@ class GameIsometricUI {
   }
 
   static Widget buildPlayerExperienceBar(double experience) =>
-      buildDialogUIControl(
+      GSDialog(
         child: Container(
           width: GameStyle.ExperienceBarWidth,
           height: GameStyle.ExperienceBarHeight,
@@ -800,7 +773,7 @@ class GameIsometricUI {
       child: Container(
         width: engine.screen.width,
         alignment: Alignment.center,
-        child: GameIsometricUI.buildDialogUIControl(
+        child: GSDialog(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

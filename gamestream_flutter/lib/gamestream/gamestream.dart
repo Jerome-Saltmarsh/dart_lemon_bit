@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'operation_status.dart';
 import 'game.dart';
 import 'games.dart';
-import 'isometric/enums/dialog_type.dart';
 import 'isometric/isometric.dart';
 import 'network/enums/connection_region.dart';
 import 'network/enums/connection_status.dart';
@@ -212,7 +211,7 @@ class Gamestream with ByteReader {
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
-         isometric.ui.hoverDialogType.value = DialogType.None;
+         isometric.ui.clearHoverDialogType();
          isometric.clientState.timeConnectionEstablished = DateTime.now();
          audio.enabledSound.value = true;
          if (!engine.isLocalHost) {

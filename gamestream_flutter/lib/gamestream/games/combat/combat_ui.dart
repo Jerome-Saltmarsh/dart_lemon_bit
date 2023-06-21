@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/gamestream/games/combat/combat_game.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
@@ -179,7 +180,7 @@ extension CombatUI on CombatGame {
     );
 
     return buildFullscreen(
-      child: GameIsometricUI.buildDialogUIControl(
+      child: GSDialog(
         child: Container(
           width: 600,
           padding: GameStyle.Padding_6,

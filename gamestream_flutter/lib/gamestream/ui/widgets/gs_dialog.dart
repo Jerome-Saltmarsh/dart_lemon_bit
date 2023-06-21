@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 
 class GSDialog extends StatefulWidget {
@@ -19,16 +18,16 @@ class _GSDialogState extends State<GSDialog> {
   @override
   void dispose() {
     super.dispose();
-    gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
+    gamestream.isometric.ui.clearHoverDialogType();
   }
 
   @override
   Widget build(BuildContext context) => MouseRegion(
     onEnter: (PointerEnterEvent event) {
-      gamestream.isometric.ui.hoverDialogType.value = DialogType.UI_Control;
+      gamestream.isometric.ui.hoverDialogType.value = true;
     },
     onExit: (PointerExitEvent event) {
-      gamestream.isometric.ui.hoverDialogType.value = DialogType.None;
+      gamestream.isometric.ui.hoverDialogType.value = false;
     },
     child: widget.child,
   );
