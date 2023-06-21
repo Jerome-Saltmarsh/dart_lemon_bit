@@ -28,6 +28,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   final CaptureTheFlagGame game;
   final CaptureTheFlagPower power1;
   final CaptureTheFlagPower power2;
+  final CaptureTheFlagPower power3;
 
   /// The power the places has selected but must still caste
   late final powerActivated = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
@@ -41,6 +42,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     required this.game,
     required this.power1,
     required this.power2,
+    required this.power3,
   }) : super(game: game) {
     writeScore();
     weaponDamage = 1;
@@ -111,6 +113,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeActivatedPowerTarget(); // todo optimize
     writePower1(); // todo optimize
     writePower2(); // todo optimize
+    writePower3(); // todo optimize
   }
 
   void writeActivatedPowerPosition() {
@@ -285,6 +288,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void activatePower2() => activatePower(power2);
 
+  void activatePower3() => activatePower(power3);
+
   void activatePower(CaptureTheFlagPower value) {
     if (!value.ready) {
       writeGameError(GameError.Power_Not_Ready);
@@ -316,6 +321,12 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_2);
     writePower(power2);
+  }
+
+  void writePower3() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Power_3);
+    writePower(power3);
   }
 
   void writePower(CaptureTheFlagPower power) {

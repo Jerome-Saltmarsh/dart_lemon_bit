@@ -4,4 +4,5 @@ enum CaptureTheFlagRequest {
    toggleSelectedAIRole,
    Activate_Power_1,
    Activate_Power_2,
+   Activate_Power_3,
 }

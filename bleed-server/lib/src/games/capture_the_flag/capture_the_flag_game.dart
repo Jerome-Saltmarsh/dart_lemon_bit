@@ -598,6 +598,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         cooldown: 300,
         duration: 120,
       ),
+      power3: CaptureTheFlagPower(
+        type: CaptureTheFlagPowerType.Slow,
+        range: 300,
+        cooldown: 300,
+        duration: 120,
+      ),
     );
     player.team = countPlayersOnTeamBlue > countPlayersOnTeamRed
         ? CaptureTheFlagTeam.Red

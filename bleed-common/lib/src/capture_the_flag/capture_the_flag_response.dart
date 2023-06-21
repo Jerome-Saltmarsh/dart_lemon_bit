@@ -18,4 +18,5 @@ class CaptureTheFlagResponse {
   static const Activated_Power_Target = 17;
   static const Power_1 = 18;
   static const Power_2 = 19;
+  static const Power_3 = 20;
 }

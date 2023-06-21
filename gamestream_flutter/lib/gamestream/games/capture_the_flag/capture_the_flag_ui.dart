@@ -368,6 +368,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
           buildControlPower(playerPower1),
           width8,
           buildControlPower(playerPower2),
+          width8,
+          buildControlPower(playerPower3),
         ],
       ),
     );

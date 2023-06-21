@@ -129,6 +129,10 @@ extension CaptureTheFlagResponseReader on Gamestream {
       case CaptureTheFlagResponse.Power_2:
         readPower(captureTheFlag.playerPower2);
         break;
+
+      case CaptureTheFlagResponse.Power_3:
+        readPower(captureTheFlag.playerPower3);
+        break;
     }
   }
 
