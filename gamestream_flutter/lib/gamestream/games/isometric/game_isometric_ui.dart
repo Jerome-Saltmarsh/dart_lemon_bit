@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
@@ -410,7 +411,15 @@ class GameIsometricUI {
 
   static Widget buildMainMenu({List<Widget>? children}) {
     final controlTime = buildTime();
-    return GSDialog(
+    return MouseRegion(
+      onEnter: (PointerEnterEvent event) {
+        gamestream.isometric.ui.hoverDialogType.value = true;
+        gamestream.isometric.clientState.window_visible_menu.value = true;
+      },
+      onExit: (PointerExitEvent event) {
+        gamestream.isometric.ui.hoverDialogType.value = false;
+        gamestream.isometric.clientState.window_visible_menu.value = false;
+      },
       child: watch(gamestream.isometric.clientState.window_visible_menu, (bool menuVisible){
         return Container(
           color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
