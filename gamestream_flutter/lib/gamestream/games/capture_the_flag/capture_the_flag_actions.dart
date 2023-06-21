@@ -1,6 +1,7 @@
 
 
 import 'package:bleed_common/src/capture_the_flag/src.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';
@@ -18,6 +19,12 @@ extension CaptureTheFlagActions on CaptureTheFlagGame {
       gamestream.network.sendClientRequest(
           ClientRequest.Capture_The_Flag,
           CaptureTheFlagRequest.toggleSelectedAIRole.index
+      );
+
+  void upgradePower(CaptureTheFlagPower power) =>
+      gamestream.network.sendClientRequest(
+          ClientRequest.Capture_The_Flag,
+          '${CaptureTheFlagRequest.Upgrade_Power.index} ${power.type.value.index}'
       );
 
   void sendCaptureTheFlagRequest(CaptureTheFlagRequest value, [dynamic message]){

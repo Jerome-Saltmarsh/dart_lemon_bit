@@ -6,6 +6,7 @@ import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_power_
 class CaptureTheFlagPower {
 
   var cooldownRemaining = 0;
+  var level = 1;
 
   final int duration;
   final int cooldown;

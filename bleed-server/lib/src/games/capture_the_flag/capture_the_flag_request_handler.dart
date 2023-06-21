@@ -1,6 +1,8 @@
 
 
+import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_power_type.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_request.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
@@ -49,6 +51,16 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         break;
       case CaptureTheFlagRequest.Activate_Power_3:
         player.activatePower3();
+        break;
+      case CaptureTheFlagRequest.Upgrade_Power:
+        final powerTypeIndex = parseArg2(arguments);
+        if (powerTypeIndex == null) return;
+        if (!isValidIndex(powerTypeIndex, PowerType.values)){
+          errorInvalidClientRequest();
+          return;
+        }
+        final powerType = CaptureTheFlagPowerType.values[powerTypeIndex];
+        player.upgradePowerType(powerType);
         break;
     }
   }

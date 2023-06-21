@@ -348,6 +348,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeUInt16(power.cooldown);
     writeUInt16(power.cooldownRemaining);
     writeBool(powerActivated.value == power);
+    writeByte(power.level);
   }
 
   void performActivatedPower() {
@@ -389,6 +390,35 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   void writePlayerEventLevelGained() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Event_Level_Gained);
+  }
+
+  void upgradePowerType(CaptureTheFlagPowerType powerType) {
+     final power = getPowerByType(powerType);
+     if (power == null) {
+       writeGameError(GameError.Upgrade_Power_Error);
+       return;
+     }
+     if (skillPoints <= 0) {
+       writeGameError(GameError.Insufficient_Skill_Points);
+       return;
+     }
+     skillPoints--;
+     writePlayerLevel();
+     power.level++;
+     writePower1();
+     writePower2();
+     writePower3();
+
+  }
+
+  CaptureTheFlagPower? getPowerByType(CaptureTheFlagPowerType powerType) {
+     if (power1.type == powerType)
+       return power1;
+     if (power2.type == powerType)
+       return power2;
+     if (power3.type == powerType)
+       return power3;
+     return null;
   }
 
 

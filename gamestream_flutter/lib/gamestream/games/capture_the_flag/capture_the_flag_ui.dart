@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_button.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
@@ -406,13 +407,16 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         children: [
           watch(skillPoints, (skillPoints) => (skillPoints <= 0) ? nothing :
              GSDialog(
-               child: Container(
-                  color: GameStyle.Container_Color,
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  child: buildText("+"),
-                 margin: const EdgeInsets.only(bottom: 6),
+               child: GSButton(
+                 action: () => upgradePower(power),
+                 child: Container(
+                    color: GameStyle.Container_Color,
+                    width: 40,
+                    height: 40,
+                    alignment: Alignment.center,
+                    child: buildText("+"),
+                   margin: const EdgeInsets.only(bottom: 6),
+                 ),
                ),
              )
           ),
@@ -432,7 +436,14 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                                height: size * power.cooldownPercentage,
                             ))),
                     watch(power.type, (powerType) =>
-                        watch(power.coolingDown, (coolingDown) => buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green))),
+                        watch(power.coolingDown, (coolingDown) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green),
+                            watch(power.level, buildText),
+                          ],
+                        ))),
                     Container(
                         width: size,
                         height: size,

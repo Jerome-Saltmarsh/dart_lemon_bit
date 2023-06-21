@@ -6,6 +6,8 @@ enum GameError {
   Invalid_Weapon_Type,
   Invalid_Power_Type,
   Power_Not_Ready,
+  Upgrade_Power_Error,
+  Insufficient_Skill_Points,
   Invalid_Inventory_Index,
   Invalid_Inventory_Request_Index,
   Respawn_Duration_Remaining,

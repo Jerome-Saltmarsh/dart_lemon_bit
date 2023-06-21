@@ -6,6 +6,7 @@ class CaptureTheFlagPower {
    final cooldown = Watch(0);
    final activated = Watch(false);
    final coolingDown = Watch(false);
+   final level = Watch(0);
 
    late final cooldownRemaining = Watch(0, onChanged: onChangedCooldownRemaining);
 
