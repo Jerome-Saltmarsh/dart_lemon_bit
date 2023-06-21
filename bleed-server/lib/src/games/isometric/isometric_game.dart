@@ -2967,4 +2967,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
     return nearestCharacter;
   }
+
+  double clampX(double value)=> clamp(value, 0, scene.gridRowLength);
+
+  double clampY(double value)=> clamp(value, 0, scene.gridColumnLength);
 }

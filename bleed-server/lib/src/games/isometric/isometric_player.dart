@@ -83,8 +83,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricCollider? get aimTarget => _aimTarget;
   int get lookDirection => Direction.fromRadian(lookRadian);
 
-  double get mouseGridX => (mouse.x + mouse.y) + z;
-  double get mouseGridY => (mouse.y - mouse.x) + z;
+  double get mouseGridX => game.clampX((mouse.x + mouse.y) + z);
+  double get mouseGridY => game.clampY((mouse.y - mouse.x) + z);
+
   /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
   IsometricScene get scene => game.scene;

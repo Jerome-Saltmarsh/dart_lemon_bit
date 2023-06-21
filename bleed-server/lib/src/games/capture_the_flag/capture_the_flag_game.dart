@@ -512,8 +512,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     final range = activatedPower.range;
     if (player.mouseDistance <= range){
-      player.activatedPowerX = player.mouseGridX;
-      player.activatedPowerY = player.mouseGridY;
+      player.activatedPowerX = clampX(player.mouseGridX);
+      player.activatedPowerY = clampY(player.mouseGridY);
     } else {
       final angle = player.mouseAngle;
       player.activatedPowerX = player.x + getAdjacent(angle, range);

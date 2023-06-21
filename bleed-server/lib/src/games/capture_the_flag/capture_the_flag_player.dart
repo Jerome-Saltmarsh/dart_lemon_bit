@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/player.dart';
@@ -115,8 +113,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     if (powerActivated.value == null) return;
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Activated_Power_Position);
-    writeUInt24(max(0, activatedPowerX.toInt()));
-    writeUInt24(max(0, activatedPowerY.toInt()));
+    writeUInt24(activatedPowerX.toInt());
+    writeUInt24(activatedPowerY.toInt());
   }
 
   void writeActivatedPowerTarget() {
