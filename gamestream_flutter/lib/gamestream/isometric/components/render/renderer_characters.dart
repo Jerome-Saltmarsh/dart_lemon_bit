@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_charac
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
-import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererCharacters extends IsometricRenderer {
@@ -276,7 +275,7 @@ class RendererCharacters extends IsometricRenderer {
     );
   }
 
-  static double getZombieSrcX(IsometricCharacter character) {
+  double getZombieSrcX(IsometricCharacter character) {
     const framesPerDirection = 0;
     switch (character.state) {
       case CharacterState.Running:
@@ -360,4 +359,33 @@ class RendererCharacters extends IsometricRenderer {
       color: gamestream.isometric.nodes.getV3RenderColor(character),
     );
   }
+
+  double single({
+    required int frame,
+    required num direction,
+    required int framesPerDirection,
+    double size = 64.0
+  }) {
+    return ((direction * framesPerDirection) + (frame - 1)) * size;
+  }
+
+  double loop4({
+    required List<int> animation,
+    required IsometricCharacter character,
+    required int framesPerDirection,
+    double size = 64,
+  }) => (character.renderDirection * framesPerDirection * size) +
+        ((animation[character.frame % 4] - 1) * size);
+
+  double animate({
+    required List<int> animation,
+    required IsometricCharacter character,
+    required int framesPerDirection,
+    double size = 64.0
+  }) {
+    final animationFrame = min(character.frame, animation.length - 1);
+    final frame = animation[animationFrame] - 1;
+    return (character.renderDirection * framesPerDirection * size) + (frame * size);
+  }
+
 }

@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
-import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../games/isometric/game_isometric_constants.dart';
@@ -574,6 +573,11 @@ class IsometricRender {
       gamestream.isometric.renderer.renderWireFrameBlue(z, gamestream.isometric.editor.row, gamestream.isometric.editor.column);
     }
     gamestream.isometric.renderer.renderWireFrameRed(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
+  }
+
+  void renderText({required String text, required double x, required double y}){
+    const charWidth = 4.5;
+    engine.writeText(text, x - charWidth * text.length, y);
   }
 }
 
