@@ -362,32 +362,48 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   buildWindowPlayer() => Container(
       width: engine.screen.width,
       alignment: Alignment.center,
-      child: buildWindow(
-          width: 300,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildControlPower(playerPower1),
-              width8,
-              buildControlPower(playerPower2),
-            ],
-          ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          buildControlPower(playerPower1),
+          width8,
+          buildControlPower(playerPower2),
+        ],
       ),
     );
 
   Widget buildControlPower(CaptureTheFlagPower power) => watch(power.activated, (activated) =>
-    Container(
-      color: activated ? Colors.white12 : Colors.transparent,
-      child: Column(
-          children: [
-            watch(power.type, (powerType) =>
-                buildText(powerType.name)),
-            watch(power.cooldown, (cooldown) =>
-                watch(power.cooldownRemaining, (cooldownRemaining) =>
-                    buildText('$cooldownRemaining / $cooldown'))),
-          ],
-        ),
-    ),
+    Stack(
+        alignment: Alignment.center,
+        children: [
+          watch(power.cooldown, (cooldown) =>
+              watch(power.cooldownRemaining, (cooldownRemaining) =>
+                  // buildText('$cooldownRemaining / $cooldown'))),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: GameStyle.Container_Color,
+                      shape: BoxShape.circle,
+                    ),
+                     width: 100,
+                     height: cooldownRemaining == 0 ? 100 : 100 * ((cooldown - cooldownRemaining) / cooldown),
+                  ))),
+          watch(power.type, (powerType) =>
+              buildText(powerType.name)),
+          Container(
+              width: 100,
+              height: 100,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  // color: GameStyle.Container_Color,
+                  border: Border.all(
+                    color: activated ? Colors.white : Colors.transparent,
+                    width: 2,
+                  )
+              )
+          ),
+        ],
+      ),
   );
 }
 
