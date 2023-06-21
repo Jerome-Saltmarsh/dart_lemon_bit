@@ -65,7 +65,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   bool get canPerformActivatedPower {
     final power = powerActivated.value;
-    return power != null && power.isTargeted && powerActivatedTarget == null;
+    if (power == null)
+      return false;
+    if (power.isTargeted && powerActivatedTarget == null)
+      return false;
+    return true;
   }
 
   bool get shouldUsePowerPerforming {
