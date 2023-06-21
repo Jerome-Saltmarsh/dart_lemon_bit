@@ -392,6 +392,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(CaptureTheFlagResponse.Player_Event_Level_Gained);
   }
 
+  void writePlayerEventSkillUpgraded() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Player_Event_Skill_Upgraded);
+  }
+
   void upgradePowerType(CaptureTheFlagPowerType powerType) {
      final power = getPowerByType(powerType);
      if (power == null) {
@@ -408,6 +413,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
      writePower1();
      writePower2();
      writePower3();
+     writePlayerEventSkillUpgraded();
+
+
 
   }
 
