@@ -2,14 +2,15 @@
 
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_io.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_particles.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ui.dart';
+import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
-import '../../library.dart';
+import 'ui/game_isometric_minimap.dart';
+import 'classes/isometric_particles.dart';
+import 'components/isometric_ui.dart';
+import 'components/render/renderer_gameobjects.dart';
+import 'components/render/renderer_particles.dart';
+import 'components/isometric_io.dart';
 import 'components/isometric_actions.dart';
 import 'components/isometric_camera.dart';
 import 'components/isometric_client_state.dart';
