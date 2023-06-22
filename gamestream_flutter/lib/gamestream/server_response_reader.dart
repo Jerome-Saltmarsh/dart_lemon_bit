@@ -565,7 +565,6 @@ extension ServerResponseReader on Gamestream {
 
   void readGameTime() {
     isometric.server.seconds.value = readUInt24();
-
   }
 
   void readNodes() {
@@ -685,15 +684,6 @@ extension ServerResponseReader on Gamestream {
   }
 
   double readPercentage() => readByte() / 255.0;
-
-  List<Quest> readQuests(){
-    final total = readUInt16();
-    final values = <Quest>[];
-    for (var i = 0; i < total; i++){
-      values.add(quests[readByte()]);
-    }
-    return values;
-  }
 
   double readAngle() => readDouble() * degreesToRadians;
 

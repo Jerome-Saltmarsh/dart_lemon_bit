@@ -39,6 +39,7 @@ class Gamestream with ByteReader {
   late final Games games;
   late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
 
+
   void refreshGame() {
     _onChangedGameType(gameType.value);
   }

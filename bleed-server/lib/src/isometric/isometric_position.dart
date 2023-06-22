@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src/maths.dart';
-import 'package:bleed_server/common/src/node_size.dart';
+import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/library.dart';
 
 class IsometricPosition with Position {

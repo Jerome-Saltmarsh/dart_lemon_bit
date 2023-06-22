@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/api_players.dart';
-import 'package:bleed_server/common/src/item_type.dart';
+import 'package:bleed_server/common/src/isometric/item_type.dart';
 import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/engine.dart';

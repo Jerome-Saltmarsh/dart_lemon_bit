@@ -1,5 +1,5 @@
-import 'package:bleed_server/common/src/lightning_type.dart';
-import 'package:bleed_server/common/src/rain_type.dart';
+import 'package:bleed_server/common/src/isometric/lightning_type.dart';
+import 'package:bleed_server/common/src/isometric/rain_type.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:lemon_math/library.dart';
 
