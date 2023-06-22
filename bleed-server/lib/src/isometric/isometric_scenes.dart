@@ -17,6 +17,7 @@ class IsometricScenes {
   late IsometricScene warehouse02;
   late IsometricScene town;
   late IsometricScene captureTheFlag;
+  late IsometricScene moba;
 
   Future load() async {
       suburbs_01 = await loadScene('suburbs_01');
@@ -24,6 +25,7 @@ class IsometricScenes {
       warehouse02 = await loadScene('warehouse02');
       town = await loadScene('town');
       captureTheFlag = await loadScene('capture_the_flag');
+      moba = await loadScene('moba');
   }
 
   Future<IsometricScene> loadScene(String sceneName) async {

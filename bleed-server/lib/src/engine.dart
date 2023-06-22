@@ -143,7 +143,7 @@ class Engine {
     }
 
     return joinGame(Moba(
-      scene: isometricScenes.captureTheFlag,
+      scene: isometricScenes.moba,
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
     ));
