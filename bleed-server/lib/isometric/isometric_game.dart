@@ -15,9 +15,9 @@ import 'package:bleed_server/common/src/isometric/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/common/src/isometric/weapon_state.dart';
-import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/game/game.dart';
-import 'package:bleed_server/src/utilities/maths.dart';
+import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/core/game.dart';
+import 'package:bleed_server/utils/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
@@ -1550,7 +1550,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void setCharacterStateStunned(IsometricCharacter character,
-      {int duration = Engine.Frames_Per_Second * 2}) {
+      {int duration = Gamestream.Frames_Per_Second * 2}) {
     if (character.dead) return;
     if (character.buffInvincible) return;
     character.stateDurationRemaining = duration;

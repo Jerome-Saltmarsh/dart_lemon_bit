@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src/maths.dart';
-import 'package:bleed_server/src/utilities/typedefs.dart';
+import 'package:bleed_server/utils/typedefs.dart';
 import 'package:lemon_math/constants/pi2.dart';
 import 'package:lemon_math/functions/distance_between.dart';
 import 'package:lemon_math/functions/position.dart';

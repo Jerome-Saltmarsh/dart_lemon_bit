@@ -3,8 +3,8 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
-import 'package:bleed_server/src/utilities/is_valid_index.dart';
-import 'package:bleed_server/src/websocket/websocket_connection.dart';
+import 'package:bleed_server/utils/is_valid_index.dart';
+import 'package:bleed_server/websocket/websocket_connection.dart';
 
 extension CaptureTheFlagRequestHandler on WebSocketConnection {
 

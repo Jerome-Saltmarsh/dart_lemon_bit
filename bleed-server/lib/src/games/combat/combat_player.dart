@@ -6,7 +6,7 @@ import 'package:bleed_server/common/src/api_players.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
 import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/src/engine.dart';
+import 'package:bleed_server/gamestream.dart';
 
 import 'package:bleed_server/isometric/src.dart';
 import 'package:lemon_math/functions/clamp.dart';
@@ -157,7 +157,7 @@ class CombatPlayer extends IsometricPlayer {
   }
 
   int getPlayerPowerTypeCooldownTotal() {
-    return Engine.Frames_Per_Second * 10;
+    return Gamestream.Frames_Per_Second * 10;
   }
 
   void writeApiPlayerRespawnTimer(){

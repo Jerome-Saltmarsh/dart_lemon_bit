@@ -1,7 +1,7 @@
 
 import 'package:bleed_server/common/src/rock_paper_scissors/api_spr.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/src/game/player.dart';
+import 'package:bleed_server/core/player.dart';
 
 import 'rock_paper_scissors_game.dart';
 

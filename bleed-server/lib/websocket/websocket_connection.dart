@@ -3,25 +3,25 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
-import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/game/game.dart';
-import 'package:bleed_server/src/game/player.dart';
+import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/core/game.dart';
+import 'package:bleed_server/core/player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
-import 'package:bleed_server/src/utilities/generate_random_name.dart';
-import 'package:bleed_server/src/utilities/is_valid_index.dart';
-import 'package:bleed_server/src/utilities/system.dart';
-import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
+import 'package:bleed_server/utils/generate_random_name.dart';
+import 'package:bleed_server/utils/is_valid_index.dart';
+import 'package:bleed_server/utils/system.dart';
+import 'package:bleed_server/websocket/handle_request_modify_canvas_size.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_request_handler.dart';
-import 'package:bleed_server/src/websocket/handlers/handle_client_request_combat.dart';
+import 'package:bleed_server/websocket/handle_client_request_combat.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 
 class WebSocketConnection with ByteReader {
-  final Engine engine;
+  final Gamestream engine;
   final started = DateTime.now();
   late WebSocketChannel webSocket;
   late WebSocketSink sink;

@@ -8,55 +8,33 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
-- Should the player be able to collect resource like trees and rocks?
+[MMO]
 
-- Should creeps drop loot?
-  - Should loot vanish after a time?
-
-- Should weapons be upgradable
-  - Should it cost gold?
-  - Should it cost more gold each upgrade?
-  - Should skills cost skill points
-
-- Should creeps be spawned?
-  - Should the player be able to spawn creeps?
-  - Should there be a passive income?
-    - Should the passive income be upgradable?
-
-- Is the aim of the game to destroy the enemy's base?
-    - Should Sniper Shots do damage to buildings?
-    - Should guard towers defend the castle?
-        - Can Guard towers can be upgraded? 
-        - Can guard towers be repaired?
-    - Can all structures be repaired?
-    - Can buildings be repaired once they are destroyed?
+[MOBA]
+  [ ] destructable base
 
 [CAPTURE THE FLAG]
-[ ] destroyable terrain
-[ai system]
+  [ ] destroyable terrain
   [ ] pathfinding 3d 
-[refactor]
-  [ ] isometric_character
-[level system]
-  [ ] player experience
-  [ ] player level
-[power system]
-  [x] right click to cancel active power 
-  [x] caste power blink
-  [x] prevent attack on caste power
-  [x] caste power slow
-  [x] perform caste
-  [x] do not render power circles while player is performing the power
-  [x] heal ally
+  [ ] refactor isometric_character
   [ ] power strong arrow
   [ ] power silence
   [ ] capture the flag player slowable
+
+[COMPLETED] - 22.06.2023
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding
 [x] render objective lines
 [x] render bases on mini map
 [x] render flags on mini map
+[x] right click to cancel active power
+[x] caste power blink
+[x] prevent attack on caste power
+[x] caste power slow
+[x] perform caste
+[x] do not render power circles while player is performing the power
+[x] heal ally
 
 [RELEASE FIGHT2D MVP]
 [x] strike down hit

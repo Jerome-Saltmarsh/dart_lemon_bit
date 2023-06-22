@@ -6,7 +6,7 @@ import 'game_fight2d.dart';
 import 'game_fight2d_bot.dart';
 import 'game_fight2d_character.dart';
 
-import 'package:bleed_server/src/game/player.dart';
+import 'package:bleed_server/core/player.dart';
 
 
 

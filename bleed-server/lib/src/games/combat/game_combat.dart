@@ -11,15 +11,15 @@ import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/isometric/team_type.dart';
-import 'package:bleed_server/src/engine.dart';
+import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/combat/combat_player.dart';
-import 'package:bleed_server/src/utilities/system.dart';
+import 'package:bleed_server/utils/system.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 class GameCombat extends IsometricGame<CombatPlayer> {
   // constants
-  static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);
+  static final Player_Respawn_Duration  = Gamestream.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
   static const AI_Respawn_Duration      = 300;
@@ -35,9 +35,9 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   static const Player_Energy_Perk       = 24;
   static const Player_Run_Speed         = 1.0;
   static const Player_Run_Speed_Perk    = 1.2;
-  static const Power_Duration_Invisible = Engine.Frames_Per_Second * 6;
-  static const Power_Duration_Shield    = Engine.Frames_Per_Second * 4;
-  static const Power_Duration_Stun      = Engine.Frames_Per_Second * 3;
+  static const Power_Duration_Invisible = Gamestream.Frames_Per_Second * 6;
+  static const Power_Duration_Shield    = Gamestream.Frames_Per_Second * 4;
+  static const Power_Duration_Stun      = Gamestream.Frames_Per_Second * 3;
 
   static const Power_Range_Stun         = 125.0;
 

@@ -1,25 +1,25 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/common/src/version.dart';
 import 'package:bleed_server/firestore/firestore.dart';
-import 'package:bleed_server/src/game/player.dart';
+import 'package:bleed_server/core/player.dart';
 import 'package:bleed_server/src/games/mmo/mmo.dart';
 import 'package:bleed_server/src/games/moba/moba.dart';
-import 'package:bleed_server/src/websocket/websocket_server.dart';
+import 'package:bleed_server/websocket/websocket_server.dart';
 
 import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
 
-import 'game/game.dart';
-import 'games/capture_the_flag/capture_the_flag_game.dart';
-import 'games/fight2d/game_fight2d.dart';
-import 'games/fight2d/game_fight2d_scene_generator.dart';
-import 'games/combat/game_combat.dart';
-import 'games/rock_paper_scissors/rock_paper_scissors_game.dart';
-import 'package:bleed_server/isometric/src.dart';
-import 'utilities/system.dart';
+import 'core/game.dart';
+import 'src/games/capture_the_flag/capture_the_flag_game.dart';
+import 'src/games/fight2d/game_fight2d.dart';
+import 'src/games/fight2d/game_fight2d_scene_generator.dart';
+import 'src/games/combat/game_combat.dart';
+import 'src/games/rock_paper_scissors/rock_paper_scissors_game.dart';
+import 'utils/system.dart';
 
-class Engine {
+class Gamestream {
 
   static const Frames_Per_Second = 45;
 
@@ -30,11 +30,6 @@ class Engine {
 
   var _highScore = 0;
   var frame = 0;
-
-
-  Engine() {
-    run();
-  }
 
   int get highScore => _highScore;
 

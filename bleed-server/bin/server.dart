@@ -1,7 +1,7 @@
-import 'package:bleed_server/src/engine.dart';
+import 'package:bleed_server/gamestream.dart';
 
 
 void main() {
-  Engine();
+  Gamestream().run();
 }
 

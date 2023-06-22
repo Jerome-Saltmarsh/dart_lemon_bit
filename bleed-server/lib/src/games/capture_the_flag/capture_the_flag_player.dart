@@ -1,7 +1,7 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
-import 'package:bleed_server/src/utilities/change_notifier.dart';
+import 'package:bleed_server/utils/change_notifier.dart';
 
 import 'mixins/i_capture_the_flag_team.dart';
 
