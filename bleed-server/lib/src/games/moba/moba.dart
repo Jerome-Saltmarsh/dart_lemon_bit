@@ -22,6 +22,8 @@ class Moba extends IsometricGame<MobaPlayer> {
         id: generateUniqueId(),
     );
 
+    redBase1.hitable = true;
+
     blueBase1 = IsometricGameObject(
         x: 100,
         y: scene.gridColumnLength - 100,
