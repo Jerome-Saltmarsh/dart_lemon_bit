@@ -18,6 +18,7 @@ class WebsiteGame extends Game {
     GameType.Fight2D,
     GameType.Capture_The_Flag,
     GameType.Moba,
+    GameType.Mmo,
   ];
 
   final error = Watch<String?>(null);

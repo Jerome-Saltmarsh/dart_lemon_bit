@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bleed_server/common/src/version.dart';
 import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/src/game/player.dart';
+import 'package:bleed_server/src/games/mmo/mmo.dart';
 import 'package:bleed_server/src/games/moba/moba.dart';
 import 'package:bleed_server/src/websocket/websocket_server.dart';
 
@@ -142,6 +143,20 @@ class Engine {
     }
 
     return joinGame(Moba(
+      scene: isometricScenes.captureTheFlag,
+      time: IsometricTime(enabled: false, hour: 14),
+      environment: IsometricEnvironment(),
+    ));
+  }
+
+  Player joinGameMmo() {
+    for (final game in games) {
+      if (game.isFull) continue;
+      if (game is! Mmo) continue;
+      return joinGame(game);
+    }
+
+    return joinGame(Mmo(
       scene: isometricScenes.captureTheFlag,
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),

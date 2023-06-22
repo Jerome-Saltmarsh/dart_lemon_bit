@@ -205,7 +205,6 @@ extension WebsiteUI on WebsiteGame {
       GameType.Moba: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
-  @override
   Widget buildSelectRegionColumn() {
     return SizedBox(
       width: 300,

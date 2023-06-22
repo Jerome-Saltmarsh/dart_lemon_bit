@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/src.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/Mmo.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game.dart';
 
@@ -21,6 +22,7 @@ class Games {
   late final Moba moba;
   late final SurvivalGame survival;
   late final CombatGame combat;
+  late final Mmo mmo;
 
   Games(Gamestream gamestream) {
      captureTheFlag = CaptureTheFlagGame(gamestream: gamestream);
@@ -28,6 +30,7 @@ class Games {
      survival = SurvivalGame(isometric: gamestream.isometric);
      moba = Moba(isometric: gamestream.isometric);
      combat = CombatGame(isometric: gamestream.isometric);
+     mmo = Mmo(isometric: gamestream.isometric);
   }
 
   Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
@@ -38,6 +41,7 @@ class Games {
       GameType.Capture_The_Flag => captureTheFlag,
       GameType.Editor => isometricEditor,
       GameType.Moba => moba,
+      GameType.Mmo => mmo,
       _ => throw Exception('mapGameTypeToGame($gameType)')
     };
 }

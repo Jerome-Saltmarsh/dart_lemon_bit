@@ -8,6 +8,7 @@ enum GameType {
   Cube3D,
   Moba,
   Capture_The_Flag,
+  Mmo,
 }
 
 extension GameTypeExtension on GameType {
