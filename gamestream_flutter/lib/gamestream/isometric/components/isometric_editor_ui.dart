@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor.dart';

@@ -7,13 +7,13 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_pla
 import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'game_isometric_ui.dart';
+import '../ui/game_isometric_ui.dart';
 
-class GameIsometric extends Game {
+class IsometricGame extends Game {
 
   final Isometric isometric;
 
-  GameIsometric({required this.isometric}) {
+  IsometricGame({required this.isometric}) {
     isometric.camera.chaseTarget = isometric.player.position;
   }
 

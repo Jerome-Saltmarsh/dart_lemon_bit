@@ -30,7 +30,7 @@ class Gamestream with ByteReader {
 
   late final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
   late final io = GameIO(isometric);
-  late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
+  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
   late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
@@ -40,7 +40,7 @@ class Gamestream with ByteReader {
   late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
 
   void refreshGame() {
-    _onChangedGameType(gameType.value);
+    onChangedGameType(gameType.value);
   }
 
   Gamestream() {
@@ -123,19 +123,13 @@ class Gamestream with ByteReader {
      game.onActivated();
    }
 
-   /// EVENT HANDLER (DO NOT CALL)
-   void _onChangedGameType(GameType value) {
-     print("_onChangedGameType(${value.name})");
-     game.value = switch (value) {
-       GameType.Website => games.website,
-       GameType.Fight2D => games.fight2D,
-       GameType.Combat  => games.isometric,
-       GameType.Cube3D  => games.cube3D,
-       GameType.Capture_The_Flag => games.captureTheFlag,
-       GameType.Editor => games.isometricEditor,
-       GameType.Moba => games.moba,
-       _ => throw Exception('mapGameTypeToGame($gameType)')
-     };
+   void onChangedGameType(GameType value) {
+     print("onChangedGameType(${value.name})");
+     startGameByType(value);
+   }
+
+   void startGameByType(GameType gameType){
+     game.value = games.mapGameTypeToGame(gameType);
    }
 
    void onScreenSizeChanged(

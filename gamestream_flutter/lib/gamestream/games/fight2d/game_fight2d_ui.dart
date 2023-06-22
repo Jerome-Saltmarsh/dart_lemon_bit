@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/bool_watch_builder_checkbox.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';

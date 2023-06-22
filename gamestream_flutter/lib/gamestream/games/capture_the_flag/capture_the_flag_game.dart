@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -14,7 +14,7 @@ import 'capture_the_flag_render.dart';
 import 'capture_the_flag_ui.dart';
 import 'capture_the_flag_events.dart';
 
-class CaptureTheFlagGame extends GameIsometric {
+class CaptureTheFlagGame extends IsometricGame {
 
   var objectiveLinesEnabled = false;
   var characterTargetTotal = 0;

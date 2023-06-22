@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class BoolWatchBuilderCheckBox extends StatelessWidget {

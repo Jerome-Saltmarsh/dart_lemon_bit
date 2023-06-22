@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 import 'package:gamestream_flutter/library.dart';

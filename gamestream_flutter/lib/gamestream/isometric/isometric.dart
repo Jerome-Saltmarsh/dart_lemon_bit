@@ -2,7 +2,7 @@
 
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_minimap.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_io.dart';

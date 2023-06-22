@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'gamestream/games/isometric/game_isometric_colors.dart';
+import 'gamestream/isometric/ui/game_isometric_colors.dart';
 
 class GameStyle {
   static final Container_Color = GameIsometricColors.brownDark;

@@ -1,8 +1,9 @@
 
 
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 
-class Moba extends GameIsometric {
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
+
+class Moba extends IsometricGame {
 
   Moba({required super.isometric});
 

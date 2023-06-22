@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';

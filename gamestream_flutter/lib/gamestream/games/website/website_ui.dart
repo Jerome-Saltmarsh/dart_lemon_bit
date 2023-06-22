@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/website/enums/website_page.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';

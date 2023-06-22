@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-import '../../games/isometric/game_isometric_ui.dart';
+import '../ui/game_isometric_ui.dart';
 import '../isometric.dart';
 
 class IsometricActions {
