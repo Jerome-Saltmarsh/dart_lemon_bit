@@ -26,7 +26,7 @@ class GameIO {
   var previousVelocityY2 = 0.0;
 
   var touchPanning = false;
-  var touchscreenDirectionMove = Direction.None;
+  var touchscreenDirectionMove = IsometricDirection.None;
   var touchscreenRadianInput = 0.0;
   var touchscreenRadianMove = 0.0;
   var touchscreenRadianPerform = 0.0;
@@ -159,7 +159,7 @@ class GameIO {
     if (engine.keyPressed(KeyCode.Delete)) {
       isometric.editor.delete();
     }
-    if (getInputDirectionKeyboard() != Direction.None) {
+    if (getInputDirectionKeyboard() != IsometricDirection.None) {
       isometric.actions.actionSetModePlay();
     }
     return;
@@ -230,7 +230,7 @@ class TouchController {
   }
 
   int getDirection() =>
-      engine.touches == 0 ? Direction.None : Direction.fromRadian(angle);
+      engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
 
   void onMouseMoved(double x, double y){
     joystickX = engine.mousePositionX;

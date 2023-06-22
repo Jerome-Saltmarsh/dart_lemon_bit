@@ -4,12 +4,12 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/isometric/character_state.dart';
 import 'package:bleed_server/common/src/isometric/character_type.dart';
-import 'package:bleed_server/common/src/direction.dart';
+import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/isometric/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/weapon_state.dart';
+import 'package:bleed_server/common/src/isometric/weapon_state.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_collider.dart';
@@ -470,7 +470,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     return weaponStateDurationTotal - weaponStateDuration;
   }
 
-  int get faceDirection => Direction.fromRadian(_faceAngle);
+  int get faceDirection => IsometricDirection.fromRadian(_faceAngle);
   int get health => _health;
   int get maxHealth => _maxHealth;
   int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
@@ -504,7 +504,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void set faceDirection(int value) =>
-        faceAngle = Direction.toRadian(value);
+        faceAngle = IsometricDirection.toRadian(value);
 
   void set faceAngle(double value){
     if (value < 0){

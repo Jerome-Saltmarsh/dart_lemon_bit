@@ -57,7 +57,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     var frameBody = 0;
     var frameWeapon = 0;
 
-    final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
+    final diff = IsometricDirection.getDifference(character.renderDirection, character.aimDirection).abs();
     final runningBackwards = diff >= 3 && character.running;
     var renderDirectionOpposite = (character.renderDirection + 4) % 8;
 

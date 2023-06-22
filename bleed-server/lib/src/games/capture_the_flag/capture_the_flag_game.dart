@@ -1,5 +1,4 @@
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/job.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 import 'package:lemon_math/functions/adjacent.dart';
@@ -180,7 +179,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
     }
 
-    playerRunInDirection(player, Direction.fromInputDirection(direction));
+    playerRunInDirection(player, IsometricDirection.fromInputDirection(direction));
 
   }
 

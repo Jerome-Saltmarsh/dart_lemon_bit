@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/isometric/character_state.dart';
 import 'package:bleed_server/common/src/isometric/character_type.dart';
-import 'package:bleed_server/common/src/direction.dart';
+import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/maths.dart';
@@ -14,7 +14,7 @@ import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/team_type.dart';
-import 'package:bleed_server/common/src/weapon_state.dart';
+import 'package:bleed_server/common/src/isometric/weapon_state.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/utilities/maths.dart';
@@ -277,7 +277,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (inputTypeKeyboard) {
-      playerRunInDirection(player, Direction.fromInputDirection(direction));
+      playerRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else {
       if (mouseLeftDown) {
         player.runToMouse();
@@ -338,19 +338,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void playerRunInDirection(IsometricPlayer player, int direction) {
-    if (direction == Direction.None && player.target == null) {
+    if (direction == IsometricDirection.None && player.target == null) {
       player.setCharacterStateIdle();
       return;
     }
 
     if (player.targetSet) {
-      if (direction == Direction.None) {
+      if (direction == IsometricDirection.None) {
         return;
       }
       clearCharacterTarget(player);
       player.setCharacterStateIdle();
       return;
-    } else if (direction == Direction.None) {
+    } else if (direction == IsometricDirection.None) {
       clearCharacterTarget(player);
       player.setCharacterStateIdle();
       return;
@@ -1701,7 +1701,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
 
     if (player.idling && !player.weaponStateBusy) {
-      final diff = Direction.getDifference(
+      final diff = IsometricDirection.getDifference(
           player.lookDirection, player.faceDirection);
       if (diff >= 2) {
         player.faceAngle += piQuarter;

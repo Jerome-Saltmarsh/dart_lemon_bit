@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_server/common/src/isometric/character_type.dart';
-import 'package:bleed_server/common/src/direction.dart';
+import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/game_type.dart';
@@ -239,7 +239,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       playerUsePower(player);
     }
 
-    playerRunInDirection(player, Direction.fromInputDirection(direction));
+    playerRunInDirection(player, IsometricDirection.fromInputDirection(direction));
   }
 
   @override

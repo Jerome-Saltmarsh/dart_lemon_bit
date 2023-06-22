@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'input_type.dart';
+import '../input_type.dart';
 
-class Direction {
+class IsometricDirection {
   static const North = 0;
   static const North_East = 1;
   static const East = 2;
@@ -15,16 +15,16 @@ class Direction {
 
   static int fromInputDirection(int inputDirection){
     return const {
-      InputDirection.Up         : Direction.North_East,
-      InputDirection.Up_Right   : Direction.East,
-      InputDirection.Right      : Direction.South_East,
-      InputDirection.Down_Right : Direction.South,
-      InputDirection.Down       : Direction.South_West,
-      InputDirection.Down_Left  : Direction.West,
-      InputDirection.Left       : Direction.North_West,
-      InputDirection.Up_Left    : Direction.North,
-      InputDirection.None       : Direction.None,
-    }[inputDirection] ?? Direction.None;
+      InputDirection.Up         : IsometricDirection.North_East,
+      InputDirection.Up_Right   : IsometricDirection.East,
+      InputDirection.Right      : IsometricDirection.South_East,
+      InputDirection.Down_Right : IsometricDirection.South,
+      InputDirection.Down       : IsometricDirection.South_West,
+      InputDirection.Down_Left  : IsometricDirection.West,
+      InputDirection.Left       : IsometricDirection.North_West,
+      InputDirection.Up_Left    : IsometricDirection.North,
+      InputDirection.None       : IsometricDirection.None,
+    }[inputDirection] ?? IsometricDirection.None;
   }
 
   /// 7 and 1
@@ -66,14 +66,14 @@ class Direction {
   static double toRadian(int direction){
     const piQuarter = pi / 4;
     const piHalf = pi / 2;
-    if (direction == Direction.North) return pi;
-    if (direction == Direction.North_East) return pi + piQuarter;
-    if (direction == Direction.East) return pi + piHalf;
-    if (direction == Direction.South_East) return pi + piHalf + piQuarter;
-    if (direction == Direction.South) return 0;
-    if (direction == Direction.South_West) return piQuarter;
-    if (direction == Direction.West) return piHalf;
-    if (direction == Direction.North_West) return piHalf + piQuarter;
+    if (direction == IsometricDirection.North) return pi;
+    if (direction == IsometricDirection.North_East) return pi + piQuarter;
+    if (direction == IsometricDirection.East) return pi + piHalf;
+    if (direction == IsometricDirection.South_East) return pi + piHalf + piQuarter;
+    if (direction == IsometricDirection.South) return 0;
+    if (direction == IsometricDirection.South_West) return piQuarter;
+    if (direction == IsometricDirection.West) return piHalf;
+    if (direction == IsometricDirection.North_West) return piHalf + piQuarter;
     throw Exception('Could not convert direction $direction to angle');
   }
 

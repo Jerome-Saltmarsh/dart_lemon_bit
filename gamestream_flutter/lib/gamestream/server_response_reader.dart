@@ -9,6 +9,7 @@ import 'isometric/classes/isometric_character.dart';
 import 'isometric/components/isometric_player_score.dart';
 import 'isometric/classes/isometric_projectile.dart';
 
+
 extension ServerResponseReader on Gamestream {
 
   void read(Uint8List values) {

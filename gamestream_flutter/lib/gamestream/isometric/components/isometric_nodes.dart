@@ -204,7 +204,7 @@ class IsometricNodes {
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
     final columnIndex = convertNodeIndexToIndexY(index);
-    final radius = Shade.Pitch_Black;
+    final radius = 6;
     final zMin = max(zIndex - radius, 0);
     final zMax = min(zIndex + radius, totalZ);
     final rowMin = max(rowIndex - radius, 0);
@@ -233,7 +233,7 @@ class IsometricNodes {
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
-          final distanceValue = clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
+          final distanceValue = clamp(b + (column - columnIndex).abs() - 2, 0, 6);
           if (distanceValue > 5) continue;
           ambientStackIndex++;
           ambientStack[ambientStackIndex] = nodeIndex;

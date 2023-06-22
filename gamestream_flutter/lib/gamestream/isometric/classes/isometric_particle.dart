@@ -29,7 +29,7 @@ class IsometricParticle extends IsometricPosition {
   var emitsLight = false;
 
   bool get active => duration > 0;
-  int get direction => Direction.fromRadian(rotation);
+  int get direction => IsometricDirection.fromRadian(rotation);
   double get duration01 => duration / durationTotal;
 
   void setSpeed(double angle, double speed){

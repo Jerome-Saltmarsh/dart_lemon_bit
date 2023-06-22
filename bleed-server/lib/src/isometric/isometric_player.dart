@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
-import 'package:bleed_server/common/src/direction.dart';
+import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
 import 'package:bleed_server/common/src/enums/input_mode.dart';
 import 'package:bleed_server/common/src/environment_response.dart';
 import 'package:bleed_server/common/src/game_error.dart';
@@ -12,7 +12,7 @@ import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/common/src/target_category.dart';
+import 'package:bleed_server/common/src/isometric/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
@@ -81,7 +81,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
 
   IsometricCollider? get aimTarget => _aimTarget;
-  int get lookDirection => Direction.fromRadian(lookRadian);
+  int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
   double get mouseGridX => game.clampX((mouse.x + mouse.y) + z);
   double get mouseGridY => game.clampY((mouse.y - mouse.x) + z);
