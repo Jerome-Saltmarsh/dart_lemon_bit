@@ -15,7 +15,7 @@ import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/combat/combat_player.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_math/library.dart';
-import 'package:bleed_server/src/isometric/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 
 class GameCombat extends IsometricGame<CombatPlayer> {
   // constants

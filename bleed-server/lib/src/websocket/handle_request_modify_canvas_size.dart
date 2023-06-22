@@ -3,7 +3,7 @@ import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:bleed_server/common/src/request_modify_canvas_size.dart';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/isometric/isometric_player.dart';
+import 'package:bleed_server/isometric/isometric_player.dart';
 
 void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPlayer player){
   final game = player.game;

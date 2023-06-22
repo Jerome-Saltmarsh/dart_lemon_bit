@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
-import 'package:bleed_server/src/isometric/src.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/is_valid_index.dart';

@@ -1,7 +1,8 @@
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/src/games/mmo/MmoPlayer.dart';
-import 'package:bleed_server/src/isometric/isometric_game.dart';
+import 'package:bleed_server/isometric/src.dart';
+
+import 'MmoPlayer.dart';
 
 class Mmo extends IsometricGame<MmoPlayer> {
 

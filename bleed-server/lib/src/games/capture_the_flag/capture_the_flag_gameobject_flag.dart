@@ -1,8 +1,8 @@
 
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
-import 'package:bleed_server/src/games/capture_the_flag/mixins/i_capture_the_flag_team.dart';
 
-import 'package:bleed_server/src/isometric/src.dart';
+import 'mixins/i_capture_the_flag_team.dart';
+import 'package:bleed_server/isometric/src.dart';
 
 class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheFlagTeam {
 

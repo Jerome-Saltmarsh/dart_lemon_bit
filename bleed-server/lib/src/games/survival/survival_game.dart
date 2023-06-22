@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_server/common/src/isometric/interact_mode.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/src/isometric/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
 
 class SurvivalGame extends IsometricGame<SurvivalPlayer> {

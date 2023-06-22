@@ -1,12 +1,12 @@
 
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
-import 'package:bleed_server/src/isometric/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/opposite.dart';
 
 import 'capture_the_flag_game.dart';
+import 'capture_the_flag_gameobject_flag.dart';
 
 
 class CaptureTheFlagAI extends IsometricCharacterTemplate {

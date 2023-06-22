@@ -1,12 +1,13 @@
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_ai.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_power.dart';
+import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
-import 'package:bleed_server/src/isometric/src.dart';
 
 import 'mixins/i_capture_the_flag_team.dart';
+
+import 'capture_the_flag_game.dart';
+import 'capture_the_flag_ai.dart';
+import 'capture_the_flag_power.dart';
 
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {

@@ -2,7 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/isometric/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';

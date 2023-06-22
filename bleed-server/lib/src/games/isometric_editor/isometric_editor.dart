@@ -1,12 +1,5 @@
-import 'package:bleed_server/common/src/isometric/character_state.dart';
-import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/isometric/node_type.dart';
-import 'package:bleed_server/src/isometric/isometric_environment.dart';
-import 'package:bleed_server/src/isometric/isometric_game.dart';
-import 'package:bleed_server/src/isometric/isometric_player.dart';
-import 'package:bleed_server/src/isometric/isometric_scene.dart';
-import 'package:bleed_server/src/isometric/isometric_scene_generator.dart';
-import 'package:bleed_server/src/isometric/isometric_time.dart';
+import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 
 class IsometricEditor extends IsometricGame {
 

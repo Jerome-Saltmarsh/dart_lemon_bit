@@ -1,5 +1,5 @@
 
-import 'package:bleed_server/src/isometric/isometric_gameobject.dart';
+import 'package:bleed_server/isometric/isometric_gameobject.dart';
 
 class MobaBuilding extends IsometricGameObject {
   var health = 0;

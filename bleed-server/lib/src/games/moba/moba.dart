@@ -1,6 +1,6 @@
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/src/isometric/src.dart';
+import 'package:bleed_server/isometric/src.dart';
 
 import 'moba_player.dart';
 

@@ -16,10 +16,7 @@ import 'games/fight2d/game_fight2d.dart';
 import 'games/fight2d/game_fight2d_scene_generator.dart';
 import 'games/combat/game_combat.dart';
 import 'games/rock_paper_scissors/rock_paper_scissors_game.dart';
-import 'isometric/isometric_environment.dart';
-import 'isometric/isometric_player.dart';
-import 'isometric/isometric_scenes.dart';
-import 'isometric/isometric_time.dart';
+import 'package:bleed_server/isometric/src.dart';
 import 'utilities/system.dart';
 
 class Engine {
