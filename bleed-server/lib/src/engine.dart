@@ -6,7 +6,7 @@ import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/websocket/websocket_server.dart';
 
-import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
 
 import 'game/game.dart';
 import 'games/capture_the_flag/capture_the_flag_game.dart';
@@ -136,7 +136,7 @@ class Engine {
 
 
   Player joinGameEditor({String? name}) {
-    return joinGame(GameEditor());
+    return joinGame(IsometricEditor());
   }
 
 

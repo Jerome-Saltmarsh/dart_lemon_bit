@@ -8,9 +8,9 @@ import 'package:bleed_server/src/isometric/isometric_scene.dart';
 import 'package:bleed_server/src/isometric/isometric_scene_generator.dart';
 import 'package:bleed_server/src/isometric/isometric_time.dart';
 
-class GameEditor extends IsometricGame {
+class IsometricEditor extends IsometricGame {
 
-  GameEditor({IsometricScene? scene}) : super(
+  IsometricEditor({IsometricScene? scene}) : super(
       scene: scene ?? IsometricSceneGenerator.generateEmptyScene(),
       environment: IsometricEnvironment(),
       time: IsometricTime(),

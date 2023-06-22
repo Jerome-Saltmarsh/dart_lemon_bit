@@ -15,7 +15,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -553,7 +553,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   void writeGameProperties() {
     writeByte(ServerResponse.Game_Properties);
-    writeBool((game is GameEditor || isLocalMachine));
+    writeBool((game is IsometricEditor || isLocalMachine));
     writeString(game.scene.name);
     writeBool(game.running);
   }

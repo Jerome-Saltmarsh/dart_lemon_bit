@@ -6,7 +6,7 @@ import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
-import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
 import 'package:bleed_server/src/isometric/src.dart';
 import 'package:bleed_server/src/games/survival/survival_player.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
@@ -161,12 +161,12 @@ class WebSocketConnection with ByteReader {
             }
             return;
           case IsometricEditorRequest.Toggle_Game_Running:
-            if (!isLocalMachine && game is! GameEditor) return;
+            if (!isLocalMachine && game is! IsometricEditor) return;
             game.running = !game.running;
             break;
 
           case IsometricEditorRequest.Scene_Reset:
-            if (!isLocalMachine && game is! GameEditor) return;
+            if (!isLocalMachine && game is! IsometricEditor) return;
             game.reset();
             break;
 
@@ -408,7 +408,7 @@ class WebSocketConnection with ByteReader {
     if (player == null) return;
     final game = player.game;
     if (game is! IsometricGame) return;
-    if (!isLocalMachine && game is GameEditor == false) return;
+    if (!isLocalMachine && game is IsometricEditor == false) return;
 
     var nodeIndex = parseArg2(arguments);
     var nodeType = parseArg3(arguments);
@@ -447,7 +447,7 @@ class WebSocketConnection with ByteReader {
   void handleIsometricEditorRequestGameObject(List<String> arguments) {
     final player = _player;
     if (player == null) return;
-    if (!isLocalMachine && player.game is! GameEditor) return;
+    if (!isLocalMachine && player.game is! IsometricEditor) return;
 
     final gameObjectRequestIndex = parseArg2(arguments);
 
@@ -623,7 +623,7 @@ class WebSocketConnection with ByteReader {
   }
 
   Future joinGameEditorScene(IsometricScene scene) async {
-    joinGame(GameEditor(scene: scene));
+    joinGame(IsometricEditor(scene: scene));
   }
 
   void joinGame(Game game){
@@ -755,7 +755,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricRequest.Teleport:
-        if (!isLocalMachine && game is! GameEditor) return;
+        if (!isLocalMachine && game is! IsometricEditor) return;
         player.x = player.mouseGridX;
         player.y = player.mouseGridY;
         player.health = player.maxHealth;
