@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_render.dart';
@@ -77,18 +76,8 @@ class CaptureTheFlagGame extends IsometricGame {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
-    updateCursorType();
     renderCaptureTheFlag();
   }
-
-  void updateCursorType() {
-    gamestream.isometric.clientState.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
-  }
-
-  int mapTargetCategoryToCursorType(int targetCategory) => switch(targetCategory) {
-        TargetCategory.Enemy => IsometricCursorType.CrossHair_Red,
-        _ => IsometricCursorType.CrossHair_White,
-    };
 
   @override
   Widget customBuildUI(BuildContext context) => buildCaptureTheFlagGameUI();

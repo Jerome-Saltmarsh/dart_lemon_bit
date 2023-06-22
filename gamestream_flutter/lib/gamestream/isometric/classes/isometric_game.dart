@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
@@ -22,6 +23,11 @@ class IsometricGame extends Game {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     isometric.drawCanvas(canvas, size);
+    updateCursorType();
+  }
+
+  void updateCursorType() {
+    gamestream.isometric.clientState.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
   }
 
   @override
@@ -107,4 +113,10 @@ class IsometricGame extends Game {
       isometric.io.onKeyPressedModePlay(key);
     }
   }
+
+  /// override to customize cursor type
+  int mapTargetCategoryToCursorType(int targetCategory) => switch(targetCategory) {
+    TargetCategory.Enemy => IsometricCursorType.CrossHair_Red,
+    _ => IsometricCursorType.CrossHair_White,
+  };
 }
