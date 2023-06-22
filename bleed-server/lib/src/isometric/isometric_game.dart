@@ -2834,11 +2834,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
   }
 
-  void playersWriteGameStatus(int gameStatus) {
-    playersWriteByte(ServerResponse.Game_Status);
-    playersWriteByte(gameStatus);
-  }
-
   void playersWriteByte(int byte) {
     for (final player in players) {
       player.writeByte(byte);

@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/isometric/character_state.dart';
-import 'package:bleed_server/common/src/enums/ai_mode.dart';
+import 'package:bleed_server/common/src/isometric/ai_mode.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/library.dart';

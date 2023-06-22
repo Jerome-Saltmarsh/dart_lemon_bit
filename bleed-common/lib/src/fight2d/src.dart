@@ -1,4 +1,4 @@
-library fight2d;
+library src;
 
 export 'game_fight2d_client_request.dart';
 export 'game_fight2d_events.dart';

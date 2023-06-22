@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
-import 'package:bleed_server/common/src/enums/input_mode.dart';
+import 'package:bleed_server/common/src/input_mode.dart';
 import 'package:bleed_server/common/src/environment_response.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
@@ -625,11 +625,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   void lookAt(Position position) {
     assert(!dead);
     lookRadian = this.getAngle(position) + pi;
-  }
-
-  void writeGameStatus(int gameStatus){
-    writeByte(ServerResponse.Game_Status);
-    writeByte(gameStatus);
   }
 
   void writeDouble(double value){

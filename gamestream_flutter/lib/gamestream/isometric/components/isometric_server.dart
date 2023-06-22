@@ -41,7 +41,6 @@ class IsometricServer {
   final minutes = Watch(0);
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
-  final gameStatus = Watch(GameStatus.Playing);
   final playerBelt1_ItemType = Watch(ItemType.Empty);
   final playerBelt2_ItemType = Watch(ItemType.Empty);
   final playerBelt3_ItemType = Watch(ItemType.Empty);

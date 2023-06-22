@@ -110,9 +110,6 @@ extension ServerResponseReader on Gamestream {
           final bytes = readBytes(length);
           engine.downloadBytes(bytes, name: '$name.scene');
           break;
-        case ServerResponse.Game_Status:
-          isometric.server.gameStatus.value = readByte();
-          break;
         case ServerResponse.GameObject_Deleted:
           isometric.server.removeGameObjectById(readUInt16());
           break;

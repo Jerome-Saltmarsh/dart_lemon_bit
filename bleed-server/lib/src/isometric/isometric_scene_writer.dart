@@ -2,7 +2,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/enums/scene_part.dart';
+import 'package:bleed_server/common/src/isometric/scene_part.dart';
 import 'package:bleed_server/common/src/isometric/node_type.dart';
 
 import 'isometric_gameobject.dart';

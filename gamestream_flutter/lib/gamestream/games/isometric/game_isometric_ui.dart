@@ -251,21 +251,6 @@ class GameIsometricUI {
     });
   }
 
-  static Widget buildWatchGameStatus() {
-    return watch(gamestream.isometric.server.gameStatus, (int gameStatus) {
-      if (gameStatus == GameStatus.Playing) return nothing;
-      return IgnorePointer(
-        child: Positioned(
-          top: 60,
-          child: Container(
-              alignment: Alignment.center,
-              width: engine.screen.width,
-              child: buildText("Waiting for more players to join")),
-        ),
-      );
-    });
-  }
-
   static Positioned buildPositionedMessageStatus() => Positioned(
     bottom: 150,
     child: IgnorePointer(
