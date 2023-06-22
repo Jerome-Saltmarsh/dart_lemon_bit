@@ -1,6 +1,5 @@
 
 
-import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/library.dart';
 

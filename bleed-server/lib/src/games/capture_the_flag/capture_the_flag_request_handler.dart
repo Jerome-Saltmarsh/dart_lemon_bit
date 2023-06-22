@@ -55,7 +55,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case CaptureTheFlagRequest.Upgrade_Power:
         final powerTypeIndex = parseArg2(arguments);
         if (powerTypeIndex == null) return;
-        if (!isValidIndex(powerTypeIndex, PowerType.values)){
+        if (!isValidIndex(powerTypeIndex, CombatPowerType.values)){
           errorInvalidClientRequest();
           return;
         }

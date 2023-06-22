@@ -579,16 +579,16 @@ class GameIsometricUI {
     });
   }
 
-  static Widget buildIconPowerType(int powerType){
-    assert (PowerType.values.contains(powerType));
+  static Widget buildIconCombatPowerType(int powerType){
+    assert (CombatPowerType.values.contains(powerType));
     final powerTypeIcon = const <int, int> {
-      PowerType.None      : IconType.Power_None,
-      PowerType.Bomb      : IconType.Power_Bomb,
-      PowerType.Teleport  : IconType.Power_Teleport,
-      PowerType.Invisible : IconType.Power_Invisible,
-      PowerType.Shield    : IconType.Power_Shield,
-      PowerType.Stun      : IconType.Power_Stun,
-      PowerType.Revive    : IconType.Power_Revive,
+      CombatPowerType.None      : IconType.Power_None,
+      CombatPowerType.Bomb      : IconType.Power_Bomb,
+      CombatPowerType.Teleport  : IconType.Power_Teleport,
+      CombatPowerType.Invisible : IconType.Power_Invisible,
+      CombatPowerType.Shield    : IconType.Power_Shield,
+      CombatPowerType.Stun      : IconType.Power_Stun,
+      CombatPowerType.Revive    : IconType.Power_Revive,
     }[powerType] ?? -1;
     return Container(
       height: 64,

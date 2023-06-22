@@ -7,9 +7,9 @@ import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/node_size.dart';
-import 'package:bleed_server/common/src/node_type.dart';
+import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/power_type.dart';
+import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/team_type.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/combat/combat_player.dart';
@@ -107,10 +107,10 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       player.buffDuration--;
       if (player.buffDuration == 0) {
         switch (player.powerType) {
-          case PowerType.Shield:
+          case CombatPowerType.Shield:
             player.buffInvincible = false;
             break;
-          case PowerType.Invisible:
+          case CombatPowerType.Invisible:
             player.buffInvisible = false;
             break;
         }
@@ -464,7 +464,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     player.powerCooldown = 0;
     player.buffDuration = 0;
     player.respawnTimer = 0;
-    player.powerType        = PowerType.Bomb;
+    player.powerType        = CombatPowerType.Bomb;
     player.weaponPrimary    = ItemType.Weapon_Ranged_Plasma_Pistol;
     player.weaponSecondary  = ItemType.Weapon_Melee_Crowbar;
     player.weaponType       = player.weaponPrimary;
@@ -539,22 +539,22 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     }
 
     switch (player.powerType) {
-      case PowerType.Bomb:
+      case CombatPowerType.Bomb:
         playerThrowGrenade(player);
         break;
-      case PowerType.Teleport:
+      case CombatPowerType.Teleport:
         playerTeleport(player);
         break;
-      case PowerType.Revive:
+      case CombatPowerType.Revive:
         player.health = player.maxHealth;
         player.energy = player.maxEnergy;
         player.writePlayerEventItemTypeConsumed(ItemType.Consumables_Potion_Blue);
         break;
-      case PowerType.Shield:
+      case CombatPowerType.Shield:
         player.buffInvincible = true;
         player.buffDuration = Power_Duration_Shield;
         break;
-      case PowerType.Invisible:
+      case CombatPowerType.Invisible:
         player.buffInvisible = true;
         player.buffDuration = Power_Duration_Invisible;
         for (final character in characters) {
@@ -562,7 +562,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
           clearCharacterTarget(character);
         }
         break;
-      case PowerType.Stun:
+      case CombatPowerType.Stun:
         const duration = Power_Duration_Stun;
         final playerX = player.x;
         final playerY = player.y;

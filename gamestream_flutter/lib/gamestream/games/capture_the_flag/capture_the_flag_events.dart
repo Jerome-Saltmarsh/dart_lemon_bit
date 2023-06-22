@@ -1,4 +1,3 @@
-import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_game.dart';

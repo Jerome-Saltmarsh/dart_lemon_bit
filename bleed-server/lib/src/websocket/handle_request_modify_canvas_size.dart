@@ -1,5 +1,5 @@
 import 'package:bleed_server/common/src/node_size.dart';
-import 'package:bleed_server/common/src/node_type.dart';
+import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:bleed_server/common/src/request_modify_canvas_size.dart';
 import 'dart:typed_data';
 

@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/api_players.dart';
 import 'package:bleed_server/common/src/item_type.dart';
-import 'package:bleed_server/common/src/power_type.dart';
+import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/engine.dart';
 
@@ -25,7 +25,7 @@ class CombatPlayer extends IsometricPlayer {
   var nextEnergyGain = 0;
 
   var _energy = 10;
-  var _powerType = PowerType.None;
+  var _powerType = CombatPowerType.None;
   var _credits = 0;
   var _respawnTimer = 0;
 
@@ -59,8 +59,8 @@ class CombatPlayer extends IsometricPlayer {
 
   set powerType(int value) {
     if (_powerType == value) return;
-    assert (PowerType.values.contains(value));
-    if (!PowerType.values.contains(value)) return;
+    assert (CombatPowerType.values.contains(value));
+    if (!CombatPowerType.values.contains(value)) return;
     _powerType = value;
     writePlayerPower();
   }

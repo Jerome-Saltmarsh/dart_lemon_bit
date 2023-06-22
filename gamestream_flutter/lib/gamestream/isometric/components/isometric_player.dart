@@ -28,7 +28,7 @@ class IsometricPlayer {
 
   final id = Watch(0);
   final team = Watch(0);
-  final powerType = Watch(PowerType.None);
+  final powerType = Watch(CombatPowerType.None);
   final powerReady = Watch(true);
   final attributeHealth = Watch(0);
   final attributeMagic = Watch(0);

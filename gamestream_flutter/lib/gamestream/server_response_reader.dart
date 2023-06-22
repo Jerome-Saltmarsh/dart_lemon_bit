@@ -2,7 +2,6 @@ import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:bleed_common/src/capture_the_flag/src.dart';
 
 import 'games/game_scissors_paper_rock.dart';
 import 'gamestream.dart';
@@ -11,7 +10,6 @@ import 'isometric/components/isometric_player_score.dart';
 import 'isometric/classes/isometric_projectile.dart';
 
 extension ServerResponseReader on Gamestream {
-
 
   void read(Uint8List values) {
     assert (values.isNotEmpty);

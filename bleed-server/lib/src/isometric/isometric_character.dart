@@ -6,7 +6,7 @@ import 'package:bleed_server/common/src/isometric/character_state.dart';
 import 'package:bleed_server/common/src/isometric/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/item_type.dart';
-import 'package:bleed_server/common/src/node_orientation.dart';
+import 'package:bleed_server/common/src/isometric/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/weapon_state.dart';

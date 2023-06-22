@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bleed_server/common/src/node_orientation.dart';
-import 'package:bleed_server/common/src/node_type.dart';
+import 'package:bleed_server/common/src/isometric/node_orientation.dart';
+import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:fast_noise/fast_noise.dart';
 import 'dart:typed_data';
 

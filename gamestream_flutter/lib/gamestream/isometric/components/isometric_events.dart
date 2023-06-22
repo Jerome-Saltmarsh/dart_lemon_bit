@@ -468,13 +468,13 @@ class IsometricEvents {
 
   void onPlayerEventPowerUsed() {
     switch (gamestream.isometric.player.powerType.value) {
-      case PowerType.Shield:
+      case CombatPowerType.Shield:
         gamestream.audio.buff_10();
         break;
-      case PowerType.Invisible:
+      case CombatPowerType.Invisible:
         gamestream.audio.buff_19();
         break;
-      case PowerType.Stun:
+      case CombatPowerType.Stun:
         // gamestream.audio.debuff_4();
         // GameState.spawnParticle(
         //     type: ParticleType.Lightning_Bolt,
@@ -700,7 +700,7 @@ class IsometricEvents {
 
   void onGameEventPowerUsed(double x, double y, double z, int powerType) {
       switch (powerType){
-        case PowerType.Stun:
+        case CombatPowerType.Stun:
           gamestream.audio.debuff_4();
           gamestream.isometric.particles.spawnParticle(
             type: ParticleType.Lightning_Bolt,

@@ -34,7 +34,7 @@ extension CombatUI on CombatGame {
     buildWatchBool(gamestream.isometric.clientState.control_visible_player_power, (){
       return buildWatchBool(gamestream.isometric.player.powerReady, () =>
           Positioned(
-            child: buildIconPlayerPowerType(),
+            child: buildIconPlayerCombatPowerType(),
             left: GameStyle.Default_Padding,
             bottom: GameStyle.Default_Padding,
           )
@@ -72,7 +72,7 @@ extension CombatUI on CombatGame {
       children: [
         buildText('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
         height12,
-        buildIconPlayerPowerType(),
+        buildIconPlayerCombatPowerType(),
         height24,
         Container(
           width: containerWidth,
@@ -80,18 +80,18 @@ extension CombatUI on CombatGame {
           child: SingleChildScrollView(
             child: Column(
                 children: const <int> [
-                  PowerType.Bomb,
-                  PowerType.Stun,
-                  PowerType.Invisible,
-                  PowerType.Shield,
-                  PowerType.Teleport,
+                  CombatPowerType.Bomb,
+                  CombatPowerType.Stun,
+                  CombatPowerType.Invisible,
+                  CombatPowerType.Shield,
+                  CombatPowerType.Teleport,
                 ].map((int powerType) => onPressed(
                     action: () => sendClientRequestSelectPower(powerType),
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
-                      child: watch(gamestream.isometric.player.powerType, (int playerPowerType){
-                        return buildText(PowerType.getName(powerType),
-                          color: powerType == playerPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
+                      child: watch(gamestream.isometric.player.powerType, (int playerCombatPowerType){
+                        return buildText(CombatPowerType.getName(powerType),
+                          color: powerType == playerCombatPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
                           size: textSize,
                         );
                       }),
@@ -239,10 +239,10 @@ extension CombatUI on CombatGame {
     );
   }
 
-  Widget buildIconPlayerPowerType(){
+  Widget buildIconPlayerCombatPowerType(){
     return watch(gamestream.isometric.player.powerReady, (bool powerReady) {
       return !powerReady ? width64 :
-      watch(gamestream.isometric.player.powerType, GameIsometricUI.buildIconPowerType);
+      watch(gamestream.isometric.player.powerType, GameIsometricUI.buildIconCombatPowerType);
     });
   }
 

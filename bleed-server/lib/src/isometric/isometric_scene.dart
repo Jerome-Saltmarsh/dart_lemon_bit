@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/maths.dart';
-import 'package:bleed_server/common/src/node_orientation.dart';
+import 'package:bleed_server/common/src/isometric/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
-import 'package:bleed_server/common/src/node_type.dart';
+import 'package:bleed_server/common/src/isometric/node_type.dart';
 
 import 'isometric_ai.dart';
 import 'isometric_gameobject.dart';

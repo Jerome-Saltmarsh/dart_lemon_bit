@@ -1,5 +1,5 @@
 
-class PowerType {
+class CombatPowerType {
    static const None        = 0;
    static const Bomb        = 1;
    static const Teleport    = 2;

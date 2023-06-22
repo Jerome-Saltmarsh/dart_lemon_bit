@@ -1,4 +1,3 @@
-import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
