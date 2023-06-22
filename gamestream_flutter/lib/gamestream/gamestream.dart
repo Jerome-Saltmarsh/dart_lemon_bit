@@ -133,6 +133,7 @@ class Gamestream with ByteReader {
        GameType.Cube3D  => games.cube3D,
        GameType.Capture_The_Flag => games.captureTheFlag,
        GameType.Editor => games.isometricEditor,
+       GameType.Moba => games.moba,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

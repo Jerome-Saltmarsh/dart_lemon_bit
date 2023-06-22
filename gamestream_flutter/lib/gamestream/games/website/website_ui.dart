@@ -18,18 +18,12 @@ import 'package:golden_ratio/constants.dart';
 
 extension WebsiteUI on WebsiteGame {
 
-  Widget buildColumnSelectGameType(){
-    return WatchBuilder(
+  Widget buildSelectGameType() => WatchBuilder(
         gamestream.gameType,
             (activeGameType) => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              GameType.Combat,
-              GameType.Fight2D,
-              GameType.Capture_The_Flag,
-            ]
-                .map((gameType) => onPressed(
+            children: gameTypes.map((gameType) => onPressed(
               action: () => gamestream.startGameType(gameType),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -44,8 +38,6 @@ extension WebsiteUI on WebsiteGame {
               ),
             ))
                 .toList()));
-
-  }
 
   Widget buildPageWebsiteDesktop() {
     return Center(
@@ -86,7 +78,7 @@ extension WebsiteUI on WebsiteGame {
                 ),
               ),
               height32,
-              buildColumnSelectGameType(),
+              buildSelectGameType(),
             ],
           );
         }
@@ -210,6 +202,7 @@ extension WebsiteUI on WebsiteGame {
       GameType.Fight2D: 'images/website/game-fight2d.png',
       GameType.Combat: 'images/website/game-isometric.png',
       GameType.Capture_The_Flag: 'images/website/game-isometric.png',
+      GameType.Moba: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
   @override

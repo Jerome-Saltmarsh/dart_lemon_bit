@@ -1,7 +1,8 @@
 
 import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/src/games/moba/moba_player.dart';
 import 'package:bleed_server/src/isometric/isometric_game.dart';
+
+import 'moba_player.dart';
 
 class Moba extends IsometricGame<MobaPlayer> {
 
@@ -16,6 +17,12 @@ class Moba extends IsometricGame<MobaPlayer> {
   int get maxPlayers => 10;
 
   @override
-  MobaPlayer buildPlayer() => MobaPlayer(game: this);
+  MobaPlayer buildPlayer() {
+    final player = MobaPlayer(game: this);
+    player.x = 100;
+    player.y = 100;
+    player.z = 50;
+    return player;
+  }
 
 }

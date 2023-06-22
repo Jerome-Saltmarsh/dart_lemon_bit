@@ -12,6 +12,14 @@ import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
 class WebsiteGame extends Game {
+
+  final gameTypes = [
+    GameType.Combat,
+    GameType.Fight2D,
+    GameType.Capture_The_Flag,
+    GameType.Moba,
+  ];
+
   final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);

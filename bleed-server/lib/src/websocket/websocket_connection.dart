@@ -671,6 +671,9 @@ class WebSocketConnection with ByteReader {
       case GameType.Capture_The_Flag:
         _player = engine.joinGameCaptureTheFlag();
         break;
+      case GameType.Moba:
+        _player = engine.joinGameMoba();
+        break;
       case GameType.Mobile_Aeon:
        throw Exception('GameType.Mobile_Aeon not supported');
       case GameType.Rock_Paper_Scissors:

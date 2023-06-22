@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bleed_server/common/src/version.dart';
 import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/src/game/player.dart';
+import 'package:bleed_server/src/games/moba/moba.dart';
 import 'package:bleed_server/src/websocket/websocket_server.dart';
 
 import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
@@ -130,10 +131,22 @@ class Engine {
       scene: isometricScenes.captureTheFlag,
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
-    )
-    );
+    ));
   }
 
+  Player joinGameMoba() {
+    for (final game in games) {
+      if (game.isFull) continue;
+      if (game is! Moba) continue;
+      return joinGame(game);
+    }
+
+    return joinGame(Moba(
+      scene: isometricScenes.captureTheFlag,
+      time: IsometricTime(enabled: false, hour: 14),
+      environment: IsometricEnvironment(),
+    ));
+  }
 
   Player joinGameEditor({String? name}) {
     return joinGame(IsometricEditor());
