@@ -4,7 +4,7 @@ import 'package:bleed_server/common/src/combat/combat_request.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
 import 'package:bleed_server/core/player.dart';
-import 'package:bleed_server/src/games/combat/combat_player.dart';
+import 'package:bleed_server/games/combat/combat_player.dart';
 import 'package:bleed_server/utils/is_valid_index.dart';
 import 'package:bleed_server/websocket/websocket_connection.dart';
 

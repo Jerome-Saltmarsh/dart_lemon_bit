@@ -12,10 +12,11 @@ import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/games/combat/combat_player.dart';
 import 'package:bleed_server/utils/system.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_server/isometric/src.dart';
+
+import 'combat_player.dart';
 
 class GameCombat extends IsometricGame<CombatPlayer> {
   // constants

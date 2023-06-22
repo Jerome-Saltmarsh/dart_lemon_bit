@@ -5,18 +5,10 @@ import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/common/src/version.dart';
 import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/core/player.dart';
-import 'package:bleed_server/src/games/mmo/mmo.dart';
-import 'package:bleed_server/src/games/moba/moba.dart';
 import 'package:bleed_server/websocket/websocket_server.dart';
 
-import 'package:bleed_server/src/games/isometric_editor/isometric_editor.dart';
-
 import 'core/game.dart';
-import 'src/games/capture_the_flag/capture_the_flag_game.dart';
-import 'src/games/fight2d/game_fight2d.dart';
-import 'src/games/fight2d/game_fight2d_scene_generator.dart';
-import 'src/games/combat/game_combat.dart';
-import 'src/games/rock_paper_scissors/rock_paper_scissors_game.dart';
+import 'games/src.dart';
 import 'utils/system.dart';
 
 class Gamestream {
