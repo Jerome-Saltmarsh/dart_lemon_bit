@@ -1,6 +1,5 @@
 
-import 'package:bleed_server/src/games/isometric/isometric_physics.dart';
-
+import 'isometric_physics.dart';
 import 'isometric_collider.dart';
 import 'isometric_position.dart';
 

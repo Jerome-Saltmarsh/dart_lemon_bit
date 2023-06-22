@@ -16,12 +16,12 @@ import 'package:bleed_server/common/src/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
+import 'isometric_character_template.dart';
 import 'isometric_ai.dart';
 import 'isometric_collider.dart';
 import 'isometric_game.dart';
@@ -712,6 +712,11 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Team);
     writeByte(team);
+  }
+
+  void writeGameError(GameError value){
+    writeByte(ServerResponse.Game_Error);
+    writeByte(value.index);
   }
 }
 

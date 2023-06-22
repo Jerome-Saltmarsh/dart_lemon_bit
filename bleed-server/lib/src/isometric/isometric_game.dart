@@ -18,13 +18,13 @@ import 'package:bleed_server/common/src/team_type.dart';
 import 'package:bleed_server/common/src/weapon_state.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/game.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/utilities/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
+import 'isometric_character_template.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
 import 'isometric_gameobject.dart';

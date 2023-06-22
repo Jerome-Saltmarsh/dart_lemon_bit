@@ -7,8 +7,8 @@ import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/power_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/games/isometric/isometric_player.dart';
-import 'package:bleed_server/src/games/isometric/isometric_side.dart';
+
+import 'package:bleed_server/src/isometric/src.dart';
 import 'package:lemon_math/functions/clamp.dart';
 
 import 'game_combat.dart';

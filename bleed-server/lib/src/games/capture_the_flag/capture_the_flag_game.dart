@@ -1,14 +1,11 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/game/job.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character.dart';
-import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
-import 'package:bleed_server/src/games/isometric/isometric_game.dart';
-import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/give_or_take.dart';
 import 'package:lemon_math/functions/opposite.dart';
+import 'package:bleed_server/src/isometric/src.dart';
 
 import 'capture_the_flag_ai.dart';
 import 'capture_the_flag_gameobject_flag.dart';

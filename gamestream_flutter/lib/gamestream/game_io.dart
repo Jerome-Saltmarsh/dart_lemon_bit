@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 
 import '../library.dart';
-import 'games/isometric/game_isometric.dart';
 import 'isometric/components/isometric_render.dart';
 import 'isometric/isometric.dart';
 

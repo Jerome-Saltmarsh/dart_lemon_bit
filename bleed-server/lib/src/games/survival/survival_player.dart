@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/isometric/src.dart';
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
@@ -9,8 +10,6 @@ import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:lemon_math/functions/clamp.dart';
 
 import 'survival_game.dart';

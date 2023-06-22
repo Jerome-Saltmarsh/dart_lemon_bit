@@ -3,7 +3,7 @@
 
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
+import 'package:bleed_server/src/isometric/isometric_scene.dart';
 import 'package:test/test.dart';
 
 void main() {

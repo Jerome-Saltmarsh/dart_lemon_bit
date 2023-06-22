@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src/team_type.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character.dart';
-import 'package:bleed_server/src/games/isometric/isometric_physics.dart';
 import 'package:lemon_math/library.dart';
 
+import 'isometric_character.dart';
+import 'isometric_physics.dart';
 import 'isometric_position.dart';
 
 class IsometricCollider extends IsometricPosition {

@@ -4,10 +4,10 @@ import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/common/src/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/node_type.dart';
-import 'package:bleed_server/src/games/isometric/isometric_ai.dart';
-import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
-import 'package:lemon_math/library.dart';
 
+import 'isometric_ai.dart';
+import 'isometric_gameobject.dart';
+import 'package:lemon_math/library.dart';
 import 'isometric_position.dart';
 
 late IsometricAI pathFindAI;

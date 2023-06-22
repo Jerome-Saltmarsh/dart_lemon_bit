@@ -6,7 +6,7 @@ enum GameType {
   Mobile_Aeon,
   Fight2D,
   Cube3D,
-  CastleStorm,
+  Moba,
   Capture_The_Flag,
 }
 

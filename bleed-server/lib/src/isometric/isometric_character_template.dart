@@ -1,7 +1,8 @@
 
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character.dart';
+
+import 'isometric_character.dart';
 
 class IsometricCharacterTemplate extends IsometricCharacter {
   var _headType = ItemType.Head_Steel_Helm;

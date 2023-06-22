@@ -4,8 +4,9 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/enums/scene_part.dart';
 import 'package:bleed_server/common/src/node_type.dart';
-import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
-import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
+
+import 'isometric_gameobject.dart';
+import 'isometric_scene.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 

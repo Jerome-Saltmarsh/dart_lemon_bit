@@ -3,10 +3,7 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character.dart';
-import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
-import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
-import 'package:bleed_server/src/games/isometric/isometric_position.dart';
+import 'package:bleed_server/src/isometric/src.dart';
 import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/opposite.dart';
 

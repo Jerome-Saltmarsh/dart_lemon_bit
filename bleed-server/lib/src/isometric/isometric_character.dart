@@ -10,12 +10,12 @@ import 'package:bleed_server/common/src/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/weapon_state.dart';
-import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_player.dart';
 import 'isometric_position.dart';
+import 'isometric_scene.dart';
 import 'isometric_settings.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
