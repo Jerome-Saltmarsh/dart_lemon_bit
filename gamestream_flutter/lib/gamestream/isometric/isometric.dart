@@ -87,7 +87,6 @@ class Isometric {
   Future sendClientRequestUpdate() async {
     gamestream.io.applyKeyboardInputToUpdateBuffer();
     gamestream.io.sendUpdateBuffer();
-    gamestream.io.setCursorAction(CursorAction.None);
   }
 
   void revive() =>

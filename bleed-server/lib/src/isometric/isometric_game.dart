@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/character_action.dart';
-import 'package:bleed_server/common/src/character_state.dart';
-import 'package:bleed_server/common/src/character_type.dart';
+import 'package:bleed_server/common/src/isometric/character_state.dart';
+import 'package:bleed_server/common/src/isometric/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
@@ -1941,7 +1940,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
     switch (character.state) {
-      case CharacterAction.Idle:
+      case CharacterState.Idle:
         break;
       case CharacterState.Running:
         character.applyForce(

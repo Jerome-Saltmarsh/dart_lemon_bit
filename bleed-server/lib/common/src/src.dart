@@ -1,5 +1,7 @@
 library src;
 
+
+export 'isometric/src.dart';
 export 'capture_the_flag/capture_the_flag_response.dart';
 export 'capture_the_flag/capture_the_flag_team.dart';
 export 'enums/ai_mode.dart';
@@ -15,20 +17,16 @@ export 'power_type.dart';
 export 'enums/scene_part.dart';
 export 'enums/player_actions.dart';
 export 'enums/api_spr.dart';
-export 'api_dark_age.dart';
 export 'api_player.dart';
-export 'area_type.dart';
 export 'byte_hex.dart';
 export 'enums/input_mode.dart';
 export 'weapon_state.dart';
 export 'api_players.dart';
-export 'character_state.dart';
-export 'character_action.dart';
-export 'character_type.dart';
+export 'isometric/character_state.dart';
+export 'isometric/character_type.dart';
 export 'client_request.dart';
 export 'compile_util.dart';
 export 'constants.dart';
-export 'cursor_action.dart';
 export 'direction.dart';
 export 'edit_request.dart';
 export 'environment_response.dart';

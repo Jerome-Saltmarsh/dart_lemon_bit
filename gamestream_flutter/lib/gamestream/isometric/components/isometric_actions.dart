@@ -94,19 +94,6 @@ class IsometricActions {
     isometric.clientState.debugMode.value = !isometric.clientState.debugMode.value;;
   }
 
-  void setTarget() {
-    gamestream.io.touchscreenCursorAction = CursorAction.Set_Target;
-  }
-
-  void attackAuto() {
-    gamestream.io.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
-  }
-
-  void playerStop() {
-    gamestream.io.recenterCursor();
-    setTarget();
-  }
-
   void toggleZoom(){
     gamestream.audio.weaponSwap2();
     if (engine.targetZoom != Zoom_Far){

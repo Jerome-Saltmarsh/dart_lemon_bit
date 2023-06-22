@@ -57,7 +57,6 @@ class IsometricServer {
   final equippedWeaponIndex = Watch(0);
   final sceneUnderground = Watch(false);
 
-  late final areaType = Watch(AreaType.None, onChanged: onChangedAreaType);
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
   late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
   late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);

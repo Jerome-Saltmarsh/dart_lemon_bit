@@ -266,15 +266,6 @@ class GameIsometricUI {
     });
   }
 
-  static Positioned buildPositionedAreaType() => Positioned(
-    top: 75,
-    child: Container(
-        width: engine.screen.width,
-        alignment: Alignment.center,
-        child: buildWatchAreaType()
-    ),
-  );
-
   static Positioned buildPositionedMessageStatus() => Positioned(
     bottom: 150,
     child: IgnorePointer(
@@ -299,19 +290,6 @@ class GameIsometricUI {
         child: buildText(message, onPressed: gamestream.isometric.clientState.messageClear),),
     );
   }
-
-  static WatchBuilder<int> buildWatchAreaType() =>
-      WatchBuilder(gamestream.isometric.server.areaType, (int areaType) {
-        return WatchBuilder(gamestream.isometric.clientState.areaTypeVisible, (bool areaTypeVisible){
-          return IgnorePointer(
-            child: AnimatedOpacity(
-              opacity: areaTypeVisible ? 1.0 : 0.0,
-              duration: const Duration(seconds: 1),
-              child: buildText(AreaType.getName(areaType), size: 30),
-            ),
-          );
-        });
-      });
 
   static Widget buildStackInputModeTouch(bool side) => Stack(children: [
     // Positioned(

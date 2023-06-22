@@ -1,4 +1,4 @@
-import 'package:bleed_server/common/src/character_state.dart';
+import 'package:bleed_server/common/src/isometric/character_state.dart';
 import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/node_type.dart';
 import 'package:bleed_server/src/isometric/isometric_environment.dart';

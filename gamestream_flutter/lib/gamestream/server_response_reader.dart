@@ -96,14 +96,6 @@ extension ServerResponseReader on Gamestream {
         case ServerResponse.Info:
           readServerResponseInfo();
           break;
-        case ServerResponse.Dark_Age:
-          final darkAgeCode = readByte();
-          switch (darkAgeCode) {
-            case ApiDarkAge.areaType:
-              isometric.server.areaType.value = readByte();
-              break;
-          }
-          break;
         case ServerResponse.Fight2D:
           readServerResponseFight2D(gamestream.games.fight2D);
           break;

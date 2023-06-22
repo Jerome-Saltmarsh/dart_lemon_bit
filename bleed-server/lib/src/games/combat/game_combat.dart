@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_server/common/src/character_type.dart';
+import 'package:bleed_server/common/src/isometric/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';

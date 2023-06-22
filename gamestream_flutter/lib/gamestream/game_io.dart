@@ -27,7 +27,6 @@ class GameIO {
 
   var touchPanning = false;
   var touchscreenDirectionMove = Direction.None;
-  var touchscreenCursorAction = CursorAction.None;
   var touchscreenRadianInput = 0.0;
   var touchscreenRadianMove = 0.0;
   var touchscreenRadianPerform = 0.0;
@@ -57,17 +56,6 @@ class GameIO {
 
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
-
-  void onTap(){
-    touchCursorWorldX = engine.screenToWorldX(_touchCursorTapX);
-    touchCursorWorldY = engine.screenToWorldY(_touchCursorTapY);
-
-    if (inputModeKeyboard && engine.keyPressedShiftLeft){
-      isometric.actions.attackAuto();
-    } else {
-      isometric.actions.setTarget();
-    }
-  }
 
   void onTapDown(TapDownDetails details) {
     // print("onTapDown()");
@@ -156,10 +144,6 @@ class GameIO {
       return InputDirection.Right;
     }
     return InputDirection.None;
-  }
-
-  void setCursorAction(int cursorAction) {
-    touchscreenCursorAction = CursorAction.None;
   }
 
   void readPlayerInput() {
