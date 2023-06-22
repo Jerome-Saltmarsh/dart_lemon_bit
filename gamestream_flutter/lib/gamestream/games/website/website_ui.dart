@@ -39,8 +39,7 @@ extension WebsiteUI on WebsiteGame {
             ))
                 .toList()));
 
-  Widget buildPageWebsiteDesktop() {
-    return Center(
+  Widget buildPageWebsiteDesktop() => Center(
       child: WatchBuilder(websitePage, (websitePage){
         if (websitePage == WebsitePage.Region){
           return buildSelectRegionColumn();
@@ -85,8 +84,6 @@ extension WebsiteUI on WebsiteGame {
         );
       }),
     );
-
-  }
 
   Widget buildWatchErrorMessage() =>
       WatchBuilder(gamestream.games.website.error, (String? message) {
@@ -175,16 +172,12 @@ extension WebsiteUI on WebsiteGame {
         ),
       );
 
-  Widget buildButtonJoinGameType({required GameType gameType, required String gameName}){
-    return onPressed(
+  Widget buildButtonJoinGameType({required GameType gameType, required String gameName}) => onPressed(
       action: () => gamestream.network.connectToGame(gameType),
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
-  }
 
-  Widget buildLogoGameStream(){
-    return buildText("GAMESTREAM.ONLINE", size: FontSize.VeryLarge);
-  }
+  Widget buildLogoGameStream() => buildText("GAMESTREAM.ONLINE", size: FontSize.VeryLarge);
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
@@ -203,10 +196,10 @@ extension WebsiteUI on WebsiteGame {
       GameType.Combat: 'images/website/game-isometric.png',
       GameType.Capture_The_Flag: 'images/website/game-isometric.png',
       GameType.Moba: 'images/website/game-isometric.png',
+      GameType.Mmo: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
-  Widget buildSelectRegionColumn() {
-    return SizedBox(
+  Widget buildSelectRegionColumn() => SizedBox(
       width: 300,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -252,7 +245,6 @@ extension WebsiteUI on WebsiteGame {
         ],
       ),
     );
-  }
 
   Widget buildErrorDialog(String message, {Widget? bottomRight}) => dialog(
         width: 200,
