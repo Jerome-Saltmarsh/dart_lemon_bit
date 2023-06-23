@@ -15,17 +15,9 @@ import 'functions/format_bytes.dart';
 
 mixin class IsometricClientState {
   final sceneChanged = Watch(0);
-  final readsHotKeys = Watch(0);
-  final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final overrideColor = WatchBool(false);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-  final mouseOverItemType = Watch(-1);
-  final buff_active_infinite_ammo = Watch(false);
-  final buff_active_double_damage = Watch(false);
-  final buff_active_fast = Watch(false);
-  final buff_active_invincible = Watch(false);
-  final buff_active_no_recoil = Watch(false);
 
   var cursorType = IsometricCursorType.Hand;
   var srcXRainFalling = 6640.0;
@@ -56,7 +48,6 @@ mixin class IsometricClientState {
   final gridShadows = Watch(true, onChanged: (bool value){
     gamestream.isometric.nodes.resetNodeColorsToAmbient();
   });
-
 
   bool get playMode => !editMode;
   bool get editMode => edit.value;
@@ -400,10 +391,7 @@ mixin class IsometricClientState {
     return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
 
-
-
   void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
-  void redrawHotKeys() => readsHotKeys.value++;
 
   void showMessage(String message){
     messageStatus.value = "";
@@ -437,10 +425,6 @@ mixin class IsometricClientState {
 
   void onChangedAttributesWindowVisible(bool value){
     gamestream.isometric.clientState.playSoundWindow();
-  }
-
-  void onChangedHotKeys(int value){
-    gamestream.isometric.clientState.redrawHotKeys();
   }
 
   void onChangedRaining(bool raining){
