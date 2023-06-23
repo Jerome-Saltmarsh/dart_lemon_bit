@@ -88,11 +88,32 @@ class IsometricDirection {
     if (angle < piQuarter * 7) return East;
     return South_East;
   }
+
+  static int convertToVelocityColumn(int direction) => <int, int> {
+    North: -1,
+    North_East: -1,
+    East: 0,
+    South_East: 1,
+    South: 1,
+    South_West: 1,
+    West: 0,
+    North_West: -1,
+  }[direction] ?? (throw Exception('IsometricDirection.convertToColumnVelocity2($direction)'));
+
+  static int convertToVelocityRow(int direction) => <int, int> {
+        North: 0,
+        North_East: 1,
+        East: 1,
+        South_East: 1,
+        South: 0,
+        South_West: -1,
+        West: -1,
+        North_West: -1,
+  }[direction] ??
+      (throw Exception('IsometricDirection.convertToVelocityRow($direction)'));
 }
 
 
 
-int clampDirection(int index){
-  return index >= 0 ? index % 8 : 8 - (index.abs() % 8);
-}
+int clampDirection(int index) => index >= 0 ? index % 8 : 8 - (index.abs() % 8);
 

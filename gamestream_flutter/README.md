@@ -8,15 +8,15 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
-[MMO]
+[ENGINE]
+  [ ] destructable structures
+  [ ] pathfinding 3d
 
 [MOBA]
-  [ ] destructable base
+  [ ] 3D Model alien creature
 
 [CAPTURE THE FLAG]
   [ ] destroyable terrain
-  [ ] pathfinding 3d 
-  [ ] refactor isometric_character
   [ ] power strong arrow
   [ ] power silence
   [ ] capture the flag player slowable

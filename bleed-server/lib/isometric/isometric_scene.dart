@@ -1,9 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/maths.dart';
-import 'package:bleed_server/common/src/isometric/node_orientation.dart';
-import 'package:bleed_server/common/src/isometric/node_size.dart';
-import 'package:bleed_server/common/src/isometric/node_type.dart';
+import 'package:bleed_server/common/src.dart';
 
 import 'isometric_ai.dart';
 import 'isometric_gameobject.dart';
@@ -285,26 +282,26 @@ class IsometricScene {
 
       visit(
           z: z,
-          row: row + convertDirectionToRowVel(backwardDirection),
-          column: column + convertDirectionToColumnVel(backwardDirection),
+          row: row + IsometricDirection.convertToVelocityRow(backwardDirection),
+          column: column + IsometricDirection.convertToVelocityColumn(backwardDirection),
           fromIndex: currentIndex,
       );
 
       for (var i = 3; i >= 0; i--) {
         final dirLess = (targetDirection - i) % 8;
-        final dirLessRow = row + convertDirectionToRowVel(dirLess);
-        final dirLessCol = column+ convertDirectionToColumnVel(dirLess);
+        final dirLessRow = row + IsometricDirection.convertToVelocityRow(dirLess);
+        final dirLessCol = column + IsometricDirection.convertToVelocityColumn(dirLess);
 
         final dirMore = (targetDirection + i) % 8;
-        final dirMoreRow = row + convertDirectionToRowVel(dirMore);
-        final dirMoreColumn = column + convertDirectionToColumnVel(dirMore);
+        final dirMoreRow = row + IsometricDirection.convertToVelocityRow(dirMore);
+        final dirMoreColumn = column + IsometricDirection.convertToVelocityColumn(dirMore);
 
         visit(z: z, row: dirLessRow, column: dirLessCol, fromIndex: currentIndex);
         visit(z: z, row: dirMoreRow, column: dirMoreColumn, fromIndex: currentIndex);
       }
 
-      final forwardRow = row + convertDirectionToRowVel(targetDirection);
-      final forwardColumn = column + convertDirectionToColumnVel(targetDirection);
+      final forwardRow = row + IsometricDirection.convertToVelocityRow(targetDirection);
+      final forwardColumn = column + IsometricDirection.convertToVelocityColumn(targetDirection);
       visit(z: z, row: forwardRow, column: forwardColumn, fromIndex: currentIndex);
     }
 
@@ -333,30 +330,6 @@ class IsometricScene {
     visitStackIndex++;
     visitStack[visitStackIndex] = index;
   }
-
-  static int convertDirectionToColumnVel(int direction) => switch(direction){
-    0 => -1,
-    1 => -1,
-    2 => 0,
-    3 => 1,
-    4 => 1,
-    5 => 1,
-    6 => 0,
-    7 => -1,
-    _ => throw Exception('invalid direction $direction'),
-  };
-
-  static int convertDirectionToRowVel(int direction) => switch(direction){
-    0 => 0,
-    1 => 1,
-    2 => 1,
-    3 => 1,
-    4 => 0,
-    5 => -1,
-    6 => -1,
-    7 => -1,
-    _ => throw Exception('invalid direction $direction'),
-  };
 
   static int convertToDirection(int diffRows, int diffCols){
     if (diffRows > 0){
