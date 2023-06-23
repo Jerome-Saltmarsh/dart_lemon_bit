@@ -245,11 +245,9 @@ class IsometricScene {
       return indexStart;
 
 
-    for (var i = 0; i < visitHistoryIndex; i++){
+    for (var i = 0; i <= visitHistoryIndex; i++){
       path[visitHistory[i]] = 0;
     }
-
-    // assert(!path.any((element) => element != 0));
 
     visitHistoryIndex = 0;
     visitStackIndex = 0;
@@ -279,7 +277,11 @@ class IsometricScene {
       final row = getNodeIndexRow(currentIndex);
       final column = getNodeIndexColumn(currentIndex);
 
-      final backwardDirection = (convertToDirection(targetIndexRow - row, targetIndexColumn - column) + 4) % 8;
+
+      // print("current index: row: $row, column: $column, index: $currentIndex");
+
+      final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
+      final backwardDirection = (targetDirection + 4) % 8;
 
       visit(
           z: z,
@@ -288,14 +290,10 @@ class IsometricScene {
           fromIndex: currentIndex,
       );
 
-      final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
-      final forwardRow = row + convertDirectionToRowVel(targetDirection);
-      final forwardColumn = column + convertDirectionToColumnVel(targetDirection);
-
       for (var i = 3; i >= 0; i--) {
         final dirLess = (targetDirection - i) % 8;
         final dirLessRow = row + convertDirectionToRowVel(dirLess);
-        final dirLessCol = convertDirectionToColumnVel(dirLess);
+        final dirLessCol = column+ convertDirectionToColumnVel(dirLess);
 
         final dirMore = (targetDirection + i) % 8;
         final dirMoreRow = row + convertDirectionToRowVel(dirMore);
@@ -305,6 +303,8 @@ class IsometricScene {
         visit(z: z, row: dirMoreRow, column: dirMoreColumn, fromIndex: currentIndex);
       }
 
+      final forwardRow = row + convertDirectionToRowVel(targetDirection);
+      final forwardColumn = column + convertDirectionToColumnVel(targetDirection);
       visit(z: z, row: forwardRow, column: forwardColumn, fromIndex: currentIndex);
     }
 
@@ -327,6 +327,7 @@ class IsometricScene {
     if (nodeOrientations[index] != NodeOrientation.None)
       return;
 
+    // print('visited row: $row, column: $column from $fromIndex');
     path[index] = fromIndex;
     visitHistory[visitHistoryIndex++] = index;
     visitStackIndex++;
