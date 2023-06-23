@@ -44,7 +44,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   IsometricTime time;
 
   var _running = true;
-  var _timerUpdateAITargets = 0;
+  var timerUpdateAITargets = 0;
 
   var frame = 0;
   var gameObjectId = 0;
@@ -63,7 +63,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {
     IsometricPosition.sort(gameObjects);
 
-    /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
     customInit();
 
@@ -2254,9 +2253,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateAITargets() {
-    if (_timerUpdateAITargets-- > 0) return;
+    if (timerUpdateAITargets-- > 0) return;
 
-    _timerUpdateAITargets = 15;
+    timerUpdateAITargets = 15;
 
     for (final character in characters) {
       if (!character.alive) continue;

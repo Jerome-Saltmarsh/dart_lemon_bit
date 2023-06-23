@@ -4,10 +4,11 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_positi
 import 'package:gamestream_flutter/library.dart';
 
 import 'games/game_scissors_paper_rock.dart';
-import 'gamestream.dart';
 import 'isometric/classes/isometric_character.dart';
 import 'isometric/components/isometric_player_score.dart';
 import 'isometric/classes/isometric_projectile.dart';
+
+import 'gamestream.dart';
 
 
 extension ServerResponseReader on Gamestream {
@@ -61,9 +62,8 @@ extension ServerResponseReader on Gamestream {
           if (index >= GameType.values.length){
             throw Exception('invalid game type index $index');
           }
-          final gameType = GameType.values[index];
-          gamestream.gameType.value = gameType;
-          gamestream.refreshGame();
+          gameType.value = GameType.values[index];
+          refreshGame();
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
@@ -96,7 +96,7 @@ extension ServerResponseReader on Gamestream {
           readServerResponseInfo();
           break;
         case ServerResponse.Fight2D:
-          readServerResponseFight2D(gamestream.games.fight2D);
+          readServerResponseFight2D(games.fight2D);
           break;
         case ServerResponse.Capture_The_Flag:
           readCaptureTheFlag();
@@ -115,7 +115,7 @@ extension ServerResponseReader on Gamestream {
           break;
         case ServerResponse.Game_Error:
           final errorTypeIndex = readByte();
-          gamestream.error.value = parseIndexToGameError(errorTypeIndex);
+          error.value = parseIndexToGameError(errorTypeIndex);
           return;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
@@ -161,19 +161,19 @@ extension ServerResponseReader on Gamestream {
 
     switch (eventType) {
       case GameFight2DEvents.Punch:
-        gamestream.audio.playAudioSingle2D(gamestream.audio.heavy_punch_13, x, y);
+        audio.playAudioSingle2D(audio.heavy_punch_13, x, y);
         break;
       case GameFight2DEvents.Jump:
-        gamestream.audio.playAudioSingle2D(gamestream.audio.jump, x, y);
+        audio.playAudioSingle2D(audio.jump, x, y);
         break;
       case GameFight2DEvents.Footstep:
-        gamestream.audio.playAudioSingle2D(gamestream.audio.footstep_stone, x, y);
+        audio.playAudioSingle2D(audio.footstep_stone, x, y);
         break;
       case GameFight2DEvents.Strike_Swing:
-        gamestream.audio.playAudioSingle2D(gamestream.audio.arm_swing_whoosh_11, x, y);
+        audio.playAudioSingle2D(audio.arm_swing_whoosh_11, x, y);
         break;
       case GameFight2DEvents.Death:
-        gamestream.audio.playAudioSingle2D(gamestream.audio.magical_impact_16, x, y);
+        audio.playAudioSingle2D(audio.magical_impact_16, x, y);
         break;
     }
   }
@@ -302,7 +302,7 @@ extension ServerResponseReader on Gamestream {
         final itemType = readUInt16();
         final itemQuantity = readUInt16();
 
-        final survival = gamestream.games.survival;
+        final survival = games.survival;
 
         if (index == ItemType.Belt_1){
           isometric.server.playerBelt1_ItemType.value = itemType;
@@ -349,11 +349,11 @@ extension ServerResponseReader on Gamestream {
         break;
       case ApiPlayer.Alive:
         isometric.player.alive.value = readBool();
-        gamestream.isometric.ui.mouseOverDialog.setFalse();
+        isometric.ui.mouseOverDialog.setFalse();
         break;
       case ApiPlayer.Spawned:
         isometric.camera.centerOnChaseTarget();
-        gamestream.io.recenterCursor();
+        io.recenterCursor();
         break;
       case ApiPlayer.Damage:
         isometric.server.playerDamage.value = readUInt16();
@@ -456,7 +456,7 @@ extension ServerResponseReader on Gamestream {
     for (var i = 0; i < total; i++){
       isometric.server.inventoryQuantity[i] = readUInt16();
     }
-    gamestream.games.survival.redrawInventory();
+    games.survival.redrawInventory();
   }
 
   void readMapCoordinate() {
@@ -591,10 +591,10 @@ extension ServerResponseReader on Gamestream {
     isometric.nodes.refreshNodeVariations();
     isometric.clientState.sceneChanged.value++;
 
-    gamestream.isometric.particles.totalActiveParticles = 0;
-    gamestream.isometric.particles.totalParticles = 0;
-    gamestream.isometric.particles.particles.clear();
-    gamestream.io.recenterCursor();
+    isometric.particles.totalActiveParticles = 0;
+    isometric.particles.totalParticles = 0;
+    isometric.particles.particles.clear();
+    io.recenterCursor();
   }
 
   double readDouble() => readInt16().toDouble();
