@@ -241,16 +241,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(false);
   }
 
-  void writeAIPath(){
-    writeByte(ServerResponse.Capture_The_Flag);
-    writeByte(CaptureTheFlagResponse.AI_Paths);
-    final characters = game.characters;
-    writeUInt16(characters.length);
-    for (var i = 0; i < characters.length; i++){
-      writeCharacterPath(characters[i]);
-    }
-  }
-
   void writeCharacterPath(IsometricCharacter character){
     writeUInt16(character.pathIndex);
     writeUInt16(character.pathStart);
@@ -271,6 +261,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(true);
     writeString(selectedCharacter.runtimeType.toString());
     writeIsometricPosition(selectedCharacter);
+    writeInt16(selectedCharacter.destinationX.toInt());
+    writeInt16(selectedCharacter.destinationY.toInt());
     writeCharacterPath(selectedCharacter);
 
     if (selectedCharacter is CaptureTheFlagAI){

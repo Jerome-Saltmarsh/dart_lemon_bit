@@ -72,7 +72,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
   bool get roleDefensive => role == CaptureTheFlagAIRole.Defense;
 
-  bool get enemyTargetAttackable {
+  bool get shouldAttackTargetEnemy {
     final target = this.target;
     if (target == null) return false;
     if (target is! IsometricCollider) return false;
@@ -133,7 +133,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get arrivedAtPathEnd => pathIndex <= 0;
 
-  bool get pathNeedsToBeUpdated {
+  bool get shouldUpdatePath {
     if (indexZ != 1) return false;
 
     if (targetPrevious != target) {
@@ -215,7 +215,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void updatePath() {
     final target = this.target;
-    if (target == null){
+    if (target == null) {
       pathIndex = 0;
       pathStart = 0;
       return;
@@ -225,30 +225,34 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void updatePathIndexAndDestination() {
 
-    if (enemyTargetAttackable) {
-      attackTargetEnemy();
-    }
-    if (pathNeedsToBeUpdated) {
+    // if (shouldAttackTargetEnemy) {
+    //   attackTargetEnemy();
+    // }
+    if (shouldUpdatePath) {
       updatePath();
     }
-    if (shouldSetDestinationToTarget) {
-      setDestinationToTarget();
-    }
-    if (shouldRunToDestination) {
-      runToDestination();
-    }
-    if (shouldIncrementPathIndex) {
-      incrementPathIndex();
-    }
+    // if (shouldSetDestinationToTarget) {
+    //   setDestinationToTarget();
+    // }
+    // if (shouldRunToDestination) {
+    //   runToDestination();
+    // }
+    // if (shouldIncrementPathIndex) {
+    //   incrementPathIndex();
+    // }
   }
 
   void incrementPathIndex() {
-    pathIndex++;
-    if (!arrivedAtPathEnd) {
-      final scene = game.scene;
-      destinationX = scene.getNodePositionX(pathNodeIndex);
-      destinationY = scene.getNodePositionY(pathNodeIndex);
-    }
+    pathIndex--;
+    if (pathIndex <= 0) return;
+    updateDestinationToPathNodeIndex();
+  }
+
+  void updateDestinationToPathNodeIndex() {
+    if (pathIndex <= 0) return;
+    final scene = game.scene;
+    destinationX = scene.getNodePositionX(pathNodeIndex);
+    destinationY = scene.getNodePositionY(pathNodeIndex);
   }
 
   void executeDecision() {

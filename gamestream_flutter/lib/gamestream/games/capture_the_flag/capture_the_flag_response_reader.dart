@@ -74,6 +74,8 @@ extension CaptureTheFlagResponseReader on Gamestream {
         captureTheFlag.characterSelectedX.value = readDouble();
         captureTheFlag.characterSelectedY.value = readDouble();
         captureTheFlag.characterSelectedZ.value = readDouble();
+        captureTheFlag.characterSelectedDestinationX.value = readDouble();
+        captureTheFlag.characterSelectedDestinationY.value = readDouble();
         captureTheFlag.characterSelectedPathIndex.value = readUInt16();
         final pathEnd = readUInt16();
         captureTheFlag.characterSelectedPathEnd.value = pathEnd;

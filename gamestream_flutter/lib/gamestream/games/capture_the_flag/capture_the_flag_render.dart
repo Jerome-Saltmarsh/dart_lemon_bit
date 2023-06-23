@@ -176,6 +176,16 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
           end: characterSelectedPathEnd.value,
       );
     }
+
+    engine.setPaintColor(Colors.deepPurpleAccent);
+    isometric.renderer.renderLine(
+      characterSelectedX.value,
+      characterSelectedY.value,
+      characterSelectedZ.value,
+      characterSelectedDestinationX.value,
+      characterSelectedDestinationY.value,
+      characterSelectedZ.value,
+    );
   }
 
   void renderPlayerActivatedPower() {
