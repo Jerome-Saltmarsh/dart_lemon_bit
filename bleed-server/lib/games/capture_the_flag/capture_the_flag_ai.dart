@@ -148,6 +148,12 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     if (arrivedAtPathEnd)
       return true;
 
+    return targetIndexChanged;
+  }
+
+  bool get targetIndexChanged {
+    final target = this.target;
+    if (target == null) return false;
     return game.scene.getNodeIndexV3(target) != targetIndex;
   }
 
@@ -214,7 +220,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
 
     decision = getDecision();
-    target = mapDecisionToTarget();
+    target = getTarget();
     executeDecision();
   }
 
@@ -225,23 +231,24 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       pathStart = 0;
       return;
     }
-    setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
+    targetIndex = game.scene.getNodeIndexV3(target);
+    setPathToNodeIndex(game.scene, targetIndex);
   }
 
   void executeDecision() {
 
-    if (shouldUpdatePath) {
+    if (shouldUpdatePath)
       updatePath();
-    }
-    if (shouldUpdateDestination){
+
+    if (shouldUpdateDestination)
       updateDestination();
-    }
-    if (shouldUpdateCharacterAction){
-       updateCharacterAction();
-    }
-    if (shouldIncrementPathIndex) {
+
+    if (shouldUpdateCharacterAction)
+      updateCharacterAction();
+
+    if (shouldIncrementPathIndex)
       incrementPathIndex();
-    }
+
   }
 
   void incrementPathIndex() {
@@ -269,7 +276,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     destinationY = scene.getNodePositionY(index);
   }
 
-  IsometricPosition? mapDecisionToTarget() {
+  IsometricPosition? getTarget() {
     switch (decision){
       case CaptureTheFlagAIDecision.Idle:
         return null;
