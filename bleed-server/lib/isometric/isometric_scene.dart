@@ -13,10 +13,29 @@ import 'isometric_position.dart';
 late IsometricAI pathFindAI;
 var pathFindSearchID = 0;
 
+
+class PathFinder {
+  final path = Uint32List(20);
+  var pathIndex = 0;
+  var pathEnd = 0;
+}
+
 class IsometricScene {
   late Uint8List nodeTypes;
   late Uint8List nodeOrientations;
+  /// contains the the index of a previous path
+  late Int32List path;
   Uint8List? compiled;
+
+  // pathfinding
+  static final visitedNodes = Uint32List(10000);
+  static final pathVisitedStack = Uint32List(10000);
+
+  static var visitQueue = 0;
+  static var visitedNodesIndex = 0;
+  static var futureNodesIndex = 0;
+  static var pathVisitedStackIndex = 0;
+
 
   var gridHeight = 0;
   var gridRows = 0;
@@ -54,6 +73,7 @@ class IsometricScene {
   }
 
   void refreshGridMetrics(){
+    path = Int32List(nodeTypes.length);
     gridArea = gridRows * gridColumns;
     gridVolume = gridHeight * gridArea;
     gridRowLength = gridRows * Node_Size;
@@ -215,4 +235,137 @@ class IsometricScene {
   int getNodeIndexColumn(int nodeIndex) => (nodeIndex) % rowsPerZ;
 
   int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
+
+
+  bool findPath(var indexStart, var indexEnd){
+    if (indexEnd == 0) return false;
+
+    for (var i = 0; i < pathVisitedStackIndex; i++){
+      path[pathVisitedStack[i]] = 0;
+    }
+
+    pathVisitedStackIndex = 0;
+    visitQueue = 0;
+    pathVisitedStack[pathVisitedStackIndex++] = indexStart;
+
+    final targetIndexRow = getNodeIndexRow(indexEnd);
+    final targetIndexColumn = getNodeIndexColumn(indexEnd);
+    final z = getNodeIndexZ(indexEnd);
+
+    var max = 0;
+
+    while (visitQueue <= pathVisitedStackIndex) {
+      // in the first step reserve all the surrounding nodes in the order of priority
+      // if a node has already been reserved it is skipped
+
+      if (max++ >= 100) return true;
+
+      final currentIndex = pathVisitedStack[visitQueue++];
+
+      final row = getNodeIndexRow(currentIndex);
+      final column = getNodeIndexColumn(currentIndex);
+
+      final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
+      final forwardRow = row + convertDirectionToRowVel(targetDirection);
+      final forwardColumn = column + convertDirectionToColumnVel(targetDirection);
+
+      if (!outOfBounds(z, forwardRow, forwardColumn)){
+        final forwardIndex = getNodeIndex(z, forwardRow, forwardColumn);
+
+        if (forwardIndex == indexEnd) {
+          path[forwardIndex] = currentIndex;
+          pathVisitedStack[pathVisitedStackIndex++] = forwardIndex;
+          return true;
+        }
+        if (path[forwardIndex] == 0) {
+          path[forwardIndex] = currentIndex;
+          pathVisitedStack[pathVisitedStackIndex++] = forwardIndex;
+        }
+      }
+
+      for (var i = 1; i <= 3; i++){
+        final dirLess = (targetDirection - i) % 8;
+        final dirLessRow = row + convertDirectionToRowVel(dirLess);
+        final dirLessCol = convertDirectionToColumnVel(dirLess);
+
+        if (!outOfBounds(z, dirLessRow, dirLessCol)){
+          final indexLess = getNodeIndex(z, dirLessRow, dirLessCol);
+          if (indexLess == indexEnd) {
+            path[indexLess] = currentIndex;
+            pathVisitedStack[pathVisitedStackIndex++] = indexLess;
+            return true;
+          }
+
+          if (path[indexLess] == 0) {
+            path[indexLess] = currentIndex;
+            pathVisitedStack[pathVisitedStackIndex++] = indexLess;
+          }
+        }
+
+
+        final dirMore = (targetDirection + i) % 8;
+        final dirMoreRow = row + convertDirectionToRowVel(dirMore);
+        final dirMoreColumn = column + convertDirectionToColumnVel(dirMore);
+
+        if (!outOfBounds(z, dirMoreRow, dirMoreColumn)){
+          final indexMore = getNodeIndex(z, dirMoreRow, dirMoreColumn);
+
+          if (indexMore == indexEnd) {
+            path[indexMore] = currentIndex;
+            pathVisitedStack[pathVisitedStackIndex++] = indexMore;
+            return true;
+          }
+
+          if (path[indexMore] == 0) {
+            path[indexMore] = currentIndex;
+            pathVisitedStack[pathVisitedStackIndex++] = indexMore;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  static int convertDirectionToColumnVel(int direction)=> switch(direction){
+    0 => -1,
+    1 => -1,
+    2 => 0,
+    3 => 1,
+    4 => 1,
+    5 => 1,
+    6 => 0,
+    7 => -1,
+    _ => throw Exception('invalid direction $direction'),
+  };
+
+  static int convertDirectionToRowVel(int direction) => switch(direction){
+    0 => 0,
+    1 => 1,
+    2 => 1,
+    3 => 1,
+    4 => 0,
+    5 => -1,
+    6 => -1,
+    7 => -1,
+    _ => throw Exception('invalid direction $direction'),
+  };
+
+  static int convertToDirection(int diffRows, int diffCols){
+    if (diffRows > 0){
+      if (diffCols < 0) return 1;
+      if (diffCols > 0) return 3;
+      return 2;
+    }
+
+    if (diffRows < 0) {
+      if (diffCols < 0) return 7;
+      if (diffCols > 0) return 5;
+      return 6;
+    }
+
+    if (diffCols < 0) return 0;
+    return 4;
+  }
+
 }

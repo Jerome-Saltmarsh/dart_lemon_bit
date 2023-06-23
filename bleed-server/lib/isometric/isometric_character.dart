@@ -2,14 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 
-import 'package:bleed_server/common/src/isometric/character_state.dart';
-import 'package:bleed_server/common/src/isometric/character_type.dart';
-import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
-import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/common/src/isometric/node_orientation.dart';
-import 'package:bleed_server/common/src/isometric/node_size.dart';
-import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/isometric/weapon_state.dart';
+import 'package:bleed_server/common/src.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_collider.dart';
@@ -50,13 +43,10 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   // PATHFINDING
 
-  static final visitedNodes = Uint32List(10000);
-  static var visitedNodesIndex = 0;
-
   final path = Uint32List(20);
-
   var pathIndex = 0;
-  var pathEnd = 0;
+  var pathStart = 0;
+
   var targetIndex = 0;
   var targetIndexRow = 0;
   var targetIndexColumn = 0;
@@ -68,284 +58,18 @@ abstract class IsometricCharacter extends IsometricCollider {
   double get weaponRangeSquared => weaponRange * weaponRange;
 
   void setPathToNodeIndex(IsometricScene scene, int targetIndex) {
-
-    this.targetIndex = targetIndex;
-    targetIndexRow = scene.getNodeIndexRow(targetIndex);
-    targetIndexColumn = scene.getNodeIndexColumn(targetIndex);
-    final targetIndexZ = scene.getNodeIndexZ(targetIndex);
-
-    assert(scene.getNodeIndex(targetIndexZ, targetIndexRow, targetIndexColumn) == targetIndex);
-
-    visitedNodesIndex = 0;
     pathIndex = 0;
-    pathEnd = 0;
-
-    final pathLeftFound = visitNodeLeft(indexRow, indexColumn, indexZ, scene);
-    final pathLeftLength = pathIndex;
-    visitedNodesIndex = 0;
-    pathIndex = 0;
-    pathEnd = 0;
-    final pathRightFound = visitNodeRight(indexRow, indexColumn, indexZ, scene);
-    final pathRightLength = pathIndex;
-
-    if (pathLeftFound && pathLeftLength < pathRightLength){
-      visitedNodesIndex = 0;
-      pathIndex = 0;
-      pathEnd = 0;
-      visitNodeLeft(indexRow, indexColumn, indexZ, scene);
+    final startIndex = scene.getNodeIndexV3(this);
+    if (!scene.findPath(startIndex, targetIndex)) return;
+    var index = IsometricScene.pathVisitedStack[IsometricScene.visitQueue];
+    while (scene.path[index] != startIndex) {
+      if (path.length <= pathIndex) return;
+      final nextIndex = scene.path[index];
+      path[pathIndex++] = nextIndex;
+      index = nextIndex;
     }
-
-    // if (!pathFound){
-    //   visitedNodesIndex = 0;
-    //   pathIndex = 0;
-    //   pathEnd = 0;
-    //   pathFound = visitNodeRight(indexRow, indexColumn, indexZ, scene);
-    // }
-
-    if (pathLeftFound || pathRightFound){
-      pathEnd = pathIndex;
-      // prevents the ai from running backwards initially
-      if (pathEnd > 1){
-        pathIndex = 1;
-      } else {
-        pathIndex = 0;
-      }
-
-      destinationX = scene.getNodePositionX(path[pathIndex]);
-      destinationY = scene.getNodePositionY(path[pathIndex]);
-      assert(validatePath(scene));
-    } else {
-      pathIndex = 0;
-      pathEnd = 0;
-      destinationX = x;
-      destinationY = y;
-    }
+    pathStart = pathIndex;
   }
-
-  bool validatePath(IsometricScene scene) {
-    if (pathEnd <= 0) return true;
-    for (var i = 0; i < pathEnd; i++){
-      if (scene.nodeOrientations[path[i]] == NodeOrientation.None) continue;
-      return false;
-    }
-    return true;
-  }
-
-  bool visitNodeLeft(int row, int column, int z, IsometricScene scene){
-    if (row < 0)
-      return false;
-    if (column < 0)
-      return false;
-    if (z < 0)
-      return false;
-    if (row >= scene.gridRows)
-      return false;
-    if (column >= scene.gridColumns)
-      return false;
-    if (z >= scene.gridHeight)
-      return false;
-
-    final index = scene.getNodeIndex(z, row, column);
-
-    assert (scene.getNodeIndexRow(index) == row);
-    assert (scene.getNodeIndexColumn(index) == column);
-
-    if (index == targetIndex) {
-      return true;
-    }
-
-    if (index < 0) return false;
-    if (index >= scene.nodeOrientations.length) return false;
-
-    final nodeOrientation = scene.nodeOrientations[index];
-    if (nodeOrientation != NodeOrientation.None) {
-      return false;
-    }
-
-    for (var i = 0; i < visitedNodesIndex; i++){
-      if (visitedNodes[i] == index) {
-        return false;
-      }
-    }
-
-    visitedNodes[visitedNodesIndex] = index;
-    visitedNodesIndex++;
-
-
-    if (pathIndex > 0){
-      final pathI = path[pathIndex - 1];
-      final pathIRow = scene.getNodeIndexRow(pathI);
-      final pathJRow = scene.getNodeIndexRow(index);
-      final pathIColumn = scene.getNodeIndexRow(pathI);
-      final pathJColumn = scene.getNodeIndexRow(index);
-
-      if ((pathIRow - pathJRow).abs() > 1){
-        return false;
-      }
-      if ((pathIColumn - pathJColumn).abs() > 1){
-        return false;
-      }
-    }
-
-    path[pathIndex] = index;
-    pathIndex++;
-    final cachePathIndex = pathIndex;
-
-    if (pathIndex >= path.length)
-      return false;
-
-    final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
-
-    if (visitNodeLeft(row + convertDirectionToRowVel(targetDirection), column + convertDirectionToColumnVel(targetDirection), z, scene)){
-      return true;
-    }
-    pathIndex = cachePathIndex;
-
-    for (var i = 1; i <= 3; i++){
-      final dirLess = (targetDirection - i) % 8;
-      if (visitNodeLeft(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-      final dirMore = (targetDirection + i) % 8;
-      if (visitNodeLeft(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-    }
-
-    final dirOpp = (targetDirection + 4) % 8;
-    return visitNodeLeft(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
-  }
-
-  bool visitNodeRight(int row, int column, int z, IsometricScene scene){
-    if (row < 0)
-      return false;
-    if (column < 0)
-      return false;
-    if (z < 0)
-      return false;
-    if (row >= scene.gridRows)
-      return false;
-    if (column >= scene.gridColumns)
-      return false;
-    if (z >= scene.gridHeight)
-      return false;
-
-    final index = scene.getNodeIndex(z, row, column);
-
-    assert (scene.getNodeIndexRow(index) == row);
-    assert (scene.getNodeIndexColumn(index) == column);
-
-    if (index == targetIndex) {
-      return true;
-    }
-
-    if (index < 0) return false;
-    if (index >= scene.nodeOrientations.length) return false;
-
-    final nodeOrientation = scene.nodeOrientations[index];
-    if (nodeOrientation != NodeOrientation.None) {
-      return false;
-    }
-
-    for (var i = 0; i < visitedNodesIndex; i++){
-      if (visitedNodes[i] == index) {
-        return false;
-      }
-    }
-
-    visitedNodes[visitedNodesIndex] = index;
-    visitedNodesIndex++;
-
-
-    if (pathIndex > 0){
-      final pathI = path[pathIndex - 1];
-      final pathIRow = scene.getNodeIndexRow(pathI);
-      final pathJRow = scene.getNodeIndexRow(index);
-      final pathIColumn = scene.getNodeIndexRow(pathI);
-      final pathJColumn = scene.getNodeIndexRow(index);
-
-      if ((pathIRow - pathJRow).abs() > 1){
-        return false;
-      }
-      if ((pathIColumn - pathJColumn).abs() > 1){
-        return false;
-      }
-    }
-
-    path[pathIndex] = index;
-    pathIndex++;
-    final cachePathIndex = pathIndex;
-
-    if (pathIndex >= path.length)
-      return true;
-
-    final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
-
-    if (visitNodeRight(row + convertDirectionToRowVel(targetDirection), column + convertDirectionToColumnVel(targetDirection), z, scene)){
-      return true;
-    }
-    pathIndex = cachePathIndex;
-
-    for (var i = 1; i <= 3; i++){
-      final dirMore = (targetDirection + i) % 8;
-      if (visitNodeRight(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-      final dirLess = (targetDirection - i) % 8;
-      if (visitNodeRight(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-    }
-
-    final dirOpp = (targetDirection + 4) % 8;
-    return visitNodeRight(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
-  }
-
-  int convertToDirection(int diffRows, int diffCols){
-    if (diffRows > 0){
-      if (diffCols < 0) return 1;
-      if (diffCols > 0) return 3;
-      return 2;
-    }
-
-    if (diffRows < 0) {
-      if (diffCols < 0) return 7;
-      if (diffCols > 0) return 5;
-      return 6;
-    }
-
-    if (diffCols < 0) return 0;
-    return 4;
-  }
-
-  int convertDirectionToColumnVel(int direction)=> switch(direction){
-        0 => -1,
-        1 => -1,
-        2 => 0,
-        3 => 1,
-        4 => 1,
-        5 => 1,
-        6 => 0,
-        7 => -1,
-        _ => throw Exception('invalid direction $direction'),
-     };
-
-  int convertDirectionToRowVel(int direction) => switch(direction){
-    0 => 0,
-    1 => 1,
-    2 => 1,
-    3 => 1,
-    4 => 0,
-    5 => -1,
-    6 => -1,
-    7 => -1,
-    _ => throw Exception('invalid direction $direction'),
-  };
-
 
   IsometricCharacter({
     required int characterType,

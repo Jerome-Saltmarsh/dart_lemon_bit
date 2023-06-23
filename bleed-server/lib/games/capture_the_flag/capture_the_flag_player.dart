@@ -253,8 +253,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void writeCharacterPath(IsometricCharacter character){
     writeUInt16(character.pathIndex);
-    writeUInt16(character.pathEnd);
-    for (var j = 0; j < character.pathEnd; j++){
+    writeUInt16(character.pathStart);
+    for (var j = 0; j < character.pathStart; j++){
       writeUInt16(character.path[j]);
     }
   }
