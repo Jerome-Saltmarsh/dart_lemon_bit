@@ -6,12 +6,14 @@ import 'package:bleed_server/common/src/game_error.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
+import 'package:bleed_server/common/src/isometric/node_orientation.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/utils/maths.dart';
 import 'package:bleed_server/utils/system.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_server/isometric/src.dart';
@@ -243,20 +245,9 @@ class CombatGame extends IsometricGame<CombatPlayer> {
      }
 
      if (target is CombatZombie && scene.spawnPoints.isNotEmpty) {
-       final spawnNodeIndex = randomItem(scene.spawnPoints);
-
-       final z = scene.getNodeIndexZ(spawnNodeIndex);
-       final row = scene.getNodeIndexRow(spawnNodeIndex);
-       final column = scene.getNodeIndexColumn(spawnNodeIndex);
-
-       performScript(timer: AI_Respawn_Duration).writeSpawnAI(
-         type: randomItem(const[CharacterType.Zombie, CharacterType.Dog]),
-         x: row * Node_Size + Node_Size_Half,
-         y: column * Node_Size + Node_Size_Half,
-         z: z * Node_Height,
-         team: TeamType.Evil,
-       );
-
+       createJob(timer: AI_Respawn_Duration, action: (){
+         respawnAI(target);
+       });
        if (random.nextDouble() < Chance_Of_Item_Gem) {
          spawnRandomGemsAtIndex(scene.getNodeIndexV3(target));
        }
@@ -432,7 +423,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     }
   }
 
-  @override
   void customActionSpawnAIAtIndex(int index){
     spawnAI(
       characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie]),
@@ -690,6 +680,204 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       }
     }
     characterUseWeapon(character);
+  }
+
+  void respawnAI(CombatZombie ai) {
+    assert (ai.dead);
+    final distance = randomBetween(0, 100);
+    final angle = randomAngle();
+    ai.x = ai.spawnX + getAdjacent(angle, distance);
+    ai.y = ai.spawnY + getOpposite(angle, distance);
+    ai.z = ai.spawnZ;
+    ai.clearDest();
+    clearCharacterTarget(ai);
+    ai.clearPath();
+    activateCollider(ai);
+    ai.health = ai.maxHealth;
+    ai.target = null;
+    ai.setCharacterStateSpawning();
+  }
+
+  @override
+  void customOnCharacterDamageApplied(IsometricCharacter target, src, int amount) {
+    super.customOnCharacterDamageApplied(target, src, amount);
+
+    if (target is CombatZombie) {
+      onDamageAppliedToZombie(target, src);
+    }
+  }
+
+  void onDamageAppliedToZombie(CombatZombie ai, dynamic src) {
+    final targetAITarget = ai.target;
+    if (targetAITarget == null) {
+      ai.target = src;
+      return;
+    }
+    final aiTargetDistance = distanceV2(ai, targetAITarget);
+    final srcTargetDistance = distanceV2(src, ai);
+    if (srcTargetDistance < aiTargetDistance) {
+      ai.target = src;
+    }
+  }
+
+  CombatZombie spawnAI({
+    required int nodeIndex,
+    required int characterType,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+    double wanderRadius = 200,
+  }) {
+    if (nodeIndex < 0) throw Exception('nodeIndex < 0');
+    if (nodeIndex >= scene.gridVolume) {
+      throw Exception(
+          'game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
+    }
+    final instance = CombatZombie(
+      weaponType: ItemType.Empty,
+      characterType: characterType,
+      health: health,
+      damage: damage,
+      team: team,
+      wanderRadius: wanderRadius,
+    );
+    moveToIndex(instance, nodeIndex);
+    instance.clearDest();
+    instance.clearPath();
+    instance.spawnX = instance.x;
+    instance.spawnY = instance.y;
+    instance.spawnZ = instance.z;
+    characters.add(instance);
+    instance.spawnNodeIndex = nodeIndex;
+    return instance;
+  }
+
+  void updateAITarget(CombatZombie ai) {
+    assert (ai.alive);
+    var target = ai.target;
+
+    final targetSet = target != null;
+
+    if (targetSet && !ai.withinChaseRange(target)) {
+      clearCharacterTarget(ai);
+    }
+
+    var closestDistanceX = ai.viewRange;
+    var closestDistanceY = closestDistanceX;
+
+    for (final character in characters) {
+      if (!character.aliveAndActive) continue;
+      if (IsometricCollider.onSameTeam(character, ai)) continue;
+      final distanceX = (ai.x - character.x).abs();
+      if (closestDistanceX < distanceX) continue;
+      final distanceY = (ai.y - character.y).abs();
+      if (closestDistanceY < distanceY) continue;
+
+      closestDistanceX = distanceX;
+      closestDistanceY = distanceY;
+      ai.target = character;
+    }
+    target = ai.target;
+    if (target == null) return;
+    if (!targetSet) {
+      dispatchGameEventAITargetAcquired(ai);
+      // npcSetPathTo(ai, target);
+    }
+  }
+
+  void dispatchGameEventAITargetAcquired(CombatZombie ai) {
+    for (final player in players) {
+      if (!player.onScreen(ai.x, ai.y)) continue;
+      player.writeGameEvent(
+        type: GameEventType.AI_Target_Acquired,
+        x: ai.x,
+        y: ai.y,
+        z: ai.z,
+        angle: 0,
+      );
+      player.writeByte(ai.characterType);
+    }
+  }
+
+  @override
+  void customUpdate() {
+    super.customUpdate();
+    updateAITargets();
+    updateZombies();
+  }
+
+  void updateZombies() {
+    for (final character in characters) {
+      if (!character.aliveAndActive) continue;
+      if (character is! CombatZombie) continue;
+      character.updateAI();
+      character.applyBehaviorWander(this);
+
+      if (character.running) {
+        final frontX = character.x +
+            getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
+        final frontY = character.y +
+            getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
+        final nodeTypeInFront = scene.getNodeTypeXYZ(
+            frontX, frontY, character.z - Node_Height_Half);
+        if (nodeTypeInFront == NodeType.Water) {
+          character.setCharacterStateIdle();
+        } else {
+          final nodeOrientationInFrontAbove = scene.getNodeOrientationXYZ(
+              frontX, frontY, character.z + Node_Height_Half);
+          if (nodeOrientationInFrontAbove == NodeOrientation.Solid) {
+            character.setCharacterStateIdle();
+          }
+        }
+      }
+    }
+  }
+
+  void updateAITargets() {
+    if (timerUpdateAITargets-- > 0) return;
+
+    timerUpdateAITargets = 15;
+
+    for (final character in characters) {
+      if (!character.alive) continue;
+      if (character is CombatZombie == false) continue;
+      updateAITarget(character as CombatZombie);
+    }
+  }
+
+  CombatZombie spawnAIXYZ({
+    required double x,
+    required double y,
+    required double z,
+    required int characterType,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+    double wanderRadius = 200,
+  }) {
+    if (!scene.inboundsXYZ(x, y, z)) throw Exception(
+        'game.spawnAIXYZ() - out of bounds');
+
+    final instance = CombatZombie(
+      weaponType: ItemType.Empty,
+      characterType: characterType,
+      health: health,
+      damage: damage,
+      team: team,
+      wanderRadius: wanderRadius,
+    );
+    instance.x = x;
+    instance.y = y;
+    instance.z = z;
+    instance.clearDest();
+    instance.clearPath();
+    instance.spawnX = instance.x;
+    instance.spawnY = instance.y;
+    instance.spawnZ = instance.z;
+    instance.setCharacterStateSpawning();
+    characters.add(instance);
+    instance.spawnNodeIndex = scene.getNodeIndexXYZ(x, y, z);
+    return instance;
   }
 
 }

@@ -126,23 +126,23 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
         return;
       }
 
-      if (target is CombatZombie && player.targetIsAlly) {
-        if (player.withinRadiusPosition(target, 100)) {
-          if (!target.deadOrBusy) {
-            target.face(player);
-          }
-          final onInteractedWith = target.onInteractedWith;
-          if (onInteractedWith != null) {
-            player.interactMode = InteractMode.Talking;
-            onInteractedWith(player);
-          }
-          clearCharacterTarget(player);
-          player.setCharacterStateIdle();
-          return;
-        }
-        setCharacterStateRunning(player);
-        return;
-      }
+      // if (target is CombatZombie && player.targetIsAlly) {
+      //   if (player.withinRadiusPosition(target, 100)) {
+      //     if (!target.deadOrBusy) {
+      //       target.face(player);
+      //     }
+      //     final onInteractedWith = target.onInteractedWith;
+      //     if (onInteractedWith != null) {
+      //       player.interactMode = InteractMode.Talking;
+      //       onInteractedWith(player);
+      //     }
+      //     clearCharacterTarget(player);
+      //     player.setCharacterStateIdle();
+      //     return;
+      //   }
+      //   setCharacterStateRunning(player);
+      //   return;
+      // }
       return;
     }
 

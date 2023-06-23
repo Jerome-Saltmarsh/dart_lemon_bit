@@ -23,19 +23,4 @@ class IsometricScript extends ByteWriter {
     writeUInt16(y.toInt());
     writeUInt16(z.toInt());
   }
-
-  void writeSpawnAI({
-    required int type,
-    required double x,
-    required double y,
-    required double z,
-    required int team,
-  }){
-    writeUInt8(IsometricScriptType.Spawn_AI);
-    writeUInt16(type);
-    writeUInt16(x.toInt());
-    writeUInt16(y.toInt());
-    writeUInt16(z.toInt());
-    writeUInt8(team);
-  }
 }

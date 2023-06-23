@@ -374,4 +374,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   void customUpdate() {}
 
   void customOnHurt(){ }
+
+  void customOnDead() {}
 }

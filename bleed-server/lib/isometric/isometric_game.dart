@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/isometric/character_state.dart';
-import 'package:bleed_server/common/src/isometric/character_type.dart';
 import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
 import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
@@ -13,7 +12,6 @@ import 'package:bleed_server/common/src/isometric/node_type.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/isometric/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/common/src/isometric/weapon_state.dart';
 import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/gamestream.dart';
@@ -151,9 +149,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// @override
   void customOnCollisionBetweenPlayerAndGameObject(T player,
       IsometricGameObject gameObject) {}
-
-  /// @override
-  void customOnAIRespawned(CombatZombie ai) {}
 
   /// @override
   void customOnPlayerWeaponChanged(IsometricPlayer player,
@@ -947,20 +942,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             type: type,
           );
           break;
-        case IsometricScriptType.Spawn_AI:
-          final type = scriptReader.readUInt16();
-          final x = scriptReader.readUInt16();
-          final y = scriptReader.readUInt16();
-          final z = scriptReader.readUInt16();
-          final team = scriptReader.readUInt8();
-          spawnAIXYZ(
-            x: x.toDouble(),
-            y: y.toDouble(),
-            z: z.toDouble(),
-            characterType: type,
-            team: team,
-          );
-          break;
         default:
           return;
       }
@@ -1125,7 +1106,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     time.update();
     environment.update();
 
-    updateAITargets();
     internalUpdateScripts();
     customUpdate();
     updateGameObjects();
@@ -1218,36 +1198,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (target.health <= 0) {
       setCharacterStateDead(target);
-      if (target is CombatZombie) {
-        clearCharacterTarget(target);
-        target.clearDest();
-        target.clearPath();
-      }
       customOnCharacterKilled(target, src);
       return;
     }
     customOnCharacterDamageApplied(target, src, damage);
     target.setCharacterStateHurt();
     dispatchGameEventCharacterHurt(target);
-
-    if (target is CombatZombie) {
-      onAIDamagedBy(target, src);
-    }
   }
 
   /// Can be safely overridden to customize behavior
-  void onAIDamagedBy(CombatZombie ai, dynamic src) {
-    final targetAITarget = ai.target;
-    if (targetAITarget == null) {
-      ai.target = src;
-      return;
-    }
-    final aiTargetDistance = distanceV2(ai, targetAITarget);
-    final srcTargetDistance = distanceV2(src, ai);
-    if (srcTargetDistance < aiTargetDistance) {
-      ai.target = src;
-    }
-  }
 
   void dispatchGameEventCharacterHurt(IsometricCharacter character) {
     for (final player in players) {
@@ -1414,6 +1373,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.animationFrame = 0;
     deactivateCollider(character);
     clearCharacterTarget(character);
+    character.customOnDead();
     customOnCharacterDead(character);
     if (character is T) {
       customOnPlayerDead(character);
@@ -1737,29 +1697,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    /// TODO INVALID HIERARCHY
-    if (character is CombatZombie) {
-      character.updateAI();
-      character.applyBehaviorWander(this);
-
-      if (character.running) {
-        final frontX = character.x +
-            getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
-        final frontY = character.y +
-            getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
-        final nodeTypeInFront = scene.getNodeTypeXYZ(
-            frontX, frontY, character.z - Node_Height_Half);
-        if (nodeTypeInFront == NodeType.Water) {
-          character.setCharacterStateIdle();
-        } else {
-          final nodeOrientationInFrontAbove = scene.getNodeOrientationXYZ(
-              frontX, frontY, character.z + Node_Height_Half);
-          if (nodeOrientationInFrontAbove == NodeOrientation.Solid) {
-            character.setCharacterStateIdle();
-          }
-        }
-      }
-    }
     updateColliderPhysics(character);
     updateCharacterState(character);
   }
@@ -1806,23 +1743,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         break;
     }
     character.stateDuration++;
-  }
-
-  void respawnAI(CombatZombie ai) {
-    assert (ai.dead);
-    final distance = randomBetween(0, 100);
-    final angle = randomAngle();
-    ai.x = ai.spawnX + getAdjacent(angle, distance);
-    ai.y = ai.spawnY + getOpposite(angle, distance);
-    ai.z = ai.spawnZ;
-    ai.clearDest();
-    clearCharacterTarget(ai);
-    ai.clearPath();
-    activateCollider(ai);
-    ai.health = ai.maxHealth;
-    ai.target = null;
-    ai.setCharacterStateSpawning();
-    customOnAIRespawned(ai);
   }
 
   IsometricProjectile spawnProjectileOrb({
@@ -2011,75 +1931,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return projectile;
   }
 
-  CombatZombie spawnAIXYZ({
-    required double x,
-    required double y,
-    required double z,
-    required int characterType,
-    int health = 10,
-    int damage = 1,
-    int team = TeamType.Evil,
-    double wanderRadius = 200,
-  }) {
-    if (!scene.inboundsXYZ(x, y, z)) throw Exception(
-        'game.spawnAIXYZ() - out of bounds');
-
-    final instance = CombatZombie(
-      weaponType: ItemType.Empty,
-      characterType: characterType,
-      health: health,
-      damage: damage,
-      team: team,
-      wanderRadius: wanderRadius,
-    );
-    instance.x = x;
-    instance.y = y;
-    instance.z = z;
-    instance.clearDest();
-    instance.clearPath();
-    instance.spawnX = instance.x;
-    instance.spawnY = instance.y;
-    instance.spawnZ = instance.z;
-    instance.setCharacterStateSpawning();
-    characters.add(instance);
-    instance.spawnNodeIndex = scene.getNodeIndexXYZ(x, y, z);
-    customOnAIRespawned(instance);
-    return instance;
-  }
-
-  CombatZombie spawnAI({
-    required int nodeIndex,
-    required int characterType,
-    int health = 10,
-    int damage = 1,
-    int team = TeamType.Evil,
-    double wanderRadius = 200,
-  }) {
-    if (nodeIndex < 0) throw Exception('nodeIndex < 0');
-    if (nodeIndex >= scene.gridVolume) {
-      throw Exception(
-          'game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
-    }
-    final instance = CombatZombie(
-      weaponType: ItemType.Empty,
-      characterType: characterType,
-      health: health,
-      damage: damage,
-      team: team,
-      wanderRadius: wanderRadius,
-    );
-    moveToIndex(instance, nodeIndex);
-    instance.clearDest();
-    instance.clearPath();
-    instance.spawnX = instance.x;
-    instance.spawnY = instance.y;
-    instance.spawnZ = instance.z;
-    characters.add(instance);
-    instance.spawnNodeIndex = nodeIndex;
-    customOnAIRespawned(instance);
-    return instance;
-  }
-
   void moveToIndex(IsometricPosition position, int index) {
     position.x = scene.getNodePositionX(index);
     position.y = scene.getNodePositionY(index);
@@ -2243,65 +2094,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: angle,
       );
       player.writeByte(attackType);
-    }
-  }
-
-  void updateAITargets() {
-    if (timerUpdateAITargets-- > 0) return;
-
-    timerUpdateAITargets = 15;
-
-    for (final character in characters) {
-      if (!character.alive) continue;
-      if (character is CombatZombie == false) continue;
-      updateAITarget(character as CombatZombie);
-    }
-  }
-
-  void updateAITarget(CombatZombie ai) {
-    assert (ai.alive);
-    var target = ai.target;
-
-    final targetSet = target != null;
-
-    if (targetSet && !ai.withinChaseRange(target)) {
-      clearCharacterTarget(ai);
-    }
-
-    var closestDistanceX = ai.viewRange;
-    var closestDistanceY = closestDistanceX;
-
-    for (final character in characters) {
-      if (!character.aliveAndActive) continue;
-      if (IsometricCollider.onSameTeam(character, ai)) continue;
-      final distanceX = (ai.x - character.x).abs();
-      if (closestDistanceX < distanceX) continue;
-      final distanceY = (ai.y - character.y).abs();
-      if (closestDistanceY < distanceY) continue;
-
-      closestDistanceX = distanceX;
-      closestDistanceY = distanceY;
-      ai.target = character;
-    }
-    target = ai.target;
-    if (target == null) return;
-    if (!targetSet) {
-      dispatchGameEventAITargetAcquired(ai);
-      // npcSetPathTo(ai, target);
-    }
-  }
-
-  void dispatchGameEventAITargetAcquired(CombatZombie ai) {
-    for (final player in players) {
-      if (!player.onScreen(ai.x, ai.y)) continue;
-      player.writeGameEvent(
-        type: GameEventType.AI_Target_Acquired,
-        x: ai.x,
-        y: ai.y,
-        z: ai.z,
-        angle: 0,
-      );
-      player.writeByte(ai.characterType);
     }
   }
 
@@ -2529,37 +2321,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character is IsometricPlayer) {
       character.writePlayerTargetCategory();
     }
-    if (character is CombatZombie) {
-      character.clearDest();
-      character.clearPath();
-    }
   }
 
   static double getAngleBetweenV3(Position a, Position b) =>
       getAngle(a.x - b.x, a.y - b.y);
 
   void triggerSpawnPoints({int instances = 1}) {
-    for (final index in scene.spawnPoints) {
-      for (var i = 0; i < instances; i++) {
-        customActionSpawnAIAtIndex(index);
-      }
-    }
-  }
-
-  /// safe to override
-  /// spawn a new ai at the given index
-  void customActionSpawnAIAtIndex(int index) {
-    spawnAI(
-      characterType: randomItem(const [
-        CharacterType.Dog,
-        CharacterType.Zombie,
-        CharacterType.Template
-      ]),
-      nodeIndex: index,
-      damage: 10,
-      team: TeamType.Evil,
-      health: 3,
-    );
+    // for (final index in scene.spawnPoints) {
+    //   for (var i = 0; i < instances; i++) {
+    //     customActionSpawnAIAtIndex(index);
+    //   }
+    // }
   }
 
   /// WARNING EXPENSIVE OPERATION

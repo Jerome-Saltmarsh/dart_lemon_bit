@@ -15,7 +15,6 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/isometric/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/core/player.dart';
-import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/games/isometric_editor/isometric_editor.dart';
 import 'package:bleed_server/utils/generate_random_name.dart';
 import 'package:bleed_server/utils/system.dart';
@@ -352,17 +351,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writePlayerAimTargetName() {
-    if (aimTarget == null) return;
-
-    if (aimTarget is IsometricPlayer) {
-      writeApiPlayerAimTargetName((aimTarget as IsometricPlayer).name);
-      return;
-    }
-
-    if (aimTarget is CombatZombie) {
-      writeApiPlayerAimTargetName((aimTarget as CombatZombie).name);
-      return;
-    }
+    final aimTarget = this.aimTarget;
+    if (aimTarget is! IsometricCharacter) return;
+    writeApiPlayerAimTargetName(aimTarget.name);
   }
 
   void writeApiPlayerAimTargetName(String value) {

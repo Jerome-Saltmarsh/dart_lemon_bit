@@ -4,7 +4,6 @@ enum IsometricEditorRequest {
    Set_Node,
    Load_Scene,
    Download,
-   Spawn_Zombie,
    Modify_Canvas_Size,
    Save,
    Spawn_AI,

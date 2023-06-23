@@ -183,4 +183,10 @@ class CombatZombie extends IsometricCharacter {
     assert (target != null);
     return getAngleBetween(x, y, target!.x, target!.y);
   }
+
+  @override
+  void customOnDead() {
+    clearDest();
+    clearPath();
+  }
 }

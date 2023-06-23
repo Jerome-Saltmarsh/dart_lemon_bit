@@ -248,20 +248,6 @@ class WebSocketConnection with ByteReader {
             if (player is! IsometricPlayer) return;
             handleRequestModifyCanvasSize(request, player);
             return;
-
-          case IsometricEditorRequest.Spawn_Zombie:
-            if (arguments.length < 3) {
-              return errorInvalidClientRequest();
-            }
-            final spawnIndex = parse(arguments[2]);
-            if (spawnIndex == null) {
-              return errorInvalidClientRequest();
-            }
-            game.spawnAI(
-              nodeIndex: spawnIndex,
-              characterType: CharacterType.Zombie,
-            );
-            break;
         }
         break;
 
@@ -745,14 +731,6 @@ class WebSocketConnection with ByteReader {
     }
 
     switch (IsometricRequest.values[isometricClientRequestIndex]){
-      case IsometricRequest.Spawn_Zombie:
-        game.spawnAIXYZ(
-          x: player.mouseGridX,
-          y: player.mouseGridY,
-          z: player.game.scene.gridHeightLength - 50,
-          characterType: CharacterType.Zombie,
-        );
-        break;
 
       case IsometricRequest.Teleport:
         if (!isLocalMachine && game is! IsometricEditor) return;
