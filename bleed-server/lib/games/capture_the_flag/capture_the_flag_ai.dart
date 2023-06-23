@@ -231,6 +231,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     if (shouldUpdatePath) {
       updatePath();
     }
+
+    updateDestinationToPathNodeIndex();
+
     // if (shouldSetDestinationToTarget) {
     //   setDestinationToTarget();
     // }
