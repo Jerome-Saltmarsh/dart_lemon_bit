@@ -233,30 +233,35 @@ class IsometricScene {
   int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
 
 
-  int findPath(var indexStart, var indexEnd){
+  int findPath(var indexStart, var indexEnd, {int max = 100}){
     if (indexEnd == 0) return indexStart;
 
     for (var i = 0; i < visitHistoryIndex; i++){
       path[visitHistory[i]] = 0;
     }
 
+    assert(!path.any((element) => element != 0));
+
     visitHistoryIndex = 0;
     visitStackIndex = 0;
 
     visitHistory[visitHistoryIndex++] = indexStart;
-    visitStack[visitStackIndex++] = indexStart;
+    visitStack[visitStackIndex] = indexStart;
 
     final targetIndexRow = getNodeIndexRow(indexEnd);
     final targetIndexColumn = getNodeIndexColumn(indexEnd);
     final z = getNodeIndexZ(indexEnd);
 
-    var max = 0;
+    var count = 0;
 
     while (visitStackIndex >= 0) {
 
       final currentIndex = visitStack[visitStackIndex--];
 
-      if (max++ >= 100)
+      assert (currentIndex != 0);
+      count++;
+
+      if (count >= max)
         return currentIndex;
 
       if (currentIndex == indexEnd)
@@ -269,63 +274,50 @@ class IsometricScene {
       final backwardRow = row + convertDirectionToRowVel(backwardDirection);
       final backwardColumn = column + convertDirectionToColumnVel(backwardDirection);
 
-      if (!outOfBounds(z, backwardRow, backwardColumn)) {
-        final backwardIndex = getNodeIndex(z, backwardRow, backwardColumn);
-
-        // if it has not been visited yet and it can be visited
-        if (path[backwardIndex] == 0 && nodeOrientations[backwardIndex] == NodeOrientation.None) {
-          path[backwardIndex] = currentIndex;
-          visitHistory[visitHistoryIndex++] = backwardIndex;
-          visitStack[visitStackIndex++] = backwardIndex;
-        }
-      }
+      visit(z: z, row: backwardRow, column: backwardColumn, fromIndex: currentIndex);
 
       final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
       final forwardRow = row + convertDirectionToRowVel(targetDirection);
       final forwardColumn = column + convertDirectionToColumnVel(targetDirection);
 
-      for (var i = 3; i >= 0; i--){
+      for (var i = 3; i >= 0; i--) {
         final dirLess = (targetDirection - i) % 8;
         final dirLessRow = row + convertDirectionToRowVel(dirLess);
         final dirLessCol = convertDirectionToColumnVel(dirLess);
-
-        if (!outOfBounds(z, dirLessRow, dirLessCol)){
-          final indexLess = getNodeIndex(z, dirLessRow, dirLessCol);
-
-          if (path[indexLess] == 0 && nodeOrientations[indexLess] == NodeOrientation.None) {
-            path[indexLess] = currentIndex;
-            visitHistory[visitHistoryIndex++] = indexLess;
-            visitStack[visitStackIndex++] = indexLess;
-          }
-        }
-
 
         final dirMore = (targetDirection + i) % 8;
         final dirMoreRow = row + convertDirectionToRowVel(dirMore);
         final dirMoreColumn = column + convertDirectionToColumnVel(dirMore);
 
-        if (!outOfBounds(z, dirMoreRow, dirMoreColumn)){
-          final indexMore = getNodeIndex(z, dirMoreRow, dirMoreColumn);
-
-          if (path[indexMore] == 0 && nodeOrientations[indexMore] == NodeOrientation.None) {
-            path[indexMore] = currentIndex;
-            visitHistory[visitHistoryIndex++] = indexMore;
-            visitStack[visitStackIndex++] = indexMore;
-          }
-        }
+        visit(z: z, row: dirLessRow, column: dirLessCol, fromIndex: currentIndex);
+        visit(z: z, row: dirMoreRow, column: dirMoreColumn, fromIndex: currentIndex);
       }
 
-      if (!outOfBounds(z, forwardRow, forwardColumn)) {
-        final forwardIndex = getNodeIndex(z, forwardRow, forwardColumn);
-
-        if (path[forwardIndex] == 0 && nodeOrientations[forwardIndex] == NodeOrientation.None) {
-          path[forwardIndex] = currentIndex;
-          visitHistory[visitHistoryIndex++] = forwardIndex;
-        }
-      }
+      visit(z: z, row: forwardRow, column: forwardColumn, fromIndex: currentIndex);
     }
 
     return indexStart;
+  }
+
+  void visit({
+    required int z,
+    required int row,
+    required int column,
+    required int fromIndex,
+  }) {
+    if (outOfBounds(z, row, column)) return;
+
+    final index = getNodeIndex(z, row, column);
+
+    if (path[index] != 0)
+      return;
+    if (nodeOrientations[index] != NodeOrientation.None)
+      return;
+
+    path[index] = fromIndex;
+    visitHistory[visitHistoryIndex++] = index;
+    visitStackIndex++;
+    visitStack[visitStackIndex] = index;
   }
 
   static int convertDirectionToColumnVel(int direction) => switch(direction){
