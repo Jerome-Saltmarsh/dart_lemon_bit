@@ -145,6 +145,12 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     if (target == null)
       return false;
 
+    if (withinRadiusPosition(target, Node_Size))
+      return false;
+
+    if (pathIndex <= 0)
+      return true;
+
     if (arrivedAtPathEnd)
       return true;
 
