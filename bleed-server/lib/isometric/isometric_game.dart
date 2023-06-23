@@ -142,12 +142,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnGameStarted() {}
 
   /// @override
-  void customOnNpcObjectivesCompleted(IsometricCharacter npc) {}
-
-  /// @override
-  void customOnPlayerLevelGained(T player) {}
-
-  /// @override
   void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {}
 
   /// @override
@@ -2315,75 +2309,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!players.remove(player));
     characters.remove(player);
     customOnPlayerDisconnected(player);
-  }
-
-  void npcSetRandomDestination(IsometricAI ai, {int radius = 10}) {
-    // final node = scene.getNodeByPosition(ai);
-    // if (!node.open) return;
-    // final minColumn = max(0, node.column - radius);
-    // final maxColumn = min(scene.numberOfColumns, node.column + radius);
-    // final minRow = max(0, node.row - radius);
-    // final maxRow = min(scene.numberOfRows, node.row + radius);
-    // final randomColumn = randomInt(minColumn, maxColumn);
-    // final randomRow = randomInt(minRow, maxRow);
-    // final randomTile = scene.nodes[randomRow][randomColumn];
-    // npcSetPathToTileNode(ai, randomTile);
-  }
-
-  void npcSetPathTo(IsometricAI ai, IsometricPosition position) {
-    // npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
-  }
-
-  // void npcSetPathToTileNode(AI ai, Node node) {
-  //   pathFindDestination = node;
-  //   pathFindAI = ai;
-  //   pathFindSearchID++;
-  //   ai.pathIndex = -1;
-  //   // scene.visitNodeFirst(scene.getNodeByPosition(ai));
-  // }
-
-  IsometricAI addNpc({
-    required String name,
-    required int row,
-    required int column,
-    required int z,
-    required int weaponType,
-    required int headType,
-    required int armour,
-    required int pants,
-    required int team,
-    Function(IsometricPlayer player)? onInteractedWith,
-    int health = 10,
-    double speed = 3.0,
-    double wanderRadius = 0,
-    int damage = 1,
-  }) {
-    final npc = IsometricAI(
-      characterType: CharacterType.Template,
-      name: name,
-      onInteractedWith: onInteractedWith,
-      x: 0,
-      y: 0,
-      z: 0,
-      weaponType: weaponType,
-      team: team,
-      health: health,
-      wanderRadius: wanderRadius,
-      damage: damage,
-    );
-    setGridPosition(position: npc, z: z, row: row, column: column);
-    npc.spawnX = npc.x;
-    npc.spawnY = npc.y;
-    npc.clearDest();
-    characters.add(npc);
-    return npc;
-  }
-
-  double angle2(double adjacent, double opposite) {
-    if (adjacent > 0) {
-      return pi2 - (atan2(adjacent, opposite) * -1);
-    }
-    return atan2(adjacent, opposite);
   }
 
   void playerDeleteEditorSelectedGameObject(IsometricPlayer player) {
