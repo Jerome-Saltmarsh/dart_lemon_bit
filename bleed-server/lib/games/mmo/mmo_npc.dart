@@ -1,14 +1,16 @@
 
-import 'package:bleed_server/isometric/isometric_character.dart';
+import 'package:bleed_server/isometric/isometric_character_template.dart';
 
-class MMONpc extends IsometricCharacter {
+class MMONpc extends IsometricCharacterTemplate {
 
   MMONpc({
-    required super.characterType,
     required super.health,
     required super.weaponType,
     required super.team,
     required super.damage,
+    required super.x,
+    required super.y,
+    required super.z,
   });
 
 }
