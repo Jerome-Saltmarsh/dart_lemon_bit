@@ -27,10 +27,10 @@ class IsometricScene {
   late Int32List path;
   Uint8List? compiled;
 
-  // pathfinding
+  static final visitHistory = Uint32List(10000);
   static final visitStack = Uint32List(10000);
 
-  static var visitQueue = 0;
+  static var visitHistoryIndex = 0;
   static var visitStackIndex = 0;
 
   var gridHeight = 0;
@@ -236,12 +236,14 @@ class IsometricScene {
   bool findPath(var indexStart, var indexEnd){
     if (indexEnd == 0) return false;
 
-    for (var i = 0; i < visitStackIndex; i++){
-      path[visitStack[i]] = 0;
+    for (var i = 0; i < visitHistoryIndex; i++){
+      path[visitHistory[i]] = 0;
     }
 
+    visitHistoryIndex = 0;
     visitStackIndex = 0;
-    visitQueue = 0;
+
+    visitHistory[visitHistoryIndex++] = indexStart;
     visitStack[visitStackIndex++] = indexStart;
 
     final targetIndexRow = getNodeIndexRow(indexEnd);
@@ -250,17 +252,13 @@ class IsometricScene {
 
     var max = 0;
 
-    while (visitQueue <= visitStackIndex) {
-      // in the first step reserve all the surrounding nodes in the order of priority
-      // if a node has already been reserved it is skipped
+    while (visitStackIndex >= 0) {
 
       if (max++ >= 100) return true;
 
-      final currentIndex = visitStack[visitQueue++];
-
+      final currentIndex = visitStack[visitStackIndex--];
       final row = getNodeIndexRow(currentIndex);
       final column = getNodeIndexColumn(currentIndex);
-
 
       final backwardDirection = (convertToDirection(targetIndexRow - row, targetIndexColumn - column) + 4) % 8;
       final backwardRow = row + convertDirectionToRowVel(backwardDirection);
@@ -271,11 +269,14 @@ class IsometricScene {
 
         if (backwardIndex == indexEnd) {
           path[backwardIndex] = currentIndex;
-          visitStack[visitStackIndex++] = backwardIndex;
+          visitHistory[visitHistoryIndex++] = backwardIndex;
           return true;
         }
+
+        // if it has not been visited yet and it can be visited
         if (path[backwardIndex] == 0 && nodeOrientations[backwardIndex] == NodeOrientation.None) {
           path[backwardIndex] = currentIndex;
+          visitHistory[visitHistoryIndex++] = backwardIndex;
           visitStack[visitStackIndex++] = backwardIndex;
         }
       }
@@ -293,12 +294,13 @@ class IsometricScene {
           final indexLess = getNodeIndex(z, dirLessRow, dirLessCol);
           if (indexLess == indexEnd) {
             path[indexLess] = currentIndex;
-            visitStack[visitStackIndex++] = indexLess;
+            visitHistory[visitHistoryIndex++] = indexLess;
             return true;
           }
 
           if (path[indexLess] == 0 && nodeOrientations[indexLess] == NodeOrientation.None) {
             path[indexLess] = currentIndex;
+            visitHistory[visitHistoryIndex++] = indexLess;
             visitStack[visitStackIndex++] = indexLess;
           }
         }
@@ -313,12 +315,13 @@ class IsometricScene {
 
           if (indexMore == indexEnd) {
             path[indexMore] = currentIndex;
-            visitStack[visitStackIndex++] = indexMore;
+            visitHistory[visitHistoryIndex++] = indexMore;
             return true;
           }
 
           if (path[indexMore] == 0 && nodeOrientations[indexMore] == NodeOrientation.None) {
             path[indexMore] = currentIndex;
+            visitHistory[visitHistoryIndex++] = indexMore;
             visitStack[visitStackIndex++] = indexMore;
           }
         }
@@ -328,13 +331,13 @@ class IsometricScene {
         final forwardIndex = getNodeIndex(z, forwardRow, forwardColumn);
         if (forwardIndex == indexEnd) {
           path[forwardIndex] = currentIndex;
-          visitStack[visitStackIndex++] = forwardIndex;
+          visitHistory[visitHistoryIndex++] = forwardIndex;
           return true;
         }
 
         if (path[forwardIndex] == 0 && nodeOrientations[forwardIndex] == NodeOrientation.None) {
           path[forwardIndex] = currentIndex;
-          visitStack[visitStackIndex++] = forwardIndex;
+          visitHistory[visitHistoryIndex++] = forwardIndex;
         }
       }
     }
@@ -382,5 +385,4 @@ class IsometricScene {
     if (diffCols < 0) return 0;
     return 4;
   }
-
 }

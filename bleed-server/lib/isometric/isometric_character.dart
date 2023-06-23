@@ -61,7 +61,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     pathIndex = 0;
     final startIndex = scene.getNodeIndexV3(this);
     if (!scene.findPath(startIndex, targetIndex)) return;
-    var index = IsometricScene.visitStack[IsometricScene.visitQueue];
+    var index = IsometricScene.visitHistory[IsometricScene.visitStackIndex];
     while (scene.path[index] != startIndex) {
       if (path.length <= pathIndex) break;
       final nextIndex = scene.path[index];
