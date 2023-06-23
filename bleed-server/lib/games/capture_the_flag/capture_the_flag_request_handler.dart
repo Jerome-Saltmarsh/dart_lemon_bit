@@ -60,6 +60,11 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         final powerType = CaptureTheFlagPowerType.values[powerTypeIndex];
         player.upgradePowerType(powerType);
         break;
+      case CaptureTheFlagRequest.Debug_Selected_Character_AI:
+        final selected = player.selectedCharacter;
+        if (selected is! CaptureTheFlagAI) break;
+        selected.customUpdate();
+        break;
     }
   }
 }

@@ -6,4 +6,5 @@ enum CaptureTheFlagRequest {
    Activate_Power_2,
    Activate_Power_3,
    Upgrade_Power,
+   Debug_Selected_Character_AI,
 }

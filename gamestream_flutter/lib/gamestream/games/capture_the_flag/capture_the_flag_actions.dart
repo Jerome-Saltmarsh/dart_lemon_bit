@@ -20,6 +20,10 @@ extension CaptureTheFlagActions on CaptureTheFlagGame {
           CaptureTheFlagRequest.toggleSelectedAIRole.index
       );
 
+  void debugSelectAI() => sendCaptureTheFlagRequest(
+    CaptureTheFlagRequest.Debug_Selected_Character_AI
+  );
+
   void upgradePower(CaptureTheFlagPower power) =>
       gamestream.network.sendClientRequest(
           ClientRequest.Capture_The_Flag,

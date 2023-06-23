@@ -313,6 +313,9 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     onPressed(
                         action: toggleSelectedCharacterAIRole,
                         child: WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}"))),
+                    onPressed(
+                        action: debugSelectAI,
+                        child: buildText("DEBUG")),
                 ],
               )),
               const SizedBox(height: 1,),
