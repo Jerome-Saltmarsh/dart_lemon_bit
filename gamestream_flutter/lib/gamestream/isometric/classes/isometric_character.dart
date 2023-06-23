@@ -24,11 +24,6 @@ class IsometricCharacter extends IsometricPosition {
   var lookRadian = 0.0;
   var weaponFrame = 0;
   var color = 0;
-  var buff = 0;
-
-  bool get buffInvincible     => buff & 0x00000001 == 1;
-  bool get buffDoubleDamage   => buff & 0x00000002 == 2;
-  bool get buffInvisible      => buff & 0x00000004 == 4;
 
   static const piSixteenth = pi / 16.0;
 

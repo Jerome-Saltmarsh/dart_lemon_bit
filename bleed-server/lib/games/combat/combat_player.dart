@@ -24,6 +24,10 @@ class CombatPlayer extends IsometricPlayer {
   var aimTargetWeaponSide = IsometricSide.Left;
   var nextEnergyGain = 0;
 
+  var buffInvincible      = false;
+  var buffDoubleDamage    = false;
+  var buffInvisible       = false;
+
   var _energy = 10;
   var _powerType = CombatPowerType.None;
   var _credits = 0;

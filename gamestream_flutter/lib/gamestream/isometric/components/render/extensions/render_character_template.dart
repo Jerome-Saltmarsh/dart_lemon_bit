@@ -136,8 +136,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     frameBody = frameWeapon;
     frameHead = frameWeapon;
 
-
-    final invisible = character.buffInvisible;
+    final invisible = false;
 
     final dstX = IsometricRender.convertV3ToRenderX(character);
     final dstY = IsometricRender.convertV3ToRenderY(character);

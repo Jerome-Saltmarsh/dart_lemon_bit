@@ -35,9 +35,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
-  var buffInvincible      = false;
-  var buffDoubleDamage    = false;
-  var buffInvisible       = false;
 
   IsometricPosition? target;
 
@@ -102,19 +99,19 @@ abstract class IsometricCharacter extends IsometricCollider {
     radius = CharacterType.getRadius(characterType);
   }
 
-  int get buffByte {
-    var buff = 0;
-    if (buffInvincible) {
-      buff = buff | 0x00000001;
-    }
-    if (buffDoubleDamage) {
-      buff = buff | 0x00000002;
-    }
-    if (buffInvisible) {
-      buff = buff | 0x00000004;
-    }
-    return buff;
-  }
+  // int get buffByte {
+  //   var buff = 0;
+  //   if (buffInvincible) {
+  //     buff = buff | 0x00000001;
+  //   }
+  //   if (buffDoubleDamage) {
+  //     buff = buff | 0x00000002;
+  //   }
+  //   if (buffInvisible) {
+  //     buff = buff | 0x00000004;
+  //   }
+  //   return buff;
+  // }
 
   int get weaponType => _weaponType;
   bool get isPlayer => false;

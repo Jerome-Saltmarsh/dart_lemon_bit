@@ -253,9 +253,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       if (character.renderX > screenRight) continue;
       if (character.renderY > screenBottom) continue;
 
-      if (character.buffInvisible && !IsometricCollider.onSameTeam(this, character)){
-        continue;
-      }
+      // if (!IsometricCollider.onSameTeam(this, character)){
+      //   continue;
+      // }
 
       writeByte(character.characterType);
       writeCharacterTeamDirectionAndState(character);
@@ -266,7 +266,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
         writeCharacterUpperBody(character);
       }
 
-      writeByte(character.buffByte);
+      // writeByte(character.buffByte);
     }
     writeByte(END);
   }

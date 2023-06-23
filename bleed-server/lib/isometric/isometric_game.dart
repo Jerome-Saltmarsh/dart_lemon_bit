@@ -455,10 +455,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     final weaponType = character.weaponType;
 
-    if (character.buffInvisible) {
-      character.buffInvisible = false;
-    }
-
     if (weaponType == ItemType.Weapon_Thrown_Grenade) {
       if (character is IsometricPlayer) {
         playerThrowGrenade(character, damage: 10);
@@ -960,30 +956,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       damage: character.weaponDamage,
     );
 
-    if (character.buffDoubleDamage) {
-      const angleOffset = degreesToRadians * 20;
-      spawnProjectile(
-        src: character,
-        accuracy: character.accuracy,
-        angle: angle - angleOffset,
-        range: character.weaponRange,
-        projectileType: ProjectileType.Bullet,
-        damage: character.weaponDamage,
-      );
-    }
-
-    if (character.buffDoubleDamage) {
-      const angleOffset = degreesToRadians * 20;
-      spawnProjectile(
-        src: character,
-        accuracy: character.accuracy,
-        angle: angle + angleOffset,
-        range: character.weaponRange,
-        projectileType: ProjectileType.Bullet,
-        damage: character.weaponDamage,
-      );
-    }
-
     dispatchAttackPerformed(
       character.weaponType,
       character.x + getAdjacent(angle, 70),
@@ -1323,8 +1295,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     activateCollider(player);
     player.health = player.maxHealth;
     clearCharacterTarget(player);
-    player.buffInvincible = false;
-    player.buffDoubleDamage = false;
 
     customOnPlayerRevived(player);
 
@@ -1372,7 +1342,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int amount,
   }) {
     if (target.dead) return;
-    if (target.buffInvincible) return;
 
     final damage = min(amount, target.health);
     target.health -= damage;
@@ -1552,7 +1521,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void setCharacterStateStunned(IsometricCharacter character,
       {int duration = Gamestream.Frames_Per_Second * 2}) {
     if (character.dead) return;
-    if (character.buffInvincible) return;
     character.stateDurationRemaining = duration;
     character.state = CharacterState.Stunned;
     character.onCharacterStateChanged();
@@ -2436,7 +2404,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final character in characters) {
       if (!character.aliveAndActive) continue;
       if (IsometricCollider.onSameTeam(character, ai)) continue;
-      if (character.buffInvisible) continue;
       final distanceX = (ai.x - character.x).abs();
       if (closestDistanceX < distanceX) continue;
       final distanceY = (ai.y - character.y).abs();

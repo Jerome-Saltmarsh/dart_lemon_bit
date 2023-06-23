@@ -500,7 +500,6 @@ extension ServerResponseReader on Gamestream {
         readCharacterUpperBody(character);
       }
 
-      character.buff = readUInt8();
       isometric.server.totalCharacters++;
     }
   }

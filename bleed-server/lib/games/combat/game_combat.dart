@@ -624,10 +624,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       }
     }
 
-    if (character.buffInvisible) {
-      character.buffInvisible = false;
-    }
-
     if (weaponType == ItemType.Weapon_Thrown_Grenade) {
       if (character is IsometricPlayer) {
         playerThrowGrenade(character, damage: 10);

@@ -104,20 +104,6 @@ class RendererCharacters extends IsometricRenderer {
       default:
         throw Exception("Cannot render character type: ${character.characterType}");
     }
-
-    if (character.buffInvincible) {
-      engine.renderSprite(
-        image: GameImages.sprite_shield,
-        srcX: 125.0 * gamestream.animation.animationFrame16,
-        srcY: 0,
-        dstX: character.renderX,
-        dstY: character.renderY - 10,
-        srcWidth: 125,
-        srcHeight: 125,
-        scale: 0.4,
-      );
-    }
-
   }
 
 
