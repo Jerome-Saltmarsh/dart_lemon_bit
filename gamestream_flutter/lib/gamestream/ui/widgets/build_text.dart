@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 
 Widget buildText(dynamic value, {
-  num? size,
+  num size = 18,
   Function? onPressed,
   TextDecoration decoration = TextDecoration.none,
   FontWeight weight = FontWeight.normal,
   bool italic = false,
   bool bold = false,
   bool underline = false,
-  Color? color,
+  Color color = Colors.white,
   String? family,
   TextAlign? align,
   String Function(dynamic t)? format,
@@ -20,8 +20,8 @@ Widget buildText(dynamic value, {
       value.toString(),
       textAlign: align,
       style: TextStyle(
-          color: color ?? flutterKitConfiguration.defaultTextColor,
-          fontSize: size?.toDouble() ?? flutterKitConfiguration.defaultTextFontSize,
+          color: color,
+          fontSize: size.toDouble(),
           decoration: underline ? TextDecoration.underline : decoration,
           fontWeight: bold ? FontWeight.bold : weight,
           fontFamily: family,

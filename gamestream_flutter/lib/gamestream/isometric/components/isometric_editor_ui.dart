@@ -795,7 +795,7 @@ extension IsometricEditorUI on IsometricEditor {
       Row(
         children: [
           buildOrientationIcon(NodeOrientation.Corner_Left),
-          width(48),
+          const SizedBox(width: 48),
           buildOrientationIcon(NodeOrientation.Corner_Right),
         ],
       ),

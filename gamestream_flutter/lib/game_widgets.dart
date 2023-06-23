@@ -4,17 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:lemon_watch/src.dart';
 
-import 'game_style.dart';
-import 'instances/engine.dart';
 import 'gamestream/ui/widgets/build_text.dart';
 import 'gamestream/ui/widgets/nothing.dart';
-
-class _FlutterKitConfiguration {
-  Color defaultTextColor = Colors.white;
-  double defaultTextFontSize = 18;
-}
-
-final flutterKitConfiguration = _FlutterKitConfiguration();
+import 'instances/engine.dart';
 
 Widget watch<T>(Watch<T> watch, Widget Function(T t) builder){
   return WatchBuilder(watch, builder);
@@ -23,8 +15,6 @@ Widget watch<T>(Watch<T> watch, Widget Function(T t) builder){
 Widget buildWatch<T>(Watch<T> watch, Widget Function(T t) builder){
   return WatchBuilder(watch, builder);
 }
-
-
 
 Widget border({
   required Widget child,
@@ -54,7 +44,7 @@ Widget button(dynamic value, Function onPressed, {
   Color fillColor = Colors.transparent,
   Color borderColor = Colors.white,
   Color borderColorMouseOver = Colors.white,
-  int? fontSize = 18,
+  int fontSize = 18,
   bool boldOnHover = false,
   Alignment alignment = Alignment.center
 }) {
@@ -75,8 +65,6 @@ Widget button(dynamic value, Function onPressed, {
   }
   return _button;
 }
-
-
 
 typedef RefreshBuilder = Widget Function();
 typedef WidgetFunction = Widget Function();
@@ -122,10 +110,6 @@ class _RefreshState extends State<Refresh> {
   }
 }
 
-Widget center(Widget child) {
-  return buildFullscreen(child: child);
-}
-
 Widget buildFullscreen({
   required Widget child,
   Alignment alignment = Alignment.center,
@@ -140,37 +124,31 @@ Widget buildFullscreen({
   );
 
 
-Widget height(double value) {
-  return SizedBox(height: value);
-}
+const height2 = SizedBox(height: 2);
+const height4 = SizedBox(height: 4);
+const height6 = SizedBox(height: 6);
+const height8 = SizedBox(height: 8);
+const height12 = SizedBox(height: 12);
+const height16 = SizedBox(height: 16);
+const height20 = SizedBox(height: 20);
+const height24 = SizedBox(height: 24);
+const height32 = SizedBox(height: 32);
+const height50 = SizedBox(height: 50);
+const height64 = SizedBox(height: 64);
 
-final Widget height2 = height(2);
-final Widget height4 = height(4);
-final Widget height6 = height(6);
-final Widget height8 = height(8);
-final Widget height12 = height(12);
-final Widget height16 = height(16);
-final Widget height20 = height(20);
-final Widget height24 = height(24);
-final Widget height32 = height(32);
-final Widget height50 = height(50);
-final Widget height64 = height(64);
+const width2 = SizedBox(width: 2);
+const width3 = SizedBox(width: 3);
+const width4 = SizedBox(width: 4);
+const width6 = SizedBox(width: 6);
+const width8 = SizedBox(width: 8);
+const width16 = SizedBox(width: 16);
+const width32 = SizedBox(width: 32);
+const width64 = SizedBox(width: 64);
+const width96 = SizedBox(width: 96);
+const width128 = SizedBox(width: 128);
+const width256 = SizedBox(width: 256);
 
-Widget width(double value) {
-  return SizedBox(width: value);
-}
-
-final width2 = width(2);
-final width3 = width(3);
-final width4 = width(4);
-final width6 = width(6);
-final width8 = width(8);
-final width16 = width(16);
-final width32 = width(32);
-final width64 = width(64);
-final width96 = width(96);
-final width128 = width(128);
-final width256 = width(256);
+const borderRadius4 = BorderRadius.all(Radius.circular(4));
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   return OutlinedButton.styleFrom(
@@ -180,44 +158,11 @@ ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   );
 }
 
-final Widget blank = const Positioned(
+final blank = const Positioned(
   child: const Text(""),
   top: 0,
   left: 0,
 );
-
-
-Widget topLeft({required Widget child, double padding = 0}) {
-  return Positioned(
-    top: padding,
-    left: padding,
-    child: child,
-  );
-}
-
-Widget topRight({required Widget child, double padding = 0}) {
-  return Positioned(
-    top: padding,
-    right: padding,
-    child: child,
-  );
-}
-
-Widget bottomRight({required Widget child, double padding = 0}) {
-  return Positioned(
-    bottom: padding,
-    right: padding,
-    child: child,
-  );
-}
-
-Widget bottomLeft({required Widget child, double padding = 0}) {
-  return Positioned(
-    bottom: padding,
-    left: padding,
-    child: child,
-  );
-}
 
 Widget dialog({
   required Widget child,
@@ -249,154 +194,11 @@ Widget dialog({
   );
 }
 
-Widget buildDecorationImage({
-  required DecorationImage image,
-  double? width,
-  double? height,
-  double borderWidth = 1,
-  Color? color,
-  Color? borderColor,
-}) {
-  return Container(
-    width: width,
-    height: height,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      image: image,
-      color: color,
-      border: borderWidth > 0 && borderColor != null
-          ? Border.all(color: borderColor, width: borderWidth)
-          : null,
-      borderRadius: borderRadius4,
-    ),
-  );
-}
+Widget buildWatchBool(
+    Watch<bool> watch,
+    Widget Function() builder,
+    [bool match = true]
+) =>
+  WatchBuilder(watch, (bool value) => value == match ? builder() : nothing);
 
-Widget visibleBuilder(Watch<bool> watch, Widget widget) =>
-    WatchBuilder(watch, (bool visible) => visible ? widget : nothing);
-
-Widget buildWatchBool(Watch<bool> watch, Widget Function() builder, [bool match = true]) =>
-  WatchBuilder(watch, (bool value) =>
-    value == match ? builder() : nothing
-  );
-
-Widget textBuilder(Watch watch){
-  return WatchBuilder(watch, (dynamic value){
-    return buildText(value);
-  });
-}
-
-Widget boolBuilder(Watch<bool> watch, {required Widget widgetTrue, required Widget widgetFalse}){
-  return WatchBuilder(watch, (bool visible){
-    return visible ? widgetTrue : widgetFalse;
-  });
-}
-
-Widget loadingText(String value, Function onPressed){
-  var frame = 0;
-  return Refresh(() {
-     frame = (frame + 1) % 4;
-     switch(frame){
-       case 0:
-         return buildText('-- $value --', size: FontSize.Large, bold: true, onPressed: onPressed);
-       case 1:
-         return buildText('/- $value -\\', size: FontSize.Large, bold: true, onPressed: onPressed);
-       case 2:
-         return buildText('|- $value -|', size: FontSize.Large, bold: true, onPressed: onPressed);
-       case 3:
-         return buildText('\\- $value -/', size: FontSize.Large, bold: true, onPressed: onPressed);
-       default:
-          return buildText(value);
-     }
-  }, milliseconds: 100);
-}
-
-Widget buildImage(String filename, {required double width, required double height}){
-  return Container(
-      width: width,
-      height: height,
-      decoration:
-      BoxDecoration(image: DecorationImage(image: AssetImage(filename)))
-  );
-}
-
-Widget buildTextButton(
-    String value, {
-      Function? action,
-      double size = 24,
-      Color? colorMouseOver,
-      Color? colorRegular,
-    }) =>
-    MouseOver(builder: (bool mouseOver) =>
-        buildText(value,
-            onPressed: action,
-            size: size,
-            color: mouseOver ? colorMouseOver ?? Colors.white70 : colorRegular ?? Colors.white54
-        ),
-    );
-
-
-
-const EdgeInsets padding16 = EdgeInsets.all(16);
-const EdgeInsets padding6 = EdgeInsets.all(6);
-const EdgeInsets padding8 = EdgeInsets.all(8);
-const EdgeInsets padding4 = EdgeInsets.all(4);
-const EdgeInsets padding0 = EdgeInsets.zero;
-const BorderRadius borderRadius0 = BorderRadius.zero;
-const BorderRadius borderRadius2 = BorderRadius.all(radius2);
-const BorderRadius borderRadius4 = BorderRadius.all(radius4);
-const BorderRadius borderRadius8 = BorderRadius.all(radius8);
-const BorderRadius borderRadius16 = BorderRadius.all(radius16);
-const BorderRadius borderRadius32 = BorderRadius.all(radius32);
-
-const BorderRadius borderRadiusBottomRight8 = BorderRadius.only(bottomRight: radius8);
-
-const Radius radius0 = Radius.circular(0);
-const Radius radius2 = Radius.circular(2);
-const Radius radius4 = Radius.circular(4);
-const Radius radius8 = Radius.circular(8);
-const Radius radius16 = Radius.circular(16);
-const Radius radius32 = Radius.circular(32);
-
-final _Radius radius = _Radius();
-
-class _Radius {
-  final Radius circular4 = const Radius.circular(4);
-  final Radius circular8 = const Radius.circular(8);
-  final Radius circular16 = const Radius.circular(16);
-  final Radius circular32 = const Radius.circular(32);
-}
-
-final Border border3 = Border.all(width: 3.0);
-
-final Color black26 = Colors.black26;
-final Color black45 = Colors.black45;
-final Color black54 = Colors.black54;
-
-const FontWeight bold = FontWeight.bold;
-final TextDecoration underline = TextDecoration.underline;
-
-// final _Axis axis = _Axis();
-//
-// class _Axis {
-//   final _Main main = _Main();
-//   final _Cross cross = _Cross();
-// }
-
-// class _Main {
-//   final MainAxisAlignment start = MainAxisAlignment.start;
-//   final MainAxisAlignment end = MainAxisAlignment.end;
-//   final MainAxisAlignment center = MainAxisAlignment.center;
-//   final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
-//   final MainAxisAlignment spread = MainAxisAlignment.spaceBetween;
-//   final MainAxisAlignment apart = MainAxisAlignment.spaceBetween;
-//   final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
-// }
-//
-// class _Cross {
-//   final CrossAxisAlignment center = CrossAxisAlignment.center;
-//   final CrossAxisAlignment start = CrossAxisAlignment.start;
-//   final CrossAxisAlignment end = CrossAxisAlignment.end;
-//   final CrossAxisAlignment stretch = CrossAxisAlignment.stretch;
-// }
 
