@@ -71,7 +71,7 @@ class IsometricAI extends IsometricCharacter {
     (y - destY).abs() < Destination_Radius ;
 
   void clearPath() {
-    pathIndex = -1;
+    pathIndex = 0;
   }
 
   void clearDest(){
