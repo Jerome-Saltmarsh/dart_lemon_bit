@@ -1708,11 +1708,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateCharacterState(character);
   }
 
-  void faceCharacterTowards(IsometricCharacter character, Position position) {
-    assert(!character.deadOrBusy);
-    character.faceAngle = getAngleBetweenV3(character, position);
-  }
-
   void updateCharacterState(IsometricCharacter character) {
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
@@ -2285,6 +2280,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void setCharacterTarget(IsometricCharacter character, IsometricPosition target) {
     if (character.target == target) return;
     character.target = target;
+
+    // TODO
     if (character is IsometricPlayer) {
       character.writePlayerTargetCategory();
       character.writePlayerTargetPosition();
@@ -2295,13 +2292,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.target == null) return;
     character.target = null;
     character.setCharacterStateIdle();
+    // TODO
     if (character is IsometricPlayer) {
       character.writePlayerTargetCategory();
     }
   }
-
-  static double getAngleBetweenV3(Position a, Position b) =>
-      getAngle(a.x - b.x, a.y - b.y);
 
   void triggerSpawnPoints({int instances = 1}) {
     // for (final index in scene.spawnPoints) {

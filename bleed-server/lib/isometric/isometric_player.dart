@@ -371,8 +371,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       }
       return TargetCategory.Nothing;
     }
-    if (isAlly(value)) return TargetCategory.Allie;
-    if (isEnemy(value)) return TargetCategory.Enemy;
+    if (isAlly(value)) return TargetCategory.Talk;
+    if (isEnemy(value)) return TargetCategory.Attack;
     return TargetCategory.Run;
   }
 

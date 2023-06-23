@@ -123,7 +123,11 @@ class IsometricGame extends Game {
 
   /// override to customize cursor type
   int mapTargetCategoryToCursorType(int targetCategory) => switch(targetCategory) {
-    TargetCategory.Enemy => IsometricCursorType.CrossHair_Red,
+    TargetCategory.Attack => IsometricCursorType.CrossHair_Red,
+    TargetCategory.Talk => IsometricCursorType.Talk,
+    TargetCategory.Nothing => IsometricCursorType.CrossHair_White,
+    TargetCategory.Collect => IsometricCursorType.Hand,
+    TargetCategory.Run => IsometricCursorType.CrossHair_White,
     _ => IsometricCursorType.CrossHair_White,
   };
 }

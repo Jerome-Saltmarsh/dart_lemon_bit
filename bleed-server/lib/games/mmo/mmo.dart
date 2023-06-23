@@ -22,7 +22,6 @@ class Mmo extends IsometricGame<MmoPlayer> {
       team: MmoTeam.Human,
       damage: 1,
     ));
-
   }
 
   @override
