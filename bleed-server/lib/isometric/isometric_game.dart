@@ -464,32 +464,22 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
-      if (character is IsometricPlayer) {
-        playerUseFlamethrower(character);
-        return;
-      }
-      throw Exception('ai cannot use flamethrower');
+      characterUseFlamethrower(character);
+      return;
     }
 
     if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
-      if (character is IsometricPlayer) {
-        playerUseBazooka(character);
-      }
+      characterUseBazooka(character);
       return;
     }
 
     if (weaponType == ItemType.Weapon_Ranged_Minigun) {
-      if (character is IsometricPlayer) {
-        playerUseMinigun(character);
-      }
+      characterUseMinigun(character);
       return;
     }
 
     if (ItemType.isTypeWeaponFirearm(weaponType)) {
       characterFireWeapon(character);
-      // if (character is Player){
-      //   if (character.buffNoRecoil > 0) return;
-      // }
       character.accuracy += 0.25;
       return;
     }
@@ -602,14 +592,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void playerThrowGrenade(IsometricPlayer player, {int damage = 10}) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
-    // if (options.items){
-    //   if (player.grenades <= 0) {
-    //     player.writeError('No grenades left');
-    //     return;
-    //   }
-    //   player.grenades--;
-    // }
-
     dispatchAttackPerformed(
       ItemType.Weapon_Thrown_Grenade,
       player.x + getAdjacent(player.lookRadian, 60),
@@ -660,19 +642,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     });
   }
 
-  void playerUseFlamethrower(IsometricPlayer player) {
-    dispatchPlayerAttackPerformed(player);
-    player.assignWeaponStateFiring();
-    spawnProjectileFireball(player, damage: 3, range: player.weaponRange);
+  void characterUseFlamethrower(IsometricCharacter character) {
+    dispatchAttackPerformedCharacter(character);
+    character.assignWeaponStateFiring();
+    spawnProjectileFireball(character, damage: 3, range: character.weaponRange);
   }
 
-  void playerUseBazooka(IsometricPlayer player) {
-    dispatchPlayerAttackPerformed(player);
-    player.assignWeaponStateFiring();
-    spawnProjectileRocket(player, damage: 3, range: player.weaponRange);
+  void characterUseBazooka(IsometricCharacter character) {
+    dispatchAttackPerformedCharacter(character);
+    character.assignWeaponStateFiring();
+    spawnProjectileRocket(character, damage: 3, range: character.weaponRange);
   }
 
-  void playerUseMinigun(IsometricPlayer player) {
+  void characterUseMinigun(IsometricCharacter player) {
     characterFireWeapon(player);
   }
 
@@ -2322,13 +2304,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void dispatchPlayerAttackPerformed(IsometricPlayer player) =>
+  void dispatchAttackPerformedCharacter(IsometricCharacter character) =>
       dispatchAttackPerformed(
-        player.weaponType,
-        player.x,
-        player.y,
-        player.z,
-        player.lookRadian,
+        character.weaponType,
+        character.x,
+        character.y,
+        character.z,
+        character.lookRadian,
       );
 
   void dispatchAttackPerformed(int attackType, double x, double y, double z,

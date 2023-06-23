@@ -587,24 +587,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
 
     final weaponType = character.weaponType;
 
-    if (character is CombatPlayer) {
-      final cost = getCharacterWeaponEnergyCost(character);
-      if (character.energy < cost) {
-        character.writeGameError(GameError.Insufficient_Energy);
-        return;
-      }
-      character.energy -= cost;
-    } else if (character is IsometricAI) {
-      if (ItemType.isTypeWeaponFirearm(weaponType)) {
-        if (character.rounds <= 0) {
-          character.assignWeaponStateReloading();
-          character.rounds = ItemType.getMaxQuantity(weaponType);
-          return;
-        }
-        character.rounds--;
-      }
-    }
-
     if (weaponType == ItemType.Weapon_Thrown_Grenade) {
       if (character is IsometricPlayer) {
         playerThrowGrenade(character, damage: 10);
@@ -615,7 +597,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
 
     if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
       if (character is IsometricPlayer) {
-        playerUseFlamethrower(character);
+        characterUseFlamethrower(character);
         return;
       }
       throw Exception('ai cannot use flamethrower');
@@ -623,23 +605,20 @@ class GameCombat extends IsometricGame<CombatPlayer> {
 
     if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
       if (character is IsometricPlayer) {
-        playerUseBazooka(character);
+        characterUseBazooka(character);
       }
       return;
     }
 
     if (weaponType == ItemType.Weapon_Ranged_Minigun) {
       if (character is IsometricPlayer) {
-        playerUseMinigun(character);
+        characterUseMinigun(character);
       }
       return;
     }
 
     if (ItemType.isTypeWeaponFirearm(weaponType)) {
       characterFireWeapon(character);
-      // if (character is Player){
-      //   if (character.buffNoRecoil > 0) return;
-      // }
       character.accuracy += 0.25;
       return;
     }
