@@ -114,6 +114,3 @@ class IsometricDirection {
 }
 
 
-
-int clampDirection(int index) => index >= 0 ? index % 8 : 8 - (index.abs() % 8);
-

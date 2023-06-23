@@ -39,7 +39,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   // PATHFINDING
 
-  final path = Uint32List(100);
+  final path = Uint32List(20);
   var pathIndex = 0;
   var pathStart = 0;
 
