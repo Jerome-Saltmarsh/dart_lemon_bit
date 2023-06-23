@@ -84,6 +84,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   double get mouseGridX => game.clampX((mouse.x + mouse.y) + z);
   double get mouseGridY => game.clampY((mouse.y - mouse.x) + z);
+  double get mouseGridZ => z;
 
   /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);

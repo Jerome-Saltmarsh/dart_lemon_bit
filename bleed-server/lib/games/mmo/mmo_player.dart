@@ -19,4 +19,15 @@ class MmoPlayer extends IsometricPlayer {
     return TargetCategory.Run;
   }
 
+
+  @override
+  void onMouseLeftClicked() {
+    final aimTarget = this.aimTarget;
+
+    if (aimTarget == null) {
+      destinationX = mouseGridX;
+      destinationY = mouseGridX;
+      destinationZ = mouseGridZ;
+    }
+  }
 }
