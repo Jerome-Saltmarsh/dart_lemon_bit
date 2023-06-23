@@ -12,12 +12,13 @@ class Mmo extends IsometricGame<MmoPlayer> {
     required super.environment,
   }) : super(gameType: GameType.Mmo) {
 
+
   }
 
   @override
   MmoPlayer buildPlayer() => MmoPlayer(game: this)
-    ..x = 100
-    ..y = 100
+    ..x = 500
+    ..y = 500
     ..z = 50;
 
   @override

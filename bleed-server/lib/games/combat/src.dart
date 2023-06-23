@@ -1,4 +1,5 @@
 library src;
 
 export 'combat_player.dart';
-export 'game_combat.dart';
+export 'combat_zombie.dart';
+export 'combat_game.dart';

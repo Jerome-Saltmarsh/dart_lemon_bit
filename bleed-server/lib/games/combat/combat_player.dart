@@ -11,7 +11,8 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/isometric/src.dart';
 import 'package:lemon_math/functions/clamp.dart';
 
-import 'game_combat.dart';
+import 'combat_game.dart';
+
 
 class CombatPlayer extends IsometricPlayer {
 
@@ -33,7 +34,7 @@ class CombatPlayer extends IsometricPlayer {
   var _credits = 0;
   var _respawnTimer = 0;
 
-  final GameCombat game;
+  final CombatGame game;
 
   CombatPlayer(this.game) : super(game: game) {
     maxEnergy = energy;

@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 import 'survival_player.dart';
@@ -125,7 +126,7 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
         return;
       }
 
-      if (target is IsometricAI && player.targetIsAlly) {
+      if (target is CombatZombie && player.targetIsAlly) {
         if (player.withinRadiusPosition(target, 100)) {
           if (!target.deadOrBusy) {
             target.face(player);

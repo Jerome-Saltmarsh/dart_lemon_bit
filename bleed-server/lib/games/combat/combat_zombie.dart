@@ -7,12 +7,12 @@ import 'package:bleed_server/common/src/isometric/item_type.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/library.dart';
 
-import 'isometric_character.dart';
-import 'isometric_game.dart';
-import 'isometric_player.dart';
-import 'isometric_position.dart';
+import '../../isometric/isometric_character.dart';
+import '../../isometric/isometric_game.dart';
+import '../../isometric/isometric_player.dart';
+import '../../isometric/isometric_position.dart';
 
-class IsometricAI extends IsometricCharacter {
+class CombatZombie extends IsometricCharacter {
   static const AI_Path_Size = 80;
   static const Destination_Radius = 15;
   static const Frames_Between_AI_Mode_Min = 80;
@@ -37,7 +37,7 @@ class IsometricAI extends IsometricCharacter {
   var rounds = 0;
   Function(IsometricPlayer player)? onInteractedWith;
 
-  IsometricAI({
+  CombatZombie({
     required int characterType,
     required int health,
     required int weaponType,
@@ -108,7 +108,7 @@ class IsometricAI extends IsometricCharacter {
 
   void shuffleAIMode(){
     aiMode = randomInt(0, 5);
-    aiModeNext = randomInt(IsometricAI.Frames_Between_AI_Mode_Min, IsometricAI.Frames_Between_AI_Mode_Max);
+    aiModeNext = randomInt(CombatZombie.Frames_Between_AI_Mode_Min, CombatZombie.Frames_Between_AI_Mode_Max);
   }
   
   void updateAI(){

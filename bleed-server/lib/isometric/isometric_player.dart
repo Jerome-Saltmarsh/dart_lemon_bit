@@ -15,6 +15,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/isometric/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/core/player.dart';
+import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/games/isometric_editor/isometric_editor.dart';
 import 'package:bleed_server/utils/generate_random_name.dart';
 import 'package:bleed_server/utils/system.dart';
@@ -22,7 +23,6 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_character_template.dart';
-import 'isometric_ai.dart';
 import 'isometric_collider.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
@@ -359,8 +359,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       return;
     }
 
-    if (aimTarget is IsometricAI) {
-      writeApiPlayerAimTargetName((aimTarget as IsometricAI).name);
+    if (aimTarget is CombatZombie) {
+      writeApiPlayerAimTargetName((aimTarget as CombatZombie).name);
       return;
     }
   }

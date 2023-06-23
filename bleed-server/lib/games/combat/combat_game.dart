@@ -17,8 +17,9 @@ import 'package:lemon_math/library.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 import 'combat_player.dart';
+import 'combat_zombie.dart';
 
-class GameCombat extends IsometricGame<CombatPlayer> {
+class CombatGame extends IsometricGame<CombatPlayer> {
   // constants
   static final Player_Respawn_Duration  = Gamestream.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
@@ -73,7 +74,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   ];
 
   // constructor
-  GameCombat({
+  CombatGame({
     required super.scene,
   }) : super(
       gameType: GameType.Combat,
@@ -241,7 +242,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
        src.score += Credits_Per_Kill;
      }
 
-     if (target is IsometricAI && scene.spawnPoints.isNotEmpty) {
+     if (target is CombatZombie && scene.spawnPoints.isNotEmpty) {
        final spawnNodeIndex = randomItem(scene.spawnPoints);
 
        final z = scene.getNodeIndexZ(spawnNodeIndex);

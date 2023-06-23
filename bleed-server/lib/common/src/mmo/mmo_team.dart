@@ -1,0 +1,5 @@
+
+enum MmoTeam {
+   Human,
+   Alien,
+}

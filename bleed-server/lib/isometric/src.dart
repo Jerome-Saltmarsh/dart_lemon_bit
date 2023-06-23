@@ -1,6 +1,5 @@
 library isometric;
 
-export 'isometric_ai.dart';
 export 'isometric_character.dart';
 export 'isometric_character_template.dart';
 export 'isometric_collider.dart';

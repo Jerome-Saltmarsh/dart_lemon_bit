@@ -15,13 +15,13 @@ import 'package:bleed_server/common/src/isometric/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/common/src/isometric/weapon_state.dart';
+import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/core/game.dart';
 import 'package:bleed_server/utils/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
-import 'isometric_ai.dart';
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
@@ -153,7 +153,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       IsometricGameObject gameObject) {}
 
   /// @override
-  void customOnAIRespawned(IsometricAI ai) {}
+  void customOnAIRespawned(CombatZombie ai) {}
 
   /// @override
   void customOnPlayerWeaponChanged(IsometricPlayer player,
@@ -1218,7 +1218,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (target.health <= 0) {
       setCharacterStateDead(target);
-      if (target is IsometricAI) {
+      if (target is CombatZombie) {
         clearCharacterTarget(target);
         target.clearDest();
         target.clearPath();
@@ -1230,13 +1230,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     target.setCharacterStateHurt();
     dispatchGameEventCharacterHurt(target);
 
-    if (target is IsometricAI) {
+    if (target is CombatZombie) {
       onAIDamagedBy(target, src);
     }
   }
 
   /// Can be safely overridden to customize behavior
-  void onAIDamagedBy(IsometricAI ai, dynamic src) {
+  void onAIDamagedBy(CombatZombie ai, dynamic src) {
     final targetAITarget = ai.target;
     if (targetAITarget == null) {
       ai.target = src;
@@ -1738,7 +1738,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     /// TODO INVALID HIERARCHY
-    if (character is IsometricAI) {
+    if (character is CombatZombie) {
       character.updateAI();
       character.applyBehaviorWander(this);
 
@@ -1808,7 +1808,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.stateDuration++;
   }
 
-  void respawnAI(IsometricAI ai) {
+  void respawnAI(CombatZombie ai) {
     assert (ai.dead);
     final distance = randomBetween(0, 100);
     final angle = randomAngle();
@@ -2011,7 +2011,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return projectile;
   }
 
-  IsometricAI spawnAIXYZ({
+  CombatZombie spawnAIXYZ({
     required double x,
     required double y,
     required double z,
@@ -2024,7 +2024,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!scene.inboundsXYZ(x, y, z)) throw Exception(
         'game.spawnAIXYZ() - out of bounds');
 
-    final instance = IsometricAI(
+    final instance = CombatZombie(
       weaponType: ItemType.Empty,
       characterType: characterType,
       health: health,
@@ -2047,7 +2047,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return instance;
   }
 
-  IsometricAI spawnAI({
+  CombatZombie spawnAI({
     required int nodeIndex,
     required int characterType,
     int health = 10,
@@ -2060,7 +2060,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       throw Exception(
           'game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
     }
-    final instance = IsometricAI(
+    final instance = CombatZombie(
       weaponType: ItemType.Empty,
       characterType: characterType,
       health: health,
@@ -2253,12 +2253,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (final character in characters) {
       if (!character.alive) continue;
-      if (character is IsometricAI == false) continue;
-      updateAITarget(character as IsometricAI);
+      if (character is CombatZombie == false) continue;
+      updateAITarget(character as CombatZombie);
     }
   }
 
-  void updateAITarget(IsometricAI ai) {
+  void updateAITarget(CombatZombie ai) {
     assert (ai.alive);
     var target = ai.target;
 
@@ -2291,7 +2291,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void dispatchGameEventAITargetAcquired(IsometricAI ai) {
+  void dispatchGameEventAITargetAcquired(CombatZombie ai) {
     for (final player in players) {
       if (!player.onScreen(ai.x, ai.y)) continue;
       player.writeGameEvent(
@@ -2529,7 +2529,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character is IsometricPlayer) {
       character.writePlayerTargetCategory();
     }
-    if (character is IsometricAI) {
+    if (character is CombatZombie) {
       character.clearDest();
       character.clearPath();
     }
