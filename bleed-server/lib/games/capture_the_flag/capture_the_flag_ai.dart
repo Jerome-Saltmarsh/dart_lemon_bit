@@ -129,7 +129,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
-  bool get shouldIncrementPathIndex => nodeIndex == pathNodeIndex;
+  bool get shouldIncrementPathIndex => pathIndex > 0 && nodeIndex == pathNodeIndex;
 
   bool get arrivedAtPathEnd => pathStart > 0 && pathIndex <= 0;
 
