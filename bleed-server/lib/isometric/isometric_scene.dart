@@ -2,27 +2,17 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src.dart';
 
-import 'isometric_ai.dart';
 import 'isometric_gameobject.dart';
 import 'package:lemon_math/library.dart';
 import 'isometric_position.dart';
 
-late IsometricAI pathFindAI;
-var pathFindSearchID = 0;
-
-
-class PathFinder {
-  final path = Uint32List(20);
-  var pathIndex = 0;
-  var pathEnd = 0;
-}
-
 class IsometricScene {
-  late Uint8List nodeTypes;
-  late Uint8List nodeOrientations;
-  /// contains the the index of a previous path
-  late Int32List path;
+  Uint8List nodeTypes;
+  Uint8List nodeOrientations;
   Uint8List? compiled;
+
+  /// used for pathfinding to contains the the index of a previous path
+  Int32List path = Int32List(0);
 
   static final visitHistory = Uint32List(10000);
   static final visitStack = Uint32List(10000);
@@ -45,9 +35,6 @@ class IsometricScene {
   late double gridRowLength;
   late double gridColumnLength;
   late double gridHeightLength;
-
-  int get columnsPerRow => gridRows;
-  int get rowsPerZ => gridColumns;
 
   IsometricScene({
     required this.name,
@@ -225,7 +212,7 @@ class IsometricScene {
 
   int getNodeIndexRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
 
-  int getNodeIndexColumn(int nodeIndex) => (nodeIndex) % rowsPerZ;
+  int getNodeIndexColumn(int nodeIndex) => (nodeIndex) % gridColumns;
 
   int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
-import 'package:bleed_server/common/src/version.dart';
 import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/core/player.dart';
 import 'package:bleed_server/websocket/websocket_server.dart';
@@ -94,91 +94,58 @@ class Gamestream {
     }
   }
 
-  RockPaperScissorsGame getGameRockPaperScissors() {
-    for (final game in games) {
-      if (game is RockPaperScissorsGame) {
-        return game;
-      }
-    }
-    final gameInstance = RockPaperScissorsGame();
-    games.add(gameInstance);
-    return gameInstance;
-  }
+  Player joinGameByType(GameType gameType) => joinGame(findGameByGameType(gameType));
 
-  Player joinGameCaptureTheFlag() {
+  Game findGameByGameType(GameType gameType){
     for (final game in games) {
       if (game.isFull) continue;
-      if (game is! CaptureTheFlagGame) continue;
-      return joinGame(game);
+      if (game.gameType != gameType) continue;
+      return game;
     }
+    final newInstance = createNewGameByType(gameType);
+    games.add(newInstance);
+    return newInstance;
+  }
 
-    return joinGame(CaptureTheFlagGame(
+  Game createNewGameByType(GameType gameType) => switch (gameType){
+      GameType.Mmo => buildGameMMO(),
+      GameType.Capture_The_Flag => buildGameCaptureTheFlag(),
+      GameType.Moba => buildGameMoba(),
+      GameType.Combat => buildGameCombat(),
+      GameType.Fight2D => buildGameFight2D(),
+      GameType.Rock_Paper_Scissors => RockPaperScissorsGame(),
+      GameType.Editor => IsometricEditor(),
+      _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
+  };
+
+  Game buildGameMMO() => Mmo(
+      scene: isometricScenes.mmoTown,
+      time: IsometricTime(enabled: true, hour: 14),
+      environment: IsometricEnvironment(),
+    );
+
+  Game buildGameCaptureTheFlag() => CaptureTheFlagGame(
       scene: isometricScenes.captureTheFlag,
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
-    ));
-  }
+    );
 
-  Player joinGameMoba() {
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game is! Moba) continue;
-      return joinGame(game);
-    }
-
-    return joinGame(Moba(
+  Game buildGameMoba() => Moba(
       scene: isometricScenes.moba,
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
-    ));
-  }
+    );
 
-  Player joinGameMmo() {
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game is! Mmo) continue;
-      return joinGame(game);
-    }
+  Game buildGameCombat() => GameCombat(scene: isometricScenes.warehouse02);
 
-    return joinGame(Mmo(
-      scene: isometricScenes.captureTheFlag,
-      time: IsometricTime(enabled: false, hour: 14),
-      environment: IsometricEnvironment(),
-    ));
-  }
-
-  Player joinGameEditor({String? name}) {
-    return joinGame(IsometricEditor());
-  }
-
-
-  Player joinGameFight2D() {
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game is! GameFight2D) continue;
-      return joinGame(game);
-    }
-    return joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate()));
-  }
+  Game buildGameFight2D() => GameFight2D(scene: GameFight2DSceneGenerator.generate());
 
   Player joinGame(Game game) {
-    if (!games.contains(game)) {
-      games.add(game);
-    }
     final player = game.createPlayer();
     if (!game.players.contains(player)){
       game.players.add(player);
     }
     player.writeGameType();
     return player;
-  }
-
-  Player joinGameCombat() {
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game is! GameCombat) continue;
-      return joinGame(game);
-    }
-    return joinGame(GameCombat(scene: isometricScenes.warehouse02));
   }
 }
