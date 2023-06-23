@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
@@ -17,29 +16,27 @@ import 'package:golden_ratio/constants.dart';
 
 extension CombatUI on CombatGame {
 
-  Widget buildStackPlay(GameType gameType) => StackFullscreen(children: [
-    if (gameType == GameType.Combat)
-      buildWatchBool(gamestream.isometric.clientState.window_visible_player_creation, buildWindowCharacterCreation),
-    if (gameType == GameType.Combat)
-      buildWatchBool(gamestream.isometric.clientState.control_visible_respawn_timer, () =>
-          Positioned(
-            bottom: GameStyle.Default_Padding,
-            left: 0,
-            child: Container(
-                width: engine.screen.width,
-                alignment: Alignment.center,
-                child: buildWindowPlayerRespawnTimer()),
-          )
-      ),
-    buildWatchBool(gamestream.isometric.clientState.control_visible_player_power, (){
-      return buildWatchBool(gamestream.isometric.player.powerReady, () =>
-          Positioned(
-            child: buildIconPlayerCombatPowerType(),
-            left: GameStyle.Default_Padding,
-            bottom: GameStyle.Default_Padding,
-          )
-      );
-    }),
+  Widget buildStackPlay() => StackFullscreen(children: [
+      // buildWatchBool(gamestream.isometric.clientState.window_visible_player_creation, buildWindowCharacterCreation),
+      // buildWatchBool(gamestream.isometric.clientState.control_visible_respawn_timer, () =>
+      //     Positioned(
+      //       bottom: GameStyle.Default_Padding,
+      //       left: 0,
+      //       child: Container(
+      //           width: engine.screen.width,
+      //           alignment: Alignment.center,
+      //           child: buildWindowPlayerRespawnTimer()),
+      //     )
+      // ),
+    // buildWatchBool(gamestream.isometric.clientState.control_visible_player_power, (){
+    //   return buildWatchBool(gamestream.isometric.player.powerReady, () =>
+    //       Positioned(
+    //         child: buildIconPlayerCombatPowerType(),
+    //         left: GameStyle.Default_Padding,
+    //         bottom: GameStyle.Default_Padding,
+    //       )
+    //   );
+    // }),
 
   ]);
 
@@ -209,18 +206,16 @@ extension CombatUI on CombatGame {
   }
 
   Widget buildWindowPlayerRespawnTimer(){
-    return buildWatchBool(gamestream.isometric.clientState.control_visible_respawn_timer, () {
-      return Container(
-        width: 240,
-        height: 240 * goldenRatio_0381,
-        color: GameStyle.Container_Color,
-        padding: GameStyle.Container_Padding,
-        alignment: Alignment.center,
-        child: watch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
-          return buildText("RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}", size: 25);
-        }),
-      );
-    });
+    return Container(
+      width: 240,
+      height: 240 * goldenRatio_0381,
+      color: GameStyle.Container_Color,
+      padding: GameStyle.Container_Padding,
+      alignment: Alignment.center,
+      child: watch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
+        return buildText("RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}", size: 25);
+      }),
+    );
   }
 
   Container buildIconPlayerWeaponSecondary() {

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
@@ -21,7 +20,6 @@ import 'game_isometric_colors.dart';
 
 
 class GameIsometricUI {
-  final window_visible_menu = WatchBool(false);
   static const Server_FPS = 45;
   static const Icon_Scale = 1.5;
   static final messageBoxVisible = Watch(false, clamp: (bool value) {
@@ -132,82 +130,6 @@ class GameIsometricUI {
           ),
         ),
     );
-
-  static Widget buildWindowLightSettings(){
-    return Container(
-      padding: GameStyle.Padding_6,
-      color: GameIsometricColors.brownDark,
-      width: 300,
-      child: Column(
-        children: [
-          buildText("Light-Settings", bold: true),
-          height8,
-          onPressed(
-              action: gamestream.isometric.clientState.toggleDynamicShadows,
-              child: Refresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.clientState.dynamicShadows}'))
-          ),
-          onPressed(
-              child: Refresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
-              action: (){
-                final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
-                final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
-                engine.bufferBlendMode = BlendMode.values[nextIndex];
-              }
-          ),
-          height8,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildText("<-", onPressed: (){
-                gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length - 1);
-              }),
-              Refresh(() => buildText('light-size: ${gamestream.isometric.nodes.interpolation_length}')),
-              buildText("->", onPressed: (){
-                gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length + 1);
-              }),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildText("<-", onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
-                final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
-              }),
-              watch(gamestream.isometric.nodes.interpolation_ease_type, buildText),
-              buildText("->", onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
-                final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
-              }),
-            ],
-          ),
-
-          height16,
-          buildText("ambient-color"),
-          ColorPicker(
-            portraitOnly: true,
-            pickerColor: HSVColor.fromAHSV(
-              gamestream.isometric.nodes.ambient_alp / 255,
-              gamestream.isometric.nodes.ambient_hue.toDouble(),
-              gamestream.isometric.nodes.ambient_sat / 100,
-              gamestream.isometric.nodes.ambient_val / 100,
-            ).toColor(),
-            onColorChanged: (color){
-              gamestream.isometric.clientState.overrideColor.value = true;
-              final hsvColor = HSVColor.fromColor(color);
-              gamestream.isometric.nodes.ambient_alp = (hsvColor.alpha * 255).round();
-              gamestream.isometric.nodes.ambient_hue = hsvColor.hue.round();
-              gamestream.isometric.nodes.ambient_sat = (hsvColor.saturation * 100).round();
-              gamestream.isometric.nodes.ambient_val = (hsvColor.value * 100).round();
-              gamestream.isometric.nodes.resetNodeColorsToAmbient();
-            },
-          ),
-        ],
-      ),
-    );
-  }
 
   static Widget buildGeneratedMiniMap({required double translate}){
     return watch(gamestream.isometric.clientState.sceneChanged, (_){

@@ -649,14 +649,6 @@ class IsometricEvents {
     }
   }
 
-  void onChangedPlayerRespawnTimer(int respawnTimer) {
-    if (gamestream.gameType.value == GameType.Combat) {
-      clientState.control_visible_player_weapons.value = respawnTimer <= 0;
-      clientState.window_visible_player_creation.value = respawnTimer <= 0;
-      clientState.control_visible_respawn_timer.value = respawnTimer > 0;
-    }
-  }
-
   void readPlayerEventItemAcquired() {
     final itemType = gamestream.readUInt16();
     if (itemType == ItemType.Empty) return;
@@ -725,12 +717,6 @@ class IsometricEvents {
 
   void onChangedPlayerActive(bool playerActive){
      print("onChangedPlayerActive($playerActive)");
-      if (gamestream.gameType.value == GameType.Combat) {
-        if (playerActive){
-          clientState.window_visible_player_creation.value = false;
-        }
-
-      }
   }
 
   void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {

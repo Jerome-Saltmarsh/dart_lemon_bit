@@ -103,10 +103,6 @@ class IsometricActions {
     }
   }
 
-  void toggleWindowSettings(){
-      isometric.clientState.window_visible_light_settings.toggle();
-  }
-
   void createExplosion(double x, double y, double z){
     isometric.particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);

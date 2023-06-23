@@ -47,14 +47,6 @@ class IsometricGame extends Game {
   @override
   void onActivated() {
     gamestream.isometric.particles.clearParticles();
-    isometric.clientState.control_visible_player_weapons.value = true;
-    isometric.clientState.control_visible_scoreboard.value = true;
-    isometric.clientState.control_visible_player_power.value = true;
-    isometric.clientState.window_visible_player_creation.value = false;
-    isometric.clientState.control_visible_respawn_timer.value = false;
-    isometric.clientState.control_visible_player_weapons.value = false;
-    isometric.clientState.window_visible_player_creation.value = false;
-    isometric.clientState.control_visible_respawn_timer.value = false;
     isometric.ui.menuOpen.setFalse();
 
     gamestream.audio.musicStop();
@@ -82,8 +74,7 @@ class IsometricGame extends Game {
       WatchBuilder(isometric.clientState.edit, (edit) =>
         edit ? gamestream.isometric.editor.buildEditor() : customBuildUI(context)),
       buildWatchBool(isometric.clientState.debugMode, gamestream.isometric.ui.buildStackDebug),
-      buildWatchBool(isometric.clientState.window_visible_light_settings,
-          GameIsometricUI.buildWindowLightSettings),
+      isometric.ui.buildWindowLightSettings(),
       Positioned(top: 16, right: 16, child: GameIsometricUI.buildMainMenu(children: buildMenuItems())),
 
 

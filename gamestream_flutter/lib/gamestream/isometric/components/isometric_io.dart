@@ -15,18 +15,9 @@ class IsometricIO {
 
 
   void onKeyPressedModePlay(int key) {
-
     if (key == Key_Zoom) {
       gamestream.isometric.actions.toggleZoom();
       return;
     }
-
-    if (engine.isLocalHost){
-      if (key == Key_Settings) {
-        gamestream.isometric.actions.toggleWindowSettings();
-        return;
-      }
-    }
   }
-
 }

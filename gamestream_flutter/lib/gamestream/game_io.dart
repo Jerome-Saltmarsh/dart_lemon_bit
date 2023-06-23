@@ -1,8 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
-
 import '../library.dart';
 import 'isometric/components/isometric_render.dart';
 import 'isometric/isometric.dart';
@@ -15,8 +13,6 @@ class GameIO {
   var joystickLeftDown = false;
   var touchscreenAimX = 0.0;
   var touchscreenAimY = 0.0;
-  var _touchCursorTapX = 0.0;
-  var _touchCursorTapY = 0.0;
   var touchCursorWorldX = 100.0;
   var touchCursorWorldY = 100.0;
 
@@ -56,12 +52,6 @@ class GameIO {
 
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
-
-  void onTapDown(TapDownDetails details) {
-    // print("onTapDown()");
-    _touchCursorTapX = details.globalPosition.dx;
-    _touchCursorTapY = details.globalPosition.dy;
-  }
 
   double get touchMouseWorldZ => isometric.player.position.z;
 

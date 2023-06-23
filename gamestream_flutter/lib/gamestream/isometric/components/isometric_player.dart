@@ -57,7 +57,7 @@ class IsometricPlayer {
   late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final respawnTimer = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerRespawnTimer);
+  late final respawnTimer = Watch(0);
 
   int get areaNodeIndex => (indexRow * gamestream.isometric.nodes.totalColumns) + indexColumn;
 

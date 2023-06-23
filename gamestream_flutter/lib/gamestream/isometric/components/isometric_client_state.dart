@@ -19,13 +19,6 @@ mixin class IsometricClientState {
   final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final overrideColor = WatchBool(false);
-  final window_visible_light_settings = WatchBool(false);
-  final window_visible_player_creation = WatchBool(false);
-  final window_visible_attributes = WatchBool(false);
-  final control_visible_player_weapons = WatchBool(false);
-  final control_visible_player_power = WatchBool(true);
-  final control_visible_scoreboard = WatchBool(false);
-  final control_visible_respawn_timer = WatchBool(false);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final mouseOverItemType = Watch(-1);
   final buff_active_infinite_ammo = Watch(false);
