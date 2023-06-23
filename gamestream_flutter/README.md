@@ -22,6 +22,7 @@ alt + m             : go to declaration
   [ ] capture the flag player slowable
 
 [COMPLETED] - 22.06.2023
+[x] improved pathfinding and removed recursion
 [x] separate flag spawn location
 [x] ai weapons
 [x] ai pathfinding

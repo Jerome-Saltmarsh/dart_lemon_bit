@@ -164,6 +164,12 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   @override
   double get runSpeed => slowed ? super.runSpeed * 0.5 : super.runSpeed;
 
+  bool get shouldUpdateDestination => true;
+
+  bool get shouldSetDestinationToPathNodeIndex => true;
+
+  bool get shouldUpdateCharacterAction => !deadBusyOrWeaponStateBusy;
+
   IsometricCollider? getNearestEnemy(){
     IsometricCollider? nearestEnemy;
     var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
@@ -225,34 +231,37 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void updatePathIndexAndDestination() {
 
-    // if (shouldAttackTargetEnemy) {
-    //   attackTargetEnemy();
-    // }
     if (shouldUpdatePath) {
       updatePath();
     }
-
-    updateDestinationToPathNodeIndex();
-
-    // if (shouldSetDestinationToTarget) {
-    //   setDestinationToTarget();
-    // }
-    // if (shouldRunToDestination) {
-    //   runToDestination();
-    // }
-    // if (shouldIncrementPathIndex) {
-    //   incrementPathIndex();
-    // }
+    if (shouldUpdateDestination){
+      updateDestination();
+    }
+    if (shouldUpdateCharacterAction){
+       updateCharacterAction();
+    }
+    if (shouldIncrementPathIndex) {
+      incrementPathIndex();
+    }
   }
 
   void incrementPathIndex() {
     pathIndex--;
-    if (pathIndex <= 0) return;
-    updateDestinationToPathNodeIndex();
   }
 
-  void updateDestinationToPathNodeIndex() {
-    if (pathIndex <= 0) return;
+  void updateDestination() {
+    if (shouldSetDestinationToTarget) {
+      setDestinationToTarget();
+      return;
+    }
+    if (shouldSetDestinationToPathNodeIndex){
+      setDestinationToPathNodeIndex();
+      return;
+    }
+
+  }
+
+  void setDestinationToPathNodeIndex() {
     final scene = game.scene;
     destinationX = scene.getNodePositionX(pathNodeIndex);
     destinationY = scene.getNodePositionY(pathNodeIndex);
@@ -366,9 +375,10 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   void attackTargetEnemy(){
-    assert (target != null);
+    final target = this.target;
+    if (target == null) return;
     idle();
-    face(target!);
+    face(target);
     useWeapon();
   }
 
@@ -405,6 +415,18 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     destinationX = target.x;
     destinationY = target.y;
     destinationZ = target.z;
+  }
+
+  void updateCharacterAction() {
+    if (shouldAttackTargetEnemy) {
+      attackTargetEnemy();
+      return;
+    }
+    if (shouldRunToDestination) {
+      runToDestination();
+      return;
+    }
+    idle();
   }
 
 }
