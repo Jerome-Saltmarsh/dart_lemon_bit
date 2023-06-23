@@ -233,8 +233,8 @@ class IsometricScene {
   int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
 
 
-  bool findPath(var indexStart, var indexEnd){
-    if (indexEnd == 0) return false;
+  int findPath(var indexStart, var indexEnd){
+    if (indexEnd == 0) return indexStart;
 
     for (var i = 0; i < visitHistoryIndex; i++){
       path[visitHistory[i]] = 0;
@@ -254,9 +254,14 @@ class IsometricScene {
 
     while (visitStackIndex >= 0) {
 
-      if (max++ >= 100) return true;
-
       final currentIndex = visitStack[visitStackIndex--];
+
+      if (max++ >= 100)
+        return currentIndex;
+
+      if (currentIndex == indexEnd)
+        return currentIndex;
+
       final row = getNodeIndexRow(currentIndex);
       final column = getNodeIndexColumn(currentIndex);
 
@@ -266,12 +271,6 @@ class IsometricScene {
 
       if (!outOfBounds(z, backwardRow, backwardColumn)) {
         final backwardIndex = getNodeIndex(z, backwardRow, backwardColumn);
-
-        if (backwardIndex == indexEnd) {
-          path[backwardIndex] = currentIndex;
-          visitHistory[visitHistoryIndex++] = backwardIndex;
-          return true;
-        }
 
         // if it has not been visited yet and it can be visited
         if (path[backwardIndex] == 0 && nodeOrientations[backwardIndex] == NodeOrientation.None) {
@@ -292,11 +291,6 @@ class IsometricScene {
 
         if (!outOfBounds(z, dirLessRow, dirLessCol)){
           final indexLess = getNodeIndex(z, dirLessRow, dirLessCol);
-          if (indexLess == indexEnd) {
-            path[indexLess] = currentIndex;
-            visitHistory[visitHistoryIndex++] = indexLess;
-            return true;
-          }
 
           if (path[indexLess] == 0 && nodeOrientations[indexLess] == NodeOrientation.None) {
             path[indexLess] = currentIndex;
@@ -313,12 +307,6 @@ class IsometricScene {
         if (!outOfBounds(z, dirMoreRow, dirMoreColumn)){
           final indexMore = getNodeIndex(z, dirMoreRow, dirMoreColumn);
 
-          if (indexMore == indexEnd) {
-            path[indexMore] = currentIndex;
-            visitHistory[visitHistoryIndex++] = indexMore;
-            return true;
-          }
-
           if (path[indexMore] == 0 && nodeOrientations[indexMore] == NodeOrientation.None) {
             path[indexMore] = currentIndex;
             visitHistory[visitHistoryIndex++] = indexMore;
@@ -329,11 +317,6 @@ class IsometricScene {
 
       if (!outOfBounds(z, forwardRow, forwardColumn)) {
         final forwardIndex = getNodeIndex(z, forwardRow, forwardColumn);
-        if (forwardIndex == indexEnd) {
-          path[forwardIndex] = currentIndex;
-          visitHistory[visitHistoryIndex++] = forwardIndex;
-          return true;
-        }
 
         if (path[forwardIndex] == 0 && nodeOrientations[forwardIndex] == NodeOrientation.None) {
           path[forwardIndex] = currentIndex;
@@ -342,7 +325,7 @@ class IsometricScene {
       }
     }
 
-    return false;
+    return indexStart;
   }
 
   static int convertDirectionToColumnVel(int direction) => switch(direction){
