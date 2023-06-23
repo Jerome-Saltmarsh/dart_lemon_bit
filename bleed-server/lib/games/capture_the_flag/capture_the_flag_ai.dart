@@ -283,7 +283,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   IsometricPosition? getTarget() {
-    switch (decision){
+    switch (decision) {
       case CaptureTheFlagAIDecision.Idle:
         return null;
       case CaptureTheFlagAIDecision.Capture_Flag_Own:
@@ -298,7 +298,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         if (awayFromFlagOwnSpawn)
           return flagOwn;
 
-        break;
+        return null;
+
       case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
         return flagEnemy;
 

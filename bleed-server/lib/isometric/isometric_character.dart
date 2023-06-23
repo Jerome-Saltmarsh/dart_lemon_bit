@@ -31,7 +31,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
-  var buffDuration = 0;
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
@@ -45,8 +44,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathStart = 0;
 
   var targetIndex = 0;
-  var targetIndexRow = 0;
-  var targetIndexColumn = 0;
 
   var destinationX = 0.0;
   var destinationY = 0.0;

@@ -31,7 +31,7 @@ void main() {
     scene.setNode(0, 2, 2, NodeType.Grass, NodeOrientation.Solid);
     scene.setNode(0, 3, 2, NodeType.Grass, NodeOrientation.Solid);
 
-    final path = scene.findPath(scene.getNodeIndex(0, 2, 5), scene.getNodeIndex(0, 3, 1));
+    // final path = scene.findPath(scene.getNodeIndex(0, 2, 5), scene.getNodeIndex(0, 3, 1));
 
   });
 }

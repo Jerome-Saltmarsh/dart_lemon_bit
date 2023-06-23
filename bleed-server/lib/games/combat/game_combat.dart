@@ -103,21 +103,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
         player.nextEnergyGain = player.energyGainRate;
       }
     }
-
-    if (player.buffDuration > 0) {
-      player.buffDuration--;
-      if (player.buffDuration == 0) {
-        switch (player.powerType) {
-          case CombatPowerType.Shield:
-            player.buffInvincible = false;
-            break;
-          case CombatPowerType.Invisible:
-            player.buffInvisible = false;
-            break;
-        }
-      }
-    }
-
   }
 
   @override
@@ -246,7 +231,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
   @override
   void customOnPlayerDead(CombatPlayer player) {
     player.powerCooldown = 0;
-    player.buffDuration = 0;
     player.respawnTimer = Player_Respawn_Duration;
     player.writePlayerPower();
   }
@@ -463,7 +447,6 @@ class GameCombat extends IsometricGame<CombatPlayer> {
     player.writePlayerApiId();
     writePlayerScoresAll();
     player.powerCooldown = 0;
-    player.buffDuration = 0;
     player.respawnTimer = 0;
     player.powerType        = CombatPowerType.Bomb;
     player.weaponPrimary    = ItemType.Weapon_Ranged_Plasma_Pistol;
@@ -553,11 +536,9 @@ class GameCombat extends IsometricGame<CombatPlayer> {
         break;
       case CombatPowerType.Shield:
         player.buffInvincible = true;
-        player.buffDuration = Power_Duration_Shield;
         break;
       case CombatPowerType.Invisible:
         player.buffInvisible = true;
-        player.buffDuration = Power_Duration_Invisible;
         for (final character in characters) {
           if (character.target != player) continue;
           clearCharacterTarget(character);
