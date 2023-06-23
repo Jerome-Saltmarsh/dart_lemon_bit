@@ -131,29 +131,26 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get shouldIncrementPathIndex => nodeIndex == pathNodeIndex;
 
-  bool get arrivedAtPathEnd => pathIndex <= 0;
+  bool get arrivedAtPathEnd => pathStart > 0 && pathIndex <= 0;
 
   bool get shouldUpdatePath {
     if (indexZ != 1) return false;
+
+    final target = this.target;
 
     if (targetPrevious != target) {
       targetPrevious = target;
       return true;
     }
-    if (target == null) return false;
+    if (target == null)
+      return false;
 
-    if (pathIndex <= 0) {
-      return game.scene.getNodeIndexV3(target!) != game.scene.getNodeIndexV3(this);
-    }
-
-    if (arrivedAtPathEnd) {
+    if (arrivedAtPathEnd)
       return true;
-    }
 
-    return targetIndexChanged;
+    return game.scene.getNodeIndexV3(target) != targetIndex;
   }
 
-  bool get targetIndexChanged => target != null && game.scene.getNodeIndexV3(target!) != targetIndex;
 
   bool get shouldSetDestinationToTarget {
     final target = this.target;
@@ -166,7 +163,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get shouldUpdateDestination => true;
 
-  bool get shouldSetDestinationToPathNodeIndex => true;
+  bool get shouldSetDestinationToPathNodeIndex {
+     return nodeIndex > 0;
+  }
 
   bool get shouldUpdateCharacterAction => !deadBusyOrWeaponStateBusy;
 
@@ -215,8 +214,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
 
     decision = getDecision();
+    target = mapDecisionToTarget();
     executeDecision();
-    updatePathIndexAndDestination();
   }
 
   void updatePath() {
@@ -229,7 +228,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     setPathToNodeIndex(game.scene, game.scene.getNodeIndexV3(target));
   }
 
-  void updatePathIndexAndDestination() {
+  void executeDecision() {
 
     if (shouldUpdatePath) {
       updatePath();
@@ -258,61 +257,56 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       setDestinationToPathNodeIndex();
       return;
     }
-
   }
 
   void setDestinationToPathNodeIndex() {
+    if (pathIndex <= 0) return;
+    assert (pathNodeIndex != 0);
+
     final scene = game.scene;
-    destinationX = scene.getNodePositionX(pathNodeIndex);
-    destinationY = scene.getNodePositionY(pathNodeIndex);
+    final index = pathNodeIndex;
+    destinationX = scene.getNodePositionX(index);
+    destinationY = scene.getNodePositionY(index);
   }
 
-  void executeDecision() {
-
+  IsometricPosition? mapDecisionToTarget() {
     switch (decision){
       case CaptureTheFlagAIDecision.Idle:
-        idle();
-        break;
+        return null;
       case CaptureTheFlagAIDecision.Capture_Flag_Own:
         final heldBy = flagOwn.heldBy;
-        if (heldBy == null) {
-          target = flagOwn;
-          return;
-        }
-        if (isEnemy(heldBy)){
-          target = heldBy;
-          return;
-        }
-        if (awayFromFlagOwnSpawn){
-          target = flagOwn;
-        }
+
+        if (heldBy == null)
+          return flagOwn;
+
+        if (isEnemy(heldBy))
+          return heldBy;
+
+        if (awayFromFlagOwnSpawn)
+          return flagOwn;
+
         break;
       case CaptureTheFlagAIDecision.Capture_Flag_Enemy:
-        target = flagEnemy;
-        break;
+        return flagEnemy;
+
       case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
-        target = getNearestEnemy();
-        if (target == null){
-          idle();
-          break;
-        }
-        break;
+        return getNearestEnemy();
+
       case CaptureTheFlagAIDecision.Run_To_Base_Own:
-        target = baseOwn;
+         return baseOwn;
+
       case CaptureTheFlagAIDecision.Defend_Flag_Spawn_Own:
-        target = flagSpawnOwn;
-        break;
+         return flagSpawnOwn;
+
       case CaptureTheFlagAIDecision.Run_To_Flag_Own:
-        if (flagOwnRespawning) {
-          target = flagSpawnOwn;
-          break;
-        }
-        if (withinRadiusPosition(flagOwn, 50)) {
-          idle();
-        } else {
-          target = flagOwn;
-        }
-        break;
+        if (flagOwnRespawning)
+          return flagSpawnOwn;
+
+        if (withinRadiusPosition(flagOwn, 50))
+          return null;
+
+        return flagOwn;
+
       default:
         throw Exception('not implemented');
     }
