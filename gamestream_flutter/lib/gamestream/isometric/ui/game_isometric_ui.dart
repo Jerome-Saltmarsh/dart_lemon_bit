@@ -300,13 +300,13 @@ class GameIsometricUI {
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
         gamestream.isometric.ui.mouseOverDialog.value = true;
-        gamestream.isometric.ui.menuOpen.value = true;
+        gamestream.isometric.ui.windowOpenMenu.value = true;
       },
       onExit: (PointerExitEvent event) {
         gamestream.isometric.ui.mouseOverDialog.value = false;
-        gamestream.isometric.ui.menuOpen.value = false;
+        gamestream.isometric.ui.windowOpenMenu.value = false;
       },
-      child: watch(gamestream.isometric.ui.menuOpen, (bool menuVisible){
+      child: watch(gamestream.isometric.ui.windowOpenMenu, (bool menuVisible){
         return Container(
           color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
           child: Column(
@@ -367,7 +367,7 @@ class GameIsometricUI {
       action: gamestream.isometric.actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconMenu() => onPressed(
-      action: gamestream.isometric.ui.menuOpen.toggle,
+      action: gamestream.isometric.ui.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
@@ -375,7 +375,7 @@ class GameIsometricUI {
   );
 
   static Widget buildIconCog() => onPressed(
-      action: gamestream.isometric.ui.menuOpen.toggle,
+      action: gamestream.isometric.ui.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog),
@@ -383,7 +383,7 @@ class GameIsometricUI {
   );
 
   static Widget buildIconCogTurned() => onPressed(
-      action: gamestream.isometric.ui.menuOpen.toggle,
+      action: gamestream.isometric.ui.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog_Turned),
