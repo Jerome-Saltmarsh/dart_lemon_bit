@@ -152,10 +152,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
-    if (!player.weaponStateBusy) {
-      player.lookRadian = player.mouseAngle;
-    }
-
     if (mouseLeftDown) {
       if (!player.ignoreMouseLeftClick){
         final powerActivated = player.powerActivated.value;
@@ -493,6 +489,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   void updatePlayer(CaptureTheFlagPlayer player) {
+    super.updatePlayer(player);
 
     if (player.shouldUsePowerPerforming) {
       playerUsePowerPerforming(player);

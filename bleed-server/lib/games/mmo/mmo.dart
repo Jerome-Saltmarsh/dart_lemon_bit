@@ -34,4 +34,9 @@ class Mmo extends IsometricGame<MmoPlayer> {
   @override
   int get maxPlayers => 64;
 
+  @override
+  void onPlayerUpdateRequestReceived({required MmoPlayer player, required int direction, required bool mouseLeftDown, required bool mouseRightDown, required bool keySpaceDown, required bool inputTypeKeyboard}) {
+
+  }
+
 }

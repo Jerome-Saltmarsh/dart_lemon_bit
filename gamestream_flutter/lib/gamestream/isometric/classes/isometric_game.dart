@@ -27,7 +27,7 @@ class IsometricGame extends Game {
   }
 
   void updateCursorType() {
-    gamestream.isometric.clientState.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
+    isometric.clientState.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
   }
 
   @override

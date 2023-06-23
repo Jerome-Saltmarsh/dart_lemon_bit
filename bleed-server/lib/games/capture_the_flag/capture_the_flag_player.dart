@@ -403,9 +403,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
      writePower2();
      writePower3();
      writePlayerEventSkillUpgraded();
-
-
-
   }
 
   CaptureTheFlagPower? getPowerByType(CaptureTheFlagPowerType powerType) {

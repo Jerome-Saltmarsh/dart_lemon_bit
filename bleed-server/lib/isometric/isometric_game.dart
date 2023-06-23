@@ -256,12 +256,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {
     if (player.deadOrBusy) return;
 
-    _updateIsometricPlayerAimTarget(player);
-
-    if (!player.weaponStateBusy) {
-      player.lookRadian = player.mouseAngle;
-    }
-
     if (inputTypeKeyboard) {
       characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else {
@@ -1499,11 +1493,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updatePlayer(T player) {
     player.framesSinceClientRequest++;
 
-    _updateIsometricPlayerAimTarget(player);
-
     if (player.dead) return;
     if (!player.active) return;
 
+    _updateIsometricPlayerAimTarget(player);
+
+    if (!player.weaponStateBusy) {
+      player.lookRadian = player.mouseAngle;
+    }
 
     if (player.idling && !player.weaponStateBusy) {
       final diff = IsometricDirection.getDifference(
