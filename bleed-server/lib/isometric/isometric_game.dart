@@ -23,7 +23,6 @@ import 'package:lemon_math/library.dart';
 
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
-import 'isometric_character_template.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
 import 'isometric_gameobject.dart';
@@ -40,17 +39,38 @@ import 'isometric_time.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
-  var frame = 0;
-  var _running = true;
   IsometricScene scene;
+  IsometricEnvironment environment;
+  IsometricTime time;
+
+  var _running = true;
+  var _timerUpdateAITargets = 0;
+
+  var frame = 0;
+  var gameObjectId = 0;
+
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
   final scripts = <IsometricScript>[];
   final scriptReader = ByteReader();
-  var _timerUpdateAITargets = 0;
-  var gameObjectId = 0;
-  IsometricEnvironment environment;
-  IsometricTime time;
+
+  /// CONSTRUCTOR
+  IsometricGame({
+    required this.scene,
+    required this.time,
+    required this.environment,
+    required super.gameType,
+  }) {
+    IsometricPosition.sort(gameObjects);
+
+    /// TODO Illegal external scope reference
+    gameObjectId = scene.gameObjects.length;
+    customInit();
+
+    for (final gameObject in gameObjects) {
+      customOnGameObjectSpawned(gameObject);
+    }
+  }
 
   bool get running => _running;
 
@@ -187,31 +207,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     });
   }
 
-  /// PROPERTIES
   List<IsometricGameObject> get gameObjects => scene.gameObjects;
 
   /// @override
   double get minAimTargetCursorDistance => 35;
-
-  /// CONSTRUCTOR
-  IsometricGame({
-    required this.scene,
-    required this.time,
-    required this.environment,
-    required super.gameType,
-  }) {
-    IsometricPosition.sort(gameObjects);
-
-    /// TODO Illegal external scope reference
-    gameObjectId = scene.gameObjects.length;
-    customInit();
-
-    for (final gameObject in gameObjects) {
-      customOnGameObjectSpawned(gameObject);
-    }
-  }
-
-  /// QUERIES
 
   IsometricGameObject? findGameObjectByType(int type) {
     for (final gameObject in gameObjects) {
@@ -277,26 +276,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (inputTypeKeyboard) {
-      playerRunInDirection(player, IsometricDirection.fromInputDirection(direction));
+      characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else {
       if (mouseLeftDown) {
         player.runToMouse();
       }
     }
-  }
-
-  void changeGame(IsometricPlayer player, IsometricGame to) {
-    if (this == to) return;
-    removePlayer(player);
-    for (final character in characters) {
-      if (character.target != this) continue;
-      clearCharacterTarget(character);
-    }
-    to.players.add(player);
-    to.characters.add(player);
-    player.sceneDownloaded = false;
-    player.game = to;
-    player.game.clearCharacterTarget(player);
   }
 
   void _updateIsometricPlayerAimTarget(IsometricPlayer player) {
@@ -337,118 +322,28 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.aimTarget = closestCollider;
   }
 
-  void playerRunInDirection(IsometricPlayer player, int direction) {
-    if (direction == IsometricDirection.None && player.target == null) {
-      player.setCharacterStateIdle();
+  void characterRunInDirection(IsometricCharacter character, int direction) {
+    if (direction == IsometricDirection.None && character.target == null) {
+      character.setCharacterStateIdle();
       return;
     }
 
-    if (player.targetSet) {
+    if (character.targetSet) {
       if (direction == IsometricDirection.None) {
         return;
       }
-      clearCharacterTarget(player);
-      player.setCharacterStateIdle();
+      clearCharacterTarget(character);
+      character.setCharacterStateIdle();
       return;
     } else if (direction == IsometricDirection.None) {
-      clearCharacterTarget(player);
-      player.setCharacterStateIdle();
+      clearCharacterTarget(character);
+      character.setCharacterStateIdle();
       return;
     }
-    player.faceDirection = direction;
-    setCharacterStateRunning(player);
-    clearCharacterTarget(player);
+    character.faceDirection = direction;
+    setCharacterStateRunning(character);
+    clearCharacterTarget(character);
   }
-
-  void characterWeaponAim(IsometricCharacter character) {
-    character.weaponState = WeaponState.Aiming;
-    character.weaponStateDurationTotal = 30;
-  }
-
-  void characterUseOrEquipWeapon({
-    required IsometricCharacter character,
-    required int weaponType,
-    required bool characterStateChange,
-  }) {
-    if (character.deadBusyOrWeaponStateBusy) return;
-
-    if (character.weaponType != weaponType) {
-      character.weaponType = weaponType;
-      if (characterStateChange) {
-        setCharacterStateChanging(character);
-        return;
-      }
-    }
-    characterUseWeapon(character);
-  }
-
-  void characterEquipItemType(IsometricCharacterTemplate character, int itemType) {
-    if (!character.canChangeEquipment) return;
-
-    if (ItemType.isTypeWeapon(itemType)) {
-      characterEquipWeapon(
-        character: character,
-        weaponType: itemType,
-        characterStateChange: true,
-      );
-      return;
-    }
-
-    if (ItemType.isTypeHead(itemType)) {
-      character.headType = itemType;
-      setCharacterStateChanging(character);
-      return;
-    }
-
-    if (ItemType.isTypeBody(itemType)) {
-      character.bodyType = itemType;
-      setCharacterStateChanging(character);
-      return;
-    }
-
-    if (ItemType.isTypeLegs(itemType)) {
-      character.legsType = itemType;
-      setCharacterStateChanging(character);
-      return;
-    }
-
-    throw Exception(
-        "game.characterEquipItemType(${ItemType.getName(itemType)})"
-    );
-  }
-
-  void characterEquipWeapon({
-    required IsometricCharacter character,
-    required int weaponType,
-    required bool characterStateChange,
-  }) {
-    if (!character.canChangeEquipment) return;
-    if (character.weaponType == weaponType) return;
-    character.weaponType = weaponType;
-    if (characterStateChange) {
-      setCharacterStateChanging(character);
-    }
-  }
-
-  void characterAimWeapon(IsometricCharacter character) {
-    if (character.deadBusyOrWeaponStateBusy && !character.weaponStateAiming)
-      return;
-    character.assignWeaponStateAiming();
-  }
-
-  int getCharacterWeaponEnergyCost(IsometricCharacter character) =>
-      const <int, int>{
-        ItemType.Weapon_Ranged_Flamethrower: 1,
-        ItemType.Weapon_Ranged_Sniper_Rifle: 5,
-        ItemType.Weapon_Ranged_Shotgun: 5,
-        ItemType.Weapon_Ranged_Plasma_Pistol: 2,
-        ItemType.Weapon_Ranged_Bazooka: 10,
-        ItemType.Weapon_Ranged_Plasma_Rifle: 2,
-        ItemType.Weapon_Ranged_Teleport: 10,
-        ItemType.Weapon_Melee_Knife: 5,
-        ItemType.Weapon_Melee_Sword: 8,
-        ItemType.Weapon_Melee_Crowbar: 2,
-      }[character.weaponType] ?? 1;
 
   void characterUseWeapon(IsometricCharacter character) {
     if (character.deadBusyOrWeaponStateBusy) return;

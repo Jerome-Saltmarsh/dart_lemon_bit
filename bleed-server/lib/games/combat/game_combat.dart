@@ -225,7 +225,7 @@ class GameCombat extends IsometricGame<CombatPlayer> {
       playerUsePower(player);
     }
 
-    playerRunInDirection(player, IsometricDirection.fromInputDirection(direction));
+    characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
   }
 
   @override
@@ -673,6 +673,23 @@ class GameCombat extends IsometricGame<CombatPlayer> {
         y: player.mouseGridY,
         range: 500,
       );
+
+  void characterUseOrEquipWeapon({
+    required IsometricCharacter character,
+    required int weaponType,
+    required bool characterStateChange,
+  }) {
+    if (character.deadBusyOrWeaponStateBusy) return;
+
+    if (character.weaponType != weaponType) {
+      character.weaponType = weaponType;
+      if (characterStateChange) {
+        setCharacterStateChanging(character);
+        return;
+      }
+    }
+    characterUseWeapon(character);
+  }
 
 }
 

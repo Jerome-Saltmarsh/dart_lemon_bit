@@ -180,7 +180,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
     }
 
-    playerRunInDirection(player, IsometricDirection.fromInputDirection(direction));
+    characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
 
   }
 
