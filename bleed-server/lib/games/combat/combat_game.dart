@@ -630,9 +630,11 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         character.assignWeaponStateFiring();
         return;
       case ItemType.Weapon_Melee_Staff:
-        characterSpawnProjectileFireball(
-          character,
+        spawnProjectileFireball(
+          src: character,
           angle: character.lookRadian,
+          damage: character.weaponDamage,
+          range: character.weaponRange,
         );
         character.assignWeaponStateFiring();
         break;

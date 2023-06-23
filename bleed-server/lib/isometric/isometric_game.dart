@@ -13,7 +13,6 @@ import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/isometric/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/isometric/weapon_state.dart';
-import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/core/game.dart';
 import 'package:bleed_server/utils/maths.dart';
@@ -383,9 +382,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.assignWeaponStateFiring();
         return;
       case ItemType.Weapon_Melee_Staff:
-        characterSpawnProjectileFireball(
-          character,
+        spawnProjectileFireball(
+          src: character,
           angle: character.lookRadian,
+          damage: character.weaponDamage,
+          range: character.weaponRange,
         );
         character.assignWeaponStateFiring();
         break;
@@ -528,7 +529,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterUseFlamethrower(IsometricCharacter character) {
     dispatchAttackPerformedCharacter(character);
     character.assignWeaponStateFiring();
-    spawnProjectileFireball(character, damage: 3, range: character.weaponRange);
+
+    spawnProjectileFireball(
+      src: character,
+      angle: character.lookRadian,
+      damage: character.weaponDamage,
+      range: character.weaponRange,
+    );
   }
 
   void characterUseBazooka(IsometricCharacter character) {
@@ -1785,7 +1792,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  IsometricProjectile spawnProjectileFireball(IsometricCharacter src, {
+  IsometricProjectile spawnProjectileFireball({
+    required IsometricCharacter src,
     required int damage,
     required double range,
     double? angle,
@@ -1814,37 +1822,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         projectileType: ProjectileType.Rocket,
         damage: damage,
       );
-
-  // Projectile spawnProjectileBullet({
-  //   required Character src,
-  //   required double speed,
-  //   double accuracy = 0,
-  // }) =>
-  //   spawnProjectile(
-  //     src: src,
-  //     accuracy: 0,
-  //     angle: src.faceAngle,
-  //     range: src.weaponTypeRange,
-  //     projectileType: ProjectileType.Bullet,
-  //     damage: src.damage,
-  //   );
-
-  void characterSpawnProjectileFireball(IsometricCharacter character, {
-    required double angle,
-    double speed = 3.0,
-    double range = 300,
-    int damage = 5,
-  }) {
-    spawnProjectile(
-      src: character,
-      projectileType: ProjectileType.Fireball,
-      accuracy: 0,
-      // TODO delete accuracy
-      angle: angle,
-      range: range,
-      damage: damage,
-    );
-  }
 
   void characterFireShotgun(IsometricCharacter src, double angle) {
     src.applyForce(

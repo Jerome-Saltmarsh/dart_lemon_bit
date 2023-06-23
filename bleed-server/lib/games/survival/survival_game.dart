@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/games/combat/combat_zombie.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 import 'survival_player.dart';
