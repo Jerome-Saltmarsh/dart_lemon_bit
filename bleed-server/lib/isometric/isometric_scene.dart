@@ -28,14 +28,10 @@ class IsometricScene {
   Uint8List? compiled;
 
   // pathfinding
-  static final visitedNodes = Uint32List(10000);
-  static final pathVisitedStack = Uint32List(10000);
+  static final visitStack = Uint32List(10000);
 
   static var visitQueue = 0;
-  static var visitedNodesIndex = 0;
-  static var futureNodesIndex = 0;
-  static var pathVisitedStackIndex = 0;
-
+  static var visitStackIndex = 0;
 
   var gridHeight = 0;
   var gridRows = 0;
@@ -240,13 +236,13 @@ class IsometricScene {
   bool findPath(var indexStart, var indexEnd){
     if (indexEnd == 0) return false;
 
-    for (var i = 0; i < pathVisitedStackIndex; i++){
-      path[pathVisitedStack[i]] = 0;
+    for (var i = 0; i < visitStackIndex; i++){
+      path[visitStack[i]] = 0;
     }
 
-    pathVisitedStackIndex = 0;
+    visitStackIndex = 0;
     visitQueue = 0;
-    pathVisitedStack[pathVisitedStackIndex++] = indexStart;
+    visitStack[visitStackIndex++] = indexStart;
 
     final targetIndexRow = getNodeIndexRow(indexEnd);
     final targetIndexColumn = getNodeIndexColumn(indexEnd);
@@ -254,13 +250,13 @@ class IsometricScene {
 
     var max = 0;
 
-    while (visitQueue <= pathVisitedStackIndex) {
+    while (visitQueue <= visitStackIndex) {
       // in the first step reserve all the surrounding nodes in the order of priority
       // if a node has already been reserved it is skipped
 
       if (max++ >= 100) return true;
 
-      final currentIndex = pathVisitedStack[visitQueue++];
+      final currentIndex = visitStack[visitQueue++];
 
       final row = getNodeIndexRow(currentIndex);
       final column = getNodeIndexColumn(currentIndex);
@@ -269,17 +265,19 @@ class IsometricScene {
       final forwardRow = row + convertDirectionToRowVel(targetDirection);
       final forwardColumn = column + convertDirectionToColumnVel(targetDirection);
 
-      if (!outOfBounds(z, forwardRow, forwardColumn)){
+      if (!outOfBounds(z, forwardRow, forwardColumn)) {
         final forwardIndex = getNodeIndex(z, forwardRow, forwardColumn);
+
 
         if (forwardIndex == indexEnd) {
           path[forwardIndex] = currentIndex;
-          pathVisitedStack[pathVisitedStackIndex++] = forwardIndex;
+          visitStack[visitStackIndex++] = forwardIndex;
           return true;
         }
-        if (path[forwardIndex] == 0) {
+
+        if (path[forwardIndex] == 0 && nodeOrientations[forwardIndex] == NodeOrientation.None) {
           path[forwardIndex] = currentIndex;
-          pathVisitedStack[pathVisitedStackIndex++] = forwardIndex;
+          visitStack[visitStackIndex++] = forwardIndex;
         }
       }
 
@@ -292,13 +290,13 @@ class IsometricScene {
           final indexLess = getNodeIndex(z, dirLessRow, dirLessCol);
           if (indexLess == indexEnd) {
             path[indexLess] = currentIndex;
-            pathVisitedStack[pathVisitedStackIndex++] = indexLess;
+            visitStack[visitStackIndex++] = indexLess;
             return true;
           }
 
-          if (path[indexLess] == 0) {
+          if (path[indexLess] == 0 && nodeOrientations[indexLess] == NodeOrientation.None) {
             path[indexLess] = currentIndex;
-            pathVisitedStack[pathVisitedStackIndex++] = indexLess;
+            visitStack[visitStackIndex++] = indexLess;
           }
         }
 
@@ -312,13 +310,13 @@ class IsometricScene {
 
           if (indexMore == indexEnd) {
             path[indexMore] = currentIndex;
-            pathVisitedStack[pathVisitedStackIndex++] = indexMore;
+            visitStack[visitStackIndex++] = indexMore;
             return true;
           }
 
-          if (path[indexMore] == 0) {
+          if (path[indexMore] == 0 && nodeOrientations[indexMore] == NodeOrientation.None) {
             path[indexMore] = currentIndex;
-            pathVisitedStack[pathVisitedStackIndex++] = indexMore;
+            visitStack[visitStackIndex++] = indexMore;
           }
         }
       }
@@ -327,7 +325,7 @@ class IsometricScene {
     return false;
   }
 
-  static int convertDirectionToColumnVel(int direction)=> switch(direction){
+  static int convertDirectionToColumnVel(int direction) => switch(direction){
     0 => -1,
     1 => -1,
     2 => 0,
