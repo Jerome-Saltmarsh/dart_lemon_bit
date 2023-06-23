@@ -33,25 +33,25 @@ import 'isometric_scene_writer.dart';
 import 'isometric_settings.dart';
 
 class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter implements Player {
-  /// CONSTANTS
-  final mouse = Vector2(0, 0);
+
+  var _mouseLeftDown = false;
+
   var inputMode = InputMode.Keyboard;
   var screenLeft = 0.0;
   var screenTop = 0.0;
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var framesSinceClientRequest = 0;
-
-  /// Variables
-  late IsometricGame game;
-  final runTarget = IsometricPosition();
-  IsometricGameObject? editorSelectedGameObject;
   var name = generateRandomName();
   var sceneDownloaded = false;
   var initialized = false;
   var id = 0;
 
-  /// Warning - do not reference
+  final mouse = Vector2(0, 0);
+  final runTarget = IsometricPosition();
+
+  IsometricGame game;
+  IsometricGameObject? editorSelectedGameObject;
   IsometricCollider? _aimTarget; // the currently highlighted character
   Account? account;
 
@@ -704,6 +704,35 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(ServerResponse.Game_Error);
     writeByte(value.index);
   }
+
+  void onMouseLeftReleased(){
+
+  }
+
+  void onMouseLeftClicked(){
+
+  }
+
+  void onMouseLeftHeld(){
+
+  }
+
+  set mouseLeftDown(bool value){
+    if (_mouseLeftDown != value) {
+      _mouseLeftDown = value;
+      if (value){
+        onMouseLeftClicked();
+      } else {
+        onMouseLeftReleased();
+      }
+    } else {
+      if (value){
+        onMouseLeftHeld();
+      }
+    }
+  }
+
+
 }
 
 

@@ -8,20 +8,50 @@ import 'package:lemon_math/library.dart';
 import 'game.dart';
 
 abstract class Player with ByteWriter {
-  Game get game;
-  var framesSinceClientRequest = 0;
+
   final mouse = Vector2(0, 0);
+  var framesSinceClientRequest = 0;
   var screenLeft = 0.0;
   var screenTop = 0.0;
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var inputMode = InputMode.Keyboard;
-
-  void writePlayerGame();
+  var _mouseLeftDown = false;
 
   Player(){
     writeGameType();
   }
+
+  set mouseLeftDown(bool value){
+     if (_mouseLeftDown != value) {
+       _mouseLeftDown = value;
+       if (value){
+          onMouseLeftClicked();
+       } else {
+          onMouseLeftReleased();
+       }
+     } else {
+       if (value){
+         onMouseLeftHeld();
+       }
+     }
+  }
+
+  void onMouseLeftReleased(){
+
+  }
+
+  void onMouseLeftClicked(){
+
+  }
+
+  void onMouseLeftHeld(){
+
+  }
+
+  void writePlayerGame();
+
+  Game get game;
 }
 
 extension PlayerExtension on Player {
