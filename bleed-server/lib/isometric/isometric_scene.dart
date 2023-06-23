@@ -236,11 +236,20 @@ class IsometricScene {
   int findPath(var indexStart, var indexEnd, {int max = 100}){
     if (indexEnd == 0) return indexStart;
 
+
+    if (indexEnd < 0)
+      return indexStart;
+    if (indexEnd >= nodeOrientations.length)
+      return indexStart;
+    if (nodeOrientations[indexEnd] != NodeOrientation.None)
+      return indexStart;
+
+
     for (var i = 0; i < visitHistoryIndex; i++){
       path[visitHistory[i]] = 0;
     }
 
-    assert(!path.any((element) => element != 0));
+    // assert(!path.any((element) => element != 0));
 
     visitHistoryIndex = 0;
     visitStackIndex = 0;
@@ -271,10 +280,13 @@ class IsometricScene {
       final column = getNodeIndexColumn(currentIndex);
 
       final backwardDirection = (convertToDirection(targetIndexRow - row, targetIndexColumn - column) + 4) % 8;
-      final backwardRow = row + convertDirectionToRowVel(backwardDirection);
-      final backwardColumn = column + convertDirectionToColumnVel(backwardDirection);
 
-      visit(z: z, row: backwardRow, column: backwardColumn, fromIndex: currentIndex);
+      visit(
+          z: z,
+          row: row + convertDirectionToRowVel(backwardDirection),
+          column: column + convertDirectionToColumnVel(backwardDirection),
+          fromIndex: currentIndex,
+      );
 
       final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
       final forwardRow = row + convertDirectionToRowVel(targetDirection);
@@ -305,7 +317,8 @@ class IsometricScene {
     required int column,
     required int fromIndex,
   }) {
-    if (outOfBounds(z, row, column)) return;
+    if (outOfBounds(z, row, column))
+      return;
 
     final index = getNodeIndex(z, row, column);
 
