@@ -1491,7 +1491,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     _updateIsometricPlayerAimTarget(player);
 
-    if (!player.weaponStateBusy) {
+    if (!player.deadOrBusy) {
       player.lookRadian = player.mouseAngle;
     }
 
