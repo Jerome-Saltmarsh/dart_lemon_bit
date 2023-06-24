@@ -1,6 +1,5 @@
 
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/common/src/mmo/mmo_response.dart';
 import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/utils/change_notifier.dart';
 
@@ -141,5 +140,10 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Npc_Text);
     writeString(npcText.value);
+  }
+
+  void endInteraction() {
+    if (!interacting) return;
+    clearTarget();
   }
 }

@@ -12,4 +12,13 @@ class MmoGame extends IsometricGame {
 
   @override
   Widget customBuildUI(BuildContext context) => buildMMOUI();
+
+  void endInteraction() =>
+      sendMMORequest(MMORequest.End_Interaction);
+
+  void sendMMORequest(MMORequest request, [dynamic message]) =>
+      gamestream.network.sendClientRequest(
+        ClientRequest.MMO,
+        '${request.index} $message'
+      );
 }

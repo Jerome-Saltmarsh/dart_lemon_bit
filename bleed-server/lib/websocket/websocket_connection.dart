@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/games/mmo/mmo_request_handler.dart';
 import 'package:bleed_server/games/src.dart';
 import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/gamestream.dart';
@@ -259,6 +260,10 @@ class WebSocketConnection with ByteReader {
 
       case ClientRequest.Capture_The_Flag:
         handleClientRequestCaptureTheFlag(arguments);
+        break;
+
+      case ClientRequest.MMO:
+        handleClientRequestMMORequest(arguments);
         break;
 
       case ClientRequest.Fight2D:
