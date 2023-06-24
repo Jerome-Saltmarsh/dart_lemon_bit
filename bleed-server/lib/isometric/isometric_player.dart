@@ -163,7 +163,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writePlayerAccuracy();
     writePlayerAimTargetPosition();
 
-    // writeDebugCharacter();
+    writeDebugCharacter();
 
     writeProjectiles();
     writePlayerTargetPosition();

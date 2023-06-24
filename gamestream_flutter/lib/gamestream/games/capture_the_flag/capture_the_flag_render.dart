@@ -28,7 +28,6 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
   }
 
-
   void renderLineToEnemyFlag(){
     if (playerIsTeamRed) {
       renderLineToBlueFlag();
