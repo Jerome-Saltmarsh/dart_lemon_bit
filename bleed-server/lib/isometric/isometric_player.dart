@@ -758,6 +758,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     }
   }
 
+  void selectDebugCharacterNearestToMouse() {
+    debugCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
+  }
 }
 
 

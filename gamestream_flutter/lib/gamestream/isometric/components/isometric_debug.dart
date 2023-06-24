@@ -77,7 +77,7 @@ class IsometricDebug {
         );
       });
 
-  void renderCharacterSelected() {
+  void render() {
     isometric.renderer.renderCircle(
       characterSelectedX.value,
       characterSelectedY.value,

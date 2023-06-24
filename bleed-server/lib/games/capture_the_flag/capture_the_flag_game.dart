@@ -172,7 +172,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (player.canDeselectActivatedPower) {
         player.deselectActivatedPower();
       } else {
-        player.selectAINearestToMouse();
+        player.selectDebugCharacterNearestToMouse();
       }
     }
 

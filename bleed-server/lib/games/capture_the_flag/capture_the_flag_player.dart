@@ -221,10 +221,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(false);
   }
 
-  void selectAINearestToMouse() {
-     debugCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
-  }
-
   void activatePower1() => activatePower(power1);
 
   void activatePower2() => activatePower(power2);

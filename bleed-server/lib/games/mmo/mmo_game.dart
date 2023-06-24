@@ -53,5 +53,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     required bool inputTypeKeyboard,
   }) {
 
+    if (mouseRightDown) {
+      player.selectDebugCharacterNearestToMouse();
+    }
   }
 }
