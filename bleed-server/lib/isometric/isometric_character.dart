@@ -42,9 +42,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   final path = Uint32List(20);
   var pathIndex = 0;
   var pathStart = 0;
-
   var targetIndex = 0;
-
   var destinationX = 0.0;
   var destinationY = 0.0;
   var destinationZ = 0.0;
@@ -465,6 +463,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     required IsometricScene scene,
     required int targetIndex,
   }) {
+    this.targetIndex = targetIndex;
     pathIndex = 0;
     final startIndex = scene.getNodeIndexV3(this);
     var endPath = scene.findPath(startIndex, targetIndex, max: path.length);
@@ -476,5 +475,10 @@ abstract class IsometricCharacter extends IsometricCollider {
       pathIndex--;
     }
     pathStart = pathIndex;
+  }
+
+  void clearPath(){
+    pathIndex = 0;
+    pathStart = 0;
   }
 }

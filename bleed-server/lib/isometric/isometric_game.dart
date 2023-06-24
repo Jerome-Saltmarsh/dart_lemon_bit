@@ -2478,4 +2478,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
     return nearestEnemy;
   }
+
+  void setCharacterPathToTarget(IsometricCharacter character) {
+    final target = character.target;
+    if (target == null) {
+      character.clearPath();
+      return;
+    }
+    character.setPathToNodeIndex(
+        scene: scene,
+        targetIndex: scene.getNodeIndexV3(target),
+    );
+  }
+
 }
