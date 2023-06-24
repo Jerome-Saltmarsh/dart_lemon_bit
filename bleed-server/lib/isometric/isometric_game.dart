@@ -1642,6 +1642,28 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.lookRadian = character.faceAngle;
     }
 
+    final target = character.target;
+
+    if (target != null) {
+      final updatedTargetIndex = scene.getNodeIndexV3(target);
+      if (updatedTargetIndex != character.targetIndex) {
+        character.targetIndex = updatedTargetIndex;
+        setCharacterPathToNodeIndex(
+            character: character,
+            targetIndex: updatedTargetIndex,
+        );
+      }
+
+      if (character.pathStart > 0 && character.pathIndex == 0){
+        setCharacterPathToNodeIndex(
+          character: character,
+          targetIndex: updatedTargetIndex,
+        );
+      }
+    }
+
+
+
     character.updateAccuracy();
 
     if (character.weaponStateDuration > 0) {
@@ -2468,6 +2490,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required IsometricCharacter character,
     required int targetIndex,
   }) {
+    /// TODO Support 3D Pathfinding
+    if (character.indexZ != 1)
+      return;
+
+    character.pathTargetIndex = targetIndex;
     character.targetIndex = targetIndex;
     character.pathIndex = 0;
     final startIndex = scene.getNodeIndexV3(character);

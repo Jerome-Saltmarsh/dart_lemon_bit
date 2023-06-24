@@ -236,8 +236,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void executeDecision() {
 
-    if (shouldUpdatePath)
-      updatePathToTarget();
+    // if (shouldUpdatePath)
+    //   updatePathToTarget();
 
     if (shouldUpdateDestination)
       updateDestination();
@@ -250,9 +250,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   }
 
-  void updatePathToTarget() {
-    game.setCharacterPathToTarget(this);
-  }
+  // void updatePathToTarget() {
+  //   game.setCharacterPathToTarget(this);
+  // }
 
   void incrementPathIndex() {
     pathIndex--;

@@ -35,6 +35,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var name = "";
   var pathIndex = 0;
   var pathStart = 0;
+  var pathTargetIndex = 0;
   var targetIndex = 0;
   var destinationX = 0.0;
   var destinationY = 0.0;
