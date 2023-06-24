@@ -1,0 +1,2 @@
+
+const CharactersEnd = 200;

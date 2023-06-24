@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src/api_player.dart';
-import 'package:bleed_server/common/src/compile_util.dart';
+import 'package:bleed_server/common/src/isometric/characters_end.dart';
 import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
 import 'package:bleed_server/common/src/input_mode.dart';
 import 'package:bleed_server/common/src/environment_response.dart';
@@ -253,10 +253,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       if (character.renderX > screenRight) continue;
       if (character.renderY > screenBottom) continue;
 
-      // if (!IsometricCollider.onSameTeam(this, character)){
-      //   continue;
-      // }
-
       writeByte(character.characterType);
       writeCharacterTeamDirectionAndState(character);
       writeVector3(character);
@@ -265,10 +261,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       if (character is IsometricCharacterTemplate) {
         writeCharacterUpperBody(character);
       }
-
-      // writeByte(character.buffByte);
     }
-    writeByte(END);
+    writeByte(CharactersEnd);
   }
 
   void writeCharacterTeamDirectionAndState(IsometricCharacter character){

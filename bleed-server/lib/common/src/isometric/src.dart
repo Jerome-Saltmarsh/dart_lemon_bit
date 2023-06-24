@@ -18,3 +18,4 @@ export 'team_type.dart';
 export 'ai_mode.dart';
 export 'scene_part.dart';
 export 'wind_type.dart';
+export 'characters_end.dart';

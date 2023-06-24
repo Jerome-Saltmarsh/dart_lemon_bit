@@ -488,7 +488,7 @@ extension ServerResponseReader on Gamestream {
   void readCharacters(){
      while (true) {
       final characterType = readByte();
-      if (characterType == END) return;
+      if (characterType == CharactersEnd) return;
       final character = isometric.server.getCharacterInstance();
 
       character.characterType = characterType;
