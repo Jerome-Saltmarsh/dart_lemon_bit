@@ -2,8 +2,6 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
-import 'package:lemon_math/functions/adjacent.dart';
-import 'package:lemon_math/functions/opposite.dart';
 
 import 'capture_the_flag_game.dart';
 import 'capture_the_flag_gameobject_flag.dart';
@@ -74,50 +72,50 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get roleDefensive => role == CaptureTheFlagAIRole.Defense;
 
-  bool get shouldAttackTargetEnemy {
-    final target = this.target;
-    if (target == null) return false;
-    if (target is! IsometricCollider) return false;
-    if (!target.hitable) return false;
-    if (!targetIsEnemy) return false;
-    if (!enemyTargetWithinAttackRange) return false;
-    return targetIsPerceptible;
-  }
+  // bool get shouldAttackTargetEnemy {
+  //   final target = this.target;
+  //   if (target == null) return false;
+  //   if (target is! IsometricCollider) return false;
+  //   if (!target.hitable) return false;
+  //   if (!targetIsEnemy) return false;
+  //   if (!enemyTargetWithinAttackRange) return false;
+  //   return targetIsPerceptible;
+  // }
 
-  bool get targetIsPerceptible {
-    final target = this.target;
-
-    if (target == null)
-      return false;
-
-    var positionX = x;
-    var positionY = y;
-    var angle = target.getAngle(this);
-
-    final distance = getDistance3(target);
-    final jumpSize = Node_Size_Quarter;
-    final jumps = distance ~/ jumpSize;
-    final velX = getAdjacent(angle, jumpSize);
-    final velY = getOpposite(angle, jumpSize);
-    final scene = game.scene;
-
-    for (var i = 0; i < jumps; i++) {
-      positionX += velX;
-      positionY += velY;
-      final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, z);
-      if (nodeOrientation != NodeOrientation.None){
-        return false;
-      }
-    }
-    return true;
-  }
-
-  bool get enemyTargetWithinAttackRange {
-    final target = this.target;
-    if (target == null) return false;
-    if (!isEnemy(target)) return false;
-    return getDistanceSquared(target) < weaponRangeSquared;
-  }
+  // bool get targetIsPerceptible {
+  //   final target = this.target;
+  //
+  //   if (target == null)
+  //     return false;
+  //
+  //   var positionX = x;
+  //   var positionY = y;
+  //   var angle = target.getAngle(this);
+  //
+  //   final distance = getDistance3(target);
+  //   final jumpSize = Node_Size_Quarter;
+  //   final jumps = distance ~/ jumpSize;
+  //   final velX = getAdjacent(angle, jumpSize);
+  //   final velY = getOpposite(angle, jumpSize);
+  //   final scene = game.scene;
+  //
+  //   for (var i = 0; i < jumps; i++) {
+  //     positionX += velX;
+  //     positionY += velY;
+  //     final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, z);
+  //     if (nodeOrientation != NodeOrientation.None){
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
+  //
+  // bool get enemyTargetWithinAttackRange {
+  //   final target = this.target;
+  //   if (target == null) return false;
+  //   if (!isEnemy(target)) return false;
+  //   return getDistanceSquared(target) < weaponRangeSquared;
+  // }
 
   bool get closeToFlagOwn => withinRadiusPosition(flagOwn, 250);
 
@@ -247,7 +245,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         return flagEnemy;
 
       case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
-        // return getNearestEnemy();
         return game.findNearestEnemy(this);
 
       case CaptureTheFlagAIDecision.Run_To_Base_Own:
@@ -269,10 +266,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         throw Exception('not implemented');
     }
   }
-
-  // void faceRunDestination() {
-  //   faceXY(runPositionX, runDestinationY);
-  // }
 
   void targetFlagOwn() {
     target = flagOwn;
@@ -310,20 +303,20 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return CaptureTheFlagAIDecision.Idle;
   }
 
-  void idle() {
-    setCharacterStateIdle();
-    runPositionX = x;
-    runDestinationY = y;
-    runDestinationZ = z;
-  }
+  // void idle() {
+  //   setCharacterStateIdle();
+  //   runPositionX = x;
+  //   runDestinationY = y;
+  //   runDestinationZ = z;
+  // }
 
-  void attackTargetEnemy(){
-    final target = this.target;
-    if (target == null) return;
-    idle();
-    face(target);
-    useWeapon();
-  }
+  // void attackTargetEnemy(){
+  //   final target = this.target;
+  //   if (target == null) return;
+  //   idle();
+  //   face(target);
+  //   useWeapon();
+  // }
 
   bool enemyWithinRange(double range){
      final distanceSquared = range * range;
@@ -342,8 +335,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     weaponRange = game.getWeaponTypeRange(weaponType);
   }
 
-  void useWeapon() => game.characterUseWeapon(this);
-
   void toggleRole() => role = roleDefensive ? CaptureTheFlagAIRole.Offense : CaptureTheFlagAIRole.Defense;
 
   bool flagOwnWithinRadius(double radius) =>
@@ -353,10 +344,10 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       flagEnemyRespawning ? false : withinRadiusPosition(flagEnemy, radius);
 
   void updateCharacterAction() {
-    if (shouldAttackTargetEnemy) {
-      attackTargetEnemy();
-      return;
-    }
+    // if (shouldAttackTargetEnemy) {
+    //   attackTargetEnemy();
+    //   return;
+    // }
     // if (shouldRunToDestination) {
     //   runToDestination();
     //   return;

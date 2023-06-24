@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/isometric/isometric_game.dart';
+import 'package:bleed_server/isometric/isometric_scene.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_collider.dart';
@@ -439,4 +441,63 @@ abstract class IsometricCharacter extends IsometricCollider {
     pathIndex = 0;
     pathStart = 0;
   }
+
+  bool shouldAttackTargetEnemy(IsometricScene scene) {
+    final target = this.target;
+    if (target == null) return false;
+    if (target is! IsometricCollider) return false;
+    if (!target.hitable) return false;
+    if (!targetIsEnemy) return false;
+    if (!enemyTargetWithinAttackRange) return false;
+    return targetIsPerceptible(scene);
+  }
+
+  bool targetIsPerceptible(IsometricScene scene) {
+    final target = this.target;
+
+    if (target == null)
+      return false;
+
+    var positionX = x;
+    var positionY = y;
+    var angle = target.getAngle(this);
+
+    final distance = getDistance3(target);
+    final jumpSize = Node_Size_Quarter;
+    final jumps = distance ~/ jumpSize;
+    final velX = getAdjacent(angle, jumpSize);
+    final velY = getOpposite(angle, jumpSize);
+
+    for (var i = 0; i < jumps; i++) {
+      positionX += velX;
+      positionY += velY;
+      final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, z);
+      if (nodeOrientation != NodeOrientation.None){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool get enemyTargetWithinAttackRange {
+    final target = this.target;
+    if (target == null) return false;
+    if (!isEnemy(target)) return false;
+    return getDistanceSquared(target) < weaponRangeSquared;
+  }
+
+  void attackTargetEnemy(IsometricGame game){
+    final target = this.target;
+    if (target == null) return;
+    idle();
+    face(target);
+    game.characterUseWeapon(this);
+  }
+
+  void idle() {
+    setCharacterStateIdle();
+    setDestinationToCurrentPosition();
+  }
+
+
 }

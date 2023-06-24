@@ -1657,6 +1657,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         setDestinationToPathNodeIndex(character);
       }
 
+      if (character.shouldAttackTargetEnemy(scene)) {
+        character.attackTargetEnemy(this);
+        return;
+      }
+
       if (!character.deadBusyOrWeaponStateBusy && !character.runDestinationWithinRadiusRunSpeed){
         character.runToDestination();
       } else {
