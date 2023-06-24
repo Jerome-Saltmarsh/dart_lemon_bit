@@ -81,7 +81,7 @@ class CombatZombie extends IsometricCharacter {
     destY = y;
   }
 
-  void faceDestination() {
+  void faceRunDestination() {
     faceXY(destX, destY);
   }
 
@@ -165,7 +165,7 @@ class CombatZombie extends IsometricCharacter {
     }
 
     if (!arrivedAtDest) {
-      faceDestination();
+      faceRunDestination();
       setCharacterStateRunning();
       return;
     }
@@ -174,7 +174,7 @@ class CombatZombie extends IsometricCharacter {
       pathIndex--;
       destX = pathX[pathIndex].toDouble();
       destY = pathY[pathIndex].toDouble();
-      faceDestination();
+      faceRunDestination();
       setCharacterStateRunning;
       return;
     }

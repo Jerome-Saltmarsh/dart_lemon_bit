@@ -17,7 +17,7 @@ class MmoPlayer extends IsometricPlayer {
 
   MmoPlayer({required super.game});
 
-  bool get destinationWithinDestinationRadius => destinationWithinRadius(destinationRadius);
+  bool get destinationWithinDestinationRadius => runDestinationWithinRadius(destinationRadius);
 
   @override
   int getTargetCategory(IsometricPosition? value){

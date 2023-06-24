@@ -43,8 +43,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
   }
 
-  bool get shouldRunToDestination =>
-      !deadBusyOrWeaponStateBusy && getDestinationDistanceSquared() > 80;
+  // bool get shouldRunToDestination =>
+  //     !deadBusyOrWeaponStateBusy && getDestinationDistanceSquared() > 80;
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
 
@@ -179,12 +179,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return game.scene.getNodeIndexV3(target) != targetIndex;
   }
 
-  // bool get shouldSetDestinationToTarget {
-  //   final target = this.target;
-  //   if (target == null) return false;
-  //   return withinRadiusPosition(target, Node_Size);
-  // }
-
   @override
   double get runSpeed => slowed ? super.runSpeed * 0.5 : super.runSpeed;
 
@@ -227,21 +221,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   void executeDecision() {
-
-      // updateDestination();
-
     if (shouldUpdateCharacterAction)
       updateCharacterAction();
-
   }
-
-  // void updateDestination() {
-  //   if (shouldSetDestinationToTarget) {
-  //     setDestinationToTarget();
-  //     return;
-  //   }
-  //   game.setDestinationToPathNodeIndex(this);
-  // }
 
   IsometricPosition? getTarget() {
     switch (decision) {
@@ -288,18 +270,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
   }
 
-  void runToDestination(){
-    faceDestination();
-    setCharacterStateRunning();
-  }
-
-  void faceDestination() {
-    faceXY(destinationX, destinationY);
-  }
-
-  double getDestinationDistanceSquared () =>
-      getDistanceSquaredXYZ(destinationX, destinationY, z);
-
+  // void faceRunDestination() {
+  //   faceXY(runPositionX, runDestinationY);
+  // }
 
   void targetFlagOwn() {
     target = flagOwn;
@@ -339,9 +312,9 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void idle() {
     setCharacterStateIdle();
-    destinationX = x;
-    destinationY = y;
-    destinationZ = z;
+    runPositionX = x;
+    runDestinationY = y;
+    runDestinationZ = z;
   }
 
   void attackTargetEnemy(){
@@ -384,11 +357,11 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       attackTargetEnemy();
       return;
     }
-    if (shouldRunToDestination) {
-      runToDestination();
-      return;
-    }
-    idle();
+    // if (shouldRunToDestination) {
+    //   runToDestination();
+    //   return;
+    // }
+    // idle();
   }
 
 }

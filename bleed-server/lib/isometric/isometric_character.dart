@@ -37,9 +37,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathStart = 0;
   var pathTargetIndex = 0;
   var targetIndex = 0;
-  var destinationX = 0.0;
-  var destinationY = 0.0;
-  var destinationZ = 0.0;
+
+  var runPositionX = 0.0;
+  var runDestinationY = 0.0;
+  var runDestinationZ = 0.0;
 
   IsometricPosition? target;
 
@@ -79,11 +80,9 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
-  bool get shouldIdle => target == null && destinationWithinRadius(radius);
+  bool get shouldIdle => target == null && runDestinationWithinRadius(radius);
 
   int get pathNodeIndex => path[pathIndex];
-
-  double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
 
   /// throws an exception if target is null
   bool get shouldAttackTarget {
@@ -212,8 +211,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     return weaponStateDurationTotal - weaponStateDuration;
   }
 
-  double get destinationDistance => getDistanceXYZ(destinationX, destinationY, destinationZ);
-
   int get faceDirection => IsometricDirection.fromRadian(_faceAngle);
 
   int get health => _health;
@@ -227,8 +224,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   set accuracy(double value) {
     _accuracy = clamp01(value);
   }
-
-  bool get destinationWithinRunRadius => destinationWithinRadius(10);
 
   set maxHealth(int value){
     if (_maxHealth == value) return;
@@ -401,16 +396,16 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void customOnDead() {}
 
-  bool destinationWithinRadius(double radius) =>
-      withinRadiusXYZ(destinationX, destinationY, destinationZ, radius);
-
-  void faceDestination() => faceXY(destinationX, destinationY);
+  bool runDestinationWithinRadius(double radius) =>
+      withinRadiusXYZ(runPositionX, runDestinationY, runDestinationZ, radius);
 
   void runToDestination(){
-    if (destinationWithinRadius(runSpeed)) return;
-    faceDestination();
+    if (runDestinationWithinRadius(runSpeed)) return;
+    faceRunDestination();
     setCharacterStateRunning();
   }
+
+  void faceRunDestination() => faceXY(runPositionX, runDestinationY);
 
   void clearTarget(){
     target = null;
@@ -422,9 +417,9 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (target == null) {
       throw Exception('target is null');
     }
-    destinationX = target.x;
-    destinationY = target.y;
-    destinationZ = target.z;
+    runPositionX = target.x;
+    runDestinationY = target.y;
+    runDestinationZ = target.z;
   }
 
   /// throws an exception if target is null
@@ -437,13 +432,16 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void setDestinationToCurrentPosition(){
-    destinationX = x;
-    destinationY = y;
-    destinationZ = z;
+    runPositionX = x;
+    runDestinationY = y;
+    runDestinationZ = z;
   }
 
   void clearPath(){
     pathIndex = 0;
     pathStart = 0;
   }
+
+
+  bool get shouldRunToDestination => !deadBusyOrWeaponStateBusy && !runDestinationWithinRadius(10);
 }

@@ -258,8 +258,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(true);
     writeString(selectedCharacter.runtimeType.toString());
     writeIsometricPosition(selectedCharacter);
-    writeInt16(selectedCharacter.destinationX.toInt());
-    writeInt16(selectedCharacter.destinationY.toInt());
+    writeInt16(selectedCharacter.runPositionX.toInt());
+    writeInt16(selectedCharacter.runDestinationY.toInt());
     writeCharacterPath(selectedCharacter);
 
     if (selectedCharacter is CaptureTheFlagAI){
