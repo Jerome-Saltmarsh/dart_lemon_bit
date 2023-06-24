@@ -21,6 +21,9 @@ class Mmo extends IsometricGame<MmoPlayer> {
       weaponType: ItemType.Weapon_Ranged_Handgun,
       team: MmoTeam.Human,
       damage: 1,
+      interact: (player) {
+        player.talk("Hello there");
+      }
     ));
   }
 

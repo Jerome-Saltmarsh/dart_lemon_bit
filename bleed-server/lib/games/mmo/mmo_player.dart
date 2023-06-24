@@ -1,6 +1,8 @@
 
-import 'package:bleed_server/common/src/isometric/target_category.dart';
+import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/common/src/mmo/mmo_response.dart';
 import 'package:bleed_server/isometric/src.dart';
+import 'package:bleed_server/utils/change_notifier.dart';
 
 import 'mmo_npc.dart';
 
@@ -10,6 +12,9 @@ class MmoPlayer extends IsometricPlayer {
   static const Destination_Radius_Run = 50.0;
 
   var destinationRadius = Destination_Radius_Run;
+  var interacting = false;
+
+  late final npcText = ChangeNotifier("", onChangedNpcText);
 
   MmoPlayer({required super.game});
 
@@ -59,7 +64,33 @@ class MmoPlayer extends IsometricPlayer {
 
     updateDestination();
     updateDestinationRadius();
+    updateInteracting();
     updateCharacterState();
+  }
+
+  void updateInteracting() {
+    final target = this.target;
+    if (interacting) {
+      if (target == null){
+        interacting = false;
+        npcText.value = "";
+      }
+      return;
+    }
+
+    if (target is! MMONpc)
+      return;
+
+    if (!targetWithinInteractRadius)
+      return;
+
+    final interact = target.interact;
+
+    if (interact == null)
+      return;
+
+    interact(this);
+    interacting = true;
   }
 
   void updateDestination(){
@@ -97,4 +128,18 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   bool get targetWithinInteractRadius => targetWithinRadius(Destination_Radius_Interact);
+
+  void talk(String text) {
+     npcText.value = text;
+  }
+
+  void onChangedNpcText(String value) {
+    writeNpcText();
+  }
+
+  void writeNpcText() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Npc_Text);
+    writeString(npcText.value);
+  }
 }

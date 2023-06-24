@@ -1,9 +1,10 @@
 
+import 'package:bleed_server/games/mmo/mmo_player.dart';
 import 'package:bleed_server/isometric/isometric_character_template.dart';
 
 class MMONpc extends IsometricCharacterTemplate {
 
-  Function? interact;
+  Function(MmoPlayer player)? interact;
 
   MMONpc({
     required super.health,

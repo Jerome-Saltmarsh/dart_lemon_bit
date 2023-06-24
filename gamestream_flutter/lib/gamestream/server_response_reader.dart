@@ -1,5 +1,6 @@
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -100,6 +101,9 @@ extension ServerResponseReader on Gamestream {
           break;
         case ServerResponse.Capture_The_Flag:
           readCaptureTheFlag();
+          break;
+        case ServerResponse.MMO:
+          readMMOResponse();
           break;
         case ServerResponse.High_Score:
           isometric.server.highScore.value = readUInt24();
