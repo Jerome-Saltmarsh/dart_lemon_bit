@@ -1,13 +1,11 @@
 
 import 'package:bleed_common/src.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/game_style.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/gamestream/games/combat/combat_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/src.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -83,7 +81,7 @@ extension CombatUI on CombatGame {
                     action: () => sendClientRequestSelectPower(powerType),
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
-                      child: watch(gamestream.isometric.player.powerType, (int playerCombatPowerType){
+                      child: buildWatch(gamestream.isometric.player.powerType, (int playerCombatPowerType){
                         return buildText(CombatPowerType.getName(powerType),
                           color: powerType == playerCombatPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
                           size: textSize,
@@ -97,7 +95,7 @@ extension CombatUI on CombatGame {
       ],
     );
 
-    final columnSelectWeaponLeft = watch(gamestream.isometric.player.weaponPrimary, (int weaponPrimary) {
+    final columnSelectWeaponLeft = buildWatch(gamestream.isometric.player.weaponPrimary, (int weaponPrimary) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -128,7 +126,7 @@ extension CombatUI on CombatGame {
       );
     });
 
-    final columnSelectWeaponRight = watch(gamestream.isometric.player.weaponSecondary, (int weaponSecondary) {
+    final columnSelectWeaponRight = buildWatch(gamestream.isometric.player.weaponSecondary, (int weaponSecondary) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -209,7 +207,7 @@ extension CombatUI on CombatGame {
       color: GameStyle.Container_Color,
       padding: GameStyle.Container_Padding,
       alignment: Alignment.center,
-      child: watch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
+      child: buildWatch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
         return buildText("RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}", size: 25);
       }),
     );
@@ -219,7 +217,7 @@ extension CombatUI on CombatGame {
     return Container(
       constraints: BoxConstraints(maxWidth: 120),
       height: 64,
-      child: watch(gamestream.isometric.player.weaponSecondary, GameIsometricUI.buildAtlasItemType),
+      child: buildWatch(gamestream.isometric.player.weaponSecondary, GameIsometricUI.buildAtlasItemType),
     );
   }
 
@@ -227,14 +225,14 @@ extension CombatUI on CombatGame {
     return Container(
       constraints: BoxConstraints(maxWidth: 120, maxHeight: 64),
       height: 64,
-      child: watch(gamestream.isometric.player.weaponPrimary, GameIsometricUI.buildAtlasItemType),
+      child: buildWatch(gamestream.isometric.player.weaponPrimary, GameIsometricUI.buildAtlasItemType),
     );
   }
 
   Widget buildIconPlayerCombatPowerType(){
-    return watch(gamestream.isometric.player.powerReady, (bool powerReady) {
+    return buildWatch(gamestream.isometric.player.powerReady, (bool powerReady) {
       return !powerReady ? width64 :
-      watch(gamestream.isometric.player.powerType, GameIsometricUI.buildIconCombatPowerType);
+      buildWatch(gamestream.isometric.player.powerType, GameIsometricUI.buildIconCombatPowerType);
     });
   }
 

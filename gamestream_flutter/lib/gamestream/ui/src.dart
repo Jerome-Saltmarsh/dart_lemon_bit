@@ -1,5 +1,5 @@
 
-library src;
+library ui;
 
 export 'builders/src.dart';
 export 'constants/src.dart';

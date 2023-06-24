@@ -1,13 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:golden_ratio/constants.dart';
 
 extension MMOUI on MmoGame {
 
-  Widget buildMMOUI()=> watch(npcText, (npcText) => npcText.isEmpty ? nothing :
+  Widget buildMMOUI()=> buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
     GSDialog(
       child: GSContainer(
           width: 200,

@@ -89,7 +89,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll("_", " ")))
-          : watch(gamestream.network.connectionStatus, buildConnectionStatus);
+          : buildWatch(gamestream.network.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {
@@ -105,7 +105,7 @@ extension WebsiteUI on WebsiteGame {
     final _height = 50.0;
     return buildFullScreen(
       color: GameIsometricColors.black,
-      child: watch(download, (double value) {
+      child: buildWatch(download, (double value) {
         value = 0.6182;
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +137,7 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
-  Widget buildNotConnected()  => watch(engine.deviceType, buildPageWebsite);
+  Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
 
   Widget buildPageWebsite(int deviceType) =>
       deviceType == DeviceType.Computer
@@ -241,7 +241,7 @@ extension WebsiteUI on WebsiteGame {
       ),
     );
 
-  Widget buildErrorDialog(String message, {Widget? bottomRight}) => dialog(
+  Widget buildErrorDialog(String message, {Widget? bottomRight}) => buildDialog(
         width: 200,
         height: 200 * goldenRatio_0618,
         color: GameIsometricColors.brownDark,

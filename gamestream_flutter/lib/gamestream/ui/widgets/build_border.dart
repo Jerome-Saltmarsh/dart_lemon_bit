@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/border_radius.dart';
 
 Widget buildBorder({
   required Widget child,

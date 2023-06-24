@@ -20,12 +20,12 @@ extension SurvivalGameUI on SurvivalGame {
   static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row + 8;
 
   Widget buildWatchBeltType(Watch<int> watchBeltType) {
-    return watch(
+    return buildWatch(
         watchBeltType,
             (int beltItemType) {
           return Stack(
             children: [
-              watch(gamestream.isometric.server.equippedWeaponIndex, (equippedWeaponIndex) =>
+              buildWatch(gamestream.isometric.server.equippedWeaponIndex, (equippedWeaponIndex) =>
                   buildDragTargetSlot(
                       index: gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBeltType),
                       scale: 2.0,
@@ -200,7 +200,7 @@ extension SurvivalGameUI on SurvivalGame {
 
 
   Widget buildStackInventoryItems() =>
-      watch(inventoryReads, (int reads){
+      buildWatch(inventoryReads, (int reads){
         final positioned = <Widget>[];
         for (var i = 0; i < gamestream.isometric.server.inventory.length; i++){
           if (gamestream.isometric.server.inventory[i] == ItemType.Empty) continue;
@@ -361,7 +361,7 @@ extension SurvivalGameUI on SurvivalGame {
       Container(
         alignment: Alignment.center,
         width: 32 * Slot_Scale, height: 32 * Slot_Scale, color: GameIsometricColors.brown02,
-        child: watch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index)),
+        child: buildWatch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index)),
       );
 
 
@@ -399,7 +399,7 @@ extension SurvivalGameUI on SurvivalGame {
 
   /// Automatically rebuilds whenever the inventory gets updated
   Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
-      watch(inventoryReads, (int reads) => builder());
+      buildWatch(inventoryReads, (int reads) => builder());
 
   Widget buildStackHotKeyContainer({
     required int itemType,
@@ -442,8 +442,8 @@ extension SurvivalGameUI on SurvivalGame {
     return GSDialog(
       child: buildHoverTarget(
         hoverTargetType: InventoryType.Hover_Target_Player_Stats_Health,
-        child: watch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
-          return watch(gamestream.isometric.server.playerHealth, (int currentHealth) {
+        child: buildWatch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
+          return buildWatch(gamestream.isometric.server.playerHealth, (int currentHealth) {
             return Stack(
               children: [
                 Container(color: Colors.white24, height: height, width: width),
@@ -494,7 +494,7 @@ extension SurvivalGameUI on SurvivalGame {
     return GSDialog(
       child: buildHoverTarget(
         hoverTargetType: InventoryType.Hover_Target_Player_Stats_Damage,
-        child: watch(gamestream.isometric.server.playerDamage, (int damage) {
+        child: buildWatch(gamestream.isometric.server.playerDamage, (int damage) {
           return Container(
             color: Colors.white24,
             padding: const EdgeInsets.all(6),
@@ -525,8 +525,8 @@ extension SurvivalGameUI on SurvivalGame {
     return GSDialog(
       child: buildHoverTarget(
         hoverTargetType: InventoryType.Hover_Target_Player_Stats_Energy,
-        child: watch(gamestream.isometric.player.energyMax, (int energyMax) {
-          return watch(gamestream.isometric.player.energy, (int energy) {
+        child: buildWatch(gamestream.isometric.player.energyMax, (int energyMax) {
+          return buildWatch(gamestream.isometric.player.energy, (int energy) {
             return Stack(
               children: [
                 Container(color: Colors.white24, height: height, width: width),

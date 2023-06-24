@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lemon_watch/src.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/border_radius.dart';
+import 'package:gamestream_flutter/instances/engine.dart';
 
-import 'instances/engine.dart';
-
-Widget watch<T>(Watch<T> watch, Widget Function(T t) builder) => WatchBuilder(watch, builder);
-
-
-
-
-const borderRadius4 = BorderRadius.all(Radius.circular(4));
-
-ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
-  return OutlinedButton.styleFrom(
-    side: BorderSide(color: borderColor, width: borderWidth),
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5))),
-  );
-}
-
-Widget dialog({
+Widget buildDialog({
   required Widget child,
   double padding = 8,
   double width = 400,

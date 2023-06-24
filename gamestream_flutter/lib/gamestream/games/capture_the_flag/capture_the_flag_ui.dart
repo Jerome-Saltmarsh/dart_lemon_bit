@@ -161,7 +161,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             ),
             width: mapSize,
             height: mapSize,
-            child:   watch(isometric.clientState.sceneChanged, (_){
+            child:   buildWatch(isometric.clientState.sceneChanged, (_){
               return engine.buildCanvas(paint: (Canvas canvas, Size size){
                 const scale = 2.0;
                 canvas.scale(scale, scale);
@@ -337,7 +337,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   Widget buildToggleRow({required String title, required WatchBool watchBool}) => onPressed(
       action: watchBool.toggle,
-      child: watch(watchBool, (value)=> Row(
+      child: buildWatch(watchBool, (value)=> Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             buildText(title),
@@ -378,11 +378,11 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildControlPlayerLevel({double width = 200, double height = 20}) => Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        watch(playerLevel, (t) => buildText("LEVEL: $t")),
+        buildWatch(playerLevel, (t) => buildText("LEVEL: $t")),
         width8,
-        watch(playerExperienceRequiredForNextLevel, (experienceRequired) =>
+        buildWatch(playerExperienceRequiredForNextLevel, (experienceRequired) =>
           (experienceRequired <= 0) ? nothing :
-            watch(playerExperience, (experience) =>
+            buildWatch(playerExperience, (experience) =>
                 Tooltip(
                   message: '$experience / $experienceRequired',
                   child: Container(
@@ -404,7 +404,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          watch(skillPoints, (skillPoints) => (skillPoints <= 0) ? nothing :
+          buildWatch(skillPoints, (skillPoints) => (skillPoints <= 0) ? nothing :
              GSDialog(
                child: GSButton(
                  action: () => upgradePower(power),
@@ -419,13 +419,13 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                ),
              )
           ),
-          watch(power.activated, (activated) =>
+          buildWatch(power.activated, (activated) =>
             GSDialog(
               child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    watch(power.cooldown, (cooldown) =>
-                        watch(power.cooldownRemaining, (cooldownRemaining) =>
+                    buildWatch(power.cooldown, (cooldown) =>
+                        buildWatch(power.cooldownRemaining, (cooldownRemaining) =>
                             Container(
                               decoration: BoxDecoration(
                                 color: GameStyle.Container_Color,
@@ -434,13 +434,13 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                                width: size,
                                height: size * power.cooldownPercentage,
                             ))),
-                    watch(power.type, (powerType) =>
-                        watch(power.coolingDown, (coolingDown) => Column(
+                    buildWatch(power.type, (powerType) =>
+                        buildWatch(power.coolingDown, (coolingDown) => Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             buildText(powerType.name, color: coolingDown ? Colors.red : Colors.green),
-                            watch(power.level, buildText),
+                            buildWatch(power.level, buildText),
                           ],
                         ))),
                     Container(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,7 +76,7 @@ class WebsiteGame extends Game {
   @override
   Widget buildUI(BuildContext context) => Stack(
       children: [
-        watch(gamestream.operationStatus, buildOperationStatus),
+        buildWatch(gamestream.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ]);
 

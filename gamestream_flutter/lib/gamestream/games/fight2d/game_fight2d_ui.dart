@@ -15,7 +15,7 @@ class GameFight2DUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        watch(tutorialVisible, (tutorialVisible) {
+        buildWatch(tutorialVisible, (tutorialVisible) {
            return Positioned(
                left: 16,
                top: 16,
@@ -34,7 +34,7 @@ class GameFight2DUI extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText("TUTORIAL", size: 20, color: Colors.white70),
-                          watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
+                          buildWatch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                         ],
                       ),
                     ),
@@ -64,7 +64,7 @@ class GameFight2DUI extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText("DEBUG", size: 20, color: Colors.white70),
-                            watch(game.renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
+                            buildWatch(game.renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                           ],
                         ),
                       ),

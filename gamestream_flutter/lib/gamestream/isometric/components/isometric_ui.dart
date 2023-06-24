@@ -33,11 +33,11 @@ class IsometricUI {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              watch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-                              watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
-                              watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
-                              watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
-                              watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
+                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
                               GSRefresh(() =>  buildText(
                                   "connection-duration: ${gamestream.isometric..clientState.formattedConnectionDuration}\n"
                                   // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
@@ -86,13 +86,13 @@ class IsometricUI {
                               GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
                               GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
                               GSRefresh(() => buildText('engine-frame: ${engine.paintFrame}')),
-                              watch(gamestream.updateFrame, (t) => buildText("update-frame: $t")),
-                              watch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText("interpolating: $interpolating", onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
-                              watch(gamestream.gameType, (GameType value) => buildText("game-type: ${value.name}")),
-                              watch(engine.deviceType, (int deviceType) => buildText("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
-                              watch(gamestream.io.inputMode, (int inputMode) => buildText("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
-                              watch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText("mouse-left-down: $mouseLeftDown")),
-                              watch(engine.mouseRightDown, (bool rightDown) => buildText("mouse-right-down: $rightDown")),
+                              buildWatch(gamestream.updateFrame, (t) => buildText("update-frame: $t")),
+                              buildWatch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText("interpolating: $interpolating", onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
+                              buildWatch(gamestream.gameType, (GameType value) => buildText("game-type: ${value.name}")),
+                              buildWatch(engine.deviceType, (int deviceType) => buildText("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
+                              buildWatch(gamestream.io.inputMode, (int inputMode) => buildText("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
+                              buildWatch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText("mouse-left-down: $mouseLeftDown")),
+                              buildWatch(engine.mouseRightDown, (bool rightDown) => buildText("mouse-right-down: $rightDown")),
                               // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                             ],
                           ),
@@ -108,7 +108,7 @@ class IsometricUI {
 
 
   Widget buildWindowLightSettings() =>
-    watch(windowOpenLightSettings, (t) => !t ? nothing :
+    buildWatch(windowOpenLightSettings, (t) => !t ? nothing :
       Container(
         padding: GameStyle.Padding_6,
         color: GameIsometricColors.brownDark,
@@ -150,7 +150,7 @@ class IsometricUI {
                   final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
                   gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
                 }),
-                watch(gamestream.isometric.nodes.interpolation_ease_type, buildText),
+                buildWatch(gamestream.isometric.nodes.interpolation_ease_type, buildText),
                 buildText("->", onPressed: (){
                   final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
                   final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
