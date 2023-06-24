@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d_ui.dart';
-import 'package:gamestream_flutter/language_utils.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_fight2d_player.dart';

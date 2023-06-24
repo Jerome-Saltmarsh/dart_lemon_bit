@@ -11,7 +11,7 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
-import 'package:gamestream_flutter/language_utils.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 extension IsometricEditorUI on IsometricEditor {
