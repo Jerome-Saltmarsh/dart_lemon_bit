@@ -28,7 +28,7 @@ class IsometricDebug {
 
   Isometric get isometric => gamestream.isometric;
 
-  Widget buildWindowSelectedCharacter() =>
+  Widget buildUI() =>
       WatchBuilder(characterSelected, (characterSelected){
         if (!characterSelected) return nothing;
         return Container(

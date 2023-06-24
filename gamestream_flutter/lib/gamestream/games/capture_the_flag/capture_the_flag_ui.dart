@@ -56,7 +56,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 children: [
                   if (selectedTab ==
                       CaptureTheFlagUITabs.Selected_Character)
-                    isometric.debug.buildWindowSelectedCharacter(),
+                    isometric.debug.buildUI(),
                   if (selectedTab == CaptureTheFlagUITabs.GameObjects)
                     buildWindowGameObjects(),
                   if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
