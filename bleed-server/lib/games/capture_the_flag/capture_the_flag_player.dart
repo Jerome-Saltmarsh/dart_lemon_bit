@@ -97,7 +97,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   @override
   void customUpdate() {
     if (shouldUpdatePathToMouse){
-      updatePathToMouse();
+      setPathToMouse();
     }
 
     updatePowers();
@@ -108,9 +108,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     power2.update();
     power3.update();
   }
-
-  void updatePathToMouse() =>
-      setPathToNodeIndex(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, 25));
 
   void onChangedFlagStatus(int value) => writePlayerFlagStatus(value);
 
