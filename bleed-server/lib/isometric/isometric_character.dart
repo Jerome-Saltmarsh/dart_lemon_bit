@@ -162,6 +162,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get characterStateHurt => state == CharacterState.Hurt;
+  bool get characterStatePerforming => state == CharacterState.Performing;
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
   bool get busy => stateDurationRemaining > 0 && !characterStateHurt;
   bool get deadOrBusy => dead || busy;
@@ -334,13 +335,10 @@ abstract class IsometricCharacter extends IsometricCollider {
     return withinRadiusPosition(target, weaponRange);
   }
 
-  void face(Position position) {
-    assert(!deadOrBusy);
-    faceAngle = this.getAngle(position) + pi;
-  }
+  void face(Position position) => faceXY(position.x, position.y);
 
   void faceXY(double x, double y) {
-    assert(!deadOrBusy);
+    if (deadOrBusy) return;
     faceAngle = getAngleXY(x, y) + pi;
   }
 

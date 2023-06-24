@@ -1583,13 +1583,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required IsometricCharacter srcCharacter,
     required IsometricCollider target,
     required int damage,
-    required double angle,
     required int hitType,
     double force = 20,
+    double? angle,
     bool friendlyFire = false,
   }) {
     if (!target.hitable) return;
     if (!target.active) return;
+
+    if (angle == null){
+      angle = radiansV2(srcCharacter, target);
+    }
 
     target.applyForce(
       force: force,

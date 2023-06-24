@@ -24,6 +24,21 @@ class MMOZombie extends IsometricCharacter {
   @override
   void customOnUpdate() {
     super.customOnUpdate();
+    if (deadBusyOrWeaponStateBusy) return;
+
+    if (characterStatePerforming && stateDuration == 10){
+
+      final target = this.target;
+
+      if (target is IsometricCollider){
+        game.applyHit(
+          srcCharacter: this,
+          target: target,
+          damage: 1,
+          hitType: IsometricHitType.Melee,
+        );
+      }
+    }
 
     updateTarget();
     updateCharacterState();
@@ -31,7 +46,7 @@ class MMOZombie extends IsometricCharacter {
 
   void updateTarget(){
       if (targetIsNull) {
-        target = game.findNearestEnemy(this);
+        target = game.findNearestEnemy(this, radius: 2000);
       }
   }
 
@@ -41,7 +56,11 @@ class MMOZombie extends IsometricCharacter {
     if (target == null) return;
 
     if (targetWithinAttackRange){
-
+      face(target);
+      setCharacterStatePerforming(duration: 30);
+    } else {
+      face(target);
+      setCharacterStateRunning();
     }
   }
 
