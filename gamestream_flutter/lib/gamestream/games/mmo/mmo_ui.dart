@@ -2,11 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:golden_ratio/constants.dart';
 
 extension MMOUI on MmoGame {
@@ -16,12 +12,17 @@ extension MMOUI on MmoGame {
       child: GSContainer(
           width: 200,
           height: 200 * goldenRatio_0618,
-          child: Column(
+          child: Stack(
+            alignment: Alignment.center,
             children: [
               buildText(npcText),
-              onPressed(
-                  action: endInteraction,
-                  child: buildText("close")),
+              Positioned(
+                bottom: 8,
+                right: 8,
+                child: onPressed(
+                    action: endInteraction,
+                    child: buildText("close")),
+              ),
             ],
           )),
     ));
