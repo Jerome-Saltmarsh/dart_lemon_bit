@@ -1,7 +1,7 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/games/mmo/mmo_npc.dart';
-import 'package:bleed_server/games/mmo/mmo_zombie.dart';
+import 'package:bleed_server/isometric/isometric_zombie.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 import 'mmo_player.dart';
@@ -27,7 +27,9 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       }
     ));
 
-    characters.add(MMOZombie(game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
+    // characters.add(MMOZombie(game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
+
+    characters.add(IsometricZombie(team: MmoTeam.Alien, game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
   }
 
   @override
