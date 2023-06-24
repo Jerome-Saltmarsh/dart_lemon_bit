@@ -83,7 +83,11 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
-  bool get shouldIdle => target == null;
+  bool get shouldIdle => target == null && destinationWithinRadius(radius);
+
+  int get pathNodeIndex => path[pathIndex];
+
+  double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
 
   /// throws an exception if target is null
   bool get shouldAttackTarget {
@@ -111,7 +115,9 @@ abstract class IsometricCharacter extends IsometricCollider {
   // }
 
   int get weaponType => _weaponType;
+
   bool get isPlayer => false;
+
   bool get aliveAndActive => alive && active;
 
   int get weaponStateDurationTotal => _weaponStateDurationTotal;
@@ -123,7 +129,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     onWeaponTypeChanged();
   }
 
-
   set weaponStateDurationTotal(int value){
     assert (value >= 0);
     if (value > 0){
@@ -133,6 +138,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   int get characterType => _characterType;
+
   bool get isTemplate => _characterType == CharacterType.Template;
 
   set characterType(int value){
@@ -143,12 +149,16 @@ abstract class IsometricCharacter extends IsometricCollider {
     }
   }
 
-  /// PROPERTIES
   double get accuracy => _accuracy;
+
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
+
   bool get characterTypeTemplate => characterType == CharacterType.Template;
+
   bool get dead => state == CharacterState.Dead;
+
   bool get alive => !dead;
+
   bool get targetIsNull => target == null;
 
   bool get targetIsEnemy {
@@ -161,27 +171,43 @@ abstract class IsometricCharacter extends IsometricCollider {
     return isAlly(target);
   }
   bool get weaponStateBusy => weaponStateDuration > 0 && weaponState != WeaponState.Aiming;
+
   bool get running => state == CharacterState.Running;
+
   bool get performing => state == CharacterState.Performing;
+
   bool get idling => state == CharacterState.Idle;
+
   bool get characterStateIdle => state == CharacterState.Idle;
+
   bool get characterStateHurt => state == CharacterState.Hurt;
+
   bool get characterStatePerforming => state == CharacterState.Performing;
+
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
+
   bool get busy => stateDurationRemaining > 0 && !characterStateHurt;
+
   bool get deadOrBusy => dead || busy;
+
   bool get deadBusyOrWeaponStateBusy => dead || weaponStateBusy;
+
   bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging || weaponStateAiming;
+
   bool get targetSet => target != null;
 
   bool get weaponStateIdle => weaponState == WeaponState.Idle;
+
   bool get weaponStateReloading => weaponState == WeaponState.Reloading;
+
   bool get weaponStateFiring => weaponState == WeaponState.Firing;
+
   bool get weaponStateAiming => weaponState == WeaponState.Aiming;
 
   double get healthPercentage => health / maxHealth;
+
   double get faceAngle => _faceAngle;
-  double get weaponTypeRangeMelee => ItemType.getMeleeAttackRadius(weaponType);
+
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
   int get weaponFrame {
@@ -193,16 +219,20 @@ abstract class IsometricCharacter extends IsometricCollider {
   double get destinationDistance => getDistanceXYZ(destinationX, destinationY, destinationZ);
 
   int get faceDirection => IsometricDirection.fromRadian(_faceAngle);
+
   int get health => _health;
+
   int get maxHealth => _maxHealth;
+
   int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
-  int get equippedAttackDuration => 25;
 
   /// SETTERS
 
   set accuracy(double value) {
     _accuracy = clamp01(value);
   }
+
+  bool get destinationWithinRunRadius => destinationWithinRadius(10);
 
   set maxHealth(int value){
     if (_maxHealth == value) return;
@@ -415,6 +445,21 @@ abstract class IsometricCharacter extends IsometricCollider {
     destinationY = y;
     destinationZ = z;
   }
+
+  void setPathToTarget(IsometricScene scene){
+    final target = this.target;
+    if (target == null) return;
+    setPathToPosition(scene: scene, position: target);
+  }
+
+  void setPathToPosition({
+    required IsometricScene scene,
+    required IsometricPosition position,
+  }) =>
+      setPathToNodeIndex(
+        scene: scene,
+        targetIndex: scene.getNodeIndexV3(position),
+      );
 
   void setPathToNodeIndex({
     required IsometricScene scene,

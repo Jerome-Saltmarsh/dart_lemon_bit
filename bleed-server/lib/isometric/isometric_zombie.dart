@@ -8,6 +8,7 @@ class IsometricZombie extends IsometricCharacter {
 
   double viewRadius;
   int refreshTargetDuration;
+  int refreshDurationWander;
 
   final IsometricGame game;
 
@@ -22,6 +23,7 @@ class IsometricZombie extends IsometricCharacter {
     required super.z,
     this.viewRadius = 500,
     this.refreshTargetDuration = 100,
+    this.refreshDurationWander = 500,
   }) : super(
     characterType: CharacterType.Zombie,
     weaponType: ItemType.Empty,
@@ -32,6 +34,10 @@ class IsometricZombie extends IsometricCharacter {
   bool get shouldRunToTarget => target != null;
 
   bool get shouldApplyHitToTarget => characterStatePerforming && stateDuration == 10;
+
+  void updateDestination(){
+
+  }
 
   @override
   void customOnUpdate() {
@@ -45,6 +51,8 @@ class IsometricZombie extends IsometricCharacter {
     if (shouldRefreshTarget) {
       refreshTarget();
     }
+
+    updateDestination();
 
     if (shouldIdle) {
       setCharacterStateIdle();
@@ -90,6 +98,7 @@ class IsometricZombie extends IsometricCharacter {
     if (target == null) return;
     face(target);
     setCharacterStateRunning();
+    setPathToTarget(game.scene);
   }
 
 }

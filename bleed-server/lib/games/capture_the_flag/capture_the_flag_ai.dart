@@ -48,8 +48,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
   int get nodeIndex => game.scene.getNodeIndexV3(this);
-  int get pathNodeIndex => path[pathIndex];
-  double get destinationDistanceSquared => getDistanceSquaredXYZ(destinationX, destinationY, destinationZ);
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;

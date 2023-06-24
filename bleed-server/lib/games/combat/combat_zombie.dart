@@ -66,6 +66,8 @@ class CombatZombie extends IsometricCharacter {
     rounds = ItemType.getMaxQuantity(weaponType);
   }
 
+  int get equippedAttackDuration => 25;
+
   bool get arrivedAtDest =>
     (x - destX).abs() < Destination_Radius ||
     (y - destY).abs() < Destination_Radius ;
@@ -110,7 +112,7 @@ class CombatZombie extends IsometricCharacter {
     aiMode = randomInt(0, 5);
     aiModeNext = randomInt(CombatZombie.Frames_Between_AI_Mode_Min, CombatZombie.Frames_Between_AI_Mode_Max);
   }
-  
+
   void updateAI(){
     if (busy) return;
 

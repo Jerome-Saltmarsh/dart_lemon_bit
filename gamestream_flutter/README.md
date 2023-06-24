@@ -8,12 +8,11 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
-[ENGINE]
+[ISOMETRIC]
+  [ ] 3D Model alien creature
   [ ] destructable structures
   [ ] pathfinding 3d
-
-[MOBA]
-  [ ] 3D Model alien creature
+  [ ] implement pathfinding for isometric zombie
 
 [CAPTURE THE FLAG]
   [ ] destroyable terrain
