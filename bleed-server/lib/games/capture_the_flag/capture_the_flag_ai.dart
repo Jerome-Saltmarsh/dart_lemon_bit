@@ -48,8 +48,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
 
-  int get nodeIndex => game.scene.getNodeIndexV3(this);
-
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
 
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
@@ -181,20 +179,14 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     return game.scene.getNodeIndexV3(target) != targetIndex;
   }
 
-  bool get shouldSetDestinationToTarget {
-    final target = this.target;
-    if (target == null) return false;
-    return withinRadiusPosition(target, Node_Size);
-  }
+  // bool get shouldSetDestinationToTarget {
+  //   final target = this.target;
+  //   if (target == null) return false;
+  //   return withinRadiusPosition(target, Node_Size);
+  // }
 
   @override
   double get runSpeed => slowed ? super.runSpeed * 0.5 : super.runSpeed;
-
-  bool get shouldUpdateDestination => true;
-
-  bool get shouldSetDestinationToPathNodeIndex {
-     return nodeIndex > 0;
-  }
 
   bool get shouldUpdateCharacterAction => !deadBusyOrWeaponStateBusy;
 
@@ -236,24 +228,20 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void executeDecision() {
 
-    if (shouldUpdateDestination)
-      updateDestination();
+      // updateDestination();
 
     if (shouldUpdateCharacterAction)
       updateCharacterAction();
 
   }
 
-  void updateDestination() {
-    if (shouldSetDestinationToTarget) {
-      setDestinationToTarget();
-      return;
-    }
-    if (shouldSetDestinationToPathNodeIndex) {
-      game.setDestinationToPathNodeIndex(this);
-      return;
-    }
-  }
+  // void updateDestination() {
+  //   if (shouldSetDestinationToTarget) {
+  //     setDestinationToTarget();
+  //     return;
+  //   }
+  //   game.setDestinationToPathNodeIndex(this);
+  // }
 
   IsometricPosition? getTarget() {
     switch (decision) {
@@ -390,14 +378,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool flagEnemyWithinRadius(double radius) =>
       flagEnemyRespawning ? false : withinRadiusPosition(flagEnemy, radius);
-
-  void setDestinationToTarget() {
-    final target = this.target;
-    if (target == null) return;
-    destinationX = target.x;
-    destinationY = target.y;
-    destinationZ = target.z;
-  }
 
   void updateCharacterAction() {
     if (shouldAttackTargetEnemy) {
