@@ -102,7 +102,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void setDestinationToCurrentPosition(){
     destinationX = x;
-    destinationZ = y;
+    destinationY = y;
     destinationZ = z;
   }
 

@@ -2,12 +2,14 @@
 import 'package:bleed_server/common/src/isometric/target_category.dart';
 import 'package:bleed_server/isometric/src.dart';
 
+import 'mmo_npc.dart';
+
 class MmoPlayer extends IsometricPlayer {
 
   static const Destination_Radius_Interact = 50.0;
   static const Destination_Radius_Run = 50.0;
 
-  var destinationRadius = 10.0;
+  var destinationRadius = Destination_Radius_Run;
 
   MmoPlayer({required super.game});
 
@@ -22,7 +24,12 @@ class MmoPlayer extends IsometricPlayer {
       }
       return TargetCategory.Nothing;
     }
-    if (isAlly(value)) return TargetCategory.Talk;
+
+    if (isAlly(value)) {
+      if (value is MMONpc && value.interact != null) {
+        return TargetCategory.Talk;
+      }
+    }
     if (isEnemy(value)) return TargetCategory.Attack;
     return TargetCategory.Run;
   }
