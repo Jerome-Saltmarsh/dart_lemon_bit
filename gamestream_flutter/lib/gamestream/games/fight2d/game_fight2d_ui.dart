@@ -2,10 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/bool_watch_builder_checkbox.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameFight2DUI extends StatelessWidget {

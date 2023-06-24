@@ -1,22 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
-import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_button.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
