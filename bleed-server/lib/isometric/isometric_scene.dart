@@ -334,4 +334,29 @@ class IsometricScene {
     if (diffCols < 0) return 0;
     return 4;
   }
+
+  bool isPerceptible(IsometricPosition a, IsometricPosition b) {
+
+    var positionX = a.x;
+    var positionY = a.y;
+    var positionZ = a.z;
+    var angle = b.getAngle(a);
+
+    final distance = a.getDistance3(b);
+    final jumpSize = Node_Size_Quarter;
+    final jumps = distance ~/ jumpSize;
+    final velX = getAdjacent(angle, jumpSize);
+    final velY = getOpposite(angle, jumpSize);
+
+    for (var i = 0; i < jumps; i++) {
+      positionX += velX;
+      positionY += velY;
+      final nodeOrientation = getNodeOrientationXYZ(positionX, positionY, positionZ);
+      if (nodeOrientation != NodeOrientation.None){
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
