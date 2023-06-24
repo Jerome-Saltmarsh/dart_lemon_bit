@@ -242,34 +242,17 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     if (shouldUpdateCharacterAction)
       updateCharacterAction();
 
-    // if (shouldIncrementPathIndex)
-    //   incrementPathIndex();
-
   }
-
-  // void incrementPathIndex() {
-  //   pathIndex--;
-  // }
 
   void updateDestination() {
     if (shouldSetDestinationToTarget) {
       setDestinationToTarget();
       return;
     }
-    if (shouldSetDestinationToPathNodeIndex){
-      setDestinationToPathNodeIndex();
+    if (shouldSetDestinationToPathNodeIndex) {
+      game.setDestinationToPathNodeIndex(this);
       return;
     }
-  }
-
-  void setDestinationToPathNodeIndex() {
-    if (pathIndex <= 0) return;
-    assert (pathNodeIndex != 0);
-
-    final scene = game.scene;
-    final index = pathNodeIndex;
-    destinationX = scene.getNodePositionX(index);
-    destinationY = scene.getNodePositionY(index);
   }
 
   IsometricPosition? getTarget() {

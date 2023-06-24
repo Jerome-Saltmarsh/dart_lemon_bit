@@ -2512,4 +2512,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.pathStart = character.pathIndex;
   }
 
+  void setDestinationToPathNodeIndex(IsometricCharacter character) {
+    if (character.pathIndex <= 0) return;
+    if (character.pathStart <= 0) return;
+
+    final pathNodeIndex = character.pathNodeIndex;
+    character.destinationX = scene.getNodePositionX(pathNodeIndex);
+    character.destinationY = scene.getNodePositionY(pathNodeIndex);
+  }
+
 }
