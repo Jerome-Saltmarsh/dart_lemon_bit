@@ -93,7 +93,7 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
-          ? buildFullscreen(child: buildText(operationStatus.name.replaceAll("_", " ")))
+          ? buildFullScreen(child: buildText(operationStatus.name.replaceAll("_", " ")))
           : watch(gamestream.network.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
@@ -108,7 +108,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
     final _height = 50.0;
-    return buildFullscreen(
+    return buildFullScreen(
       color: GameIsometricColors.black,
       child: watch(download, (double value) {
         value = 0.6182;

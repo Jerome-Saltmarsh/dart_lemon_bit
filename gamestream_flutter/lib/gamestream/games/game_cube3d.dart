@@ -4,15 +4,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
 class GameCube3D implements Game {
   @override
-  Widget buildUI(BuildContext context) => buildFullscreen(
+  Widget buildUI(BuildContext context) => buildFullScreen(
       child: Stack(
          children: [
            Positioned(

@@ -1,128 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:lemon_watch/src.dart';
 
-import 'gamestream/ui/widgets/build_text.dart';
 import 'gamestream/ui/widgets/nothing.dart';
 import 'instances/engine.dart';
 
 Widget watch<T>(Watch<T> watch, Widget Function(T t) builder){
   return WatchBuilder(watch, builder);
 }
-
-Widget buildWatch<T>(Watch<T> watch, Widget Function(T t) builder){
-  return WatchBuilder(watch, builder);
-}
-
-Widget border({
-  required Widget child,
-  Color color = Colors.white,
-  double width = 1,
-  BorderRadius radius = borderRadius4,
-  Color fillColor = Colors.transparent,
-}) {
-  return Container(
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-        border: Border.all(color: color, width: width),
-        borderRadius: radius,
-    ),
-    child: child,
-  );
-}
-
-Widget button(dynamic value, Function onPressed, {
-  double? width,
-  double? height,
-  String? hint,
-  double borderWidth = 1,
-  EdgeInsets? margin,
-  BorderRadius borderRadius = borderRadius4,
-  Color fillColorMouseOver = Colors.black26,
-  Color fillColor = Colors.transparent,
-  Color borderColor = Colors.white,
-  Color borderColorMouseOver = Colors.white,
-  int fontSize = 18,
-  bool boldOnHover = false,
-  Alignment alignment = Alignment.center
-}) {
-  final _button = onPressed(
-      callback: onPressed,
-      child: MouseOver(builder: (bool mouseOver) {
-        return border(
-            radius: borderRadius,
-            width: borderWidth,
-            child: value is Widget ? value : buildText(value, size: fontSize, bold: mouseOver && boldOnHover),
-            color: mouseOver ? borderColorMouseOver : borderColor,
-            fillColor: mouseOver ? fillColorMouseOver : fillColor,
-        );
-      }));
-
-  if (hint != null) {
-    return Tooltip(message: hint, child: _button);
-  }
-  return _button;
-}
-
-typedef RefreshBuilder = Widget Function();
-typedef WidgetFunction = Widget Function();
-
-class Refresh extends StatefulWidget {
-  final RefreshBuilder builder;
-  late final Duration duration;
-
-  Refresh(this.builder, {int seconds = 0, int milliseconds = 100}) {
-    this.duration = Duration(seconds: seconds, milliseconds: milliseconds);
-  }
-
-  @override
-  _RefreshState createState() => _RefreshState();
-}
-
-class _RefreshState extends State<Refresh> {
-  late Timer timer;
-  bool assigned = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    timer = Timer.periodic(widget.duration, (timer) {
-      rebuild();
-    });
-  }
-
-  void rebuild() {
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.builder();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    timer.cancel();
-  }
-}
-
-Widget buildFullscreen({
-  required Widget child,
-  Alignment alignment = Alignment.center,
-  Color? color,
-}) =>
-  Container(
-      alignment: alignment,
-      width: engine.screen.width,
-      height: engine.screen.height,
-      color: color,
-      child: child
-  );
-
 
 const height2 = SizedBox(height: 2);
 const height4 = SizedBox(height: 4);

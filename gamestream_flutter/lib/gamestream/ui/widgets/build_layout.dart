@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
-
-
+import 'build_fullscreen.dart';
 
 
 
@@ -39,6 +37,6 @@ Widget buildLayout({
         foreground,
     ],
   );
-  return expand ? buildFullscreen(child: stack, color: color): stack;
+  return expand ? buildFullScreen(child: stack, color: color): stack;
 }
 

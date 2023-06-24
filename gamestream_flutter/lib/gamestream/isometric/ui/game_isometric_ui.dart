@@ -6,12 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
-import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_button.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
@@ -520,7 +515,7 @@ class GameIsometricUI {
   static Widget buildIconPlayerWeaponMelee(){
     return watch(gamestream.isometric.player.weapon, (int playerWeaponType){
       return watch(gamestream.isometric.player.weaponTertiary, (int itemType) {
-        return border(
+        return buildBorder(
           color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
           width: 3,
           child: Container(
@@ -537,7 +532,7 @@ class GameIsometricUI {
   static Widget buildPlayerHealth() {
     final height = 87.0;
     final width = height * goldenRatio_0618;
-    return border(
+    return buildBorder(
       width: GameStyle.Player_Weapons_Border_Size,
       color: GameIsometricColors.Red_3,
       child: Container(
@@ -582,7 +577,7 @@ class GameIsometricUI {
   static Widget buildPlayerEnergy() {
     final height = 87.0;
     final width = height * goldenRatio_0618;
-    return border(
+    return buildBorder(
       width: GameStyle.Player_Weapons_Border_Size,
       color: GameIsometricColors.yellow,
       child: Container(

@@ -1,19 +1,13 @@
 
-import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_button.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_dialog.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
-
-import 'capture_the_flag_actions.dart';
-
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
 import 'package:gamestream_flutter/library.dart';
+
+import 'capture_the_flag_actions.dart';
 
 
 extension CaptureTheFlagUI on CaptureTheFlagGame {
@@ -90,7 +84,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   WatchBuilder<CaptureTheFlagGameStatus> buildWindowGameStatus() {
     return WatchBuilder(gameStatus, (value){
       if (value == CaptureTheFlagGameStatus.In_Progress) return nothing;
-      return buildFullscreen(
+      return buildFullScreen(
         child: buildWindow(
           width: 300,
           height: 200,
@@ -130,7 +124,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
   WatchBuilder<bool> buildWindowSelectClass() => WatchBuilder(selectClass, (value){
       if (!value) return const SizedBox();
-      return buildFullscreen(
+      return buildFullScreen(
         child: buildWindow(
           width: 300,
           height: 400,

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/format_bytes.dart';
@@ -40,7 +38,7 @@ class IsometricUI {
                               watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
                               watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
                               watch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
-                              Refresh(() =>  buildText(
+                              GSRefresh(() =>  buildText(
                                   "connection-duration: ${gamestream.isometric..clientState.formattedConnectionDuration}\n"
                                   // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
                                   // "onscreen-nodes: ${gamestream.isometricEngine.nodes.onscreenNodes}\n"
@@ -76,18 +74,18 @@ class IsometricUI {
                                       'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
                                       "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                               )),
-                              Refresh(() => buildText('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
-                              Refresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
-                              Refresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
-                              Refresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
-                              Refresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
-                              Refresh(() => buildText('engine-frame: ${engine.paintFrame}')),
+                              GSRefresh(() => buildText('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
+                              GSRefresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
+                              GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
+                              GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
+                              GSRefresh(() => buildText('engine-frame: ${engine.paintFrame}')),
                               watch(gamestream.updateFrame, (t) => buildText("update-frame: $t")),
                               watch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText("interpolating: $interpolating", onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
                               watch(gamestream.gameType, (GameType value) => buildText("game-type: ${value.name}")),
@@ -121,10 +119,10 @@ class IsometricUI {
             height8,
             onPressed(
                 action: gamestream.isometric.clientState.toggleDynamicShadows,
-                child: Refresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.clientState.dynamicShadows}'))
+                child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.clientState.dynamicShadows}'))
             ),
             onPressed(
-                child: Refresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
+                child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
                 action: (){
                   final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
                   final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
@@ -138,7 +136,7 @@ class IsometricUI {
                 buildText("<-", onPressed: (){
                   gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length - 1);
                 }),
-                Refresh(() => buildText('light-size: ${gamestream.isometric.nodes.interpolation_length}')),
+                GSRefresh(() => buildText('light-size: ${gamestream.isometric.nodes.interpolation_length}')),
                 buildText("->", onPressed: (){
                   gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length + 1);
                 }),
