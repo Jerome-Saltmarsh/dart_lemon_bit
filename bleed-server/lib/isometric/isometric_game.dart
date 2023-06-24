@@ -1224,16 +1224,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateCharacters() {
-    final characterLength = characters.length;
-    for (var i = 0; i < characterLength; i++) {
-      final character = characters[i];
-      updateIsometricCharacter(character);
-      character.customOnUpdate();
-      // TODO
-      if (character is T) {
-        updatePlayer(character);
-        customUpdatePlayer(character);
-      }
+    for (var i = 0; i < characters.length; i++) {
+      updateCharacter(characters[i]);
     }
   }
 
@@ -1633,39 +1625,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void updateCharacterStatePerforming(IsometricCharacter character) {
-    // if (character.isTemplate) {
-    //   if (!character.weaponStateBusy) {
-    //     characterUseWeapon(character);
-    //   }
-    //   return;
-    // }
-    // const framePerformStrike = 10;
-    // if (character.stateDuration != framePerformStrike) return;
-    //
-    // dispatchAttackPerformed(
-    //   character.weaponType,
-    //   character.x + getAdjacent(character.faceAngle, 30),
-    //   character.y + getOpposite(character.faceAngle, 30),
-    //   character.z,
-    //   character.faceAngle,
-    // );
-    //
-    // final attackTarget = character.target;
-    // if (attackTarget == null) return;
-    // if (attackTarget is IsometricCollider) {
-    //   applyHit(
-    //     target: attackTarget,
-    //     angle: radiansV2(character, attackTarget),
-    //     srcCharacter: character,
-    //     damage: character.weaponDamage,
-    //     hitType: IsometricHitType.Projectile,
-    //   );
-    //   clearCharacterTarget(character);
-    // }
-  }
+  void updateCharacter(IsometricCharacter character) {
+    character.customOnUpdate();
 
-  void updateIsometricCharacter(IsometricCharacter character) {
+    // TODO Improve Logic
+    if (character is T) {
+      updatePlayer(character);
+      customUpdatePlayer(character);
+    }
+
     if (character.dead) return;
     if (!character.active) return;
 

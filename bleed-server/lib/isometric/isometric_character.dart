@@ -8,7 +8,6 @@ import 'package:lemon_math/library.dart';
 import 'isometric_collider.dart';
 import 'isometric_player.dart';
 import 'isometric_position.dart';
-import 'isometric_scene.dart';
 import 'isometric_settings.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
@@ -34,18 +33,16 @@ abstract class IsometricCharacter extends IsometricCollider {
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
-
-  IsometricPosition? target;
-
-  // PATHFINDING
-
-  final path = Uint32List(20);
   var pathIndex = 0;
   var pathStart = 0;
   var targetIndex = 0;
   var destinationX = 0.0;
   var destinationY = 0.0;
   var destinationZ = 0.0;
+
+  IsometricPosition? target;
+
+  final path = Uint32List(20);
 
   IsometricCharacter({
     required int characterType,
