@@ -8,6 +8,8 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
+[MAJ1K]
+
 [ISOMETRIC]
   [ ] 3D Model alien creature
   [ ] destructable structures

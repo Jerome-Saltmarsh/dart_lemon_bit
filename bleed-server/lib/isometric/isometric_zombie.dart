@@ -37,10 +37,6 @@ class IsometricZombie extends IsometricCharacter {
 
   bool get shouldIdle => target == null && runDestinationWithinRadius(radius);
 
-  void updateDestination(){
-
-  }
-
   @override
   void customOnUpdate() {
     super.customOnUpdate();
@@ -54,22 +50,20 @@ class IsometricZombie extends IsometricCharacter {
       refreshTarget();
     }
 
-    updateDestination();
-
-    if (shouldIdle) {
-      setCharacterStateIdle();
-      return;
-    }
+    // if (shouldIdle) {
+    //   setCharacterStateIdle();
+    //   return;
+    // }
 
     if (targetWithinAttackRange){
       attackTarget();
       return;
     }
 
-    if (shouldRunToTarget){
-      runToTarget();
-      return;
-    }
+    // if (shouldRunToTarget){
+    //   runToTarget();
+    //   return;
+    // }
   }
 
   void applyHitToTarget() {

@@ -2536,8 +2536,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.pathStart <= 0) return;
 
     final pathNodeIndex = character.pathNodeIndex;
-    character.runPositionX = scene.getNodePositionX(pathNodeIndex);
-    character.runDestinationY = scene.getNodePositionY(pathNodeIndex);
+    character.runX = scene.getNodePositionX(pathNodeIndex);
+    character.runY = scene.getNodePositionY(pathNodeIndex);
   }
 
   bool characterTargetIsPerceptible(IsometricCharacter character) {

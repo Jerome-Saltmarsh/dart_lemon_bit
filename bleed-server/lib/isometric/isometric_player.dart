@@ -714,9 +714,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       );
 
   void setDestinationToMouse() {
-    runPositionX = mouseGridX;
-    runDestinationY = mouseGridY;
-    runDestinationZ = mouseGridZ;
+    runX = mouseGridX;
+    runY = mouseGridY;
+    runZ = mouseGridZ;
   }
 
   void setTargetToAimTarget() => target = aimTarget;
