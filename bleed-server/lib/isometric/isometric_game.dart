@@ -2479,16 +2479,40 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return nearestEnemy;
   }
 
-  void setCharacterPathToTarget(IsometricCharacter character) {
+  void setCharacterPathToTarget(IsometricCharacter character){
     final target = character.target;
     if (target == null) {
-      character.clearPath();
       return;
     }
-    character.setPathToNodeIndex(
-        scene: scene,
-        targetIndex: scene.getNodeIndexV3(target),
-    );
+    setCharacterPathToPosition(character: character, position: target);
+  }
+
+  void setCharacterPathToPosition({
+    required IsometricCharacter character,
+    required IsometricPosition position,
+  }) =>
+      setCharacterPathToNodeIndex(
+        character: character,
+        targetIndex: scene.getNodeIndexV3(position),
+      );
+
+  void setCharacterPathToNodeIndex({
+    required IsometricCharacter character,
+    required int targetIndex,
+  }) {
+    character.targetIndex = targetIndex;
+    character.pathIndex = 0;
+    final startIndex = scene.getNodeIndexV3(character);
+    final path = character.path;
+    var endPath = scene.findPath(startIndex, targetIndex, max: character.path.length);
+    while (endPath != startIndex) {
+      path[character.pathIndex++] = endPath;
+      endPath = scene.path[endPath];
+    }
+    if (character.pathIndex > 0){
+      character.pathIndex--;
+    }
+    character.pathStart = character.pathIndex;
   }
 
 }

@@ -708,8 +708,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void setPathToMouse() =>
-      setPathToNodeIndex(
-        scene: game.scene,
+      game.setCharacterPathToNodeIndex(
+        character: this,
         targetIndex: mouseGridIndex,
       );
 

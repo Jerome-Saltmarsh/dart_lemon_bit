@@ -98,7 +98,5 @@ class IsometricZombie extends IsometricCharacter {
     if (target == null) return;
     face(target);
     setCharacterStateRunning();
-    setPathToTarget(game.scene);
   }
-
 }

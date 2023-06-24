@@ -444,39 +444,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     destinationZ = z;
   }
 
-  void setPathToTarget(IsometricScene scene){
-    final target = this.target;
-    if (target == null) return;
-    setPathToPosition(scene: scene, position: target);
-  }
-
-  void setPathToPosition({
-    required IsometricScene scene,
-    required IsometricPosition position,
-  }) =>
-      setPathToNodeIndex(
-        scene: scene,
-        targetIndex: scene.getNodeIndexV3(position),
-      );
-
-  void setPathToNodeIndex({
-    required IsometricScene scene,
-    required int targetIndex,
-  }) {
-    this.targetIndex = targetIndex;
-    pathIndex = 0;
-    final startIndex = scene.getNodeIndexV3(this);
-    var endPath = scene.findPath(startIndex, targetIndex, max: path.length);
-    while (endPath != startIndex) {
-      path[pathIndex++] = endPath;
-      endPath = scene.path[endPath];
-    }
-    if (pathIndex > 0){
-      pathIndex--;
-    }
-    pathStart = pathIndex;
-  }
-
   void clearPath(){
     pathIndex = 0;
     pathStart = 0;
