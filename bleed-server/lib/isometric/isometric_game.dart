@@ -1512,20 +1512,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player.faceAngle -= piQuarter;
       }
     }
-
-    final target = player.target;
-    if (target == null) return;
-    if (!player.busy) {
-      player.face(target);
-    }
-
-    if (player.distanceFromPos2(target) <= player.velocitySpeed) {
-      clearCharacterTarget(player);
-      player.setCharacterStateIdle();
-      return;
-    }
-
-    setCharacterStateRunning(player);
   }
 
   void setCharacterStateRunning(IsometricCharacter character) {

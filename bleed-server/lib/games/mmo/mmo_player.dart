@@ -4,7 +4,8 @@ import 'package:bleed_server/isometric/src.dart';
 
 class MmoPlayer extends IsometricPlayer {
 
-  static const Interact_Radius = 150.0;
+  static const Destination_Radius_Interact = 50.0;
+  static const Destination_Radius_Run = 50.0;
 
   var destinationRadius = 10.0;
 
@@ -36,8 +37,8 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
-  void setDestinationRadiusToInteractRadius() {
-    destinationRadius = Interact_Radius;
+  void setDestinationRadiusToDestinationRadiusInteract() {
+    destinationRadius = Destination_Radius_Interact;
   }
 
   @override
@@ -62,17 +63,17 @@ class MmoPlayer extends IsometricPlayer {
 
   void updateDestinationRadius(){
      if (targetIsNull) {
-       setDestinationRadiusToRunSpeed();
+       setDestinationRadiusToDestinationRadiusRun();
        return;
      }
      if (targetIsAlly){
-       setDestinationRadiusToInteractRadius();
+       setDestinationRadiusToDestinationRadiusInteract();
        return;
      }
   }
 
-  void setDestinationRadiusToRunSpeed() {
-    destinationRadius = 10;
+  void setDestinationRadiusToDestinationRadiusRun() {
+    destinationRadius = Destination_Radius_Run;
   }
 
   void updateCharacterState() {
@@ -88,5 +89,5 @@ class MmoPlayer extends IsometricPlayer {
     runToDestination();
   }
 
-  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
+  bool get targetWithinInteractRadius => targetWithinRadius(Destination_Radius_Interact);
 }
