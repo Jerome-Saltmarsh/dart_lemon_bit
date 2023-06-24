@@ -35,6 +35,8 @@ class IsometricZombie extends IsometricCharacter {
 
   bool get shouldApplyHitToTarget => characterStatePerforming && stateDuration == 10;
 
+  bool get shouldIdle => target == null && runDestinationWithinRadius(radius);
+
   void updateDestination(){
 
   }
@@ -59,7 +61,7 @@ class IsometricZombie extends IsometricCharacter {
       return;
     }
 
-    if (shouldAttackTarget){
+    if (targetWithinAttackRange){
       attackTarget();
       return;
     }

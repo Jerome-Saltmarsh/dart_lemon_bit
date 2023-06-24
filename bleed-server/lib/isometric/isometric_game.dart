@@ -1657,7 +1657,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         setDestinationToPathNodeIndex(character);
       }
 
-      if (character.shouldRunToDestination){
+      if (!character.deadBusyOrWeaponStateBusy && !character.runDestinationWithinRadiusRunSpeed){
         character.runToDestination();
       } else {
         character.setCharacterStateIdle();

@@ -78,22 +78,20 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
-  double get weaponRangeSquared => weaponRange * weaponRange;
+  bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(runSpeed);
 
-  bool get shouldIdle => target == null && runDestinationWithinRadius(radius);
+  double get weaponRangeSquared => weaponRange * weaponRange;
 
   int get pathNodeIndex => path[pathIndex];
 
   /// throws an exception if target is null
-  bool get shouldAttackTarget {
+  bool get targetWithinAttackRange {
     final target = this.target;
     if (target == null){
       throw Exception('target == null');
     }
     return withinAttackRange(target);
   }
-
-  bool get shouldRunTowardTarget => (target != null);
 
   // int get buffByte {
   //   var buff = 0;
@@ -400,7 +398,7 @@ abstract class IsometricCharacter extends IsometricCollider {
       withinRadiusXYZ(runPositionX, runDestinationY, runDestinationZ, radius);
 
   void runToDestination(){
-    if (runDestinationWithinRadius(runSpeed)) return;
+    if (runDestinationWithinRadiusRunSpeed) return;
     faceRunDestination();
     setCharacterStateRunning();
   }
@@ -441,7 +439,4 @@ abstract class IsometricCharacter extends IsometricCollider {
     pathIndex = 0;
     pathStart = 0;
   }
-
-
-  bool get shouldRunToDestination => !deadBusyOrWeaponStateBusy && !runDestinationWithinRadius(10);
 }
