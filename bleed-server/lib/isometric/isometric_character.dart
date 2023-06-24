@@ -83,14 +83,18 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
+  bool get shouldIdle => target == null;
+
   /// throws an exception if target is null
-  bool get targetWithinAttackRange {
+  bool get shouldAttackTarget {
     final target = this.target;
     if (target == null){
       throw Exception('target == null');
     }
     return withinAttackRange(target);
   }
+
+  bool get shouldRunTowardTarget => (target != null);
 
   // int get buffByte {
   //   var buff = 0;

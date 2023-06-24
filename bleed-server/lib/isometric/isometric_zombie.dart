@@ -4,7 +4,13 @@ import 'package:bleed_server/isometric/src.dart';
 
 class IsometricZombie extends IsometricCharacter {
 
+  var _refreshTargetTimer = 0;
+
+  double viewRadius;
+  int refreshTargetDuration;
+
   final IsometricGame game;
+
 
   IsometricZombie({
     required this.game,
@@ -14,52 +20,76 @@ class IsometricZombie extends IsometricCharacter {
     required super.x,
     required super.y,
     required super.z,
+    this.viewRadius = 500,
+    this.refreshTargetDuration = 100,
   }) : super(
     characterType: CharacterType.Zombie,
     weaponType: ItemType.Empty,
   );
+
+  bool get shouldRefreshTarget => targetIsNull || _refreshTargetTimer-- <= 0;
+
+  bool get shouldRunToTarget => target != null;
+
+  bool get shouldApplyHitToTarget => characterStatePerforming && stateDuration == 10;
 
   @override
   void customOnUpdate() {
     super.customOnUpdate();
     if (deadBusyOrWeaponStateBusy) return;
 
-    if (characterStatePerforming && stateDuration == 10){
-
-      final target = this.target;
-
-      if (target is IsometricCollider){
-        game.applyHit(
-          srcCharacter: this,
-          target: target,
-          damage: 1,
-          hitType: IsometricHitType.Melee,
-        );
-      }
+    if (shouldApplyHitToTarget){
+      applyHitToTarget();
     }
 
-    updateTarget();
-    updateCharacterState();
-  }
+    if (shouldRefreshTarget) {
+      refreshTarget();
+    }
 
-  void updateTarget(){
-    if (targetIsNull) {
-      target = game.findNearestEnemy(this, radius: 2000);
+    if (shouldIdle) {
+      setCharacterStateIdle();
+      return;
+    }
+
+    if (shouldAttackTarget){
+      attackTarget();
+      return;
+    }
+
+    if (shouldRunToTarget){
+      runToTarget();
+      return;
     }
   }
 
-  void updateCharacterState(){
+  void applyHitToTarget() {
     final target = this.target;
+    if (target is! IsometricCollider) return;
+    game.applyHit(
+      srcCharacter: this,
+      target: target,
+      damage: 1,
+      hitType: IsometricHitType.Melee,
+    );
+  }
 
+  void refreshTarget() {
+    target = game.findNearestEnemy(this, radius: viewRadius);
+    _refreshTargetTimer = refreshTargetDuration;
+  }
+
+  void attackTarget() {
+    final target = this.target;
     if (target == null) return;
+    face(target);
+    setCharacterStatePerforming(duration: 30);
+  }
 
-    if (targetWithinAttackRange){
-      face(target);
-      setCharacterStatePerforming(duration: 30);
-    } else {
-      face(target);
-      setCharacterStateRunning();
-    }
+  void runToTarget() {
+    final target = this.target;
+    if (target == null) return;
+    face(target);
+    setCharacterStateRunning();
   }
 
 }

@@ -55,7 +55,7 @@ class MMOZombie extends IsometricCharacter {
 
     if (target == null) return;
 
-    if (targetWithinAttackRange){
+    if (shouldAttackTarget){
       face(target);
       setCharacterStatePerforming(duration: 30);
     } else {
