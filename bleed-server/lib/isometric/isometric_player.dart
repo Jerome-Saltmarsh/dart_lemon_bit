@@ -48,7 +48,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var id = 0;
 
   final mouse = Vector2(0, 0);
-  final runTarget = IsometricPosition();
 
   IsometricGame game;
   IsometricGameObject? editorSelectedGameObject;
@@ -110,27 +109,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   /// METHODS
   void refreshDamage() {
     weaponDamage = game.getPlayerWeaponDamage(this);
-  }
-
-  void runToMouse(){
-    setRunTarget(mouseGridX - 16, mouseGridY - 16);
-  }
-
-  void setRunTarget(double x, double y){
-    runTarget.x = x;
-    runTarget.y = y;
-    runTarget.z = z;
-    game.setCharacterTarget(this, runTarget);
-  }
-
-  void dropItemType({required int itemType, required int quantity}){
-    if (itemType == ItemType.Empty) return;
-    game.spawnGameObjectItemAtPosition(
-      position: this,
-      type: itemType,
-      quantity: quantity,
-    );
-    writePlayerEvent(PlayerEvent.Item_Dropped);
   }
 
   void writeErrorInvalidInventoryIndex(int index){
@@ -740,6 +718,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     destinationY = mouseGridY;
     destinationZ = mouseGridZ;
   }
+
+  void setTargetToAimTarget() => target = aimTarget;
 }
 
 

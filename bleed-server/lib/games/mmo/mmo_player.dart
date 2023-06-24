@@ -3,7 +3,14 @@ import 'package:bleed_server/common/src/isometric/target_category.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 class MmoPlayer extends IsometricPlayer {
+
+  static const Interact_Radius = 150.0;
+
+  var destinationRadius = 10.0;
+
   MmoPlayer({required super.game});
+
+  bool get destinationWithinDestinationRadius => destinationWithinRadius(destinationRadius);
 
   @override
   int getTargetCategory(IsometricPosition? value){
@@ -19,31 +26,67 @@ class MmoPlayer extends IsometricPlayer {
     return TargetCategory.Run;
   }
 
-
   @override
   void onMouseLeftClicked() {
-    final aimTarget = this.aimTarget;
     if (aimTarget == null) {
+      clearTarget();
       setDestinationToMouse();
+    } else {
+      setTargetToAimTarget();
     }
+  }
+
+  void setDestinationRadiusToInteractRadius() {
+    destinationRadius = Interact_Radius;
   }
 
   @override
   void onMouseLeftHeld() {
-    final aimTarget = this.aimTarget;
-    if (aimTarget == null) {
-      setDestinationToMouse();
-    }
+    onMouseLeftClicked();
   }
 
   @override
   void customUpdate() {
     super.customUpdate();
 
-    if (!destinationWithinRadius(50)){
-      runToDestination();
-    } else {
-      setCharacterStateIdle();
+    updateDestination();
+    updateDestinationRadius();
+    updateCharacterState();
+  }
+
+  void updateDestination(){
+    if (target != null) {
+      setDestinationToTarget();
     }
   }
+
+  void updateDestinationRadius(){
+     if (targetIsNull) {
+       setDestinationRadiusToRunSpeed();
+       return;
+     }
+     if (targetIsAlly){
+       setDestinationRadiusToInteractRadius();
+       return;
+     }
+  }
+
+  void setDestinationRadiusToRunSpeed() {
+    destinationRadius = 10;
+  }
+
+  void updateCharacterState() {
+    if (destinationWithinDestinationRadius) {
+      setCharacterStateIdle();
+    } else {
+      runToDestination();
+    }
+  }
+
+  void runToTarget() {
+    setDestinationToTarget();
+    runToDestination();
+  }
+
+  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 }

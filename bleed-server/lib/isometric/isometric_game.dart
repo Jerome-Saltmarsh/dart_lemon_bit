@@ -260,7 +260,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else {
       if (mouseLeftDown) {
-        player.runToMouse();
+        player.setDestinationToMouse();
       }
     }
   }

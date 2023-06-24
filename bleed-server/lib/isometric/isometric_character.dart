@@ -198,6 +198,8 @@ abstract class IsometricCharacter extends IsometricCollider {
     return weaponStateDurationTotal - weaponStateDuration;
   }
 
+  double get destinationDistance => getDistanceXYZ(destinationX, destinationY, destinationZ);
+
   int get faceDirection => IsometricDirection.fromRadian(_faceAngle);
   int get health => _health;
   int get maxHealth => _maxHealth;
@@ -396,5 +398,29 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (destinationWithinRadius(runSpeed)) return;
     faceDestination();
     setCharacterStateRunning();
+  }
+
+  void clearTarget(){
+    target = null;
+  }
+
+  /// throws an exception if target is null
+  void setDestinationToTarget() {
+    final target = this.target;
+    if (target == null) {
+      throw Exception('target is null');
+    }
+    destinationX = target.x;
+    destinationY = target.y;
+    destinationZ = target.z;
+  }
+
+  /// throws an exception if target is null
+  bool targetWithinRadius(double radius) {
+    final target = this.target;
+    if (target == null) {
+      throw Exception("target is null");
+    }
+    return withinRadiusPosition(target, radius);
   }
 }

@@ -85,6 +85,9 @@ class IsometricPosition with Position {
   double getDistanceSquared(IsometricPosition position) =>
       getDistanceSquaredXYZ(position.x, position.y, position.z);
 
+  double getDistanceXYZ(double x, double y, double z) =>
+       sqrt(getDistanceSquaredXYZ(x, y, z));
+
   double getDistanceSquaredXYZ(double x, double y, double z) =>
       pow(this.x - x, 2) +
       pow(this.y - y, 2) +

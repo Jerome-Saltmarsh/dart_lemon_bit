@@ -151,7 +151,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
     if (!inputTypeKeyboard) {
       if (mouseLeftDown) {
-        player.runToMouse();
+        player.setDestinationToMouse();
       }
       return;
     }

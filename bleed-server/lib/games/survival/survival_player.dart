@@ -811,4 +811,13 @@ class SurvivalPlayer extends IsometricPlayer {
     writeByte(interactMode);
   }
 
+  void dropItemType({required int itemType, required int quantity}){
+    if (itemType == ItemType.Empty) return;
+    game.spawnGameObjectItemAtPosition(
+      position: this,
+      type: itemType,
+      quantity: quantity,
+    );
+    writePlayerEvent(PlayerEvent.Item_Dropped);
+  }
 }
