@@ -1228,7 +1228,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < characterLength; i++) {
       final character = characters[i];
       updateIsometricCharacter(character);
-      character.customUpdate();
+      character.customOnUpdate();
+      // TODO
       if (character is T) {
         updatePlayer(character);
         customUpdatePlayer(character);
@@ -1272,7 +1273,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.active) continue;
-        // if (colliderA.order > colliderB.order) break;
         if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
         if (colliderA.right < colliderB.left) continue;
@@ -2461,4 +2461,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   double clampX(double value)=> clamp(value, 0, scene.gridRowLength);
 
   double clampY(double value)=> clamp(value, 0, scene.gridColumnLength);
+
+  IsometricCollider? findNearestEnemy(IsometricCollider src, {double radius = 1000}){
+    IsometricCollider? nearestEnemy;
+    var nearestEnemyDistanceSquared = radius * radius;
+    for (final character in characters){
+      if (!src.isEnemy(character)) continue;
+      final distanceSquared = src.getDistanceSquared(character);
+      if (distanceSquared > nearestEnemyDistanceSquared) continue;
+      nearestEnemyDistanceSquared = distanceSquared;
+      nearestEnemy = character;
+    }
+    return nearestEnemy;
+  }
 }

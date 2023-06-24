@@ -58,8 +58,8 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   @override
-  void customUpdate() {
-    super.customUpdate();
+  void customOnUpdate() {
+    super.customOnUpdate();
 
     updateDestination();
     updateDestinationRadius();

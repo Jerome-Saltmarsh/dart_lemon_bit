@@ -383,7 +383,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   void onWeaponTypeChanged() {}
 
   /// safe to override
-  void customUpdate() {}
+  void customOnUpdate() {}
 
   void customOnHurt(){ }
 

@@ -1,13 +1,14 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/games/mmo/mmo_npc.dart';
+import 'package:bleed_server/games/mmo/mmo_zombie.dart';
 import 'package:bleed_server/isometric/src.dart';
 
 import 'mmo_player.dart';
 
-class Mmo extends IsometricGame<MmoPlayer> {
+class MmoGame extends IsometricGame<MmoPlayer> {
 
-  Mmo({
+  MmoGame({
     required super.scene,
     required super.time,
     required super.environment,
@@ -25,6 +26,8 @@ class Mmo extends IsometricGame<MmoPlayer> {
         player.talk("Hello there");
       }
     ));
+
+    characters.add(MMOZombie(game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
   }
 
   @override

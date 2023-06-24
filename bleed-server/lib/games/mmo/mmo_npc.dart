@@ -17,4 +17,10 @@ class MMONpc extends IsometricCharacterTemplate {
     this.interact,
   });
 
+  @override
+  void customOnUpdate() {
+    super.customOnUpdate();
+
+    
+  }
 }

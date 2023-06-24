@@ -118,7 +118,7 @@ class Gamestream {
       _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
   };
 
-  Game buildGameMMO() => Mmo(
+  Game buildGameMMO() => MmoGame(
       scene: isometricScenes.mmoTown,
       time: IsometricTime(enabled: true, hour: 14),
       environment: IsometricEnvironment(),

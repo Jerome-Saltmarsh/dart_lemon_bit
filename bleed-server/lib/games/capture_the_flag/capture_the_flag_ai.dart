@@ -181,19 +181,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get shouldUpdateCharacterAction => !deadBusyOrWeaponStateBusy;
 
-  IsometricCollider? getNearestEnemy(){
-    IsometricCollider? nearestEnemy;
-    var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
-    for (final character in game.characters){
-        if (!isEnemy(character)) continue;
-        final distanceSquared = getDistanceSquared(character);
-        if (distanceSquared > nearestEnemyDistanceSquared) continue;
-        nearestEnemyDistanceSquared = distanceSquared;
-        nearestEnemy = character;
-    }
-    return nearestEnemy;
-  }
-
   CaptureTheFlagAIDecision getDecision(){
 
     if (holdingFlagAny)
@@ -215,7 +202,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   @override
-  void customUpdate() {
+  void customOnUpdate() {
     if (deadOrBusy) return;
 
     if (slowed) {
@@ -304,7 +291,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
         return flagEnemy;
 
       case CaptureTheFlagAIDecision.Attack_Nearest_Enemy:
-        return getNearestEnemy();
+        // return getNearestEnemy();
+        return game.findNearestEnemy(this);
 
       case CaptureTheFlagAIDecision.Run_To_Base_Own:
          return baseOwn;
