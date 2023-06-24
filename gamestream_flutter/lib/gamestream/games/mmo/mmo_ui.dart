@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/ui/src.dart';
+import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
 extension MMOUI on MmoGame {

@@ -5,7 +5,6 @@ export 'game_images.dart';
 export 'gamestream/game_io.dart';
 export 'game_persistence.dart';
 export 'gamestream/game_animation.dart';
-export 'game_style.dart';
 export 'package:bleed_common/src.dart';
 export 'dart:typed_data';
 export 'instances/engine.dart';

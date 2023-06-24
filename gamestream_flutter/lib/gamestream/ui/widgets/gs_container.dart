@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_style.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/game_style.dart';
 
 class GSContainer extends StatelessWidget {
   final Widget child;

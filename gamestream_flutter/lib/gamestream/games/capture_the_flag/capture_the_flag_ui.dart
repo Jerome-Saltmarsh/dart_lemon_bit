@@ -409,7 +409,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                child: GSButton(
                  action: () => upgradePower(power),
                  child: Container(
-                    color: GameStyle.Container_Color,
+                    // color: GameStyle.Container_Color,
+                    color: GS_CONTAINER_COLOR,
                     width: 40,
                     height: 40,
                     alignment: Alignment.center,
