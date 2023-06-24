@@ -29,7 +29,8 @@ class Mmo extends IsometricGame<MmoPlayer> {
     ..x = 880
     ..y = 1100
     ..z = 50
-    ..team = MmoTeam.Human;
+    ..team = MmoTeam.Human
+    ..setDestinationToCurrentPosition();
 
   @override
   int get maxPlayers => 64;

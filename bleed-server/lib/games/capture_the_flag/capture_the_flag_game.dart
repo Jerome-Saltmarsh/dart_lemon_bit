@@ -479,10 +479,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   void customUpdate() {
-    for (final character in characters) {
-      character.customUpdate();
-    }
-
+    super.customUpdate();
     updateFlag(flagRed);
     updateFlag(flagBlue);
   }

@@ -1228,6 +1228,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < characterLength; i++) {
       final character = characters[i];
       updateIsometricCharacter(character);
+      character.customUpdate();
       if (character is T) {
         updatePlayer(character);
         customUpdatePlayer(character);

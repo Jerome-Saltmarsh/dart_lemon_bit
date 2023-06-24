@@ -23,11 +23,27 @@ class MmoPlayer extends IsometricPlayer {
   @override
   void onMouseLeftClicked() {
     final aimTarget = this.aimTarget;
-
     if (aimTarget == null) {
-      destinationX = mouseGridX;
-      destinationY = mouseGridX;
-      destinationZ = mouseGridZ;
+      setDestinationToMouse();
+    }
+  }
+
+  @override
+  void onMouseLeftHeld() {
+    final aimTarget = this.aimTarget;
+    if (aimTarget == null) {
+      setDestinationToMouse();
+    }
+  }
+
+  @override
+  void customUpdate() {
+    super.customUpdate();
+
+    if (!destinationWithinRadius(50)){
+      runToDestination();
+    } else {
+      setCharacterStateIdle();
     }
   }
 }

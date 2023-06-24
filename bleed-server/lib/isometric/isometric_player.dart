@@ -734,6 +734,12 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
         scene: game.scene,
         targetIndex: mouseGridIndex,
       );
+
+  void setDestinationToMouse() {
+    destinationX = mouseGridX;
+    destinationY = mouseGridY;
+    destinationZ = mouseGridZ;
+  }
 }
 
 

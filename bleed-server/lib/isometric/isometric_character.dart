@@ -97,6 +97,13 @@ abstract class IsometricCharacter extends IsometricCollider {
     physical = true;
     hitable = true;
     radius = CharacterType.getRadius(characterType);
+    setDestinationToCurrentPosition();
+  }
+
+  void setDestinationToCurrentPosition(){
+    destinationX = x;
+    destinationZ = y;
+    destinationZ = z;
   }
 
   // int get buffByte {
@@ -379,4 +386,15 @@ abstract class IsometricCharacter extends IsometricCollider {
   void customOnHurt(){ }
 
   void customOnDead() {}
+
+  bool destinationWithinRadius(double radius) =>
+      withinRadiusXYZ(destinationX, destinationY, destinationZ, radius);
+
+  void faceDestination() => faceXY(destinationX, destinationY);
+
+  void runToDestination(){
+    if (destinationWithinRadius(runSpeed)) return;
+    faceDestination();
+    setCharacterStateRunning();
+  }
 }
