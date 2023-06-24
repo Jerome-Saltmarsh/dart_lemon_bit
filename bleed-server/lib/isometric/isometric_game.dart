@@ -1657,7 +1657,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         setDestinationToPathNodeIndex(character);
       }
 
-      if (character.shouldAttackTargetEnemy(scene)) {
+      if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
         character.attackTargetEnemy(this);
         return;
       }
@@ -2540,4 +2540,31 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.runDestinationY = scene.getNodePositionY(pathNodeIndex);
   }
 
+  bool characterTargetIsPerceptible(IsometricCharacter character) {
+    final target = character.target;
+
+    if (target == null)
+      return false;
+
+    var positionX = character.x;
+    var positionY = character.y;
+    var positionZ = character.z;
+    var angle = target.getAngle(character);
+
+    final distance = character.getDistance3(target);
+    final jumpSize = Node_Size_Quarter;
+    final jumps = distance ~/ jumpSize;
+    final velX = getAdjacent(angle, jumpSize);
+    final velY = getOpposite(angle, jumpSize);
+
+    for (var i = 0; i < jumps; i++) {
+      positionX += velX;
+      positionY += velY;
+      final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, positionZ);
+      if (nodeOrientation != NodeOrientation.None){
+        return false;
+      }
+    }
+    return true;
+  }
 }
