@@ -47,37 +47,35 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     );
 
   Widget buildDebugWindow() =>
-      buildDebugMode(
-        child: GSDialog(
-          child: GSContainer(
-            child: WatchBuilder(
-                tab,
-                (selectedTab) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (selectedTab ==
-                            CaptureTheFlagUITabs.Selected_Character)
-                          buildWindowSelectedCharacter(),
-                        if (selectedTab == CaptureTheFlagUITabs.GameObjects)
-                          buildWindowGameObjects(),
-                        if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
-                          buildWindowFlagStatus(),
-                        height8,
-                        Row(
-                          children: CaptureTheFlagUITabs.values
-                              .map((e) => onPressed(
-                                  action: () => tab.value = e,
-                                  child: Container(
-                                      color: e == selectedTab
-                                          ? Colors.white12
-                                          : null,
-                                      padding: const EdgeInsets.all(8),
-                                      child: buildText(e.name))))
-                              .toList(growable: false),
-                        )
-                      ],
-                    )),
-          ),
+      GSDialog(
+        child: GSContainer(
+          child: WatchBuilder(
+              tab,
+                  (selectedTab) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (selectedTab ==
+                      CaptureTheFlagUITabs.Selected_Character)
+                    isometric.debug.buildWindowSelectedCharacter(),
+                  if (selectedTab == CaptureTheFlagUITabs.GameObjects)
+                    buildWindowGameObjects(),
+                  if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
+                    buildWindowFlagStatus(),
+                  height8,
+                  Row(
+                    children: CaptureTheFlagUITabs.values
+                        .map((e) => onPressed(
+                        action: () => tab.value = e,
+                        child: Container(
+                            color: e == selectedTab
+                                ? Colors.white12
+                                : null,
+                            padding: const EdgeInsets.all(8),
+                            child: buildText(e.name))))
+                        .toList(growable: false),
+                  )
+                ],
+              )),
         ),
       );
 
@@ -261,9 +259,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     ),
   );
 
-  Widget buildDebugMode({required Widget child}) =>
-      WatchBuilder(debugMode, (t) => t ? child : nothing);
-
   Widget buildWindowGameObjects()=> Column(
       children: [
         Container(
@@ -285,55 +280,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         )
       ],
     );
-
-  Widget buildWindowSelectedCharacter() =>
-      WatchBuilder(characterSelected, (characterSelected){
-        if (!characterSelected) return nothing;
-        return Container(
-          width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              WatchBuilder(characterSelectedRuntimeType, (runtimeType) => buildText("type: $runtimeType")),
-              WatchBuilder(characterSelectedX, (x) => buildText("position-x: ${x.toInt()}")),
-              WatchBuilder(characterSelectedY, (y) => buildText("position-y: ${y.toInt()}")),
-              WatchBuilder(characterSelectedZ, (z) => buildText("position-z: ${z.toInt()}")),
-              WatchBuilder(characterSelectedPathIndex, (pathIndex) => buildText("path-index: $pathIndex")),
-              WatchBuilder(characterSelectedPathEnd, (pathEnd) => buildText("path-end: $pathEnd")),
-              WatchBuilder(characterSelectedIsAI, (isAI) => !isAI ? nothing : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    WatchBuilder(characterSelectedAIDecision, (decision) => buildText("ai-decision: ${decision.name}")),
-                    onPressed(
-                        action: toggleSelectedCharacterAIRole,
-                        child: WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}"))),
-                    onPressed(
-                        action: debugSelectAI,
-                        child: buildText("DEBUG")),
-                ],
-              )),
-              const SizedBox(height: 1,),
-              WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
-                if (!characterSelectedTarget) return nothing;
-                return Container(
-                  color: Colors.white12,
-                  padding: GameStyle.Container_Padding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildText("TARGET"),
-                      WatchBuilder(characterSelectedTargetType, (type) => buildText("type: $type")),
-                      WatchBuilder(characterSelectedTargetX, (x) => buildText("x: ${x.toInt()}")),
-                      WatchBuilder(characterSelectedTargetY, (y) => buildText("y: ${y.toInt()}")),
-                      WatchBuilder(characterSelectedTargetZ, (z) => buildText("z: ${z.toInt()}")),
-                    ],
-                  ),
-                );
-              }),
-            ],
-          ),
-        );
-      });
 
   Widget buildToggleRow({required String title, required WatchBool watchBool}) => onPressed(
       action: watchBool.toggle,

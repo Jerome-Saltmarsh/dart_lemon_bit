@@ -14,7 +14,7 @@ import 'gamestream.dart';
 
 extension ServerResponseReader on Gamestream {
 
-  void read(Uint8List values) {
+  void readServerResponse(Uint8List values) {
     assert (values.isNotEmpty);
     updateFrame.value++;
     index = 0;
@@ -34,6 +34,9 @@ extension ServerResponseReader on Gamestream {
           break;
         case ServerResponse.Api_SPR:
           readServerResponseApiSPR();
+          break;
+        case ServerResponse.Isometric:
+          readServerResponseIsometric();
           break;
         case ServerResponse.GameObject:
           readGameObject();
@@ -783,5 +786,43 @@ extension ServerResponseReader on Gamestream {
 
   CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
   CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
+
+  void readServerResponseIsometric() {
+
+
+    final debug = isometric.debug;
+    debug.characterSelected.value = readBool();
+
+    if (!debug.characterSelected.value)
+      return;
+
+    debug.characterSelectedRuntimeType.value = readString();
+    debug.characterSelectedX.value = readDouble();
+    debug.characterSelectedY.value = readDouble();
+    debug.characterSelectedZ.value = readDouble();
+    debug.characterSelectedDestinationX.value = readDouble();
+    debug.characterSelectedDestinationY.value = readDouble();
+    debug.characterSelectedPathIndex.value = readUInt16();
+    final pathEnd = readUInt16();
+    debug.characterSelectedPathEnd.value = pathEnd;
+    for (var i = 0; i < pathEnd; i++){
+      debug.characterSelectedPath[i] = readUInt16();
+    }
+
+    final characterSelectedIsAI = readBool();
+    debug.characterSelectedIsAI.value = characterSelectedIsAI;
+    if (characterSelectedIsAI) {
+      debug.characterSelectedAIDecision.value = readCaptureTheFlagAIDecision();
+      debug.characterSelectedAIRole.value = readCaptureTheFlagAIRole();
+    }
+
+    final characterSelectedTarget = readBool();
+    debug.characterSelectedTarget.value = characterSelectedTarget;
+    if (!characterSelectedTarget) return;
+    debug.characterSelectedTargetType.value = readString();
+    debug.characterSelectedTargetX.value = readDouble();
+    debug.characterSelectedTargetY.value = readDouble();
+    debug.characterSelectedTargetZ.value = readDouble();
+  }
 }
 

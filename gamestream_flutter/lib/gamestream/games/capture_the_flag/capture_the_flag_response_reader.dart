@@ -44,60 +44,6 @@ extension CaptureTheFlagResponseReader on Gamestream {
       case CaptureTheFlagResponse.Next_Game_Count_Down:
         captureTheFlag.nextGameCountDown.value = readUInt16();
         break;
-      case CaptureTheFlagResponse.AI_Paths:
-        captureTheFlag.characterPaths.clear();
-        final total = readUInt16();
-        for (var i = 0; i < total; i++){
-          final pathIndex = readUInt16(); // DELETE NOT DELETE
-          final pathLength = readUInt16();
-          final path = readUint16List(pathLength);
-          captureTheFlag.characterPaths.add(path);
-        }
-        break;
-      case CaptureTheFlagResponse.AI_Targets:
-        var index = 0;
-        final characterTargets = captureTheFlag.characterTargets;
-        captureTheFlag.characterTargetTotal = 0;
-        while (readBool()) {
-          captureTheFlag.characterTargetTotal++;
-          for (var i = 0; i < 6; i++){
-            characterTargets[index++] = readDouble();
-          }
-        }
-        break;
-
-      case CaptureTheFlagResponse.Selected_Character:
-        final characterSelected = readBool();
-        captureTheFlag.characterSelected.value = characterSelected;
-        if (!characterSelected) break;
-        captureTheFlag.characterSelectedRuntimeType.value = readString();
-        captureTheFlag.characterSelectedX.value = readDouble();
-        captureTheFlag.characterSelectedY.value = readDouble();
-        captureTheFlag.characterSelectedZ.value = readDouble();
-        captureTheFlag.characterSelectedDestinationX.value = readDouble();
-        captureTheFlag.characterSelectedDestinationY.value = readDouble();
-        captureTheFlag.characterSelectedPathIndex.value = readUInt16();
-        final pathEnd = readUInt16();
-        captureTheFlag.characterSelectedPathEnd.value = pathEnd;
-        for (var i = 0; i < pathEnd; i++){
-          captureTheFlag.characterSelectedPath[i] = readUInt16();
-        }
-
-        final characterSelectedIsAI = readBool();
-        captureTheFlag.characterSelectedIsAI.value = characterSelectedIsAI;
-        if (characterSelectedIsAI) {
-          captureTheFlag.characterSelectedAIDecision.value = readCaptureTheFlagAIDecision();
-          captureTheFlag.characterSelectedAIRole.value = readCaptureTheFlagAIRole();
-        }
-
-        final characterSelectedTarget = readBool();
-        captureTheFlag.characterSelectedTarget.value = characterSelectedTarget;
-        if (!characterSelectedTarget) break;
-        captureTheFlag.characterSelectedTargetType.value = readString();
-        captureTheFlag.characterSelectedTargetX.value = readDouble();
-        captureTheFlag.characterSelectedTargetY.value = readDouble();
-        captureTheFlag.characterSelectedTargetZ.value = readDouble();
-        break;
 
       case CaptureTheFlagResponse.Activated_Power:
         final powerSet = readBool();

@@ -1,23 +1,14 @@
 
 import 'dart:math';
 
-import 'package:bleed_server/common/src/api_player.dart';
-import 'package:bleed_server/common/src/isometric/characters_end.dart';
-import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
-import 'package:bleed_server/common/src/input_mode.dart';
-import 'package:bleed_server/common/src/environment_response.dart';
-import 'package:bleed_server/common/src/game_error.dart';
-import 'package:bleed_server/common/src/game_event_type.dart';
-import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/common/src/isometric/node_size.dart';
-import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/common/src/isometric/target_category.dart';
+import 'package:bleed_server/common.dart';
+import 'package:bleed_server/games/capture_the_flag/capture_the_flag_ai.dart';
+import 'package:bleed_server/utils.dart';
+
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/core/player.dart';
 import 'package:bleed_server/games/isometric_editor/isometric_editor.dart';
-import 'package:bleed_server/utils/generate_random_name.dart';
-import 'package:bleed_server/utils/system.dart';
+
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
@@ -50,11 +41,11 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   final mouse = Vector2(0, 0);
 
   IsometricGame game;
+  IsometricCharacter? debugCharacter;
   IsometricGameObject? editorSelectedGameObject;
   IsometricCollider? _aimTarget; // the currently highlighted character
   Account? account;
 
-  /// CONSTRUCTOR
   IsometricPlayer({
     required this.game,
   }) : super(
@@ -71,28 +62,31 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     id = game.playerId++;
   }
 
-  /// GETTERS
-
   int get mouseGridIndex => game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, mouseGridZ);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
       : false;
 
-
   IsometricCollider? get aimTarget => _aimTarget;
+
   int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
   double get mouseGridX => game.clampX((mouse.x + mouse.y) + z);
+
   double get mouseGridY => game.clampY((mouse.y - mouse.x) + z);
+
   double get mouseGridZ => z;
 
   /// in radians
-  double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
+  double get mouseAngle => getAngleBetween(
+      mouseGridX  + Character_Gun_Height,
+      mouseGridY + Character_Gun_Height, x, y,
+  );
+
   IsometricScene get scene => game.scene;
 
-  double get mouseDistance => getDistanceXY(mouseGridX, mouseGridY);
-
+  double get mouseDistance => this.getDistanceXY(mouseGridX, mouseGridY);
 
   set aimTarget(IsometricCollider? collider) {
     if (_aimTarget == collider) return;
@@ -106,7 +100,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     game.customOnPlayerAimTargetChanged(this, collider);
   }
 
-  /// METHODS
   void refreshDamage() {
     weaponDamage = game.getPlayerWeaponDamage(this);
   }
@@ -169,6 +162,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writePlayerWeaponCooldown();
     writePlayerAccuracy();
     writePlayerAimTargetPosition();
+
+    // writeDebugCharacter();
 
     writeProjectiles();
     writePlayerTargetPosition();
@@ -720,6 +715,49 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void setTargetToAimTarget() => target = aimTarget;
+
+  void writeDebugCharacter() {
+    final selectedCharacter = this.debugCharacter;
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Debug_Character);
+
+    if (selectedCharacter == null) {
+      writeBool(false);
+      return;
+    }
+    writeBool(true);
+    writeString(selectedCharacter.runtimeType.toString());
+    writeIsometricPosition(selectedCharacter);
+    writeInt16(selectedCharacter.runX.toInt());
+    writeInt16(selectedCharacter.runY.toInt());
+    writeCharacterPath(selectedCharacter);
+
+    if (selectedCharacter is CaptureTheFlagAI){
+      writeBool(true);
+      writeByte(selectedCharacter.decision.index);
+      writeByte(selectedCharacter.role.index);
+    } else {
+      writeBool(false);
+    }
+
+    final selectedCharacterTarget = selectedCharacter.target;
+    if (selectedCharacterTarget == null){
+      writeBool(false);
+    } else {
+      writeBool(true);
+      writeString(selectedCharacterTarget.runtimeType.toString());
+      writeIsometricPosition(selectedCharacterTarget);
+    }
+  }
+
+  void writeCharacterPath(IsometricCharacter character){
+    writeUInt16(character.pathIndex);
+    writeUInt16(character.pathStart);
+    for (var j = 0; j < character.pathStart; j++){
+      writeUInt16(character.path[j]);
+    }
+  }
+
 }
 
 

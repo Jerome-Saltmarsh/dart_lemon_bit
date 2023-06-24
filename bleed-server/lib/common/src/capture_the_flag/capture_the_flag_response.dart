@@ -9,10 +9,7 @@ class CaptureTheFlagResponse {
   static const Select_Class = 7;
   static const Game_Status = 8;
   static const Next_Game_Count_Down = 9;
-  static const AI_Paths = 10;
-  static const AI_Targets = 11;
   static const AI_List = 13;
-  static const Selected_Character = 14;
   static const Activated_Power = 15;
   static const Activated_Power_Position = 16;
   static const Activated_Power_Target = 17;

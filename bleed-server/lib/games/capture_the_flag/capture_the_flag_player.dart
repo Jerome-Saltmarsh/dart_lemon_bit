@@ -12,7 +12,6 @@ import 'capture_the_flag_power.dart';
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
-  IsometricCharacter? selectedCharacter;
   IsometricPosition? powerActivatedTarget;
   IsometricPosition? powerPerformingTarget;
   CaptureTheFlagPower? powerPerforming;
@@ -116,7 +115,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     super.writePlayerGame();
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
-    writeSelectedCharacter(); // todo optimize
     writeActivatedPowerPosition(); // todo optimize
     writeActivatedPowerTarget(); // todo optimize
     writePower1(); // todo optimize
@@ -208,21 +206,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeUInt16(value);
   }
 
-  void writeAITarget(){
-    writeByte(ServerResponse.Capture_The_Flag);
-    writeByte(CaptureTheFlagResponse.AI_Targets);
-    final characters = game.characters;
-    for (final character in characters){
-       if (!character.active) continue;
-       final characterTarget = character.target;
-       if (characterTarget == null) continue;
-       writeBool(true);
-       writeIsometricPosition(character);
-       writeIsometricPosition(characterTarget);
-    }
-    writeBool(false);
-  }
-
   void writeAIList(){
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.AI_List);
@@ -238,50 +221,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeBool(false);
   }
 
-  void writeCharacterPath(IsometricCharacter character){
-    writeUInt16(character.pathIndex);
-    writeUInt16(character.pathStart);
-    for (var j = 0; j < character.pathStart; j++){
-      writeUInt16(character.path[j]);
-    }
-  }
-
-  void writeSelectedCharacter() {
-    final selectedCharacter = this.selectedCharacter;
-    writeByte(ServerResponse.Capture_The_Flag);
-    writeByte(CaptureTheFlagResponse.Selected_Character);
-
-    if (selectedCharacter == null) {
-      writeBool(false);
-      return;
-    }
-    writeBool(true);
-    writeString(selectedCharacter.runtimeType.toString());
-    writeIsometricPosition(selectedCharacter);
-    writeInt16(selectedCharacter.runX.toInt());
-    writeInt16(selectedCharacter.runY.toInt());
-    writeCharacterPath(selectedCharacter);
-
-    if (selectedCharacter is CaptureTheFlagAI){
-      writeBool(true);
-      writeByte(selectedCharacter.decision.index);
-      writeByte(selectedCharacter.role.index);
-    } else {
-      writeBool(false);
-    }
-
-    final selectedCharacterTarget = selectedCharacter.target;
-    if (selectedCharacterTarget == null){
-      writeBool(false);
-    } else {
-      writeBool(true);
-      writeString(selectedCharacterTarget.runtimeType.toString());
-      writeIsometricPosition(selectedCharacterTarget);
-    }
-  }
-
   void selectAINearestToMouse() {
-     selectedCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
+     debugCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
   }
 
   void activatePower1() => activatePower(power1);

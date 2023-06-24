@@ -2,8 +2,8 @@
 
 import 'dart:ui';
 
-import 'package:bleed_common/src.dart';
-import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_debug.dart';
+import 'package:gamestream_flutter/library.dart';
 
 import 'ui/game_isometric_minimap.dart';
 import 'classes/isometric_particles.dart';
@@ -22,6 +22,7 @@ import 'components/isometric_server.dart';
 import 'components/isometric_render.dart';
 
 class Isometric {
+  final debug = IsometricDebug();
   final clientState = IsometricClientState();
   final server = IsometricServer();
   final nodes = IsometricNodes();

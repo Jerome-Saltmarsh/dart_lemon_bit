@@ -117,7 +117,7 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return gamestream.read(response);
+      return gamestream.readServerResponse(response);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){
