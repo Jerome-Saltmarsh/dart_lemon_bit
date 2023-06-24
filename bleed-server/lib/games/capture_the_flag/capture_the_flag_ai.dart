@@ -47,27 +47,33 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
       !deadBusyOrWeaponStateBusy && getDestinationDistanceSquared() > 80;
 
   bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
+
   int get nodeIndex => game.scene.getNodeIndexV3(this);
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
+
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
 
   IsometricPosition get baseOwn => isTeamRed ? game.baseRed : game.baseBlue;
+
   IsometricPosition get baseEnemy => isTeamRed ? game.baseBlue : game.baseRed;
 
   CaptureTheFlagGameObjectFlag get flagOwn => isTeamRed ? game.flagRed : game.flagBlue;
+
   CaptureTheFlagGameObjectFlag get flagEnemy => isTeamRed ? game.flagBlue : game.flagRed;
 
   IsometricPosition get flagSpawnOwn => game.getFlagSpawn(flagOwn);
 
   double get baseOwnDistance => getDistance3(baseOwn);
+
   double get baseEnemyDistance => getDistance3(baseEnemy);
 
   bool get flagEnemyCapturable => flagEnemy.statusAtBase || flagEnemy.statusDropped;
 
-
   bool get enemyFlagCapturable => enemyFlagStatusAtBase || enemyFlagStatusDropped;
+
   bool get roleOffensive => role == CaptureTheFlagAIRole.Offense;
+
   bool get roleDefensive => role == CaptureTheFlagAIRole.Defense;
 
   bool get shouldAttackTargetEnemy {
@@ -82,20 +88,22 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get targetIsPerceptible {
     final target = this.target;
-    if (target == null) return false;
-    final distance = getDistance3(target);
-    final jumpSize = Node_Size_Quarter;
-    final jumps = distance ~/ jumpSize;
+
+    if (target == null)
+      return false;
 
     var positionX = x;
     var positionY = y;
     var angle = target.getAngle(this);
+
+    final distance = getDistance3(target);
+    final jumpSize = Node_Size_Quarter;
+    final jumps = distance ~/ jumpSize;
     final velX = getAdjacent(angle, jumpSize);
     final velY = getOpposite(angle, jumpSize);
-
     final scene = game.scene;
 
-    for (var i = 0; i < jumps; i++){
+    for (var i = 0; i < jumps; i++) {
       positionX += velX;
       positionY += velY;
       final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, z);
@@ -114,17 +122,29 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }
 
   bool get closeToFlagOwn => withinRadiusPosition(flagOwn, 250);
+
   bool get enemyWithinViewRange => enemyWithinRange(viewRange);
+
   bool get flagOwnCapturedByEnemy => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+
   bool get flagOwnCapturedByAlly => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Ally;
+
   bool get flagOwnDropped => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
+
   bool get awayFromFlagOwnSpawn => !withinRadiusPosition(flagSpawnOwn, 100);
+
   bool get flagOwnRespawning => flagOwn.status == CaptureTheFlagFlagStatus.Respawning;
+
   bool get flagEnemyRespawning => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
+
   bool get holdingFlagAny => holdingFlagEnemy || holdingFlagOwn;
+
   bool get holdingFlagEnemy => flagEnemy.heldBy == this;
+
   bool get holdingFlagOwn => flagOwn.heldBy == this;
+
   bool get enemyFlagStatusAtBase => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
+
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
   bool get shouldIncrementPathIndex => pathIndex > 0 && nodeIndex == pathNodeIndex;
@@ -160,7 +180,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     if (target == null) return false;
     return game.scene.getNodeIndexV3(target) != targetIndex;
   }
-
 
   bool get shouldSetDestinationToTarget {
     final target = this.target;
@@ -215,7 +234,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     executeDecision();
   }
 
-  void updatePath() {
+  void updatePathToTarget() {
     final target = this.target;
     if (target == null) {
       pathIndex = 0;
@@ -229,7 +248,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   void executeDecision() {
 
     if (shouldUpdatePath)
-      updatePath();
+      updatePathToTarget();
 
     if (shouldUpdateDestination)
       updateDestination();
