@@ -1644,6 +1644,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     final target = character.target;
 
+    if (character.pathIndex > 0 && getNodeIndexV3(character) == character.pathNodeIndex){
+      character.pathIndex--;
+    }
+
     if (target != null) {
       final updatedTargetIndex = scene.getNodeIndexV3(target);
       if (updatedTargetIndex != character.targetIndex) {
@@ -1661,8 +1665,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         );
       }
     }
-
-
 
     character.updateAccuracy();
 

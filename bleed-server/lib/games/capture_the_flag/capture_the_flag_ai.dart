@@ -147,7 +147,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
-  bool get shouldIncrementPathIndex => pathIndex > 0 && nodeIndex == pathNodeIndex;
+  // bool get shouldIncrementPathIndex => pathIndex > 0 && nodeIndex == pathNodeIndex;
 
   bool get arrivedAtPathEnd => pathStart > 0 && pathIndex <= 0;
 
@@ -236,27 +236,20 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   void executeDecision() {
 
-    // if (shouldUpdatePath)
-    //   updatePathToTarget();
-
     if (shouldUpdateDestination)
       updateDestination();
 
     if (shouldUpdateCharacterAction)
       updateCharacterAction();
 
-    if (shouldIncrementPathIndex)
-      incrementPathIndex();
+    // if (shouldIncrementPathIndex)
+    //   incrementPathIndex();
 
   }
 
-  // void updatePathToTarget() {
-  //   game.setCharacterPathToTarget(this);
+  // void incrementPathIndex() {
+  //   pathIndex--;
   // }
-
-  void incrementPathIndex() {
-    pathIndex--;
-  }
 
   void updateDestination() {
     if (shouldSetDestinationToTarget) {
