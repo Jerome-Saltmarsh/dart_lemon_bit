@@ -26,9 +26,23 @@ class MMOZombie extends IsometricCharacter {
     super.customOnUpdate();
 
     updateTarget();
+    updateCharacterState();
   }
 
   void updateTarget(){
-
+      if (targetIsNull) {
+        target = game.findNearestEnemy(this);
+      }
   }
+
+  void updateCharacterState(){
+    final target = this.target;
+
+    if (target == null) return;
+
+    if (targetWithinAttackRange){
+
+    }
+  }
+
 }

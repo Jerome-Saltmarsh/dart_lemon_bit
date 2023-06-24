@@ -49,25 +49,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var destinationY = 0.0;
   var destinationZ = 0.0;
 
-  double get weaponRangeSquared => weaponRange * weaponRange;
-
-  void setPathToNodeIndex({
-    required IsometricScene scene,
-    required int targetIndex,
-  }) {
-    pathIndex = 0;
-    final startIndex = scene.getNodeIndexV3(this);
-    var endPath = scene.findPath(startIndex, targetIndex, max: path.length);
-    while (endPath != startIndex) {
-      path[pathIndex++] = endPath;
-      endPath = scene.path[endPath];
-    }
-    if (pathIndex > 0){
-      pathIndex--;
-    }
-    pathStart = pathIndex;
-  }
-
   IsometricCharacter({
     required int characterType,
     required int health,
@@ -100,10 +81,15 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
-  void setDestinationToCurrentPosition(){
-    destinationX = x;
-    destinationY = y;
-    destinationZ = z;
+  double get weaponRangeSquared => weaponRange * weaponRange;
+
+  /// throws an exception if target is null
+  bool get targetWithinAttackRange {
+    final target = this.target;
+    if (target == null){
+      throw Exception('target == null');
+    }
+    return withinAttackRange(target);
   }
 
   // int get buffByte {
@@ -124,6 +110,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   bool get isPlayer => false;
   bool get aliveAndActive => alive && active;
 
+  int get weaponStateDurationTotal => _weaponStateDurationTotal;
+
   set weaponType(int value){
     assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
     if (_weaponType == value) return;
@@ -131,7 +119,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     onWeaponTypeChanged();
   }
 
-  int get weaponStateDurationTotal => _weaponStateDurationTotal;
 
   set weaponStateDurationTotal(int value){
     assert (value >= 0);
@@ -377,9 +364,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   /// safe to override
-  void onEquipmentChanged() {}
-
-  /// safe to override
   void onWeaponTypeChanged() {}
 
   /// safe to override
@@ -422,5 +406,28 @@ abstract class IsometricCharacter extends IsometricCollider {
       throw Exception("target is null");
     }
     return withinRadiusPosition(target, radius);
+  }
+
+  void setDestinationToCurrentPosition(){
+    destinationX = x;
+    destinationY = y;
+    destinationZ = z;
+  }
+
+  void setPathToNodeIndex({
+    required IsometricScene scene,
+    required int targetIndex,
+  }) {
+    pathIndex = 0;
+    final startIndex = scene.getNodeIndexV3(this);
+    var endPath = scene.findPath(startIndex, targetIndex, max: path.length);
+    while (endPath != startIndex) {
+      path[pathIndex++] = endPath;
+      endPath = scene.path[endPath];
+    }
+    if (pathIndex > 0){
+      pathIndex--;
+    }
+    pathStart = pathIndex;
   }
 }

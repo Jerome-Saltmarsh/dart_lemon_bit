@@ -43,4 +43,7 @@ class IsometricCharacterTemplate extends IsometricCharacter {
     _legsType = value;
     onEquipmentChanged();
   }
+
+  /// safe to override
+  void onEquipmentChanged() {}
 }
