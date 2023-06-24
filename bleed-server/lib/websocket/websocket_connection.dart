@@ -65,8 +65,10 @@ class WebSocketConnection with ByteReader {
 
   void onData(dynamic args) {
     if (args is Uint8List) {
+      if (args.isEmpty) return;
+      index = 0;
       values = args;
-      switch (values[0]) {
+      switch (readByte()) {
         case ClientRequest.Update:
           handleClientRequestUpdate(args);
           return;
@@ -575,7 +577,8 @@ class WebSocketConnection with ByteReader {
 
     if (player == null) return errorPlayerNotFound();
 
-    final hex = args[1];
+
+    final hex = readByte();
 
     final direction         = hex & 0xf;
     final mouseDownLeft     = hex & ByteHex.Hex_16 > 0;
@@ -584,12 +587,14 @@ class WebSocketConnection with ByteReader {
     final keyDownSpace      = hex & ByteHex.Hex_128 > 0;
 
     player.framesSinceClientRequest = 0;
-    player.mouse.x = readNumberFromByteArray(args, index: 2).toDouble();
-    player.mouse.y = readNumberFromByteArray(args, index: 4).toDouble();
-    player.screenLeft = readNumberFromByteArray(args, index: 6).toDouble();
-    player.screenTop = readNumberFromByteArray(args, index: 8).toDouble();
-    player.screenRight = readNumberFromByteArray(args, index: 10).toDouble();
-    player.screenBottom = readNumberFromByteArray(args, index: 12).toDouble();
+
+    player.mouse.x = readInt16().toDouble();
+    player.mouse.y = readInt16().toDouble();
+    player.screenLeft = readInt16().toDouble();
+    player.screenTop = readInt16().toDouble();
+    player.screenRight = readInt16().toDouble();
+    player.screenBottom = readInt16().toDouble();
+
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
     player.mouseLeftDown = mouseDownLeft;
 
