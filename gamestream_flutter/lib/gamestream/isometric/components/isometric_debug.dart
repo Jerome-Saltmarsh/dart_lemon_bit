@@ -180,15 +180,15 @@ class IsometricDebug {
   static Widget buildRow({required String text, required Widget value}) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      buildText(text),
+      buildValue(buildText(text), color: Colors.black12),
       buildValue(value),
     ],
   );
 
-  static Widget buildValue(Widget child) => Container(
-      width: 120,
-      alignment: Alignment.center,
-      color: Colors.white12,
+  static Widget buildValue(Widget child, {Color color = Colors.white12}) => Container(
+      width: 140,
+      alignment: Alignment.centerLeft,
+      color: color,
       padding: const EdgeInsets.all(4),
       child: FittedBox(child: child),
     );
