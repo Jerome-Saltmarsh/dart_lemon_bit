@@ -137,6 +137,6 @@ class TemplateAnimation {
     if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
       return FiringShotgun;
     }
-    throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
+    throw Exception('TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})');
   }
 }

@@ -18,10 +18,10 @@ Future<DataAuthentication?> getAuthenticationFacebook() async {
 
   final accessToken = result.accessToken;
 
-  if (accessToken == null) throw Exception("access token is null");
+  if (accessToken == null) throw Exception('access token is null');
 
   final userData =
-      await FacebookAuth.instance.getUserData(fields: "name,email");
+      await FacebookAuth.instance.getUserData(fields: 'name,email');
 
   final privateName = userData['name'];
   final email = userData['email'];
@@ -32,9 +32,9 @@ Future<DataAuthentication?> getAuthenticationFacebook() async {
 
 void initFacebookAuth() {
   FacebookAuth.instance.webInitialize(
-    appId: "652186692488193",
+    appId: '652186692488193',
     cookie: true,
     xfbml: true,
-    version: "v12.0",
+    version: 'v12.0',
   );
 }

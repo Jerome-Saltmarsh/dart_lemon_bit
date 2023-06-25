@@ -33,7 +33,7 @@ class GameFight2DUI extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildText("TUTORIAL", size: 20, color: Colors.white70),
+                          buildText('TUTORIAL', size: 20, color: Colors.white70),
                           buildWatch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                         ],
                       ),
@@ -48,7 +48,7 @@ class GameFight2DUI extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("EDIT", size: 20, color: Colors.white70),
+                            buildText('EDIT', size: 20, color: Colors.white70),
                             BoolWatchBuilderCheckBox(watchBool: game.player.edit),
                           ],
                         ),
@@ -63,7 +63,7 @@ class GameFight2DUI extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("DEBUG", size: 20, color: Colors.white70),
+                            buildText('DEBUG', size: 20, color: Colors.white70),
                             buildWatch(game.renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                           ],
                         ),
@@ -90,7 +90,7 @@ class GameFight2DUI extends StatelessWidget {
         children: [
           onPressed(
               action: tutorialVisible.setFalse,
-              child: buildText("CLOSE"),
+              child: buildText('CLOSE'),
           ),
           gap,
           Row(
@@ -99,30 +99,30 @@ class GameFight2DUI extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  buildTextBox("W"),
+                  buildTextBox('W'),
                   gap,
-                  buildTextBox("A"),
+                  buildTextBox('A'),
                   gap,
-                  buildTextBox("S"),
+                  buildTextBox('S'),
                   gap,
-                  buildTextBox("D"),
+                  buildTextBox('D'),
                   gap,
-                  buildTextBox("SPACE"),
+                  buildTextBox('SPACE'),
                 ],
               ),
               width6,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  buildTextBox("Jump"),
+                  buildTextBox('Jump'),
                   gap,
-                  buildTextBox("RUN LEFT"),
+                  buildTextBox('RUN LEFT'),
                   gap,
-                  buildTextBox("CROUCH"),
+                  buildTextBox('CROUCH'),
                   gap,
-                  buildTextBox("RUN RIGHT"),
+                  buildTextBox('RUN RIGHT'),
                   gap,
-                  buildTextBox("ATTACK"),
+                  buildTextBox('ATTACK'),
                 ],
               ),
             ],

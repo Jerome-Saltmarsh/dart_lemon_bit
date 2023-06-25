@@ -88,7 +88,7 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
-          ? buildFullScreen(child: buildText(operationStatus.name.replaceAll("_", " ")))
+          ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
           : buildWatch(gamestream.network.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
@@ -113,7 +113,7 @@ extension WebsiteUI on WebsiteGame {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildText("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.white),
+                buildText('GAMESTREAM ${(value * 100).toInt()}%', color: Colors.white),
                 height8,
                 Container(
                   width: _width,
@@ -155,12 +155,12 @@ extension WebsiteUI on WebsiteGame {
             height16,
             buildButtonJoinGameType(
               gameType: GameType.Mobile_Aeon,
-              gameName: "AEON",
+              gameName: 'AEON',
             ),
             height16,
             buildButtonJoinGameType(
               gameType: GameType.Rock_Paper_Scissors,
-              gameName: "CHASE",
+              gameName: 'CHASE',
             ),
             height16,
           ],
@@ -172,7 +172,7 @@ extension WebsiteUI on WebsiteGame {
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
 
-  Widget buildLogoGameStream() => buildText("GAMESTREAM.ONLINE", size: FontSize.VeryLarge);
+  Widget buildLogoGameStream() => buildText('GAMESTREAM.ONLINE', size: FontSize.VeryLarge);
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
@@ -183,7 +183,7 @@ extension WebsiteUI on WebsiteGame {
       Container(
         color: GameIsometricColors.black,
         alignment: Alignment.center,
-        child: buildText("LOADING GAMESTREAM"),
+        child: buildText('LOADING GAMESTREAM'),
       );
 
   Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
@@ -199,7 +199,7 @@ extension WebsiteUI on WebsiteGame {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          buildText("Select Your Region", size: FontSize.Large),
+          buildText('Select Your Region', size: FontSize.Large),
           height16,
           WatchBuilder(gamestream.network.region, (activeRegion) {
             return SingleChildScrollView(
@@ -250,7 +250,7 @@ extension WebsiteUI on WebsiteGame {
             child: Center(
               child: buildText(message, color: GameIsometricColors.white),
             ),
-            bottomRight: bottomRight ?? buildText("okay", onPressed: () => gamestream.games.website.error.value = null)
+            bottomRight: bottomRight ?? buildText('okay', onPressed: () => gamestream.games.website.error.value = null)
         )
     );
 }

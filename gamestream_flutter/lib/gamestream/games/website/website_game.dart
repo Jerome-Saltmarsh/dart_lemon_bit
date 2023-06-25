@@ -58,7 +58,7 @@ class WebsiteGame extends Game {
   }
 
   onChangedVisitCount(int value){
-    print("visit-count: $value");
+    print('visit-count: $value');
   }
 
   String formatDate(DateTime value){
@@ -134,16 +134,16 @@ class WebsiteGame extends Game {
   }
 
   void showDialogCustomMaps(){
-    _log("showDialogCustomMaps");
+    _log('showDialogCustomMaps');
     gamestream.games.website.dialog.value = WebsiteDialog.Custom_Maps;
   }
 
   void connectToCustomGame(String customGame){
-    _log("connectToCustomGame");
+    _log('connectToCustomGame');
   }
 
   void _log(String value){
-    print("website.actions.$value()");
+    print('website.actions.$value()');
   }
 
   void showDialogChangeRegion(){

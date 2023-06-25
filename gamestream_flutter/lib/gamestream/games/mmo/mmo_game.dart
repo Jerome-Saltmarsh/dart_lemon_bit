@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class MmoGame extends IsometricGame {
 
-  final npcText = Watch("");
+  final npcText = Watch('');
 
   MmoGame({required super.isometric});
 

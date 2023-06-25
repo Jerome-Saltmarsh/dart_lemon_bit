@@ -136,7 +136,7 @@ class GameImages {
          ItemType.Weapon_Ranged_Bazooka => template_weapon_bazooka,
          ItemType.Weapon_Thrown_Grenade => template_weapon_grenade,
 
-         _ => throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})")
+         _ => throw Exception('GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})')
       };
 
    static void loadImages() {

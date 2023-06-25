@@ -80,7 +80,7 @@ class GameIsometricUI {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildText("SOUND", size: 20, color: Colors.white70),
+                      buildText('SOUND', size: 20, color: Colors.white70),
                       buildWatch(gamestream.audio.enabledSound, buildIconCheckbox),
                     ],
                   ),
@@ -93,7 +93,7 @@ class GameIsometricUI {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildText("MUSIC", size: 20, color: Colors.white70),
+                      buildText('MUSIC', size: 20, color: Colors.white70),
                       buildWatch(gamestream.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
                     ],
                   ),
@@ -106,7 +106,7 @@ class GameIsometricUI {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildText("FULLSCREEN", size: 20, color: Colors.white70),
+                      buildText('FULLSCREEN', size: 20, color: Colors.white70),
                       buildWatch(engine.fullScreen, buildIconCheckbox),
                     ],
                   ),
@@ -119,7 +119,7 @@ class GameIsometricUI {
               height24,
               onPressed(
                 action: gamestream.network.disconnect,
-                child: buildText("DISCONNECT", size: 25),
+                child: buildText('DISCONNECT', size: 25),
               ),
               height24,
             ],
@@ -230,17 +230,17 @@ class GameIsometricUI {
       child: buildWatch(
           gamestream.rendersSinceUpdate,
               (int frames) =>
-              buildText("Warning: No message received from server $frames")));
+              buildText('Warning: No message received from server $frames')));
 
   static Positioned buildWatchInterpolation() => Positioned(
     bottom: 0,
     left: 0,
     child: buildWatch(gamestream.isometric.player.interpolating, (bool value) {
       if (!value)
-        return buildText("Interpolation Off",
+        return buildText('Interpolation Off',
             onPressed: () => gamestream.isometric.player.interpolating.value = true);
       return buildWatch(gamestream.rendersSinceUpdate, (int frames) {
-        return buildText("Frames: $frames",
+        return buildText('Frames: $frames',
             onPressed: () => gamestream.isometric.player.interpolating.value = false);
       });
     }),
@@ -329,7 +329,7 @@ class GameIsometricUI {
 
   static Widget buildIconAudioSound() =>
       onPressed(
-        hint: "toggle sound",
+        hint: 'toggle sound',
         action: gamestream.audio.toggleMutedSound,
         child: Container(
           width: 32,
@@ -353,7 +353,7 @@ class GameIsometricUI {
   static Widget buildIconFullscreen() => WatchBuilder(
       engine.fullScreen,
           (bool fullscreen) => onPressed(
-          hint: "toggle fullscreen",
+          hint: 'toggle fullscreen',
           action: engine.fullscreenToggle,
           child: Container(
               width: 32,
@@ -650,8 +650,8 @@ class GameIsometricUI {
       if (!isOwner) return const SizedBox();
       return buildWatch(gamestream.isometric.clientState.edit, (bool edit) {
         return buildButton(
-            toolTip: "Tab",
-            child: edit ? "PLAY" : "EDIT",
+            toolTip: 'Tab',
+            child: edit ? 'PLAY' : 'EDIT',
             action: gamestream.isometric.actionToggleEdit,
             color: GameIsometricColors.green,
             alignment: Alignment.center,
@@ -676,7 +676,7 @@ class GameIsometricUI {
               height8,
               buildButton(
                 alignment: Alignment.center,
-                child: "RESPAWN",
+                child: 'RESPAWN',
                 action: gamestream.isometric.revive,
                 color: GameIsometricColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
@@ -694,7 +694,7 @@ class GameIsometricUI {
       WatchBuilder(gamestream.isometric.server.hours, (int hours){
         return buildText(padZero(hours), size: 22);
       }),
-      buildText(":", size: 22),
+      buildText(':', size: 22),
       WatchBuilder(gamestream.isometric.server.minutes, (int minutes){
         return buildText(padZero(minutes), size: 22);
       }),
@@ -718,7 +718,7 @@ class GameIsometricUI {
       return;
     }
     GameIsometricUI.textFieldMessage.unfocus();
-    GameIsometricUI.textEditingControllerMessage.text = "";
+    GameIsometricUI.textEditingControllerMessage.text = '';
   }
 
 

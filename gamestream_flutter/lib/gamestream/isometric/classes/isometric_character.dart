@@ -14,8 +14,8 @@ class IsometricCharacter extends IsometricPosition {
   var state = 0;
   var direction = 0;
   var frame = 0;
-  var name = "";
-  var text = "";
+  var name = '';
+  var text = '';
   var allie = false;
   /// percentage between 0 and 1
   var health = 1.0;

@@ -40,7 +40,7 @@ mixin class IsometricClientState {
   DateTime? timeConnectionEstablished;
 
   late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
-  late final messageStatus = Watch("", onChanged: onChangedMessageStatus);
+  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
   late final debugMode = Watch(false, onChanged: onChangedDebugMode);
   late final raining = Watch(false, onChanged: onChangedRaining);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
@@ -277,7 +277,7 @@ mixin class IsometricClientState {
     if (messageStatusDuration > 0) {
       messageStatusDuration--;
       if (messageStatusDuration <= 0) {
-        messageStatus.value = "";
+        messageStatus.value = '';
       }
     }
 
@@ -395,7 +395,7 @@ mixin class IsometricClientState {
   void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
 
   void showMessage(String message){
-    messageStatus.value = "";
+    messageStatus.value = '';
     messageStatus.value = message;
   }
 
@@ -413,7 +413,7 @@ mixin class IsometricClientState {
       gamestream.audio.click_sound_8(1);
 
    void messageClear(){
-    writeMessage("");
+    writeMessage('');
   }
 
    void writeMessage(String value){

@@ -57,11 +57,11 @@ class AudioSingle {
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
     await audioPlayer.setVolume(min(playVolume, 1));
-    if (audioPlayer.audioSource == null) throw Exception("no audio source");
+    if (audioPlayer.audioSource == null) throw Exception('no audio source');
     await audioPlayer.seek(null);
     if (!audioPlayer.playing){
       await audioPlayer.play().catchError((error){
-        print("failed to play $name");
+        print('failed to play $name');
       });
     }
   }

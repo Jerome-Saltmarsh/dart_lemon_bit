@@ -1,4 +1,4 @@
 
 
-String formatEnumName(String value) => value.replaceAll("_", " ");
+String formatEnumName(String value) => value.replaceAll('_', ' ');
 

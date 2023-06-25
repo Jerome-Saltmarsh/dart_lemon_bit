@@ -176,13 +176,13 @@ extension IsometricEditorUI on IsometricEditor {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        buildButton(child: "DOWNLOAD", action: gamestream.isometric.editor.downloadScene),
-        buildButton(child: "LOAD", action: gamestream.isometric.editor.uploadScene),
-        buildButton(child: "EDIT", action: gamestream.isometric.editor.toggleWindowEnabledScene),
-        buildButton(child: "MAP SIZE", action: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
-        buildButton(child: "GENERATE", action: gamestream.isometric.editor.windowEnabledGenerate.toggle),
+        buildButton(child: 'DOWNLOAD', action: gamestream.isometric.editor.downloadScene),
+        buildButton(child: 'LOAD', action: gamestream.isometric.editor.uploadScene),
+        buildButton(child: 'EDIT', action: gamestream.isometric.editor.toggleWindowEnabledScene),
+        buildButton(child: 'MAP SIZE', action: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
+        buildButton(child: 'GENERATE', action: gamestream.isometric.editor.windowEnabledGenerate.toggle),
         if (engine.isLocalHost)
-          buildButton(child: "SAVE", action: gamestream.isometric.editor.saveScene),
+          buildButton(child: 'SAVE', action: gamestream.isometric.editor.saveScene),
       ],
     );
   }
@@ -200,8 +200,8 @@ extension IsometricEditorUI on IsometricEditor {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildText("CANVAS SIZE"),
-                buildText("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
+                buildText('CANVAS SIZE'),
+                buildText('Close', onPressed: gamestream.isometric.editor.toggleWindowEnabledCanvasSize),
               ],
             ),
             // watch(GameNodes.totalRows)
@@ -222,70 +222,70 @@ extension IsometricEditorUI on IsometricEditor {
                       left: 0,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
                       iconType: IconType.Plus,
-                      hint: "Add Row",
+                      hint: 'Add Row',
                     ),
                     buildPositionedIconButton(
                       top: 0,
                       left: 40,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_Start),
                       iconType: IconType.Minus,
-                      hint: "Remove Row",
+                      hint: 'Remove Row',
                     ),
                     buildPositionedIconButton(
                       top: 0,
                       left: 150,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_Start),
                       iconType: IconType.Plus,
-                      hint: "Add Column",
+                      hint: 'Add Column',
                     ),
                     buildPositionedIconButton(
                       top: 20,
                       left: 160,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_Start),
                       iconType: IconType.Minus,
-                      hint: "Remove Column",
+                      hint: 'Remove Column',
                     ),
                     buildPositionedIconButton(
                       top: 160,
                       left: 120,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_End),
                       iconType: IconType.Minus,
-                      hint: "Remove Row",
+                      hint: 'Remove Row',
                     ),
                     buildPositionedIconButton(
                       top: 160,
                       left: 160,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_End),
                       iconType: IconType.Plus,
-                      hint: "Add Row",
+                      hint: 'Add Row',
                     ),
                     buildPositionedIconButton(
                       top: 140,
                       left: 0,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_End),
                       iconType: IconType.Plus,
-                      hint: "Add Column",
+                      hint: 'Add Column',
                     ),
                     buildPositionedIconButton(
                       top: 140,
                       left: 40,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_End),
                       iconType: IconType.Minus,
-                      hint: "Remove Column",
+                      hint: 'Remove Column',
                     ),
                     buildPositionedIconButton(
                       top: 80,
                       left: 60,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Z),
                       iconType: IconType.Plus,
-                      hint: "Add Z",
+                      hint: 'Add Z',
                     ),
                     buildPositionedIconButton(
                       top: 80,
                       left: 100,
                       action: () => gamestream.isometric.editor.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Z),
                       iconType: IconType.Minus,
-                      hint: "Remove Z",
+                      hint: 'Remove Z',
                     ),
                   ],
                 ),
@@ -324,18 +324,18 @@ extension IsometricEditorUI on IsometricEditor {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildText("Generate"),
-                buildText("Close", onPressed: gamestream.isometric.editor.windowEnabledGenerate.toggle),
+                buildText('Generate'),
+                buildText('Close', onPressed: gamestream.isometric.editor.windowEnabledGenerate.toggle),
               ],
             ),
             height32,
-            buildRowGenerate(gamestream.isometric.editor.generateRows, "Rows"),
-            buildRowGenerate(gamestream.isometric.editor.generateColumns, "Columns"),
-            buildRowGenerate(gamestream.isometric.editor.generateHeight, "Height"),
-            buildRowGenerate(gamestream.isometric.editor.generateOctaves, "Octaves"),
-            buildRowGenerate(gamestream.isometric.editor.generateFrequency, "Frequency"),
+            buildRowGenerate(gamestream.isometric.editor.generateRows, 'Rows'),
+            buildRowGenerate(gamestream.isometric.editor.generateColumns, 'Columns'),
+            buildRowGenerate(gamestream.isometric.editor.generateHeight, 'Height'),
+            buildRowGenerate(gamestream.isometric.editor.generateOctaves, 'Octaves'),
+            buildRowGenerate(gamestream.isometric.editor.generateFrequency, 'Frequency'),
             height16,
-            buildButton(child: "Generate", action: gamestream.isometric.editor.generateScene, color: GameIsometricColors.blue, alignment: Alignment.center),
+            buildButton(child: 'Generate', action: gamestream.isometric.editor.generateScene, color: GameIsometricColors.blue, alignment: Alignment.center),
           ],
         ),
       ),
@@ -353,9 +353,9 @@ extension IsometricEditorUI on IsometricEditor {
       ),
       Row(
         children: [
-          buildButton(child: "-", width: 50, action: value.decrement, alignment: Alignment.center),
+          buildButton(child: '-', width: 50, action: value.decrement, alignment: Alignment.center),
           width6,
-          buildButton(child: "+", width: 50, action: value.increment, alignment: Alignment.center),
+          buildButton(child: '+', width: 50, action: value.increment, alignment: Alignment.center),
         ],
       ),
     ],
@@ -375,8 +375,8 @@ extension IsometricEditorUI on IsometricEditor {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildText("Edit Scene"),
-                buildText("Close", onPressed: gamestream.isometric.editor.toggleWindowEnabledScene),
+                buildText('Edit Scene'),
+                buildText('Close', onPressed: gamestream.isometric.editor.toggleWindowEnabledScene),
               ],
             ),
             height16,
@@ -388,7 +388,7 @@ extension IsometricEditorUI on IsometricEditor {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildText("Underground"),
+                    buildText('Underground'),
                     buildWatch(gamestream.isometric.server.sceneUnderground, buildText),
                   ],
                 ),
@@ -400,7 +400,7 @@ extension IsometricEditorUI on IsometricEditor {
               child: Container(
                 color: Colors.white12,
                 padding: const EdgeInsets.all(5),
-                child: buildText("Set Floor Stone"),
+                child: buildText('Set Floor Stone'),
               ),
             ),
           ],
@@ -551,7 +551,7 @@ extension IsometricEditorUI on IsometricEditor {
       case LightningType.On:
         return IconType.Lightning_On;
       default:
-        throw Exception("EditorUI.convertLightningToIconType($lightning)");
+        throw Exception('EditorUI.convertLightningToIconType($lightning)');
     }
   }
 
@@ -636,7 +636,7 @@ extension IsometricEditorUI on IsometricEditor {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         buildWatch(gamestream.isometric.server.hours, (num hour) => buildText(padZero(hour))),
-        buildText(":"),
+        buildText(':'),
         buildWatch(gamestream.isometric.server.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
@@ -720,11 +720,11 @@ extension IsometricEditorUI on IsometricEditor {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildWatch(gamestream.isometric.server.gameRunning, (gameRunning) {
-              return buildText("Game Running: $gameRunning", onPressed: () => gamestream.isometric.editor.toggleGameRunning);
+              return buildText('Game Running: $gameRunning', onPressed: () => gamestream.isometric.editor.toggleGameRunning);
             }),
-            buildText ("Reset", onPressed: gamestream.isometric.editor.editSceneReset),
-            buildText("Spawn AI", onPressed: gamestream.isometric.editor.editSceneSpawnAI),
-            buildText("Clear Spawned AI",
+            buildText ('Reset', onPressed: gamestream.isometric.editor.editSceneReset),
+            buildText('Spawn AI', onPressed: gamestream.isometric.editor.editSceneSpawnAI),
+            buildText('Clear Spawned AI',
                 onPressed: gamestream.isometric.editor.editSceneClearSpawnedAI),
           ],
         ),
@@ -955,7 +955,7 @@ extension IsometricEditorUI on IsometricEditor {
           onTap: (){
             final row = ((mousePosX + mousePosY - 24) ~/ Node_Size) - 1;
             final column = ((mousePosY - mousePosX - 72) ~/ Node_Size) + 2;
-            print("row: $row, column: $column");
+            print('row: $row, column: $column');
             if (row < 0) return;
             if (column < 0) return;
             if (row > 2) return;
@@ -1077,7 +1077,7 @@ extension IsometricEditorUI on IsometricEditor {
                 children: [
                   Container(
                     alignment: Alignment.centerRight,
-                    child: buildText("X", onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
+                    child: buildText('X', onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
                   ),
                   Container(
                     constraints: BoxConstraints(
@@ -1091,7 +1091,7 @@ extension IsometricEditorUI on IsometricEditor {
                     children: [
                       buildText(ItemType.getName(type), size: 22),
                       width8,
-                      buildText("Duplicate", onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
+                      buildText('Duplicate', onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
                     ],
                   ),
                   height8,
@@ -1101,7 +1101,7 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("Strikable"),
+                            buildText('Strikable'),
                             buildText(enabled),
                           ],
                         ),
@@ -1113,7 +1113,7 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("Gravity"),
+                            buildText('Gravity'),
                             buildText(enabled),
                           ],
                         ),
@@ -1125,7 +1125,7 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("Fixed"),
+                            buildText('Fixed'),
                             buildText(enabled),
                           ],
                         ),
@@ -1137,7 +1137,7 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("Collectable"),
+                            buildText('Collectable'),
                             buildText(enabled),
                           ],
                         ),
@@ -1149,7 +1149,7 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("Physical"),
+                            buildText('Physical'),
                             buildText(enabled),
                           ],
                         ),
@@ -1161,7 +1161,7 @@ extension IsometricEditorUI on IsometricEditor {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText("Persistable"),
+                            buildText('Persistable'),
                             buildText(enabled),
                           ],
                         ),
@@ -1175,11 +1175,11 @@ extension IsometricEditorUI on IsometricEditor {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildText("Emission"),
+                                buildText('Emission'),
                                 buildText(emissionType),
                               ],
                             ),
-                            buildText("Intensity"),
+                            buildText('Intensity'),
                             buildWatch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
                               value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
                               onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
@@ -1216,9 +1216,9 @@ extension IsometricEditorUI on IsometricEditor {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildWatch(gamestream.isometric.editor.gameObjectSelectedParticleType,
-                (int particleType) => buildText("Particle Type: $particleType")),
+                (int particleType) => buildText('Particle Type: $particleType')),
         buildWatch(gamestream.isometric.editor.gameObjectSelectedParticleSpawnRate,
-                (int rate) => buildText("Rate: $rate")),
+                (int rate) => buildText('Rate: $rate')),
       ],
     );
   }
@@ -1309,7 +1309,7 @@ extension IsometricEditorUI on IsometricEditor {
               children: [
                 buildWatch(gamestream.isometric.editor.nodeSelectedIndex, buildText),
                 onPressed(
-                  hint: "Delete",
+                  hint: 'Delete',
                   action: gamestream.isometric.editor.delete,
                   child: Container(
                     width: 16,
@@ -1349,21 +1349,21 @@ extension IsometricEditorUI on IsometricEditor {
                     left: 27 + shiftX,
                     action: gamestream.isometric.editor.cursorZDecrease,
                     iconType: IconType.Arrows_Down,
-                    hint: "Shift + Arrow Down",
+                    hint: 'Shift + Arrow Down',
                   ),
                   buildPositionedIconButton(
                     top: 3 + shiftY,
                     left: 3 + shiftY,
                     action: gamestream.isometric.editor.cursorRowDecrease,
                     iconType: IconType.Arrows_North,
-                    hint: "Arrow Up",
+                    hint: 'Arrow Up',
                   ),
                   buildPositionedIconButton(
                     top: 5 + shiftY,
                     left: 50 + shiftX,
                     action: gamestream.isometric.editor.cursorColumnDecrease,
                     iconType: IconType.Arrows_East,
-                    hint: "Arrow Right",
+                    hint: 'Arrow Right',
                   ),
                   Container(
                       height: 72,
@@ -1376,21 +1376,21 @@ extension IsometricEditorUI on IsometricEditor {
                       left: 50 + shiftX,
                       action: gamestream.isometric.editor.cursorRowIncrease,
                       iconType: IconType.Arrows_South,
-                      hint: "Arrow Down"
+                      hint: 'Arrow Down'
                   ),
                   buildPositionedIconButton(
                       top: -10 + shiftY,
                       left: 27 + shiftX,
                       action: gamestream.isometric.editor.cursorZIncrease,
                       iconType: IconType.Arrows_Up,
-                      hint: "Shift + Arrow Up"
+                      hint: 'Shift + Arrow Up'
                   ),
                   buildPositionedIconButton(
                       top: 50 + shiftY,
                       left: 0 + shiftX,
                       action: gamestream.isometric.editor.cursorColumnIncrease,
                       iconType: IconType.Arrows_West,
-                      hint: "Arrow Left"
+                      hint: 'Arrow Left'
                   ),
                 ],
               ),
@@ -1448,5 +1448,5 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonGameDialogClose() =>
-      buildText("x", onPressed: gamestream.isometric.editor.actionGameDialogClose);
+      buildText('x', onPressed: gamestream.isometric.editor.actionGameDialogClose);
 }

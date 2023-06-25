@@ -54,9 +54,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   (selectedTab) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (selectedTab ==
-                      CaptureTheFlagUITabs.Selected_Character)
-                    isometric.debug.buildUI(),
                   if (selectedTab == CaptureTheFlagUITabs.GameObjects)
                     buildWindowGameObjects(),
                   if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
@@ -91,7 +88,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             children: [
               buildText(value.name),
               WatchBuilder(nextGameCountDown, (nextGameCountDown) =>
-                  buildText("NEXT GAME STARTS IN $nextGameCountDown")),
+                  buildText('NEXT GAME STARTS IN $nextGameCountDown')),
             ],
           ),
         ),
@@ -104,8 +101,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildWindowFlagStatus() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      WatchBuilder(flagRedStatus, (status) => buildText("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
-      WatchBuilder(flagBlueStatus, (status) => buildText("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+      WatchBuilder(flagRedStatus, (status) => buildText('RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}')),
+      WatchBuilder(flagBlueStatus, (status) => buildText('BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}')),
     ],
   );
 
@@ -113,9 +110,9 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildText("SCORE"),
-          WatchBuilder(scoreRed, (score) => buildText("RED: $score")),
-          WatchBuilder(scoreBlue, (score) => buildText("BlUE: $score")),
+          buildText('SCORE'),
+          WatchBuilder(scoreRed, (score) => buildText('RED: $score')),
+          WatchBuilder(scoreBlue, (score) => buildText('BlUE: $score')),
         ],
       ),
     );
@@ -324,7 +321,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   Widget buildControlPlayerLevel({double width = 200, double height = 20}) => Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        buildWatch(playerLevel, (t) => buildText("LEVEL: $t")),
+        buildWatch(playerLevel, (t) => buildText('LEVEL: $t')),
         width8,
         buildWatch(playerExperienceRequiredForNextLevel, (experienceRequired) =>
           (experienceRequired <= 0) ? nothing :
@@ -360,7 +357,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     width: 40,
                     height: 40,
                     alignment: Alignment.center,
-                    child: buildText("+"),
+                    child: buildText('+'),
                    margin: const EdgeInsets.only(bottom: 6),
                  ),
                ),
@@ -426,7 +423,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
 
 enum CaptureTheFlagUITabs {
-   Selected_Character,
    GameObjects,
    Flag_Status,
 }

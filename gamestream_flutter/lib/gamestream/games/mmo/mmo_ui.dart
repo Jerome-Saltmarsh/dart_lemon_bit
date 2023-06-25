@@ -30,7 +30,7 @@ extension MMOUI on MmoGame {
                   top: 8,
                   child: onPressed(
                       action: endInteraction,
-                      child: buildText("x", size: 25)),
+                      child: buildText('x', size: 25)),
                 ),
               ],
             )),

@@ -328,10 +328,10 @@ class IsometricServer {
       return playerBelt6_ItemType.value;
     }
     if (index >= inventory.length){
-      throw Exception("ServerQuery.getItemTypeAtInventoryIndex($index) index >= inventory.length");
+      throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index >= inventory.length');
     }
     if (index < 0){
-      throw Exception("ServerQuery.getItemTypeAtInventoryIndex($index) index < 0");
+      throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index < 0');
     }
     return inventory[index];
   }

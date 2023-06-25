@@ -1591,7 +1591,7 @@ class RendererNodes extends IsometricRenderer {
         );
         return;
       default:
-        throw Exception("render_node_window(${NodeOrientation.getName(renderNodeOrientation)})");
+        throw Exception('render_node_window(${NodeOrientation.getName(renderNodeOrientation)})');
     }
   }
 

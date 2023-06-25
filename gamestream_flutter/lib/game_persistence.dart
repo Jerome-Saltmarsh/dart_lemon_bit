@@ -19,7 +19,7 @@ class StorageService {
   }
 
   void rememberAuthorization(DataAuthentication authorization){
-    print("storage.rememberAuthorization()");
+    print('storage.rememberAuthorization()');
     put(_keys.userId, authorization.userId);
     put(_keys.userEmail, authorization.email);
     put(_keys.userName, authorization.name);
@@ -51,7 +51,7 @@ class StorageService {
   }
 
   void put(String key, dynamic value){
-    if (key.isEmpty) throw Exception("key is empty");
+    if (key.isEmpty) throw Exception('key is empty');
 
     if (value == null){
       print('cannot store key $key because value is null');
@@ -109,7 +109,7 @@ class StorageService {
     if (T.toString().startsWith('DateTime')){
       return DateTime.parse(engine.sharedPreferences.getString(key)!) as T;
     }
-    throw Exception("cannot get value for key $key");
+    throw Exception('cannot get value for key $key');
   }
 }
 
@@ -118,7 +118,7 @@ extension SharedPreferencesExtensions on SharedPreferences {
   void putAny(String key, dynamic value){
     print("storage.put({key: '$key', value: '$value'})");
 
-    if (key.isEmpty) throw Exception("key is empty");
+    if (key.isEmpty) throw Exception('key is empty');
 
     if (value == null){
       print('cannot store key $key because value is null');
@@ -177,7 +177,7 @@ extension SharedPreferencesExtensions on SharedPreferences {
     if (T.toString().startsWith('DateTime')){
       return DateTime.parse(getString(key)!) as T;
     }
-     throw Exception("cannot get value for key $key, type: ${T.toString()}");
+     throw Exception('cannot get value for key $key, type: ${T.toString()}');
   }
 }
 

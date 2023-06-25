@@ -102,7 +102,7 @@ class RendererCharacters extends IsometricRenderer {
         renderCharacterDog(character);
         break;
       default:
-        throw Exception("Cannot render character type: ${character.characterType}");
+        throw Exception('Cannot render character type: ${character.characterType}');
     }
   }
 
@@ -297,7 +297,7 @@ class RendererCharacters extends IsometricRenderer {
             framesPerDirection: framesPerDirection
         );
       default:
-        throw Exception("Render zombie invalid state ${character.state}");
+        throw Exception('Render zombie invalid state ${character.state}');
     }
   }
 

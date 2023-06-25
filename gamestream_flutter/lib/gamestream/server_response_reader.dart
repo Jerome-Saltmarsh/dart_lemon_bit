@@ -125,7 +125,7 @@ extension ServerResponseReader on Gamestream {
           error.value = parseIndexToGameError(errorTypeIndex);
           return;
         default:
-          print("read error; index: $index, previous-server-response: $previousServerResponse");
+          print('read error; index: $index, previous-server-response: $previousServerResponse');
           print(values);
           return;
       }
@@ -383,7 +383,7 @@ extension ServerResponseReader on Gamestream {
         isometric.player.team.value = readByte();
         break;
       default:
-        throw Exception("Cannot parse apiPlayer $apiPlayer");
+        throw Exception('Cannot parse apiPlayer $apiPlayer');
     }
   }
 
@@ -475,7 +475,7 @@ extension ServerResponseReader on Gamestream {
 
     final id = readUInt16();
     final gameObject = isometric.server.findGameObjectById(id);
-    if (gameObject == null) throw Exception("could not find gameobject with id $id");
+    if (gameObject == null) throw Exception('could not find gameobject with id $id');
     isometric.editor.gameObject.value = gameObject;
     isometric.editor.gameObjectSelectedCollidable   .value = readBool();
     isometric.editor.gameObjectSelectedFixed        .value = readBool();

@@ -15,7 +15,7 @@ class AudioLoop {
 
   AudioLoop({required this.name, required this.getTargetVolume}) {
     load().catchError((error){
-       print("an error occurred loading $name");
+       print('an error occurred loading $name');
        print(error);
     });
   }
@@ -24,7 +24,7 @@ class AudioLoop {
     final d = await audioPlayer.setUrl('assets/audio/$name.mp3');
     audioPlayer.play();
     audioPlayer.positionStream.listen(onPositionChanged);
-    if (d == null) throw Exception("could not get duration for $name");
+    if (d == null) throw Exception('could not get duration for $name');
     durationInSeconds = d.inSeconds;
     duration = d;
     audioPlayer.setLoopMode(LoopMode.one);

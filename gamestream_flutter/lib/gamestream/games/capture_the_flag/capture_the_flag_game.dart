@@ -20,7 +20,7 @@ class CaptureTheFlagGame extends IsometricGame {
   var playerActivatedTargetSet = false;
 
   final Gamestream gamestream;
-  final tab = Watch(CaptureTheFlagUITabs.Selected_Character);
+  final tab = Watch(CaptureTheFlagUITabs.Flag_Status);
   final flagPositionRed = IsometricPosition();
   final flagPositionBlue = IsometricPosition();
   final basePositionRed = IsometricPosition();

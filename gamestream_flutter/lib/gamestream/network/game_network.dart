@@ -15,7 +15,7 @@ class GameNetwork {
   late WebSocketChannel webSocketChannel;
   late WebSocketSink sink;
   late final connectionStatus = Watch(ConnectionStatus.None);
-  String connectionUri = "";
+  String connectionUri = '';
   DateTime? connectionEstablished;
   late final region = Watch<ConnectionRegion?>(null);
 
@@ -29,13 +29,13 @@ class GameNetwork {
 
   // FUNCTIONS
   void connectToRegion(ConnectionRegion region, String message) {
-    print("connectToRegion(${region.name}");
+    print('connectToRegion(${region.name}');
     if (region == ConnectionRegion.LocalHost) {
       connectToServer(wsLocalHost, message);
       return;
     }
     if (region == ConnectionRegion.Custom) {
-      print("connecting to custom server");
+      print('connecting to custom server');
       print(gamestream.games.website.customConnectionStrongController.text);
       connectToServer(
         gamestream.games.website.customConnectionStrongController.text,
@@ -55,7 +55,7 @@ class GameNetwork {
   }
 
   static String convertHttpToWSS(String url, {String port = '8080'}) =>
-      url.replaceAll("https", "wss") + "/:$port";
+      url.replaceAll('https', 'wss') + '/:$port';
 
   void connectToGameEditor() => connectToGame(GameType.Editor);
 
@@ -65,7 +65,7 @@ class GameNetwork {
 
   void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
 
-  void connectToGame(GameType gameType, [String message = ""]) {
+  void connectToGame(GameType gameType, [String message = '']) {
     final regionValue = region.value;
     if (regionValue == null) {
       throw Exception('region is null');
@@ -74,7 +74,7 @@ class GameNetwork {
   }
 
   void connect({required String uri, required dynamic message}) {
-    print("webSocket.connect($uri)");
+    print('webSocket.connect($uri)');
     connectionStatus.value = ConnectionStatus.Connecting;
     try {
       webSocketChannel = WebSocketChannel.connect(
@@ -84,16 +84,16 @@ class GameNetwork {
       sink = webSocketChannel.sink;
       connectionEstablished = DateTime.now();
       sink.done.then((value){
-        print("Connection Finished");
-        print("webSocketChannel.closeCode: ${webSocketChannel.closeCode}");
-        print("webSocketChannel.closeReason: ${webSocketChannel.closeReason}");
+        print('Connection Finished');
+        print('webSocketChannel.closeCode: ${webSocketChannel.closeCode}');
+        print('webSocketChannel.closeReason: ${webSocketChannel.closeReason}');
         if (connectionEstablished != null){
           final duration = DateTime.now().difference(connectionEstablished!);
-          print("Connection Duration ${duration.inSeconds} seconds");
+          print('Connection Duration ${duration.inSeconds} seconds');
         }
 
         if (webSocketChannel.closeCode != null){
-          gamestream.games.website.error.value = "Lost Connection";
+          gamestream.games.website.error.value = 'Lost Connection';
         }
       });
       connectionUri = uri;
@@ -121,25 +121,25 @@ class GameNetwork {
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){
-        print("ping request received");
+        print('ping request received');
         sink.add('pong');
         return;
       }
       gamestream.games.website.error.value = response;
       return;
     }
-    throw Exception("cannot parse response: $response");
+    throw Exception('cannot parse response: $response');
   }
 
   void _onError(Object error, StackTrace stackTrace) {
-    print("network.onError()");
+    print('network.onError()');
     // core.actions.setError(error.toString());
   }
 
   void _onDone() {
-    print("network.onDone()");
+    print('network.onDone()');
 
-    connectionUri = "";
+    connectionUri = '';
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
     } else {
@@ -153,7 +153,7 @@ class GameNetwork {
 
   void send(dynamic message) {
     if (!connected) {
-      print("warning cannot send because not connected");
+      print('warning cannot send because not connected');
       return;
     }
     sink.add(message);

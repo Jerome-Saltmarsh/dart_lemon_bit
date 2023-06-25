@@ -24,7 +24,7 @@ class GameAudio {
   }
 
   late final mutedMusic = Watch(false, onChanged: (bool muted){
-    print("music muted: $muted");
+    print('music muted: $muted');
     if (muted) {
       audioTracks.audioPlayer.pause();
     } else {
@@ -33,7 +33,7 @@ class GameAudio {
   });
 
   late final enabledSound = Watch(false, onChanged: (bool soundEnabled){
-    print("sound enabled: $soundEnabled");
+    print('sound enabled: $soundEnabled');
     if (!soundEnabled){
       for (final audioSource in audioLoops) {
         audioSource.setVolume(0);

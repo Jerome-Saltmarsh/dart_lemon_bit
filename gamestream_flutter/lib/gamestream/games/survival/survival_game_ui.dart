@@ -137,14 +137,14 @@ extension SurvivalGameUI on SurvivalGame {
           },
           builder: (context, data, dataRejected){
             return onPressed(
-              hint: "Inventory",
+              hint: 'Inventory',
               action: sendClientRequestInventoryToggle,
               onRightClick: sendClientRequestInventoryToggle,
               child: GameIsometricUI.buildAtlasIconType(IconType.Inventory, scale: 2.0),
             );
           },
         ),
-        Positioned(top: 5, left: 5, child: buildText("R"))
+        Positioned(top: 5, left: 5, child: buildText('R'))
       ],
     );
   }
@@ -394,7 +394,7 @@ extension SurvivalGameUI on SurvivalGame {
     if (hotKeyWatch == gamestream.isometric.server.playerBelt4_ItemType) return '4';
     if (hotKeyWatch == gamestream.isometric.server.playerBelt5_ItemType) return 'Q';
     if (hotKeyWatch == gamestream.isometric.server.playerBelt6_ItemType) return 'E';
-    throw Exception("ClientQuery.mapHotKeyWatchToString($hotKeyWatch)");
+    throw Exception('ClientQuery.mapHotKeyWatchToString($hotKeyWatch)');
   }
 
   /// Automatically rebuilds whenever the inventory gets updated
@@ -463,7 +463,7 @@ extension SurvivalGameUI on SurvivalGame {
                         ),
                       ),
                       buildText(
-                          "$currentHealth / ${padSpace(maxHealth, length: 3)}",
+                          '$currentHealth / ${padSpace(maxHealth, length: 3)}',
                           color: GameStyle.Player_Stats_Text_Color
                       ),
                     ],
@@ -544,7 +544,7 @@ extension SurvivalGameUI on SurvivalGame {
                           child: FittedBox(
                               child:
                               GameIsometricUI.buildAtlasIconType(IconType.Energy))),
-                      buildText("$energy / ${padSpace(energyMax, length: 3)}",
+                      buildText('$energy / ${padSpace(energyMax, length: 3)}',
                           color: GameStyle.Player_Stats_Text_Color),
                     ],
                   ),

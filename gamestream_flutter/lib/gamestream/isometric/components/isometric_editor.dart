@@ -376,7 +376,7 @@ class IsometricEditor {
     required double tx,
     required double ty,
     required double tz,
-  }) => sendGameObjectRequest(IsometricEditorGameObjectRequest.Translate, "$tx $ty $tz");
+  }) => sendGameObjectRequest(IsometricEditorGameObjectRequest.Translate, '$tx $ty $tz');
 
   void sendGameObjectRequestDuplicate() => sendGameObjectRequest(IsometricEditorGameObjectRequest.Duplicate);
 
@@ -429,7 +429,7 @@ class IsometricEditor {
     // gamestream.network.sink.add(package);
     sendIsometricEditorRequest(
       IsometricEditorRequest.Load_Scene,
-      bytes.join(" "),
+      bytes.join(' '),
     );
   }
 
@@ -492,7 +492,7 @@ class IsometricEditor {
   void uploadScene() async {
     final result = await FilePicker.platform.pickFiles(
       withData: true,
-      dialogTitle: "Load Scene",
+      dialogTitle: 'Load Scene',
       type: FileType.custom,
       allowedExtensions: ['scene'],
     );

@@ -79,7 +79,7 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
   }
 
   void onRedTeamScore(){
-    print("onRedTeamScore()");
+    print('onRedTeamScore()');
     if (playerIsTeamRed){
       gamestream.audio.voiceYourTeamHasScoredAPoint.play();
     } else {
@@ -88,7 +88,7 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
   }
 
   void onBlueTeamScore() {
-    print("onBlueTeamScore()");
+    print('onBlueTeamScore()');
     if (playerIsTeamBlue){
       gamestream.audio.voiceYourTeamHasScoredAPoint.play();
     } else {

@@ -13,7 +13,7 @@ class SurvivalGame extends IsometricGame {
   late final inventoryReads = Watch(0, onChanged: onInventoryReadsChanged);
 
   SurvivalGame({required super.isometric}) {
-    print("SurvivalGame()");
+    print('SurvivalGame()');
   }
 
   void sendClientRequestInventoryEquip(int index) =>
@@ -41,7 +41,7 @@ class SurvivalGame extends IsometricGame {
     required int indexFrom,
     required int indexTo,
   }) =>
-      sendSurvivalRequest(SurvivalRequest.Move, "$indexFrom $indexTo");
+      sendSurvivalRequest(SurvivalRequest.Move, '$indexFrom $indexTo');
 
   void sendSurvivalRequest(
       SurvivalRequest survivalRequest, [dynamic message]

@@ -369,14 +369,14 @@ class IsometricEvents {
       gamestream.isometric.camera.setModeFree();
       gamestream.isometric.editor.cursorSetToPlayer();
       gamestream.isometric.camera.centerOnChaseTarget();
-      gamestream.isometric.player.message.value = "-press arrow keys to move\n\n-press tab to play";
+      gamestream.isometric.player.message.value = '-press arrow keys to move\n\n-press tab to play';
       gamestream.isometric.player.messageTimer = 300;
     } else {
       gamestream.isometric.editor.deselectGameObject();
       gamestream.isometric.ui.mouseOverDialog.setFalse();
       gamestream.isometric.camera.setModeChase();
       if (gamestream.isometric.server.sceneEditable.value){
-        gamestream.isometric.player.message.value = "press tab to edit";
+        gamestream.isometric.player.message.value = 'press tab to edit';
       }
     }
   }
@@ -421,7 +421,7 @@ class IsometricEvents {
         break;
       case PlayerEvent.Level_Increased:
         gamestream.audio.buff_1();
-        gamestream.isometric.clientState.writeMessage("Level Gained");
+        gamestream.isometric.clientState.writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
         readPlayerEventItemConsumed();
@@ -456,13 +456,13 @@ class IsometricEvents {
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
-        gamestream.isometric.clientState.writeMessage("Not Enough Gold");
+        gamestream.isometric.clientState.writeMessage('Not Enough Gold');
         break;
       case PlayerEvent.Inventory_Full:
-        gamestream.isometric.clientState.writeMessage("Inventory Full");
+        gamestream.isometric.clientState.writeMessage('Inventory Full');
         break;
       case PlayerEvent.Invalid_Request:
-        gamestream.isometric.clientState.writeMessage("Invalid Request");
+        gamestream.isometric.clientState.writeMessage('Invalid Request');
         break;
     }
   }
@@ -717,7 +717,7 @@ class IsometricEvents {
   }
 
   void onChangedPlayerActive(bool playerActive){
-     print("onChangedPlayerActive($playerActive)");
+     print('onChangedPlayerActive($playerActive)');
   }
 
   void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {

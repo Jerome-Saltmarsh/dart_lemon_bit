@@ -42,7 +42,7 @@ class Cache<T> extends Watch<T> {
           shared.setStringList(key, t);
           return;
         }
-        throw Exception("could not cache value: $t");
+        throw Exception('could not cache value: $t');
       });
   }
 }

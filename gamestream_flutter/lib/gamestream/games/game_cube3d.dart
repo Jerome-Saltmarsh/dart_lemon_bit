@@ -22,7 +22,7 @@ class GameCube3D implements Game {
                      color: Colors.green,
                      alignment: Alignment.center,
                      padding: const EdgeInsets.all(8),
-                     child: buildText("EXIT"),
+                     child: buildText('EXIT'),
                  ),
                ),
            ),

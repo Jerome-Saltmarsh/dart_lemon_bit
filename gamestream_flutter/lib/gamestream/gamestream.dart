@@ -56,7 +56,7 @@ class Gamestream with ByteReader {
      if (visitDateTimeString != null) {
        final visitDateTime = DateTime.parse(visitDateTimeString);
        final durationSinceLastVisit = DateTime.now().difference(visitDateTime);
-       print("duration since last visit: ${durationSinceLastVisit.inSeconds} seconds");
+       print('duration since last visit: ${durationSinceLastVisit.inSeconds} seconds');
        games.website.saveVisitDateTime();
        if (durationSinceLastVisit.inSeconds > 45){
          games.website.checkForLatestVersion();
@@ -64,7 +64,7 @@ class Gamestream with ByteReader {
        }
      }
 
-     print("time zone: ${detectConnectionRegion()}");
+     print('time zone: ${detectConnectionRegion()}');
      engine.onScreenSizeChanged = onScreenSizeChanged;
      engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
@@ -101,7 +101,7 @@ class Gamestream with ByteReader {
        final cachedVersion = sharedPreferences.getString('version');
        if (cachedVersion != null){
          if (version != cachedVersion){
-           print("New version detected (previous: $cachedVersion, latest: $version)");
+           print('New version detected (previous: $cachedVersion, latest: $version)');
          }
        }
 
@@ -124,7 +124,7 @@ class Gamestream with ByteReader {
    }
 
    void onChangedGameType(GameType value) {
-     print("onChangedGameType(${value.name})");
+     print('onChangedGameType(${value.name})');
      startGameByType(value);
    }
 
@@ -174,7 +174,7 @@ class Gamestream with ByteReader {
    }
 
    void _onChangedGameError(GameError? gameError){
-     print("_onChangedGameError($gameError)");
+     print('_onChangedGameError($gameError)');
      if (gameError == null) return;
      gamestream.isometric.clientState.playAudioError();
      switch (gameError) {
@@ -232,13 +232,13 @@ class Gamestream with ByteReader {
          audio.enabledSound.value = false;
          break;
        case ConnectionStatus.Failed_To_Connect:
-         gamestream.games.website.error.value = "Failed to connect";
+         gamestream.games.website.error.value = 'Failed to connect';
          break;
        case ConnectionStatus.Invalid_Connection:
-         gamestream.games.website.error.value = "Invalid Connection";
+         gamestream.games.website.error.value = 'Invalid Connection';
          break;
        case ConnectionStatus.Error:
-         gamestream.games.website.error.value = "Connection Error";
+         gamestream.games.website.error.value = 'Connection Error';
          break;
        default:
          break;

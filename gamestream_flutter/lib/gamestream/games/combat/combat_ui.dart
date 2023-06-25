@@ -164,7 +164,7 @@ extension CombatUI on CombatGame {
               height: 150 * goldenRatio_0381,
               alignment: Alignment.center,
               color: GameIsometricColors.green.withAlpha(mouseOver ? 140 : 100),
-              child: buildText("START", size: 45, color: GameIsometricColors.green),
+              child: buildText('START', size: 45, color: GameIsometricColors.green),
             );
           }
       ),
@@ -207,7 +207,7 @@ extension CombatUI on CombatGame {
       padding: GameStyle.Container_Padding,
       alignment: Alignment.center,
       child: buildWatch(gamestream.isometric.player.respawnTimer, (int respawnTimer){
-        return buildText("RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}", size: 25);
+        return buildText('RESPAWN: ${respawnTimer ~/ GameIsometricUI.Server_FPS}', size: 25);
       }),
     );
   }

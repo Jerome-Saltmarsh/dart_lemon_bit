@@ -27,7 +27,7 @@ class AccountService {
     print("actions.changePublicName('$value')");
     final account = gamestream.account.value;
     if (account == null) {
-      gamestream.games.website.setError("Account is null");
+      gamestream.games.website.setError('Account is null');
       return;
     }
     value = value.trim();
@@ -37,7 +37,7 @@ class AccountService {
     }
 
     if (value.isEmpty) {
-      gamestream.games.website.setError("Name entered is empty");
+      gamestream.games.website.setError('Name entered is empty');
       return;
     }
     gamestream.operationStatus.value = OperationStatus.Changing_Public_Name;
@@ -53,25 +53,25 @@ class AccountService {
       case ChangeNameStatus.Success:
         updateAccount();
         gamestream.games.website.showDialogAccount();
-        gamestream.games.website.setError("Name Changed successfully");
+        gamestream.games.website.setError('Name Changed successfully');
         break;
       case ChangeNameStatus.Taken:
         gamestream.games.website.setError("'$value' already taken");
         break;
       case ChangeNameStatus.Too_Short:
-        gamestream.games.website.setError("Too short");
+        gamestream.games.website.setError('Too short');
         break;
       case ChangeNameStatus.Too_Long:
-        gamestream.games.website.setError("Too long");
+        gamestream.games.website.setError('Too long');
         break;
       case ChangeNameStatus.Other:
-        gamestream.games.website.setError("Something went wrong");
+        gamestream.games.website.setError('Something went wrong');
         break;
     }
   }
 
   void cancelSubscription() async {
-    print("actions.cancelSubscription()");
+    print('actions.cancelSubscription()');
     gamestream.games.website.showDialogAccount();
     final account = gamestream.account.value;
     if (account == null) {
@@ -85,7 +85,7 @@ class AccountService {
   }
 
   Future updateAccount() async {
-    print("refreshAccountDetails()");
+    print('refreshAccountDetails()');
     final account = gamestream.account.value;
     if (account == null){
       return;
@@ -99,7 +99,7 @@ class AccountService {
   }
 
   Future login(DataAuthentication authentication){
-    print("actions.login()");
+    print('actions.login()');
     // storage.rememberAuthorization(authentication);
     return signInOrCreateAccount(
         userId: authentication.userId,
@@ -113,31 +113,31 @@ class AccountService {
     required String email,
     required String privateName
   }) async {
-    print("actions.signInOrCreateAccount()");
+    print('actions.signInOrCreateAccount()');
     gamestream.operationStatus.value = OperationStatus.Authenticating;
     final account = await firestoreService.findUserById(userId).catchError((error){
       throw error;
     });
     if (account == null){
-      print("No account found. Creating new account");
+      print('No account found. Creating new account');
       gamestream.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
       gamestream.operationStatus.value = OperationStatus.Authenticating;
       gamestream.account.value = await firestoreService.findUserById(userId);
       if (gamestream.account.value == null){
-        throw Exception("failed to find new account");
+        throw Exception('failed to find new account');
       }
       // TODO Illegal reference to website
       // Website.dialog.value = WebsiteDialog.Account_Created;
     }else{
-      print("Existing Account found");
+      print('Existing Account found');
       gamestream.account.value = account;
     }
     gamestream.operationStatus.value = OperationStatus.None;
   }
 
   void openStripeCheckout() {
-    throw Exception("No longer supported");
+    throw Exception('No longer supported');
     // print("actions.openStripeCheckout()");
     // final account = Website.account.value;
     // if (account == null){

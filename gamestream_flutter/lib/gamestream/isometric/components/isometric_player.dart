@@ -13,12 +13,12 @@ class IsometricPlayer {
   var targetPosition = IsometricPosition();
   var aimTargetCategory = TargetCategory.Nothing;
   var aimTargetType = 0;
-  var aimTargetName = "";
+  var aimTargetName = '';
   var aimTargetQuantity = 0;
   var aimTargetPosition = IsometricPosition();
   var messageTimer = 0;
   var mouseAngle = 0.0;
-  var npcTalk = Watch("");
+  var npcTalk = Watch('');
   var npcTalkOptions = Watch<List<String>>([]);
   var aimTargetChanged = Watch(0);
   var indexZ = 0;
@@ -49,7 +49,7 @@ class IsometricPlayer {
   final target = IsometricPosition();
   final questAdded = Watch(false);
 
-  late final message = Watch("", onChanged: gamestream.isometric.events.onChangedPlayerMessage);
+  late final message = Watch('', onChanged: gamestream.isometric.events.onChangedPlayerMessage);
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
   late final alive = Watch(true, onChanged: gamestream.isometric.events.onChangedPlayerAlive);
@@ -101,7 +101,7 @@ class IsometricPlayer {
     if (ItemType.isTypeBody(itemType)) return body;
     if (ItemType.isTypeLegs(itemType)) return legs;
     throw Exception(
-        "gamestream.isometricEngine.player.getItemTypeWatch(${ItemType.getName(itemType)})"
+        'gamestream.isometricEngine.player.getItemTypeWatch(${ItemType.getName(itemType)})'
     );
   }
 
@@ -111,7 +111,7 @@ class IsometricPlayer {
     messageTimer--;
     if (messageTimer > 0)
       return;
-    message.value = "";
+    message.value = '';
   }
 }
 
