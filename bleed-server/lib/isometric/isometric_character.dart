@@ -34,8 +34,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
-  var pathIndex = 0;
-  var pathStart = 0;
+  var pathIndex = -1;
+  var pathStart = -1;
   var pathTargetIndex = 0;
   var targetIndex = 0;
 
@@ -447,41 +447,12 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool shouldAttackTarget() {
     final target = this.target;
-    if (target == null) return false;
-    if (!targetIsEnemy) return false;
-    if (target is! IsometricCollider) return false;
-    if (!target.hitable) return false;
-    if (!enemyTargetWithinAttackRange) return false;
-
-    return true;
+    return
+        target is IsometricCollider &&
+        targetIsEnemy &&
+        target.hitable &&
+        enemyTargetWithinAttackRange;
   }
-
-  // bool targetIsPerceptible(IsometricScene scene) {
-  //   final target = this.target;
-  //
-  //   if (target == null)
-  //     return false;
-  //
-  //   var positionX = x;
-  //   var positionY = y;
-  //   var angle = target.getAngle(this);
-  //
-  //   final distance = getDistance3(target);
-  //   final jumpSize = Node_Size_Quarter;
-  //   final jumps = distance ~/ jumpSize;
-  //   final velX = getAdjacent(angle, jumpSize);
-  //   final velY = getOpposite(angle, jumpSize);
-  //
-  //   for (var i = 0; i < jumps; i++) {
-  //     positionX += velX;
-  //     positionY += velY;
-  //     final nodeOrientation = scene.getNodeOrientationXYZ(positionX, positionY, z);
-  //     if (nodeOrientation != NodeOrientation.None){
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
 
   bool get enemyTargetWithinAttackRange {
     final target = this.target;
