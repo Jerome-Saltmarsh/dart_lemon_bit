@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_render.dart';
+
 class IsometricDebug {
   final characterSelected = Watch(false);
   final characterSelectedIsAI = Watch(false);
@@ -29,32 +31,20 @@ class IsometricDebug {
   Isometric get isometric => gamestream.isometric;
 
   Widget buildUI() =>
-      WatchBuilder(characterSelected, (characterSelected){
-        if (!characterSelected) return nothing;
-        return Container(
-          width: 300,
+      WatchBuilder(characterSelected, (characterSelected) => !characterSelected ? nothing :
+        GSContainer(
+          width: 220,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              WatchBuilder(characterSelectedRuntimeType, (runtimeType) => buildText("type: $runtimeType")),
-              WatchBuilder(characterSelectedX, (x) => buildText("position-x: ${x.toInt()}")),
-              WatchBuilder(characterSelectedY, (y) => buildText("position-y: ${y.toInt()}")),
-              WatchBuilder(characterSelectedZ, (z) => buildText("position-z: ${z.toInt()}")),
-              WatchBuilder(characterSelectedPathIndex, (pathIndex) => buildText("path-index: $pathIndex")),
-              WatchBuilder(characterSelectedPathEnd, (pathEnd) => buildText("path-end: $pathEnd")),
-              WatchBuilder(characterSelectedIsAI, (isAI) => !isAI ? nothing : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  WatchBuilder(characterSelectedAIDecision, (decision) => buildText("ai-decision: ${decision.name}")),
-                  // onPressed(
-                  //     action: toggleSelectedCharacterAIRole,
-                  //     child: WatchBuilder(characterSelectedAIRole, (role) => buildText("ai-role: ${role.name}"))),
-                  // onPressed(
-                  //     action: debugSelectAI,
-                  //     child: buildText("DEBUG")),
-                ],
-              )),
-              const SizedBox(height: 1,),
+              buildText("DEBUG"),
+              height8,
+              buildWatchString(watch: characterSelectedRuntimeType, text: 'type'),
+              buildWatchDouble(watch: characterSelectedX, text: 'x'),
+              buildWatchDouble(watch: characterSelectedY, text: 'y'),
+              buildWatchDouble(watch: characterSelectedZ, text: 'z'),
+              buildWatchInt(watch: characterSelectedPathIndex, text: 'path-index'),
+              buildWatchInt(watch: characterSelectedPathEnd, text: 'path-end'),
               WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
                 if (!characterSelectedTarget) return nothing;
                 return Container(
@@ -74,11 +64,12 @@ class IsometricDebug {
               }),
             ],
           ),
-        );
-      });
+        ));
 
-  void render() {
-    isometric.renderer.renderCircle(
+  void render(IsometricRender renderer) {
+    if (!characterSelected.value) return;
+
+    renderer.renderCircle(
       characterSelectedX.value,
       characterSelectedY.value,
       characterSelectedZ.value,
@@ -88,7 +79,7 @@ class IsometricDebug {
     if (characterSelectedTarget.value &&
         characterSelectedTargetRenderLine.value
     ) {
-      isometric.renderer.renderLine(
+      renderer.renderLine(
         characterSelectedX.value,
         characterSelectedY.value,
         characterSelectedZ.value,
@@ -115,7 +106,7 @@ class IsometricDebug {
     }
 
     engine.setPaintColor(Colors.deepPurpleAccent);
-    isometric.renderer.renderLine(
+    renderer.renderLine(
       characterSelectedX.value,
       characterSelectedY.value,
       characterSelectedZ.value,
@@ -124,7 +115,6 @@ class IsometricDebug {
       characterSelectedZ.value,
     );
   }
-
 
   void renderPath({required Uint16List path, required int start, required int end}){
     final nodes = gamestream.isometric.nodes;
@@ -140,5 +130,44 @@ class IsometricDebug {
     }
   }
 
+  static Widget buildWatchDouble({
+    required Watch<double> watch,
+    required String text,
+  }) => Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildText(text),
+        buildValue(child: WatchBuilder(watch, (x) => buildText(x.toInt())))
+      ],
+    );
 
+  static Widget buildWatchInt({
+    required Watch<int> watch,
+    required String text,
+  }) => Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildText(text),
+        buildValue(child: WatchBuilder(watch, buildText))
+      ],
+    );
+
+  static Widget buildWatchString({
+    required Watch<String> watch,
+    required String text,
+  }) => Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildText(text),
+        buildValue(child: WatchBuilder(watch, buildText))
+      ],
+    );
+
+  static Widget buildValue({required Widget child}) => Container(
+      width: 80,
+      alignment: Alignment.center,
+      color: Colors.white12,
+      padding: const EdgeInsets.all(4),
+      child: child,
+    );
 }

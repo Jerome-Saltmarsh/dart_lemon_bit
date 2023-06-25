@@ -54,7 +54,7 @@ class Isometric {
     renderer.renderMouseTargetName();
     renderer.renderPlayerEnergy();
 
-    debug.render();
+    debug.render(renderer);
 
     gamestream.rendersSinceUpdate.value++;
   }
