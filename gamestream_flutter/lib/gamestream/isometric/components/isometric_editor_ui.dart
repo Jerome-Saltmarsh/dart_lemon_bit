@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/editor_dialog.dart';

@@ -10,7 +10,6 @@ import 'classes/isometric_particles.dart';
 import 'components/isometric_ui.dart';
 import 'components/render/renderer_gameobjects.dart';
 import 'components/render/renderer_particles.dart';
-import 'components/isometric_io.dart';
 import 'components/isometric_camera.dart';
 import 'components/isometric_client_state.dart';
 import 'components/isometric_editor.dart';
@@ -29,7 +28,6 @@ class Isometric {
   final editor = IsometricEditor();
   final player = IsometricPlayer();
   final camera = IsometricCamera();
-  final io = IsometricIO();
   final particles = IsometricParticles();
   final ui = IsometricUI();
 
@@ -115,10 +113,12 @@ class Isometric {
 
   void editorLoadGame(String name)=> request(IsometricRequest.Editor_Load_Game, name);
 
+  void teleportDebugCharacterToMouse() =>
+      request(IsometricRequest.Debug_Character_Teleport_To_Mouse);
+
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,
         '${request.index} $message',
       );
-
 }

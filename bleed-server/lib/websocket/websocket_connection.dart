@@ -818,6 +818,14 @@ class WebSocketConnection with ByteReader {
       case IsometricRequest.Editor_Load_Game:
         // _player = engine.joinGameEditor(name: arguments[2]);
         break;
+
+      case IsometricRequest.Debug_Character_Teleport_To_Mouse:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null) return;
+        debugCharacter.x = player.mouseGridX;
+        debugCharacter.y = player.mouseGridY;
+        debugCharacter.z = player.mouseGridZ;
+        break;
     }
   }
 }

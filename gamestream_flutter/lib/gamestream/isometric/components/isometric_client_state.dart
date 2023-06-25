@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';

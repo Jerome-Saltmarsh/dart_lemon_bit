@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game_ui.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client_state.dart';
 import 'package:gamestream_flutter/library.dart';
 

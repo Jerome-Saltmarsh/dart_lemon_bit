@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/utils.dart';

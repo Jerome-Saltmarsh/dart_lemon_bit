@@ -10,9 +10,7 @@ class IsometricCamera {
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;
-
-  IsometricCamera();
-
+  var mouseFollowSensitivity = 0.1;
 
   void centerOnChaseTarget() {
     if (chaseTarget != null){
@@ -25,14 +23,13 @@ class IsometricCamera {
     if (!chaseTargetEnabled.value) return;
     final mouseAngle = getMousePlayerAngle() + pi;
     final mouseDistance = getMousePlayerRenderDistance();
-    final translateDistance = mouseDistance * gamestream.isometric.io.Mouse_Translation_Sensitivity;
+    final translateDistance = mouseDistance * mouseFollowSensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
 
     if (chaseTarget != null){
       engine.cameraFollow(chaseTarget!.renderX + translateX, chaseTarget!.renderY + translateY, chaseStrength);
     }
-
   }
 
   void setModeFree(){

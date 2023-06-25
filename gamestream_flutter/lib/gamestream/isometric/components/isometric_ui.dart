@@ -12,7 +12,6 @@ class IsometricUI {
   final windowOpenMenu = WatchBool(false);
   final windowOpenDebug = WatchBool(false);
   final windowOpenLightSettings = WatchBool(false);
-
   final mouseOverDialog = WatchBool(false);
 
   Widget buildStackDebug() =>

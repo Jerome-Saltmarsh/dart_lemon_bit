@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_editor_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/src.dart';
@@ -113,10 +114,9 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.G) {
-      isometric.ui.windowOpenLightSettings.toggle();
+      isometric.teleportDebugCharacterToMouse();
       return;
     }
-
 
     if (key == KeyCode.P) {
       isometric.ui.windowOpenLightSettings.toggle();
@@ -125,8 +125,14 @@ class IsometricGame extends Game {
 
     if (isometric.clientState.editMode){
       isometric.editor.onKeyPressedModeEdit(key);
-    } else {
-      isometric.io.onKeyPressedModePlay(key);
+      return;
+    }
+
+    // play mode
+
+    if (key == KeyCode.F) {
+      gamestream.isometric.toggleZoom();
+      return;
     }
   }
 
