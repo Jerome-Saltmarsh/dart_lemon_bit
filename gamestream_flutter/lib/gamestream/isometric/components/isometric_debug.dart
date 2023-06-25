@@ -30,12 +30,16 @@ class IsometricDebug {
   final characterSelectedTargetZ = Watch(0.0);
   final characterSelectedTargetRenderLine = WatchBool(true);
 
+  final weaponType = Watch(0);
+  final weaponState = Watch(0);
+  final weaponStateDuration = Watch(0);
+
   Isometric get isometric => gamestream.isometric;
 
   Widget buildUI() =>
       WatchBuilder(characterSelected, (characterSelected) => !characterSelected ? nothing :
         GSContainer(
-          width: 220,
+          width: 320,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,6 +65,12 @@ class IsometricDebug {
               buildWatchInt(watch: characterSelectedPathIndex, text: 'path-index'),
               height2,
               buildWatchInt(watch: characterSelectedPathEnd, text: 'path-end'),
+              height2,
+              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
+              height2,
+              buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
+              height2,
+              buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
               height2,
               WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
                 if (!characterSelectedTarget) return nothing;
@@ -160,6 +170,14 @@ class IsometricDebug {
       ],
     );
 
+  static Widget buildRow({required String text, required Widget value}) => Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildText(text),
+        value,
+      ],
+    );
+
   static Widget buildWatchInt({
     required Watch<int> watch,
     required String text,
@@ -183,10 +201,10 @@ class IsometricDebug {
     );
 
   static Widget buildValue({required Widget child}) => Container(
-      width: 80,
+      width: 120,
       alignment: Alignment.center,
       color: Colors.white12,
       padding: const EdgeInsets.all(4),
-      child: child,
+      child: FittedBox(child: child),
     );
 }

@@ -812,6 +812,10 @@ extension ServerResponseReader on Gamestream {
           debug.characterSelectedPath[i] = readUInt16();
         }
 
+        // debug.weaponType.value = readUInt16();
+        // debug.weaponState.value = readByte();
+        // debug.weaponStateDuration.value = readUInt16();
+
         final characterSelectedIsAI = readBool();
         debug.characterSelectedIsAI.value = characterSelectedIsAI;
         if (characterSelectedIsAI) {
