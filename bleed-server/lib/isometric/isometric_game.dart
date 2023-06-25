@@ -1644,6 +1644,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.pathIndex--;
     }
 
+    character.update();
+    updateColliderPhysics(character);
+    updateCharacterState(character);
+
     if (target != null) {
 
       if (character.targetWithinRadius(Node_Size)) {
@@ -1654,7 +1658,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
         character.attackTargetEnemy(this);
-        return;
       }
 
       if (!character.deadBusyOrWeaponStateBusy && !character.runDestinationWithinRadiusRunSpeed){
@@ -1680,9 +1683,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    character.update();
-    updateColliderPhysics(character);
-    updateCharacterState(character);
   }
 
   void updateCharacterState(IsometricCharacter character) {
