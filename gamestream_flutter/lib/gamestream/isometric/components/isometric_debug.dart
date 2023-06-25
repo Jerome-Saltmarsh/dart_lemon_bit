@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -7,6 +8,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'isometric_render.dart';
 
 class IsometricDebug {
+  final character = IsometricCharacter();
   final characterSelected = Watch(false);
   final characterSelectedIsAI = Watch(false);
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
@@ -37,7 +39,16 @@ class IsometricDebug {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildText('DEBUG'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildText('DEBUG'),
+                  onPressed(
+                      action: () => isometric.camera.target = character,
+                      child: buildText('CAMERA TRACK')
+                  ),
+                ],
+              ),
               height8,
               buildWatchString(watch: characterSelectedRuntimeType, text: 'type'),
               buildWatchDouble(watch: characterSelectedX, text: 'x'),

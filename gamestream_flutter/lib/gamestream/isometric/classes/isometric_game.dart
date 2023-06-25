@@ -78,7 +78,7 @@ class IsometricGame extends Game {
       isometric.ui.buildStackDebug(),
       isometric.ui.buildWindowLightSettings(),
       Positioned(
-          bottom: 16,
+          top: 80,
           right: 16,
           child: isometric.debug.buildUI()
       ),

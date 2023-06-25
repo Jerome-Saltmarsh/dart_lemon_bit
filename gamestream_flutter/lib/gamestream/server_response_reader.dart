@@ -800,6 +800,9 @@ extension ServerResponseReader on Gamestream {
         debug.characterSelectedX.value = readDouble();
         debug.characterSelectedY.value = readDouble();
         debug.characterSelectedZ.value = readDouble();
+        debug.character.x = debug.characterSelectedX.value;
+        debug.character.y = debug.characterSelectedY.value;
+        debug.character.z = debug.characterSelectedZ.value;
         debug.characterSelectedDestinationX.value = readDouble();
         debug.characterSelectedDestinationY.value = readDouble();
         debug.characterSelectedPathIndex.value = readInt16();

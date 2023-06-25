@@ -374,13 +374,12 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void updateWeaponState() {
     final change = 0.01;
-    final targetAccuracy = 0;
-    final difference = accuracy - targetAccuracy;
-    if (difference.abs() < change) return;
-    if (difference > 0) {
-      accuracy -= change;
-    } else {
-      accuracy += change;
+    if (accuracy.abs() > change){
+      if (accuracy > 0) {
+        accuracy -= change;
+      } else {
+        accuracy += change;
+      }
     }
 
     if (weaponStateDuration > 0) {
@@ -397,7 +396,6 @@ abstract class IsometricCharacter extends IsometricCollider {
         }
       }
     }
-
   }
 
   /// safe to override
