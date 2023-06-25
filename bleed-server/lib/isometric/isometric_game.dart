@@ -1680,8 +1680,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    character.updateWeaponState();
-
+    character.update();
     updateColliderPhysics(character);
     updateCharacterState(character);
   }

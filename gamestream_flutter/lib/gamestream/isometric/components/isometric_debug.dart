@@ -51,11 +51,17 @@ class IsometricDebug {
               ),
               height8,
               buildWatchString(watch: characterSelectedRuntimeType, text: 'type'),
+              height2,
               buildWatchDouble(watch: characterSelectedX, text: 'x'),
+              height2,
               buildWatchDouble(watch: characterSelectedY, text: 'y'),
+              height2,
               buildWatchDouble(watch: characterSelectedZ, text: 'z'),
+              height2,
               buildWatchInt(watch: characterSelectedPathIndex, text: 'path-index'),
+              height2,
               buildWatchInt(watch: characterSelectedPathEnd, text: 'path-end'),
+              height2,
               WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
                 if (!characterSelectedTarget) return nothing;
                 return Container(

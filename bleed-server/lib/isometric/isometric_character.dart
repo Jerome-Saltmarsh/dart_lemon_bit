@@ -292,17 +292,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     }
   }
 
-  void assignWeaponStateIdle() {
-    weaponState = WeaponState.Idle;
-    weaponStateDurationTotal = 0;
-    weaponStateDuration = 0;
-  }
-
-  void assignWeaponStateAiming() {
-    weaponState = WeaponState.Aiming;
-    weaponStateDurationTotal = 10;
-  }
-
   void setCharacterStatePerforming({required int duration}){
     assert (active);
     assert (alive);
@@ -372,7 +361,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   void setCharacterStateRunning()=>
       setCharacterState(value: CharacterState.Running, duration: 0);
 
-  void updateWeaponState() {
+  void update() {
     final change = 0.01;
     if (accuracy.abs() > change){
       if (accuracy > 0) {
@@ -384,14 +373,16 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     if (weaponStateDuration > 0) {
       weaponStateDuration--;
-
       if (weaponStateDuration <= 0) {
         switch (weaponState) {
           case WeaponState.Firing:
-            assignWeaponStateAiming();
+            weaponState = WeaponState.Aiming;
+            weaponStateDurationTotal = 10;
             break;
           default:
-            assignWeaponStateIdle();
+            weaponState = WeaponState.Idle;
+            weaponStateDurationTotal = 0;
+            weaponStateDuration = 0;
             break;
         }
       }
