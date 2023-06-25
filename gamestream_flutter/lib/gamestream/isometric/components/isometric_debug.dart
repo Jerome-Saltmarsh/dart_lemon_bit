@@ -162,45 +162,30 @@ class IsometricDebug {
   static Widget buildWatchDouble({
     required Watch<double> watch,
     required String text,
-  }) => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        buildText(text),
-        buildValue(child: WatchBuilder(watch, (x) => buildText(x.toInt())))
-      ],
-    );
-
-  static Widget buildRow({required String text, required Widget value}) => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        buildText(text),
-        value,
-      ],
-    );
+  }) => buildRow(
+      text: text,
+      value: WatchBuilder(watch, (x) => buildText(x.toInt())),
+  );
 
   static Widget buildWatchInt({
     required Watch<int> watch,
     required String text,
-  }) => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        buildText(text),
-        buildValue(child: WatchBuilder(watch, buildText))
-      ],
-    );
+  }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
 
   static Widget buildWatchString({
-    required Watch<String> watch,
     required String text,
-  }) => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        buildText(text),
-        buildValue(child: WatchBuilder(watch, buildText))
-      ],
-    );
+    required Watch<String> watch,
+  }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
 
-  static Widget buildValue({required Widget child}) => Container(
+  static Widget buildRow({required String text, required Widget value}) => Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      buildText(text),
+      buildValue(value),
+    ],
+  );
+
+  static Widget buildValue(Widget child) => Container(
       width: 120,
       alignment: Alignment.center,
       color: Colors.white12,
