@@ -732,6 +732,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeInt16(selectedCharacter.runY.toInt());
     writeCharacterPath(selectedCharacter);
 
+    writeByte(selectedCharacter.state);
+    writeUInt16(selectedCharacter.stateDuration);
+    writeUInt16(selectedCharacter.stateDurationRemaining);
     writeUInt16(selectedCharacter.weaponType);
     writeByte(selectedCharacter.weaponState);
     writeUInt16(selectedCharacter.weaponStateDuration);

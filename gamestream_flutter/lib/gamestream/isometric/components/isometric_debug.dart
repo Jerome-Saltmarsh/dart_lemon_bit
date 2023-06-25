@@ -30,6 +30,10 @@ class IsometricDebug {
   final characterSelectedTargetZ = Watch(0.0);
   final characterSelectedTargetRenderLine = WatchBool(true);
 
+  final characterState = Watch(0);
+  final characterStateDuration = Watch(0);
+  final characterStateDurationRemaining = Watch(0);
+
   final weaponType = Watch(0);
   final weaponState = Watch(0);
   final weaponStateDuration = Watch(0);
@@ -66,7 +70,11 @@ class IsometricDebug {
               height2,
               buildWatchInt(watch: characterSelectedPathEnd, text: 'path-end'),
               height2,
-              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
+              buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
+              height2,
+              buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
+              height2,
+              buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
               height2,
               buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
               height2,
