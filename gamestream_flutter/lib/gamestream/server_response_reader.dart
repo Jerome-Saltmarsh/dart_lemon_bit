@@ -36,7 +36,7 @@ extension ServerResponseReader on Gamestream {
           readServerResponseApiSPR();
           break;
         case ServerResponse.Isometric:
-          readServerResponseIsometric();
+          readIsometricResponse();
           break;
         case ServerResponse.GameObject:
           readGameObject();
@@ -787,7 +787,7 @@ extension ServerResponseReader on Gamestream {
 
   CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
 
-  void readServerResponseIsometric() {
+  void readIsometricResponse() {
     switch (readByte()) {
       case IsometricResponse.Debug_Character:
         final debug = isometric.debug;
@@ -812,9 +812,9 @@ extension ServerResponseReader on Gamestream {
           debug.characterSelectedPath[i] = readUInt16();
         }
 
-        // debug.weaponType.value = readUInt16();
-        // debug.weaponState.value = readByte();
-        // debug.weaponStateDuration.value = readUInt16();
+        debug.weaponType.value = readUInt16();
+        debug.weaponState.value = readByte();
+        debug.weaponStateDuration.value = readUInt16();
 
         final characterSelectedIsAI = readBool();
         debug.characterSelectedIsAI.value = characterSelectedIsAI;
