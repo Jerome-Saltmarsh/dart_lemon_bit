@@ -31,16 +31,16 @@ class GameIO with ByteWriter {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
-  // final updateBuffer = Uint8List(15);
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
   final touchController = TouchController();
   final Isometric isometric;
+  late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.events.onChangedInputMode);
 
   GameIO(this.isometric);
 
-  late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.events.onChangedInputMode);
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
+
   bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
 
   void recenterCursor(){

@@ -95,34 +95,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
   bool get enemyFlagStatusDropped => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
 
-  // bool get shouldIncrementPathIndex => pathIndex > 0 && nodeIndex == pathNodeIndex;
-
-  bool get arrivedAtPathEnd => pathStart > 0 && pathIndex <= 0;
-
-  bool get shouldUpdatePath {
-    if (indexZ != 1) return false;
-
-    final target = this.target;
-
-    if (targetPrevious != target) {
-      targetPrevious = target;
-      return true;
-    }
-    if (target == null)
-      return false;
-
-    if (withinRadiusPosition(target, Node_Size))
-      return false;
-
-    if (pathIndex <= 0)
-      return true;
-
-    if (arrivedAtPathEnd)
-      return true;
-
-    return targetIndexChanged;
-  }
-
   bool get targetIndexChanged {
     final target = this.target;
     if (target == null) return false;
@@ -168,7 +140,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     decision = getDecision();
     target = getTarget();
   }
-
 
   IsometricPosition? getTarget() {
     switch (decision) {
@@ -249,21 +220,6 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
 
     return CaptureTheFlagAIDecision.Idle;
   }
-
-  // void idle() {
-  //   setCharacterStateIdle();
-  //   runPositionX = x;
-  //   runDestinationY = y;
-  //   runDestinationZ = z;
-  // }
-
-  // void attackTargetEnemy(){
-  //   final target = this.target;
-  //   if (target == null) return;
-  //   idle();
-  //   face(target);
-  //   useWeapon();
-  // }
 
   bool enemyWithinRange(double range){
      final distanceSquared = range * range;

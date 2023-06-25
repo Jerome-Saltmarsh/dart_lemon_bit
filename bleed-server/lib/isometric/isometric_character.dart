@@ -42,6 +42,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var runX = 0.0;
   var runY = 0.0;
   var runZ = 0.0;
+  var runRadius = 1.0;
 
   IsometricPosition? target;
 
@@ -371,10 +372,9 @@ abstract class IsometricCharacter extends IsometricCollider {
   void setCharacterStateRunning()=>
       setCharacterState(value: CharacterState.Running, duration: 0);
 
-  void updateAccuracy() {
+  void updateWeaponState() {
     final change = 0.01;
     final targetAccuracy = 0;
-    // final targetAccuracy = running ? 0.5 : 0;
     final difference = accuracy - targetAccuracy;
     if (difference.abs() < change) return;
     if (difference > 0) {
@@ -382,6 +382,22 @@ abstract class IsometricCharacter extends IsometricCollider {
     } else {
       accuracy += change;
     }
+
+    if (weaponStateDuration > 0) {
+      weaponStateDuration--;
+
+      if (weaponStateDuration <= 0) {
+        switch (weaponState) {
+          case WeaponState.Firing:
+            assignWeaponStateAiming();
+            break;
+          default:
+            assignWeaponStateIdle();
+            break;
+        }
+      }
+    }
+
   }
 
   /// safe to override
@@ -436,8 +452,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void clearPath(){
-    pathIndex = 0;
-    pathStart = 0;
+    pathIndex = -1;
+    pathStart = -1;
   }
 
   bool shouldAttackTarget() {

@@ -136,7 +136,7 @@ class GameIsometricUI {
         final screenCenterY = size.height * 0.5;
         const ratio = 2 / 48.0;
 
-        final chaseTarget = gamestream.isometric.camera.chaseTarget;
+        final chaseTarget = gamestream.isometric.camera.target;
         if (chaseTarget != null){
           final targetX = chaseTarget.renderX * ratio;
           final targetY = chaseTarget.renderY * ratio;

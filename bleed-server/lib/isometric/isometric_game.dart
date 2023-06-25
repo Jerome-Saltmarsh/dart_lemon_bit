@@ -1,20 +1,19 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/isometric/character_state.dart';
 import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
-import 'package:bleed_server/common/src/game_event_type.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/common/src/isometric/node_orientation.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:bleed_server/common/src/isometric/node_type.dart';
-import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/isometric/projectile_type.dart';
+import 'package:bleed_server/common/src/maths.dart';
+import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/common/src/isometric/weapon_state.dart';
-import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/core/game.dart';
+import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/utils/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
@@ -174,9 +173,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// @override
   void customOnGameObjectDestroyed(IsometricGameObject gameObject) {}
-
-  /// @override
-  void customOnCharacterWeaponStateReady(IsometricCharacter character) {}
 
   /// @override
   void customOnPlayerAimTargetChanged(IsometricPlayer player,
@@ -1642,10 +1638,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.lookRadian = character.faceAngle;
     }
 
-
     final target = character.target;
 
-    if (character.pathIndex > 0 && getNodeIndexV3(character) == character.pathNodeIndex){
+    if (character.pathIndex >= 0 && getNodeIndexV3(character) == character.pathNodeIndex){
       character.pathIndex--;
     }
 
@@ -1685,23 +1680,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    character.updateAccuracy();
-
-    if (character.weaponStateDuration > 0) {
-      character.weaponStateDuration--;
-
-      if (character.weaponStateDuration <= 0) {
-        customOnCharacterWeaponStateReady(character);
-        switch (character.weaponState) {
-          case WeaponState.Firing:
-            character.assignWeaponStateAiming();
-            break;
-          default:
-            character.assignWeaponStateIdle();
-            break;
-        }
-      }
-    }
+    character.updateWeaponState();
 
     updateColliderPhysics(character);
     updateCharacterState(character);

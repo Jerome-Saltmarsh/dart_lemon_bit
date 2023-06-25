@@ -16,13 +16,13 @@ class IsometricDebug {
   final characterSelectedX = Watch(0.0);
   final characterSelectedY = Watch(0.0);
   final characterSelectedZ = Watch(0.0);
-  final characterSelectedRuntimeType = Watch("");
+  final characterSelectedRuntimeType = Watch('');
   final characterSelectedPath = Uint16List(500);
   final characterSelectedPathIndex = Watch(0);
   final characterSelectedPathEnd = Watch(0);
   final characterSelectedPathRender = WatchBool(true);
   final characterSelectedTarget = Watch(false);
-  final characterSelectedTargetType = Watch("");
+  final characterSelectedTargetType = Watch('');
   final characterSelectedTargetX = Watch(0.0);
   final characterSelectedTargetY = Watch(0.0);
   final characterSelectedTargetZ = Watch(0.0);
@@ -37,7 +37,7 @@ class IsometricDebug {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildText("DEBUG"),
+              buildText('DEBUG'),
               height8,
               buildWatchString(watch: characterSelectedRuntimeType, text: 'type'),
               buildWatchDouble(watch: characterSelectedX, text: 'x'),
@@ -53,11 +53,11 @@ class IsometricDebug {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildText("TARGET"),
-                      WatchBuilder(characterSelectedTargetType, (type) => buildText("type: $type")),
-                      WatchBuilder(characterSelectedTargetX, (x) => buildText("x: ${x.toInt()}")),
-                      WatchBuilder(characterSelectedTargetY, (y) => buildText("y: ${y.toInt()}")),
-                      WatchBuilder(characterSelectedTargetZ, (z) => buildText("z: ${z.toInt()}")),
+                      buildText('TARGET'),
+                      WatchBuilder(characterSelectedTargetType, (type) => buildText('type: $type')),
+                      WatchBuilder(characterSelectedTargetX, (x) => buildText('x: ${x.toInt()}')),
+                      WatchBuilder(characterSelectedTargetY, (y) => buildText('y: ${y.toInt()}')),
+                      WatchBuilder(characterSelectedTargetZ, (z) => buildText('z: ${z.toInt()}')),
                     ],
                   ),
                 );
@@ -89,7 +89,7 @@ class IsometricDebug {
       );
     }
 
-    if (characterSelectedPathRender.value){
+    if (characterSelectedPathRender.value ){
       engine.setPaintColor(Colors.blue);
       renderPath(
         path: characterSelectedPath,
@@ -117,6 +117,8 @@ class IsometricDebug {
   }
 
   void renderPath({required Uint16List path, required int start, required int end}){
+    if (start < 0) return;
+    if (end < 0) return;
     final nodes = gamestream.isometric.nodes;
     for (var i = start; i < end - 1; i++){
       final a = path[i];

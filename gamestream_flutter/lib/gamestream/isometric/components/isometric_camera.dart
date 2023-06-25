@@ -6,15 +6,17 @@ import '../classes/isometric_position.dart';
 
 class IsometricCamera {
   final chaseTargetEnabled = Watch(true);
-  IsometricPosition? chaseTarget;
+
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;
   var mouseFollowSensitivity = 0.1;
 
+  IsometricPosition? target;
+
   void centerOnChaseTarget() {
-    if (chaseTarget != null){
-      centerOnV3(chaseTarget!);
+    if (target != null){
+      centerOnV3(target!);
     }
   }
   void centerOnV3(IsometricPosition v3) => engine.cameraCenter(v3.renderX, v3.renderY);
@@ -27,8 +29,9 @@ class IsometricCamera {
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
 
-    if (chaseTarget != null){
-      engine.cameraFollow(chaseTarget!.renderX + translateX, chaseTarget!.renderY + translateY, chaseStrength);
+    final target = this.target;
+    if (target != null) {
+      engine.cameraFollow(target.renderX + translateX, target.renderY + translateY, chaseStrength);
     }
   }
 

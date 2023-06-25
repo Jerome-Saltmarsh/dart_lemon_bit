@@ -751,8 +751,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writeCharacterPath(IsometricCharacter character){
-    writeUInt16(character.pathIndex);
-    writeUInt16(character.pathStart);
+    writeInt16(character.pathIndex);
+    writeInt16(character.pathStart);
     for (var j = 0; j < character.pathStart; j++){
       writeUInt16(character.path[j]);
     }

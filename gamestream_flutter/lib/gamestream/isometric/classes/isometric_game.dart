@@ -17,7 +17,7 @@ class IsometricGame extends Game {
   final Isometric isometric;
 
   IsometricGame({required this.isometric}) {
-    isometric.camera.chaseTarget = isometric.player.position;
+    isometric.camera.target = isometric.player.position;
   }
 
   IsometricPlayer get player => isometric.player;
