@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/games/survival/survival_game_ui.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client_state.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -47,8 +48,8 @@ class IsometricEvents {
     gamestream.isometric.nodes.refreshBakeMapLightSources();
 
     if (clientState.raining.value) {
-      gamestream.isometric.actions.rainStop();
-      gamestream.isometric.actions.rainStart();
+      gamestream.isometric.rainStop();
+      gamestream.isometric.rainStart();
     }
     gamestream.isometric.nodes.resetNodeColorsToAmbient();
     gamestream.isometric.editor.refreshNodeSelectedIndex();
@@ -243,7 +244,7 @@ class IsometricEvents {
   }
 
   void onGameEventExplosion(double x, double y, double z) {
-    gamestream.isometric.actions.createExplosion(x, y, z);
+    gamestream.isometric.createExplosion(x, y, z);
   }
 
   void onNodeSet(double x, double y, double z) {

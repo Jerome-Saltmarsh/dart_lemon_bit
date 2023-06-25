@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -428,7 +429,7 @@ mixin class IsometricClientState {
   }
 
   void onChangedRaining(bool raining){
-    raining ? gamestream.isometric.actions.rainStart() : gamestream.isometric.actions.rainStop();
+    raining ? gamestream.isometric.rainStart() : gamestream.isometric.rainStop();
     gamestream.isometric.nodes.resetNodeColorsToAmbient();
   }
 

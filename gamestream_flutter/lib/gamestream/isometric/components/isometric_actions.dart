@@ -1,29 +1,24 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../ui/game_isometric_ui.dart';
-import '../isometric.dart';
 
-class IsometricActions {
+extension IsometricActions on Isometric {
   static const Zoom_Far = 1.0;
   static const Zoom_Very_Far = 0.75;
   static const Zoom_Default = Zoom_Close;
   static const Zoom_Spawn = Zoom_Very_Far;
   static const Zoom_Close = 1.5;
   
-  final Isometric isometric;
-
-  IsometricActions(this.isometric);
-
   void loadSelectedSceneName(){
-    final sceneName = isometric.editor.selectedSceneName.value;
+    final sceneName = editor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
-    gamestream.isometric.editorLoadGame(sceneName);
-    isometric.editor.actionGameDialogClose();
+    editorLoadGame(sceneName);
+    editor.actionGameDialogClose();
   }
 
   void rainStart(){
-    final nodes = isometric.nodes;
     final rows = nodes.totalRows;
     final columns = nodes.totalColumns;
     final zs = nodes.totalZ - 1;
@@ -53,7 +48,6 @@ class IsometricActions {
   }
 
   void rainStop() {
-    final nodes = isometric.nodes;
     for (var i = 0; i < nodes.total; i++) {
       if (!NodeType.isRain(nodes.nodeTypes[i])) continue;
       nodes.nodeTypes[i] = NodeType.Empty;
@@ -67,15 +61,15 @@ class IsometricActions {
   }
 
   void actionSetModePlay(){
-    isometric.clientState.edit.value = false;
+    clientState.edit.value = false;
   }
 
   void actionSetModeEdit(){
-    isometric.clientState.edit.value = true;
+    clientState.edit.value = true;
   }
 
   void actionToggleEdit() {
-    isometric.clientState.edit.value = !isometric.clientState.edit.value;
+    clientState.edit.value = !clientState.edit.value;
   }
 
   void messageBoxToggle(){
@@ -91,7 +85,7 @@ class IsometricActions {
   }
 
   void toggleDebugMode(){
-    isometric.clientState.debugMode.value = !isometric.clientState.debugMode.value;;
+    clientState.debugMode.value = !clientState.debugMode.value;;
   }
 
   void toggleZoom(){
@@ -104,14 +98,14 @@ class IsometricActions {
   }
 
   void createExplosion(double x, double y, double z){
-    isometric.particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+    particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      isometric.particles.spawnParticleFire(
+      particles.spawnParticleFire(
           x: x,
           y: y,
           z: z,
@@ -121,13 +115,13 @@ class IsometricActions {
       ;
     }
 
-    isometric.particles.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
-    isometric.particles.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
-    isometric.particles.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
-    isometric.particles.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
+    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
+    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
+    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
     for (var i = 0; i < 7; i++) {
-      gamestream.isometric.particles.spawnParticle(
+      particles.spawnParticle(
         type: ParticleType.Fire,
         x: x,
         y: y,
@@ -147,7 +141,7 @@ class IsometricActions {
 
     for (var i = 0; i < 7; i++) {
       const r = 5.0;
-      gamestream.isometric.particles.spawnParticleSmoke(
+      particles.spawnParticleSmoke(
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),

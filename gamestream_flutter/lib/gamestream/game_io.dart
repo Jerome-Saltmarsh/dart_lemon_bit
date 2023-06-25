@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../library.dart';
@@ -152,7 +153,7 @@ class GameIO with ByteWriter {
       isometric.editor.delete();
     }
     if (getInputDirectionKeyboard() != IsometricDirection.None) {
-      isometric.actions.actionSetModePlay();
+      isometric.actionSetModePlay();
     }
     return;
   }

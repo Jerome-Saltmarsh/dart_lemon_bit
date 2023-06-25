@@ -11,7 +11,6 @@ import 'components/isometric_ui.dart';
 import 'components/render/renderer_gameobjects.dart';
 import 'components/render/renderer_particles.dart';
 import 'components/isometric_io.dart';
-import 'components/isometric_actions.dart';
 import 'components/isometric_camera.dart';
 import 'components/isometric_client_state.dart';
 import 'components/isometric_editor.dart';
@@ -35,7 +34,6 @@ class Isometric {
   final ui = IsometricUI();
 
   late final events = IsometricEvents(clientState, gamestream);
-  late final actions = IsometricActions(this);
   late final renderer = IsometricRender(
     rendererGameObjects: RendererGameObjects(nodes),
     rendererParticles: RendererParticles(nodes),

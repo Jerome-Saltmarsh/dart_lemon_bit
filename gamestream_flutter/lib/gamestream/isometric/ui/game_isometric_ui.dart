@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -359,7 +360,7 @@ class GameIsometricUI {
               child: GameIsometricUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   static Widget buildIconZoom() => onPressed(
-      action: gamestream.isometric.actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: gamestream.isometric.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconMenu() => onPressed(
       action: gamestream.isometric.ui.windowOpenMenu.toggle,
@@ -651,7 +652,7 @@ class GameIsometricUI {
         return buildButton(
             toolTip: "Tab",
             child: edit ? "PLAY" : "EDIT",
-            action: gamestream.isometric.actions.actionToggleEdit,
+            action: gamestream.isometric.actionToggleEdit,
             color: GameIsometricColors.green,
             alignment: Alignment.center,
             width: 100);

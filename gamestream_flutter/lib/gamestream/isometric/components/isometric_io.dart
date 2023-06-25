@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricIO {
@@ -16,7 +17,7 @@ class IsometricIO {
 
   void onKeyPressedModePlay(int key) {
     if (key == Key_Zoom) {
-      gamestream.isometric.actions.toggleZoom();
+      gamestream.isometric.toggleZoom();
       return;
     }
   }

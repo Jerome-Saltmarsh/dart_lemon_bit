@@ -47,7 +47,7 @@ class IsometricGame extends Game {
 
   @override
   void onActivated() {
-    gamestream.isometric.particles.clearParticles();
+    isometric.particles.clearParticles();
     isometric.ui.windowOpenMenu.setFalse();
 
     gamestream.audio.musicStop();
@@ -69,7 +69,7 @@ class IsometricGame extends Game {
   @override
   Widget buildUI(BuildContext context) => StackFullscreen(children: [
       buildWatchBool(
-          gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
+          isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
           GameIsometricUI.buildDialogFramesSinceUpdate,
       ),
       WatchBuilder(isometric.clientState.edit, (edit) =>
@@ -98,23 +98,28 @@ class IsometricGame extends Game {
   void onKeyPressed(int key) {
 
     if (key == KeyCode.Tab) {
-      gamestream.isometric.clientState.edit.value = !gamestream.isometric.clientState.edit.value;
+      isometric.clientState.edit.value = !isometric.clientState.edit.value;
       return;
     }
 
     if (key == KeyCode.Digit_0) {
-      gamestream.isometric.ui.windowOpenDebug.toggle();
+      isometric.ui.windowOpenDebug.toggle();
       return;
     }
 
     if (key == KeyCode.Escape) {
-      gamestream.isometric.ui.windowOpenMenu.toggle();
+      isometric.ui.windowOpenMenu.toggle();
+      return;
+    }
+
+    if (key == KeyCode.G) {
+      isometric.ui.windowOpenLightSettings.toggle();
       return;
     }
 
 
     if (key == KeyCode.P) {
-      gamestream.isometric.ui.windowOpenLightSettings.toggle();
+      isometric.ui.windowOpenLightSettings.toggle();
       return;
     }
 
