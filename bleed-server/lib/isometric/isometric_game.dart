@@ -1622,7 +1622,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateCharacter(IsometricCharacter character) {
-    character.customOnUpdate();
 
     // TODO Improve Logic
     if (character is T) {
@@ -1650,11 +1649,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (target != null) {
 
+      // if (character.isAlly(target) && character.targetWit)
+      //
+      // update destination
       if (character.targetWithinRadius(Node_Size)) {
         character.setDestinationToTarget();
       } else {
         setDestinationToPathNodeIndex(character);
       }
+
+
+      // update character-state
 
       if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
         character.attackTargetEnemy(this);
@@ -1666,23 +1671,20 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.setCharacterStateIdle();
       }
 
-      final updatedTargetIndex = scene.getNodeIndexV3(target);
-      if (updatedTargetIndex != character.targetIndex) {
-        character.targetIndex = updatedTargetIndex;
+      // update path
+      final targetIndex = scene.getNodeIndexV3(target);
+
+      if (targetIndex != character.targetIndex ||
+          (character.pathStart > 0 && character.pathIndex == 0)
+      ) {
         setCharacterPathToNodeIndex(
             character: character,
-            targetIndex: updatedTargetIndex,
-        );
-      }
-
-      if (character.pathStart > 0 && character.pathIndex == 0){
-        setCharacterPathToNodeIndex(
-          character: character,
-          targetIndex: updatedTargetIndex,
+            targetIndex: targetIndex,
         );
       }
     }
 
+    character.customOnUpdate();
   }
 
   void updateCharacterState(IsometricCharacter character) {
