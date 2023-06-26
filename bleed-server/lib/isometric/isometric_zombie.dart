@@ -49,11 +49,12 @@ class IsometricZombie extends IsometricCharacter {
 
       if (_nextWander <= 0) {
         _nextWander = randomInt(300, 500);
-        pathTargetIndex = game.scene.getRandomEmptyNodeIndexAroundZRC(
+        pathTargetIndex = game.scene.findRandomNodeTypeAround(
             z: indexZ,
             row: indexRow,
             column: indexColumn,
             radius: wanderRadius,
+            type: NodeType.Empty,
         );
       }
     }

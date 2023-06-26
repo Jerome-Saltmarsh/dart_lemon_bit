@@ -358,46 +358,24 @@ class IsometricScene {
     return true;
   }
 
-  int getRandomFreeNodeIndexAround({required int index, required int radius}){
-    assert (radius >= 1);
-
-    final z = getNodeIndexZ(index);
-    final row = getNodeIndexRow(index);
-    final column = getNodeIndexColumn(index);
-
-    var attempts = 5;
-
-    while (attempts-- >= 0) {
-      final randomZ = z;
-      final randomRow = row + giveOrTake(radius).toInt();
-      final randomColumn = column + giveOrTake(radius).toInt();
-      if (getGridOrientation(randomZ, randomRow, randomColumn) == NodeOrientation.None) {
-        return getNodeIndex(randomZ, randomRow, randomColumn);
-      }
-    }
-
-    return getNodeIndex(z, row, column);
-  }
-
-  int getRandomEmptyNodeIndexAroundZRC({
+  int findRandomNodeTypeAround({
     required int z,
     required int row,
     required int column,
     required int radius,
+    required int type,
+    int attempts = 5,
   }){
     assert (radius >= 1);
-
-    var attempts = 5;
 
     while (attempts-- >= 0) {
       final randomZ = z;
       final randomRow = row + giveOrTake(radius).toInt();
       final randomColumn = column + giveOrTake(radius).toInt();
-      if (getGridOrientation(randomZ, randomRow, randomColumn) == NodeOrientation.None) {
+      if (getGridOrientation(randomZ, randomRow, randomColumn) == type) {
         return getNodeIndex(randomZ, randomRow, randomColumn);
       }
     }
-
     return -1;
   }
 
