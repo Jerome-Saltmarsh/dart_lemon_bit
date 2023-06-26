@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../classes/isometric_position.dart';
 
 class IsometricCamera {
-  final chaseTargetEnabled = Watch(true);
+  final followTarget = WatchBool(true);
 
   var chaseStrength = 0.00075;
   var translateX = 0.0;
@@ -23,7 +23,7 @@ class IsometricCamera {
   void centerOnV3(IsometricPosition v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
-    if (!chaseTargetEnabled.value) return;
+    if (!followTarget.value) return;
 
     final target = this.target;
     if (target == null) return;
@@ -41,11 +41,11 @@ class IsometricCamera {
   }
 
   void setModeFree(){
-    chaseTargetEnabled.value = false;
+    followTarget.value = false;
   }
 
   void setModeChase(){
-    chaseTargetEnabled.value = true;
+    followTarget.value = true;
   }
 
   void cameraSetPositionGrid(int row, int column, int z){

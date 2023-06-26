@@ -53,16 +53,14 @@ class IsometricDebug {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildText('DEBUG'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildText('CAMERA'),
-                      buildText('Player'),
-                      buildText('Selected'),
-                      buildText('Free'),
-                    ],
-                  ),
                   height8,
+                  onPressed(
+                      action: isometric.camera.followTarget.toggle,
+                      child: buildRowWatchBool(
+                        text: 'camera-follow',
+                          watch: isometric.camera.followTarget,
+                      ),
+                  ),
                   buildRowWatchString(text: 'type', watch: runTimeType),
                   buildRowWatchDouble(text: 'x', watch: x, ),
                   buildRowWatchDouble(text: 'y', watch: y),
@@ -220,6 +218,7 @@ class IsometricDebug {
        isometric.camera.target = character;
      } else {
        isometric.camera.target = isometric.player.position;
+       isometric.camera.followTarget.value = true;
      }
   }
 }
