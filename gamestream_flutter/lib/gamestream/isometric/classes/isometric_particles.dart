@@ -166,7 +166,7 @@ class IsometricParticles {
       final particle = particles[i];
       if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
-      gamestream.isometric.nodes.emitLightAHSVShadowed(
+      gamestream.isometric.scene.emitLightAHSVShadowed(
         index: particle.nodeIndex,
         hue: particle.lightHue,
         saturation: particle.lightSaturation,
@@ -211,12 +211,12 @@ class IsometricParticles {
 
 
 
-    final nodeIndex = gamestream.isometric.nodes.getNodeIndexV3(particle);
+    final nodeIndex = gamestream.isometric.scene.getNodeIndexV3(particle);
 
     assert (nodeIndex >= 0);
-    assert (nodeIndex < gamestream.isometric.nodes.total);
+    assert (nodeIndex < gamestream.isometric.scene.total);
 
-    final tile = gamestream.isometric.nodes.nodeTypes[nodeIndex];
+    final tile = gamestream.isometric.scene.nodeTypes[nodeIndex];
     final airBorn =
         !particle.checkNodeCollision || (
             tile == NodeType.Empty        ||
@@ -641,9 +641,9 @@ class IsometricParticles {
         scale: scale,
       )
         ..emitsLight = true
-        ..lightHue = gamestream.isometric.nodes.ambient_hue
-        ..lightSaturation = gamestream.isometric.nodes.ambient_sat
-        ..lightValue = gamestream.isometric.nodes.ambient_val
+        ..lightHue = gamestream.isometric.scene.ambient_hue
+        ..lightSaturation = gamestream.isometric.scene.ambient_sat
+        ..lightValue = gamestream.isometric.scene.ambient_val
         ..alpha = 0
         ..checkNodeCollision = false
         ..strength = 0.5
@@ -666,9 +666,9 @@ class IsometricParticles {
         checkCollision: false,
         animation: true,
       )
-        ..lightHue = gamestream.isometric.nodes.ambient_hue
-        ..lightSaturation = gamestream.isometric.nodes.ambient_sat
-        ..lightValue = gamestream.isometric.nodes.ambient_val
+        ..lightHue = gamestream.isometric.scene.ambient_hue
+        ..lightSaturation = gamestream.isometric.scene.ambient_sat
+        ..lightValue = gamestream.isometric.scene.ambient_val
         ..alpha = 0
         ..flash = true
         ..strength = 0.0

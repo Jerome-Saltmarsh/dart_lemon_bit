@@ -65,7 +65,7 @@ class IsometricUI {
                                       'aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n'
                                       'target-category: ${TargetCategory.getName(gamestream.isometric.player.targetCategory)}\n'
                                       'target-position: ${gamestream.isometric.player.targetPosition}\n'
-                                      'scene-light-sources: ${gamestream.isometric.nodes.nodesLightSourcesTotal}\n'
+                                      'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
                                       'scene-light-active: ${gamestream.isometric.clientState.lights_active}\n'
                                       'total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n'
                                       'total-characters: ${gamestream.isometric.server.totalCharacters}\n'
@@ -133,11 +133,11 @@ class IsometricUI {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildText('<-', onPressed: (){
-                  gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length - 1);
+                  gamestream.isometric.scene.setInterpolationLength(gamestream.isometric.scene.interpolation_length - 1);
                 }),
-                GSRefresh(() => buildText('light-size: ${gamestream.isometric.nodes.interpolation_length}')),
+                GSRefresh(() => buildText('light-size: ${gamestream.isometric.scene.interpolation_length}')),
                 buildText('->', onPressed: (){
-                  gamestream.isometric.nodes.setInterpolationLength(gamestream.isometric.nodes.interpolation_length + 1);
+                  gamestream.isometric.scene.setInterpolationLength(gamestream.isometric.scene.interpolation_length + 1);
                 }),
               ],
             ),
@@ -145,15 +145,15 @@ class IsometricUI {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildText('<-', onPressed: (){
-                  final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
+                  final indexCurrent = EaseType.values.indexOf(gamestream.isometric.scene.interpolation_ease_type.value);
                   final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                  gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
+                  gamestream.isometric.scene.interpolation_ease_type.value = EaseType.values[indexNext];
                 }),
-                buildWatch(gamestream.isometric.nodes.interpolation_ease_type, buildText),
+                buildWatch(gamestream.isometric.scene.interpolation_ease_type, buildText),
                 buildText('->', onPressed: (){
-                  final indexCurrent = EaseType.values.indexOf(gamestream.isometric.nodes.interpolation_ease_type.value);
+                  final indexCurrent = EaseType.values.indexOf(gamestream.isometric.scene.interpolation_ease_type.value);
                   final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                  gamestream.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
+                  gamestream.isometric.scene.interpolation_ease_type.value = EaseType.values[indexNext];
                 }),
               ],
             ),
@@ -163,19 +163,19 @@ class IsometricUI {
             ColorPicker(
               portraitOnly: true,
               pickerColor: HSVColor.fromAHSV(
-                gamestream.isometric.nodes.ambient_alp / 255,
-                gamestream.isometric.nodes.ambient_hue.toDouble(),
-                gamestream.isometric.nodes.ambient_sat / 100,
-                gamestream.isometric.nodes.ambient_val / 100,
+                gamestream.isometric.scene.ambient_alp / 255,
+                gamestream.isometric.scene.ambient_hue.toDouble(),
+                gamestream.isometric.scene.ambient_sat / 100,
+                gamestream.isometric.scene.ambient_val / 100,
               ).toColor(),
               onColorChanged: (color){
                 gamestream.isometric.clientState.overrideColor.value = true;
                 final hsvColor = HSVColor.fromColor(color);
-                gamestream.isometric.nodes.ambient_alp = (hsvColor.alpha * 255).round();
-                gamestream.isometric.nodes.ambient_hue = hsvColor.hue.round();
-                gamestream.isometric.nodes.ambient_sat = (hsvColor.saturation * 100).round();
-                gamestream.isometric.nodes.ambient_val = (hsvColor.value * 100).round();
-                gamestream.isometric.nodes.resetNodeColorsToAmbient();
+                gamestream.isometric.scene.ambient_alp = (hsvColor.alpha * 255).round();
+                gamestream.isometric.scene.ambient_hue = hsvColor.hue.round();
+                gamestream.isometric.scene.ambient_sat = (hsvColor.saturation * 100).round();
+                gamestream.isometric.scene.ambient_val = (hsvColor.value * 100).round();
+                gamestream.isometric.scene.resetNodeColorsToAmbient();
               },
             ),
           ],

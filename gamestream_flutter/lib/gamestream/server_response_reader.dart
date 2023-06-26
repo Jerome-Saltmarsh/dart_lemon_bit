@@ -555,8 +555,8 @@ extension ServerResponseReader on Gamestream {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    isometric.nodes.nodeTypes[nodeIndex] = nodeType;
-    isometric.nodes.nodeOrientations[nodeIndex] = nodeOrientation;
+    isometric.scene.nodeTypes[nodeIndex] = nodeType;
+    isometric.scene.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
     isometric.events.onChangedNodes();
     isometric.editor.refreshNodeSelectedIndex();
@@ -572,9 +572,9 @@ extension ServerResponseReader on Gamestream {
 
   void readNodes() {
     final scenePart = readByte(); /// DO NOT DELETE
-    isometric.nodes.totalZ = readUInt16();
-    isometric.nodes.totalRows = readUInt16();
-    isometric.nodes.totalColumns = readUInt16();
+    isometric.scene.totalZ = readUInt16();
+    isometric.scene.totalRows = readUInt16();
+    isometric.scene.totalColumns = readUInt16();
 
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationsLength = readUInt24();
@@ -583,19 +583,19 @@ extension ServerResponseReader on Gamestream {
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
     final nodeTypes = decoder.decodeBytes(compressedNodeTypes);
 
-    isometric.nodes.nodeTypes = Uint8List.fromList(nodeTypes);
-    isometric.nodes.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    isometric.nodes.area = isometric.nodes.totalRows * isometric.nodes.totalColumns;
-    isometric.nodes.area2 = isometric.nodes.area * 2;
-    isometric.nodes.projection = isometric.nodes.area2 + isometric.nodes.totalColumns + 1;
-    isometric.nodes.projectionHalf =  isometric.nodes.projection ~/ 2;
-    final totalNodes = isometric.nodes.totalZ * isometric.nodes.totalRows * isometric.nodes.totalColumns;
-    isometric.nodes.colorStack = Uint16List(totalNodes);
-    isometric.nodes.ambientStack = Uint16List(totalNodes);
-    isometric.nodes.total = totalNodes;
-    isometric.clientState.nodesRaycast = isometric.nodes.area +  isometric.nodes.area + isometric.nodes.totalColumns + 1;
+    isometric.scene.nodeTypes = Uint8List.fromList(nodeTypes);
+    isometric.scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+    isometric.scene.area = isometric.scene.totalRows * isometric.scene.totalColumns;
+    isometric.scene.area2 = isometric.scene.area * 2;
+    isometric.scene.projection = isometric.scene.area2 + isometric.scene.totalColumns + 1;
+    isometric.scene.projectionHalf =  isometric.scene.projection ~/ 2;
+    final totalNodes = isometric.scene.totalZ * isometric.scene.totalRows * isometric.scene.totalColumns;
+    isometric.scene.colorStack = Uint16List(totalNodes);
+    isometric.scene.ambientStack = Uint16List(totalNodes);
+    isometric.scene.total = totalNodes;
+    isometric.clientState.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
     isometric.events.onChangedNodes();
-    isometric.nodes.refreshNodeVariations();
+    isometric.scene.refreshNodeVariations();
     isometric.clientState.sceneChanged.value++;
 
     isometric.particles.totalActiveParticles = 0;

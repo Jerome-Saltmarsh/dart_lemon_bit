@@ -52,31 +52,31 @@ class IsometricEditor {
 
   late var nodeSelectedIndex = Watch(0, clamp: (int value){
     if (value < 0) return 0;
-    if (value >= gamestream.isometric.nodes.total) return gamestream.isometric.nodes.total - 1;
+    if (value >= gamestream.isometric.scene.total) return gamestream.isometric.scene.total - 1;
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  int get z => gamestream.isometric.nodes.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
-  int get row => gamestream.isometric.nodes.convertNodeIndexToIndexX(nodeSelectedIndex.value);
-  int get column => gamestream.isometric.nodes.convertNodeIndexToIndexY(nodeSelectedIndex.value);
+  int get z => gamestream.isometric.scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  int get row => gamestream.isometric.scene.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  int get column => gamestream.isometric.scene.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   set z(int value){
     if (value < 0) return;
-    if (value >= gamestream.isometric.nodes.totalZ) return;
+    if (value >= gamestream.isometric.scene.totalZ) return;
     final difference = value - z;
-    nodeSelectedIndex.value += difference * gamestream.isometric.nodes.area;
+    nodeSelectedIndex.value += difference * gamestream.isometric.scene.area;
   }
 
   set row(int value){
     if (value < 0) return;
-    if (value >= gamestream.isometric.nodes.totalRows) return;
+    if (value >= gamestream.isometric.scene.totalRows) return;
     final difference = value - row;
-    nodeSelectedIndex.value += difference * gamestream.isometric.nodes.totalColumns;
+    nodeSelectedIndex.value += difference * gamestream.isometric.scene.totalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
-    if (value >= gamestream.isometric.nodes.totalColumns) return;
+    if (value >= gamestream.isometric.scene.totalColumns) return;
     nodeSelectedIndex.value += value - column;
   }
 
@@ -153,8 +153,8 @@ class IsometricEditor {
 
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = gamestream.isometric.nodes.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = gamestream.isometric.nodes.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = gamestream.isometric.scene.nodeTypes[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = gamestream.isometric.scene.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
@@ -220,7 +220,7 @@ class IsometricEditor {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = gamestream.isometric.nodes.getNodeIndexZRC(z, row, column);
+    nodeSelectedIndex.value = gamestream.isometric.scene.getNodeIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){
@@ -248,12 +248,12 @@ class IsometricEditor {
 
   void raise(){
     final nodeIndex = nodeSelectedIndex.value;
-    if (nodeIndex <= gamestream.isometric.nodes.area) return;
-    final nodeIndexBelow = nodeIndex - gamestream.isometric.nodes.area;
+    if (nodeIndex <= gamestream.isometric.scene.area) return;
+    final nodeIndexBelow = nodeIndex - gamestream.isometric.scene.area;
     sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
-      type: gamestream.isometric.nodes.nodeTypes[nodeIndexBelow],
-      orientation: gamestream.isometric.nodes.nodeOrientations[nodeIndexBelow],
+      type: gamestream.isometric.scene.nodeTypes[nodeIndexBelow],
+      orientation: gamestream.isometric.scene.nodeOrientations[nodeIndexBelow],
     );
   }
 
@@ -316,8 +316,8 @@ class IsometricEditor {
   }
 
   void onChangedSelectedNodeIndex(int index){
-    nodeSelectedOrientation.value = gamestream.isometric.nodes.nodeOrientations[index];
-    nodeSelectedType.value = gamestream.isometric.nodes.nodeTypes[index];
+    nodeSelectedOrientation.value = gamestream.isometric.scene.nodeOrientations[index];
+    nodeSelectedType.value = gamestream.isometric.scene.nodeTypes[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();

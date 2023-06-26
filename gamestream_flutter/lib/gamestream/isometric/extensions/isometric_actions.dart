@@ -19,28 +19,28 @@ extension IsometricActions on Isometric {
   }
 
   void rainStart(){
-    final rows = nodes.totalRows;
-    final columns = nodes.totalColumns;
-    final zs = nodes.totalZ - 1;
+    final rows = scene.totalRows;
+    final columns = scene.totalColumns;
+    final zs = scene.totalZ - 1;
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
-          final index = nodes.getNodeIndexZRC(z, row, column);
-          final type = nodes.nodeTypes[index];
+          final index = scene.getNodeIndexZRC(z, row, column);
+          final type = scene.nodeTypes[index];
           if (type != NodeType.Empty) {
-            if (type == NodeType.Water || nodes.nodeOrientations[index] == NodeOrientation.Solid) {
-              nodes.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
+            if (type == NodeType.Water || scene.nodeOrientations[index] == NodeOrientation.Solid) {
+              scene.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
-            nodes.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
+            scene.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
             break;
           }
           if (
               column == 0 ||
               row == 0 ||
-              !nodes.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
-              !nodes.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
+              !scene.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
+              !scene.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
           ){
-            nodes.setNodeType(z, row, column, NodeType.Rain_Falling);
+            scene.setNodeType(z, row, column, NodeType.Rain_Falling);
           }
         }
       }
@@ -48,10 +48,10 @@ extension IsometricActions on Isometric {
   }
 
   void rainStop() {
-    for (var i = 0; i < nodes.total; i++) {
-      if (!NodeType.isRain(nodes.nodeTypes[i])) continue;
-      nodes.nodeTypes[i] = NodeType.Empty;
-      nodes.nodeOrientations[i] = NodeOrientation.None;
+    for (var i = 0; i < scene.total; i++) {
+      if (!NodeType.isRain(scene.nodeTypes[i])) continue;
+      scene.nodeTypes[i] = NodeType.Empty;
+      scene.nodeOrientations[i] = NodeOrientation.None;
     }
   }
 

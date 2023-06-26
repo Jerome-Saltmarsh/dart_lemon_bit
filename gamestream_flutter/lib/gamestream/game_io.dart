@@ -159,7 +159,7 @@ class GameIO with ByteWriter {
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    final nodes = isometric.nodes;
+    final nodes = isometric.scene;
     var z = nodes.totalZ - 1;
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;

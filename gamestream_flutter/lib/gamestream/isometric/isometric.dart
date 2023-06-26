@@ -23,7 +23,7 @@ class Isometric {
   final debug = IsometricDebug();
   final clientState = IsometricClientState();
   final server = IsometricServer();
-  final nodes = IsometricNodes();
+  final scene = IsometricScene();
   final minimap = GameIsometricMinimap();
   final editor = IsometricEditor();
   final player = IsometricPlayer();
@@ -33,8 +33,8 @@ class Isometric {
 
   late final events = IsometricEvents(clientState, gamestream);
   late final renderer = IsometricRender(
-    rendererGameObjects: RendererGameObjects(nodes),
-    rendererParticles: RendererParticles(nodes),
+    rendererGameObjects: RendererGameObjects(scene),
+    rendererParticles: RendererParticles(scene),
   );
 
   void drawCanvas(Canvas canvas, Size size) {
@@ -58,12 +58,12 @@ class Isometric {
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
-    if (clientState.windLine < nodes.totalRows){
+    if (clientState.windLine < scene.totalRows){
       windLineColumn = 0;
-      windLineRow =  nodes.totalRows - clientState.windLine - 1;
+      windLineRow =  scene.totalRows - clientState.windLine - 1;
     } else {
       windLineRow = 0;
-      windLineColumn = clientState.windLine - nodes.totalRows + 1;
+      windLineColumn = clientState.windLine - scene.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }

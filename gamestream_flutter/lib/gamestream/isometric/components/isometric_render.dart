@@ -418,13 +418,13 @@ class IsometricRender {
 
   void debugRenderHeightMapValues() {
     var i = 0;
-    for (var row = 0; row < gamestream.isometric.nodes.totalRows; row++){
-      for (var column = 0; column < gamestream.isometric.nodes.totalColumns; column++){
+    for (var row = 0; row < gamestream.isometric.scene.totalRows; row++){
+      for (var column = 0; column < gamestream.isometric.scene.totalColumns; column++){
         gamestream.isometric.renderer.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
-          text: gamestream.isometric.nodes.heightMap[i].toString(),
+          text: gamestream.isometric.scene.heightMap[i].toString(),
         );
         i++;
       }
@@ -433,8 +433,8 @@ class IsometricRender {
 
   void debugRenderIsland() {
     var i = 0;
-    for (var row = 0; row < gamestream.isometric.nodes.totalRows; row++){
-      for (var column = 0; column < gamestream.isometric.nodes.totalColumns; column++){
+    for (var row = 0; row < gamestream.isometric.scene.totalRows; row++){
+      for (var column = 0; column < gamestream.isometric.scene.totalColumns; column++){
         if (!RendererNodes.island[i]) {
           i++;
           continue;
@@ -475,8 +475,8 @@ class IsometricRender {
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
-      final i2 = gamestream.isometric.nodes.getNodeIndex(x2, y2, z);
-      if (!NodeType.isTransient(gamestream.isometric.nodes.nodeTypes[i2])) break;
+      final i2 = gamestream.isometric.scene.getNodeIndex(x2, y2, z);
+      if (!NodeType.isTransient(gamestream.isometric.scene.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
       i1 = i2;

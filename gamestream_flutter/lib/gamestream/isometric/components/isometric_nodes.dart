@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../classes/isometric_position.dart';
 
-class IsometricNodes {
+class IsometricScene {
 
   // VARIABLES
   var hsv_color_red  = HSVColor.fromColor(Color.fromRGBO(232, 59, 59, 0.5));
@@ -1220,7 +1220,7 @@ class IsometricNodes {
     for (var z = minZ; z <= maxZ; z++){
       for (var row = minRow; row <= maxRow; row++){
         for (var column = minColumn; column <= maxColumn; column++){
-          if (gamestream.isometric.nodes.gridNodeZRCType(z, row, column) != type) continue;
+          if (gamestream.isometric.scene.gridNodeZRCType(z, row, column) != type) continue;
           final distance = gamestream.isometric.player.position.getGridDistance(z, row, column);
           if (distance > closest) continue;
           closest = distance;
@@ -1240,7 +1240,7 @@ class IsometricNodes {
       );
 
   bool isInboundV3(IsometricPosition vector3) =>
-      gamestream.isometric.nodes.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
+      gamestream.isometric.scene.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
 
   void setNodeType(int z, int row, int column, int type){

@@ -10,7 +10,7 @@ import 'functions/render_shadow.dart';
 
 class RendererParticles extends IsometricRenderer {
 
-  final IsometricNodes nodes;
+  final IsometricScene nodes;
   static final particles = gamestream.isometric.particles.particles;
   static late IsometricParticle particle;
   static final screen = engine.screen;
@@ -562,11 +562,11 @@ class RendererParticles extends IsometricRenderer {
 
   static void casteShadowDownV3(IsometricPosition vector3){
     if (vector3.z < Node_Height) return;
-    if (vector3.z >= gamestream.isometric.nodes.lengthZ) return;
-    final nodeIndex = gamestream.isometric.nodes.getNodeIndexV3(vector3);
-    if (nodeIndex > gamestream.isometric.nodes.area) {
-      final nodeBelowIndex = nodeIndex - gamestream.isometric.nodes.area;
-      final nodeBelowOrientation = gamestream.isometric.nodes.nodeOrientations[nodeBelowIndex];
+    if (vector3.z >= gamestream.isometric.scene.lengthZ) return;
+    final nodeIndex = gamestream.isometric.scene.getNodeIndexV3(vector3);
+    if (nodeIndex > gamestream.isometric.scene.area) {
+      final nodeBelowIndex = nodeIndex - gamestream.isometric.scene.area;
+      final nodeBelowOrientation = gamestream.isometric.scene.nodeOrientations[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
         renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);

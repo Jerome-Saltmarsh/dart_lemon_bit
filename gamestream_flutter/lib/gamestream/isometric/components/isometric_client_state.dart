@@ -47,7 +47,7 @@ mixin class IsometricClientState {
   late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
 
   final gridShadows = Watch(true, onChanged: (bool value){
-    gamestream.isometric.nodes.resetNodeColorsToAmbient();
+    gamestream.isometric.scene.resetNodeColorsToAmbient();
   });
 
   bool get playMode => !editMode;
@@ -58,7 +58,7 @@ mixin class IsometricClientState {
 
   void applyEmissions(){
     lights_active = 0;
-    gamestream.isometric.nodes.applyEmissionsLightSources();
+    gamestream.isometric.scene.applyEmissionsLightSources();
     applyEmissionsCharacters();
     gamestream.isometric.server.applyEmissionGameObjects();
     applyEmissionsProjectiles();
@@ -70,11 +70,11 @@ mixin class IsometricClientState {
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
     if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.emission_type == IsometricEmissionType.None)){
-      gamestream.isometric.nodes.emitLightAHSVShadowed(
+      gamestream.isometric.scene.emitLightAHSVShadowed(
         index: gamestream.isometric.editor.nodeSelectedIndex.value,
-        hue: gamestream.isometric.nodes.ambient_hue,
-        saturation: gamestream.isometric.nodes.ambient_sat,
-        value: gamestream.isometric.nodes.ambient_val,
+        hue: gamestream.isometric.scene.ambient_hue,
+        saturation: gamestream.isometric.scene.ambient_sat,
+        value: gamestream.isometric.scene.ambient_val,
         alpha: 0,
       );
     }
@@ -87,7 +87,7 @@ mixin class IsometricClientState {
   }
 
   void applyCharacterColor(IsometricCharacter character){
-    character.color = gamestream.isometric.nodes.getV3RenderColor(character);
+    character.color = gamestream.isometric.scene.getV3RenderColor(character);
   }
 
   void applyEmissionsCharacters() {
@@ -165,9 +165,9 @@ mixin class IsometricClientState {
     required int alpha,
     double intensity = 1.0,
   }){
-    if (!gamestream.isometric.nodes.inBoundsVector3(v)) return;
-    gamestream.isometric.nodes.emitLightAHSVShadowed(
-      index: gamestream.isometric.nodes.getNodeIndexV3(v),
+    if (!gamestream.isometric.scene.inBoundsVector3(v)) return;
+    gamestream.isometric.scene.emitLightAHSVShadowed(
+      index: gamestream.isometric.scene.getNodeIndexV3(v),
       hue: hue,
       saturation: saturation,
       value: value,
@@ -186,10 +186,10 @@ mixin class IsometricClientState {
     assert (intensity <= 1);
     assert (alpha >= 0);
     assert (alpha <= 255);
-    if (!gamestream.isometric.nodes.inBoundsVector3(v)) return;
-    gamestream.isometric.nodes.emitLightAmbient(
-      index: gamestream.isometric.nodes.getNodeIndexV3(v),
-      alpha: Engine.linerInterpolationInt(gamestream.isometric.nodes.ambient_hue, alpha , intensity),
+    if (!gamestream.isometric.scene.inBoundsVector3(v)) return;
+    gamestream.isometric.scene.emitLightAmbient(
+      index: gamestream.isometric.scene.getNodeIndexV3(v),
+      alpha: Engine.linerInterpolationInt(gamestream.isometric.scene.ambient_hue, alpha , intensity),
     );
   }
 
@@ -242,7 +242,7 @@ mixin class IsometricClientState {
       torch_emission_vel = -torch_emission_vel;
     }
 
-    gamestream.isometric.nodes.torch_emission_intensity = interpolateDouble(
+    gamestream.isometric.scene.torch_emission_intensity = interpolateDouble(
       start: torch_emission_start,
       end: torch_emission_end,
       t: torch_emission_t,
@@ -267,7 +267,7 @@ mixin class IsometricClientState {
   // PROPERTIES
 
   void update(){
-    interpolation_padding = ((gamestream.isometric.nodes.interpolation_length + 1) * Node_Size) / engine.zoom;
+    interpolation_padding = ((gamestream.isometric.scene.interpolation_length + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -312,17 +312,17 @@ mixin class IsometricClientState {
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = (gamestream.isometric.server.hours.value * Seconds_Per_Hour) + (gamestream.isometric.server.minutes.value * 60);
 
-    gamestream.isometric.nodes.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
+    gamestream.isometric.scene.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
     if (gamestream.isometric.server.rainType.value == RainType.Light){
-      gamestream.isometric.nodes.ambient_alp += 20;
+      gamestream.isometric.scene.ambient_alp += 20;
     }
     if (gamestream.isometric.server.rainType.value == RainType.Heavy){
-      gamestream.isometric.nodes.ambient_alp += 40;
+      gamestream.isometric.scene.ambient_alp += 40;
     }
-    gamestream.isometric.nodes.resetNodeColorsToAmbient();
+    gamestream.isometric.scene.resetNodeColorsToAmbient();
   }
 
   void refreshRain(){
@@ -430,7 +430,7 @@ mixin class IsometricClientState {
 
   void onChangedRaining(bool raining){
     raining ? gamestream.isometric.rainStart() : gamestream.isometric.rainStop();
-    gamestream.isometric.nodes.resetNodeColorsToAmbient();
+    gamestream.isometric.scene.resetNodeColorsToAmbient();
   }
 
   void onChangedMessageStatus(String value){

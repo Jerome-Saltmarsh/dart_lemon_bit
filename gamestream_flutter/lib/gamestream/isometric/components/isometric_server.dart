@@ -125,7 +125,7 @@ class IsometricServer {
   }
 
   void projectShadow(IsometricPosition v3){
-    if (!gamestream.isometric.nodes.inBoundsVector3(v3)) return;
+    if (!gamestream.isometric.scene.inBoundsVector3(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
@@ -148,8 +148,8 @@ class IsometricServer {
 
     while (true) {
       if (z < 0) return -1;
-      final nodeIndex = gamestream.isometric.nodes.getIndexXYZ(x, y, z);
-      final nodeOrientation = gamestream.isometric.nodes.nodeOrientations[nodeIndex];
+      final nodeIndex = gamestream.isometric.scene.getIndexXYZ(x, y, z);
+      final nodeOrientation = gamestream.isometric.scene.nodeOrientations[nodeIndex];
 
       if (const <int> [
         NodeOrientation.None,
@@ -188,8 +188,8 @@ class IsometricServer {
 
   void clean() {
     gameObjects.clear();
-    gamestream.isometric.nodes.colorStackIndex = -1;
-    gamestream.isometric.nodes.ambientStackIndex = -1;
+    gamestream.isometric.scene.colorStackIndex = -1;
+    gamestream.isometric.scene.ambientStackIndex = -1;
   }
 
   void sortGameObjects(){

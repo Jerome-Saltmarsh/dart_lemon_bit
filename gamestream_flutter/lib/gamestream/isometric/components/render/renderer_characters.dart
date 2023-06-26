@@ -208,7 +208,7 @@ class RendererCharacters extends IsometricRenderer {
 
     var angle = 0.0;
     var dist = 0.0;
-    final nodes = gamestream.isometric.nodes;
+    final nodes = gamestream.isometric.scene;
 
     if (!nodes.outOfBoundsV3(character)){
       var torchIndex = nodes.getTorchIndex(nodes.getNodeIndexV3(character));
@@ -313,7 +313,7 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.isometric.nodes.getV3RenderColor(character),
+        color: gamestream.isometric.scene.getV3RenderColor(character),
       );
     }
 
@@ -328,7 +328,7 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.isometric.nodes.getV3RenderColor(character),
+        color: gamestream.isometric.scene.getV3RenderColor(character),
       );
     }
 
@@ -342,7 +342,7 @@ class RendererCharacters extends IsometricRenderer {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: gamestream.isometric.nodes.getV3RenderColor(character),
+      color: gamestream.isometric.scene.getV3RenderColor(character),
     );
   }
 

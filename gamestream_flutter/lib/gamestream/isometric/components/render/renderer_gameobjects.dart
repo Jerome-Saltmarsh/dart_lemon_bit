@@ -12,7 +12,7 @@ class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;
 
   static final gameObjects = gamestream.isometric.server.gameObjects;
-  final IsometricNodes nodes;
+  final IsometricScene nodes;
 
   RendererGameObjects(this.nodes);
 

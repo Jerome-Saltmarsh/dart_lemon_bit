@@ -136,12 +136,20 @@ class IsometricDebug {
       destinationY.value,
       z.value,
     );
+
+    if (pathTargetIndex.value != -1){
+      // isometric.renderer.renderWireFrameBlue(
+      //     isometric.sc,
+      //     row,
+      //     column,
+      // )
+    }
   }
 
   void renderPath({required Uint16List path, required int start, required int end}){
     if (start < 0) return;
     if (end < 0) return;
-    final nodes = gamestream.isometric.nodes;
+    final nodes = gamestream.isometric.scene;
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];

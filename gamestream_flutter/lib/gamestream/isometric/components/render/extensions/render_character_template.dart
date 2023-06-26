@@ -142,7 +142,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = IsometricRender.convertV3ToRenderY(character);
 
     const Color_Invisible = GameIsometricColors.White38_Value;
-    final color = invisible ? Color_Invisible : gamestream.isometric.nodes.getV3RenderColor(character);
+    final color = invisible ? Color_Invisible : gamestream.isometric.scene.getV3RenderColor(character);
 
     if (invisible) {
       engine.bufferBlendMode = BlendMode.srcIn;
@@ -156,10 +156,10 @@ extension RenderCharactersTemplate on RendererCharacters {
     const Anchor_Y = 0.625;
 
     if (character.z >= GameIsometricConstants.Node_Height){
-      gamestream.isometric.nodes.markShadow(character);
+      gamestream.isometric.scene.markShadow(character);
 
-      final shadowAngle = gamestream.isometric.nodes.shadow.z + pi;
-      final shadowDistance = gamestream.isometric.nodes.shadow.magnitudeXY;
+      final shadowAngle = gamestream.isometric.scene.shadow.z + pi;
+      final shadowDistance = gamestream.isometric.scene.shadow.magnitudeXY;
       final shadowX = character.x + adj(shadowAngle, shadowDistance);
       final shadowY = character.y + opp(shadowAngle, shadowDistance);
       final shadowZ = character.z;

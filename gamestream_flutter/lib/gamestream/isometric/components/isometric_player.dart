@@ -59,7 +59,7 @@ class IsometricPlayer {
   late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final respawnTimer = Watch(0);
 
-  int get areaNodeIndex => (indexRow * gamestream.isometric.nodes.totalColumns) + indexColumn;
+  int get areaNodeIndex => (indexRow * gamestream.isometric.scene.totalColumns) + indexColumn;
 
   double get x => position.x;
   double get y => position.y;
@@ -71,7 +71,7 @@ class IsometricPlayer {
 
   bool get interactModeTrading => gamestream.isometric.server.interactMode.value == InteractMode.Trading;
   bool get dead => !alive.value;
-  bool get inBounds => gamestream.isometric.nodes.inBoundsVector3(position);
+  bool get inBounds => gamestream.isometric.scene.inBoundsVector3(position);
 
 
   bool isCharacter(IsometricCharacter character){
@@ -87,9 +87,9 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final index = position.nodeIndex + gamestream.isometric.nodes.area;
-    while (index < gamestream.isometric.nodes.total){
-      if (NodeType.isRainOrEmpty(gamestream.isometric.nodes.nodeTypes[index]))  continue;
+    final index = position.nodeIndex + gamestream.isometric.scene.area;
+    while (index < gamestream.isometric.scene.total){
+      if (NodeType.isRainOrEmpty(gamestream.isometric.scene.nodeTypes[index]))  continue;
       return true;
     }
     return false;
