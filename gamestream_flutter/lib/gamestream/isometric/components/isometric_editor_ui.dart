@@ -692,7 +692,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildColumnEditNodeOrientation(int nodeOrientation) =>
       Column(
         children: [
-          if (NodeOrientation.isSlopeSymmetric(nodeOrientation))
+          if (NodeOrientation.slopeSymmetric.contains(nodeOrientation))
             buildColumnNodeOrientationSlopeSymmetric(),
           if (NodeOrientation.isCorner(nodeOrientation))
             buildColumnNodeOrientationCorner(),

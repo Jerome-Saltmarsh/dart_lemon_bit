@@ -412,7 +412,7 @@ class RendererNodes extends IsometricRenderer {
               NodeOrientation.isCorner(nodeOrientation)   ||
               NodeOrientation.isColumn(nodeOrientation)   ;
         } else if (
-          NodeOrientation.isSlopeSymmetric(nodeOrientation) ||
+          NodeOrientation.slopeSymmetric.contains(nodeOrientation) ||
           NodeOrientation.isSlopeCornerInner(nodeOrientation) ||
           NodeOrientation.isSlopeCornerOuter(nodeOrientation)
         ) break;

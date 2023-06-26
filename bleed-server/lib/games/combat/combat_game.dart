@@ -249,7 +249,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
          respawnAI(target);
        });
        if (random.nextDouble() < Chance_Of_Item_Gem) {
-         spawnRandomGemsAtIndex(scene.getNodeIndexV3(target));
+         spawnRandomGemsAtIndex(scene.getIndexPosition(target));
        }
      }
   }
@@ -353,7 +353,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     }
 
     if (GameObjects_Spawn_Loot.contains(gameObject.type)){
-       spawnGemAtIndex(scene.getNodeIndexV3(gameObject));
+       spawnGemAtIndex(scene.getIndexPosition(gameObject));
     }
   }
 
@@ -820,7 +820,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
             getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
         final frontY = character.y +
             getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
-        final nodeTypeInFront = scene.getNodeTypeXYZ(
+        final nodeTypeInFront = scene.getTypeXYZ(
             frontX, frontY, character.z - Node_Height_Half);
         if (nodeTypeInFront == NodeType.Water) {
           character.setCharacterStateIdle();

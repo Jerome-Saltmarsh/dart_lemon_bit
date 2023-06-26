@@ -99,7 +99,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   bool get targetIndexChanged {
     final target = this.target;
     if (target == null) return false;
-    return game.scene.getNodeIndexV3(target) != pathTargetIndex;
+    return game.scene.getIndexPosition(target) != pathTargetIndex;
   }
 
   @override

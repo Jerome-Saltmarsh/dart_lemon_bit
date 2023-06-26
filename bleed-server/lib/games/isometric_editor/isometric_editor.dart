@@ -37,7 +37,7 @@ class IsometricEditor extends IsometricGame {
 
   bool isSafeToRevive(int row, int column) {
      for (var z = scene.gridHeight - 1; z >= 0; z--){
-       final type = scene.getGridType(z, row, column);
+       final type = scene.getType(z, row, column);
         if (type == NodeType.Water) return false;
         if (type == NodeType.Water_Flowing) return false;
      }

@@ -689,7 +689,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           hitType: IsometricHitType.Melee);
     }
 
-    if (!scene.isInboundXYZ(performX, performY, performZ)) return;
+    if (!scene.inboundsXYZ(performX, performY, performZ)) return;
     final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
 
@@ -1433,7 +1433,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       deactivateProjectile(projectile);
 
       final velocityAngle = projectile.velocityAngle;
-      final nodeType = scene.getNodeTypeXYZ(
+      final nodeType = scene.getTypeXYZ(
           projectile.x, projectile.y, projectile.z);
 
       if (!NodeType.isRainOrEmpty(nodeType)) {
@@ -1669,7 +1669,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           character.attackTargetEnemy(this);
         }
 
-        character.pathTargetIndex = scene.getNodeIndexV3(target);
+        character.pathTargetIndex = scene.getIndexPosition(target);
       }
 
       if (character.shouldUpdatePath){
@@ -2355,7 +2355,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   int getNodeIndexV3(IsometricPosition value) =>
-      scene.getNodeIndex(value.indexZ, value.indexRow, value.indexColumn);
+      scene.getIndex(value.indexZ, value.indexRow, value.indexColumn);
 
   int getNodeIndexXYZ(double x, double y, double z){
       return scene.getNodeIndexXYZ(x, y, z);
@@ -2479,7 +2479,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (target == null) {
       return;
     }
-    character.pathTargetIndex = scene.getNodeIndexV3(target);
+    character.pathTargetIndex = scene.getIndexPosition(target);
     // setCharacterPathToPosition(character: character, position: target);
   }
 
@@ -2504,7 +2504,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     character.pathTargetIndexPrevious = character.pathTargetIndex;
     character.pathIndex = 0;
-    final startIndex = scene.getNodeIndexV3(character);
+    final startIndex = scene.getIndexPosition(character);
     final path = character.path;
     var endPath = scene.findPath(startIndex, character.pathTargetIndex, max: character.path.length);
     while (endPath != startIndex) {

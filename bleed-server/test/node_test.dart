@@ -26,8 +26,8 @@ void main() {
         spawnPointsPlayers: Uint16List(0),
     );
 
-    final indexA = scene.getNodeIndex(0, 2, 5);
-    final indexB = scene.getNodeIndex(0, 2, 6);
+    final indexA = scene.getIndex(0, 2, 5);
+    final indexB = scene.getIndex(0, 2, 6);
     expect(indexA + 1, indexB);
 
 

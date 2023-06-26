@@ -290,7 +290,7 @@ class NodeType {
       return supportsOrientationSlopeCornerOuter(type);
     }
 
-    if (NodeOrientation.isSlopeSymmetric(orientation)) {
+    if (NodeOrientation.slopeSymmetric.contains(orientation)){
       return supportsOrientationSlopeSymmetric(type);
     }
 

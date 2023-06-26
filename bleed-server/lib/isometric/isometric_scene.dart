@@ -69,42 +69,11 @@ class IsometricScene {
     gridHeightLength = gridHeight * Node_Height;
   }
 
-  int getGridType(int z, int row, int column) =>
-      outOfBounds(z, row, column)
-          ? NodeType.Boundary
-          : nodeTypes[getNodeIndex(z, row, column)];
-
-  int getGridOrientation(int z, int row, int column) =>
-      outOfBounds(z, row, column)
-          ? NodeType.Boundary
-          : nodeOrientations[getNodeIndex(z, row, column)];
-
-  int getNodeIndex(int z, int row, int column) {
-    assert (!outOfBounds(z, row, column));
-    return (z * gridArea) + (row * gridColumns) + column;
-  }
-
-  bool outOfBounds(int z, int row, int column) =>
-        z < 0 ||
-        row < 0 ||
-        column < 0 ||
-        z >= gridHeight ||
-        row >= gridRows ||
-        column >= gridColumns;
-
   bool inboundsV3(IsometricPosition v3) => inboundsXYZ(v3.x, v3.y, v3.z);
-
-  bool inboundsXYZ(double x, double y, double z) =>
-      x >= 0                &&
-      y >= 0                &&
-      z >= 0                &&
-      x < gridRowLength     &&
-      y < gridColumnLength  &&
-      z < gridHeightLength   ;
 
   void setNode(int z, int row, int column, int type, int orientation) {
     if (outOfBounds(z, row, column)) return;
-    final index = getNodeIndex(z, row, column);
+    final index = getIndex(z, row, column);
     final currentType = nodeTypes[index];
     final currentOrientation = nodeOrientations[index];
     if (currentType == type && currentOrientation == orientation) {
@@ -114,12 +83,12 @@ class IsometricScene {
     nodeOrientations[index] = orientation;
   }
 
-  int getNodeTypeXYZ(double x, double y, double z) =>
-      isInboundXYZ(x, y, z)
+  int getTypeXYZ(double x, double y, double z) =>
+      inboundsXYZ(x, y, z)
           ? nodeTypes[getNodeIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
-  int getNodeIndexV3(IsometricPosition position3) =>
+  int getIndexPosition(IsometricPosition position3) =>
       getNodeIndexXYZ(
         position3.x,
         position3.y,
@@ -127,7 +96,7 @@ class IsometricScene {
       );
 
   int getNodeIndexXYZ(double x, double y, double z) =>
-    getNodeIndex(
+    getIndex(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
@@ -143,15 +112,7 @@ class IsometricScene {
   }
 
   bool isInboundV3(IsometricPosition pos ) =>
-    isInboundXYZ(pos.x, pos.y, pos.z);
-
-  bool isInboundXYZ(double x, double y, double z) =>
-    z >= 0 &&
-    x >= 0 &&
-    y >= 0 &&
-    z < gridHeightLength &&
-    x < gridRowLength &&
-    y < gridColumnLength;
+      inboundsXYZ(pos.x, pos.y, pos.z);
 
   bool getCollisionAt(double x, double y, double z) {
     final orientation = getNodeOrientationXYZ(x, y, z);
@@ -217,12 +178,6 @@ class IsometricScene {
   double getNodePositionZ(int index) =>
       getZ(index) * Node_Height;
 
-  int getRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
-
-  int getColumn(int nodeIndex) => (nodeIndex) % gridColumns;
-
-  int getZ(int nodeIndex) => nodeIndex ~/ gridArea;
-
   int findPath(var indexStart, var indexEnd, {int max = 100}){
 
     if (indexEnd <= 0 ||
@@ -256,6 +211,7 @@ class IsometricScene {
       final column = getColumn(currentIndex);
 
       final targetDirection = convertToDirection(targetRow - row, targetColumn - column);
+      final targetDirectionV = convertToDirectionVertical(targetZ - z);
       final backwardDirection = (targetDirection + 4) % 8;
 
       visit(
@@ -292,13 +248,38 @@ class IsometricScene {
     required int column,
     required int fromIndex,
   }) {
-    if (outOfBounds(z, row, column))
+    if (outOfBounds(z, row, column) || z <= 0)
       return;
 
-    final index = getNodeIndex(z, row, column);
+    final index = getIndex(z, row, column);
 
     if (path[index] != Not_Visited)
       return;
+
+
+    final indexOrientation = nodeOrientations[index];
+    // if (NodeOrientation.slopeSymmetric.contains(indexOrientation)) {
+    //   final fromZ = getZ(fromIndex);
+    //   final fromRow = getRow(fromIndex);
+    //   final fromCol = getColumn(fromIndex);
+    //
+    //   if (fromRow > row){
+    //      if (indexOrientation == NodeOrientation.Slope_South) {
+    //        path[index] = fromIndex;
+    //        visitHistory[visitHistoryIndex++] = index;
+    //        visitStackIndex++;
+    //        visitStack[visitStackIndex] = index;
+    //        visit(
+    //            z: z + 1,
+    //            row: row + 1,
+    //            column: column,
+    //            fromIndex: getIndex(z, row, column),
+    //        );
+    //      }
+    //   }
+    //
+    // }
+
     if (nodeOrientations[index] != NodeOrientation.None)
       return;
 
@@ -306,6 +287,12 @@ class IsometricScene {
     visitHistory[visitHistoryIndex++] = index;
     visitStackIndex++;
     visitStack[visitStackIndex] = index;
+  }
+
+  static int convertToDirectionVertical(int value){
+    if (value < 0) return -1;
+    if (value > 0) return 1;
+    return 0;
   }
 
   static int convertToDirection(int diffRows, int diffCols){
@@ -363,11 +350,47 @@ class IsometricScene {
       final randomZ = z;
       final randomRow = row + giveOrTake(radius).toInt();
       final randomColumn = column + giveOrTake(radius).toInt();
-      if (getGridOrientation(randomZ, randomRow, randomColumn) == type) {
-        return getNodeIndex(randomZ, randomRow, randomColumn);
+      if (getOrientation(randomZ, randomRow, randomColumn) == type) {
+        return getIndex(randomZ, randomRow, randomColumn);
       }
     }
     return -1;
   }
 
+  int getType(int z, int row, int column) =>
+      outOfBounds(z, row, column)
+          ? NodeType.Boundary
+          : nodeTypes[getIndex(z, row, column)];
+
+  int getOrientation(int z, int row, int column) =>
+      outOfBounds(z, row, column)
+          ? NodeType.Boundary
+          : nodeOrientations[getIndex(z, row, column)];
+
+  bool inboundsXYZ(double x, double y, double z) =>
+      x >= 0 &&
+      y >= 0 &&
+      z >= 0 &&
+      x < gridRowLength &&
+      y < gridColumnLength &&
+      z < gridHeightLength;
+
+  int getIndex(int z, int row, int column) {
+    assert (!outOfBounds(z, row, column));
+    return (z * gridArea) + (row * gridColumns) + column;
+  }
+
+  bool outOfBounds(int z, int row, int column) =>
+      z < 0 ||
+          row < 0 ||
+          column < 0 ||
+          z >= gridHeight ||
+          row >= gridRows ||
+          column >= gridColumns;
+
+  int getRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
+
+  int getColumn(int nodeIndex) => (nodeIndex) % gridColumns;
+
+  int getZ(int nodeIndex) => nodeIndex ~/ gridArea;
 }

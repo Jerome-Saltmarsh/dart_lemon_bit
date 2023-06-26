@@ -1,3 +1,5 @@
+
+
 class NodeOrientation {
    static const None = 0;
    static const Slope_North = 1;
@@ -74,11 +76,12 @@ class NodeOrientation {
       Corner_Left,
    ];
 
-   static bool isSlopeSymmetric(int value) =>
-       value == Slope_North ||
-       value == Slope_East ||
-       value == Slope_South ||
-       value == Slope_West ;
+   static const slopeSymmetric = [
+     Slope_North,
+     Slope_East,
+     Slope_South,
+     Slope_West,
+   ];
 
    static bool isCorner(int value) =>
        value == Corner_Top ||
@@ -289,9 +292,6 @@ class NodeOrientation {
          return 1;
        default:
          return 0;
-         // throw Exception(
-         //     'node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y'
-         // );
      }
    }
 }
