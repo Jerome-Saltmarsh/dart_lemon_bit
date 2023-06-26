@@ -258,32 +258,79 @@ class IsometricScene {
 
 
     final indexOrientation = nodeOrientations[index];
-    // if (NodeOrientation.slopeSymmetric.contains(indexOrientation)) {
-    //   final fromZ = getZ(fromIndex);
-    //   final fromRow = getRow(fromIndex);
-    //   final fromCol = getColumn(fromIndex);
-    //
-    //   if (fromRow > row){
-    //      if (indexOrientation == NodeOrientation.Slope_South) {
-    //        path[index] = fromIndex;
-    //        visitHistory[visitHistoryIndex++] = index;
-    //        visitStackIndex++;
-    //        visitStack[visitStackIndex] = index;
-    //        visit(
-    //            z: z + 1,
-    //            row: row + 1,
-    //            column: column,
-    //            fromIndex: getIndex(z, row, column),
-    //        );
-    //      }
-    //   }
-    //
-    // }
 
-    if (nodeOrientations[index] != NodeOrientation.None)
+    if (indexOrientation == NodeOrientation.Solid) {
       return;
+    }
 
-    path[index] = fromIndex;
+    if (NodeOrientation.slopeSymmetric.contains(indexOrientation)) {
+      final fromRow = getRow(fromIndex);
+      final fromColumn = getColumn(fromIndex);
+
+      if ((fromRow - row).abs() + (fromColumn - column).abs() > 1)
+        return;
+
+      if (fromRow > row) {
+        if (indexOrientation == NodeOrientation.Slope_North) {
+          addToStack(index, fromIndex);
+          visit(
+            z: z + 1,
+            row: row + 1,
+            column: column,
+            fromIndex: index,
+          );
+        }
+        return;
+      }
+
+      if (fromRow < row) {
+         if (indexOrientation == NodeOrientation.Slope_South) {
+           addToStack(index, fromIndex);
+           visit(
+               z: z + 1,
+               row: row + 1,
+               column: column,
+               fromIndex: index,
+           );
+         }
+         return;
+      }
+
+
+      if (fromColumn > column) {
+        if (indexOrientation == NodeOrientation.Slope_East) {
+          addToStack(index, fromIndex);
+          visit(
+            z: z + 1,
+            row: row,
+            column: column - 1,
+            fromIndex: index,
+          );
+        }
+        return;
+      }
+
+      if (fromColumn < column) {
+        if (indexOrientation == NodeOrientation.Slope_West) {
+          visit(
+            z: z + 1,
+            row: row,
+            column: column + 1,
+            fromIndex: index,
+          );
+        }
+        return;
+      }
+    } else {
+      path[index] = fromIndex;
+      visitHistory[visitHistoryIndex++] = index;
+      visitStackIndex++;
+      visitStack[visitStackIndex] = index;
+    }
+  }
+
+  addToStack(int index, int from){
+    path[index] = index;
     visitHistory[visitHistoryIndex++] = index;
     visitStackIndex++;
     visitStack[visitStackIndex] = index;
@@ -296,20 +343,20 @@ class IsometricScene {
   }
 
   static int convertToDirection(int diffRows, int diffCols){
-    if (diffRows > 0){
-      if (diffCols < 0) return 1;
-      if (diffCols > 0) return 3;
-      return 2;
+    if (diffRows > 0) {
+      if (diffCols < 0) return IsometricDirection.North_East;
+      if (diffCols > 0) return IsometricDirection.South_East;
+      return IsometricDirection.East;
     }
 
     if (diffRows < 0) {
-      if (diffCols < 0) return 7;
-      if (diffCols > 0) return 5;
-      return 6;
+      if (diffCols < 0) return IsometricDirection.North_West;
+      if (diffCols > 0) return IsometricDirection.South_West;
+      return IsometricDirection.West;
     }
 
-    if (diffCols < 0) return 0;
-    return 4;
+    if (diffCols < 0) return IsometricDirection.North;
+    return IsometricDirection.South;
   }
 
   bool isPerceptible(IsometricPosition a, IsometricPosition b) {
