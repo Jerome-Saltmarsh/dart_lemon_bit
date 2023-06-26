@@ -826,6 +826,13 @@ class WebSocketConnection with ByteReader {
         debugCharacter.y = player.mouseGridY;
         debugCharacter.z = player.mouseGridZ;
         break;
+
+      case IsometricRequest.Debug_Character_Walk_To_Mouse:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null) return;
+        debugCharacter.clearTarget();
+        debugCharacter.pathTargetIndex = player.mouseGridIndex;
+        break;
     }
   }
 }

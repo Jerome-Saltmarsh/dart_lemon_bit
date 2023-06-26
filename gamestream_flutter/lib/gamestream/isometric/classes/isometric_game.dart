@@ -118,6 +118,11 @@ class IsometricGame extends Game {
       return;
     }
 
+    if (key == KeyCode.Z) {
+      isometric.DebugCharacterWalkToMouse();
+      return;
+    }
+
     if (key == KeyCode.P) {
       isometric.ui.windowOpenLightSettings.toggle();
       return;

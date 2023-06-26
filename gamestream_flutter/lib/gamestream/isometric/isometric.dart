@@ -116,6 +116,9 @@ class Isometric {
   void teleportDebugCharacterToMouse() =>
       request(IsometricRequest.Debug_Character_Teleport_To_Mouse);
 
+  void DebugCharacterWalkToMouse() =>
+      request(IsometricRequest.Debug_Character_Walk_To_Mouse);
+
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,

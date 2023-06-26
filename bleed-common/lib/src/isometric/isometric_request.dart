@@ -10,4 +10,5 @@ enum IsometricRequest {
    Npc_Talk_Select_Option,
    Editor_Load_Game,
    Debug_Character_Teleport_To_Mouse,
+   Debug_Character_Walk_To_Mouse,
 }

@@ -21,6 +21,7 @@ class IsometricDebug {
   final path = Uint16List(500);
   final pathIndex = Watch(0);
   final pathEnd = Watch(0);
+  final pathTargetIndex = Watch(0);
   final targetSet = Watch(false);
   final targetType = Watch('');
   final targetX = Watch(0.0);
@@ -66,6 +67,7 @@ class IsometricDebug {
                   buildWatchDouble(text: 'z', watch: z),
                   buildWatchInt(text: 'path-index', watch: pathIndex),
                   buildWatchInt(text: 'path-end', watch: pathEnd),
+                  buildWatchInt(text: 'path-target-index', watch: pathTargetIndex),
                   buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
                   buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
                   buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),

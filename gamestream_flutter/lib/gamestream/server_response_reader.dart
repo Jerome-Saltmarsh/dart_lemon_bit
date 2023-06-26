@@ -807,6 +807,7 @@ extension ServerResponseReader on Gamestream {
         debug.destinationY.value = readDouble();
         debug.pathIndex.value = readInt16();
         debug.pathEnd.value = readInt16();
+        debug.pathTargetIndex.value = readInt16();
         for (var i = 0; i < debug.pathEnd.value; i++) {
           debug.path[i] = readUInt16();
         }
