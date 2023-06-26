@@ -2450,6 +2450,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   double clampY(double value)=> clamp(value, 0, scene.gridColumnLength);
 
+  double clampZ(double value)=> clamp(value, 0, scene.gridHeightLength);
+
   IsometricCollider? findNearestEnemy(IsometricCollider src, {double radius = 1000}){
     IsometricCollider? nearestEnemy;
     var nearestEnemyDistanceSquared = radius * radius;

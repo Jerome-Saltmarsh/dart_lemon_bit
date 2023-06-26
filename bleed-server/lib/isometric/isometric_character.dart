@@ -88,7 +88,7 @@ abstract class IsometricCharacter extends IsometricCollider {
       (pathTargetIndex != pathTargetIndexPrevious) ||
       (pathIndex == 0);
 
-  bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(runSpeed);
+  bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(10);
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
