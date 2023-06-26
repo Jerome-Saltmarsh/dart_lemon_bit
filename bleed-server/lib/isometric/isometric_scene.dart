@@ -7,6 +7,9 @@ import 'isometric_gameobject.dart';
 import 'isometric_position.dart';
 
 class IsometricScene {
+
+  static const Not_Visited = -1;
+
   Uint8List nodeTypes;
   Uint8List nodeOrientations;
   Uint8List? compiled;
@@ -55,6 +58,9 @@ class IsometricScene {
   void refreshMetrics(){
     if (path.length != nodeTypes.length){
       path = Int32List(nodeTypes.length);
+      for (var i = 0; i < path.length; i++){
+        path[i] = Not_Visited;
+      }
     }
     gridArea = gridRows * gridColumns;
     gridVolume = gridHeight * gridArea;
@@ -225,7 +231,7 @@ class IsometricScene {
     ) return indexStart;
 
     for (var i = 0; i <= visitHistoryIndex; i++){
-      path[visitHistory[i]] = 0;
+      path[visitHistory[i]] = Not_Visited;
     }
 
     visitHistoryIndex = 0;
@@ -244,7 +250,6 @@ class IsometricScene {
 
       final currentIndex = visitStack[visitStackIndex--];
 
-      assert (currentIndex != 0);
       count++;
 
       if (count >= max)
@@ -298,7 +303,7 @@ class IsometricScene {
 
     final index = getNodeIndex(z, row, column);
 
-    if (path[index] != 0)
+    if (path[index] != Not_Visited)
       return;
     if (nodeOrientations[index] != NodeOrientation.None)
       return;
