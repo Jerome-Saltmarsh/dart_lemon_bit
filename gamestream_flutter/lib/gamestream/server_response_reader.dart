@@ -822,7 +822,7 @@ extension ServerResponseReader on Gamestream {
         debug.weaponState.value = readByte();
         debug.weaponStateDuration.value = readUInt16();
 
-        debug.autoAttackNearbyEnemies.value = readBool();
+        debug.autoAttack.value = readBool();
 
         final characterSelectedTarget = readBool();
         debug.targetSet.value = characterSelectedTarget;

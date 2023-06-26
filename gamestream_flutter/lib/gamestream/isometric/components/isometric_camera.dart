@@ -19,20 +19,25 @@ class IsometricCamera {
       centerOnV3(target!);
     }
   }
+
   void centerOnV3(IsometricPosition v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
     if (!chaseTargetEnabled.value) return;
+
+    final target = this.target;
+    if (target == null) return;
+
     final mouseAngle = getMousePlayerAngle() + pi;
     final mouseDistance = getMousePlayerRenderDistance();
     final translateDistance = mouseDistance * mouseFollowSensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
-
-    final target = this.target;
-    if (target != null) {
-      engine.cameraFollow(target.renderX + translateX, target.renderY + translateY, chaseStrength);
-    }
+    engine.cameraFollow(
+        target.renderX + translateX,
+        target.renderY + translateY,
+        chaseStrength,
+    );
   }
 
   void setModeFree(){

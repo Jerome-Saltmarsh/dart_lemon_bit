@@ -1639,7 +1639,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateColliderPhysics(character);
     updateCharacterState(character);
 
-    if (character.autoTargetNearbyEnemies && character.autoTargetTimer-- <= 0){
+    if (character.autoTarget && character.autoTargetTimer-- <= 0){
       character.autoTargetTimer = character.autoTargetTimerDuration;
       character.target = findNearestEnemy(character, radius: character.autoTargetRange);
     }

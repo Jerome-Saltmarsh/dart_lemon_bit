@@ -9,7 +9,6 @@ import 'isometric_render.dart';
 
 class IsometricDebug {
   final character = IsometricCharacter();
-  final characterSelected = Watch(false);
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
   final destinationX = Watch(0.0);
@@ -37,7 +36,9 @@ class IsometricDebug {
   final weaponRange = Watch(0);
   final weaponState = Watch(0);
   final weaponStateDuration = Watch(0);
-  final autoAttackNearbyEnemies = Watch(false);
+  final autoAttack = Watch(false);
+
+  late final characterSelected = Watch(false, onChanged: onChangedCharacterSelected);
 
   Isometric get isometric => gamestream.isometric;
 
@@ -51,14 +52,14 @@ class IsometricDebug {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  buildText('DEBUG'),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      buildText('DEBUG'),
-                      onPressed(
-                          action: () => isometric.camera.target = character,
-                          child: buildText('CAMERA TRACK')
-                      ),
+                      buildText('CAMERA'),
+                      buildText('Player'),
+                      buildText('Selected'),
+                      buildText('Free'),
                     ],
                   ),
                   height8,
@@ -79,7 +80,7 @@ class IsometricDebug {
                   buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
                   onPressed(
                       action: isometric.debugCharacterToggleAutoAttack,
-                      child: buildRowWatchBool(text: 'auto-attack-nearby-enemies', watch: autoAttackNearbyEnemies)),
+                      child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)),
                   buildTarget(),
                 ],
               ),
@@ -212,5 +213,13 @@ class IsometricDebug {
    );
 
     return WatchBuilder(targetSet, (targetSet) => targetSet ? columnSet : notSet);
+  }
+
+  void onChangedCharacterSelected(bool characterSelected){
+     if (characterSelected){
+       isometric.camera.target = character;
+     } else {
+       isometric.camera.target = isometric.player.position;
+     }
   }
 }

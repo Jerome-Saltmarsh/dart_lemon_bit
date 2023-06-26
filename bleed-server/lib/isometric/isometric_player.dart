@@ -58,7 +58,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     weaponRange: 20,
     damage: 1,
   ){
-    this.autoTargetNearbyEnemies = autoTargetNearbyEnemies;
+    this.autoTarget = autoTargetNearbyEnemies;
     writeGameType();
     writePlayerTeam();
     id = game.playerId++;
@@ -738,7 +738,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeUInt16(selectedCharacter.weaponRange.toInt());
     writeByte(selectedCharacter.weaponState);
     writeUInt16(selectedCharacter.weaponStateDuration);
-    writeBool(selectedCharacter.autoTargetNearbyEnemies);
+    writeBool(selectedCharacter.autoTarget);
 
     final selectedCharacterTarget = selectedCharacter.target;
     if (selectedCharacterTarget == null){
