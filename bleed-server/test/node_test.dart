@@ -31,8 +31,8 @@ void main() {
     expect(indexA + 1, indexB);
 
 
-    expect(scene.getNodeIndexRow(indexA), 2);
-    expect(scene.getNodeIndexColumn(indexA), 5);
-    expect(scene.getNodeIndexZ(indexA), 0);
+    expect(scene.getRow(indexA), 2);
+    expect(scene.getColumn(indexA), 5);
+    expect(scene.getZ(indexA), 0);
   });
 }

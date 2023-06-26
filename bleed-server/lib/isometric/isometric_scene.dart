@@ -209,19 +209,19 @@ class IsometricScene {
   }
 
   double getNodePositionX(int index) =>
-      (getNodeIndexRow(index) * Node_Size) + Node_Size_Half;
+      (getRow(index) * Node_Size) + Node_Size_Half;
 
   double getNodePositionY(int index) =>
-      (getNodeIndexColumn(index) * Node_Size) + Node_Size_Half;
+      (getColumn(index) * Node_Size) + Node_Size_Half;
 
   double getNodePositionZ(int index) =>
-      getNodeIndexZ(index) * Node_Height;
+      getZ(index) * Node_Height;
 
-  int getNodeIndexRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
+  int getRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
 
-  int getNodeIndexColumn(int nodeIndex) => (nodeIndex) % gridColumns;
+  int getColumn(int nodeIndex) => (nodeIndex) % gridColumns;
 
-  int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
+  int getZ(int nodeIndex) => nodeIndex ~/ gridArea;
 
   int findPath(var indexStart, var indexEnd, {int max = 100}){
 
@@ -240,9 +240,9 @@ class IsometricScene {
     visitHistory[visitHistoryIndex++] = indexStart;
     visitStack[visitStackIndex] = indexStart;
 
-    final targetIndexRow = getNodeIndexRow(indexEnd);
-    final targetIndexColumn = getNodeIndexColumn(indexEnd);
-    final z = getNodeIndexZ(indexEnd);
+    final targetZ = getZ(indexEnd);
+    final targetRow = getRow(indexEnd);
+    final targetColumn = getColumn(indexEnd);
 
     while (visitStackIndex >= 0 && max-- > 0) {
 
@@ -251,10 +251,11 @@ class IsometricScene {
       if (currentIndex == indexEnd)
         return currentIndex;
 
-      final row = getNodeIndexRow(currentIndex);
-      final column = getNodeIndexColumn(currentIndex);
+      final z = getZ(currentIndex);
+      final row = getRow(currentIndex);
+      final column = getColumn(currentIndex);
 
-      final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
+      final targetDirection = convertToDirection(targetRow - row, targetColumn - column);
       final backwardDirection = (targetDirection + 4) % 8;
 
       visit(
