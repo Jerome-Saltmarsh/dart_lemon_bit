@@ -137,12 +137,14 @@ class IsometricDebug {
       z.value,
     );
 
-    if (pathTargetIndex.value != -1){
-      // isometric.renderer.renderWireFrameBlue(
-      //     isometric.sc,
-      //     row,
-      //     column,
-      // )
+    final pathTargetIndexValue = pathTargetIndex.value;
+    if (pathTargetIndexValue != -1) {
+      final scene = isometric.scene;
+      isometric.renderer.renderWireFrameBlue(
+          scene.getIndexZ(pathTargetIndexValue),
+          scene.getIndexRow(pathTargetIndexValue),
+          scene.getIndexColumn(pathTargetIndexValue),
+      );
     }
   }
 
