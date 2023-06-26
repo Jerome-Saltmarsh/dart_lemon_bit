@@ -128,12 +128,11 @@ class IsometricScene {
     );
 
   int getNodeOrientationXYZ(double x, double y, double z){
-     if (x < 0) return NodeOrientation.Solid;
-     if (y < 0) return NodeOrientation.Solid;
-     if (x >= gridRowLength) return NodeOrientation.Solid;
-     if (y >= gridColumnLength) return NodeOrientation.Solid;
-     if (z >= gridHeightLength) return NodeOrientation.None;
-     if (z < 0) return NodeOrientation.None;
+     if (x < 0 || y < 0 || x >= gridRowLength || y >= gridColumnLength)
+       return NodeOrientation.Solid;
+     if (z >= gridHeightLength || z < 0)
+       return NodeOrientation.None;
+
      return nodeOrientations[getNodeIndexXYZ(x, y, z)];
   }
 
@@ -150,8 +149,11 @@ class IsometricScene {
 
   bool getCollisionAt(double x, double y, double z) {
     final orientation = getNodeOrientationXYZ(x, y, z);
-    if (orientation == NodeOrientation.None) return false;
-    if (orientation == NodeOrientation.Solid) return true;
+    if (orientation == NodeOrientation.None)
+      return false;
+    if (orientation == NodeOrientation.Solid)
+      return true;
+
     final percX = ((x % Node_Size) / Node_Size);
     final percY = ((y % Node_Size) / Node_Size);
     return ((z ~/ Node_Height) * Node_Height)
@@ -215,18 +217,12 @@ class IsometricScene {
 
   int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
 
-
   int findPath(var indexStart, var indexEnd, {int max = 100}){
-    if (indexEnd == 0) return indexStart;
 
-
-    if (indexEnd < 0)
-      return indexStart;
-    if (indexEnd >= nodeOrientations.length)
-      return indexStart;
-    if (nodeOrientations[indexEnd] != NodeOrientation.None)
-      return indexStart;
-
+    if (indexEnd <= 0 ||
+        indexEnd >= nodeOrientations.length ||
+        nodeOrientations[indexEnd] != NodeOrientation.None
+    ) return indexStart;
 
     for (var i = 0; i <= visitHistoryIndex; i++){
       path[visitHistory[i]] = 0;
@@ -259,9 +255,6 @@ class IsometricScene {
 
       final row = getNodeIndexRow(currentIndex);
       final column = getNodeIndexColumn(currentIndex);
-
-
-      // print("current index: row: $row, column: $column, index: $currentIndex");
 
       final targetDirection = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
       final backwardDirection = (targetDirection + 4) % 8;
@@ -310,7 +303,6 @@ class IsometricScene {
     if (nodeOrientations[index] != NodeOrientation.None)
       return;
 
-    // print('visited row: $row, column: $column from $fromIndex');
     path[index] = fromIndex;
     visitHistory[visitHistoryIndex++] = index;
     visitStackIndex++;
