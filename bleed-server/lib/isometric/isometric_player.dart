@@ -64,7 +64,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     id = game.playerId++;
   }
 
-  int get mouseGridIndex => game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, mouseGridZ);
+  int get mouseGridIndex => game.scene.getIndexXYZ(mouseGridX, mouseGridY, mouseGridZ);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius

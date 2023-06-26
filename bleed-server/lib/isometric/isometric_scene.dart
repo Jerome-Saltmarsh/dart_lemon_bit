@@ -85,37 +85,37 @@ class IsometricScene {
 
   int getTypeXYZ(double x, double y, double z) =>
       inboundsXYZ(x, y, z)
-          ? nodeTypes[getNodeIndexXYZ(x, y, z)]
+          ? nodeTypes[getIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
   int getIndexPosition(IsometricPosition position3) =>
-      getNodeIndexXYZ(
+      getIndexXYZ(
         position3.x,
         position3.y,
         position3.z,
       );
 
-  int getNodeIndexXYZ(double x, double y, double z) =>
+  int getIndexXYZ(double x, double y, double z) =>
     getIndex(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
     );
 
-  int getNodeOrientationXYZ(double x, double y, double z){
+  int getOrientationXYZ(double x, double y, double z){
      if (x < 0 || y < 0 || x >= gridRowLength || y >= gridColumnLength)
        return NodeOrientation.Solid;
      if (z >= gridHeightLength || z < 0)
        return NodeOrientation.None;
 
-     return nodeOrientations[getNodeIndexXYZ(x, y, z)];
+     return nodeOrientations[getIndexXYZ(x, y, z)];
   }
 
   bool isInboundV3(IsometricPosition pos ) =>
       inboundsXYZ(pos.x, pos.y, pos.z);
 
   bool getCollisionAt(double x, double y, double z) {
-    final orientation = getNodeOrientationXYZ(x, y, z);
+    final orientation = getOrientationXYZ(x, y, z);
     if (orientation == NodeOrientation.None)
       return false;
     if (orientation == NodeOrientation.Solid)
@@ -328,7 +328,7 @@ class IsometricScene {
     for (var i = 0; i < jumps; i++) {
       positionX += velX;
       positionY += velY;
-      final nodeOrientation = getNodeOrientationXYZ(positionX, positionY, positionZ);
+      final nodeOrientation = getOrientationXYZ(positionX, positionY, positionZ);
       if (nodeOrientation != NodeOrientation.None){
         return false;
       }

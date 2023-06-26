@@ -413,7 +413,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       y = character.y + getOpposite(r, range);
     }
 
-    final nodeIndex = scene.getNodeIndexXYZ(x, y, z);
+    final nodeIndex = scene.getIndexXYZ(x, y, z);
     final nodeOrientation = scene.nodeOrientations[nodeIndex];
 
     if (!completed && nodeOrientation == NodeOrientation.None) {
@@ -423,7 +423,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (!completed && z + Node_Height < scene.gridHeightLength) {
-      final aboveNodeIndex = scene.getNodeIndexXYZ(x, y, z + Node_Height);
+      final aboveNodeIndex = scene.getIndexXYZ(x, y, z + Node_Height);
       final aboveNodeOrientation = scene.nodeOrientations[aboveNodeIndex];
       if (aboveNodeOrientation == NodeOrientation.None) {
         character.x = x;
@@ -442,7 +442,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       for (var i = 0; i < jumps; i++) {
         x -= jumpX;
         y -= jumpY;
-        final frontNodeIndex = scene.getNodeIndexXYZ(x, y, z);
+        final frontNodeIndex = scene.getIndexXYZ(x, y, z);
         final frontNodeOrientation = scene.nodeOrientations[frontNodeIndex];
         if (frontNodeOrientation == NodeOrientation.None) {
           character.x = x;
@@ -690,7 +690,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (!scene.inboundsXYZ(performX, performY, performZ)) return;
-    final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
+    final nodeIndex = scene.getIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
 
     if (!NodeType.isRainOrEmpty(nodeType)) {
@@ -2090,7 +2090,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     final bottomZ = collider.z;
-    final nodeBottomIndex = scene.getNodeIndexXYZ(
+    final nodeBottomIndex = scene.getIndexXYZ(
       collider.x,
       collider.y,
       bottomZ,
@@ -2168,7 +2168,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (bottomZ >= scene.gridHeightLength) return;
 
-    final nodeBottomIndex = scene.getNodeIndexXYZ(
+    final nodeBottomIndex = scene.getIndexXYZ(
       collider.x,
       collider.y,
       bottomZ,
@@ -2358,7 +2358,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       scene.getIndex(value.indexZ, value.indexRow, value.indexColumn);
 
   int getNodeIndexXYZ(double x, double y, double z){
-      return scene.getNodeIndexXYZ(x, y, z);
+      return scene.getIndexXYZ(x, y, z);
   }
 
   void customOnPlayerCollectGameObject(T player,

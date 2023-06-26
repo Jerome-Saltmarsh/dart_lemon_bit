@@ -825,7 +825,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         if (nodeTypeInFront == NodeType.Water) {
           character.setCharacterStateIdle();
         } else {
-          final nodeOrientationInFrontAbove = scene.getNodeOrientationXYZ(
+          final nodeOrientationInFrontAbove = scene.getOrientationXYZ(
               frontX, frontY, character.z + Node_Height_Half);
           if (nodeOrientationInFrontAbove == NodeOrientation.Solid) {
             character.setCharacterStateIdle();
@@ -878,7 +878,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     instance.spawnZ = instance.z;
     instance.setCharacterStateSpawning();
     characters.add(instance);
-    instance.spawnNodeIndex = scene.getNodeIndexXYZ(x, y, z);
+    instance.spawnNodeIndex = scene.getIndexXYZ(x, y, z);
     return instance;
   }
 
