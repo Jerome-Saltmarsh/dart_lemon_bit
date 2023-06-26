@@ -122,6 +122,9 @@ class Isometric {
   void debugCharacterToggleAutoAttack() =>
       request(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
 
+  void debugCharacterTogglePathFindingEnabled() =>
+      request(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
+
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,

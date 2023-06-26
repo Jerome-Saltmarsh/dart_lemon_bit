@@ -37,6 +37,7 @@ class IsometricDebug {
   final weaponState = Watch(0);
   final weaponStateDuration = Watch(0);
   final autoAttack = Watch(false);
+  final pathFindingEnabled = Watch(false);
 
   late final characterSelected = Watch(false, onChanged: onChangedCharacterSelected);
 
@@ -78,7 +79,12 @@ class IsometricDebug {
                   buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
                   onPressed(
                       action: isometric.debugCharacterToggleAutoAttack,
-                      child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)),
+                      child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
+                  ),
+                  onPressed(
+                      action: isometric.debugCharacterTogglePathFindingEnabled,
+                      child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
+                  ),
                   buildTarget(),
                 ],
               ),

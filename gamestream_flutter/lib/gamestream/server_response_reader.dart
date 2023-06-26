@@ -823,6 +823,7 @@ extension ServerResponseReader on Gamestream {
         debug.weaponStateDuration.value = readUInt16();
 
         debug.autoAttack.value = readBool();
+        debug.pathFindingEnabled.value = readBool();
 
         final characterSelectedTarget = readBool();
         debug.targetSet.value = characterSelectedTarget;

@@ -839,6 +839,12 @@ class WebSocketConnection with ByteReader {
         if (debugCharacter == null) return;
         debugCharacter.autoTarget = !debugCharacter.autoTarget;
         break;
+
+      case IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null) return;
+        debugCharacter.pathFindingEnabled = !debugCharacter.pathFindingEnabled;
+        break;
     }
   }
 }
