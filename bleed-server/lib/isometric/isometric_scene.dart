@@ -244,16 +244,9 @@ class IsometricScene {
     final targetIndexColumn = getNodeIndexColumn(indexEnd);
     final z = getNodeIndexZ(indexEnd);
 
-    var count = 0;
-
-    while (visitStackIndex >= 0) {
+    while (visitStackIndex >= 0 && max-- > 0) {
 
       final currentIndex = visitStack[visitStackIndex--];
-
-      count++;
-
-      if (count >= max)
-        return currentIndex;
 
       if (currentIndex == indexEnd)
         return currentIndex;
