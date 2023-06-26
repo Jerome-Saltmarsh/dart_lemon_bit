@@ -35,6 +35,7 @@ class IsometricDebug {
   final characterStateDurationRemaining = Watch(0);
 
   final weaponType = Watch(0);
+  final weaponDamage = Watch(0);
   final weaponState = Watch(0);
   final weaponStateDuration = Watch(0);
 
@@ -58,26 +59,18 @@ class IsometricDebug {
                 ],
               ),
               height8,
-              buildWatchString(watch: characterSelectedRuntimeType, text: 'type'),
-              height2,
-              buildWatchDouble(watch: characterSelectedX, text: 'x'),
-              height2,
-              buildWatchDouble(watch: characterSelectedY, text: 'y'),
-              height2,
-              buildWatchDouble(watch: characterSelectedZ, text: 'z'),
-              height2,
-              buildWatchInt(watch: characterSelectedPathIndex, text: 'path-index'),
-              height2,
-              buildWatchInt(watch: characterSelectedPathEnd, text: 'path-end'),
-              height2,
+              buildWatchString(text: 'type', watch: characterSelectedRuntimeType),
+              buildWatchDouble(text: 'x', watch: characterSelectedX, ),
+              buildWatchDouble(text: 'y', watch: characterSelectedY),
+              buildWatchDouble(text: 'z', watch: characterSelectedZ),
+              buildWatchInt(text: 'path-index', watch: characterSelectedPathIndex),
+              buildWatchInt(text: 'path-end', watch: characterSelectedPathEnd),
               buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
-              height2,
               buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
-              height2,
               buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-              height2,
+              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
+              buildWatchInt(text: 'weapon-damage', watch: weaponDamage),
               buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
-              height2,
               buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
               height2,
               WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
@@ -185,12 +178,15 @@ class IsometricDebug {
     required Watch<String> watch,
   }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
 
-  static Widget buildRow({required String text, required Widget value}) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      buildValue(buildText(text), color: Colors.black12),
-      buildValue(value),
-    ],
+  static Widget buildRow({required String text, required Widget value}) => Container(
+    margin: const EdgeInsets.only(bottom: 2),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildValue(buildText(text), color: Colors.black12),
+        buildValue(value),
+      ],
+    ),
   );
 
   static Widget buildValue(Widget child, {Color color = Colors.white12}) => Container(

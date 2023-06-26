@@ -7,7 +7,7 @@ import 'mmo_npc.dart';
 
 class MmoPlayer extends IsometricPlayer {
 
-  static const Destination_Radius_Interact = 50.0;
+  static const Destination_Radius_Interact = 80.0;
   static const Destination_Radius_Run = 50.0;
 
   var destinationRadius = Destination_Radius_Run;
@@ -59,8 +59,6 @@ class MmoPlayer extends IsometricPlayer {
 
   @override
   void customOnUpdate() {
-    super.customOnUpdate();
-
     updateDestination();
     updateDestinationRadius();
     updateInteracting();
