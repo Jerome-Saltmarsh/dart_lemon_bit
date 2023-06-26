@@ -37,6 +37,7 @@ class IsometricDebug {
   final weaponRange = Watch(0);
   final weaponState = Watch(0);
   final weaponStateDuration = Watch(0);
+  final autoAttackNearbyEnemies = Watch(false);
 
   Isometric get isometric => gamestream.isometric;
 
@@ -61,21 +62,22 @@ class IsometricDebug {
                     ],
                   ),
                   height8,
-                  buildWatchString(text: 'type', watch: runTimeType),
-                  buildWatchDouble(text: 'x', watch: x, ),
-                  buildWatchDouble(text: 'y', watch: y),
-                  buildWatchDouble(text: 'z', watch: z),
-                  buildWatchInt(text: 'path-index', watch: pathIndex),
-                  buildWatchInt(text: 'path-end', watch: pathEnd),
-                  buildWatchInt(text: 'path-target-index', watch: pathTargetIndex),
+                  buildRowWatchString(text: 'type', watch: runTimeType),
+                  buildRowWatchDouble(text: 'x', watch: x, ),
+                  buildRowWatchDouble(text: 'y', watch: y),
+                  buildRowWatchDouble(text: 'z', watch: z),
+                  buildRowWatchInt(text: 'path-index', watch: pathIndex),
+                  buildRowWatchInt(text: 'path-end', watch: pathEnd),
+                  buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
                   buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
-                  buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
-                  buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
+                  buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
+                  buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
                   buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
-                  buildWatchInt(text: 'weapon-damage', watch: weaponDamage),
-                  buildWatchInt(text: 'weapon-range', watch: weaponRange),
+                  buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
+                  buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
                   buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
-                  buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
+                  buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
+                  buildRowWatchBool(text: 'auto-attack-nearby-enemies', watch: autoAttackNearbyEnemies),
                   buildTarget(),
                 ],
               ),
@@ -145,7 +147,7 @@ class IsometricDebug {
     }
   }
 
-  static Widget buildWatchDouble({
+  static Widget buildRowWatchDouble({
     required Watch<double> watch,
     required String text,
   }) => buildRow(
@@ -153,12 +155,17 @@ class IsometricDebug {
       value: WatchBuilder(watch, (x) => buildText(x.toInt())),
   );
 
-  static Widget buildWatchInt({
+  static Widget buildRowWatchInt({
     required Watch<int> watch,
     required String text,
   }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
 
-  static Widget buildWatchString({
+  static Widget buildRowWatchBool({
+    required Watch<bool> watch,
+    required String text,
+  }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
+
+  static Widget buildRowWatchString({
     required String text,
     required Watch<String> watch,
   }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
@@ -186,10 +193,10 @@ class IsometricDebug {
 
    final columnSet = Column(
      children: [
-       buildWatchString(text: 'target-type', watch: targetType),
-       buildWatchDouble(text: 'target-x', watch: targetX),
-       buildWatchDouble(text: 'target-y', watch: targetY),
-       buildWatchDouble(text: 'target-z', watch: targetZ),
+       buildRowWatchString(text: 'target-type', watch: targetType),
+       buildRowWatchDouble(text: 'target-x', watch: targetX),
+       buildRowWatchDouble(text: 'target-y', watch: targetY),
+       buildRowWatchDouble(text: 'target-z', watch: targetZ),
      ],
    );
 
