@@ -36,6 +36,7 @@ class IsometricDebug {
 
   final weaponType = Watch(0);
   final weaponDamage = Watch(0);
+  final weaponRange = Watch(0);
   final weaponState = Watch(0);
   final weaponStateDuration = Watch(0);
 
@@ -70,6 +71,7 @@ class IsometricDebug {
               buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
               buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
               buildWatchInt(text: 'weapon-damage', watch: weaponDamage),
+              buildWatchInt(text: 'weapon-range', watch: weaponRange),
               buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
               buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
               height2,

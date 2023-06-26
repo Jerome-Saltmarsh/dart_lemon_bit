@@ -2445,6 +2445,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     IsometricCharacter? nearestCharacter;
     var nearestCharacterDistanceSquared = maxRadius * maxRadius;
     for (final character in characters){
+      if (!character.active) continue;
       final distanceSquared = character.getDistanceSquaredXYZ(x, y, z);
       if (distanceSquared > nearestCharacterDistanceSquared) continue;
       nearestCharacterDistanceSquared = distanceSquared;

@@ -818,6 +818,7 @@ extension ServerResponseReader on Gamestream {
 
         debug.weaponType.value = readUInt16();
         debug.weaponDamage.value = readUInt16();
+        debug.weaponRange.value = readUInt16();
         debug.weaponState.value = readByte();
         debug.weaponStateDuration.value = readUInt16();
 
