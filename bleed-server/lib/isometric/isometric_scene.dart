@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/common.dart';
+import 'package:lemon_math/library.dart';
 
 import 'isometric_gameobject.dart';
-import 'package:lemon_math/library.dart';
 import 'isometric_position.dart';
 
 class IsometricScene {
@@ -26,7 +26,6 @@ class IsometricScene {
   var gridVolume = 0;
   var gridArea = 0;
   var name = "";
-  final List<IsometricGameObject> gameObjects;
 
   Uint16List spawnPoints;
   Uint16List spawnPointsPlayers;
@@ -35,6 +34,8 @@ class IsometricScene {
   late double gridRowLength;
   late double gridColumnLength;
   late double gridHeightLength;
+
+  final List<IsometricGameObject> gameObjects;
 
   IsometricScene({
     required this.name,
@@ -48,7 +49,6 @@ class IsometricScene {
     required this.spawnPointTypes,
     required this.spawnPointsPlayers,
   }) {
-    // assert (spawnPoints.length == spawnPointTypes.length);
     refreshGridMetrics();
   }
 
@@ -70,7 +70,6 @@ class IsometricScene {
       outOfBounds(z, row, column)
           ? NodeType.Boundary
           : nodeOrientations[getNodeIndex(z, row, column)];
-
 
   int getNodeIndex(int z, int row, int column) {
     assert (!outOfBounds(z, row, column));
@@ -357,6 +356,49 @@ class IsometricScene {
       }
     }
     return true;
+  }
+
+  int getRandomFreeNodeIndexAround({required int index, required int radius}){
+    assert (radius >= 1);
+
+    final z = getNodeIndexZ(index);
+    final row = getNodeIndexRow(index);
+    final column = getNodeIndexColumn(index);
+
+    var attempts = 5;
+
+    while (attempts-- >= 0) {
+      final randomZ = z;
+      final randomRow = row + giveOrTake(radius).toInt();
+      final randomColumn = column + giveOrTake(radius).toInt();
+      if (getGridOrientation(randomZ, randomRow, randomColumn) == NodeOrientation.None) {
+        return getNodeIndex(randomZ, randomRow, randomColumn);
+      }
+    }
+
+    return getNodeIndex(z, row, column);
+  }
+
+  int getRandomEmptyNodeIndexAroundZRC({
+    required int z,
+    required int row,
+    required int column,
+    required int radius,
+  }){
+    assert (radius >= 1);
+
+    var attempts = 5;
+
+    while (attempts-- >= 0) {
+      final randomZ = z;
+      final randomRow = row + giveOrTake(radius).toInt();
+      final randomColumn = column + giveOrTake(radius).toInt();
+      if (getGridOrientation(randomZ, randomRow, randomColumn) == NodeOrientation.None) {
+        return getNodeIndex(randomZ, randomRow, randomColumn);
+      }
+    }
+
+    return -1;
   }
 
 }

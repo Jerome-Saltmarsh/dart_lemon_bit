@@ -849,6 +849,10 @@ class WebSocketConnection with ByteReader {
   }
 }
 
+// control_type
+// - click
+// - wasd
+
 // character_behavior
 
 // idle

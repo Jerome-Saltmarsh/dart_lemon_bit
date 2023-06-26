@@ -1,11 +1,12 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
-import 'package:lemon_math/functions/give_or_take.dart';
+import 'package:lemon_math/functions/random_int.dart';
 
 class IsometricZombie extends IsometricCharacter {
 
   var _nextWander = 0;
+  var wanderRadius = 5;
 
   final IsometricGame game;
 
@@ -46,14 +47,14 @@ class IsometricZombie extends IsometricCharacter {
     if (target == null){
       _nextWander--;
 
-      if (_nextWander <= 0){
-        _nextWander = 500;
-
-        final randomRow = indexRow + giveOrTake(5).toInt();
-        final randomColumn = indexColumn + giveOrTake(5).toInt();
-        if (game.scene.getGridOrientation(indexZ, randomRow, randomColumn) == NodeOrientation.None){
-          pathTargetIndex = game.scene.getNodeIndex(indexZ, randomRow, randomColumn);
-        }
+      if (_nextWander <= 0) {
+        _nextWander = randomInt(300, 500);
+        pathTargetIndex = game.scene.getRandomEmptyNodeIndexAroundZRC(
+            z: indexZ,
+            row: indexRow,
+            column: indexColumn,
+            radius: wanderRadius,
+        );
       }
     }
   }
@@ -75,5 +76,4 @@ class IsometricZombie extends IsometricCharacter {
     face(target);
     setCharacterStatePerforming(duration: 30);
   }
-
 }
