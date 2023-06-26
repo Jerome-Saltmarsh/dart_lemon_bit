@@ -21,13 +21,11 @@ class IsometricDebug {
   final path = Uint16List(500);
   final pathIndex = Watch(0);
   final pathEnd = Watch(0);
-  final characterSelectedPathRender = WatchBool(true);
   final targetSet = Watch(false);
   final targetType = Watch('');
   final targetX = Watch(0.0);
   final targetY = Watch(0.0);
   final targetZ = Watch(0.0);
-  final characterSelectedTargetRenderLine = WatchBool(true);
 
   final characterState = Watch(0);
   final characterStateDuration = Watch(0);
@@ -73,24 +71,7 @@ class IsometricDebug {
               buildWatchInt(text: 'weapon-range', watch: weaponRange),
               buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
               buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
-              height2,
-              WatchBuilder(targetSet, (characterSelectedTarget){
-                if (!characterSelectedTarget) return nothing;
-                return Container(
-                  color: Colors.white12,
-                  padding: GameStyle.Container_Padding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildText('TARGET'),
-                      WatchBuilder(targetType, (type) => buildText('type: $type')),
-                      WatchBuilder(targetX, (x) => buildText('x: ${x.toInt()}')),
-                      WatchBuilder(targetY, (y) => buildText('y: ${y.toInt()}')),
-                      WatchBuilder(targetZ, (z) => buildText('z: ${z.toInt()}')),
-                    ],
-                  ),
-                );
-              }),
+              buildTarget(),
             ],
           ),
         ));
@@ -105,9 +86,7 @@ class IsometricDebug {
       40,
     );
 
-    if (targetSet.value &&
-        characterSelectedTargetRenderLine.value
-    ) {
+    if (targetSet.value) {
       renderer.renderLine(
         x.value,
         y.value,
@@ -118,7 +97,6 @@ class IsometricDebug {
       );
     }
 
-    if (characterSelectedPathRender.value ){
       engine.setPaintColor(Colors.blue);
       renderPath(
         path: path,
@@ -132,7 +110,6 @@ class IsometricDebug {
         start: pathIndex.value,
         end: pathEnd.value,
       );
-    }
 
     engine.setPaintColor(Colors.deepPurpleAccent);
     renderer.renderLine(
@@ -197,4 +174,27 @@ class IsometricDebug {
       padding: const EdgeInsets.all(4),
       child: FittedBox(child: child),
     );
+
+  Widget buildTarget(){
+
+   final columnSet = Column(
+     children: [
+       buildWatchString(text: 'target-type', watch: targetType),
+       buildWatchDouble(text: 'target-x', watch: targetX),
+       buildWatchDouble(text: 'target-y', watch: targetY),
+       buildWatchDouble(text: 'target-z', watch: targetZ),
+     ],
+   );
+
+   final notSet = Column(
+     children: [
+       buildRow(text: 'target-type', value: buildText('-')),
+       buildRow(text: 'target-x', value: buildText('-')),
+       buildRow(text: 'target-y', value: buildText('-')),
+       buildRow(text: 'target-z', value: buildText('-')),
+     ],
+   );
+
+    return WatchBuilder(targetSet, (targetSet) => targetSet ? columnSet : notSet);
+  }
 }

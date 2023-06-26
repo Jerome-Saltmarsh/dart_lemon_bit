@@ -8,6 +8,8 @@ import 'mmo_player.dart';
 
 class MmoGame extends IsometricGame<MmoPlayer> {
 
+  late MMONpc npcGuard;
+
   MmoGame({
     required super.scene,
     required super.time,
@@ -28,7 +30,32 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       }
     ));
 
+    npcGuard = MMONpc(
+      x: 800,
+      y: 1000,
+      z: 25,
+      health: 200,
+      weaponType: ItemType.Weapon_Ranged_Machine_Gun,
+      weaponRange: 200,
+      damage: 1,
+      team: MmoTeam.Human,
+    );
+
+    characters.add(npcGuard);
+
     characters.add(IsometricZombie(team: MmoTeam.Alien, game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
+
+    characters.add(
+        IsometricZombie(
+            team: MmoTeam.Alien,
+            game: this,
+            x: 80,
+            y: 50,
+            z: 24,
+            health: 5,
+            damage: 1,
+        )..target = npcGuard
+    );
   }
 
   @override
