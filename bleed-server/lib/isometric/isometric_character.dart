@@ -37,7 +37,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathIndex = -1;
   var pathStart = -1;
   var pathTargetIndex = 0;
-  var targetIndex = 0;
+  var pathTargetIndexPrevious = 0;
 
   var runX = 0.0;
   var runY = 0.0;
@@ -81,6 +81,11 @@ abstract class IsometricCharacter extends IsometricCollider {
     radius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
   }
+
+  bool get shouldUpdatePath =>
+      (pathTargetIndex != -1 && pathIndex == -1) ||
+      (pathTargetIndex != pathTargetIndexPrevious) ||
+      (pathIndex == 0);
 
   bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(runSpeed);
 
@@ -445,6 +450,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   void clearPath(){
     pathIndex = -1;
     pathStart = -1;
+    pathTargetIndex = -1;
+    pathTargetIndexPrevious = -1;
   }
 
   bool shouldAttackTarget() {

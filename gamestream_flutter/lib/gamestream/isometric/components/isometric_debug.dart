@@ -41,38 +41,43 @@ class IsometricDebug {
 
   Widget buildUI() =>
       WatchBuilder(characterSelected, (characterSelected) => !characterSelected ? nothing :
-        GSContainer(
-          width: 320,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        GSDialog(
+          child: GSContainer(
+            width: 320,
+            height: engine.screen.height - 150,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildText('DEBUG'),
-                  onPressed(
-                      action: () => isometric.camera.target = character,
-                      child: buildText('CAMERA TRACK')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('DEBUG'),
+                      onPressed(
+                          action: () => isometric.camera.target = character,
+                          child: buildText('CAMERA TRACK')
+                      ),
+                    ],
                   ),
+                  height8,
+                  buildWatchString(text: 'type', watch: runTimeType),
+                  buildWatchDouble(text: 'x', watch: x, ),
+                  buildWatchDouble(text: 'y', watch: y),
+                  buildWatchDouble(text: 'z', watch: z),
+                  buildWatchInt(text: 'path-index', watch: pathIndex),
+                  buildWatchInt(text: 'path-end', watch: pathEnd),
+                  buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
+                  buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
+                  buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
+                  buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
+                  buildWatchInt(text: 'weapon-damage', watch: weaponDamage),
+                  buildWatchInt(text: 'weapon-range', watch: weaponRange),
+                  buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
+                  buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
+                  buildTarget(),
                 ],
               ),
-              height8,
-              buildWatchString(text: 'type', watch: runTimeType),
-              buildWatchDouble(text: 'x', watch: x, ),
-              buildWatchDouble(text: 'y', watch: y),
-              buildWatchDouble(text: 'z', watch: z),
-              buildWatchInt(text: 'path-index', watch: pathIndex),
-              buildWatchInt(text: 'path-end', watch: pathEnd),
-              buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
-              buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
-              buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
-              buildWatchInt(text: 'weapon-damage', watch: weaponDamage),
-              buildWatchInt(text: 'weapon-range', watch: weaponRange),
-              buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
-              buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
-              buildTarget(),
-            ],
+            ),
           ),
         ));
 

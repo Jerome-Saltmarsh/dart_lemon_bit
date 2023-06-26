@@ -263,7 +263,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     final base = getBaseOwn(character);
     activateCollider(character);
     character.target = null;
-    character.targetIndex = -1;
+    character.pathTargetIndex = -1;
     character.pathStart = -1;
     character.pathIndex = -1;
     character.health = character.maxHealth;

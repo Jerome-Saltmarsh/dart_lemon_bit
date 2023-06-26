@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:bleed_server/common.dart';
-import 'package:bleed_server/games/capture_the_flag/capture_the_flag_ai.dart';
 import 'package:bleed_server/utils.dart';
 
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
@@ -703,11 +702,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     }
   }
 
-  void setPathToMouse() =>
-      game.setCharacterPathToNodeIndex(
-        character: this,
-        targetIndex: mouseGridIndex,
-      );
+  void setPathToMouse() => pathTargetIndex = mouseGridIndex;
 
   void setDestinationToMouse() {
     runX = mouseGridX;

@@ -11,10 +11,11 @@ alt + m             : go to declaration
 [MAJ1K]
 
 [ISOMETRIC]
+  [ ] refactor item type
   [ ] 3D Model alien creature
   [ ] destructable structures
   [ ] pathfinding 3d
-  [ ] implement pathfinding for isometric zombie
+  [x] implement pathfinding for isometric zombie
 
 [CAPTURE THE FLAG]
   [ ] destroyable terrain

@@ -1,7 +1,7 @@
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/isometric/src.dart';
-import 'package:bleed_server/utils/change_notifier.dart';
+import 'package:bleed_server/common.dart';
+import 'package:bleed_server/isometric.dart';
+import 'package:bleed_server/utils.dart';
 
 import 'mmo_npc.dart';
 

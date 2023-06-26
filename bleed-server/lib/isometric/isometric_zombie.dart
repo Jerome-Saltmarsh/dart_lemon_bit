@@ -1,10 +1,12 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
+import 'package:lemon_math/functions/give_or_take.dart';
 
 class IsometricZombie extends IsometricCharacter {
 
   var _refreshTargetTimer = 0;
+  var _nextWander = 0;
 
   double viewRadius;
   int refreshTargetDuration;
@@ -50,20 +52,24 @@ class IsometricZombie extends IsometricCharacter {
       refreshTarget();
     }
 
-    // if (shouldIdle) {
-    //   setCharacterStateIdle();
-    //   return;
-    // }
-
     if (targetWithinAttackRange){
       attackTarget();
       return;
     }
 
-    // if (shouldRunToTarget){
-    //   runToTarget();
-    //   return;
-    // }
+    if (target == null){
+      _nextWander--;
+
+      if (_nextWander <= 0){
+        _nextWander = 500;
+
+        final randomRow = indexRow + giveOrTake(5).toInt();
+        final randomColumn = indexColumn + giveOrTake(5).toInt();
+        if (game.scene.getGridOrientation(indexZ, randomRow, randomColumn) == NodeOrientation.None){
+          pathTargetIndex = game.scene.getNodeIndex(indexZ, randomRow, randomColumn);
+        }
+      }
+    }
   }
 
   void applyHitToTarget() {
