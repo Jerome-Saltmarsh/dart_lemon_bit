@@ -679,7 +679,7 @@ extension IsometricEditorUI on IsometricEditor {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (gamestream.isometric.clientState.playMode) {
+            if (gamestream.isometric.client.playMode) {
               gamestream.isometric.actionSetModePlay();
               return;
             }

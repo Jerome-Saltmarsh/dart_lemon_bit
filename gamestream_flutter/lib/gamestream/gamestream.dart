@@ -176,7 +176,7 @@ class Gamestream with ByteReader {
    void _onChangedGameError(GameError? gameError){
      print('_onChangedGameError($gameError)');
      if (gameError == null) return;
-     gamestream.isometric.clientState.playAudioError();
+     gamestream.isometric.client.playAudioError();
      switch (gameError) {
        case GameError.Unable_To_Join_Game:
          gamestream.games.website.error.value = 'unable to join game';
@@ -208,7 +208,7 @@ class Gamestream with ByteReader {
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
          gamestream.isometric.ui.mouseOverDialog.setFalse();
-         isometric.clientState.timeConnectionEstablished = DateTime.now();
+         isometric.client.timeConnectionEstablished = DateTime.now();
          audio.enabledSound.value = true;
          if (!engine.isLocalHost) {
            engine.fullScreenEnter();
@@ -224,8 +224,8 @@ class Gamestream with ByteReader {
          engine.drawCanvasAfterUpdate = true;
          engine.fullScreenExit();
          isometric.player.active.value = false;
-         isometric.clientState.timeConnectionEstablished = null;
-         isometric.clientState.clear();
+         isometric.client.timeConnectionEstablished = null;
+         isometric.client.clear();
          isometric.server.clean();
          isometric.server.sceneEditable.value = false;
          gameType.value = GameType.Website;

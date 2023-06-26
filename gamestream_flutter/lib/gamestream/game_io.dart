@@ -140,7 +140,7 @@ class GameIO with ByteWriter {
   }
 
   void readPlayerInput() {
-    if (isometric.clientState.edit.value) {
+    if (isometric.client.edit.value) {
       return readPlayerInputEdit();
     }
   }

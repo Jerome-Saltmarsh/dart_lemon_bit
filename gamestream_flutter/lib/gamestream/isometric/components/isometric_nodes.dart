@@ -190,7 +190,7 @@ class IsometricScene {
     required int alpha,
   }){
 
-    if (gamestream.isometric.clientState.dynamicShadows) {
+    if (gamestream.isometric.client.dynamicShadows) {
       emitLightAmbientShadows(
         index: index,
         alpha: alpha,
@@ -380,7 +380,7 @@ class IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.clientState.interpolation_padding;
+    final padding = gamestream.isometric.client.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
@@ -388,7 +388,7 @@ class IsometricScene {
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
 
-    gamestream.isometric.clientState.lights_active++;
+    gamestream.isometric.client.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -478,7 +478,7 @@ class IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.clientState.interpolation_padding;
+    final padding = gamestream.isometric.client.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
@@ -486,7 +486,7 @@ class IsometricScene {
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
 
-    gamestream.isometric.clientState.lights_active++;
+    gamestream.isometric.client.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);

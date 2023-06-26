@@ -95,7 +95,7 @@ class IsometricServer {
         case IsometricEmissionType.None:
           continue;
         case IsometricEmissionType.Color:
-          gamestream.isometric.clientState.applyVector3Emission(
+          gamestream.isometric.client.applyVector3Emission(
             gameObject,
             hue: gameObject.emission_hue,
             saturation: gameObject.emission_sat,
@@ -105,7 +105,7 @@ class IsometricServer {
           );
           continue;
         case IsometricEmissionType.Ambient:
-          gamestream.isometric.clientState.applyVector3EmissionAmbient(gameObject,
+          gamestream.isometric.client.applyVector3EmissionAmbient(gameObject,
             alpha: gameObject.emission_alp,
             intensity: gameObject.emission_intensity,
           );
@@ -381,14 +381,14 @@ class IsometricServer {
       ItemType.getConsumeType(getEquippedWeaponType());
 
   void onChangedAreaType(int areaType) {
-    gamestream.isometric.clientState.areaTypeVisible.value = true;
+    gamestream.isometric.client.areaTypeVisible.value = true;
   }
 
   void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
       gamestream.audio.thunder(1.0);
     } else {
-      gamestream.isometric.clientState.updateGameLighting();
+      gamestream.isometric.client.updateGameLighting();
     }
   }
 

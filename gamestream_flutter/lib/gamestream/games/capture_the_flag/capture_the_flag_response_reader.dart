@@ -93,12 +93,12 @@ extension CaptureTheFlagResponseReader on Gamestream {
 
       case CaptureTheFlagResponse.Player_Event_Level_Gained:
         captureTheFlag.audioOnLevelGain.play();
-        gamestream.isometric.clientState.spawnConfettiPlayer();
+        gamestream.isometric.client.spawnConfettiPlayer();
         break;
 
       case CaptureTheFlagResponse.Player_Event_Skill_Upgraded:
         captureTheFlag.audioOnLevelGain.play();
-        gamestream.isometric.clientState.spawnConfettiPlayer();
+        gamestream.isometric.client.spawnConfettiPlayer();
         break;
     }
   }

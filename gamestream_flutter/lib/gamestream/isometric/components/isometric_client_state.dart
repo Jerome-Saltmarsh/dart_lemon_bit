@@ -14,7 +14,7 @@ import '../classes/isometric_projectile.dart';
 import 'functions/format_bytes.dart';
 
 
-mixin class IsometricClientState {
+mixin class IsometricClient {
   final sceneChanged = Watch(0);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final overrideColor = WatchBool(false);
@@ -417,7 +417,7 @@ mixin class IsometricClientState {
   }
 
    void writeMessage(String value){
-    gamestream.isometric.clientState.messageStatus.value = value;
+    gamestream.isometric.client.messageStatus.value = value;
   }
 
    void playAudioError(){
@@ -425,7 +425,7 @@ mixin class IsometricClientState {
   }
 
   void onChangedAttributesWindowVisible(bool value){
-    gamestream.isometric.clientState.playSoundWindow();
+    gamestream.isometric.client.playSoundWindow();
   }
 
   void onChangedRaining(bool raining){
@@ -435,14 +435,14 @@ mixin class IsometricClientState {
 
   void onChangedMessageStatus(String value){
     if (value.isEmpty){
-      gamestream.isometric.clientState.messageStatusDuration = 0;
+      gamestream.isometric.client.messageStatusDuration = 0;
     } else {
-      gamestream.isometric.clientState.messageStatusDuration = 150;
+      gamestream.isometric.client.messageStatusDuration = 150;
     }
   }
 
   void onChangedAreaTypeVisible(bool value) =>
-      gamestream.isometric.clientState.areaTypeVisibleDuration = value
+      gamestream.isometric.client.areaTypeVisibleDuration = value
           ? 150
           : 0;
 

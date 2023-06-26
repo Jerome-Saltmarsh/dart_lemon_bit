@@ -593,10 +593,10 @@ extension ServerResponseReader on Gamestream {
     isometric.scene.colorStack = Uint16List(totalNodes);
     isometric.scene.ambientStack = Uint16List(totalNodes);
     isometric.scene.total = totalNodes;
-    isometric.clientState.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
+    isometric.client.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
     isometric.events.onChangedNodes();
     isometric.scene.refreshNodeVariations();
-    isometric.clientState.sceneChanged.value++;
+    isometric.client.sceneChanged.value++;
 
     isometric.particles.totalActiveParticles = 0;
     isometric.particles.totalParticles = 0;

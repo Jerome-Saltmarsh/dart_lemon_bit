@@ -21,17 +21,17 @@ import 'components/isometric_render.dart';
 
 class Isometric {
   final debug = IsometricDebug();
-  final clientState = IsometricClientState();
+  final client = IsometricClient();
   final server = IsometricServer();
   final scene = IsometricScene();
-  final minimap = GameIsometricMinimap();
+  final minimap = IsometricMinimap();
   final editor = IsometricEditor();
   final player = IsometricPlayer();
   final camera = IsometricCamera();
   final particles = IsometricParticles();
   final ui = IsometricUI();
 
-  late final events = IsometricEvents(clientState, gamestream);
+  late final events = IsometricEvents(client, gamestream);
   late final renderer = IsometricRender(
     rendererGameObjects: RendererGameObjects(scene),
     rendererParticles: RendererParticles(scene),
@@ -43,7 +43,7 @@ class Isometric {
       /// this makes them much smoother as they don't freeze
       particles.updateParticles();
     }
-    clientState.interpolatePlayer();
+    client.interpolatePlayer();
     camera.update();
     renderer.render3D();
     renderer.renderEditMode();
@@ -58,12 +58,12 @@ class Isometric {
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
-    if (clientState.windLine < scene.totalRows){
+    if (client.windLine < scene.totalRows){
       windLineColumn = 0;
-      windLineRow =  scene.totalRows - clientState.windLine - 1;
+      windLineRow =  scene.totalRows - client.windLine - 1;
     } else {
       windLineRow = 0;
-      windLineColumn = clientState.windLine - scene.totalRows + 1;
+      windLineColumn = client.windLine - scene.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
@@ -78,9 +78,9 @@ class Isometric {
     gamestream.io.readPlayerInput();
     server.updateProjectiles();
     server.updateGameObjects();
-    clientState.updateTorchEmissionIntensity();
-    clientState.updateParticleEmitters();
-    clientState.update();
+    client.updateTorchEmissionIntensity();
+    client.updateParticleEmitters();
+    client.update();
     player.updateMessageTimer();
     sendClientRequestUpdate();
   }

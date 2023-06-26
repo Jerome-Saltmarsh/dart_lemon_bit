@@ -128,7 +128,7 @@ class GameIsometricUI {
     );
 
   static Widget buildGeneratedMiniMap({required double translate}){
-    return buildWatch(gamestream.isometric.clientState.sceneChanged, (_){
+    return buildWatch(gamestream.isometric.client.sceneChanged, (_){
       return engine.buildCanvas(paint: (Canvas canvas, Size size){
         const scale = 2.0;
         canvas.scale(scale, scale);
@@ -175,7 +175,7 @@ class GameIsometricUI {
       child: Container(
         width: engine.screen.width,
         alignment: Alignment.center,
-        child: buildWatch(gamestream.isometric.clientState.messageStatus, buildMessageStatus),
+        child: buildWatch(gamestream.isometric.client.messageStatus, buildMessageStatus),
       ),
     ),
   );
@@ -185,12 +185,12 @@ class GameIsometricUI {
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        gamestream.isometric.clientState.messageClear();
+        gamestream.isometric.client.messageClear();
       },
       child: Container(
         padding: const EdgeInsets.all(10),
         color: Colors.black12,
-        child: buildText(message, onPressed: gamestream.isometric.clientState.messageClear),),
+        child: buildText(message, onPressed: gamestream.isometric.client.messageClear),),
     );
   }
 
@@ -222,7 +222,7 @@ class GameIsometricUI {
   static Widget buildStackInputMode(int inputMode) =>
       inputMode == InputMode.Keyboard
           ? nothing
-          : buildWatch(gamestream.isometric.clientState.touchButtonSide, buildStackInputModeTouch);
+          : buildWatch(gamestream.isometric.client.touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
@@ -430,7 +430,7 @@ class GameIsometricUI {
             height: 64,
             child: buildAtlasItemType(ItemType.Resource_Credit)),
         width4,
-        buildWatch(gamestream.isometric.clientState.playerCreditsAnimation, (value) => buildText(value, size: 25)),
+        buildWatch(gamestream.isometric.client.playerCreditsAnimation, (value) => buildText(value, size: 25)),
       ],
     );
   }
@@ -648,7 +648,7 @@ class GameIsometricUI {
   static Widget buildButtonTogglePlayMode() {
     return buildWatch(gamestream.isometric.server.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return buildWatch(gamestream.isometric.clientState.edit, (bool edit) {
+      return buildWatch(gamestream.isometric.client.edit, (bool edit) {
         return buildButton(
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',

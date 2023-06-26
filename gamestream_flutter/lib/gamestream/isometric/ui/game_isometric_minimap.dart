@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 
-class GameIsometricMinimap {
+class IsometricMinimap {
   var src = Float32List(0);
   var dst = Float32List(0);
 

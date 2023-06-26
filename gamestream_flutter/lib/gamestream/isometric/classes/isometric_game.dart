@@ -29,7 +29,7 @@ class IsometricGame extends Game {
   }
 
   void updateCursorType() {
-    isometric.clientState.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
+    isometric.client.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
   }
 
   @override
@@ -70,10 +70,10 @@ class IsometricGame extends Game {
   @override
   Widget buildUI(BuildContext context) => StackFullscreen(children: [
       buildWatchBool(
-          isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
+          isometric.client.triggerAlarmNoMessageReceivedFromServer,
           GameIsometricUI.buildDialogFramesSinceUpdate,
       ),
-      WatchBuilder(isometric.clientState.edit, (edit) =>
+      WatchBuilder(isometric.client.edit, (edit) =>
         edit ? isometric.editor.buildEditor() : customBuildUI(context)),
       isometric.ui.buildStackDebug(),
       isometric.ui.buildWindowLightSettings(),
@@ -90,7 +90,7 @@ class IsometricGame extends Game {
     if (gamestream.io.inputModeTouch){
       gamestream.io.touchController.onClick();
     }
-    if (isometric.clientState.edit.value) {
+    if (isometric.client.edit.value) {
       isometric.editor.onMouseLeftClicked();
     }
   }
@@ -99,7 +99,7 @@ class IsometricGame extends Game {
   void onKeyPressed(int key) {
 
     if (key == KeyCode.Tab) {
-      isometric.clientState.edit.value = !isometric.clientState.edit.value;
+      isometric.client.edit.value = !isometric.client.edit.value;
       return;
     }
 
@@ -128,7 +128,7 @@ class IsometricGame extends Game {
       return;
     }
 
-    if (isometric.clientState.editMode){
+    if (isometric.client.editMode){
       isometric.editor.onKeyPressedModeEdit(key);
       return;
     }

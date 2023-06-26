@@ -34,11 +34,11 @@ class IsometricUI {
                             children: [
                               buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
                               buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
-                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
-                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
-                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.clientState.formatAverageBytePerHour(bytes)}')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.client.formatAverageBytePerSecond(bytes)}')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.client.formatAverageBytePerMinute(bytes)}')),
+                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.client.formatAverageBytePerHour(bytes)}')),
                               GSRefresh(() =>  buildText(
-                                  'connection-duration: ${gamestream.isometric..clientState.formattedConnectionDuration}\n'
+                                  'connection-duration: ${gamestream.isometric..client.formattedConnectionDuration}\n'
                                   // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
                                   // "onscreen-nodes: ${gamestream.isometricEngine.nodes.onscreenNodes}\n"
                                       'touches: ${engine.touches}\n'
@@ -66,7 +66,7 @@ class IsometricUI {
                                       'target-category: ${TargetCategory.getName(gamestream.isometric.player.targetCategory)}\n'
                                       'target-position: ${gamestream.isometric.player.targetPosition}\n'
                                       'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
-                                      'scene-light-active: ${gamestream.isometric.clientState.lights_active}\n'
+                                      'scene-light-active: ${gamestream.isometric.client.lights_active}\n'
                                       'total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n'
                                       'total-characters: ${gamestream.isometric.server.totalCharacters}\n'
                                       'total-particles: ${gamestream.isometric.particles.particles.length}\n'
@@ -98,7 +98,7 @@ class IsometricUI {
                         ),
                       ),
                       height24,
-                      buildText('close x', onPressed: () => gamestream.isometric.clientState.debugMode.value = false, bold: true),
+                      buildText('close x', onPressed: () => gamestream.isometric.client.debugMode.value = false, bold: true),
                     ],
                   ),
                 )),
@@ -117,8 +117,8 @@ class IsometricUI {
             buildText('Light-Settings', bold: true),
             height8,
             onPressed(
-                action: gamestream.isometric.clientState.toggleDynamicShadows,
-                child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.clientState.dynamicShadows}'))
+                action: gamestream.isometric.client.toggleDynamicShadows,
+                child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.client.dynamicShadows}'))
             ),
             onPressed(
                 child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
@@ -169,7 +169,7 @@ class IsometricUI {
                 gamestream.isometric.scene.ambient_val / 100,
               ).toColor(),
               onColorChanged: (color){
-                gamestream.isometric.clientState.overrideColor.value = true;
+                gamestream.isometric.client.overrideColor.value = true;
                 final hsvColor = HSVColor.fromColor(color);
                 gamestream.isometric.scene.ambient_alp = (hsvColor.alpha * 255).round();
                 gamestream.isometric.scene.ambient_hue = hsvColor.hue.round();

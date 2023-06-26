@@ -497,12 +497,12 @@ class IsometricEditor {
       allowedExtensions: ['scene'],
     );
     if (result == null) {
-      gamestream.isometric.clientState.showMessage('result == null');
+      gamestream.isometric.client.showMessage('result == null');
       return;
     }
     final sceneBytes = result.files[0].bytes;
     if (sceneBytes == null) {
-      gamestream.isometric.clientState.showMessage('contents == null');
+      gamestream.isometric.client.showMessage('contents == null');
       return;
     }
     loadScene(sceneBytes);

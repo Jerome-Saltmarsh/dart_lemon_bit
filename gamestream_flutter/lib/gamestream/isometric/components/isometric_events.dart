@@ -10,7 +10,7 @@ import '../isometric.dart';
 class IsometricEvents {
 
   final Gamestream gamestream;
-  final IsometricClientState clientState;
+  final IsometricClient clientState;
   late final Isometric isometric;
 
   IsometricEvents(this.clientState, this.gamestream) {
@@ -421,7 +421,7 @@ class IsometricEvents {
         break;
       case PlayerEvent.Level_Increased:
         gamestream.audio.buff_1();
-        gamestream.isometric.clientState.writeMessage('Level Gained');
+        gamestream.isometric.client.writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
         readPlayerEventItemConsumed();
@@ -456,13 +456,13 @@ class IsometricEvents {
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
-        gamestream.isometric.clientState.writeMessage('Not Enough Gold');
+        gamestream.isometric.client.writeMessage('Not Enough Gold');
         break;
       case PlayerEvent.Inventory_Full:
-        gamestream.isometric.clientState.writeMessage('Inventory Full');
+        gamestream.isometric.client.writeMessage('Inventory Full');
         break;
       case PlayerEvent.Invalid_Request:
-        gamestream.isometric.clientState.writeMessage('Invalid Request');
+        gamestream.isometric.client.writeMessage('Invalid Request');
         break;
     }
   }
@@ -599,7 +599,7 @@ class IsometricEvents {
 
   void onChangedPlayerInteractMode(int value) {
     final camera = gamestream.isometric.camera;
-    gamestream.isometric.clientState.playSoundWindow();
+    gamestream.isometric.client.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
         camera.translateX = SurvivalGameUI.Inventory_Width * 0.5;

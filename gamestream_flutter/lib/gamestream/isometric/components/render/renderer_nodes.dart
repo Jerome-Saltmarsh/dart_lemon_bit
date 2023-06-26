@@ -261,7 +261,7 @@ class RendererNodes extends IsometricRenderer {
     remaining = total > 0;
     gamestream.isometric.scene.resetNodeColorStack();
     gamestream.isometric.scene.resetNodeAmbientStack();
-    gamestream.isometric.clientState.applyEmissions();
+    gamestream.isometric.client.applyEmissions();
 
     // highlightCharacterNearMouse();
   }
@@ -597,7 +597,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   static bool assertOnScreen(){
-    if (!gamestream.isometric.clientState.debugMode.value) return true;
+    if (!gamestream.isometric.client.debugMode.value) return true;
     if (currentNodeDstX < screenLeft){
       offscreenNodesLeft++;
       return true;
@@ -770,21 +770,21 @@ class RendererNodes extends IsometricRenderer {
         renderNodeWindow();
         break;
       case NodeType.Spawn:
-        if (gamestream.isometric.clientState.playMode) return;
+        if (gamestream.isometric.client.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_X,
           srcY: AtlasNode.Spawn_Y,
         );
         break;
       case NodeType.Spawn_Weapon:
-        if (gamestream.isometric.clientState.playMode) return;
+        if (gamestream.isometric.client.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Weapon_X,
           srcY: AtlasNode.Spawn_Weapon_Y,
         );
         break;
       case NodeType.Spawn_Player:
-        if (gamestream.isometric.clientState.playMode) return;
+        if (gamestream.isometric.client.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Player_X,
           srcY: AtlasNode.Spawn_Player_Y,
@@ -894,14 +894,14 @@ class RendererNodes extends IsometricRenderer {
       return;
     }
     renderStandardNode(
-      srcX: gamestream.isometric.clientState.srcXRainLanding,
+      srcX: gamestream.isometric.client.srcXRainLanding,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   static void renderNodeRainFalling() {
     renderStandardNode(
-      srcX: gamestream.isometric.clientState.srcXRainFalling,
+      srcX: gamestream.isometric.client.srcXRainFalling,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }

@@ -61,15 +61,15 @@ extension IsometricActions on Isometric {
   }
 
   void actionSetModePlay(){
-    clientState.edit.value = false;
+    client.edit.value = false;
   }
 
   void actionSetModeEdit(){
-    clientState.edit.value = true;
+    client.edit.value = true;
   }
 
   void actionToggleEdit() {
-    clientState.edit.value = !clientState.edit.value;
+    client.edit.value = !client.edit.value;
   }
 
   void messageBoxToggle(){
@@ -85,7 +85,7 @@ extension IsometricActions on Isometric {
   }
 
   void toggleDebugMode(){
-    clientState.debugMode.value = !clientState.debugMode.value;;
+    client.debugMode.value = !client.debugMode.value;;
   }
 
   void toggleZoom(){
