@@ -22,6 +22,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponType: ItemType.Weapon_Ranged_Handgun,
       team: MmoTeam.Human,
       damage: 1,
+      weaponRange: 200,
       interact: (player) {
         player.talk("Hello there");
       }
@@ -48,7 +49,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     if (character is MMONpc) {
       if (character.timerUpdateTarget-- <= 0){
         character.target = findNearestEnemy(character, radius: character.viewRange);
-        character.timerUpdateTarget = character.timerUpdateTargetDuration;
+        character.timerUpdateTarget = character.refreshRateTarget;
       }
     }
   }

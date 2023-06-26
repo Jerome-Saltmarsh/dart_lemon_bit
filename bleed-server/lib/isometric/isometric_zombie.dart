@@ -12,7 +12,6 @@ class IsometricZombie extends IsometricCharacter {
 
   final IsometricGame game;
 
-
   IsometricZombie({
     required this.game,
     required super.health,
@@ -27,6 +26,7 @@ class IsometricZombie extends IsometricCharacter {
   }) : super(
     characterType: CharacterType.Zombie,
     weaponType: ItemType.Empty,
+    weaponRange: 20,
   );
 
   bool get shouldRefreshTarget => targetIsNull || _refreshTargetTimer-- <= 0;

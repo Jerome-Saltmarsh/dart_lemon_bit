@@ -54,6 +54,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     required int weaponType,
     required int team,
     required int damage,
+    required double weaponRange,
     double x = 0,
     double y = 0,
     double z = 0,
@@ -66,6 +67,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   ) {
     maxHealth = health;
     this.weaponType = weaponType;
+    this.weaponRange = weaponRange;
     this.characterType = characterType;
     this.health = health;
     this.team = team;

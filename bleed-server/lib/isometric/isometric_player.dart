@@ -55,6 +55,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     health: 10,
     team: 0,
     weaponType: 0,
+    weaponRange: 20,
     damage: 1,
   ){
     writeGameType();

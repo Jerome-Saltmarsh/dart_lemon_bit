@@ -6,7 +6,7 @@ class MMONpc extends IsometricCharacterTemplate {
 
   var viewRange = 400.0;
   var timerUpdateTarget = 0;
-  var timerUpdateTargetDuration = 200;
+  var refreshRateTarget = 100;
 
   Function(MmoPlayer player)? interact;
 
@@ -15,6 +15,7 @@ class MMONpc extends IsometricCharacterTemplate {
     required super.weaponType,
     required super.team,
     required super.damage,
+    required super.weaponRange,
     required super.x,
     required super.y,
     required super.z,

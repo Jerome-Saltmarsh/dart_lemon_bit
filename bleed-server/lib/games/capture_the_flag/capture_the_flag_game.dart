@@ -759,6 +759,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     ItemType.Weapon_Ranged_Sniper_Rifle: 350,
   }[weaponType] ?? (throw Exception('getWeaponTypeRange(${ItemType.getName(weaponType)})'));
 
+  int getWeaponTypeDamage(int weaponType) => const <int, int>{
+    ItemType.Weapon_Melee_Sword: 2,
+  }[weaponType] ?? 1;
+
   @override
   int getExperienceForLevel(int level){
     return level * 3;

@@ -57,6 +57,7 @@ class CombatZombie extends IsometricCharacter {
       health: health,
       team: team,
       weaponType: weaponType,
+      weaponRange: 20.0,
       damage: damage,
   ) {
     clearDest();

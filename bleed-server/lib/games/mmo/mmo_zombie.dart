@@ -19,6 +19,7 @@ class MMOZombie extends IsometricCharacter {
       characterType: CharacterType.Zombie,
       team: MmoTeam.Alien,
       weaponType: ItemType.Empty,
+      weaponRange: 20.0,
   );
 
   @override
