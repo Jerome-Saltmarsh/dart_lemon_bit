@@ -1624,12 +1624,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacter(IsometricCharacter character) {
 
-    // TODO Improve Logic
-    if (character is T) {
-      updatePlayer(character);
-      customUpdatePlayer(character);
-    }
-
     if (character.dead) return;
     if (!character.active) return;
 
@@ -1675,6 +1669,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       updateCharacterPath(
         character: character,
       );
+    }
+
+    if (character is T) {
+      updatePlayer(character);
+      customUpdatePlayer(character);
     }
 
     character.customOnUpdate();

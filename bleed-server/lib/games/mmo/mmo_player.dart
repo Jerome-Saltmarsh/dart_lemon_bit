@@ -42,6 +42,7 @@ class MmoPlayer extends IsometricPlayer {
   void onMouseLeftClicked() {
     if (aimTarget == null) {
       clearTarget();
+      clearPath();
       setDestinationToMouse();
     } else {
       setTargetToAimTarget();
