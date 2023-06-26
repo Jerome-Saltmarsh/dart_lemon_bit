@@ -847,7 +847,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void onGridChanged() {
-    scene.refreshGridMetrics();
+    scene.refreshMetrics();
     for (final player in players) {
       player.writeGrid();
     }

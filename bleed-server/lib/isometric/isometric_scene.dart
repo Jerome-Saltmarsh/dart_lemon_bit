@@ -49,11 +49,13 @@ class IsometricScene {
     required this.spawnPointTypes,
     required this.spawnPointsPlayers,
   }) {
-    refreshGridMetrics();
+    refreshMetrics();
   }
 
-  void refreshGridMetrics(){
-    path = Int32List(nodeTypes.length);
+  void refreshMetrics(){
+    if (path.length != nodeTypes.length){
+      path = Int32List(nodeTypes.length);
+    }
     gridArea = gridRows * gridColumns;
     gridVolume = gridHeight * gridArea;
     gridRowLength = gridRows * Node_Size;
@@ -76,15 +78,13 @@ class IsometricScene {
     return (z * gridArea) + (row * gridColumns) + column;
   }
 
-  bool outOfBounds(int z, int row, int column){
-     if (z < 0) return true;
-     if (row < 0) return true;
-     if (column < 0) return true;
-     if (z >= gridHeight) return true;
-     if (row >= gridRows) return true;
-     if (column >= gridColumns) return true;
-     return false;
-  }
+  bool outOfBounds(int z, int row, int column) =>
+        z < 0 ||
+        row < 0 ||
+        column < 0 ||
+        z >= gridHeight ||
+        row >= gridRows ||
+        column >= gridColumns;
 
   bool inboundsV3(IsometricPosition v3) => inboundsXYZ(v3.x, v3.y, v3.z);
 
