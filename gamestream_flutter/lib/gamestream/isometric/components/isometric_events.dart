@@ -366,7 +366,7 @@ class IsometricEvents {
 
   void onChangedEdit(bool value) {
     if (value) {
-      gamestream.isometric.camera.setModeFree();
+      gamestream.isometric.camera.followTarget.setFalse();
       gamestream.isometric.editor.cursorSetToPlayer();
       gamestream.isometric.camera.centerOnChaseTarget();
       gamestream.isometric.player.message.value = '-press arrow keys to move\n\n-press tab to play';
@@ -374,7 +374,7 @@ class IsometricEvents {
     } else {
       gamestream.isometric.editor.deselectGameObject();
       gamestream.isometric.ui.mouseOverDialog.setFalse();
-      gamestream.isometric.camera.setModeChase();
+      gamestream.isometric.camera.followTarget.setTrue();
       if (gamestream.isometric.server.sceneEditable.value){
         gamestream.isometric.player.message.value = 'press tab to edit';
       }

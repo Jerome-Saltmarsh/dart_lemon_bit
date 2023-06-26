@@ -26,6 +26,9 @@ class IsometricCamera {
     if (!followTarget.value) {
       const padding = 200.0;
       const speed = 6.0;
+
+      if (gamestream.isometric.ui.mouseOverDialog.value) return;
+
       if (engine.mousePositionX < padding){
          engine.cameraX -= speed;
       }
@@ -55,14 +58,6 @@ class IsometricCamera {
         target.renderY + translateY,
         chaseStrength,
     );
-  }
-
-  void setModeFree(){
-    followTarget.value = false;
-  }
-
-  void setModeChase(){
-    followTarget.value = true;
   }
 
   void cameraSetPositionGrid(int row, int column, int z){
