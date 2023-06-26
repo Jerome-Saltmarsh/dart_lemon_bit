@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';

@@ -2,22 +2,14 @@
 
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_debug.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 import 'ui/game_isometric_minimap.dart';
 import 'classes/isometric_particles.dart';
-import 'components/isometric_ui.dart';
 import 'components/render/renderer_gameobjects.dart';
 import 'components/render/renderer_particles.dart';
-import 'components/isometric_camera.dart';
-import 'components/isometric_client_state.dart';
-import 'components/isometric_editor.dart';
-import 'components/isometric_events.dart';
-import 'components/isometric_nodes.dart';
-import 'components/isometric_player.dart';
-import 'components/isometric_server.dart';
-import 'components/isometric_render.dart';
+import 'components/src.dart';
 
 class Isometric {
   final debug = IsometricDebug();
