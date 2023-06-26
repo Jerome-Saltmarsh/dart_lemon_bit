@@ -833,6 +833,12 @@ class WebSocketConnection with ByteReader {
         debugCharacter.clearTarget();
         debugCharacter.pathTargetIndex = player.mouseGridIndex;
         break;
+
+      case IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null) return;
+        debugCharacter.autoTargetNearbyEnemies = !debugCharacter.autoTargetNearbyEnemies;
+        break;
     }
   }
 }

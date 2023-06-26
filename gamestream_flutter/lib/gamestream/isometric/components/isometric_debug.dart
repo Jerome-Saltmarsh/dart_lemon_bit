@@ -77,7 +77,9 @@ class IsometricDebug {
                   buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
                   buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
                   buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
-                  buildRowWatchBool(text: 'auto-attack-nearby-enemies', watch: autoAttackNearbyEnemies),
+                  onPressed(
+                      action: isometric.debugCharacterToggleAutoAttack,
+                      child: buildRowWatchBool(text: 'auto-attack-nearby-enemies', watch: autoAttackNearbyEnemies)),
                   buildTarget(),
                 ],
               ),

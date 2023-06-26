@@ -119,6 +119,9 @@ class Isometric {
   void DebugCharacterWalkToMouse() =>
       request(IsometricRequest.Debug_Character_Walk_To_Mouse);
 
+  void debugCharacterToggleAutoAttack() =>
+      request(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
+
   void request(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,
