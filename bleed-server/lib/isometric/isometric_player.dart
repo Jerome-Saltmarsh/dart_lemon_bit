@@ -730,6 +730,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeInt16(selectedCharacter.runY.toInt());
     writeCharacterPath(selectedCharacter);
 
+    writeByte(selectedCharacter.characterType);
     writeByte(selectedCharacter.state);
     writeUInt16(selectedCharacter.stateDuration);
     writeUInt16(selectedCharacter.stateDurationRemaining);

@@ -27,6 +27,7 @@ class IsometricDebug {
   final targetY = Watch(0.0);
   final targetZ = Watch(0.0);
 
+  final characterType = Watch(0);
   final characterState = Watch(0);
   final characterStateDuration = Watch(0);
   final characterStateDurationRemaining = Watch(0);
@@ -62,13 +63,14 @@ class IsometricDebug {
                           watch: isometric.camera.followTarget,
                       ),
                   ),
-                  buildRowWatchString(text: 'type', watch: runTimeType),
+                  buildRowWatchString(text: 'runtime-type', watch: runTimeType),
                   buildRowWatchDouble(text: 'x', watch: x, ),
                   buildRowWatchDouble(text: 'y', watch: y),
                   buildRowWatchDouble(text: 'z', watch: z),
                   buildRowWatchInt(text: 'path-index', watch: pathIndex),
                   buildRowWatchInt(text: 'path-end', watch: pathEnd),
                   buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
+                  buildRow(text: 'character-type', value: buildWatch(characterType, (t) => buildText(CharacterType.getName(t)))),
                   buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
                   buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
                   buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),

@@ -15,7 +15,6 @@ alt + m             : go to declaration
   [ ] 3D Model alien creature
   [ ] destructable structures
   [ ] pathfinding 3d
-  [x] implement pathfinding for isometric zombie
 
 [CAPTURE THE FLAG]
   [ ] destroyable terrain
@@ -23,7 +22,8 @@ alt + m             : go to declaration
   [ ] power silence
   [ ] capture the flag player slowable
 
-[COMPLETED] - 22.06.2023
+[COMPLETED]
+[x] implement pathfinding for isometric zombie
 [x] improved pathfinding and removed recursion
 [x] separate flag spawn location
 [x] ai weapons

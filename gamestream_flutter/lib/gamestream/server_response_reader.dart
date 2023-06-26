@@ -812,6 +812,7 @@ extension ServerResponseReader on Gamestream {
           debug.path[i] = readUInt16();
         }
 
+        debug.characterType.value = readByte();
         debug.characterState.value = readByte();
         debug.characterStateDuration.value = readUInt16();
         debug.characterStateDurationRemaining.value = readUInt16();
