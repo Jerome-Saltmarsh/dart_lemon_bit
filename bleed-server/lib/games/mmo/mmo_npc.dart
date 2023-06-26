@@ -4,6 +4,10 @@ import 'package:bleed_server/isometric/isometric_character_template.dart';
 
 class MMONpc extends IsometricCharacterTemplate {
 
+  var viewRange = 400.0;
+  var timerUpdateTarget = 0;
+  var timerUpdateTargetDuration = 200;
+
   Function(MmoPlayer player)? interact;
 
   MMONpc({
@@ -16,11 +20,4 @@ class MMONpc extends IsometricCharacterTemplate {
     required super.z,
     this.interact,
   });
-
-  @override
-  void customOnUpdate() {
-    super.customOnUpdate();
-
-    
-  }
 }

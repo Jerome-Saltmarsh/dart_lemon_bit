@@ -27,8 +27,6 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       }
     ));
 
-    // characters.add(MMOZombie(game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
-
     characters.add(IsometricZombie(team: MmoTeam.Alien, game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
   }
 
@@ -42,6 +40,18 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   int get maxPlayers => 64;
+
+  @override
+  void updateCharacter(IsometricCharacter character) {
+    super.updateCharacter(character);
+
+    if (character is MMONpc) {
+      if (character.timerUpdateTarget-- <= 0){
+        character.target = findNearestEnemy(character, radius: character.viewRange);
+        character.timerUpdateTarget = character.timerUpdateTargetDuration;
+      }
+    }
+  }
 
   @override
   void onPlayerUpdateRequestReceived({
