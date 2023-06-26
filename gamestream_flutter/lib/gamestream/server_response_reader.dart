@@ -796,20 +796,19 @@ extension ServerResponseReader on Gamestream {
         if (!debug.characterSelected.value)
           return;
 
-        debug.characterSelectedRuntimeType.value = readString();
-        debug.characterSelectedX.value = readDouble();
-        debug.characterSelectedY.value = readDouble();
-        debug.characterSelectedZ.value = readDouble();
-        debug.character.x = debug.characterSelectedX.value;
-        debug.character.y = debug.characterSelectedY.value;
-        debug.character.z = debug.characterSelectedZ.value;
-        debug.characterSelectedDestinationX.value = readDouble();
-        debug.characterSelectedDestinationY.value = readDouble();
-        debug.characterSelectedPathIndex.value = readInt16();
-        final pathEnd = readInt16();
-        debug.characterSelectedPathEnd.value = pathEnd;
-        for (var i = 0; i < pathEnd; i++){
-          debug.characterSelectedPath[i] = readUInt16();
+        debug.runTimeType.value = readString();
+        debug.x.value = readDouble();
+        debug.y.value = readDouble();
+        debug.z.value = readDouble();
+        debug.character.x = debug.x.value;
+        debug.character.y = debug.y.value;
+        debug.character.z = debug.z.value;
+        debug.destinationX.value = readDouble();
+        debug.destinationY.value = readDouble();
+        debug.pathIndex.value = readInt16();
+        debug.pathEnd.value = readInt16();
+        for (var i = 0; i < debug.pathEnd.value; i++) {
+          debug.path[i] = readUInt16();
         }
 
         debug.characterState.value = readByte();
@@ -822,20 +821,13 @@ extension ServerResponseReader on Gamestream {
         debug.weaponState.value = readByte();
         debug.weaponStateDuration.value = readUInt16();
 
-        final characterSelectedIsAI = readBool();
-        debug.characterSelectedIsAI.value = characterSelectedIsAI;
-        if (characterSelectedIsAI) {
-          debug.characterSelectedAIDecision.value = readCaptureTheFlagAIDecision();
-          debug.characterSelectedAIRole.value = readCaptureTheFlagAIRole();
-        }
-
         final characterSelectedTarget = readBool();
-        debug.characterSelectedTarget.value = characterSelectedTarget;
+        debug.targetSet.value = characterSelectedTarget;
         if (!characterSelectedTarget) return;
-        debug.characterSelectedTargetType.value = readString();
-        debug.characterSelectedTargetX.value = readDouble();
-        debug.characterSelectedTargetY.value = readDouble();
-        debug.characterSelectedTargetZ.value = readDouble();
+        debug.targetType.value = readString();
+        debug.targetX.value = readDouble();
+        debug.targetY.value = readDouble();
+        debug.targetZ.value = readDouble();
         break;
     }
   }

@@ -10,24 +10,23 @@ import 'isometric_render.dart';
 class IsometricDebug {
   final character = IsometricCharacter();
   final characterSelected = Watch(false);
-  final characterSelectedIsAI = Watch(false);
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
-  final characterSelectedDestinationX = Watch(0.0);
-  final characterSelectedDestinationY = Watch(0.0);
-  final characterSelectedX = Watch(0.0);
-  final characterSelectedY = Watch(0.0);
-  final characterSelectedZ = Watch(0.0);
-  final characterSelectedRuntimeType = Watch('');
-  final characterSelectedPath = Uint16List(500);
-  final characterSelectedPathIndex = Watch(0);
-  final characterSelectedPathEnd = Watch(0);
+  final destinationX = Watch(0.0);
+  final destinationY = Watch(0.0);
+  final x = Watch(0.0);
+  final y = Watch(0.0);
+  final z = Watch(0.0);
+  final runTimeType = Watch('');
+  final path = Uint16List(500);
+  final pathIndex = Watch(0);
+  final pathEnd = Watch(0);
   final characterSelectedPathRender = WatchBool(true);
-  final characterSelectedTarget = Watch(false);
-  final characterSelectedTargetType = Watch('');
-  final characterSelectedTargetX = Watch(0.0);
-  final characterSelectedTargetY = Watch(0.0);
-  final characterSelectedTargetZ = Watch(0.0);
+  final targetSet = Watch(false);
+  final targetType = Watch('');
+  final targetX = Watch(0.0);
+  final targetY = Watch(0.0);
+  final targetZ = Watch(0.0);
   final characterSelectedTargetRenderLine = WatchBool(true);
 
   final characterState = Watch(0);
@@ -60,12 +59,12 @@ class IsometricDebug {
                 ],
               ),
               height8,
-              buildWatchString(text: 'type', watch: characterSelectedRuntimeType),
-              buildWatchDouble(text: 'x', watch: characterSelectedX, ),
-              buildWatchDouble(text: 'y', watch: characterSelectedY),
-              buildWatchDouble(text: 'z', watch: characterSelectedZ),
-              buildWatchInt(text: 'path-index', watch: characterSelectedPathIndex),
-              buildWatchInt(text: 'path-end', watch: characterSelectedPathEnd),
+              buildWatchString(text: 'type', watch: runTimeType),
+              buildWatchDouble(text: 'x', watch: x, ),
+              buildWatchDouble(text: 'y', watch: y),
+              buildWatchDouble(text: 'z', watch: z),
+              buildWatchInt(text: 'path-index', watch: pathIndex),
+              buildWatchInt(text: 'path-end', watch: pathEnd),
               buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
               buildWatchInt(text: 'character-state-duration', watch: characterStateDuration),
               buildWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
@@ -75,7 +74,7 @@ class IsometricDebug {
               buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
               buildWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
               height2,
-              WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
+              WatchBuilder(targetSet, (characterSelectedTarget){
                 if (!characterSelectedTarget) return nothing;
                 return Container(
                   color: Colors.white12,
@@ -84,10 +83,10 @@ class IsometricDebug {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildText('TARGET'),
-                      WatchBuilder(characterSelectedTargetType, (type) => buildText('type: $type')),
-                      WatchBuilder(characterSelectedTargetX, (x) => buildText('x: ${x.toInt()}')),
-                      WatchBuilder(characterSelectedTargetY, (y) => buildText('y: ${y.toInt()}')),
-                      WatchBuilder(characterSelectedTargetZ, (z) => buildText('z: ${z.toInt()}')),
+                      WatchBuilder(targetType, (type) => buildText('type: $type')),
+                      WatchBuilder(targetX, (x) => buildText('x: ${x.toInt()}')),
+                      WatchBuilder(targetY, (y) => buildText('y: ${y.toInt()}')),
+                      WatchBuilder(targetZ, (z) => buildText('z: ${z.toInt()}')),
                     ],
                   ),
                 );
@@ -100,49 +99,49 @@ class IsometricDebug {
     if (!characterSelected.value) return;
 
     renderer.renderCircle(
-      characterSelectedX.value,
-      characterSelectedY.value,
-      characterSelectedZ.value,
+      x.value,
+      y.value,
+      z.value,
       40,
     );
 
-    if (characterSelectedTarget.value &&
+    if (targetSet.value &&
         characterSelectedTargetRenderLine.value
     ) {
       renderer.renderLine(
-        characterSelectedX.value,
-        characterSelectedY.value,
-        characterSelectedZ.value,
-        characterSelectedTargetX.value,
-        characterSelectedTargetY.value,
-        characterSelectedTargetZ.value,
+        x.value,
+        y.value,
+        z.value,
+        targetX.value,
+        targetY.value,
+        targetZ.value,
       );
     }
 
     if (characterSelectedPathRender.value ){
       engine.setPaintColor(Colors.blue);
       renderPath(
-        path: characterSelectedPath,
+        path: path,
         start: 0,
-        end: characterSelectedPathIndex.value,
+        end: pathIndex.value,
       );
 
       engine.setPaintColor(Colors.yellow);
       renderPath(
-        path: characterSelectedPath,
-        start: characterSelectedPathIndex.value,
-        end: characterSelectedPathEnd.value,
+        path: path,
+        start: pathIndex.value,
+        end: pathEnd.value,
       );
     }
 
     engine.setPaintColor(Colors.deepPurpleAccent);
     renderer.renderLine(
-      characterSelectedX.value,
-      characterSelectedY.value,
-      characterSelectedZ.value,
-      characterSelectedDestinationX.value,
-      characterSelectedDestinationY.value,
-      characterSelectedZ.value,
+      x.value,
+      y.value,
+      z.value,
+      destinationX.value,
+      destinationY.value,
+      z.value,
     );
   }
 

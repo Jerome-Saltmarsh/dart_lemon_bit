@@ -742,13 +742,13 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(selectedCharacter.weaponState);
     writeUInt16(selectedCharacter.weaponStateDuration);
 
-    if (selectedCharacter is CaptureTheFlagAI){
-      writeBool(true);
-      writeByte(selectedCharacter.decision.index);
-      writeByte(selectedCharacter.role.index);
-    } else {
-      writeBool(false);
-    }
+    // if (selectedCharacter is CaptureTheFlagAI){
+    //   writeBool(true);
+    //   writeByte(selectedCharacter.decision.index);
+    //   writeByte(selectedCharacter.role.index);
+    // } else {
+    //   writeBool(false);
+    // }
 
     final selectedCharacterTarget = selectedCharacter.target;
     if (selectedCharacterTarget == null){
