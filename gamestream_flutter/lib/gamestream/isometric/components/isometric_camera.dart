@@ -23,7 +23,24 @@ class IsometricCamera {
   void centerOnV3(IsometricPosition v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
-    if (!followTarget.value) return;
+    if (!followTarget.value) {
+      const padding = 200.0;
+      const speed = 6.0;
+      if (engine.mousePositionX < padding){
+         engine.cameraX -= speed;
+      }
+      if (engine.mousePositionX > engine.screen.width - padding){
+        engine.cameraX += speed;
+      }
+      if (engine.mousePositionY < padding){
+         engine.cameraY -= speed;
+      }
+      if (engine.mousePositionY > engine.screen.height - padding){
+        engine.cameraY += speed;
+      }
+
+      return;
+    }
 
     final target = this.target;
     if (target == null) return;
