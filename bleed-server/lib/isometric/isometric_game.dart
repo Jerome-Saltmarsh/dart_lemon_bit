@@ -1644,36 +1644,39 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.target = findNearestEnemy(character, radius: character.autoTargetRange);
     }
 
-    if (character.pathIndex >= 0){
-      setDestinationToPathNodeIndex(character);
-    }
+    if (character.pathFindingEnabled) {
 
-    if (!character.deadBusyOrWeaponStateBusy && !character.runDestinationWithinRadiusRunSpeed){
-      character.runToDestination();
-    } else {
-      character.setCharacterStateIdle();
-    }
-
-    final target = character.target;
-
-    if (target != null) {
-
-      if (character.targetWithinRadius(Node_Size)) {
-        character.setDestinationToTarget();
+      if (character.pathIndex >= 0){
+        setDestinationToPathNodeIndex(character);
+      }
+      if (!character.deadBusyOrWeaponStateBusy && !character.runDestinationWithinRadiusRunSpeed){
+        character.runToDestination();
+      } else {
+        character.setCharacterStateIdle();
       }
 
-      if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
-        character.attackTargetEnemy(this);
+      final target = character.target;
+
+      if (target != null) {
+
+        if (character.targetWithinRadius(Node_Size)) {
+          character.setDestinationToTarget();
+        }
+
+        if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
+          character.attackTargetEnemy(this);
+        }
+
+        character.pathTargetIndex = scene.getNodeIndexV3(target);
       }
 
-      character.pathTargetIndex = scene.getNodeIndexV3(target);
+      if (character.shouldUpdatePath){
+        updateCharacterPath(
+          character: character,
+        );
+      }
     }
 
-    if (character.shouldUpdatePath){
-      updateCharacterPath(
-        character: character,
-      );
-    }
 
     if (character is T) {
       updatePlayer(character);

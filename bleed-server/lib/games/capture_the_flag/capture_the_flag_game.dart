@@ -637,6 +637,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         : CaptureTheFlagTeam.Blue;
 
     player.moveTo(getBaseOwn(player));
+    player.setDestinationToCurrentPosition();
 
     if (player.team == CaptureTheFlagTeam.Blue) {
       player.legsType = ItemType.Legs_Blue;
