@@ -22,6 +22,11 @@ abstract class IsometricCharacter extends IsometricCollider {
   var _weaponType = ItemType.Empty;
   var _characterType = 0;
 
+  var autoTargetNearbyEnemies = true;
+  var autoTargetRange = 300.0;
+  var autoTargetTimer = 0;
+  var autoTargetTimerDuration = 100;
+
   var weaponDamage = 1;
   var weaponRange = 20.0;
   var weaponState = WeaponState.Idle;

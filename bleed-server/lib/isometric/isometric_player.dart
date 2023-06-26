@@ -47,6 +47,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   IsometricPlayer({
     required this.game,
+    bool autoTargetNearbyEnemies = false,
   }) : super(
     x: 0,
     y: 0,
@@ -57,6 +58,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     weaponRange: 20,
     damage: 1,
   ){
+    this.autoTargetNearbyEnemies = autoTargetNearbyEnemies;
     writeGameType();
     writePlayerTeam();
     id = game.playerId++;

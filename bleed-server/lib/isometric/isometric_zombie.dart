@@ -5,12 +5,12 @@ import 'package:lemon_math/functions/give_or_take.dart';
 
 class IsometricZombie extends IsometricCharacter {
 
-  var _refreshTargetTimer = 0;
+  // var _refreshTargetTimer = 0;
   var _nextWander = 0;
 
-  double viewRadius;
-  int refreshTargetDuration;
-  int refreshDurationWander;
+  // double viewRadius;
+  // int refreshTargetDuration;
+  // int refreshDurationWander;
 
   final IsometricGame game;
 
@@ -22,16 +22,16 @@ class IsometricZombie extends IsometricCharacter {
     required super.x,
     required super.y,
     required super.z,
-    this.viewRadius = 500,
-    this.refreshTargetDuration = 100,
-    this.refreshDurationWander = 500,
+    // this.viewRadius = 500,
+    // this.refreshTargetDuration = 100,
+    // this.refreshDurationWander = 500,
   }) : super(
     characterType: CharacterType.Zombie,
     weaponType: ItemType.Empty,
     weaponRange: 20,
   );
 
-  bool get shouldRefreshTarget => targetIsNull || _refreshTargetTimer-- <= 0;
+  // bool get shouldRefreshTarget => targetIsNull || _refreshTargetTimer-- <= 0;
 
   bool get shouldRunToTarget => target != null;
 
@@ -48,9 +48,9 @@ class IsometricZombie extends IsometricCharacter {
       applyHitToTarget();
     }
 
-    if (shouldRefreshTarget) {
-      refreshTarget();
-    }
+    // if (shouldRefreshTarget) {
+    //   refreshTarget();
+    // }
 
     if (targetWithinAttackRange){
       attackTarget();
@@ -83,10 +83,10 @@ class IsometricZombie extends IsometricCharacter {
     );
   }
 
-  void refreshTarget() {
-    target = game.findNearestEnemy(this, radius: viewRadius);
-    _refreshTargetTimer = refreshTargetDuration;
-  }
+  // void refreshTarget() {
+  //   target = game.findNearestEnemy(this, radius: viewRadius);
+  //   _refreshTargetTimer = refreshTargetDuration;
+  // }
 
   void attackTarget() {
     final target = this.target;

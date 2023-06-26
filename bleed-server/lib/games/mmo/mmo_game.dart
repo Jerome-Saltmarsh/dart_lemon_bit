@@ -69,17 +69,17 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   @override
   int get maxPlayers => 64;
 
-  @override
-  void updateCharacter(IsometricCharacter character) {
-    super.updateCharacter(character);
-
-    if (character is MMONpc) {
-      if (character.timerUpdateTarget-- <= 0){
-        character.target = findNearestEnemy(character, radius: character.viewRange);
-        character.timerUpdateTarget = character.refreshRateTarget;
-      }
-    }
-  }
+  // @override
+  // void updateCharacter(IsometricCharacter character) {
+  //   super.updateCharacter(character);
+  //
+  //   if (character is MMONpc) {
+  //     if (character.timerUpdateTarget-- <= 0){
+  //       character.target = findNearestEnemy(character, radius: character.viewRange);
+  //       character.timerUpdateTarget = character.refreshRateTarget;
+  //     }
+  //   }
+  // }
 
   @override
   void onPlayerUpdateRequestReceived({

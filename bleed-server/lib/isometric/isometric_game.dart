@@ -1631,9 +1631,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!character.isPlayer) {
       character.lookRadian = character.faceAngle;
     }
-
-    final target = character.target;
-
     if (character.pathIndex >= 0 && getNodeIndexV3(character) == character.pathNodeIndex){
       character.pathIndex--;
     }
@@ -1641,6 +1638,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.update();
     updateColliderPhysics(character);
     updateCharacterState(character);
+
+    if (character.autoTargetNearbyEnemies && character.autoTargetTimer-- <= 0){
+      character.autoTargetTimer = character.autoTargetTimerDuration;
+      character.target = findNearestEnemy(character, radius: character.autoTargetRange);
+    }
 
     if (character.pathIndex >= 0){
       setDestinationToPathNodeIndex(character);
@@ -1651,6 +1653,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     } else {
       character.setCharacterStateIdle();
     }
+
+    final target = character.target;
 
     if (target != null) {
 

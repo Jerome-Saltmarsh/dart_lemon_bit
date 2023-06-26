@@ -4,9 +4,9 @@ import 'package:bleed_server/isometric/isometric_character_template.dart';
 
 class MMONpc extends IsometricCharacterTemplate {
 
-  var viewRange = 400.0;
-  var timerUpdateTarget = 0;
-  var refreshRateTarget = 100;
+  // var viewRange = 400.0;
+  // var timerUpdateTarget = 0;
+  // var refreshRateTarget = 100;
 
   Function(MmoPlayer player)? interact;
 
