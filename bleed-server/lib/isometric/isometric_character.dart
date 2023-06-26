@@ -476,5 +476,10 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
+  void faceTarget() {
+    final target = this.target;
+    if (target == null) return;
+    face(target);
+  }
 
 }

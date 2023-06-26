@@ -139,7 +139,19 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     }
 
     decision = getDecision();
-    target = getTarget();
+    final target = getTarget();
+    this.target = target;
+
+    if (target is CaptureTheFlagGameObjectFlag) {
+      if (target.statusDropped) {
+        if (targetWithinRadius(Node_Size)){
+          faceTarget();
+          setCharacterStateRunning();
+        }
+      }
+    }
+
+
   }
 
   IsometricPosition? getTarget() {
