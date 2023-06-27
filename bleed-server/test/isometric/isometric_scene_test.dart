@@ -7,6 +7,23 @@ import 'package:test/test.dart';
 
 void main() {
 
+  IsometricScene createScene({
+    required int height,
+    required int rows,
+    required int columns,
+  }) => IsometricScene(
+      name: ' ',
+      nodeTypes: Uint8List(height * rows * columns),
+      nodeOrientations: Uint8List(height * rows * columns),
+      gridHeight: height,
+      gridRows: rows,
+      gridColumns: columns,
+      gameObjects: [],
+      spawnPoints: Uint16List(0),
+      spawnPointTypes: Uint16List(0),
+      spawnPointsPlayers: Uint16List(0),
+    );
+
   void testFindPath({
     required IsometricScene scene,
     required int start,
@@ -33,21 +50,8 @@ void main() {
     final rows = 10;
     final columns = 10;
     final height = 2;
-    final volume = rows * columns * height;
 
-    final scene = IsometricScene(
-      name: ' ',
-      nodeTypes: Uint8List(volume),
-      nodeOrientations: Uint8List(volume),
-      gridHeight: height,
-      gridRows: rows,
-      gridColumns: columns,
-      gameObjects: [],
-      spawnPoints: Uint16List(0),
-      spawnPointTypes: Uint16List(0),
-      spawnPointsPlayers: Uint16List(0),
-    );
-
+    final scene = createScene(height: height, rows: rows, columns: columns);
 
     assignGrassFloor(scene);
     scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
@@ -65,20 +69,8 @@ void main() {
     final rows = 10;
     final columns = 10;
     final height = 3;
-    final volume = rows * columns * height;
 
-    final scene = IsometricScene(
-      name: ' ',
-      nodeTypes: Uint8List(volume),
-      nodeOrientations: Uint8List(volume),
-      gridHeight: height,
-      gridRows: rows,
-      gridColumns: columns,
-      gameObjects: [],
-      spawnPoints: Uint16List(0),
-      spawnPointTypes: Uint16List(0),
-      spawnPointsPlayers: Uint16List(0),
-    );
+    final scene = createScene(height: height, rows: rows, columns: columns);
 
     assignGrassFloor(scene);
 
@@ -96,7 +88,7 @@ void main() {
 
     testFindPath(
         scene: scene,
-        start: scene.getIndex(1, 3, 8),
+        start: scene.getIndex(1, 8, 8),
         end: scene.getIndex(2, 3, 3),
     );
   });
