@@ -211,7 +211,6 @@ class IsometricScene {
       final column = getColumn(currentIndex);
 
       final targetDirection = convertToDirection(targetRow - row, targetColumn - column);
-      // final targetDirectionV = convertToDirectionVertical(targetZ - z);
       final backwardDirection = (targetDirection + 4) % 8;
 
       visit(
@@ -248,6 +247,9 @@ class IsometricScene {
     required int column,
     required int fromIndex,
   }) {
+
+    // print("visit(z: $z, row: $row, column: $column, fromZ: ${getZ(fromIndex)}, fromRow: ${getRow(fromIndex)}, fromColumn: ${getColumn(fromIndex)}");
+
     if (outOfBounds(z, row, column) || z <= 0)
       return;
 
@@ -322,15 +324,23 @@ class IsometricScene {
         return;
       }
     } else {
-      path[index] = fromIndex;
-      visitHistory[visitHistoryIndex++] = index;
-      visitStackIndex++;
-      visitStack[visitStackIndex] = index;
+
+      addToStack(index, fromIndex);
+
+      // assert (path[index] == Not_Visited);
+      // assert (index != fromIndex);
+      // path[index] = fromIndex;
+      // visitHistory[visitHistoryIndex++] = index;
+      // visitStackIndex++;
+      // visitStack[visitStackIndex] = index;
     }
   }
 
   addToStack(int index, int from){
-    path[index] = index;
+    assert (path[index] == Not_Visited);
+    assert (index != from);
+    // print("addToStack(index: $index, from: $from)");
+    path[index] = from;
     visitHistory[visitHistoryIndex++] = index;
     visitStackIndex++;
     visitStack[visitStackIndex] = index;
@@ -350,7 +360,7 @@ class IsometricScene {
       if (columns < 0)
         return IsometricDirection.South_East;
       if (columns > 0)
-        return IsometricDirection.North_West;
+        return IsometricDirection.South_West;
       return IsometricDirection.South;
     }
 

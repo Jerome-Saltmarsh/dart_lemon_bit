@@ -96,7 +96,7 @@ void main() {
 
     testFindPath(
         scene: scene,
-        start: scene.getIndex(1, 3, 5),
+        start: scene.getIndex(1, 3, 8),
         end: scene.getIndex(2, 3, 3),
     );
   });
