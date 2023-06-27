@@ -6,10 +6,30 @@ import 'package:bleed_server/isometric/src.dart';
 import 'package:test/test.dart';
 
 void main() {
+
+  void testFindPath({
+    required IsometricScene scene,
+    required int start,
+    required int end,
+  }){
+
+    var index = scene.findPath(start, end);
+    expect(index, isNot(start));
+    var length = 0;
+
+    while (index != start){
+      expect(length++, isNot(10000));
+      index = scene.path[index];
+    }
+
+    expect(index, start);
+    print('found: true, length: $length');
+  }
+
   test('find-path-2D', () {
-    final rows = 8;
-    final columns = 8;
-    final height = 1;
+    final rows = 10;
+    final columns = 10;
+    final height = 2;
     final volume = rows * columns * height;
 
     final scene = IsometricScene(
@@ -25,10 +45,16 @@ void main() {
       spawnPointsPlayers: Uint16List(0),
     );
 
-    scene.setNode(0, 2, 2, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(0, 3, 2, NodeType.Grass, NodeOrientation.Solid);
 
-    final path = scene.findPath(scene.getIndex(0, 2, 5), scene.getIndex(0, 3, 1));
+    assignGrassFloor(scene);
+    scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
+
+    testFindPath(
+        scene: scene,
+        start: scene.getIndex(1, 2, 5),
+        end: scene.getIndex(1, 3, 1),
+    );
 
   });
 
@@ -51,11 +77,7 @@ void main() {
       spawnPointsPlayers: Uint16List(0),
     );
 
-    for (var row = 0; row < rows; row++){
-      for (var column = 0; column < columns; column++){
-        scene.setNode(0, row, column, NodeType.Grass, NodeOrientation.Solid);
-      }
-    }
+    assignGrassFloor(scene);
 
     scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
     scene.setNode(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
@@ -69,22 +91,15 @@ void main() {
     scene.setNode(1, 3, 4, NodeType.Grass, NodeOrientation.Solid);
     scene.setNode(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
 
-    final start = scene.getIndex(1, 2, 9);
-    final end = scene.getIndex(2, 3, 3);
-
-    var index = scene.findPath(start, end);
-
-    expect(index, isNot(start));
-
-    var length = 0;
-
-    while (index != start){
-      expect(length++, isNot(1000));
-      index = scene.path[index];
-    }
-
-    assert (index == start);
-
-    print('found: true, length: $length');
+    testFindPath(scene: scene, start: scene.getIndex(1, 2, 9), end: scene.getIndex(2, 3, 3));
   });
 }
+
+void assignGrassFloor(IsometricScene scene) {
+  for (var row = 0; row < scene.gridRows; row++){
+    for (var column = 0; column < scene.gridColumns; column++){
+      scene.setNode(0, row, column, NodeType.Grass, NodeOrientation.Solid);
+    }
+  }
+}
+

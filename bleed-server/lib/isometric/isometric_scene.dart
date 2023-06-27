@@ -211,7 +211,7 @@ class IsometricScene {
       final column = getColumn(currentIndex);
 
       final targetDirection = convertToDirection(targetRow - row, targetColumn - column);
-      final targetDirectionV = convertToDirectionVertical(targetZ - z);
+      // final targetDirectionV = convertToDirectionVertical(targetZ - z);
       final backwardDirection = (targetDirection + 4) % 8;
 
       visit(
@@ -337,25 +337,34 @@ class IsometricScene {
   }
 
   static int convertToDirectionVertical(int value){
-    if (value < 0) return -1;
-    if (value > 0) return 1;
+    if (value < 0)
+      return -1;
+    if (value > 0)
+      return 1;
     return 0;
   }
 
-  static int convertToDirection(int diffRows, int diffCols){
-    if (diffRows > 0) {
-      if (diffCols < 0) return IsometricDirection.South_East;
-      if (diffCols > 0) return IsometricDirection.North_West;
+  static int convertToDirection(int rows, int columns){
+
+    if (rows > 0) {
+      if (columns < 0)
+        return IsometricDirection.South_East;
+      if (columns > 0)
+        return IsometricDirection.North_West;
       return IsometricDirection.South;
     }
 
-    if (diffRows < 0) {
-      if (diffCols < 0) return IsometricDirection.North_East;
-      if (diffCols > 0) return IsometricDirection.North_West;
+    if (rows < 0) {
+      if (columns < 0)
+        return IsometricDirection.North_East;
+      if (columns > 0)
+        return IsometricDirection.North_West;
       return IsometricDirection.North;
     }
 
-    if (diffCols < 0) return IsometricDirection.East;
+    if (columns < 0)
+      return IsometricDirection.East;
+
     return IsometricDirection.West;
   }
 
