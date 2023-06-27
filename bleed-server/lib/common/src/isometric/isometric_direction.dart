@@ -90,24 +90,24 @@ class IsometricDirection {
   }
 
   static int convertToVelocityColumn(int direction) => <int, int> {
-    North: -1,
+    North: 0,
     North_East: -1,
-    East: 0,
-    South_East: 1,
-    South: 1,
+    East: -1,
+    South_East: -1,
+    South: 0,
     South_West: 1,
-    West: 0,
-    North_West: -1,
+    West: 1,
+    North_West: 1,
   }[direction] ?? (throw Exception('IsometricDirection.convertToColumnVelocity2($direction)'));
 
   static int convertToVelocityRow(int direction) => <int, int> {
-        North: 0,
-        North_East: 1,
-        East: 1,
+        North: -1,
+        North_East: -1,
+        East: 0,
         South_East: 1,
-        South: 0,
-        South_West: -1,
-        West: -1,
+        South: 1,
+        South_West: 1,
+        West: 0,
         North_West: -1,
   }[direction] ??
       (throw Exception('IsometricDirection.convertToVelocityRow($direction)'));

@@ -344,19 +344,19 @@ class IsometricScene {
 
   static int convertToDirection(int diffRows, int diffCols){
     if (diffRows > 0) {
-      if (diffCols < 0) return IsometricDirection.North_East;
-      if (diffCols > 0) return IsometricDirection.South_East;
-      return IsometricDirection.East;
+      if (diffCols < 0) return IsometricDirection.South_East;
+      if (diffCols > 0) return IsometricDirection.North_West;
+      return IsometricDirection.South;
     }
 
     if (diffRows < 0) {
-      if (diffCols < 0) return IsometricDirection.North_West;
-      if (diffCols > 0) return IsometricDirection.South_West;
-      return IsometricDirection.West;
+      if (diffCols < 0) return IsometricDirection.North_East;
+      if (diffCols > 0) return IsometricDirection.North_West;
+      return IsometricDirection.North;
     }
 
-    if (diffCols < 0) return IsometricDirection.North;
-    return IsometricDirection.South;
+    if (diffCols < 0) return IsometricDirection.East;
+    return IsometricDirection.West;
   }
 
   bool isPerceptible(IsometricPosition a, IsometricPosition b) {
