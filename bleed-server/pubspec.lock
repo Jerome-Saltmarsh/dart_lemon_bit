@@ -197,10 +197,10 @@ packages:
     dependency: "direct main"
     description:
       name: lemon_math
-      sha256: ce2c7366c997b01556174e6ca18e05129873300a571faba7e38cb7db45d5dc20
+      sha256: aab07ad9a8586887db7669a93c088ac3e279b890da0d564fd27f6c4e6a71dd78
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.17"
+    version: "1.2.18"
   logging:
     dependency: transitive
     description:

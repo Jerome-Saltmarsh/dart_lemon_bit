@@ -359,7 +359,7 @@ class IsometricScene {
 
     shadow.x = vx;
     shadow.y = vy;
-    shadow.z = angle(vx, vy);
+    shadow.z = rad(vx, vy);
   }
 
   int getIndexRow(int index) => (index % area) ~/ totalColumns;

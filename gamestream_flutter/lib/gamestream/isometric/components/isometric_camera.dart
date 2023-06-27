@@ -73,13 +73,13 @@ class IsometricCamera {
   double getMousePlayerRenderDistance(){
     final adjacent = gamestream.isometric.player.renderX - engine.mouseWorldX;
     final opposite = gamestream.isometric.player.renderY - engine.mouseWorldY;
-    return hyp(adjacent, opposite);
+    return hyp2(adjacent, opposite);
   }
 
   static double getMousePlayerAngle(){
     final adjacent = gamestream.isometric.player.renderX - engine.mouseWorldX;
     final opposite = gamestream.isometric.player.renderY - engine.mouseWorldY;
-    return angle(adjacent, opposite);
+    return rad(adjacent, opposite);
   }
 
 }

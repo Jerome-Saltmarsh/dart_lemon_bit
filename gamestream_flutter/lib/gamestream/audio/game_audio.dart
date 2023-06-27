@@ -311,7 +311,7 @@ class GameAudio {
     if (!enabledSound.value) return;
     final distanceX = engine.screenCenterWorldX - x;
     final distanceY = engine.screenCenterWorldY - y;
-    final distance = hyp(distanceX, distanceY);
+    final distance = hyp2(distanceX, distanceY);
     final distanceSqrt = sqrt(distance);
     final distanceSrtClamped = max(distanceSqrt * 0.5, 1);
     audioSingle.play(volume: 1 / distanceSrtClamped);
