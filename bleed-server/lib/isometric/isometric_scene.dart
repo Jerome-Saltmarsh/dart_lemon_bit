@@ -23,11 +23,11 @@ class IsometricScene {
   static var visitHistoryIndex = 0;
   static var visitStackIndex = 0;
 
-  var gridHeight = 0;
-  var gridRows = 0;
-  var gridColumns = 0;
-  var gridVolume = 0;
-  var gridArea = 0;
+  var height = 0;
+  var rows = 0;
+  var columns = 0;
+  var volume = 0;
+  var area = 0;
   var name = "";
 
   Uint16List spawnPoints;
@@ -44,9 +44,9 @@ class IsometricScene {
     required this.name,
     required this.nodeTypes,
     required this.nodeOrientations,
-    required this.gridHeight,
-    required this.gridRows,
-    required this.gridColumns,
+    required this.height,
+    required this.rows,
+    required this.columns,
     required this.gameObjects,
     required this.spawnPoints,
     required this.spawnPointTypes,
@@ -62,11 +62,11 @@ class IsometricScene {
         path[i] = Not_Visited;
       }
     }
-    gridArea = gridRows * gridColumns;
-    gridVolume = gridHeight * gridArea;
-    gridRowLength = gridRows * Node_Size;
-    gridColumnLength = gridColumns * Node_Size;
-    gridHeightLength = gridHeight * Node_Height;
+    area = rows * columns;
+    volume = height * area;
+    gridRowLength = rows * Node_Size;
+    gridColumnLength = columns * Node_Size;
+    gridHeightLength = height * Node_Height;
   }
 
   bool inboundsV3(IsometricPosition v3) => inboundsXYZ(v3.x, v3.y, v3.z);
@@ -146,7 +146,7 @@ class IsometricScene {
   /// WARNING - EXPENSIVE
   List<int> findNodesOfType(int type){
     final values = <int>[];
-    for (var i = 0; i < gridVolume; i++){
+    for (var i = 0; i < volume; i++){
       if (nodeTypes[i] != type) continue;
       values.add(i);
     }
@@ -261,6 +261,7 @@ class IsometricScene {
 
     final indexOrientation = nodeOrientations[index];
 
+
     if (indexOrientation == NodeOrientation.Solid) {
       return;
     }
@@ -277,7 +278,7 @@ class IsometricScene {
           addToStack(index, fromIndex);
           visit(
             z: z + 1,
-            row: row + 1,
+            row: row - 1,
             column: column,
             fromIndex: index,
           );
@@ -326,6 +327,11 @@ class IsometricScene {
     } else {
 
       addToStack(index, fromIndex);
+
+      final indexOrientationBelow = nodeOrientations[index - area];
+      if (indexOrientationBelow == NodeOrientation.None) {
+        visit(z: z - 1, row: row, column: column, fromIndex: index);
+      }
 
       // assert (path[index] == Not_Visited);
       // assert (index != fromIndex);
@@ -443,20 +449,20 @@ class IsometricScene {
 
   int getIndex(int z, int row, int column) {
     assert (!outOfBounds(z, row, column));
-    return (z * gridArea) + (row * gridColumns) + column;
+    return (z * area) + (row * columns) + column;
   }
 
   bool outOfBounds(int z, int row, int column) =>
       z < 0 ||
           row < 0 ||
           column < 0 ||
-          z >= gridHeight ||
-          row >= gridRows ||
-          column >= gridColumns;
+          z >= height ||
+          row >= rows ||
+          column >= columns;
 
-  int getRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
+  int getRow(int nodeIndex) => (nodeIndex % area) ~/ columns;
 
-  int getColumn(int nodeIndex) => (nodeIndex) % gridColumns;
+  int getColumn(int nodeIndex) => (nodeIndex) % columns;
 
-  int getZ(int nodeIndex) => nodeIndex ~/ gridArea;
+  int getZ(int nodeIndex) => nodeIndex ~/ area;
 }

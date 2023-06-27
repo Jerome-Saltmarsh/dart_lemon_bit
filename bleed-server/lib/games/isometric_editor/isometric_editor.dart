@@ -24,8 +24,8 @@ class IsometricEditor extends IsometricGame {
        return;
      }
 
-     for (var row = 0; row < scene.gridRows; row++) {
-        for (var column = 0; column < scene.gridColumns; column++){
+     for (var row = 0; row < scene.rows; row++) {
+        for (var column = 0; column < scene.columns; column++){
           if (isSafeToRevive(row, column)){
             IsometricGame.setGridPosition(position: player, z: 1, row: row, column: column);
             player.writePlayerMoved();
@@ -36,7 +36,7 @@ class IsometricEditor extends IsometricGame {
   }
 
   bool isSafeToRevive(int row, int column) {
-     for (var z = scene.gridHeight - 1; z >= 0; z--){
+     for (var z = scene.height - 1; z >= 0; z--){
        final type = scene.getType(z, row, column);
         if (type == NodeType.Water) return false;
         if (type == NodeType.Water_Flowing) return false;

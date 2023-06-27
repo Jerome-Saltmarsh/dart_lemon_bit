@@ -11,16 +11,16 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
   scene.compiled = null;
   switch (request) {
     case RequestModifyCanvasSize.Add_Row_Start:
-      final newGridVolume = scene.gridVolume + (scene.gridColumns * scene.gridHeight);
+      final newGridVolume = scene.volume + (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.gridArea == 0){
+      for (var i = 0; i < scene.volume; i++) {
+        if (i % scene.area == 0){
           final k = newIndex;
-          var type = i < scene.gridArea ? NodeType.Grass : NodeType.Empty;
+          var type = i < scene.area ? NodeType.Grass : NodeType.Empty;
           var orientation = NodeType.getDefaultOrientation(type);
-          for (var j = 0; j < scene.gridColumns; j++){
+          for (var j = 0; j < scene.columns; j++){
             newNodeTypes[k + j] = type;
             newNodeOrientations[k + j] = orientation;
             newIndex++;
@@ -32,7 +32,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridRows++;
+      scene.rows++;
       game.onGridChanged();
 
       for (final character in game.characters) {
@@ -43,13 +43,13 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       break;
     case RequestModifyCanvasSize.Remove_Row_Start:
-      final newGridVolume = scene.gridVolume - (scene.gridColumns * scene.gridHeight);
+      final newGridVolume = scene.volume - (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.gridArea == 0){
-          i += scene.gridColumns;
+      for (var i = 0; i < scene.volume; i++) {
+        if (i % scene.area == 0){
+          i += scene.columns;
         }
         newNodeTypes[newIndex] = scene.nodeTypes[i];
         newNodeOrientations[newIndex] = scene.nodeOrientations[i];
@@ -57,7 +57,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridRows--;
+      scene.rows--;
       game.onGridChanged();
       for (final character in game.characters) {
         character.x -= Node_Size;
@@ -67,16 +67,16 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       break;
     case RequestModifyCanvasSize.Add_Row_End:
-      final newGridVolume = scene.gridVolume + (scene.gridColumns * scene.gridHeight);
+      final newGridVolume = scene.volume + (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.gridArea == scene.gridArea - scene.gridColumns){
+      for (var i = 0; i < scene.volume; i++) {
+        if (i % scene.area == scene.area - scene.columns){
           final k = newIndex;
-          var type = i < scene.gridArea ? NodeType.Grass : NodeType.Empty;
+          var type = i < scene.area ? NodeType.Grass : NodeType.Empty;
           var orientation = NodeType.getDefaultOrientation(type);
-          for (var j = 0; j < scene.gridColumns; j++){
+          for (var j = 0; j < scene.columns; j++){
             newNodeTypes[k + j] = type;
             newNodeOrientations[k + j] = orientation;
             newIndex++;
@@ -88,7 +88,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridRows++;
+      scene.rows++;
       game.onGridChanged();
 
       for (final character in game.characters) {
@@ -99,15 +99,15 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       break;
     case RequestModifyCanvasSize.Remove_Row_End:
-      final newGridVolume = scene.gridVolume - (scene.gridColumns * scene.gridHeight);
+      final newGridVolume = scene.volume - (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.gridArea == scene.gridArea - scene.gridColumns){
-          i += scene.gridColumns;
+      for (var i = 0; i < scene.volume; i++) {
+        if (i % scene.area == scene.area - scene.columns){
+          i += scene.columns;
         }
-        if (i < scene.gridVolume){
+        if (i < scene.volume){
           newNodeTypes[newIndex] = scene.nodeTypes[i];
           newNodeOrientations[newIndex] = scene.nodeOrientations[i];
           newIndex++;
@@ -115,25 +115,25 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridRows--;
+      scene.rows--;
       game.onGridChanged();
       break;
     case RequestModifyCanvasSize.Add_Z:
-      final newGridVolume = scene.gridVolume + (scene.gridArea);
+      final newGridVolume = scene.volume + (scene.area);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
-      for (var i = 0; i < scene.gridVolume; i++){
+      for (var i = 0; i < scene.volume; i++){
         newNodeTypes[i] = scene.nodeTypes[i];
         newNodeOrientations[i] = scene.nodeOrientations[i];
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridHeight++;
+      scene.height++;
       game.onGridChanged();
       break;
     case RequestModifyCanvasSize.Remove_Z:
-      if (scene.gridHeight <= 5) return;
-      final newGridVolume = scene.gridVolume - (scene.gridArea);
+      if (scene.height <= 5) return;
+      final newGridVolume = scene.volume - (scene.area);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       for (var i = 0; i < newGridVolume; i++){
@@ -142,17 +142,17 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridHeight--;
+      scene.height--;
       game.onGridChanged();
       break;
     case RequestModifyCanvasSize.Add_Column_Start:
-      final newGridVolume = scene.gridVolume + (scene.gridRows * scene.gridHeight);
+      final newGridVolume = scene.volume + (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var iNew = 0;
-      for (var iOld = 0; iOld < scene.gridVolume; iOld++) {
-        if (iOld % scene.gridColumns == 0){
-          var type = iOld < scene.gridArea ? NodeType.Grass : NodeType.Empty;
+      for (var iOld = 0; iOld < scene.volume; iOld++) {
+        if (iOld % scene.columns == 0){
+          var type = iOld < scene.area ? NodeType.Grass : NodeType.Empty;
           var orientation = NodeType.getDefaultOrientation(type);
           newNodeTypes[iNew] = type;
           newNodeOrientations[iNew] = orientation;
@@ -164,7 +164,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridColumns++;
+      scene.columns++;
       game.onGridChanged();
       for (final character in game.characters) {
         character.y += Node_Size;
@@ -174,19 +174,19 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       break;
     case RequestModifyCanvasSize.Remove_Column_Start:
-      final newGridVolume = scene.gridVolume - (scene.gridRows * scene.gridHeight);
+      final newGridVolume = scene.volume - (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.gridColumns == 0) continue;
+      for (var i = 0; i < scene.volume; i++) {
+        if (i % scene.columns == 0) continue;
         newNodeTypes[newIndex] = scene.nodeTypes[i];
         newNodeOrientations[newIndex] = scene.nodeOrientations[i];
         newIndex++;
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridColumns--;
+      scene.columns--;
       game.onGridChanged();
       for (final character in game.characters) {
         character.y -= Node_Size;
@@ -196,13 +196,13 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       break;
     case RequestModifyCanvasSize.Add_Column_End:
-      final newGridVolume = scene.gridVolume + (scene.gridRows * scene.gridHeight);
+      final newGridVolume = scene.volume + (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var iNew = 0;
-      for (var iOld = 0; iOld < scene.gridVolume; iOld++) {
-        if (iOld % scene.gridColumns == scene.gridColumns - 1){
-          var type = iOld < scene.gridArea ? NodeType.Grass : NodeType.Empty;
+      for (var iOld = 0; iOld < scene.volume; iOld++) {
+        if (iOld % scene.columns == scene.columns - 1){
+          var type = iOld < scene.area ? NodeType.Grass : NodeType.Empty;
           var orientation = NodeType.getDefaultOrientation(type);
           newNodeTypes[iNew] = type;
           newNodeOrientations[iNew] = orientation;
@@ -214,7 +214,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridColumns++;
+      scene.columns++;
       game.onGridChanged();
       for (final character in game.characters) {
         character.y += Node_Size;
@@ -224,19 +224,19 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       }
       break;
     case RequestModifyCanvasSize.Remove_Column_End:
-      final newGridVolume = scene.gridVolume - (scene.gridRows * scene.gridHeight);
+      final newGridVolume = scene.volume - (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.gridColumns == scene.gridColumns - 1) continue;
+      for (var i = 0; i < scene.volume; i++) {
+        if (i % scene.columns == scene.columns - 1) continue;
         newNodeTypes[newIndex] = scene.nodeTypes[i];
         newNodeOrientations[newIndex] = scene.nodeOrientations[i];
         newIndex++;
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
-      scene.gridColumns--;
+      scene.columns--;
       game.onGridChanged();
       for (final character in game.characters) {
         character.y -= Node_Size;

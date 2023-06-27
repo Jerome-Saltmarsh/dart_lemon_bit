@@ -29,9 +29,9 @@ class IsometricSceneWriter extends ByteWriter {
     assert (!compressedNodeTypes.any((element) => element > 256));
     assert (!compressedNodeTypes.any((element) => element < 0));
     writeByte(ScenePart.Nodes);
-    writeUInt16(scene.gridHeight);
-    writeUInt16(scene.gridRows);
-    writeUInt16(scene.gridColumns);
+    writeUInt16(scene.height);
+    writeUInt16(scene.rows);
+    writeUInt16(scene.columns);
     writeUInt24(compressedNodeTypes.length);
     writeUInt24(compressedNodeOrientations.length);
     writeUint8List(compressedNodeTypes);
@@ -58,7 +58,7 @@ class IsometricSceneWriter extends ByteWriter {
   void writePlayerSpawnPoints(IsometricScene scene) {
     writeByte(ScenePart.Player_SpawnPoints);
     List<int> values = [];
-     for (var i = 0; i < scene.gridVolume; i++){
+     for (var i = 0; i < scene.volume; i++){
         if (scene.nodeTypes[i] != NodeType.Spawn_Player) continue;
         values.add(i);
      }
@@ -120,9 +120,9 @@ class SceneReader extends ByteReader {
         name: 'test',
         nodeTypes: nodeTypes,
         nodeOrientations: nodeOrientations,
-        gridHeight: totalZ,
-        gridRows: totalRows,
-        gridColumns: totalColumns,
+        height: totalZ,
+        rows: totalRows,
+        columns: totalColumns,
         gameObjects: gameObjects,
         spawnPoints: spawnPoints,
         spawnPointTypes: Uint16List(0),

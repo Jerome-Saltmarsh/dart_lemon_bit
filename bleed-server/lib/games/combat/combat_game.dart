@@ -731,7 +731,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     double wanderRadius = 200,
   }) {
     if (nodeIndex < 0) throw Exception('nodeIndex < 0');
-    if (nodeIndex >= scene.gridVolume) {
+    if (nodeIndex >= scene.volume) {
       throw Exception(
           'game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
     }

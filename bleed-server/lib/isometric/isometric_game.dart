@@ -2237,7 +2237,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {
     assert (nodeIndex >= 0);
 
-    if (nodeIndex >= scene.gridVolume) {
+    if (nodeIndex >= scene.volume) {
       throw Exception(
           "game.setNode(nodeIndex: $nodeIndex) - node index out of bounds");
     }

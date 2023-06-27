@@ -15,9 +15,9 @@ void main() {
       name: ' ',
       nodeTypes: Uint8List(height * rows * columns),
       nodeOrientations: Uint8List(height * rows * columns),
-      gridHeight: height,
-      gridRows: rows,
-      gridColumns: columns,
+      height: height,
+      rows: rows,
+      columns: columns,
       gameObjects: [],
       spawnPoints: Uint16List(0),
       spawnPointTypes: Uint16List(0),
@@ -65,7 +65,7 @@ void main() {
 
   });
 
-  test('find-path-3D-down', () {
+  test('find-path-3D-up', () {
     final rows = 10;
     final columns = 10;
     final height = 3;
@@ -92,11 +92,39 @@ void main() {
         end: scene.getIndex(2, 3, 3),
     );
   });
+
+  test('find-path-3D-down', () {
+    final rows = 10;
+    final columns = 10;
+    final height = 3;
+
+    final scene = createScene(height: height, rows: rows, columns: columns);
+
+    assignGrassFloor(scene);
+
+    scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 4, 2, NodeType.Grass, NodeOrientation.Solid);
+
+    scene.setNode(1, 2, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 3, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 4, 3, NodeType.Grass, NodeOrientation.Solid);
+
+    scene.setNode(1, 2, 4, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 3, 4, NodeType.Grass, NodeOrientation.Slope_East);
+    scene.setNode(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
+
+    testFindPath(
+        scene: scene,
+        start: scene.getIndex(2, 3, 3),
+        end: scene.getIndex(1, 8, 8),
+    );
+  });
 }
 
 void assignGrassFloor(IsometricScene scene) {
-  for (var row = 0; row < scene.gridRows; row++){
-    for (var column = 0; column < scene.gridColumns; column++){
+  for (var row = 0; row < scene.rows; row++){
+    for (var column = 0; column < scene.columns; column++){
       scene.setNode(0, row, column, NodeType.Grass, NodeOrientation.Solid);
     }
   }

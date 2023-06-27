@@ -214,7 +214,7 @@ class WebSocketConnection with ByteReader {
           case IsometricEditorRequest.Scene_Set_Floor_Type:
             final nodeType = parseArg2(arguments);
             if (nodeType == null) return;
-            for (var i = 0; i < game.scene.gridArea; i++){
+            for (var i = 0; i < game.scene.area; i++){
               game.scene.nodeTypes[i] = nodeType;
             }
             game.playersDownloadScene();
@@ -420,10 +420,10 @@ class WebSocketConnection with ByteReader {
         nodeOrientation: nodeOrientation,
     );
     if (nodeType == NodeType.Tree_Bottom){
-      final topIndex = nodeIndex + game.scene.gridArea;
-      if (topIndex < game.scene.gridVolume){
+      final topIndex = nodeIndex + game.scene.area;
+      if (topIndex < game.scene.volume){
         game.setNode(
-          nodeIndex: nodeIndex + game.scene.gridArea,
+          nodeIndex: nodeIndex + game.scene.area,
           nodeType: NodeType.Tree_Top,
           nodeOrientation: nodeOrientation,
         );
@@ -498,7 +498,7 @@ class WebSocketConnection with ByteReader {
         if (type == null) return errorInvalidClientRequest();
         if (index < 0) return errorInvalidClientRequest();
         final scene = player.game.scene;
-        if (index >= scene.gridVolume) {
+        if (index >= scene.volume) {
           return errorInvalidClientRequest();
         }
         final instance = player.game.spawnGameObject(
@@ -822,16 +822,30 @@ class WebSocketConnection with ByteReader {
       case IsometricRequest.Debug_Character_Teleport_To_Mouse:
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;
-        debugCharacter.x = player.mouseGridX;
-        debugCharacter.y = player.mouseGridY;
-        debugCharacter.z = player.mouseGridZ;
+        final scene = player.game.scene;
+        var index = player.mouseIndex;
+
+        while (index < scene.nodeOrientations.length){
+           if (scene.nodeOrientations[index] != NodeOrientation.None) {
+             index += scene.area;
+             continue;
+           }
+
+           debugCharacter.clearTarget();
+           debugCharacter.clearPath();
+           debugCharacter.x = scene.getNodePositionX(index);
+           debugCharacter.y = scene.getNodePositionY(index);
+           debugCharacter.z = scene.getNodePositionZ(index);
+           debugCharacter.setDestinationToCurrentPosition();
+           break;
+        }
         break;
 
       case IsometricRequest.Debug_Character_Walk_To_Mouse:
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;
         debugCharacter.clearTarget();
-        debugCharacter.pathTargetIndex = player.mouseGridIndex;
+        debugCharacter.pathTargetIndex = player.mouseIndex;
         break;
 
       case IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies:

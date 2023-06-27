@@ -64,7 +64,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     id = game.playerId++;
   }
 
-  int get mouseGridIndex => game.scene.getIndexXYZ(mouseGridX, mouseGridY, mouseGridZ);
+  int get mouseIndex => game.scene.getIndexXYZ(mouseGridX, mouseGridY, mouseGridZ);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
@@ -578,7 +578,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   void writeNode(int index){
     assert (index >= 0);
-    assert (index < scene.gridVolume);
+    assert (index < scene.volume);
     writeByte(ServerResponse.Node);
     writeUInt24(index);
     writeByte(scene.nodeTypes[index]);
@@ -704,7 +704,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     }
   }
 
-  void setPathToMouse() => pathTargetIndex = mouseGridIndex;
+  void setPathToMouse() => pathTargetIndex = mouseIndex;
 
   void setDestinationToMouse() {
     runX = mouseGridX;
