@@ -14,11 +14,14 @@ void main() {
   }){
 
     var index = scene.findPath(start, end);
-    expect(index, isNot(start));
+    expect(index, end, reason: 'end not found');
+    expect(index, isNot(start), reason: 'no path was found');
     var length = 0;
 
     while (index != start){
-      expect(length++, isNot(10000));
+      expect(length++, isNot(10000), reason: 'limit exceeded');
+      expect(scene.path[index], isNot(IsometricScene.Not_Visited));
+      expect(scene.path[index], isNot(index));
       index = scene.path[index];
     }
 
@@ -85,13 +88,17 @@ void main() {
 
     scene.setNode(1, 2, 3, NodeType.Grass, NodeOrientation.Solid);
     scene.setNode(1, 3, 3, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 4, 3, NodeType.Grass, NodeOrientation.Slope_North);
+    scene.setNode(1, 4, 3, NodeType.Grass, NodeOrientation.Solid);
 
     scene.setNode(1, 2, 4, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 4, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNode(1, 3, 4, NodeType.Grass, NodeOrientation.Slope_East);
     scene.setNode(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
 
-    testFindPath(scene: scene, start: scene.getIndex(1, 2, 9), end: scene.getIndex(2, 3, 3));
+    testFindPath(
+        scene: scene,
+        start: scene.getIndex(1, 3, 5),
+        end: scene.getIndex(2, 3, 3),
+    );
   });
 }
 
