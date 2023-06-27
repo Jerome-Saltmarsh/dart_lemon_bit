@@ -13,8 +13,8 @@ void main() {
     required int columns,
   }) => IsometricScene(
       name: ' ',
-      nodeTypes: Uint8List(height * rows * columns),
-      nodeOrientations: Uint8List(height * rows * columns),
+      types: Uint8List(height * rows * columns),
+      shapes: Uint8List(height * rows * columns),
       height: height,
       rows: rows,
       columns: columns,

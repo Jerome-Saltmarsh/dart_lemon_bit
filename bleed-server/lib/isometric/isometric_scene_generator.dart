@@ -83,8 +83,8 @@ class IsometricSceneGenerator {
 
     return IsometricScene(
         name: "",
-        nodeTypes: nodeTypes,
-        nodeOrientations: nodeOrientations,
+        types: nodeTypes,
+        shapes: nodeOrientations,
         height: height,
         rows: rows,
         columns: columns,
@@ -112,8 +112,8 @@ class IsometricSceneGenerator {
       height: height,
       columns: columns,
       rows: rows,
-      nodeTypes: nodeTypes,
-      nodeOrientations: nodeOrientations,
+      types: nodeTypes,
+      shapes: nodeOrientations,
       spawnPoints: Uint16List(0),
       spawnPointTypes: Uint16List(0),
       spawnPointsPlayers:Uint16List(0),

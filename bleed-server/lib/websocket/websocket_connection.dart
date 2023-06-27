@@ -215,7 +215,7 @@ class WebSocketConnection with ByteReader {
             final nodeType = parseArg2(arguments);
             if (nodeType == null) return;
             for (var i = 0; i < game.scene.area; i++){
-              game.scene.nodeTypes[i] = nodeType;
+              game.scene.types[i] = nodeType;
             }
             game.playersDownloadScene();
             break;
@@ -823,29 +823,25 @@ class WebSocketConnection with ByteReader {
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;
         final scene = player.game.scene;
-        var index = player.mouseIndex;
+        final index = scene.findEmptyIndex(player.mouseIndex);
+        if (index == -1) return;
 
-        while (index < scene.nodeOrientations.length){
-           if (scene.nodeOrientations[index] != NodeOrientation.None) {
-             index += scene.area;
-             continue;
-           }
-
-           debugCharacter.clearTarget();
-           debugCharacter.clearPath();
-           debugCharacter.x = scene.getNodePositionX(index);
-           debugCharacter.y = scene.getNodePositionY(index);
-           debugCharacter.z = scene.getNodePositionZ(index);
-           debugCharacter.setDestinationToCurrentPosition();
-           break;
-        }
+        debugCharacter.clearTarget();
+        debugCharacter.clearPath();
+        debugCharacter.x = scene.getNodePositionX(index);
+        debugCharacter.y = scene.getNodePositionY(index);
+        debugCharacter.z = scene.getNodePositionZ(index);
+        debugCharacter.setDestinationToCurrentPosition();
         break;
 
       case IsometricRequest.Debug_Character_Walk_To_Mouse:
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;
+        final scene = player.game.scene;
+        final index = scene.findEmptyIndex(player.mouseIndex);
+        if (index == -1) return;
         debugCharacter.clearTarget();
-        debugCharacter.pathTargetIndex = player.mouseIndex;
+        debugCharacter.pathTargetIndex = index;
         break;
 
       case IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies:
@@ -858,6 +854,12 @@ class WebSocketConnection with ByteReader {
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;
         debugCharacter.pathFindingEnabled = !debugCharacter.pathFindingEnabled;
+        break;
+
+      case IsometricRequest.Debug_Character_Debug_Update:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null) return;
+        player.game.updateCharacter(debugCharacter);
         break;
     }
   }

@@ -26,12 +26,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
             newIndex++;
           }
         }
-        newNodeTypes[newIndex] = scene.nodeTypes[i];
-        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+        newNodeTypes[newIndex] = scene.types[i];
+        newNodeOrientations[newIndex] = scene.shapes[i];
         newIndex++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.rows++;
       game.onGridChanged();
 
@@ -51,12 +51,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         if (i % scene.area == 0){
           i += scene.columns;
         }
-        newNodeTypes[newIndex] = scene.nodeTypes[i];
-        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+        newNodeTypes[newIndex] = scene.types[i];
+        newNodeOrientations[newIndex] = scene.shapes[i];
         newIndex++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.rows--;
       game.onGridChanged();
       for (final character in game.characters) {
@@ -82,12 +82,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
             newIndex++;
           }
         }
-        newNodeTypes[newIndex] = scene.nodeTypes[i];
-        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+        newNodeTypes[newIndex] = scene.types[i];
+        newNodeOrientations[newIndex] = scene.shapes[i];
         newIndex++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.rows++;
       game.onGridChanged();
 
@@ -108,13 +108,13 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
           i += scene.columns;
         }
         if (i < scene.volume){
-          newNodeTypes[newIndex] = scene.nodeTypes[i];
-          newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+          newNodeTypes[newIndex] = scene.types[i];
+          newNodeOrientations[newIndex] = scene.shapes[i];
           newIndex++;
         }
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.rows--;
       game.onGridChanged();
       break;
@@ -123,11 +123,11 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       for (var i = 0; i < scene.volume; i++){
-        newNodeTypes[i] = scene.nodeTypes[i];
-        newNodeOrientations[i] = scene.nodeOrientations[i];
+        newNodeTypes[i] = scene.types[i];
+        newNodeOrientations[i] = scene.shapes[i];
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.height++;
       game.onGridChanged();
       break;
@@ -137,11 +137,11 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       for (var i = 0; i < newGridVolume; i++){
-        newNodeTypes[i] = scene.nodeTypes[i];
-        newNodeOrientations[i] = scene.nodeOrientations[i];
+        newNodeTypes[i] = scene.types[i];
+        newNodeOrientations[i] = scene.shapes[i];
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.height--;
       game.onGridChanged();
       break;
@@ -158,12 +158,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
           newNodeOrientations[iNew] = orientation;
           iNew++;
         }
-        newNodeTypes[iNew] = scene.nodeTypes[iOld];
-        newNodeOrientations[iNew] = scene.nodeOrientations[iOld];
+        newNodeTypes[iNew] = scene.types[iOld];
+        newNodeOrientations[iNew] = scene.shapes[iOld];
         iNew++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.columns++;
       game.onGridChanged();
       for (final character in game.characters) {
@@ -180,12 +180,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       var newIndex = 0;
       for (var i = 0; i < scene.volume; i++) {
         if (i % scene.columns == 0) continue;
-        newNodeTypes[newIndex] = scene.nodeTypes[i];
-        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+        newNodeTypes[newIndex] = scene.types[i];
+        newNodeOrientations[newIndex] = scene.shapes[i];
         newIndex++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.columns--;
       game.onGridChanged();
       for (final character in game.characters) {
@@ -208,12 +208,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
           newNodeOrientations[iNew] = orientation;
           iNew++;
         }
-        newNodeTypes[iNew] = scene.nodeTypes[iOld];
-        newNodeOrientations[iNew] = scene.nodeOrientations[iOld];
+        newNodeTypes[iNew] = scene.types[iOld];
+        newNodeOrientations[iNew] = scene.shapes[iOld];
         iNew++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.columns++;
       game.onGridChanged();
       for (final character in game.characters) {
@@ -230,12 +230,12 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       var newIndex = 0;
       for (var i = 0; i < scene.volume; i++) {
         if (i % scene.columns == scene.columns - 1) continue;
-        newNodeTypes[newIndex] = scene.nodeTypes[i];
-        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+        newNodeTypes[newIndex] = scene.types[i];
+        newNodeOrientations[newIndex] = scene.shapes[i];
         newIndex++;
       }
-      scene.nodeTypes = newNodeTypes;
-      scene.nodeOrientations = newNodeOrientations;
+      scene.types = newNodeTypes;
+      scene.shapes = newNodeOrientations;
       scene.columns--;
       game.onGridChanged();
       for (final character in game.characters) {

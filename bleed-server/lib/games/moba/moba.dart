@@ -15,7 +15,7 @@ class Moba extends IsometricGame<MobaPlayer> {
     required super.environment,
   }) : super(gameType: GameType.Moba) {
     redBase1 = IsometricGameObject(
-        x: scene.gridRowLength - 100,
+        x: scene.rowLength - 100,
         y: 100,
         z: 24,
         type: ItemType.GameObjects_Base_Red,
@@ -26,7 +26,7 @@ class Moba extends IsometricGame<MobaPlayer> {
 
     blueBase1 = IsometricGameObject(
         x: 100,
-        y: scene.gridColumnLength - 100,
+        y: scene.columnLength - 100,
         z: 24,
         type: ItemType.GameObjects_Base_Blue,
         id: generateUniqueId(),

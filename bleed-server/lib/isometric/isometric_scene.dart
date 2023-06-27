@@ -10,8 +10,8 @@ class IsometricScene {
 
   static const Not_Visited = -1;
 
-  Uint8List nodeTypes;
-  Uint8List nodeOrientations;
+  Uint8List types;
+  Uint8List shapes;
   Uint8List? compiled;
 
   /// used for pathfinding to contains the the index of a previous path
@@ -34,16 +34,16 @@ class IsometricScene {
   Uint16List spawnPointsPlayers;
   Uint16List spawnPointTypes;
 
-  late double gridRowLength;
-  late double gridColumnLength;
-  late double gridHeightLength;
+  late double rowLength;
+  late double columnLength;
+  late double heightLength;
 
   final List<IsometricGameObject> gameObjects;
 
   IsometricScene({
     required this.name,
-    required this.nodeTypes,
-    required this.nodeOrientations,
+    required this.types,
+    required this.shapes,
     required this.height,
     required this.rows,
     required this.columns,
@@ -55,18 +55,18 @@ class IsometricScene {
     refreshMetrics();
   }
 
-  void refreshMetrics(){
-    if (path.length != nodeTypes.length){
-      path = Int32List(nodeTypes.length);
-      for (var i = 0; i < path.length; i++){
+  void refreshMetrics() {
+    if (path.length != types.length) {
+      path = Int32List(types.length);
+      for (var i = 0; i < path.length; i++) {
         path[i] = Not_Visited;
       }
     }
     area = rows * columns;
     volume = height * area;
-    gridRowLength = rows * Node_Size;
-    gridColumnLength = columns * Node_Size;
-    gridHeightLength = height * Node_Height;
+    rowLength = rows * Node_Size;
+    columnLength = columns * Node_Size;
+    heightLength = height * Node_Height;
   }
 
   bool inboundsV3(IsometricPosition v3) => inboundsXYZ(v3.x, v3.y, v3.z);
@@ -74,18 +74,18 @@ class IsometricScene {
   void setNode(int z, int row, int column, int type, int orientation) {
     if (outOfBounds(z, row, column)) return;
     final index = getIndex(z, row, column);
-    final currentType = nodeTypes[index];
-    final currentOrientation = nodeOrientations[index];
+    final currentType = types[index];
+    final currentOrientation = shapes[index];
     if (currentType == type && currentOrientation == orientation) {
       return;
     }
-    nodeTypes[index] = type;
-    nodeOrientations[index] = orientation;
+    types[index] = type;
+    shapes[index] = orientation;
   }
 
   int getTypeXYZ(double x, double y, double z) =>
       inboundsXYZ(x, y, z)
-          ? nodeTypes[getIndexXYZ(x, y, z)]
+          ? types[getIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
   int getIndexPosition(IsometricPosition position3) =>
@@ -96,22 +96,22 @@ class IsometricScene {
       );
 
   int getIndexXYZ(double x, double y, double z) =>
-    getIndex(
+      getIndex(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
-    );
+      );
 
-  int getOrientationXYZ(double x, double y, double z){
-     if (x < 0 || y < 0 || x >= gridRowLength || y >= gridColumnLength)
-       return NodeOrientation.Solid;
-     if (z >= gridHeightLength || z < 0)
-       return NodeOrientation.None;
+  int getOrientationXYZ(double x, double y, double z) {
+    if (x < 0 || y < 0 || x >= rowLength || y >= columnLength)
+      return NodeOrientation.Solid;
+    if (z >= heightLength || z < 0)
+      return NodeOrientation.None;
 
-     return nodeOrientations[getIndexXYZ(x, y, z)];
+    return shapes[getIndexXYZ(x, y, z)];
   }
 
-  bool isInboundV3(IsometricPosition pos ) =>
+  bool isInboundV3(IsometricPosition pos) =>
       inboundsXYZ(pos.x, pos.y, pos.z);
 
   bool getCollisionAt(double x, double y, double z) {
@@ -131,23 +131,23 @@ class IsometricScene {
   /// Warning Expensive, (Do not call during runtime)
   void refreshSpawnPoints() {
     final newSpawnPoints = <int>[];
-    for (var i = 0; i < nodeTypes.length; i++){
-      if (nodeTypes[i] != NodeType.Spawn) continue;
+    for (var i = 0; i < types.length; i++) {
+      if (types[i] != NodeType.Spawn) continue;
       newSpawnPoints.add(i);
     }
-    if (spawnPoints.length != newSpawnPoints){
+    if (spawnPoints.length != newSpawnPoints) {
       spawnPoints = Uint16List(newSpawnPoints.length);
     }
-    for (var i = 0; i < spawnPoints.length; i++){
-       spawnPoints[i] = newSpawnPoints[i];
+    for (var i = 0; i < spawnPoints.length; i++) {
+      spawnPoints[i] = newSpawnPoints[i];
     }
   }
 
   /// WARNING - EXPENSIVE
-  List<int> findNodesOfType(int type){
+  List<int> findNodesOfType(int type) {
     final values = <int>[];
-    for (var i = 0; i < volume; i++){
-      if (nodeTypes[i] != type) continue;
+    for (var i = 0; i < volume; i++) {
+      if (types[i] != type) continue;
       values.add(i);
     }
     return values;
@@ -156,7 +156,8 @@ class IsometricScene {
   void detectSpawnPoints() =>
       spawnPoints = Uint16List.fromList(findNodesOfType(NodeType.Spawn));
 
-  bool raycastCollisionXY(double x1, double y1, double x2, double y2, double z) {
+  bool raycastCollisionXY(double x1, double y1, double x2, double y2,
+      double z) {
     final distance = getDistanceXY(x1, y1, x2, y2);
     final jumps = distance ~/ Node_Size_Half;
     if (jumps <= 0) return false;
@@ -178,14 +179,13 @@ class IsometricScene {
   double getNodePositionZ(int index) =>
       getZ(index) * Node_Height;
 
-  int findPath(var indexStart, var indexEnd, {int max = 100}){
-
+  int findPath(var indexStart, var indexEnd, {int max = 100}) {
     if (indexEnd <= 0 ||
-        indexEnd >= nodeOrientations.length ||
-        nodeOrientations[indexEnd] != NodeOrientation.None
+        indexEnd >= shapes.length ||
+        shapes[indexEnd] != NodeOrientation.None
     ) return indexStart;
 
-    for (var i = 0; i <= visitHistoryIndex; i++){
+    for (var i = 0; i <= visitHistoryIndex; i++) {
       path[visitHistory[i]] = Not_Visited;
     }
 
@@ -195,12 +195,10 @@ class IsometricScene {
     visitHistory[visitHistoryIndex++] = indexStart;
     visitStack[visitStackIndex] = indexStart;
 
-    final targetZ = getZ(indexEnd);
     final targetRow = getRow(indexEnd);
     final targetColumn = getColumn(indexEnd);
 
     while (visitStackIndex >= 0 && max-- > 0) {
-
       final currentIndex = visitStack[visitStackIndex--];
 
       if (currentIndex == indexEnd)
@@ -210,32 +208,47 @@ class IsometricScene {
       final row = getRow(currentIndex);
       final column = getColumn(currentIndex);
 
-      final targetDirection = convertToDirection(targetRow - row, targetColumn - column);
+      final targetDirection = convertToDirection(
+          targetRow - row, targetColumn - column);
       final backwardDirection = (targetDirection + 4) % 8;
 
       visit(
-          z: z,
-          row: row + IsometricDirection.convertToVelocityRow(backwardDirection),
-          column: column + IsometricDirection.convertToVelocityColumn(backwardDirection),
-          fromIndex: currentIndex,
+        z: z,
+        row: row + IsometricDirection.convertToVelocityRow(backwardDirection),
+        column: column +
+            IsometricDirection.convertToVelocityColumn(backwardDirection),
+        fromIndex: currentIndex,
       );
 
       for (var i = 3; i >= 0; i--) {
         final dirLess = (targetDirection - i) % 8;
-        final dirLessRow = row + IsometricDirection.convertToVelocityRow(dirLess);
-        final dirLessCol = column + IsometricDirection.convertToVelocityColumn(dirLess);
+        final dirLessRow = row +
+            IsometricDirection.convertToVelocityRow(dirLess);
+        final dirLessCol = column +
+            IsometricDirection.convertToVelocityColumn(dirLess);
 
         final dirMore = (targetDirection + i) % 8;
-        final dirMoreRow = row + IsometricDirection.convertToVelocityRow(dirMore);
-        final dirMoreColumn = column + IsometricDirection.convertToVelocityColumn(dirMore);
+        final dirMoreRow = row +
+            IsometricDirection.convertToVelocityRow(dirMore);
+        final dirMoreColumn = column +
+            IsometricDirection.convertToVelocityColumn(dirMore);
 
-        visit(z: z, row: dirLessRow, column: dirLessCol, fromIndex: currentIndex);
-        visit(z: z, row: dirMoreRow, column: dirMoreColumn, fromIndex: currentIndex);
+        visit(
+            z: z, row: dirLessRow, column: dirLessCol, fromIndex: currentIndex);
+        visit(z: z,
+            row: dirMoreRow,
+            column: dirMoreColumn,
+            fromIndex: currentIndex);
       }
 
-      final forwardRow = row + IsometricDirection.convertToVelocityRow(targetDirection);
-      final forwardColumn = column + IsometricDirection.convertToVelocityColumn(targetDirection);
-      visit(z: z, row: forwardRow, column: forwardColumn, fromIndex: currentIndex);
+      final forwardRow = row +
+          IsometricDirection.convertToVelocityRow(targetDirection);
+      final forwardColumn = column +
+          IsometricDirection.convertToVelocityColumn(targetDirection);
+      visit(z: z,
+          row: forwardRow,
+          column: forwardColumn,
+          fromIndex: currentIndex);
     }
 
     return indexStart;
@@ -247,7 +260,6 @@ class IsometricScene {
     required int column,
     required int fromIndex,
   }) {
-
     // print("visit(z: $z, row: $row, column: $column, fromZ: ${getZ(fromIndex)}, fromRow: ${getRow(fromIndex)}, fromColumn: ${getColumn(fromIndex)}");
 
     if (outOfBounds(z, row, column) || z <= 0)
@@ -259,14 +271,14 @@ class IsometricScene {
       return;
 
 
-    final indexOrientation = nodeOrientations[index];
+    final indexShape = shapes[index];
 
 
-    if (indexOrientation == NodeOrientation.Solid) {
+    if (indexShape == NodeOrientation.Solid) {
       return;
     }
 
-    if (NodeOrientation.slopeSymmetric.contains(indexOrientation)) {
+    if (NodeOrientation.slopeSymmetric.contains(indexShape)) {
       final fromRow = getRow(fromIndex);
       final fromColumn = getColumn(fromIndex);
 
@@ -274,7 +286,7 @@ class IsometricScene {
         return;
 
       if (fromRow > row) {
-        if (indexOrientation == NodeOrientation.Slope_North) {
+        if (indexShape == NodeOrientation.Slope_North) {
           addToStack(index, fromIndex);
           visit(
             z: z + 1,
@@ -287,21 +299,21 @@ class IsometricScene {
       }
 
       if (fromRow < row) {
-         if (indexOrientation == NodeOrientation.Slope_South) {
-           addToStack(index, fromIndex);
-           visit(
-               z: z + 1,
-               row: row + 1,
-               column: column,
-               fromIndex: index,
-           );
-         }
-         return;
+        if (indexShape == NodeOrientation.Slope_South) {
+          addToStack(index, fromIndex);
+          visit(
+            z: z + 1,
+            row: row + 1,
+            column: column,
+            fromIndex: index,
+          );
+        }
+        return;
       }
 
 
       if (fromColumn > column) {
-        if (indexOrientation == NodeOrientation.Slope_East) {
+        if (indexShape == NodeOrientation.Slope_East) {
           addToStack(index, fromIndex);
           visit(
             z: z + 1,
@@ -314,7 +326,7 @@ class IsometricScene {
       }
 
       if (fromColumn < column) {
-        if (indexOrientation == NodeOrientation.Slope_West) {
+        if (indexShape == NodeOrientation.Slope_West) {
           visit(
             z: z + 1,
             row: row,
@@ -325,10 +337,9 @@ class IsometricScene {
         return;
       }
     } else {
-
       addToStack(index, fromIndex);
 
-      final indexOrientationBelow = nodeOrientations[index - area];
+      final indexOrientationBelow = shapes[index - area];
       if (indexOrientationBelow == NodeOrientation.None) {
         visit(z: z - 1, row: row, column: column, fromIndex: index);
       }
@@ -342,7 +353,7 @@ class IsometricScene {
     }
   }
 
-  addToStack(int index, int from){
+  addToStack(int index, int from) {
     assert (path[index] == Not_Visited);
     assert (index != from);
     // print("addToStack(index: $index, from: $from)");
@@ -352,7 +363,7 @@ class IsometricScene {
     visitStack[visitStackIndex] = index;
   }
 
-  static int convertToDirectionVertical(int value){
+  static int convertToDirectionVertical(int value) {
     if (value < 0)
       return -1;
     if (value > 0)
@@ -360,8 +371,7 @@ class IsometricScene {
     return 0;
   }
 
-  static int convertToDirection(int rows, int columns){
-
+  static int convertToDirection(int rows, int columns) {
     if (rows > 0) {
       if (columns < 0)
         return IsometricDirection.South_East;
@@ -385,7 +395,6 @@ class IsometricScene {
   }
 
   bool isPerceptible(IsometricPosition a, IsometricPosition b) {
-
     var positionX = a.x;
     var positionY = a.y;
     var positionZ = a.z;
@@ -400,8 +409,9 @@ class IsometricScene {
     for (var i = 0; i < jumps; i++) {
       positionX += velX;
       positionY += velY;
-      final nodeOrientation = getOrientationXYZ(positionX, positionY, positionZ);
-      if (nodeOrientation != NodeOrientation.None){
+      final nodeOrientation = getOrientationXYZ(
+          positionX, positionY, positionZ);
+      if (nodeOrientation != NodeOrientation.None) {
         return false;
       }
     }
@@ -415,7 +425,7 @@ class IsometricScene {
     required int radius,
     required int type,
     int attempts = 5,
-  }){
+  }) {
     assert (radius >= 1);
 
     while (attempts-- >= 0) {
@@ -432,20 +442,20 @@ class IsometricScene {
   int getType(int z, int row, int column) =>
       outOfBounds(z, row, column)
           ? NodeType.Boundary
-          : nodeTypes[getIndex(z, row, column)];
+          : types[getIndex(z, row, column)];
 
   int getOrientation(int z, int row, int column) =>
       outOfBounds(z, row, column)
           ? NodeType.Boundary
-          : nodeOrientations[getIndex(z, row, column)];
+          : shapes[getIndex(z, row, column)];
 
   bool inboundsXYZ(double x, double y, double z) =>
       x >= 0 &&
-      y >= 0 &&
-      z >= 0 &&
-      x < gridRowLength &&
-      y < gridColumnLength &&
-      z < gridHeightLength;
+          y >= 0 &&
+          z >= 0 &&
+          x < rowLength &&
+          y < columnLength &&
+          z < heightLength;
 
   int getIndex(int z, int row, int column) {
     assert (!outOfBounds(z, row, column));
@@ -465,4 +475,15 @@ class IsometricScene {
   int getColumn(int nodeIndex) => (nodeIndex) % columns;
 
   int getZ(int nodeIndex) => nodeIndex ~/ area;
+
+  int findEmptyIndex(int index) {
+    while (index < shapes.length) {
+      if (shapes[index] == NodeOrientation.None)
+        return index;
+
+      index += area;
+
+    }
+    return -1;
+  }
 }

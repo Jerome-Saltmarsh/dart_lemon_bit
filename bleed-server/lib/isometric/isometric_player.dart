@@ -581,8 +581,8 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     assert (index < scene.volume);
     writeByte(ServerResponse.Node);
     writeUInt24(index);
-    writeByte(scene.nodeTypes[index]);
-    writeByte(scene.nodeOrientations[index]);
+    writeByte(scene.types[index]);
+    writeByte(scene.shapes[index]);
   }
 
   void lookAt(Position position) {

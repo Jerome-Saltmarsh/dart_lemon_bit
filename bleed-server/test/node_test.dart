@@ -15,8 +15,8 @@ void main() {
 
     final scene = IsometricScene(
         name: ' ',
-        nodeTypes: Uint8List(volume),
-        nodeOrientations: Uint8List(volume),
+        types: Uint8List(volume),
+        shapes: Uint8List(volume),
         height: height,
         rows: rows,
         columns: columns,

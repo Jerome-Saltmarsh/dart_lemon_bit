@@ -24,8 +24,8 @@ class IsometricSceneWriter extends ByteWriter {
   }
 
   void writeNodes(IsometricScene scene){
-    final compressedNodeTypes = encoder.convert(scene.nodeTypes);
-    final compressedNodeOrientations = encoder.convert(scene.nodeOrientations);
+    final compressedNodeTypes = encoder.convert(scene.types);
+    final compressedNodeOrientations = encoder.convert(scene.shapes);
     assert (!compressedNodeTypes.any((element) => element > 256));
     assert (!compressedNodeTypes.any((element) => element < 0));
     writeByte(ScenePart.Nodes);
@@ -59,7 +59,7 @@ class IsometricSceneWriter extends ByteWriter {
     writeByte(ScenePart.Player_SpawnPoints);
     List<int> values = [];
      for (var i = 0; i < scene.volume; i++){
-        if (scene.nodeTypes[i] != NodeType.Spawn_Player) continue;
+        if (scene.types[i] != NodeType.Spawn_Player) continue;
         values.add(i);
      }
      writeUInt16(values.length);
@@ -118,8 +118,8 @@ class SceneReader extends ByteReader {
 
     return IsometricScene(
         name: 'test',
-        nodeTypes: nodeTypes,
-        nodeOrientations: nodeOrientations,
+        types: nodeTypes,
+        shapes: nodeOrientations,
         height: totalZ,
         rows: totalRows,
         columns: totalColumns,

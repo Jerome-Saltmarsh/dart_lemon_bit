@@ -43,7 +43,7 @@ class MmoPlayer extends IsometricPlayer {
     final debugCharacter = this.debugCharacter;
     if (debugCharacter != null) {
       debugCharacter.clearTarget();
-      debugCharacter.pathTargetIndex = mouseIndex;
+      debugCharacter.pathTargetIndex = scene.findEmptyIndex(mouseIndex);
       return;
     }
 

@@ -64,13 +64,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     blueFlagSpawn = findGameObjectByTypeOrFail(ItemType.GameObjects_Flag_Spawn_Blue);
 
     baseRed = (findGameObjectByType(ItemType.GameObjects_Base_Red) ?? spawnGameObject(
-        x: scene.gridRowLength * 0.5, y: scene.gridColumnLength - 150, z: 25, type: ItemType.GameObjects_Base_Red)
+        x: scene.rowLength * 0.5, y: scene.columnLength - 150, z: 25, type: ItemType.GameObjects_Base_Red)
     )
       ..fixed = true
       ..team = CaptureTheFlagTeam.Red;
 
     baseBlue = (findGameObjectByType(ItemType.GameObjects_Base_Blue) ?? spawnGameObject(
-        x: scene.gridRowLength * 0.5, y: 150, z: 25, type: ItemType.GameObjects_Base_Blue))
+        x: scene.rowLength * 0.5, y: 150, z: 25, type: ItemType.GameObjects_Base_Blue))
       ..fixed = true
       ..team = CaptureTheFlagTeam.Blue;
 

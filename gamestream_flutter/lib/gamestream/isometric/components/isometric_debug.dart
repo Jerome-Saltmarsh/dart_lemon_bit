@@ -54,7 +54,9 @@ class IsometricDebug {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildText('DEBUG'),
+                  onPressed(
+                    action: isometric.debugCharacterDebugUpdate,
+                    child: buildText('DEBUG'), ),
                   height8,
                   onPressed(
                       action: isometric.camera.followTarget.toggle,
