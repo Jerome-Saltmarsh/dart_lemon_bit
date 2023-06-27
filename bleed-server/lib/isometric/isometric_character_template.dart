@@ -1,6 +1,5 @@
 
-import 'package:bleed_server/common/src/isometric/character_type.dart';
-import 'package:bleed_server/common/src/isometric/item_type.dart';
+import 'package:bleed_server/common.dart';
 
 import 'isometric_character.dart';
 

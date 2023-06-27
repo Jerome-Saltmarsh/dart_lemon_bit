@@ -1,17 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/game_event_type.dart';
-import 'package:bleed_server/common/src/isometric/character_state.dart';
-import 'package:bleed_server/common/src/isometric/isometric_direction.dart';
-import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/common/src/isometric/node_orientation.dart';
-import 'package:bleed_server/common/src/isometric/node_size.dart';
-import 'package:bleed_server/common/src/isometric/node_type.dart';
-import 'package:bleed_server/common/src/isometric/projectile_type.dart';
-import 'package:bleed_server/common/src/maths.dart';
-import 'package:bleed_server/common/src/player_event.dart';
-import 'package:bleed_server/common/src/server_response.dart';
+import 'package:bleed_server/common.dart';
 import 'package:bleed_server/core/game.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/utils/maths.dart';
@@ -640,7 +630,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       applyHit(
-          angle: radiansV2(character, other),
+          angle: character.getAngle(other),
           target: other,
           damage: character.weaponDamage,
           srcCharacter: character,
@@ -671,7 +661,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       applyHit(
-          angle: radiansV2(character, gameObject),
+          angle: character.getAngle(gameObject),
           target: gameObject,
           damage: character.weaponDamage,
           srcCharacter: character,
@@ -682,7 +672,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (nearest != null) {
       applyHit(
-          angle: radiansV2(character, nearest),
+          angle: character.getAngle(nearest),
           target: nearest,
           damage: character.weaponDamage,
           srcCharacter: character,
@@ -1316,7 +1306,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    final ratio = 1.0 / hyp(xDiff, yDiff);
+    final ratio = 1.0 / hyp2(xDiff, yDiff);
     final xDiffNormalized = xDiff * ratio;
     final yDiffNormalized = yDiff * ratio;
     final halfOverlap = overlap * 0.5;
@@ -1581,7 +1571,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!target.active) return;
 
     if (angle == null){
-      angle = radiansV2(srcCharacter, target);
+      angle = srcCharacter.getAngle(target);
     }
 
     target.applyForce(

@@ -61,7 +61,7 @@ class IsometricCollider extends IsometricPosition {
   /// GETTERS
   /// Expensive Operation
   bool get inactive => !active;
-  double get velocitySpeed => hyp(velocityX, velocityY);
+  double get velocitySpeed => hyp2(velocityX, velocityY);
   double get velocityAngle => angle(velocityX, velocityY);
   double get left => x - radius;
   double get right => x + radius;

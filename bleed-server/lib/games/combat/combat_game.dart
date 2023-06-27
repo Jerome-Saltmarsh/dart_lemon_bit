@@ -13,7 +13,6 @@ import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/combat/combat_power_type.dart';
 import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/utils/maths.dart';
 import 'package:bleed_server/utils/system.dart';
 import 'package:bleed_server/isometric/src.dart';
 import 'package:lemon_math/src.dart';
@@ -715,8 +714,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       ai.target = src;
       return;
     }
-    final aiTargetDistance = distanceV2(ai, targetAITarget);
-    final srcTargetDistance = distanceV2(src, ai);
+    final aiTargetDistance = ai.getDistance(targetAITarget);
+    final srcTargetDistance =  ai.getDistance(src);
     if (srcTargetDistance < aiTargetDistance) {
       ai.target = src;
     }
