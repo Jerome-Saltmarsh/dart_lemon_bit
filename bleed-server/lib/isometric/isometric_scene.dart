@@ -20,6 +20,9 @@ class IsometricScene {
   static final visitHistory = Uint32List(10000);
   static final visitStack = Uint32List(10000);
 
+  static final compiledPath = Uint32List(10000);
+  static var compiledPathLength = 0;
+
   static var visitHistoryIndex = 0;
   static var visitStackIndex = 0;
 
