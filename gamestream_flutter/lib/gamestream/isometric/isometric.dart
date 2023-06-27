@@ -83,44 +83,44 @@ class Isometric {
   }
 
   void revive() =>
-      sendRequest(IsometricRequest.Revive);
+      sendIsometricRequest(IsometricRequest.Revive);
 
   void setRain(int value) =>
-      sendRequest(IsometricRequest.Weather_Set_Rain, value);
+      sendIsometricRequest(IsometricRequest.Weather_Set_Rain, value);
 
   void setWind(int value) =>
-      sendRequest(IsometricRequest.Weather_Set_Wind, value);
+      sendIsometricRequest(IsometricRequest.Weather_Set_Wind, value);
 
   void setLightning(int value) =>
-      sendRequest(IsometricRequest.Weather_Set_Lightning, value);
+      sendIsometricRequest(IsometricRequest.Weather_Set_Lightning, value);
 
   void toggleBreeze() =>
-      sendRequest(IsometricRequest.Weather_Toggle_Breeze);
+      sendIsometricRequest(IsometricRequest.Weather_Toggle_Breeze);
 
   void setHour(int value) =>
-      sendRequest(IsometricRequest.Time_Set_Hour, value);
+      sendIsometricRequest(IsometricRequest.Time_Set_Hour, value);
 
   void selectNpcTalkOption(int index) =>
-      sendRequest(IsometricRequest.Npc_Talk_Select_Option, index);
+      sendIsometricRequest(IsometricRequest.Npc_Talk_Select_Option, index);
 
-  void editorLoadGame(String name)=> sendRequest(IsometricRequest.Editor_Load_Game, name);
+  void editorLoadGame(String name)=> sendIsometricRequest(IsometricRequest.Editor_Load_Game, name);
 
   void teleportDebugCharacterToMouse() =>
-      sendRequest(IsometricRequest.Debug_Character_Teleport_To_Mouse);
+      sendIsometricRequest(IsometricRequest.Debug_Character_Teleport_To_Mouse);
 
   void DebugCharacterWalkToMouse() =>
-      sendRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
+      sendIsometricRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
 
   void debugCharacterToggleAutoAttack() =>
-      sendRequest(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
+      sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
 
   void debugCharacterTogglePathFindingEnabled() =>
-      sendRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
+      sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
 
   void debugCharacterDebugUpdate() =>
-      sendRequest(IsometricRequest.Debug_Character_Debug_Update);
+      sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
 
-  void sendRequest(IsometricRequest request, [dynamic message]) =>
+  void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,
         '${request.index} $message',

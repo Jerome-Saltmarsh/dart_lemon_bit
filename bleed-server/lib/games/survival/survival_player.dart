@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/common/src.dart';
-import 'package:lemon_math/functions/clamp.dart';
+import 'package:lemon_math/src.dart';
 
 import 'survival_game.dart';
 

@@ -9,7 +9,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/gamestream.dart';
 
 import 'package:bleed_server/isometric/src.dart';
-import 'package:lemon_math/functions/clamp.dart';
+import 'package:lemon_math/src.dart';
 
 import 'combat_game.dart';
 

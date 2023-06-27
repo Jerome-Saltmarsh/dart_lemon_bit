@@ -5,8 +5,7 @@ import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/input_type.dart';
 import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/core/game.dart';
-import 'package:lemon_math/functions/random_between.dart';
-import 'package:lemon_math/functions/random_int.dart';
+import 'package:lemon_math/src.dart';
 
 import 'game_fight2d_bot.dart';
 import 'game_fight2d_character.dart';

@@ -2,9 +2,7 @@ import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
 import 'package:bleed_server/core/job.dart';
 import 'package:bleed_server/utils/change_notifier.dart';
-import 'package:lemon_math/functions/adjacent.dart';
-import 'package:lemon_math/functions/give_or_take.dart';
-import 'package:lemon_math/functions/opposite.dart';
+import 'package:lemon_math/src.dart';
 
 
 import 'capture_the_flag_ai.dart';
@@ -543,8 +541,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       player.activatedPowerY = clampY(player.mouseGridY);
     } else {
       final angle = player.mouseAngle;
-      player.activatedPowerX = player.x + getAdjacent(angle, range);
-      player.activatedPowerY = player.y + getOpposite(angle, range);
+      player.activatedPowerX = player.x + adj(angle, range);
+      player.activatedPowerY = player.y + opp(angle, range);
     }
   }
 

@@ -15,8 +15,8 @@ import 'package:bleed_server/common/src/isometric/team_type.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/utils/maths.dart';
 import 'package:bleed_server/utils/system.dart';
-import 'package:lemon_math/library.dart';
 import 'package:bleed_server/isometric/src.dart';
+import 'package:lemon_math/src.dart';
 
 import 'combat_player.dart';
 import 'combat_zombie.dart';
@@ -688,8 +688,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     assert (ai.dead);
     final distance = randomBetween(0, 100);
     final angle = randomAngle();
-    ai.x = ai.spawnX + getAdjacent(angle, distance);
-    ai.y = ai.spawnY + getOpposite(angle, distance);
+    ai.x = ai.spawnX + adj(angle, distance);
+    ai.y = ai.spawnY + opp(angle, distance);
     ai.z = ai.spawnZ;
     ai.clearDest();
     clearCharacterTarget(ai);
@@ -817,9 +817,9 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
       if (character.running) {
         final frontX = character.x +
-            getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
+            adj(character.faceAngle, Node_Size_Three_Quarters);
         final frontY = character.y +
-            getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
+            adj(character.faceAngle, Node_Size_Three_Quarters);
         final nodeTypeInFront = scene.getTypeXYZ(
             frontX, frontY, character.z - Node_Height_Half);
         if (nodeTypeInFront == NodeType.Water) {

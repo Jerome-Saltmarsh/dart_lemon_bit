@@ -57,14 +57,6 @@ class GameNetwork {
   static String convertHttpToWSS(String url, {String port = '8080'}) =>
       url.replaceAll('https', 'wss') + '/:$port';
 
-  void connectToGameEditor() => connectToGame(GameType.Editor);
-
-  void connectToGameCombat() => connectToGame(GameType.Combat);
-
-  void connectToGameRockPaperScissors() => connectToGame(GameType.Rock_Paper_Scissors);
-
-  void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
-
   void connectToGame(GameType gameType, [String message = '']) {
     final regionValue = region.value;
     if (regionValue == null) {

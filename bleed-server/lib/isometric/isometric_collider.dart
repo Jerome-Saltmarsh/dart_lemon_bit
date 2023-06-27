@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/common/src/isometric/team_type.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import 'isometric_character.dart';
 import 'isometric_physics.dart';
@@ -61,8 +61,8 @@ class IsometricCollider extends IsometricPosition {
   /// GETTERS
   /// Expensive Operation
   bool get inactive => !active;
-  double get velocitySpeed => getHypotenuse(velocityX, velocityY);
-  double get velocityAngle => getAngle(velocityX, velocityY);
+  double get velocitySpeed => hyp(velocityX, velocityY);
+  double get velocityAngle => angle(velocityX, velocityY);
   double get left => x - radius;
   double get right => x + radius;
   double get top => y - radius;
@@ -72,8 +72,8 @@ class IsometricCollider extends IsometricPosition {
   void set velocitySpeed(double value){
     assert (value >= 0);
     final currentAngle = velocityAngle;
-    velocityX = getAdjacent(currentAngle, value);
-    velocityY = getOpposite(currentAngle, value);
+    velocityX = adj(currentAngle, value);
+    velocityY = opp(currentAngle, value);
   }
 
   // METHODS
@@ -96,8 +96,8 @@ class IsometricCollider extends IsometricPosition {
   }
 
   void setVelocity(double angle, double speed){
-    velocityX = getAdjacent(angle, speed);
-    velocityY = getOpposite(angle, speed);
+    velocityX = adj(angle, speed);
+    velocityY = opp(angle, speed);
   }
 
   void applyForce({
@@ -105,8 +105,8 @@ class IsometricCollider extends IsometricPosition {
     required double angle,
   }) {
     if (fixed) return;
-    velocityX += getAdjacent(angle, force);
-    velocityY += getOpposite(angle, force);
+    velocityX += adj(angle, force);
+    velocityY += opp(angle, force);
   }
 
   void clampVelocity(double value){

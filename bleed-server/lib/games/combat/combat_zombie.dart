@@ -5,7 +5,7 @@ import 'package:bleed_server/common/src/isometric/character_state.dart';
 import 'package:bleed_server/common/src/isometric/ai_mode.dart';
 import 'package:bleed_server/common/src/isometric/item_type.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import '../../isometric/isometric_character.dart';
 import '../../isometric/isometric_game.dart';
@@ -151,16 +151,16 @@ class CombatZombie extends IsometricCharacter {
           setCharacterStateRunning();
           return;
         case AIMode.Encircle_CW:
-          final targetAngle = getAngleBetween(target.x, target.y, x, y) + piEighth;
+          final targetAngle = angleBetween(target.x, target.y, x, y) + piEighth;
           final distance =  getDistance3(target);
-          destX = target.x + getAdjacent(targetAngle, distance);
-          destY = target.y + getOpposite(targetAngle, distance);
+          destX = target.x + adj(targetAngle, distance);
+          destY = target.y + opp(targetAngle, distance);
           break;
         case AIMode.Encircle_CCW:
-          final targetAngle = getAngleBetween(target.x, target.y, x, y) - piEighth;
+          final targetAngle = angleBetween(target.x, target.y, x, y) - piEighth;
           final distance = getDistance3(target);
-          destX = target.x + getAdjacent(targetAngle, distance);
-          destY = target.y + getOpposite(targetAngle, distance);
+          destX = target.x + adj(targetAngle, distance);
+          destY = target.y + opp(targetAngle, distance);
           break;
       }
     }
@@ -184,7 +184,7 @@ class CombatZombie extends IsometricCharacter {
 
   double get getAngleBetweenTarget {
     assert (target != null);
-    return getAngleBetween(x, y, target!.x, target!.y);
+    return angleBetween(x, y, target!.x, target!.y);
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:bleed_server/common/src/rock_paper_scissors/teams_rock_paper_sci
 import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/core/game.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import 'rock_paper_scissors_player.dart';
 
@@ -23,9 +23,9 @@ class RockPaperScissorsGame extends Game<RockPaperScissorsPlayer> {
       final distanceX = (player.x - player.targetX).abs();
       final distanceY = (player.y - player.targetY).abs();
       if (distanceX < minDistance && distanceY < minDistance) continue;
-      final angle = getAngleBetween(player.x, player.y, player.targetX, player.targetY);
-      player.x -= getAdjacent(angle, movementSpeed);
-      player.y -= getOpposite(angle, movementSpeed);
+      final angle = angleBetween(player.x, player.y, player.targetX, player.targetY);
+      player.x -= adj(angle, movementSpeed);
+      player.y -= opp(angle, movementSpeed);
     }
 
     final total = players.length - 1;

@@ -16,7 +16,7 @@ import 'package:bleed_server/core/game.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/utils/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
@@ -226,8 +226,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void move(IsometricPosition value, double angle, double distance) {
-    value.x += getAdjacent(angle, distance);
-    value.y += getOpposite(angle, distance);
+    value.x += adj(angle, distance);
+    value.y += opp(angle, distance);
   }
 
   double getDistanceFromPlayerMouse(IsometricPlayer player,
@@ -409,8 +409,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     var completed = false;
 
     if (!character.withinRadiusXYZ(x, y, z, range)) {
-      x = character.x + getAdjacent(r, range);
-      y = character.y + getOpposite(r, range);
+      x = character.x + adj(r, range);
+      y = character.y + opp(r, range);
     }
 
     final nodeIndex = scene.getIndexXYZ(x, y, z);
@@ -436,8 +436,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!completed) {
       final distance = getDistanceXY(x, y, character.x, character.y);
       final jumps = distance ~/ Node_Size_Half;
-      final jumpX = getAdjacent(r, Node_Size_Half);
-      final jumpY = getOpposite(r, Node_Size_Half);
+      final jumpX = adj(r, Node_Size_Half);
+      final jumpY = opp(r, Node_Size_Half);
 
       for (var i = 0; i < jumps; i++) {
         x -= jumpX;
@@ -468,8 +468,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     dispatchAttackPerformed(
       ItemType.Weapon_Thrown_Grenade,
-      player.x + getAdjacent(player.lookRadian, 60),
-      player.y + getOpposite(player.lookRadian, 60),
+      player.x + adj(player.lookRadian, 60),
+      player.y + opp(player.lookRadian, 60),
       player.z + Character_Gun_Height,
       player.lookRadian,
     );
@@ -594,8 +594,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     final attackRadiusHalf = attackRadius * 0.5;
-    final performX = character.x + getAdjacent(angle, attackRadiusHalf);
-    final performY = character.y + getOpposite(angle, attackRadiusHalf);
+    final performX = character.x + adj(angle, attackRadiusHalf);
+    final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
 
     character.assignWeaponStateMelee();
@@ -762,8 +762,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     final attackRadiusHalf = attackRadius * 0.5;
-    final performX = character.x + getAdjacent(angle, attackRadiusHalf);
-    final performY = character.y + getOpposite(angle, attackRadiusHalf);
+    final performX = character.x + adj(angle, attackRadiusHalf);
+    final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
 
     for (final other in characters) {
@@ -820,8 +820,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     dispatchAttackPerformed(
       character.weaponType,
-      character.x + getAdjacent(angle, 70),
-      character.y + getOpposite(angle, 70),
+      character.x + adj(angle, 70),
+      character.y + opp(angle, 70),
       character.z + Character_Gun_Height,
       angle,
     );
@@ -1316,7 +1316,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    final ratio = 1.0 / getHypotenuse(xDiff, yDiff);
+    final ratio = 1.0 / hyp(xDiff, yDiff);
     final xDiffNormalized = xDiff * ratio;
     final yDiffNormalized = yDiff * ratio;
     final halfOverlap = overlap * 0.5;
@@ -1817,8 +1817,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     src.assignWeaponStateFiring();
     dispatchAttackPerformed(
       src.weaponType,
-      src.x + getAdjacent(angle, 60),
-      src.y + getOpposite(angle, 60),
+      src.x + adj(angle, 60),
+      src.y + opp(angle, 60),
       src.z + Character_Gun_Height,
       angle,
     );
@@ -1856,8 +1856,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
     // final r = 10.0 + (src.isTemplate ? ItemType.getWeaponLength(src.weaponType) : 0);
     final r = 5.0;
-    projectile.x = src.x + getAdjacent(finalAngle, r);
-    projectile.y = src.y + getOpposite(finalAngle, r);
+    projectile.x = src.x + adj(finalAngle, r);
+    projectile.y = src.y + opp(finalAngle, r);
     projectile.z = src.z + Character_Gun_Height;
     projectile.startX = projectile.x;
     projectile.startY = projectile.y;

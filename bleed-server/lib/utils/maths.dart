@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 double distanceV2(Position a, Position b) {
-  return getHypotenuse(a.x - b.x, a.y - b.y);
+  return hyp(a.x - b.x, a.y - b.y);
 }
 
 double radiansV2(Position a, Position b) {
@@ -26,7 +26,7 @@ double radiansBetween(double x1, double y1, double x2, double y2) {
 }
 
 double normalize(double x, double y) {
-  return 1.0 / getHypotenuse(x, y);
+  return 1.0 / hyp(x, y);
 }
 
 double normalizeX(double x, double y) {

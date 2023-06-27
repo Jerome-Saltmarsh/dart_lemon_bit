@@ -1,7 +1,7 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/src.dart';
-import 'package:lemon_math/functions/random_int.dart';
+import 'package:lemon_math/src.dart';
 
 class IsometricZombie extends IsometricCharacter {
 

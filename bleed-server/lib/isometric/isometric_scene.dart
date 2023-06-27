@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/common.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import 'isometric_gameobject.dart';
 import 'isometric_position.dart';
@@ -164,10 +164,10 @@ class IsometricScene {
     final distance = getDistanceXY(x1, y1, x2, y2);
     final jumps = distance ~/ Node_Size_Half;
     if (jumps <= 0) return false;
-    final angle = getAngleBetween(x1, y1, x2, y2);
+    final angle = angleBetween(x1, y1, x2, y2);
     for (var i = 0; i < jumps; i++) {
-      final x = x1 + getAdjacent(angle, i * Node_Size_Half);
-      final y = y1 + getOpposite(angle, i * Node_Size_Half);
+      final x = x1 + adj(angle, i * Node_Size_Half);
+      final y = y1 + opp(angle, i * Node_Size_Half);
       if (getCollisionAt(x, y, z)) return true;
     }
     return false;
@@ -406,8 +406,8 @@ class IsometricScene {
     final distance = a.getDistance3(b);
     final jumpSize = Node_Size_Quarter;
     final jumps = distance ~/ jumpSize;
-    final velX = getAdjacent(angle, jumpSize);
-    final velY = getOpposite(angle, jumpSize);
+    final velX = adj(angle, jumpSize);
+    final velY = opp(angle, jumpSize);
 
     for (var i = 0; i < jumps; i++) {
       positionX += velX;

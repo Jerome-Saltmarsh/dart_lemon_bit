@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/isometric/isometric_game.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_player.dart';
@@ -369,7 +369,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   double getAngleXY(double x, double y) =>
-      getAngleBetween(this.x, this.y, x, y);
+      angleBetween(this.x, this.y, x, y);
 
   void setCharacterStateRunning()=>
       setCharacterState(value: CharacterState.Running, duration: 0);

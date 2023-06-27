@@ -1,4 +1,5 @@
-import 'package:lemon_math/library.dart';
+
+import 'package:lemon_math/src.dart';
 
 String generateRandomName() {
 

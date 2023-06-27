@@ -9,7 +9,7 @@ import 'package:bleed_server/core/player.dart';
 import 'package:bleed_server/games/isometric_editor/isometric_editor.dart';
 
 import 'package:lemon_byte/byte_writer.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 import 'isometric_character_template.dart';
 import 'isometric_collider.dart';
@@ -81,7 +81,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   double get mouseGridZ => game.clampZ(z);
 
   /// in radians
-  double get mouseAngle => getAngleBetween(
+  double get mouseAngle => angleBetween(
       mouseGridX  + Character_Gun_Height,
       mouseGridY + Character_Gun_Height, x, y,
   );
