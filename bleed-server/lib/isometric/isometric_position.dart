@@ -5,15 +5,33 @@ import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/src.dart';
 
-class IsometricPosition with Position {
+class IsometricPosition {
+  var x = 0.0;
+  var y = 0.0;
   var z = 0.0;
 
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
   int get indexZ => z ~/ Node_Size_Half;
+
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
-  double get order => (y + x + z);
+  double get order => (x + y + z);
+
+  double getDistance(IsometricPosition value) =>
+      getDistanceXYZ(value.x, value.y, value.z);
+
+  double getDistanceXYZ(double x, double y, double z) =>
+      hyp3(this.x - x, this.y - y, this.z - z);
+
+  double getDistanceXY(double x, double y) =>
+      hyp2(this.x - x, this.y - y);
+
+  double getAngle(IsometricPosition value) =>
+      getAngleXY(value.x, value.y);
+
+  double getAngleXY(double x, double y) =>
+      angleBetween(this.x, this.y, x, y);
 
   IsometricPosition set({double? x, double? y, double? z}){
      if (x != null) this.x = x;
@@ -84,9 +102,6 @@ class IsometricPosition with Position {
 
   double getDistanceSquared(IsometricPosition position) =>
       getDistanceSquaredXYZ(position.x, position.y, position.z);
-
-  double getDistanceXYZ(double x, double y, double z) =>
-       sqrt(getDistanceSquaredXYZ(x, y, z));
 
   double getDistanceSquaredXYZ(double x, double y, double z) =>
       pow(this.x - x, 2) +

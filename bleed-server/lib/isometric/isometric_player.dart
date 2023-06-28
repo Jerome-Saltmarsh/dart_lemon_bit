@@ -430,7 +430,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   void writeProjectile(IsometricProjectile projectile){
     if (!projectile.active) return;
     writePosition(projectile);
-    writeDouble(projectile.z);
     writeByte(projectile.type);
     writeAngle(projectile.velocityAngle);
   }
@@ -472,9 +471,10 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte((value * 255).toInt());
   }
 
-  void writePosition(Position value){
+  void writePosition(IsometricPosition value){
     writeDouble(value.x);
     writeDouble(value.y);
+    writeDouble(value.z);
   }
 
   void writeIsometricPosition(IsometricPosition value){
@@ -500,14 +500,10 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writePlayerTarget() {
+    final target = this.target;
+    if (target == null) return;
     writeByte(ServerResponse.Player_Target);
-    writePosition(target != null ? target! : mouse);
-
-    if (target != null){
-      writeDouble(target!.z);
-    } else{
-      writeDouble(z);
-    }
+    writePosition(target);
   }
 
   void writeAngle(double radians){
@@ -585,7 +581,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(scene.shapes[index]);
   }
 
-  void lookAt(Position position) {
+  void lookAt(IsometricPosition position) {
     assert(!dead);
     lookRadian = this.getAngle(position) + pi;
   }

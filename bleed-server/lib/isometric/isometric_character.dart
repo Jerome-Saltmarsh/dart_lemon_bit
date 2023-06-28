@@ -360,7 +360,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     return withinRadiusPosition(target, weaponRange);
   }
 
-  void face(Position position) => faceXY(position.x, position.y);
+  void face(IsometricPosition position) => faceXY(position.x, position.y);
 
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
