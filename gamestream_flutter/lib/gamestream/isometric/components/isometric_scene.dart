@@ -56,8 +56,7 @@ class IsometricScene {
   var onscreenNodes = 0;
   var torch_emission_intensity = 1.0;
 
-  // CONSTANTS
-
+  final shadow = IsometricPosition();
   late var interpolation_length = 6;
 
   late final Watch<EaseType> interpolation_ease_type = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
@@ -312,8 +311,6 @@ class IsometricScene {
     }
   }
 
-  final shadow = IsometricPosition();
-
   void markShadow(IsometricPosition vector){
     final index = vector.nodeIndex - area;
     if (index < 0) return;
@@ -363,11 +360,10 @@ class IsometricScene {
   }
 
   int getIndexRow(int index) => (index % area) ~/ totalColumns;
+
   int getIndexZ(int index) => index ~/ area;
+
   int getIndexColumn(int index) => index % totalColumns;
-
-
-  /// EMIT LIGHT FUNCTIONS
 
   void emitLightAHSVShadowed({
     required int index,
