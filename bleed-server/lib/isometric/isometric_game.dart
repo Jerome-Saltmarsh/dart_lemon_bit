@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_server/common.dart';
 import 'package:bleed_server/core/game.dart';
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/utils/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/src.dart';
 
@@ -395,7 +394,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final startZ = character.z;
 
     final z = character.z;
-    final r = radian(x1: character.x, y1: character.y, x2: x, y2: y);
+    final r = angleBetween(character.x, character.y, x, y);
     var completed = false;
 
     if (!character.withinRadiusXYZ(x, y, z, range)) {
@@ -1051,7 +1050,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!gameObject.hitable) continue;
       if (!gameObject.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
-        angle: radian(x1: x, y1: y, x2: gameObject.x, y2: gameObject.y),
+        angle: angleBetween(x, y, gameObject.x, gameObject.y),
         target: gameObject,
         srcCharacter: srcCharacter,
         damage: damage,
@@ -1067,7 +1066,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (character.dead) continue;
       if (!character.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
-        angle: radian(x1: x, y1: y, x2: character.x, y2: character.y),
+        angle: angleBetween(x, y, character.x, character.y),
         target: character,
         srcCharacter: srcCharacter,
         damage: damage,

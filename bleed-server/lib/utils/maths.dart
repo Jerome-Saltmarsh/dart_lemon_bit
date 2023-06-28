@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:lemon_math/src.dart';
 
 
-double radian({
-  required double x1,
-  required double y1,
-  required double x2,
-  required double y2
-}) => atan2(y2 - y1, x2 - x1);
+// double radian({
+//   required double x1,
+//   required double y1,
+//   required double x2,
+//   required double y2
+// }) => atan2(y2 - y1, x2 - x1);
 
 double radiansBetween2(Position a, double x, double y) {
   return radiansBetween(a.x, a.y, x, y);
