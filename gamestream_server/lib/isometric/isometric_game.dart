@@ -1629,6 +1629,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.target = findNearestEnemy(character, radius: character.autoTargetRange);
     }
 
+    if (character.runToDestinationEnabled) {
+      if (character.deadBusyOrWeaponStateBusy || character.runDestinationWithinRadiusRunSpeed){
+        character.setCharacterStateIdle();
+      } else {
+        character.runToDestination();
+      }
+    }
+
     if (character.pathFindingEnabled) {
 
       if (character.pathIndex >= 0 && getNodeIndexV3(character) == character.pathNodeIndex){
@@ -1646,12 +1654,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (character.pathIndex >= 0){
         setDestinationToPathNodeIndex(character);
-      }
-
-      if (character.deadBusyOrWeaponStateBusy || character.runDestinationWithinRadiusRunSpeed){
-        character.setCharacterStateIdle();
-      } else {
-        character.runToDestination();
       }
 
       final target = character.target;

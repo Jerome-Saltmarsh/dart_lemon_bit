@@ -48,4 +48,29 @@ class Moba extends IsometricGame<MobaPlayer> {
     player.z = redBase1.z;
     return player;
   }
+
+  @override
+  void onPlayerUpdateRequestReceived({
+    required MobaPlayer player,
+    required int direction,
+    required bool mouseLeftDown,
+    required bool mouseRightDown,
+    required bool keySpaceDown,
+    required bool inputTypeKeyboard}) {
+
+    if (player.deadOrBusy) return;
+    if (!player.active) return;
+
+    if (mouseRightDown){
+      player.selectDebugCharacterNearestToMouse();
+    }
+
+    if (direction != IsometricDirection.None){
+      player.runToDestinationEnabled = false;
+      characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
+    } else if (!player.runToDestinationEnabled){
+      player.setCharacterStateIdle();
+    }
+
+  }
 }
