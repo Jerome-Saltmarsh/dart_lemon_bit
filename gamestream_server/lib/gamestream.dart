@@ -21,8 +21,6 @@ class Gamestream {
   var _highScore = 0;
   var frame = 0;
 
-
-
   int get highScore => _highScore;
 
   set highScore(int value) {

@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/utils.dart';
 
-import 'package:gamestream_server/firestoreClient/firestoreService.dart';
 import 'package:gamestream_server/core/player.dart';
 import 'package:gamestream_server/games/isometric_editor/isometric_editor.dart';
 
@@ -43,7 +42,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   IsometricCharacter? debugCharacter;
   IsometricGameObject? editorSelectedGameObject;
   IsometricCollider? _aimTarget; // the currently highlighted character
-  Account? account;
 
   IsometricPlayer({
     required this.game,
