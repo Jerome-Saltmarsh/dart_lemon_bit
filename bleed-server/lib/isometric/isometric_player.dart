@@ -235,7 +235,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       writeVector3(character);
       writeCharacterHealthAndAnimationFrame(character);
 
-      if (character is IsometricCharacterTemplate) {
+      if (character is IsometricCharacterTemplate && character.characterTypeTemplate) {
         writeCharacterUpperBody(character);
       }
     }

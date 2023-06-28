@@ -6,14 +6,13 @@ import 'package:gamestream_flutter/library.dart';
 class IsometricPosition with Position {
   late double z;
 
-  // GETTERS
-
   int get indexZ => z ~/ Node_Size_Half;
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
-  double get indexSum => (indexRow + indexColumn).toDouble();
   int get nodeIndex => gamestream.isometric.scene.getNodeIndex(x, y, z);
   int get indexProjection => nodeIndex % gamestream.isometric.scene.projection;
+
+  double get indexSum => (indexRow + indexColumn).toDouble();
 
   bool get onscreen {
      final rx = renderX;

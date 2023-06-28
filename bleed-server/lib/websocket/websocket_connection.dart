@@ -862,6 +862,16 @@ class WebSocketConnection with ByteReader {
         if (debugCharacter == null) return;
         player.game.updateCharacter(debugCharacter);
         break;
+
+      case IsometricRequest.Debug_Character_Set_Character_Type:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null)
+          return;
+        final characterType = parseArg2(arguments);
+        if (characterType == null)
+          return;
+        debugCharacter.characterType = characterType;
+        break;
     }
   }
 }

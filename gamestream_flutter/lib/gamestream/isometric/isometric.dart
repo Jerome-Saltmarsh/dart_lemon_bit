@@ -120,6 +120,12 @@ class Isometric {
   void debugCharacterDebugUpdate() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
 
+  void debugCharacterSetCharacterType(int characterType) =>
+      sendIsometricRequest(
+          IsometricRequest.Debug_Character_Set_Character_Type,
+          characterType,
+      );
+
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,

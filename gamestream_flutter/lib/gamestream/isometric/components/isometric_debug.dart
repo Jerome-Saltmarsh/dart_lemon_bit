@@ -40,6 +40,8 @@ class IsometricDebug {
   final autoAttack = Watch(false);
   final pathFindingEnabled = Watch(false);
 
+  final windowOpenSelectCharacterType = Watch(false);
+
   late final characterSelected = Watch(false, onChanged: onChangedCharacterSelected);
 
   Isometric get isometric => gamestream.isometric;
@@ -72,7 +74,7 @@ class IsometricDebug {
                   buildRowWatchInt(text: 'path-index', watch: pathIndex),
                   buildRowWatchInt(text: 'path-end', watch: pathEnd),
                   buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
-                  buildRow(text: 'character-type', value: buildWatch(characterType, (t) => buildText(CharacterType.getName(t)))),
+                  buildRow(text: 'character-type', value: buildDropDownCharacterType()),
                   buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
                   buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
                   buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
@@ -241,4 +243,21 @@ class IsometricDebug {
        isometric.camera.followTarget.value = true;
      }
   }
+
+  Widget buildDropDownCharacterType() => buildWatch(
+      isometric.debug.characterType,
+      (debugCharacterType) => DropdownButton<int>(
+            value: debugCharacterType,
+            onChanged: (int? newValue) {
+              if (newValue == null) return;
+              isometric.debugCharacterSetCharacterType(newValue);
+            },
+            items: CharacterType.values.map((int characterType) => DropdownMenuItem<int>(
+                value: characterType,
+                child: buildText(
+                    CharacterType.getName(characterType),
+                    color: Colors.black87,
+                ),
+              )).toList(),
+          ));
 }

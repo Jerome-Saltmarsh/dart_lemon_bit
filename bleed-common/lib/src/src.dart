@@ -22,7 +22,6 @@ export 'environment_response.dart';
 export 'game_error.dart';
 export 'game_event_type.dart';
 export 'game_type.dart';
-export 'maths.dart';
 export 'particle_type.dart';
 export 'player_event.dart';
 export 'request_modify_canvas_size.dart';

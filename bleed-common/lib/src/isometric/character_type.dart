@@ -8,6 +8,16 @@ class CharacterType {
    static const Triangle = 5;
    static const Dog = 6;
 
+   static const values = [
+     Template,
+     Zombie,
+     Rat,
+     Slime,
+     Wolf,
+     Triangle,
+     Dog,
+   ];
+   
    static String getName(int value){
      return const {
        Template: 'Template',
