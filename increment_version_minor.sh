@@ -18,5 +18,7 @@ git add *
 # Commit the changes with the new version number
 git commit -m "$new_version"
 
+git push
+
 # Pause at the end of the script
 read -p "Press enter to exit"
