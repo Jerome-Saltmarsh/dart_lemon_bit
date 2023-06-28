@@ -1635,7 +1635,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.pathIndex--;
         if (character.pathIndex <= 0 && getNodeIndexV3(character) == character.pathTargetIndex){
           character.clearPath();
+          character.setCharacterStateIdle();
+          character.setDestinationToCurrentPosition();
         }
+      }
+
+      if (character.shouldUpdatePath){
+        updateCharacterPath(character);
       }
 
       if (character.pathIndex >= 0){
@@ -1661,10 +1667,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         }
 
         character.pathTargetIndex = scene.getIndexPosition(target);
-      }
-
-      if (character.shouldUpdatePath){
-        updateCharacterPath(character);
       }
     }
 

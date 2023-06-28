@@ -20,5 +20,3 @@ git commit -m "$new_version"
 
 git push
 
-# Pause at the end of the script
-read -p "Press enter to exit"
