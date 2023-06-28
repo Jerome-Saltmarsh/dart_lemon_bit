@@ -1,7 +1,6 @@
-import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/core/player.dart';
-import 'package:bleed_server/core/job.dart';
+import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/core/player.dart';
+import 'package:gamestream_server/core/job.dart';
 
 abstract class Game <T extends Player> {
   var playerId = 0;

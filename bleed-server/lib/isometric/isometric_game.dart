@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common.dart';
-import 'package:bleed_server/core/game.dart';
-import 'package:bleed_server/gamestream.dart';
+import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/core/game.dart';
+import 'package:gamestream_server/gamestream.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/src.dart';
 

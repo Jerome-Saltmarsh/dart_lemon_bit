@@ -1,5 +1,5 @@
-import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/common/src/isometric/team_type.dart';
+import 'package:gamestream_server/common/src/isometric/item_type.dart';
+import 'package:gamestream_server/common/src/isometric/team_type.dart';
 
 import 'isometric_collider.dart';
 

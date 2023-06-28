@@ -1,6 +1,6 @@
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/isometric/src.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/isometric/src.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricZombie extends IsometricCharacter {

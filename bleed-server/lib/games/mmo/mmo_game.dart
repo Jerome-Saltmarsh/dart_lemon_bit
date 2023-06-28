@@ -1,8 +1,8 @@
 
-import 'package:bleed_server/common.dart';
-import 'package:bleed_server/isometric.dart';
+import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/isometric.dart';
 
-import 'package:bleed_server/games/mmo/mmo_npc.dart';
+import 'package:gamestream_server/games/mmo/mmo_npc.dart';
 
 import 'mmo_player.dart';
 

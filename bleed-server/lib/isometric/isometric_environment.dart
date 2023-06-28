@@ -1,6 +1,6 @@
-import 'package:bleed_server/common/src/isometric/lightning_type.dart';
-import 'package:bleed_server/common/src/isometric/rain_type.dart';
-import 'package:bleed_server/common/src/isometric/wind_type.dart';
+import 'package:gamestream_server/common/src/isometric/lightning_type.dart';
+import 'package:gamestream_server/common/src/isometric/rain_type.dart';
+import 'package:gamestream_server/common/src/isometric/wind_type.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricEnvironment {

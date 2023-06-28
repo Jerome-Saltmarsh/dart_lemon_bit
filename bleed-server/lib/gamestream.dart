@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bleed_server/firestore/firestore.dart';
-import 'package:bleed_server/websocket/websocket_server.dart';
-
+import 'firestore/firestore.dart';
 import 'utils.dart';
 import 'games.dart';
 import 'common.dart';
 import 'core.dart';
 import 'isometric.dart';
+import 'websocket/websocket_server.dart';
 
 class Gamestream {
 

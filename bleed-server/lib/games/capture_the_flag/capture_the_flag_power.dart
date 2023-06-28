@@ -1,7 +1,7 @@
 
 
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_power_mode.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_power_type.dart';
+import 'package:gamestream_server/common/src/capture_the_flag/capture_the_flag_power_mode.dart';
+import 'package:gamestream_server/common/src/capture_the_flag/capture_the_flag_power_type.dart';
 
 class CaptureTheFlagPower {
 

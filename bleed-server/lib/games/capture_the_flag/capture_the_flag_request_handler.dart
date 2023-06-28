@@ -1,8 +1,8 @@
 
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/utils/is_valid_index.dart';
-import 'package:bleed_server/websocket/websocket_connection.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/utils/is_valid_index.dart';
+import 'package:gamestream_server/websocket/websocket_connection.dart';
 
 import 'capture_the_flag_ai.dart';
 import 'capture_the_flag_player.dart';

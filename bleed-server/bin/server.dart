@@ -1,5 +1,4 @@
-import 'package:bleed_server/gamestream.dart';
-
+import 'package:gamestream_server/gamestream.dart';
 
 void main() {
   Gamestream().run();

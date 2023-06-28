@@ -1,9 +1,9 @@
-import 'package:bleed_server/common/src/fight2d/game_fight2d_events.dart';
-import 'package:bleed_server/common/src/fight2d/game_fight2d_node_type.dart';
-import 'package:bleed_server/common/src/fight2d/game_fight2d_response.dart';
-import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/input_type.dart';
-import 'package:bleed_server/core/game.dart';
+import 'package:gamestream_server/common/src/fight2d/game_fight2d_events.dart';
+import 'package:gamestream_server/common/src/fight2d/game_fight2d_node_type.dart';
+import 'package:gamestream_server/common/src/fight2d/game_fight2d_response.dart';
+import 'package:gamestream_server/common/src/game_type.dart';
+import 'package:gamestream_server/common/src/input_type.dart';
+import 'package:gamestream_server/core/game.dart';
 import 'package:lemon_math/src.dart';
 
 import 'game_fight2d_bot.dart';

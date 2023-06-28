@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:bleed_server/common/src/rock_paper_scissors/teams_rock_paper_scissors.dart';
-import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/core/game.dart';
+import 'package:gamestream_server/common/src/rock_paper_scissors/teams_rock_paper_scissors.dart';
+import 'package:gamestream_server/common/src/game_type.dart';
+import 'package:gamestream_server/common/src/server_response.dart';
+import 'package:gamestream_server/core/game.dart';
 import 'package:lemon_math/src.dart';
 
 import 'rock_paper_scissors_player.dart';

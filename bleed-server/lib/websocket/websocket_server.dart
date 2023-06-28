@@ -1,5 +1,5 @@
-import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/websocket/server_base.dart';
+import 'package:gamestream_server/gamestream.dart';
+import 'package:gamestream_server/websocket/server_base.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

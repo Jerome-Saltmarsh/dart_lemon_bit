@@ -1,4 +1,4 @@
-import 'package:bleed_server/common/src.dart';
+import 'package:gamestream_server/common/src.dart';
 
 class IsometricTime {
   var secondsPerFrame = 2;

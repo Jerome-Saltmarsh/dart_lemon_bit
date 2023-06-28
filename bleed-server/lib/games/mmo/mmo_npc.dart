@@ -1,6 +1,6 @@
 
-import 'package:bleed_server/games/mmo/mmo_player.dart';
-import 'package:bleed_server/isometric/isometric_character_template.dart';
+import 'package:gamestream_server/games/mmo/mmo_player.dart';
+import 'package:gamestream_server/isometric/isometric_character_template.dart';
 
 class MMONpc extends IsometricCharacterTemplate {
 

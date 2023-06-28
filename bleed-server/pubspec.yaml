@@ -1,4 +1,4 @@
-name: bleed_server
+name: gamestream_server
 description: The Websocket server for gamestream
 version: 1.0.0
 

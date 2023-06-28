@@ -1,14 +1,14 @@
 
 import 'dart:math';
 
-import 'package:bleed_server/common/src/api_player.dart';
-import 'package:bleed_server/common/src/api_players.dart';
-import 'package:bleed_server/common/src/isometric/item_type.dart';
-import 'package:bleed_server/common/src/combat/combat_power_type.dart';
-import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/gamestream.dart';
+import 'package:gamestream_server/common/src/api_player.dart';
+import 'package:gamestream_server/common/src/api_players.dart';
+import 'package:gamestream_server/common/src/isometric/item_type.dart';
+import 'package:gamestream_server/common/src/combat/combat_power_type.dart';
+import 'package:gamestream_server/common/src/server_response.dart';
+import 'package:gamestream_server/gamestream.dart';
 
-import 'package:bleed_server/isometric/src.dart';
+import 'package:gamestream_server/isometric/src.dart';
 import 'package:lemon_math/src.dart';
 
 import 'combat_game.dart';

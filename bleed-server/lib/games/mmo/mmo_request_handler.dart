@@ -1,7 +1,7 @@
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/games/mmo/mmo_player.dart';
-import 'package:bleed_server/utils/src.dart';
-import 'package:bleed_server/websocket/websocket_connection.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/games/mmo/mmo_player.dart';
+import 'package:gamestream_server/utils/src.dart';
+import 'package:gamestream_server/websocket/websocket_connection.dart';
 
 extension CaptureTheFlagRequestHandler on WebSocketConnection {
 

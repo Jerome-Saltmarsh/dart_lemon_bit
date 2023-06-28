@@ -1,4 +1,4 @@
-import 'package:bleed_server/data_types/boolean32_list.dart';
+import 'package:gamestream_server/data_types/boolean32_list.dart';
 import 'package:test/test.dart';
 
 void main() {

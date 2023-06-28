@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bleed_server/common/src/isometric/team_type.dart';
+import 'package:gamestream_server/common/src/isometric/team_type.dart';
 import 'package:lemon_math/src.dart';
 
 import 'isometric_character.dart';

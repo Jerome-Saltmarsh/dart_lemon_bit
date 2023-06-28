@@ -1,7 +1,7 @@
 
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/isometric/src.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/isometric/src.dart';
 
 import 'capture_the_flag_game.dart';
 import 'capture_the_flag_gameobject_flag.dart';

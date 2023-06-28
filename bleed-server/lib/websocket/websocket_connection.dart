@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/games/mmo/mmo_request_handler.dart';
-import 'package:bleed_server/games/src.dart';
-import 'package:bleed_server/isometric/src.dart';
-import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/core/src.dart';
-import 'package:bleed_server/utils/src.dart';
-import 'package:bleed_server/websocket/src.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/games/mmo/mmo_request_handler.dart';
+import 'package:gamestream_server/games/src.dart';
+import 'package:gamestream_server/isometric/src.dart';
+import 'package:gamestream_server/gamestream.dart';
+import 'package:gamestream_server/core/src.dart';
+import 'package:gamestream_server/utils/src.dart';
+import 'package:gamestream_server/websocket/src.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';

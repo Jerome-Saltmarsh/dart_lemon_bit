@@ -1,8 +1,8 @@
 
 import 'dart:math';
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/isometric/src.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/isometric/src.dart';
 
 import 'survival_player.dart';
 

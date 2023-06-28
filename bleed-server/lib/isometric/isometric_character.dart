@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/isometric/isometric_game.dart';
+import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:lemon_math/src.dart';
 
 import 'isometric_collider.dart';

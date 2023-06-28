@@ -1,5 +1,5 @@
 
-import 'package:bleed_server/common.dart';
+import 'package:gamestream_server/common.dart';
 
 import 'isometric_character.dart';
 

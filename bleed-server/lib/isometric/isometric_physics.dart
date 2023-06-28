@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:bleed_server/utils/typedefs.dart';
+import 'package:gamestream_server/utils/typedefs.dart';
 import 'package:lemon_math/src.dart';
 
 import 'isometric_character.dart';

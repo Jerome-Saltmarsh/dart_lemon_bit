@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src.dart';
+import 'package:gamestream_server/common/src.dart';
 
 class GameFight2DScene {
   static const tileSize = 32.0;
