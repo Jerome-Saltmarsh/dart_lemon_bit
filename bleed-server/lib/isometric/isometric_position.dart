@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/src.dart';
 
@@ -98,7 +97,7 @@ class IsometricPosition {
   }
 
   double getDistance3(IsometricPosition position) =>
-      getDistanceV3(x, y, z, position.x, position.y, position.z);
+      getDistanceXYZ(position.x, position.y, position.z);
 
   double getDistanceSquared(IsometricPosition position) =>
       getDistanceSquaredXYZ(position.x, position.y, position.z);

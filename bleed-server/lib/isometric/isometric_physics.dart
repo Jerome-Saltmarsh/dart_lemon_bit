@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/utils/typedefs.dart';
 import 'package:lemon_math/src.dart';
 
@@ -106,7 +105,7 @@ class IsometricPhysics {
 
     for (final position in positions) {
       if (!where(position)) continue;
-      final colliderDistance = getDistanceV3(position.x, position.y, position.z, x, y, z);
+      final colliderDistance = getDistanceXYZ(position.x, position.y, position.z, x, y, z);
       if (colliderDistance >= closestDistance) continue;
       closest = position;
       closestDistance = colliderDistance;
@@ -125,7 +124,7 @@ class IsometricPhysics {
     var closestDistance = 9999999.0;
 
     for (final position in positions) {
-      final colliderDistance = getDistanceV3(position.x, position.y, position.z, x, y, z);
+      final colliderDistance = getDistanceXYZ(position.x, position.y, position.z, x, y, z);
       if (colliderDistance >= closestDistance) continue;
       closest = position;
       closestDistance = colliderDistance;

@@ -3,7 +3,6 @@ import 'package:bleed_server/common/src/fight2d/game_fight2d_node_type.dart';
 import 'package:bleed_server/common/src/fight2d/game_fight2d_response.dart';
 import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/input_type.dart';
-import 'package:bleed_server/common/src/maths.dart';
 import 'package:bleed_server/core/game.dart';
 import 'package:lemon_math/src.dart';
 
@@ -195,7 +194,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     if (bot.target == null) {
        for (final character in characters) {
          if (character == bot) continue;
-         final distanceSquared = getDistanceV2Squared(character.x, character.y, bot.x, bot.y);
+         final distanceSquared = getDistanceXYSquared(character.x, character.y, bot.x, bot.y);
          if (distanceSquared > nearestCharacterDistanceSquared) continue;
          nearestCharacterDistanceSquared = distanceSquared;
          bot.target = character;

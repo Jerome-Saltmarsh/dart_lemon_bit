@@ -221,7 +221,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   double getDistanceFromPlayerMouse(IsometricPlayer player,
       IsometricPosition position) =>
-      getDistanceV3(
+      getDistanceXYZ(
         player.mouseGridX,
         player.mouseGridY,
         player.z,
@@ -265,8 +265,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if ((mouseY - character.y).abs() > IsometricSettings.Pickup_Range) continue;
       if ((mouseZ - character.z).abs() > IsometricSettings.Pickup_Range) continue;
       if (character == player) continue;
-      final distance = getDistanceV3Squared(
-          mouseX, mouseY, mouseZ, character.x, character.y, character.z);
+      final distance = getDistanceXYZSquared(
+          mouseX, mouseY, mouseZ, character.x, character.y, character.z,
+      );
       if (distance > closestDistance) continue;
       closestDistance = distance;
       closestCollider = character;
@@ -278,8 +279,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if ((mouseX - gameObject.x).abs() > IsometricSettings.Pickup_Range) continue;
       if ((mouseY - gameObject.y).abs() > IsometricSettings.Pickup_Range) continue;
       if ((mouseZ - gameObject.z).abs() > IsometricSettings.Pickup_Range) continue;
-      final distance = getDistanceV3Squared(
-          mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
+      final distance = getDistanceXYZSquared(
+          mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z,
+      );
       if (distance > closestDistance) continue;
       closestDistance = distance;
       closestCollider = gameObject;
@@ -423,7 +425,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (!completed) {
-      final distance = getDistanceXY(x, y, character.x, character.y);
+      final distance = character.getDistanceXY(x, y);
       final jumps = distance ~/ Node_Size_Half;
       final jumpX = adj(r, Node_Size_Half);
       final jumpY = opp(r, Node_Size_Half);
@@ -465,8 +467,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     player.assignWeaponStateThrowing();
 
-    final mouseDistance = getDistanceXY(
-        player.x, player.y, player.mouseGridX, player.mouseGridY);
+    final mouseDistance = player.getDistanceXY(player.mouseGridX, player.mouseGridY);
     final throwDistance = min(mouseDistance, IsometricPhysics.Max_Throw_Distance);
     final throwRatio = throwDistance / IsometricPhysics.Max_Throw_Distance;
     final velocity = IsometricPhysics.Max_Throw_Velocity * throwRatio;
@@ -1288,7 +1289,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void resolveCollisionPhysicsRadial(IsometricCollider a, IsometricCollider b) {
     final combinedRadius = a.radius + b.radius;
-    final totalDistance = getDistanceXY(a.x, a.y, b.x, b.y);
+    final totalDistance = a.getDistanceXY(b.x, b.y);
     final overlap = combinedRadius - totalDistance;
     if (overlap < 0) return;
     var xDiff = a.x - b.x;

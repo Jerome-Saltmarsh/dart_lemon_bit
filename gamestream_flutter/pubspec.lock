@@ -389,7 +389,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-math"
       relative: false
     source: path
-    version: "1.2.16"
+    version: "1.2.22"
   lemon_watch:
     dependency: transitive
     description:
