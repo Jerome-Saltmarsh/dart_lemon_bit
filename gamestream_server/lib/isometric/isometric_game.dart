@@ -1345,14 +1345,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.state == CharacterState.Dead) return;
 
     dispatchGameEventCharacterDeath(character);
-    character.pathIndex = -1;
-    character.pathStart = -1;
-    character.pathTargetIndex = -1;
     character.health = 0;
     character.state = CharacterState.Dead;
     character.stateDuration = 0;
     character.animationFrame = 0;
     deactivateCollider(character);
+    character.clearPath();
     clearCharacterTarget(character);
     character.customOnDead();
     customOnCharacterDead(character);
@@ -1635,6 +1633,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (character.pathIndex >= 0 && getNodeIndexV3(character) == character.pathNodeIndex){
         character.pathIndex--;
+        if (character.pathIndex <= 0 && getNodeIndexV3(character) == character.pathTargetIndex){
+          character.clearPath();
+        }
       }
 
       if (character.pathIndex >= 0){
@@ -1663,9 +1664,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       if (character.shouldUpdatePath){
-        updateCharacterPath(
-          character: character,
-        );
+        updateCharacterPath(character);
       }
     }
 
@@ -2470,23 +2469,23 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
     character.pathTargetIndex = scene.getIndexPosition(target);
-    // setCharacterPathToPosition(character: character, position: target);
   }
 
-  void setCharacterPathToPosition({
-    required IsometricCharacter character,
-    required IsometricPosition position,
-  }) =>
-      updateCharacterPath(
-        character: character,
-      );
-
-  void updateCharacterPath({
-    required IsometricCharacter character,
-  }) {
+  void updateCharacterPath(IsometricCharacter character) {
     character.pathTargetIndexPrevious = character.pathTargetIndex;
-    character.pathIndex = 0;
+
+    if (character.pathTargetIndex == -1){
+      character.clearPath();
+      return;
+    }
+
     final startIndex = scene.getIndexPosition(character);
+
+    if (character.pathTargetIndex == startIndex){
+      character.clearPath();
+      return;
+    }
+
     final path = character.path;
     var endPath = scene.findPath(
         startIndex, character.pathTargetIndex,
@@ -2499,6 +2498,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     final length = min(path.length, IsometricScene.compiledPathLength);
+
+    if (length < 0) return;
+
     character.pathIndex = length;
     for (var i = 0; i < length; i++){
       path[i] = IsometricScene.compiledPath[IsometricScene.compiledPathLength - length + i];
@@ -2511,8 +2513,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void setDestinationToPathNodeIndex(IsometricCharacter character) {
-    if (character.pathIndex <= 0) return;
-    if (character.pathStart <= 0) return;
+    if (character.pathIndex < 0) return;
+    if (character.pathStart < 0) return;
 
     final pathNodeIndex = character.pathNodeIndex;
     character.runX = scene.getNodePositionX(pathNodeIndex);

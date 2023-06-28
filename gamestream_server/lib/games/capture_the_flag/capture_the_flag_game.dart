@@ -260,10 +260,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void reviveCharacter(IsometricCharacter character) {
     final base = getBaseOwn(character);
     activateCollider(character);
+    character.clearPath();
     character.target = null;
-    character.pathTargetIndex = -1;
-    character.pathStart = -1;
-    character.pathIndex = -1;
     character.health = character.maxHealth;
     character.state = CharacterState.Idle;
     character.x = base.x + giveOrTake(50);
