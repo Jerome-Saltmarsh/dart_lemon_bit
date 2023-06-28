@@ -2491,19 +2491,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         startIndex, character.pathTargetIndex,
         max: character.path.length,
     );
-    IsometricScene.compiledPathLength = 0;
+    var totalPathLength = 0;
     while (endPath != startIndex) {
-      IsometricScene.compiledPath[IsometricScene.compiledPathLength++] = endPath;
+      IsometricScene.compiledPath[totalPathLength++] = endPath;
       endPath = scene.path[endPath];
     }
 
-    final length = min(path.length, IsometricScene.compiledPathLength);
+    final length = min(path.length, totalPathLength);
 
     if (length < 0) return;
 
     character.pathIndex = length;
     for (var i = 0; i < length; i++){
-      path[i] = IsometricScene.compiledPath[IsometricScene.compiledPathLength - length + i];
+      path[i] = IsometricScene.compiledPath[totalPathLength - length + i];
     }
 
     if (character.pathIndex > 0){

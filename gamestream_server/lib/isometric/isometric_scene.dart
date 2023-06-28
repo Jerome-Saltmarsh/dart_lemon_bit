@@ -21,7 +21,6 @@ class IsometricScene {
   static final visitStack = Uint32List(10000);
 
   static final compiledPath = Uint32List(10000);
-  static var compiledPathLength = 0;
 
   static var visitHistoryIndex = 0;
   static var visitStackIndex = 0;
@@ -201,8 +200,13 @@ class IsometricScene {
     final targetRow = getRow(indexEnd);
     final targetColumn = getColumn(indexEnd);
 
-    while (visitStackIndex >= 0 && max-- > 0) {
+    while (visitStackIndex >= 0) {
+
       final currentIndex = visitStack[visitStackIndex--];
+
+      if (max-- <= 0){
+        return currentIndex;
+      }
 
       if (currentIndex == indexEnd)
         return currentIndex;

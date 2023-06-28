@@ -88,9 +88,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   bool get shouldUpdatePath {
-    return
-      (pathTargetIndex != pathTargetIndexPrevious) ||
-      (pathIndex == 0);
+    return (pathTargetIndex != pathTargetIndexPrevious) || (pathIndex == 0);
   }
 
   bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(10);
