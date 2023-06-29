@@ -32,11 +32,12 @@ class IsometricUI {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
                               buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
-                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-second: ${gamestream.isometric.client.formatAverageBytePerSecond(bytes)}')),
-                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-minute: ${gamestream.isometric.client.formatAverageBytePerMinute(bytes)}')),
-                              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-per-hour: ${gamestream.isometric.client.formatAverageBytePerHour(bytes)}')),
+                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
+                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * 45)}')),
+                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * 45 * 60)}')),
+                              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * 45 * 60 * 60)}')),
                               GSRefresh(() =>  buildText(
                                   'connection-duration: ${gamestream.isometric..client.formattedConnectionDuration}\n'
                                   // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
