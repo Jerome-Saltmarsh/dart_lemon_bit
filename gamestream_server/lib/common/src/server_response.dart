@@ -30,6 +30,7 @@ class ServerResponse {
   static const Capture_The_Flag           = 31;
   static const MMO                        = 32;
   static const Isometric                  = 33;
+  static const FPS                        = 34;
 }
 
 

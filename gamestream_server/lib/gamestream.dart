@@ -11,7 +11,7 @@ import 'websocket/websocket_server.dart';
 
 class Gamestream {
 
-  static const Frames_Per_Second = 45;
+  static const Frames_Per_Second = 30;
 
   final games = <Game>[];
   final isometricScenes = IsometricScenes();
@@ -143,7 +143,8 @@ class Gamestream {
     if (!game.players.contains(player)){
       game.players.add(player);
     }
-    player.writeGameType();
+    // player.writeGameType();
+    // player.writeFPS();
     return player;
   }
 }

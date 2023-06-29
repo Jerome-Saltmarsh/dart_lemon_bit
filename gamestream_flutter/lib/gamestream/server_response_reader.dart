@@ -124,6 +124,9 @@ extension ServerResponseReader on Gamestream {
           final errorTypeIndex = readByte();
           error.value = parseIndexToGameError(errorTypeIndex);
           return;
+        case ServerResponse.FPS:
+          serverFPS.value = readUInt16();
+          return;
         default:
           print('read error; index: $index, previous-server-response: $previousServerResponse');
           print(values);

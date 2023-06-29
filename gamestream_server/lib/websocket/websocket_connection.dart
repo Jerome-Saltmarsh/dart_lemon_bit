@@ -653,35 +653,6 @@ class WebSocketConnection with ByteReader {
     }
     final gameType = GameType.values[gameTypeIndex];
     _player = engine.joinGameByType(gameType);
-    // switch (gameType) {
-    //   case GameType.Editor:
-    //     _player = engine.joinGameEditor();
-    //     break;
-    //   case GameType.Combat:
-    //     _player = engine.joinGameCombat();
-    //     break;
-    //   case GameType.Capture_The_Flag:
-    //     _player = engine.joinGameCaptureTheFlag();
-    //     break;
-    //   case GameType.Moba:
-    //     _player = engine.joinGameMoba();
-    //     break;
-    //   case GameType.Mmo:
-    //     _player = engine.joinGameMmo();
-    //     break;
-    //   case GameType.Mobile_Aeon:
-    //    throw Exception('GameType.Mobile_Aeon not supported');
-    //   case GameType.Rock_Paper_Scissors:
-    //     joinGame(engine.getGameRockPaperScissors());
-    //     break;
-    //   case GameType.Fight2D:
-    //     _player = engine.joinGameFight2D();
-    //     break;
-    //   default:
-    //     sendGameError(GameError.Unable_To_Join_Game);
-    //     cancelSubscription();
-    //     return;
-    // }
   }
 
   void cancelSubscription() {

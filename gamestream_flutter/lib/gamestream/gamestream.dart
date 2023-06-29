@@ -20,6 +20,8 @@ import 'ui/widgets/build_text.dart';
 class Gamestream with ByteReader {
   var previousServerResponse = -1;
 
+  final serverFPS = Watch(0);
+
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
   final decoder = ZLibDecoder();

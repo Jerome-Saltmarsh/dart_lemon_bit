@@ -1,5 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/gamestream.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/src.dart';
 
@@ -18,6 +19,7 @@ abstract class Player with ByteWriter {
 
   Player(){
     writeGameType();
+    writeFPS();
   }
 
   set mouseLeftDown(bool value){
@@ -50,6 +52,7 @@ abstract class Player with ByteWriter {
   void writePlayerGame();
 
   Game get game;
+
 }
 
 extension PlayerExtension on Player {
@@ -62,5 +65,10 @@ extension PlayerExtension on Player {
   void writeGameType(){
     writeByte(ServerResponse.Game_Type);
     writeByte(game.gameType.index);
+  }
+
+  void writeFPS() {
+    writeByte(ServerResponse.FPS);
+    writeUInt16(Gamestream.Frames_Per_Second);
   }
 }
