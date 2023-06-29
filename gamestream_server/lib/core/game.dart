@@ -1,6 +1,7 @@
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/player.dart';
 import 'package:gamestream_server/core/job.dart';
+import 'package:gamestream_server/gamestream.dart';
 
 abstract class Game <T extends Player> {
   var playerId = 0;
@@ -10,6 +11,8 @@ abstract class Game <T extends Player> {
 
   int get maxPlayers;
   bool get isFull => players.length >= maxPlayers;
+
+  int get fps => Gamestream.Frames_Per_Second;
 
   var _id = 0;
 
@@ -52,24 +55,36 @@ abstract class Game <T extends Player> {
 
   void removePlayer(T player);
 
-  void createJob({required int timer, required Function action}) {
+  void addJob({
+    required num seconds,
+    required Function action,
+    bool repeat = false,
+  }) {
+    final frames = (fps * seconds).toInt();
      for (final job in jobs){
-         if (job.timer > 0) continue;
-         job.timer = timer;
+         if (job.repeat) continue;
+         if (job.remaining > 0) continue;
+         job.remaining = frames;
+         job.duration = frames;
          job.action = action;
+         job.repeat = repeat;
          return;
      }
-     jobs.add(GameJob(timer, action));
+     jobs.add(GameJob(frames, action, repeat: repeat));
   }
 
   void updateJobs() {
     for (var i = 0; i < jobs.length; i++) {
       final job = jobs[i];
-      if (job.timer <= 0) continue;
-      job.timer--;
-      if (job.timer > 0) continue;
+      if (job.remaining <= 0) continue;
+      job.remaining--;
+      if (job.remaining > 0) continue;
       job.action();
-      job.action = _clearJob;
+      if (job.repeat) {
+        job.remaining = job.duration;
+      } else {
+        job.action = _clearJob;
+      }
     }
   }
 

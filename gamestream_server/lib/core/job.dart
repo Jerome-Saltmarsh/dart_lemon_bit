@@ -1,6 +1,10 @@
 class GameJob {
-  int timer;
+  int duration;
+  late int remaining;
   Function action;
+  bool repeat;
 
-  GameJob(this.timer, this.action);
+  GameJob(this.duration, this.action, {this.repeat = false}) {
+    remaining = duration;
+  }
 }

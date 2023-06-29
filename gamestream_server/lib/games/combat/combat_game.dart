@@ -25,7 +25,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   static final Player_Respawn_Duration  = Gamestream.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
-  static const AI_Respawn_Duration      = 300;
+  static const AI_Respawn_Duration      = 6.0; // seconds
   static const Chance_Of_Item_Bombs     = 0.1;
   static const Chance_Of_Item_Gem       = 0.5;
   static const Credits_Collected        = 1;
@@ -244,7 +244,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
      }
 
      if (target is CombatZombie && scene.spawnPoints.isNotEmpty) {
-       createJob(timer: AI_Respawn_Duration, action: (){
+       addJob(seconds: AI_Respawn_Duration, action: (){
          respawnAI(target);
        });
        if (random.nextDouble() < Chance_Of_Item_Gem) {
@@ -459,7 +459,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       spawnRandomGemsAtIndex(nodeIndex);
     }
 
-    createJob(timer: 1000, action: (){
+    addJob(seconds: 10, action: (){
       setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,

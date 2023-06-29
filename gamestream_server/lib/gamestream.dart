@@ -128,7 +128,7 @@ class Gamestream {
       environment: IsometricEnvironment(),
     );
 
-  Game buildGameMoba() => Moba(
+  Game buildGameMoba() => MobaGame(
       scene: isometricScenes.moba,
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),

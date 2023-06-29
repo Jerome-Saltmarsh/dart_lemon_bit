@@ -2,14 +2,18 @@
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/isometric/src.dart';
 
+import 'moba_creep.dart';
 import 'moba_player.dart';
 
-class Moba extends IsometricGame<MobaPlayer> {
+class MobaGame extends IsometricGame<MobaPlayer> {
 
   late final IsometricGameObject redBase1;
   late final IsometricGameObject blueBase1;
 
-  Moba({
+  final team1 = 10;
+  final team2 = 20;
+
+  MobaGame({
     required super.scene,
     required super.time,
     required super.environment,
@@ -34,11 +38,29 @@ class Moba extends IsometricGame<MobaPlayer> {
 
     gameObjects.add(redBase1);
     gameObjects.add(blueBase1);
-  }
 
+    addJob(seconds: 10, action: spawnCreeps, repeat: true);
+  }
 
   @override
   int get maxPlayers => 10;
+
+  void spawnCreeps() {
+    for (var i = 0; i < 3; i++){
+      spawn(MobaCreep(
+        game: this,
+        characterType: CharacterType.Zombie,
+        health: 10,
+        damage: 1,
+        team: team1,
+        weaponType: ItemType.Empty,
+        weaponRange: 20,
+        x: redBase1.x,
+        y: redBase1.y,
+        z: redBase1.z,
+      ));
+    }
+  }
 
   @override
   MobaPlayer buildPlayer() {
@@ -46,6 +68,7 @@ class Moba extends IsometricGame<MobaPlayer> {
     player.x = redBase1.x;
     player.y = redBase1.y;
     player.z = redBase1.z;
+    player.team = team1;
     return player;
   }
 
@@ -71,6 +94,5 @@ class Moba extends IsometricGame<MobaPlayer> {
     } else if (!player.runToDestinationEnabled){
       player.setCharacterStateIdle();
     }
-
   }
 }

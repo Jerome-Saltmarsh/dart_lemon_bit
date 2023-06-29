@@ -39,6 +39,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   final scripts = <IsometricScript>[];
   final scriptReader = ByteReader();
 
+  void spawn(IsometricCollider value){
+    if (value is IsometricCharacter){
+       characters.add(value);
+       return;
+    }
+    if (value is IsometricGameObject){
+       gameObjects.add(value);
+       return;
+    }
+    if (value is IsometricProjectile){
+      projectiles.add(value);
+      return;
+    }
+  }
+
   /// CONSTRUCTOR
   IsometricGame({
     required this.scene,
@@ -170,7 +185,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     // default behavior is to respawn after a period however this can be safely overriden
-    createJob(timer: 1000, action: () {
+    addJob(seconds: 1000, action: () {
       setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,
@@ -493,7 +508,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..owner = player
       ..weaponDamage = damage;
 
-    createJob(timer: IsometricSettings.Grenade_Cook_Duration, action: () {
+    addJob(seconds: IsometricSettings.Grenade_Cook_Duration, action: () {
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;

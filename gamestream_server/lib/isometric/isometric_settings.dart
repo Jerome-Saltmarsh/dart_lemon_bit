@@ -1,6 +1,6 @@
 
 class IsometricSettings {
-  static const Grenade_Cook_Duration = 32;
+  static const Grenade_Cook_Duration = 3;
   static const Weapon_State_Duration_Throw = 20;
   static const Weapon_State_Duration_Melee = 25;
   static const Pickup_Range = 35.0;
