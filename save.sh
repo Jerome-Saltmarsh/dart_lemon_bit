@@ -20,3 +20,4 @@ git commit -m "$new_version"
 
 git push
 
+echo "yes"

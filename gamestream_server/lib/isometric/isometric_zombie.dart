@@ -60,6 +60,7 @@ class IsometricZombie extends IsometricCharacter {
     }
   }
 
+
   void applyHitToTarget() {
     final target = this.target;
     if (target is! IsometricCollider) return;
