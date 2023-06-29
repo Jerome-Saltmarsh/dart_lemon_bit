@@ -52,23 +52,17 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     for (var i = 0; i < Creeps_Per_Spawn; i++){
       spawn(MobaCreep(
         game: this,
-        characterType: CharacterType.Zombie,
         health: 10,
         damage: 1,
         team: teamRed,
-        weaponType: ItemType.Empty,
-        weaponRange: 20,
       )
       );
 
       spawn(MobaCreep(
         game: this,
-        characterType: CharacterType.Zombie,
         health: 10,
         damage: 1,
         team: teamBlue,
-        weaponType: ItemType.Empty,
-        weaponRange: 20,
       )
       );
     }
