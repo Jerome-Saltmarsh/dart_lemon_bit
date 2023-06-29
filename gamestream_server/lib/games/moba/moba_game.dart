@@ -7,18 +7,21 @@ import 'moba_player.dart';
 
 class MobaGame extends IsometricGame<MobaPlayer> {
 
-  late final IsometricGameObject redBase1;
-  late final IsometricGameObject blueBase1;
+  static const Creeps_Per_Spawn = 3;
 
-  final team1 = 10;
-  final team2 = 20;
+  late final IsometricGameObject teamRedBase;
+  late final IsometricGameObject teamBlueBase;
+
+  static const teamRed = 10;
+  static const teamBlue = 20;
 
   MobaGame({
     required super.scene,
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Moba) {
-    redBase1 = IsometricGameObject(
+
+    teamRedBase = IsometricGameObject(
         x: scene.rowLength - 100,
         y: 100,
         z: 24,
@@ -26,9 +29,9 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         id: generateUniqueId(),
     );
 
-    redBase1.hitable = true;
+    teamRedBase.hitable = true;
 
-    blueBase1 = IsometricGameObject(
+    teamBlueBase = IsometricGameObject(
         x: 100,
         y: scene.columnLength - 100,
         z: 24,
@@ -36,8 +39,8 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         id: generateUniqueId(),
     );
 
-    gameObjects.add(redBase1);
-    gameObjects.add(blueBase1);
+    gameObjects.add(teamRedBase);
+    gameObjects.add(teamBlueBase);
 
     addJob(seconds: 10, action: spawnCreeps, repeat: true);
   }
@@ -46,29 +49,38 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   int get maxPlayers => 10;
 
   void spawnCreeps() {
-    for (var i = 0; i < 3; i++){
+    for (var i = 0; i < Creeps_Per_Spawn; i++){
       spawn(MobaCreep(
         game: this,
         characterType: CharacterType.Zombie,
         health: 10,
         damage: 1,
-        team: team1,
+        team: teamRed,
         weaponType: ItemType.Empty,
         weaponRange: 20,
-        x: redBase1.x,
-        y: redBase1.y,
-        z: redBase1.z,
-      ));
+      )
+      );
+
+      spawn(MobaCreep(
+        game: this,
+        characterType: CharacterType.Zombie,
+        health: 10,
+        damage: 1,
+        team: teamBlue,
+        weaponType: ItemType.Empty,
+        weaponRange: 20,
+      )
+      );
     }
   }
 
   @override
   MobaPlayer buildPlayer() {
     final player = MobaPlayer(game: this);
-    player.x = redBase1.x;
-    player.y = redBase1.y;
-    player.z = redBase1.z;
-    player.team = team1;
+    player.x = teamRedBase.x;
+    player.y = teamRedBase.y;
+    player.z = teamRedBase.z;
+    player.team = teamRed;
     return player;
   }
 

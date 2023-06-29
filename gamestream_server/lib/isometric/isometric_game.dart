@@ -2434,6 +2434,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   @override
   T createPlayer() {
     final player = buildPlayer();
+    player.setDestinationToCurrentPosition();
     player.sceneDownloaded = false;
     characters.add(player);
     customOnPlayerJoined(player);
