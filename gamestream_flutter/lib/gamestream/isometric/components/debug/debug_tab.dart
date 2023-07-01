@@ -1,0 +1,4 @@
+
+enum DebugTab {
+  Character, Network,
+}

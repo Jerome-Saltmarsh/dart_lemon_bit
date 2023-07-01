@@ -15,6 +15,10 @@ import 'gamestream.dart';
 
 extension ServerResponseReader on Gamestream {
 
+  static final serverResponseStack = Uint8List(1000);
+  static final serverResponseStackLength = Uint16List(1000);
+  static var serverResponseStackIndex = 0;
+
   void readServerResponse(Uint8List values) {
     assert (values.isNotEmpty);
     updateFrame.value++;
@@ -24,8 +28,21 @@ extension ServerResponseReader on Gamestream {
     bufferSize.value = values.length;
     bufferSizeTotal.value += values.length;
 
+    var serverResponseStart = -1;
+    var serverResponse = -1;
+    serverResponseStackIndex = -1;
+
     while (true) {
-      final serverResponse = readByte();
+
+      if (serverResponse != -1) {
+        serverResponseStackIndex++;
+        serverResponseStack[serverResponseStackIndex] = serverResponse;
+        serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
+      }
+
+      serverResponseStart = index;
+      serverResponse = readByte();
+
       switch (serverResponse) {
         case ServerResponse.Api_Player:
           readApiPlayer();
@@ -43,6 +60,9 @@ extension ServerResponseReader on Gamestream {
           readGameObject();
           break;
         case ServerResponse.End:
+          serverResponseStackIndex++;
+          serverResponseStack[serverResponseStackIndex] = serverResponse;
+          serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
           return readEnd();
         case ServerResponse.Projectiles:
           readProjectiles();

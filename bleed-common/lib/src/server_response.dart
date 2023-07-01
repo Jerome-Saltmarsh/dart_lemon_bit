@@ -30,6 +30,40 @@ class ServerResponse {
   static const MMO                        = 32;
   static const Isometric                  = 33;
   static const FPS                        = 34;
+
+  static String getName(int value) {
+    return <int, String>{
+      Api_Player: "Api_Player",
+      Projectiles: "Projectiles",
+      Game_Event: "Game_Event",
+      Player_Event: "Player_Event",
+      Game_Time: "Game_Time",
+      Game_Type: "Game_Type",
+      End: "End",
+      Player_Target: "Player_Target",
+      Node: "Node",
+      Store_Items: "Store_Items",
+      Weather: "Weather",
+      Game_Properties: "Game_Properties",
+      Npc_Talk: "Npc_Talk",
+      Map_Coordinate: "Map_Coordinate",
+      Characters: "Characters",
+      Editor_GameObject_Selected: "Editor_GameObject_Selected",
+      GameObject: "GameObject",
+      Environment: "Environment",
+      Game_Error: "Game_Error",
+      Download_Scene: "Download_Scene",
+      GameObjects: "GameObjects",
+      GameObject_Deleted: "GameObject_Deleted",
+      Info: "Info",
+      Api_Players: "Api_Players",
+      Api_SPR: "Api_SPR",
+      High_Score: "High_Score",
+      Fight2D: "Fight2D",
+      Capture_The_Flag: "Capture_The_Flag",
+      MMO: "MMO",
+      Isometric: "Isometric",
+      FPS: "FPS",
+    }[value] ?? 'server-response-missing-name-$value';
+  }
 }
-
-

@@ -3,7 +3,7 @@ library src;
 
 export 'isometric_camera.dart';
 export 'isometric_client.dart';
-export 'isometric_debug.dart';
+export 'debug/isometric_debug.dart';
 export 'isometric_editor.dart';
 export 'isometric_editor_style.dart';
 export 'isometric_editor_ui.dart';

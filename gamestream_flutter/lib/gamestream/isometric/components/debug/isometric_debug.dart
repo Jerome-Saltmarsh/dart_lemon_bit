@@ -1,13 +1,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/utils/format_percentage.dart';
 
-import 'isometric_render.dart';
+import '../isometric_render.dart';
 
 class IsometricDebug {
+  final tab = Watch(DebugTab.Character);
   final character = IsometricCharacter();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
@@ -47,54 +51,83 @@ class IsometricDebug {
   Isometric get isometric => gamestream.isometric;
 
   Widget buildUI() =>
-      WatchBuilder(characterSelected, (characterSelected) => !characterSelected ? nothing :
-        GSDialog(
-          child: GSContainer(
-            width: 320,
-            height: engine.screen.height - 150,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  onPressed(
-                    action: isometric.debugCharacterDebugUpdate,
-                    child: buildText('DEBUG'), ),
-                  height8,
-                  onPressed(
-                      action: isometric.camera.followTarget.toggle,
-                      child: buildRowWatchBool(
-                        text: 'camera-follow',
-                          watch: isometric.camera.followTarget,
-                      ),
-                  ),
-                  buildRowWatchString(text: 'runtime-type', watch: runTimeType),
-                  buildRowWatchDouble(text: 'x', watch: x, ),
-                  buildRowWatchDouble(text: 'y', watch: y),
-                  buildRowWatchDouble(text: 'z', watch: z),
-                  buildRowWatchInt(text: 'path-index', watch: pathIndex),
-                  buildRowWatchInt(text: 'path-end', watch: pathEnd),
-                  buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
-                  buildRow(text: 'character-type', value: buildDropDownCharacterType()),
-                  buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
-                  buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
-                  buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-                  buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
-                  buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
-                  buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
-                  buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
-                  buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
-                  onPressed(
-                      action: isometric.debugCharacterToggleAutoAttack,
-                      child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
-                  ),
-                  onPressed(
-                      action: isometric.debugCharacterTogglePathFindingEnabled,
-                      child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
-                  ),
-                  buildTarget(),
-                ],
+      GSDialog(
+        child: GSContainer(
+          child: WatchBuilder(tab, (DebugTab activeTab) => Column(
+            children: [
+              Row(children: DebugTab.values.map((e) => onPressed(
+                  action: () => tab.value = e,
+                  child: Container(
+                      margin: const EdgeInsets.only(right: 16),
+                      child: buildText(
+                          e.name,
+                          bold: activeTab == e,
+                          underline: activeTab == e,
+                      )
+                  ))
+              ).toList(growable: false)),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxHeight: engine.screen.height - 150),
+                      child: switch (activeTab) {
+                           DebugTab.Character => buildTabCharacter(),
+                           DebugTab.Network => buildTabNetwork(),
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
+          )),
+        ),
+      );
+
+  Widget buildTabCharacter() =>
+      WatchBuilder(characterSelected, (characterSelected) => !characterSelected ? nothing :
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              onPressed(
+                action: isometric.debugCharacterDebugUpdate,
+                child: buildText('DEBUG'), ),
+              height8,
+              onPressed(
+                  action: isometric.camera.followTarget.toggle,
+                  child: buildRowWatchBool(
+                    text: 'camera-follow',
+                      watch: isometric.camera.followTarget,
+                  ),
+              ),
+              buildRowWatchString(text: 'runtime-type', watch: runTimeType),
+              buildRowWatchDouble(text: 'x', watch: x, ),
+              buildRowWatchDouble(text: 'y', watch: y),
+              buildRowWatchDouble(text: 'z', watch: z),
+              buildRowWatchInt(text: 'path-index', watch: pathIndex),
+              buildRowWatchInt(text: 'path-end', watch: pathEnd),
+              buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
+              buildRow(text: 'character-type', value: buildDropDownCharacterType()),
+              buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
+              buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
+              buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
+              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
+              buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
+              buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
+              buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
+              buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
+              onPressed(
+                  action: isometric.debugCharacterToggleAutoAttack,
+                  child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
+              ),
+              onPressed(
+                  action: isometric.debugCharacterTogglePathFindingEnabled,
+                  child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
+              ),
+              buildTarget(),
+            ],
           ),
         ));
 
@@ -260,4 +293,16 @@ class IsometricDebug {
                 ),
               )).toList(),
           ));
+
+  Widget buildTabNetwork() => buildWatch(gamestream.bufferSize, (bytes){
+    bytes--; // remove the final end byte
+    var text = '';
+    for (var i = 0; i < ServerResponseReader.serverResponseStackIndex; i++){
+      final serverResponse = ServerResponseReader.serverResponseStack[i];
+      final length = ServerResponseReader.serverResponseStackLength[i];
+      final lengthPercentage = formatPercentage(length / bytes);
+      text += '${ServerResponse.getName(serverResponse)}, ($length / $bytes, $lengthPercentage\n';
+    }
+    return buildText(text);
+  });
 }

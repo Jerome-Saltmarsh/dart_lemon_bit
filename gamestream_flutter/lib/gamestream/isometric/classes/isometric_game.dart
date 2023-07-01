@@ -75,14 +75,18 @@ class IsometricGame extends Game {
       ),
       WatchBuilder(isometric.client.edit, (edit) =>
         edit ? isometric.editor.buildEditor() : customBuildUI(context)),
-      isometric.ui.buildStackDebug(),
+      isometric.ui.buildWindowDebug(),
       isometric.ui.buildWindowLightSettings(),
       Positioned(
           top: 80,
           right: 16,
           child: isometric.debug.buildUI()
       ),
-      Positioned(top: 16, right: 16, child: GameIsometricUI.buildMainMenu(children: buildMenuItems())),
+      Positioned(
+          top: 16,
+          right: 16,
+          child: GameIsometricUI.buildMainMenu(children: buildMenuItems()),
+      ),
     ]);
 
   @override
