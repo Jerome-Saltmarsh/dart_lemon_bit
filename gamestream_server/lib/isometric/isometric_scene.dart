@@ -469,6 +469,10 @@ class IsometricScene {
     return (z * area) + (row * columns) + column;
   }
 
+  int getIndexUnsafe(int z, int row, int column) {
+    return (z * area) + (row * columns) + column;
+  }
+
   bool outOfBounds(int z, int row, int column) =>
       z < 0 ||
           row < 0 ||

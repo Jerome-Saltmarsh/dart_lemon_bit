@@ -1636,8 +1636,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     character.update();
-    updateColliderPhysics(character);
     updateCharacterState(character);
+    updateColliderPhysics(character);
 
     if (character.autoTarget && character.autoTargetTimer-- <= 0){
       character.autoTargetTimer = character.autoTargetTimerDuration;
@@ -1654,9 +1654,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.pathFindingEnabled) {
 
-      if (character.pathIndex >= 0 && getNodeIndexV3(character) == character.pathNodeIndex){
+      if (character.pathIndex >= 0 && getNodeIndexV3Unsafe(character) == character.pathNodeIndex){
         character.pathIndex--;
-        if (character.pathIndex <= 0 && getNodeIndexV3(character) == character.pathTargetIndex){
+        if (character.pathIndex <= 0 && getNodeIndexV3Unsafe(character) == character.pathTargetIndex){
           character.clearPath();
           character.setCharacterStateIdle();
           character.setDestinationToCurrentPosition();
@@ -2364,6 +2364,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   int getNodeIndexV3(IsometricPosition value) =>
       scene.getIndex(value.indexZ, value.indexRow, value.indexColumn);
+
+  int getNodeIndexV3Unsafe(IsometricPosition value) =>
+      scene.getIndexUnsafe(value.indexZ, value.indexRow, value.indexColumn);
 
   int getNodeIndexXYZ(double x, double y, double z){
       return scene.getIndexXYZ(x, y, z);
