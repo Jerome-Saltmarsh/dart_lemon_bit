@@ -74,6 +74,7 @@ class IsometricDebug {
                        DebugTab.Network => buildTabNetwork(),
                        DebugTab.Stats => buildTabStats(),
                        DebugTab.Lighting => buildTabLighting(),
+                       DebugTab.Engine => buildTabEngine(),
                   },
                 ),
               ),
@@ -316,6 +317,7 @@ class IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          GSRefresh(() => buildText('connection-duration: ${gamestream.isometric.client.formattedConnectionDuration}\n')),
           buildText('network-server-fps: $serverFPS'),
           buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
           buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
@@ -346,11 +348,7 @@ class IsometricDebug {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GSRefresh(() =>  buildText(
-              'connection-duration: ${gamestream.isometric..client.formattedConnectionDuration}\n'
-                  'touches: ${engine.touches}\n'
-                  'touch down id: ${engine.touchDownId}\n'
-                  'touch update id: ${engine.touchDownId}\n'
-                  'isometric-mouse-position: x: ${IsometricMouse.positionX.toInt()}, y: ${IsometricMouse.positionY.toInt()}\n'
+                  'mouse-scene: x: ${IsometricMouse.positionX.toInt()}, y: ${IsometricMouse.positionY.toInt()}\n'
                   'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
                   'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                   'player-alive: ${gamestream.isometric.player.alive.value}\n'
@@ -379,18 +377,6 @@ class IsometricDebug {
                   'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
                   'offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}'
           )),
-          GSRefresh(() => buildText('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
-          GSRefresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
-          GSRefresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
-          GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
-          GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
-          GSRefresh(() => buildText('engine-frame: ${engine.paintFrame}')),
           buildWatch(gamestream.updateFrame, (t) => buildText('update-frame: $t')),
           buildWatch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText('interpolating: $interpolating', onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
           buildWatch(gamestream.gameType, (GameType value) => buildText('game-type: ${value.name}')),
@@ -471,5 +457,22 @@ class IsometricDebug {
         ],
       );
 
+  Widget buildTabEngine() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GSRefresh(() => buildText('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
+        GSRefresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
+        GSRefresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
+        GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
+        GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
+        GSRefresh(() => buildText('engine-frame: ${engine.paintFrame}')),
+      ],
+    );
 
 }

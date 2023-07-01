@@ -19,25 +19,17 @@ class GSRefresh extends StatefulWidget {
 
 class _GSRefreshState extends State<GSRefresh> {
   late Timer timer;
-  bool assigned = false;
 
   @override
   void initState() {
     super.initState();
-
     timer = Timer.periodic(widget.duration, (timer) {
-      rebuild();
+      setState(() {});
     });
   }
 
-  void rebuild() {
-    setState(() {});
-  }
-
   @override
-  Widget build(BuildContext context) {
-    return widget.builder();
-  }
+  Widget build(BuildContext context) => widget.builder();
 
   @override
   void dispose() {
