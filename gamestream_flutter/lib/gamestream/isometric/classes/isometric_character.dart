@@ -21,7 +21,7 @@ class IsometricCharacter extends IsometricPosition {
   var health = 1.0;
   /// percentage between 0 and 1
   var magic = 1.0;
-  var lookRadian = 0.0;
+  var lookDirection = 0;
   var weaponFrame = 0;
   var color = 0;
 
@@ -44,7 +44,6 @@ class IsometricCharacter extends IsometricPosition {
   bool get alive => !dead;
   bool get unarmed => weaponType == ItemType.Empty;
   bool get weaponTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
-  int get aimDirection => ((lookRadian - (piSixteenth)) ~/ piQuarter + 4) % 8;
   int get renderDirection => direction == 0 ? 7 : (direction - 1);
   double get angle => direction * piQuarter;
 }

@@ -13,7 +13,6 @@ import 'isometric_settings.dart';
 abstract class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _accuracy = 0.0;
-  /// TODO BELONGS IN isometric_character_template.dart
   var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
@@ -35,6 +34,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
+  /// TODO BELONGS IN isometric_character_template.dart
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
@@ -97,6 +97,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   double get weaponRangeSquared => weaponRange * weaponRange;
 
   int get pathNodeIndex => path[pathIndex];
+
+  int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
   bool get targetWithinAttackRange {
     final target = this.target;
@@ -260,17 +262,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   void set faceDirection(int value) =>
         faceAngle = IsometricDirection.toRadian(value);
 
-  void set faceAngle(double value){
-    if (value < 0){
-      _faceAngle = pi2 - (-value % pi2);
-      return;
-    }
-    if (value > pi2){
+  void set faceAngle(double value) =>
       _faceAngle = value % pi2;
-      return;
-    }
-    _faceAngle = value;
-  }
 
   /// METHODS
   void assignWeaponStateChanging() {

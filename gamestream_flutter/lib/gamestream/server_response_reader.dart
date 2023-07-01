@@ -588,7 +588,7 @@ extension ServerResponseReader on Gamestream {
     character.bodyType = readUInt16();
     character.headType = readUInt16();
     character.legType = readUInt16();
-    character.lookRadian = readAngle();
+    character.lookDirection = readByte();
     character.weaponFrame = readByte();
   }
 

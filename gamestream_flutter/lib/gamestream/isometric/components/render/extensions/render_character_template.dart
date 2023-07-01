@@ -57,7 +57,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     var frameBody = 0;
     var frameWeapon = 0;
 
-    final diff = IsometricDirection.getDifference(character.renderDirection, character.aimDirection).abs();
+    final diff = IsometricDirection.getDifference(character.renderDirection, character.lookDirection).abs();
     final runningBackwards = diff >= 3 && character.running;
     var renderDirectionOpposite = (character.renderDirection + 4) % 8;
 
@@ -67,8 +67,8 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     var directionLegs = upperBodyDirection;
     final weaponEngaged = (character.weaponStateAiming || character.weaponStateFiring || character.weaponStateMelee);
-    var directionBody = weaponEngaged ? character.aimDirection : upperBodyDirection;
-    var directionHead = weaponEngaged ? directionBody : character.aimDirection;
+    var directionBody = weaponEngaged ? character.lookDirection : upperBodyDirection;
+    var directionHead = weaponEngaged ? directionBody : character.lookDirection;
 
     switch (character.state) {
       case CharacterState.Idle:

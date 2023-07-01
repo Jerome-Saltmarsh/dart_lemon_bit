@@ -66,14 +66,24 @@ class IsometricDirection {
   static double toRadian(int direction){
     const piQuarter = pi / 4;
     const piHalf = pi / 2;
-    if (direction == IsometricDirection.North) return pi;
-    if (direction == IsometricDirection.North_East) return pi + piQuarter;
-    if (direction == IsometricDirection.East) return pi + piHalf;
-    if (direction == IsometricDirection.South_East) return pi + piHalf + piQuarter;
-    if (direction == IsometricDirection.South) return 0;
-    if (direction == IsometricDirection.South_West) return piQuarter;
-    if (direction == IsometricDirection.West) return piHalf;
-    if (direction == IsometricDirection.North_West) return piHalf + piQuarter;
+
+    if (direction == IsometricDirection.North)
+      return pi;
+    if (direction == IsometricDirection.North_East)
+      return pi + piQuarter;
+    if (direction == IsometricDirection.East)
+      return pi + piHalf;
+    if (direction == IsometricDirection.South_East)
+      return pi + piHalf + piQuarter;
+    if (direction == IsometricDirection.South)
+      return 0;
+    if (direction == IsometricDirection.South_West)
+      return piQuarter;
+    if (direction == IsometricDirection.West)
+      return piHalf;
+    if (direction == IsometricDirection.North_West)
+      return piHalf + piQuarter;
+
     throw Exception('Could not convert direction $direction to angle');
   }
 
