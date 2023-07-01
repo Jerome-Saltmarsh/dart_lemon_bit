@@ -7,7 +7,6 @@ class ServerResponse {
   static const Game_Type                  = 05;
   static const End                        = 06;
   static const Player_Target              = 07;
-  static const Grid                       = 08;
   static const Node                       = 09;
   static const Store_Items                = 10;
   static const Weather                    = 11;

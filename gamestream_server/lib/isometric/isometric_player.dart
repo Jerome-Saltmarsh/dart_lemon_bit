@@ -249,7 +249,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
   void downloadScene(){
-    writeGrid();
+    writeScene();
     writeGameProperties();
     writeGameType();
     writeWeather();
@@ -488,8 +488,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeDouble(value.z);
   }
 
-  void writeGrid() {
-    writeByte(ServerResponse.Grid);
+  void writeScene() {
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Scene);
     var compiled = scene.compiled;
     if (compiled == null){
       compiled = IsometricSceneWriter.compileScene(scene, gameObjects: false);
