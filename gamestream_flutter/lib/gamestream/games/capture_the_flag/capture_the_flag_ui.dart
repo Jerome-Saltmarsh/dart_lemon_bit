@@ -200,12 +200,18 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   engine.renderExternalCanvas(
                       canvas: canvas,
                       image: GameImages.atlas_gameobjects,
-                      srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Red),
-                      srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Red),
+                      srcX: AtlasItems.getSrcX(
+                          GameObjectType.Object, ObjectType.Flag_Red,
+                      ),
+                      srcY: AtlasItems.getSrcY(
+                          GameObjectType.Object, ObjectType.Flag_Red,
+                      ),
                       srcWidth: AtlasItems.getSrcWidth(
-                          ItemType.GameObjects_Flag_Red),
+                          GameObjectType.Object, ObjectType.Flag_Red,
+                      ),
                       srcHeight: AtlasItems.getSrcHeight(
-                          ItemType.GameObjects_Flag_Red),
+                          GameObjectType.Object, ObjectType.Flag_Red,
+                      ),
                       dstX: flagPositionRed.renderX * ratio,
                       dstY: flagPositionRed.renderY * ratio,
                       scale: 0.1
@@ -216,10 +222,12 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   engine.renderExternalCanvas(
                       canvas: canvas,
                       image: GameImages.atlas_gameobjects,
-                      srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Blue),
-                      srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Blue),
-                      srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Flag_Blue),
-                      srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Flag_Blue),
+                      srcX: AtlasItems.getSrcX(
+                        GameObjectType.Object, ObjectType.Flag_Blue,
+                      ),
+                      srcY: AtlasItems.getSrcY(GameObjectType.Object, ObjectType.Flag_Blue),
+                      srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, ObjectType.Flag_Blue),
+                      srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, ObjectType.Flag_Blue),
                       dstX: flagPositionBlue.renderX * ratio,
                       dstY: flagPositionBlue.renderY * ratio,
                       scale: 0.1
@@ -229,10 +237,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 engine.renderExternalCanvas(
                     canvas: canvas,
                     image: GameImages.atlas_gameobjects,
-                    srcX: AtlasItems.getSrcX(ItemType.GameObjects_Base_Red),
-                    srcY: AtlasItems.getSrcY(ItemType.GameObjects_Base_Red),
-                    srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Base_Red),
-                    srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Base_Red),
+                    srcX: AtlasItems.getSrcX(GameObjectType.Object, ObjectType.Base_Red),
+                    srcY: AtlasItems.getSrcY(GameObjectType.Object, ObjectType.Base_Red),
+                    srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, ObjectType.Base_Red),
+                    srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, ObjectType.Base_Red),
                     dstX: basePositionRed.renderX * ratio,
                     dstY: basePositionRed.renderY * ratio,
                     scale: 0.05
@@ -241,10 +249,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 engine.renderExternalCanvas(
                     canvas: canvas,
                     image: GameImages.atlas_gameobjects,
-                    srcX: AtlasItems.getSrcX(ItemType.GameObjects_Base_Blue),
-                    srcY: AtlasItems.getSrcY(ItemType.GameObjects_Base_Blue),
-                    srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Base_Blue),
-                    srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Base_Blue),
+                    srcX: AtlasItems.getSrcX(GameObjectType.Object, ObjectType.Base_Blue),
+                    srcY: AtlasItems.getSrcY(GameObjectType.Object, ObjectType.Base_Blue),
+                    srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, ObjectType.Base_Blue),
+                    srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, ObjectType.Base_Blue),
                     dstX: basePositionBlue.renderX * ratio,
                     dstY: basePositionBlue.renderY * ratio,
                     scale: 0.05
@@ -269,7 +277,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     action: () {
 
                     },
-                    child: buildText(ItemType.getName(e.type))
+                    child: buildText(e.type.toString()),
                 );
               }).toList(growable: false),
             ),

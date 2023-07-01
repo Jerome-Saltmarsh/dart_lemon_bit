@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/games/mmo/mmo_request_handler.dart';
 import 'package:gamestream_server/games/src.dart';
+import 'package:gamestream_server/isometric/isometric_scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/core/src.dart';
@@ -360,10 +361,10 @@ class WebSocketConnection with ByteReader {
       case SurvivalRequest.Drop:
         final index = parse(arguments[2]);
         if (index == null) return;
-        if (!player.isValidInventoryIndex(index)){
-          player.writeErrorInvalidInventoryIndex(index);
-          return;
-        }
+        // if (!player.isValidInventoryIndex(index)){
+        //   player.writeErrorInvalidInventoryIndex(index);
+        //   return;
+        // }
         player.inventoryDrop(index);
         break;
       case SurvivalRequest.Move:
@@ -493,23 +494,24 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricEditorGameObjectRequest.Add:
-        final index = parse(arguments[3]);
-        final type = parse(arguments[4]);
-        if (index == null) return errorInvalidClientRequest();
-        if (type == null) return errorInvalidClientRequest();
-        if (index < 0) return errorInvalidClientRequest();
-        final scene = player.game.scene;
-        if (index >= scene.volume) {
-          return errorInvalidClientRequest();
-        }
-        final instance = player.game.spawnGameObject(
-          x: scene.getNodePositionX(index) + Node_Size_Half,
-          y: scene.getNodePositionY(index) + Node_Size_Half,
-          z: scene.getNodePositionZ(index),
-          type: type,
-        );
-        player.editorSelectedGameObject = instance;
-        break;
+        throw Exception('todo add sub-type');
+        // final index = parse(arguments[3]);
+        // final type = parse(arguments[4]);
+        // if (index == null) return errorInvalidClientRequest();
+        // if (type == null) return errorInvalidClientRequest();
+        // if (index < 0) return errorInvalidClientRequest();
+        // final scene = player.game.scene;
+        // if (index >= scene.volume) {
+        //   return errorInvalidClientRequest();
+        // }
+        // final instance = player.game.spawnGameObject(
+        //   x: scene.getNodePositionX(index) + Node_Size_Half,
+        //   y: scene.getNodePositionY(index) + Node_Size_Half,
+        //   z: scene.getNodePositionZ(index),
+        //   type: type,
+        // );
+        // player.editorSelectedGameObject = instance;
+        // break;
 
       case IsometricEditorGameObjectRequest.Delete:
         player.game.playerDeleteEditorSelectedGameObject(player);
@@ -559,7 +561,8 @@ class WebSocketConnection with ByteReader {
             x: selectedGameObject.x,
             y: selectedGameObject.y,
             z: selectedGameObject.z,
-            type: selectedGameObject.type
+            type: selectedGameObject.type,
+            subType: selectedGameObject.subType,
         );
         player.editorSelectedGameObject = duplicated;
         break;

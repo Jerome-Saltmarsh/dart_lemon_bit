@@ -528,7 +528,8 @@ class IsometricRender {
     if (gamestream.isometric.editor.gameObjectSelected.value){
       engine.renderCircleOutline(
         sides: 24,
-        radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
+        // radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
+        radius: 30,
         x: gamestream.isometric.editor.gameObject.value!.renderX,
         y: gamestream.isometric.editor.gameObject.value!.renderY,
         color: Colors.white,

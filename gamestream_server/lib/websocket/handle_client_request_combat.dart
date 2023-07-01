@@ -1,8 +1,6 @@
 
 
 import 'package:gamestream_server/common/src/combat/combat_request.dart';
-import 'package:gamestream_server/common/src/game_error.dart';
-import 'package:gamestream_server/common/src/isometric/item_type.dart';
 import 'package:gamestream_server/core/player.dart';
 import 'package:gamestream_server/games/combat/combat_player.dart';
 import 'package:gamestream_server/utils/is_valid_index.dart';
@@ -34,10 +32,10 @@ extension HandleClientRequestCombat on WebSocketConnection {
       case CombatRequest.Select_Weapon_Primary:
         final value = parseArg1(arguments);
         if (value == null) return;
-        if (!ItemType.isTypeWeapon(value)) {
-          player.writeGameError(GameError.Invalid_Weapon_Type);
-          return;
-        }
+        // if (!ItemType.isTypeWeapon(value)) {
+        //   player.writeGameError(GameError.Invalid_Weapon_Type);
+        //   return;
+        // }
         player.weaponPrimary = value;
         player.weaponType = value;
         player.onWeaponTypeChanged();
@@ -45,10 +43,10 @@ extension HandleClientRequestCombat on WebSocketConnection {
       case CombatRequest.Select_Weapon_Secondary:
         final value = parseArg1(arguments);
         if (value == null) return;
-        if (!ItemType.isTypeWeapon(value)) {
-          player.writeGameError(GameError.Invalid_Weapon_Type);
-          return;
-        }
+        // if (!ItemType.isTypeWeapon(value)) {
+        //   player.writeGameError(GameError.Invalid_Weapon_Type);
+        //   return;
+        // }
         player.weaponSecondary = value;
         player.weaponType = value;
         player.onWeaponTypeChanged();

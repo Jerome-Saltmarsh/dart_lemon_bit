@@ -1,20 +1,9 @@
 
 
-import 'package:gamestream_server/common/src/isometric/character_type.dart';
-import 'package:gamestream_server/common/src/isometric/isometric_direction.dart';
-import 'package:gamestream_server/common/src/game_error.dart';
-import 'package:gamestream_server/common/src/game_event_type.dart';
-import 'package:gamestream_server/common/src/game_type.dart';
-import 'package:gamestream_server/common/src/isometric/item_type.dart';
-import 'package:gamestream_server/common/src/isometric/node_orientation.dart';
-import 'package:gamestream_server/common/src/isometric/node_size.dart';
-import 'package:gamestream_server/common/src/isometric/node_type.dart';
-import 'package:gamestream_server/common/src/player_event.dart';
-import 'package:gamestream_server/common/src/combat/combat_power_type.dart';
-import 'package:gamestream_server/common/src/isometric/team_type.dart';
+import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/gamestream.dart';
-import 'package:gamestream_server/utils/system.dart';
 import 'package:gamestream_server/isometric/src.dart';
+import 'package:gamestream_server/utils/system.dart';
 import 'package:lemon_math/src.dart';
 
 import 'combat_player.dart';
@@ -45,33 +34,16 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   static const Power_Range_Stun         = 125.0;
 
   static const GameObjects_Respawnable = [
-    ItemType.GameObjects_Crate_Wooden,
-    ItemType.GameObjects_Barrel_Explosive,
+    ObjectType.Crate_Wooden,
+    ObjectType.Barrel_Explosive,
   ];
 
   static const GameObjects_Spawn_Loot = [
-    ItemType.GameObjects_Crate_Wooden,
+    ObjectType.Crate_Wooden,
   ];
 
   static const GameObjects_Destroyable = [
-    ItemType.GameObjects_Crate_Wooden,
-  ];
-
-  static const GameObjects_Interactable = [
-    ItemType.Weapon_Ranged_Flamethrower,
-    ItemType.Weapon_Ranged_Bazooka,
-    ItemType.Weapon_Ranged_Plasma_Pistol,
-    ItemType.Weapon_Ranged_Plasma_Rifle,
-    ItemType.Weapon_Ranged_Sniper_Rifle,
-    ItemType.Weapon_Ranged_Teleport,
-    ItemType.Weapon_Ranged_Shotgun,
-    ItemType.Weapon_Melee_Crowbar,
-    ItemType.Weapon_Melee_Pickaxe,
-  ];
-
-  static const GameObjects_Collectable = [
-    ItemType.Resource_Credit,
-    ItemType.Weapon_Thrown_Grenade,
+    ObjectType.Crate_Wooden,
   ];
 
   // constructor
@@ -174,7 +146,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         }
       }
 
-      if (!ItemType.isTypeWeaponMelee(player.weaponPrimary)
+      if (!WeaponType.isMelee(player.weaponPrimary)
           && characterMeleeAttackTargetInRange(player)
       ){
         player.weaponType = player.weaponPrimary;
@@ -208,7 +180,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         }
       }
 
-      if (!ItemType.isTypeWeaponMelee(player.weaponSecondary)
+      if (!WeaponType.isMelee(player.weaponSecondary)
           && characterMeleeAttackTargetInRange(player)
       ) {
         player.weaponType = player.weaponSecondary;
@@ -279,17 +251,17 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
   @override
   void customInit() {
-    for (final gameObject in gameObjects){
-       if (!ItemType.isTypeWeapon(gameObject.type)) continue;
-       gameObject
-         ..physical = false
-         ..interactable = true
-         ..fixed = true
-         ..hitable = false
-         ..gravity = false
-         ..collectable = true
-       ;
-    }
+    // for (final gameObject in gameObjects){
+    //    if (!WeaponType.isTypeWeapon(gameObject.type)) continue;
+    //    gameObject
+    //      ..physical = false
+    //      ..interactable = true
+    //      ..fixed = true
+    //      ..hitable = false
+    //      ..gravity = false
+    //      ..collectable = true
+    //    ;
+    // }
 
     for (final spawnPoint in scene.spawnPoints) {
        spawnAI(nodeIndex: spawnPoint, characterType: CharacterType.Zombie);
@@ -310,29 +282,10 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       return;
     }
 
-    final itemCost = getItemCost(gameObjectType);
-
-     if (player.score < itemCost) {
-       player.writeGameError(GameError.Already_Equipped);
-       return;
-     }
-
-     player.score -= itemCost;
-
      player.aimTargetWeaponSide == IsometricSide.Left
          ? playerEquipPrimary(player, gameObjectType)
          : playerEquipSecondary(player, gameObjectType);
   }
-
-  int getItemCost(int itemType) => const <int, int> {
-        ItemType.Weapon_Ranged_Plasma_Rifle: 250,
-        ItemType.Weapon_Ranged_Plasma_Pistol: 100,
-        ItemType.Weapon_Ranged_Shotgun: 250,
-        ItemType.Weapon_Ranged_Flamethrower: 400,
-        ItemType.Weapon_Ranged_Sniper_Rifle: 300,
-        ItemType.Weapon_Ranged_Bazooka: 400,
-        ItemType.Weapon_Ranged_Teleport: 400,
-  } [itemType] ?? 0;
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(CombatPlayer player, IsometricGameObject gameObject) {
@@ -371,7 +324,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     required double force,
   }) {
     if (target is! IsometricGameObject) return;
-    if (target.type == ItemType.GameObjects_Barrel_Explosive) {
+    if (target.type == ObjectType.Barrel_Explosive) {
       if (hitType == IsometricHitType.Projectile || hitType == IsometricHitType.Explosion) {
         destroyGameObject(target);
         createExplosion(
@@ -388,7 +341,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   void customOnPlayerCollectGameObject(CombatPlayer player, IsometricGameObject gameObject) {
     if (!gameObject.collectable) return;
 
-    if (gameObject.type == ItemType.Resource_Credit) {
+    if (gameObject.type == ObjectType.Credits) {
       player.score += Credits_Collected;
       player.writePlayerEventItemAcquired(gameObject.type);
       player.writeGameEventGameObjectDestroyed(gameObject);
@@ -398,28 +351,28 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       return;
     }
 
-    final itemType = gameObject.type;
+    // final itemType = gameObject.type;
 
-    if (ItemType.isTypeWeapon(itemType)) {
-      if (player.weaponPrimary == itemType) {
-        return;
-      }
-      if (player.weaponSecondary == itemType) {
-        return;
-      }
-
-      if (player.weaponPrimary == ItemType.Empty) {
-        playerEquipPrimary(player, itemType);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (player.weaponSecondary == ItemType.Empty) {
-        playerEquipSecondary(player, itemType);
-        deactivateCollider(gameObject);
-        return;
-      }
-    }
+    // if (ItemType.isTypeWeapon(itemType)) {
+    //   if (player.weaponPrimary == itemType) {
+    //     return;
+    //   }
+    //   if (player.weaponSecondary == itemType) {
+    //     return;
+    //   }
+    //
+    //   if (player.weaponPrimary == ItemType.Empty) {
+    //     playerEquipPrimary(player, itemType);
+    //     deactivateCollider(gameObject);
+    //     return;
+    //   }
+    //
+    //   if (player.weaponSecondary == ItemType.Empty) {
+    //     playerEquipSecondary(player, itemType);
+    //     deactivateCollider(gameObject);
+    //     return;
+    //   }
+    // }
   }
 
   void customActionSpawnAIAtIndex(int index){
@@ -439,12 +392,12 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     player.powerCooldown = 0;
     player.respawnTimer = 0;
     player.powerType        = CombatPowerType.Bomb;
-    player.weaponPrimary    = ItemType.Weapon_Ranged_Plasma_Pistol;
-    player.weaponSecondary  = ItemType.Weapon_Melee_Crowbar;
+    player.weaponPrimary    = WeaponType.Plasma_Pistol;
+    player.weaponSecondary  = WeaponType.Crowbar;
     player.weaponType       = player.weaponPrimary;
-    player.headType         = randomItem(ItemType.Collection_Clothing_Head);
-    player.bodyType         = randomItem(ItemType.Collection_Clothing_Body);
-    player.legsType         = randomItem(ItemType.Collection_Clothing_Legs);
+    player.headType         = HeadType.Plain;
+    player.bodyType         = BodyType.Shirt_Red;
+    player.legsType         = LegType.Blue;
     player.writePlayerPower();
   }
 
@@ -478,7 +431,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   void spawnGemAtIndex(int nodeIndex){
     spawnGameObjectAtIndex(
       index: nodeIndex,
-      type: ItemType.Resource_Credit,
+      type: GameObjectType.Object,
+      subType: ObjectType.Credits
     )
       ..velocityZ = 7
       ..setVelocity(randomAngle(), 7.0)
@@ -486,12 +440,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       ..gravity = true
       ..physical = true
     ;
-  }
-
-  @override
-  void customOnPlayerAimTargetChanged(IsometricPlayer player, IsometricCollider? collider) {
-    if (collider is! IsometricGameObject) return;
-    player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
 
   void playerUsePower(CombatPlayer player){
@@ -522,7 +470,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       case CombatPowerType.Revive:
         player.health = player.maxHealth;
         player.energy = player.maxEnergy;
-        player.writePlayerEventItemTypeConsumed(ItemType.Consumables_Potion_Blue);
+        // player.writePlayerEventItemTypeConsumed(ItemType.Consumables_Potion_Blue);
         break;
       case CombatPowerType.Shield:
         player.buffInvincible = true;
@@ -577,7 +525,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
     final weaponType = character.weaponType;
 
-    if (weaponType == ItemType.Weapon_Thrown_Grenade) {
+    if (weaponType == WeaponType.Grenade) {
       if (character is IsometricPlayer) {
         playerThrowGrenade(character, damage: 10);
         return;
@@ -585,7 +533,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       throw Exception('ai cannot throw grenades');
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
+    if (weaponType == WeaponType.Flame_Thrower) {
       if (character is IsometricPlayer) {
         characterUseFlamethrower(character);
         return;
@@ -593,33 +541,33 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       throw Exception('ai cannot use flamethrower');
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
+    if (weaponType == WeaponType.Bazooka) {
       if (character is IsometricPlayer) {
         characterUseBazooka(character);
       }
       return;
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Minigun) {
+    if (weaponType == WeaponType.Minigun) {
       if (character is IsometricPlayer) {
         characterUseMinigun(character);
       }
       return;
     }
 
-    if (ItemType.isTypeWeaponFirearm(weaponType)) {
+    if (WeaponType.isFirearm(weaponType)) {
       characterFireWeapon(character);
       character.accuracy += 0.25;
       return;
     }
 
-    if (ItemType.isTypeWeaponMelee(weaponType)) {
+    if (WeaponType.isMelee(weaponType)) {
       characterAttackMelee(character);
       return;
     }
 
     switch (weaponType) {
-      case ItemType.Weapon_Ranged_Crossbow:
+      case WeaponType.Crossbow:
         spawnProjectileArrow(
           damage: character.weaponDamage,
           range: character.weaponRange,
@@ -628,7 +576,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         );
         character.assignWeaponStateFiring();
         return;
-      case ItemType.Weapon_Melee_Staff:
+      case WeaponType.Staff:
         spawnProjectileFireball(
           src: character,
           angle: character.lookRadian,
@@ -637,7 +585,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         );
         character.assignWeaponStateFiring();
         break;
-      case ItemType.Weapon_Ranged_Bow:
+      case WeaponType.Bow:
         spawnProjectileArrow(
           src: character,
           damage: character.weaponDamage,
@@ -735,7 +683,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
           'game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
     }
     final instance = CombatZombie(
-      weaponType: ItemType.Empty,
+      weaponType: WeaponType.Unarmed,
       characterType: characterType,
       health: health,
       damage: damage,
@@ -860,7 +808,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         'game.spawnAIXYZ() - out of bounds');
 
     final instance = CombatZombie(
-      weaponType: ItemType.Empty,
+      weaponType: WeaponType.Unarmed,
       characterType: characterType,
       health: health,
       damage: damage,

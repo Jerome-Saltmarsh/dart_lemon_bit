@@ -400,16 +400,18 @@ class GameIsometricUI {
         ),
       );
 
-  static Widget buildAtlasItemType(int itemType, {int color = 1}) =>
+  static Widget buildAtlasItemType({
+    required int type,
+    required int subType,
+    int color = 1,
+  }) =>
       FittedBox(
         child: engine.buildAtlasImage(
-          image: ItemType.isTypeGameObject(itemType)
-              ? GameImages.atlas_gameobjects
-              : GameImages.atlas_items,
-          srcX: AtlasItems.getSrcX(itemType),
-          srcY: AtlasItems.getSrcY(itemType),
-          srcWidth: AtlasItems.getSrcWidth(itemType),
-          srcHeight: AtlasItems.getSrcHeight(itemType),
+          image: GameImages.getImageForGameObject(type),
+          srcX: AtlasItems.getSrcX(type, subType),
+          srcY: AtlasItems.getSrcY(type, subType),
+          srcWidth: AtlasItems.getSrcWidth(type, subType),
+          srcHeight: AtlasItems.getSrcHeight(type, subType),
           color: color,
         ),
       );
@@ -422,18 +424,18 @@ class GameIsometricUI {
     srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
   );
 
-  static Widget buildPanelCredits() {
-    return Column(
-      children: [
-        Container(
-            width: 64,
-            height: 64,
-            child: buildAtlasItemType(ItemType.Resource_Credit)),
-        width4,
-        buildWatch(gamestream.isometric.client.playerCreditsAnimation, (value) => buildText(value, size: 25)),
-      ],
-    );
-  }
+  // static Widget buildPanelCredits() {
+  //   return Column(
+  //     children: [
+  //       Container(
+  //           width: 64,
+  //           height: 64,
+  //           // child: buildAtlasItemType(ItemType.Resource_Credit)),
+  //       // width4,
+  //       // buildWatch(gamestream.isometric.client.playerCreditsAnimation, (value) => buildText(value, size: 25)),
+  //     ],
+  //   );
+  // }
 
   static Widget buildContainer({required Widget child, double? width}) =>
       GSDialog(
@@ -455,32 +457,32 @@ class GameIsometricUI {
       )
   );
 
-  static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
-
-    final container = Container(
-      margin: const EdgeInsets.only(right: 4),
-      child: Column(
-        children: [
-          Container(
-            width: 64,
-            height: 64,
-            child: buildAtlasItemType(buffType),
-          ),
-          height4,
-          // Container(
-          //   color: Colors.black26,
-          //   child: watch(buffDuration, text),
-          // ),
-          buildText(ItemType.getName(buffType)),
-        ],
-      ),
-    );
-
-    return buildWatch(buffDuration, (int duration) {
-      if (duration <= 0) return nothing;
-      return container;
-    });
-  }
+  // static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
+  //
+  //   final container = Container(
+  //     margin: const EdgeInsets.only(right: 4),
+  //     child: Column(
+  //       children: [
+  //         Container(
+  //           width: 64,
+  //           height: 64,
+  //           child: buildAtlasItemType(buffType),
+  //         ),
+  //         height4,
+  //         // Container(
+  //         //   color: Colors.black26,
+  //         //   child: watch(buffDuration, text),
+  //         // ),
+  //         buildText(ItemType.getName(buffType)),
+  //       ],
+  //     ),
+  //   );
+  //
+  //   return buildWatch(buffDuration, (int duration) {
+  //     if (duration <= 0) return nothing;
+  //     return container;
+  //   });
+  // }
 
   static Widget buildIconCombatPowerType(int powerType){
     assert (CombatPowerType.values.contains(powerType));
@@ -513,22 +515,22 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildIconPlayerWeaponMelee(){
-    return buildWatch(gamestream.isometric.player.weapon, (int playerWeaponType){
-      return buildWatch(gamestream.isometric.player.weaponTertiary, (int itemType) {
-        return buildBorder(
-          color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
-          width: 3,
-          child: Container(
-            height: GameStyle.Player_Weapons_Icon_Size,
-            color: Colors.black45,
-            padding: GameStyle.Padding_2,
-            child: buildAtlasItemType(itemType),
-          ),
-        );
-      });
-    });
-  }
+  // static Widget buildIconPlayerWeaponMelee(){
+  //   return buildWatch(gamestream.isometric.player.weapon, (int playerWeaponType){
+  //     return buildWatch(gamestream.isometric.player.weaponTertiary, (int itemType) {
+  //       return buildBorder(
+  //         color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
+  //         width: 3,
+  //         child: Container(
+  //           height: GameStyle.Player_Weapons_Icon_Size,
+  //           color: Colors.black45,
+  //           padding: GameStyle.Padding_2,
+  //           child: buildAtlasItemType(itemType),
+  //         ),
+  //       );
+  //     });
+  //   });
+  // }
 
   static Widget buildPlayerHealth() {
     final height = 87.0;

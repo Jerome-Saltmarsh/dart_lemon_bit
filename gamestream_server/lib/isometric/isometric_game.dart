@@ -211,7 +211,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final gameObject in gameObjects) {
       if (gameObject.type == type) return gameObject;
     }
-    throw Exception('findGameObjectByTypeOrFail(${ItemType.getName(type)})');
+    throw Exception('findGameObjectByTypeOrFail($type})');
   }
 
   IsometricGameObject? findGameObjectById(int id) {
@@ -333,7 +333,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     final weaponType = character.weaponType;
 
-    if (weaponType == ItemType.Weapon_Thrown_Grenade) {
+    if (weaponType == WeaponType.Grenade) {
       if (character is IsometricPlayer) {
         playerThrowGrenade(character, damage: 10);
         return;
@@ -341,34 +341,34 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       throw Exception('ai cannot throw grenades');
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Flamethrower) {
+    if (weaponType == WeaponType.Flame_Thrower) {
       characterUseFlamethrower(character);
       return;
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
+    if (weaponType == WeaponType.Bazooka) {
       characterUseBazooka(character);
       return;
     }
 
-    if (weaponType == ItemType.Weapon_Ranged_Minigun) {
+    if (weaponType == WeaponType.Minigun) {
       characterUseMinigun(character);
       return;
     }
 
-    if (ItemType.isTypeWeaponFirearm(weaponType)) {
+    if (WeaponType.isFirearm(weaponType)) {
       characterFireWeapon(character);
       character.accuracy += 0.25;
       return;
     }
 
-    if (ItemType.isTypeWeaponMelee(weaponType)) {
+    if (WeaponType.isMelee(weaponType)) {
       characterAttackMelee(character);
       return;
     }
 
     switch (weaponType) {
-      case ItemType.Weapon_Ranged_Crossbow:
+      case WeaponType.Crossbow:
         spawnProjectileArrow(
           damage: character.weaponDamage,
           range: character.weaponRange,
@@ -377,7 +377,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         );
         character.assignWeaponStateFiring();
         return;
-      case ItemType.Weapon_Melee_Staff:
+      case WeaponType.Staff:
         spawnProjectileFireball(
           src: character,
           angle: character.lookRadian,
@@ -386,7 +386,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         );
         character.assignWeaponStateFiring();
         break;
-      case ItemType.Weapon_Ranged_Bow:
+      case WeaponType.Bow:
         spawnProjectileArrow(
           src: character,
           damage: character.weaponDamage,
@@ -473,7 +473,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.deadBusyOrWeaponStateBusy) return;
 
     dispatchAttackPerformed(
-      ItemType.Weapon_Thrown_Grenade,
+      WeaponType.Grenade,
       player.x + adj(player.lookRadian, 60),
       player.y + opp(player.lookRadian, 60),
       player.z + Character_Gun_Height,
@@ -492,7 +492,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       x: player.x,
       y: player.y,
       z: player.z + Character_Height,
-      type: ItemType.Weapon_Thrown_Grenade,
+      type: GameObjectType.Weapon,
+      subType: WeaponType.Grenade,
     )
       ..setVelocity(player.lookRadian, velocity)
       ..quantity = 1
@@ -583,6 +584,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
+  int getMeleeAttackRadius(int weaponType){
+    return 20;
+  }
+
+  bool isMeleeAOE(int weaponType){
+    return false;
+  }
+
   void characterAttackMelee(IsometricCharacter character) {
     assert (character.active);
     assert (character.alive);
@@ -591,11 +600,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.deadBusyOrWeaponStateBusy) return;
 
     final angle = character.lookRadian;
-    final attackRadius = ItemType.getMeleeAttackRadius(character.weaponType);
+    final attackRadius = getMeleeAttackRadius(character.weaponType);
 
     if (attackRadius <= 0) {
       throw Exception(
-          'ItemType.getRange(${ItemType.getName(character.weaponType)})');
+          'ItemType.getRange(${character.weaponType})');
     }
 
     final attackRadiusHalf = attackRadius * 0.5;
@@ -622,7 +631,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     IsometricCollider? nearest;
     var nearestDistance = 999.0;
-    final areaOfEffect = ItemType.isMeleeAOE(character.weaponType);
+    final areaOfEffect = isMeleeAOE(character.weaponType);
 
     for (final other in characters) {
       if (!other.active) continue;
@@ -759,7 +768,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.deadBusyOrWeaponStateBusy) return false;
 
     final angle = character.lookRadian;
-    final attackRadius = ItemType.getMeleeAttackRadius(character.weaponType) *
+    final attackRadius = getMeleeAttackRadius(character.weaponType) *
         0.75;
 
     if (attackRadius <= 0) {
@@ -802,7 +811,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         ? character.lookRadian
         : character.faceAngle;
 
-    if (character.weaponType == ItemType.Weapon_Ranged_Shotgun) {
+    if (character.weaponType == WeaponType.Shotgun) {
       characterFireShotgun(character, angle);
       return;
     }
@@ -933,7 +942,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           }
           break;
         case IsometricScriptType.Spawn_GameObject:
-          final type = scriptReader.readUInt16();
+          final type = scriptReader.readByte();
+          final subType = scriptReader.readByte();
           final x = scriptReader.readUInt16();
           final y = scriptReader.readUInt16();
           final z = scriptReader.readUInt16();
@@ -942,6 +952,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             y: y.toDouble(),
             z: z.toDouble(),
             type: type,
+            subType: subType,
           );
           break;
         default:
@@ -1604,7 +1615,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
 
     if (target is IsometricGameObject) {
-      if (ItemType.isMaterialMetal(target.type)) {
+      if (ObjectType.isMaterialMetal(target.type)) {
         dispatch(
             GameEventType.Material_Struck_Metal, target.x, target.y, target.z,
             angle);
@@ -1915,17 +1926,23 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     position.z = scene.getNodePositionZ(index);
   }
 
-  IsometricGameObject spawnGameObjectAtIndex({required int index, required int type}) =>
+  IsometricGameObject spawnGameObjectAtIndex({
+    required int index,
+    required int type,
+    required int subType,
+  }) =>
       spawnGameObject(
         x: scene.getNodePositionX(index),
         y: scene.getNodePositionY(index),
         z: scene.getNodePositionZ(index),
         type: type,
+        subType: subType,
       );
 
   void spawnGameObjectItemAtPosition({
     required IsometricPosition position,
     required int type,
+    required int subType,
     int quantity = 1,
   }) =>
       spawnGameObjectItem(
@@ -1933,6 +1950,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         y: position.y,
         z: position.z,
         type: type,
+        subType: subType,
         quantity: quantity,
       );
 
@@ -1941,26 +1959,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required double y,
     required double z,
     required int type,
+    required int subType,
     int quantity = 1,
   }) {
-    assert (type != ItemType.Empty);
-    assert (type != ItemType.Equipped_Legs);
-    assert (type != ItemType.Equipped_Body);
-    assert (type != ItemType.Equipped_Head);
-    assert (type != ItemType.Equipped_Weapon);
-    spawnGameObject(x: x, y: y, z: z, type: type)
+    spawnGameObject(x: x, y: y, z: z, type: type, subType: subType)
       ..quantity = quantity;
   }
 
   IsometricGameObject spawnGameObjectAtPosition({
     required IsometricPosition position,
     required int type,
+    required int subType,
   }) =>
       spawnGameObject(
         x: position.x,
         y: position.y,
         z: position.z,
         type: type,
+        subType: subType,
       );
 
   IsometricGameObject spawnGameObject({
@@ -1968,6 +1984,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required double y,
     required double z,
     required int type,
+    required int subType,
   }) {
     for (final gameObject in gameObjects) {
       if (gameObject.active) continue;
@@ -1983,6 +2000,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       gameObject.velocityY = 0;
       gameObject.velocityZ = 0;
       gameObject.type = type;
+      gameObject.subType = subType;
       gameObject.active = true;
       gameObject.dirty = true;
       gameObject.friction = IsometricPhysics.Friction;
@@ -1995,6 +2013,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       y: y,
       z: z,
       type: type,
+      subType: subType,
       id: generateId(),
     );
     instance.type = type;
@@ -2408,31 +2427,29 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   /// Safe to override to provide custom logic
-  int getPlayerWeaponDamage(IsometricPlayer player) =>
-      const <int, int>{
-        ItemType.Weapon_Ranged_Bow: 06,
-        ItemType.Empty: 01,
-        ItemType.Weapon_Ranged_Smg: 02,
-        ItemType.Weapon_Ranged_Machine_Gun: 02,
-        ItemType.Weapon_Ranged_Rifle: 04,
-        ItemType.Weapon_Ranged_Sniper_Rifle: 12,
-        ItemType.Weapon_Ranged_Musket: 04,
-        ItemType.Weapon_Ranged_Bazooka: 10,
-        ItemType.Weapon_Ranged_Flamethrower: 01,
-        ItemType.Weapon_Ranged_Minigun: 01,
-        ItemType.Weapon_Ranged_Handgun: 04,
-        ItemType.Weapon_Ranged_Revolver: 06,
-        ItemType.Weapon_Ranged_Desert_Eagle: 08,
-        ItemType.Weapon_Ranged_Pistol: 07,
-        ItemType.Weapon_Ranged_Plasma_Pistol: 05,
-        ItemType.Weapon_Ranged_Plasma_Rifle: 02,
-        ItemType.Weapon_Ranged_Shotgun: 04,
-        ItemType.Weapon_Melee_Hammer: 03,
-        ItemType.Weapon_Melee_Pickaxe: 05,
-        ItemType.Weapon_Melee_Knife: 04,
-        ItemType.Weapon_Melee_Crowbar: 05,
-        ItemType.Weapon_Melee_Sword: 15,
-        ItemType.Weapon_Melee_Axe: 04,
+  int getPlayerWeaponDamage(IsometricPlayer player) => const <int, int> {
+        WeaponType.Bow: 06,
+        WeaponType.Unarmed: 01,
+        WeaponType.Smg: 02,
+        WeaponType.Machine_Gun: 02,
+        WeaponType.Sniper_Rifle: 12,
+        WeaponType.Musket: 04,
+        WeaponType.Bazooka: 10,
+        WeaponType.Flame_Thrower: 01,
+        WeaponType.Minigun: 01,
+        WeaponType.Handgun: 04,
+        WeaponType.Revolver: 06,
+        WeaponType.Desert_Eagle: 08,
+        WeaponType.Pistol: 07,
+        WeaponType.Plasma_Pistol: 05,
+        WeaponType.Plasma_Rifle: 02,
+        WeaponType.Shotgun: 04,
+        WeaponType.Hammer: 03,
+        WeaponType.Pickaxe: 05,
+        WeaponType.Knife: 04,
+        WeaponType.Crowbar: 05,
+        WeaponType.Sword: 15,
+        WeaponType.Axe: 04,
       } [player.weaponType] ?? 0;
 
   int getExperienceForLevel(int level) => (((level - 1) * (level - 1))) * 6;

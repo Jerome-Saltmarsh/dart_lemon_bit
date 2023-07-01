@@ -135,7 +135,7 @@ class Gamestream {
       environment: IsometricEnvironment(),
     );
 
-  Game buildGameCombat() => CombatGame(scene: isometricScenes.warehouse02);
+  Game buildGameCombat() => CombatGame(scene: isometricScenes.mmoTown);
 
   Game buildGameFight2D() => GameFight2D(scene: GameFight2DSceneGenerator.generate());
 

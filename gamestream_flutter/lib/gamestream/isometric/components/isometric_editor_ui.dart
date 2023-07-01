@@ -421,34 +421,38 @@ extension IsometricEditorUI on IsometricEditor {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: ItemType.GameObjectTypes
-                    .map(buildRowAddGameObject)
-                    .toList(),
+                // children: ObjectType.values
+                //     .map(buildRowAddGameObject)
+                //     .toList(),
               )
             ],
           ),
         );
       });
 
-  Widget buildRowAddGameObject(int gameObjectType, {int color = 1}) =>
+  Widget buildRowAddGameObject({
+    required int objectType,
+    int color = 1,
+  }) =>
       Tooltip(
-        message: ItemType.getName(gameObjectType),
+        message: ObjectType.getName(objectType),
         child: Container(
           width: 70,
           height: 70,
           color: Colors.white,
           child: FittedBox(
             child: engine.buildAtlasImageButton(
-                image: ItemType.isTypeGameObject(gameObjectType)
-                    ? GameImages.atlas_gameobjects
-                    : GameImages.atlas_items,
-                srcX: AtlasItems.getSrcX(gameObjectType),
-                srcY: AtlasItems.getSrcY(gameObjectType),
-                srcWidth: AtlasItems.getSrcWidth(gameObjectType),
-                srcHeight: AtlasItems.getSrcHeight(gameObjectType),
+                image: GameImages.atlas_gameobjects,
+                // image: ItemType.isTypeGameObject(gameObjectType)
+                //     ? GameImages.atlas_gameobjects
+                //     : GameImages.atlas_items,
+                srcX: AtlasItems.getSrcX(objectType, GameObjectType.Object),
+                srcY: AtlasItems.getSrcY(objectType, GameObjectType.Object),
+                srcWidth: AtlasItems.getSrcWidth(objectType, GameObjectType.Object),
+                srcHeight: AtlasItems.getSrcHeight(objectType, GameObjectType.Object),
                 color: color,
                 action: () =>
-                    gamestream.isometric.editor.actionAddGameObject(gameObjectType)
+                    gamestream.isometric.editor.actionAddGameObject(objectType)
             ),
           ),
         ),
@@ -1084,12 +1088,12 @@ extension IsometricEditorUI on IsometricEditor {
                       maxWidth: 80,
                       maxHeight: 80,
                     ),
-                    child: GameIsometricUI.buildAtlasItemType(type),
+                    // child: GameIsometricUI.buildAtlasItemType(type),
                   ),
                   height8,
                   Row(
                     children: [
-                      buildText(ItemType.getName(type), size: 22),
+                      buildText(ObjectType.getName(type), size: 22),
                       width8,
                       buildText('Duplicate', onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
                     ],

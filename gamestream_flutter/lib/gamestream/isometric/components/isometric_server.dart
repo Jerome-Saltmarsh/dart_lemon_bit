@@ -40,12 +40,12 @@ class IsometricServer {
   final minutes = Watch(0);
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
-  final playerBelt1_ItemType = Watch(ItemType.Empty);
-  final playerBelt2_ItemType = Watch(ItemType.Empty);
-  final playerBelt3_ItemType = Watch(ItemType.Empty);
-  final playerBelt4_ItemType = Watch(ItemType.Empty);
-  final playerBelt5_ItemType = Watch(ItemType.Empty);
-  final playerBelt6_ItemType = Watch(ItemType.Empty);
+  final playerBelt1_ItemType = Watch(GameObjectType.Nothing);
+  final playerBelt2_ItemType = Watch(GameObjectType.Nothing);
+  final playerBelt3_ItemType = Watch(GameObjectType.Nothing);
+  final playerBelt4_ItemType = Watch(GameObjectType.Nothing);
+  final playerBelt5_ItemType = Watch(GameObjectType.Nothing);
+  final playerBelt6_ItemType = Watch(GameObjectType.Nothing);
   final playerBelt1_Quantity = Watch(0);
   final playerBelt2_Quantity = Watch(0);
   final playerBelt3_Quantity = Watch(0);
@@ -118,8 +118,8 @@ class IsometricServer {
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       gameObject.update();
-      if (gameObject.type != ItemType.Weapon_Thrown_Grenade) continue;
-      projectShadow(gameObject);
+      // if (gameObject.type != ItemType.Weapon_Thrown_Grenade) continue;
+      // projectShadow(gameObject);
     }
   }
 
@@ -240,12 +240,12 @@ class IsometricServer {
 
 
   int getWatchBeltItemTypeIndex(Watch<int> watchBelt){
-    if (watchBelt == playerBelt1_ItemType) return ItemType.Belt_1;
-    if (watchBelt == playerBelt2_ItemType) return ItemType.Belt_2;
-    if (watchBelt == playerBelt3_ItemType) return ItemType.Belt_3;
-    if (watchBelt == playerBelt4_ItemType) return ItemType.Belt_4;
-    if (watchBelt == playerBelt5_ItemType) return ItemType.Belt_5;
-    if (watchBelt == playerBelt6_ItemType) return ItemType.Belt_6;
+    // if (watchBelt == playerBelt1_ItemType) return ItemType.Belt_1;
+    // if (watchBelt == playerBelt2_ItemType) return ItemType.Belt_2;
+    // if (watchBelt == playerBelt3_ItemType) return ItemType.Belt_3;
+    // if (watchBelt == playerBelt4_ItemType) return ItemType.Belt_4;
+    // if (watchBelt == playerBelt5_ItemType) return ItemType.Belt_5;
+    // if (watchBelt == playerBelt6_ItemType) return ItemType.Belt_6;
     throw Exception('ServerQuery.getWatchBeltIndex($watchBelt)');
   }
 
@@ -260,79 +260,81 @@ class IsometricServer {
   }
 
   int getItemTypeConsumesRemaining(int itemType) {
-    final consumeAmount = ItemType.getConsumeAmount(itemType);
-    if (consumeAmount <= 0) return 0;
-    return countItemTypeQuantityInPlayerPossession(ItemType.getConsumeType(itemType)) ~/ consumeAmount;
+    // final consumeAmount = ItemType.getConsumeAmount(itemType);
+    // if (consumeAmount <= 0) return 0;
+    // return countItemTypeQuantityInPlayerPossession(ItemType.getConsumeType(itemType)) ~/ consumeAmount;
+    return 0;
   }
 
   int mapWatchBeltTypeToItemType(Watch<int> watchBeltType){
-    if (watchBeltType == playerBelt1_ItemType) return ItemType.Belt_1;
-    if (watchBeltType == playerBelt2_ItemType) return ItemType.Belt_2;
-    if (watchBeltType == playerBelt3_ItemType) return ItemType.Belt_3;
-    if (watchBeltType == playerBelt4_ItemType) return ItemType.Belt_4;
-    if (watchBeltType == playerBelt5_ItemType) return ItemType.Belt_5;
-    if (watchBeltType == playerBelt6_ItemType) return ItemType.Belt_6;
+    // if (watchBeltType == playerBelt1_ItemType) return ItemType.Belt_1;
+    // if (watchBeltType == playerBelt2_ItemType) return ItemType.Belt_2;
+    // if (watchBeltType == playerBelt3_ItemType) return ItemType.Belt_3;
+    // if (watchBeltType == playerBelt4_ItemType) return ItemType.Belt_4;
+    // if (watchBeltType == playerBelt5_ItemType) return ItemType.Belt_5;
+    // if (watchBeltType == playerBelt6_ItemType) return ItemType.Belt_6;
     throw Exception('ServerQuery.mapWatchBeltTypeToItemType($watchBeltType)');
   }
 
   int getItemQuantityAtIndex(int index){
-    assert (index >= 0);
-    if (index < inventory.length)
-      return inventoryQuantity[index];
-    if (index == ItemType.Belt_1)
-      return playerBelt1_Quantity.value;
-    if (index == ItemType.Belt_2)
-      return playerBelt2_Quantity.value;
-    if (index == ItemType.Belt_3)
-      return playerBelt3_Quantity.value;
-    if (index == ItemType.Belt_4)
-      return playerBelt4_Quantity.value;
-    if (index == ItemType.Belt_5)
-      return playerBelt5_Quantity.value;
-    if (index == ItemType.Belt_6)
-      return playerBelt6_Quantity.value;
-
+    // assert (index >= 0);
+    // if (index < inventory.length)
+    //   return inventoryQuantity[index];
+    // if (index == ItemType.Belt_1)
+    //   return playerBelt1_Quantity.value;
+    // if (index == ItemType.Belt_2)
+    //   return playerBelt2_Quantity.value;
+    // if (index == ItemType.Belt_3)
+    //   return playerBelt3_Quantity.value;
+    // if (index == ItemType.Belt_4)
+    //   return playerBelt4_Quantity.value;
+    // if (index == ItemType.Belt_5)
+    //   return playerBelt5_Quantity.value;
+    // if (index == ItemType.Belt_6)
+    //   return playerBelt6_Quantity.value;
+    //
     throw Exception('ServerQuery.getItemQuantityAtIndex($index)');
   }
 
   int getItemTypeAtInventoryIndex(int index){
-    if (index == ItemType.Equipped_Weapon)
-      return gamestream.isometric.player.weapon.value;
-
-    if (index == ItemType.Equipped_Head)
-      return gamestream.isometric.player.head.value;
-
-    if (index == ItemType.Equipped_Body)
-      return gamestream.isometric.player.body.value;
-
-    if (index == ItemType.Equipped_Legs)
-      return gamestream.isometric.player.legs.value;
-
-    if (index == ItemType.Belt_1){
-      return playerBelt1_ItemType.value;
-    }
-    if (index == ItemType.Belt_2){
-      return playerBelt2_ItemType.value;
-    }
-    if (index == ItemType.Belt_3){
-      return playerBelt3_ItemType.value;
-    }
-    if (index == ItemType.Belt_4){
-      return playerBelt4_ItemType.value;
-    }
-    if (index == ItemType.Belt_5){
-      return playerBelt5_ItemType.value;
-    }
-    if (index == ItemType.Belt_6){
-      return playerBelt6_ItemType.value;
-    }
-    if (index >= inventory.length){
-      throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index >= inventory.length');
-    }
-    if (index < 0){
-      throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index < 0');
-    }
-    return inventory[index];
+    // if (index == ItemType.Equipped_Weapon)
+    //   return gamestream.isometric.player.weapon.value;
+    //
+    // if (index == ItemType.Equipped_Head)
+    //   return gamestream.isometric.player.head.value;
+    //
+    // if (index == ItemType.Equipped_Body)
+    //   return gamestream.isometric.player.body.value;
+    //
+    // if (index == ItemType.Equipped_Legs)
+    //   return gamestream.isometric.player.legs.value;
+    //
+    // if (index == ItemType.Belt_1){
+    //   return playerBelt1_ItemType.value;
+    // }
+    // if (index == ItemType.Belt_2){
+    //   return playerBelt2_ItemType.value;
+    // }
+    // if (index == ItemType.Belt_3){
+    //   return playerBelt3_ItemType.value;
+    // }
+    // if (index == ItemType.Belt_4){
+    //   return playerBelt4_ItemType.value;
+    // }
+    // if (index == ItemType.Belt_5){
+    //   return playerBelt5_ItemType.value;
+    // }
+    // if (index == ItemType.Belt_6){
+    //   return playerBelt6_ItemType.value;
+    // }
+    // if (index >= inventory.length){
+    //   throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index >= inventory.length');
+    // }
+    // if (index < 0){
+    //   throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index < 0');
+    // }
+    // return inventory[index];
+    throw Exception();
   }
 
   int countItemTypeQuantityInPlayerPossession(int itemType){
@@ -370,14 +372,16 @@ class IsometricServer {
       getItemQuantityAtIndex(equippedWeaponIndex.value);
 
   int getEquippedItemType(int itemType) =>
-      ItemType.isTypeWeapon (itemType) ? gamestream.isometric.player.weapon.value :
-      ItemType.isTypeHead   (itemType) ? gamestream.isometric.player.head.value   :
-      ItemType.isTypeBody   (itemType) ? gamestream.isometric.player.body.value   :
-      ItemType.isTypeLegs   (itemType) ? gamestream.isometric.player.legs.value   :
-      ItemType.Empty          ;
+      // ItemType.isTypeWeapon (itemType) ? gamestream.isometric.player.weapon.value :
+      // ItemType.isTypeHead   (itemType) ? gamestream.isometric.player.head.value   :
+      // ItemType.isTypeBody   (itemType) ? gamestream.isometric.player.body.value   :
+      // ItemType.isTypeLegs   (itemType) ? gamestream.isometric.player.legs.value   :
+      // ItemType.Empty          ;
+  0;
 
   int getEquippedWeaponConsumeType() =>
-      ItemType.getConsumeType(getEquippedWeaponType());
+      // ItemType.getConsumeType(getEquippedWeaponType());
+  0;
 
   void onChangedAreaType(int areaType) {
     gamestream.isometric.client.areaTypeVisible.value = true;

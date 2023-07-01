@@ -23,7 +23,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       double dstY,
       ) {
 
-    if (weaponType == ItemType.Empty) return;
+    if (weaponType == WeaponType.Unarmed) return;
     const Sprite_Size = 125.0;
     engine.renderSprite(
         image: GameImages.getImageForWeaponType(weaponType),
@@ -65,7 +65,12 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     final upperBodyDirection = runningBackwards ? renderDirectionOpposite : renderDirection;
     final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
-    final weaponIsTwoHandedFirearm = ItemType.isTwoHanded(weaponType);
+    final weaponIsTwoHandedFirearm = const [
+      WeaponType.Sniper_Rifle,
+      WeaponType.Machine_Gun,
+      WeaponType.Shotgun,
+      WeaponType.Rifle,
+    ].contains(weaponType);
 
     var directionLegs = upperBodyDirection;
     final weaponEngaged = character.weaponEngaged;
@@ -115,10 +120,15 @@ extension RenderCharactersTemplate on RendererCharacters {
         frameWeapon = TemplateAnimation.Frame_Changing;
         break;
       case WeaponState.Aiming:
-        if (ItemType.isTypeWeaponMelee(weaponType) || ItemType.isTypeWeaponThrown(weaponType)) {
+        if (WeaponType.isMelee(weaponType) || WeaponType.Grenade == weaponType) {
           frameWeapon = TemplateAnimation.Frame_Aiming_Sword;
         } else
-        if (ItemType.isOneHanded(weaponType)){
+        if (const[
+          WeaponType.Handgun,
+          WeaponType.Pistol,
+          WeaponType.Smg,
+          WeaponType.Plasma_Pistol,
+        ].contains(weaponType)){
           frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
         } else {
           frameWeapon = TemplateAnimation.Frame_Aiming_Two_Handed;

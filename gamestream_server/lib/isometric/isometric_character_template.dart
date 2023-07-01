@@ -4,9 +4,9 @@ import 'package:gamestream_server/common.dart';
 import 'isometric_character.dart';
 
 class IsometricCharacterTemplate extends IsometricCharacter {
-  var _headType = ItemType.Head_Steel_Helm;
-  var _bodyType = ItemType.Body_Shirt_Cyan;
-  var _legsType = ItemType.Legs_Blue;
+  var _headType = HeadType.Steel_Helm;
+  var _bodyType = BodyType.Shirt_Cyan;
+  var _legsType = LegType.Blue;
 
   IsometricCharacterTemplate({
     required super.x,
@@ -24,21 +24,21 @@ class IsometricCharacterTemplate extends IsometricCharacter {
   int get legsType => _legsType;
 
   set headType(int value){
-    assert (value == ItemType.Empty || ItemType.isTypeHead(value));
+    // assert (value == ItemType.Empty || ItemType.isTypeHead(value));
     if (_headType == value) return;
     _headType = value;
     onEquipmentChanged();
   }
 
   set bodyType(int value){
-    assert (value == ItemType.Empty || ItemType.isTypeBody(value));
+    // assert (value == ItemType.Empty || ItemType.isTypeBody(value));
     if (_bodyType == value) return;
     _bodyType = value;
     onEquipmentChanged();
   }
 
   set legsType(int value) {
-    assert (value == ItemType.Empty || ItemType.isTypeLegs(value));
+    // assert (value == ItemType.Empty || ItemType.isTypeLegs(value));
     if (_legsType == value) return;
     _legsType = value;
     onEquipmentChanged();

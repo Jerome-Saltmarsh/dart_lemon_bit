@@ -44,31 +44,41 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         x: 200,
         y: 200,
         z: 25,
-        type: ItemType.GameObjects_Flag_Red,
+        subType: ObjectType.Flag_Red,
         id: generateId())
       ..team = CaptureTheFlagTeam.Red;
     flagBlue = CaptureTheFlagGameObjectFlag(
         x: 200,
         y: 300,
         z: 25,
-        type: ItemType.GameObjects_Flag_Blue,
+        subType: ObjectType.Flag_Blue,
         id: generateId())
       ..team = CaptureTheFlagTeam.Blue;
 
     gameObjects.add(flagRed);
     gameObjects.add(flagBlue);
 
-    redFlagSpawn = findGameObjectByTypeOrFail(ItemType.GameObjects_Flag_Spawn_Red);
-    blueFlagSpawn = findGameObjectByTypeOrFail(ItemType.GameObjects_Flag_Spawn_Blue);
+    redFlagSpawn = findGameObjectByTypeOrFail(ObjectType.Spawn_Red);
+    blueFlagSpawn = findGameObjectByTypeOrFail(ObjectType.Spawn_Blue);
 
-    baseRed = (findGameObjectByType(ItemType.GameObjects_Base_Red) ?? spawnGameObject(
-        x: scene.rowLength * 0.5, y: scene.columnLength - 150, z: 25, type: ItemType.GameObjects_Base_Red)
+    baseRed = (findGameObjectByType(ObjectType.Base_Red) ?? spawnGameObject(
+        x: scene.rowLength * 0.5,
+        y: scene.columnLength - 150,
+        z: 25,
+        type: GameObjectType.Object,
+        subType: ObjectType.Base_Red,
+    )
     )
       ..fixed = true
       ..team = CaptureTheFlagTeam.Red;
 
-    baseBlue = (findGameObjectByType(ItemType.GameObjects_Base_Blue) ?? spawnGameObject(
-        x: scene.rowLength * 0.5, y: 150, z: 25, type: ItemType.GameObjects_Base_Blue))
+    baseBlue = (findGameObjectByType(ObjectType.Base_Blue) ?? spawnGameObject(
+        x: scene.rowLength * 0.5,
+        y: 150,
+        z: 25,
+        type: GameObjectType.Object,
+        subType: ObjectType.Base_Red,
+    ))
       ..fixed = true
       ..team = CaptureTheFlagTeam.Blue;
 
@@ -82,28 +92,28 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       characters.add(CaptureTheFlagAI(
           game: this,
           team: team,
-          weaponType: ItemType.Weapon_Ranged_Sniper_Rifle,
+          weaponType: WeaponType.Sniper_Rifle,
           role: CaptureTheFlagAIRole.Defense,
       ));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: team,
-          weaponType: ItemType.Weapon_Ranged_Smg,
+          weaponType: WeaponType.Smg,
           role: CaptureTheFlagAIRole.Defense));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: team,
-          weaponType: ItemType.Weapon_Melee_Sword,
+          weaponType: WeaponType.Sword,
           role: CaptureTheFlagAIRole.Offense));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: team,
-          weaponType: ItemType.Weapon_Ranged_Bow,
+          weaponType: WeaponType.Bow,
           role: CaptureTheFlagAIRole.Offense));
       characters.add(CaptureTheFlagAI(
           game: this,
           team: team,
-          weaponType: ItemType.Weapon_Ranged_Machine_Gun,
+          weaponType: WeaponType.Machine_Gun,
           role: CaptureTheFlagAIRole.Offense));
     }
   }
@@ -127,7 +137,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void removeFlags() {
      for (var i = 0; i < gameObjects.length; i++){
       final gameObject = gameObjects[i];
-      if (const [ItemType.GameObjects_Flag_Blue, ItemType.GameObjects_Flag_Red]
+      if (const [ObjectType.Flag_Blue, ObjectType.Flag_Red]
           .contains(gameObject.type)) {
         gameObjects.removeAt(i);
         i--;
@@ -636,11 +646,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     player.setDestinationToCurrentPosition();
 
     if (player.team == CaptureTheFlagTeam.Blue) {
-      player.legsType = ItemType.Legs_Blue;
-      player.bodyType = ItemType.Body_Shirt_Blue;
+      player.legsType = LegType.Blue;
+      player.bodyType = BodyType.Shirt_Blue;
     } else {
-      player.legsType = ItemType.Legs_Red;
-      player.bodyType = ItemType.Body_Shirt_Red;
+      player.legsType = LegType.Red;
+      player.bodyType = BodyType.Shirt_Red;
     }
 
     player.writeFlagStatus();
@@ -715,22 +725,22 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void playerSelectCharacterClass(CaptureTheFlagPlayer player, CaptureTheFlagCharacterClass classType){
      switch (classType){
        case CaptureTheFlagCharacterClass.sniper:
-         player.weaponType = ItemType.Weapon_Ranged_Sniper_Rifle;
+         player.weaponType = WeaponType.Sniper_Rifle;
          break;
        case CaptureTheFlagCharacterClass.machineGun:
-         player.weaponType = ItemType.Weapon_Ranged_Machine_Gun;
+         player.weaponType = WeaponType.Machine_Gun;
          break;
        case CaptureTheFlagCharacterClass.medic:
-         player.weaponType = ItemType.Weapon_Ranged_Smg;
+         player.weaponType = WeaponType.Smg;
          break;
        case CaptureTheFlagCharacterClass.scout:
-         player.weaponType = ItemType.Weapon_Ranged_Bow;
+         player.weaponType = WeaponType.Bow;
          break;
        case CaptureTheFlagCharacterClass.shotgun:
-         player.weaponType = ItemType.Weapon_Ranged_Shotgun;
+         player.weaponType = WeaponType.Smg;
          break;
        case CaptureTheFlagCharacterClass.knight:
-         player.weaponType = ItemType.Weapon_Melee_Sword;
+         player.weaponType = WeaponType.Sword;
          break;
      }
      player.writeSelectClass(false);
@@ -752,17 +762,17 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   double getWeaponTypeRange(int weaponType) => const <int, double>{
-    ItemType.Weapon_Melee_Sword: 60,
-    ItemType.Weapon_Ranged_Bow: 300,
-    ItemType.Weapon_Ranged_Smg: 190,
-    ItemType.Weapon_Ranged_Machine_Gun: 200,
-    ItemType.Weapon_Ranged_Shotgun: 150,
-    ItemType.Weapon_Ranged_Handgun: 200,
-    ItemType.Weapon_Ranged_Sniper_Rifle: 350,
-  }[weaponType] ?? (throw Exception('getWeaponTypeRange(${ItemType.getName(weaponType)})'));
+    WeaponType.Sword: 60,
+    WeaponType.Bow: 300,
+    WeaponType.Smg: 190,
+    WeaponType.Machine_Gun: 200,
+    WeaponType.Shotgun: 150,
+    WeaponType.Handgun: 200,
+    WeaponType.Sniper_Rifle: 350,
+  }[weaponType] ?? (throw Exception('getWeaponTypeRange($weaponType)'));
 
   int getWeaponTypeDamage(int weaponType) => const <int, int>{
-    ItemType.Weapon_Melee_Sword: 2,
+    WeaponType.Sword: 2,
   }[weaponType] ?? 1;
 
   @override

@@ -1,11 +1,7 @@
 
 import 'dart:math';
 
-import 'package:gamestream_server/common/src/api_player.dart';
-import 'package:gamestream_server/common/src/api_players.dart';
-import 'package:gamestream_server/common/src/isometric/item_type.dart';
-import 'package:gamestream_server/common/src/combat/combat_power_type.dart';
-import 'package:gamestream_server/common/src/server_response.dart';
+import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/gamestream.dart';
 
 import 'package:gamestream_server/isometric/src.dart';
@@ -18,9 +14,9 @@ class CombatPlayer extends IsometricPlayer {
 
   var energyGainRate = 16;
   var powerCooldown = 0;
-  var weaponPrimary = ItemType.Empty;
-  var weaponSecondary = ItemType.Empty;
-  var weaponTertiary = ItemType.Empty;
+  var weaponPrimary = WeaponType.Unarmed;
+  var weaponSecondary = WeaponType.Unarmed;
+  var weaponTertiary = WeaponType.Unarmed;
   var maxEnergy = 10;
   var aimTargetWeaponSide = IsometricSide.Left;
   var nextEnergyGain = 0;

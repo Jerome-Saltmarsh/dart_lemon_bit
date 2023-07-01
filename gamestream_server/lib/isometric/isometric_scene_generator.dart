@@ -95,7 +95,11 @@ class IsometricSceneGenerator {
      );
   }
 
-  static IsometricScene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
+  static IsometricScene generateEmptyScene({
+    int height = 8,
+    int rows = 50,
+    int columns = 50,
+  }){
     final area = rows * columns;
     final total = height * area;
     final nodeTypes = Uint8List(total);

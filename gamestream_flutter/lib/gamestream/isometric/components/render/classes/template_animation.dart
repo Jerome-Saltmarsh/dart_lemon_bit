@@ -99,44 +99,46 @@ class TemplateAnimation {
 
   static List<int> getAttackAnimation(int weaponType){
 
-    if (weaponType == ItemType.Empty) {
+    if (weaponType == WeaponType.Unarmed) {
       return Punch;
     }
 
-    if (ItemType.isTypeWeaponHandgun(weaponType)) {
-      return FiringHandgun;
-    }
-
-    if (weaponType == ItemType.Weapon_Ranged_Shotgun){
+    if (const [
+      WeaponType.Shotgun,
+      WeaponType.Flame_Thrower,
+      WeaponType.Bazooka,
+    ].contains(weaponType)) {
       return FiringShotgun;
     }
 
-    if (ItemType.isTypeWeaponRifle(weaponType)){
+    if (const [
+      WeaponType.Handgun,
+      WeaponType.Pistol,
+      WeaponType.Desert_Eagle,
+      WeaponType.Plasma_Pistol,
+      WeaponType.Smg,
+    ].contains(weaponType)) {
+      return FiringHandgun;
+    }
+
+    if (const [
+      WeaponType.Rifle,
+      WeaponType.Sniper_Rifle,
+    ].contains(weaponType)) {
       return FiringRifle;
     }
 
-    if (ItemType.isTypeWeaponMelee(weaponType)){
+    if (WeaponType.isMelee(weaponType)) {
       return StrikingBlade;
     }
 
-    if (ItemType.isTypeWeaponBow(weaponType)){
+    if (WeaponType.Bow == weaponType){
       return FiringBow;
     }
-    if (weaponType == ItemType.Weapon_Thrown_Grenade) {
+    if (weaponType == WeaponType.Grenade) {
       return Punch;
     }
-    if (weaponType == ItemType.Weapon_Ranged_Flamethrower){
-      return FiringShotgun;
-    }
-    if (weaponType == ItemType.Weapon_Ranged_Smg) {
-      return FiringHandgun;
-    }
-    if (weaponType == ItemType.Weapon_Ranged_Minigun) {
-      return FiringShotgun;
-    }
-    if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
-      return FiringShotgun;
-    }
-    throw Exception('TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})');
+
+    throw Exception('TemplateAnimation.getAttackAnimation(${WeaponType.getName(weaponType)})');
   }
 }

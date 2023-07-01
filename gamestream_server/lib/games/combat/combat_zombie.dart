@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src/isometric/character_state.dart';
 import 'package:gamestream_server/common/src/isometric/ai_mode.dart';
-import 'package:gamestream_server/common/src/isometric/item_type.dart';
 import 'package:gamestream_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/src.dart';
 
@@ -64,7 +63,6 @@ class CombatZombie extends IsometricCharacter {
     spawnX = x;
     spawnY = y;
     spawnZ = z;
-    rounds = ItemType.getMaxQuantity(weaponType);
   }
 
   int get equippedAttackDuration => 25;

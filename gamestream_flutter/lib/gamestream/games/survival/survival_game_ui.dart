@@ -36,7 +36,7 @@ extension SurvivalGameUI on SurvivalGame {
                 top: 5,
                 child: buildText(mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
               ),
-              if (beltItemType != ItemType.Empty)
+              if (beltItemType != GameObjectType.Nothing)
                 Container(
                   width: 64,
                   height: 64,
@@ -47,7 +47,7 @@ extension SurvivalGameUI on SurvivalGame {
                   ),
                 ),
 
-              if (beltItemType != ItemType.Empty)
+              if (beltItemType != GameObjectType.Nothing)
                 Positioned(
                     right: 5,
                     bottom: 5,
@@ -203,7 +203,7 @@ extension SurvivalGameUI on SurvivalGame {
       buildWatch(inventoryReads, (int reads){
         final positioned = <Widget>[];
         for (var i = 0; i < gamestream.isometric.server.inventory.length; i++){
-          if (gamestream.isometric.server.inventory[i] == ItemType.Empty) continue;
+          if (gamestream.isometric.server.inventory[i] == GameObjectType.Nothing) continue;
           positioned.add(
               buildPositionInventoryItem(i)
           );
@@ -305,9 +305,9 @@ extension SurvivalGameUI on SurvivalGame {
             height: 32 * scale,
             child: Stack(
               children: [
-                GameIsometricUI.buildAtlasItemType(
-                  itemType ?? gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex),
-                ),
+                // GameIsometricUI.buildAtlasItemType(
+                //   itemType ?? gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex),
+                // ),
                 if (itemQuantity != null && itemQuantity > 1)
                   Positioned(child: buildText(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
               ],
@@ -365,17 +365,14 @@ extension SurvivalGameUI on SurvivalGame {
       );
 
 
-  Widget buildContainerEquippedWeapon() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.weapon, ItemType.Equipped_Weapon);
-
   Widget buildContainerEquippedBody() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.body, ItemType.Equipped_Body);
+      buildWatchEquippedItemType(gamestream.isometric.player.body, GameObjectType.Nothing);
 
   Widget buildContainerEquippedHead() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.head, ItemType.Equipped_Head);
+      buildWatchEquippedItemType(gamestream.isometric.player.head, GameObjectType.Nothing);
 
   Widget buildContainerEquippedLegs() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.legs, ItemType.Equipped_Legs);
+      buildWatchEquippedItemType(gamestream.isometric.player.legs, GameObjectType.Nothing);
 
 
   Widget buildIconSlotEmpty() =>
@@ -407,32 +404,32 @@ extension SurvivalGameUI on SurvivalGame {
   }) => Stack(
     children: [
       GameIsometricUI.buildAtlasIconType(IconType.Slot, scale: 2.0),
-      GameIsometricUI.buildAtlasItemType(itemType),
+      // GameIsometricUI.buildAtlasItemType(itemType),
       Positioned(
         left: 5,
         top: 5,
         child: buildText(hotKey),
       ),
-      if (ItemType.getConsumeType(itemType) != ItemType.Empty)
-        Positioned(
-            right: 5,
-            bottom: 5,
-            child: buildInventoryAware(
-                builder: () => buildText(
-                  gamestream.isometric.server.getItemTypeConsumesRemaining(itemType),
-                  italic: true,
-                  color: Colors.white70,
-                ))),
-      if (itemType != ItemType.Empty && gamestream.isometric.player.weapon.value == itemType)
-        Container(
-          width: 64,
-          height: 64,
-          decoration: GameIsometricUI.buildDecorationBorder(
-            colorBorder: Colors.white,
-            colorFill: Colors.transparent,
-            width: 3,
-          ),
-        )
+      // if (ItemType.getConsumeType(itemType) != ItemType.Empty)
+      //   Positioned(
+      //       right: 5,
+      //       bottom: 5,
+      //       child: buildInventoryAware(
+      //           builder: () => buildText(
+      //             gamestream.isometric.server.getItemTypeConsumesRemaining(itemType),
+      //             italic: true,
+      //             color: Colors.white70,
+      //           ))),
+      // if (itemType != ItemType.Empty && gamestream.isometric.player.weapon.value == itemType)
+      //   Container(
+      //     width: 64,
+      //     height: 64,
+      //     decoration: GameIsometricUI.buildDecorationBorder(
+      //       colorBorder: Colors.white,
+      //       colorFill: Colors.transparent,
+      //       width: 3,
+      //     ),
+      //   )
     ],
   );
 

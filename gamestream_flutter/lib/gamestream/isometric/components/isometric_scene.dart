@@ -146,7 +146,7 @@ class IsometricScene {
     for (var row = 0; row < totalRows; row++){
       for (var column = 0; column < totalColumns; column++){
         var searchIndex = total - area +  index;
-        var typeFound = ItemType.Empty;
+        var typeFound = NodeType.Empty;
         while (true) {
           if (searchIndex < 0) break;
           final type = nodeTypes[searchIndex];

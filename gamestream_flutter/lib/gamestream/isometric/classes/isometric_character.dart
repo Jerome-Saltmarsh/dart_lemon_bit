@@ -6,7 +6,7 @@ import 'package:lemon_math/src.dart';
 
 class IsometricCharacter extends IsometricPosition {
   var characterType = CharacterType.Template;
-  var weaponType = ItemType.Empty;
+  var weaponType = WeaponType.Unarmed;
   var weaponState = 0;
   var bodyType = 0;
   var headType = 0;
@@ -43,8 +43,8 @@ class IsometricCharacter extends IsometricPosition {
   bool get performing => state == CharacterState.Performing;
   bool get hurt => state == CharacterState.Hurt;
   bool get alive => !dead;
-  bool get unarmed => weaponType == ItemType.Empty;
-  bool get weaponTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
+  bool get unarmed => weaponType == WeaponType.Unarmed;
+  bool get weaponTypeIsShotgun => weaponType == WeaponType.Shotgun;
   int get renderDirection => (direction - 1) % 8;
   int get renderLookDirection => (lookDirection - 1) % 8;
   double get angle => direction * piQuarter;

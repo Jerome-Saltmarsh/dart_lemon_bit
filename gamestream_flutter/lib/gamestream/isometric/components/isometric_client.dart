@@ -97,7 +97,7 @@ mixin class IsometricClient {
       final character = characters[i];
       if (!character.allie) continue;
 
-      if (character.weaponType == ItemType.Weapon_Melee_Staff){
+      if (character.weaponType == WeaponType.Staff){
         applyVector3Emission(
           character,
           alpha: 150,
@@ -259,7 +259,7 @@ mixin class IsometricClient {
     nextEmissionSmoke = 20;
     for (final gameObject in gamestream.isometric.server.gameObjects){
       if (!gameObject.active) continue;
-      if (gameObject.type != ItemType.GameObjects_Barrel_Flaming) continue;
+      if (gameObject.type != ObjectType.Barrel_Flaming) continue;
       gamestream.isometric.particles.spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
     }
   }

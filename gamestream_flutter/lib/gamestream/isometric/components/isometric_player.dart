@@ -97,12 +97,12 @@ class IsometricPlayer {
   }
 
   Watch<int> getItemTypeWatch(int itemType){
-    if (ItemType.isTypeWeapon(itemType)) return weapon;
-    if (ItemType.isTypeHead(itemType)) return head;
-    if (ItemType.isTypeBody(itemType)) return body;
-    if (ItemType.isTypeLegs(itemType)) return legs;
+    // if (ItemType.isTypeWeapon(itemType)) return weapon;
+    // if (ItemType.isTypeHead(itemType)) return head;
+    // if (ItemType.isTypeBody(itemType)) return body;
+    // if (ItemType.isTypeLegs(itemType)) return legs;
     throw Exception(
-        'gamestream.isometricEngine.player.getItemTypeWatch(${ItemType.getName(itemType)})'
+        'gamestream.isometricEngine.player.getItemTypeWatch($itemType)'
     );
   }
 

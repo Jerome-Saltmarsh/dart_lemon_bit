@@ -25,7 +25,8 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         x: scene.rowLength - 100,
         y: 100,
         z: 24,
-        type: ItemType.GameObjects_Base_Red,
+        type: GameObjectType.Object,
+        subType: ObjectType.Base_Red,
         id: generateUniqueId(),
     );
 
@@ -35,7 +36,8 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         x: 100,
         y: scene.columnLength - 100,
         z: 24,
-        type: ItemType.GameObjects_Base_Blue,
+        type: GameObjectType.Object,
+        subType: ObjectType.Base_Blue,
         id: generateUniqueId(),
     );
 

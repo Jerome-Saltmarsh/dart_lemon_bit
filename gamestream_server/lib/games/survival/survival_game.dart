@@ -28,13 +28,17 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
     player.interactMode = InteractMode.None;
   }
 
+  int getMaxQuantity(int itemType){
+    return 5;
+  }
+
   @override
   void customOnPlayerCollectGameObject(
       SurvivalPlayer player,
       IsometricGameObject target,
   ) {
     var quantityRemaining = target.quantity > 0 ? target.quantity : 1;
-    final maxQuantity = ItemType.getMaxQuantity(target.type);
+    final maxQuantity = getMaxQuantity(target.type);
     if (maxQuantity > 1) {
       for (var i = 0; i < player.inventory.length; i++) {
         if (player.inventory[i] != target.type) continue;

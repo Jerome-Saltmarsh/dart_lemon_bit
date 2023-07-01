@@ -23,7 +23,7 @@ class IsometricEvents {
 
   void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
-      case ItemType.Weapon_Ranged_Shotgun:
+      case WeaponType.Shotgun:
         gamestream.audio.cock_shotgun_3.playXYZ(x, y, z);
         break;
       default:
@@ -188,10 +188,10 @@ class IsometricEvents {
       case GameEventType.Attack_Missed:
         final attackType = gamestream.readUInt16();
         switch (attackType) {
-          case ItemType.Empty:
+          case WeaponType.Unarmed:
             gamestream.audio.arm_swing_whoosh_11.playXYZ(x, y, z);
             break;
-          case ItemType.Weapon_Melee_Sword:
+          case WeaponType.Sword:
             gamestream.audio.arm_swing_whoosh_11.playXYZ(x, y, z);
             break;
         }
@@ -308,30 +308,30 @@ class IsometricEvents {
       attackTypeAudio.playXYZ(x, y, z);
     }
 
-    if (attackType == ItemType.Empty){
+    if (attackType == WeaponType.Unarmed){
       isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
-    if (attackType == ItemType.Weapon_Melee_Knife){
+    if (attackType == WeaponType.Melee){
       isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
-    if (ItemType.isTypeWeaponMelee(attackType)) {
+    if (WeaponType.isMelee(attackType)) {
       isometric.particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
-    if (attackType == ItemType.Weapon_Ranged_Flamethrower) return;
+    if (attackType == WeaponType.Flame_Thrower) return;
 
     const gun_distance = 50.0;
     final gunX = x - adj(angle, gun_distance);
     final gunY = y - opp(angle, gun_distance);
 
-    if (ItemType.isTypeWeaponFirearm(attackType)){
+    if (WeaponType.isFirearm(attackType)){
       isometric.particles.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
       isometric.particles.spawnParticleShell(gunX, gunY, z);
     }
-    if (ItemType.isAutomaticFirearm(attackType)){
+    if (WeaponType.Firearms_Automatic.contains(attackType)){
       isometric.particles.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
       return;
     }
@@ -346,15 +346,15 @@ class IsometricEvents {
       attackTypeAudio.playXYZ(x, y, z);
     }
 
-    if (attackType == ItemType.Empty){
+    if (attackType == WeaponType.Unarmed){
       isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
-    if (attackType == ItemType.Weapon_Melee_Knife){
+    if (attackType == WeaponType.Knife){
       isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
-    if (ItemType.isTypeWeaponMelee(attackType)) {
+    if (WeaponType.isMelee(attackType)) {
       isometric.particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
@@ -406,7 +406,7 @@ class IsometricEvents {
     switch (event) {
       case PlayerEvent.Reloading:
         switch (gamestream.isometric.player.weapon.value){
-          case ItemType.Weapon_Ranged_Handgun:
+          case WeaponType.Handgun:
             gamestream.audio.reload_6();
             break;
           default:
@@ -495,30 +495,30 @@ class IsometricEvents {
   }
 
   void readPlayerEventItemConsumed() {
-    switch (gamestream.readUInt16()){
-      case ItemType.Consumables_Potion_Red:
-        gamestream.audio.drink();
-        gamestream.audio.reviveHeal1();
-
-        for (var i = 0; i < 8; i++){
-          isometric.particles.spawnParticleConfettiByType(
-             gamestream.isometric.player.position.x,
-             gamestream.isometric.player.position.y,
-             gamestream.isometric.player.position.z,
-             ParticleType.Confetti_Green,
-          );
-        }
-        break;
-      case ItemType.Consumables_Potion_Blue:
-        gamestream.audio.drink();
-        break;
-      case ItemType.Consumables_Meat:
-        gamestream.audio.eat();
-        break;
-      case ItemType.Consumables_Apple:
-        gamestream.audio.eat();
-        break;
-    }
+    // switch (gamestream.readUInt16()){
+    //   case ItemType.Consumables_Potion_Red:
+    //     gamestream.audio.drink();
+    //     gamestream.audio.reviveHeal1();
+    //
+    //     for (var i = 0; i < 8; i++){
+    //       isometric.particles.spawnParticleConfettiByType(
+    //          gamestream.isometric.player.position.x,
+    //          gamestream.isometric.player.position.y,
+    //          gamestream.isometric.player.position.z,
+    //          ParticleType.Confetti_Green,
+    //       );
+    //     }
+    //     break;
+    //   case ItemType.Consumables_Potion_Blue:
+    //     gamestream.audio.drink();
+    //     break;
+    //   case ItemType.Consumables_Meat:
+    //     gamestream.audio.eat();
+    //     break;
+    //   case ItemType.Consumables_Apple:
+    //     gamestream.audio.eat();
+    //     break;
+    // }
   }
 
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
@@ -619,29 +619,29 @@ class IsometricEvents {
     }
   }
 
-  void onChangedPlayerWeapon(int itemType){
-    if (itemType == ItemType.Empty) return;
+  void onChangedPlayerWeapon(int weaponType){
+    if (weaponType == WeaponType.Unarmed) return;
 
-    switch (itemType) {
-      case ItemType.Weapon_Ranged_Plasma_Rifle:
+    switch (weaponType) {
+      case WeaponType.Plasma_Rifle:
         gamestream.audio.gun_pickup_01();
         break;
-      case ItemType.Weapon_Ranged_Plasma_Pistol:
+      case WeaponType.Plasma_Pistol:
         gamestream.audio.revolver_reload_1();
         break;
-      case ItemType.Weapon_Ranged_Revolver:
+      case WeaponType.Revolver:
         gamestream.audio.revolver_reload_1();
         break;
-      case ItemType.Weapon_Ranged_Handgun:
+      case WeaponType.Handgun:
         gamestream.audio.reload_6();
         break;
-      case ItemType.Weapon_Ranged_Shotgun:
+      case WeaponType.Shotgun:
         gamestream.audio.cock_shotgun_3();
         break;
-      case ItemType.Weapon_Melee_Sword:
+      case WeaponType.Sword:
         gamestream.audio.sword_unsheathe();
         break;
-      case ItemType.Weapon_Ranged_Bow:
+      case WeaponType.Bow:
         gamestream.audio.bow_draw();
         break;
       default:
@@ -652,40 +652,35 @@ class IsometricEvents {
 
   void readPlayerEventItemAcquired() {
     final itemType = gamestream.readUInt16();
-    if (itemType == ItemType.Empty) return;
+    // todo read subtype
+    if (itemType == WeaponType.Unarmed) return;
 
     switch (itemType) {
-      case ItemType.Weapon_Ranged_Plasma_Rifle:
+      case WeaponType.Plasma_Rifle:
         gamestream.audio.gun_pickup_01();
         break;
-      case ItemType.Weapon_Ranged_Plasma_Pistol:
+      case WeaponType.Plasma_Pistol:
         gamestream.audio.revolver_reload_1();
         break;
-      case ItemType.Weapon_Ranged_Revolver:
+      case WeaponType.Revolver:
         gamestream.audio.revolver_reload_1();
         break;
-      case ItemType.Weapon_Ranged_Handgun:
+      case WeaponType.Handgun:
         gamestream.audio.reload_6();
         break;
-      case ItemType.Weapon_Ranged_Shotgun:
+      case WeaponType.Shotgun:
         gamestream.audio.cock_shotgun_3();
         break;
-      case ItemType.Weapon_Melee_Sword:
+      case WeaponType.Sword:
         gamestream.audio.sword_unsheathe();
         break;
-      case ItemType.Weapon_Ranged_Bow:
+      case WeaponType.Bow:
         gamestream.audio.bow_draw();
         break;
-      case ItemType.Buff_Invincible:
-        gamestream.audio.buff_16();
-        break;
-      case ItemType.Resource_Credit:
-        gamestream.audio.collect_star_3();
-        break;
       default:
-        if (ItemType.isTypeWeapon(itemType)){
-          gamestream.audio.gun_pickup_01();
-        }
+        // if (ItemType.isTypeWeapon(itemType)){
+        //   gamestream.audio.gun_pickup_01();
+        // }
         break;
     }
   }
@@ -766,26 +761,26 @@ class IsometricEvents {
       int type,
       ){
     switch (type){
-      case ItemType.GameObjects_Barrel:
+      case ObjectType.Barrel:
         gamestream.audio.crate_breaking.playXYZ(x, y, z);
         for (var i = 0; i < 5; i++) {
           gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
         }
         break;
-      case ItemType.GameObjects_Toilet:
+      case ObjectType.Toilet:
         gamestream.audio.crate_breaking.playXYZ(x, y, z);
         for (var i = 0; i < 5; i++) {
           gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
         }
         break;
-      case ItemType.GameObjects_Crate_Wooden:
+      case ObjectType.Crate_Wooden:
         gamestream.audio.crate_breaking.playXYZ(x, y, z);
         for (var i = 0; i < 5; i++) {
           gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
         }
         break;
 
-      case ItemType.Resource_Credit:
+      case ObjectType.Credits:
         for (var i = 0; i < 8; i++){
           gamestream.isometric.particles.spawnParticleConfettiByType(
             x,

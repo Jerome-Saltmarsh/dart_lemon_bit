@@ -1,20 +1,17 @@
 import 'dart:io';
 
+import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_io/src/filename_remove_extension.dart';
 import 'package:gamestream_server/lemon_io/src/get_file_system_entity_filename.dart';
 import 'package:gamestream_server/lemon_io/src/write_string_to_file.dart';
 import 'package:gamestream_server/utils/system.dart';
 
-import 'isometric_scene.dart';
-import 'isometric_scene_writer.dart';
+import 'isometric_scene_reader.dart';
 
 class IsometricScenes {
   String get sceneDirectoryPath =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';
   late final sceneDirectory = Directory(sceneDirectoryPath);
 
-  late IsometricScene suburbs_01;
-  late IsometricScene warehouse;
-  late IsometricScene warehouse02;
   late IsometricScene town;
   late IsometricScene captureTheFlag;
   late IsometricScene moba;
@@ -22,10 +19,8 @@ class IsometricScenes {
   late IsometricScene mmoTown;
 
   Future load() async {
-      suburbs_01 = await loadScene('suburbs_01');
-      warehouse = await loadScene('warehouse');
-      warehouse02 = await loadScene('warehouse02');
-      town = await loadScene('town');
+      // town = await loadScene('town');
+      town = IsometricSceneGenerator.generateEmptyScene();
       captureTheFlag = await loadScene('capture_the_flag');
       moba = await loadScene('moba');
       mmoTown = await loadScene('mmo_town');

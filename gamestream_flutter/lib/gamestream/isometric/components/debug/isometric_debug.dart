@@ -124,7 +124,7 @@ class IsometricDebug {
               buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
               buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
               buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(ItemType.getName(t)))),
+              buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(WeaponType.getName(t)))),
               buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
               buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
               buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
@@ -358,10 +358,10 @@ class IsometricDebug {
                   'player-screen: x: ${gamestream.isometric.player.positionScreenX.toInt()}, y: ${gamestream.isometric.player.positionScreenY.toInt()}\n'
                   'player-index: z: ${gamestream.isometric.player.position.indexZ}, row: ${gamestream.isometric.player.position.indexRow}, column: ${gamestream.isometric.player.position.indexColumn}\n'
                   'player-inside-island: ${RendererNodes.playerInsideIsland}\n'
-                  'player-legs: ${ItemType.getName(gamestream.isometric.player.legs.value)}\n'
-                  'player-body: ${ItemType.getName(gamestream.isometric.player.body.value)}\n'
-                  'player-head: ${ItemType.getName(gamestream.isometric.player.head.value)}\n'
-                  'player-weapon: ${ItemType.getName(gamestream.isometric.player.weapon.value)}\n'
+                  'player-legs: ${LegType.getName(gamestream.isometric.player.legs.value)}\n'
+                  'player-body: ${BodyType.getName(gamestream.isometric.player.body.value)}\n'
+                  'player-head: ${HeadType.getName(gamestream.isometric.player.head.value)}\n'
+                  'player-weapon: ${WeaponType.getName(gamestream.isometric.player.weapon.value)}\n'
                   'player-interact-mode: ${InteractMode.getName(gamestream.isometric.server.interactMode.value)}\n'
                   'aim-target-category: ${TargetCategory.getName(gamestream.isometric.player.aimTargetCategory)}\n'
                   'aim-target-type: ${gamestream.isometric.player.aimTargetType}\n'

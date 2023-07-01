@@ -17,7 +17,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var _health = 1;
   var _maxHealth = 1;
   var _weaponStateDurationTotal = 0;
-  var _weaponType = ItemType.Empty;
+  var _weaponType = WeaponType.Unarmed;
   var _characterType = 0;
 
   var autoTarget = true;
@@ -29,6 +29,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var weaponRange = 20.0;
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
+  var weaponCooldown = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
@@ -131,7 +132,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   int get weaponStateDurationTotal => _weaponStateDurationTotal;
 
   set weaponType(int value){
-    assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
+    // assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
     if (_weaponType == value) return;
     _weaponType = value;
     onWeaponTypeChanged();
@@ -153,7 +154,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     _characterType = value;
     radius = CharacterType.getRadius(value);
     if (value != CharacterType.Template) {
-      weaponType = ItemType.Empty;
+      weaponType = WeaponType.Unarmed;
     }
   }
 
@@ -232,7 +233,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   int get maxHealth => _maxHealth;
 
-  int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
+  // int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
 
   /// SETTERS
 
@@ -275,7 +276,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void assignWeaponStateFiring() {
     weaponState = WeaponState.Firing;
-    weaponStateDurationTotal = ItemType.getCooldown(weaponType);
+    weaponStateDurationTotal = weaponCooldown;
     assert (weaponStateDurationTotal > 0);
   }
 

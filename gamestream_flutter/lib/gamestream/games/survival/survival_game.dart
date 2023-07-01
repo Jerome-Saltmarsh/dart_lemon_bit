@@ -144,8 +144,8 @@ class SurvivalGame extends IsometricGame {
     // print("onDragEnd()");
   }
 
-  void dropEquippedWeapon() =>
-      sendClientRequestInventoryDrop(ItemType.Equipped_Weapon);
+  // void dropEquippedWeapon() =>
+  //     sendClientRequestInventoryDrop(ItemType.Equipped_Weapon);
 
   void equipWatchBeltType(Watch<int> watchBeltType) =>
       sendClientRequestInventoryEquip(

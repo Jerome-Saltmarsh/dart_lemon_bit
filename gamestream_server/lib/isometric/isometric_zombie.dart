@@ -20,7 +20,7 @@ class IsometricZombie extends IsometricCharacter {
     required super.z,
   }) : super(
     characterType: CharacterType.Zombie,
-    weaponType: ItemType.Empty,
+    weaponType: WeaponType.Unarmed,
     weaponRange: 20,
   );
 

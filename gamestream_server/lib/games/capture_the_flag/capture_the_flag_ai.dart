@@ -34,11 +34,11 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   ) {
     id = game.generateUniqueId();
     if (isTeamRed) {
-      bodyType = ItemType.Body_Shirt_Red;
-      legsType = ItemType.Legs_Red;
+      bodyType = BodyType.Shirt_Red;
+      legsType = LegType.Red;
     } else {
-      bodyType = ItemType.Body_Shirt_Blue;
-      legsType = ItemType.Legs_Blue;
+      bodyType = BodyType.Shirt_Blue;
+      legsType = LegType.Blue;
     }
   }
 

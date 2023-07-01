@@ -1,5 +1,5 @@
 
-import 'package:gamestream_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
+import 'package:gamestream_server/common.dart';
 
 import 'mixins/i_capture_the_flag_team.dart';
 import 'package:gamestream_server/isometric/src.dart';
@@ -11,7 +11,13 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheF
   IsometricCollider? heldBy;
 
 
-  CaptureTheFlagGameObjectFlag({required super.x, required super.y, required super.z, required super.type, required super.id}) {
+  CaptureTheFlagGameObjectFlag({
+    required super.x,
+    required super.y,
+    required super.z,
+    required super.id,
+    required super.subType,
+  }) :super(type: GameObjectType.Object) {
     recyclable = false;
     fixed = false;
     physical = false;

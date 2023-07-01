@@ -40,16 +40,15 @@ extension CombatUI on CombatGame {
     const textSize = 22;
 
     const weaponTypes = const [
-      ItemType.Weapon_Ranged_Plasma_Rifle,
-      ItemType.Weapon_Ranged_Plasma_Pistol,
-      ItemType.Weapon_Ranged_Shotgun,
-      ItemType.Weapon_Ranged_Bazooka,
-      ItemType.Weapon_Ranged_Sniper_Rifle,
-      ItemType.Weapon_Ranged_Flamethrower,
-      ItemType.Weapon_Ranged_Teleport,
+      WeaponType.Plasma_Pistol,
+      WeaponType.Shotgun,
+      WeaponType.Bazooka,
+      WeaponType.Sniper_Rifle,
+      WeaponType.Flame_Thrower,
+      WeaponType.Portal,
       // ItemType.Weapon_Melee_Knife,
-      ItemType.Weapon_Melee_Crowbar,
-      ItemType.Weapon_Melee_Sword,
+      WeaponType.Crowbar,
+      WeaponType.Sword,
     ];
 
     const titleFontSize = 22;
@@ -111,7 +110,7 @@ extension CombatUI on CombatGame {
                   margin: const EdgeInsets.only(bottom: 6),
                   child: onPressed(
                       action: () => sendClientRequestSelectWeaponPrimary(itemType),
-                      child: buildText(ItemType.getName(itemType),
+                      child: buildText(WeaponType.getName(itemType),
                         color: weaponPrimary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
                         size: textSize,
                       )),
@@ -142,7 +141,7 @@ extension CombatUI on CombatGame {
                   margin: const EdgeInsets.only(bottom: 6),
                   child: onPressed(
                       action: () => sendClientRequestSelectWeaponSecondary(itemType),
-                      child: buildText(ItemType.getName(itemType),
+                      child: buildText(WeaponType.getName(itemType),
                         color: weaponSecondary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
                         size: textSize,
                       )),
@@ -212,21 +211,23 @@ extension CombatUI on CombatGame {
     );
   }
 
-  Container buildIconPlayerWeaponSecondary() {
-    return Container(
+  Container buildIconPlayerWeaponSecondary() => Container(
       constraints: BoxConstraints(maxWidth: 120),
       height: 64,
-      child: buildWatch(gamestream.isometric.player.weaponSecondary, GameIsometricUI.buildAtlasItemType),
+      child: buildWatch(gamestream.isometric.player.weaponSecondary,
+              (weaponType) => GameIsometricUI.buildAtlasItemType(
+                  type: GameObjectType.Weapon, subType: weaponType,
+              )),
     );
-  }
 
-  Container buildIconPlayerWeaponPrimary() {
-    return Container(
+  Container buildIconPlayerWeaponPrimary() => Container(
       constraints: BoxConstraints(maxWidth: 120, maxHeight: 64),
       height: 64,
-      child: buildWatch(gamestream.isometric.player.weaponPrimary, GameIsometricUI.buildAtlasItemType),
+      child: buildWatch(gamestream.isometric.player.weaponPrimary,
+              (weaponType) => GameIsometricUI.buildAtlasItemType(
+            type: GameObjectType.Weapon, subType: weaponType,
+          )),
     );
-  }
 
   Widget buildIconPlayerCombatPowerType(){
     return buildWatch(gamestream.isometric.player.powerReady, (bool powerReady) {

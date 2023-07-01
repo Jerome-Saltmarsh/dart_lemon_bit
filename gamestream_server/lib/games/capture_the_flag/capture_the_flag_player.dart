@@ -46,7 +46,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }) : super(game: game) {
     writeScore();
     weaponDamage = 1;
-    weaponType = ItemType.Empty;
+    weaponType = WeaponType.Unarmed;
     pathFindingEnabled = false;
     runToDestinationEnabled = false;
   }

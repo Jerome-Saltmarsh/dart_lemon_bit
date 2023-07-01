@@ -432,10 +432,10 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writeCharacterUpperBody(IsometricCharacterTemplate character) {
-    assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
-    assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
-    assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
-    assert (ItemType.isTypeHead(character.headType) || character.headType == ItemType.Empty);
+    // assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
+    // assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
+    // assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
+    // assert (ItemType.isTypeHead(character.headType) || character.headType == ItemType.Empty);
     writeUInt16(character.weaponType);
     writeByte(character.weaponState);
     writeUInt16(character.bodyType);
