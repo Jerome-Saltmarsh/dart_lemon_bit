@@ -740,6 +740,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeUInt16(debugCharacter.weaponStateDuration);
     writeBool(debugCharacter.autoTarget);
     writeBool(debugCharacter.pathFindingEnabled);
+    writeBool(debugCharacter.runToDestinationEnabled);
 
     final selectedCharacterTarget = debugCharacter.target;
     if (selectedCharacterTarget == null){

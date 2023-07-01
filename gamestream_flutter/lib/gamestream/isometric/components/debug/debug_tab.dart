@@ -1,4 +1,4 @@
 
 enum DebugTab {
-  Character, Network,
+  Character, Network, Stats, Lighting,
 }

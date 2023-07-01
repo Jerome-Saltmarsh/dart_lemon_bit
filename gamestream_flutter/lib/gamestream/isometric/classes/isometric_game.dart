@@ -75,11 +75,9 @@ class IsometricGame extends Game {
       ),
       WatchBuilder(isometric.client.edit, (edit) =>
         edit ? isometric.editor.buildEditor() : customBuildUI(context)),
-      isometric.ui.buildWindowDebug(),
-      isometric.ui.buildWindowLightSettings(),
       Positioned(
-          top: 80,
-          right: 16,
+          top: 16,
+          left: 16,
           child: isometric.debug.buildUI()
       ),
       Positioned(
@@ -108,7 +106,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Digit_0) {
-      isometric.ui.windowOpenDebug.toggle();
+      isometric.debug.enabled.toggle();
       return;
     }
 
@@ -124,11 +122,6 @@ class IsometricGame extends Game {
 
     if (key == KeyCode.Z) {
       isometric.DebugCharacterWalkToMouse();
-      return;
-    }
-
-    if (key == KeyCode.P) {
-      isometric.ui.windowOpenLightSettings.toggle();
       return;
     }
 
