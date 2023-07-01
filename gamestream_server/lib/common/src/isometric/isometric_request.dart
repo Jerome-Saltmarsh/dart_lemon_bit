@@ -13,6 +13,7 @@ enum IsometricRequest {
    Debug_Character_Walk_To_Mouse,
    Debug_Character_Toggle_Auto_Attack_Nearby_Enemies,
    Debug_Character_Toggle_Path_Finding_Enabled,
+   Debug_Character_Toggle_Run_To_Destination,
    Debug_Character_Debug_Update,
    Debug_Character_Set_Character_Type,
 }

@@ -61,6 +61,7 @@ extension IsometricResponseReader on Gamestream {
 
     debug.autoAttack.value = readBool();
     debug.pathFindingEnabled.value = readBool();
+    debug.runToDestinationEnabled.value = readBool();
 
     final characterSelectedTarget = readBool();
     debug.targetSet.value = characterSelectedTarget;

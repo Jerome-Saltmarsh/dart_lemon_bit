@@ -828,6 +828,12 @@ class WebSocketConnection with ByteReader {
         debugCharacter.pathFindingEnabled = !debugCharacter.pathFindingEnabled;
         break;
 
+      case IsometricRequest.Debug_Character_Toggle_Run_To_Destination:
+        final debugCharacter = player.debugCharacter;
+        if (debugCharacter == null) return;
+        debugCharacter.runToDestinationEnabled = !debugCharacter.runToDestinationEnabled;
+        break;
+
       case IsometricRequest.Debug_Character_Debug_Update:
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;

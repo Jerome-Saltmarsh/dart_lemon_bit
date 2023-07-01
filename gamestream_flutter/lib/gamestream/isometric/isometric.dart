@@ -117,6 +117,9 @@ class Isometric {
   void debugCharacterTogglePathFindingEnabled() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
 
+  void debugCharacterToggleRunToDestination() =>
+      sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Run_To_Destination);
+
   void debugCharacterDebugUpdate() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
 
