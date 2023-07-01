@@ -20,7 +20,6 @@ class IsometricServer {
   var inventory = Uint16List(0);
   var inventoryQuantity = Uint16List(0);
 
-  final characterBytes = Watch(0);
   final tagTypes = <String, int> {};
   final playerScores = <IsometricPlayerScore>[];
   final gameObjects = <IsometricGameObject>[];

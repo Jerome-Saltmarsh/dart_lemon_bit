@@ -492,7 +492,6 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readCharacters(){
-     var start = index;
      final server = isometric.server;
      while (true) {
       final characterType = readByte();
@@ -509,8 +508,6 @@ extension ServerResponseReader on Gamestream {
       }
       server.totalCharacters++;
     }
-
-     server.characterBytes.value = index - start;
   }
 
   void readNpcTalk() {

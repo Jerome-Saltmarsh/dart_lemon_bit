@@ -208,27 +208,27 @@ class RendererCharacters extends IsometricRenderer {
 
     var angle = 0.0;
     var dist = 0.0;
-    final nodes = gamestream.isometric.scene;
+    // final nodes = gamestream.isometric.scene;
 
-    if (!nodes.outOfBoundsV3(character)){
-      var torchIndex = nodes.getTorchIndex(nodes.getNodeIndexV3(character));
-      if (torchIndex != -1) {
-        final torchRow = nodes.convertNodeIndexToIndexX(torchIndex);
-        final torchColumn = nodes.convertNodeIndexToIndexY(torchIndex);
-        final torchPosX = torchRow * Node_Size + Node_Size_Half;
-        final torchPosY = torchColumn * Node_Size + Node_Size_Half;
-        angle = angleBetween(character.x, character.y, torchPosX, torchPosY);
-        dist = min(
-          Character_Shadow_Distance_Max,
-          distanceBetween(
-              character.x,
-              character.y,
-              torchPosX,
-              torchPosY
-          ) * Character_Shadow_Distance_Ratio,
-        );
-      }
-    }
+    // if (!nodes.outOfBoundsV3(character)){
+    //   var torchIndex = nodes.getTorchIndex(nodes.getNodeIndexV3(character));
+    //   if (torchIndex != -1) {
+    //     final torchRow = nodes.convertNodeIndexToIndexX(torchIndex);
+    //     final torchColumn = nodes.convertNodeIndexToIndexY(torchIndex);
+    //     final torchPosX = torchRow * Node_Size + Node_Size_Half;
+    //     final torchPosY = torchColumn * Node_Size + Node_Size_Half;
+    //     angle = angleBetween(character.x, character.y, torchPosX, torchPosY);
+    //     dist = min(
+    //       Character_Shadow_Distance_Max,
+    //       distanceBetween(
+    //           character.x,
+    //           character.y,
+    //           torchPosX,
+    //           torchPosY
+    //       ) * Character_Shadow_Distance_Ratio,
+    //     );
+    //   }
+    // }
 
     final shadowX = character.x + adj(angle, dist);
     final shadowY = character.y + opp(angle, dist);

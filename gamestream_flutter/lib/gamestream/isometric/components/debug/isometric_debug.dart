@@ -308,42 +308,45 @@ class IsometricDebug {
               )).toList(),
           ));
 
-  Widget buildTabNetwork() => buildWatch(gamestream.bufferSize, (bytes){
-    bytes--; // remove the final end byte
-    var text = '';
-    for (var i = 0; i < ServerResponseReader.serverResponseStackIndex; i++){
-      final serverResponse = ServerResponseReader.serverResponseStack[i];
-      final length = ServerResponseReader.serverResponseStackLength[i];
-      final lengthPercentage = formatPercentage(length / bytes);
-      text += '${ServerResponse.getName(serverResponse)}, ($length / $bytes, $lengthPercentage\n';
-    }
-    return buildText(text);
-  });
+  Widget buildTabNetwork() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      buildWatch(gamestream.serverFPS, (serverFPS) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          buildText('network-server-fps: $serverFPS'),
+          buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
+          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
+          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
+          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
+          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+        ],
+      )),
+      height16,
+      buildWatch(gamestream.bufferSize, (bytes){
+        bytes--; // remove the final end byte
+        var text = '';
+        for (var i = 0; i < ServerResponseReader.serverResponseStackIndex; i++){
+          final serverResponse = ServerResponseReader.serverResponseStack[i];
+          final length = ServerResponseReader.serverResponseStackLength[i];
+          final lengthPercentage = formatPercentage(length / bytes);
+          text += '${ServerResponse.getName(serverResponse)}, ($length / $bytes, $lengthPercentage\n';
+        }
+        return buildText(text);
+      }),
+    ],
+  );
 
   Widget buildTabStats() =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildWatch(gamestream.serverFPS, (serverFPS) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              buildText('server-fps: $serverFPS'),
-              buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
-              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
-              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
-              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
-              buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
-              height8,
-              buildWatch(gamestream.isometric.server.characterBytes, (int bytes) => buildText('network-character-size: ${formatPercentage(bytes / gamestream.bufferSize.value) }')),
-            ],
-          )),
           GSRefresh(() =>  buildText(
               'connection-duration: ${gamestream.isometric..client.formattedConnectionDuration}\n'
-              // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
-              // "onscreen-nodes: ${gamestream.isometricEngine.nodes.onscreenNodes}\n"
                   'touches: ${engine.touches}\n'
                   'touch down id: ${engine.touchDownId}\n'
                   'touch update id: ${engine.touchDownId}\n'
