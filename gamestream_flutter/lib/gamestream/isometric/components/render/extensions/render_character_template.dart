@@ -46,10 +46,8 @@ extension RenderCharactersTemplate on RendererCharacters {
     assert(character.direction < 8);
     if (character.dead) return;
 
-    if (renderHealthBar) {
-      if (character.allie){
-        gamestream.isometric.renderer.renderCharacterHealthBar(character);
-      }
+    if (renderHealthBar && character.allie) {
+      gamestream.isometric.renderer.renderCharacterHealthBar(character);
     }
 
     var frameLegs = 0;
@@ -57,18 +55,22 @@ extension RenderCharactersTemplate on RendererCharacters {
     var frameBody = 0;
     var frameWeapon = 0;
 
-    final diff = IsometricDirection.getDifference(character.renderDirection, character.lookDirection).abs();
-    final runningBackwards = diff >= 3 && character.running;
-    var renderDirectionOpposite = (character.renderDirection + 4) % 8;
+    final renderLookDirection = character.renderLookDirection;
+    final renderDirection = character.renderDirection;
 
-    final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
+    final lookDirectionDifference = IsometricDirection.getDifference(renderDirection, renderLookDirection).abs();
+    final runningBackwards = lookDirectionDifference >= 3 && character.running;
+    final renderDirectionOpposite = (renderDirection + 4) % 8;
+    final weaponType = character.weaponType;
+
+    final upperBodyDirection = runningBackwards ? renderDirectionOpposite : renderDirection;
     final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
-    var weaponIsTwoHandedFirearm = ItemType.isTwoHanded(character.weaponType);
+    final weaponIsTwoHandedFirearm = ItemType.isTwoHanded(weaponType);
 
     var directionLegs = upperBodyDirection;
-    final weaponEngaged = (character.weaponStateAiming || character.weaponStateFiring || character.weaponStateMelee);
-    var directionBody = weaponEngaged ? character.lookDirection : upperBodyDirection;
-    var directionHead = weaponEngaged ? directionBody : character.lookDirection;
+    final weaponEngaged = character.weaponEngaged;
+    var directionBody = weaponEngaged ? renderLookDirection : upperBodyDirection;
+    var directionHead = weaponEngaged ? directionBody : renderLookDirection;
 
     switch (character.state) {
       case CharacterState.Idle:
@@ -88,10 +90,10 @@ extension RenderCharactersTemplate on RendererCharacters {
         frameWeapon = TemplateAnimation.Frame_Changing;
         break;
       case CharacterState.Performing:
-        final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
+        final animation = TemplateAnimation.getAttackAnimation(weaponType);
         frameWeapon = capIndex(animation, character.frame);
         frameLegs = frameWeapon;
-        directionBody = character.renderDirection;
+        directionBody = renderDirection;
         directionHead = directionBody;
         directionLegs = directionBody;
         break;
@@ -106,17 +108,17 @@ extension RenderCharactersTemplate on RendererCharacters {
       case WeaponState.Idle:
         break;
       case WeaponState.Firing:
-        final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
+        final animation = TemplateAnimation.getAttackAnimation(weaponType);
         frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
         break;
       case WeaponState.Reloading:
         frameWeapon = TemplateAnimation.Frame_Changing;
         break;
       case WeaponState.Aiming:
-        if (ItemType.isTypeWeaponMelee(character.weaponType) || ItemType.isTypeWeaponThrown(character.weaponType)) {
+        if (ItemType.isTypeWeaponMelee(weaponType) || ItemType.isTypeWeaponThrown(weaponType)) {
           frameWeapon = TemplateAnimation.Frame_Aiming_Sword;
         } else
-        if (ItemType.isOneHanded(character.weaponType)){
+        if (ItemType.isOneHanded(weaponType)){
           frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
         } else {
           frameWeapon = TemplateAnimation.Frame_Aiming_Two_Handed;
@@ -149,7 +151,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     }
 
     if (!weaponInFront) {
-      renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
+      renderTemplateWeapon(weaponType, directionBody, frameWeapon, color, dstX, dstY);
     }
     const Scale = 0.7;
     const Sprite_Size = 125.0;

@@ -36,6 +36,7 @@ class IsometricCharacter extends IsometricPosition {
   bool get weaponStateChanging => weaponState == WeaponState.Changing;
   bool get weaponStateAiming => weaponState == WeaponState.Aiming;
   bool get weaponStateThrowing => weaponState == WeaponState.Throwing;
+  bool get weaponEngaged => weaponStateAiming || weaponStateFiring || weaponStateMelee;
   bool get dead => state == CharacterState.Dead;
   bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
@@ -44,6 +45,7 @@ class IsometricCharacter extends IsometricPosition {
   bool get alive => !dead;
   bool get unarmed => weaponType == ItemType.Empty;
   bool get weaponTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
-  int get renderDirection => direction == 0 ? 7 : (direction - 1);
+  int get renderDirection => (direction - 1) % 8;
+  int get renderLookDirection => (lookDirection - 1) % 8;
   double get angle => direction * piQuarter;
 }
