@@ -165,6 +165,8 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get dead => state == CharacterState.Dead;
 
+  bool get deadOrInactive => dead || !active;
+
   bool get alive => !dead;
 
   bool get targetIsNull => target == null;

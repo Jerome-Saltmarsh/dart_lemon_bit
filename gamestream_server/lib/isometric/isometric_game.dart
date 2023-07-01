@@ -1639,17 +1639,35 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateCharacterState(character);
     updateColliderPhysics(character);
 
+
+
     if (character.autoTarget && character.autoTargetTimer-- <= 0){
       character.autoTargetTimer = character.autoTargetTimerDuration;
       character.target = findNearestEnemy(character, radius: character.autoTargetRange);
     }
 
     if (character.runToDestinationEnabled) {
-      if (character.deadBusyOrWeaponStateBusy || character.runDestinationWithinRadiusRunSpeed){
+      if (character.deadBusyOrWeaponStateBusy ||
+          character.runDestinationWithinRadiusRunSpeed
+      ){
         character.setCharacterStateIdle();
       } else {
         character.runToDestination();
       }
+    }
+
+    // update the target
+
+    if (character.target != null) {
+       final target = character.target;
+       if (target != null){
+         if (
+           character.deadOrInactive ||
+           scene.outOfBoundsPosition(target)
+         ) {
+           character.clearTarget();
+         }
+       }
     }
 
     if (character.pathFindingEnabled) {
@@ -2497,6 +2515,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateCharacterPath(IsometricCharacter character) {
     character.pathTargetIndexPrevious = character.pathTargetIndex;
 
+    if (scene.outOfBoundsPosition(character)) {
+      character.clearPath();
+      return;
+    }
+
     if (character.pathTargetIndex == -1){
       character.clearPath();
       return;
@@ -2547,6 +2570,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final target = character.target;
 
     if (target == null)
+      return false;
+
+    if (scene.outOfBoundsPosition(character))
       return false;
 
     return scene.isPerceptible(character, target);

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gamestream_server/common/src/isometric/team_type.dart';
+import 'package:gamestream_server/gamestream.dart';
 import 'package:lemon_math/src.dart';
 
 import 'isometric_character.dart';
@@ -118,16 +119,18 @@ class IsometricCollider extends IsometricPosition {
 
   void updateVelocity(){
     if (fixed) return;
-    x += velocityX;
-    y += velocityY;
-    z += velocityZ;
+
+
+    x += (velocityX * Gamestream.Fixed_Time);
+    y += (velocityY * Gamestream.Fixed_Time);
+    z += (velocityZ * Gamestream.Fixed_Time);
     velocityX *= friction;
     velocityY *= friction;
 
     if (gravity) {
-      velocityZ -= IsometricPhysics.Gravity;
+      velocityZ -= IsometricPhysics.Gravity * Gamestream.Fixed_Time;
       if (velocityZ < -IsometricPhysics.Max_Fall_Velocity) {
-        velocityZ = -IsometricPhysics.Max_Fall_Velocity;
+        velocityZ = -IsometricPhysics.Max_Fall_Velocity * Gamestream.Fixed_Time;
       }
     }
   }

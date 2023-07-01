@@ -481,6 +481,17 @@ class IsometricScene {
           row >= rows ||
           column >= columns;
 
+  bool outOfBoundsPosition(IsometricPosition position) =>
+      outOfBoundsXYZ(position.x, position.y, position.z);
+
+  bool outOfBoundsXYZ(double x, double y, double z) =>
+      x < 0 ||
+      y < 0 ||
+      z < 0 ||
+      x >= rowLength ||
+      y >= columnLength ||
+      z >= heightLength;
+
   int getRow(int nodeIndex) => (nodeIndex % area) ~/ columns;
 
   int getColumn(int nodeIndex) => (nodeIndex) % columns;

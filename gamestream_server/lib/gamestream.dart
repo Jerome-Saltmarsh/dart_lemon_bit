@@ -12,6 +12,7 @@ import 'websocket/websocket_server.dart';
 class Gamestream {
 
   static const Frames_Per_Second = 30;
+  static const Fixed_Time = 45 / Frames_Per_Second;
 
   final games = <Game>[];
   final isometricScenes = IsometricScenes();
