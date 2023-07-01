@@ -65,7 +65,6 @@ class IsometricDirection {
 
   static double toRadian(int direction){
     const piQuarter = pi / 4;
-    const piHalf = pi / 2;
     const piQuarters0 = piQuarter * 0;
     const piQuarters1 = piQuarter * 1;
     const piQuarters2 = piQuarter * 2;
@@ -97,13 +96,22 @@ class IsometricDirection {
 
   static int fromRadian(double angle) {
     const piQuarter = pi / 4;
-    if (angle < piQuarter * 1) return South;
-    if (angle < piQuarter * 2) return South_West;
-    if (angle < piQuarter * 3) return West;
-    if (angle < piQuarter * 4) return North_West;
-    if (angle < piQuarter * 5) return North;
-    if (angle < piQuarter * 6) return North_East;
-    if (angle < piQuarter * 7) return East;
+    const piEight = pi / 8;
+    const piQuarters1 = piQuarter * 1;
+    const piQuarters2 = piQuarter * 2;
+    const piQuarters3 = piQuarter * 3;
+    const piQuarters4 = piQuarter * 4;
+    const piQuarters5 = piQuarter * 5;
+    const piQuarters6 = piQuarter * 6;
+    const piQuarters7 = piQuarter * 7;
+
+    if (angle < piQuarters1 - piEight) return South;
+    if (angle < piQuarters2 - piEight) return South_West;
+    if (angle < piQuarters3 - piEight) return West;
+    if (angle < piQuarters4 - piEight) return North_West;
+    if (angle < piQuarters5 - piEight) return North;
+    if (angle < piQuarters6 - piEight) return North_East;
+    if (angle < piQuarters7 - piEight) return East;
     return South_East;
   }
 
