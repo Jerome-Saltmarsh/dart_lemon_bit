@@ -137,7 +137,7 @@ class IsometricDebug {
                   child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
               ),
               onPressed(
-                  action: isometric.debugCharacterTogglePathFindingEnabled,
+                  action: isometric.debugCharacterToggleRunToDestination,
                   child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
               ),
               buildTarget(),

@@ -826,6 +826,7 @@ class WebSocketConnection with ByteReader {
         final debugCharacter = player.debugCharacter;
         if (debugCharacter == null) return;
         debugCharacter.pathFindingEnabled = !debugCharacter.pathFindingEnabled;
+        debugCharacter.clearPath();
         break;
 
       case IsometricRequest.Debug_Character_Toggle_Run_To_Destination:
