@@ -104,6 +104,7 @@ class IsometricDirection {
     const piQuarters5 = piQuarter * 5;
     const piQuarters6 = piQuarter * 6;
     const piQuarters7 = piQuarter * 7;
+    const piQuarters8 = piQuarter * 8;
 
     if (angle < piQuarters1 - piEight) return South;
     if (angle < piQuarters2 - piEight) return South_West;
@@ -112,7 +113,8 @@ class IsometricDirection {
     if (angle < piQuarters5 - piEight) return North;
     if (angle < piQuarters6 - piEight) return North_East;
     if (angle < piQuarters7 - piEight) return East;
-    return South_East;
+    if (angle < piQuarters8 - piEight) return South_East;
+    return South;
   }
 
   static int convertToVelocityRow(int direction) => <int, int> {
