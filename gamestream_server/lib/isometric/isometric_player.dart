@@ -255,6 +255,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeWeather();
     writeGameObjects();
     writeGameTime();
+    writeFPS();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;

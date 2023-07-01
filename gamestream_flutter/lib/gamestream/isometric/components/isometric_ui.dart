@@ -32,8 +32,7 @@ class IsometricUI {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildWatch(gamestream.serverFPS, (serverFPS){
-                                return Column(
+                              buildWatch(gamestream.serverFPS, (serverFPS) => Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -45,8 +44,7 @@ class IsometricUI {
                                     buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
                                     buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
                                   ],
-                                );
-                              }),
+                                )),
                               GSRefresh(() =>  buildText(
                                   'connection-duration: ${gamestream.isometric..client.formattedConnectionDuration}\n'
                                   // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
