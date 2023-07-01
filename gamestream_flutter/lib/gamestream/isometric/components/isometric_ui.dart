@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/utils.dart';
 
 import 'functions/format_bytes.dart';
 import 'isometric_mouse.dart';
@@ -43,6 +44,8 @@ class IsometricUI {
                                     buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
                                     buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
                                     buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+                                    height8,
+                                    buildWatch(gamestream.isometric.server.characterBytes, (int bytes) => buildText('network-character-size: ${formatPercentage(bytes / gamestream.bufferSize.value) }')),
                                   ],
                                 )),
                               GSRefresh(() =>  buildText(

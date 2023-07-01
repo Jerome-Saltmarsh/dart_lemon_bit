@@ -472,10 +472,12 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readCharacters(){
+     var start = index;
+     final server = isometric.server;
      while (true) {
       final characterType = readByte();
-      if (characterType == CharactersEnd) return;
-      final character = isometric.server.getCharacterInstance();
+      if (characterType == CharactersEnd) break;
+      final character = server.getCharacterInstance();
 
       character.characterType = characterType;
       readCharacterTeamDirectionAndState(character);
@@ -485,9 +487,10 @@ extension ServerResponseReader on Gamestream {
       if (CharacterType.supportsUpperBody(characterType)){
         readCharacterUpperBody(character);
       }
-
-      isometric.server.totalCharacters++;
+      server.totalCharacters++;
     }
+
+     server.characterBytes.value = index - start;
   }
 
   void readNpcTalk() {
