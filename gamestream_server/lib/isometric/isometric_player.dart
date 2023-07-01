@@ -35,6 +35,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var sceneDownloaded = false;
   var initialized = false;
   var id = 0;
+  var debugCharacterSelected = false;
 
   final mouse = Vector2(0, 0);
 
@@ -711,34 +712,40 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   void setTargetToAimTarget() => target = aimTarget;
 
   void writeDebugCharacter() {
-    final selectedCharacter = this.debugCharacter;
-    writeByte(ServerResponse.Isometric);
-    writeByte(IsometricResponse.Debug_Character);
+    final debugCharacter = this.debugCharacter;
 
-    if (selectedCharacter == null) {
-      writeBool(false);
+    if (debugCharacter == null) {
+      if (!debugCharacterSelected) return;
+      debugCharacterSelected = false;
+      writeByte(ServerResponse.Isometric);
+      writeByte(IsometricResponse.Debug_Character);
+      writeBool(debugCharacterSelected);
       return;
     }
-    writeBool(true);
-    writeString(selectedCharacter.runtimeType.toString());
-    writeIsometricPosition(selectedCharacter);
-    writeInt16(selectedCharacter.runX.toInt());
-    writeInt16(selectedCharacter.runY.toInt());
-    writeCharacterPath(selectedCharacter);
+    debugCharacterSelected = true;
 
-    writeByte(selectedCharacter.characterType);
-    writeByte(selectedCharacter.state);
-    writeUInt16(selectedCharacter.stateDuration);
-    writeUInt16(selectedCharacter.stateDurationRemaining);
-    writeUInt16(selectedCharacter.weaponType);
-    writeUInt16(selectedCharacter.weaponDamage);
-    writeUInt16(selectedCharacter.weaponRange.toInt());
-    writeByte(selectedCharacter.weaponState);
-    writeUInt16(selectedCharacter.weaponStateDuration);
-    writeBool(selectedCharacter.autoTarget);
-    writeBool(selectedCharacter.pathFindingEnabled);
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Debug_Character);
+    writeBool(debugCharacterSelected);
+    writeString(debugCharacter.runtimeType.toString());
+    writeIsometricPosition(debugCharacter);
+    writeInt16(debugCharacter.runX.toInt());
+    writeInt16(debugCharacter.runY.toInt());
+    writeCharacterPath(debugCharacter);
 
-    final selectedCharacterTarget = selectedCharacter.target;
+    writeByte(debugCharacter.characterType);
+    writeByte(debugCharacter.state);
+    writeUInt16(debugCharacter.stateDuration);
+    writeUInt16(debugCharacter.stateDurationRemaining);
+    writeUInt16(debugCharacter.weaponType);
+    writeUInt16(debugCharacter.weaponDamage);
+    writeUInt16(debugCharacter.weaponRange.toInt());
+    writeByte(debugCharacter.weaponState);
+    writeUInt16(debugCharacter.weaponStateDuration);
+    writeBool(debugCharacter.autoTarget);
+    writeBool(debugCharacter.pathFindingEnabled);
+
+    final selectedCharacterTarget = debugCharacter.target;
     if (selectedCharacterTarget == null){
       writeBool(false);
     } else {
