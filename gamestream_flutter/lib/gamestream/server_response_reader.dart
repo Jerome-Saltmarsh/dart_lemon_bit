@@ -240,9 +240,6 @@ extension ServerResponseReader on Gamestream {
   void readApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
-      case ApiPlayer.Position:
-        readApiPlayerPosition();
-        break;
       case ApiPlayer.Aim_Target_Category:
         isometric.player.aimTargetCategory = readByte();
         break;
@@ -280,9 +277,6 @@ extension ServerResponseReader on Gamestream {
         break;
       case ApiPlayer.Health:
         readPlayerHealth();
-        break;
-      case ApiPlayer.Weapon_Cooldown:
-        isometric.player.weaponCooldown.value = readPercentage();
         break;
       case ApiPlayer.Accuracy:
         isometric.server.playerAccuracy.value = readPercentage();
@@ -386,19 +380,6 @@ extension ServerResponseReader on Gamestream {
       default:
         throw Exception('Cannot parse apiPlayer $apiPlayer');
     }
-  }
-
-  void readApiPlayerPosition() {
-    final player = isometric.player;
-    player.previousPosition.x = player.position.x;
-    player.previousPosition.y = player.position.y;
-    player.previousPosition.z = player.position.z;
-    readVector3(player.position);
-    final position = player.position;
-    player.indexColumn = position.indexColumn;
-    player.indexRow = position.indexRow;
-    player.indexZ = position.indexZ;
-    player.nodeIndex = position.nodeIndex;
   }
 
   void readApiPlayerEnergy() =>

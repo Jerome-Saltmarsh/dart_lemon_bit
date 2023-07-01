@@ -7,25 +7,25 @@ import '../classes/isometric_position.dart';
 
 class IsometricPlayer {
   var energyPercentage = 0.0;
-  var position = IsometricPosition();
   var runningToTarget = false;
   var targetCategory = TargetCategory.Nothing;
-  var targetPosition = IsometricPosition();
   var aimTargetCategory = TargetCategory.Nothing;
   var aimTargetType = 0;
   var aimTargetName = '';
   var aimTargetQuantity = 0;
-  var aimTargetPosition = IsometricPosition();
   var messageTimer = 0;
   var mouseAngle = 0.0;
-  var npcTalk = Watch('');
-  var npcTalkOptions = Watch<List<String>>([]);
-  var aimTargetChanged = Watch(0);
   var indexZ = 0;
   var indexRow = 0;
   var indexColumn = 0;
   var nodeIndex = 0;
 
+  final npcTalk = Watch('');
+  final aimTargetPosition = IsometricPosition();
+  final targetPosition = IsometricPosition();
+  final position = IsometricPosition();
+  final npcTalkOptions = Watch<List<String>>([]);
+  final aimTargetChanged = Watch(0);
   final id = Watch(0);
   final team = Watch(0);
   final powerType = Watch(CombatPowerType.None);

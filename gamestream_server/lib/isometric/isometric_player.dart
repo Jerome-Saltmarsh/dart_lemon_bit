@@ -114,10 +114,11 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeString(info);
   }
 
-  void writePlayerPosition(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Position);
+  void writeIsometricPlayer(){
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Player);
     writeIsometricPosition(this);
+    writePercentage(weaponDurationPercentage);
   }
 
   void writePlayerHealth(){
@@ -159,15 +160,15 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   @override
   void writePlayerGame() {
-    writePlayerPosition();
-    writePlayerWeaponCooldown();
+    writeIsometricPlayer();
+    // writePlayerWeaponCooldown();
     writePlayerAccuracy();
     writePlayerAimTargetPosition();
+    writePlayerTargetPosition();
 
     writeDebugCharacter();
 
     writeProjectiles();
-    writePlayerTargetPosition();
     writeCharacters();
     writeEditorGameObjectSelected();
 
@@ -176,7 +177,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     if (!initialized) {
       initialized = true;
       game.customInitPlayer(this);
-      writePlayerPosition();
+      writeIsometricPlayer();
       writePlayerSpawned();
       writePlayerHealth();
       writePlayerAlive();
@@ -199,11 +200,11 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writePlayerAlive();
   }
 
-  void writePlayerWeaponCooldown() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Weapon_Cooldown);
-    writePercentage(weaponDurationPercentage);
-  }
+  // void writePlayerWeaponCooldown() {
+  //   writeByte(ServerResponse.Api_Player);
+  //   writeByte(ApiPlayer.Weapon_Cooldown);
+  //   writePercentage(weaponDurationPercentage);
+  // }
 
   void writePlayerAccuracy(){
     writeByte(ServerResponse.Api_Player);
@@ -267,13 +268,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(ApiPlayer.Spawned);
   }
 
-  // void writeAndSendResponse(){
-  //   writePlayerGame();
-  //   game.customPlayerWrite(this);
-  //   writeByte(ServerResponse.End);
-  //   sendBufferToClient();
-  // }
-
   void writePlayerTargetPosition(){
     if (target == null) return;
     writeByte(ServerResponse.Api_Player);
@@ -287,7 +281,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(getTargetCategory(target));
   }
 
-  void writePlayerAimTargetPosition(){
+  void writePlayerAimTargetPosition() {
     if (aimTarget == null) return;
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Position);
@@ -407,7 +401,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writePlayerMoved(){
-    writePlayerPosition();
+    writeIsometricPlayer();
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
