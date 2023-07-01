@@ -25,6 +25,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
   var _mouseLeftDown = false;
 
+  var totalProjectiles = 0;
   var inputMode = InputMode.Keyboard;
   var screenLeft = 0.0;
   var screenTop = 0.0;
@@ -36,6 +37,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   var initialized = false;
   var id = 0;
   var debugCharacterSelected = false;
+  var gameTimeInMinutes = 0;
 
   final mouse = Vector2(0, 0);
 
@@ -343,13 +345,18 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writeProjectiles(){
-    writeByte(ServerResponse.Projectiles);
     final projectiles = game.projectiles;
     var totalActiveProjectiles = 0;
     for (final gameObject in projectiles) {
       if (!gameObject.active) continue;
       totalActiveProjectiles++;
     }
+    if (totalActiveProjectiles == 0){
+      if (totalProjectiles == 0) return;
+      totalProjectiles = 0;
+    }
+    totalProjectiles = totalActiveProjectiles;
+    writeByte(ServerResponse.Projectiles);
     writeUInt16(totalActiveProjectiles);
     projectiles.forEach(writeProjectile);
   }
@@ -410,6 +417,9 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   }
 
   void writeGameTime(){
+    final gameTimeInMinutes = game.time.time ~/ Duration.secondsPerMinute;
+    if (gameTimeInMinutes == this.gameTimeInMinutes) return;
+    this.gameTimeInMinutes = gameTimeInMinutes;
     writeByte(ServerResponse.Game_Time);
     writeUInt24(game.time.time);
   }
