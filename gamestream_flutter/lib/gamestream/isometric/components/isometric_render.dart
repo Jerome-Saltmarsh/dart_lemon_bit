@@ -386,7 +386,7 @@ class IsometricRender {
 
   void renderCursor(Canvas canvas) {
     final cooldown = gamestream.isometric.player.weaponCooldown.value;
-    final accuracy = gamestream.isometric.server.playerAccuracy.value;
+    final accuracy = gamestream.isometric.player.accuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 
     switch (gamestream.isometric.client.cursorType) {

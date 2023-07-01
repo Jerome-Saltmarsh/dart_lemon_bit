@@ -278,9 +278,6 @@ extension ServerResponseReader on Gamestream {
       case ApiPlayer.Health:
         readPlayerHealth();
         break;
-      case ApiPlayer.Accuracy:
-        isometric.server.playerAccuracy.value = readPercentage();
-        break;
       case ApiPlayer.Credits:
         isometric.server.playerCredits.value = readUInt16();
         break;

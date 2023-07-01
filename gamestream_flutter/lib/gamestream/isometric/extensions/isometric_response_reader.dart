@@ -110,8 +110,11 @@ extension IsometricResponseReader on Gamestream {
     player.previousPosition.x = player.position.x;
     player.previousPosition.y = player.position.y;
     player.previousPosition.z = player.position.z;
-    readVector3(player.position);
+
+    readIsometricPosition(player.position);
     player.weaponCooldown.value = readPercentage();
+    player.accuracy.value = readPercentage();
+
     final position = player.position;
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;

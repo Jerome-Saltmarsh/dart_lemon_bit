@@ -1,14 +1,12 @@
 
 class ApiPlayer {
-  // static const Position               = 00;
   static const Health                 = 01;
   static const Experience             = 02;
   static const Alive                  = 03;
   static const Experience_Percentage  = 04;
   static const Aim_Angle              = 06;
   static const Message                = 07;
-  // static const Weapon_Cooldown        = 08;
-  static const Accuracy               = 09;
+  // static const Accuracy               = 09;
   static const Spawned                = 10;
   static const Inventory              = 11;
   static const Aim_Target_Category    = 12;

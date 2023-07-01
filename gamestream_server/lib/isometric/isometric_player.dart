@@ -119,6 +119,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeByte(IsometricResponse.Player);
     writeIsometricPosition(this);
     writePercentage(weaponDurationPercentage);
+    writePercentage(accuracy);
   }
 
   void writePlayerHealth(){
@@ -161,8 +162,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   @override
   void writePlayerGame() {
     writeIsometricPlayer();
-    // writePlayerWeaponCooldown();
-    writePlayerAccuracy();
     writePlayerAimTargetPosition();
     writePlayerTargetPosition();
 
@@ -205,12 +204,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
   //   writeByte(ApiPlayer.Weapon_Cooldown);
   //   writePercentage(weaponDurationPercentage);
   // }
-
-  void writePlayerAccuracy(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Accuracy);
-    writePercentage(accuracy);
-  }
 
   void writeGameObjects(){
     final gameObjects = game.gameObjects;
