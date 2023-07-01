@@ -227,7 +227,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
 
       writeByte(character.characterType);
       writeCharacterTeamDirectionAndState(character);
-      writeVector3(character);
+      writeIsometricPosition(character);
       writeCharacterHealthAndAnimationFrame(character);
 
       if (character is IsometricCharacterTemplate && character.characterTypeTemplate) {
@@ -437,7 +437,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
     assert (ItemType.isTypeHead(character.headType) || character.headType == ItemType.Empty);
     writeUInt16(character.weaponType);
-    writeUInt16(character.weaponState); // TODO use byte instead
+    writeByte(character.weaponState); // TODO use byte instead
     writeUInt16(character.bodyType);
     writeUInt16(character.headType);
     writeUInt16(character.legsType);

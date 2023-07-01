@@ -584,7 +584,7 @@ extension ServerResponseReader on Gamestream {
 
   void readCharacterUpperBody(IsometricCharacter character){
     character.weaponType = readUInt16();
-    character.weaponState = readUInt16();
+    character.weaponState = readByte();
     character.bodyType = readUInt16();
     character.headType = readUInt16();
     character.legType = readUInt16();
