@@ -48,6 +48,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     weaponDamage = 1;
     weaponType = ItemType.Empty;
     pathFindingEnabled = false;
+    runToDestinationEnabled = false;
   }
 
   bool get shouldUpdatePathToMouse => game.scene.inboundsXYZ(mouseGridX, mouseGridY, 25);
