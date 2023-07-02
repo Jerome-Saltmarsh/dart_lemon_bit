@@ -9,6 +9,12 @@ import 'package:gamestream_flutter/library.dart';
 
 extension IsometricEditorUI on IsometricEditor {
 
+  static const gameObjects = const [
+    ObjectType.Barrel,
+    ObjectType.Barrel_Explosive,
+  ];
+
+
   static const editorGridTypesColumn1 = [
     NodeType.Water,
     NodeType.Brick,
@@ -413,9 +419,7 @@ extension IsometricEditorUI on IsometricEditor {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [ObjectType.Barrel]
-                      .map(buildButtonAddGameObject)
-                      .toList(),
+                  children: gameObjects.map(buildButtonAddGameObject).toList(),
                 )
               ],
             ),
@@ -1045,150 +1049,146 @@ extension IsometricEditorUI on IsometricEditor {
     });
   }
 
-  Widget buildColumnSelectedGameObject() => GSDialog(
-    child: Container(
-      color: style.brownLight,
-      width: 220,
-      padding: GameStyle.Padding_10,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildWatch(gamestream.isometric.editor.gameObjectSelectedType, (int type) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: buildText('X', onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
+  Widget buildColumnSelectedGameObject() => Container(
+    color: style.brownLight,
+    width: 220,
+    padding: GameStyle.Padding_10,
+    child: SingleChildScrollView(
+      child: Column(
+        children: [
+          buildWatch(gamestream.isometric.editor.gameObjectSelectedType, (int type) => Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: buildText('X', onPressed: gamestream.isometric.editor.sendGameObjectRequestDeselect),
+                ),
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 80,
+                    maxHeight: 80,
                   ),
-                  Container(
-                    constraints: BoxConstraints(
-                      maxWidth: 80,
-                      maxHeight: 80,
-                    ),
-                    // child: GameIsometricUI.buildAtlasItemType(type),
-                  ),
-                  height8,
-                  Row(
-                    children: [
-                      buildText(ObjectType.getName(type), size: 22),
-                      width8,
-                      buildText('Duplicate', onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
-                    ],
-                  ),
-                  height8,
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
-                      onPressed(
-                        action: () => gamestream.isometric.editor.sendGameObjectRequestToggleStrikable,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('Strikable'),
-                            buildText(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
-                      onPressed(
-                        action: () => gamestream.isometric.editor.sendGameObjectRequestToggleGravity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('Gravity'),
-                            buildText(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
-                      onPressed(
-                        action: gamestream.isometric.editor.sendGameObjectRequestToggleFixed,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('Fixed'),
-                            buildText(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
-                      onPressed(
-                        action: gamestream.isometric.editor.sendGameObjectRequestToggleCollectable,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('Collectable'),
-                            buildText(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
-                      onPressed(
-                        action: gamestream.isometric.editor.selectedGameObjectTogglePhysical,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('Physical'),
-                            buildText(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
-                      onPressed(
-                        action: gamestream.isometric.editor.selectedGameObjectTogglePersistable,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('Persistable'),
-                            buildText(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  buildWatch(gamestream.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
-                      onPressed(
-                        action: () => gamestream.isometric.editor.gameObject.value!.emissionType = ((gamestream.isometric.editor.gameObject.value!.emissionType + 1) % 3),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                buildText('Emission'),
-                                buildText(emissionType),
-                              ],
-                            ),
-                            buildText('Intensity'),
-                            buildWatch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
-                              value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
-                              onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
-                            )),
-                            if (emissionType == IsometricEmissionType.Color)
-                              ColorPicker(
-                                portraitOnly: true,
-                                pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emissionColor),
-                                onColorChanged: (color){
-                                  final gameObject = gamestream.isometric.editor.gameObject.value!;
-                                  final hsv = HSVColor.fromColor(color);
-                                  gameObject.emission_alp = (hsv.alpha * 255).round();
-                                  gameObject.emission_hue = (hsv.hue).round();
-                                  gameObject.emission_sat = (hsv.saturation * 100).round();
-                                  gameObject.emission_val = (hsv.value * 100).round();
-                                  gameObject.refreshEmissionColor();
-                                },
-                              )
-                          ],
-                        ),
-                      )
-                  ),
-                ],
-              );
-            }),
-          ],
-        ),
+                  // child: GameIsometricUI.buildAtlasItemType(type),
+                ),
+                height8,
+                Row(
+                  children: [
+                    buildText(ObjectType.getName(type), size: 22),
+                    width8,
+                    buildText('Duplicate', onPressed: gamestream.isometric.editor.sendGameObjectRequestDuplicate)
+                  ],
+                ),
+                height8,
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
+                    onPressed(
+                      action: () => gamestream.isometric.editor.sendGameObjectRequestToggleStrikable,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Strikable'),
+                          buildText(enabled),
+                        ],
+                      ),
+                    )
+                ),
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
+                    onPressed(
+                      action: () => gamestream.isometric.editor.sendGameObjectRequestToggleGravity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Gravity'),
+                          buildText(enabled),
+                        ],
+                      ),
+                    )
+                ),
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
+                    onPressed(
+                      action: gamestream.isometric.editor.sendGameObjectRequestToggleFixed,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Fixed'),
+                          buildText(enabled),
+                        ],
+                      ),
+                    )
+                ),
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
+                    onPressed(
+                      action: gamestream.isometric.editor.sendGameObjectRequestToggleCollectable,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Collectable'),
+                          buildText(enabled),
+                        ],
+                      ),
+                    )
+                ),
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
+                    onPressed(
+                      action: gamestream.isometric.editor.selectedGameObjectTogglePhysical,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Physical'),
+                          buildText(enabled),
+                        ],
+                      ),
+                    )
+                ),
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
+                    onPressed(
+                      action: gamestream.isometric.editor.selectedGameObjectTogglePersistable,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Persistable'),
+                          buildText(enabled),
+                        ],
+                      ),
+                    )
+                ),
+                buildWatch(gamestream.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
+                    onPressed(
+                      action: () => gamestream.isometric.editor.gameObject.value!.emissionType = ((gamestream.isometric.editor.gameObject.value!.emissionType + 1) % 3),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText('Emission'),
+                              buildText(emissionType),
+                            ],
+                          ),
+                          buildText('Intensity'),
+                          buildWatch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
+                            value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
+                            onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
+                          )),
+                          if (emissionType == IsometricEmissionType.Color)
+                            ColorPicker(
+                              portraitOnly: true,
+                              pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emissionColor),
+                              onColorChanged: (color){
+                                final gameObject = gamestream.isometric.editor.gameObject.value!;
+                                final hsv = HSVColor.fromColor(color);
+                                gameObject.emission_alp = (hsv.alpha * 255).round();
+                                gameObject.emission_hue = (hsv.hue).round();
+                                gameObject.emission_sat = (hsv.saturation * 100).round();
+                                gameObject.emission_val = (hsv.value * 100).round();
+                                gameObject.refreshEmissionColor();
+                              },
+                            )
+                        ],
+                      ),
+                    )
+                ),
+              ],
+            )),
+        ],
       ),
     ),
   );

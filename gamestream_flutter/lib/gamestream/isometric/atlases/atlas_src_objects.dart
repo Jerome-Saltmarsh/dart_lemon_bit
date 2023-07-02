@@ -8,6 +8,15 @@ class AtlasSrcObjects {
     0.65, // anchorY
   ];
 
+  static const Barrel_Explosive = <double>[
+    128,  // x
+    39,    // y
+    33,   // width
+    63,   // height
+    0.75,  // scale
+    0.65, // anchorY
+  ];
+
   static const Flag_Red = <double>[
     368,  // x
     224,    // y
