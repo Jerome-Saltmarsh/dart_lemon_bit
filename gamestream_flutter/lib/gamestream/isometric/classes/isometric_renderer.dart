@@ -1,9 +1,15 @@
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
+
 abstract class IsometricRenderer {
   var _index = 0;
   var total = 0;
   var orderRowColumn = 0.0;
   var orderZ = 0;
   var remaining = true;
+
+  final IsometricScene scene;
+
+  IsometricRenderer(this.scene);
 
   void renderFunction();
   void updateFunction();

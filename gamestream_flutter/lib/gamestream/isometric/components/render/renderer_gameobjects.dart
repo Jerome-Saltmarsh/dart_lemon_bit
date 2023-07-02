@@ -1,7 +1,6 @@
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -12,9 +11,8 @@ class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;
 
   static final gameObjects = gamestream.isometric.server.gameObjects;
-  final IsometricScene nodes;
 
-  RendererGameObjects(this.nodes);
+  RendererGameObjects(super.scene);
 
   @override
   int getTotal() {
@@ -39,7 +37,7 @@ class RendererGameObjects extends IsometricRenderer {
       srcHeight: src[Atlas.SrcHeight],
       scale: src[Atlas.SrcScale],
       color: gameObject.emissionType != IsometricEmissionType.Color
-          ? nodes.getRenderColorPosition(gameObject)
+          ? scene.getRenderColorPosition(gameObject)
           : gameObject.emissionColor,
     );
     //
@@ -82,7 +80,7 @@ class RendererGameObjects extends IsometricRenderer {
   void updateFunction() {
     gameObject = gameObjects[index];
 
-    while (!gameObject.active || !gameObject.onscreenPadded || !gameObject.nodePerceptible) {
+    while (!gameObject.active || !gameObject.onscreenPadded || !scene.nodePerceptible(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];

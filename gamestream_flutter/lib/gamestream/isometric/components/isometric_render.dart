@@ -20,18 +20,21 @@ import 'render/renderer_projectiles.dart';
 class IsometricRender {
   var totalRemaining = 0;
   var totalIndex = 0;
-  final rendererNodes        = RendererNodes();
-  final rendererProjectiles  = RendererProjectiles();
-  final rendererCharacters   = RendererCharacters();
+  final RendererNodes rendererNodes;
+  final RendererProjectiles rendererProjectiles;
+  final RendererCharacters rendererCharacters;
   final RendererParticles rendererParticles;
   final RendererGameObjects rendererGameObjects;
   late IsometricRenderer next = rendererNodes;
   var renderDebug = false;
 
   IsometricRender({
+    required this.rendererCharacters,
     required this.rendererGameObjects,
     required this.rendererParticles,
-  }); // ACTIONS
+    required this.rendererNodes,
+    required this.rendererProjectiles
+  });
 
   void renderCircleAtIsometricPosition({
     required IsometricPosition position,

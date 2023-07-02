@@ -79,6 +79,8 @@ class RendererNodes extends IsometricRenderer {
   static var transparencyGridStack = Uint16List(0);
   static var transparencyGridStackIndex = 0;
 
+  RendererNodes(super.scene);
+
   // GETTERS
   static double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
   static int get currentNodeColor => gamestream.isometric.scene.nodeColors[currentNodeIndex];

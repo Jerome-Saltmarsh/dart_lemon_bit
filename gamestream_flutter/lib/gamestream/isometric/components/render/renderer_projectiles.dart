@@ -5,6 +5,8 @@ import 'package:gamestream_flutter/library.dart';
 class RendererProjectiles extends IsometricRenderer {
 
   late IsometricProjectile projectile;
+
+  RendererProjectiles(super.scene);
   
   @override
   void renderFunction() {

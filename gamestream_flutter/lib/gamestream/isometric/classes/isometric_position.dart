@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricPosition {
@@ -44,15 +43,15 @@ class IsometricPosition {
     return true;
   }
 
-  bool get nodePerceptible {
-    if (outOfBounds) return false;
-    if (!RendererNodes.playerInsideIsland) return true;
-    final i = indexRow * gamestream.isometric.scene.totalColumns + indexColumn;
-    if (!RendererNodes.island[i]) return true;
-    if (indexZ > gamestream.isometric.player.indexZ + 2) return false;
-
-    return RendererNodes.visible3D[gamestream.isometric.scene.getNodeIndexPosition(this)];
-  }
+  // bool get nodePerceptible {
+  //   if (outOfBounds) return false;
+  //   if (!RendererNodes.playerInsideIsland) return true;
+  //   final i = indexRow * gamestream.isometric.scene.totalColumns + indexColumn;
+  //   if (!RendererNodes.island[i]) return true;
+  //   if (indexZ > gamestream.isometric.player.indexZ + 2) return false;
+  //
+  //   return RendererNodes.visible3D[gamestream.isometric.scene.getNodeIndexPosition(this)];
+  // }
 
   /// TODO remove
   bool get outOfBounds =>

@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ren
 import 'package:gamestream_flutter/library.dart';
 
 import '../classes/isometric_position.dart';
+import 'render/renderer_nodes.dart';
 
 class IsometricScene {
 
@@ -108,6 +109,25 @@ class IsometricScene {
       hsv_values[i] = ambient_val;
       hsv_alphas[i] = ambient_alp;
     }
+  }
+
+  bool nodePerceptible(IsometricPosition position) {
+    if (!RendererNodes.playerInsideIsland)
+      return true;
+    if (outOfBoundsPosition(position))
+      return false;
+
+    final index = getNodeIndexPosition(position);
+    final indexRow = getIndexRow(index);
+    final indexColumn = getIndexRow(index);
+    final i = indexRow * gamestream.isometric.scene.totalColumns + indexColumn;
+    if (!RendererNodes.island[i])
+      return true;
+    final indexZ = getIndexZ(index);
+    if (indexZ > gamestream.isometric.player.indexZ + 2)
+      return false;
+
+    return RendererNodes.visible3D[index];
   }
 
   int getHeightAt(int row, int column){

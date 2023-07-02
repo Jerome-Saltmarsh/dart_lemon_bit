@@ -3,6 +3,9 @@
 import 'dart:ui';
 
 import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 
 import 'ui/game_isometric_minimap.dart';
@@ -27,6 +30,9 @@ class Isometric {
   late final renderer = IsometricRender(
     rendererGameObjects: RendererGameObjects(scene),
     rendererParticles: RendererParticles(scene),
+    rendererCharacters: RendererCharacters(scene),
+    rendererNodes: RendererNodes(scene),
+    rendererProjectiles: RendererProjectiles(scene),
   );
 
   void drawCanvas(Canvas canvas, Size size) {

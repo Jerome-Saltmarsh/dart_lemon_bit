@@ -11,6 +11,8 @@ class RendererCharacters extends IsometricRenderer {
   static const Character_Shadow_Distance_Ratio = 0.15;
   late IsometricCharacter character;
 
+  RendererCharacters(super.scene);
+
   @override
   void renderFunction() => renderCurrentCharacter();
 
@@ -19,7 +21,8 @@ class RendererCharacters extends IsometricRenderer {
       character = gamestream.isometric.server.characters[index];
       orderZ = character.indexZ;
       orderRowColumn = character.indexSum;
-      if (character.nodePerceptible) break;
+      if (scene.nodePerceptible(character))
+        break;
       index++;
     }
   }
