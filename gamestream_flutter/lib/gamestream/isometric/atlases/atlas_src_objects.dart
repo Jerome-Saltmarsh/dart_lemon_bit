@@ -17,6 +17,15 @@ class AtlasSrcObjects {
     0.65, // anchorY
   ];
 
+  static const Crate_Wooden = <double>[
+    361,  // x
+    0,    // y
+    48,   // width
+    80,   // height
+    0.75,  // scale
+    0.65, // anchorY
+  ];
+
   static const Flag_Red = <double>[
     368,  // x
     224,    // y

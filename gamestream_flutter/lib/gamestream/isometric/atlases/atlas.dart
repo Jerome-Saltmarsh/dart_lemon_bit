@@ -25,6 +25,7 @@ class Atlas {
   static const Collection_Objects = <int, List<double>>{
     ObjectType.Barrel: AtlasSrcObjects.Barrel,
     ObjectType.Barrel_Explosive: AtlasSrcObjects.Barrel_Explosive,
+    ObjectType.Crate_Wooden: AtlasSrcObjects.Crate_Wooden,
   };
 
   static const Collection = <Map<int, List<double>>>[

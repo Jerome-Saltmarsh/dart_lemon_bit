@@ -12,8 +12,8 @@ extension IsometricEditorUI on IsometricEditor {
   static const gameObjects = const [
     ObjectType.Barrel,
     ObjectType.Barrel_Explosive,
+    ObjectType.Crate_Wooden,
   ];
-
 
   static const editorGridTypesColumn1 = [
     NodeType.Water,
@@ -416,12 +416,7 @@ extension IsometricEditorUI on IsometricEditor {
           return SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: gameObjects.map(buildButtonAddGameObject).toList(),
-                )
-              ],
+              children: gameObjects.map(buildButtonAddGameObject).toList(),
             ),
           );
         }),
@@ -433,7 +428,8 @@ extension IsometricEditorUI on IsometricEditor {
         child: Container(
           width: 70,
           height: 70,
-          color: Colors.white,
+          padding: const EdgeInsets.all(4),
+          color: GS_CONTAINER_COLOR,
           child: FittedBox(
             child: gamestream.isometric.ui.buildImageGameObject(objectType),
           ),
