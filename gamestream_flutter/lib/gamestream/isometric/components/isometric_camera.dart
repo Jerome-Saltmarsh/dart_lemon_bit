@@ -29,18 +29,22 @@ class IsometricCamera {
 
       if (gamestream.isometric.ui.mouseOverDialog.value) return;
 
-      if (engine.mousePositionX < padding){
-         engine.cameraX -= speed;
-      }
-      if (engine.mousePositionX > engine.screen.width - padding){
-        engine.cameraX += speed;
-      }
-      if (engine.mousePositionY < padding){
-         engine.cameraY -= speed;
-      }
-      if (engine.mousePositionY > engine.screen.height - padding){
-        engine.cameraY += speed;
-      }
+      // if (engine.keyPressedSpace){
+      //   if (engine.mousePositionX < padding){
+      //     engine.cameraX -= speed;
+      //   }
+      //   if (engine.mousePositionX > engine.screen.width - padding){
+      //     engine.cameraX += speed;
+      //   }
+      //   if (engine.mousePositionY < padding){
+      //     engine.cameraY -= speed;
+      //   }
+      //   if (engine.mousePositionY > engine.screen.height - padding){
+      //     engine.cameraY += speed;
+      //   }
+      // }
+
+
 
       return;
     }

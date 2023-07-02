@@ -434,12 +434,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writeCharacterUpperBody(IsometricCharacter character) {
     writeByte(character.weaponType);
-    writeByte(character.weaponState);
     writeByte(character.bodyType);
     writeByte(character.headType);
     writeByte(character.legsType);
     writeByte(character.lookDirection);
     writeByte(character.weaponFrame);
+    writeByte(character.weaponState);
   }
 
   void writeWeather() {

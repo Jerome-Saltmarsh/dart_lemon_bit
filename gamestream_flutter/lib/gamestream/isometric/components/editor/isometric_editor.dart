@@ -1,12 +1,12 @@
 
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/edit_tab.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../enums/editor_dialog.dart';
-import '../enums/emission_type.dart';
-import '../classes/isometric_gameobject.dart';
+import '../../enums/editor_dialog.dart';
+import '../../enums/emission_type.dart';
+import '../../classes/isometric_gameobject.dart';
 import 'isometric_editor_style.dart';
+import 'isometric_editor_tab.dart';
 
 
 class IsometricEditor {

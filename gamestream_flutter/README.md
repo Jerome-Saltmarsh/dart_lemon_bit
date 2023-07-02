@@ -11,10 +11,12 @@ alt + m             : go to declaration
 [MAJ1K]
 
 [ISOMETRIC]
-  [ ] refactor item type
-  [ ] 3D Model alien creature
+  [x] refactor item type
+  [x] remove character template class
+  [x] pathfinding 3d
+  [ ] merge interact logic into isometric character 
+  [ ] 3d model alien creature
   [ ] destructable structures
-  [ ] pathfinding 3d
 
 [CAPTURE THE FLAG]
   [ ] destroyable terrain

@@ -190,7 +190,6 @@ class GameIO with ByteWriter {
   /// [6] Shift
   /// [7] Space
   void applyKeyboardInputToUpdateBuffer() {
-    // final updateBuffer = gamestream.network.updateBuffer;
     clear();
     writeByte(ClientRequest.Update);
     writeByte(gamestream.io.getInputAsByte());
@@ -200,13 +199,6 @@ class GameIO with ByteWriter {
     writeInt16(engine.Screen_Top.toInt());
     writeInt16(engine.Screen_Right.toInt());
     writeInt16(engine.Screen_Bottom.toInt());
-    // updateBuffer = compile();
-    // writeNumberToByteArray(number: engine.mouseWorldX, list: updateBuffer, index: 2);
-    // writeNumberToByteArray(number: engine.mouseWorldY, list: updateBuffer, index: 4);
-    // writeNumberToByteArray(number: engine.Screen_Left, list: updateBuffer, index: 6);
-    // writeNumberToByteArray(number: engine.Screen_Top, list: updateBuffer, index: 8);
-    // writeNumberToByteArray(number: engine.Screen_Right, list: updateBuffer, index: 10);
-    // writeNumberToByteArray(number: engine.Screen_Bottom, list: updateBuffer, index: 12);
   }
 
   void sendUpdateBuffer() => gamestream.network.send(compile());

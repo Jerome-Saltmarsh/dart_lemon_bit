@@ -2,7 +2,6 @@ library isometric;
 
 export 'isometric_zombie.dart';
 export 'isometric_character.dart';
-export 'isometric_character_template.dart';
 export 'isometric_collider.dart';
 export 'isometric_environment.dart';
 export 'isometric_game.dart';
