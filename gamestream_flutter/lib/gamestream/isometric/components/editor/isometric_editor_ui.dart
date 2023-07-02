@@ -55,7 +55,7 @@ extension IsometricEditorUI on IsometricEditor {
           child: Stack(children: children)
       );
 
-  Widget buildUI(EditTab activeEditTab) => buildPage(
+  Widget buildUI(IsometricEditorTab activeEditTab) => buildPage(
     children: [
       buildWatch(gamestream.isometric.editor.editorDialog, buildWatchEditorDialog),
       Positioned(
@@ -67,7 +67,7 @@ extension IsometricEditorUI on IsometricEditor {
           )
       ),
       buildWindowAIControls(),
-      if (activeEditTab == EditTab.Objects)
+      if (activeEditTab == IsometricEditorTab.Objects)
         Positioned(
           left: 0,
           top: 50,
@@ -75,13 +75,13 @@ extension IsometricEditorUI on IsometricEditor {
               height: engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
-      if (activeEditTab == EditTab.Grid)
+      if (activeEditTab == IsometricEditorTab.Grid)
         Positioned(
           left: 0,
           top: 50,
           child: buildColumnSelectNodeType(),
         ),
-      if (activeEditTab == EditTab.Grid)
+      if (activeEditTab == IsometricEditorTab.Grid)
         Positioned(
           left: 160,
           top: 50,
@@ -144,7 +144,7 @@ extension IsometricEditorUI on IsometricEditor {
             ],
           ),
         ),
-      if (activeEditTab == EditTab.File)
+      if (activeEditTab == IsometricEditorTab.File)
         Positioned(
             top: 50,
             left: 0,
@@ -413,38 +413,26 @@ extension IsometricEditorUI on IsometricEditor {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                // children: ObjectType.values
-                //     .map(buildRowAddGameObject)
-                //     .toList(),
+                children: ObjectType.values
+                    .map(buildRowAddGameObject)
+                    .toList(),
               )
             ],
           ),
         );
       });
 
-  Widget buildRowAddGameObject({
-    required int objectType,
-    int color = 1,
-  }) =>
-      Tooltip(
-        message: ObjectType.getName(objectType),
-        child: Container(
-          width: 70,
-          height: 70,
-          color: Colors.white,
-          child: FittedBox(
-            child: engine.buildAtlasImageButton(
-                image: GameImages.atlas_gameobjects,
-                // image: ItemType.isTypeGameObject(gameObjectType)
-                //     ? GameImages.atlas_gameobjects
-                //     : GameImages.atlas_items,
-                srcX: AtlasItems.getSrcX(objectType, GameObjectType.Object),
-                srcY: AtlasItems.getSrcY(objectType, GameObjectType.Object),
-                srcWidth: AtlasItems.getSrcWidth(objectType, GameObjectType.Object),
-                srcHeight: AtlasItems.getSrcHeight(objectType, GameObjectType.Object),
-                color: color,
-                action: () =>
-                    gamestream.isometric.editor.actionAddGameObject(objectType)
+  Widget buildRowAddGameObject(int objectType) =>
+      onPressed(
+        action: () => actionAddGameObject(objectType),
+        child: Tooltip(
+          message: ObjectType.getName(objectType),
+          child: Container(
+            width: 70,
+            height: 70,
+            color: Colors.white,
+            child: FittedBox(
+              child: gamestream.isometric.ui.buildImageGameObject(objectType),
             ),
           ),
         ),
@@ -1230,10 +1218,10 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildPaintType(int type) =>
       buildButton(child: NodeType.getName(type));
 
-  Row buildEditorMenu(EditTab activeEditTab) => Row(
+  Row buildEditorMenu(IsometricEditorTab activeEditTab) => Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: EditTab.values
+    children: IsometricEditorTab.values
         .map((editTab) => buildButton(
       child: editTab.name,
       width: 150,
@@ -1445,4 +1433,6 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildButtonGameDialogClose() =>
       buildText('x', onPressed: gamestream.isometric.editor.actionGameDialogClose);
+
 }
+

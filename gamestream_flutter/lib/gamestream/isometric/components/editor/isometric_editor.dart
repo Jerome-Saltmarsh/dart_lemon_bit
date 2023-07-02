@@ -43,7 +43,7 @@ class IsometricEditor {
   });
 
   late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
-  late final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
+  late final editTab = Watch(IsometricEditorTab.Grid, onChanged: onChangedEditTab);
   late final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
@@ -343,12 +343,12 @@ class IsometricEditor {
   }
 
   void setTabGrid(){
-    editTab.value = EditTab.Grid;
+    editTab.value = IsometricEditorTab.Grid;
   }
 
   // EVENTS
 
-  void onChangedEditTab(EditTab editTab){
+  void onChangedEditTab(IsometricEditorTab editTab){
     deselectGameObject();
   }
 
@@ -358,15 +358,15 @@ class IsometricEditor {
 
   void onMouseLeftClicked() {
     switch (editTab.value) {
-      case EditTab.File:
+      case IsometricEditorTab.File:
         setTabGrid();
         selectMouseBlock();
         break;
-      case EditTab.Grid:
+      case IsometricEditorTab.Grid:
         selectMouseBlock();
         actionRecenterCamera();
         break;
-      case EditTab.Objects:
+      case IsometricEditorTab.Objects:
         selectMouseGameObject();
         break;
     }

@@ -5,7 +5,7 @@ class AtlasItems {
   static const size = 32.0;
 
   static double getSrcX(int type, int subType) {
-    
+    const function = 'getSrcX';
     switch (type) {
       case GameObjectType.Weapon:
         return const <int, double> {
@@ -34,7 +34,7 @@ class AtlasItems {
           WeaponType.Minigun: 1,
           WeaponType.Plasma_Pistol: 417,
           WeaponType.Portal: 673,
-        }[subType] ?? (throw Exception('getSrcX(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Head:
         return const <int, double> {
@@ -43,7 +43,7 @@ class AtlasItems {
           HeadType.Wizards_Hat: 192,
           HeadType.Swat: 288,
         }[subType] ?? (
-            throw Exception('getSrcX(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Body:
@@ -53,7 +53,7 @@ class AtlasItems {
           BodyType.Tunic_Padded: 128,
           BodyType.Swat: 256,
         }[subType] ?? (
-            throw Exception('getSrcX(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Legs:
@@ -64,9 +64,7 @@ class AtlasItems {
           LegType.Red: 352,
           LegType.Green: 384,
           LegType.White: 384,
-        }[subType] ?? (
-            throw Exception('getSrcX(type: $type, subType: $subType)')
-        );
+        }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Object:
         return subType == ObjectType.Barrel_Explosive ? 34.0 * gamestream.animation.animationFrame6 :
@@ -106,13 +104,19 @@ class AtlasItems {
           ObjectType.Flag_Spawn_Red: 368,
           ObjectType.Flag_Spawn_Blue: 368,
           ObjectType.Credits: 448,
-        }[subType] ?? (throw Exception('getSrcX(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
     }
 
-    throw Exception('getSrcX(type: $type, subType: $subType)');
+    switch (type){
+      case GameObjectType.Weapon:
+        throw buildException(function, type, subType);
+    }
+
+    throw buildException(function, type, subType);
   }
 
   static double getSrcY(int type, int subType) {
+    const function = 'getSrcY';
 
     switch (type) {
       case GameObjectType.Weapon:
@@ -139,13 +143,13 @@ class AtlasItems {
           WeaponType.Minigun: 130,
           WeaponType.Plasma_Pistol: 208,
           WeaponType.Portal: 42,
-        }[subType] ?? (throw Exception('getSrcY(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Head:
         return const <int, double> {
           HeadType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcY(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Body:
@@ -155,7 +159,7 @@ class AtlasItems {
           BodyType.Tunic_Padded: 32,
           BodyType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcY(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Legs:
@@ -167,7 +171,7 @@ class AtlasItems {
           LegType.White: 64,
           LegType.Brown: 128,
         }[subType] ?? (
-            throw Exception('getSrcY(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Object:
@@ -209,13 +213,15 @@ class AtlasItems {
          ObjectType.Base_Blue: 401,
          ObjectType.Flag_Spawn_Red: 272,
          ObjectType.Flag_Spawn_Blue: 401,
-        }[subType] ?? (throw Exception('getSrcY(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
     }
 
-    throw Exception('getSrcY(type: $type, subType: $subType)');
+    throw buildException(function, type, subType);
   }
 
   static double getSrcWidth(int type, int subType) {
+    const function = 'getSrcWidth';
+
     switch (type) {
       case GameObjectType.Weapon:
         return const <int, double> {
@@ -232,13 +238,13 @@ class AtlasItems {
           WeaponType.Portal: 80,
           WeaponType.Grenade: 38,
           WeaponType.Knife: 44,
-        }[subType] ?? (throw Exception('getSrcWidth(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Head:
         return const <int, double> {
           HeadType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Body:
@@ -248,7 +254,7 @@ class AtlasItems {
           BodyType.Tunic_Padded: 32,
           BodyType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Legs:
@@ -260,7 +266,7 @@ class AtlasItems {
           LegType.White: 64,
           LegType.Brown: 128,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Object:
@@ -300,13 +306,15 @@ class AtlasItems {
           ObjectType.Base_Blue: 128,
           ObjectType.Flag_Spawn_Red: 128,
           ObjectType.Flag_Spawn_Blue: 128,
-        }[subType] ?? (throw Exception('getSrcWidth(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
     }
 
-    throw Exception('getSrcWidth(type: $type, subType: $subType)');
+    throw buildException(function, type, subType);
   }
 
   static double getSrcHeight(int type, int subType) {
+    const function = 'getSrcHeight';
+
     switch (type) {
       case GameObjectType.Weapon:
         return const <int, double> {
@@ -323,13 +331,13 @@ class AtlasItems {
           WeaponType.Flame_Thrower: 66,
           WeaponType.Grenade: 45,
           WeaponType.Knife: 10,
-        }[subType] ?? (throw Exception('getSrcWidth(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Head:
         return const <int, double> {
           HeadType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Body:
@@ -339,7 +347,7 @@ class AtlasItems {
           BodyType.Tunic_Padded: 32,
           BodyType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Legs:
@@ -351,7 +359,7 @@ class AtlasItems {
           LegType.White: 64,
           LegType.Brown: 128,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Object:
@@ -391,13 +399,15 @@ class AtlasItems {
           ObjectType.Base_Blue: 128,
           ObjectType.Flag_Spawn_Red: 128,
           ObjectType.Flag_Spawn_Blue: 128,
-        }[subType] ?? (throw Exception('getSrcWidth(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
     }
 
-    throw Exception('getSrcWidth(type: $type, subType: $subType)');
+    throw buildException(function, type, subType);
   }
 
   static double getSrcScale(int type, int subType) {
+
+    const function = 'getSrcScale';
 
     switch (type) {
       case GameObjectType.Weapon:
@@ -415,13 +425,13 @@ class AtlasItems {
           WeaponType.Flame_Thrower: 66,
           WeaponType.Grenade: 45,
           WeaponType.Knife: 10,
-        }[subType] ?? (throw Exception('getSrcWidth(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Head:
         return const <int, double> {
           HeadType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Body:
@@ -431,7 +441,7 @@ class AtlasItems {
           BodyType.Tunic_Padded: 32,
           BodyType.Swat: 96,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Legs:
@@ -443,7 +453,7 @@ class AtlasItems {
           LegType.White: 64,
           LegType.Brown: 128,
         }[subType] ?? (
-            throw Exception('getSrcWidth(type: $type, subType: $subType)')
+            throw buildException(function, type, subType)
         );
 
       case GameObjectType.Object:
@@ -463,10 +473,10 @@ class AtlasItems {
           ObjectType.Computer: 0.61,
           ObjectType.Flag_Spawn_Red: 0.5,
           ObjectType.Flag_Spawn_Blue: 0.5,
-        }[subType] ?? (throw Exception('getSrcWidth(type: $type, subType: $subType)'));
+        }[subType] ?? (throw buildException(function, type, subType));
     }
 
-    throw Exception('getSrcWidth(type: $type, subType: $subType)');
+    throw buildException(function, type, subType);
   }
 
   static double getAnchorY(int type, int subType) {
@@ -487,4 +497,8 @@ class AtlasItems {
         }[subType] ??
         0.5;
   }
+
+  static Exception buildException(String function, int type, int subType) =>
+      Exception('$function(type: ${GameObjectType.getName(type)}, subType: ${GameObjectType.getNameSubType(type, subType)})');
+
 }

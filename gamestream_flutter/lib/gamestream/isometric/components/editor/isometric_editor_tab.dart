@@ -1,4 +1,4 @@
-enum EditTab {
+enum IsometricEditorTab {
   File,
   Grid,
   Objects,
