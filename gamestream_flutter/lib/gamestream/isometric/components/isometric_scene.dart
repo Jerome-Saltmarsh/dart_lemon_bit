@@ -1010,6 +1010,9 @@ class IsometricScene {
     refreshNodeColor(index);
   }
 
+  bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
+      NodeType.isRainOrEmpty(getNodeTypeZRC(z, row, column));
+
   void applyAHSV({
     required int index,
     required int alpha,
@@ -1125,26 +1128,24 @@ class IsometricScene {
 
   int getNodeIndexBelow(int index) => index - area;
 
-  bool isInboundZRC(int z, int row, int column){
-    if (z < 0) return false;
-    if (z >= totalZ) return false;
-    if (row < 0) return false;
-    if (row >= totalRows) return false;
-    if (column < 0) return false;
-    if (column >= totalColumns) return false;
-    return true;
-  }
-
   bool inBoundsPosition(IsometricPosition position) =>
       inBoundsXYZ(position.x, position.y, position.z);
 
   bool inBoundsXYZ(double x, double y, double z) =>
-        x >= 0 &&
-        y >= 0 &&
-        z >= 0 &&
-        x < lengthRows &&
-        y < lengthColumns &&
-        z < lengthZ;
+      x >= 0 &&
+      y >= 0 &&
+      z >= 0 &&
+      x < lengthRows &&
+      y < lengthColumns &&
+      z < lengthZ;
+
+  bool inBoundsZRC(int z, int row, int column) =>
+      z >= 0 &&
+      z < totalZ &&
+      row >= 0 &&
+      row < totalRows &&
+      column >= 0 &&
+      column < totalColumns;
 
   int getNodeIndex(double x, double y, double z) =>
       getNodeIndexZRC(
@@ -1153,37 +1154,14 @@ class IsometricScene {
         y ~/ Node_Size,
       );
 
-  int gridNodeXYZTypeSafe(double x, double y, double z) => (
-      x < 0 ||
-      y < 0 ||
-      z < 0 ||
-      x >= lengthRows ||
-      y >= lengthColumns ||
-      z >= lengthZ
-  ) ? NodeType.Boundary : gridNodeXYZType(x, y, z);
+  int getNodeTypeXYZSafe(double x, double y, double z) =>
+      inBoundsXYZ(x, y, z) ? getNodeTypeXYZ(x, y, z) : NodeType.Boundary;
 
-  int gridNodeXYZType(double x, double y, double z) =>
+  int getNodeTypeXYZ(double x, double y, double z) =>
       nodeTypes[getNodeIndexXYZ(x, y, z)];
-
-  bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-      NodeType.isRainOrEmpty(nodeTypes[getNodeIndexZRC(z, row, column)]);
-
-  int gridNodeZRCTypeSafe(int z, int row, int column) => (
-      z < 0 ||
-      row < 0 ||
-      column < 0 ||
-      z >= totalZ ||
-      row >= totalRows ||
-      column >= totalColumns
-  ) ? NodeType.Boundary : getNodeTypeZRC(z, row, column);
 
   int getNodeTypeZRC(int z, int row, int column) =>
       nodeTypes[getNodeIndexZRC(z, row, column)];
-
-
-  double getDistanceFromMouse(IsometricPosition value) =>
-      engine.distanceFromMouse(value.renderX, value.renderY);
-
 
   // TODO REFACTOR
   int getClosestByType({required int radius, required int type}){
@@ -1207,18 +1185,12 @@ class IsometricScene {
     return closest;
   }
 
-
-
-  int getNodeIndexBelowV3(IsometricPosition vector3) =>
+  int getNodeIndexBelowPosition(IsometricPosition position) =>
       getNodeIndexZRC(
-        vector3.indexZ - 1,
-        vector3.indexRow,
-        vector3.indexColumn,
+        position.indexZ - 1,
+        position.indexRow,
+        position.indexColumn,
       );
-
-  bool isInboundV3(IsometricPosition vector3) =>
-      gamestream.isometric.scene.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
-
 
   void setNodeType(int z, int row, int column, int type){
     if (z < 0)
@@ -1254,8 +1226,8 @@ class IsometricScene {
   int getNodeIndexZRC(int z, int row, int column) =>
       (z * area) + (row * totalColumns) + column;
 
-  bool outOfBoundsV3(IsometricPosition v3) =>
-      outOfBoundsXYZ(v3.x, v3.y, v3.z);
+  bool outOfBoundsPosition(IsometricPosition position) =>
+      outOfBoundsXYZ(position.x, position.y, position.z);
 
   bool outOfBoundsXYZ(double x, double y, double z) =>
       z < 0 ||
@@ -1266,7 +1238,9 @@ class IsometricScene {
       y >= lengthColumns;
 
   int convertNodeIndexToIndexY(int index) =>
-      index - ((convertNodeIndexToIndexZ(index) * area) + (convertNodeIndexToIndexX(index) * totalColumns));
+      index -
+      ((convertNodeIndexToIndexZ(index) * area) +
+          (convertNodeIndexToIndexX(index) * totalColumns));
 
   int convertNodeIndexToIndexX(int index) =>
       (index - ((index ~/ area) * area)) ~/ totalColumns;
@@ -1275,7 +1249,7 @@ class IsometricScene {
       index ~/ area;
 
   int getRenderColorPosition(IsometricPosition position) =>
-      outOfBoundsV3(position)
+      outOfBoundsPosition(position)
           ? ambientColor
           : nodeColors[position.nodeIndex];
 

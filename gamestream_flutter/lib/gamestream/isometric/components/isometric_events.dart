@@ -57,9 +57,9 @@ class IsometricEvents {
 
   void onFootstep(double x, double y, double z) {
     if (clientState.raining.value && (
-        gamestream.isometric.scene.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
+        gamestream.isometric.scene.getNodeTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
             ||
-            gamestream.isometric.scene.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
+            gamestream.isometric.scene.getNodeTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
       gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
@@ -69,7 +69,7 @@ class IsometricEvents {
       }
     }
 
-    final nodeType = gamestream.isometric.scene.gridNodeXYZTypeSafe(x, y, z - 2);
+    final nodeType = gamestream.isometric.scene.getNodeTypeXYZSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
       gamestream.audio.footstep_stone.playXYZ(x, y, z);
       return;
