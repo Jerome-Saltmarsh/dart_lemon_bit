@@ -10,7 +10,6 @@ import 'package:gamestream_server/games/isometric_editor/isometric_editor.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/src.dart';
 
-import 'isometric_character_template.dart';
 import 'isometric_collider.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
@@ -21,7 +20,7 @@ import 'isometric_scene.dart';
 import 'isometric_scene_writer.dart';
 import 'isometric_settings.dart';
 
-class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter implements Player {
+class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
 
   var _mouseLeftDown = false;
 
@@ -50,6 +49,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     required this.game,
     bool autoTargetNearbyEnemies = false,
   }) : super(
+    characterType: CharacterType.Template,
     x: 0,
     y: 0,
     z: 0,
@@ -231,7 +231,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       writeIsometricPosition(character);
       writeCharacterHealthAndAnimationFrame(character);
 
-      if (character is IsometricCharacterTemplate && character.characterTypeTemplate) {
+      if (character.characterTypeTemplate) {
         writeCharacterUpperBody(character);
       }
     }
@@ -432,7 +432,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeCharacterUpperBody(IsometricCharacterTemplate character) {
+  void writeCharacterUpperBody(IsometricCharacter character) {
     // assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
     // assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
     // assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
@@ -606,7 +606,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     }
   }
 
-  @override
+  // @override
   void onEquipmentChanged() {
     refreshDamage();
     writePlayerEquipment();

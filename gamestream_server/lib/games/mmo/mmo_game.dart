@@ -17,6 +17,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }) : super(gameType: GameType.Mmo) {
 
     characters.add(MMONpc(
+      characterType: CharacterType.Template,
       x: 900,
       y: 1100,
       z: 25,
@@ -32,6 +33,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     ));
 
     npcGuard = MMONpc(
+      characterType: CharacterType.Template,
       x: 800,
       y: 1000,
       z: 25,

@@ -1,12 +1,13 @@
 
 import 'package:gamestream_server/games/mmo/mmo_player.dart';
-import 'package:gamestream_server/isometric/isometric_character_template.dart';
+import 'package:gamestream_server/isometric.dart';
 
-class MMONpc extends IsometricCharacterTemplate {
+class MMONpc extends IsometricCharacter {
 
   Function(MmoPlayer player)? interact;
 
   MMONpc({
+    required super.characterType,
     required super.health,
     required super.weaponType,
     required super.team,

@@ -51,6 +51,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   var runZ = 0.0;
   var runRadius = 1.0;
 
+  var headType = HeadType.Steel_Helm;
+  var bodyType = BodyType.Shirt_Cyan;
+  var legsType = LegType.Blue;
+
   IsometricPosition? target;
 
   final path = Uint32List(20);

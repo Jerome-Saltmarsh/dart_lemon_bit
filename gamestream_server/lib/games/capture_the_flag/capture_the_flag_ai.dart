@@ -7,7 +7,7 @@ import 'capture_the_flag_game.dart';
 import 'capture_the_flag_gameobject_flag.dart';
 
 
-class CaptureTheFlagAI extends IsometricCharacterTemplate {
+class CaptureTheFlagAI extends IsometricCharacter {
 
   var slowed = false;
   var slowedDuration = 0;
@@ -26,6 +26,7 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
     this.role = CaptureTheFlagAIRole.Defense,
   }) : super(
     health: 10,
+    characterType: CharacterType.Template,
     weaponRange: game.getWeaponTypeRange(weaponType),
     weaponDamage: game.getWeaponTypeDamage(weaponType),
     weaponCooldown: game.getWeaponCooldown(weaponType),
