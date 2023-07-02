@@ -311,16 +311,16 @@ class IsometricScene {
     }
   }
 
-  void markShadow(IsometricPosition vector){
-    final index = vector.nodeIndex - area;
+  void markShadow(IsometricPosition position){
+    final index = getNodeIndexPosition(position) - area;
     if (index < 0) return;
     if (index >= total) return;
 
     final indexRow = getIndexRow(index);
     final indexColumn = getIndexColumn(index);
 
-    final vectorX = vector.x;
-    final vectorY = vector.y;
+    final vectorX = position.x;
+    final vectorY = position.y;
 
     var vx = 0.0;
     var vy = 0.0;
@@ -1103,6 +1103,8 @@ class IsometricScene {
     NodeOrientation.Half_Vertical_Bottom,
   ]).contains(nodeOrientation);
 
+  int getProjectionIndex(int nodeIndex) => nodeIndex % projection;
+
   bool isIndexOnScreen(int index){
 
     final row = getIndexRow(index);
@@ -1251,7 +1253,7 @@ class IsometricScene {
   int getRenderColorPosition(IsometricPosition position) =>
       outOfBoundsPosition(position)
           ? ambientColor
-          : nodeColors[position.nodeIndex];
+          : nodeColors[getNodeIndexPosition(position)];
 
   void applyEmissionsLightSources() {
     for (var i = 0; i < nodesLightSourcesTotal; i++){

@@ -13,9 +13,9 @@ class IsometricPosition {
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
   // TODO Remove
-  int get nodeIndex => gamestream.isometric.scene.getNodeIndex(x, y, z);
+  // int get nodeIndex => gamestream.isometric.scene.getNodeIndex(x, y, z);
   // TODO Remove
-  int get indexProjection => nodeIndex % gamestream.isometric.scene.projection;
+  // int get indexProjection => nodeIndex % gamestream.isometric.scene.projection;
 
   double get indexSum => (indexRow + indexColumn).toDouble();
 
@@ -51,7 +51,7 @@ class IsometricPosition {
     if (!RendererNodes.island[i]) return true;
     if (indexZ > gamestream.isometric.player.indexZ + 2) return false;
 
-    return RendererNodes.visible3D[nodeIndex];
+    return RendererNodes.visible3D[gamestream.isometric.scene.getNodeIndexPosition(this)];
   }
 
   /// TODO remove

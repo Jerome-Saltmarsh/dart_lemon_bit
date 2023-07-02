@@ -120,7 +120,7 @@ extension IsometricResponseReader on Gamestream {
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
-    player.nodeIndex = position.nodeIndex;
+    player.nodeIndex = isometric.scene.getNodeIndexPosition(position);
   }
 
 }

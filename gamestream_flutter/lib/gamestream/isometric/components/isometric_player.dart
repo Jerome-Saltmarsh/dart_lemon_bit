@@ -88,9 +88,10 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final index = position.nodeIndex + gamestream.isometric.scene.area;
-    while (index < gamestream.isometric.scene.total){
-      if (NodeType.isRainOrEmpty(gamestream.isometric.scene.nodeTypes[index]))  continue;
+    final scene = gamestream.isometric.scene;
+    final index = nodeIndex + scene.area;
+    while (index < scene.total){
+      if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;
       return true;
     }
     return false;

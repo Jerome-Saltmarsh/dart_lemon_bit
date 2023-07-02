@@ -162,12 +162,13 @@ class IsometricParticles {
 
   void applyEmissionsParticles() {
     final length = particles.length;
+    final scene = gamestream.isometric.scene;
     for (var i = 0; i < length; i++) {
       final particle = particles[i];
       if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
-      gamestream.isometric.scene.emitLightAHSVShadowed(
-        index: particle.nodeIndex,
+      scene.emitLightAHSVShadowed(
+        index: scene.getNodeIndexPosition(particle),
         hue: particle.lightHue,
         saturation: particle.lightSaturation,
         value: particle.lightValue,

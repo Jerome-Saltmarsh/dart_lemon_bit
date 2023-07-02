@@ -466,7 +466,7 @@ class IsometricRender {
 
     var x1 = gamestream.isometric.player.position.x;
     var y1 = gamestream.isometric.player.position.y;
-    var i1 = gamestream.isometric.player.position.nodeIndex;
+    var i1 = gamestream.isometric.player.nodeIndex;
     final z = gamestream.isometric.player.position.z + Node_Height_Half;
 
     final tX = adj(mouseAngle, Node_Height_Half);

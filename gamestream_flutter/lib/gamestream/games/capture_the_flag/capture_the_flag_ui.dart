@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_objects.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
