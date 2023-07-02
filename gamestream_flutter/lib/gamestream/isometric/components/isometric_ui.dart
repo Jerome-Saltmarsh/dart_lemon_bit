@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricUI {
@@ -11,14 +11,14 @@ class IsometricUI {
   Widget buildImageGameObject(int objectType) =>
       buildImageFromSrc(
           GameImages.atlas_gameobjects,
-          AtlasSrc.getSrc(GameObjectType.Object, objectType),
+          Atlas.getSrc(GameObjectType.Object, objectType),
       );
 
   Widget buildImageFromSrc(ui.Image image, List<double> src) => engine.buildAtlasImage(
       image: image,
-      srcX: src[AtlasSrc.SrcX],
-      srcY: src[AtlasSrc.SrcY],
-      srcWidth: src[AtlasSrc.SrcWidth],
-      srcHeight: src[AtlasSrc.SrcHeight],
+      srcX: src[Atlas.SrcX],
+      srcY: src[Atlas.SrcY],
+      srcWidth: src[Atlas.SrcWidth],
+      srcHeight: src[Atlas.SrcHeight],
     );
 }

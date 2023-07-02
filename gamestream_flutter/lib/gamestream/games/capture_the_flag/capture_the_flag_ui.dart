@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_objects.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_checkbox.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -197,21 +199,14 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 }
 
                 if (flagRedStatus.value != CaptureTheFlagFlagStatus.Respawning) {
+
                   engine.renderExternalCanvas(
                       canvas: canvas,
                       image: GameImages.atlas_gameobjects,
-                      srcX: AtlasItems.getSrcX(
-                          GameObjectType.Object, ObjectType.Flag_Red,
-                      ),
-                      srcY: AtlasItems.getSrcY(
-                          GameObjectType.Object, ObjectType.Flag_Red,
-                      ),
-                      srcWidth: AtlasItems.getSrcWidth(
-                          GameObjectType.Object, ObjectType.Flag_Red,
-                      ),
-                      srcHeight: AtlasItems.getSrcHeight(
-                          GameObjectType.Object, ObjectType.Flag_Red,
-                      ),
+                      srcX: AtlasSrcObjects.Flag_Red[Atlas.SrcX],
+                      srcY: AtlasSrcObjects.Flag_Red[Atlas.SrcY],
+                      srcWidth: AtlasSrcObjects.Flag_Red[Atlas.SrcWidth],
+                      srcHeight: AtlasSrcObjects.Flag_Red[Atlas.SrcHeight],
                       dstX: flagPositionRed.renderX * ratio,
                       dstY: flagPositionRed.renderY * ratio,
                       scale: 0.1
@@ -222,14 +217,12 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   engine.renderExternalCanvas(
                       canvas: canvas,
                       image: GameImages.atlas_gameobjects,
-                      srcX: AtlasItems.getSrcX(
-                        GameObjectType.Object, ObjectType.Flag_Blue,
-                      ),
-                      srcY: AtlasItems.getSrcY(GameObjectType.Object, ObjectType.Flag_Blue),
-                      srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, ObjectType.Flag_Blue),
-                      srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, ObjectType.Flag_Blue),
-                      dstX: flagPositionBlue.renderX * ratio,
-                      dstY: flagPositionBlue.renderY * ratio,
+                      srcX: AtlasSrcObjects.Flag_Blue[Atlas.SrcX],
+                      srcY: AtlasSrcObjects.Flag_Blue[Atlas.SrcY],
+                      srcWidth: AtlasSrcObjects.Flag_Blue[Atlas.SrcWidth],
+                      srcHeight: AtlasSrcObjects.Flag_Blue[Atlas.SrcHeight],
+                      dstX: flagPositionRed.renderX * ratio,
+                      dstY: flagPositionRed.renderY * ratio,
                       scale: 0.1
                   );
                 }
@@ -237,25 +230,25 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 engine.renderExternalCanvas(
                     canvas: canvas,
                     image: GameImages.atlas_gameobjects,
-                    srcX: AtlasItems.getSrcX(GameObjectType.Object, ObjectType.Base_Red),
-                    srcY: AtlasItems.getSrcY(GameObjectType.Object, ObjectType.Base_Red),
-                    srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, ObjectType.Base_Red),
-                    srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, ObjectType.Base_Red),
-                    dstX: basePositionRed.renderX * ratio,
-                    dstY: basePositionRed.renderY * ratio,
-                    scale: 0.05
+                    srcX: AtlasSrcObjects.Base_Red[Atlas.SrcX],
+                    srcY: AtlasSrcObjects.Base_Red[Atlas.SrcY],
+                    srcWidth: AtlasSrcObjects.Base_Red[Atlas.SrcWidth],
+                    srcHeight: AtlasSrcObjects.Base_Red[Atlas.SrcHeight],
+                    dstX: flagPositionRed.renderX * ratio,
+                    dstY: flagPositionRed.renderY * ratio,
+                    scale: 0.1
                 );
 
                 engine.renderExternalCanvas(
                     canvas: canvas,
                     image: GameImages.atlas_gameobjects,
-                    srcX: AtlasItems.getSrcX(GameObjectType.Object, ObjectType.Base_Blue),
-                    srcY: AtlasItems.getSrcY(GameObjectType.Object, ObjectType.Base_Blue),
-                    srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, ObjectType.Base_Blue),
-                    srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, ObjectType.Base_Blue),
-                    dstX: basePositionBlue.renderX * ratio,
-                    dstY: basePositionBlue.renderY * ratio,
-                    scale: 0.05
+                    srcX: AtlasSrcObjects.Base_Blue[Atlas.SrcX],
+                    srcY: AtlasSrcObjects.Base_Blue[Atlas.SrcY],
+                    srcWidth: AtlasSrcObjects.Base_Blue[Atlas.SrcWidth],
+                    srcHeight: AtlasSrcObjects.Base_Blue[Atlas.SrcHeight],
+                    dstX: flagPositionRed.renderX * ratio,
+                    dstY: flagPositionRed.renderY * ratio,
+                    scale: 0.1
                 );
               });
             })

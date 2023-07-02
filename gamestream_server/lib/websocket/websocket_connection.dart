@@ -494,24 +494,28 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricEditorGameObjectRequest.Add:
-        throw Exception('todo add sub-type');
-        // final index = parse(arguments[3]);
-        // final type = parse(arguments[4]);
-        // if (index == null) return errorInvalidClientRequest();
-        // if (type == null) return errorInvalidClientRequest();
-        // if (index < 0) return errorInvalidClientRequest();
-        // final scene = player.game.scene;
-        // if (index >= scene.volume) {
-        //   return errorInvalidClientRequest();
-        // }
-        // final instance = player.game.spawnGameObject(
-        //   x: scene.getNodePositionX(index) + Node_Size_Half,
-        //   y: scene.getNodePositionY(index) + Node_Size_Half,
-        //   z: scene.getNodePositionZ(index),
-        //   type: type,
-        // );
-        // player.editorSelectedGameObject = instance;
-        // break;
+        final index = parseArg3(arguments);
+        final type = parseArg4(arguments);
+        if (index == null)
+          return;
+        if (type == null)
+          return;
+        if (index < 0)
+          return errorInvalidClientRequest();
+
+        final scene = player.game.scene;
+        if (index >= scene.volume) {
+          return errorInvalidClientRequest();
+        }
+        final instance = player.game.spawnGameObject(
+          x: scene.getNodePositionX(index) + Node_Size_Half,
+          y: scene.getNodePositionY(index) + Node_Size_Half,
+          z: scene.getNodePositionZ(index),
+          type: GameObjectType.Object,
+          subType: type,
+        );
+        player.editorSelectedGameObject = instance;
+        break;
 
       case IsometricEditorGameObjectRequest.Delete:
         player.game.playerDeleteEditorSelectedGameObject(player);

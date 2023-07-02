@@ -414,7 +414,7 @@ extension IsometricEditorUI on IsometricEditor {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: const [ObjectType.Barrel]
-                      .map(buildRowAddGameObject)
+                      .map(buildButtonAddGameObject)
                       .toList(),
                 )
               ],
@@ -423,7 +423,7 @@ extension IsometricEditorUI on IsometricEditor {
         }),
       );
 
-  Widget buildRowAddGameObject(int objectType) =>
+  Widget buildButtonAddGameObject(int objectType) =>
       onPressed(
         action: () => actionAddGameObject(objectType),
         child: Container(

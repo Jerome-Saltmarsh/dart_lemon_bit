@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
-import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'game_isometric_colors.dart';
@@ -404,17 +404,20 @@ class GameIsometricUI {
     required int type,
     required int subType,
     int color = 1,
-  }) =>
-      FittedBox(
+  }) {
+    final src = Atlas.getSrc(type, subType);
+
+    return FittedBox(
         child: engine.buildAtlasImage(
           image: GameImages.getImageForGameObject(type),
-          srcX: AtlasItems.getSrcX(type, subType),
-          srcY: AtlasItems.getSrcY(type, subType),
-          srcWidth: AtlasItems.getSrcWidth(type, subType),
-          srcHeight: AtlasItems.getSrcHeight(type, subType),
+          srcX: src[Atlas.SrcX],
+          srcY: src[Atlas.SrcY],
+          srcWidth: src[Atlas.SrcWidth],
+          srcHeight: src[Atlas.SrcHeight],
           color: color,
         ),
       );
+  }
 
   static Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
     image: GameImages.atlas_nodes,
