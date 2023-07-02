@@ -654,7 +654,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       applyHit(
-          angle: character.getAngle(other),
           target: other,
           damage: character.weaponDamage,
           srcCharacter: character,
@@ -685,7 +684,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       applyHit(
-          angle: character.getAngle(gameObject),
           target: gameObject,
           damage: character.weaponDamage,
           srcCharacter: character,
@@ -696,7 +694,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (nearest != null) {
       applyHit(
-          angle: character.getAngle(nearest),
           target: nearest,
           damage: character.weaponDamage,
           srcCharacter: character,
@@ -1595,7 +1592,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!target.active) return;
 
     if (angle == null){
-      angle = srcCharacter.getAngle(target);
+      angle = target.getAngle(srcCharacter);
     }
 
     target.applyForce(
