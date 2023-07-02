@@ -23,7 +23,7 @@ class Isometric {
   final editor = IsometricEditor();
   final player = IsometricPlayer();
   final camera = IsometricCamera();
-  final particles = IsometricParticles();
+  late final particles = IsometricParticles(scene);
   final ui = IsometricUI();
 
   late final events = IsometricEvents(client, gamestream);

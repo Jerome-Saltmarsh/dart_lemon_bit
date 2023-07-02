@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -16,8 +17,12 @@ class IsometricParticles {
 
   final particles = <IsometricParticle>[];
   final particleOverflow = IsometricParticle();
+  final IsometricScene scene;
+
+  IsometricParticles(this.scene);
 
   int get bodyPartDuration =>  randomInt(120, 200);
+
 
   void countTotalActiveParticles(){
     totalActiveParticles = 0;
@@ -183,7 +188,11 @@ class IsometricParticles {
       particle.delay--;
       return;
     }
-    if (particle.outOfBounds) return particle.deactivate();
+
+    if (scene.outOfBoundsPosition(particle)){
+      particle.deactivate();
+      return;
+    }
 
     if (particle.type == ParticleType.Light_Emission){
       const change = 0.125;
@@ -245,7 +254,10 @@ class IsometricParticles {
     final bounce = particle.zv < 0 && !airBorn;
     particle.updateMotion();
 
-    if (particle.outOfBounds) return particle.deactivate();
+    if (scene.outOfBoundsPosition(particle)){
+      particle.deactivate();
+      return;
+    }
 
     if (bounce) {
       if (tile == NodeType.Water){

@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 

@@ -11,10 +11,6 @@ class IsometricPosition {
   int get indexZ => z ~/ Node_Size_Half;
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
-  // TODO Remove
-  // int get nodeIndex => gamestream.isometric.scene.getNodeIndex(x, y, z);
-  // TODO Remove
-  // int get indexProjection => nodeIndex % gamestream.isometric.scene.projection;
 
   double get indexSum => (indexRow + indexColumn).toDouble();
 
@@ -43,24 +39,14 @@ class IsometricPosition {
     return true;
   }
 
-  // bool get nodePerceptible {
-  //   if (outOfBounds) return false;
-  //   if (!RendererNodes.playerInsideIsland) return true;
-  //   final i = indexRow * gamestream.isometric.scene.totalColumns + indexColumn;
-  //   if (!RendererNodes.island[i]) return true;
-  //   if (indexZ > gamestream.isometric.player.indexZ + 2) return false;
-  //
-  //   return RendererNodes.visible3D[gamestream.isometric.scene.getNodeIndexPosition(this)];
-  // }
-
-  /// TODO remove
-  bool get outOfBounds =>
-      z < 0                ||
-          x < 0                ||
-          y < 0                ||
-          x >= gamestream.isometric.scene.lengthRows    ||
-          y >= gamestream.isometric.scene.lengthColumns ||
-          z >= gamestream.isometric.scene.lengthZ     ;
+  // /// TODO remove
+  // bool get outOfBounds =>
+  //     z < 0                ||
+  //         x < 0                ||
+  //         y < 0                ||
+  //         x >= gamestream.isometric.scene.lengthRows    ||
+  //         y >= gamestream.isometric.scene.lengthColumns ||
+  //         z >= gamestream.isometric.scene.lengthZ     ;
 
   double get sortOrder => x + y + z;
   double get renderX => (x - y) * 0.5;
