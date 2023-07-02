@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricPosition with Position {
-  late double z;
+class IsometricPosition {
+
+  var x = 0.0;
+  var y = 0.0;
+  var z = 0.0;
 
   int get indexZ => z ~/ Node_Size_Half;
   int get indexRow => x ~/ Node_Size;
@@ -88,12 +91,6 @@ class IsometricPosition with Position {
       return distanceColumn;
     }
     return distance;
-  }
-
-  IsometricPosition() {
-    this.x = 0;
-    this.y = 0;
-    this.z = 0;
   }
 
   @override

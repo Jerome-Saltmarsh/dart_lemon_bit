@@ -1135,18 +1135,16 @@ class IsometricScene {
     return true;
   }
 
-  bool inBoundsVector3(IsometricPosition vector3) =>
-      inBounds(vector3.x, vector3.y, vector3.z);
+  bool inBoundsPosition(IsometricPosition position) =>
+      inBoundsXYZ(position.x, position.y, position.z);
 
-  bool inBounds(double x, double y, double z){
-    if (x < 0) return false;
-    if (y < 0) return false;
-    if (z < 0) return false;
-    if (x >= lengthRows) return false;
-    if (y >= lengthColumns) return false;
-    if (z >= lengthZ) return false;
-    return true;
-  }
+  bool inBoundsXYZ(double x, double y, double z) =>
+        x >= 0 &&
+        y >= 0 &&
+        z >= 0 &&
+        x < lengthRows &&
+        y < lengthColumns &&
+        z < lengthZ;
 
   int getNodeIndex(double x, double y, double z) =>
       getNodeIndexZRC(
@@ -1155,50 +1153,33 @@ class IsometricScene {
         y ~/ Node_Size,
       );
 
-  int getNodeIndexV3(IsometricPosition vector3) =>
-      getNodeIndexZRC(
-        vector3.indexZ,
-        vector3.indexRow,
-        vector3.indexColumn,
-      );
-
-
-  int gridNodeXYZTypeSafe(double x, double y, double z) {
-    if (x < 0) return NodeType.Boundary;
-    if (y < 0) return NodeType.Boundary;
-    if (z < 0) return NodeType.Boundary;
-    if (x >= lengthRows) return NodeType.Boundary;
-    if (y >= lengthColumns) return NodeType.Boundary;
-    if (z >= lengthZ) return NodeType.Boundary;
-    return gridNodeXYZType(x, y, z);
-  }
+  int gridNodeXYZTypeSafe(double x, double y, double z) => (
+      x < 0 ||
+      y < 0 ||
+      z < 0 ||
+      x >= lengthRows ||
+      y >= lengthColumns ||
+      z >= lengthZ
+  ) ? NodeType.Boundary : gridNodeXYZType(x, y, z);
 
   int gridNodeXYZType(double x, double y, double z) =>
-      nodeTypes[gridNodeXYZIndex(x, y, z)];
+      nodeTypes[getNodeIndexXYZ(x, y, z)];
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
       NodeType.isRainOrEmpty(nodeTypes[getNodeIndexZRC(z, row, column)]);
 
-  int gridNodeZRCTypeSafe(int z, int row, int column) {
-    if (z < 0) return NodeType.Boundary;
-    if (row < 0) return NodeType.Boundary;
-    if (column < 0) return NodeType.Boundary;
-    if (z >= totalZ) return NodeType.Boundary;
-    if (row >= totalRows) return NodeType.Boundary;
-    if (column >= totalColumns) return NodeType.Boundary;
-    return gridNodeZRCType(z, row, column);
-  }
+  int gridNodeZRCTypeSafe(int z, int row, int column) => (
+      z < 0 ||
+      row < 0 ||
+      column < 0 ||
+      z >= totalZ ||
+      row >= totalRows ||
+      column >= totalColumns
+  ) ? NodeType.Boundary : getNodeTypeZRC(z, row, column);
 
-  int gridNodeZRCType(int z, int row, int column) =>
+  int getNodeTypeZRC(int z, int row, int column) =>
       nodeTypes[getNodeIndexZRC(z, row, column)];
 
-
-  int gridNodeXYZIndex(double x, double y, double z) =>
-      getNodeIndexZRC(
-        z ~/ Node_Size_Half,
-        x ~/ Node_Size,
-        y ~/ Node_Size,
-      );
 
   double getDistanceFromMouse(IsometricPosition value) =>
       engine.distanceFromMouse(value.renderX, value.renderY);
@@ -1216,7 +1197,7 @@ class IsometricScene {
     for (var z = minZ; z <= maxZ; z++){
       for (var row = minRow; row <= maxRow; row++){
         for (var column = minColumn; column <= maxColumn; column++){
-          if (gamestream.isometric.scene.gridNodeZRCType(z, row, column) != type) continue;
+          if (gamestream.isometric.scene.getNodeTypeZRC(z, row, column) != type) continue;
           final distance = gamestream.isometric.player.position.getGridDistance(z, row, column);
           if (distance > closest) continue;
           closest = distance;
@@ -1255,6 +1236,20 @@ class IsometricScene {
 
     nodeTypes[getNodeIndexZRC(z, row, column)] = type;
   }
+
+  int getNodeIndexPosition(IsometricPosition position) =>
+      getNodeIndexZRC(
+        position.indexZ,
+        position.indexRow,
+        position.indexColumn,
+      );
+
+  int getNodeIndexXYZ(double x, double y, double z) =>
+      getNodeIndexZRC(
+        z ~/ Node_Size_Half,
+        x ~/ Node_Size,
+        y ~/ Node_Size,
+      );
 
   int getNodeIndexZRC(int z, int row, int column) =>
       (z * area) + (row * totalColumns) + column;

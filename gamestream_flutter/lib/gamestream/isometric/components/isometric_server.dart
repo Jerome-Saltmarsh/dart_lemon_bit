@@ -124,7 +124,7 @@ class IsometricServer {
   }
 
   void projectShadow(IsometricPosition v3){
-    if (!gamestream.isometric.scene.inBoundsVector3(v3)) return;
+    if (!gamestream.isometric.scene.inBoundsPosition(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;

@@ -211,7 +211,7 @@ class IsometricParticles {
 
 
 
-    final nodeIndex = gamestream.isometric.scene.getNodeIndexV3(particle);
+    final nodeIndex = gamestream.isometric.scene.getNodeIndexPosition(particle);
 
     assert (nodeIndex >= 0);
     assert (nodeIndex < gamestream.isometric.scene.total);

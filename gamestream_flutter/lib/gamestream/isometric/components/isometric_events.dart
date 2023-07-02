@@ -252,7 +252,7 @@ class IsometricEvents {
   }
 
   void onNodeStruck(double x, double y, double z) {
-    if (!gamestream.isometric.scene.inBounds(x, y, z)) return;
+    if (!gamestream.isometric.scene.inBoundsXYZ(x, y, z)) return;
 
     final nodeIndex = gamestream.isometric.scene.getIndexXYZ(x, y, z);
     final nodeType = gamestream.isometric.scene.nodeTypes[nodeIndex];

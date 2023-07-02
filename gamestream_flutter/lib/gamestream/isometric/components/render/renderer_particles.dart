@@ -563,7 +563,7 @@ class RendererParticles extends IsometricRenderer {
   static void casteShadowDownV3(IsometricPosition vector3){
     if (vector3.z < Node_Height) return;
     if (vector3.z >= gamestream.isometric.scene.lengthZ) return;
-    final nodeIndex = gamestream.isometric.scene.getNodeIndexV3(vector3);
+    final nodeIndex = gamestream.isometric.scene.getNodeIndexPosition(vector3);
     if (nodeIndex > gamestream.isometric.scene.area) {
       final nodeBelowIndex = nodeIndex - gamestream.isometric.scene.area;
       final nodeBelowOrientation = gamestream.isometric.scene.nodeOrientations[nodeBelowIndex];

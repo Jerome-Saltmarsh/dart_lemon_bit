@@ -165,9 +165,9 @@ mixin class IsometricClient {
     required int alpha,
     double intensity = 1.0,
   }){
-    if (!gamestream.isometric.scene.inBoundsVector3(v)) return;
+    if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
     gamestream.isometric.scene.emitLightAHSVShadowed(
-      index: gamestream.isometric.scene.getNodeIndexV3(v),
+      index: gamestream.isometric.scene.getNodeIndexPosition(v),
       hue: hue,
       saturation: saturation,
       value: value,
@@ -186,9 +186,9 @@ mixin class IsometricClient {
     assert (intensity <= 1);
     assert (alpha >= 0);
     assert (alpha <= 255);
-    if (!gamestream.isometric.scene.inBoundsVector3(v)) return;
+    if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
     gamestream.isometric.scene.emitLightAmbient(
-      index: gamestream.isometric.scene.getNodeIndexV3(v),
+      index: gamestream.isometric.scene.getNodeIndexPosition(v),
       alpha: Engine.linerInterpolationInt(gamestream.isometric.scene.ambient_hue, alpha , intensity),
     );
   }
