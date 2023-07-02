@@ -486,6 +486,7 @@ extension ServerResponseReader on Gamestream {
     isometric.editor.gameObjectSelectedGravity      .value = readBool();
 
     isometric.editor.gameObjectSelectedType.value          = gameObject.type;
+    isometric.editor.gameObjectSelectedSubType.value       = gameObject.subType;
     isometric.editor.gameObjectSelected.value              = true;
     isometric.editor.cameraCenterSelectedObject();
 

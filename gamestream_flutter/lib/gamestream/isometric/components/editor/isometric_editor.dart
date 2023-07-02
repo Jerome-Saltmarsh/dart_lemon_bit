@@ -26,6 +26,7 @@ class IsometricEditor {
   final gameObject = Watch<IsometricGameObject?>(null);
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
+  final gameObjectSelectedSubType = Watch(0);
   final gameObjectSelectedCollidable = Watch(true);
   final gameObjectSelectedGravity = Watch(true);
   final gameObjectSelectedFixed = Watch(true);
