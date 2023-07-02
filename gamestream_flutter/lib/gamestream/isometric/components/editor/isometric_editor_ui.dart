@@ -1047,51 +1047,39 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildColumnSelectedGameObject() => GSContainer(
         width: 220,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildWatch(
-                  gameObjectSelectedType,
-                  (int type) => buildWatch(
-                      gameObjectSelectedSubType,
-                      (int subType) => Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                alignment: Alignment.centerRight,
-                                child: buildText('X',
-                                    onPressed: sendGameObjectRequestDeselect),
-                              ),
-                              Container(
-                                constraints: BoxConstraints(
-                                  maxWidth: 80,
-                                  maxHeight: 80,
-                                ),
-                              ),
-                              height8,
-                              buidButtonDuplicate(),
-                              height8,
-                              buildText(GameObjectType.getName(type), size: 22),
-                              height8,
-                              buildText(
-                                  GameObjectType.getNameSubType(type, subType),
-                                  size: 22),
-                              height8,
-                              buildWatchCollidable(),
-                              buildWatchGravity(),
-                              buildWatchFixed(),
-                              buildWatchCollectable(),
-                              buildWatchPhysical(),
-                              buildWatchPersistable(),
-                              buildWatchEmission(),
-                            ],
-                          ))),
-            ],
-          ),
-        ),
+        child: buildWatch(
+            gameObjectSelectedType,
+            (int type) => buildWatch(
+                gameObjectSelectedSubType,
+                (int subType) => Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: buildText('X',
+                              onPressed: sendGameObjectRequestDeselect
+                          ),
+                        ),
+                        Center(child: gamestream.isometric.ui.buildImageGameObject(subType)),
+                        height8,
+                        buidButtonDuplicate(),
+                        height8,
+                        buildText(GameObjectType.getName(type), size: 22),
+                        height8,
+                        buildText(
+                            GameObjectType.getNameSubType(type, subType),
+                            size: 22),
+                        height8,
+                        buildWatchCollidable(),
+                        buildWatchGravity(),
+                        buildWatchFixed(),
+                        buildWatchCollectable(),
+                        buildWatchPhysical(),
+                        buildWatchPersistable(),
+                        buildWatchEmission(),
+                      ],
+                    ))),
       );
 
   Widget buildColumnEditParticleEmitter() {
