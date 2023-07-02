@@ -15,22 +15,17 @@ class IsometricScenes {
   late IsometricScene town;
   late IsometricScene captureTheFlag;
   late IsometricScene moba;
-
   late IsometricScene mmoTown;
 
   Future load() async {
       // town = await loadScene('town');
       town = IsometricSceneGenerator.generateEmptyScene();
-      captureTheFlag = await loadScene('capture_the_flag');
-      moba = await loadScene('moba');
-      mmoTown = await loadScene('mmo_town');
+      captureTheFlag = await readSceneFromFile('capture_the_flag');
+      moba = await readSceneFromFile('moba');
+      mmoTown = await readSceneFromFile('mmo_town');
   }
 
-  Future<IsometricScene> loadScene(String sceneName) async {
-    return readSceneFromFileBytes(sceneName);
-  }
-
-  Future<IsometricScene> readSceneFromFileBytes(String sceneName) async {
+  Future<IsometricScene> readSceneFromFile(String sceneName) async {
     final fileName = '$sceneDirectoryPath/$sceneName.scene';
     final file = File(fileName);
     final exists = await file.exists();
@@ -52,7 +47,7 @@ class IsometricScenes {
         .toList();
   }
 
-  void saveSceneToFileBytes(IsometricScene scene) {
+  void saveSceneToFile(IsometricScene scene) {
     writeBytesToFile(
       fileName: '${scene.name}.scene',
       directory: sceneDirectoryPath,

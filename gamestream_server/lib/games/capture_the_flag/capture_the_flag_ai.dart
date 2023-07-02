@@ -27,7 +27,8 @@ class CaptureTheFlagAI extends IsometricCharacterTemplate {
   }) : super(
     health: 10,
     weaponRange: game.getWeaponTypeRange(weaponType),
-    damage: game.getWeaponTypeDamage(weaponType),
+    weaponDamage: game.getWeaponTypeDamage(weaponType),
+    weaponCooldown: game.getWeaponCooldown(weaponType),
     x: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).x,
     y: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).y,
     z: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).z,

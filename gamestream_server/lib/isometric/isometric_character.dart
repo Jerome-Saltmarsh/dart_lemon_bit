@@ -60,8 +60,9 @@ abstract class IsometricCharacter extends IsometricCollider {
     required int health,
     required int weaponType,
     required int team,
-    required int damage,
-    required double weaponRange,
+    required this.weaponDamage,
+    required this.weaponRange,
+    required this.weaponCooldown,
     double x = 0,
     double y = 0,
     double z = 0,
@@ -74,11 +75,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   ) {
     maxHealth = health;
     this.weaponType = weaponType;
-    this.weaponRange = weaponRange;
     this.characterType = characterType;
     this.health = health;
     this.team = team;
-    this.weaponDamage = damage;
+
     if (name != null){
       this.name = name;
     }
@@ -108,20 +108,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     }
     return withinAttackRange(target);
   }
-
-  // int get buffByte {
-  //   var buff = 0;
-  //   if (buffInvincible) {
-  //     buff = buff | 0x00000001;
-  //   }
-  //   if (buffDoubleDamage) {
-  //     buff = buff | 0x00000002;
-  //   }
-  //   if (buffInvisible) {
-  //     buff = buff | 0x00000004;
-  //   }
-  //   return buff;
-  // }
 
   int get weaponType => _weaponType;
 

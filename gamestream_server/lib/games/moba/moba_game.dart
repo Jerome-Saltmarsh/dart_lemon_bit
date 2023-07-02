@@ -55,7 +55,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       spawn(MobaCreep(
         game: this,
         health: 10,
-        damage: 1,
+        weaponDamage: 1,
         team: teamRed,
       )
       );
@@ -63,7 +63,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       spawn(MobaCreep(
         game: this,
         health: 10,
-        damage: 1,
+        weaponDamage: 1,
         team: teamBlue,
       )
       );

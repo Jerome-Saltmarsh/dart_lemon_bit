@@ -21,10 +21,11 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       y: 1100,
       z: 25,
       health: 50,
-      weaponType: WeaponType.Handgun,
       team: MmoTeam.Human,
-      damage: 1,
+      weaponType: WeaponType.Handgun,
+      weaponDamage: 1,
       weaponRange: 200,
+      weaponCooldown: 20,
       interact: (player) {
         player.talk("Hello there");
       }
@@ -37,13 +38,22 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       health: 200,
       weaponType: WeaponType.Machine_Gun,
       weaponRange: 200,
-      damage: 1,
+      weaponDamage: 1,
+      weaponCooldown: 5,
       team: MmoTeam.Human,
     );
 
     characters.add(npcGuard);
 
-    characters.add(IsometricZombie(team: MmoTeam.Alien, game: this, x: 50, y: 50, z: 24, health: 5, damage: 1));
+    characters.add(IsometricZombie(
+        team: MmoTeam.Alien,
+        game: this,
+        x: 50,
+        y: 50,
+        z: 24,
+        health: 5,
+        weaponDamage: 1,
+    ));
 
     characters.add(
         IsometricZombie(
@@ -53,7 +63,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
             y: 50,
             z: 24,
             health: 5,
-            damage: 1,
+            weaponDamage: 1,
         )..target = npcGuard
     );
   }

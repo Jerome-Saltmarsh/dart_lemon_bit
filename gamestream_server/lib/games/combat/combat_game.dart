@@ -683,7 +683,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
           'game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
     }
     final instance = CombatZombie(
-      weaponType: WeaponType.Unarmed,
       characterType: characterType,
       health: health,
       damage: damage,
@@ -808,7 +807,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
         'game.spawnAIXYZ() - out of bounds');
 
     final instance = CombatZombie(
-      weaponType: WeaponType.Unarmed,
       characterType: characterType,
       health: health,
       damage: damage,

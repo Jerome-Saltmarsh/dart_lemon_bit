@@ -1,15 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gamestream_server/common/src/isometric/character_state.dart';
-import 'package:gamestream_server/common/src/isometric/ai_mode.dart';
-import 'package:gamestream_server/common/src/isometric/node_size.dart';
+import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/isometric.dart';
 import 'package:lemon_math/src.dart';
-
-import '../../isometric/isometric_character.dart';
-import '../../isometric/isometric_game.dart';
-import '../../isometric/isometric_player.dart';
-import '../../isometric/isometric_position.dart';
 
 class CombatZombie extends IsometricCharacter {
   static const AI_Path_Size = 80;
@@ -39,7 +33,6 @@ class CombatZombie extends IsometricCharacter {
   CombatZombie({
     required int characterType,
     required int health,
-    required int weaponType,
     required int damage,
     required int team,
     this.wanderRadius = 200,
@@ -50,14 +43,15 @@ class CombatZombie extends IsometricCharacter {
     String? name,
   }): super(
       characterType: characterType,
+      weaponType: WeaponType.Unarmed,
       x: x,
       y: y,
       z: z,
       health: health,
       team: team,
-      weaponType: weaponType,
       weaponRange: 20.0,
-      damage: damage,
+      weaponDamage: 1,
+      weaponCooldown: 20,
   ) {
     clearDest();
     spawnX = x;

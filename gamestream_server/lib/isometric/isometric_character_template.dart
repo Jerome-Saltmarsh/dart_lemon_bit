@@ -13,10 +13,11 @@ class IsometricCharacterTemplate extends IsometricCharacter {
     required super.y,
     required super.z,
     required super.health,
+    required super.team,
     required super.weaponType,
     required super.weaponRange,
-    required super.team,
-    required super.damage,
+    required super.weaponDamage,
+    required super.weaponCooldown,
   }) : super(characterType: CharacterType.Template);
 
   int get headType => _headType;

@@ -15,7 +15,7 @@ class MobaCreep extends IsometricZombie {
     required this.game,
     required super.health,
     required super.team,
-    required super.damage,
+    required super.weaponDamage,
     super.x = 0,
     super.y = 0,
     super.z = 0,

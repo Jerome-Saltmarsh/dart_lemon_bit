@@ -775,6 +775,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     WeaponType.Sword: 2,
   }[weaponType] ?? 1;
 
+  int getWeaponCooldown(int weaponType) => const <int, int>{
+    WeaponType.Unarmed: 20,
+    WeaponType.Handgun: 20,
+    WeaponType.Smg: 5,
+  }[weaponType] ?? 1;
+
   @override
   int getExperienceForLevel(int level){
     return level * 3;

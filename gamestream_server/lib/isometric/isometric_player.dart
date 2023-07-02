@@ -55,9 +55,10 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     z: 0,
     health: 10,
     team: 0,
-    weaponType: 0,
+    weaponType: WeaponType.Unarmed,
     weaponRange: 20,
-    damage: 1,
+    weaponDamage: 1,
+    weaponCooldown: 20,
   ){
     this.autoTarget = autoTargetNearbyEnemies;
     writeGameType();

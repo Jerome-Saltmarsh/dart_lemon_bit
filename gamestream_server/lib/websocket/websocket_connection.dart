@@ -237,7 +237,7 @@ class WebSocketConnection with ByteReader {
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
             }
-            engine.isometricScenes.saveSceneToFileBytes(game.scene);
+            engine.isometricScenes.saveSceneToFile(game.scene);
             break;
 
           case IsometricEditorRequest.Modify_Canvas_Size:

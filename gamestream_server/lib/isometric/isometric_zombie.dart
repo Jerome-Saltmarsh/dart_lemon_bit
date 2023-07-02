@@ -13,7 +13,7 @@ class IsometricZombie extends IsometricCharacter {
   IsometricZombie({
     required this.game,
     required super.health,
-    required super.damage,
+    required super.weaponDamage,
     required super.team,
     required super.x,
     required super.y,
@@ -22,6 +22,7 @@ class IsometricZombie extends IsometricCharacter {
     characterType: CharacterType.Zombie,
     weaponType: WeaponType.Unarmed,
     weaponRange: 20,
+    weaponCooldown: 20,
   );
 
   bool get shouldRunToTarget => target != null;
