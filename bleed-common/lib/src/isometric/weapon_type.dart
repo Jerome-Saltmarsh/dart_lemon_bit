@@ -1,4 +1,3 @@
-
 class WeaponType {
   static const Unarmed = 0;
   static const Handgun = 1;
@@ -29,21 +28,21 @@ class WeaponType {
   static const Rifle = 26;
 
   static const Firearms = [
-     Handgun,
-     Smg,
-     Machine_Gun,
-     Sniper_Rifle,
-     Shotgun,
-     Plasma_Pistol,
-     Minigun,
-     Musket,
-     Rifle,
+    Handgun,
+    Smg,
+    Machine_Gun,
+    Sniper_Rifle,
+    Shotgun,
+    Plasma_Pistol,
+    Minigun,
+    Musket,
+    Rifle,
   ];
 
   static const Firearms_Automatic = [
-     Smg,
-     Machine_Gun,
-     Minigun,
+    Smg,
+    Machine_Gun,
+    Minigun,
   ];
 
   static const Melee = [
@@ -52,12 +51,72 @@ class WeaponType {
     Crowbar,
     Hammer,
   ];
-  
+
   static bool isMelee(int value) => Melee.contains(value);
 
   static bool isFirearm(int value) => Firearms.contains(value);
-  
-  static bool isFirearmAutomatic(int value) => Firearms.contains(value);
-  
-  static String getName(int value) => value.toString();
+
+  static bool isFirearmAutomatic(int value) => Firearms_Automatic.contains(value);
+
+  static String getName(int value) {
+    return const {
+      Unarmed: "Unarmed",
+      Handgun: "Handgun",
+      Smg: "SMG",
+      Machine_Gun: "Machine Gun",
+      Sniper_Rifle: "Sniper Rifle",
+      Shotgun: "Shotgun",
+      Sword: "Sword",
+      Bow: "Bow",
+      Plasma_Pistol: "Plasma Pistol",
+      Crowbar: "Crowbar",
+      Grenade: "Grenade",
+      Flame_Thrower: "Flame Thrower",
+      Bazooka: "Bazooka",
+      Minigun: "Minigun",
+      Crossbow: "Crossbow",
+      Staff: "Staff",
+      Musket: "Musket",
+      Revolver: "Revolver",
+      Desert_Eagle: "Desert Eagle",
+      Pistol: "Pistol",
+      Plasma_Rifle: "Plasma Rifle",
+      Hammer: "Hammer",
+      Pickaxe: "Pickaxe",
+      Knife: "Knife",
+      Axe: "Axe",
+      Portal: "Portal",
+      Rifle: "Rifle",
+    }[value] ?? 'weapon-type-unknown-$value';
+  }
+
+  static const values = [
+    Unarmed,
+    Handgun,
+    Smg,
+    Machine_Gun,
+    Sniper_Rifle,
+    Shotgun,
+    Sword,
+    Bow,
+    Plasma_Pistol,
+    Crowbar,
+    Grenade,
+    Flame_Thrower,
+    Bazooka,
+    Minigun,
+    Crossbow,
+    Staff,
+    Musket,
+    Revolver,
+    Desert_Eagle,
+    Pistol,
+    Plasma_Rifle,
+    Hammer,
+    Pickaxe,
+    Knife,
+    Axe,
+    Portal,
+    Rifle,
+  ];
 }
