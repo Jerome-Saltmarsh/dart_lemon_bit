@@ -275,21 +275,6 @@ class GameAudio {
     return 0;
   }
 
-  double getVolumeTargetFire(){
-    // if (!ClientState.torchesIgnited.value) return 0;
-    const r = 4;
-    const maxDistance = r * Node_Size;
-    var closest = gamestream.isometric.scene.getClosestByType(radius: r, type: NodeType.Fireplace) * Node_Size;
-    final closestTorch = gamestream.isometric.scene.getClosestByType(
-        radius: r,
-        type: NodeType.Torch
-    ) * Node_Size;
-    if (closestTorch < closest) {
-      closest = closestTorch;
-    }
-    return convertDistanceToVolume(closest, maxDistance: maxDistance);
-  }
-
   double getVolumeTargetDistanceThunder(){
     if (gamestream.isometric.client.lightningOn) return 1.0;
     return 0;
@@ -298,13 +283,6 @@ class GameAudio {
   double getVolumeHeartBeat(){
     if (gamestream.isometric.server.playerMaxHealth.value <= 0) return 0.0;
     return 1.0 - gamestream.isometric.server.playerHealth.value / gamestream.isometric.server.playerMaxHealth.value;
-  }
-
-  double getVolumeStream(){
-    const r = 5;
-    const maxDistance = r * Node_Size;
-    final distance = gamestream.isometric.scene.getClosestByType(radius: r, type: NodeType.Water) * Node_Size;
-    return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.25);
   }
 
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){

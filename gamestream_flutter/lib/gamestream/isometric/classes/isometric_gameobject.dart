@@ -107,4 +107,15 @@ class IsometricGameObject extends IsometricPosition {
         opacity: interpolate(start: gamestream.isometric.scene.ambient_alp, end: emission_alp, t: emission_intensity),
     );
   }
+
+  bool get onscreen {
+    const Pad_Distance = 75.0;
+    final rx = renderX;
+
+    if (rx < engine.Screen_Left - Pad_Distance || rx > engine.Screen_Right + Pad_Distance)
+      return false;
+
+    final ry = renderY;
+    return ry > engine.Screen_Top - Pad_Distance && ry < engine.Screen_Bottom + Pad_Distance;
+  }
 }

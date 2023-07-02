@@ -14,7 +14,7 @@ alt + m             : go to declaration
   [x] refactor item type
   [x] remove character template class
   [x] pathfinding 3d
-  [ ] refactor flutter isometric position 
+  [x] refactor flutter isometric position 
   [ ] merge interact logic into isometric character 
   [ ] 3d model alien creature
   [ ] destructable structures

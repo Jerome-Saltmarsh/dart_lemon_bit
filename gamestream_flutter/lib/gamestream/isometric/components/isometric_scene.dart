@@ -1186,28 +1186,6 @@ class IsometricScene {
   int getNodeTypeZRC(int z, int row, int column) =>
       nodeTypes[getNodeIndexZRC(z, row, column)];
 
-  // TODO REFACTOR
-  int getClosestByType({required int radius, required int type}){
-    final minRow = max(gamestream.isometric.player.position.indexRow - radius, 0);
-    final maxRow = min(gamestream.isometric.player.position.indexRow + radius, totalRows - 1);
-    final minColumn = max(gamestream.isometric.player.position.indexColumn - radius, 0);
-    final maxColumn = min(gamestream.isometric.player.position.indexColumn + radius, totalColumns - 1);
-    final minZ = max(gamestream.isometric.player.position.indexZ - radius, 0);
-    final maxZ = min(gamestream.isometric.player.position.indexZ + radius, totalZ - 1);
-    var closest = 99999;
-    for (var z = minZ; z <= maxZ; z++){
-      for (var row = minRow; row <= maxRow; row++){
-        for (var column = minColumn; column <= maxColumn; column++){
-          if (gamestream.isometric.scene.getNodeTypeZRC(z, row, column) != type) continue;
-          final distance = gamestream.isometric.player.position.getGridDistance(z, row, column);
-          if (distance > closest) continue;
-          closest = distance;
-        }
-      }
-    }
-    return closest;
-  }
-
   int getNodeIndexBelowPosition(IsometricPosition position) =>
       getNodeIndexZRC(
         position.indexZ - 1,

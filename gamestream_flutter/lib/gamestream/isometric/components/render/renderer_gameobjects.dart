@@ -80,7 +80,7 @@ class RendererGameObjects extends IsometricRenderer {
   void updateFunction() {
     gameObject = gameObjects[index];
 
-    while (!gameObject.active || !gameObject.onscreenPadded || !scene.nodePerceptible(gameObject)) {
+    while (!gameObject.active || !gameObject.onscreen || !scene.nodePerceptible(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];
