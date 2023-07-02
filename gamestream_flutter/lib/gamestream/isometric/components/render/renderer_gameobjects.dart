@@ -39,9 +39,9 @@ class RendererGameObjects extends IsometricRenderer {
       srcWidth: src[Atlas.SrcWidth],
       srcHeight: src[Atlas.SrcHeight],
       scale: src[Atlas.SrcScale],
-      color: gameObject.emission_type != IsometricEmissionType.Color
-          ? nodes.getV3RenderColor(gameObject)
-          : gameObject.emission_col,
+      color: gameObject.emissionType != IsometricEmissionType.Color
+          ? nodes.getRenderColorPosition(gameObject)
+          : gameObject.emissionColor,
     );
     //
     // switch (type) {

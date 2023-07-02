@@ -21,11 +21,11 @@ class IsometricScene {
   late var ambient_sat        = (ambient_color_hsv.saturation * 100).round();
   late var ambient_val        = (ambient_color_hsv.value * 100).round();
   late var ambient_alp        = (ambient_color_hsv.alpha * 255).round();
-  var ambient_color      = 0;
+  var ambientColor      = 0;
 
   var nodesLightSources = Uint16List(0);
   var nodesLightSourcesTotal = 0;
-  var node_colors = Uint32List(0);
+  var nodeColors = Uint32List(0);
   var hsv_hue = Uint16List(0);
   var hsv_saturation = Uint8List(0);
   var hsv_values = Uint8List(0);
@@ -85,7 +85,7 @@ class IsometricScene {
 
   void resetNodeColorsToAmbient() {
     ambient_alp = clamp(ambient_alp, 0, 255);
-    ambient_color = hsvToColor(
+    ambientColor = hsvToColor(
         hue: ambient_hue,
         saturation: ambient_sat,
         value: ambient_val,
@@ -93,16 +93,16 @@ class IsometricScene {
     );
     colorStackIndex = -1;
 
-    if (node_colors.length != total) {
+    if (nodeColors.length != total) {
       colorStack = Uint16List(total);
-      node_colors = Uint32List(total);
+      nodeColors = Uint32List(total);
       hsv_hue = Uint16List(total);
       hsv_saturation = Uint8List(total);
       hsv_values = Uint8List(total);
       hsv_alphas = Uint8List(total);
     }
     for (var i = 0; i < total; i++) {
-      node_colors[i] = ambient_color;
+      nodeColors[i] = ambientColor;
       hsv_hue[i] = ambient_hue;
       hsv_saturation[i] = ambient_sat;
       hsv_values[i] = ambient_val;
@@ -164,7 +164,7 @@ class IsometricScene {
   void resetNodeColorStack() {
     while (colorStackIndex >= 0) {
       final i = colorStack[colorStackIndex];
-      node_colors[i] = ambient_color;
+      nodeColors[i] = ambientColor;
       hsv_hue[i] = ambient_hue;
       hsv_saturation[i] = ambient_sat;
       hsv_values[i] = ambient_val;
@@ -177,7 +177,7 @@ class IsometricScene {
   void resetNodeAmbientStack() {
     while (ambientStackIndex >= 0) {
       final i = ambientStack[ambientStackIndex];
-      node_colors[i] = ambient_color;
+      nodeColors[i] = ambientColor;
       hsv_alphas[i] = ambient_alp;
       ambientStackIndex--;
     }
@@ -249,7 +249,7 @@ class IsometricScene {
   }
 
   void refreshNodeColor(int index) =>
-      node_colors[index] = hsvToColor(
+      nodeColors[index] = hsvToColor(
         hue: hsv_hue[index],
         saturation: hsv_saturation[index],
         value: hsv_values[index],
@@ -258,7 +258,7 @@ class IsometricScene {
 
 
   void refreshNodeColor2(int index) =>
-      node_colors[index] = hsvToColor(
+      nodeColors[index] = hsvToColor(
         hue: hsv_hue[index],
         saturation: hsv_saturation[index],
         value: hsv_values[index],
@@ -1279,10 +1279,10 @@ class IsometricScene {
   int convertNodeIndexToIndexZ(int index) =>
       index ~/ area;
 
-  int getV3RenderColor(IsometricPosition vector3) =>
-      vector3.outOfBounds
-          ? ambient_color
-          : node_colors[vector3.nodeIndex];
+  int getRenderColorPosition(IsometricPosition position) =>
+      outOfBoundsV3(position)
+          ? ambientColor
+          : nodeColors[position.nodeIndex];
 
   void applyEmissionsLightSources() {
     for (var i = 0; i < nodesLightSourcesTotal; i++){

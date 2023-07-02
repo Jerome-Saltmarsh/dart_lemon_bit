@@ -489,7 +489,7 @@ extension ServerResponseReader on Gamestream {
     isometric.editor.gameObjectSelected.value              = true;
     isometric.editor.cameraCenterSelectedObject();
 
-    isometric.editor.gameObjectSelectedEmission.value = gameObject.emission_type;
+    isometric.editor.gameObjectSelectedEmission.value = gameObject.emissionType;
     isometric.editor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
   }
 

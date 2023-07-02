@@ -81,7 +81,7 @@ class RendererNodes extends IsometricRenderer {
 
   // GETTERS
   static double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
-  static int get currentNodeColor => gamestream.isometric.scene.node_colors[currentNodeIndex];
+  static int get currentNodeColor => gamestream.isometric.scene.nodeColors[currentNodeIndex];
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeWind => gamestream.isometric.server.windTypeAmbient.value;
   static int get currentNodeVariation => gamestream.isometric.scene.nodeVariations[currentNodeIndex];
@@ -93,9 +93,9 @@ class RendererNodes extends IsometricRenderer {
   static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - gamestream.isometric.scene.area);
 
   static int getNodeColorAtIndex(int index){
-    if (index < 0) return gamestream.isometric.scene.ambient_color;
-    if (index >= gamestream.isometric.scene.total) return gamestream.isometric.scene.ambient_color;
-    return gamestream.isometric.scene.node_colors[index];
+    if (index < 0) return gamestream.isometric.scene.ambientColor;
+    if (index >= gamestream.isometric.scene.total) return gamestream.isometric.scene.ambientColor;
+    return gamestream.isometric.scene.nodeColors[index];
   }
 
   static var currentNodeWithinIsland = false;
@@ -1459,7 +1459,7 @@ class RendererNodes extends IsometricRenderer {
           srcY: GameIsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: -8,
-          color: gamestream.isometric.scene.node_colors[currentNodeIndex + gamestream.isometric.scene.area < gamestream.isometric.scene.total ? currentNodeIndex + gamestream.isometric.scene.area : currentNodeIndex],
+          color: gamestream.isometric.scene.nodeColors[currentNodeIndex + gamestream.isometric.scene.area < gamestream.isometric.scene.total ? currentNodeIndex + gamestream.isometric.scene.area : currentNodeIndex],
         );
         return;
       case NodeOrientation.Half_Vertical_Center:

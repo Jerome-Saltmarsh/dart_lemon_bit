@@ -1151,7 +1151,7 @@ extension IsometricEditorUI on IsometricEditor {
                   ),
                   buildWatch(gamestream.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
                       onPressed(
-                        action: () => gamestream.isometric.editor.gameObject.value!.emission_type = ((gamestream.isometric.editor.gameObject.value!.emission_type + 1) % 3),
+                        action: () => gamestream.isometric.editor.gameObject.value!.emissionType = ((gamestream.isometric.editor.gameObject.value!.emissionType + 1) % 3),
                         child: Column(
                           children: [
                             Row(
@@ -1169,7 +1169,7 @@ extension IsometricEditorUI on IsometricEditor {
                             if (emissionType == IsometricEmissionType.Color)
                               ColorPicker(
                                 portraitOnly: true,
-                                pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emission_col),
+                                pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emissionColor),
                                 onColorChanged: (color){
                                   final gameObject = gamestream.isometric.editor.gameObject.value!;
                                   final hsv = HSVColor.fromColor(color);

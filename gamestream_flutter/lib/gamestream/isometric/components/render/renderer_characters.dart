@@ -313,7 +313,7 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.isometric.scene.getV3RenderColor(character),
+        color: gamestream.isometric.scene.getRenderColorPosition(character),
       );
     }
 
@@ -328,7 +328,7 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.isometric.scene.getV3RenderColor(character),
+        color: gamestream.isometric.scene.getRenderColorPosition(character),
       );
     }
 
@@ -342,7 +342,7 @@ class RendererCharacters extends IsometricRenderer {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: gamestream.isometric.scene.getV3RenderColor(character),
+      color: gamestream.isometric.scene.getRenderColorPosition(character),
     );
   }
 

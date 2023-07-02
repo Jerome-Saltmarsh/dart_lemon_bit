@@ -154,7 +154,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = IsometricRender.convertV3ToRenderY(character);
 
     const Color_Invisible = GameIsometricColors.White38_Value;
-    final color = invisible ? Color_Invisible : gamestream.isometric.scene.getV3RenderColor(character);
+    final color = invisible ? Color_Invisible : gamestream.isometric.scene.getRenderColorPosition(character);
 
     if (invisible) {
       engine.bufferBlendMode = BlendMode.srcIn;

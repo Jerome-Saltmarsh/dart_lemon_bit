@@ -9,19 +9,19 @@ class IsometricPosition with Position {
   int get indexZ => z ~/ Node_Size_Half;
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
+  // TODO Remove
   int get nodeIndex => gamestream.isometric.scene.getNodeIndex(x, y, z);
+  // TODO Remove
   int get indexProjection => nodeIndex % gamestream.isometric.scene.projection;
 
   double get indexSum => (indexRow + indexColumn).toDouble();
 
   bool get onscreen {
      final rx = renderX;
-     if (rx < engine.Screen_Left) return false;
-     if (rx > engine.Screen_Right) return false;
+     if (rx < engine.Screen_Left || rx > engine.Screen_Right)
+       return false;
      final ry = renderY;
-     if (ry < engine.Screen_Top) return false;
-     if (ry > engine.Screen_Bottom) return false;
-     return true;
+     return ry > engine.Screen_Top && ry < engine.Screen_Bottom;
   }
 
   bool get onscreenPadded {
@@ -51,6 +51,7 @@ class IsometricPosition with Position {
     return RendererNodes.visible3D[nodeIndex];
   }
 
+  /// TODO remove
   bool get outOfBounds =>
       z < 0                ||
           x < 0                ||

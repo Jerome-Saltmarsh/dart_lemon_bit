@@ -38,7 +38,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 40,
             srcWidth: 4,
             srcHeight: 4,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Blood:
@@ -51,7 +51,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: AtlasParticleY.Blood,
             srcWidth: 8,
             srcHeight: 8,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Bubble:
@@ -67,7 +67,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 32,
             srcWidth: 8,
             srcHeight: 8,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Bubble_Small:
@@ -79,7 +79,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 32,
             srcWidth: 4,
             srcHeight: 4,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Bullet_Ring:
@@ -91,7 +91,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 32,
             srcWidth: 4,
             srcHeight: 4,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Smoke:
@@ -124,7 +124,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Block_Grass:
@@ -137,7 +137,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Confetti_Yellow:
@@ -150,7 +150,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Confetti_Red:
@@ -163,7 +163,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Confetti_Blue:
@@ -176,7 +176,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Confetti_Green:
@@ -189,7 +189,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Confetti_Purple:
@@ -202,7 +202,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Confetti_Cyan:
@@ -215,7 +215,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
 
@@ -229,7 +229,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Block_Sand:
@@ -242,7 +242,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Fire:
@@ -332,7 +332,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 1 + 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Zombie_Head:
@@ -345,7 +345,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Zombie_leg:
@@ -358,7 +358,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
 
@@ -372,7 +372,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: nodes.getV3RenderColor(particle),
+            color: nodes.getRenderColorPosition(particle),
           );
           break;
         case ParticleType.Strike_Blade:
@@ -427,7 +427,7 @@ class RendererParticles extends IsometricRenderer {
       srcWidth: 32,
       srcHeight: 16,
       scale: 0.25,
-      color: nodes.getV3RenderColor(particle),
+      color: nodes.getRenderColorPosition(particle),
     );
   }
 
@@ -441,7 +441,7 @@ class RendererParticles extends IsometricRenderer {
       srcY: 7,
       srcWidth: 16,
       srcHeight: 16,
-      color: nodes.getV3RenderColor(particle),
+      color: nodes.getRenderColorPosition(particle),
       rotation: particle.rotation,
       scale: particle.scale,
     );
@@ -464,7 +464,7 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.1,
-      color: nodes.getV3RenderColor(particle),
+      color: nodes.getRenderColorPosition(particle),
     );
   }
 
@@ -485,7 +485,7 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.4,
       anchorY: 0.1,
-      color: nodes.getV3RenderColor(particle),
+      color: nodes.getRenderColorPosition(particle),
     );
   }
 
@@ -506,7 +506,7 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.1,
-      color: nodes.getV3RenderColor(particle),
+      color: nodes.getRenderColorPosition(particle),
     );
   }
   void renderParticleStrikeLight() {
@@ -526,7 +526,7 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.1,
-      color: nodes.getV3RenderColor(particle),
+      color: nodes.getRenderColorPosition(particle),
     );
   }
 

@@ -90,7 +90,7 @@ class IsometricServer {
   void applyEmissionGameObjects() {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      switch (gameObject.emission_type) {
+      switch (gameObject.emissionType) {
         case IsometricEmissionType.None:
           continue;
         case IsometricEmissionType.Color:

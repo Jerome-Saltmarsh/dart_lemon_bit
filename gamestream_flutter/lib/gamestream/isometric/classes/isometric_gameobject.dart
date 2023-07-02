@@ -8,12 +8,12 @@ class IsometricGameObject extends IsometricPosition {
   var _type = -1;
   var subType = -1;
   var active = false;
-  var emission_type = IsometricEmissionType.None;
+  var emissionType = IsometricEmissionType.None;
   var emission_hue = 0;
   var emission_sat = 0;
   var emission_val = 0;
   var emission_alp = 0;
-  var emission_col = 0;
+  var emissionColor = 0;
   var _emission_intensity = 1.0;
   var emission_intensity_start = 0.15;
   var emission_intensity_end = 1.0;
@@ -32,7 +32,7 @@ class IsometricGameObject extends IsometricPosition {
 
     switch (value) {
       case ObjectType.Neon_Sign_01:
-        emission_type = IsometricEmissionType.Color;
+        emissionType = IsometricEmissionType.Color;
         emission_hue = 344;
         emission_sat = 67;
         emission_val = 94;
@@ -41,7 +41,7 @@ class IsometricGameObject extends IsometricPosition {
         refreshEmissionColor();
         break;
       case ObjectType.Neon_Sign_02:
-        emission_type = IsometricEmissionType.Color;
+        emissionType = IsometricEmissionType.Color;
         emission_hue = 166;
         emission_sat = 78;
         emission_val = 88;
@@ -49,16 +49,16 @@ class IsometricGameObject extends IsometricPosition {
         refreshEmissionColor();
         break;
       case ObjectType.Barrel_Flaming:
-        emission_type = IsometricEmissionType.Ambient;
+        emissionType = IsometricEmissionType.Ambient;
         emission_intensity_vel = 0.1;
         emission_intensity_start = 0.78;
         emission_intensity_end = 1.0;
         break;
       case ObjectType.Grenade:
-        emission_type = IsometricEmissionType.Ambient;
+        emissionType = IsometricEmissionType.Ambient;
         break;
       case ObjectType.Vending_Upgrades:
-        emission_type = IsometricEmissionType.Color;
+        emissionType = IsometricEmissionType.Color;
         emission_hue = 209;
         emission_sat = 66;
         emission_val = 90;
@@ -66,7 +66,7 @@ class IsometricGameObject extends IsometricPosition {
         refreshEmissionColor();
         break;
       case ObjectType.Credits:
-        emission_type = IsometricEmissionType.Ambient;
+        emissionType = IsometricEmissionType.Ambient;
         refreshEmissionColor();
         break;
     }
@@ -100,7 +100,7 @@ class IsometricGameObject extends IsometricPosition {
   }
 
   void refreshEmissionColor(){
-    emission_col = hsvToColor(
+    emissionColor = hsvToColor(
         hue: interpolate(start: gamestream.isometric.scene.ambient_hue, end: emission_hue , t: emission_intensity),
         saturation: interpolate(start: gamestream.isometric.scene.ambient_sat, end: emission_sat, t: emission_intensity),
         value: interpolate(start: gamestream.isometric.scene.ambient_val, end: emission_val, t: emission_intensity),
