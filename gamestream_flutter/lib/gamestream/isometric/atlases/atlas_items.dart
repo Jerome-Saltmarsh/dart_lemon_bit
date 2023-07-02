@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/instances/gamestream.dart';
 class AtlasItems {
   static const size = 32.0;
 
+
+
   static double getSrcX(int type, int subType) {
     const function = 'getSrcX';
     switch (type) {
@@ -67,7 +69,7 @@ class AtlasItems {
         }[subType] ?? (throw buildException(function, type, subType));
 
       case GameObjectType.Object:
-        return subType == ObjectType.Barrel_Explosive ? 34.0 * gamestream.animation.animationFrame6 :
+        return subType == ObjectType.Barrel_Flaming ? 34.0 * gamestream.animation.animationFrame6 :
         const <int, double> {
           ObjectType.Car: 384,
           ObjectType.Crystal: 75,

@@ -402,25 +402,26 @@ extension IsometricEditorUI on IsometricEditor {
   );
 
   Widget buildEditorTabGameObjects() =>
-
-      buildWatch(gamestream.isometric.editor.gameObjectSelected, (bool objectSelected){
-        if (objectSelected){
-          return buildColumnSelectedGameObject();
-        }
-        return SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const [ObjectType.Barrel_Explosive]
-                    .map(buildRowAddGameObject)
-                    .toList(),
-              )
-            ],
-          ),
-        );
-      });
+      GSDialog(
+        child: buildWatch(gamestream.isometric.editor.gameObjectSelected, (bool objectSelected){
+          if (objectSelected){
+            return buildColumnSelectedGameObject();
+          }
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [ObjectType.Barrel]
+                      .map(buildRowAddGameObject)
+                      .toList(),
+                )
+              ],
+            ),
+          );
+        }),
+      );
 
   Widget buildRowAddGameObject(int objectType) =>
       onPressed(
@@ -1215,19 +1216,21 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildPaintType(int type) =>
       buildButton(child: NodeType.getName(type));
 
-  Row buildEditorMenu(IsometricEditorTab activeEditTab) => Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: IsometricEditorTab.values
-        .map((editTab) => buildButton(
-      child: editTab.name,
-      width: 150,
-      color: activeEditTab == editTab
-          ? GameIsometricColors.brownDark
-          : GameIsometricColors.brownLight,
-      action: () => gamestream.isometric.editor.editTab.value = editTab,
-    ))
-        .toList(),
+  Widget buildEditorMenu(IsometricEditorTab activeEditTab) => GSDialog(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: IsometricEditorTab.values
+          .map((editTab) => buildButton(
+        child: editTab.name,
+        width: 150,
+        color: activeEditTab == editTab
+            ? GameIsometricColors.brownDark
+            : GameIsometricColors.brownLight,
+        action: () => gamestream.isometric.editor.editTab.value = editTab,
+      ))
+          .toList(),
+    ),
   );
 
   Widget buildMenu(
