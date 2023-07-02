@@ -45,7 +45,7 @@ class TemplateAnimation {
     return list;
   }();
 
-  static Uint8List FiringBow = (){
+  static Uint8List Firing_Bow = (){
     final list = Uint8List(9);
     list[0] = 5;
     list[1] = 5;
@@ -59,7 +59,7 @@ class TemplateAnimation {
     return list;
   }();
 
-  static List<int> FiringHandgun = (){
+  static List<int> Firing_One_Handed_Firearm = (){
     final frames = Uint8List(4);
     frames[0] = 8;
     frames[1] = 9;
@@ -72,7 +72,7 @@ class TemplateAnimation {
     6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 8, 8, 8
   ];
 
-  static const FiringRifle = [
+  static const Firing_Two_Handed_Firearm = [
     6, 7, 7, 6];
 
   static const FiringMinigun = [6];
@@ -118,14 +118,15 @@ class TemplateAnimation {
       WeaponType.Plasma_Pistol,
       WeaponType.Smg,
     ].contains(weaponType)) {
-      return FiringHandgun;
+      return Firing_One_Handed_Firearm;
     }
 
     if (const [
       WeaponType.Rifle,
       WeaponType.Sniper_Rifle,
+      WeaponType.Machine_Gun,
     ].contains(weaponType)) {
-      return FiringRifle;
+      return Firing_Two_Handed_Firearm;
     }
 
     if (WeaponType.isMelee(weaponType)) {
@@ -133,7 +134,7 @@ class TemplateAnimation {
     }
 
     if (WeaponType.Bow == weaponType){
-      return FiringBow;
+      return Firing_Bow;
     }
     if (weaponType == WeaponType.Grenade) {
       return Punch;

@@ -11,9 +11,9 @@ class IsometricUI {
     // image: ItemType.isTypeGameObject(gameObjectType)
     //     ? GameImages.atlas_gameobjects
     //     : GameImages.atlas_items,
-    srcX: AtlasItems.getSrcX(objectType, GameObjectType.Object),
-    srcY: AtlasItems.getSrcY(objectType, GameObjectType.Object),
-    srcWidth: AtlasItems.getSrcWidth(objectType, GameObjectType.Object),
-    srcHeight: AtlasItems.getSrcHeight(objectType, GameObjectType.Object),
+    srcX: AtlasItems.getSrcX(GameObjectType.Object, objectType),
+    srcY: AtlasItems.getSrcY(GameObjectType.Object, objectType),
+    srcWidth: AtlasItems.getSrcWidth(GameObjectType.Object, objectType),
+    srcHeight: AtlasItems.getSrcHeight(GameObjectType.Object, objectType),
   );
 }

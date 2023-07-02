@@ -413,7 +413,7 @@ extension IsometricEditorUI on IsometricEditor {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: ObjectType.values
+                children: const [ObjectType.Barrel_Explosive]
                     .map(buildRowAddGameObject)
                     .toList(),
               )
@@ -425,15 +425,12 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildRowAddGameObject(int objectType) =>
       onPressed(
         action: () => actionAddGameObject(objectType),
-        child: Tooltip(
-          message: ObjectType.getName(objectType),
-          child: Container(
-            width: 70,
-            height: 70,
-            color: Colors.white,
-            child: FittedBox(
-              child: gamestream.isometric.ui.buildImageGameObject(objectType),
-            ),
+        child: Container(
+          width: 70,
+          height: 70,
+          color: Colors.white,
+          child: FittedBox(
+            child: gamestream.isometric.ui.buildImageGameObject(objectType),
           ),
         ),
       );
