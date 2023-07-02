@@ -1050,16 +1050,19 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildColumnSelectedGameObject() => GSContainer(
-    width: 220,
-    child: SingleChildScrollView(
-      child: Column(
-        children: [
+        width: 220,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               buildWatch(
                   gameObjectSelectedType,
                   (int type) => buildWatch(
                       gameObjectSelectedSubType,
                       (int subType) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 alignment: Alignment.centerRight,
@@ -1073,165 +1076,27 @@ extension IsometricEditorUI on IsometricEditor {
                                 ),
                               ),
                               height8,
-                              Row(
-                                children: [
-                                  buildText(GameObjectType.getName(type), size: 22),
-                                  width8,
-                                  buildText(GameObjectType.getNameSubType(type, subType), size: 22),
-                                  width8,
-                                  buildText('Duplicate',
-                                      onPressed: sendGameObjectRequestDuplicate)
-                                ],
-                              ),
+                              buidButtonDuplicate(),
                               height8,
-                              buildWatch(
-                                  gameObjectSelectedCollidable,
-                                  (bool enabled) => onPressed(
-                                        action: () =>
-                                            sendGameObjectRequestToggleStrikable,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildText('Strikable'),
-                                            buildText(enabled),
-                                          ],
-                                        ),
-                                      )),
-                              buildWatch(
-                                  gameObjectSelectedGravity,
-                                  (bool enabled) => onPressed(
-                                        action: () =>
-                                            sendGameObjectRequestToggleGravity,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildText('Gravity'),
-                                            buildText(enabled),
-                                          ],
-                                        ),
-                                      )),
-                              buildWatch(
-                                  gameObjectSelectedFixed,
-                                  (bool enabled) => onPressed(
-                                        action:
-                                            sendGameObjectRequestToggleFixed,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildText('Fixed'),
-                                            buildText(enabled),
-                                          ],
-                                        ),
-                                      )),
-                              buildWatch(
-                                  gameObjectSelectedCollectable,
-                                  (bool enabled) => onPressed(
-                                        action:
-                                            sendGameObjectRequestToggleCollectable,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildText('Collectable'),
-                                            buildText(enabled),
-                                          ],
-                                        ),
-                                      )),
-                              buildWatch(
-                                  gameObjectSelectedPhysical,
-                                  (bool enabled) => onPressed(
-                                        action:
-                                            selectedGameObjectTogglePhysical,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildText('Physical'),
-                                            buildText(enabled),
-                                          ],
-                                        ),
-                                      )),
-                              buildWatch(
-                                  gameObjectSelectedPersistable,
-                                  (bool enabled) => onPressed(
-                                        action:
-                                            selectedGameObjectTogglePersistable,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildText('Persistable'),
-                                            buildText(enabled),
-                                          ],
-                                        ),
-                                      )),
-                              buildWatch(
-                                  gameObjectSelectedEmission,
-                                  (int emissionType) => onPressed(
-                                        action: () => gameObject
-                                                .value!.emissionType =
-                                            ((gameObject.value!.emissionType +
-                                                    1) %
-                                                3),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                buildText('Emission'),
-                                                buildText(emissionType),
-                                              ],
-                                            ),
-                                            buildText('Intensity'),
-                                            buildWatch(
-                                                gameObjectSelectedEmissionIntensity,
-                                                (double value) => Slider(
-                                                      value: gameObject.value
-                                                              ?.emission_intensity ??
-                                                          0,
-                                                      onChanged:
-                                                          setSelectedObjectedIntensity,
-                                                    )),
-                                            if (emissionType ==
-                                                IsometricEmissionType.Color)
-                                              ColorPicker(
-                                                portraitOnly: true,
-                                                pickerColor: Color(gameObject
-                                                    .value!.emissionColor),
-                                                onColorChanged: (color) {
-                                                  final gameObject =
-                                                      this.gameObject.value;
-                                                  if (gameObject == null)
-                                                    return;
-                                                  final hsv =
-                                                      HSVColor.fromColor(color);
-                                                  gameObject.emission_alp =
-                                                      (hsv.alpha * 255).round();
-                                                  gameObject.emission_hue =
-                                                      (hsv.hue).round();
-                                                  gameObject.emission_sat =
-                                                      (hsv.saturation * 100)
-                                                          .round();
-                                                  gameObject.emission_val =
-                                                      (hsv.value * 100).round();
-                                                  gameObject
-                                                      .refreshEmissionColor();
-                                                },
-                                              )
-                                          ],
-                                        ),
-                                      )),
+                              buildText(GameObjectType.getName(type), size: 22),
+                              height8,
+                              buildText(
+                                  GameObjectType.getNameSubType(type, subType),
+                                  size: 22),
+                              height8,
+                              buildWatchCollidable(),
+                              buildWatchGravity(),
+                              buildWatchFixed(),
+                              buildWatchCollectable(),
+                              buildWatchPhysical(),
+                              buildWatchPersistable(),
+                              buildWatchEmission(),
                             ],
                           ))),
-        ],
-      ),
-    ),
-  );
+            ],
+          ),
+        ),
+      );
 
   Widget buildColumnEditParticleEmitter() {
     return Column(
@@ -1474,5 +1339,160 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildButtonGameDialogClose() =>
       buildText('x', onPressed: actionGameDialogClose);
 
+  Widget buidButtonDuplicate() => buildText('Duplicate', onPressed: sendGameObjectRequestDuplicate);
+
+  Widget buildWatchFixed() => buildWatch(
+        gameObjectSelectedFixed,
+            (bool enabled) =>
+            onPressed(
+              action:
+              sendGameObjectRequestToggleFixed,
+              child: Row(
+                mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+                children: [
+                  buildText('Fixed'),
+                  buildText(enabled),
+                ],
+              ),
+            ));
+
+  Widget buildWatchGravity() => buildWatch(
+        gameObjectSelectedGravity,
+            (bool enabled) => onPressed(
+          action: () =>
+          sendGameObjectRequestToggleGravity,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Gravity'),
+              buildText(enabled),
+            ],
+          ),
+        ));
+
+  Widget buildWatchCollidable() => buildWatch(
+        gameObjectSelectedCollidable,
+            (bool enabled) => onPressed(
+          action: () =>
+          sendGameObjectRequestToggleStrikable,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Collidable'),
+              buildText(enabled),
+            ],
+          ),
+        ));
+
+  Widget buildWatchCollectable() => buildWatch(
+        gameObjectSelectedCollectable,
+            (bool enabled) => onPressed(
+          action:
+          sendGameObjectRequestToggleCollectable,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Collectable'),
+              buildText(enabled),
+            ],
+          ),
+        ));
+
+  Widget buildWatchPhysical() => buildWatch(
+        gameObjectSelectedPhysical,
+            (bool enabled) => onPressed(
+          action:
+          selectedGameObjectTogglePhysical,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Physical'),
+              buildText(enabled),
+            ],
+          ),
+        ));
+
+  Widget buildWatchPersistable() => buildWatch(
+        gameObjectSelectedPersistable,
+            (bool enabled) => onPressed(
+          action:
+          selectedGameObjectTogglePersistable,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Persistable'),
+              buildText(enabled),
+            ],
+          ),
+        ));
+
+  Widget buildWatchEmission() => buildWatch(
+        gameObjectSelectedEmission,
+            (int emissionType) => onPressed(
+          action: () => gameObject
+              .value!.emissionType =
+          ((gameObject.value!.emissionType +
+              1) %
+              3),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment:
+                MainAxisAlignment
+                    .spaceBetween,
+                children: [
+                  buildText('Emission'),
+                  buildText(emissionType),
+                ],
+              ),
+              buildText('Intensity'),
+              buildWatch(
+                  gameObjectSelectedEmissionIntensity,
+                      (double value) => Slider(
+                    value: gameObject.value
+                        ?.emission_intensity ??
+                        0,
+                    onChanged:
+                    setSelectedObjectedIntensity,
+                  )),
+              if (emissionType ==
+                  IsometricEmissionType.Color)
+                ColorPicker(
+                  portraitOnly: true,
+                  pickerColor: Color(gameObject
+                      .value!.emissionColor),
+                  onColorChanged: (color) {
+                    final gameObject =
+                        this.gameObject.value;
+                    if (gameObject == null)
+                      return;
+                    final hsv =
+                    HSVColor.fromColor(color);
+                    gameObject.emission_alp =
+                        (hsv.alpha * 255).round();
+                    gameObject.emission_hue =
+                        (hsv.hue).round();
+                    gameObject.emission_sat =
+                        (hsv.saturation * 100)
+                            .round();
+                    gameObject.emission_val =
+                        (hsv.value * 100).round();
+                    gameObject
+                        .refreshEmissionColor();
+                  },
+                )
+            ],
+          ),
+        ));
 }
+
+
+
+
 
