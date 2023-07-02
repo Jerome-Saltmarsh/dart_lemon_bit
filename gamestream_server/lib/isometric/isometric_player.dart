@@ -202,12 +202,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerAlive();
   }
 
-  // void writePlayerWeaponCooldown() {
-  //   writeByte(ServerResponse.Api_Player);
-  //   writeByte(ApiPlayer.Weapon_Cooldown);
-  //   writePercentage(weaponDurationPercentage);
-  // }
-
   void writeGameObjects(){
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
@@ -586,11 +580,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeGameObject(IsometricGameObject gameObject){
-    writeUInt8(ServerResponse.GameObject);
+    writeByte(ServerResponse.GameObject);
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
-    writeUInt16(gameObject.type);
-    writeVector3(gameObject);
+    writeByte(gameObject.type);
+    writeByte(gameObject.subType);
+    writeIsometricPosition(gameObject);
   }
 
   void writeMap(Map<int, int> map){
