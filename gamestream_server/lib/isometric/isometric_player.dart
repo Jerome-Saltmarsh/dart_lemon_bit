@@ -775,6 +775,11 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
         z: z,
         maxRadius: maxRadius,
       );
+
+  void lookAtMouse(){
+    if (deadOrBusy) return;
+    lookRadian = mouseAngle;
+  }
 }
 
 

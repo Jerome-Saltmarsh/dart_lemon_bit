@@ -16,6 +16,7 @@ alt + m             : go to declaration
   [ ] remove all static instances
 
 [ISOMETRIC]
+  [ ] compress character look direction and weapon state into single byte 
   [ ] modify selected object type
   [ ] merge interact logic into isometric collider
   [ ] implement isometric ability

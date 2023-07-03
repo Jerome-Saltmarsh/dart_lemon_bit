@@ -278,6 +278,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
+    player.lookAtMouse();
+
     if (mouseLeftDown) {
       player.setDestinationToMouse();
       player.runToDestinationEnabled = true;
@@ -861,13 +863,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.y + opp(angle, 70),
       character.z + Character_Gun_Height,
       angle,
-    );
-  }
-
-  void playerFaceMouse(IsometricPlayer player) {
-    player.faceXY(
-      player.mouseGridX,
-      player.mouseGridY,
     );
   }
 
@@ -1524,10 +1519,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!player.active) return;
 
     _updateIsometricPlayerAimTarget(player);
-
-    if (!player.deadOrBusy) {
-      player.lookRadian = player.mouseAngle;
-    }
 
     if (player.idling && !player.weaponStateBusy) {
       final diff = IsometricDirection.getDifference(
