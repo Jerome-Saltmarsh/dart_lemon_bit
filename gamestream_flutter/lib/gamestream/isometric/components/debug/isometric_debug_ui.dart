@@ -29,7 +29,7 @@ extension isometricDebugUI on IsometricDebug {
                         maxHeight: engine.screen.height - 150),
                     child: SingleChildScrollView(
                       child: switch (activeTab) {
-                        DebugTab.Character => buildTabCharacter(),
+                        DebugTab.Selected => buildTabSelected(),
                         DebugTab.Network => buildTabNetwork(),
                         DebugTab.Stats => buildTabStats(),
                         DebugTab.Lighting => buildTabLighting(),
@@ -56,55 +56,16 @@ extension isometricDebugUI on IsometricDebug {
       ))
   ).toList(growable: false));
 
-  Widget buildTabCharacter() =>
-      WatchBuilder(selectedCollider, (characterSelected) => !characterSelected ? buildText('None Selected') :
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            onPressed(
-              action: isometric.debugCharacterDebugUpdate,
-              child: buildText('DEBUG'), ),
-            height8,
-            onPressed(
-              action: isometric.camera.followTarget.toggle,
-              child: buildRowWatchBool(
-                text: 'camera-follow',
-                watch: isometric.camera.followTarget,
-              ),
-            ),
-            buildRowWatchString(text: 'runtime-type', watch: runTimeType),
-            buildRowWatchDouble(text: 'x', watch: x, ),
-            buildRowWatchDouble(text: 'y', watch: y),
-            buildRowWatchDouble(text: 'z', watch: z),
-            buildRowWatchInt(text: 'path-index', watch: pathIndex),
-            buildRowWatchInt(text: 'path-end', watch: pathEnd),
-            buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
-            buildRow(text: 'character-type', value: buildDropDownCharacterType()),
-            buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
-            buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
-            buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-            buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(WeaponType.getName(t)))),
-            buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
-            buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
-            buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
-            buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
-            onPressed(
-                action: isometric.debugCharacterToggleAutoAttack,
-                child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
-            ),
-            onPressed(
-                action: isometric.debugCharacterTogglePathFindingEnabled,
-                child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
-            ),
-            onPressed(
-                action: isometric.debugCharacterToggleRunToDestination,
-                child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
-            ),
-            buildTarget(),
-          ],
-        ),
-      ));
+  Widget buildTabSelected() => WatchBuilder(
+      selectedCollider,
+      (selectedCollider) => !selectedCollider
+          ? buildText('Nothing Selected')
+          : WatchBuilder(selectedColliderType,
+              (colliderType) => switch (colliderType) {
+                IsometricType.Character => buildSelectedColliderTypeCharacter(),
+                IsometricType.GameObject => buildSelectedColliderTypeGameObject(),
+                _ => nothing
+              }));
 
   Widget buildDropDownCharacterType() => buildWatch(
       isometric.debug.characterType,
@@ -368,4 +329,72 @@ extension isometricDebugUI on IsometricDebug {
 
     return WatchBuilder(targetSet, (targetSet) => targetSet ? columnSet : notSet);
   }
+
+  Widget buildSelectedColliderTypeCharacter() => SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        onPressed(
+          action: isometric.debugCharacterDebugUpdate,
+          child: buildText('DEBUG'), ),
+        height8,
+        onPressed(
+          action: isometric.camera.followTarget.toggle,
+          child: buildRowWatchBool(
+            text: 'camera-follow',
+            watch: isometric.camera.followTarget,
+          ),
+        ),
+        buildRowWatchString(text: 'runtime-type', watch: runTimeType),
+        buildRowWatchDouble(text: 'x', watch: x, ),
+        buildRowWatchDouble(text: 'y', watch: y),
+        buildRowWatchDouble(text: 'z', watch: z),
+        buildRowWatchInt(text: 'path-index', watch: pathIndex),
+        buildRowWatchInt(text: 'path-end', watch: pathEnd),
+        buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
+        buildRow(text: 'character-type', value: buildDropDownCharacterType()),
+        buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
+        buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
+        buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
+        buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(WeaponType.getName(t)))),
+        buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
+        buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
+        buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
+        buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
+        onPressed(
+            action: isometric.debugCharacterToggleAutoAttack,
+            child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
+        ),
+        onPressed(
+            action: isometric.debugCharacterTogglePathFindingEnabled,
+            child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
+        ),
+        onPressed(
+            action: isometric.debugCharacterToggleRunToDestination,
+            child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
+        ),
+        buildTarget(),
+      ],
+    ),
+  );
+
+  Widget buildSelectedColliderTypeGameObject() => SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        onPressed(
+          action: isometric.camera.followTarget.toggle,
+          child: buildRowWatchBool(
+            text: 'camera-follow',
+            watch: isometric.camera.followTarget,
+          ),
+        ),
+        buildRowWatchString(text: 'runtime-type', watch: runTimeType),
+        buildRowWatchDouble(text: 'x', watch: x, ),
+        buildRowWatchDouble(text: 'y', watch: y),
+        buildRowWatchDouble(text: 'z', watch: z),
+      ],
+    ),
+  );
 }
+

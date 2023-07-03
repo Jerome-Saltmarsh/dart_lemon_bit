@@ -9,7 +9,7 @@ import '../isometric_render.dart';
 
 class IsometricDebug {
   final enabled = WatchBool(false);
-  final tab = Watch(DebugTab.Character);
+  final tab = Watch(DebugTab.Selected);
   final character = IsometricCharacter();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
@@ -42,6 +42,7 @@ class IsometricDebug {
   final autoAttack = Watch(false);
   final pathFindingEnabled = Watch(false);
   final runToDestinationEnabled = Watch(false);
+  final selectedColliderType = Watch(-1);
 
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
