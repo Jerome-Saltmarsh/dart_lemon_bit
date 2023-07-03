@@ -45,18 +45,14 @@ class IsometricGameObject extends IsometricCollider {
     previousZ = z;
   }
 
-  // set type(int value) {
-  //    _type = value;
-  //    radius           = ObjectType.getRadius(value);
-  //    collectable      = false;
-  //    physical         = true;
-  //    fixed            = false;
-  //    hitable          = false;
-  //    persistable      = true;
-  //    interactable     = false;
-  //    bounce           = false;
-  //    gravity          = !fixed && physical;
-  // }
+  String get typeName => GameObjectType.getName(type);
+
+  String get subTypeName => GameObjectType.getNameSubType(type, subType);
+
+  @override
+  String toString() {
+    return '{type: $typeName, subType: $subTypeName, id: $id}';
+  }
 }
 
 

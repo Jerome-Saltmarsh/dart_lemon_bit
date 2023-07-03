@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
@@ -128,6 +129,9 @@ class Isometric {
 
   void debugCharacterDebugUpdate() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
+
+  void selectGameObject(IsometricGameObject gameObject) =>
+      sendIsometricRequest(IsometricRequest.Select_GameObject, '${gameObject.id}');
 
   void debugCharacterSetCharacterType(int characterType) =>
       sendIsometricRequest(

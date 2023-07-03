@@ -294,8 +294,11 @@ extension isometricDebugUI on IsometricDebug {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: gamestream.isometric.server.gameObjects
-              .map((e) => buildText(
-                  '${GameObjectType.getName(e.type)} - ${GameObjectType.getNameSubType(e.type, e.subType)}'))
+              .map((gameObject) => onPressed(
+                action: () => gamestream.isometric.selectGameObject(gameObject),
+                child: buildText(
+                    '${GameObjectType.getName(gameObject.type)} - ${GameObjectType.getNameSubType(gameObject.type, gameObject.subType)}'),
+              ))
               .toList(growable: false),
         ),
         seconds: 1,

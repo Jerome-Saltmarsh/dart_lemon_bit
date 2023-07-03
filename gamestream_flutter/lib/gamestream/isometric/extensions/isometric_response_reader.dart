@@ -34,6 +34,14 @@ extension IsometricResponseReader on Gamestream {
 
     final isometricType = readByte();
 
+    if (isometricType == IsometricType.GameObject) {
+      debug.runTimeType.value = readString();
+      debug.x.value = readDouble();
+      debug.y.value = readDouble();
+      debug.z.value = readDouble();
+      return;
+    }
+
     if (isometricType == IsometricType.Character){
       debug.runTimeType.value = readString();
       debug.x.value = readDouble();
