@@ -2,16 +2,13 @@
 
 import 'dart:ui';
 
-import 'package:bleed_common/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
-import 'package:gamestream_flutter/instances/engine.dart';
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'components/render/renderer_characters.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'classes/isometric_particles.dart';
 import 'components/render/renderer_gameobjects.dart';
@@ -19,6 +16,7 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 
 class Isometric {
+  final animation = GameAnimation();
   final debug = IsometricDebug();
   final client = IsometricClient();
   final server = IsometricServer();
@@ -75,16 +73,14 @@ class Isometric {
       sendClientRequestUpdate();
       return;
     }
-    particles.updateParticles();
     gamestream.audio.update();
-    gamestream.animation.updateAnimationFrame();
-    readPlayerInputEdit();
+    particles.updateParticles();
+    animation.updateAnimationFrame();
     server.updateProjectiles();
     server.updateGameObjects();
-    client.updateTorchEmissionIntensity();
-    client.updateParticleEmitters();
     client.update();
     player.updateMessageTimer();
+    readPlayerInputEdit();
     sendClientRequestUpdate();
   }
 

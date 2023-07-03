@@ -346,7 +346,7 @@ class IsometricRender {
   void renderStars(double x, double y) =>
       engine.renderSprite(
         image: Images.sprite_stars,
-        srcX: 125.0 * gamestream.animation.animationFrame16,
+        srcX: 125.0 * gamestream.isometric.animation.animationFrame16,
         srcY: 0,
         srcWidth: 125,
         srcHeight: 125,

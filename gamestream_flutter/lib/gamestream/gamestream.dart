@@ -26,7 +26,6 @@ class Gamestream with ByteReader {
   final bufferSizeTotal = Watch(0);
   final decoder = ZLibDecoder();
   final audio = GameAudio();
-  final animation = GameAnimation();
   final operationStatus = Watch(OperationStatus.None);
   final isometric = Isometric();
 

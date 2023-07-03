@@ -267,6 +267,9 @@ mixin class IsometricClient {
   // PROPERTIES
 
   void update(){
+    updateTorchEmissionIntensity();
+    updateParticleEmitters();
+
     interpolation_padding = ((gamestream.isometric.scene.interpolationLength + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {

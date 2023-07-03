@@ -54,7 +54,7 @@ class WebsiteGame extends Game {
 
   @override
   void update() {
-    gamestream.animation.updateAnimationFrame();
+    gamestream.isometric.animation.updateAnimationFrame();
   }
 
   onChangedVisitCount(int value){
