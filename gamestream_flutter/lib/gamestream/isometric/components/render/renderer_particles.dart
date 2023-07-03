@@ -8,11 +8,12 @@ import 'functions/render_shadow.dart';
 
 class RendererParticles extends IsometricRenderer {
 
-  static final particles = gamestream.isometric.particles.particles;
-  static late IsometricParticle particle;
-  static final screen = engine.screen;
+  final List<IsometricParticle> particles;
 
-  RendererParticles(super.scene);
+  late IsometricParticle particle;
+  final screen = engine.screen;
+
+  RendererParticles(super.scene, this.particles);
 
   @override
   void renderFunction() {

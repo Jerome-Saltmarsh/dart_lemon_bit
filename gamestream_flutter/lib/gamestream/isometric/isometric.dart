@@ -30,7 +30,7 @@ class Isometric {
   late final events = IsometricEvents(client, gamestream);
   late final renderer = IsometricRender(
     rendererGameObjects: RendererGameObjects(scene),
-    rendererParticles: RendererParticles(scene),
+    rendererParticles: RendererParticles(scene, particles.particles),
     rendererCharacters: RendererCharacters(scene),
     rendererNodes: RendererNodes(scene),
     rendererProjectiles: RendererProjectiles(scene),
