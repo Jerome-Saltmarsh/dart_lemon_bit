@@ -4,7 +4,6 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_percentage.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -132,7 +131,6 @@ extension isometricDebugUI on IsometricDebug {
                   'player-render: x: ${gamestream.isometric.player.position.renderX}, y: ${gamestream.isometric.player.position.renderY}\n'
                   'player-screen: x: ${gamestream.isometric.player.positionScreenX.toInt()}, y: ${gamestream.isometric.player.positionScreenY.toInt()}\n'
                   'player-index: z: ${gamestream.isometric.player.position.indexZ}, row: ${gamestream.isometric.player.position.indexRow}, column: ${gamestream.isometric.player.position.indexColumn}\n'
-                  'player-inside-island: ${RendererNodes.playerInsideIsland}\n'
                   'player-legs: ${LegType.getName(gamestream.isometric.player.legs.value)}\n'
                   'player-body: ${BodyType.getName(gamestream.isometric.player.body.value)}\n'
                   'player-head: ${HeadType.getName(gamestream.isometric.player.head.value)}\n'
@@ -150,7 +148,6 @@ extension isometricDebugUI on IsometricDebug {
                   'total-characters: ${gamestream.isometric.server.totalCharacters}\n'
                   'total-particles: ${gamestream.isometric.particles.particles.length}\n'
                   'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
-                  'offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}'
           )),
           buildWatch(gamestream.updateFrame, (t) => buildText('update-frame: $t')),
           buildWatch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText('interpolating: $interpolating', onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),

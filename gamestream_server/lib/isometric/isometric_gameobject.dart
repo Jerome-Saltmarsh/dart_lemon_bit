@@ -35,19 +35,17 @@ class IsometricGameObject extends IsometricCollider {
     synchronizePrevious();
   }
 
-  // int get type => _type;
-
   bool get positionDirty => x != previousX || y != previousY || z != previousZ;
+
+  String get typeName => GameObjectType.getName(type);
+
+  String get subTypeName => GameObjectType.getNameSubType(type, subType);
 
   void synchronizePrevious(){
     previousX = x;
     previousY = y;
     previousZ = z;
   }
-
-  String get typeName => GameObjectType.getName(type);
-
-  String get subTypeName => GameObjectType.getNameSubType(type, subType);
 
   @override
   String toString() {

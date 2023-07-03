@@ -106,7 +106,7 @@ class IsometricScene {
   }
 
   bool isPerceptiblePosition(IsometricPosition position) {
-    if (!RendererNodes.playerInsideIsland)
+    if (!gamestream.isometric.player.playerInsideIsland)
       return true;
     if (outOfBoundsPosition(position))
       return false;
@@ -114,14 +114,14 @@ class IsometricScene {
     final index = getIndexPosition(position);
     final indexRow = getIndexRow(index);
     final indexColumn = getIndexRow(index);
-    final i = indexRow * gamestream.isometric.scene.totalColumns + indexColumn;
-    if (!RendererNodes.island[i])
+    final i = indexRow * totalColumns + indexColumn;
+    if (!gamestream.isometric.renderer.rendererNodes.island[i])
       return true;
     final indexZ = getIndexZ(index);
     if (indexZ > gamestream.isometric.player.indexZ + 2)
       return false;
 
-    return RendererNodes.visible3D[index];
+    return gamestream.isometric.renderer.rendererNodes.visible3D[index];
   }
 
   int getHeightAt(int row, int column){

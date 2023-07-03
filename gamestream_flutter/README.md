@@ -13,25 +13,28 @@ alt + m             : go to declaration
 [CLIENT]
   [ ] remove lemon engine global instance
   [ ] remove gamestream global instance
-  [ ] remove static instances
+  [ ] remove all static instances
 
 [ISOMETRIC]
-  [x] refactor item type
-  [x] remove character template class
-  [x] pathfinding 3d
-  [x] refactor flutter isometric position 
+  [ ] modify selected object type
   [ ] merge interact logic into isometric collider
   [ ] implement isometric ability
-  [ ] 3d model alien creature
+  [ ] character type alien slug
   [ ] destructable structures
+  [ ] gameobject health
 
-[CAPTURE THE FLAG]
-  [ ] destroyable terrain
-  [ ] power strong arrow
-  [ ] power silence
-  [ ] capture the flag player slowable
+[MOBA]
+  [ ] npc store
+  [ ] character items
+  [ ] character selection
+  [ ] character abilities
+  [ ] character gold
 
 [COMPLETED]
+[x] refactor item type
+[x] remove character template class
+[x] pathfinding 3d
+[x] refactor flutter isometric position
 [x] implement pathfinding for isometric zombie
 [x] improved pathfinding and removed recursion
 [x] separate flag spawn location

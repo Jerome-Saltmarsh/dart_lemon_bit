@@ -6,6 +6,7 @@ import '../enums/game_dialog.dart';
 import '../classes/isometric_position.dart';
 
 class IsometricPlayer {
+  var playerInsideIsland = false;
   var energyPercentage = 0.0;
   var runningToTarget = false;
   var targetCategory = TargetCategory.Nothing;

@@ -10,97 +10,96 @@ import 'package:gamestream_flutter/library.dart';
 class RendererNodes extends IsometricRenderer {
 
   // VARIABLES
-  static var previousVisibility = 0;
+  var previousVisibility = 0;
 
-  static final bufferClr = engine.bufferClr;
-  static final bufferSrc = engine.bufferSrc;
-  static final bufferDst = engine.bufferDst;
-  static final atlas_nodes = Images.atlas_nodes;
+  final bufferClr = engine.bufferClr;
+  final bufferSrc = engine.bufferSrc;
+  final bufferDst = engine.bufferDst;
+  final atlas_nodes = Images.atlas_nodes;
 
-  static var playerRenderRow = 0;
-  static var playerRenderColumn = 0;
+  var playerRenderRow = 0;
+  var playerRenderColumn = 0;
 
-  static var indexShow = 0;
-  static var indexRow = 0;
-  static var indexColumn = 0;
-  static var indexZ = 0;
-  static var nodesStartRow = 0;
-  static var nodeStartColumn = 0;
-  static var nodesMaxZ = 0;
-  static var nodesMinZ = 0;
-  static var currentNodeZ = 0;
-  static var row = 0;
-  static var column = 0;
-  static var currentNodeDstX = 0.0;
-  static var currentNodeDstY = 0.0;
-  static var currentNodeIndex = 0;
-  static var currentNodeType = 0;
+  var indexShow = 0;
+  var indexRow = 0;
+  var indexColumn = 0;
+  var indexZ = 0;
+  var nodesStartRow = 0;
+  var nodeStartColumn = 0;
+  var nodesMaxZ = 0;
+  var nodesMinZ = 0;
+  var currentNodeZ = 0;
+  var row = 0;
+  var column = 0;
+  var currentNodeDstX = 0.0;
+  var currentNodeDstY = 0.0;
+  var currentNodeIndex = 0;
+  var currentNodeType = 0;
 
-  static var offscreenNodesTop = 0;
-  static var offscreenNodesRight = 0;
-  static var offscreenNodesBottom = 0;
-  static var offscreenNodesLeft = 0;
+  var offscreenNodesTop = 0;
+  var offscreenNodesRight = 0;
+  var offscreenNodesBottom = 0;
+  var offscreenNodesLeft = 0;
 
-  static var onscreenNodes = 0;
-  static var offscreenNodes = 0;
+  var onscreenNodes = 0;
+  var offscreenNodes = 0;
 
-  static var nodesRowsMax = 0;
-  static var nodesShiftIndex = 0;
-  static var nodesScreenTopLeftRow = 0;
-  static var nodesScreenBottomRightRow = 0;
-  static var nodesGridTotalColumnsMinusOne = 0;
-  static var nodesGridTotalZMinusOne = 0;
-  static var nodesPlayerColumnRow = 0;
-  static var playerProjection = 0;
+  var nodesRowsMax = 0;
+  var nodesShiftIndex = 0;
+  var nodesScreenTopLeftRow = 0;
+  var nodesScreenBottomRightRow = 0;
+  var nodesGridTotalColumnsMinusOne = 0;
+  var nodesGridTotalZMinusOne = 0;
+  var nodesPlayerColumnRow = 0;
+  var playerProjection = 0;
 
-  static var playerZ = 0;
-  static var playerRow = 0;
-  static var playerColumn = 0;
+  var playerZ = 0;
+  var playerRow = 0;
+  var playerColumn = 0;
 
-  static var screenTop = 0.0;
-  static var screenRight = 0.0;
-  static var screenBottom = 0.0;
-  static var screenLeft = 0.0;
+  var screenTop = 0.0;
+  var screenRight = 0.0;
+  var screenBottom = 0.0;
+  var screenLeft = 0.0;
 
-  static var nodeTypes = gamestream.isometric.scene.nodeTypes;
-  static var nodeOrientations = gamestream.isometric.scene.nodeOrientations;
+  var nodeTypes = gamestream.isometric.scene.nodeTypes;
+  var nodeOrientations = gamestream.isometric.scene.nodeOrientations;
 
-  static var visited2DStack = Uint16List(0);
-  static var visited2DStackIndex = 0;
-  static var visited2D = <bool>[];
-  static var island = <bool>[];
-  static var zMin = 0;
-  static var playerInsideIsland = false;
-  static var visible3D = <bool>[];
-  static var visible3DStack = Uint16List(10000);
-  static var visible3DIndex = 0;
-  static var playerIndex = 0;
-  static var transparencyGrid = <bool>[];
-  static var transparencyGridStack = Uint16List(0);
-  static var transparencyGridStackIndex = 0;
+  var visited2DStack = Uint16List(0);
+  var visited2DStackIndex = 0;
+  var visited2D = <bool>[];
+  var island = <bool>[];
+  var zMin = 0;
+  var visible3D = <bool>[];
+  var visible3DStack = Uint16List(10000);
+  var visible3DIndex = 0;
+  var playerIndex = 0;
+  var transparencyGrid = <bool>[];
+  var transparencyGridStack = Uint16List(0);
+  var transparencyGridStackIndex = 0;
 
   RendererNodes(super.scene);
 
   // GETTERS
-  static double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
-  static int get currentNodeColor => gamestream.isometric.scene.nodeColors[currentNodeIndex];
-  static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get currentNodeWind => gamestream.isometric.server.windTypeAmbient.value;
-  static int get currentNodeVariation => gamestream.isometric.scene.nodeVariations[currentNodeIndex];
-  static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get renderNodeWind => gamestream.isometric.server.windTypeAmbient.value;
-  static int get renderNodeVariation => gamestream.isometric.scene.nodeVariations[currentNodeIndex];
-  static int get renderNodeBelowIndex => currentNodeIndex - gamestream.isometric.scene.area;
-  static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? gamestream.isometric.scene.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
-  static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - gamestream.isometric.scene.area);
+  double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
+  int get currentNodeColor => gamestream.isometric.scene.nodeColors[currentNodeIndex];
+  int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
+  int get currentNodeWind => gamestream.isometric.server.windTypeAmbient.value;
+  int get currentNodeVariation => gamestream.isometric.scene.nodeVariations[currentNodeIndex];
+  int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
+  int get renderNodeWind => gamestream.isometric.server.windTypeAmbient.value;
+  int get renderNodeVariation => gamestream.isometric.scene.nodeVariations[currentNodeIndex];
+  int get renderNodeBelowIndex => currentNodeIndex - gamestream.isometric.scene.area;
+  int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? gamestream.isometric.scene.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+  int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - gamestream.isometric.scene.area);
 
-  static int getNodeColorAtIndex(int index){
+  int getNodeColorAtIndex(int index){
     if (index < 0) return gamestream.isometric.scene.ambientColor;
     if (index >= gamestream.isometric.scene.total) return gamestream.isometric.scene.ambientColor;
     return gamestream.isometric.scene.nodeColors[index];
   }
 
-  static var currentNodeWithinIsland = false;
+  var currentNodeWithinIsland = false;
 
   // METHODS
 
@@ -115,7 +114,7 @@ class RendererNodes extends IsometricRenderer {
       currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
 
-        if (!playerInsideIsland){
+        if (!gamestream.isometric.player.playerInsideIsland){
           renderCurrentNode();
         } else {
           currentNodeWithinIsland = island[row * gamestream.isometric.scene.totalColumns + column];
@@ -183,7 +182,7 @@ class RendererNodes extends IsometricRenderer {
     orderRowColumn = (row + column).toDouble() - 0.5;
   }
 
-  static int getIndex(int row, int column, int z){
+  int getIndex(int row, int column, int z){
     return (row * gamestream.isometric.scene.totalColumns) + column + (z * gamestream.isometric.scene.area);
   }
 
@@ -268,7 +267,7 @@ class RendererNodes extends IsometricRenderer {
     // highlightCharacterNearMouse();
   }
 
-  static void updateTransparencyGrid() {
+  void updateTransparencyGrid() {
 
     if (transparencyGrid.length != gamestream.isometric.scene.projection) {
       transparencyGrid = List.generate(gamestream.isometric.scene.projection, (index) => false, growable: false);
@@ -303,7 +302,7 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  static void updateHeightMapPerception() {
+  void updateHeightMapPerception() {
 
     if (visible3D.length != gamestream.isometric.scene.total) {
       visible3D = List.generate(gamestream.isometric.scene.total, (index) => false);
@@ -333,14 +332,13 @@ class RendererNodes extends IsometricRenderer {
 
     if (gamestream.isometric.player.indexZ <= 0) {
       zMin = 0;
-      playerInsideIsland = false;
+      gamestream.isometric.player.playerInsideIsland = false;
       return;
     }
 
+    gamestream.isometric.player.playerInsideIsland = gamestream.isometric.player.indexZ < height;
 
-    playerInsideIsland = gamestream.isometric.player.indexZ < height;
-
-    if (!playerInsideIsland) {
+    if (!gamestream.isometric.player.playerInsideIsland) {
       ensureIndexPerceptible(gamestream.isometric.player.nodeIndex);
     }
 
@@ -352,7 +350,7 @@ class RendererNodes extends IsometricRenderer {
     visit2D(gamestream.isometric.player.areaNodeIndex);
   }
 
-  static void ensureIndexPerceptible(int index){
+  void ensureIndexPerceptible(int index){
     var projectionRow     = gamestream.isometric.scene.getIndexRow(index);
     var projectionColumn  = gamestream.isometric.scene.getIndexColumn(index);
     var projectionZ       = gamestream.isometric.scene.getIndexZ(index);
@@ -368,20 +366,20 @@ class RendererNodes extends IsometricRenderer {
           (projectionRow * gamestream.isometric.scene.totalColumns) + projectionColumn;
       final projectionHeight = gamestream.isometric.scene.heightMap[projectionIndex];
       if (projectionZ > projectionHeight) continue;
-      playerInsideIsland = true;
+      gamestream.isometric.player.playerInsideIsland = true;
       zMin = max(gamestream.isometric.player.indexZ - 1, 0);
       visit2D(projectionIndex);
       return;
     }
   }
 
-  static void addVisible3D(int i){
+  void addVisible3D(int i){
     visible3D[i] = true;
     visible3DStack[visible3DIndex] = i;
     visible3DIndex++;
   }
 
-  static void visit2D(int i) {
+  void visit2D(int i) {
      if (visited2D[i]) return;
      visited2D[i] = true;
      visited2DStack[visited2DStackIndex] = i;
@@ -447,11 +445,11 @@ class RendererNodes extends IsometricRenderer {
      }
   }
 
-  static int getProjectionIndex(int index){
+  int getProjectionIndex(int index){
     return index % gamestream.isometric.scene.projection;
   }
 
-  static bool nodeTypeBlocks(int nodeType){
+  bool nodeTypeBlocks(int nodeType){
     if (nodeType == NodeType.Window) return false;
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
@@ -459,7 +457,7 @@ class RendererNodes extends IsometricRenderer {
     return true;
   }
 
-  static bool blocksBeamHorizontal(int index, int dirRow, int dirColumn){
+  bool blocksBeamHorizontal(int index, int dirRow, int dirColumn){
     assert (dirRow == 0 || dirColumn == 0);
     final nodeOrientation = gamestream.isometric.scene.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
@@ -485,7 +483,7 @@ class RendererNodes extends IsometricRenderer {
     return true;
   }
 
-  static bool blocksBeamVertical(int index){
+  bool blocksBeamVertical(int index){
     final nodeOrientation = gamestream.isometric.scene.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (NodeOrientation.isHalf(nodeOrientation)) return false;
@@ -495,7 +493,7 @@ class RendererNodes extends IsometricRenderer {
     return true;
   }
 
-  static void trimLeft(){
+  void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
     final maxRow = gamestream.isometric.scene.totalRows - 1;
     while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
@@ -506,7 +504,7 @@ class RendererNodes extends IsometricRenderer {
     nodesSetStart();
   }
 
-  static void nodesSetStart(){
+  void nodesSetStart(){
     nodesStartRow = clamp(row, 0, gamestream.isometric.scene.totalRows - 1);
     nodeStartColumn = clamp(column, 0, gamestream.isometric.scene.totalColumns - 1);
 
@@ -516,7 +514,7 @@ class RendererNodes extends IsometricRenderer {
     assert (nodeStartColumn < gamestream.isometric.scene.totalColumns);
   }
 
-  static void nodesShiftIndexDown(){
+  void nodesShiftIndexDown(){
 
     column = row + column + 1;
     row = 0;
@@ -536,7 +534,7 @@ class RendererNodes extends IsometricRenderer {
     nodesSetStart();
   }
 
-  static void nodesCalculateMinMaxZ(){
+  void nodesCalculateMinMaxZ(){
     final bottom = (row + column) * Node_Size_Half;
     final distance =  bottom - screenTop;
     nodesMaxZ = (distance ~/ Node_Height); // TODO optimize
@@ -560,7 +558,7 @@ class RendererNodes extends IsometricRenderer {
 
 
 
-  static void nodesTrimTop() {
+  void nodesTrimTop() {
     // TODO optimize
     while (currentNodeRenderY < screenTop){
       nodesShiftIndexDown();
@@ -569,7 +567,7 @@ class RendererNodes extends IsometricRenderer {
     nodesSetStart();
   }
 
-  static void renderNodeTorch(){
+  void renderNodeTorch(){
     if (renderNodeWind == WindType.Calm){
       engine.renderSprite(
         image: Images.atlas_nodes,
@@ -598,7 +596,7 @@ class RendererNodes extends IsometricRenderer {
     return;
   }
 
-  static bool assertOnScreen(){
+  bool assertOnScreen(){
     if (!gamestream.isometric.client.debugMode.value) return true;
     if (currentNodeDstX < screenLeft){
       offscreenNodesLeft++;
@@ -620,7 +618,7 @@ class RendererNodes extends IsometricRenderer {
     return true;
   }
 
-  static bool get currentNodeTransparent {
+  bool get currentNodeTransparent {
     // if (currentNodeWithinIsland) {
     //   if (currentNodeZ >= playerZ + 2) {
     //     return true;
@@ -642,7 +640,7 @@ class RendererNodes extends IsometricRenderer {
     return row >= playerRow && column >= playerColumn;
   }
 
-  static void renderCurrentNode() {
+  void renderCurrentNode() {
 
     if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
 
@@ -806,7 +804,7 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  static void renderNodeShoppingShelf() {
+  void renderNodeShoppingShelf() {
      if (currentNodeVariation == 0){
       renderStandardNode(
         srcX: 1392,
@@ -820,14 +818,14 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  static void renderNodeBookShelf() {
+  void renderNodeBookShelf() {
     renderStandardNode(
       srcX: 1392,
       srcY: 233,
     );
   }
 
-  static void renderNodeGrass() {
+  void renderNodeGrass() {
     if (currentNodeOrientation == NodeOrientation.Solid){
       final variation = currentNodeVariation;
       if (variation == 0) {
@@ -862,7 +860,7 @@ class RendererNodes extends IsometricRenderer {
     renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_3);
   }
 
-  static void renderNodeGrassLong() {
+  void renderNodeGrassLong() {
     if (currentNodeOrientation == NodeOrientation.Destroyed) return;
     switch (currentNodeWind) {
       case WindType.Calm:
@@ -880,7 +878,7 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  static void renderNodeRainLanding() {
+  void renderNodeRainLanding() {
     if (currentNodeIndex > gamestream.isometric.scene.area && nodeTypes[currentNodeIndex - gamestream.isometric.scene.area] == NodeType.Water){
       engine.renderSprite(
         image: Images.atlas_nodes,
@@ -901,18 +899,18 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  static void renderNodeRainFalling() {
+  void renderNodeRainFalling() {
     renderStandardNode(
       srcX: gamestream.isometric.client.srcXRainFalling,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }
 
-  static void renderTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderTreeTopOak();
+  void renderTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderTreeTopOak();
 
-  static void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
+  void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
-  static void renderTreeTopOak(){
+  void renderTreeTopOak(){
     var shift = GameAnimation.treeAnimation[((row - column) + gamestream.animation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     engine.renderSprite(
       image: Images.atlas_nodes,
@@ -928,7 +926,7 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  static void renderTreeTopPine() {
+  void renderTreeTopPine() {
     var shift = GameAnimation.treeAnimation[((row - column) + gamestream.animation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     engine.renderSprite(
       image: Images.atlas_nodes,
@@ -944,7 +942,7 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  static void renderTreeBottomOak() {
+  void renderTreeBottomOak() {
     engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
@@ -958,7 +956,7 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  static void renderTreeBottomPine() {
+  void renderTreeBottomPine() {
     engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: 1216,
@@ -973,7 +971,7 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  static void renderNodeTemplateShadedOffset(double srcX, {double offsetX = 0, double offsetY = 0}) {
+  void renderNodeTemplateShadedOffset(double srcX, {double offsetX = 0, double offsetY = 0}) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
         renderNodeShadedOffset(
@@ -1279,7 +1277,7 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  static void renderNodeTemplateShaded(double srcX) {
+  void renderNodeTemplateShaded(double srcX) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNode(
@@ -1557,7 +1555,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
 
-  static void renderNodeWindow(){
+  void renderNodeWindow(){
     const srcX = 1508.0;
     switch (renderNodeOrientation) {
       case NodeOrientation.Half_North:
@@ -1597,7 +1595,7 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  static void renderNodeDust() =>
+  void renderNodeDust() =>
       engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: 1552,
@@ -1610,7 +1608,7 @@ class RendererNodes extends IsometricRenderer {
         color: currentNodeColor,
       );
 
-  static void renderNodeWater() =>
+  void renderNodeWater() =>
       engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: AtlasNodeX.Water,
@@ -1623,7 +1621,7 @@ class RendererNodes extends IsometricRenderer {
         color: currentNodeColor,
       );
 
-  static void renderStandardNode({
+  void renderStandardNode({
     required double srcX,
     required double srcY,
   }){
@@ -1641,7 +1639,7 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  static void renderNodeShadedOffset({
+  void renderNodeShadedOffset({
     required double srcX,
     required double srcY,
     required double offsetX,
@@ -1661,7 +1659,7 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  static void renderNodeShadedCustom({
+  void renderNodeShadedCustom({
     required double srcX,
     required double srcY,
     required double offsetX,

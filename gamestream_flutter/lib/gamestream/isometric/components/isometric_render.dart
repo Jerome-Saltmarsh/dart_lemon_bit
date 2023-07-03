@@ -434,24 +434,24 @@ class IsometricRender {
     }
   }
 
-  void debugRenderIsland() {
-    var i = 0;
-    for (var row = 0; row < gamestream.isometric.scene.totalRows; row++){
-      for (var column = 0; column < gamestream.isometric.scene.totalColumns; column++){
-        if (!RendererNodes.island[i]) {
-          i++;
-          continue;
-        }
-        gamestream.isometric.renderer.renderTextXYZ(
-          x: row * Node_Size,
-          y: column * Node_Size,
-          z: 5,
-          text: RendererNodes.island[i].toString(),
-        );
-        i++;
-      }
-    }
-  }
+  // void debugRenderIsland() {
+  //   var i = 0;
+  //   for (var row = 0; row < gamestream.isometric.scene.totalRows; row++){
+  //     for (var column = 0; column < gamestream.isometric.scene.totalColumns; column++){
+  //       if (!RendererNodes.island[i]) {
+  //         i++;
+  //         continue;
+  //       }
+  //       gamestream.isometric.renderer.renderTextXYZ(
+  //         x: row * Node_Size,
+  //         y: column * Node_Size,
+  //         z: 5,
+  //         text: RendererNodes.island[i].toString(),
+  //       );
+  //       i++;
+  //     }
+  //   }
+  // }
 
 
   void renderObjectRadius() {
