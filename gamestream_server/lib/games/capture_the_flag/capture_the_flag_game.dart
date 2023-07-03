@@ -170,46 +170,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   int countPlayersOnTeam(int team) =>
       players.where((player) => player.team == team).length;
 
-  @override
-  void onPlayerUpdateRequestReceived({
-      required CaptureTheFlagPlayer player,
-      required int direction,
-      required bool mouseLeftDown,
-      required bool mouseRightDown,
-      required bool keySpaceDown,
-      required bool inputTypeKeyboard}) {
-
-    if (player.deadOrBusy) return;
-    if (!player.active) return;
-
-    if (mouseLeftDown) {
-      if (!player.ignoreMouseLeftClick){
-        final powerActivated = player.powerActivated.value;
-        if (powerActivated == null){
-          characterUseWeapon(player);
-        } else {
-          player.ignoreMouseLeftClick = true;
-          if (player.canPerformActivatedPower) {
-            player.performActivatedPower();
-          }
-        }
-      }
-    } else if (player.ignoreMouseLeftClick){
-      player.ignoreMouseLeftClick = false;
-    }
-
-    if (mouseRightDown) {
-      if (player.canDeselectActivatedPower) {
-        player.deselectActivatedPower();
-      } else {
-        player.selectNearestColliderToMouse();
-      }
-    }
-
-    characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
-
-  }
-
   void playerUsePower(CaptureTheFlagPlayer player, CaptureTheFlagPower power) {
 
     switch (power.type) {

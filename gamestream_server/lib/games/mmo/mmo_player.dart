@@ -38,39 +38,36 @@ class MmoPlayer extends IsometricPlayer {
     return TargetCategory.Run;
   }
 
-  @override
-  void onMouseLeftClicked() {
-    final debugCharacter = this.selectedCollider;
-    if (debugCharacter is IsometricCharacter) {
-      debugCharacter.clearTarget();
-      debugCharacter.pathTargetIndex = scene.findEmptyIndex(mouseIndex);
-      return;
-    }
-
-    if (aimTarget == null) {
-      clearTarget();
-      clearPath();
-      setDestinationToMouse();
-    } else {
-      setTargetToAimTarget();
-    }
-  }
+  // @override
+  // void onMouseLeftClicked() {
+  //   final debugCharacter = this.selectedCollider;
+  //   if (debugCharacter is IsometricCharacter) {
+  //     debugCharacter.clearTarget();
+  //     debugCharacter.pathTargetIndex = scene.findEmptyIndex(mouseIndex);
+  //     return;
+  //   }
+  //
+  //   if (aimTarget == null) {
+  //     clearTarget();
+  //     clearPath();
+  //     setDestinationToMouse();
+  //   } else {
+  //     setTargetToAimTarget();
+  //   }
+  // }
 
   void setDestinationRadiusToDestinationRadiusInteract() {
     destinationRadius = Destination_Radius_Interact;
   }
-
-  @override
-  void onMouseLeftHeld() {
-    onMouseLeftClicked();
-  }
+  //
+  // @override
+  // void onMouseLeftHeld() {
+  //   onMouseLeftClicked();
+  // }
 
   @override
   void customOnUpdate() {
-    updateDestination();
-    updateDestinationRadius();
     updateInteracting();
-    updateCharacterState();
   }
 
   void updateInteracting() {
@@ -96,40 +93,6 @@ class MmoPlayer extends IsometricPlayer {
 
     interact(this);
     interacting = true;
-  }
-
-  void updateDestination(){
-    if (target != null) {
-      setDestinationToTarget();
-    }
-  }
-
-  void updateDestinationRadius(){
-     if (targetIsNull) {
-       setDestinationRadiusToDestinationRadiusRun();
-       return;
-     }
-     if (targetIsAlly){
-       setDestinationRadiusToDestinationRadiusInteract();
-       return;
-     }
-  }
-
-  void setDestinationRadiusToDestinationRadiusRun() {
-    destinationRadius = Destination_Radius_Run;
-  }
-
-  void updateCharacterState() {
-    if (destinationWithinDestinationRadius) {
-      setCharacterStateIdle();
-    } else {
-      runToDestination();
-    }
-  }
-
-  void runToTarget() {
-    setDestinationToTarget();
-    runToDestination();
   }
 
   bool get targetWithinInteractRadius => targetWithinRadius(Destination_Radius_Interact);

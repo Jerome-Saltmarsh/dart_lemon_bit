@@ -266,22 +266,32 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       );
 
   /// @inputTypeKeyboard keyboard = true, touchscreen = false
+  @override
   void onPlayerUpdateRequestReceived({
     required T player,
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,
     required bool keySpaceDown,
-    required bool inputTypeKeyboard,
-  }) {
-    if (player.deadOrBusy) return;
+    required bool inputTypeKeyboard}) {
 
-    if (inputTypeKeyboard) {
+    if (player.deadOrBusy) return;
+    if (!player.active) return;
+
+    if (mouseRightDown){
+      player.selectNearestColliderToMouse();
+    }
+
+    if (mouseLeftDown) {
+      player.setDestinationToMouse();
+      player.runToDestinationEnabled = true;
+    }
+
+    if (direction != IsometricDirection.None){
+      player.runToDestinationEnabled = false;
       characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
-    } else {
-      if (mouseLeftDown) {
-        player.setDestinationToMouse();
-      }
+    } else if (!player.runToDestinationEnabled){
+      player.setCharacterStateIdle();
     }
   }
 
