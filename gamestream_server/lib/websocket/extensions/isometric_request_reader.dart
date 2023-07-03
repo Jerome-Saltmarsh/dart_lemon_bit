@@ -176,6 +176,10 @@ extension IsometricRequestReader on WebSocketConnection {
         }
         player.selectedCollider = gameObject;
         break;
+
+      case IsometricRequest.Debug_Select:
+        player.selectNearestColliderToMouse();
+        break;
     }
   }
 

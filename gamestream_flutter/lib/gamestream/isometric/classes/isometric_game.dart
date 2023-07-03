@@ -96,6 +96,9 @@ class IsometricGame extends Game {
     if (isometric.client.edit.value) {
       isometric.editor.onMouseLeftClicked();
     }
+    if (isometric.debug.enabled.value){
+       isometric.debugSelect();
+    }
   }
 
   @override

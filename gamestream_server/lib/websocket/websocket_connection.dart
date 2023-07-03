@@ -74,12 +74,10 @@ class WebSocketConnection with ByteReader {
       values = args;
       switch (readByte()) {
         case ClientRequest.Update:
-          handleClientRequestUpdate(args);
+          handleClientRequestUpdate(args, debug: false);
           return;
         case ClientRequest.Debugging:
-          final player = this.player;
-          if (player == null) return;
-          player.framesSinceClientRequest = 0;
+          handleClientRequestUpdate(args, debug: true);
           return;
         default:
           break;
@@ -591,11 +589,10 @@ class WebSocketConnection with ByteReader {
     }
   }
 
-  void handleClientRequestUpdate(Uint8List args) {
+  void handleClientRequestUpdate(Uint8List args, {required bool debug}) {
     final player = _player;
 
     if (player == null) return errorPlayerNotFound();
-
 
     final hex = readByte();
 
@@ -617,6 +614,7 @@ class WebSocketConnection with ByteReader {
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
     player.mouseLeftDown = mouseDownLeft;
 
+    if (debug) return;
     player.game.onPlayerUpdateRequestReceived(
       player: player,
       direction: direction,

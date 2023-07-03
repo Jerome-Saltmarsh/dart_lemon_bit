@@ -278,10 +278,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
-    if (mouseRightDown){
-      player.selectNearestColliderToMouse();
-    }
-
     if (mouseLeftDown) {
       player.setDestinationToMouse();
       player.runToDestinationEnabled = true;

@@ -70,6 +70,7 @@ class Isometric {
   
   void update(){
     if (!server.gameRunning.value) {
+      gamestream.io.writeByte(ClientRequest.Update);
       gamestream.io.applyKeyboardInputToUpdateBuffer();
       gamestream.io.sendUpdateBuffer();
       return;
@@ -85,8 +86,10 @@ class Isometric {
 
     if (debug.enabled.value) {
       gamestream.io.writeByte(ClientRequest.Debugging);
+      gamestream.io.applyKeyboardInputToUpdateBuffer();
       gamestream.io.sendUpdateBuffer();
     } else {
+      gamestream.io.writeByte(ClientRequest.Update);
       gamestream.io.applyKeyboardInputToUpdateBuffer();
       gamestream.io.sendUpdateBuffer();
     }
@@ -157,6 +160,9 @@ class Isometric {
           IsometricRequest.Debug_Character_Set_Character_Type,
           characterType,
       );
+
+  void debugSelect() =>
+      sendIsometricRequest(IsometricRequest.Debug_Select);
 
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(

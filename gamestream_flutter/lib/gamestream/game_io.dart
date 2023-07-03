@@ -170,8 +170,6 @@ class GameIO with ByteWriter {
   /// [6] Shift
   /// [7] Space
   void applyKeyboardInputToUpdateBuffer() {
-    clear();
-    writeByte(ClientRequest.Update);
     writeByte(gamestream.io.getInputAsByte());
     writeInt16(engine.mouseWorldX.toInt());
     writeInt16(engine.mouseWorldY.toInt());

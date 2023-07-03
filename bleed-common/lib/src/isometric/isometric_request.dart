@@ -16,5 +16,6 @@ enum IsometricRequest {
    Debug_Character_Toggle_Run_To_Destination,
    Debug_Character_Debug_Update,
    Debug_Character_Set_Character_Type,
+   Debug_Select,
    Select_GameObject,
 }
