@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ren
 import 'package:gamestream_flutter/library.dart';
 
 import '../classes/isometric_position.dart';
-import 'render/renderer_nodes.dart';
 
 class IsometricScene {
 

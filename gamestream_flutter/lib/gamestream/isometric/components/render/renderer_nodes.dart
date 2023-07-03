@@ -74,10 +74,9 @@ class RendererNodes extends IsometricRenderer {
   var transparencyGrid = <bool>[];
   var transparencyGridStack = Uint16List(0);
   var transparencyGridStackIndex = 0;
+  var currentNodeWithinIsland = false;
 
-  RendererNodes(super.scene) {
-
-  }
+  RendererNodes(super.scene);
 
   // GETTERS
   double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
@@ -98,22 +97,21 @@ class RendererNodes extends IsometricRenderer {
     return scene.nodeColors[index];
   }
 
-  var currentNodeWithinIsland = false;
-
-  // METHODS
-
   @override
   void renderFunction() {
     engine.bufferImage = atlas_nodes;
+
+    final playerInsideIsland = gamestream.isometric.player.playerInsideIsland;
+    final nodeTypes = scene.nodeTypes;
+
     while (
         column >= 0            &&
         row    <= nodesRowsMax &&
         currentNodeDstX   <= screenRight
     ){
-      currentNodeType = scene.nodeTypes[currentNodeIndex];
+      currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
-
-        if (!gamestream.isometric.player.playerInsideIsland){
+        if (!playerInsideIsland){
           renderCurrentNode();
         } else {
           currentNodeWithinIsland = island[row * scene.totalColumns + column];
@@ -135,7 +133,6 @@ class RendererNodes extends IsometricRenderer {
 
   @override
   void updateFunction() {
-    final nodes = gamestream.isometric.scene;
     currentNodeZ++;
     if (currentNodeZ > nodesMaxZ) {
       currentNodeZ = 0;
@@ -146,8 +143,8 @@ class RendererNodes extends IsometricRenderer {
 
       assert (column >= 0);
       assert (row >= 0);
-      assert (row < nodes.totalRows);
-      assert (column < nodes.totalColumns);
+      assert (row < scene.totalRows);
+      assert (column < scene.totalColumns);
 
       trimLeft();
 
@@ -159,24 +156,24 @@ class RendererNodes extends IsometricRenderer {
         }
       }
     } else {
-      assert (nodesStartRow < nodes.totalRows);
-      assert (column < nodes.totalColumns);
+      assert (nodesStartRow < scene.totalRows);
+      assert (column < scene.totalColumns);
       row = nodesStartRow;
       column = nodeStartColumn;
     }
 
-    currentNodeIndex = (currentNodeZ * nodes.area) + (row * nodes.totalColumns) + column;
+    currentNodeIndex = (currentNodeZ * scene.area) + (row * scene.totalColumns) + column;
     assert (currentNodeZ >= 0);
     assert (row >= 0);
     assert (column >= 0);
     assert (currentNodeIndex >= 0);
-    assert (currentNodeZ < nodes.totalZ);
-    assert (row < nodes.totalRows);
-    assert (column < nodes.totalColumns);
-    assert (currentNodeIndex < nodes.total);
+    assert (currentNodeZ < scene.totalZ);
+    assert (row < scene.totalRows);
+    assert (column < scene.totalColumns);
+    assert (currentNodeIndex < scene.total);
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeType = nodes.nodeTypes[currentNodeIndex];
+    currentNodeType = scene.nodeTypes[currentNodeIndex];
     orderZ = currentNodeZ;
     orderRowColumn = (row + column).toDouble() - 0.5;
   }
