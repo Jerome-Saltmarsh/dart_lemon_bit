@@ -205,7 +205,6 @@ mixin class IsometricClient {
     gamestream.isometric.server.interactMode.value = InteractMode.None;
     gamestream.isometric.particles.particles.clear();
     engine.zoom = 1;
-    engine.redrawCanvas();
   }
 
   int get bodyPartDuration =>  randomInt(120, 200);

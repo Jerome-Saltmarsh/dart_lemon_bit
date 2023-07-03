@@ -247,7 +247,22 @@ extension isometricDebugUI on IsometricDebug {
       onPressed(
           action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
-      )
+
+      ),
+      onPressed(
+          action: () => gamestream.renderCanvasAfterServerResponseReceived = !gamestream.renderCanvasAfterServerResponseReceived,
+          child: GSRefresh(() => buildText(' gamestream.renderCanvasAfterServerResponseReceived = ${gamestream.renderCanvasAfterServerResponseReceived}'))
+      ),
+      Builder(
+        builder: (context) {
+          var previousFrames = engine.paintFrame;
+          return GSRefresh(() {
+            final framesElapsed = engine.paintFrame - previousFrames;
+            previousFrames = engine.paintFrame;
+            return buildText('render-fps: $framesElapsed');
+          }, seconds: 1, milliseconds: 0);
+        }
+      ),
     ],
   );
 

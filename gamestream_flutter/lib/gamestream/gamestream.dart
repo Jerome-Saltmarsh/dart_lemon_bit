@@ -19,9 +19,9 @@ import 'ui/widgets/build_text.dart';
 
 class Gamestream with ByteReader {
   var previousServerResponse = -1;
+  var renderCanvasAfterServerResponseReceived = false;
 
   final serverFPS = Watch(0);
-
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
   final decoder = ZLibDecoder();
@@ -203,7 +203,6 @@ class Gamestream with ByteReader {
      switch (connection) {
        case ConnectionStatus.Connected:
          engine.cursorType.value = CursorType.None;
-         engine.drawCanvasAfterUpdate = false;
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;

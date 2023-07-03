@@ -539,7 +539,10 @@ extension ServerResponseReader on Gamestream {
   void readEnd() {
     bufferSize.value = index;
     index = 0;
-    engine.redrawCanvas();
+
+    if (renderCanvasAfterServerResponseReceived){
+      engine.redrawCanvas();
+    }
   }
 
   void readStoreItems() {
