@@ -7,7 +7,10 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameob
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
+import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/library.dart';
 
 import 'ui/game_isometric_minimap.dart';
 import 'classes/isometric_particles.dart';
@@ -40,7 +43,7 @@ class Isometric {
     if (server.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
-      particles.updateParticles();
+      // particles.updateParticles();
     }
     client.interpolatePlayer();
     camera.update();
@@ -72,9 +75,10 @@ class Isometric {
       sendClientRequestUpdate();
       return;
     }
+    particles.updateParticles();
     gamestream.audio.update();
     gamestream.animation.updateAnimationFrame();
-    gamestream.io.readPlayerInput();
+    readPlayerInputEdit();
     server.updateProjectiles();
     server.updateGameObjects();
     client.updateTorchEmissionIntensity();
@@ -83,6 +87,23 @@ class Isometric {
     player.updateMessageTimer();
     sendClientRequestUpdate();
   }
+
+  void readPlayerInputEdit() {
+    if (!client.edit.value)
+      return;
+
+    if (engine.keyPressedSpace) {
+      engine.panCamera();
+    }
+    if (engine.keyPressed(KeyCode.Delete)) {
+      editor.delete();
+    }
+    if (gamestream.io.getInputDirectionKeyboard() != IsometricDirection.None) {
+      actionSetModePlay();
+    }
+    return;
+  }
+
 
   Future sendClientRequestUpdate() async {
     gamestream.io.applyKeyboardInputToUpdateBuffer();

@@ -139,25 +139,6 @@ class GameIO with ByteWriter {
     return InputDirection.None;
   }
 
-  void readPlayerInput() {
-    if (isometric.client.edit.value) {
-      return readPlayerInputEdit();
-    }
-  }
-
-  void readPlayerInputEdit() {
-    if (engine.keyPressedSpace) {
-      engine.panCamera();
-    }
-    if (engine.keyPressed(KeyCode.Delete)) {
-      isometric.editor.delete();
-    }
-    if (getInputDirectionKeyboard() != IsometricDirection.None) {
-      isometric.actionSetModePlay();
-    }
-    return;
-  }
-
   void mouseRaycast(Function(int z, int row, int column) callback){
     final nodes = isometric.scene;
     var z = nodes.totalZ - 1;
