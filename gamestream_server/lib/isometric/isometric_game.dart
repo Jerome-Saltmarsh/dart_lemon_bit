@@ -214,6 +214,26 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     throw Exception('findGameObjectByTypeOrFail($type})');
   }
 
+  IsometricGameObject findGameObjectOrSpawn({
+    required int type,
+    required int subType,
+    required double x,
+    required double y,
+    required double z,
+}) {
+    IsometricGameObject? instance;
+    for (final gameObject in gameObjects) {
+      if (gameObject.type != type) continue;
+      if (gameObject.subType != subType) continue;
+      instance = gameObject;
+      instance.x = x;
+      instance.y = y;
+      instance.z = z;
+      return instance;
+    }
+    return spawnGameObject(x: x, y: y, z: z, type: type, subType: subType);
+  }
+
   IsometricGameObject? findGameObjectById(int id) {
     for (final gameObject in gameObjects) {
       if (gameObject.id == id) return gameObject;

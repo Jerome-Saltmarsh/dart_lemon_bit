@@ -12,14 +12,11 @@ class IsometricScenes {
   String get sceneDirectoryPath =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';
   late final sceneDirectory = Directory(sceneDirectoryPath);
 
-  late IsometricScene town;
   late IsometricScene captureTheFlag;
   late IsometricScene moba;
   late IsometricScene mmoTown;
 
   Future load() async {
-      // town = await loadScene('town');
-      town = IsometricSceneGenerator.generateEmptyScene();
       captureTheFlag = await readSceneFromFile('capture_the_flag');
       moba = await readSceneFromFile('moba');
       mmoTown = await readSceneFromFile('mmo_town');

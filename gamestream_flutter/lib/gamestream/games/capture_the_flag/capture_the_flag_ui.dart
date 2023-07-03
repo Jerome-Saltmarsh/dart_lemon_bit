@@ -371,6 +371,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     buildWatch(power.cooldown, (cooldown) =>
                         buildWatch(power.cooldownRemaining, (cooldownRemaining) =>
                             Container(
+                              constraints: BoxConstraints(
+                                minHeight: size,
+                                maxHeight: size,
+                              ),
                               decoration: BoxDecoration(
                                 color: GameStyle.Container_Color,
                                 shape: BoxShape.circle,
