@@ -799,7 +799,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricRequest.Debug_Character_Teleport_To_Mouse:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter) return;
         final scene = player.game.scene;
         final index = scene.findEmptyIndex(player.mouseIndex);
@@ -814,7 +814,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricRequest.Debug_Character_Walk_To_Mouse:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter) return;
         final scene = player.game.scene;
         final index = scene.findEmptyIndex(player.mouseIndex);
@@ -824,32 +824,32 @@ class WebSocketConnection with ByteReader {
         break;
 
       case IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter) return;
         debugCharacter.autoTarget = !debugCharacter.autoTarget;
         break;
 
       case IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter) return;
         debugCharacter.pathFindingEnabled = !debugCharacter.pathFindingEnabled;
         debugCharacter.clearPath();
         break;
 
       case IsometricRequest.Debug_Character_Toggle_Run_To_Destination:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter) return;
         debugCharacter.runToDestinationEnabled = !debugCharacter.runToDestinationEnabled;
         break;
 
       case IsometricRequest.Debug_Character_Debug_Update:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter) return;
         player.game.updateCharacter(debugCharacter);
         break;
 
       case IsometricRequest.Debug_Character_Set_Character_Type:
-        final debugCharacter = player.debugSelected;
+        final debugCharacter = player.selectedCollider;
         if (debugCharacter is! IsometricCharacter)
           return;
         final characterType = parseArg2(arguments);

@@ -10,8 +10,8 @@ extension IsometricResponseReader on Gamestream {
   void readIsometricResponse() {
     switch (readByte()) {
 
-      case IsometricResponse.Debug_Character:
-        readDebugCharacter();
+      case IsometricResponse.Selected_Collider:
+        readSelectedCollider();
         break;
 
       case IsometricResponse.Scene:
@@ -25,51 +25,55 @@ extension IsometricResponseReader on Gamestream {
   }
 
 
-  void readDebugCharacter(){
+  void readSelectedCollider() {
     final debug = isometric.debug;
-    debug.characterSelected.value = readBool();
+    debug.selectedCollider.value = readBool();
 
-    if (!debug.characterSelected.value)
+    if (!debug.selectedCollider.value)
       return;
 
-    debug.runTimeType.value = readString();
-    debug.x.value = readDouble();
-    debug.y.value = readDouble();
-    debug.z.value = readDouble();
-    debug.character.x = debug.x.value;
-    debug.character.y = debug.y.value;
-    debug.character.z = debug.z.value;
-    debug.destinationX.value = readDouble();
-    debug.destinationY.value = readDouble();
-    debug.pathIndex.value = readInt16();
-    debug.pathEnd.value = readInt16();
-    debug.pathTargetIndex.value = readInt16();
-    for (var i = 0; i < debug.pathEnd.value; i++) {
-      debug.path[i] = readUInt16();
+    final isometricType = readByte();
+
+    if (isometricType == IsometricType.Character){
+      debug.runTimeType.value = readString();
+      debug.x.value = readDouble();
+      debug.y.value = readDouble();
+      debug.z.value = readDouble();
+      debug.character.x = debug.x.value;
+      debug.character.y = debug.y.value;
+      debug.character.z = debug.z.value;
+      debug.destinationX.value = readDouble();
+      debug.destinationY.value = readDouble();
+      debug.pathIndex.value = readInt16();
+      debug.pathEnd.value = readInt16();
+      debug.pathTargetIndex.value = readInt16();
+      for (var i = 0; i < debug.pathEnd.value; i++) {
+        debug.path[i] = readUInt16();
+      }
+
+      debug.characterType.value = readByte();
+      debug.characterState.value = readByte();
+      debug.characterStateDuration.value = readUInt16();
+      debug.characterStateDurationRemaining.value = readUInt16();
+
+      debug.weaponType.value = readUInt16();
+      debug.weaponDamage.value = readUInt16();
+      debug.weaponRange.value = readUInt16();
+      debug.weaponState.value = readByte();
+      debug.weaponStateDuration.value = readUInt16();
+
+      debug.autoAttack.value = readBool();
+      debug.pathFindingEnabled.value = readBool();
+      debug.runToDestinationEnabled.value = readBool();
+
+      final characterSelectedTarget = readBool();
+      debug.targetSet.value = characterSelectedTarget;
+      if (!characterSelectedTarget) return;
+      debug.targetType.value = readString();
+      debug.targetX.value = readDouble();
+      debug.targetY.value = readDouble();
+      debug.targetZ.value = readDouble();
     }
-
-    debug.characterType.value = readByte();
-    debug.characterState.value = readByte();
-    debug.characterStateDuration.value = readUInt16();
-    debug.characterStateDurationRemaining.value = readUInt16();
-
-    debug.weaponType.value = readUInt16();
-    debug.weaponDamage.value = readUInt16();
-    debug.weaponRange.value = readUInt16();
-    debug.weaponState.value = readByte();
-    debug.weaponStateDuration.value = readUInt16();
-
-    debug.autoAttack.value = readBool();
-    debug.pathFindingEnabled.value = readBool();
-    debug.runToDestinationEnabled.value = readBool();
-
-    final characterSelectedTarget = readBool();
-    debug.targetSet.value = characterSelectedTarget;
-    if (!characterSelectedTarget) return;
-    debug.targetType.value = readString();
-    debug.targetX.value = readDouble();
-    debug.targetY.value = readDouble();
-    debug.targetZ.value = readDouble();
   }
 
   void readScene() {

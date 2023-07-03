@@ -35,14 +35,14 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var sceneDownloaded = false;
   var initialized = false;
   var id = 0;
-  var debugCharacterSelected = false;
+  var selectedColliderDirty = false;
   var gameTimeInMinutes = 0;
 
   final mouse = Vector2(0, 0);
 
-  IsometricGame game;
-  IsometricCollider? debugSelected;
   IsometricGameObject? editorSelectedGameObject;
+  IsometricGame game;
+  IsometricCollider? selectedCollider;
   IsometricCollider? _aimTarget; // the currently highlighted character
 
   IsometricPlayer({
@@ -168,7 +168,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerAimTargetPosition();
     writePlayerTargetPosition();
 
-    writeDebugCharacter();
+    writeSelectedCollider();
 
     writeProjectiles();
     writeCharacters();
@@ -699,48 +699,59 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void setTargetToAimTarget() => target = aimTarget;
 
-  void writeDebugCharacter() {
-    final debugCharacter = this.debugSelected;
+  void writeSelectedCollider() {
+    final selectedCollider = this.selectedCollider;
 
-    if (debugCharacter is! IsometricCharacter) {
-      if (!debugCharacterSelected) return;
-      debugCharacterSelected = false;
+    if (selectedCollider == null) {
+      if (!selectedColliderDirty) return;
+      selectedColliderDirty = false;
       writeByte(ServerResponse.Isometric);
-      writeByte(IsometricResponse.Debug_Character);
-      writeBool(debugCharacterSelected);
+      writeByte(IsometricResponse.Selected_Collider);
+      writeBool(false);
       return;
     }
-    debugCharacterSelected = true;
+    selectedColliderDirty = true;
 
     writeByte(ServerResponse.Isometric);
-    writeByte(IsometricResponse.Debug_Character);
-    writeBool(debugCharacterSelected);
-    writeString(debugCharacter.runtimeType.toString());
-    writeIsometricPosition(debugCharacter);
-    writeInt16(debugCharacter.runX.toInt());
-    writeInt16(debugCharacter.runY.toInt());
-    writeCharacterPath(debugCharacter);
+    writeByte(IsometricResponse.Selected_Collider);
+    writeBool(true);
 
-    writeByte(debugCharacter.characterType);
-    writeByte(debugCharacter.state);
-    writeUInt16(debugCharacter.stateDuration);
-    writeUInt16(debugCharacter.stateDurationRemaining);
-    writeUInt16(debugCharacter.weaponType);
-    writeUInt16(debugCharacter.weaponDamage);
-    writeUInt16(debugCharacter.weaponRange.toInt());
-    writeByte(debugCharacter.weaponState);
-    writeUInt16(debugCharacter.weaponStateDuration);
-    writeBool(debugCharacter.autoTarget);
-    writeBool(debugCharacter.pathFindingEnabled);
-    writeBool(debugCharacter.runToDestinationEnabled);
+    if (selectedCollider is IsometricGameObject) {
+      final gameObject = selectedCollider;
+      writeByte(IsometricType.GameObject);
+      return;
+    }
 
-    final selectedCharacterTarget = debugCharacter.target;
-    if (selectedCharacterTarget == null){
-      writeBool(false);
-    } else {
-      writeBool(true);
-      writeString(selectedCharacterTarget.runtimeType.toString());
-      writeIsometricPosition(selectedCharacterTarget);
+    if (selectedCollider is IsometricCharacter) {
+      final character = selectedCollider;
+      writeByte(IsometricType.Character);
+      writeString(character.runtimeType.toString());
+      writeIsometricPosition(character);
+      writeInt16(character.runX.toInt());
+      writeInt16(character.runY.toInt());
+      writeCharacterPath(character);
+
+      writeByte(character.characterType);
+      writeByte(character.state);
+      writeUInt16(character.stateDuration);
+      writeUInt16(character.stateDurationRemaining);
+      writeUInt16(character.weaponType);
+      writeUInt16(character.weaponDamage);
+      writeUInt16(character.weaponRange.toInt());
+      writeByte(character.weaponState);
+      writeUInt16(character.weaponStateDuration);
+      writeBool(character.autoTarget);
+      writeBool(character.pathFindingEnabled);
+      writeBool(character.runToDestinationEnabled);
+
+      final selectedCharacterTarget = character.target;
+      if (selectedCharacterTarget == null){
+        writeBool(false);
+      } else {
+        writeBool(true);
+        writeString(selectedCharacterTarget.runtimeType.toString());
+        writeIsometricPosition(selectedCharacterTarget);
+      }
     }
   }
 
@@ -754,7 +765,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void selectDebugCharacterNearestToMouse() {
-    debugSelected = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
+    selectedCollider = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
   }
 }
 

@@ -57,7 +57,7 @@ extension isometricDebugUI on IsometricDebug {
   ).toList(growable: false));
 
   Widget buildTabCharacter() =>
-      WatchBuilder(characterSelected, (characterSelected) => !characterSelected ? buildText('None Selected') :
+      WatchBuilder(selectedCollider, (characterSelected) => !characterSelected ? buildText('None Selected') :
       SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

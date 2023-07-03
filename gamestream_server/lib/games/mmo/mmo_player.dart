@@ -40,7 +40,7 @@ class MmoPlayer extends IsometricPlayer {
 
   @override
   void onMouseLeftClicked() {
-    final debugCharacter = this.debugSelected;
+    final debugCharacter = this.selectedCollider;
     if (debugCharacter is IsometricCharacter) {
       debugCharacter.clearTarget();
       debugCharacter.pathTargetIndex = scene.findEmptyIndex(mouseIndex);

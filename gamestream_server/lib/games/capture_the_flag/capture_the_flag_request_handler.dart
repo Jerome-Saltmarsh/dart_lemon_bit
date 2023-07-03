@@ -35,7 +35,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         break;
 
       case CaptureTheFlagRequest.toggleSelectedAIRole:
-        final selectedCharacter = player.debugSelected;
+        final selectedCharacter = player.selectedCollider;
         if (selectedCharacter is! CaptureTheFlagAI){
           return errorInvalidClientRequest();
         }
@@ -61,7 +61,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         player.upgradePowerType(powerType);
         break;
       case CaptureTheFlagRequest.Debug_Selected_Character_AI:
-        final selected = player.debugSelected;
+        final selected = player.selectedCollider;
         if (selected is! CaptureTheFlagAI) break;
         selected.customOnUpdate();
         break;

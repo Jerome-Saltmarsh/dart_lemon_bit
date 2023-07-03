@@ -12,7 +12,7 @@ class MobaPlayer extends IsometricPlayer {
 
   @override
   void onMouseLeftClicked() {
-    final debugCharacter = this.debugSelected;
+    final debugCharacter = this.selectedCollider;
     if (debugCharacter is IsometricCharacter) {
       debugCharacter.clearTarget();
       if (debugCharacter.pathFindingEnabled){

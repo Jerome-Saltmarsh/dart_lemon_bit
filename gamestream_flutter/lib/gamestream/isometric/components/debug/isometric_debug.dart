@@ -43,13 +43,13 @@ class IsometricDebug {
   final pathFindingEnabled = Watch(false);
   final runToDestinationEnabled = Watch(false);
 
-  late final characterSelected = Watch(false, onChanged: onChangedCharacterSelected);
+  late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
   Isometric get isometric => gamestream.isometric;
 
 
   void render(IsometricRender renderer) {
-    if (!characterSelected.value) return;
+    if (!selectedCollider.value) return;
 
     renderer.renderCircle(
       x.value,
