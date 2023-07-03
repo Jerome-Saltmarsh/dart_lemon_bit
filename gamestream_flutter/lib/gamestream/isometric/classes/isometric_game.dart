@@ -115,22 +115,17 @@ class IsometricGame extends Game {
       return;
     }
 
-    if (key == KeyCode.G) {
-      isometric.teleportDebugCharacterToMouse();
-      return;
-    }
-
-    if (key == KeyCode.Z) {
-      isometric.DebugCharacterWalkToMouse();
-      return;
-    }
-
     if (isometric.client.editMode){
       isometric.editor.onKeyPressedModeEdit(key);
       return;
     }
 
     // play mode
+
+    if (key == KeyCode.G) {
+      isometric.teleportDebugCharacterToMouse();
+      return;
+    }
 
     if (key == KeyCode.F) {
       gamestream.isometric.toggleZoom();

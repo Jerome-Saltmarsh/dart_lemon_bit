@@ -39,6 +39,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     removeFlags();
 
+    gameObjects.removeWhere((gameObject) => gameObject.subType == ObjectType.Base_Red);
+    gameObjects.removeWhere((gameObject) => gameObject.subType == ObjectType.Base_Blue);
 
     flagRed = CaptureTheFlagGameObjectFlag(
         x: 200,
@@ -47,6 +49,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         subType: ObjectType.Flag_Red,
         id: generateId())
       ..team = CaptureTheFlagTeam.Red;
+
     flagBlue = CaptureTheFlagGameObjectFlag(
         x: 200,
         y: 300,
@@ -58,24 +61,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     gameObjects.add(flagRed);
     gameObjects.add(flagBlue);
 
-    redFlagSpawn = findGameObjectOrSpawn(
-        type: GameObjectType.Object,
-        subType: ObjectType.Spawn_Red,
-        x: scene.rowLength * 0.5,
-        y: 100,
-        z: 25,
-    );
-    blueFlagSpawn = findGameObjectOrSpawn(
-      type: GameObjectType.Object,
-      subType: ObjectType.Spawn_Blue,
-      x: scene.rowLength * 0.5,
-      y: scene.columnLength - 100,
-      z: 25,
-    );
-
     baseRed = (findGameObjectByType(ObjectType.Base_Red) ?? spawnGameObject(
         x: scene.rowLength * 0.5,
-        y: scene.columnLength - 150,
+        y: 100,
         z: 25,
         type: GameObjectType.Object,
         subType: ObjectType.Base_Red,
@@ -86,13 +74,29 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     baseBlue = (findGameObjectByType(ObjectType.Base_Blue) ?? spawnGameObject(
         x: scene.rowLength * 0.5,
-        y: 150,
+        y: scene.columnLength - 100,
         z: 25,
         type: GameObjectType.Object,
-        subType: ObjectType.Base_Red,
+        subType: ObjectType.Base_Blue,
     ))
       ..fixed = true
       ..team = CaptureTheFlagTeam.Blue;
+
+    redFlagSpawn = findGameObjectOrSpawn(
+      type: GameObjectType.Object,
+      subType: ObjectType.Spawn_Red,
+      x: baseRed.x,
+      y: baseRed.y + 100,
+      z: baseRed.z,
+    );
+
+    blueFlagSpawn = findGameObjectOrSpawn(
+      type: GameObjectType.Object,
+      subType: ObjectType.Spawn_Blue,
+      x: baseBlue.x,
+      y: baseBlue.y - 100,
+      z: baseBlue.z,
+    );
 
     flagRed.status = CaptureTheFlagFlagStatus.At_Base;
     flagBlue.status = CaptureTheFlagFlagStatus.At_Base;
@@ -791,7 +795,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     WeaponType.Unarmed: 20,
     WeaponType.Handgun: 20,
     WeaponType.Smg: 5,
-  }[weaponType] ?? 1;
+    WeaponType.Sniper_Rifle: 40,
+    WeaponType.Shotgun: 40,
+    WeaponType.Sword: 35,
+    WeaponType.Bow: 25,
+    WeaponType.Machine_Gun: 5,
+  }[weaponType] ?? (throw Exception('getWeaponCooldown(${WeaponType.getName(weaponType)})'));
 
   @override
   int getExperienceForLevel(int level){

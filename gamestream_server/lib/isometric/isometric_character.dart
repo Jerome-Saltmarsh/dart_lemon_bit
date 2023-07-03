@@ -267,6 +267,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   void assignWeaponStateFiring() {
     weaponState = WeaponState.Firing;
     weaponStateDurationTotal = weaponCooldown;
+    assert (weaponCooldown > 0);
     assert (weaponStateDurationTotal > 0);
   }
 

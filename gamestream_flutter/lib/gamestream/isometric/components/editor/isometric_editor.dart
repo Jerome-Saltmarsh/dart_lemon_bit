@@ -97,57 +97,58 @@ class IsometricEditor {
         sendGameObjectRequestDuplicate();
         break;
       case KeyCode.F:
-        gamestream.isometric.editor.paint();
+        paint();
         break;
       case KeyCode.G:
-        if (gamestream.isometric.editor.gameObjectSelected.value) {
+
+        if (gameObjectSelected.value) {
           sendGameObjectRequestMoveToMouse();
         } else {
-          gamestream.isometric.camera.cameraSetPositionGrid(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
+          gamestream.isometric.camera.cameraSetPositionGrid(row, column, z);
         }
         break;
       case KeyCode.R:
-        gamestream.isometric.editor.selectPaintType();
+        selectPaintType();
         break;
       case KeyCode.Arrow_Up:
         if (engine.keyPressedShiftLeft) {
-          if (gamestream.isometric.editor.gameObjectSelected.value){
-            gamestream.isometric.editor.translate(x: 0, y: 0, z: 1);
+          if (gameObjectSelected.value){
+            translate(x: 0, y: 0, z: 1);
             return;
           }
-          gamestream.isometric.editor.cursorZIncrease();
+          cursorZIncrease();
           return;
         }
-        if (gamestream.isometric.editor.gameObjectSelected.value) {
-          gamestream.isometric.editor.translate(x: -1, y: -1, z: 0);
+        if (gameObjectSelected.value) {
+          translate(x: -1, y: -1, z: 0);
           return;
         }
-        gamestream.isometric.editor.cursorRowDecrease();
+        cursorRowDecrease();
         return;
       case KeyCode.Arrow_Right:
-        if (gamestream.isometric.editor.gameObjectSelected.value){
-          return gamestream.isometric.editor.translate(x: 1, y: -1, z: 0);
+        if (gameObjectSelected.value){
+          return translate(x: 1, y: -1, z: 0);
         }
-        gamestream.isometric.editor.cursorColumnDecrease();
+        cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
         if (engine.keyPressedShiftLeft) {
-          if (gamestream.isometric.editor.gameObjectSelected.value){
-            return gamestream.isometric.editor.translate(x: 0, y: 0, z: -1);
+          if (gameObjectSelected.value){
+            return translate(x: 0, y: 0, z: -1);
           }
-          gamestream.isometric.editor.cursorZDecrease();
+          cursorZDecrease();
         } else {
-          if (gamestream.isometric.editor.gameObjectSelected.value){
-            return gamestream.isometric.editor.translate(x: 1, y: 1, z: 0);
+          if (gameObjectSelected.value){
+            return translate(x: 1, y: 1, z: 0);
           }
-          gamestream.isometric.editor.cursorRowIncrease();
+          cursorRowIncrease();
         }
         break;
       case KeyCode.Arrow_Left:
-        if (gamestream.isometric.editor.gameObjectSelected.value){
-          return gamestream.isometric.editor.translate(x: -1, y: 1, z: 0);
+        if (gameObjectSelected.value){
+          return translate(x: -1, y: 1, z: 0);
         }
-        gamestream.isometric.editor.cursorColumnIncrease();
+        cursorColumnIncrease();
         break;
     }
   }
