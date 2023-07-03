@@ -9,6 +9,7 @@ class ClientRequest {
   static const Survival                 = 38;
   static const Combat                   = 39;
   static const MMO                      = 40;
+  static const Debugging                = 41;
 }
 
 

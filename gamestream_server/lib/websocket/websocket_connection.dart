@@ -76,6 +76,11 @@ class WebSocketConnection with ByteReader {
         case ClientRequest.Update:
           handleClientRequestUpdate(args);
           return;
+        case ClientRequest.Debugging:
+          final player = this.player;
+          if (player == null) return;
+          player.framesSinceClientRequest = 0;
+          return;
         default:
           break;
       }

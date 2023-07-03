@@ -70,7 +70,8 @@ class Isometric {
   
   void update(){
     if (!server.gameRunning.value) {
-      sendClientRequestUpdate();
+      gamestream.io.applyKeyboardInputToUpdateBuffer();
+      gamestream.io.sendUpdateBuffer();
       return;
     }
     gamestream.audio.update();
@@ -81,7 +82,14 @@ class Isometric {
     client.update();
     player.updateMessageTimer();
     readPlayerInputEdit();
-    sendClientRequestUpdate();
+
+    if (debug.enabled.value) {
+      gamestream.io.writeByte(ClientRequest.Debugging);
+      gamestream.io.sendUpdateBuffer();
+    } else {
+      gamestream.io.applyKeyboardInputToUpdateBuffer();
+      gamestream.io.sendUpdateBuffer();
+    }
   }
 
   void readPlayerInputEdit() {
@@ -98,12 +106,6 @@ class Isometric {
       actionSetModePlay();
     }
     return;
-  }
-
-
-  Future sendClientRequestUpdate() async {
-    gamestream.io.applyKeyboardInputToUpdateBuffer();
-    gamestream.io.sendUpdateBuffer();
   }
 
   void revive() =>
