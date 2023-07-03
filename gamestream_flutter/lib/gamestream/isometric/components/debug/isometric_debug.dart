@@ -53,6 +53,7 @@ class IsometricDebug {
 
 
   void render(IsometricRender renderer) {
+    if (!enabled.value) return;
     if (!selectedCollider.value) return;
 
     renderer.renderCircle(
