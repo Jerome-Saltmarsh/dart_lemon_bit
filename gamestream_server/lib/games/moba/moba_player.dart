@@ -12,8 +12,8 @@ class MobaPlayer extends IsometricPlayer {
 
   @override
   void onMouseLeftClicked() {
-    final debugCharacter = this.debugCharacter;
-    if (debugCharacter != null) {
+    final debugCharacter = this.debugSelected;
+    if (debugCharacter is IsometricCharacter) {
       debugCharacter.clearTarget();
       if (debugCharacter.pathFindingEnabled){
         debugCharacter.pathTargetIndex = scene.findEmptyIndex(mouseIndex);

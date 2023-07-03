@@ -41,7 +41,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   final mouse = Vector2(0, 0);
 
   IsometricGame game;
-  IsometricCharacter? debugCharacter;
+  IsometricCollider? debugSelected;
   IsometricGameObject? editorSelectedGameObject;
   IsometricCollider? _aimTarget; // the currently highlighted character
 
@@ -700,9 +700,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void setTargetToAimTarget() => target = aimTarget;
 
   void writeDebugCharacter() {
-    final debugCharacter = this.debugCharacter;
+    final debugCharacter = this.debugSelected;
 
-    if (debugCharacter == null) {
+    if (debugCharacter is! IsometricCharacter) {
       if (!debugCharacterSelected) return;
       debugCharacterSelected = false;
       writeByte(ServerResponse.Isometric);
@@ -754,7 +754,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void selectDebugCharacterNearestToMouse() {
-    debugCharacter = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
+    debugSelected = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
   }
 }
 
