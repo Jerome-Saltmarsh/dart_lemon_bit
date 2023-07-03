@@ -50,6 +50,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Spawn_Red);
     removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Spawn_Blue);
 
+    const spawnDistance = 300.0;
+
     flagRed = CaptureTheFlagGameObjectFlag(
         x: 200,
         y: 200,
@@ -93,7 +95,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       type: GameObjectType.Object,
       subType: ObjectType.Spawn_Red,
       x: baseRed.x,
-      y: baseRed.y + 100,
+      y: baseRed.y + spawnDistance,
       z: baseRed.z,
     );
 
@@ -101,7 +103,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       type: GameObjectType.Object,
       subType: ObjectType.Spawn_Blue,
       x: baseBlue.x,
-      y: baseBlue.y - 100,
+      y: baseBlue.y - spawnDistance,
       z: baseBlue.z,
     );
 

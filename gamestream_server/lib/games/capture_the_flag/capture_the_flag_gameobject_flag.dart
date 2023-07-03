@@ -23,6 +23,7 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheF
     physical = false;
     collidable = true;
     persistable = false;
+    gravity = false;
   }
 
   bool get statusAtBase => status == CaptureTheFlagFlagStatus.At_Base;
