@@ -31,16 +31,24 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final scoreBlue = ChangeNotifier(0, onChangedScoreBlue);
   late final nextGameCountDown = ChangeNotifier(Next_Game_Duration, onChangedNextGameCountDown);
 
+  void removeGameObjects({required int type, required int subType}) =>
+      gameObjects.removeWhere((gameObject) =>
+        gameObject.type == type &&
+        gameObject.subType == subType
+      );
+
   CaptureTheFlagGame({
     required super.scene,
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Capture_The_Flag) {
 
-    removeFlags();
-
-    gameObjects.removeWhere((gameObject) => gameObject.subType == ObjectType.Base_Red);
-    gameObjects.removeWhere((gameObject) => gameObject.subType == ObjectType.Base_Blue);
+    removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Base_Red);
+    removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Base_Blue);
+    removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Flag_Red);
+    removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Flag_Blue);
+    removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Spawn_Red);
+    removeGameObjects(type: GameObjectType.Object, subType: ObjectType.Spawn_Blue);
 
     flagRed = CaptureTheFlagGameObjectFlag(
         x: 200,
@@ -61,24 +69,23 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     gameObjects.add(flagRed);
     gameObjects.add(flagBlue);
 
-    baseRed = (findGameObjectByType(ObjectType.Base_Red) ?? spawnGameObject(
+    baseRed = spawnGameObject(
         x: scene.rowLength * 0.5,
         y: 100,
         z: 25,
         type: GameObjectType.Object,
         subType: ObjectType.Base_Red,
     )
-    )
       ..fixed = true
       ..team = CaptureTheFlagTeam.Red;
 
-    baseBlue = (findGameObjectByType(ObjectType.Base_Blue) ?? spawnGameObject(
+    baseBlue = spawnGameObject(
         x: scene.rowLength * 0.5,
         y: scene.columnLength - 100,
         z: 25,
         type: GameObjectType.Object,
         subType: ObjectType.Base_Blue,
-    ))
+    )
       ..fixed = true
       ..team = CaptureTheFlagTeam.Blue;
 
@@ -149,17 +156,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
 
   int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
-
-  void removeFlags() {
-     for (var i = 0; i < gameObjects.length; i++){
-      final gameObject = gameObjects[i];
-      if (const [ObjectType.Flag_Blue, ObjectType.Flag_Red]
-          .contains(gameObject.type)) {
-        gameObjects.removeAt(i);
-        i--;
-      }
-    }
-  }
 
   int countPlayersOnTeam(int team) =>
       players.where((player) => player.team == team).length;
