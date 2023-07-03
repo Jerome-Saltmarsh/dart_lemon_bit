@@ -2506,6 +2506,30 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   int generateId() => gameObjectId++;
 
+  IsometricCollider? getNearestCollider({
+    required double x,
+    required double y,
+    required double z,
+    required double maxRadius,
+  }) {
+
+    final nearestCharacter = getNearestCharacter(x, y, z, maxRadius: maxRadius);
+    final nearestGameObject = getNearestGameObject(x: x, y: y, z: z, maxRadius: maxRadius);
+
+    if (nearestCharacter == null){
+      return nearestGameObject;
+    }
+
+    if (nearestGameObject == null){
+      return nearestCharacter;
+    }
+
+    return
+      nearestCharacter.getDistanceSquaredXYZ(x, y, z) <
+      nearestGameObject.getDistanceSquaredXYZ(x, y, z) ?
+        nearestCharacter : nearestGameObject;
+  }
+
   IsometricCharacter? getNearestCharacter(double x, double y, double z, {double maxRadius = 10000}){
     IsometricCharacter? nearestCharacter;
     var nearestCharacterDistanceSquared = maxRadius * maxRadius;
@@ -2517,6 +2541,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       nearestCharacter = character;
     }
     return nearestCharacter;
+  }
+
+  IsometricGameObject? getNearestGameObject({
+    required double x,
+    required double y,
+    required double z,
+    double maxRadius = 10000,
+  }){
+    IsometricGameObject? nearestGameObject;
+    var nearestGameObjectDistanceSquared = maxRadius * maxRadius;
+    for (final gameObject in gameObjects){
+      if (!gameObject.active) continue;
+      final distanceSquared = gameObject.getDistanceSquaredXYZ(x, y, z);
+      if (distanceSquared > nearestGameObjectDistanceSquared) continue;
+      nearestGameObjectDistanceSquared = distanceSquared;
+      nearestGameObject = gameObject;
+    }
+    return nearestGameObject;
   }
 
   double clampX(double value)=> clamp(value, 0, scene.rowLength);

@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -63,16 +62,17 @@ class IsometricDebug {
       40,
     );
 
-    if (targetSet.value) {
-      renderer.renderLine(
-        x.value,
-        y.value,
-        z.value,
-        targetX.value,
-        targetY.value,
-        targetZ.value,
-      );
-    }
+    if (selectedColliderType.value == IsometricType.Character) {
+      if (targetSet.value) {
+        renderer.renderLine(
+          x.value,
+          y.value,
+          z.value,
+          targetX.value,
+          targetY.value,
+          targetZ.value,
+        );
+      }
 
       engine.setPaintColor(Colors.blue);
       renderPath(
@@ -88,24 +88,25 @@ class IsometricDebug {
         end: pathEnd.value,
       );
 
-    engine.setPaintColor(Colors.deepPurpleAccent);
-    renderer.renderLine(
-      x.value,
-      y.value,
-      z.value,
-      destinationX.value,
-      destinationY.value,
-      z.value,
-    );
+      engine.setPaintColor(Colors.deepPurpleAccent);
+      renderer.renderLine(
+        x.value,
+        y.value,
+        z.value,
+        destinationX.value,
+        destinationY.value,
+        z.value,
+      );
 
-    final pathTargetIndexValue = pathTargetIndex.value;
-    if (pathTargetIndexValue != -1) {
-      final scene = isometric.scene;
-      isometric.renderer.renderWireFrameBlue(
+      final pathTargetIndexValue = pathTargetIndex.value;
+      if (pathTargetIndexValue != -1) {
+        final scene = isometric.scene;
+        isometric.renderer.renderWireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
           scene.getIndexRow(pathTargetIndexValue),
           scene.getIndexColumn(pathTargetIndexValue),
-      );
+        );
+      }
     }
   }
 

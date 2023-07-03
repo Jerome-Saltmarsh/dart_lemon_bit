@@ -50,7 +50,7 @@ class AtlasSrcObjects {
     128,   // width
     128,   // height
     1.0,  // scale
-    1.0, // anchorY
+    0.5, // anchorY
   ];
 
   static const Base_Blue = <double>[
@@ -59,7 +59,7 @@ class AtlasSrcObjects {
     128,   // width
     128,   // height
     1.0,  // scale
-    1.0, // anchorY
+    0.5, // anchorY
   ];
 
   static const Spawn_Red = <double>[
@@ -68,7 +68,7 @@ class AtlasSrcObjects {
     128,   // width
     128,   // height
     0.5,  // scale
-    1.0, // anchorY
+    0.5, // anchorY
   ];
 
   static const Spawn_Blue = <double>[
@@ -77,6 +77,6 @@ class AtlasSrcObjects {
     128,   // width
     128,   // height
     0.5,  // scale
-    1.0, // anchorY
+    0.5, // anchorY
   ];
 }

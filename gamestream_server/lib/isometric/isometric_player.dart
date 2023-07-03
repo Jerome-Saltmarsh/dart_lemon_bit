@@ -768,9 +768,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
   }
 
-  void selectDebugCharacterNearestToMouse() {
-    selectedCollider = game.getNearestCharacter(mouseGridX, mouseGridY, z, maxRadius: 75);
-  }
+  void selectNearestColliderToMouse({double maxRadius = 75}) =>
+      selectedCollider = game.getNearestCollider(
+        x: mouseGridX,
+        y: mouseGridY,
+        z: z,
+        maxRadius: maxRadius,
+      );
 }
 
 

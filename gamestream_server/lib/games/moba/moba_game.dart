@@ -93,7 +93,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     if (!player.active) return;
 
     if (mouseRightDown){
-      player.selectDebugCharacterNearestToMouse();
+      player.selectNearestColliderToMouse();
     }
 
     if (direction != IsometricDirection.None){

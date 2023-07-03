@@ -92,7 +92,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }) {
 
     if (mouseRightDown) {
-      player.selectDebugCharacterNearestToMouse();
+      player.selectNearestColliderToMouse();
     }
   }
 }
