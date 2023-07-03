@@ -44,6 +44,9 @@ class IsometricDebug {
   final runToDestinationEnabled = Watch(false);
   final selectedColliderType = Watch(-1);
 
+  final selectedGameObjectType = Watch(-1);
+  final selectedGameObjectSubType = Watch(-1);
+
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
   Isometric get isometric => gamestream.isometric;

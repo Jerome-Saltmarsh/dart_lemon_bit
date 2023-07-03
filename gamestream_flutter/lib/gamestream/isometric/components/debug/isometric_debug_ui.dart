@@ -393,6 +393,15 @@ extension isometricDebugUI on IsometricDebug {
         buildRowWatchDouble(text: 'x', watch: x, ),
         buildRowWatchDouble(text: 'y', watch: y),
         buildRowWatchDouble(text: 'z', watch: z),
+        WatchBuilder(selectedGameObjectType, (type) => Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildRow(text: 'type', value: buildText(GameObjectType.getName(type))),
+              buildRow(text: 'sub-type', value: WatchBuilder(selectedGameObjectSubType, (subType) => buildText(GameObjectType.getNameSubType(type, subType))))
+            ],
+          ))
+
       ],
     ),
   );

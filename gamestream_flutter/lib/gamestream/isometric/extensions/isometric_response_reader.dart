@@ -40,6 +40,8 @@ extension IsometricResponseReader on Gamestream {
       debug.x.value = readDouble();
       debug.y.value = readDouble();
       debug.z.value = readDouble();
+      debug.selectedGameObjectType.value = readByte();
+      debug.selectedGameObjectSubType.value = readByte();
       return;
     }
 

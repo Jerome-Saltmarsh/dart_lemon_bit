@@ -721,6 +721,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeByte(IsometricType.GameObject);
       writeString(gameObject.runtimeType.toString());
       writeIsometricPosition(gameObject);
+      writeByte(gameObject.type);
+      writeByte(gameObject.subType);
       return;
     }
 
