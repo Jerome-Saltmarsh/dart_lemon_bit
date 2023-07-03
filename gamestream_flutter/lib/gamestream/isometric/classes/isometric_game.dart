@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
