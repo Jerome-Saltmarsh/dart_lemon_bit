@@ -124,7 +124,7 @@ class IsometricGame extends Game {
     // play mode
 
     if (key == KeyCode.G) {
-      isometric.teleportDebugCharacterToMouse();
+      isometric.moveSelectedColliderToMouse();
       return;
     }
 

@@ -103,19 +103,22 @@ extension IsometricRequestReader on WebSocketConnection {
       // _player = engine.joinGameEditor(name: arguments[2]);
         break;
 
-      case IsometricRequest.Debug_Character_Teleport_To_Mouse:
-        final debugCharacter = player.selectedCollider;
-        if (debugCharacter is! IsometricCharacter) return;
+      case IsometricRequest.Move_Selected_Collider_To_Mouse:
+        final selectedCollider = player.selectedCollider;
+        if (selectedCollider == null) return;
         final scene = player.game.scene;
         final index = scene.findEmptyIndex(player.mouseIndex);
         if (index == -1) return;
 
-        debugCharacter.clearTarget();
-        debugCharacter.clearPath();
-        debugCharacter.x = scene.getNodePositionX(index);
-        debugCharacter.y = scene.getNodePositionY(index);
-        debugCharacter.z = scene.getNodePositionZ(index);
-        debugCharacter.setDestinationToCurrentPosition();
+        selectedCollider.x = scene.getNodePositionX(index);
+        selectedCollider.y = scene.getNodePositionY(index);
+        selectedCollider.z = scene.getNodePositionZ(index);
+
+        if (selectedCollider is IsometricCharacter){
+          selectedCollider.clearTarget();
+          selectedCollider.clearPath();
+          selectedCollider.setDestinationToCurrentPosition();
+        }
         break;
 
       case IsometricRequest.Debug_Character_Walk_To_Mouse:

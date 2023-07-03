@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -10,7 +11,7 @@ import '../isometric_render.dart';
 class IsometricDebug {
   final enabled = WatchBool(false);
   final tab = Watch(DebugTab.Selected);
-  final character = IsometricCharacter();
+  final position = IsometricPosition();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
   final destinationX = Watch(0.0);
@@ -126,7 +127,7 @@ class IsometricDebug {
 
   void onChangedCharacterSelected(bool characterSelected){
      if (characterSelected){
-       isometric.camera.target = character;
+       isometric.camera.target = position;
      } else {
        isometric.camera.target = isometric.player.position;
        isometric.camera.followTarget.value = true;

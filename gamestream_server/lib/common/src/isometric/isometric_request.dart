@@ -9,7 +9,7 @@ enum IsometricRequest {
    Time_Set_Hour,
    Npc_Talk_Select_Option,
    Editor_Load_Game,
-   Debug_Character_Teleport_To_Mouse,
+   Move_Selected_Collider_To_Mouse,
    Debug_Character_Walk_To_Mouse,
    Debug_Character_Toggle_Auto_Attack_Nearby_Enemies,
    Debug_Character_Toggle_Path_Finding_Enabled,

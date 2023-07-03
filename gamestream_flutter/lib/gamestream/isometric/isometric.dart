@@ -112,8 +112,8 @@ class Isometric {
 
   void editorLoadGame(String name)=> sendIsometricRequest(IsometricRequest.Editor_Load_Game, name);
 
-  void teleportDebugCharacterToMouse() =>
-      sendIsometricRequest(IsometricRequest.Debug_Character_Teleport_To_Mouse);
+  void moveSelectedColliderToMouse() =>
+      sendIsometricRequest(IsometricRequest.Move_Selected_Collider_To_Mouse);
 
   void DebugCharacterWalkToMouse() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
