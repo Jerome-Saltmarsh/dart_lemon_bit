@@ -244,6 +244,10 @@ extension isometricDebugUI on IsometricDebug {
       GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
       GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
       GSRefresh(() => buildText('engine-frame: ${engine.paintFrame}')),
+      onPressed(
+          action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
+          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
+      )
     ],
   );
 

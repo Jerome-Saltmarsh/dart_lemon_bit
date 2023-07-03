@@ -16,7 +16,7 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 
 class Isometric {
-  final animation = GameAnimation();
+  final animation = IsometricAnimation();
   final debug = IsometricDebug();
   final client = IsometricClient();
   final server = IsometricServer();

@@ -4,7 +4,7 @@ export 'gamestream/audio/game_audio.dart';
 export 'images.dart';
 export 'gamestream/game_io.dart';
 export 'persistence.dart';
-export 'gamestream/game_animation.dart';
+export 'gamestream/isometric/components/isometric_animation.dart';
 export 'package:bleed_common/src.dart';
 export 'dart:typed_data';
 export 'instances/engine.dart';

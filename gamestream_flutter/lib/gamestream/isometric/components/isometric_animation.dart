@@ -1,7 +1,7 @@
 
-import '../library.dart';
+import '../../../library.dart';
 
-class GameAnimation {
+class IsometricAnimation {
   var animationFrame = 0;
   var animationFrameWater = 0;
   var animationFrameWaterHeight = 0;

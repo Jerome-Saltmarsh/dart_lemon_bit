@@ -24,7 +24,6 @@ class IsometricServer {
   final playerScores = <IsometricPlayerScore>[];
   final gameObjects = <IsometricGameObject>[];
   final characters = <IsometricCharacter>[];
-  final npcs = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
   final playerScoresReads = Watch(0);
   final highScore = Watch(0);

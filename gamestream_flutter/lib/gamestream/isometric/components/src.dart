@@ -1,6 +1,7 @@
 
 library src;
 
+export 'isometric_animation.dart';
 export 'isometric_camera.dart';
 export 'isometric_client.dart';
 export 'debug/isometric_debug.dart';

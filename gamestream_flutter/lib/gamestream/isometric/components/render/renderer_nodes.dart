@@ -901,7 +901,7 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    var shift = GameAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % IsometricAnimation.treeAnimation.length] * renderNodeWind;
     engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
@@ -917,7 +917,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeTopPine() {
-    var shift = GameAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % IsometricAnimation.treeAnimation.length] * renderNodeWind;
     engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: 1262,

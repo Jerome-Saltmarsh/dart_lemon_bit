@@ -107,7 +107,6 @@ class Gamestream with ByteReader {
        }
 
        network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
-       // GameNetwork.connectToGameAeon();
      }
      await Future.delayed(const Duration(seconds: 4));
    }
@@ -204,7 +203,7 @@ class Gamestream with ByteReader {
      switch (connection) {
        case ConnectionStatus.Connected:
          engine.cursorType.value = CursorType.None;
-         engine.drawCanvasAfterUpdate = true;
+         engine.drawCanvasAfterUpdate = false;
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
@@ -222,7 +221,6 @@ class Gamestream with ByteReader {
          engine.zoom = 1.0;
          engine.drawCanvasAfterUpdate = true;
          engine.cursorType.value = CursorType.Basic;
-         engine.drawCanvasAfterUpdate = true;
          engine.fullScreenExit();
          isometric.player.active.value = false;
          isometric.client.timeConnectionEstablished = null;
