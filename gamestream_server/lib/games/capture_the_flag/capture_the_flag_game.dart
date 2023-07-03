@@ -78,6 +78,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         type: GameObjectType.Object,
         subType: ObjectType.Base_Red,
     )
+      ..physical = false
       ..fixed = true
       ..team = CaptureTheFlagTeam.Red;
 
@@ -88,6 +89,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         type: GameObjectType.Object,
         subType: ObjectType.Base_Blue,
     )
+      ..physical = false
       ..fixed = true
       ..team = CaptureTheFlagTeam.Blue;
 
@@ -97,7 +99,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       x: baseRed.x,
       y: baseRed.y + spawnDistance,
       z: baseRed.z,
-    );
+    )
+      ..physical = false
+      ..fixed = true
+      ..team = CaptureTheFlagTeam.Red;
 
     blueFlagSpawn = findGameObjectOrSpawn(
       type: GameObjectType.Object,
@@ -105,7 +110,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       x: baseBlue.x,
       y: baseBlue.y - spawnDistance,
       z: baseBlue.z,
-    );
+    )
+      ..physical = false
+      ..fixed = true
+      ..team = CaptureTheFlagTeam.Blue;
 
     flagRed.status = CaptureTheFlagFlagStatus.At_Base;
     flagBlue.status = CaptureTheFlagFlagStatus.At_Base;
