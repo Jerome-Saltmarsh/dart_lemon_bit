@@ -26,6 +26,12 @@ class Atlas {
     ObjectType.Barrel: AtlasSrcObjects.Barrel,
     ObjectType.Barrel_Explosive: AtlasSrcObjects.Barrel_Explosive,
     ObjectType.Crate_Wooden: AtlasSrcObjects.Crate_Wooden,
+    ObjectType.Flag_Red: AtlasSrcObjects.Flag_Red,
+    ObjectType.Flag_Blue: AtlasSrcObjects.Flag_Blue,
+    ObjectType.Base_Red: AtlasSrcObjects.Base_Red,
+    ObjectType.Base_Blue: AtlasSrcObjects.Base_Blue,
+    ObjectType.Spawn_Red: AtlasSrcObjects.Spawn_Red,
+    ObjectType.Spawn_Blue: AtlasSrcObjects.Spawn_Blue,
   };
 
   static const Collection = <Map<int, List<double>>>[
