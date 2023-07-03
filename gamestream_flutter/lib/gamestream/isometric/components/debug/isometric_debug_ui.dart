@@ -34,6 +34,7 @@ extension isometricDebugUI on IsometricDebug {
                         DebugTab.Stats => buildTabStats(),
                         DebugTab.Lighting => buildTabLighting(),
                         DebugTab.Engine => buildTabEngine(),
+                        DebugTab.Objects => buildTabObjects(),
                       },
                     ),
                   ),
@@ -288,6 +289,17 @@ extension isometricDebugUI on IsometricDebug {
     ],
   );
 
+  Widget buildTabObjects() => GSRefresh(
+        () => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: gamestream.isometric.server.gameObjects
+              .map((e) => buildText(
+                  '${GameObjectType.getName(e.type)} - ${GameObjectType.getNameSubType(e.type, e.subType)}'))
+              .toList(growable: false),
+        ),
+        seconds: 1,
+      );
 
   static Widget buildRowWatchDouble({
     required Watch<double> watch,

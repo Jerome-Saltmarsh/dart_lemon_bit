@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_charac
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui.dart';
 
 import '../isometric_render.dart';
 
