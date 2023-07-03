@@ -27,7 +27,7 @@ class RendererGameObjects extends IsometricRenderer {
     final src = Atlas.getSrc(type, subType);
 
     engine.renderSprite(
-      image: GameImages.atlas_gameobjects,
+      image: Images.atlas_gameobjects,
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: src[Atlas.SrcX],
@@ -80,7 +80,7 @@ class RendererGameObjects extends IsometricRenderer {
   void updateFunction() {
     gameObject = gameObjects[index];
 
-    while (!gameObject.active || !gameObject.onscreen || !scene.nodePerceptible(gameObject)) {
+    while (!gameObject.active || !gameObject.onscreen || !scene.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];

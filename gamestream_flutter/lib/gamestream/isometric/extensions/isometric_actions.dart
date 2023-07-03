@@ -25,7 +25,7 @@ extension IsometricActions on Isometric {
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
-          final index = scene.getNodeIndexZRC(z, row, column);
+          final index = scene.getIndexZRC(z, row, column);
           final type = scene.nodeTypes[index];
           if (type != NodeType.Empty) {
             if (type == NodeType.Water || scene.nodeOrientations[index] == NodeOrientation.Solid) {

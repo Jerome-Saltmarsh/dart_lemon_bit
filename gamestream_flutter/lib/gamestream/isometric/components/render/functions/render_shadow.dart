@@ -2,7 +2,7 @@ import 'package:gamestream_flutter/library.dart';
 
 void renderShadow(double x, double y, double z, {double scale = 1}) =>
     engine.renderSprite(
-      image: GameImages.atlas_gameobjects,
+      image: Images.atlas_gameobjects,
       dstX: (x - y) * 0.5,
       dstY: ((y + x) * 0.5) - z,
       srcX: 0,

@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:bleed_common/src.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
-class GameImages {
+class Images {
    static late Image shades;
    static late Image pixel;
    static late Image projectiles;

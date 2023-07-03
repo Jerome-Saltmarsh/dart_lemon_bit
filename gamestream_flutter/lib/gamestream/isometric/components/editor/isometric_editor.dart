@@ -221,7 +221,7 @@ class IsometricEditor {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = gamestream.isometric.scene.getNodeIndexZRC(z, row, column);
+    nodeSelectedIndex.value = gamestream.isometric.scene.getIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){
@@ -289,7 +289,7 @@ class IsometricEditor {
 
   void cursorSetToPlayer() {
     if (!gamestream.isometric.player.inBounds) return;
-    nodeSelectedIndex.value = gamestream.isometric.scene.getNodeIndexPosition(gamestream.isometric.player.position);
+    nodeSelectedIndex.value = gamestream.isometric.scene.getIndexPosition(gamestream.isometric.player.position);
   }
   void cursorRowIncrease() => row++;
   void cursorRowDecrease() => row--;

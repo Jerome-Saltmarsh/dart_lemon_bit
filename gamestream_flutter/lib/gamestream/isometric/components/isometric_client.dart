@@ -72,9 +72,9 @@ mixin class IsometricClient {
     if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.emissionType == IsometricEmissionType.None)){
       gamestream.isometric.scene.emitLightAHSVShadowed(
         index: gamestream.isometric.editor.nodeSelectedIndex.value,
-        hue: gamestream.isometric.scene.ambient_hue,
-        saturation: gamestream.isometric.scene.ambient_sat,
-        value: gamestream.isometric.scene.ambient_val,
+        hue: gamestream.isometric.scene.ambientHue,
+        saturation: gamestream.isometric.scene.ambientSaturation,
+        value: gamestream.isometric.scene.ambientValue,
         alpha: 0,
       );
     }
@@ -167,7 +167,7 @@ mixin class IsometricClient {
   }){
     if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
     gamestream.isometric.scene.emitLightAHSVShadowed(
-      index: gamestream.isometric.scene.getNodeIndexPosition(v),
+      index: gamestream.isometric.scene.getIndexPosition(v),
       hue: hue,
       saturation: saturation,
       value: value,
@@ -188,8 +188,8 @@ mixin class IsometricClient {
     assert (alpha <= 255);
     if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
     gamestream.isometric.scene.emitLightAmbient(
-      index: gamestream.isometric.scene.getNodeIndexPosition(v),
-      alpha: Engine.linerInterpolationInt(gamestream.isometric.scene.ambient_hue, alpha , intensity),
+      index: gamestream.isometric.scene.getIndexPosition(v),
+      alpha: Engine.linerInterpolationInt(gamestream.isometric.scene.ambientHue, alpha , intensity),
     );
   }
 
@@ -267,7 +267,7 @@ mixin class IsometricClient {
   // PROPERTIES
 
   void update(){
-    interpolation_padding = ((gamestream.isometric.scene.interpolation_length + 1) * Node_Size) / engine.zoom;
+    interpolation_padding = ((gamestream.isometric.scene.interpolationLength + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -312,15 +312,15 @@ mixin class IsometricClient {
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = (gamestream.isometric.server.hours.value * Seconds_Per_Hour) + (gamestream.isometric.server.minutes.value * 60);
 
-    gamestream.isometric.scene.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
+    gamestream.isometric.scene.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
     if (gamestream.isometric.server.rainType.value == RainType.Light){
-      gamestream.isometric.scene.ambient_alp += 20;
+      gamestream.isometric.scene.ambientAlpha += 20;
     }
     if (gamestream.isometric.server.rainType.value == RainType.Heavy){
-      gamestream.isometric.scene.ambient_alp += 40;
+      gamestream.isometric.scene.ambientAlpha += 40;
     }
     gamestream.isometric.scene.resetNodeColorsToAmbient();
   }

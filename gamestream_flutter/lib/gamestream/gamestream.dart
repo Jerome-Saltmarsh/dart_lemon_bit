@@ -69,7 +69,7 @@ class Gamestream with ByteReader {
      print('time zone: ${detectConnectionRegion()}');
      engine.onScreenSizeChanged = onScreenSizeChanged;
      engine.deviceType.onChanged(onDeviceTypeChanged);
-     GameImages.loadImages();
+     Images.loadImages();
      engine.cursorType.value = CursorType.Basic;
      io.detectInputMode();
 

@@ -171,7 +171,7 @@ class GameIO with ByteWriter {
       if (row >= nodes.totalRows) break;
       if (column >= nodes.totalColumns) break;
       if (z >= nodes.totalZ) break;
-      final index = nodes.getNodeIndexZRC(z, row, column);
+      final index = nodes.getIndexZRC(z, row, column);
       if (NodeType.isRainOrEmpty(nodes.nodeTypes[index])) {
         z--;
         continue;

@@ -176,7 +176,7 @@ class IsometricRender {
       int column,
       ) {
     engine.renderSprite(
-      image: GameImages.atlas_nodes,
+      image: Images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
@@ -190,7 +190,7 @@ class IsometricRender {
 
   void renderWireFrameRed(int row, int column, int z) {
     engine.renderSprite(
-      image: GameImages.atlas_nodes,
+      image: Images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
@@ -204,7 +204,7 @@ class IsometricRender {
   void canvasRenderCursorHand(ui.Canvas canvas){
     engine.renderExternalCanvas(
       canvas: canvas,
-      image: GameImages.atlas_icons,
+      image: Images.atlas_icons,
       srcX: 0,
       srcY: 256,
       srcWidth: 64,
@@ -218,7 +218,7 @@ class IsometricRender {
   void canvasRenderCursorTalk(ui.Canvas canvas){
     engine.renderExternalCanvas(
       canvas: canvas,
-      image: GameImages.atlas_icons,
+      image: Images.atlas_icons,
       srcX: 0,
       srcY: 320,
       srcWidth: 64,
@@ -234,7 +234,7 @@ class IsometricRender {
     const srcY = 192;
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -245,7 +245,7 @@ class IsometricRender {
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -256,7 +256,7 @@ class IsometricRender {
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -267,7 +267,7 @@ class IsometricRender {
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -284,7 +284,7 @@ class IsometricRender {
     const offset = 0;
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -295,7 +295,7 @@ class IsometricRender {
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -306,7 +306,7 @@ class IsometricRender {
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -317,7 +317,7 @@ class IsometricRender {
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -330,7 +330,7 @@ class IsometricRender {
 
   void renderCircle32(double x, double y, double z){
     engine.renderSprite(
-      image: GameImages.atlas_gameobjects,
+      image: Images.atlas_gameobjects,
       srcX: 16,
       srcY: 48,
       srcWidth: 32,
@@ -345,7 +345,7 @@ class IsometricRender {
 
   void renderStars(double x, double y) =>
       engine.renderSprite(
-        image: GameImages.sprite_stars,
+        image: Images.sprite_stars,
         srcX: 125.0 * gamestream.animation.animationFrame16,
         srcY: 0,
         srcWidth: 125,
@@ -478,7 +478,7 @@ class IsometricRender {
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
-      final i2 = gamestream.isometric.scene.getNodeIndex(x2, y2, z);
+      final i2 = gamestream.isometric.scene.getIndexXYZ(x2, y2, z);
       if (!NodeType.isTransient(gamestream.isometric.scene.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
@@ -500,7 +500,7 @@ class IsometricRender {
 
   void renderBarGreen(double x, double y, double z, double percentage) {
     engine.renderSprite(
-      image: GameImages.atlas_gameobjects,
+      image: Images.atlas_gameobjects,
       dstX: IsometricRender.getRenderX(x, y, z) - 26,
       dstY: IsometricRender.getRenderY(x, y, z) - 45,
       srcX: 171,
@@ -514,7 +514,7 @@ class IsometricRender {
 
   void renderBarBlue(double x, double y, double z, double percentage) {
     engine.renderSprite(
-      image: GameImages.atlas_gameobjects,
+      image: Images.atlas_gameobjects,
       dstX: getRenderX(x, y, z) - 26,
       dstY: getRenderY(x, y, z) - 55,
       srcX: 171,

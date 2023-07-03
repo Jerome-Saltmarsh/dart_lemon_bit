@@ -173,7 +173,7 @@ class IsometricParticles {
       if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
       scene.emitLightAHSVShadowed(
-        index: scene.getNodeIndexPosition(particle),
+        index: scene.getIndexPosition(particle),
         hue: particle.lightHue,
         saturation: particle.lightSaturation,
         value: particle.lightValue,
@@ -221,7 +221,7 @@ class IsometricParticles {
 
 
 
-    final nodeIndex = gamestream.isometric.scene.getNodeIndexPosition(particle);
+    final nodeIndex = gamestream.isometric.scene.getIndexPosition(particle);
 
     assert (nodeIndex >= 0);
     assert (nodeIndex < gamestream.isometric.scene.total);
@@ -654,9 +654,9 @@ class IsometricParticles {
         scale: scale,
       )
         ..emitsLight = true
-        ..lightHue = gamestream.isometric.scene.ambient_hue
-        ..lightSaturation = gamestream.isometric.scene.ambient_sat
-        ..lightValue = gamestream.isometric.scene.ambient_val
+        ..lightHue = gamestream.isometric.scene.ambientHue
+        ..lightSaturation = gamestream.isometric.scene.ambientSaturation
+        ..lightValue = gamestream.isometric.scene.ambientValue
         ..alpha = 0
         ..checkNodeCollision = false
         ..strength = 0.5
@@ -679,9 +679,9 @@ class IsometricParticles {
         checkCollision: false,
         animation: true,
       )
-        ..lightHue = gamestream.isometric.scene.ambient_hue
-        ..lightSaturation = gamestream.isometric.scene.ambient_sat
-        ..lightValue = gamestream.isometric.scene.ambient_val
+        ..lightHue = gamestream.isometric.scene.ambientHue
+        ..lightSaturation = gamestream.isometric.scene.ambientSaturation
+        ..lightValue = gamestream.isometric.scene.ambientValue
         ..alpha = 0
         ..flash = true
         ..strength = 0.0

@@ -21,7 +21,7 @@ class RendererCharacters extends IsometricRenderer {
       character = gamestream.isometric.server.characters[index];
       orderZ = character.indexZ;
       orderRowColumn = character.indexSum;
-      if (scene.nodePerceptible(character))
+      if (scene.isPerceptiblePosition(character))
         break;
       index++;
     }
@@ -39,7 +39,7 @@ class RendererCharacters extends IsometricRenderer {
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
         engine.renderSprite(
-          image: GameImages.atlas_gameobjects,
+          image: Images.atlas_gameobjects,
           srcX: 1920,
           srcY: (character.frame % 8) * 43.0,
           dstX: character.renderX,
@@ -51,7 +51,7 @@ class RendererCharacters extends IsometricRenderer {
       }
       if (character.characterType == CharacterType.Slime) {
         engine.renderSprite(
-          image: GameImages.atlas_gameobjects,
+          image: Images.atlas_gameobjects,
           srcX: 3040,
           srcY: (character.frame % 6) * 48.0,
           dstX: character.renderX,
@@ -63,7 +63,7 @@ class RendererCharacters extends IsometricRenderer {
         return;
       }
       engine.renderSprite(
-        image: GameImages.atlas_characters,
+        image: Images.atlas_characters,
         srcX: 513,
         srcY: (character.frame % 8) * 73.0,
         dstX: character.renderX,
@@ -91,7 +91,7 @@ class RendererCharacters extends IsometricRenderer {
         break;
       case CharacterType.Triangle:
         engine.renderSpriteRotated(
-          image: GameImages.atlas_characters,
+          image: Images.atlas_characters,
           srcX: 0,
           srcY: 512,
           srcWidth: 32,
@@ -116,7 +116,7 @@ class RendererCharacters extends IsometricRenderer {
 
     if (character.state == CharacterState.Idle){
       engine.renderSprite(
-        image: GameImages.character_dog,
+        image: Images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -134,7 +134,7 @@ class RendererCharacters extends IsometricRenderer {
       const frames = const [4, 5];
       final frame = frames[(character.frame % 2)];
       engine.renderSprite(
-        image: GameImages.character_dog,
+        image: Images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: frame * Src_Size,
@@ -157,7 +157,7 @@ class RendererCharacters extends IsometricRenderer {
         frame = frames[frame];
       }
       engine.renderSprite(
-        image: GameImages.character_dog,
+        image: Images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: frame * Src_Size,
@@ -173,7 +173,7 @@ class RendererCharacters extends IsometricRenderer {
 
     if (character.state == CharacterState.Hurt) {
       engine.renderSprite(
-        image: GameImages.character_dog,
+        image: Images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: Src_Size,
@@ -190,7 +190,7 @@ class RendererCharacters extends IsometricRenderer {
     if (character.state == CharacterState.Stunned){
       gamestream.isometric.renderer.renderStarsV3(character);
       engine.renderSprite(
-        image: GameImages.character_dog,
+        image: Images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -238,7 +238,7 @@ class RendererCharacters extends IsometricRenderer {
     final shadowZ = character.z;
 
     engine.renderSprite(
-      image: GameImages.zombie_shadow,
+      image: Images.zombie_shadow,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
@@ -251,7 +251,7 @@ class RendererCharacters extends IsometricRenderer {
     );
 
     engine.renderSprite(
-      image: GameImages.zombie,
+      image: Images.zombie,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
@@ -307,7 +307,7 @@ class RendererCharacters extends IsometricRenderer {
   void renderCharacterRat(IsometricCharacter character){
     if (character.state == CharacterState.Running){
       engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
+        image: Images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -322,7 +322,7 @@ class RendererCharacters extends IsometricRenderer {
 
     if (character.state == CharacterState.Performing){
       engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
+        image: Images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 2680,
@@ -336,7 +336,7 @@ class RendererCharacters extends IsometricRenderer {
     }
 
     engine.renderSprite(
-      image: GameImages.atlas_gameobjects,
+      image: Images.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,

@@ -26,7 +26,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     if (weaponType == WeaponType.Unarmed) return;
     const Sprite_Size = 125.0;
     engine.renderSprite(
-        image: GameImages.getImageForWeaponType(weaponType),
+        image: Images.getImageForWeaponType(weaponType),
         srcX: frame * Sprite_Size,
         srcY: direction * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -177,7 +177,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       final shadowZ = character.z;
 
       engine.renderSprite(
-        image: GameImages.template_shadow,
+        image: Images.template_shadow,
         srcX: frameLegs * 64,
         srcY: upperBodyDirection * 64,
         srcWidth: 64,
@@ -191,7 +191,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     }
 
     engine.renderSprite(
-        image: GameImages.getImageForLegType(character.legType),
+        image: Images.getImageForLegType(character.legType),
         srcX: frameLegs * Sprite_Size,
         srcY: directionLegs * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -203,7 +203,7 @@ extension RenderCharactersTemplate on RendererCharacters {
         anchorY: Anchor_Y
     );
     engine.renderSprite(
-        image: GameImages.getImageForBodyType(character.bodyType),
+        image: Images.getImageForBodyType(character.bodyType),
         srcX: frameBody * Sprite_Size,
         srcY: directionBody * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -219,7 +219,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     // GameRender.renderTextV3(character, gamestream.isometricEngine.nodes.nodeAlps[character.nodeIndex - gamestream.isometricEngine.nodes.area], offsetY: -80);
 
     engine.renderSprite(
-        image: GameImages.getImageForHeadType(character.headType),
+        image: Images.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
         srcY: directionHead * Sprite_Size,
         srcWidth: Sprite_Size,

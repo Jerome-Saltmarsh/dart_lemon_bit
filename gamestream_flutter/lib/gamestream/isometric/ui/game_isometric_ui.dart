@@ -155,7 +155,7 @@ class GameIsometricUI {
           final isPlayer = player.isCharacter(character);
           engine.renderExternalCanvas(
               canvas: canvas,
-              image: GameImages.atlas_gameobjects,
+              image: Images.atlas_gameobjects,
               srcX: 0,
               srcY: isPlayer ? 96 : character.allie ? 81 : 72,
               srcWidth: 8,
@@ -390,7 +390,7 @@ class GameIsometricUI {
       {double scale = 1, int color = 1}) =>
       FittedBox(
         child: engine.buildAtlasImage(
-          image: GameImages.atlas_icons,
+          image: Images.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
           srcWidth: AtlasIcons.getSrcWidth(iconType),
@@ -409,7 +409,7 @@ class GameIsometricUI {
 
     return FittedBox(
         child: engine.buildAtlasImage(
-          image: GameImages.getImageForGameObject(type),
+          image: Images.getImageForGameObject(type),
           srcX: src[Atlas.SrcX],
           srcY: src[Atlas.SrcY],
           srcWidth: src[Atlas.SrcWidth],
@@ -420,7 +420,7 @@ class GameIsometricUI {
   }
 
   static Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
-    image: GameImages.atlas_nodes,
+    image: Images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
     srcWidth: AtlasNodeWidth.mapNodeType(nodeType),

@@ -10,27 +10,21 @@ import 'render/renderer_nodes.dart';
 
 class IsometricScene {
 
-  // VARIABLES
-  var hsv_color_red  = HSVColor.fromColor(Color.fromRGBO(232, 59, 59, 0.5));
-  var hsv_color_blue  = HSVColor.fromColor(Color.fromRGBO(77, 155, 230, 0.5));
-  var hsv_color_purple  = HSVColor.fromColor(Color.fromRGBO(168, 132, 243, 0.5));
-  var hsv_color_yellow  = HSVColor.fromColor(Color.fromRGBO(251, 255, 134, 0.5));
-
-  var ambient_color_rgb  = Color.fromRGBO(31, 1, 86, 0.5);
-  late var ambient_color_hsv  = HSVColor.fromColor(ambient_color_rgb);
-  late var ambient_hue        = ((ambient_color_hsv.hue)).round();
-  late var ambient_sat        = (ambient_color_hsv.saturation * 100).round();
-  late var ambient_val        = (ambient_color_hsv.value * 100).round();
-  late var ambient_alp        = (ambient_color_hsv.alpha * 255).round();
+  var ambientColorRGB  = Color.fromRGBO(31, 1, 86, 0.5);
+  late var ambientColorHSV  = HSVColor.fromColor(ambientColorRGB);
+  late var ambientHue        = ((ambientColorHSV.hue)).round();
+  late var ambientSaturation        = (ambientColorHSV.saturation * 100).round();
+  late var ambientValue        = (ambientColorHSV.value * 100).round();
+  late var ambientAlpha        = (ambientColorHSV.alpha * 255).round();
   var ambientColor      = 0;
 
   var nodesLightSources = Uint16List(0);
   var nodesLightSourcesTotal = 0;
   var nodeColors = Uint32List(0);
-  var hsv_hue = Uint16List(0);
-  var hsv_saturation = Uint8List(0);
-  var hsv_values = Uint8List(0);
-  var hsv_alphas = Uint8List(0);
+  var hsvHue = Uint16List(0);
+  var hsvSaturation = Uint8List(0);
+  var hsvValues = Uint8List(0);
+  var hsvAlphas = Uint8List(0);
   var nodeOrientations = Uint8List(0);
   var nodeTypes = Uint8List(0);
   var nodeVariations = Uint8List(0);
@@ -58,66 +52,66 @@ class IsometricScene {
   var torch_emission_intensity = 1.0;
 
   final shadow = IsometricPosition();
-  late var interpolation_length = 6;
+  late var interpolationLength = 6;
 
-  late final Watch<EaseType> interpolation_ease_type = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
+  late final Watch<EaseType> interpolationEaseType = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEase(
-      length: interpolation_length,
+      length: interpolationLength,
       easeType: EaseType.In_Out_Quad,
     );
   });
 
   late var interpolations = interpolateEase(
-    length: interpolation_length,
-    easeType: interpolation_ease_type.value,
+    length: interpolationLength,
+    easeType: interpolationEaseType.value,
   );
 
   void setInterpolationLength(int value){
     if (value < 1) return;
-    if (interpolation_length == value) return;
-    interpolation_length = value;
+    if (interpolationLength == value) return;
+    interpolationLength = value;
     interpolations = interpolateEase(
-      length: interpolation_length,
-      easeType: interpolation_ease_type.value,
+      length: interpolationLength,
+      easeType: interpolationEaseType.value,
     );
   }
 
   // FUNCTIONS
 
   void resetNodeColorsToAmbient() {
-    ambient_alp = clamp(ambient_alp, 0, 255);
+    ambientAlpha = clamp(ambientAlpha, 0, 255);
     ambientColor = hsvToColor(
-        hue: ambient_hue,
-        saturation: ambient_sat,
-        value: ambient_val,
-        opacity: ambient_alp
+        hue: ambientHue,
+        saturation: ambientSaturation,
+        value: ambientValue,
+        opacity: ambientAlpha
     );
     colorStackIndex = -1;
 
     if (nodeColors.length != total) {
       colorStack = Uint16List(total);
       nodeColors = Uint32List(total);
-      hsv_hue = Uint16List(total);
-      hsv_saturation = Uint8List(total);
-      hsv_values = Uint8List(total);
-      hsv_alphas = Uint8List(total);
+      hsvHue = Uint16List(total);
+      hsvSaturation = Uint8List(total);
+      hsvValues = Uint8List(total);
+      hsvAlphas = Uint8List(total);
     }
     for (var i = 0; i < total; i++) {
       nodeColors[i] = ambientColor;
-      hsv_hue[i] = ambient_hue;
-      hsv_saturation[i] = ambient_sat;
-      hsv_values[i] = ambient_val;
-      hsv_alphas[i] = ambient_alp;
+      hsvHue[i] = ambientHue;
+      hsvSaturation[i] = ambientSaturation;
+      hsvValues[i] = ambientValue;
+      hsvAlphas[i] = ambientAlpha;
     }
   }
 
-  bool nodePerceptible(IsometricPosition position) {
+  bool isPerceptiblePosition(IsometricPosition position) {
     if (!RendererNodes.playerInsideIsland)
       return true;
     if (outOfBoundsPosition(position))
       return false;
 
-    final index = getNodeIndexPosition(position);
+    final index = getIndexPosition(position);
     final indexRow = getIndexRow(index);
     final indexColumn = getIndexRow(index);
     final i = indexRow * gamestream.isometric.scene.totalColumns + indexColumn;
@@ -151,12 +145,6 @@ class IsometricScene {
     }
   }
 
-  int getIndexXYZ(double x, double y, double z) =>
-      getIndex(x ~/ Node_Size, y ~/ Node_Size, z ~/ Node_Size_Half);
-
-  int getIndex(int row, int column, int z) =>
-      (row * totalColumns) + column + (z * area);
-
   void generateMiniMap(){
     if (miniMap.length != area){
       miniMap = Uint8List(area);
@@ -185,10 +173,10 @@ class IsometricScene {
     while (colorStackIndex >= 0) {
       final i = colorStack[colorStackIndex];
       nodeColors[i] = ambientColor;
-      hsv_hue[i] = ambient_hue;
-      hsv_saturation[i] = ambient_sat;
-      hsv_values[i] = ambient_val;
-      hsv_alphas[i] = ambient_alp;
+      hsvHue[i] = ambientHue;
+      hsvSaturation[i] = ambientSaturation;
+      hsvValues[i] = ambientValue;
+      hsvAlphas[i] = ambientAlpha;
       colorStackIndex--;
     }
     colorStackIndex = -1;
@@ -198,7 +186,7 @@ class IsometricScene {
     while (ambientStackIndex >= 0) {
       final i = ambientStack[ambientStackIndex];
       nodeColors[i] = ambientColor;
-      hsv_alphas[i] = ambient_alp;
+      hsvAlphas[i] = ambientAlpha;
       ambientStackIndex--;
     }
     ambientStackIndex = -1;
@@ -258,9 +246,9 @@ class IsometricScene {
           ambientStack[ambientStackIndex] = nodeIndex;
 
           final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
-          final nodeAlpha = hsv_alphas[nodeIndex];
+          final nodeAlpha = hsvAlphas[nodeIndex];
           if (nodeAlpha < alpha) continue;
-          hsv_alphas[nodeIndex] = Engine.linerInterpolationInt(hsv_alphas[nodeIndex], alpha      , intensity);
+          hsvAlphas[nodeIndex] = Engine.linerInterpolationInt(hsvAlphas[nodeIndex], alpha      , intensity);
           refreshNodeColor(nodeIndex);
         }
       }
@@ -270,19 +258,19 @@ class IsometricScene {
 
   void refreshNodeColor(int index) =>
       nodeColors[index] = hsvToColor(
-        hue: hsv_hue[index],
-        saturation: hsv_saturation[index],
-        value: hsv_values[index],
-        opacity: hsv_alphas[index],
+        hue: hsvHue[index],
+        saturation: hsvSaturation[index],
+        value: hsvValues[index],
+        opacity: hsvAlphas[index],
       );
 
 
   void refreshNodeColor2(int index) =>
       nodeColors[index] = hsvToColor(
-        hue: hsv_hue[index],
-        saturation: hsv_saturation[index],
-        value: hsv_values[index],
-        opacity: hsv_alphas[index],
+        hue: hsvHue[index],
+        saturation: hsvSaturation[index],
+        value: hsvValues[index],
+        opacity: hsvAlphas[index],
       );
 
 
@@ -332,7 +320,7 @@ class IsometricScene {
   }
 
   void markShadow(IsometricPosition position){
-    final index = getNodeIndexPosition(position) - area;
+    final index = getIndexPosition(position) - area;
     if (index < 0) return;
     if (index >= total) return;
 
@@ -356,8 +344,8 @@ class IsometricScene {
         if (searchColumn < 0) continue;
         if (searchColumn >= totalColumns) break;
         final searchIndex = rowAddition + column;
-        final alpha = hsv_alphas[searchIndex];
-        if (alpha >= ambient_alp) continue;
+        final alpha = hsvAlphas[searchIndex];
+        if (alpha >= ambientAlpha) continue;
         final x = (searchRow * Node_Size);
         final y = (searchColumn * Node_Size);
 
@@ -377,6 +365,26 @@ class IsometricScene {
     shadow.x = vx;
     shadow.y = vy;
     shadow.z = rad(vx, vy);
+  }
+
+  void applyEmissionsLightSources() {
+    for (var i = 0; i < nodesLightSourcesTotal; i++){
+      final nodeIndex = nodesLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+
+      switch (nodeType){
+        case NodeType.Torch:
+          emitLightAmbient(
+            index: nodeIndex,
+            alpha: Engine.linerInterpolationInt(
+              ambientHue,
+              0,
+              torch_emission_intensity,
+            ),
+          );
+          break;
+      }
+    }
   }
 
   int getIndexRow(int index) => (index % area) ~/ totalColumns;
@@ -452,10 +460,10 @@ class IsometricScene {
       }
     }
 
-    final h = Engine.linerInterpolationInt(ambient_hue, hue , intensity);
-    final s = Engine.linerInterpolationInt(ambient_sat, saturation, intensity);
-    final v = Engine.linerInterpolationInt(ambient_val, value, intensity);
-    final a = Engine.linerInterpolationInt(ambient_alp, alpha, intensity);
+    final h = Engine.linerInterpolationInt(ambientHue, hue , intensity);
+    final s = Engine.linerInterpolationInt(ambientSaturation, saturation, intensity);
+    final v = Engine.linerInterpolationInt(ambientValue, value, intensity);
+    final a = Engine.linerInterpolationInt(ambientAlpha, alpha, intensity);
 
     applyAHSV(
       index: index,
@@ -585,19 +593,19 @@ class IsometricScene {
     int vy = 0,
     int vz = 0,
   }){
-    assert (interpolation < interpolation_length);
+    assert (interpolation < interpolationLength);
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
     var paintBehindZ = vz == 0;
     var paintBehindRow = vx == 0;
     var paintBehindColumn = vy == 0;
 
-    while (interpolation < interpolation_length) {
+    while (interpolation < interpolationLength) {
 
       if (velocity == 0) return;
 
       interpolation += velocity;
-      if (interpolation >= interpolation_length) return;
+      if (interpolation >= interpolationLength) return;
 
       if (vx != 0){
         row += vx;
@@ -745,7 +753,7 @@ class IsometricScene {
         NodeType.Tree_Top,
       ].contains(nodeType)){
         interpolation += 2;
-        if (interpolation >= interpolation_length) return;
+        if (interpolation >= interpolationLength) return;
       }
 
       if (velocity > 1) {
@@ -776,19 +784,19 @@ class IsometricScene {
     int vz = 0,
 
   }){
-    assert (interpolation < interpolation_length);
+    assert (interpolation < interpolationLength);
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
     var paintBehindZ = vz == 0;
     var paintBehindRow = vx == 0;
     var paintBehindColumn = vy == 0;
 
-    while (interpolation < interpolation_length) {
+    while (interpolation < interpolationLength) {
 
       if (velocity == 0) return;
 
       interpolation += velocity;
-      if (interpolation >= interpolation_length) return;
+      if (interpolation >= interpolationLength) return;
 
       if (vx != 0){
         row += vx;
@@ -954,7 +962,7 @@ class IsometricScene {
         NodeType.Tree_Top,
       ].contains(nodeType)) {
         interpolation += 2;
-        if (interpolation >= interpolation_length) return;
+        if (interpolation >= interpolationLength) return;
       }
 
       if (velocity > 1) {
@@ -1001,8 +1009,8 @@ class IsometricScene {
     }
   }
 
-  bool isValidIndex(int index) => index >= 0 && index < total;
 
+  bool isValidIndex(int index) => index >= 0 && index < total;
 
   double getIndexRenderX(int index) =>
       IsometricRender.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));
@@ -1019,19 +1027,19 @@ class IsometricScene {
     if (index >= total) return;
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
-    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
-    final currentAlpha = hsv_alphas[index];
+    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambientAlpha, intensity);;
+    final currentAlpha = hsvAlphas[index];
     if (currentAlpha <= interpolatedAlpha) return;
-    final currentHue = hsv_hue[index];
-    if (currentHue != ambient_hue) return;
+    final currentHue = hsvHue[index];
+    if (currentHue != ambientHue) return;
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
-    hsv_alphas[index] = interpolatedAlpha;
+    hsvAlphas[index] = interpolatedAlpha;
     refreshNodeColor(index);
   }
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-      NodeType.isRainOrEmpty(getNodeTypeZRC(z, row, column));
+      NodeType.isRainOrEmpty(getTypeZRC(z, row, column));
 
   void applyAHSV({
     required int index,
@@ -1047,7 +1055,7 @@ class IsometricScene {
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
 
     var hueA = hue;
-    var hueB = hsv_hue[index];
+    var hueB = hsvHue[index];
     int hueI;
 
     if ((hueA - hueB).abs() > 180){
@@ -1061,15 +1069,15 @@ class IsometricScene {
       hueI = Engine.linerInterpolationInt(hueA, hueB, intensity);
     }
 
-    final interpolatedA = Engine.linerInterpolationInt(alpha, hsv_alphas[index], intensity);
-    final interpolatedS = Engine.linerInterpolationInt(saturation, hsv_saturation[index], intensity);
-    final interpolatedV = Engine.linerInterpolationInt(value, hsv_values[index], intensity);
+    final interpolatedA = Engine.linerInterpolationInt(alpha, hsvAlphas[index], intensity);
+    final interpolatedS = Engine.linerInterpolationInt(saturation, hsvSaturation[index], intensity);
+    final interpolatedV = Engine.linerInterpolationInt(value, hsvValues[index], intensity);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    hsv_alphas[index] = interpolatedA;
-    hsv_hue[index] = hueI;
-    hsv_saturation[index] = interpolatedS;
-    hsv_values[index] = interpolatedV;
+    hsvAlphas[index] = interpolatedA;
+    hsvHue[index] = hueI;
+    hsvSaturation[index] = interpolatedS;
+    hsvValues[index] = interpolatedV;
     refreshNodeColor2(index);
   }
 
@@ -1141,52 +1149,17 @@ class IsometricScene {
     return true;
   }
 
-  int getNodeTypeBelow(int index){
+  int getTypeBelow(int index){
     if (index < area) return NodeType.Boundary;
     final indexBelow = index - area;
     if (indexBelow >= total) return NodeType.Boundary;
     return nodeTypes[indexBelow];
   }
 
-  int getNodeIndexBelow(int index) => index - area;
+  int getIndexBelow(int index) => index - area;
 
-  bool inBoundsPosition(IsometricPosition position) =>
-      inBoundsXYZ(position.x, position.y, position.z);
-
-  bool inBoundsXYZ(double x, double y, double z) =>
-      x >= 0 &&
-      y >= 0 &&
-      z >= 0 &&
-      x < lengthRows &&
-      y < lengthColumns &&
-      z < lengthZ;
-
-  bool inBoundsZRC(int z, int row, int column) =>
-      z >= 0 &&
-      z < totalZ &&
-      row >= 0 &&
-      row < totalRows &&
-      column >= 0 &&
-      column < totalColumns;
-
-  int getNodeIndex(double x, double y, double z) =>
-      getNodeIndexZRC(
-        z ~/ Node_Size_Half,
-        x ~/ Node_Size,
-        y ~/ Node_Size,
-      );
-
-  int getNodeTypeXYZSafe(double x, double y, double z) =>
-      inBoundsXYZ(x, y, z) ? getNodeTypeXYZ(x, y, z) : NodeType.Boundary;
-
-  int getNodeTypeXYZ(double x, double y, double z) =>
-      nodeTypes[getNodeIndexXYZ(x, y, z)];
-
-  int getNodeTypeZRC(int z, int row, int column) =>
-      nodeTypes[getNodeIndexZRC(z, row, column)];
-
-  int getNodeIndexBelowPosition(IsometricPosition position) =>
-      getNodeIndexZRC(
+  int getIndexBelowPosition(IsometricPosition position) =>
+      getIndexZRC(
         position.indexZ - 1,
         position.indexRow,
         position.indexColumn,
@@ -1206,36 +1179,8 @@ class IsometricScene {
     if (column >= totalColumns)
       return;
 
-    nodeTypes[getNodeIndexZRC(z, row, column)] = type;
+    nodeTypes[getIndexZRC(z, row, column)] = type;
   }
-
-  int getNodeIndexPosition(IsometricPosition position) =>
-      getNodeIndexZRC(
-        position.indexZ,
-        position.indexRow,
-        position.indexColumn,
-      );
-
-  int getNodeIndexXYZ(double x, double y, double z) =>
-      getNodeIndexZRC(
-        z ~/ Node_Size_Half,
-        x ~/ Node_Size,
-        y ~/ Node_Size,
-      );
-
-  int getNodeIndexZRC(int z, int row, int column) =>
-      (z * area) + (row * totalColumns) + column;
-
-  bool outOfBoundsPosition(IsometricPosition position) =>
-      outOfBoundsXYZ(position.x, position.y, position.z);
-
-  bool outOfBoundsXYZ(double x, double y, double z) =>
-      z < 0 ||
-      y < 0 ||
-      z < 0 ||
-      z >= lengthZ ||
-      x >= lengthRows ||
-      y >= lengthColumns;
 
   int convertNodeIndexToIndexY(int index) =>
       index -
@@ -1251,27 +1196,7 @@ class IsometricScene {
   int getRenderColorPosition(IsometricPosition position) =>
       outOfBoundsPosition(position)
           ? ambientColor
-          : nodeColors[getNodeIndexPosition(position)];
-
-  void applyEmissionsLightSources() {
-    for (var i = 0; i < nodesLightSourcesTotal; i++){
-      final nodeIndex = nodesLightSources[i];
-      final nodeType = nodeTypes[nodeIndex];
-
-      switch (nodeType){
-        case NodeType.Torch:
-          emitLightAmbient(
-            index: nodeIndex,
-            alpha: Engine.linerInterpolationInt(
-              ambient_hue,
-              0,
-              torch_emission_intensity,
-            ),
-          );
-          break;
-      }
-    }
-  }
+          : nodeColors[getIndexPosition(position)];
 
   void refreshBakeMapLightSources() {
     nodesLightSourcesTotal = 0;
@@ -1287,6 +1212,63 @@ class IsometricScene {
     }
   }
 
+  bool outOfBoundsPosition(IsometricPosition position) =>
+      outOfBoundsXYZ(position.x, position.y, position.z);
+
+  int getTypeXYZSafe(double x, double y, double z) =>
+      inBoundsXYZ(x, y, z) ? getTypeXYZ(x, y, z) : NodeType.Boundary;
+
+  int getTypeXYZ(double x, double y, double z) =>
+      nodeTypes[getIndexXYZ(x, y, z)];
+
+  bool inBoundsPosition(IsometricPosition position) =>
+      inBoundsXYZ(position.x, position.y, position.z);
+
+  bool inBoundsXYZ(double x, double y, double z) =>
+      x >= 0 &&
+          y >= 0 &&
+          z >= 0 &&
+          x < lengthRows &&
+          y < lengthColumns &&
+          z < lengthZ;
+
+
+  bool inBoundsZRC(int z, int row, int column) =>
+      z >= 0 &&
+          z < totalZ &&
+          row >= 0 &&
+          row < totalRows &&
+          column >= 0 &&
+          column < totalColumns;
+
+
+  int getIndexPosition(IsometricPosition position) =>
+      getIndexZRC(
+        position.indexZ,
+        position.indexRow,
+        position.indexColumn,
+      );
+
+  int getIndexXYZ(double x, double y, double z) =>
+      getIndexZRC(
+        z ~/ Node_Size_Half,
+        x ~/ Node_Size,
+        y ~/ Node_Size,
+      );
+
+  int getTypeZRC(int z, int row, int column) =>
+      nodeTypes[getIndexZRC(z, row, column)];
+
+  int getIndexZRC(int z, int row, int column) =>
+      (z * area) + (row * totalColumns) + column;
+
+  bool outOfBoundsXYZ(double x, double y, double z) =>
+      z < 0 ||
+      y < 0 ||
+      z < 0 ||
+      z >= lengthZ ||
+      x >= lengthRows ||
+      y >= lengthColumns;
 }
 
 

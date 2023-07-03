@@ -208,7 +208,7 @@ extension IsometricEditorUI on IsometricEditor {
                 child: Stack(
                   children: [
                     engine.buildAtlasImage(
-                      image: GameImages.atlas_icons,
+                      image: Images.atlas_icons,
                       srcX: 193,
                       srcY: 32,
                       srcWidth: 96,
@@ -644,7 +644,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildButtonSelectNodeType(int nodeType) {
     final canvas = engine.buildAtlasImage(
-      image: GameImages.atlas_nodes,
+      image: Images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -718,7 +718,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildOrientationIcon(int orientation) {
 
     final canvas = engine.buildAtlasImage(
-      image: GameImages.atlas_nodes,
+      image: Images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: GameIsometricConstants.Sprite_Width,
@@ -848,7 +848,7 @@ extension IsometricEditorUI on IsometricEditor {
   }) =>
       engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: 304,
         srcY: 32,
         srcWidth: 48,
@@ -864,7 +864,7 @@ extension IsometricEditorUI on IsometricEditor {
   }) =>
       engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlas_icons,
+        image: Images.atlas_icons,
         srcX: 352,
         srcY: 32,
         srcWidth: 48,
@@ -1188,7 +1188,7 @@ extension IsometricEditorUI on IsometricEditor {
                     width: 16,
                     height: 16,
                     child: engine.buildAtlasImageButton(
-                      image: GameImages.atlas_icons,
+                      image: Images.atlas_icons,
                       srcX: 80,
                       srcY: 96,
                       srcWidth: 16,

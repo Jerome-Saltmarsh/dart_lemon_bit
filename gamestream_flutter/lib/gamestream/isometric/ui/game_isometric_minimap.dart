@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/src.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_images.dart';
+import 'package:gamestream_flutter/images.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 
 class IsometricMinimap {
@@ -90,6 +90,6 @@ class IsometricMinimap {
     ..strokeWidth = 1;
 
   void renderCanvas(Canvas canvas){
-    canvas.drawRawAtlas(GameImages.atlas_nodes_mini, dst, src, null, null, null, paint);
+    canvas.drawRawAtlas(Images.atlas_nodes_mini, dst, src, null, null, null, paint);
   }
 }

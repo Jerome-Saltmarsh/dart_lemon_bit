@@ -10,7 +10,7 @@ class IsometricUI {
 
   Widget buildImageGameObject(int objectType) =>
       buildImageFromSrc(
-          GameImages.atlas_gameobjects,
+          Images.atlas_gameobjects,
           Atlas.getSrc(GameObjectType.Object, objectType),
       );
 

@@ -55,7 +55,7 @@ class GameFight2D extends Game {
          }[nodeType] ?? 0;
 
          engine.renderSprite(
-             image: GameImages.atlas_fight2d_nodes,
+             image: Images.atlas_fight2d_nodes,
              srcX: srcY,
              srcY: 0,
              srcWidth: 34,
@@ -105,7 +105,7 @@ class GameFight2D extends Game {
       };
 
       engine.renderSprite(
-          image: GameImages.atlas_fight2d_character,
+          image: Images.atlas_fight2d_character,
           srcX: frame * frameSize,
           srcY:  characterDirection[i] == GameFight2DDirection.Left ? 0 : frameSize,
           srcWidth: frameSize,

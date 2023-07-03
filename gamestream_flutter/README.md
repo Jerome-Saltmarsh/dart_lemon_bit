@@ -10,12 +10,18 @@ alt + m             : go to declaration
 
 [MAJ1K]
 
+[CLIENT]
+  [ ] remove lemon engine global instance
+  [ ] remove gamestream global instance
+  [ ] remove static instances
+
 [ISOMETRIC]
   [x] refactor item type
   [x] remove character template class
   [x] pathfinding 3d
   [x] refactor flutter isometric position 
-  [ ] merge interact logic into isometric character 
+  [ ] merge interact logic into isometric collider
+  [ ] implement isometric ability
   [ ] 3d model alien creature
   [ ] destructable structures
 
