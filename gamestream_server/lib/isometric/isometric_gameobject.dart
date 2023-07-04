@@ -26,7 +26,8 @@ class IsometricGameObject extends IsometricCollider {
     required int type,
     required this.subType,
     required this.id,
-  }) : super(x: x, y: y, z: z, radius: 15) {
+    double radius = 15.0,
+  }) : super(x: x, y: y, z: z, radius: radius) {
     this.type = type;
     team = TeamType.Alone;
     startX = x;

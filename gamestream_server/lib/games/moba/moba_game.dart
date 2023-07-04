@@ -9,45 +9,77 @@ class MobaGame extends IsometricGame<MobaPlayer> {
 
   static const Creeps_Per_Spawn = 3;
 
-  late final IsometricGameObject teamRedBase;
-  late final IsometricGameObject teamBlueBase;
+  late final IsometricGameObject redSpawn;
+  late final IsometricGameObject blueSpawn;
 
-  static const Team_Red = 10;
-  static const Team_Blue = 20;
+  late final IsometricGameObject redBase;
+  late final IsometricGameObject blueBase;
+
+  static const redTeam = 10;
+  static const blueTeam = 20;
+
+  static const Teams = [redTeam, blueTeam];
 
   MobaGame({
     required super.scene,
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Moba) {
+    redBase = IsometricGameObject(
+      x: scene.rowLength - 300,
+      y: 100,
+      z: 24,
+      type: GameObjectType.Object,
+      subType: ObjectType.Base_Red,
+      id: generateUniqueId(),
+      radius: 80,
+    )
+      ..fixed = true
+      ..physical = true
+      ..hitable = true
+      ..collidable = true;
 
-    teamRedBase = IsometricGameObject(
+    blueBase = IsometricGameObject(
+      x: 300,
+      y: scene.columnLength - 100,
+      z: 24,
+      type: GameObjectType.Object,
+      subType: ObjectType.Base_Red,
+      id: generateUniqueId(),
+      radius: 80,
+    )
+      ..fixed = true
+      ..physical = true
+      ..hitable = true
+      ..collidable = true;
+
+    redSpawn = IsometricGameObject(
         x: scene.rowLength - 100,
         y: 100,
         z: 24,
         type: GameObjectType.Object,
-        subType: ObjectType.Base_Red,
+        subType: ObjectType.Spawn_Red,
         id: generateUniqueId(),
     )
       ..fixed = true
       ..physical = false
       ..collidable = false;
 
-    teamRedBase.hitable = true;
-
-    teamBlueBase = IsometricGameObject(
+    blueSpawn = IsometricGameObject(
         x: 100,
         y: scene.columnLength - 100,
         z: 24,
         type: GameObjectType.Object,
-        subType: ObjectType.Base_Blue,
+        subType: ObjectType.Spawn_Blue,
         id: generateUniqueId(),
     ) ..fixed = true
       ..physical = false
       ..collidable = false;
 
-    gameObjects.add(teamRedBase);
-    gameObjects.add(teamBlueBase);
+    gameObjects.add(redBase);
+    gameObjects.add(blueBase);
+    gameObjects.add(redSpawn);
+    gameObjects.add(blueSpawn);
 
     addJob(seconds: 10, action: spawnCreeps, repeat: true);
   }
@@ -56,32 +88,25 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   int get maxPlayers => 10;
 
   void spawnCreeps() {
-    for (var i = 0; i < Creeps_Per_Spawn; i++){
-      spawn(MobaCreep(
-        game: this,
-        health: 10,
-        weaponDamage: 1,
-        team: Team_Red,
-      )
-      );
-
-      spawn(MobaCreep(
-        game: this,
-        health: 10,
-        weaponDamage: 1,
-        team: Team_Blue,
-      )
-      );
+    for (final team in Teams) {
+      for (var i = 0; i < Creeps_Per_Spawn; i++) {
+        spawn(MobaCreep(
+          game: this,
+          health: 10,
+          weaponDamage: 1,
+          team: team,
+        ));
+      }
     }
   }
 
   @override
   MobaPlayer buildPlayer() {
     final player = MobaPlayer(game: this);
-    player.x = teamRedBase.x;
-    player.y = teamRedBase.y;
-    player.z = teamRedBase.z;
-    player.team = Team_Red;
+    player.x = redSpawn.x;
+    player.y = redSpawn.y;
+    player.z = redSpawn.z;
+    player.team = redTeam;
     return player;
   }
 }

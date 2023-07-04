@@ -24,13 +24,13 @@ class MobaCreep extends IsometricZombie {
     setDestinationToCurrentPosition();
   }
 
-  bool get isTeamBlue => team == MobaGame.Team_Blue;
+  bool get isTeamBlue => team == MobaGame.blueTeam;
 
-  bool get isTeamRed => team == MobaGame.Team_Red;
+  bool get isTeamRed => team == MobaGame.redTeam;
 
-  IsometricGameObject get baseEnemy => isTeamBlue ? game.teamRedBase : game.teamBlueBase;
+  IsometricGameObject get baseEnemy => isTeamBlue ? game.redBase : game.blueBase;
 
-  IsometricGameObject get baseOwn => isTeamBlue ? game.teamBlueBase : game.teamRedBase;
+  IsometricGameObject get baseOwn => isTeamBlue ? game.blueBase : game.redBase;
 
   @override
   void customOnUpdate() {

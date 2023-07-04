@@ -720,6 +720,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       final gameObject = selectedCollider;
       writeByte(IsometricType.GameObject);
       writeString(gameObject.runtimeType.toString());
+      writeUInt16(gameObject.radius.toInt());
       writeIsometricPosition(gameObject);
       writeByte(gameObject.type);
       writeByte(gameObject.subType);
@@ -730,6 +731,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       final character = selectedCollider;
       writeByte(IsometricType.Character);
       writeString(character.runtimeType.toString());
+      writeUInt16(character.radius.toInt());
       writeIsometricPosition(character);
       writeInt16(character.runX.toInt());
       writeInt16(character.runY.toInt());

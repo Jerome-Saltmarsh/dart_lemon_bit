@@ -10,6 +10,7 @@ import '../isometric_render.dart';
 
 class IsometricDebug {
   final tab = Watch(DebugTab.Selected);
+  final radius = Watch(0);
   final position = IsometricPosition();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
@@ -61,7 +62,7 @@ class IsometricDebug {
       x.value,
       y.value,
       z.value,
-      40,
+      radius.value.toDouble(),
     );
 
     if (selectedColliderType.value == IsometricType.Character) {
