@@ -268,18 +268,33 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
-    player.lookAtMouse();
+    if (player.target == null){
+      player.lookAtMouse();
+    }
+
 
     if (mouseLeftDown) {
-      player.setDestinationToMouse();
-      player.runToDestinationEnabled = true;
+      final aimTarget = player.aimTarget;
+      if (aimTarget == null){
+        player.setDestinationToMouse();
+        player.runToDestinationEnabled = true;
+        player.pathFindingEnabled = false;
+        player.target = null;
+      } else {
+        player.target = aimTarget;
+        player.runToDestinationEnabled = true;
+        player.pathFindingEnabled = false;
+      }
+      return;
     }
 
     if (direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;
       characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else if (!player.runToDestinationEnabled){
-      player.setCharacterStateIdle();
+      if (player.target == null){
+        player.setCharacterStateIdle();
+      }
     }
   }
 
@@ -1665,6 +1680,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateColliderPhysics(character);
 
 
+    if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
+      character.attackTargetEnemy(this);
+    }
 
     if (character.autoTarget && character.autoTargetTimer-- <= 0){
       character.autoTargetTimer = character.autoTargetTimerDuration;
@@ -1720,10 +1738,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
         if (character.targetWithinRadius(Node_Size)) {
           character.setDestinationToTarget();
-        }
-
-        if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
-          character.attackTargetEnemy(this);
         }
 
         character.pathTargetIndex = scene.getIndexPosition(target);

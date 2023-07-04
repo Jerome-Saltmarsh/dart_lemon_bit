@@ -450,14 +450,7 @@ abstract class IsometricCharacter extends IsometricCollider {
         target is IsometricCollider &&
         targetIsEnemy &&
         target.hitable &&
-        enemyTargetWithinAttackRange;
-  }
-
-  bool get enemyTargetWithinAttackRange {
-    final target = this.target;
-    if (target == null) return false;
-    if (!isEnemy(target)) return false;
-    return getDistanceSquared(target) < weaponRangeSquared;
+        targetWithinAttackRange;
   }
 
   void attackTargetEnemy(IsometricGame game){
@@ -465,7 +458,12 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (target == null) return;
     idle();
     face(target);
-    game.characterUseWeapon(this);
+
+    if (characterTypeTemplate){
+      game.characterUseWeapon(this);
+    } else {
+      setCharacterStatePerforming(duration: weaponCooldown);
+    }
   }
 
   void idle() {

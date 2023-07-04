@@ -6,6 +6,9 @@ class MobaPlayer extends IsometricPlayer {
   MobaCharacterClass? characterClass;
 
   MobaPlayer({required super.game}) {
-
+    weaponType = WeaponType.Sword;
+    weaponDamage = 1;
+    weaponCooldown = 20;
+    weaponRange = 30;
   }
 }

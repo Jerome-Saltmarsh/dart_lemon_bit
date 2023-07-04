@@ -41,7 +41,7 @@ class IsometricZombie extends IsometricCharacter {
       applyHitToTarget();
     }
 
-    if (targetWithinAttackRange){
+    if (targetIsEnemy && targetWithinAttackRange){
       attackTarget();
       return;
     }
