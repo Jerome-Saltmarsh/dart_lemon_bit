@@ -416,7 +416,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           src: character,
           angle: character.lookRadian,
         );
-        character.assignWeaponStateFiring();
+        character.weaponState = WeaponState.Firing;
         return;
       case WeaponType.Staff:
         spawnProjectileFireball(
@@ -425,7 +425,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           damage: character.weaponDamage,
           range: character.weaponRange,
         );
-        character.assignWeaponStateFiring();
+        character.weaponState = WeaponState.Firing;
         break;
       case WeaponType.Bow:
         spawnProjectileArrow(
@@ -434,7 +434,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           range: character.weaponRange,
           angle: character.lookRadian,
         );
-        character.assignWeaponStateFiring();
+        character.weaponState = WeaponState.Firing;
         break;
     }
   }
@@ -521,7 +521,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.lookRadian,
     );
 
-    player.assignWeaponStateThrowing();
+    player.weaponState = WeaponState.Throwing;
 
     final mouseDistance = player.getDistanceXY(player.mouseSceneX, player.mouseSceneY);
     final throwDistance = min(mouseDistance, IsometricPhysics.Max_Throw_Distance);
@@ -565,7 +565,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterUseFlamethrower(IsometricCharacter character) {
     dispatchAttackPerformedCharacter(character);
-    character.assignWeaponStateFiring();
+    character.weaponState = WeaponState.Firing;
 
     spawnProjectileFireball(
       src: character,
@@ -577,7 +577,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterUseBazooka(IsometricCharacter character) {
     dispatchAttackPerformedCharacter(character);
-    character.assignWeaponStateFiring();
+    character.weaponState = WeaponState.Firing;
     spawnProjectileRocket(character, damage: 3, range: character.weaponRange);
   }
 
@@ -653,7 +653,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
 
-    character.assignWeaponStateMelee();
+    character.weaponState = WeaponState.Melee;
 
     dispatchMeleeAttackPerformed(
       character.weaponType,
@@ -854,7 +854,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    character.assignWeaponStateFiring();
+    character.weaponState = WeaponState.Firing;
     character.applyForce(
       force: 1.0,
       angle: angle + pi,
@@ -1394,7 +1394,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void setCharacterStateChanging(IsometricCharacter character) {
     if (!character.canChangeEquipment) return;
-    character.assignWeaponStateChanging();
+    character.weaponState = WeaponState.Changing;
     dispatchV3(GameEventType.Character_Changing, character);
   }
 
@@ -1889,7 +1889,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         damage: src.weaponDamage,
       );
     }
-    src.assignWeaponStateFiring();
+
+    src.weaponState = WeaponState.Firing;
     dispatchAttackPerformed(
       src.weaponType,
       src.x + adj(angle, 60),

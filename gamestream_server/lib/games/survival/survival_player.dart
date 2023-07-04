@@ -86,7 +86,7 @@ class SurvivalPlayer extends IsometricPlayer {
       _equippedWeaponIndex = index;
       weaponType = itemTypeAtIndex;
       inventoryDirty = true;
-      assignWeaponStateChanging();
+      weaponState = WeaponState.Changing;
       game.dispatchV3(GameEventType.Character_Changing, this);
       refreshDamage();
       return;
@@ -517,8 +517,7 @@ class SurvivalPlayer extends IsometricPlayer {
     // if (weaponsSwapped && ItemType.isTypeWeapon(indexAType) && ItemType.isTypeWeapon(indexBType)) {
     //   equippedWeaponIndex = currentEquippedWeaponIndex;
     // }
-
-    assignWeaponStateChanging();
+    weaponState = WeaponState.Changing;
     game.dispatchV3(GameEventType.Character_Changing, this);
   }
 

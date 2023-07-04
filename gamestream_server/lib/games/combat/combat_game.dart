@@ -552,7 +552,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
           src: character,
           angle: character.lookRadian,
         );
-        character.assignWeaponStateFiring();
+        character.weaponState = WeaponState.Firing;
         return;
       case WeaponType.Staff:
         spawnProjectileFireball(
@@ -561,7 +561,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
           damage: character.weaponDamage,
           range: character.weaponRange,
         );
-        character.assignWeaponStateFiring();
+        character.weaponState = WeaponState.Firing;
         break;
       case WeaponType.Bow:
         spawnProjectileArrow(
@@ -570,7 +570,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
           range: character.weaponRange,
           angle: character.lookRadian,
         );
-        character.assignWeaponStateFiring();
+        character.weaponState = WeaponState.Firing;
         break;
     }
   }

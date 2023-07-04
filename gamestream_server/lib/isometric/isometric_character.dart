@@ -240,26 +240,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   void set faceAngle(double value) =>
       _faceAngle = value % pi2;
 
-  void assignWeaponStateChanging() {
-      weaponState = WeaponState.Changing;
-      weaponStateDurationTotal = 20;
-  }
-
-  void assignWeaponStateFiring() {
-    weaponState = WeaponState.Firing;
-    weaponStateDurationTotal = weaponCooldown;
-  }
-
-  void assignWeaponStateThrowing() {
-    weaponState = WeaponState.Throwing;
-    weaponStateDurationTotal = weaponCooldown;
-  }
-
-  void assignWeaponStateMelee() {
-    weaponState = WeaponState.Melee;
-    weaponStateDurationTotal = weaponCooldown;
-  }
-
   int getWeaponStateDurationTotal(int weaponState) =>
       switch(weaponState) {
         WeaponState.Melee => weaponCooldown,
@@ -358,7 +338,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     if (weaponStateDuration < weaponStateDurationTotal) {
       weaponStateDuration++;
-      if (weaponStateDuration == weaponStateDuration) {
+      if (weaponStateDuration == weaponStateDurationTotal) {
         switch (weaponState) {
           case WeaponState.Firing:
             weaponState = WeaponState.Aiming;
