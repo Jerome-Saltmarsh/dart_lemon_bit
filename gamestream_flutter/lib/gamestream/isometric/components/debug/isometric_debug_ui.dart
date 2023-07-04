@@ -296,6 +296,16 @@ extension isometricDebugUI on IsometricDebug {
     required Watch<String> watch,
   }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
 
+  static Widget buildRowText({required String text, required String value}) => Container(
+    margin: const EdgeInsets.only(bottom: 2),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildValue(buildText(text), color: Colors.black12),
+        buildValue(buildText(value)),
+      ],
+    ),
+  );
   static Widget buildRow({required String text, required Widget value}) => Container(
     margin: const EdgeInsets.only(bottom: 2),
     child: Row(
@@ -399,6 +409,8 @@ extension isometricDebugUI on IsometricDebug {
           ),
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
+        buildWatch(healthMax, (healthMax) => buildWatch(health, (health) =>
+            buildRowText(text: 'health', value: '$health / $healthMax'))),
         buildRowWatchInt(text: 'radius', watch: radius),
         buildRowWatchDouble(text: 'x', watch: x, ),
         buildRowWatchDouble(text: 'y', watch: y),

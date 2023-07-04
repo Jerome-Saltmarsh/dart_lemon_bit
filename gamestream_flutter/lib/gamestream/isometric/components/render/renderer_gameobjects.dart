@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_positi
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import '../functions/format_percentage.dart';
 import 'functions/render_shadow.dart';
 
 class RendererGameObjects extends IsometricRenderer {
@@ -38,6 +39,16 @@ class RendererGameObjects extends IsometricRenderer {
           ? scene.getRenderColorPosition(gameObject)
           : gameObject.emissionColor,
     );
+
+
+    if (gameObject.maxHealth > 0) {
+        renderer.renderHealthBarPosition(
+          position: gameObject,
+          percentage: gameObject.healthPercentage,
+        );
+        renderer.renderTextPosition(gameObject, formatPercentage(gameObject.healthPercentage));
+    }
+
     //
     // switch (type) {
     //

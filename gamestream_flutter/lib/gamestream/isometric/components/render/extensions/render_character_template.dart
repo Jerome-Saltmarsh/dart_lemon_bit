@@ -150,8 +150,8 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     final invisible = false;
 
-    final dstX = IsometricRender.convertV3ToRenderX(character);
-    final dstY = IsometricRender.convertV3ToRenderY(character);
+    final dstX = IsometricRender.getPositionRenderX(character);
+    final dstY = IsometricRender.getPositionRenderY(character);
 
     const Color_Invisible = GameIsometricColors.White38_Value;
     final color = invisible ? Color_Invisible : gamestream.isometric.scene.getRenderColorPosition(character);

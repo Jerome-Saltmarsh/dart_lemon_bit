@@ -2,11 +2,14 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../ui/game_isometric_constants.dart';
@@ -150,11 +153,11 @@ class IsometricRender {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
 
-  void renderTextV3(IsometricPosition v3, dynamic text, {double offsetY = 0}){
+  void renderTextPosition(IsometricPosition v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
-      x: IsometricRender.convertV3ToRenderX(v3),
-      y: IsometricRender.convertV3ToRenderY(v3) + offsetY,
+      x: IsometricRender.getPositionRenderX(v3),
+      y: IsometricRender.getPositionRenderY(v3) + offsetY,
     );
   }
 
@@ -487,15 +490,19 @@ class IsometricRender {
     gamestream.isometric.renderer.renderCircle32(x1, y1, z);
   }
 
-  void renderCharacterHealthBar(IsometricCharacter character){
-    renderBarGreen(character.x, character.y, character.z, character.health);
-  }
+  void renderCharacterHealthBar(IsometricCharacter character) =>
+      renderHealthBarPosition(
+          position: character,
+          percentage: character.health,
+      );
 
-  void renderBarGreen(double x, double y, double z, double percentage) {
-    engine.renderSprite(
+  void renderHealthBarPosition({
+    required IsometricPosition position,
+    required double percentage,
+  }) => engine.renderSprite(
       image: Images.atlas_gameobjects,
-      dstX: IsometricRender.getRenderX(x, y, z) - 26,
-      dstY: IsometricRender.getRenderY(x, y, z) - 45,
+      dstX: IsometricRender.getPositionRenderX(position) - 26,
+      dstY: IsometricRender.getPositionRenderY(position) - 45,
       srcX: 171,
       srcY: 16,
       srcWidth: 51.0 * percentage,
@@ -503,7 +510,6 @@ class IsometricRender {
       anchorX: 0.0,
       color: 1,
     );
-  }
 
   void renderBarBlue(double x, double y, double z, double percentage) {
     engine.renderSprite(
@@ -566,8 +572,8 @@ class IsometricRender {
   static double renderX(double x, double y, double z) => (x - y) * 0.5;
   static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 
-  static double convertV3ToRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
-  static double convertV3ToRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
+  static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double getPositionRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
 
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
   static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;

@@ -1,4 +1,6 @@
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 abstract class IsometricRenderer {
   var _index = 0;
@@ -8,6 +10,8 @@ abstract class IsometricRenderer {
   var remaining = true;
 
   final IsometricScene scene;
+
+  IsometricRender get renderer => gamestream.isometric.renderer;
 
   IsometricRenderer(this.scene);
 

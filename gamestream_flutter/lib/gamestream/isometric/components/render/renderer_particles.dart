@@ -19,10 +19,10 @@ class RendererParticles extends IsometricRenderer {
   void renderFunction() {
       assert (particle.active);
       assert (particle.delay <= 0);
-      final dstX = IsometricRender.convertV3ToRenderX(particle);
+      final dstX = IsometricRender.getPositionRenderX(particle);
       assert (dstX > engine.Screen_Left - 50);
       assert (dstX < engine.Screen_Right + 50);
-      final dstY = IsometricRender.convertV3ToRenderY(particle);
+      final dstY = IsometricRender.getPositionRenderY(particle);
       assert (dstY > engine.Screen_Top - 50);
       assert (dstY < engine.Screen_Bottom + 50);
 
@@ -534,10 +534,10 @@ class RendererParticles extends IsometricRenderer {
       particle = particles[index++];
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
-      final dstX = IsometricRender.convertV3ToRenderX(particle);
+      final dstX = IsometricRender.getPositionRenderX(particle);
       if (dstX < engine.Screen_Left - 50) continue;
       if (dstX > engine.Screen_Right + 50) continue;
-      final dstY = IsometricRender.convertV3ToRenderY(particle);
+      final dstY = IsometricRender.getPositionRenderY(particle);
       if (dstY < engine.Screen_Top - 50) continue;
       if (dstY > engine.Screen_Bottom + 50) continue;
       if (!scene.isPerceptiblePosition(particle)) continue;

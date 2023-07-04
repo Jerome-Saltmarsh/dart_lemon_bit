@@ -10,6 +10,8 @@ import '../isometric_render.dart';
 
 class IsometricDebug {
   final tab = Watch(DebugTab.Selected);
+  final health = Watch(0);
+  final healthMax = Watch(0);
   final radius = Watch(0);
   final position = IsometricPosition();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);

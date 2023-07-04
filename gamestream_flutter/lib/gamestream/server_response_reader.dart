@@ -254,6 +254,8 @@ extension ServerResponseReader on Gamestream {
     gameObject.active = readBool();
     gameObject.type = readByte();
     gameObject.subType = readByte();
+    gameObject.health = readUInt16();
+    gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
     isometric.server.sortGameObjects();
   }

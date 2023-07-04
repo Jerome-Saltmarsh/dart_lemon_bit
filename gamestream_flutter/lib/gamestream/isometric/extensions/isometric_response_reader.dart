@@ -37,7 +37,7 @@ extension IsometricResponseReader on Gamestream {
 
     if (selectedColliderType == IsometricType.GameObject) {
       debug.runTimeType.value = readString();
-      debug.radius.value = readUInt16();
+      debug.health.value = readUInt16();
       debug.x.value = readDouble();
       debug.y.value = readDouble();
       debug.z.value = readDouble();
@@ -46,6 +46,8 @@ extension IsometricResponseReader on Gamestream {
       debug.position.z = debug.z.value;
       debug.selectedGameObjectType.value = readByte();
       debug.selectedGameObjectSubType.value = readByte();
+      debug.healthMax.value = readUInt16();
+      debug.radius.value = readUInt16();
       return;
     }
 

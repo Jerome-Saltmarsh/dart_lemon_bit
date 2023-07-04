@@ -65,8 +65,8 @@ class IsometricPlayer {
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
-  double get renderX => IsometricRender.convertV3ToRenderX(position);
-  double get renderY => IsometricRender.convertV3ToRenderY(position);
+  double get renderX => IsometricRender.getPositionRenderX(position);
+  double get renderY => IsometricRender.getPositionRenderY(position);
   double get positionScreenX => engine.worldToScreenX(gamestream.isometric.player.position.renderX);
   double get positionScreenY => engine.worldToScreenY(gamestream.isometric.player.position.renderY);
 

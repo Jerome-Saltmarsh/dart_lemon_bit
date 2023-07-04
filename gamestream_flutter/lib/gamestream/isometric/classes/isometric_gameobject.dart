@@ -7,6 +7,8 @@ class IsometricGameObject extends IsometricPosition {
   final int id;
   var _type = -1;
   var subType = -1;
+  var health = -1;
+  var maxHealth = -1;
   var active = false;
   var emissionType = IsometricEmissionType.None;
   var emission_hue = 0;
@@ -23,6 +25,8 @@ class IsometricGameObject extends IsometricPosition {
   IsometricGameObject(this.id); // PROPERTIES
   
   int get type => _type;
+
+  double get healthPercentage => maxHealth <= 0 ? 0 : health / maxHealth;
   
   set type(int value) {
     if (_type == value) return;
