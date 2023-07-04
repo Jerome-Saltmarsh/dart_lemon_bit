@@ -159,20 +159,6 @@ class IsometricScene {
   void detectSpawnPoints() =>
       spawnPoints = Uint16List.fromList(findNodesOfType(NodeType.Spawn));
 
-  bool raycastCollisionXY(double x1, double y1, double x2, double y2,
-      double z) {
-    final distance = getDistanceXY(x1, y1, x2, y2);
-    final jumps = distance ~/ Node_Size_Half;
-    if (jumps <= 0) return false;
-    final angle = angleBetween(x1, y1, x2, y2);
-    for (var i = 0; i < jumps; i++) {
-      final x = x1 + adj(angle, i * Node_Size_Half);
-      final y = y1 + opp(angle, i * Node_Size_Half);
-      if (getCollisionAt(x, y, z)) return true;
-    }
-    return false;
-  }
-
   double getNodePositionX(int index) =>
       (getRow(index) * Node_Size) + Node_Size_Half;
 

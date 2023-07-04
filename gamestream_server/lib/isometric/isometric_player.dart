@@ -84,9 +84,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   double get mouseSceneZ => game.clampZ(z);
 
   /// in radians
-  double get mouseAngle => angleBetween(
+  double get mouseAngle => getAngleXY(
       mouseSceneX  + Character_Gun_Height,
-      mouseSceneY + Character_Gun_Height, x, y,
+      mouseSceneY + Character_Gun_Height,
   );
 
   IsometricScene get scene => game.scene;

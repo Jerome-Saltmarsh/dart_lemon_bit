@@ -319,12 +319,12 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
-    faceAngle = getAngleXY(x, y) + pi;
+    faceAngle = getAngleXY(x, y);
   }
 
   void lookAtXY(double x, double y) {
     if (deadOrBusy) return;
-    lookRadian = getAngleXY(x, y) + pi;
+    lookRadian = getAngleXY(x, y);
   }
 
   double getAngleXY(double x, double y) =>
