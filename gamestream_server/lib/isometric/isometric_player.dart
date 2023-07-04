@@ -809,6 +809,17 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void updatePlayerAimTargetCategory(){
      aimTargetCategory = getTargetCategory(aimTarget);
   }
+
+  @override
+  set maxHealth(int value){
+    super.maxHealth = value;
+    writePlayerHealth();
+  }
+
+  set health (int value) {
+    super.health = value;
+    writePlayerHealth();
+  }
 }
 
 

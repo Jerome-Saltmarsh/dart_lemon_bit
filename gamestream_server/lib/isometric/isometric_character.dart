@@ -231,25 +231,16 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   set maxHealth(int value){
-    if (_maxHealth == value) return;
-    assert (value > 0);
+    if (value < 0) return;
+    if (_maxHealth == value)
+      return;
     _maxHealth = value;
-    if (this is IsometricPlayer){
-      (this as IsometricPlayer).writePlayerHealth();
-    }
     if (_health > _maxHealth) {
       health = _maxHealth;
     }
   }
 
-  set health (int value) {
-    final clampedValue = clamp(value, 0, maxHealth);
-    if (clampedValue == _health) return;
-    _health = clampedValue;
-    if (this is IsometricPlayer){
-      (this as IsometricPlayer).writePlayerHealth();
-    }
-  }
+  set health (int value) => _health = clamp(value, 0, maxHealth);
 
   void set faceDirection(int value) =>
         faceAngle = IsometricDirection.toRadian(value);
