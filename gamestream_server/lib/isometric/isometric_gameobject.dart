@@ -38,7 +38,7 @@ class IsometricGameObject extends IsometricCollider {
     startY = y;
     startZ = z;
     this.health = health;
-    this.healthMax = healthMax;
+    this.healthMax = health;
     synchronizePrevious();
   }
 
