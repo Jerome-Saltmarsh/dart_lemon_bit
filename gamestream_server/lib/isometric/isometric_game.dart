@@ -304,7 +304,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updatePlayerAimTarget(IsometricPlayer player) {
-    var closestDistance = IsometricSettings.Pickup_Range_Squared;
+    var anyFound = false;
+    var closestDistanceSquared = IsometricSettings.Pickup_Range_Squared;
 
     final mouseX = player.mouseSceneX;
     final mouseY = player.mouseSceneY;
@@ -316,15 +317,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (final character in characters) {
       if (character.dead) continue;
-      if ((mouseX - character.x).abs() > Min_Radius) continue;
-      if ((mouseY - character.y).abs() > Min_Radius) continue;
-      if ((mouseZ - character.z).abs() > Min_Radius) continue;
+      final radius = max(Min_Radius, character.radius);
+      if ((mouseX - character.x).abs() > radius) continue;
+      if ((mouseY - character.y).abs() > radius) continue;
+      if ((mouseZ - character.z).abs() > radius) continue;
       if (character == player) continue;
-      final distance = getDistanceXYZSquared(
+      final distanceSquared = getDistanceXYZSquared(
           mouseX, mouseY, mouseZ, character.x, character.y, character.z,
       );
-      if (distance > closestDistance) continue;
-      closestDistance = distance;
+      if (anyFound && distanceSquared > closestDistanceSquared) continue;
+      anyFound = true;
+      closestDistanceSquared = distanceSquared;
       closestCollider = character;
     }
 
@@ -334,14 +337,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           !gameObject.interactable &&
            gameObject.health <= 0
       ) continue;
-      if ((mouseX - gameObject.x).abs() > Min_Radius) continue;
-      if ((mouseY - gameObject.y).abs() > Min_Radius) continue;
-      if ((mouseZ - gameObject.z).abs() > Min_Radius) continue;
+
+      final radius = max(Min_Radius, gameObject.radius);
+      if ((mouseX - gameObject.x).abs() > radius) continue;
+      if ((mouseY - gameObject.y).abs() > radius) continue;
+      if ((mouseZ - gameObject.z).abs() > radius) continue;
       final distance = getDistanceXYZSquared(
           mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z,
       );
-      if (distance > closestDistance) continue;
-      closestDistance = distance;
+      if (anyFound && distance > closestDistanceSquared) continue;
+      anyFound = true;
+      closestDistanceSquared = distance;
       closestCollider = gameObject;
     }
 
