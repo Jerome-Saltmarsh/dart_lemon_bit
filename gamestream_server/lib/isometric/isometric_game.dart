@@ -274,6 +274,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (mouseRightDown){
       characterAttack(player);
+      player.clearTarget();
+      player.runToDestinationEnabled = false;
     }
 
     if (mouseLeftDown) {
@@ -2093,8 +2095,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.lookRadian,
       );
 
-  void dispatchAttackPerformed(int attackType, double x, double y, double z,
-      double angle) {
+  void dispatchAttackPerformed(
+      int attackType,
+      double x,
+      double y,
+      double z,
+      double angle,
+  ) {
     for (final player in players) {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
@@ -2108,8 +2115,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void dispatchMeleeAttackPerformed(int attackType, double x, double y,
-      double z, double angle) {
+  void dispatchMeleeAttackPerformed(
+      int attackType,
+      double x,
+      double y,
+      double z,
+      double angle,
+  ) {
     for (final player in players) {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
