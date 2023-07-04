@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
-import 'package:lemon_math/src.dart';
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_position.dart';
@@ -315,9 +315,16 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void face(IsometricPosition position) => faceXY(position.x, position.y);
 
+  void lookAt(IsometricPosition position) => lookAtXY(position.x, position.y);
+
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
     faceAngle = getAngleXY(x, y) + pi;
+  }
+
+  void lookAtXY(double x, double y) {
+    if (deadOrBusy) return;
+    lookRadian = getAngleXY(x, y) + pi;
   }
 
   double getAngleXY(double x, double y) =>
@@ -427,6 +434,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (target == null) return;
     idle();
     face(target);
+    faceTarget();
 
     if (characterTypeTemplate){
       game.characterUseWeapon(this);
@@ -444,6 +452,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     final target = this.target;
     if (target == null) return;
     face(target);
+    lookAt(target);
   }
 
 }

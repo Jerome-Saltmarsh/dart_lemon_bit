@@ -8,7 +8,8 @@ import 'package:gamestream_server/core/player.dart';
 import 'package:gamestream_server/games/isometric_editor/isometric_editor.dart';
 
 import 'package:lemon_byte/byte_writer.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_game.dart';

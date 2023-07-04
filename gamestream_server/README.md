@@ -12,3 +12,4 @@ dart compile exe bin/server.dart -o /tmp/bleed-server.exe
 
 # Symbolic Hard Link
 mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
+mklink /J math C:\Users\Jerome\github\bleed\dart-lemon-math\lib

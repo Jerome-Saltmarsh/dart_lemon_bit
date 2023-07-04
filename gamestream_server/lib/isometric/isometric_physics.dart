@@ -2,7 +2,8 @@
 import 'dart:math';
 
 import 'package:gamestream_server/utils/typedefs.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_character.dart';
 import 'isometric_collider.dart';

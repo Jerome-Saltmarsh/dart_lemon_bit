@@ -5,7 +5,8 @@ import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
@@ -1680,11 +1681,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.dead) return;
     if (!character.active) return;
-
-    // TODO INVALID LOCATION
-    if (!character.isPlayer) {
-      character.lookRadian = character.faceAngle;
-    }
 
     character.update();
     updateCharacterState(character);

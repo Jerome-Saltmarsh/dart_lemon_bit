@@ -2,7 +2,8 @@
 import 'dart:math';
 
 import 'package:gamestream_server/common/src/isometric/node_size.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 class IsometricPosition {
   double x;

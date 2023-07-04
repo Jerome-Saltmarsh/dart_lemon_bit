@@ -3,7 +3,8 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'combat_game.dart';
 
@@ -173,11 +174,6 @@ class CombatZombie extends IsometricCharacter {
       return;
     }
     state = CharacterState.Idle;
-  }
-
-  double get getAngleBetweenTarget {
-    assert (target != null);
-    return angleBetween(x, y, target!.x, target!.y);
   }
 
   @override

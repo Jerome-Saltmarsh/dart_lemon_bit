@@ -14,7 +14,8 @@ import 'package:gamestream_server/websocket/src.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 

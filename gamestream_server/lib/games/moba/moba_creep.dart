@@ -1,6 +1,7 @@
 
 import 'package:gamestream_server/isometric.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'moba_game.dart';
 

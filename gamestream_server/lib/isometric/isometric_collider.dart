@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gamestream_server/common/src/isometric/team_type.dart';
 import 'package:gamestream_server/gamestream.dart';
-import 'package:lemon_math/src.dart';
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_character.dart';
 import 'isometric_physics.dart';

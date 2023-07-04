@@ -1,7 +1,8 @@
 import 'package:gamestream_server/common/src/isometric/lightning_type.dart';
 import 'package:gamestream_server/common/src/isometric/rain_type.dart';
 import 'package:gamestream_server/common/src/isometric/wind_type.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 class IsometricEnvironment {
   var durationRain = randomInt(1000, 3000);

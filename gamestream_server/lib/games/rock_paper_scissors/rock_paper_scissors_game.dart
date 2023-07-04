@@ -4,7 +4,8 @@ import 'package:gamestream_server/common/src/rock_paper_scissors/teams_rock_pape
 import 'package:gamestream_server/common/src/game_type.dart';
 import 'package:gamestream_server/common/src/server_response.dart';
 import 'package:gamestream_server/core/game.dart';
-import 'package:lemon_math/src.dart';
+
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'rock_paper_scissors_player.dart';
 
