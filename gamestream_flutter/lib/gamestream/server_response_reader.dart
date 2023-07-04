@@ -287,9 +287,6 @@ extension ServerResponseReader on Gamestream {
         isometric.player.runningToTarget = true;
         readVector3(isometric.player.targetPosition);
         break;
-      case ApiPlayer.Target_Category:
-        isometric.player.targetCategory = readByte();
-        break;
       case ApiPlayer.Experience_Percentage:
         isometric.server.playerExperiencePercentage.value = readPercentage();
         break;

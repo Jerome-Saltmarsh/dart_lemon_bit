@@ -17,8 +17,8 @@ class MobaCreep extends IsometricZombie {
     super.y = 0,
     super.z = 0,
   }) : super(game: game) {
-    x = baseOwn.x + giveOrTake(20);
-    y = baseOwn.y + giveOrTake(20);
+    x = spawnOwn.x + giveOrTake(20);
+    y = spawnOwn.y + giveOrTake(20);
     z = 25;
     autoTargetTimerDuration = game.fps;
     setDestinationToCurrentPosition();
@@ -31,6 +31,8 @@ class MobaCreep extends IsometricZombie {
   IsometricGameObject get baseEnemy => isTeamBlue ? game.redBase : game.blueBase;
 
   IsometricGameObject get baseOwn => isTeamBlue ? game.blueBase : game.redBase;
+
+  IsometricGameObject get spawnOwn => isTeamBlue ? game.blueSpawn : game.redSpawn;
 
   @override
   void customOnUpdate() {

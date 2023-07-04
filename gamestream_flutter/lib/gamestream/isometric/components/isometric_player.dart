@@ -9,7 +9,6 @@ class IsometricPlayer {
   var playerInsideIsland = false;
   var energyPercentage = 0.0;
   var runningToTarget = false;
-  var targetCategory = TargetCategory.Nothing;
   var aimTargetCategory = TargetCategory.Nothing;
   var aimTargetType = 0;
   var aimTargetName = '';

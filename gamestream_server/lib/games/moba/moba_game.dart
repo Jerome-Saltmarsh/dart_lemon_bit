@@ -81,6 +81,21 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     gameObjects.add(redSpawn);
     gameObjects.add(blueSpawn);
 
+
+    gameObjects.add(IsometricGameObject(
+      x: scene.rowLength - 200,
+      y: 300,
+      z: 24,
+      type: GameObjectType.Object,
+      subType: ObjectType.Base_Blue,
+      id: generateUniqueId(),
+      radius: 80,
+    )
+      ..fixed = true
+      ..physical = true
+      ..hitable = true
+      ..collidable = true);
+
     addJob(seconds: 10, action: spawnCreeps, repeat: true);
   }
 

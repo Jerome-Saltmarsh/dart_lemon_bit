@@ -1623,6 +1623,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (target is IsometricGameObject){
        if (target.healthMax > 0) {
           target.health -= clamp(target.health - damage, 0, target.healthMax);
+          target.dirty = true;
           if (target.health <= 0){
             destroyGameObject(target);
           }
@@ -2318,7 +2319,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     // TODO
     if (character is IsometricPlayer) {
-      character.writePlayerTargetCategory();
       character.writePlayerTargetPosition();
     }
   }
@@ -2327,10 +2327,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.target == null) return;
     character.target = null;
     character.setCharacterStateIdle();
-    // TODO
-    if (character is IsometricPlayer) {
-      character.writePlayerTargetCategory();
-    }
   }
 
   void triggerSpawnPoints({int instances = 1}) {

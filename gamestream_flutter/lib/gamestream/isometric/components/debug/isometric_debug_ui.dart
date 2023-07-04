@@ -140,7 +140,6 @@ extension isometricDebugUI on IsometricDebug {
                   'aim-target-type: ${gamestream.isometric.player.aimTargetType}\n'
                   'aim-target-name: ${gamestream.isometric.player.aimTargetName}\n'
                   'aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n'
-                  'target-category: ${TargetCategory.getName(gamestream.isometric.player.targetCategory)}\n'
                   'target-position: ${gamestream.isometric.player.targetPosition}\n'
                   'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
                   'scene-light-active: ${gamestream.isometric.client.lights_active}\n'

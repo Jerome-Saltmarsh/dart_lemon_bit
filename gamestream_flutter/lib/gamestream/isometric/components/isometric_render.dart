@@ -487,13 +487,6 @@ class IsometricRender {
     gamestream.isometric.renderer.renderCircle32(x1, y1, z);
   }
 
-  void renderPlayerRunTarget(){
-    if (gamestream.isometric.player.dead) return;
-    if (gamestream.isometric.player.targetCategory == TargetCategory.Run){
-      gamestream.isometric.renderer.renderCircle32(gamestream.isometric.player.targetPosition.x, gamestream.isometric.player.targetPosition.y, gamestream.isometric.player.targetPosition.z);
-    }
-  }
-
   void renderCharacterHealthBar(IsometricCharacter character){
     renderBarGreen(character.x, character.y, character.z, character.health);
   }
