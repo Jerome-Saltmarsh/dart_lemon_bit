@@ -1645,7 +1645,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (target is IsometricGameObject){
        if (target.healthMax > 0) {
-          target.health -= clamp(target.health - damage, 0, target.healthMax);
+          target.health = clamp(target.health - damage, 0, target.healthMax);
           target.dirty = true;
           if (target.health <= 0){
             destroyGameObject(target);
@@ -1711,10 +1711,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
          if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
            character.attackTargetEnemy(this);
          }
-
-
-
-
 
          if (
            character.deadOrInactive ||

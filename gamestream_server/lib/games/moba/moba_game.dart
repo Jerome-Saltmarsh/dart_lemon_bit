@@ -112,6 +112,23 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   int get maxPlayers => 10;
 
   @override
+  void updateCharacter(IsometricCharacter character) {
+    super.updateCharacter(character);
+
+    if (character.weaponStateMelee && character.weaponStateDuration == 2){
+       final target = character.target;
+       if (target is IsometricCollider){
+         applyHit(
+             srcCharacter: character,
+             target: target,
+             damage: character.weaponDamage,
+             hitType: IsometricHitType.Melee,
+         );
+       }
+    }
+  }
+
+  @override
   void customOnGameObjectDestroyed(IsometricGameObject gameObject) {
     if (gameObject == redBase){
        throw Exception('Blue Team Wins');

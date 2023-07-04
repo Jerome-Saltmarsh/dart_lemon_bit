@@ -200,6 +200,8 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get weaponStateFiring => weaponState == WeaponState.Firing;
 
+  bool get weaponStateMelee => weaponState == WeaponState.Melee;
+
   bool get weaponStateAiming => weaponState == WeaponState.Aiming;
 
   double get healthPercentage => health / maxHealth;
