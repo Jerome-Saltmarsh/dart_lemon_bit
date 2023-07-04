@@ -142,7 +142,13 @@ class IsometricDebug {
 
   void onMouseLeftClicked() => isometric.debugSelect();
 
-  void onMouseRightClicked() => isometric.debugCommand();
+  void onMouseRightClicked() {
+    if (engine.keyPressedShiftLeft){
+      isometric.debugAttack();
+      return;
+    }
+    isometric.debugCommand();
+  }
 
   void onKeyPressed(int key){
     if (key == KeyCode.G) {

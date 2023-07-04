@@ -6,9 +6,7 @@ import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:lemon_math/src.dart';
 
 import 'isometric_collider.dart';
-import 'isometric_player.dart';
 import 'isometric_position.dart';
-import 'isometric_settings.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
@@ -16,10 +14,11 @@ abstract class IsometricCharacter extends IsometricCollider {
   var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
-  var _weaponStateDurationTotal = 0;
   var _weaponType = WeaponType.Unarmed;
   var _characterType = 0;
+  var _weaponState = WeaponState.Idle;
 
+  var weaponStateDurationTotal = 0;
   var autoTarget = true;
   var autoTargetRange = 300.0;
   var autoTargetTimer = 0;
@@ -27,7 +26,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   var weaponDamage = 1;
   var weaponRange = 20.0;
-  var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
@@ -35,7 +33,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
-  /// TODO BELONGS IN isometric_character_template.dart
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
@@ -90,9 +87,18 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
-  bool get shouldUpdatePath {
-    return (pathTargetIndex != pathTargetIndexPrevious) || (pathIndex == 0);
+  int get weaponState => _weaponState;
+
+  set weaponState(int value){
+    if (_weaponState == value)
+      return;
+    _weaponState = value;
+    weaponStateDuration = 0;
+    weaponStateDurationTotal = getWeaponStateDurationTotal(value);
   }
+
+  bool get shouldUpdatePath =>
+      (pathTargetIndex != pathTargetIndexPrevious) || (pathIndex == 0);
 
   bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(10);
 
@@ -116,21 +122,11 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get aliveAndActive => alive && active;
 
-  int get weaponStateDurationTotal => _weaponStateDurationTotal;
-
   set weaponType(int value){
     // assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
     if (_weaponType == value) return;
     _weaponType = value;
     onWeaponTypeChanged();
-  }
-
-  set weaponStateDurationTotal(int value){
-    assert (value >= 0);
-    if (value > 0){
-      weaponStateDuration = value;
-      _weaponStateDurationTotal = value;
-    }
   }
 
   int get characterType => _characterType;
@@ -168,7 +164,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (target == null) return false;
     return isAlly(target);
   }
-  bool get weaponStateBusy => weaponStateDuration > 0 && weaponState != WeaponState.Aiming;
+  bool get weaponStateBusy => weaponState != WeaponState.Aiming && weaponStateDurationTotal > 0;
 
   bool get running => state == CharacterState.Running;
 
@@ -210,11 +206,11 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
-  int get weaponFrame {
-    assert (weaponStateDuration == 0 || weaponStateDurationTotal > 0);
-    assert (weaponStateDurationTotal - weaponStateDuration >= 0);
-    return weaponStateDurationTotal - weaponStateDuration;
-  }
+  // int get weaponFrame {
+  //   assert (weaponStateDuration == 0 || weaponStateDurationTotal > 0);
+  //   assert (weaponStateDurationTotal - weaponStateDuration >= 0);
+  //   return weaponStateDurationTotal - weaponStateDuration;
+  // }
 
   int get faceDirection => IsometricDirection.fromRadian(_faceAngle);
 
@@ -222,16 +218,12 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   int get maxHealth => _maxHealth;
 
-  // int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
-
-  /// SETTERS
-
   set accuracy(double value) {
     _accuracy = clamp01(value);
   }
 
   set maxHealth(int value){
-    if (value < 0) return;
+    if (value <= 0) return;
     if (_maxHealth == value)
       return;
     _maxHealth = value;
@@ -248,7 +240,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   void set faceAngle(double value) =>
       _faceAngle = value % pi2;
 
-  /// METHODS
   void assignWeaponStateChanging() {
       weaponState = WeaponState.Changing;
       weaponStateDurationTotal = 20;
@@ -257,28 +248,32 @@ abstract class IsometricCharacter extends IsometricCollider {
   void assignWeaponStateFiring() {
     weaponState = WeaponState.Firing;
     weaponStateDurationTotal = weaponCooldown;
-    assert (weaponCooldown > 0);
-    assert (weaponStateDurationTotal > 0);
   }
 
   void assignWeaponStateThrowing() {
     weaponState = WeaponState.Throwing;
-    weaponStateDurationTotal = IsometricSettings.Weapon_State_Duration_Throw;
-    assert (weaponStateDurationTotal > 0);
+    weaponStateDurationTotal = weaponCooldown;
   }
 
   void assignWeaponStateMelee() {
     weaponState = WeaponState.Melee;
-    weaponStateDurationTotal = IsometricSettings.Weapon_State_Duration_Melee;
-    assert (weaponStateDurationTotal > 0);
+    weaponStateDurationTotal = weaponCooldown;
   }
+
+  int getWeaponStateDurationTotal(int weaponState) =>
+      switch(weaponState) {
+        WeaponState.Melee => weaponCooldown,
+        WeaponState.Firing => weaponCooldown,
+        WeaponState.Idle => 0,
+        WeaponState.Aiming => 10,
+        WeaponState.Reloading => 10,
+        WeaponState.Throwing => 15,
+        _ => (throw Exception(''))
+      };
 
   void assignWeaponStateReloading(){
     weaponState = WeaponState.Reloading;
     weaponStateDurationTotal = 30;
-    if (this is IsometricPlayer) {
-      (this as IsometricPlayer).writePlayerEvent(PlayerEvent.Reloading);
-    }
   }
 
   void setCharacterStatePerforming({required int duration}){
@@ -352,7 +347,7 @@ abstract class IsometricCharacter extends IsometricCollider {
       setCharacterState(value: CharacterState.Running, duration: 0);
 
   void update() {
-    final change = 0.01;
+    const change = 0.01;
     if (accuracy.abs() > change){
       if (accuracy > 0) {
         accuracy -= change;
@@ -361,13 +356,14 @@ abstract class IsometricCharacter extends IsometricCollider {
       }
     }
 
-    if (weaponStateDuration > 0) {
-      weaponStateDuration--;
-      if (weaponStateDuration <= 0) {
+    if (weaponStateDuration < weaponStateDurationTotal) {
+      weaponStateDuration++;
+      if (weaponStateDuration == weaponStateDuration) {
         switch (weaponState) {
           case WeaponState.Firing:
             weaponState = WeaponState.Aiming;
             weaponStateDurationTotal = 10;
+            weaponStateDuration = 0;
             break;
           default:
             weaponState = WeaponState.Idle;

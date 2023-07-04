@@ -184,6 +184,10 @@ extension IsometricRequestReader on WebSocketConnection {
       case IsometricRequest.Debug_Command:
         player.debugCommand();
         break;
+
+      case IsometricRequest.Debug_Attack:
+        player.game.characterAttack(player);
+        break;
     }
   }
 

@@ -18,5 +18,6 @@ enum IsometricRequest {
    Debug_Character_Set_Character_Type,
    Debug_Select,
    Debug_Command,
+   Debug_Attack,
    Select_GameObject,
 }

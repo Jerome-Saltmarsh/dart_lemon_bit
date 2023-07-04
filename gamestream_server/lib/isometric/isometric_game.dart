@@ -272,6 +272,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.lookAtMouse();
     }
 
+    if (mouseRightDown){
+      characterAttack(player);
+    }
 
     if (mouseLeftDown) {
       final aimTarget = player.aimTarget;
@@ -634,15 +637,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     assert (character.active);
     assert (character.alive);
     assert (character.weaponDamage >= 0);
+    assert (character.weaponRange >= 0);
 
     if (character.deadBusyOrWeaponStateBusy) return;
 
     final angle = character.lookRadian;
-    final attackRadius = getMeleeAttackRadius(character.weaponType);
+    final attackRadius = character.weaponRange;
 
     if (attackRadius <= 0) {
-      throw Exception(
-          'ItemType.getRange(${character.weaponType})');
+      throw Exception();
     }
 
     final attackRadiusHalf = attackRadius * 0.5;
@@ -2652,5 +2655,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return false;
 
     return scene.isPerceptible(character, target);
+  }
+
+  void characterAttack(IsometricCharacter character){
+    if (character.deadBusyOrWeaponStateBusy)
+      return;
+
+    if (character.characterTypeTemplate){
+      characterUseWeapon(character);
+      return;
+    }
+    character.setCharacterStatePerforming(
+        duration: character.weaponCooldown
+    );
   }
 }
