@@ -257,8 +257,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   double getDistanceFromPlayerMouse(IsometricPlayer player,
       IsometricPosition position) =>
       getDistanceXYZ(
-        player.mouseGridX,
-        player.mouseGridY,
+        player.mouseSceneX,
+        player.mouseSceneY,
         player.z,
         position.x,
         position.y,
@@ -296,8 +296,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void _updateIsometricPlayerAimTarget(IsometricPlayer player) {
     var closestDistance = IsometricSettings.Pickup_Range_Squared;
 
-    final mouseX = player.mouseGridX;
-    final mouseY = player.mouseGridY;
+    final mouseX = player.mouseSceneX;
+    final mouseY = player.mouseSceneY;
     final mouseZ = player.z;
 
     IsometricCollider? closestCollider;
@@ -510,7 +510,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     player.assignWeaponStateThrowing();
 
-    final mouseDistance = player.getDistanceXY(player.mouseGridX, player.mouseGridY);
+    final mouseDistance = player.getDistanceXY(player.mouseSceneX, player.mouseSceneY);
     final throwDistance = min(mouseDistance, IsometricPhysics.Max_Throw_Distance);
     final throwRatio = throwDistance / IsometricPhysics.Max_Throw_Distance;
     final velocity = IsometricPhysics.Max_Throw_Velocity * throwRatio;
@@ -573,8 +573,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void positionToPlayerMouse(Position position, IsometricPlayer player) {
-    position.x = player.mouseGridX;
-    position.y = player.mouseGridY;
+    position.x = player.mouseSceneX;
+    position.y = player.mouseSceneY;
   }
 
   void playerAutoAim(IsometricPlayer player) {

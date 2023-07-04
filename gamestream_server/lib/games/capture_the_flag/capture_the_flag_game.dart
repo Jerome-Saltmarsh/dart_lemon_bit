@@ -527,8 +527,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     final range = activatedPower.range;
     if (player.mouseDistance <= range){
-      player.activatedPowerX = clampX(player.mouseGridX);
-      player.activatedPowerY = clampY(player.mouseGridY);
+      player.activatedPowerX = clampX(player.mouseSceneX);
+      player.activatedPowerY = clampY(player.mouseSceneY);
     } else {
       final angle = player.mouseAngle;
       player.activatedPowerX = player.x + adj(angle, range);
@@ -554,8 +554,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         if (!character.active) continue;
         if (!player.isEnemy(character)) continue;
         if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
-        if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
-        final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+        if (!character.withinRadiusXYZ(player.mouseSceneX, player.mouseSceneY, character.z, 50)) continue;
+        final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseSceneX, player.mouseSceneY, player.z);
         if (characterDistanceSquared > nearestSquared) continue;
         nearestSquared = characterDistanceSquared;
         player.powerActivatedTarget = character;
@@ -567,8 +567,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         if (!character.active) continue;
         if (!player.isAlly(character)) continue;
         if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
-        if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
-        final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+        if (!character.withinRadiusXYZ(player.mouseSceneX, player.mouseSceneY, character.z, 50)) continue;
+        final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseSceneX, player.mouseSceneY, player.z);
         if (characterDistanceSquared > nearestSquared) continue;
         nearestSquared = characterDistanceSquared;
         player.powerActivatedTarget = character;
@@ -590,8 +590,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (!character.active) continue;
       if (!player.isAlly(character)) continue;
       if (!player.withinRadiusPosition(character, activatedPower.range)) continue;
-      if (!character.withinRadiusXYZ(player.mouseGridX, player.mouseGridY, character.z, 50)) continue;
-      final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseGridX, player.mouseGridY, player.z);
+      if (!character.withinRadiusXYZ(player.mouseSceneX, player.mouseSceneY, character.z, 50)) continue;
+      final characterDistanceSquared = character.getDistanceSquaredXYZ(player.mouseSceneX, player.mouseSceneY, player.z);
       if (characterDistanceSquared > nearestSquared) continue;
       nearestSquared = characterDistanceSquared;
       player.powerActivatedTarget = character;

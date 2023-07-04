@@ -21,6 +21,10 @@ class IsometricGame extends Game {
     isometric.camera.target = isometric.player.position;
   }
 
+  bool get debugMode => isometric.debug.enabled.value;
+
+  bool get editMode => isometric.client.edit.value;
+
   IsometricPlayer get player => isometric.player;
 
   @override
@@ -90,14 +94,24 @@ class IsometricGame extends Game {
 
   @override
   void onLeftClicked() {
-    if (gamestream.io.inputModeTouch){
+    if (gamestream.io.inputModeTouch) {
       gamestream.io.touchController.onClick();
     }
-    if (isometric.client.edit.value) {
+    if (editMode) {
       isometric.editor.onMouseLeftClicked();
+      return;
     }
-    if (isometric.debug.enabled.value){
-       isometric.debugSelect();
+    if (debugMode) {
+      isometric.debug.onMouseLeftClicked();
+      return;
+    }
+  }
+
+  @override
+  void onRightClicked() {
+    if (debugMode) {
+      isometric.debug.onMouseRightClicked();
+      return;
     }
   }
 
@@ -105,12 +119,12 @@ class IsometricGame extends Game {
   void onKeyPressed(int key) {
 
     if (key == KeyCode.Tab) {
-      isometric.client.edit.value = !isometric.client.edit.value;
+      toggleEditMode();
       return;
     }
 
     if (key == KeyCode.Digit_0) {
-      isometric.debug.enabled.toggle();
+      toggleDebugMode();
       return;
     }
 
@@ -126,15 +140,23 @@ class IsometricGame extends Game {
 
     // play mode
 
-    if (key == KeyCode.G) {
-      isometric.moveSelectedColliderToMouse();
-      return;
-    }
-
     if (key == KeyCode.F) {
       gamestream.isometric.toggleZoom();
       return;
     }
+
+    if (debugMode) {
+      isometric.debug.onKeyPressed(key);
+      return;
+    }
+  }
+
+  void toggleDebugMode() {
+    isometric.debug.enabled.toggle();
+  }
+
+  void toggleEditMode() {
+    isometric.client.edit.value = !editMode;
   }
 
   /// override to customize cursor type

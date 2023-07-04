@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../isometric_render.dart';
 
 class IsometricDebug {
-  final enabled = WatchBool(false);
   final tab = Watch(DebugTab.Selected);
   final position = IsometricPosition();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
@@ -48,6 +48,7 @@ class IsometricDebug {
   final selectedGameObjectSubType = Watch(-1);
 
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
+  late final enabled = WatchBool(false)..onChanged(onChangedEnabled);
 
   Isometric get isometric => gamestream.isometric;
 
@@ -128,13 +129,30 @@ class IsometricDebug {
   }
 
   void onChangedCharacterSelected(bool characterSelected){
+     if (!enabled.value) return;
      if (characterSelected){
        isometric.camera.target = position;
      } else {
-       isometric.camera.target = isometric.player.position;
-       isometric.camera.followTarget.value = true;
+       isometric.camera.target = null;
      }
   }
 
+  void onMouseLeftClicked() => isometric.debugSelect();
 
+  void onMouseRightClicked() => isometric.debugCommand();
+
+  void onKeyPressed(int key){
+    if (key == KeyCode.G) {
+      isometric.moveSelectedColliderToMouse();
+      return;
+    }
+  }
+
+  void onChangedEnabled(bool enabled){
+      if (enabled){
+        isometric.camera.target = null;
+      } else {
+        isometric.cameraTargetPlayer;
+      }
+  }
 }

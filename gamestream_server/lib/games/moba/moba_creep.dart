@@ -6,10 +6,7 @@ import 'moba_game.dart';
 
 class MobaCreep extends IsometricZombie {
 
-  late final MobaGame game;
-
-  late IsometricGameObject baseEnemy;
-  late IsometricGameObject baseOwn;
+  final MobaGame game;
 
   MobaCreep({
     required this.game,
@@ -20,14 +17,20 @@ class MobaCreep extends IsometricZombie {
     super.y = 0,
     super.z = 0,
   }) : super(game: game) {
-    baseEnemy = team == MobaGame.teamBlue ? game.teamRedBase : game.teamBlueBase;
-    baseOwn = team == MobaGame.teamBlue ? game.teamBlueBase : game.teamRedBase;
     x = baseOwn.x + giveOrTake(20);
     y = baseOwn.y + giveOrTake(20);
     z = 25;
     autoTargetTimerDuration = game.fps;
     setDestinationToCurrentPosition();
   }
+
+  bool get isTeamBlue => team == MobaGame.Team_Blue;
+
+  bool get isTeamRed => team == MobaGame.Team_Red;
+
+  IsometricGameObject get baseEnemy => isTeamBlue ? game.teamRedBase : game.teamBlueBase;
+
+  IsometricGameObject get baseOwn => isTeamBlue ? game.teamBlueBase : game.teamRedBase;
 
   @override
   void customOnUpdate() {

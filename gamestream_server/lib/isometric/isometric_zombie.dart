@@ -5,8 +5,11 @@ import 'package:lemon_math/src.dart';
 
 class IsometricZombie extends IsometricCharacter {
 
-  var _nextWander = 0;
+  var wander = true;
+  var nextWander = 0;
   var wanderRadius = 5;
+  var applyHitFrame = 10;
+  var performAttackDuration = 30;
 
   final IsometricGame game;
 
@@ -25,15 +28,13 @@ class IsometricZombie extends IsometricCharacter {
     weaponCooldown: 20,
   );
 
-  bool get shouldRunToTarget => target != null;
+  bool get shouldWander => wander && target == null && nextWander-- <= 0;
 
-  bool get shouldApplyHitToTarget => characterStatePerforming && stateDuration == 10;
-
-  bool get shouldIdle => target == null && runDestinationWithinRadius(radius);
+  bool get shouldApplyHitToTarget =>
+      characterStatePerforming && stateDuration == applyHitFrame;
 
   @override
   void customOnUpdate() {
-    super.customOnUpdate();
     if (deadBusyOrWeaponStateBusy) return;
 
     if (shouldApplyHitToTarget){
@@ -45,22 +46,21 @@ class IsometricZombie extends IsometricCharacter {
       return;
     }
 
-    if (target == null){
-      _nextWander--;
-
-      if (_nextWander <= 0) {
-        _nextWander = randomInt(300, 500);
-        pathTargetIndex = game.scene.findRandomNodeTypeAround(
-            z: indexZ,
-            row: indexRow,
-            column: indexColumn,
-            radius: wanderRadius,
-            type: NodeType.Empty,
-        );
-      }
+    if (shouldWander) {
+      applyWander();
     }
   }
 
+  void applyWander() {
+    nextWander = randomInt(300, 500);
+    pathTargetIndex = game.scene.findRandomNodeTypeAround(
+      z: indexZ,
+      row: indexRow,
+      column: indexColumn,
+      radius: wanderRadius,
+      type: NodeType.Empty,
+    );
+  }
 
   void applyHitToTarget() {
     final target = this.target;
@@ -68,7 +68,7 @@ class IsometricZombie extends IsometricCharacter {
     game.applyHit(
       srcCharacter: this,
       target: target,
-      damage: 1,
+      damage: weaponDamage,
       hitType: IsometricHitType.Melee,
     );
   }
@@ -77,6 +77,6 @@ class IsometricZombie extends IsometricCharacter {
     final target = this.target;
     if (target == null) return;
     face(target);
-    setCharacterStatePerforming(duration: 30);
+    setCharacterStatePerforming(duration: performAttackDuration);
   }
 }

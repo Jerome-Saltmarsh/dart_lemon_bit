@@ -66,7 +66,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     id = game.playerId++;
   }
 
-  int get mouseIndex => game.scene.getIndexXYZ(mouseGridX, mouseGridY, mouseGridZ);
+  int get mouseIndex => game.scene.getIndexXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
@@ -76,21 +76,21 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
-  double get mouseGridX => game.clampX((mouse.x + mouse.y) + z);
+  double get mouseSceneX => game.clampX((mouse.x + mouse.y) + z);
 
-  double get mouseGridY => game.clampY((mouse.y - mouse.x) + z);
+  double get mouseSceneY => game.clampY((mouse.y - mouse.x) + z);
 
-  double get mouseGridZ => game.clampZ(z);
+  double get mouseSceneZ => game.clampZ(z);
 
   /// in radians
   double get mouseAngle => angleBetween(
-      mouseGridX  + Character_Gun_Height,
-      mouseGridY + Character_Gun_Height, x, y,
+      mouseSceneX  + Character_Gun_Height,
+      mouseSceneY + Character_Gun_Height, x, y,
   );
 
   IsometricScene get scene => game.scene;
 
-  double get mouseDistance => this.getDistanceXY(mouseGridX, mouseGridY);
+  double get mouseDistance => this.getDistanceXY(mouseSceneX, mouseSceneY);
 
   set aimTarget(IsometricCollider? collider) {
     if (_aimTarget == collider) return;
@@ -692,9 +692,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void setPathToMouse() => pathTargetIndex = mouseIndex;
 
   void setDestinationToMouse() {
-    runX = mouseGridX;
-    runY = mouseGridY;
-    runZ = mouseGridZ;
+    runX = mouseSceneX;
+    runY = mouseSceneY;
+    runZ = mouseSceneZ;
   }
 
   void setTargetToAimTarget() => target = aimTarget;
@@ -769,12 +769,43 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void selectNearestColliderToMouse({double maxRadius = 75}) =>
-      selectedCollider = game.getNearestCollider(
-        x: mouseGridX,
-        y: mouseGridY,
-        z: z,
-        maxRadius: maxRadius,
-      );
+      selectedCollider = getNearestColliderToMouse(maxRadius: maxRadius);
+
+  IsometricCollider? getNearestColliderToMouse({
+    required double maxRadius
+  }) => game.getNearestCollider(
+      x: mouseSceneX,
+      y: mouseSceneY,
+      z: z,
+      maxRadius: maxRadius,
+    );
+
+  void debugCommand() {
+    final selectedCollider = this.selectedCollider;
+    if (selectedCollider is! IsometricCharacter)
+      return;
+
+    final nearestMouseCollider = getNearestColliderToMouse(maxRadius: 75);
+    if (nearestMouseCollider == selectedCollider)
+      return;
+
+    if (nearestMouseCollider != null) {
+      selectedCollider.target = nearestMouseCollider;
+      return;
+    }
+
+    if (selectedCollider.pathFindingEnabled) {
+      selectedCollider.pathTargetIndex = mouseIndex;
+      return;
+    }
+
+    if (selectedCollider.runToDestinationEnabled) {
+      selectedCollider.runX = mouseSceneX;
+      selectedCollider.runY = mouseSceneY;
+      selectedCollider.runZ = mouseSceneZ;
+      return;
+    }
+  }
 
   void lookAtMouse(){
     if (deadOrBusy) return;

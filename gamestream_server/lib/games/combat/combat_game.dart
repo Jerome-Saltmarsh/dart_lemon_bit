@@ -609,8 +609,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   void playerTeleport(IsometricPlayer player) =>
       characterTeleport(
         character: player,
-        x: player.mouseGridX,
-        y: player.mouseGridY,
+        x: player.mouseSceneX,
+        y: player.mouseSceneY,
         range: 500,
       );
 

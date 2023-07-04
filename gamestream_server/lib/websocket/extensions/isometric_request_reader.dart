@@ -29,8 +29,8 @@ extension IsometricRequestReader on WebSocketConnection {
 
       case IsometricRequest.Teleport:
         if (!isLocalMachine && game is! IsometricEditor) return;
-        player.x = player.mouseGridX;
-        player.y = player.mouseGridY;
+        player.x = player.mouseSceneX;
+        player.y = player.mouseSceneY;
         player.health = player.maxHealth;
         player.state = CharacterState.Idle;
         player.active = true;
@@ -179,6 +179,10 @@ extension IsometricRequestReader on WebSocketConnection {
 
       case IsometricRequest.Debug_Select:
         player.selectNearestColliderToMouse();
+        break;
+
+      case IsometricRequest.Debug_Command:
+        player.debugCommand();
         break;
     }
   }

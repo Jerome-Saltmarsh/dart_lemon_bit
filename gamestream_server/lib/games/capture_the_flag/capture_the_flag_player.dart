@@ -51,7 +51,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     runToDestinationEnabled = false;
   }
 
-  bool get shouldUpdatePathToMouse => game.scene.inboundsXYZ(mouseGridX, mouseGridY, 25);
+  bool get shouldUpdatePathToMouse => game.scene.inboundsXYZ(mouseSceneX, mouseSceneY, 25);
 
   bool get canDeselectActivatedPower => powerActivated.value != null;
 

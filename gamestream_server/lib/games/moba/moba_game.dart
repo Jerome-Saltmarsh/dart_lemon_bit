@@ -12,8 +12,8 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   late final IsometricGameObject teamRedBase;
   late final IsometricGameObject teamBlueBase;
 
-  static const teamRed = 10;
-  static const teamBlue = 20;
+  static const Team_Red = 10;
+  static const Team_Blue = 20;
 
   MobaGame({
     required super.scene,
@@ -56,7 +56,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         game: this,
         health: 10,
         weaponDamage: 1,
-        team: teamRed,
+        team: Team_Red,
       )
       );
 
@@ -64,7 +64,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         game: this,
         health: 10,
         weaponDamage: 1,
-        team: teamBlue,
+        team: Team_Blue,
       )
       );
     }
@@ -76,7 +76,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     player.x = teamRedBase.x;
     player.y = teamRedBase.y;
     player.z = teamRedBase.z;
-    player.team = teamRed;
+    player.team = Team_Red;
     return player;
   }
 }

@@ -528,8 +528,8 @@ class WebSocketConnection with ByteReader {
       case IsometricEditorGameObjectRequest.Move_To_Mouse:
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
-        selectedGameObject.x = player.mouseGridX;
-        selectedGameObject.y = player.mouseGridY;
+        selectedGameObject.x = player.mouseSceneX;
+        selectedGameObject.y = player.mouseSceneY;
         selectedGameObject.z = player.z;
         selectedGameObject.saveStartAsCurrentPosition();
         break;

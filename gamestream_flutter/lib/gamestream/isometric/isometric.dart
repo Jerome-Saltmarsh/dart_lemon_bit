@@ -164,6 +164,9 @@ class Isometric {
   void debugSelect() =>
       sendIsometricRequest(IsometricRequest.Debug_Select);
 
+  void debugCommand() =>
+      sendIsometricRequest(IsometricRequest.Debug_Command);
+
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,
