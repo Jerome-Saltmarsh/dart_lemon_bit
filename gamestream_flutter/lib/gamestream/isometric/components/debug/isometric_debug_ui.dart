@@ -365,6 +365,8 @@ extension isometricDebugUI on IsometricDebug {
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
         buildRowWatchInt(text: 'radius', watch: radius),
+        buildWatch(healthMax, (healthMax) => buildWatch(health, (health) =>
+            buildRowText(text: 'health', value: '$health / $healthMax'))),
         buildRowWatchDouble(text: 'x', watch: x),
         buildRowWatchDouble(text: 'y', watch: y),
         buildRowWatchDouble(text: 'z', watch: z),
