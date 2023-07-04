@@ -33,6 +33,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
   static const Power_Range_Stun         = 125.0;
 
+  static const Team_Zombie = 5;
+
   static const GameObjects_Respawnable = [
     ObjectType.Crate_Wooden,
     ObjectType.Barrel_Explosive,
@@ -315,29 +317,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   }
 
   @override
-  void customOnHitApplied({
-    required IsometricCharacter srcCharacter,
-    required IsometricCollider target,
-    required int damage,
-    required double angle,
-    required int hitType,
-    required double force,
-  }) {
-    if (target is! IsometricGameObject) return;
-    if (target.type == ObjectType.Barrel_Explosive) {
-      if (hitType == IsometricHitType.Projectile || hitType == IsometricHitType.Explosion) {
-        destroyGameObject(target);
-        createExplosion(
-          x: target.x,
-          y: target.y,
-          z: target.z,
-          srcCharacter: srcCharacter,
-        );
-      }
-    }
-  }
-
-  @override
   void customOnPlayerCollectGameObject(CombatPlayer player, IsometricGameObject gameObject) {
     if (!gameObject.collectable) return;
 
@@ -380,7 +359,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie]),
       nodeIndex: index,
       damage: 1,
-      team: TeamType.Evil,
       health: 5,
     );
   }
@@ -674,7 +652,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     required int characterType,
     int health = 10,
     int damage = 1,
-    int team = TeamType.Evil,
+    int team = Team_Zombie,
     double wanderRadius = 200,
   }) {
     if (nodeIndex < 0) throw Exception('nodeIndex < 0');
@@ -686,7 +664,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       characterType: characterType,
       health: health,
       damage: damage,
-      team: team,
       wanderRadius: wanderRadius,
     );
     moveToIndex(instance, nodeIndex);
@@ -800,7 +777,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     required int characterType,
     int health = 10,
     int damage = 1,
-    int team = TeamType.Evil,
     double wanderRadius = 200,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) throw Exception(
@@ -810,7 +786,6 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       characterType: characterType,
       health: health,
       damage: damage,
-      team: team,
       wanderRadius: wanderRadius,
     );
     instance.x = x;

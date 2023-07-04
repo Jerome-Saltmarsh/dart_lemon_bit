@@ -157,16 +157,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       int previousWeaponType, int newWeaponType) {}
 
   /// @override
-  void customOnHitApplied({
-    required IsometricCharacter srcCharacter,
-    required IsometricCollider target,
-    required int damage,
-    required double angle,
-    required int hitType,
-    required double force,
-  }) {}
-
-  /// @override
   void customOnPlayerJoined(T player) {}
 
   /// @override
@@ -1619,15 +1609,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     target.clampVelocity(IsometricPhysics.Max_Velocity);
 
-    customOnHitApplied(
-      srcCharacter: srcCharacter,
-      target: target,
-      damage: damage,
-      angle: angle,
-      force: force,
-      hitType: hitType,
-    );
-
     if (target is IsometricGameObject) {
       if (ObjectType.isMaterialMetal(target.type)) {
         dispatch(
@@ -1639,7 +1620,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    // TODO Hack
+    if (target is IsometricGameObject){
+       if (target.healthMax > 0) {
+          target.health -= clamp(target.health - damage, 0, target.healthMax);
+          if (target.health <= 0){
+            destroyGameObject(target);
+          }
+       }
+    }
+
+    // TODO Remove Hack
     if (srcCharacter.characterTypeZombie) {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
@@ -1647,6 +1637,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!friendlyFire && IsometricCollider.onSameTeam(srcCharacter, target)) return;
       if (target.dead) return;
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
+      return;
     }
   }
 
@@ -1929,7 +1920,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return projectile;
     }
 
-    final projectile = IsometricProjectile();
+    final projectile = IsometricProjectile(
+      x: 0,
+      y: 0,
+      z: 0,
+      team: 0,
+    );
     projectiles.add(projectile);
     return projectile;
   }

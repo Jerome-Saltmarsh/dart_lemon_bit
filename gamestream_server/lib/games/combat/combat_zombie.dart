@@ -5,6 +5,8 @@ import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:lemon_math/src.dart';
 
+import 'combat_game.dart';
+
 class CombatZombie extends IsometricCharacter {
   static const AI_Path_Size = 80;
   static const Destination_Radius = 15;
@@ -34,7 +36,6 @@ class CombatZombie extends IsometricCharacter {
     required int characterType,
     required int health,
     required int damage,
-    required int team,
     this.wanderRadius = 200,
     double x = 0,
     double y = 0,
@@ -48,7 +49,7 @@ class CombatZombie extends IsometricCharacter {
       y: y,
       z: z,
       health: health,
-      team: team,
+      team: CombatGame.Team_Zombie,
       weaponRange: 20.0,
       weaponDamage: 1,
       weaponCooldown: 20,

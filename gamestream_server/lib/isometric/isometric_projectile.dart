@@ -9,7 +9,12 @@ class IsometricProjectile extends IsometricCollider {
   var friendlyFire = false;
   IsometricPosition? target = null;
 
-  IsometricProjectile() : super(x: 0, y: 0, z: 0, radius: IsometricPhysics.Projectile_Radius);
+  IsometricProjectile({
+    required super.team,
+    required super.x,
+    required super.y,
+    required super.z,
+  }) : super(radius: IsometricPhysics.Projectile_Radius);
 
   bool get overRange => distanceTravelled > range;
 

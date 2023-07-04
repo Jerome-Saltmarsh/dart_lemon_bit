@@ -60,21 +60,18 @@ abstract class IsometricCharacter extends IsometricCollider {
   final path = Uint32List(20);
 
   IsometricCharacter({
+    required super.x,
+    required super.y,
+    required super.z,
+    required super.team,
     required int characterType,
     required int health,
     required int weaponType,
-    required int team,
     required this.weaponDamage,
     required this.weaponRange,
     required this.weaponCooldown,
-    double x = 0,
-    double y = 0,
-    double z = 0,
     String? name,
   }) : super(
-    x: x,
-    y: y,
-    z: z,
     radius: CharacterType.getRadius(characterType),
   ) {
     maxHealth = health;
@@ -340,7 +337,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   bool withinAttackRange(IsometricPosition target){
-    if ((target.z - z).abs() > Character_Height) return false;
+    if ((target.z - z).abs() > Character_Height)
+      return false;
     if (target is IsometricCollider) {
       return withinRadiusPosition(target, weaponRange + target.radius);
     }

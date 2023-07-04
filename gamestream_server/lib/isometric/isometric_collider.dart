@@ -30,27 +30,19 @@ class IsometricCollider extends IsometricPosition {
 
   var sizeX = 0.0;
   var sizeY = 0.0;
+  var team = 0;
 
-
-  var _team = 0;
-
-  int get team => _team;
-
-  set team(int value){
-    if (_team == value) return;
-    _team = value;
-    onTeamChanged();
-  }
 
   IsometricCharacter? owner;
   var weaponDamage = 0;
 
   /// CONSTRUCTOR
   IsometricCollider({
-    required double x,
-    required double y,
-    required double z,
-    required double radius
+    required super.x,
+    required super.y,
+    required super.z,
+    required double radius,
+    required this.team,
   }) {
     this.x = x;
     this.y = y;
@@ -164,10 +156,6 @@ class IsometricCollider extends IsometricPosition {
     startX = x;
     startY = y;
     startZ = z;
-  }
-
-  void onTeamChanged(){
-
   }
 
   bool isAlly(dynamic that) {

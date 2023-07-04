@@ -18,6 +18,8 @@ class IsometricGameObject extends IsometricCollider {
   var previousX = 0.0;
   var previousY = 0.0;
   var previousZ = 0.0;
+  var health = 0;
+  var healthMax = 0;
 
   IsometricGameObject({
     required double x,
@@ -26,13 +28,17 @@ class IsometricGameObject extends IsometricCollider {
     required int type,
     required this.subType,
     required this.id,
+    int team = TeamType.Neutral,
+    int health = 0,
     double radius = 15.0,
-  }) : super(x: x, y: y, z: z, radius: radius) {
+  }) : super(x: x, y: y, z: z, radius: radius, team: team) {
     this.type = type;
-    team = TeamType.Alone;
+    team = team;
     startX = x;
     startY = y;
     startZ = z;
+    this.health = health;
+    this.healthMax = healthMax;
     synchronizePrevious();
   }
 

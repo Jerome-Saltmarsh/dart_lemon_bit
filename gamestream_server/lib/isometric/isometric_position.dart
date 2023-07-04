@@ -5,9 +5,15 @@ import 'package:gamestream_server/common/src/isometric/node_size.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricPosition {
-  var x = 0.0;
-  var y = 0.0;
-  var z = 0.0;
+  double x;
+  double y;
+  double z;
+
+  IsometricPosition({
+    required this.x,
+    required this.y,
+    required this.z,
+  });
 
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;

@@ -647,10 +647,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt16(gameObject.type);
   }
 
-  @override
-  void onTeamChanged() => writePlayerTeam();
-
-
   void writePlayerTeam(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Team);

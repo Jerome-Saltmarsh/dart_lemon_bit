@@ -44,7 +44,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       y: scene.columnLength - 100,
       z: 24,
       type: GameObjectType.Object,
-      subType: ObjectType.Base_Red,
+      subType: ObjectType.Base_Blue,
       id: generateUniqueId(),
       radius: 80,
     )
@@ -86,6 +86,17 @@ class MobaGame extends IsometricGame<MobaPlayer> {
 
   @override
   int get maxPlayers => 10;
+
+  @override
+  void customOnGameObjectDestroyed(IsometricGameObject gameObject) {
+    if (gameObject == redBase){
+       throw Exception('Blue Team Wins');
+    }
+    if (gameObject == blueBase){
+       throw Exception('Red Team Wins');
+    }
+  }
+
 
   void spawnCreeps() {
     for (final team in Teams) {
