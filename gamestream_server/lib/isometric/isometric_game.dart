@@ -283,20 +283,22 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void _updateIsometricPlayerAimTarget(IsometricPlayer player) {
+  void updatePlayerAimTarget(IsometricPlayer player) {
     var closestDistance = IsometricSettings.Pickup_Range_Squared;
 
     final mouseX = player.mouseSceneX;
     final mouseY = player.mouseSceneY;
-    final mouseZ = player.z;
+    final mouseZ = player.mouseSceneZ;
 
     IsometricCollider? closestCollider;
 
+    const Min_Radius = IsometricSettings.Pickup_Range;
+
     for (final character in characters) {
       if (character.dead) continue;
-      if ((mouseX - character.x).abs() > IsometricSettings.Pickup_Range) continue;
-      if ((mouseY - character.y).abs() > IsometricSettings.Pickup_Range) continue;
-      if ((mouseZ - character.z).abs() > IsometricSettings.Pickup_Range) continue;
+      if ((mouseX - character.x).abs() > Min_Radius) continue;
+      if ((mouseY - character.y).abs() > Min_Radius) continue;
+      if ((mouseZ - character.z).abs() > Min_Radius) continue;
       if (character == player) continue;
       final distance = getDistanceXYZSquared(
           mouseX, mouseY, mouseZ, character.x, character.y, character.z,
@@ -308,10 +310,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (!gameObject.collectable && !gameObject.interactable) continue;
-      if ((mouseX - gameObject.x).abs() > IsometricSettings.Pickup_Range) continue;
-      if ((mouseY - gameObject.y).abs() > IsometricSettings.Pickup_Range) continue;
-      if ((mouseZ - gameObject.z).abs() > IsometricSettings.Pickup_Range) continue;
+      if (!gameObject.collectable &&
+          !gameObject.interactable &&
+           gameObject.health <= 0
+      ) continue;
+      if ((mouseX - gameObject.x).abs() > Min_Radius) continue;
+      if ((mouseY - gameObject.y).abs() > Min_Radius) continue;
+      if ((mouseZ - gameObject.z).abs() > Min_Radius) continue;
       final distance = getDistanceXYZSquared(
           mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z,
       );
@@ -1481,9 +1486,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (instance is IsometricPlayer) {
       instance.aimTarget = null;
+      instance.target = null;
       players.remove(instance);
     }
     if (instance is IsometricCharacter) {
+      instance.target = null;
       characters.remove(instance);
       return;
     }
@@ -1508,7 +1515,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.dead) return;
     if (!player.active) return;
 
-    _updateIsometricPlayerAimTarget(player);
+    updatePlayerAimTarget(player);
+    player.updatePlayerAimTargetCategory();
 
     if (player.idling && !player.weaponStateBusy) {
       final diff = IsometricDirection.getDifference(
@@ -2313,28 +2321,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void setCharacterTarget(IsometricCharacter character, IsometricPosition target) {
-    if (character.target == target) return;
-    character.target = target;
-
-    // TODO
-    if (character is IsometricPlayer) {
-      character.writePlayerTargetPosition();
-    }
-  }
-
   void clearCharacterTarget(IsometricCharacter character) {
     if (character.target == null) return;
     character.target = null;
     character.setCharacterStateIdle();
-  }
-
-  void triggerSpawnPoints({int instances = 1}) {
-    // for (final index in scene.spawnPoints) {
-    //   for (var i = 0; i < instances; i++) {
-    //     customActionSpawnAIAtIndex(index);
-    //   }
-    // }
   }
 
   /// WARNING EXPENSIVE OPERATION

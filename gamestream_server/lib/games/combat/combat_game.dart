@@ -143,7 +143,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
           }
         }
         if (IsometricCollider.onSameTeam(player, aimTarget)){
-          setCharacterTarget(player, aimTarget);
+          player.target = aimTarget;
           return;
         }
       }
@@ -163,39 +163,39 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       );
     }
 
-    if (mouseRightDown) {
-      player.aimTargetWeaponSide = IsometricSide.Right;
-      final aimTarget = player.aimTarget;
-      if (aimTarget != null){
-        player.aimTargetWeaponSide = IsometricSide.Right;
-
-        if (aimTarget is IsometricGameObject && (aimTarget.collectable || aimTarget.interactable)){
-          if (player.aimTargetWithinInteractRadius) {
-            if (aimTarget.interactable) {
-              customOnPlayerInteractWithGameObject(player, aimTarget);
-              return;
-            }
-          }
-        }
-        if (IsometricCollider.onSameTeam(player, aimTarget)) {
-          setCharacterTarget(player, aimTarget);
-        }
-      }
-
-      if (!WeaponType.isMelee(player.weaponSecondary)
-          && characterMeleeAttackTargetInRange(player)
-      ) {
-        player.weaponType = player.weaponSecondary;
-        characterAttackMelee(player);
-        return;
-      }
-
-      characterUseOrEquipWeapon(
-        character: player,
-        weaponType: player.weaponSecondary,
-        characterStateChange: false,
-      );
-    }
+    // if (mouseRightDown) {
+    //   player.aimTargetWeaponSide = IsometricSide.Right;
+    //   final aimTarget = player.aimTarget;
+    //   if (aimTarget != null){
+    //     player.aimTargetWeaponSide = IsometricSide.Right;
+    //
+    //     if (aimTarget is IsometricGameObject && (aimTarget.collectable || aimTarget.interactable)){
+    //       if (player.aimTargetWithinInteractRadius) {
+    //         if (aimTarget.interactable) {
+    //           customOnPlayerInteractWithGameObject(player, aimTarget);
+    //           return;
+    //         }
+    //       }
+    //     }
+    //     if (IsometricCollider.onSameTeam(player, aimTarget)) {
+    //       player.target = aimTarget;
+    //     }
+    //   }
+    //
+    //   if (!WeaponType.isMelee(player.weaponSecondary)
+    //       && characterMeleeAttackTargetInRange(player)
+    //   ) {
+    //     player.weaponType = player.weaponSecondary;
+    //     characterAttackMelee(player);
+    //     return;
+    //   }
+    //
+    //   characterUseOrEquipWeapon(
+    //     character: player,
+    //     weaponType: player.weaponSecondary,
+    //     characterStateChange: false,
+    //   );
+    // }
 
     if (keySpaceDown) {
       playerUsePower(player);

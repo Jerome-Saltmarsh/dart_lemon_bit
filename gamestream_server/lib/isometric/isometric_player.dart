@@ -37,13 +37,15 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var id = 0;
   var selectedColliderDirty = false;
   var gameTimeInMinutes = 0;
+  var aimTargetCategory = TargetCategory.Run;
+  var aimTargetCategoryPrevious = -1;
 
   final mouse = Vector2(0, 0);
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
   IsometricCollider? selectedCollider;
-  IsometricCollider? _aimTarget; // the currently highlighted character
+  IsometricCollider? aimTarget;
 
   IsometricPlayer({
     required this.game,
@@ -72,8 +74,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
       : false;
 
-  IsometricCollider? get aimTarget => _aimTarget;
-
   int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
   double get mouseSceneX => game.clampX((mouse.x + mouse.y) + z);
@@ -91,18 +91,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   IsometricScene get scene => game.scene;
 
   double get mouseDistance => this.getDistanceXY(mouseSceneX, mouseSceneY);
-
-  set aimTarget(IsometricCollider? collider) {
-    if (_aimTarget == collider) return;
-    if (collider == this) return;
-    _aimTarget = collider;
-    writePlayerAimTargetCategory();
-    writePlayerAimTargetType();
-    writePlayerAimTargetPosition();
-    writePlayerAimTargetName();
-    writePlayerAimTargetQuantity();
-    game.customOnPlayerAimTargetChanged(this, collider);
-  }
 
   void refreshDamage() {
     weaponDamage = game.getPlayerWeaponDamage(this);
@@ -165,8 +153,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   @override
   void writePlayerGame() {
     writeIsometricPlayer();
-    writePlayerAimTargetPosition();
     writePlayerTargetPosition();
+    writePlayerAimTargetPosition();
+    writePlayerAimTargetCategory();
 
     writeSelectedCollider();
 
@@ -273,9 +262,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writePlayerAimTargetCategory() {
+    if (aimTargetCategoryPrevious == aimTargetCategory) return;
+
+    aimTargetCategoryPrevious = aimTargetCategory;
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Category);
-    writeByte(getTargetCategory(aimTarget));
+    writeByte(aimTargetCategory);
   }
 
   void writePlayerAimTargetType() {
@@ -318,6 +310,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       return TargetCategory.Run;
 
     if (value is IsometricGameObject) {
+      if (isEnemy(value))
+        return TargetCategory.Attack;
       if (value.interactable) {
         return TargetCategory.Collect;
       }
@@ -691,8 +685,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     runZ = mouseSceneZ;
   }
 
-  void setTargetToAimTarget() => target = aimTarget;
-
   void writeSelectedCollider() {
     final selectedCollider = this.selectedCollider;
 
@@ -806,6 +798,10 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void lookAtMouse(){
     if (deadOrBusy) return;
     lookRadian = mouseAngle;
+  }
+
+  void updatePlayerAimTargetCategory(){
+     aimTargetCategory = getTargetCategory(aimTarget);
   }
 }
 

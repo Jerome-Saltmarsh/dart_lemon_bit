@@ -18,6 +18,9 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   static const redTeam = 10;
   static const blueTeam = 20;
 
+  static const Base_Health = 200;
+  static const Base_Radius = 80.0;
+
   static const Teams = [redTeam, blueTeam];
 
   MobaGame({
@@ -25,6 +28,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Moba) {
+
     redBase = IsometricGameObject(
       x: scene.rowLength - 300,
       y: 100,
@@ -32,7 +36,8 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       type: GameObjectType.Object,
       subType: ObjectType.Base_Red,
       id: generateUniqueId(),
-      radius: 80,
+      radius: Base_Radius,
+      health: Base_Health,
     )
       ..fixed = true
       ..physical = true
@@ -46,7 +51,8 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       type: GameObjectType.Object,
       subType: ObjectType.Base_Blue,
       id: generateUniqueId(),
-      radius: 80,
+      radius: Base_Radius,
+      health: Base_Health,
     )
       ..fixed = true
       ..physical = true
@@ -72,6 +78,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         type: GameObjectType.Object,
         subType: ObjectType.Spawn_Blue,
         id: generateUniqueId(),
+        team: blueTeam,
     ) ..fixed = true
       ..physical = false
       ..collidable = false;
@@ -84,12 +91,14 @@ class MobaGame extends IsometricGame<MobaPlayer> {
 
     gameObjects.add(IsometricGameObject(
       x: scene.rowLength - 200,
-      y: 300,
+      y: 400,
       z: 24,
       type: GameObjectType.Object,
       subType: ObjectType.Base_Blue,
       id: generateUniqueId(),
       radius: 80,
+      health: 100,
+      team: blueTeam,
     )
       ..fixed = true
       ..physical = true
