@@ -243,7 +243,8 @@ extension isometricDebugUI on IsometricDebug {
       GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
       GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
       GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
-      GSRefresh(() => buildText('engine-frame: ${engine.paintFrame}')),
+      GSRefresh(() => buildText('engine-render-frame: ${engine.paintFrame}')),
+      GSRefresh(() => buildText('engine-update-frame: ${engine.updateFrame}')),
       onPressed(
           action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
@@ -259,8 +260,24 @@ extension isometricDebugUI on IsometricDebug {
           return GSRefresh(() {
             final framesElapsed = engine.paintFrame - previousFrames;
             previousFrames = engine.paintFrame;
-            return buildText('render-fps: $framesElapsed');
-          }, seconds: 1, milliseconds: 0);
+            return buildText('engine-render-frame-fps: $framesElapsed');
+          },
+              seconds: 1,
+              milliseconds: 0,
+          );
+        }
+      ),
+      Builder(
+        builder: (context) {
+          var previousUpdateFrame = engine.updateFrame;
+          return GSRefresh(() {
+            final framesElapsed = engine.updateFrame - previousUpdateFrame;
+            previousUpdateFrame = engine.updateFrame;
+            return buildText('engine-update-frame-fps: $framesElapsed');
+          },
+              seconds: 1,
+              milliseconds: 0,
+          );
         }
       ),
     ],

@@ -59,7 +59,7 @@ class Engine extends StatelessWidget {
   Function? onUpdate;
   /// override safe
   /// gets called when update timer is changed
-  Function? onUpdateTimerReset;
+  Function? onUpdateDurationChanged;
   /// override safe
   BasicWidgetBuilder? onBuildLoadingScreen;
   /// override safe
@@ -121,6 +121,7 @@ class Engine extends StatelessWidget {
   final screen = _Screen();
   var cameraX = 0.0;
   var cameraY = 0.0;
+  var updateFrame = 0;
 
   /// triggered if the state of the key is down
   void Function(int keyCode)? onKeyDown;
@@ -166,13 +167,18 @@ class Engine extends StatelessWidget {
   final watchBuildUI = Watch<WidgetBuilder?>(null);
   final watchTitle = Watch(Default_Title);
   final watchInitialized = Watch(false);
-  final watchDurationPerFrame = Watch(Duration(milliseconds: Default_Milliseconds_Per_Frame));
+
+  late final durationPerUpdate = Watch(
+      Default_Duration_Per_Update,
+      onChanged: onChangedDurationPerUpdate,
+  );
+
   late final watchMouseLeftDown = Watch(false, onChanged: _internalOnChangedMouseLeftDown);
   final mouseRightDown = Watch(false);
 
   // DEFAULTS
-  static const Default_Milliseconds_Per_Frame = 30;
   static const Default_Background_Color = Colors.black;
+  static const Default_Duration_Per_Update = Duration(milliseconds: 30);
   static const Default_Title = "DEMO";
   // CONSTANTS
   static const Milliseconds_Per_Second = 1000;
@@ -289,6 +295,7 @@ class Engine extends StatelessWidget {
     Function(Object error, StackTrace stack)? onError,
     bool setPathUrlStrategy = true,
     Color backgroundColor = Default_Background_Color,
+    Duration? durationPerUpdate = Default_Duration_Per_Update,
   }){
     this.watchTitle.value = title;
     this.onInit = init;
@@ -547,9 +554,10 @@ class Engine extends StatelessWidget {
       await onInit!(sharedPreferences);
     }
     updateTimer = Timer.periodic(
-        watchDurationPerFrame.value,
+        durationPerUpdate.value,
         _internalOnUpdate,
     );
+
     watchInitialized.value = true;
   }
 
@@ -557,16 +565,8 @@ class Engine extends StatelessWidget {
     fullScreen.value = fullScreenActive;
   }
 
-  void resetUpdateTimer(){
-    updateTimer?.cancel();
-    updateTimer = Timer.periodic(
-      watchDurationPerFrame.value,
-      _internalOnUpdate,
-    );
-    onUpdateTimerReset?.call();
-  }
-
   void _internalOnUpdate(Timer timer){
+    updateFrame++;
     Screen_Left = cameraX;
     Screen_Right = cameraX + (screen.width / zoom);
     Screen_Top = cameraY;
@@ -590,7 +590,7 @@ class Engine extends StatelessWidget {
   }
 
   void setFramesPerSecond(int framesPerSecond) =>
-     watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
+     durationPerUpdate.value = buildDurationFramesPerSecond(framesPerSecond);
 
   ui.Image get bufferImage => _bufferImage;
 
@@ -1331,6 +1331,16 @@ class Engine extends StatelessWidget {
 
   static Widget buildDefaultLoadingScreen(BuildContext buildContext){
     return Text("LOADING");
+  }
+
+  void onChangedDurationPerUpdate(Duration duration){
+    print('engine.onChangedDurationPerUpdate(milliseconds: ${duration.inMilliseconds})');
+    updateTimer?.cancel();
+    updateTimer = Timer.periodic(
+      duration,
+      _internalOnUpdate,
+    );
+    onUpdateDurationChanged?.call();
   }
 }
 
