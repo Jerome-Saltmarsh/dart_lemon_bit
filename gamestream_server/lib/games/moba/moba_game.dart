@@ -28,7 +28,10 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         type: GameObjectType.Object,
         subType: ObjectType.Base_Red,
         id: generateUniqueId(),
-    );
+    )
+      ..fixed = true
+      ..physical = false
+      ..collidable = false;
 
     teamRedBase.hitable = true;
 
@@ -39,7 +42,9 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         type: GameObjectType.Object,
         subType: ObjectType.Base_Blue,
         id: generateUniqueId(),
-    );
+    ) ..fixed = true
+      ..physical = false
+      ..collidable = false;
 
     gameObjects.add(teamRedBase);
     gameObjects.add(teamBlueBase);

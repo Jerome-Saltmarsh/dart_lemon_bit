@@ -152,7 +152,7 @@ class IsometricDebug {
       if (enabled){
         isometric.camera.target = null;
       } else {
-        isometric.cameraTargetPlayer;
+        isometric.cameraTargetPlayer();
       }
   }
 }

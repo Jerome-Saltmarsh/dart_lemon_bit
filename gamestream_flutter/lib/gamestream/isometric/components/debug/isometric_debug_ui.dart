@@ -232,7 +232,7 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabEngine() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      GSRefresh(() => buildText('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
+      GSRefresh(() => buildText('engine-touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
       GSRefresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
       GSRefresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
       GSRefresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
@@ -242,43 +242,19 @@ extension isometricDebugUI on IsometricDebug {
       GSRefresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
       GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
       GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
-      GSRefresh(() => buildText('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
+      GSRefresh(() => buildText('engine-camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
       GSRefresh(() => buildText('engine-render-frame: ${engine.paintFrame}')),
       GSRefresh(() => buildText('engine-update-frame: ${engine.updateFrame}')),
+      buildRowWatchInt(text: 'engine.ms-per-render', watch: engine.msRender),
+      buildRowWatchInt(text: 'engine.ms-per-update', watch: engine.msUpdate),
       onPressed(
           action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
 
       ),
       onPressed(
-          action: () => gamestream.renderCanvasAfterServerResponseReceived = !gamestream.renderCanvasAfterServerResponseReceived,
-          child: GSRefresh(() => buildText(' gamestream.renderCanvasAfterServerResponseReceived = ${gamestream.renderCanvasAfterServerResponseReceived}'))
-      ),
-      Builder(
-        builder: (context) {
-          var previousFrames = engine.paintFrame;
-          return GSRefresh(() {
-            final framesElapsed = engine.paintFrame - previousFrames;
-            previousFrames = engine.paintFrame;
-            return buildText('engine-render-frame-fps: $framesElapsed');
-          },
-              seconds: 1,
-              milliseconds: 0,
-          );
-        }
-      ),
-      Builder(
-        builder: (context) {
-          var previousUpdateFrame = engine.updateFrame;
-          return GSRefresh(() {
-            final framesElapsed = engine.updateFrame - previousUpdateFrame;
-            previousUpdateFrame = engine.updateFrame;
-            return buildText('engine-update-frame-fps: $framesElapsed');
-          },
-              seconds: 1,
-              milliseconds: 0,
-          );
-        }
+          action: () => gamestream.renderResponse = !gamestream.renderResponse,
+          child: GSRefresh(() => buildText(' gamestream.renderResponse = ${gamestream.renderResponse}'))
       ),
     ],
   );

@@ -11,6 +11,7 @@ alt + m             : go to declaration
 [MAJ1K]
 
 [CLIENT]
+  [ ] refactor lemon engine
   [ ] remove lemon engine global instance
   [ ] remove gamestream global instance
   [ ] remove all static instances

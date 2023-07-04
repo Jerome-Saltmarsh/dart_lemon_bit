@@ -154,7 +154,6 @@ extension IsometricActions on Isometric {
     }
   }
 
-
   void cameraTargetPlayer(){
     camera.target = player.position;
     camera.followTarget.value = true;

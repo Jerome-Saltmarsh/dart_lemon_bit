@@ -1,6 +1,7 @@
 library lemon_engine;
 import 'dart:convert';
 
+import 'package:lemon_engine/src/convert_duration_to_frames_per_second.dart';
 import 'package:lemon_engine/src/math.dart';
 import 'package:universal_html/html.dart';
 
@@ -16,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_strategy/url_strategy.dart' as us;
 
 class Engine extends StatelessWidget {
 
@@ -66,6 +66,15 @@ class Engine extends StatelessWidget {
   Function(Object error, StackTrace stack)? onError;
 
   // VARIABLES
+
+  /// milliseconds elapsed since last render frame
+  final msRender = Watch(0);
+  /// milliseconds elapsed since last update frame
+  final msUpdate = Watch(0);
+
+  var lastRenderTime = DateTime.now();
+  var lastUpdateTime = DateTime.now();
+
   List<Offset> touchPoints = [];
   var touches = 0;
   var touchDownId = 0;
@@ -361,6 +370,9 @@ class Engine extends StatelessWidget {
 
   void redrawCanvas() {
     notifierPaintFrame.value++;
+    final now = DateTime.now();
+    msRender.value = now.difference(lastRenderTime).inMilliseconds;
+    lastRenderTime = now;
   }
 
   void refreshPage(){
@@ -566,6 +578,12 @@ class Engine extends StatelessWidget {
   }
 
   void _internalOnUpdate(Timer timer){
+
+    final now = DateTime.now();
+    // fpsUpdate.value = convertDurationToFramesPerSecond(now.difference(lastUpdateTime));
+    msUpdate.value = now.difference(lastUpdateTime).inMilliseconds;
+    lastUpdateTime = now;
+
     updateFrame++;
     Screen_Left = cameraX;
     Screen_Right = cameraX + (screen.width / zoom);
