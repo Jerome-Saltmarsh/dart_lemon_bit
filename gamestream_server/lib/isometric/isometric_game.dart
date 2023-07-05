@@ -2321,12 +2321,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)) {
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
-    // scene.dirty = true;
     scene.shapes[nodeIndex] = nodeOrientation;
     scene.types[nodeIndex] = nodeType;
     for (final player in players) {
       player.writeNode(nodeIndex);
     }
+    scene.compiled = null;
   }
 
   void clearCharacterTarget(IsometricCharacter character) {
