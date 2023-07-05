@@ -248,11 +248,6 @@ class CaptureTheFlagAI extends IsometricCharacter {
      return false;
   }
 
-  @override
-  void onWeaponTypeChanged() {
-    weaponRange = game.getWeaponTypeRange(weaponType);
-  }
-
   void toggleRole() => role = roleDefensive ? CaptureTheFlagAIRole.Offense : CaptureTheFlagAIRole.Defense;
 
   bool flagOwnWithinRadius(double radius) =>

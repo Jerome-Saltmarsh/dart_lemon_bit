@@ -21,6 +21,7 @@ class IsometricDebug {
   final x = Watch(0.0);
   final y = Watch(0.0);
   final z = Watch(0.0);
+  final team = Watch(0);
   final runTimeType = Watch('');
   final path = Uint16List(500);
   final pathIndex = Watch(0);

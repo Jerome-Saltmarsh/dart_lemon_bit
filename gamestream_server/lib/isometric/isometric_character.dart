@@ -13,7 +13,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
-  var _weaponType = WeaponType.Unarmed;
   var _characterType = 0;
   var _weaponState = WeaponState.Idle;
 
@@ -23,6 +22,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
 
+  var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
   var weaponStateDuration = 0;
@@ -115,18 +115,9 @@ abstract class IsometricCharacter extends IsometricCollider {
     return withinAttackRange(target);
   }
 
-  int get weaponType => _weaponType;
-
   bool get isPlayer => false;
 
   bool get aliveAndActive => alive && active;
-
-  set weaponType(int value){
-    // assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
-    if (_weaponType == value) return;
-    _weaponType = value;
-    onWeaponTypeChanged();
-  }
 
   int get characterType => _characterType;
 
@@ -142,6 +133,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get accuracy => _accuracy;
 
+  // TODO REMOVE
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
 
   bool get characterTypeTemplate => characterType == CharacterType.Template;
@@ -152,17 +144,10 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get alive => !dead;
 
-  bool get targetIsNull => target == null;
+  bool get targetIsEnemy => target == null ? false : isEnemy(target);
 
-  bool get targetIsEnemy {
-    if (target == null) return false;
-    return isEnemy(target);
-  }
+  bool get targetIsAlly => target == null ? false : isAlly(target);
 
-  bool get targetIsAlly {
-    if (target == null) return false;
-    return isAlly(target);
-  }
   bool get weaponStateBusy => weaponState != WeaponState.Aiming && weaponStateDurationTotal > 0;
 
   bool get running => state == CharacterState.Running;
@@ -360,9 +345,6 @@ abstract class IsometricCharacter extends IsometricCollider {
       }
     }
   }
-
-  /// safe to override
-  void onWeaponTypeChanged() {}
 
   /// safe to override
   void customOnUpdate() {}

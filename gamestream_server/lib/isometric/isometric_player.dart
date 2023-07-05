@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/utils.dart';
 
@@ -593,11 +591,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerEquipment();
   }
 
-  @override
-  void onWeaponTypeChanged() {
-    refreshDamage();
-  }
-
   void writePlayerEquipment(){
      writeByte(ServerResponse.Api_Player);
      writeByte(ApiPlayer.Equipment);
@@ -704,6 +697,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       final gameObject = selectedCollider;
       writeByte(IsometricType.GameObject);
       writeString(gameObject.runtimeType.toString());
+      writeUInt16(gameObject.team);
       writeUInt16(gameObject.radius.toInt());
       writeUInt16(gameObject.health);
       writeUInt16(gameObject.healthMax);
@@ -717,6 +711,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       final character = selectedCollider;
       writeByte(IsometricType.Character);
       writeString(character.runtimeType.toString());
+      writeUInt16(character.team);
       writeUInt16(character.radius.toInt());
       writeUInt16(selectedCollider.health);
       writeUInt16(selectedCollider.maxHealth);;

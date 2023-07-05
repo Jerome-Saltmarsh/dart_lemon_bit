@@ -289,11 +289,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
      powerActivatedTarget = null;
   }
 
-  @override
-  void onWeaponTypeChanged() {
-    weaponRange = game.getWeaponTypeRange(weaponType);
-  }
-
   int get experienceRequiredForNextLevel {
     return game.getExperienceForLevel(level.value + 1);
   }

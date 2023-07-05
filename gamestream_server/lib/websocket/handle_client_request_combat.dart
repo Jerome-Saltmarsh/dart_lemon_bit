@@ -38,7 +38,6 @@ extension HandleClientRequestCombat on WebSocketConnection {
         // }
         player.weaponPrimary = value;
         player.weaponType = value;
-        player.onWeaponTypeChanged();
         break;
       case CombatRequest.Select_Weapon_Secondary:
         final value = parseArg1(arguments);
@@ -49,7 +48,6 @@ extension HandleClientRequestCombat on WebSocketConnection {
         // }
         player.weaponSecondary = value;
         player.weaponType = value;
-        player.onWeaponTypeChanged();
         break;
     }
   }

@@ -89,12 +89,6 @@ class CombatPlayer extends IsometricPlayer {
     writeUInt16(weaponSecondary);
   }
 
-  @override
-  void onWeaponTypeChanged() {
-    super.onWeaponTypeChanged();
-    writePlayerWeapons();
-  }
-
   void swapWeapons() {
     if (!canChangeEquipment) {
       return;

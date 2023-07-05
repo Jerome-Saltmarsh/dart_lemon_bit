@@ -1,4 +1,6 @@
-import 'package:lemon_math/src.dart';
+import 'ease_type.dart';
+import 'get_ease_function.dart';
+import 'interpolate_ease_function.dart';
 
 List<double> interpolateEaseType({
   required int length,
