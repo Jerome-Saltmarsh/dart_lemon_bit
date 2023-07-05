@@ -34,6 +34,7 @@ extension isometricDebugUI on IsometricDebug {
                         DebugTab.Lighting => buildTabLighting(),
                         DebugTab.Engine => buildTabEngine(),
                         DebugTab.Objects => buildTabObjects(),
+                        DebugTab.Isometric => buildTabIsometric(),
                       },
                     ),
                   ),
@@ -312,6 +313,7 @@ extension isometricDebugUI on IsometricDebug {
       ],
     ),
   );
+
   static Widget buildRow({required String text, required Widget value}) => Container(
     margin: const EdgeInsets.only(bottom: 2),
     child: Row(
@@ -322,6 +324,9 @@ extension isometricDebugUI on IsometricDebug {
       ],
     ),
   );
+
+  static Widget buildValueText(dynamic value, {Color color = Colors.white12}) =>
+      buildValue(buildText(value));
 
   static Widget buildValue(Widget child, {Color color = Colors.white12}) => Container(
     width: 140,
@@ -437,5 +442,20 @@ extension isometricDebugUI on IsometricDebug {
       ],
     ),
   );
+
+  Widget buildTabIsometric() => Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        onPressed(
+            action: isometric.options.toggleRenderHealthbarAllies,
+            child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarAllies))),
+        ),
+        onPressed(
+            action: isometric.options.toggleRenderHealthBarEnemies,
+            child: buildRow(text: 'render-health-enemy', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarEnemies))),
+        ),
+      ],
+    );
 }
 

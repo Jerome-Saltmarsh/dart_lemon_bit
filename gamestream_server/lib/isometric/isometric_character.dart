@@ -413,6 +413,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   void attackTargetEnemy(IsometricGame game){
     final target = this.target;
     if (target == null) return;
+    setDestinationToCurrentPosition();
+    clearPath();
     idle();
     face(target);
     faceTarget();

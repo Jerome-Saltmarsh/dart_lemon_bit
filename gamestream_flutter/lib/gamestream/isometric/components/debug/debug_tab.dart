@@ -1,4 +1,4 @@
 
 enum DebugTab {
-  Selected, Network, Stats, Lighting, Engine, Objects,
+  Selected, Network, Stats, Lighting, Engine, Objects, Isometric,
 }

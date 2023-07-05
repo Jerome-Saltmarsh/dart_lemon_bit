@@ -15,7 +15,10 @@ class MmoPlayer extends IsometricPlayer {
 
   late final npcText = ChangeNotifier("", onChangedNpcText);
 
-  MmoPlayer({required super.game});
+  MmoPlayer({required super.game}) {
+    weaponType = WeaponType.Unarmed;
+    weaponRange = 40;
+  }
 
   bool get destinationWithinDestinationRadius => runDestinationWithinRadius(destinationRadius);
 

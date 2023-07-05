@@ -707,10 +707,6 @@ class IsometricEvents {
       }
   }
 
-  void onChangedPlayerAlive(bool playerAlive) {
-
-  }
-
   void onChangedPlayerActive(bool playerActive){
      print('onChangedPlayerActive($playerActive)');
   }

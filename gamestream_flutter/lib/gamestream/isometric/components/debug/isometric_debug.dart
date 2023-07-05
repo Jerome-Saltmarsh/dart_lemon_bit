@@ -61,6 +61,7 @@ class IsometricDebug {
     if (!enabled.value) return;
     if (!selectedCollider.value) return;
 
+    engine.setPaintColor(Colors.white);
     renderer.renderCircle(
       x.value,
       y.value,
@@ -68,6 +69,15 @@ class IsometricDebug {
       radius.value.toDouble(),
     );
 
+    engine.setPaintColor(Colors.green);
+    renderer.renderCircle(
+      x.value,
+      y.value,
+      z.value,
+      weaponRange.value.toDouble(),
+    );
+
+    engine.setPaintColor(Colors.blue);
     if (selectedColliderType.value == IsometricType.Character) {
       if (targetSet.value) {
         renderer.renderLine(

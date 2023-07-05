@@ -53,7 +53,7 @@ class IsometricPlayer {
   late final message = Watch('', onChanged: gamestream.isometric.events.onChangedPlayerMessage);
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
-  late final alive = Watch(true, onChanged: gamestream.isometric.events.onChangedPlayerAlive);
+  late final alive = Watch(true);
   late final weapon = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);

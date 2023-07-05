@@ -46,7 +46,6 @@ class IsometricRender {
     if (radius <= 0) return;
     if (sections < 3) return;
 
-    engine.paint.color = Colors.white;
     final anglePerSection = pi2 / sections;
     var lineX1 = adj(0, radius);
     var lineY1 = opp(0, radius);
