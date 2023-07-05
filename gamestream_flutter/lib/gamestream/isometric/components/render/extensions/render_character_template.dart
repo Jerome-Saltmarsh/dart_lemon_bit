@@ -1,13 +1,12 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
 import 'package:gamestream_flutter/utils.dart';
 
 import '../../../../../library.dart';
@@ -45,10 +44,6 @@ extension RenderCharactersTemplate on RendererCharacters {
     assert(character.direction >= 0);
     assert(character.direction < 8);
     if (character.dead) return;
-
-    if (renderHealthBar && character.allie) {
-      gamestream.isometric.renderer.renderCharacterHealthBar(character);
-    }
 
     var frameLegs = 0;
     var frameHead = 0;
