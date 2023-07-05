@@ -54,13 +54,13 @@ class IsometricScene {
   late var interpolationLength = 6;
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
-    interpolations = interpolateEase(
+    interpolations = interpolateEaseType(
       length: interpolationLength,
       easeType: EaseType.In_Out_Quad,
     );
   });
 
-  late var interpolations = interpolateEase(
+  late var interpolations = interpolateEaseType(
     length: interpolationLength,
     easeType: interpolationEaseType.value,
   );
@@ -69,7 +69,7 @@ class IsometricScene {
     if (value < 1) return;
     if (interpolationLength == value) return;
     interpolationLength = value;
-    interpolations = interpolateEase(
+    interpolations = interpolateEaseType(
       length: interpolationLength,
       easeType: interpolationEaseType.value,
     );
