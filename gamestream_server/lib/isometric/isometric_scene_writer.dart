@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src/isometric/scene_part.dart';
 import 'package:gamestream_server/common/src/isometric/node_type.dart';
+import 'package:gamestream_server/utils/byte_utils.dart';
 
 import 'isometric_gameobject.dart';
 import 'isometric_scene.dart';
@@ -50,6 +51,18 @@ class IsometricSceneWriter extends ByteWriter {
       writeByte(gameObject.type);
       writeByte(gameObject.subType);
       writeByte(gameObject.team);
+
+      writeByte(writeBitsToByte(
+          gameObject.collidable,
+          gameObject.collectable,
+          gameObject.fixed,
+          gameObject.gravity,
+          gameObject.hitable,
+          gameObject.physical,
+          gameObject.interactable,
+          gameObject.destroyable,
+      ));
+
       writeUInt16(gameObject.startX.toInt());
       writeUInt16(gameObject.startY.toInt());
       writeUInt16(gameObject.startZ.toInt());
