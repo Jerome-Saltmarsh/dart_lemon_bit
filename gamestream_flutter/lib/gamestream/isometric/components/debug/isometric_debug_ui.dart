@@ -244,8 +244,14 @@ extension isometricDebugUI on IsometricDebug {
       GSRefresh(() => buildText('engine-camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
       GSRefresh(() => buildText('engine-render-frame: ${engine.paintFrame}')),
       GSRefresh(() => buildText('engine-update-frame: ${engine.updateFrame}')),
-      buildRowWatchInt(text: 'engine.ms-per-render', watch: engine.msRender),
-      buildRowWatchInt(text: 'engine.ms-per-update', watch: engine.msUpdate),
+      buildRowWatchInt(text: 'engine.ms-render', watch: engine.msRender),
+      buildRowWatchInt(text: 'engine.ms-update', watch: engine.msUpdate),
+      buildWatch(engine.msRender, (t) {
+        return buildRowText(text: 'engine.fps-render', value: t <= 0 ? '0' : (1000 ~/ t).toString());
+      }),
+      buildWatch(engine.msUpdate, (t) {
+        return buildRowText(text: 'engine.fps-update', value: t <= 0 ? '0' : (1000 ~/ t).toString());
+      }),
       onPressed(
           action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))

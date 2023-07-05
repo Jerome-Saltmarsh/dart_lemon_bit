@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/utils.dart';
 
@@ -722,13 +724,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
       writeByte(character.characterType);
       writeByte(character.state);
-      writeUInt16(character.stateDuration);
+      writeUInt16(min(character.stateDuration, 1000));
       writeUInt16(character.stateDurationRemaining);
       writeUInt16(character.weaponType);
       writeUInt16(character.weaponDamage);
       writeUInt16(character.weaponRange.toInt());
       writeByte(character.weaponState);
-      writeUInt16(character.weaponStateDuration);
+      writeUInt16(min(character.weaponStateDuration, 1000));
       writeBool(character.autoTarget);
       writeBool(character.pathFindingEnabled);
       writeBool(character.runToDestinationEnabled);

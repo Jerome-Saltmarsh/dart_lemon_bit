@@ -168,13 +168,13 @@ extension RenderCharactersTemplate on RendererCharacters {
     const Anchor_Y = 0.625;
 
     if (character.z >= GameIsometricConstants.Node_Height){
-      gamestream.isometric.scene.markShadow(character);
+      // gamestream.isometric.scene.markShadow(character);
 
-      final shadowAngle = gamestream.isometric.scene.shadow.z + pi;
-      final shadowDistance = gamestream.isometric.scene.shadow.magnitudeXY;
-      final shadowX = character.x + adj(shadowAngle, shadowDistance);
-      final shadowY = character.y + opp(shadowAngle, shadowDistance);
-      final shadowZ = character.z;
+      // final shadowAngle = gamestream.isometric.scene.shadow.z + pi;
+      // final shadowDistance = gamestream.isometric.scene.shadow.magnitudeXY;
+      // final shadowX = character.x + adj(shadowAngle, shadowDistance);
+      // final shadowY = character.y + opp(shadowAngle, shadowDistance);
+      // final shadowZ = character.z;
 
       engine.renderSprite(
         image: Images.template_shadow,
@@ -182,8 +182,8 @@ extension RenderCharactersTemplate on RendererCharacters {
         srcY: upperBodyDirection * 64,
         srcWidth: 64,
         srcHeight: 64,
-        dstX: IsometricRender.getRenderX(shadowX, shadowY, shadowZ),
-        dstY: IsometricRender.getRenderY(shadowX, shadowY, shadowZ),
+        dstX: IsometricRender.getPositionRenderX(character),
+        dstY: IsometricRender.getPositionRenderY(character),
         scale: Scale,
         color: color,
         anchorY: Anchor_Y,
