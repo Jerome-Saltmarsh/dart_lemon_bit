@@ -1639,7 +1639,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!target.active) return;
 
     if (angle == null){
-      angle = target.getAngle(srcCharacter);
+      angle = srcCharacter.getAngle(target);
     }
 
     target.applyForce(
@@ -1711,7 +1711,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.target != null) {
        final target = character.target;
        if (target != null){
-
          if (
           character.runToDestinationEnabled &&
           !character.pathFindingEnabled &&
@@ -1729,6 +1728,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
            scene.outOfBoundsPosition(target)
          ) {
            character.clearTarget();
+           character.clearPath();
+           character.setDestinationToCurrentPosition();
          }
        }
     }

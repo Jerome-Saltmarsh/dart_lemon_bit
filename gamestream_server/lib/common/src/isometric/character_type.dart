@@ -41,8 +41,8 @@ class CharacterType {
        }[value] ??    2.0;
    
    static double getRadius(int value) => const {
-          Template:   10.0,
-          Zombie:     10.0,
+          Template:   14.0,
+          Zombie:     14.0,
           Rat:        10.0,
           Slime:      10.0,
           Wolf:       10.0,
