@@ -3,13 +3,12 @@ import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
-import 'package:gamestream_server/lemon_math.dart';
-
 import 'game.dart';
 
 abstract class Player with ByteWriter {
 
-  final mouse = Vector2(0, 0);
+  var mouseX = 0.0;
+  var mouseY = 0.0;
   var framesSinceClientRequest = 0;
   var screenLeft = 0.0;
   var screenTop = 0.0;

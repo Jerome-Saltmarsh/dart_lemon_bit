@@ -1,8 +1,6 @@
 
 import 'dart:math';
 
-import 'package:gamestream_server/utils/typedefs.dart';
-
 import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_character.dart';
@@ -48,18 +46,6 @@ class IsometricPhysics {
       }
     }
     return target;
-  }
-
-  static List<T> sphereCastAll<T extends Position>({
-    required Position position,
-    required double radius,
-    required List<T> values,
-    Predicate<T>? where,
-  }) {
-    if (where != null) {
-      return values.where((value) => value.getDistance(position) < radius && where(value)).toList();
-    }
-    return values.where((value) => value.getDistance(position) < radius).toList();
   }
 
   static T? sphereCaste<T extends IsometricCollider>({

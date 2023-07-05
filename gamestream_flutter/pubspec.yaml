@@ -21,14 +21,12 @@ dependencies:
   golden_ratio: 1.0.6
   http: ^0.13.4
   intl: ^0.17.0
-  flutter_facebook_auth: ^4.0.1
   typedef: ^1.0.5
   device_info_plus: ^6.0.0
   url_launcher: ^6.1.10
-  vector_math: ^2.1.4
 
   lemon_math:
-    path: C:\Users\Jerome\github\dart-lemon-math
+    path: ..\dart-lemon-math
   lemon_byte:
     path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:

@@ -71,10 +71,6 @@ class IsometricCollider extends IsometricPosition {
 
   // METHODS
 
-  double distanceFromPos2(Position value) {
-    return distanceFromXY(value.x, value.y);
-  }
-
   double distanceFromXYZ(double x, double y, double z) {
     final a = this.x - x;
     final b = this.y - y;

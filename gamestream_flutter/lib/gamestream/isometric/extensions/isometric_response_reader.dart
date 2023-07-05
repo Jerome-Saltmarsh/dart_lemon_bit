@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 
 extension IsometricResponseReader on Gamestream {
+
   void readIsometricResponse() {
     switch (readByte()) {
 

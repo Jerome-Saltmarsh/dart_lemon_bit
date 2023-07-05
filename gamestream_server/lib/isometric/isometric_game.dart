@@ -594,11 +594,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     characterFireWeapon(player);
   }
 
-  void positionToPlayerMouse(Position position, IsometricPlayer player) {
-    position.x = player.mouseSceneX;
-    position.y = player.mouseSceneY;
-  }
-
   void playerAutoAim(IsometricPlayer player) {
     if (player.deadOrBusy) return;
     var closestTargetDistance = player.weaponRange * 1.5;

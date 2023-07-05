@@ -40,8 +40,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var gameTimeInMinutes = 0;
   var aimTargetCategory = TargetCategory.Run;
   var aimTargetCategoryPrevious = -1;
-
-  final mouse = Vector2(0, 0);
+  var mouseX = 0.0;
+  var mouseY = 0.0;
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -77,9 +77,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
-  double get mouseSceneX => game.clampX((mouse.x + mouse.y) + z);
+  double get mouseSceneX => game.clampX((mouseX + mouseY) + z);
 
-  double get mouseSceneY => game.clampY((mouse.y - mouse.x) + z);
+  double get mouseSceneY => game.clampY((mouseY - mouseX) + z);
 
   double get mouseSceneZ => game.clampZ(z);
 

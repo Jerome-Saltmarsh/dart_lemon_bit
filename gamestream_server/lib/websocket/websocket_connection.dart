@@ -460,8 +460,8 @@ class WebSocketConnection with ByteReader {
       case IsometricEditorGameObjectRequest.Select:
         final gameObjects = player.scene.gameObjects;
         if (gameObjects.isEmpty) return;
-        final mouseX = player.mouse.x;
-        final mouseY = player.mouse.y;
+        final mouseX = player.mouseX;
+        final mouseY = player.mouseY;
         var closest = gameObjects.first;
         var distance = getDistanceXY(mouseX, mouseY, closest.renderX, closest.renderY);
 
@@ -604,8 +604,8 @@ class WebSocketConnection with ByteReader {
 
     player.framesSinceClientRequest = 0;
 
-    player.mouse.x = readInt16().toDouble();
-    player.mouse.y = readInt16().toDouble();
+    player.mouseX = readInt16().toDouble();
+    player.mouseY = readInt16().toDouble();
     player.screenLeft = readInt16().toDouble();
     player.screenTop = readInt16().toDouble();
     player.screenRight = readInt16().toDouble();

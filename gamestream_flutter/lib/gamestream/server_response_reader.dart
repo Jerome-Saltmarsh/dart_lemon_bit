@@ -630,11 +630,6 @@ extension ServerResponseReader on Gamestream {
     isometric.events.onPlayerEvent(readByte());
   }
 
-  void readPosition(Position position){
-    position.x = readDouble();
-    position.y = readDouble();
-  }
-
   void readVector3(IsometricPosition value){
     value.x = readDouble();
     value.y = readDouble();
@@ -645,11 +640,6 @@ extension ServerResponseReader on Gamestream {
     value.x = readDouble();
     value.y = readDouble();
     value.z = readDouble();
-  }
-
-  void readVector2(Vector2 value){
-    value.x = readDouble();
-    value.y = readDouble();
   }
 
   double readPercentage() => readByte() / 255.0;
