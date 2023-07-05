@@ -60,9 +60,9 @@ class CaptureTheFlagAI extends IsometricCharacter {
 
   IsometricPosition get flagSpawnOwn => game.getFlagSpawn(flagOwn);
 
-  double get baseOwnDistance => getDistance3(baseOwn);
+  double get baseOwnDistance => getDistance(baseOwn);
 
-  double get baseEnemyDistance => getDistance3(baseEnemy);
+  double get baseEnemyDistance => getDistance(baseEnemy);
 
   bool get flagEnemyCapturable => flagEnemy.statusAtBase || flagEnemy.statusDropped;
 

@@ -146,13 +146,13 @@ class CombatZombie extends IsometricCharacter {
           return;
         case AIMode.Encircle_CW:
           final targetAngle = angleBetween(x, y, target.x, target.y, ) + piEighth;
-          final distance =  getDistance3(target);
+          final distance =  getDistance(target);
           destX = target.x + adj(targetAngle, distance);
           destY = target.y + opp(targetAngle, distance);
           break;
         case AIMode.Encircle_CCW:
           final targetAngle = angleBetween(x, y, target.x, target.y, ) - piEighth;
-          final distance = getDistance3(target);
+          final distance = getDistance(target);
           destX = target.x + adj(targetAngle, distance);
           destY = target.y + opp(targetAngle, distance);
           break;

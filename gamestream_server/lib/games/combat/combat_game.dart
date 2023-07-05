@@ -641,8 +641,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       ai.target = src;
       return;
     }
-    final aiTargetDistance = ai.getDistance3(targetAITarget);
-    final srcTargetDistance =  ai.getDistance3(src);
+    final aiTargetDistance = ai.getDistance(targetAITarget);
+    final srcTargetDistance =  ai.getDistance(src);
     if (srcTargetDistance < aiTargetDistance) {
       ai.target = src;
     }

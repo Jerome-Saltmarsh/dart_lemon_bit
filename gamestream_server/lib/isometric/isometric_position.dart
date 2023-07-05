@@ -39,13 +39,6 @@ class IsometricPosition {
   double getAngleXY(double x, double y) =>
       angleBetween(this.x, this.y, x, y);
 
-  IsometricPosition set({double? x, double? y, double? z}){
-     if (x != null) this.x = x;
-     if (y != null) this.y = y;
-     if (z != null) this.x = z;
-     return this;
-  }
-
   bool withinRadiusPosition(IsometricPosition position3, double radius) =>
       withinRadiusXYZ(position3.x, position3.y, position3.z, radius);
 
@@ -62,6 +55,20 @@ class IsometricPosition {
     if (zDiffSquared > radiusSquared) return false;
 
     return xDiffSquared + yDiffSquared + zDiffSquared <= radiusSquared;
+  }
+
+  double getDistanceSquared(IsometricPosition position) =>
+      getDistanceSquaredXYZ(position.x, position.y, position.z);
+
+  double getDistanceSquaredXYZ(double x, double y, double z) =>
+      pow(this.x - x, 2) +
+      pow(this.y - y, 2) +
+      pow(this.z - z, 2).toDouble();
+
+  void moveTo(IsometricPosition value){
+    x = value.x;
+    y = value.y;
+    z = value.z;
   }
 
   static bool compare(IsometricPosition a, IsometricPosition b){
@@ -101,22 +108,5 @@ class IsometricPosition {
       items.setRange(min + 1, pos + 1, items, min);
       items[min] = element;
     }
-  }
-
-  double getDistance3(IsometricPosition position) =>
-      getDistanceXYZ(position.x, position.y, position.z);
-
-  double getDistanceSquared(IsometricPosition position) =>
-      getDistanceSquaredXYZ(position.x, position.y, position.z);
-
-  double getDistanceSquaredXYZ(double x, double y, double z) =>
-      pow(this.x - x, 2) +
-      pow(this.y - y, 2) +
-      pow(this.z - z, 2).toDouble();
-
-  void moveTo(IsometricPosition value){
-    x = value.x;
-    y = value.y;
-    z = value.z;
   }
 }

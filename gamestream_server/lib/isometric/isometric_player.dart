@@ -72,7 +72,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   int get mouseIndex => game.scene.getIndexXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
-      ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
+      ? getDistance(aimTarget!) < IsometricSettings.Interact_Radius
       : false;
 
   int get lookDirection => IsometricDirection.fromRadian(lookRadian);

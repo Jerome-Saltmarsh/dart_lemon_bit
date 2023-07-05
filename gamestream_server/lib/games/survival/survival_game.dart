@@ -90,8 +90,7 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
           return;
         }
         if (target.collectable || target.interactable) {
-          // if (getDistanceBetweenV3(player, target) >
-          if (player.getDistance3(target) >
+          if (player.getDistance(target) >
               IsometricSettings.Interact_Radius) {
             setCharacterStateRunning(player);
             return;

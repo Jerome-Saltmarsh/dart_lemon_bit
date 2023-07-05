@@ -394,7 +394,7 @@ class IsometricScene {
     var positionZ = a.z;
     var angle = b.getAngle(a);
 
-    final distance = a.getDistance3(b);
+    final distance = a.getDistance(b);
     final jumpSize = Node_Size_Quarter;
     final jumps = distance ~/ jumpSize;
     final velX = adj(angle, jumpSize);

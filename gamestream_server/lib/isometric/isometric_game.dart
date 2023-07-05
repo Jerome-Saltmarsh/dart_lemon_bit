@@ -601,7 +601,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final character in characters) {
       if (character.dead) continue;
       if (IsometricCollider.onSameTeam(player, character)) continue;
-      final distance = player.getDistance3(character);
+      final distance = player.getDistance(character);
       if (distance > closestTargetDistance) continue;
       closestTarget = character;
       closestTargetDistance = distance;
@@ -615,8 +615,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
-      // if (Collider.onSameTeam(player, character)) continue;
-      final distance = player.getDistance3(gameObject);
+      final distance = player.getDistance(gameObject);
       if (distance > closestTargetDistance) continue;
       closestTarget = gameObject;
       closestTargetDistance = distance;
@@ -690,7 +689,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       )) continue;
 
       if (!areaOfEffect) {
-        final distance = character.getDistance3(other);
+        final distance = character.getDistance(other);
         if (distance > nearestDistance) continue;
         nearest = other;
         nearestDistance = distance;
@@ -720,7 +719,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       )) continue;
 
       if (!areaOfEffect) {
-        final distance = character.getDistance3(gameObject);
+        final distance = character.getDistance(gameObject);
         if (distance > nearestDistance) continue;
         nearest = gameObject;
         nearestDistance = distance;
@@ -2408,8 +2407,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   bool sceneRaycastBetween(IsometricCollider a, IsometricCollider b) {
-    // final distance = getDistanceBetweenV3(a, b);
-    final distance = a.getDistance3(b);
+    final distance = a.getDistance(b);
     if (distance < Node_Size_Half) return false;
     final distanceX = (a.x - b.x).abs();
     final distanceY = (a.y - b.y).abs();
