@@ -21,7 +21,8 @@ class SceneReader extends ByteReader {
   var spawnPoints = Uint16List(0);
   var gameObjects = <IsometricGameObject>[];
 
-  static IsometricScene readScene(Uint8List bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
+  static IsometricScene readScene(Uint8List bytes, {int startIndex = 0}) =>
+      _instance._readScene(bytes, startIndex: startIndex);
 
   IsometricScene _readScene(Uint8List bytes, {int startIndex = 0}){
     this.index = startIndex;
@@ -81,6 +82,7 @@ class SceneReader extends ByteReader {
     for (var i = 0; i < total; i++){
       final type = readByte();
       final subType = readByte();
+      final team = readByte();
       final x = readUInt16().toDouble();
       final y = readUInt16().toDouble();
       final z = readUInt16().toDouble();
@@ -92,8 +94,10 @@ class SceneReader extends ByteReader {
             type: type,
             subType: subType,
             id: id++,
-            team: 0, // TODO READ FROM FILE
+            team: team, // TODO READ FROM FILE
           )
+            ..fixed = true
+            ..persistable = true
       );
     }
   }

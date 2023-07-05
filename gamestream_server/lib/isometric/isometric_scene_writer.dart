@@ -47,7 +47,9 @@ class IsometricSceneWriter extends ByteWriter {
     writeUInt16(total);
     for (final gameObject in gameObjects){
       if (!gameObject.persistable) continue;
-      writeUInt16(gameObject.type);
+      writeByte(gameObject.type);
+      writeByte(gameObject.subType);
+      writeByte(gameObject.team);
       writeUInt16(gameObject.startX.toInt());
       writeUInt16(gameObject.startY.toInt());
       writeUInt16(gameObject.startZ.toInt());

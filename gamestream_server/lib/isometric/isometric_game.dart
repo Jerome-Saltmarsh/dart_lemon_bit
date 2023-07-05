@@ -40,22 +40,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   final scripts = <IsometricScript>[];
   final scriptReader = ByteReader();
 
-  void spawn(IsometricCollider value){
-    if (value is IsometricCharacter){
-       characters.add(value);
-       return;
-    }
-    if (value is IsometricGameObject){
-       gameObjects.add(value);
-       return;
-    }
-    if (value is IsometricProjectile){
-      projectiles.add(value);
-      return;
-    }
-  }
-
   /// CONSTRUCTOR
+
   IsometricGame({
     required this.scene,
     required this.time,
@@ -72,7 +58,26 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
+  List<IsometricGameObject> get gameObjects => scene.gameObjects;
+
+  double get minAimTargetCursorDistance => 35;
+
   bool get running => _running;
+
+  void spawn(IsometricCollider value){
+    if (value is IsometricCharacter){
+       characters.add(value);
+       return;
+    }
+    if (value is IsometricGameObject){
+       gameObjects.add(value);
+       return;
+    }
+    if (value is IsometricProjectile){
+      projectiles.add(value);
+      return;
+    }
+  }
 
   set running(bool value) {
     if (_running == value) return;
@@ -184,11 +189,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       );
     });
   }
-
-  List<IsometricGameObject> get gameObjects => scene.gameObjects;
-
-  /// @override
-  double get minAimTargetCursorDistance => 35;
 
   IsometricGameObject? findGameObjectByType(int type) {
     for (final gameObject in gameObjects) {
@@ -2311,11 +2311,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (nodeIndex >= scene.volume) {
       throw Exception(
-          "game.setNode(nodeIndex: $nodeIndex) - node index out of bounds");
+          "game.setNode(nodeIndex: $nodeIndex) - node index out of bounds"
+      );
     }
     if (
-    nodeType == scene.types[nodeIndex] &&
-        nodeOrientation == scene.shapes[nodeIndex]
+      nodeType == scene.types[nodeIndex] &&
+      nodeOrientation == scene.shapes[nodeIndex]
     ) return;
 
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)) {

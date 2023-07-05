@@ -20,6 +20,7 @@ class IsometricScenes {
       captureTheFlag = await readSceneFromFile('capture_the_flag');
       moba = await readSceneFromFile('moba');
       mmoTown = await readSceneFromFile('mmo');
+      print('scenes loaded');
   }
 
   Future<IsometricScene> readSceneFromFile(String sceneName) async {
