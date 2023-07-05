@@ -563,11 +563,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(scene.shapes[index]);
   }
 
-  void lookAt(IsometricPosition position) {
-    assert(!dead);
-    lookRadian = this.getAngle(position) + pi;
-  }
-
   void writeDouble(double value){
     writeInt16(value.toInt());
   }
