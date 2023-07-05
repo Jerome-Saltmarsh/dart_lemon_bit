@@ -92,6 +92,7 @@ class SceneReader extends ByteReader {
             type: type,
             subType: subType,
             id: id++,
+            team: 0, // TODO READ FROM FILE
           )
       );
     }

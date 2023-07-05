@@ -38,6 +38,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       id: generateUniqueId(),
       radius: Base_Radius,
       health: Base_Health,
+      team: redTeam,
     )
       ..fixed = true
       ..physical = true
@@ -53,6 +54,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       id: generateUniqueId(),
       radius: Base_Radius,
       health: Base_Health,
+      team: blueTeam,
     )
       ..fixed = true
       ..physical = true
@@ -66,6 +68,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
         type: GameObjectType.Object,
         subType: ObjectType.Spawn_Red,
         id: generateUniqueId(),
+        team: redTeam,
     )
       ..fixed = true
       ..physical = false
@@ -137,7 +140,6 @@ class MobaGame extends IsometricGame<MobaPlayer> {
        throw Exception('Red Team Wins');
     }
   }
-
 
   void spawnCreeps() {
     for (final team in Teams) {

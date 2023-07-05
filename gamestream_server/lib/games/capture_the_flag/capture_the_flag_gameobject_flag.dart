@@ -17,6 +17,7 @@ class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheF
     required super.z,
     required super.id,
     required super.subType,
+    required super.team,
   }) :super(type: GameObjectType.Object) {
     recyclable = false;
     fixed = false;

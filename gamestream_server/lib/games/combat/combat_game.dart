@@ -411,7 +411,8 @@ class CombatGame extends IsometricGame<CombatPlayer> {
     spawnGameObjectAtIndex(
       index: nodeIndex,
       type: GameObjectType.Object,
-      subType: ObjectType.Credits
+      subType: ObjectType.Credits,
+      team: TeamType.Neutral,
     )
       ..velocityZ = 7
       ..setVelocity(randomAngle(), 7.0)

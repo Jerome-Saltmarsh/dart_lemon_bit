@@ -58,16 +58,18 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         y: 200,
         z: 25,
         subType: ObjectType.Flag_Red,
-        id: generateId())
-      ..team = CaptureTheFlagTeam.Red;
+        id: generateId(),
+        team: CaptureTheFlagTeam.Red,
+    );
 
     flagBlue = CaptureTheFlagGameObjectFlag(
         x: 200,
         y: 300,
         z: 25,
         subType: ObjectType.Flag_Blue,
-        id: generateId())
-      ..team = CaptureTheFlagTeam.Blue;
+        id: generateId(),
+        team: CaptureTheFlagTeam.Blue,
+    );
 
     gameObjects.add(flagRed);
     gameObjects.add(flagBlue);
@@ -78,10 +80,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         z: 25,
         type: GameObjectType.Object,
         subType: ObjectType.Base_Red,
+        team: CaptureTheFlagTeam.Red,
     )
       ..physical = false
-      ..fixed = true
-      ..team = CaptureTheFlagTeam.Red;
+      ..fixed = true;
 
     baseBlue = spawnGameObject(
         x: scene.rowLength * 0.5,
@@ -89,6 +91,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         z: 25,
         type: GameObjectType.Object,
         subType: ObjectType.Base_Blue,
+        team: CaptureTheFlagTeam.Blue,
     )
       ..physical = false
       ..fixed = true
@@ -100,10 +103,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       x: baseRed.x,
       y: baseRed.y + spawnDistance,
       z: baseRed.z,
+      team: CaptureTheFlagTeam.Red,
     )
       ..physical = false
-      ..fixed = true
-      ..team = CaptureTheFlagTeam.Red;
+      ..fixed = true;
 
     blueFlagSpawn = findGameObjectOrSpawn(
       type: GameObjectType.Object,
@@ -111,10 +114,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       x: baseBlue.x,
       y: baseBlue.y - spawnDistance,
       z: baseBlue.z,
+      team: CaptureTheFlagTeam.Blue,
     )
       ..physical = false
-      ..fixed = true
-      ..team = CaptureTheFlagTeam.Blue;
+      ..fixed = true;
 
     flagRed.status = CaptureTheFlagFlagStatus.At_Base;
     flagBlue.status = CaptureTheFlagFlagStatus.At_Base;

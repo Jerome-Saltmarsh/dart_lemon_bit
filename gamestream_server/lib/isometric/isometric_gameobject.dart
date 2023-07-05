@@ -22,23 +22,20 @@ class IsometricGameObject extends IsometricCollider {
   var healthMax = 0;
 
   IsometricGameObject({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
+    required super.x,
+    required super.y,
+    required super.z,
+    required super.team,
+    required this.type,
     required this.subType,
     required this.id,
-    int team = TeamType.Neutral,
-    int health = 0,
-    double radius = 15.0,
-  }) : super(x: x, y: y, z: z, radius: radius, team: team) {
-    this.type = type;
-    team = team;
+    super.radius = 15.0,
+    this.health = 0,
+  }) {
     startX = x;
     startY = y;
     startZ = z;
-    this.health = health;
-    this.healthMax = health;
+    healthMax = health;
     synchronizePrevious();
   }
 

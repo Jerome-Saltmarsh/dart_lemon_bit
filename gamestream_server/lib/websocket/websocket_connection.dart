@@ -517,6 +517,7 @@ class WebSocketConnection with ByteReader {
           z: scene.getNodePositionZ(index),
           type: GameObjectType.Object,
           subType: type,
+          team: 0, // TODO
         );
         player.editorSelectedGameObject = instance;
         break;
@@ -571,6 +572,7 @@ class WebSocketConnection with ByteReader {
             z: selectedGameObject.z,
             type: selectedGameObject.type,
             subType: selectedGameObject.subType,
+            team: selectedGameObject.team,
         );
         player.editorSelectedGameObject = duplicated;
         break;

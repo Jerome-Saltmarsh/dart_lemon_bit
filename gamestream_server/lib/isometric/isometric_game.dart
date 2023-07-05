@@ -211,6 +211,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required double x,
     required double y,
     required double z,
+    required int team,
 }) {
     IsometricGameObject? instance;
     for (final gameObject in gameObjects) {
@@ -220,9 +221,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       instance.x = x;
       instance.y = y;
       instance.z = z;
+      instance.team = team;
       return instance;
     }
-    return spawnGameObject(x: x, y: y, z: z, type: type, subType: subType);
+    return spawnGameObject(
+        x: x,
+        y: y,
+        z: z,
+        type: type,
+        subType: subType,
+        team: team,
+    );
   }
 
   IsometricGameObject? findGameObjectById(int id) {
@@ -544,6 +553,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       z: player.z + Character_Height,
       type: GameObjectType.Weapon,
       subType: WeaponType.Grenade,
+      team: player.team,
     )
       ..setVelocity(player.lookRadian, velocity)
       ..quantity = 1
@@ -987,6 +997,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             z: z.toDouble(),
             type: type,
             subType: subType,
+            team: 0, // TODO
           );
           break;
         default:
@@ -1972,6 +1983,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int index,
     required int type,
     required int subType,
+    required int team,
   }) =>
       spawnGameObject(
         x: scene.getNodePositionX(index),
@@ -1979,46 +1991,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         z: scene.getNodePositionZ(index),
         type: type,
         subType: subType,
-      );
-
-  void spawnGameObjectItemAtPosition({
-    required IsometricPosition position,
-    required int type,
-    required int subType,
-    int quantity = 1,
-  }) =>
-      spawnGameObjectItem(
-        x: position.x,
-        y: position.y,
-        z: position.z,
-        type: type,
-        subType: subType,
-        quantity: quantity,
-      );
-
-  void spawnGameObjectItem({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
-    required int subType,
-    int quantity = 1,
-  }) {
-    spawnGameObject(x: x, y: y, z: z, type: type, subType: subType)
-      ..quantity = quantity;
-  }
-
-  IsometricGameObject spawnGameObjectAtPosition({
-    required IsometricPosition position,
-    required int type,
-    required int subType,
-  }) =>
-      spawnGameObject(
-        x: position.x,
-        y: position.y,
-        z: position.z,
-        type: type,
-        subType: subType,
+        team: team,
       );
 
   IsometricGameObject spawnGameObject({
@@ -2027,6 +2000,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required double z,
     required int type,
     required int subType,
+    required int team,
   }) {
     for (final gameObject in gameObjects) {
       if (gameObject.active) continue;
@@ -2046,6 +2020,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       gameObject.active = true;
       gameObject.dirty = true;
       gameObject.friction = IsometricPhysics.Friction;
+      gameObject.team = team;
       gameObject.synchronizePrevious();
       customOnGameObjectSpawned(gameObject);
       return gameObject;
@@ -2057,8 +2032,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       type: type,
       subType: subType,
       id: generateId(),
+      team: team,
     );
-    instance.type = type;
     instance.active = true;
     instance.dirty = true;
     gameObjects.add(instance);
