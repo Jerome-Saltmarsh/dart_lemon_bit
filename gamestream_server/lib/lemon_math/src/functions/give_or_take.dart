@@ -1,4 +1,4 @@
-import 'random_between.dart';
+import '../random/random_between.dart';
 
 double giveOrTake(num value){
   return randomBetween(-value, value);

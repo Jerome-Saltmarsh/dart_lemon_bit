@@ -116,7 +116,7 @@ class IsometricParticles {
     particle.duration = duration;
     particle.durationTotal = duration;
     particle.scale = scale;
-    particle.scaleV = scaleV;
+    particle.scaleVelocity = scaleV;
     particle.rotation = rotation;
     particle.rotationVelocity = rotationV;
     particle.bounciness = bounciness;

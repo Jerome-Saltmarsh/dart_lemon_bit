@@ -13,7 +13,7 @@ class IsometricParticle extends IsometricPosition {
   var rotation = 0.0;
   var rotationVelocity = 0.0;
   var scale = 0.0;
-  var scaleV = 0.0;
+  var scaleVelocity = 0.0;
   var type = 0;
   var bounciness = 0.0;
   /// Deactivates if this node hits a solid node
@@ -55,11 +55,11 @@ class IsometricParticle extends IsometricPosition {
     if (z < 0){
       z = 0;
     }
-    if (rotationVelocity != 0){
-      rotation = clampAngle(rotation + rotationVelocity);
+    if (rotationVelocity != 0) {
+      rotation = (rotation + rotationVelocity) % pi2;
     }
-    if (scaleV != 0){
-      scale += scaleV;
+    if (scaleVelocity != 0) {
+      scale += scaleVelocity;
       if (scale < 0){
         scale = 0;
       }
