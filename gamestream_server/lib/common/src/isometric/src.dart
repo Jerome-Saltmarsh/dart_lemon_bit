@@ -5,6 +5,7 @@ export 'character_state.dart';
 export 'character_type.dart';
 export 'characters_end.dart';
 export 'interact_mode.dart';
+export 'change_type.dart';
 export 'isometric_direction.dart';
 export 'isometric_request.dart';
 export 'isometric_response.dart';

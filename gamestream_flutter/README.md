@@ -10,13 +10,14 @@ alt + m             : go to declaration
 
 [TODO]
   [ ] player cast ability
+  [ ] implement isometric ability
+  [ ] merge interact logic into isometric collider
+  [ ] optimize upload
   [ ] refactor lemon engine
   [ ] remove lemon engine global instance
   [ ] remove gamestream global instance
   [ ] remove all static instances
   [ ] modify selected object type
-  [ ] merge interact logic into isometric collider
-  [ ] implement isometric ability
   [ ] character type alien slug
   [ ] npc store
   [ ] character items

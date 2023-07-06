@@ -50,6 +50,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var positionCacheZ = 0.0;
 
   final characterCache = Uint32List(200);
+  final characterCachePositionX = Int16List(200);
+  final characterCachePositionY = Int16List(200);
+  final characterCachePositionZ = Int16List(200);
   final characterCacheTemplate = Uint32List(200);
   var characterCacheIndex = 0;
 
@@ -275,7 +278,49 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       }
 
       writeByte(character.animationFrame | character.direction << 5);
-      writeIsometricPosition(character);
+
+      final characterX = character.x.toInt();
+      final characterY = character.y.toInt();
+      final characterZ = character.z.toInt();
+
+      final diffX = -(characterCachePositionX[characterCacheIndex] - characterX);
+      final diffY = -(characterCachePositionY[characterCacheIndex] - characterY);
+      final diffZ = -(characterCachePositionZ[characterCacheIndex] - characterZ);
+
+      final diffXChangeType = ChangeType.fromDiff(diffX);
+      final diffYChangeType = ChangeType.fromDiff(diffY);
+      final diffZChangeType = ChangeType.fromDiff(diffZ);
+
+      final changeTypeCompressed =
+        diffXChangeType |
+        diffYChangeType << 2 |
+        diffZChangeType << 4;
+
+      writeByte(changeTypeCompressed);
+
+      if (diffXChangeType == ChangeType.Small){
+        writeInt8(diffX);
+        characterCachePositionX[characterCacheIndex] = characterX;
+      } else if (diffXChangeType == ChangeType.Big){
+        writeInt16(characterX);
+        characterCachePositionX[characterCacheIndex] = characterX;
+      }
+
+      if (diffYChangeType == ChangeType.Small){
+        writeInt8(diffY);
+        characterCachePositionY[characterCacheIndex] = characterY;
+      } else if (diffYChangeType == ChangeType.Big){
+        writeInt16(characterY);
+        characterCachePositionY[characterCacheIndex] = characterY;
+      }
+
+      if (diffZChangeType == ChangeType.Small){
+        writeInt8(diffZ);
+        characterCachePositionZ[characterCacheIndex] = characterZ;
+      } else if (diffZChangeType == ChangeType.Big){
+        writeInt16(characterZ);
+        characterCachePositionZ[characterCacheIndex] = characterZ;
+      }
 
       if (character.characterTypeTemplate) {
         writeCharacterTemplate(character);

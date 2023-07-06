@@ -507,12 +507,38 @@ extension ServerResponseReader on Gamestream {
         character.health = readPercentage();
       }
 
-      final compressedAnimationAndFrameDirection = readByte();
-      character.direction = (compressedAnimationAndFrameDirection & Hex11100000) >> 5;
+      final animationAndFrameDirection = readByte();
+      character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
       assert (character.direction >= 0 && character.direction <= 7);
-      character.animationFrame = (compressedAnimationAndFrameDirection & Hex00011111);
+      character.animationFrame = (animationAndFrameDirection & Hex00011111);
 
-      readIsometricPosition(character);
+      final changeTypeCompressed = readByte();
+
+      if (changeTypeCompressed != 0){
+        final changeTypeX = changeTypeCompressed & Hex00000011;
+        final changeTypeY = (changeTypeCompressed & Hex00001100) >> 2;
+        final changeTypeZ = (changeTypeCompressed & Hex00110000) >> 4;
+
+
+        if (changeTypeX == ChangeType.Small){
+          character.x += readInt8();
+        } else if (changeTypeX == ChangeType.Big){
+          character.x = readDouble();
+        }
+
+        if (changeTypeY == ChangeType.Small){
+          character.y += readInt8();
+        } else if (changeTypeY == ChangeType.Big){
+          character.y = readDouble();
+        }
+
+        if (changeTypeZ == ChangeType.Small){
+          character.z += readInt8();
+        } else if (changeTypeZ == ChangeType.Big){
+          character.z = readDouble();
+        }
+      }
+
 
       if (character.characterType == CharacterType.Template){
         readCharacterTemplate(character);
