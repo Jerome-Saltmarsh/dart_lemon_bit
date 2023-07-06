@@ -612,11 +612,15 @@ extension ServerResponseReader on Gamestream {
     character.bodyType = readByte();
     character.headType = readByte();
     character.legType = readByte();
-
     final lookDirectionWeaponState = readByte();
     character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
-    character.weaponState = readNibbleFromByte2(lookDirectionWeaponState);
-    character.weaponStateDuration = readByte();
+    final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
+    character.weaponState = weaponState;
+    if (weaponState != WeaponState.Idle){
+      character.weaponStateDuration = readByte();
+    } else {
+      character.weaponStateDuration = 0;
+    }
   }
 
   // todo optimize
