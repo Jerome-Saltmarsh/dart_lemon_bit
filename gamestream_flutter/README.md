@@ -9,6 +9,7 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+  [ ] player cast ability
   [ ] refactor lemon engine
   [ ] remove lemon engine global instance
   [ ] remove gamestream global instance
@@ -17,7 +18,6 @@ alt + m             : go to declaration
   [ ] merge interact logic into isometric collider
   [ ] implement isometric ability
   [ ] character type alien slug
-  [ ] player cast ability
   [ ] npc store
   [ ] character items
   [ ] character selection

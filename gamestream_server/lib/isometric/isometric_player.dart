@@ -113,12 +113,28 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeString(info);
   }
 
+  var weaponDurationPercentagePrevious = 0.0;
+  var accuracyPrevious = 0.0;
+
   void writeIsometricPlayer(){
+    final weaponDurationPercentage = this.weaponDurationPercentage;
+    if (weaponDurationPercentagePrevious != weaponDurationPercentage){
+      weaponDurationPercentagePrevious = weaponDurationPercentage;
+      writeByte(ServerResponse.Isometric);
+      writeByte(IsometricResponse.Player_Weapon_Duration_Percentage);
+      writePercentage(weaponDurationPercentage);
+    }
+
+    if (accuracy != accuracyPrevious){
+      accuracyPrevious = accuracy;
+      writeByte(ServerResponse.Isometric);
+      writeByte(IsometricResponse.Player_Accuracy);
+      writePercentage(accuracy);
+    }
+
     writeByte(ServerResponse.Isometric);
-    writeByte(IsometricResponse.Player);
+    writeByte(IsometricResponse.Player_Position);
     writeIsometricPosition(this);
-    writePercentage(weaponDurationPercentage);
-    writePercentage(accuracy);
   }
 
   void writePlayerHealth(){
@@ -236,8 +252,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
         writePercentage(character.healthPercentage);
       }
 
-      writeByte(character.direction);
-      writeByte(character.animationFrame);
+      writeByte(character.animationFrame | character.direction << 5);
       writeIsometricPosition(character);
 
       if (character.characterTypeTemplate) {

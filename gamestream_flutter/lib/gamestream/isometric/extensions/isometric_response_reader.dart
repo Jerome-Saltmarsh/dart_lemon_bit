@@ -19,8 +19,16 @@ extension IsometricResponseReader on Gamestream {
         readScene();
         break;
 
-      case IsometricResponse.Player:
-        readIsometricPlayer();
+      case IsometricResponse.Player_Position:
+        readIsometricPlayerPosition();
+        break;
+
+      case IsometricResponse.Player_Accuracy:
+        isometric.player.accuracy.value = readPercentage();
+        break;
+
+      case IsometricResponse.Player_Weapon_Duration_Percentage:
+        isometric.player.weaponCooldown.value = readPercentage();
         break;
     }
   }
@@ -133,15 +141,13 @@ extension IsometricResponseReader on Gamestream {
     io.recenterCursor();
   }
 
-  void readIsometricPlayer() {
+  void readIsometricPlayerPosition() {
     final player = isometric.player;
     player.previousPosition.x = player.position.x;
     player.previousPosition.y = player.position.y;
     player.previousPosition.z = player.position.z;
 
     readIsometricPosition(player.position);
-    player.weaponCooldown.value = readPercentage();
-    player.accuracy.value = readPercentage();
 
     final position = player.position;
     player.indexColumn = position.indexColumn;

@@ -507,8 +507,11 @@ extension ServerResponseReader on Gamestream {
         character.health = readPercentage();
       }
 
-      character.direction = readByte();
-      character.animationFrame = readByte();
+      final compressedAnimationAndFrameDirection = readByte();
+      character.direction = (compressedAnimationAndFrameDirection & Hex11100000) >> 5;
+      assert (character.direction >= 0 && character.direction <= 7);
+      character.animationFrame = (compressedAnimationAndFrameDirection & Hex00011111);
+
       readIsometricPosition(character);
 
       if (character.characterType == CharacterType.Template){
@@ -736,5 +739,15 @@ extension ServerResponseReader on Gamestream {
   CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
 
   CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
+}
+
+
+int readFirstFiveBits(int byte) {
+  if (byte < 0 || byte > 255) {
+    throw ArgumentError('Invalid byte value. Expected values between 0 and 255.');
+  }
+
+  int result = byte & 0x11111;
+  return result;
 }
 

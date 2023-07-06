@@ -28,4 +28,5 @@ class ApiPlayer {
   static const Active                 = 33;
   static const Attribute_Values       = 35;
   static const Team                   = 36;
+  static const Weapon_Duration_Percentage = 37;
 }
