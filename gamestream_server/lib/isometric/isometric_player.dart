@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/common/src/functions/src.dart';
 import 'package:gamestream_server/utils.dart';
 
 import 'package:gamestream_server/core/player.dart';
@@ -216,7 +217,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeCharacterHealthAndAnimationFrame(character);
 
       if (character.characterTypeTemplate) {
-        writeCharacterUpperBody(character);
+        writeCharacterTemplate(character);
       }
     }
     writeByte(CharactersEnd);
@@ -419,14 +420,16 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeCharacterUpperBody(IsometricCharacter character) {
+  void writeCharacterTemplate(IsometricCharacter character) {
     writeByte(character.weaponType);
     writeByte(character.bodyType);
     writeByte(character.headType);
     writeByte(character.legsType);
-    writeByte(character.lookDirection);
+
+    writeByte(writeNibblesToByte(character.lookDirection, character.weaponState));
+    // writeByte(character.lookDirection);
+    // writeByte(character.weaponState);
     writeByte(character.weaponStateDuration);
-    writeByte(character.weaponState);
   }
 
   void writeWeather() {

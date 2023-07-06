@@ -109,7 +109,7 @@ extension RenderCharactersTemplate on RendererCharacters {
         break;
       case WeaponState.Firing:
         final animation = TemplateAnimation.getAttackAnimation(weaponType);
-        frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
+        frameWeapon = (character.weaponStateDuration >= animation.length ? animation.last : animation[character.weaponStateDuration]) - 1;
         break;
       case WeaponState.Reloading:
         frameWeapon = TemplateAnimation.Frame_Changing;
@@ -133,10 +133,10 @@ extension RenderCharactersTemplate on RendererCharacters {
         frameWeapon = TemplateAnimation.Frame_Changing;
         break;
       case WeaponState.Throwing:
-        frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponFrame);
+        frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponStateDuration);
         break;
       case WeaponState.Melee:
-        frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponFrame);
+        frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponStateDuration);
         break;
     }
 

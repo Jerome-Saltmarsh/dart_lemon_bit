@@ -1691,6 +1691,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateCharacterState(character);
     updateColliderPhysics(character);
 
+    if (character.weaponStateMelee && character.weaponStateDuration == 5){
+       final target = character.target;
+       if (target is IsometricCollider) {
+         applyHit(
+             srcCharacter: character,
+             target: target,
+             damage: character.weaponDamage,
+             hitType: IsometricHitType.Melee,
+         );
+       }
+    }
+
     if (character.autoTarget && character.autoTargetTimer-- <= 0){
       character.autoTargetTimer = character.autoTargetTimerDuration;
       character.target = findNearestEnemy(character, radius: character.autoTargetRange);

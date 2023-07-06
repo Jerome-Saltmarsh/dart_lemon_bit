@@ -506,7 +506,7 @@ extension ServerResponseReader on Gamestream {
       readCharacterHealthAndAnimationFrame(character);
 
       if (characterType == CharacterType.Template){
-        readCharacterUpperBody(character);
+        readCharacterTemplate(character);
       }
       server.totalCharacters++;
     }
@@ -607,14 +607,16 @@ extension ServerResponseReader on Gamestream {
     character.state = byte % 10;
   }
 
-  void readCharacterUpperBody(IsometricCharacter character){
+  void readCharacterTemplate(IsometricCharacter character){
     character.weaponType = readByte();
     character.bodyType = readByte();
     character.headType = readByte();
     character.legType = readByte();
-    character.lookDirection = readByte();
-    character.weaponFrame = readByte();
-    character.weaponState = readByte();
+
+    final lookDirectionWeaponState = readByte();
+    character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
+    character.weaponState = readNibbleFromByte2(lookDirectionWeaponState);
+    character.weaponStateDuration = readByte();
   }
 
   // todo optimize

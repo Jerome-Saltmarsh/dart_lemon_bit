@@ -8,24 +8,16 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
-[MAJ1K]
-
-[CLIENT]
+[TODO]
   [ ] refactor lemon engine
   [ ] remove lemon engine global instance
   [ ] remove gamestream global instance
   [ ] remove all static instances
-
-[ISOMETRIC]
-  [ ] compress character look direction and weapon state into single byte 
   [ ] modify selected object type
   [ ] merge interact logic into isometric collider
   [ ] implement isometric ability
   [ ] character type alien slug
-  [ ] destructable structures
-  [ ] gameobject health
-
-[MOBA]
+  [ ] player cast ability
   [ ] npc store
   [ ] character items
   [ ] character selection
@@ -33,6 +25,8 @@ alt + m             : go to declaration
   [ ] character gold
 
 [COMPLETED]
+[x] compress character look direction and weapon state into single byte
+[x] gameobject health
 [x] refactor item type
 [x] remove character template class
 [x] pathfinding 3d
