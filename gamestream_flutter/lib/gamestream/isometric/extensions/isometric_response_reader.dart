@@ -23,6 +23,19 @@ extension IsometricResponseReader on Gamestream {
         readIsometricPlayerPosition();
         break;
 
+      case IsometricResponse.Player_Position_Change:
+        final player = isometric.player;
+        player.savePositionPrevious();
+        player.position.x += readInt8().toDouble();
+        player.position.y += readInt8().toDouble();
+        player.position.z += readInt8().toDouble();
+        final position = player.position;
+        player.indexColumn = position.indexColumn;
+        player.indexRow = position.indexRow;
+        player.indexZ = position.indexZ;
+        player.nodeIndex = isometric.scene.getIndexPosition(position);
+        break;
+
       case IsometricResponse.Player_Accuracy:
         isometric.player.accuracy.value = readPercentage();
         break;
@@ -143,9 +156,7 @@ extension IsometricResponseReader on Gamestream {
 
   void readIsometricPlayerPosition() {
     final player = isometric.player;
-    player.previousPosition.x = player.position.x;
-    player.previousPosition.y = player.position.y;
-    player.previousPosition.z = player.position.z;
+    player.savePositionPrevious();
 
     readIsometricPosition(player.position);
 

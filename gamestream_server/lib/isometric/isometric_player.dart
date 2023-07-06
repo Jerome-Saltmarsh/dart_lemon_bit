@@ -45,6 +45,10 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var mouseX = 0.0;
   var mouseY = 0.0;
 
+  var positionCacheX = 0.0;
+  var positionCacheY = 0.0;
+  var positionCacheZ = 0.0;
+
   final characterCache = Uint32List(200);
   final characterCacheTemplate = Uint32List(200);
   var characterCacheIndex = 0;
@@ -132,9 +136,25 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePercentage(accuracy);
     }
 
-    writeByte(ServerResponse.Isometric);
-    writeByte(IsometricResponse.Player_Position);
-    writeIsometricPosition(this);
+    final diffX = x - positionCacheX;
+    final diffY = y - positionCacheY;
+    final diffZ = z - positionCacheZ;
+
+    if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ < 126){
+      writeByte(ServerResponse.Isometric);
+      writeByte(IsometricResponse.Player_Position_Change);
+      writeInt8(diffX.toInt());
+      writeInt8(diffY.toInt());
+      writeInt8(diffZ.toInt());
+    } else {
+      writeByte(ServerResponse.Isometric);
+      writeByte(IsometricResponse.Player_Position);
+      writeIsometricPosition(this);
+    }
+    positionCacheX = x;
+    positionCacheY = y;
+    positionCacheZ = z;
+
   }
 
   void writePlayerHealth(){

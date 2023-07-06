@@ -115,6 +115,12 @@ class IsometricPlayer {
       return;
     message.value = '';
   }
+
+  void savePositionPrevious(){
+    previousPosition.x = position.x;
+    previousPosition.y = position.y;
+    previousPosition.z = position.z;
+  }
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;
