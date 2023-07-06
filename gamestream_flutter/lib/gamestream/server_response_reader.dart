@@ -502,15 +502,12 @@ extension ServerResponseReader on Gamestream {
 
       if (characterType != CHARACTER_CACHED) {
         character.characterType = characterType;
-        // character.state = readByte();
-        // character.team = readByte();
-        // character.health = readPercentage();
-      }
+        character.state = readByte();
+        character.team = readByte();
+        character.health = readPercentage();
+      } else {
 
-      // character.characterType = characterType;
-      character.state = readByte();
-      character.team = readByte();
-      character.health = readPercentage();
+      }
 
       character.direction = readByte();
       character.animationFrame = readByte();
