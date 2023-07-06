@@ -140,6 +140,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     final diffY = y - positionCacheY;
     final diffZ = z - positionCacheZ;
 
+    if (diffX == 0 && diffY == 0 && diffZ == 0) return;
+
     if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ < 126){
       writeByte(ServerResponse.Isometric);
       writeByte(IsometricResponse.Player_Position_Change);
