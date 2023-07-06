@@ -211,12 +211,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Characters);
     final characters = game.characters;
     for (final character in characters) {
-      if (character.dead) continue;
-      if (character.inactive) continue;
-      if (character.renderY < screenTop) continue;
-      if (character.renderX < screenLeft) continue;
-      if (character.renderX > screenRight) continue;
-      if (character.renderY > screenBottom) continue;
+      if (
+        character.deadOrInactive ||
+        character.renderY < screenTop ||
+        character.renderX < screenLeft ||
+        character.renderX > screenRight ||
+        character.renderY > screenBottom
+      ) continue;
 
       // final compressedState = compressBytesToUInt32(
       //     character.characterType,
