@@ -505,15 +505,13 @@ extension ServerResponseReader on Gamestream {
         character.state = readByte();
         character.team = readByte();
         character.health = readPercentage();
-      } else {
-
       }
 
       character.direction = readByte();
       character.animationFrame = readByte();
       readIsometricPosition(character);
 
-      if (characterType == CharacterType.Template){
+      if (character.characterType == CharacterType.Template){
         readCharacterTemplate(character);
       }
       server.totalCharacters++;

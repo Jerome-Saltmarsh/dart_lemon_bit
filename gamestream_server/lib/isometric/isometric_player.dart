@@ -226,7 +226,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
           (character.healthPercentage * 255).toInt(),
       );
 
-      if (false && characterCache[characterCacheIndex] == compressedState){
+      if (characterCache[characterCacheIndex] == compressedState){
         writeByte(CHARACTER_CACHED);
       } else {
         characterCache[characterCacheIndex] = compressedState;
