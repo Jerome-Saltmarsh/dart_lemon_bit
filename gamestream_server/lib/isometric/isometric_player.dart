@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/common/src/functions/compress_bytes_to_uint32.dart';
-import 'package:gamestream_server/common/src/functions/src.dart';
 import 'package:gamestream_server/utils.dart';
 
 import 'package:gamestream_server/core/player.dart';
@@ -47,7 +46,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var mouseY = 0.0;
 
   final characterCache = Uint32List(200);
+  final characterTemplateCache = Uint32List(200);
   var characterCacheIndex = 0;
+
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -205,7 +206,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
   }
 
-  void writeCharacters(){
+  void writeCharacters() {
     characterCacheIndex = 0;
     writeByte(ServerResponse.Characters);
     final characters = game.characters;
@@ -217,10 +218,30 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       if (character.renderX > screenRight) continue;
       if (character.renderY > screenBottom) continue;
 
+      // final compressedState = compressBytesToUInt32(
+      //     character.characterType,
+      //     character.state,
+      //     character.team,
+      //     (character.healthPercentage * 255).toInt(),
+      // );
+
+      // if (characterCache[characterCacheIndex] == compressedState){
+      //   writeByte(CHARACTER_CACHED);
+      // } else {
+      //   characterCache[characterCacheIndex] = compressedState;
+      //   writeByte(character.characterType);
+      //   writeByte(character.state);
+      //   writeByte(character.team);
+      //   writePercentage(character.healthPercentage);
+      // }
+
       writeByte(character.characterType);
-      writeCharacterTeamDirectionAndState(character);
+      writeByte(character.state);
+      writeByte(character.team);
+      writePercentage(character.healthPercentage);
+      writeByte(character.direction);
+      writeByte(character.animationFrame);
       writeIsometricPosition(character);
-      writeCharacterHealthAndAnimationFrame(character);
 
       if (character.characterTypeTemplate) {
         writeCharacterTemplate(character);
@@ -228,16 +249,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
       characterCacheIndex++;
     }
-    writeByte(CharactersEnd);
+    writeByte(CHARACTER_END);
   }
-
-  void writeCharacterTeamDirectionAndState(IsometricCharacter character){
-    writeByte((IsometricCollider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
-  }
-
-  // todo optimize
-  void writeCharacterHealthAndAnimationFrame(IsometricCharacter character) =>
-    writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
   void downloadScene(){
     writeScene();
@@ -437,16 +450,22 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       character.legsType,
     );
 
-    if (characterCache[characterCacheIndex] == compressed){
-      writeByte(255);
+    if (characterCacheIndex < characterTemplateCache.length) {
+      if (characterTemplateCache[characterCacheIndex] == compressed){
+        writeByte(255);
+      } else {
+        characterTemplateCache[characterCacheIndex] = compressed;
+        writeByte(character.weaponType);
+        writeByte(character.bodyType);
+        writeByte(character.headType);
+        writeByte(character.legsType);
+      }
     } else {
-      characterCache[characterCacheIndex] = compressed;
       writeByte(character.weaponType);
       writeByte(character.bodyType);
       writeByte(character.headType);
       writeByte(character.legsType);
     }
-
 
     writeByte(writeNibblesToByte(character.lookDirection, character.weaponState));
 

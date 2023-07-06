@@ -497,13 +497,24 @@ extension ServerResponseReader on Gamestream {
      final server = isometric.server;
      while (true) {
       final characterType = readByte();
-      if (characterType == CharactersEnd) break;
+      if (characterType == CHARACTER_END) break;
       final character = server.getCharacterInstance();
 
+      // if (characterType != CHARACTER_CACHED) {
+      //   character.characterType = characterType;
+      //   character.state = readByte();
+      //   character.team = readByte();
+      //   character.health = readPercentage();
+      // }
+
       character.characterType = characterType;
-      readCharacterTeamDirectionAndState(character);
-      readVector3(character);
-      readCharacterHealthAndAnimationFrame(character);
+      character.state = readByte();
+      character.team = readByte();
+      character.health = readPercentage();
+
+      character.direction = readByte();
+      character.animationFrame = readByte();
+      readIsometricPosition(character);
 
       if (characterType == CharacterType.Template){
         readCharacterTemplate(character);
@@ -632,7 +643,7 @@ extension ServerResponseReader on Gamestream {
     final byte = readByte();
     final frame = byte % 10;
     final health = (byte - frame) / 240.0;
-    character.frame = frame;
+    character.animationFrame = frame;
     character.health = health;
   }
 

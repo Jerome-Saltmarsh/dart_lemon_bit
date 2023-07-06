@@ -25,13 +25,16 @@ import 'isometric_time.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
+  static const framesPerCharacterAnimationFrame = 6;
+
   IsometricScene scene;
   IsometricEnvironment environment;
   IsometricTime time;
 
+  var _nextCharacterAnimationFrame = 0;
   var _running = true;
-  var timerUpdateAITargets = 0;
 
+  var timerUpdateAITargets = 0;
   var frame = 0;
   var gameObjectId = 0;
 
@@ -39,8 +42,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   final projectiles = <IsometricProjectile>[];
   final scripts = <IsometricScript>[];
   final scriptReader = ByteReader();
-
-  /// CONSTRUCTOR
 
   IsometricGame({
     required this.scene,
@@ -382,7 +383,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.setCharacterStateIdle();
       return;
     }
-    character.faceDirection = direction;
+    character.direction = direction;
     setCharacterStateRunning(character);
     clearCharacterTarget(character);
   }
@@ -1183,16 +1184,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return false;
   }
 
-  var _nextCharacterAnimationFrame = 0;
-
   void updateCharacterFrames() {
     _nextCharacterAnimationFrame++;
-    if (_nextCharacterAnimationFrame < 6) return;
+    if (_nextCharacterAnimationFrame < framesPerCharacterAnimationFrame) return;
     _nextCharacterAnimationFrame = 0;
     for (final character in characters) {
-      if (character.animationFrame++ > 6) {
-        character.animationFrame = 0;
-      }
+      character.animationFrame = (character.animationFrame + 1) % 64;
     }
   }
 
@@ -1552,7 +1549,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (player.idling && !player.weaponStateBusy) {
       final diff = IsometricDirection.getDifference(
-          player.lookDirection, player.faceDirection);
+          player.lookDirection, player.direction);
       if (diff >= 2) {
         player.faceAngle += piQuarter;
       } else if (diff <= -3) {

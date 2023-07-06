@@ -12,8 +12,9 @@ class IsometricCharacter extends IsometricPosition {
   var headType = 0;
   var legType = 0;
   var state = 0;
+  var team = 0;
   var direction = 0;
-  var frame = 0;
+  var animationFrame = 0;
   var name = '';
   var text = '';
   var allie = false;

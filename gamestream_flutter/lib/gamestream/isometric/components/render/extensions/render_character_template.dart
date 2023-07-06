@@ -79,9 +79,9 @@ extension RenderCharactersTemplate on RendererCharacters {
         break;
       case CharacterState.Running:
         if (weaponIsTwoHandedFirearm) {
-          frameWeapon = 15 + (character.frame % 4);
+          frameWeapon = 15 + (character.animationFrame % 4);
         } else {
-          frameWeapon = 11 + (character.frame % 4);
+          frameWeapon = 11 + (character.animationFrame % 4);
         }
         frameLegs = frameWeapon;
         break;
@@ -91,7 +91,7 @@ extension RenderCharactersTemplate on RendererCharacters {
         break;
       case CharacterState.Performing:
         final animation = TemplateAnimation.getAttackAnimation(weaponType);
-        frameWeapon = capIndex(animation, character.frame);
+        frameWeapon = capIndex(animation, character.animationFrame);
         frameLegs = frameWeapon;
         directionBody = renderDirection;
         directionHead = directionBody;

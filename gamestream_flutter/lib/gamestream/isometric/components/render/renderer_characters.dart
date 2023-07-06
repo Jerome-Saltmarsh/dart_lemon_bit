@@ -49,7 +49,7 @@ class RendererCharacters extends IsometricRenderer {
         engine.renderSprite(
           image: Images.atlas_gameobjects,
           srcX: 1920,
-          srcY: (character.frame % 8) * 43.0,
+          srcY: (character.animationFrame % 8) * 43.0,
           dstX: character.renderX,
           dstY: character.renderY,
           srcWidth: 64,
@@ -61,7 +61,7 @@ class RendererCharacters extends IsometricRenderer {
         engine.renderSprite(
           image: Images.atlas_gameobjects,
           srcX: 3040,
-          srcY: (character.frame % 6) * 48.0,
+          srcY: (character.animationFrame % 6) * 48.0,
           dstX: character.renderX,
           dstY: character.renderY,
           srcWidth: 48,
@@ -73,7 +73,7 @@ class RendererCharacters extends IsometricRenderer {
       engine.renderSprite(
         image: Images.atlas_characters,
         srcX: 513,
-        srcY: (character.frame % 8) * 73.0,
+        srcY: (character.animationFrame % 8) * 73.0,
         dstX: character.renderX,
         dstY: character.renderY,
         srcWidth: 48,
@@ -140,7 +140,7 @@ class RendererCharacters extends IsometricRenderer {
 
     if (character.state == CharacterState.Running) {
       const frames = const [4, 5];
-      final frame = frames[(character.frame % 2)];
+      final frame = frames[(character.animationFrame % 2)];
       engine.renderSprite(
         image: Images.character_dog,
         dstX: character.renderX,
@@ -158,8 +158,8 @@ class RendererCharacters extends IsometricRenderer {
 
     if (character.state == CharacterState.Performing) {
       const frames = const [1, 2];
-      var frame = character.frame;
-      if (character.frame >= frames.length){
+      var frame = character.animationFrame;
+      if (character.animationFrame >= frames.length){
         frame = frames.last;
       } else {
         frame = frames[frame];
@@ -372,7 +372,7 @@ class RendererCharacters extends IsometricRenderer {
     required int framesPerDirection,
     double size = 64,
   }) => (character.renderDirection * framesPerDirection * size) +
-        ((animation[character.frame % 4] - 1) * size);
+        ((animation[character.animationFrame % 4] - 1) * size);
 
   double animate({
     required List<int> animation,
@@ -380,7 +380,7 @@ class RendererCharacters extends IsometricRenderer {
     required int framesPerDirection,
     double size = 64.0
   }) {
-    final animationFrame = min(character.frame, animation.length - 1);
+    final animationFrame = min(character.animationFrame, animation.length - 1);
     final frame = animation[animationFrame] - 1;
     return (character.renderDirection * framesPerDirection * size) + (frame * size);
   }

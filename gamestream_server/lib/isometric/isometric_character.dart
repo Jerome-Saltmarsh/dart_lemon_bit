@@ -10,7 +10,7 @@ import 'isometric_position.dart';
 abstract class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _accuracy = 0.0;
-  var _faceAngle = 0.0;
+  var _angle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
   var _characterType = 0;
@@ -186,17 +186,11 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get healthPercentage => health / maxHealth;
 
-  double get faceAngle => _faceAngle;
+  double get faceAngle => _angle;
 
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
-  // int get weaponFrame {
-  //   assert (weaponStateDuration == 0 || weaponStateDurationTotal > 0);
-  //   assert (weaponStateDurationTotal - weaponStateDuration >= 0);
-  //   return weaponStateDurationTotal - weaponStateDuration;
-  // }
-
-  int get faceDirection => IsometricDirection.fromRadian(_faceAngle);
+  int get direction => IsometricDirection.fromRadian(_angle);
 
   int get health => _health;
 
@@ -218,11 +212,11 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   set health (int value) => _health = clamp(value, 0, maxHealth);
 
-  void set faceDirection(int value) =>
+  void set direction(int value) =>
         faceAngle = IsometricDirection.toRadian(value);
 
   void set faceAngle(double value) =>
-      _faceAngle = value % pi2;
+      _angle = value % pi2;
 
   int getWeaponStateDurationTotal(int weaponState) =>
       switch(weaponState) {
