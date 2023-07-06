@@ -226,20 +226,21 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
           (character.healthPercentage * 255).toInt(),
       );
 
-      // if (characterCache[characterCacheIndex] == compressedState){
-      //   writeByte(CHARACTER_CACHED);
-      // } else {
-      //   characterCache[characterCacheIndex] = compressedState;
-      //   writeByte(character.characterType);
-      //   writeByte(character.state);
-      //   writeByte(character.team);
-      //   writePercentage(character.healthPercentage);
-      // }
+      if (false && characterCache[characterCacheIndex] == compressedState){
+        writeByte(CHARACTER_CACHED);
+      } else {
+        characterCache[characterCacheIndex] = compressedState;
+        writeByte(character.characterType);
+        writeByte(character.state);
+        writeByte(character.team);
+        writePercentage(character.healthPercentage);
+      }
 
-      writeByte(character.characterType);
-      writeByte(character.state);
-      writeByte(character.team);
-      writePercentage(character.healthPercentage);
+      // writeByte(character.characterType);
+      // writeByte(character.state);
+      // writeByte(character.team);
+      // writePercentage(character.healthPercentage);
+
       writeByte(character.direction);
       writeByte(character.animationFrame);
       writeIsometricPosition(character);
