@@ -139,18 +139,18 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePercentage(accuracy);
     }
 
-    final diffX = x - positionCacheX;
-    final diffY = y - positionCacheY;
-    final diffZ = z - positionCacheZ;
+    final diffX = -(positionCacheX - x).toInt();
+    final diffY = -(positionCacheY - y).toInt();
+    final diffZ = -(positionCacheZ - z).toInt();
 
-    if (diffX == 0 && diffY == 0 && diffZ == 0) return;
+    // if (diffX == 0 && diffY == 0 && diffZ == 0) return;
 
-    if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ < 126){
+    if (false && diffX.abs() < 126 && diffY.abs() < 126 && diffZ.abs() < 126){
       writeByte(ServerResponse.Isometric);
       writeByte(IsometricResponse.Player_Position_Change);
-      writeInt8(diffX.toInt());
-      writeInt8(diffY.toInt());
-      writeInt8(diffZ.toInt());
+      writeInt8(diffX);
+      writeInt8(diffY);
+      writeInt8(diffZ);
     } else {
       writeByte(ServerResponse.Isometric);
       writeByte(IsometricResponse.Player_Position);

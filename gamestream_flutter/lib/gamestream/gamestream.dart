@@ -128,6 +128,7 @@ class Gamestream with ByteReader {
    }
 
    void startGameByType(GameType gameType){
+     isometric.reset();
      game.value = games.mapGameTypeToGame(gameType);
    }
 

@@ -45,7 +45,7 @@ class Isometric {
       /// this makes them much smoother as they don't freeze
       // particles.updateParticles();
     }
-    client.interpolatePlayer();
+    // client.interpolatePlayer();
     camera.update();
     renderer.render3D();
     renderer.renderEditMode();
@@ -177,4 +177,9 @@ class Isometric {
         ClientRequest.Isometric,
         '${request.index} $message',
       );
+
+  void reset() {
+    server.reset();
+    player.reset();
+  }
 }

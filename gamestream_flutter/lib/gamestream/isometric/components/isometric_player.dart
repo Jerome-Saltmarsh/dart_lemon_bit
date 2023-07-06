@@ -116,6 +116,13 @@ class IsometricPlayer {
     message.value = '';
   }
 
+  void reset() {
+    position.x = 0;
+    position.y = 0;
+    position.z = 0;
+    savePositionPrevious();
+  }
+
   void savePositionPrevious(){
     previousPosition.x = position.x;
     previousPosition.y = position.y;
