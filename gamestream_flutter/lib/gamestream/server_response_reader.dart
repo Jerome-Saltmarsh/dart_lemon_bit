@@ -608,10 +608,14 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readCharacterTemplate(IsometricCharacter character){
-    character.weaponType = readByte();
-    character.bodyType = readByte();
-    character.headType = readByte();
-    character.legType = readByte();
+    final weaponType = readByte();
+    if (weaponType != 255){
+      character.weaponType = weaponType;
+      character.bodyType = readByte();
+      character.headType = readByte();
+      character.legType = readByte();
+    }
+
     final lookDirectionWeaponState = readByte();
     character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
     final weaponState = readNibbleFromByte2(lookDirectionWeaponState);

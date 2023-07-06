@@ -6,3 +6,4 @@ int writeNibblesToByte(int a, int b) {
   assert (isNibble(b));
   return (a << 4) | b;
 }
+

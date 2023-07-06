@@ -1,7 +1,9 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/common/src/functions/compress_bytes_to_uint32.dart';
 import 'package:gamestream_server/common/src/functions/src.dart';
 import 'package:gamestream_server/utils.dart';
 
@@ -43,6 +45,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var aimTargetCategoryPrevious = -1;
   var mouseX = 0.0;
   var mouseY = 0.0;
+
+  final characterCache = Uint32List(200);
+  var characterCacheIndex = 0;
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -201,6 +206,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeCharacters(){
+    characterCacheIndex = 0;
     writeByte(ServerResponse.Characters);
     final characters = game.characters;
     for (final character in characters) {
@@ -219,6 +225,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       if (character.characterTypeTemplate) {
         writeCharacterTemplate(character);
       }
+
+      characterCacheIndex++;
     }
     writeByte(CharactersEnd);
   }
@@ -421,16 +429,30 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeCharacterTemplate(IsometricCharacter character) {
-    writeByte(character.weaponType);
-    writeByte(character.bodyType);
-    writeByte(character.headType);
-    writeByte(character.legsType);
+
+    final compressed = compressBytesToUInt32(
+      character.weaponType,
+      character.bodyType,
+      character.headType,
+      character.legsType,
+    );
+
+    if (characterCache[characterCacheIndex] == compressed){
+      writeByte(255);
+    } else {
+      characterCache[characterCacheIndex] = compressed;
+      writeByte(character.weaponType);
+      writeByte(character.bodyType);
+      writeByte(character.headType);
+      writeByte(character.legsType);
+    }
+
+
     writeByte(writeNibblesToByte(character.lookDirection, character.weaponState));
 
     if (!character.weaponStateIdle){
       writeByte(character.weaponStateDuration);
     }
-
   }
 
   void writeWeather() {
