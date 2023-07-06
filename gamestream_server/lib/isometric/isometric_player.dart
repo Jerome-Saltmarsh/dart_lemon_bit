@@ -46,7 +46,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var mouseY = 0.0;
 
   final characterCache = Uint32List(200);
-  final characterTemplateCache = Uint32List(200);
+  final characterCacheTemplate = Uint32List(200);
   var characterCacheIndex = 0;
 
 
@@ -219,12 +219,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
         character.renderY > screenBottom
       ) continue;
 
-      // final compressedState = compressBytesToUInt32(
-      //     character.characterType,
-      //     character.state,
-      //     character.team,
-      //     (character.healthPercentage * 255).toInt(),
-      // );
+      final compressedState = compressBytesToUInt32(
+          character.characterType,
+          character.state,
+          character.team,
+          (character.healthPercentage * 255).toInt(),
+      );
 
       // if (characterCache[characterCacheIndex] == compressedState){
       //   writeByte(CHARACTER_CACHED);
@@ -451,11 +451,11 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       character.legsType,
     );
 
-    if (characterCacheIndex < characterTemplateCache.length) {
-      if (characterTemplateCache[characterCacheIndex] == compressed){
+    if (characterCacheIndex < characterCacheTemplate.length) {
+      if (characterCacheTemplate[characterCacheIndex] == compressed){
         writeByte(255);
       } else {
-        characterTemplateCache[characterCacheIndex] = compressed;
+        characterCacheTemplate[characterCacheIndex] = compressed;
         writeByte(character.weaponType);
         writeByte(character.bodyType);
         writeByte(character.headType);

@@ -94,7 +94,7 @@ extension ServerResponseReader on Gamestream {
           readNode();
           break;
         case ServerResponse.Player_Target:
-          readVector3(isometric.player.target);
+          readIsometricPosition(isometric.player.target);
           break;
         case ServerResponse.Store_Items:
           readStoreItems();
@@ -267,7 +267,7 @@ extension ServerResponseReader on Gamestream {
         isometric.player.aimTargetCategory = readByte();
         break;
       case ApiPlayer.Aim_Target_Position:
-        readVector3(isometric.player.aimTargetPosition);
+        readIsometricPosition(isometric.player.aimTargetPosition);
         break;
       case ApiPlayer.Aim_Target_Type:
         isometric.player.aimTargetType = readUInt16();
@@ -287,7 +287,7 @@ extension ServerResponseReader on Gamestream {
         break;
       case ApiPlayer.Target_Position:
         isometric.player.runningToTarget = true;
-        readVector3(isometric.player.targetPosition);
+        readIsometricPosition(isometric.player.targetPosition);
         break;
       case ApiPlayer.Experience_Percentage:
         isometric.server.playerExperiencePercentage.value = readPercentage();
@@ -500,14 +500,14 @@ extension ServerResponseReader on Gamestream {
       if (characterType == CHARACTER_END) break;
       final character = server.getCharacterInstance();
 
-      // if (characterType != CHARACTER_CACHED) {
-      //   character.characterType = characterType;
-      //   character.state = readByte();
-      //   character.team = readByte();
-      //   character.health = readPercentage();
-      // }
+      if (characterType != CHARACTER_CACHED) {
+        character.characterType = characterType;
+        // character.state = readByte();
+        // character.team = readByte();
+        // character.health = readPercentage();
+      }
 
-      character.characterType = characterType;
+      // character.characterType = characterType;
       character.state = readByte();
       character.team = readByte();
       character.health = readPercentage();
@@ -578,7 +578,7 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readPlayerTarget() {
-    readVector3(isometric.player.abilityTarget);
+    readIsometricPosition(isometric.player.abilityTarget);
   }
 
   void readGameTime() {
@@ -611,13 +611,6 @@ extension ServerResponseReader on Gamestream {
     }
   }
 
-  void readCharacterTeamDirectionAndState(IsometricCharacter character){
-    final byte = readByte();
-    character.allie = byte >= 100;
-    character.direction = ((byte % 100) ~/ 10);
-    character.state = byte % 10;
-  }
-
   void readCharacterTemplate(IsometricCharacter character){
     final weaponType = readByte();
     if (weaponType != 255){
@@ -638,23 +631,8 @@ extension ServerResponseReader on Gamestream {
     }
   }
 
-  // todo optimize
-  void readCharacterHealthAndAnimationFrame(IsometricCharacter character){
-    final byte = readByte();
-    final frame = byte % 10;
-    final health = (byte - frame) / 240.0;
-    character.animationFrame = frame;
-    character.health = health;
-  }
-
   void readPlayerEvent() {
     isometric.events.onPlayerEvent(readByte());
-  }
-
-  void readVector3(IsometricPosition value){
-    value.x = readDouble();
-    value.y = readDouble();
-    value.z = readDouble();
   }
 
   void readIsometricPosition(IsometricPosition value){

@@ -15,12 +15,12 @@ extension CaptureTheFlagResponseReader on Gamestream {
         captureTheFlag.scoreBlue.value = readUInt16();
         break;
       case CaptureTheFlagResponse.Flag_Positions:
-        readVector3(captureTheFlag.flagPositionRed);
-        readVector3(captureTheFlag.flagPositionBlue);
+        readIsometricPosition(captureTheFlag.flagPositionRed);
+        readIsometricPosition(captureTheFlag.flagPositionBlue);
         break;
       case CaptureTheFlagResponse.Base_Positions:
-        readVector3(captureTheFlag.basePositionRed);
-        readVector3(captureTheFlag.basePositionBlue);
+        readIsometricPosition(captureTheFlag.basePositionRed);
+        readIsometricPosition(captureTheFlag.basePositionBlue);
         break;
       case CaptureTheFlagResponse.Flag_Status:
         captureTheFlag.flagRedStatus.value = readByte();
