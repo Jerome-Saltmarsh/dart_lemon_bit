@@ -641,19 +641,28 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readCharacterTemplate(IsometricCharacter character){
-    final weaponType = readByte();
-    if (weaponType != 255){
-      character.weaponType = weaponType;
+
+    final compression = readByte();
+
+    final readA = readBitFromByte(compression, 0);
+    final readB = readBitFromByte(compression, 1);
+    final readC = readBitFromByte(compression, 2);
+
+    if (readA){
+      character.weaponType = readByte();
       character.bodyType = readByte();
       character.headType = readByte();
       character.legType = readByte();
     }
 
-    final lookDirectionWeaponState = readByte();
-    character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
-    final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
-    character.weaponState = weaponState;
-    if (weaponState != WeaponState.Idle){
+    if (readB){
+      final lookDirectionWeaponState = readByte();
+      character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
+      final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
+      character.weaponState = weaponState;
+    }
+
+    if (readC) {
       character.weaponStateDuration = readByte();
     } else {
       character.weaponStateDuration = 0;

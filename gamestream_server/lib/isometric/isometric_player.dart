@@ -72,7 +72,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   final cachePositionX = Int16List(characterCacheLength);
   final cachePositionY = Int16List(characterCacheLength);
   final cachePositionZ = Int16List(characterCacheLength);
-  final cacheTemplate = Uint32List(characterCacheLength);
+  final cacheTemplateA = Uint32List(characterCacheLength);
+  final cacheTemplateB = Uint8List(characterCacheLength);
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -546,33 +547,37 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writeCharacterTemplate(IsometricCharacter character) {
 
-    final compressed = compressBytesToUInt32(
+    final compressedA = compressBytesToUInt32(
       character.weaponType,
       character.bodyType,
       character.headType,
       character.legsType,
     );
 
-    if (cacheIndex < cacheTemplate.length) {
-      if (cacheTemplate[cacheIndex] == compressed){
-        writeByte(255);
-      } else {
-        cacheTemplate[cacheIndex] = compressed;
-        writeByte(character.weaponType);
-        writeByte(character.bodyType);
-        writeByte(character.headType);
-        writeByte(character.legsType);
-      }
-    } else {
+    final compressedB = character.compressedLookAndWeaponState;
+
+    final writeA = cacheTemplateA[cacheIndex] != compressedA;
+    final writeB = cacheTemplateB[cacheIndex] != compressedB;
+    final writeC = !character.weaponStateIdle;
+
+    writeByte(
+      writeBitsToByte(writeA, writeB, writeC, false, false, false, false, false)
+    );
+
+    if (writeA){
+      cacheTemplateA[cacheIndex] = compressedA;
       writeByte(character.weaponType);
       writeByte(character.bodyType);
       writeByte(character.headType);
       writeByte(character.legsType);
     }
 
-    writeByte(writeNibblesToByte(character.lookDirection, character.weaponState));
+    if (writeB){
+      cacheTemplateB[cacheIndex] = compressedB;
+      writeByte(compressedB);
+    }
 
-    if (!character.weaponStateIdle){
+    if (writeC){
       writeByte(character.weaponStateDuration);
     }
   }

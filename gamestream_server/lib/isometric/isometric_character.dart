@@ -87,6 +87,8 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
+  int get compressedLookAndWeaponState => (lookDirection << 4) | weaponState;
+
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
 
