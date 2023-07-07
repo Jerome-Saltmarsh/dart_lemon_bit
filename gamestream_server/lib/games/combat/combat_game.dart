@@ -12,7 +12,7 @@ import 'combat_zombie.dart';
 
 class CombatGame extends IsometricGame<CombatPlayer> {
   // constants
-  static final Player_Respawn_Duration  = Gamestream.Frames_Per_Second * (isLocalMachine ? 4 : 4);
+  static final Player_Respawn_Duration  = 45 * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
   static const AI_Respawn_Duration      = 6.0; // seconds
@@ -28,9 +28,9 @@ class CombatGame extends IsometricGame<CombatPlayer> {
   static const Player_Energy_Perk       = 24;
   static const Player_Run_Speed         = 1.0;
   static const Player_Run_Speed_Perk    = 1.2;
-  static const Power_Duration_Invisible = Gamestream.Frames_Per_Second * 6;
-  static const Power_Duration_Shield    = Gamestream.Frames_Per_Second * 4;
-  static const Power_Duration_Stun      = Gamestream.Frames_Per_Second * 3;
+  static const Power_Duration_Invisible = 45 * 6;
+  static const Power_Duration_Shield    = 45 * 4;
+  static const Power_Duration_Stun      = 45 * 3;
 
   static const Power_Range_Stun         = 125.0;
 

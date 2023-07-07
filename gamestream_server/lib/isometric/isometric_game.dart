@@ -1395,8 +1395,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     IsometricPosition.sort(projectiles);
   }
 
-  void setCharacterStateStunned(IsometricCharacter character,
-      {int duration = Gamestream.Frames_Per_Second * 2}) {
+  void setCharacterStateStunned(IsometricCharacter character, {required int duration}) {
     if (character.dead) return;
     character.stateDurationRemaining = duration;
     character.state = CharacterState.Stunned;

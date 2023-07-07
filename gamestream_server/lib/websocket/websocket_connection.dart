@@ -289,6 +289,12 @@ class WebSocketConnection with ByteReader {
         handleClientRequestFight2D(player, gameFight2DClientRequest, arguments);
         break;
 
+      case ClientRequest.Set_FPS:
+        final value = parseArg1(arguments);
+        if (value == null) return;
+
+        break;
+
       default:
         break;
     }

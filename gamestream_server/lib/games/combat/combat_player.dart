@@ -153,7 +153,7 @@ class CombatPlayer extends IsometricPlayer {
   }
 
   int getPlayerPowerTypeCooldownTotal() {
-    return Gamestream.Frames_Per_Second * 10;
+    return 45 * 10;
   }
 
   void writeApiPlayerRespawnTimer(){
