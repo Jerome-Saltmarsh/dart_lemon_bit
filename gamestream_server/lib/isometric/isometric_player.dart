@@ -906,6 +906,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       return;
     }
 
+    selectedCollider.target = null;
+
     if (selectedCollider.pathFindingEnabled) {
       selectedCollider.pathTargetIndex = mouseIndex;
       return;
