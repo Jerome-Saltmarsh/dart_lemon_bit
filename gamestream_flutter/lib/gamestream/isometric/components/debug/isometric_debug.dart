@@ -77,7 +77,7 @@ class IsometricDebug {
       weaponRange.value.toDouble(),
     );
 
-    engine.setPaintColor(Colors.blue);
+    engine.setPaintColor(Colors.red);
     if (selectedColliderType.value == IsometricType.Character) {
       if (targetSet.value) {
         renderer.renderLine(

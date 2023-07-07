@@ -104,9 +104,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customInitPlayer(IsometricPlayer player) {}
 
   /// @override
-  void customUpdatePlayer(T player) {}
-
-  /// @override
   void customOnPlayerInteractWithGameObject(T player,
       IsometricGameObject gameObject) {}
 
@@ -1075,6 +1072,43 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
+  void updateCharacterTarget(IsometricCharacter character){
+
+    if (character.autoTarget && character.autoTargetTimer-- <= 0){
+      character.autoTargetTimer = character.autoTargetTimerDuration;
+      character.target = findNearestEnemy(character, radius: character.autoTargetRange);
+    }
+
+    final target = character.target;
+
+    if (target != null){
+      if (scene.outOfBoundsPosition(target)) {
+        character.clearTarget();
+        character.clearPath();
+        character.setDestinationToCurrentPosition();
+      }
+    }
+
+  }
+
+  // void updateCharacterRunDestination(IsometricCharacter character){
+  //    if (!character.runToDestinationEnabled) return;
+  //
+  //    final target = character.target;
+  //
+  //    if (target != null) {
+  //      if (!character.pathFindingEnabled && !character.targetWithinAttackRange) {
+  //        character.setDestinationToTarget();
+  //        return;
+  //      }
+  //    }
+  //
+  //    if (character.pathIndex >= 0){
+  //      setDestinationToPathNodeIndex(character);
+  //      return;
+  //    }
+  // }
+
   void updateColliderPhysics(IsometricCollider collider) {
     assert (collider.active);
 
@@ -1687,102 +1721,36 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.dead) return;
     if (!character.active) return;
 
+    updateColliderPhysics(character);
+    updateCharacterTarget(character);
+    updateCharacterPath(character);
+    updateCharacterAction(character);
     character.update();
     updateCharacterState(character);
-    updateColliderPhysics(character);
-
-    if (character.weaponStateMelee && character.weaponStateDuration == 5){
-       final target = character.target;
-       if (target is IsometricCollider) {
-         applyHit(
-             srcCharacter: character,
-             target: target,
-             damage: character.weaponDamage,
-             hitType: IsometricHitType.Melee,
-         );
-       }
-    }
-
-    if (character.autoTarget && character.autoTargetTimer-- <= 0){
-      character.autoTargetTimer = character.autoTargetTimerDuration;
-      character.target = findNearestEnemy(character, radius: character.autoTargetRange);
-    }
-
-    if (character.runToDestinationEnabled) {
-      if (character.deadBusyOrWeaponStateBusy ||
-          character.runDestinationWithinRadius
-      ){
-        character.setCharacterStateIdle();
-      } else {
-        character.runToDestination();
-      }
-    }
-
-    // update the target
-
-    if (character.target != null) {
-       final target = character.target;
-       if (target != null){
-         if (
-          character.runToDestinationEnabled &&
-          !character.pathFindingEnabled &&
-          !character.targetWithinAttackRange
-         ){
-           character.setDestinationToTarget();
-         }
-
-         if (character.shouldAttackTarget() && characterTargetIsPerceptible(character)) {
-           character.attackTargetEnemy(this);
-         }
-
-         if (scene.outOfBoundsPosition(target)) {
-           character.clearTarget();
-           character.clearPath();
-           character.setDestinationToCurrentPosition();
-         }
-       }
-    }
-
-    if (character.pathFindingEnabled) {
-
-      if (character.pathIndex >= 0 && getNodeIndexV3Unsafe(character) == character.pathNodeIndex){
-        character.pathIndex--;
-        if (character.pathIndex <= 0 && getNodeIndexV3Unsafe(character) == character.pathTargetIndex){
-          character.clearPath();
-          character.setCharacterStateIdle();
-          character.setDestinationToCurrentPosition();
-        }
-      }
-
-      if (character.shouldUpdatePath){
-        updateCharacterPath(character);
-      }
-
-      if (character.pathIndex >= 0){
-        setDestinationToPathNodeIndex(character);
-      }
-
-      final target = character.target;
-
-      if (target != null) {
-
-        if (character.targetWithinRadius(Node_Size)) {
-          character.setDestinationToTarget();
-        }
-
-        character.pathTargetIndex = scene.getIndexPosition(target);
-      }
-    }
 
     if (character is T) {
       updatePlayer(character);
-      customUpdatePlayer(character);
     }
 
     character.customOnUpdate();
   }
 
   void updateCharacterState(IsometricCharacter character) {
+
+    // updateWeaponState
+    if (character.weaponStateMelee && character.weaponStateDuration == 5){
+      final target = character.target;
+      if (target is IsometricCollider) {
+        applyHit(
+          srcCharacter: character,
+          target: target,
+          damage: character.weaponDamage,
+          hitType: IsometricHitType.Melee,
+        );
+      }
+    }
+
+
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {
@@ -2586,11 +2554,26 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateCharacterPath(IsometricCharacter character) {
-    character.pathTargetIndexPrevious = character.pathTargetIndex;
+    if (!character.pathFindingEnabled) return;
 
     if (scene.outOfBoundsPosition(character)) {
       character.clearPath();
       return;
+    }
+
+    if (character.pathIndex >= 0 && getNodeIndexV3Unsafe(character) == character.pathNodeIndex){
+      character.pathIndex--;
+      if (character.pathIndex <= 0 && getNodeIndexV3Unsafe(character) == character.pathTargetIndex){
+        character.clearPath();
+      }
+    }
+
+    character.pathTargetIndexPrevious = character.pathTargetIndex;
+
+    final target = character.target;
+
+    if (target != null) {
+      character.pathTargetIndex = scene.getIndexPosition(target);
     }
 
     if (character.pathTargetIndex == -1){
@@ -2662,5 +2645,64 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.setCharacterStatePerforming(
         duration: character.weaponCooldown
     );
+  }
+
+  // Attack_Target
+  // Interact_With_Target
+  // Follow_Path
+  // Run_To_Target
+  // Run_To_Destination
+  // Idle
+  void updateCharacterAction(IsometricCharacter character) {
+
+    if (characterShouldAttackTarget(character)) {
+      characterActionAttackTarget(character);
+      return;
+    }
+
+    if (characterShouldFollowPath(character)){
+      characterActionFollowPath(character);
+      return;
+    }
+
+    if (characterShouldRunToDestination(character)){
+      characterActionRunToDestination(character);
+      return;
+    }
+
+    character.setCharacterStateIdle();
+  }
+
+  bool characterShouldAttackTarget(IsometricCharacter character) =>
+      character.shouldAttackTarget() &&
+      characterTargetIsPerceptible(character);
+
+  void characterActionAttackTarget(IsometricCharacter character){
+    character.attackTargetEnemy(this);
+  }
+
+  bool characterShouldFollowPath(IsometricCharacter character) =>
+      character.pathFindingEnabled && character.pathIndex >= 0;
+
+  void characterActionFollowPath(IsometricCharacter character) {
+    characterSetDestinationToPathNodeIndex(character);
+    characterActionRunToDestination(character);
+  }
+
+  void characterSetDestinationToPathNodeIndex(IsometricCharacter character) {
+    final pathNodeIndex = character.pathNodeIndex;
+    assert (pathNodeIndex >= 0);
+    character.runX = scene.getNodePositionX(pathNodeIndex);
+    character.runY = scene.getNodePositionY(pathNodeIndex);
+    character.runZ = scene.getNodePositionZ(pathNodeIndex);
+  }
+
+  bool characterShouldRunToDestination(IsometricCharacter character) =>
+      character.runToDestinationEnabled &&
+      !character.runDestinationWithinRadius(10);
+
+  void characterActionRunToDestination(IsometricCharacter character) {
+    character.faceRunDestination();
+    character.setCharacterStateRunning();
   }
 }

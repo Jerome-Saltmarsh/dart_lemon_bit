@@ -9,6 +9,8 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+  [ ] fix character runs into interact target
+  [ ] fix gameobjects invisible 
   [ ] player cast ability
   [ ] implement isometric ability
   [ ] merge interact logic into isometric collider
