@@ -1222,7 +1222,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (_nextCharacterAnimationFrame < framesPerCharacterAnimationFrame) return;
     _nextCharacterAnimationFrame = 0;
     for (final character in characters) {
-      character.animationFrame = (character.animationFrame + 1) % 64;
+      character.animationFrame = (character.animationFrame + 1) % 32;
     }
   }
 

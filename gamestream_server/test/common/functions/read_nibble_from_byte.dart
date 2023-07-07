@@ -23,16 +23,19 @@ void main() {
 
   });
 
+  test("readCharacterAnimationAndDirection", () {
+    final animationFrameIn = 16 + 8 + 4 + 2 + 1;
+    final directionIn = 1;
+    var byte = animationFrameIn | (directionIn << 5);
+    printByte(byte);
+    final directionOut = (byte & Hex11100000) >> 5;
+    final animationFrameOut = (byte & Hex00011111);
+    // expect(directionOut, directionIn);
+    // expect(animationFrameOut, animationFrameIn);
+  });
 }
 
-
-
-String convertByteToHex(int byteValue) {
-  const hexChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
-  // Extract the upper and lower nibbles from the byte
-  int upperNibble = (byteValue >> 4) & 0x0F;
-  int lowerNibble = byteValue & 0x0F;
-  // Convert the nibbles to their corresponding hex characters
-  String hex = hexChars[upperNibble] + hexChars[lowerNibble];
-  return hex;
+void printByte(int byte){
+  print(byteToBinaryString(byte));
 }
+

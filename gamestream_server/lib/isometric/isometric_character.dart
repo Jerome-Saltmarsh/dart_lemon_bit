@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/common/src/functions/compress_bytes_to_uint32.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -86,6 +87,14 @@ abstract class IsometricCharacter extends IsometricCollider {
     radius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
   }
+
+  int get compressedState => compressBytesToUInt32(
+    characterType,
+    state,
+    team,
+    (healthPercentage * 255).toInt(),
+  );
+
 
   int get weaponState => _weaponState;
 
@@ -435,5 +444,4 @@ abstract class IsometricCharacter extends IsometricCollider {
     face(target);
     lookAt(target);
   }
-
 }

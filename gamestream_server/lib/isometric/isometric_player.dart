@@ -265,12 +265,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
         character.renderY > screenBottom
       ) continue;
 
-      final compressedState = compressBytesToUInt32(
-          character.characterType,
-          character.state,
-          character.team,
-          (character.healthPercentage * 255).toInt(),
-      );
+      final compressedState = character.compressedState;
 
       if (characterCache[characterCacheIndex] == compressedState){
         writeByte(CHARACTER_CACHED);

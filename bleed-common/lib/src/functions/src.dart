@@ -8,3 +8,4 @@ export 'read_nibble_from_byte_2.dart';
 export 'write_nibbles_to_byte.dart';
 export 'read_bits_from_byte.dart';
 export 'byte_to_binary_string.dart';
+export 'binary_hex.dart';

@@ -1,6 +1,5 @@
 library src;
 
-export 'binary_hex.dart';
 export 'capture_the_flag/src.dart';
 export 'combat/src.dart';
 export 'fight2d/src.dart';
