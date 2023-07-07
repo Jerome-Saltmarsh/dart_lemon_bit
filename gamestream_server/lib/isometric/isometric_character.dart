@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src.dart';
-import 'package:gamestream_server/common/src/isometric/character_action.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -283,6 +282,15 @@ abstract class IsometricCharacter extends IsometricCollider {
     animationFrame = 0;
   }
 
+  bool withinInteractRange(IsometricPosition target){
+    if ((target.z - z).abs() > Character_Height)
+      return false;
+    if (target is IsometricCollider) {
+      return withinRadiusPosition(target, Interact_Radius + target.radius);
+    }
+    return withinRadiusPosition(target, Interact_Radius);
+  }
+
   bool withinAttackRange(IsometricPosition target){
     if ((target.z - z).abs() > Character_Height)
       return false;
@@ -417,9 +425,19 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
+  void runToTarget() {
+    final target = this.target;
+    if (target == null)
+      throw Exception('target is null');
+
+    faceTarget();
+    setCharacterStateRunning();
+  }
+
   void faceTarget() {
     final target = this.target;
-    if (target == null) return;
+    if (target == null)
+      throw Exception('target is null');
     face(target);
     lookAt(target);
   }

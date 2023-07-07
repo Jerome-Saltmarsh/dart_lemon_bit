@@ -7,3 +7,4 @@ const Node_Height_Half = 12.0;
 const Node_Height_Quarter = 6.0;
 const Character_Gun_Height = 16.0;
 const Character_Height = 18.0;
+const Interact_Radius = 40.0;

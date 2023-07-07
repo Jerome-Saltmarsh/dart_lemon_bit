@@ -1724,6 +1724,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateColliderPhysics(character);
     updateCharacterTarget(character);
     updateCharacterPath(character);
+    // updateCharacterDestination(character);
     updateCharacterAction(character);
     character.update();
     updateCharacterState(character);
@@ -2633,6 +2634,41 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacterAction(IsometricCharacter character) {
 
+
+    // final target = character.target;
+    //
+    // if (!character.pathFindingEnabled && target != null) {
+    //   if (character.isEnemy(target)) {
+    //     if (!character.withinAttackRange(target)) {
+    //       character.action = CharacterAction.Run_To_Target;
+    //       character.setDestinationToTarget();
+    //       return;
+    //     }
+    //     return;
+    //   }
+    //
+    //   if (character.isAlly(target)) {
+    //     if (character.withinInteractRange(target)) {
+    //       character.setDestinationToCurrentPosition();
+    //       return;
+    //     }
+    //     character.setDestinationToTarget();
+    //     return;
+    //   }
+    // }
+
+    if (characterShouldRunToTarget(character)){
+      character.action = CharacterAction.Run_To_Target;
+      character.runToTarget();
+      return;
+    }
+
+    if (characterShouldInteractWithTarget(character)){
+      character.action = CharacterAction.Interact_Target;
+      character.setCharacterStateIdle();
+      return;
+    }
+
     if (characterShouldAttackTarget(character)) {
       character.action = CharacterAction.Attack_Target;
       characterActionAttackTarget(character);
@@ -2692,4 +2728,53 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.faceRunDestination();
     character.setCharacterStateRunning();
   }
+
+  bool characterShouldRunToTarget(IsometricCharacter character) {
+    final target = character.target;
+    if (target == null) return false;
+
+    if (!character.pathFindingEnabled) {
+      if (character.isEnemy(target)) {
+        return !character.withinAttackRange(target);
+      }
+    }
+
+    return false;
+  }
+
+  bool characterShouldInteractWithTarget(IsometricCharacter character) {
+    final target = character.target;
+    return target != null &&
+        character.isAlly(target) &&
+        character.withinInteractRange(target);
+  }
+
+  // void updateCharacterDestination(IsometricCharacter character) {
+  //   if (!character.runToDestinationEnabled) return;
+  //
+  //   if (!character.pathFindingEnabled) {
+  //     final target = character.target;
+  //     if (target != null){
+  //       if (character.isEnemy(target)) {
+  //         if (character.withinAttackRange(target)){
+  //           character.setDestinationToCurrentPosition();
+  //           return;
+  //         }
+  //         character.setDestinationToTarget();
+  //         return;
+  //       }
+  //
+  //       if (character.isAlly(target)){
+  //          if (character.withinInteractRange(target)){
+  //            character.setDestinationToCurrentPosition();
+  //            return;
+  //          }
+  //          character.setDestinationToTarget();
+  //          return;
+  //       }
+  //     }
+  //
+  //     return;
+  //   }
+  // }
 }
