@@ -741,9 +741,9 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
       if (character.running) {
         final frontX = character.x +
-            adj(character.faceAngle, Node_Size_Three_Quarters);
+            adj(character.angle, Node_Size_Three_Quarters);
         final frontY = character.y +
-            adj(character.faceAngle, Node_Size_Three_Quarters);
+            adj(character.angle, Node_Size_Three_Quarters);
         final nodeTypeInFront = scene.getTypeXYZ(
             frontX, frontY, character.z - Node_Height_Half);
         if (nodeTypeInFront == NodeType.Water) {

@@ -38,7 +38,7 @@ class IsometricPhysics {
       final distance =  character.getDistance(collider);
       if (distance > range) continue;
       final angle = character.getAngle(collider);
-      final angleDiff = calculateAngleDifference(angle, character.faceAngle);
+      final angleDiff = calculateAngleDifference(angle, character.angle);
       if (angleDiff > angleRange) continue;
       if (distance < targetDistance) {
         target = collider;

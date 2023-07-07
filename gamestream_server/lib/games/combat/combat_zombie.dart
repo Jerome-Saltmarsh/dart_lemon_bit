@@ -141,7 +141,7 @@ class CombatZombie extends IsometricCharacter {
           break;
         case AIMode.Evade:
           face(target);
-          faceAngle += pi;
+          angle += pi;
           setCharacterStateRunning();
           return;
         case AIMode.Encircle_CW:

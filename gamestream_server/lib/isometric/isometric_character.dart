@@ -13,9 +13,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   var _angle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
-  var _characterType = 0;
+
   var _weaponState = WeaponState.Idle;
 
+  var characterType = 0;
   var weaponStateDurationTotal = 0;
   var autoTarget = true;
   var autoTargetRange = 300.0;
@@ -119,17 +120,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get aliveAndActive => alive && active;
 
-  int get characterType => _characterType;
-
-  bool get isTemplate => _characterType == CharacterType.Template;
-
-  set characterType(int value){
-    _characterType = value;
-    radius = CharacterType.getRadius(value);
-    if (value != CharacterType.Template) {
-      weaponType = WeaponType.Unarmed;
-    }
-  }
+  bool get isTemplate => characterType == CharacterType.Template;
 
   double get accuracy => _accuracy;
 
@@ -186,7 +177,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get healthPercentage => health / maxHealth;
 
-  double get faceAngle => _angle;
+  double get angle => _angle;
 
   double get weaponDurationPercentage =>
       weaponStateDurationTotal == 0 || weaponStateAiming
@@ -216,9 +207,9 @@ abstract class IsometricCharacter extends IsometricCollider {
   set health (int value) => _health = clamp(value, 0, maxHealth);
 
   void set direction(int value) =>
-        faceAngle = IsometricDirection.toRadian(value);
+        angle = IsometricDirection.toRadian(value);
 
-  void set faceAngle(double value) =>
+  void set angle(double value) =>
       _angle = value % pi2;
 
   int getWeaponStateDurationTotal(int weaponState) =>
@@ -309,7 +300,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
-    faceAngle = getAngleXY(x, y);
+    angle = getAngleXY(x, y);
   }
 
   void lookAtXY(double x, double y) {

@@ -857,7 +857,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     assert (!character.weaponStateBusy);
     final angle = (character is IsometricPlayer)
         ? character.lookRadian
-        : character.faceAngle;
+        : character.angle;
 
     if (character.weaponType == WeaponType.Shotgun) {
       characterFireShotgun(character, angle);
@@ -1588,9 +1588,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       final diff = IsometricDirection.getDifference(
           player.lookDirection, player.direction);
       if (diff >= 2) {
-        player.faceAngle += piQuarter;
+        player.angle += piQuarter;
       } else if (diff <= -3) {
-        player.faceAngle -= piQuarter;
+        player.angle -= piQuarter;
       }
     }
   }
@@ -1763,7 +1763,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       case CharacterState.Running:
         character.applyForce(
             force: character.runSpeed,
-            angle: character.faceAngle,
+            angle: character.angle,
         );
         if (character.nextFootstep++ >= 10) {
           dispatch(
@@ -1800,7 +1800,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       target: src.target,
       projectileType: ProjectileType.Orb,
       angle: src.target != null ? null : (src is IsometricPlayer ? src
-          .lookRadian : src.faceAngle),
+          .lookRadian : src.angle),
       damage: damage,
     );
   }
@@ -1821,7 +1821,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       accuracy: accuracy,
       range: range,
       target: target,
-      angle: target != null ? null : angle ?? src.faceAngle,
+      angle: target != null ? null : angle ?? src.angle,
       projectileType: ProjectileType.Arrow,
       damage: damage,
     );
@@ -1902,7 +1902,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (target != null && target is IsometricCollider) {
         finalAngle = target.getAngle(src);
       } else {
-        finalAngle = src is IsometricPlayer ? src.lookRadian : src.faceAngle;
+        finalAngle = src is IsometricPlayer ? src.lookRadian : src.angle;
       }
     }
     if (accuracy != 0) {
