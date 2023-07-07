@@ -25,6 +25,8 @@ import 'isometric_settings.dart';
 
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
 
+  static const characterCacheLength = 100;
+
   var _mouseLeftDown = false;
 
   var totalProjectiles = 0;
@@ -49,13 +51,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var positionCacheY = 0;
   var positionCacheZ = 0;
 
-  final characterCache = Uint32List(200);
-  final characterCachePositionX = Int16List(200);
-  final characterCachePositionY = Int16List(200);
-  final characterCachePositionZ = Int16List(200);
-  final characterCacheTemplate = Uint32List(200);
+  final characterCache = Uint32List(characterCacheLength);
+  final characterCachePositionX = Int16List(characterCacheLength);
+  final characterCachePositionY = Int16List(characterCacheLength);
+  final characterCachePositionZ = Int16List(characterCacheLength);
+  final characterCacheTemplate = Uint32List(characterCacheLength);
   var characterCacheIndex = 0;
-
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -267,10 +268,17 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
       final compressedState = character.compressedState;
 
-      if (characterCache[characterCacheIndex] == compressedState){
-        writeByte(CHARACTER_CACHED);
+      if (characterCacheIndex < characterCacheLength){
+        if (characterCache[characterCacheIndex] == compressedState){
+          writeByte(CHARACTER_CACHED);
+        } else {
+          characterCache[characterCacheIndex] = compressedState;
+          writeByte(character.characterType);
+          writeByte(character.state);
+          writeByte(character.team);
+          writePercentage(character.healthPercentage);
+        }
       } else {
-        characterCache[characterCacheIndex] = compressedState;
         writeByte(character.characterType);
         writeByte(character.state);
         writeByte(character.team);
