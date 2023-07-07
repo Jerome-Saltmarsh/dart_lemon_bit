@@ -166,6 +166,16 @@ extension IsometricRequestReader on WebSocketConnection {
         debugCharacter.characterType = characterType;
         break;
 
+      case IsometricRequest.Debug_Character_Set_Weapon_Type:
+        final debugCharacter = player.selectedCollider;
+        if (debugCharacter is! IsometricCharacter)
+          return;
+        final weaponType = parseArg2(arguments);
+        if (weaponType == null)
+          return;
+        debugCharacter.weaponType = weaponType;
+        break;
+
       case IsometricRequest.Select_GameObject:
         final id = parseArg2(arguments);
         if (id == null) return;

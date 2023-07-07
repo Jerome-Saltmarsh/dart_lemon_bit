@@ -68,7 +68,7 @@ extension isometricDebugUI on IsometricDebug {
               }));
 
   Widget buildDropDownCharacterType() => buildWatch(
-      isometric.debug.characterType,
+      characterType,
           (debugCharacterType) => DropdownButton<int>(
         value: debugCharacterType,
         onChanged: (int? newValue) {
@@ -79,6 +79,23 @@ extension isometricDebugUI on IsometricDebug {
           value: characterType,
           child: buildText(
             CharacterType.getName(characterType),
+            color: Colors.black87,
+          ),
+        )).toList(),
+      ));
+
+  Widget buildDropDownWeaponType() => buildWatch(
+      weaponType,
+          (weaponType) => DropdownButton<int>(
+        value: weaponType,
+        onChanged: (int? newValue) {
+          if (newValue == null) return;
+          isometric.debugCharacterSetWeaponType(newValue);
+        },
+        items: WeaponType.values.map((int weaponType) => DropdownMenuItem<int>(
+          value: weaponType,
+          child: buildText(
+            WeaponType.getName(weaponType),
             color: Colors.black87,
           ),
         )).toList(),
@@ -389,7 +406,7 @@ extension isometricDebugUI on IsometricDebug {
         buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
         buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
         buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-        buildRow(text: 'weapon-type', value: buildWatch(weaponType, (t) => buildText(WeaponType.getName(t)))),
+        buildRow(text: 'weapon-type', value: buildDropDownWeaponType()),
         buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
         buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
         buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),

@@ -163,7 +163,6 @@ extension IsometricResponseReader on Gamestream {
     final position = player.position;
     player.savePositionPrevious();
     readIsometricPosition(position);
-    print('player.position: $position');
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;

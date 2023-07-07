@@ -68,6 +68,7 @@ class Gamestream with ByteReader {
      engine.deviceType.onChanged(onDeviceTypeChanged);
      engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
      engine.drawCanvasAfterUpdate = false;
+     renderResponse = true;
      Images.loadImages();
      engine.cursorType.value = CursorType.Basic;
      io.detectInputMode();

@@ -163,6 +163,12 @@ class Isometric {
           characterType,
       );
 
+  void debugCharacterSetWeaponType(int weaponType) =>
+      sendIsometricRequest(
+          IsometricRequest.Debug_Character_Set_Weapon_Type,
+          weaponType,
+      );
+
   void debugSelect() =>
       sendIsometricRequest(IsometricRequest.Debug_Select);
 
