@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
-import 'package:gamestream_server/gamestream.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
@@ -1411,6 +1410,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void setCharacterStateDead(IsometricCharacter character) {
     if (character.state == CharacterState.Dead) return;
 
+    for (final otherCharacter in characters){
+      if (otherCharacter.target != character) continue;
+      otherCharacter.onTargetDead();
+    }
+
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
     character.state = CharacterState.Dead;
@@ -1731,10 +1735,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
            character.attackTargetEnemy(this);
          }
 
-         if (
-           character.deadOrInactive ||
-           scene.outOfBoundsPosition(target)
-         ) {
+         if (scene.outOfBoundsPosition(target)) {
            character.clearTarget();
            character.clearPath();
            character.setDestinationToCurrentPosition();

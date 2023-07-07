@@ -362,6 +362,13 @@ abstract class IsometricCharacter extends IsometricCollider {
     target = null;
   }
 
+  void onTargetDead(){
+    clearTarget();
+    clearPath();
+    setDestinationToCurrentPosition();
+    setCharacterStateIdle();
+  }
+
   /// throws an exception if target is null
   void setDestinationToTarget() {
     final target = this.target;
