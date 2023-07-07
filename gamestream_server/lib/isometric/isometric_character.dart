@@ -188,7 +188,10 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   double get faceAngle => _angle;
 
-  double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
+  double get weaponDurationPercentage =>
+      weaponStateDurationTotal == 0 || weaponStateAiming
+          ? 1
+          : weaponStateDuration / weaponStateDurationTotal;
 
   int get direction => IsometricDirection.fromRadian(_angle);
 

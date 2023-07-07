@@ -28,6 +28,7 @@ alt + m             : go to declaration
 [ ] character gold
 
 07.07.2023
+[x] fixed cursor cooldown
 [x] implement character behavior tree
 [x] fix character runs into interact target
 [x] fixed bug character run to target after killed
