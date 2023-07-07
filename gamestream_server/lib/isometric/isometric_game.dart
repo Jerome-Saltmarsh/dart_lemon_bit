@@ -2619,43 +2619,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         : scene.isPerceptible(character, target);
   }
 
-  void characterAttack(IsometricCharacter character){
-    if (character.deadBusyOrWeaponStateBusy)
-      return;
-
-    if (character.characterTypeTemplate){
-      characterUseWeapon(character);
-      return;
-    }
-    character.setCharacterStatePerforming(
-        duration: character.weaponCooldown
-    );
-  }
-
   void updateCharacterAction(IsometricCharacter character) {
-
-
-    // final target = character.target;
-    //
-    // if (!character.pathFindingEnabled && target != null) {
-    //   if (character.isEnemy(target)) {
-    //     if (!character.withinAttackRange(target)) {
-    //       character.action = CharacterAction.Run_To_Target;
-    //       character.setDestinationToTarget();
-    //       return;
-    //     }
-    //     return;
-    //   }
-    //
-    //   if (character.isAlly(target)) {
-    //     if (character.withinInteractRange(target)) {
-    //       character.setDestinationToCurrentPosition();
-    //       return;
-    //     }
-    //     character.setDestinationToTarget();
-    //     return;
-    //   }
-    // }
 
     if (characterShouldRunToTarget(character)){
       character.action = CharacterAction.Run_To_Target;
@@ -2689,6 +2653,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     character.action = CharacterAction.Idle;
     character.setCharacterStateIdle();
+  }
+
+  void characterAttack(IsometricCharacter character){
+    if (character.deadBusyOrWeaponStateBusy)
+      return;
+
+    if (character.characterTypeTemplate){
+      characterUseWeapon(character);
+      return;
+    }
+    character.setCharacterStatePerforming(
+        duration: character.weaponCooldown
+    );
   }
 
   bool characterShouldAttackTarget(IsometricCharacter character) {
@@ -2736,6 +2713,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!character.pathFindingEnabled) {
       if (character.isEnemy(target)) {
         return !character.withinAttackRange(target);
+      }
+      if (character.isAlly(target)){
+        return !character.withinInteractRange(target);
       }
     }
 

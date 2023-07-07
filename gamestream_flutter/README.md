@@ -9,7 +9,6 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-  [ ] fix character runs into interact target
   [ ] fix gameobjects invisible 
   [ ] player cast ability
   [ ] implement isometric ability
@@ -28,6 +27,8 @@ alt + m             : go to declaration
   [ ] character gold
 
 07.07.2023
+[x] implement character behavior tree
+[x] fix character runs into interact target
 [x] fixed bug character run to target after killed
 [x] debug set character weapon type
 
