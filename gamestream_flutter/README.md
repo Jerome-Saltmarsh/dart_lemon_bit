@@ -25,6 +25,10 @@ alt + m             : go to declaration
   [ ] character abilities
   [ ] character gold
 
+07.07.2023
+[x] fixed bug character run to target after killed
+[x] debug set character weapon type
+
 [COMPLETED]
 [x] compress character look direction and weapon state into single byte
 [x] gameobject health

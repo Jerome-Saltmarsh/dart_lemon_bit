@@ -45,7 +45,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var runX = 0.0;
   var runY = 0.0;
   var runZ = 0.0;
-  var runRadius = 1.0;
 
   var headType = HeadType.Plain;
   var bodyType = BodyType.Shirt_Blue;
@@ -86,6 +85,12 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
+  double get runRadius {
+    return 8.0;
+  }
+
+  bool get runDestinationWithinRadius => withinRadiusXYZ(runX, runY, runZ, runRadius);
+
   int get weaponState => _weaponState;
 
   set weaponState(int value){
@@ -98,8 +103,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get shouldUpdatePath =>
       (pathTargetIndex != pathTargetIndexPrevious) || (pathIndex == 0);
-
-  bool get runDestinationWithinRadiusRunSpeed => runDestinationWithinRadius(10);
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
@@ -347,11 +350,8 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void customOnDead() {}
 
-  bool runDestinationWithinRadius(double radius) =>
-      withinRadiusXYZ(runX, runY, runZ, radius);
-
   void runToDestination(){
-    if (runDestinationWithinRadiusRunSpeed) return;
+    if (runDestinationWithinRadius) return;
     faceRunDestination();
     setCharacterStateRunning();
   }

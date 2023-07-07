@@ -20,8 +20,6 @@ class MmoPlayer extends IsometricPlayer {
     weaponRange = 40;
   }
 
-  bool get destinationWithinDestinationRadius => runDestinationWithinRadius(destinationRadius);
-
   @override
   int getTargetCategory(IsometricPosition? value){
     if (value == null) return TargetCategory.Nothing;

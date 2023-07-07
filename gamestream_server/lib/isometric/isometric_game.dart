@@ -1710,7 +1710,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.runToDestinationEnabled) {
       if (character.deadBusyOrWeaponStateBusy ||
-          character.runDestinationWithinRadiusRunSpeed
+          character.runDestinationWithinRadius
       ){
         character.setCharacterStateIdle();
       } else {
