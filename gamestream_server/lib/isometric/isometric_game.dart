@@ -2631,12 +2631,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  // Attack_Target
-  // Interact_With_Target
-  // Follow_Path
-  // Run_To_Target
-  // Run_To_Destination
-  // Idle
   void updateCharacterAction(IsometricCharacter character) {
 
     if (characterShouldAttackTarget(character)) {
