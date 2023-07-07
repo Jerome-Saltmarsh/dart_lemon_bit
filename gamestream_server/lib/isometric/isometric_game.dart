@@ -2640,16 +2640,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateCharacterAction(IsometricCharacter character) {
 
     if (characterShouldAttackTarget(character)) {
+      character.action = CharacterAction.Attack_Target;
       characterActionAttackTarget(character);
       return;
     }
 
     if (characterShouldFollowPath(character)){
+      character.action = CharacterAction.Follow_Path;
       characterActionFollowPath(character);
       return;
     }
 
     if (characterShouldRunToDestination(character)){
+      character.action = CharacterAction.Run_To_Destination;
       characterActionRunToDestination(character);
       return;
     }
@@ -2668,7 +2671,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void characterActionAttackTarget(IsometricCharacter character){
-    character.action = CharacterAction.Attack_Target;
     character.attackTargetEnemy(this);
   }
 
@@ -2676,7 +2678,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.pathFindingEnabled && character.pathIndex >= 0 ;
 
   void characterActionFollowPath(IsometricCharacter character) {
-    character.action = CharacterAction.Follow_Path;
     characterSetDestinationToPathNodeIndex(character);
     characterActionRunToDestination(character);
   }
@@ -2694,7 +2695,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       !character.runDestinationWithinRadius(10);
 
   void characterActionRunToDestination(IsometricCharacter character) {
-    character.action = CharacterAction.Run_To_Destination;
     character.faceRunDestination();
     character.setCharacterStateRunning();
   }
