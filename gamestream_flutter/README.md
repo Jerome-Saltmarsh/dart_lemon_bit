@@ -9,8 +9,6 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] fix gameobjects invisible
-[ ] fix character direction 
 [ ] player cast ability
 [ ] implement isometric ability
 [ ] merge interact logic into isometric collider
@@ -28,6 +26,8 @@ alt + m             : go to declaration
 [ ] character gold
 
 07.07.2023
+[x] fix gameobjects invisible
+[x] fix character direction
 [x] fixed cursor cooldown
 [x] implement character behavior tree
 [x] fix character runs into interact target
