@@ -18,7 +18,7 @@ class CombatZombie extends IsometricCharacter {
   final pathY = Uint16List(AI_Path_Size);
   var viewRange = 300.0;
   var chaseRange = 500.0;
-  var pathIndex = 0;
+  var pathCurrent = 0;
   var destX = 0.0;
   var destY = 0.0;
   var spawnX = 0.0;
@@ -68,7 +68,7 @@ class CombatZombie extends IsometricCharacter {
     (y - destY).abs() < Destination_Radius ;
 
   void clearPath() {
-    pathIndex = 0;
+    pathCurrent = 0;
   }
 
   void clearDest(){
@@ -165,10 +165,10 @@ class CombatZombie extends IsometricCharacter {
       return;
     }
 
-    if (pathIndex > 0){
-      pathIndex--;
-      destX = pathX[pathIndex].toDouble();
-      destY = pathY[pathIndex].toDouble();
+    if (pathCurrent > 0){
+      pathCurrent--;
+      destX = pathX[pathCurrent].toDouble();
+      destY = pathY[pathCurrent].toDouble();
       faceRunDestination();
       setCharacterStateRunning;
       return;

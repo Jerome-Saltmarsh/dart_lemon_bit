@@ -2554,62 +2554,78 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateCharacterPath(IsometricCharacter character) {
     if (!character.pathFindingEnabled) return;
 
+    character.pathTargetIndexPrevious = character.pathTargetIndex;
+
     if (scene.outOfBoundsPosition(character)) {
       character.clearPath();
       return;
     }
 
-    if (character.pathIndex >= 0 && getNodeIndexV3Unsafe(character) == character.pathNodeIndex){
-      character.pathIndex--;
-      if (character.pathIndex <= 0 && getNodeIndexV3Unsafe(character) == character.pathTargetIndex){
-        character.clearPath();
-      }
-    }
-
-    character.pathTargetIndexPrevious = character.pathTargetIndex;
-
     final target = character.target;
-
     if (target != null) {
       character.pathTargetIndex = scene.getIndexPosition(target);
     }
 
     if (character.pathTargetIndex == -1){
+      if (character.pathTargetIndexPrevious != -1){
+        character.clearPath();
+      }
+      return;
+    }
+
+    if (characterShouldDecreasePathCurrent(character)){
+      characterDecreasePathCurrent(character);
+    }
+
+    final characterIndex = scene.getIndexPosition(character);
+
+    if (character.pathTargetIndex == characterIndex){
       character.clearPath();
       return;
     }
 
-    final startIndex = scene.getIndexPosition(character);
-
-    if (character.pathTargetIndex == startIndex){
-      character.clearPath();
+    if (character.pathTargetIndex == character.pathTargetIndexPrevious)
       return;
-    }
 
     final path = character.path;
     var endPath = scene.findPath(
-        startIndex, character.pathTargetIndex,
+        characterIndex, character.pathTargetIndex,
         max: character.path.length,
     );
     var totalPathLength = 0;
-    while (endPath != startIndex) {
+    while (endPath != characterIndex) {
       IsometricScene.compiledPath[totalPathLength++] = endPath;
       endPath = scene.path[endPath];
     }
-    character.pathIndex = -1;
+    character.pathCurrent = -1;
     final length = min(path.length, totalPathLength);
 
     if (length < 0) return;
 
-    character.pathIndex = length;
+    character.pathCurrent = length;
     for (var i = 0; i < length; i++){
       path[i] = IsometricScene.compiledPath[totalPathLength - length + i];
     }
 
-    if (character.pathIndex > 0){
-      character.pathIndex--;
+    if (character.pathCurrent > 0){
+      character.pathCurrent--;
     }
-    character.pathStart = character.pathIndex;
+    character.pathStart = character.pathCurrent;
+  }
+
+  void characterDecreasePathCurrent(IsometricCharacter character) {
+    character.pathCurrent--;
+    if (
+      character.pathCurrent <= 0 &&
+      getNodeIndexV3Unsafe(character) == character.pathTargetIndex
+    ){
+      character.clearPath();
+    }
+  }
+
+  bool characterShouldDecreasePathCurrent(IsometricCharacter character) {
+    return character.pathCurrent >= 0 &&
+    getNodeIndexV3Unsafe(character) == character.pathCurrentIndex;
   }
 
   bool characterTargetIsPerceptible(IsometricCharacter character) {
@@ -2682,7 +2698,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   bool characterShouldFollowPath(IsometricCharacter character) =>
-      character.pathFindingEnabled && character.pathIndex >= 0 ;
+      character.pathFindingEnabled && character.pathCurrent >= 0 ;
 
   void characterActionFollowPath(IsometricCharacter character) {
     characterSetDestinationToPathNodeIndex(character);
@@ -2690,7 +2706,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void characterSetDestinationToPathNodeIndex(IsometricCharacter character) {
-    final pathNodeIndex = character.pathNodeIndex;
+    final pathNodeIndex = character.pathCurrentIndex;
     assert (pathNodeIndex >= 0);
     character.runX = scene.getNodePositionX(pathNodeIndex);
     character.runY = scene.getNodePositionY(pathNodeIndex);

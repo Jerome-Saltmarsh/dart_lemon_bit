@@ -872,7 +872,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeCharacterPath(IsometricCharacter character){
-    writeInt16(character.pathIndex);
+    writeInt16(character.pathCurrent);
     writeInt16(character.pathStart);
     writeInt16(character.pathTargetIndex);
     for (var j = 0; j < character.pathStart; j++){

@@ -35,7 +35,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
-  var pathIndex = -1;
+  var pathCurrent = -1;
   var pathStart = -1;
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
@@ -99,11 +99,11 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   bool get shouldUpdatePath =>
-      (pathTargetIndex != pathTargetIndexPrevious) || (pathIndex == 0);
+      (pathTargetIndex != pathTargetIndexPrevious) || (pathCurrent == 0);
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
-  int get pathNodeIndex => path[pathIndex];
+  int get pathCurrentIndex => path[pathCurrent];
 
   int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
@@ -396,7 +396,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void clearPath(){
-    pathIndex = -1;
+    pathCurrent = -1;
     pathStart = -1;
     pathTargetIndex = -1;
     pathTargetIndexPrevious = -1;
