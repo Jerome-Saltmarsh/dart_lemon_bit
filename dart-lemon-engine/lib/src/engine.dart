@@ -1,22 +1,19 @@
 library lemon_engine;
-import 'dart:convert';
-
-import 'package:lemon_engine/src/convert_duration_to_frames_per_second.dart';
-import 'package:lemon_engine/src/math.dart';
-import 'package:universal_html/html.dart';
-
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'keycode.dart';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lemon_engine/src/math.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_html/html.dart';
+
+import 'keycode.dart';
 
 class Engine extends StatelessWidget {
 
@@ -187,7 +184,7 @@ class Engine extends StatelessWidget {
 
   // DEFAULTS
   static const Default_Background_Color = Colors.black;
-  static const Default_Duration_Per_Update = Duration(milliseconds: 30);
+  static const Default_Duration_Per_Update = Duration(milliseconds: 40);
   static const Default_Title = "DEMO";
   // CONSTANTS
   static const Milliseconds_Per_Second = 1000;
@@ -369,10 +366,12 @@ class Engine extends StatelessWidget {
   }
 
   void redrawCanvas() {
-    notifierPaintFrame.value++;
     final now = DateTime.now();
-    msRender.value = now.difference(lastRenderTime).inMilliseconds;
+    final duration = now.difference(lastRenderTime);
+    if (duration.inMilliseconds < 10) return;
     lastRenderTime = now;
+    notifierPaintFrame.value++;
+    msRender.value = duration.inMilliseconds;
   }
 
   void refreshPage(){
@@ -565,11 +564,7 @@ class Engine extends StatelessWidget {
     if (onInit != null) {
       await onInit!(sharedPreferences);
     }
-    updateTimer = Timer.periodic(
-        durationPerUpdate.value,
-        _internalOnUpdate,
-    );
-
+    durationPerUpdate.value = Default_Duration_Per_Update;
     watchInitialized.value = true;
   }
 
@@ -581,7 +576,12 @@ class Engine extends StatelessWidget {
 
     final now = DateTime.now();
     // fpsUpdate.value = convertDurationToFramesPerSecond(now.difference(lastUpdateTime));
-    msUpdate.value = now.difference(lastUpdateTime).inMilliseconds;
+    final updateDuration = now.difference(lastUpdateTime);
+
+    if (updateDuration.inMilliseconds < durationPerUpdate.value.inMilliseconds)
+      return;
+
+    msUpdate.value = updateDuration.inMilliseconds;
     lastUpdateTime = now;
 
     updateFrame++;
