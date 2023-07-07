@@ -2717,8 +2717,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (character.isAlly(target)){
         return !character.withinInteractRange(target);
       }
+      return !target.withinRadiusPosition(target, 5);
     }
 
+    // (pathFindingEnabled is true)
+    if (scene.isPerceptible(character, target)) {
+      if (character.isEnemy(target)) {
+        return !character.withinAttackRange(target);
+      }
+      if (character.isAlly(target)){
+        return !character.withinInteractRange(target);
+      }
+    }
     return false;
   }
 
