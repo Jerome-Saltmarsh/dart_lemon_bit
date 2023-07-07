@@ -389,6 +389,13 @@ class IsometricScene {
   }
 
   bool isPerceptible(IsometricPosition a, IsometricPosition b) {
+
+    if (outOfBoundsPosition(a))
+      return false;
+
+    if (outOfBoundsPosition(b))
+      return false;
+
     var positionX = a.x;
     var positionY = a.y;
     var positionZ = a.z;

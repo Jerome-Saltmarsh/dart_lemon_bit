@@ -30,7 +30,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       interact: (player) {
         player.talk("Hello there");
       }
-    ));
+    )..setDestinationToCurrentPosition());
 
     npcGuard = MMONpc(
       characterType: CharacterType.Template,
@@ -43,7 +43,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponDamage: 1,
       weaponCooldown: 5,
       team: MmoTeam.Human,
-    );
+    )..setDestinationToCurrentPosition();
 
     characters.add(npcGuard);
 

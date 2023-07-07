@@ -1737,7 +1737,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacterState(IsometricCharacter character) {
 
-    // updateWeaponState
     if (character.weaponStateMelee && character.weaponStateDuration == 5){
       final target = character.target;
       if (target is IsometricCollider) {
@@ -1749,7 +1748,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         );
       }
     }
-
 
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
@@ -1778,7 +1776,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         }
         break;
       case CharacterState.Performing:
-        // updateCharacterStatePerforming(character);
         break;
       case CharacterState.Spawning:
         if (character.stateDurationRemaining == 1) {
@@ -2598,7 +2595,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       IsometricScene.compiledPath[totalPathLength++] = endPath;
       endPath = scene.path[endPath];
     }
-
+    character.pathIndex = -1;
     final length = min(path.length, totalPathLength);
 
     if (length < 0) return;
@@ -2614,24 +2611,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.pathStart = character.pathIndex;
   }
 
-  void setDestinationToPathNodeIndex(IsometricCharacter character) {
-    if (character.pathIndex < 0) return;
-
-    final pathNodeIndex = character.pathNodeIndex;
-    character.runX = scene.getNodePositionX(pathNodeIndex);
-    character.runY = scene.getNodePositionY(pathNodeIndex);
-  }
-
   bool characterTargetIsPerceptible(IsometricCharacter character) {
     final target = character.target;
-
-    if (target == null)
-      return false;
-
-    if (scene.outOfBoundsPosition(character))
-      return false;
-
-    return scene.isPerceptible(character, target);
+    return target == null
+        ? false
+        : scene.isPerceptible(character, target);
   }
 
   void characterAttack(IsometricCharacter character){
@@ -2670,21 +2654,29 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
+    character.action = CharacterAction.Idle;
     character.setCharacterStateIdle();
   }
 
-  bool characterShouldAttackTarget(IsometricCharacter character) =>
-      character.shouldAttackTarget() &&
-      characterTargetIsPerceptible(character);
+  bool characterShouldAttackTarget(IsometricCharacter character) {
+    final target = character.target;
+    return
+        target is IsometricCollider &&
+        character.isEnemy(target) &&
+        character.targetWithinAttackRange &&
+        characterTargetIsPerceptible(character);
+  }
 
   void characterActionAttackTarget(IsometricCharacter character){
+    character.action = CharacterAction.Attack_Target;
     character.attackTargetEnemy(this);
   }
 
   bool characterShouldFollowPath(IsometricCharacter character) =>
-      character.pathFindingEnabled && character.pathIndex >= 0;
+      character.pathFindingEnabled && character.pathIndex >= 0 ;
 
   void characterActionFollowPath(IsometricCharacter character) {
+    character.action = CharacterAction.Follow_Path;
     characterSetDestinationToPathNodeIndex(character);
     characterActionRunToDestination(character);
   }
@@ -2702,6 +2694,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       !character.runDestinationWithinRadius(10);
 
   void characterActionRunToDestination(IsometricCharacter character) {
+    character.action = CharacterAction.Run_To_Destination;
     character.faceRunDestination();
     character.setCharacterStateRunning();
   }

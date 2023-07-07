@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/common/src/isometric/character_action.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -39,6 +40,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathStart = -1;
   var pathTargetIndex = 0;
   var pathTargetIndexPrevious = 0;
+  var action = CharacterAction.Idle;
 
   var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
@@ -85,9 +87,9 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
-  bool runDestinationWithinRadius(double runRadius) => withinRadiusXYZ(runX, runY, runZ, runRadius);
-
   int get weaponState => _weaponState;
+
+  bool get pathSet => pathTargetIndex >= 0;
 
   set weaponState(int value){
     if (_weaponState == value)
@@ -346,11 +348,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void customOnDead() {}
 
-  void runToDestination(){
-    faceRunDestination();
-    setCharacterStateRunning();
-  }
-
   void faceRunDestination() => faceXY(runX, runY);
 
   void clearTarget(){
@@ -397,14 +394,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     pathTargetIndexPrevious = -1;
   }
 
-  bool shouldAttackTarget() {
-    final target = this.target;
-    return
-        target is IsometricCollider &&
-        targetIsEnemy &&
-        target.hitable &&
-        targetWithinAttackRange;
-  }
+  bool runDestinationWithinRadius(double runRadius) => withinRadiusXYZ(runX, runY, runZ, runRadius);
 
   void attackTargetEnemy(IsometricGame game){
     final target = this.target;
