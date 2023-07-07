@@ -248,7 +248,6 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readGameObject() {
-    print("readGameObject()");
     final id = readUInt16();
     final gameObject = isometric.server.findOrCreateGameObject(id);
     gameObject.active = readBool();
@@ -496,49 +495,55 @@ extension ServerResponseReader on Gamestream {
   void readCharacters(){
      final server = isometric.server;
      while (true) {
-      final characterType = readByte();
-      if (characterType == CHARACTER_END) break;
+
+       final compressionLevel = readByte();
+      if (compressionLevel == CHARACTER_END) break;
       final character = server.getCharacterInstance();
 
-      if (characterType != CHARACTER_CACHED) {
-        character.characterType = characterType;
+
+      final stateAChanged = readBitFromByte(compressionLevel, 0);
+      final stateBChanged = readBitFromByte(compressionLevel, 1);
+      final changeTypeX = (compressionLevel & Hex00001100) >> 2;
+      final changeTypeY =  (compressionLevel & Hex00110000) >> 4;
+      final changeTypeZ = (compressionLevel & Hex11000000) >> 6;
+
+      if (stateAChanged) {
+        character.characterType = readByte();
         character.state = readByte();
         character.team = readByte();
         character.health = readPercentage();
       }
 
-      final animationAndFrameDirection = readByte();
-      character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
-      assert (character.direction >= 0 && character.direction <= 7);
-      character.animationFrame = (animationAndFrameDirection & Hex00011111);
-
-      final changeTypeCompressed = readByte();
-
-      if (changeTypeCompressed != 0){
-        final changeTypeX = changeTypeCompressed & Hex00000011;
-        final changeTypeY = (changeTypeCompressed & Hex00001100) >> 2;
-        final changeTypeZ = (changeTypeCompressed & Hex00110000) >> 4;
-
-
-        if (changeTypeX == ChangeType.Small){
-          character.x += readInt8();
-        } else if (changeTypeX == ChangeType.Big){
-          character.x = readDouble();
-        }
-
-        if (changeTypeY == ChangeType.Small){
-          character.y += readInt8();
-        } else if (changeTypeY == ChangeType.Big){
-          character.y = readDouble();
-        }
-
-        if (changeTypeZ == ChangeType.Small){
-          character.z += readInt8();
-        } else if (changeTypeZ == ChangeType.Big){
-          character.z = readDouble();
-        }
+      if (stateBChanged){
+        final animationAndFrameDirection = readByte();
+        character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
+        assert (character.direction >= 0 && character.direction <= 7);
+        character.animationFrame = (animationAndFrameDirection & Hex00011111);
       }
 
+
+
+       assert (changeTypeX >= 0 && changeTypeX <= 2);
+       assert (changeTypeY >= 0 && changeTypeY <= 2);
+       assert (changeTypeZ >= 0 && changeTypeZ <= 2);
+
+       if (changeTypeX == ChangeType.Small) {
+         character.x += readInt8();
+       } else if (changeTypeX == ChangeType.Big) {
+         character.x = readDouble();
+       }
+
+       if (changeTypeY == ChangeType.Small) {
+         character.y += readInt8();
+       } else if (changeTypeY == ChangeType.Big) {
+         character.y = readDouble();
+       }
+
+       if (changeTypeZ == ChangeType.Small) {
+         character.z += readInt8();
+       } else if (changeTypeZ == ChangeType.Big) {
+         character.z = readDouble();
+       }
 
       if (character.characterType == CharacterType.Template){
         readCharacterTemplate(character);

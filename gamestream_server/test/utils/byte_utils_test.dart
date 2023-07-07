@@ -1,4 +1,4 @@
-import 'package:gamestream_server/utils/byte_utils.dart';
+import 'package:gamestream_server/common.dart';
 import 'package:test/test.dart';
 
 void main() {

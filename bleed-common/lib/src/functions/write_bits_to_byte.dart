@@ -7,7 +7,7 @@ int writeBitsToByte(
     bool i5,
     bool i6,
     bool i7,
-) {
+    ) {
   int byteValue = 0;
 
   byteValue |= (i0 ? 1 : 0);  // Set the 0th bit
@@ -20,14 +20,4 @@ int writeBitsToByte(
   byteValue |= (i7 ? 1 : 0) << 7;  // Set the 7th bit
 
   return byteValue;
-}
-
-bool readBitFromByte(int byte, int index) {
-  assert(index >= 0);
-  assert(index <= 7);
-
-  int mask = 1 << index;  // Create a mask with the bit at the given index set to 1
-  int maskedByte = byte & mask;  // Perform bitwise AND to extract the bit value
-
-  return maskedByte != 0;  // Return true if the masked byte is not zero, false otherwise
 }

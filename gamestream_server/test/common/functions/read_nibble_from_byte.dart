@@ -33,6 +33,16 @@ void main() {
     // expect(directionOut, directionIn);
     // expect(animationFrameOut, animationFrameIn);
   });
+
+
+
+  test("other", () {
+
+    for (var i = 0; i < 8; i++){
+      print(readBitFromByteLR(Hex11100000, i));
+    }
+
+  });
 }
 
 void printByte(int byte){

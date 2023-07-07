@@ -1,5 +1,4 @@
 
 const CHARACTER_END = 255;
-const CHARACTER_CACHED = 254;
 
 

@@ -30,7 +30,6 @@ extension IsometricResponseReader on Gamestream {
         final changeX = readInt8().toDouble();
         final changeY = readInt8().toDouble();
         final changeZ = readInt8().toDouble();
-        print('Player_Position_Change(changeX: $changeX, changeY: $changeY, changeZ: $changeZ)');
         position.x += changeX;
         position.y += changeY;
         position.z += changeZ;
