@@ -573,14 +573,8 @@ class Engine extends StatelessWidget {
   }
 
   void _internalOnUpdate(Timer timer){
-
     final now = DateTime.now();
-    // fpsUpdate.value = convertDurationToFramesPerSecond(now.difference(lastUpdateTime));
     final updateDuration = now.difference(lastUpdateTime);
-
-    if (updateDuration.inMilliseconds < durationPerUpdate.value.inMilliseconds)
-      return;
-
     msUpdate.value = updateDuration.inMilliseconds;
     lastUpdateTime = now;
 

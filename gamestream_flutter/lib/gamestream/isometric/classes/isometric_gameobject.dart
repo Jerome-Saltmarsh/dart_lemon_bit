@@ -122,4 +122,11 @@ class IsometricGameObject extends IsometricPosition {
     final ry = renderY;
     return ry > engine.Screen_Top - Pad_Distance && ry < engine.Screen_Bottom + Pad_Distance;
   }
+
+  @override
+  String toString() => '{x: ${x.toInt()}, '
+      'y: ${y.toInt()}, '
+      'z: ${z.toInt()}, '
+      'type: ${GameObjectType.getName(type)}, '
+      'subType: ${GameObjectType.getNameSubType(type, subType)}}';
 }

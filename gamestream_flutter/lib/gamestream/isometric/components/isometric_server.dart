@@ -169,10 +169,7 @@ class IsometricServer {
   }
 
   IsometricGameObject findOrCreateGameObject(int id) {
-    for (final gameObject in gameObjects) {
-      if (gameObject.id == id) return gameObject;
-    }
-    final instance = IsometricGameObject(id);
+    final instance = findGameObjectById(id) ?? IsometricGameObject(id);
     gameObjects.add(instance);
     return instance;
   }
@@ -396,18 +393,6 @@ class IsometricServer {
 
   void onChangedGameTimeEnabled(bool value){
     GameIsometricUI.timeVisible.value = value;
-  }
-
-  void reset() {
-    characters.clear();
-    projectiles.clear();
-    gameObjects.clear();
-    totalProjectiles = 0;
-    totalCharacters = 0;
-    totalPlayers = 0;
-    totalZombies = 0;
-    totalNpcs = 0;
-
   }
 }
 

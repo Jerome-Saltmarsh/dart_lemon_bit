@@ -78,8 +78,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     weaponCooldown: 20,
   ){
     this.autoTarget = autoTargetNearbyEnemies;
-    writeGameType();
-    writePlayerTeam();
+    // writeGameType();
+
     id = game.playerId++;
   }
 
@@ -201,6 +201,22 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   @override
   void writePlayerGame() {
+
+    if (!initialized) {
+      initialized = true;
+      writePlayerInitialized();
+      game.customInitPlayer(this);
+      writeIsometricPlayer();
+      writePlayerSpawned();
+      writePlayerHealth();
+      writePlayerAlive();
+      writeHighScore();
+    }
+
+    if (!sceneDownloaded){
+      downloadScene();
+    }
+
     writeIsometricPlayer();
     writePlayerTargetPosition();
     writePlayerAimTargetPosition();
@@ -214,19 +230,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
     writeGameTime();
 
-    if (!initialized) {
-      initialized = true;
-      game.customInitPlayer(this);
-      writeIsometricPlayer();
-      writePlayerSpawned();
-      writePlayerHealth();
-      writePlayerAlive();
-      writeHighScore();
-    }
-
-    if (!sceneDownloaded){
-      downloadScene();
-    }
   }
 
   void writeHighScore(){
@@ -241,6 +244,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeGameObjects(){
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.GameObjects);
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
       writeGameObject(gameObject);
@@ -332,9 +337,10 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void downloadScene(){
-    writeScene();
-    writeGameProperties();
     writeGameType();
+    writePlayerTeam();
+    writeGameProperties();
+    writeScene();
     writeWeather();
     writeGameObjects();
     writeGameTime();
@@ -939,6 +945,11 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   set health (int value) {
     super.health = value;
     writePlayerHealth();
+  }
+
+  void writePlayerInitialized() {
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Player_Initialized);
   }
 }
 

@@ -183,9 +183,4 @@ class Isometric {
         ClientRequest.Isometric,
         '${request.index} $message',
       );
-
-  void reset() {
-    server.reset();
-    player.reset();
-  }
 }

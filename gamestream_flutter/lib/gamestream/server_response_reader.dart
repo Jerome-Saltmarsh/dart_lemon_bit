@@ -85,7 +85,6 @@ extension ServerResponseReader on Gamestream {
             throw Exception('invalid game type index $index');
           }
           gameType.value = GameType.values[index];
-          refreshGame();
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
@@ -249,6 +248,7 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readGameObject() {
+    print("readGameObject()");
     final id = readUInt16();
     final gameObject = isometric.server.findOrCreateGameObject(id);
     gameObject.active = readBool();

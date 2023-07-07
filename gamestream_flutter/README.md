@@ -9,22 +9,23 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-  [ ] fix gameobjects invisible 
-  [ ] player cast ability
-  [ ] implement isometric ability
-  [ ] merge interact logic into isometric collider
-  [ ] optimize upload
-  [ ] refactor lemon engine
-  [ ] remove lemon engine global instance
-  [ ] remove gamestream global instance
-  [ ] remove all static instances
-  [ ] modify selected object type
-  [ ] character type alien slug
-  [ ] npc store
-  [ ] character items
-  [ ] character selection
-  [ ] character abilities
-  [ ] character gold
+[ ] fix gameobjects invisible
+[ ] fix character direction 
+[ ] player cast ability
+[ ] implement isometric ability
+[ ] merge interact logic into isometric collider
+[ ] optimize upload
+[ ] refactor lemon engine
+[ ] remove lemon engine global instance
+[ ] remove gamestream global instance
+[ ] remove all static instances
+[ ] modify selected object type
+[ ] character type alien slug
+[ ] npc store
+[ ] character items
+[ ] character selection
+[ ] character abilities
+[ ] character gold
 
 07.07.2023
 [x] implement character behavior tree

@@ -47,6 +47,21 @@ extension IsometricResponseReader on Gamestream {
       case IsometricResponse.Player_Weapon_Duration_Percentage:
         isometric.player.weaponCooldown.value = readPercentage();
         break;
+
+      case IsometricResponse.GameObjects:
+        isometric.server.gameObjects.clear();
+        break;
+
+      case IsometricResponse.Player_Initialized:
+        isometric.server.characters.clear();
+        isometric.server.projectiles.clear();
+        isometric.server.gameObjects.clear();
+        isometric.server.totalProjectiles = 0;
+        isometric.server.totalCharacters = 0;
+        isometric.server.totalPlayers = 0;
+        isometric.server.totalZombies = 0;
+        isometric.server.totalNpcs = 0;
+        break;
     }
   }
 
