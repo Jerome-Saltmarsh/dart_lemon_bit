@@ -45,9 +45,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var mouseX = 0.0;
   var mouseY = 0.0;
 
-  var positionCacheX = 0.0;
-  var positionCacheY = 0.0;
-  var positionCacheZ = 0.0;
+  var positionCacheX = 0;
+  var positionCacheY = 0;
+  var positionCacheZ = 0;
 
   final characterCache = Uint32List(200);
   final characterCachePositionX = Int16List(200);
@@ -139,13 +139,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePercentage(accuracy);
     }
 
-    final diffX = -(positionCacheX - x).toInt();
-    final diffY = -(positionCacheY - y).toInt();
-    final diffZ = -(positionCacheZ - z).toInt();
+    final diffX = -(positionCacheX - x.toInt()).toInt();
+    final diffY = -(positionCacheY - y.toInt()).toInt();
+    final diffZ = -(positionCacheZ - z.toInt()).toInt();
 
     if (diffX == 0 && diffY == 0 && diffZ == 0) return;
 
-    if (false && diffX.abs() < 126 && diffY.abs() < 126 && diffZ.abs() < 126){
+    if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ.abs() < 126){
       writeByte(ServerResponse.Isometric);
       writeByte(IsometricResponse.Player_Position_Change);
       writeInt8(diffX);
@@ -156,9 +156,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeByte(IsometricResponse.Player_Position);
       writeIsometricPosition(this);
     }
-    positionCacheX = x;
-    positionCacheY = y;
-    positionCacheZ = z;
+    positionCacheX = x.toInt();
+    positionCacheY = y.toInt();
+    positionCacheZ = z.toInt();
 
   }
 
