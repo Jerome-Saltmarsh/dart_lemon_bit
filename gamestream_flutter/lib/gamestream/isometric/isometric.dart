@@ -183,4 +183,24 @@ class Isometric {
         ClientRequest.Isometric,
         '${request.index} $message',
       );
+
+  void onPlayerInitialized(){
+    player.position.x = 0;
+    player.position.y = 0;
+    player.position.z = 0;
+    player.previousPosition.x = 0;
+    player.previousPosition.y = 0;
+    player.previousPosition.z = 0;
+    player.indexZ = 0;
+    player.indexRow = 0;
+    player.indexColumn = 0;
+    server.characters.clear();
+    server.projectiles.clear();
+    server.gameObjects.clear();
+    server.totalProjectiles = 0;
+    server.totalCharacters = 0;
+    server.totalPlayers = 0;
+    server.totalZombies = 0;
+    server.totalNpcs = 0;
+  }
 }

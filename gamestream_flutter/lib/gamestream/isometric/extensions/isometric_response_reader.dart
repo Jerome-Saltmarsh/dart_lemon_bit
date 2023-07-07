@@ -53,14 +53,7 @@ extension IsometricResponseReader on Gamestream {
         break;
 
       case IsometricResponse.Player_Initialized:
-        isometric.server.characters.clear();
-        isometric.server.projectiles.clear();
-        isometric.server.gameObjects.clear();
-        isometric.server.totalProjectiles = 0;
-        isometric.server.totalCharacters = 0;
-        isometric.server.totalPlayers = 0;
-        isometric.server.totalZombies = 0;
-        isometric.server.totalNpcs = 0;
+        isometric.onPlayerInitialized();
         break;
     }
   }
