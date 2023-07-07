@@ -2573,19 +2573,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (characterShouldDecreasePathCurrent(character)){
-      characterDecreasePathCurrent(character);
-    }
-
     final characterIndex = scene.getIndexPosition(character);
 
-    if (character.pathTargetIndex == characterIndex){
+    if (character.pathCurrent >= 0 &&
+        characterIndex == character.pathCurrentIndex
+    ){
+      character.pathCurrent--;
+    }
+
+    if (character.pathCurrent > 0)
+      return;
+
+    if (characterIndex == character.pathTargetIndex) {
       character.clearPath();
       return;
     }
-
-    if (character.pathTargetIndex == character.pathTargetIndexPrevious)
-      return;
 
     final path = character.path;
     var endPath = scene.findPath(
@@ -2611,21 +2613,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.pathCurrent--;
     }
     character.pathStart = character.pathCurrent;
-  }
-
-  void characterDecreasePathCurrent(IsometricCharacter character) {
-    character.pathCurrent--;
-    if (
-      character.pathCurrent <= 0 &&
-      getNodeIndexV3Unsafe(character) == character.pathTargetIndex
-    ){
-      character.clearPath();
-    }
-  }
-
-  bool characterShouldDecreasePathCurrent(IsometricCharacter character) {
-    return character.pathCurrent >= 0 &&
-    getNodeIndexV3Unsafe(character) == character.pathCurrentIndex;
   }
 
   bool characterTargetIsPerceptible(IsometricCharacter character) {
