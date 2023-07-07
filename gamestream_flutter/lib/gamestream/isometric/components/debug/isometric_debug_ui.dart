@@ -128,7 +128,7 @@ extension isometricDebugUI on IsometricDebug {
                   'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                   'player-alive: ${gamestream.isometric.player.alive.value}\n'
                   'player-respawn-timer: ${gamestream.isometric.player.respawnTimer.value}\n'
-                  'player-position: x: ${gamestream.isometric.player.position.x}, y: ${gamestream.isometric.player.position.y}, z: ${gamestream.isometric.player.position.z}\n'
+                  'player-position: ${gamestream.isometric.player.position}\n'
                   'player-render: x: ${gamestream.isometric.player.position.renderX}, y: ${gamestream.isometric.player.position.renderY}\n'
                   'player-screen: x: ${gamestream.isometric.player.positionScreenX.toInt()}, y: ${gamestream.isometric.player.positionScreenY.toInt()}\n'
                   'player-index: z: ${gamestream.isometric.player.position.indexZ}, row: ${gamestream.isometric.player.position.indexRow}, column: ${gamestream.isometric.player.position.indexColumn}\n'

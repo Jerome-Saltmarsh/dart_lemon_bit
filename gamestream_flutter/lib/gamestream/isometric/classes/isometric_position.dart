@@ -17,6 +17,10 @@ class IsometricPosition {
 
   double get sortOrder => x + y + z;
 
+  double get screenX => engine.worldToScreenX(renderX);
+
+  double get screenY => engine.worldToScreenY(renderY);
+
   double get renderX => (x - y) * 0.5;
 
   double get renderY => ((y + x) * 0.5) - z;
@@ -34,7 +38,7 @@ class IsometricPosition {
   }
 
   @override
-  String toString()=> 'x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}';
+  String toString()=> '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}}';
 
   static bool compareRenderOrder(IsometricPosition a, IsometricPosition b) {
     final aRowColumn = a.indexRow + a.indexColumn;
@@ -51,5 +55,7 @@ class IsometricPosition {
 
     return a.sortOrder < b.sortOrder;
   }
+
+
 }
 
