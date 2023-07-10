@@ -1582,7 +1582,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!player.active) return;
 
     updatePlayerAimTarget(player);
-    player.updatePlayerAimTargetCategory();
 
     if (player.idling && !player.weaponStateBusy) {
       final diff = IsometricDirection.getDifference(

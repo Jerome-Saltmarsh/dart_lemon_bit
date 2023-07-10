@@ -74,6 +74,9 @@ class MmoPlayer extends IsometricPlayer {
     if (value == null) return TargetCategory.Nothing;
     if (value is IsometricGameObject) {
       if (value.interactable) {
+        return TargetCategory.Talk;
+      }
+      if (value.collectable) {
         return TargetCategory.Collect;
       }
       return TargetCategory.Nothing;

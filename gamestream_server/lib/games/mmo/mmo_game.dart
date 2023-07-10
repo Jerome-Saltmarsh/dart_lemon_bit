@@ -80,7 +80,12 @@ class MmoGame extends IsometricGame<MmoPlayer> {
            type: GameObjectType.Weapon,
            subType: WeaponType.Handgun,
            team: TeamType.Neutral,
-       );
+       )
+          ..fixed = true
+          ..collectable = true
+          ..persistable = false
+          ..physical = false
+       ;
 
        addJob(seconds: 30, action: () {
          setCharacterStateSpawning(target);
