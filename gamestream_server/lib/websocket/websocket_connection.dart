@@ -74,6 +74,7 @@ class WebSocketConnection with ByteReader {
       index = 0;
       values = args;
       handleClientRequestUpdate(args, debug: false);
+      return;
     }
     if (args is String) {
       return onDataStringArray(args.split(" "));
