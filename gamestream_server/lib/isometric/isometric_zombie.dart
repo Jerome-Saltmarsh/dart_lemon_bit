@@ -26,6 +26,7 @@ class IsometricZombie extends IsometricCharacter {
     weaponType: WeaponType.Unarmed,
     weaponRange: 20,
     weaponCooldown: 20,
+    name: "Zombie",
   );
 
   bool get shouldWander => wander && target == null && nextWander-- <= 0;

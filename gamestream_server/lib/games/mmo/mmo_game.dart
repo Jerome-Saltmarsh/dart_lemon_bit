@@ -27,6 +27,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponDamage: 1,
       weaponRange: 200,
       weaponCooldown: 20,
+      name: "Gus",
       interact: (player) {
         player.talk("Hello there");
       }
@@ -43,6 +44,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponDamage: 1,
       weaponCooldown: 5,
       team: MmoTeam.Human,
+      name: "Sam",
     );
 
     characters.add(npcGuard);

@@ -89,7 +89,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   set aimTarget(IsometricCollider? value){
     if (value == _aimTarget) return;
     _aimTarget = value;
-    onChangedPlayerAimTarget();
+    onChangedAimTarget();
   }
 
   int get mouseIndex => game.scene.getIndexXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
@@ -946,8 +946,20 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     lookRadian = mouseAngle;
   }
 
-  void onChangedPlayerAimTarget(){
+  void onChangedAimTarget(){
      aimTargetCategory = getTargetCategory(aimTarget);
+     writePlayerAimTarget();
+  }
+
+  void writePlayerAimTarget(){
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Player_Aim_Target);
+
+    writeBool(aimTarget != null);
+    if (aimTarget == null) {
+      return;
+    }
+    writeString(aimTarget!.name);
   }
 
   @override

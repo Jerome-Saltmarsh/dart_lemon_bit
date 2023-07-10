@@ -2,6 +2,7 @@
 import 'package:bleed_common/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
+import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -11,7 +12,9 @@ extension MMOUI on MmoGame {
     alignment: Alignment.center,
     children: [
       buildNpcText(),
-      buildPlayerItems()
+      buildPlayerItems(),
+      buildPlayerAimTarget(),
+
     ],
   );
 
@@ -58,6 +61,24 @@ extension MMOUI on MmoGame {
         ),
       ));
 
-
+  buildPlayerAimTarget() {
+    final name = Container(
+      alignment: Alignment.center,
+      width: 100,
+      child: GSWindow(
+          child: buildWatch(player.playerAimTargetName, buildText)),
+    );
+    return Positioned(
+        top: 16,
+        left: 0,
+        child: Container(
+          width: engine.screen.width,
+          alignment: Alignment.center,
+          child: buildWatch(player.playerAimTargetSet, (t) {
+            if (!t) return nothing;
+            return name;
+          }),
+        ));
+  }
 }
 

@@ -23,16 +23,16 @@ void main() {
 
   });
 
-  test("readCharacterAnimationAndDirection", () {
-    final animationFrameIn = 16 + 8 + 4 + 2 + 1;
-    final directionIn = 1;
-    var byte = animationFrameIn | (directionIn << 5);
-    printByte(byte);
-    final directionOut = (byte & Hex11100000) >> 5;
-    final animationFrameOut = (byte & Hex00011111);
-    // expect(directionOut, directionIn);
-    // expect(animationFrameOut, animationFrameIn);
-  });
+  // test("readCharacterAnimationAndDirection", () {
+  //   final animationFrameIn = 16 + 8 + 4 + 2 + 1;
+  //   final directionIn = 1;
+  //   var byte = animationFrameIn | (directionIn << 5);
+  //   printByte(byte);
+  //   final directionOut = (byte & Hex11100000) >> 5;
+  //   final animationFrameOut = (byte & Hex00011111);
+  //   // expect(directionOut, directionIn);
+  //   // expect(animationFrameOut, animationFrameIn);
+  // });
 
 
 

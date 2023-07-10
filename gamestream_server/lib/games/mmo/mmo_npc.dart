@@ -17,6 +17,7 @@ class MMONpc extends IsometricCharacter {
     required super.x,
     required super.y,
     required super.z,
+    required super.name,
     this.interact,
   });
 }

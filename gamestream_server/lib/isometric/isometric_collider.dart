@@ -8,7 +8,7 @@ import 'isometric_character.dart';
 import 'isometric_physics.dart';
 import 'isometric_position.dart';
 
-class IsometricCollider extends IsometricPosition {
+abstract class IsometricCollider extends IsometricPosition {
   /// do not mutate directly use game.deactivateCollider
   var active = true;
   var collidable = true;
@@ -28,13 +28,12 @@ class IsometricCollider extends IsometricPosition {
   var startY = 0.0;
   var startZ = 0.0;
 
-  var sizeX = 0.0;
-  var sizeY = 0.0;
+  String get name;
+
   var team = 0;
 
-
   IsometricCharacter? owner;
-  var weaponDamage = 0;
+
 
   /// CONSTRUCTOR
   IsometricCollider({

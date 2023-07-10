@@ -55,6 +55,9 @@ class IsometricGameObject extends IsometricCollider {
   String toString() {
     return '{type: $typeName, subType: $subTypeName, id: $id}';
   }
+
+  @override
+  String get name => GameObjectType.getNameSubType(type, subType);
 }
 
 

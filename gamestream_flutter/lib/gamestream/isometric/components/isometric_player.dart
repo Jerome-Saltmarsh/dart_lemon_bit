@@ -20,6 +20,8 @@ class IsometricPlayer {
   var indexColumn = 0;
   var nodeIndex = 0;
 
+  final playerAimTargetSet = Watch(false);
+  final playerAimTargetName = Watch('');
   final npcTalk = Watch('');
   final aimTargetPosition = IsometricPosition();
   final targetPosition = IsometricPosition();

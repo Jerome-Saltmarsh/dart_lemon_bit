@@ -563,8 +563,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..collectable = false
       ..interactable = false
       ..velocityZ = velocityZ
-      ..owner = player
-      ..weaponDamage = damage;
+      ..owner = player;
 
     addJob(seconds: IsometricSettings.Grenade_Cook_Duration, action: () {
       deactivateCollider(instance);
@@ -1651,7 +1650,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: projectile.velocityAngle,
         srcCharacter: owner,
         target: target,
-        damage: projectile.weaponDamage,
+        damage: projectile.damage,
         hitType: IsometricHitType.Projectile,
       );
     }
@@ -1916,7 +1915,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       const accuracyAngleDeviation = pi * 0.1;
       finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
-    projectile.weaponDamage = damage;
+    projectile.damage = damage;
     projectile.hitable = true;
     projectile.active = true;
     if (target is IsometricCollider) {

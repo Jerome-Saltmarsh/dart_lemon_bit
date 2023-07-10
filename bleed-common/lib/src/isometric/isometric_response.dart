@@ -8,4 +8,5 @@ class IsometricResponse {
  static const Player_Position_Change = 6;
  static const GameObjects = 7;
  static const Player_Initialized = 8;
+ static const Player_Aim_Target = 9;
 }

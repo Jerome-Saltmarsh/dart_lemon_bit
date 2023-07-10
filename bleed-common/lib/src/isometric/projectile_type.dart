@@ -24,4 +24,13 @@ class ProjectileType {
       Wave     : 10.0,
       Rocket   : 10.0,
    }[type] ?? 10;
+
+   static String getName(int value) => const {
+         Arrow: "Arrow",
+         Orb: "Orb",
+         Fireball: "Fireball",
+         Bullet: "Bullet",
+         Wave: "Wave",
+         Rocket: "Rocket",
+      }[value] ?? 'projectile-name-unknown-$value';
 }

@@ -23,6 +23,10 @@ extension IsometricResponseReader on Gamestream {
         readIsometricPlayerPosition();
         break;
 
+      case IsometricResponse.Player_Aim_Target:
+        readPlayerAimTarget();
+        break;
+
       case IsometricResponse.Player_Position_Change:
         final player = isometric.player;
         final position = player.position;
@@ -175,6 +179,17 @@ extension IsometricResponseReader on Gamestream {
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
     player.nodeIndex = isometric.scene.getIndexPosition(position);
+  }
+
+  void readPlayerAimTarget() {
+    final player = isometric.player;
+    final aimTargetSet = readBool();
+    player.playerAimTargetSet.value = aimTargetSet;
+    if (aimTargetSet) {
+      player.playerAimTargetName.value = readString();
+    } else {
+      player.playerAimTargetName.value = '';
+    }
   }
 
 }
