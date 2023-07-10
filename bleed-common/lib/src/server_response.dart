@@ -5,7 +5,6 @@ class ServerResponse {
   static const Player_Event               = 03;
   static const Game_Time                  = 04;
   static const Game_Type                  = 05;
-  // static const End                        = 06;
   static const Player_Target              = 07;
   static const Node                       = 09;
   static const Store_Items                = 10;
@@ -13,7 +12,6 @@ class ServerResponse {
   static const Game_Properties            = 12;
   static const Npc_Talk                   = 13;
   static const Map_Coordinate             = 14;
-  static const Characters                 = 15;
   static const Editor_GameObject_Selected = 16;
   static const GameObject                 = 17;
   static const Environment                = 18;
@@ -29,7 +27,8 @@ class ServerResponse {
   static const Capture_The_Flag           = 31;
   static const MMO                        = 32;
   static const Isometric                  = 33;
-  static const FPS                        = 34;
+  static const Isometric_Characters       = 34;
+  static const FPS                        = 35;
 
   static String getName(int value) {
     return <int, String>{
@@ -47,7 +46,7 @@ class ServerResponse {
       Game_Properties: "Game_Properties",
       Npc_Talk: "Npc_Talk",
       Map_Coordinate: "Map_Coordinate",
-      Characters: "Characters",
+      Isometric_Characters: "Isometric Characters",
       Editor_GameObject_Selected: "Editor_GameObject_Selected",
       GameObject: "GameObject",
       Environment: "Environment",

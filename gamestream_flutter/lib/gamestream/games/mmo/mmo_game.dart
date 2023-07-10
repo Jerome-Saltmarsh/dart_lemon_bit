@@ -6,9 +6,27 @@ import 'package:gamestream_flutter/library.dart';
 
 class MmoGame extends IsometricGame {
 
+  final itemListener = Watch(0);
+  late int itemLength;
+  late Uint8List itemTypes;
+  late Uint8List itemSubTypes;
+
   final npcText = Watch('');
 
   MmoGame({required super.isometric});
+
+  void setItem({required int index, required int type, required int subType}){
+    itemTypes[index] = type;
+    itemSubTypes[index] = subType;
+    itemListener.value++;
+  }
+
+  void setItemLength(int length){
+    itemLength = length;
+    itemTypes = Uint8List(length);
+    itemSubTypes = Uint8List(length);
+    itemListener.value++;
+  }
 
   @override
   Widget customBuildUI(BuildContext context) => buildMMOUI();

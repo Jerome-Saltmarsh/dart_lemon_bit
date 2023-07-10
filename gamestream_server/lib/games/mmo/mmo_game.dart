@@ -71,7 +71,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
-  MmoPlayer buildPlayer() => MmoPlayer(game: this)
+  MmoPlayer buildPlayer() => MmoPlayer(game: this, itemLength: 6)
     ..x = 880
     ..y = 1100
     ..z = 50

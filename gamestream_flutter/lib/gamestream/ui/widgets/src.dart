@@ -15,3 +15,4 @@ export 'mouse_over.dart';
 export 'nothing.dart';
 export 'on_pressed.dart';
 export 'stack_fullscreen.dart';
+export 'gs_window.dart';

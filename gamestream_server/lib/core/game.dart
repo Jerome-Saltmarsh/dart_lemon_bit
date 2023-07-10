@@ -49,7 +49,6 @@ abstract class Game <T extends Player> {
       final player = players[i];
       player.writePlayerGame();
       customWriteGame();
-      // player.writeByte(ServerResponse.End);
     }
   }
 

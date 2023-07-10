@@ -45,11 +45,11 @@ extension ServerResponseReader on Gamestream {
       serverResponse = readByte();
 
       switch (serverResponse) {
+       case ServerResponse.Isometric_Characters:
+          readIsometricCharacters();
+          break;
         case ServerResponse.Api_Player:
           readApiPlayer();
-          break;
-        case ServerResponse.Characters:
-          readCharacters();
           break;
         case ServerResponse.Api_SPR:
           readServerResponseApiSPR();
@@ -60,8 +60,6 @@ extension ServerResponseReader on Gamestream {
         case ServerResponse.GameObject:
           readGameObject();
           break;
-        // case ServerResponse.End:
-        //   break;
         case ServerResponse.Projectiles:
           readProjectiles();
           break;
@@ -495,7 +493,7 @@ extension ServerResponseReader on Gamestream {
     isometric.editor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
   }
 
-  void readCharacters(){
+  void readIsometricCharacters(){
      final server = isometric.server;
      while (true) {
 

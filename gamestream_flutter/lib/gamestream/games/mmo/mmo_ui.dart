@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -10,6 +11,7 @@ extension MMOUI on MmoGame {
     alignment: Alignment.center,
     children: [
       buildNpcText(),
+      buildPlayerItems()
     ],
   );
 
@@ -36,5 +38,23 @@ extension MMOUI on MmoGame {
             )),
       )),
     );
+
+  Positioned buildPlayerItems() => Positioned(
+        bottom: 16,
+        left: 16,
+        child: GSWindow(
+        child: buildWatch(
+          itemListener,
+          (int reads) => Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(itemLength, (index) => buildText(
+              '${GameObjectType.getName(itemTypes[index])} ${GameObjectType.getNameSubType(itemTypes[index], itemSubTypes[index])}'
+            )),
+          ),
+        ),
+      ));
+
+
 }
 

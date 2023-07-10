@@ -23,24 +23,9 @@ import 'isometric_scene_writer.dart';
 import 'isometric_settings.dart';
 
 
-class CharacterChanged {
-  static int getChanges(bool state, bool anim, bool position){
-    return writeBitsToByte(
-      false,
-      false,
-      false,
-      false,
-      false,
-      state,
-      anim,
-      position,
-    );
-  }
-}
-
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
 
-  static const characterCacheLength = 100;
+  static const Cache_Length = 100;
 
   var _mouseLeftDown = false;
 
@@ -67,13 +52,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var positionCacheZ = 0;
   var cacheIndex = 0;
 
-  final cacheStateB = Uint8List(characterCacheLength);
-  final cacheStateA = Uint32List(characterCacheLength);
-  final cachePositionX = Int16List(characterCacheLength);
-  final cachePositionY = Int16List(characterCacheLength);
-  final cachePositionZ = Int16List(characterCacheLength);
-  final cacheTemplateA = Uint32List(characterCacheLength);
-  final cacheTemplateB = Uint8List(characterCacheLength);
+  final cacheStateB = Uint8List(Cache_Length);
+  final cacheStateA = Uint32List(Cache_Length);
+  final cachePositionX = Int16List(Cache_Length);
+  final cachePositionY = Int16List(Cache_Length);
+  final cachePositionZ = Int16List(Cache_Length);
+  final cacheTemplateA = Uint32List(Cache_Length);
+  final cacheTemplateB = Uint8List(Cache_Length);
 
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -96,8 +81,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     weaponCooldown: 20,
   ){
     this.autoTarget = autoTargetNearbyEnemies;
-    // writeGameType();
-
     id = game.playerId++;
   }
 
@@ -272,7 +255,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writeCharacters() {
     cacheIndex = 0;
-    writeByte(ServerResponse.Characters);
+    writeByte(ServerResponse.Isometric_Characters);
     final characters = game.characters;
     for (final character in characters) {
       if (
