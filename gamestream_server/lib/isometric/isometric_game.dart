@@ -2686,11 +2686,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.runX = scene.getNodePositionX(pathNodeIndex);
     character.runY = scene.getNodePositionY(pathNodeIndex);
     character.runZ = scene.getNodePositionZ(pathNodeIndex);
+    character.arrivedAtDestination = false;
   }
 
   bool characterShouldRunToDestination(IsometricCharacter character) =>
       character.runToDestinationEnabled &&
-      !character.runDestinationWithinRadius(10);
+      !character.arrivedAtDestination;
 
   void characterActionRunToDestination(IsometricCharacter character) {
     character.faceRunDestination();
@@ -2708,7 +2709,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (character.isAlly(target)){
         return !character.withinInteractRange(target);
       }
-      return !character.withinRadiusPosition(target, 5);
+      return !character.withinRadiusPosition(target, 7);
     }
 
     if (scene.isPerceptible(character, target)) {

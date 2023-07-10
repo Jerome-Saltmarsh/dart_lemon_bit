@@ -42,6 +42,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
 
+  var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
   var runX = 0.0;
@@ -341,6 +342,14 @@ abstract class IsometricCharacter extends IsometricCollider {
       }
     }
 
+    if (!pathFindingEnabled && runToDestinationEnabled && target != null){
+      setDestinationToTarget();
+    }
+
+    if (runToDestinationEnabled && !arrivedAtDestination && withinRadiusXYZ(runX, runY, runZ, 8)){
+       arrivedAtDestination = true;
+    }
+
     if (weaponStateDuration < weaponStateDurationTotal) {
       weaponStateDuration++;
       if (weaponStateDuration == weaponStateDurationTotal) {
@@ -389,6 +398,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     runX = target.x;
     runY = target.y;
     runZ = target.z;
+    arrivedAtDestination = false;
   }
 
   /// throws an exception if target is null
@@ -401,9 +411,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void setDestinationToCurrentPosition(){
-    runX = x;
-    runY = y;
-    runZ = z;
+    arrivedAtDestination = true;
+    // runX = x;
+    // runY = y;
+    // runZ = z;
   }
 
   void clearPath(){

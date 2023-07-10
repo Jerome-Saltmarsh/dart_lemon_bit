@@ -820,6 +820,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     runX = mouseSceneX;
     runY = mouseSceneY;
     runZ = mouseSceneZ;
+    arrivedAtDestination = false;
   }
 
   void writeSelectedCollider() {
@@ -937,6 +938,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       selectedCollider.runX = mouseSceneX;
       selectedCollider.runY = mouseSceneY;
       selectedCollider.runZ = mouseSceneZ;
+      selectedCollider.arrivedAtDestination = false;
       return;
     }
   }
