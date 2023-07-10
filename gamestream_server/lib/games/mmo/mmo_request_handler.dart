@@ -24,6 +24,12 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case MMORequest.End_Interaction:
         player.endInteraction();
         break;
+      case MMORequest.Select_Item:
+        final index = parseArg2(arguments);
+        if (index == null) return;
+        player.selectItem(index);
+        break;
+
     }
   }
 }

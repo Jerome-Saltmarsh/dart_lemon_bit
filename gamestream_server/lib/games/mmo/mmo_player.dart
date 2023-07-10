@@ -148,4 +148,26 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(MMOResponse.Player_Item_Length);
     writeUInt16(value);
   }
+
+  void selectItem(int index) {
+    if (!isValidItemIndex(index)) {
+      writeGameError(GameError.Invalid_Item_Index);
+      return;
+    }
+
+    final itemType = itemTypes[index];
+
+    if (itemType == GameObjectType.Nothing)
+      return;
+
+    final subType = itemSubTypes[index];
+
+    switch (itemType){
+      case GameObjectType.Weapon:
+        weaponType = subType;
+        break;
+    }
+  }
+
+  bool isValidItemIndex(int index) => index >= 0 && index < itemLength;
 }

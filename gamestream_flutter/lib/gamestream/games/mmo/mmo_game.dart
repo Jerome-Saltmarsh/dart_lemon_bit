@@ -31,6 +31,9 @@ class MmoGame extends IsometricGame {
   @override
   Widget customBuildUI(BuildContext context) => buildMMOUI();
 
+  void selectItem(int index) =>
+      sendMMORequest(MMORequest.Select_Item, index);
+
   void endInteraction() =>
       sendMMORequest(MMORequest.End_Interaction);
 

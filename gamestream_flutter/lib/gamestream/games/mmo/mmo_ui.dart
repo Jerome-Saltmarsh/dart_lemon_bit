@@ -48,8 +48,11 @@ extension MMOUI on MmoGame {
           (int reads) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(itemLength, (index) => buildText(
-              '${GameObjectType.getName(itemTypes[index])} ${GameObjectType.getNameSubType(itemTypes[index], itemSubTypes[index])}'
+            children: List.generate(itemLength, (index) => onPressed(
+              action: () => selectItem(index),
+              child: buildText(
+                '${GameObjectType.getName(itemTypes[index])} ${GameObjectType.getNameSubType(itemTypes[index], itemSubTypes[index])}'
+              ),
             )),
           ),
         ),
