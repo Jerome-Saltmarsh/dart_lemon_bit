@@ -23,10 +23,11 @@ class RendererGameObjects extends IsometricRenderer {
   @override
   void renderFunction() {
 
+    final image = Atlas.getImage(gameObject.type);
     final src = Atlas.getSrc(gameObject.type, gameObject.subType);
 
     engine.renderSprite(
-      image: Images.atlas_gameobjects,
+      image: image,
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: src[Atlas.SrcX],

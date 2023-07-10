@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:gamestream_flutter/common.dart';
+import 'package:gamestream_flutter/images.dart';
 
 import 'atlas_src_objects.dart';
 
@@ -14,7 +17,11 @@ class Atlas {
 
   static const Collection_Nothing = <int, List<double>>{};
 
-  static const Collection_Weapons = <int, List<double>>{};
+  static const Collection_Weapons = <int, List<double>>{
+    WeaponType.Handgun : AtlasSrcWeapons.Handgun,
+    WeaponType.Shotgun : AtlasSrcWeapons.Shotgun,
+    WeaponType.Sniper_Rifle : AtlasSrcWeapons.Sniper_Rifle,
+  };
 
   static const Collection_Legs = <int, List<double>>{};
 
@@ -48,4 +55,12 @@ class Atlas {
       (throw Exception(
           'Atlas.getSrc(type: ${GameObjectType.getName(type)}, subType: ${GameObjectType.getNameSubType(type, subType)})'
       ));
+
+  static Image getImage(int type) =>
+      switch (type) {
+          GameObjectType.Weapon => Images.atlas_weapons,
+          GameObjectType.Object => Images.atlas_gameobjects,
+          _ => (throw Exception('Atlas.getImage(type: ${GameObjectType.getName(type)}})'))
+      }
+;
 }

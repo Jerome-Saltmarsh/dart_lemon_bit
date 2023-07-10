@@ -72,7 +72,16 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
-    if (target is IsometricZombie){
+    if (target is IsometricZombie) {
+       spawnGameObject(
+           x: target.x,
+           y: target.y,
+           z: target.z,
+           type: GameObjectType.Weapon,
+           subType: WeaponType.Handgun,
+           team: TeamType.Neutral,
+       );
+
        addJob(seconds: 30, action: () {
          setCharacterStateSpawning(target);
        });
