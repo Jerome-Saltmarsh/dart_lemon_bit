@@ -1,4 +1,3 @@
-import 'binary_hex.dart';
 
 bool readBitFromByte(int byte, int index) {
   assert(index >= 0);

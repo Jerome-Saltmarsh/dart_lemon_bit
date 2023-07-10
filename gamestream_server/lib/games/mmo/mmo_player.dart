@@ -22,8 +22,7 @@ class MmoPlayer extends IsometricPlayer {
   late Uint8List itemSubTypes;
 
   MmoPlayer({required super.game, required int itemLength}) {
-    weaponType = WeaponType.Unarmed;
-    weaponRange = 40;
+    setWeaponType(WeaponType.Unarmed);
     setItemLength(itemLength);
 
     setItem(
@@ -160,14 +159,50 @@ class MmoPlayer extends IsometricPlayer {
     if (itemType == GameObjectType.Nothing)
       return;
 
-    final subType = itemSubTypes[index];
+    equipItem(itemType, itemSubTypes[index]);
+  }
 
-    switch (itemType){
+  void equipItem(int type, int subType){
+    switch (type){
       case GameObjectType.Weapon:
-        weaponType = subType;
+        setWeaponType(subType);
         break;
     }
   }
+
+  void setWeaponType(int weaponType){
+    this.weaponType = weaponType;
+    weaponDamage = getWeaponDamage(weaponType);
+    weaponRange = getWeaponRange(weaponType);
+    weaponCooldown = getWeaponCooldown(weaponType);
+  }
+
+  int getWeaponDamage(int weaponType) => const {
+        WeaponType.Unarmed: 1,
+        WeaponType.Shotgun: 2,
+        WeaponType.Machine_Gun: 2,
+        WeaponType.Sniper_Rifle: 2,
+        WeaponType.Handgun: 2,
+        WeaponType.Smg: 2,
+     }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
+
+  double getWeaponRange(int weaponType) => const <int, double> {
+        WeaponType.Unarmed: 50,
+        WeaponType.Shotgun: 200,
+        WeaponType.Machine_Gun: 250,
+        WeaponType.Sniper_Rifle: 300,
+        WeaponType.Handgun: 200,
+        WeaponType.Smg: 180,
+     }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
+
+  int getWeaponCooldown(int weaponType) => {
+        WeaponType.Unarmed: 14,
+        WeaponType.Shotgun: 25,
+        WeaponType.Machine_Gun: 5,
+        WeaponType.Sniper_Rifle: 35,
+        WeaponType.Handgun: 15,
+        WeaponType.Smg: 10,
+     }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
 
   bool isValidItemIndex(int index) => index >= 0 && index < itemLength;
 }
