@@ -73,16 +73,7 @@ class WebSocketConnection with ByteReader {
       if (args.isEmpty) return;
       index = 0;
       values = args;
-      switch (readByte()) {
-        case ClientRequest.Update:
-          handleClientRequestUpdate(args, debug: false);
-          return;
-        case ClientRequest.Debugging:
-          handleClientRequestUpdate(args, debug: true);
-          return;
-        default:
-          break;
-      }
+      handleClientRequestUpdate(args, debug: false);
     }
     if (args is String) {
       return onDataStringArray(args.split(" "));
@@ -659,13 +650,6 @@ class WebSocketConnection with ByteReader {
     } else if (changeScreenBottom == ChangeType.Big){
       player.screenBottom = readInt16().toDouble();
     }
-
-    // player.mouseX = readInt16().toDouble();
-    // player.mouseY = readInt16().toDouble();
-    // player.screenLeft = readInt16().toDouble();
-    // player.screenTop = readInt16().toDouble();
-    // player.screenRight = readInt16().toDouble();
-    // player.screenBottom = readInt16().toDouble();
 
     if (debug) return;
     player.game.onPlayerUpdateRequestReceived(

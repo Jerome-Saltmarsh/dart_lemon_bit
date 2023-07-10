@@ -87,15 +87,8 @@ class Isometric {
     player.updateMessageTimer();
     readPlayerInputEdit();
 
-    if (debug.enabled.value) {
-      gamestream.io.writeByte(ClientRequest.Debugging);
-      gamestream.io.applyKeyboardInputToUpdateBuffer();
-      gamestream.io.sendUpdateBuffer();
-    } else {
-      gamestream.io.writeByte(ClientRequest.Update);
-      gamestream.io.applyKeyboardInputToUpdateBuffer();
-      gamestream.io.sendUpdateBuffer();
-    }
+    gamestream.io.applyKeyboardInputToUpdateBuffer();
+    gamestream.io.sendUpdateBuffer();
   }
 
   void readPlayerInputEdit() {
