@@ -9,6 +9,7 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] fix clear destination on attack
 [ ] player cast ability
 [ ] implement isometric ability
 [ ] merge interact logic into isometric collider

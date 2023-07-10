@@ -2664,6 +2664,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         target is IsometricCollider &&
         !character.isAlly(target) &&
         character.targetWithinAttackRange &&
+        (target is! IsometricGameObject || target.physical) &&
         characterTargetIsPerceptible(character);
   }
 

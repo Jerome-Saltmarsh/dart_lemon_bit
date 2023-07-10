@@ -86,6 +86,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
           ..fixed = true
           ..collectable = true
           ..persistable = false
+          ..hitable = false
           ..physical = false
        ;
 
