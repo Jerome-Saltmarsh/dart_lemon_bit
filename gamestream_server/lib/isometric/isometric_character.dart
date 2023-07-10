@@ -107,6 +107,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   set weaponState(int value){
     if (_weaponState == value)
       return;
+    if (value == WeaponState.Melee){
+      // add property clear target on target
+      clearTarget();
+    }
     _weaponState = value;
     weaponStateDuration = 0;
     weaponStateDurationTotal = getWeaponStateDurationTotal(value);

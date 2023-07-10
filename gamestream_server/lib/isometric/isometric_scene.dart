@@ -388,7 +388,10 @@ class IsometricScene {
     return IsometricDirection.West;
   }
 
-  bool isPerceptible(IsometricPosition a, IsometricPosition b) {
+  bool isPerceptible(IsometricPosition a, IsometricPosition b, {double maxRadius = 500}) {
+
+    if (!a.withinRadiusPosition(b, maxRadius))
+      return false;
 
     if (outOfBoundsPosition(a))
       return false;

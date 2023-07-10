@@ -64,7 +64,7 @@ extension MMOUI on MmoGame {
   buildPlayerAimTarget() {
     final name = Container(
       alignment: Alignment.center,
-      width: 100,
+      width: 120,
       child: GSWindow(
           child: buildWatch(player.playerAimTargetName, buildText)),
     );
