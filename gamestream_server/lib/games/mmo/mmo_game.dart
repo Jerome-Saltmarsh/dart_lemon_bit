@@ -30,7 +30,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       interact: (player) {
         player.talk("Hello there");
       }
-    )..setDestinationToCurrentPosition());
+    ));
 
     npcGuard = MMONpc(
       characterType: CharacterType.Template,
@@ -43,7 +43,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponDamage: 1,
       weaponCooldown: 5,
       team: MmoTeam.Human,
-    )..setDestinationToCurrentPosition();
+    );
 
     characters.add(npcGuard);
 
@@ -66,8 +66,17 @@ class MmoGame extends IsometricGame<MmoPlayer> {
             z: 24,
             health: 5,
             weaponDamage: 1,
-        )..target = npcGuard
+        )
     );
+  }
+
+  @override
+  void customOnCharacterKilled(IsometricCharacter target, src) {
+    if (target is IsometricZombie){
+       addJob(seconds: 30, action: () {
+         setCharacterStateSpawning(target);
+       });
+    }
   }
 
   @override

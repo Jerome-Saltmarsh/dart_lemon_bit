@@ -285,7 +285,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.runToDestinationEnabled = false;
     }
 
-    if (mouseLeftDown) {
+    if (mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
       final aimTarget = player.aimTarget;
       if (aimTarget == null){
         player.setDestinationToMouse();
@@ -1593,6 +1593,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player.angle -= piQuarter;
       }
     }
+  }
+
+  void setCharacterStateSpawning(IsometricCharacter character) {
+    character.active = true;
+    character.x = character.startX;
+    character.y = character.startY;
+    character.z = character.startZ;
+    character.setCharacterStateSpawning();
   }
 
   void setCharacterStateRunning(IsometricCharacter character) {
