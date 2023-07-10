@@ -25,6 +25,7 @@ alt + m             : go to declaration
 [ ] character gold
 
 10.07.2023
+[x] fixed cursor crosshair
 [x] optimize upload
 
 07.07.2023
