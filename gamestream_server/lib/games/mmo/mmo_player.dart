@@ -51,6 +51,27 @@ class MmoPlayer extends IsometricPlayer {
     writeItemLength(value);
   }
 
+  bool addGameObject(IsometricGameObject gameObject) =>
+      addItem(type: gameObject.type, subType: gameObject.subType);
+
+  bool addItem({required int type, required int subType}){
+    final emptyIndex = getEmptyItemIndex();
+    if (emptyIndex == -1){
+      writeGameError(GameError.Inventory_Full);
+      return false;
+    }
+    setItem(index: emptyIndex, type: type, subType: subType);
+    return true;
+  }
+
+  int getEmptyItemIndex(){
+    for (var i = 0; i < itemLength; i++){
+      if (itemTypes[i] == GameObjectType.Nothing)
+        return i;
+    }
+    return -1;
+  }
+
   void setItem({required int index, required int type, required int subType}){
     if (index < 0) throw Exception('invalid index $index');
     if (index >= itemLength) throw Exception('invalid index $index');

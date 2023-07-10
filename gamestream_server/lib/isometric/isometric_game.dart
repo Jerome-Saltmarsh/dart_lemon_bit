@@ -924,13 +924,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     for (final character in characters) {
-      if (character.target != collider) continue;
-      clearCharacterTarget(character);
+      if (character.target == collider)
+        clearCharacterTarget(character);
     }
 
     for (final projectile in projectiles) {
-      if (projectile.target != collider) continue;
-      projectile.target = null;
+      if (projectile.target == collider) continue;
+        projectile.target = null;
     }
 
     customOnColliderDeactivated(collider);
@@ -1531,6 +1531,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void removeInstance(dynamic instance) {
     if (instance == null) return;
 
+    for (final character in characters){
+      if (character.target == instance){
+        character.clearTarget();
+      }
+    }
+
     if (instance is IsometricPlayer) {
       instance.aimTarget = null;
       instance.target = null;
@@ -1542,7 +1548,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
     if (instance is IsometricGameObject) {
+      instance.active = false;
       gameObjects.remove(instance);
+
       for (final player in players) {
         player.writeUInt8(ServerResponse.GameObject_Deleted);
         player.writeUInt16(instance.id);
