@@ -354,9 +354,6 @@ class IsometricRender {
         scale: 0.4,
       );
 
-
-
-
   void renderForeground(Canvas canvas, Size size) {
 
     if (gamestream.io.inputModeKeyboard){

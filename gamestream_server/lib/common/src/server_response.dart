@@ -5,7 +5,7 @@ class ServerResponse {
   static const Player_Event               = 03;
   static const Game_Time                  = 04;
   static const Game_Type                  = 05;
-  static const End                        = 06;
+  // static const End                        = 06;
   static const Player_Target              = 07;
   static const Node                       = 09;
   static const Store_Items                = 10;
@@ -39,7 +39,7 @@ class ServerResponse {
       Player_Event: "Player_Event",
       Game_Time: "Game_Time",
       Game_Type: "Game_Type",
-      End: "End",
+      // End: "End",
       Player_Target: "Player_Target",
       Node: "Node",
       Store_Items: "Store_Items",

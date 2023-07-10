@@ -25,6 +25,7 @@ alt + m             : go to declaration
 [ ] character gold
 
 10.07.2023
+[x] remove server response end
 [x] fixed cursor crosshair
 [x] optimize upload
 

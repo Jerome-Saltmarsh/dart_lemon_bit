@@ -31,8 +31,9 @@ extension ServerResponseReader on Gamestream {
     var serverResponseStart = -1;
     var serverResponse = -1;
     serverResponseStackIndex = -1;
+    final length = values.length - 1;
 
-    while (true) {
+    while (index < length) {
 
       if (serverResponse != -1) {
         serverResponseStackIndex++;
@@ -59,11 +60,8 @@ extension ServerResponseReader on Gamestream {
         case ServerResponse.GameObject:
           readGameObject();
           break;
-        case ServerResponse.End:
-          serverResponseStackIndex++;
-          serverResponseStack[serverResponseStackIndex] = serverResponse;
-          serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
-          return readEnd();
+        // case ServerResponse.End:
+        //   break;
         case ServerResponse.Projectiles:
           readProjectiles();
           break;
@@ -151,6 +149,11 @@ extension ServerResponseReader on Gamestream {
       }
       previousServerResponse = serverResponse;
     }
+
+    serverResponseStackIndex++;
+    serverResponseStack[serverResponseStackIndex] = serverResponse;
+    serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
+    return readEnd();
   }
 
   void readServerResponseFight2D(GameFight2D game) {
