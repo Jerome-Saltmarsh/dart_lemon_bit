@@ -270,6 +270,15 @@ class GameIO with ByteWriter {
     updateSize.value = bytes.length;
     gamestream.network.send(bytes);
   }
+
+  void reset() {
+    previousMouseX = 0;
+    previousMouseY = 0;
+    previousScreenLeft = 0;
+    previousScreenTop = 0;
+    previousScreenRight = 0;
+    previousScreenBottom = 0;
+  }
 }
 
 class TouchController {

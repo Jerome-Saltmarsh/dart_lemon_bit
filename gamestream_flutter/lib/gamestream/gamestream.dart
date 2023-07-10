@@ -126,6 +126,7 @@ class Gamestream with ByteReader {
 
    void onChangedGameType(GameType value) {
      print('onChangedGameType(${value.name})');
+     io.reset();
      startGameByType(value);
    }
 

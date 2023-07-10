@@ -12,7 +12,6 @@ alt + m             : go to declaration
 [ ] player cast ability
 [ ] implement isometric ability
 [ ] merge interact logic into isometric collider
-[ ] optimize upload
 [ ] refactor lemon engine
 [ ] remove lemon engine global instance
 [ ] remove gamestream global instance
@@ -24,6 +23,9 @@ alt + m             : go to declaration
 [ ] character selection
 [ ] character abilities
 [ ] character gold
+
+10.07.2023
+[x] optimize upload
 
 07.07.2023
 [x] fix gameobjects invisible
