@@ -412,9 +412,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void setDestinationToCurrentPosition(){
     arrivedAtDestination = true;
-    // runX = x;
-    // runY = y;
-    // runZ = z;
   }
 
   void clearPath(){

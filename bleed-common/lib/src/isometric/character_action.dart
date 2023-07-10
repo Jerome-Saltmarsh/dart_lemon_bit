@@ -7,6 +7,7 @@ class CharacterAction {
   static const Run_To_Destination = 3;
   static const Run_To_Target = 4;
   static const Interact_Target = 5;
+  static const Collect_Target = 6;
 
   static String getName(int value) => {
       Idle: "Idle",
@@ -15,5 +16,6 @@ class CharacterAction {
       Run_To_Destination: "Run To Destination",
       Run_To_Target: "Run To Target",
       Interact_Target: "Interact Target",
+      Collect_Target: "Collect Target"
     }[value] ?? 'unknown-charcter-action-$value';
 }

@@ -106,4 +106,11 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   int get maxPlayers => 64;
+
+  @override
+  void characterCollectGameObject(IsometricCharacter character, IsometricGameObject gameObject) {
+    if (character is! MmoPlayer) return;
+    character.setItem(index: 4, type: gameObject.type, subType: gameObject.subType);
+    super.characterCollectGameObject(character, gameObject);
+  }
 }
