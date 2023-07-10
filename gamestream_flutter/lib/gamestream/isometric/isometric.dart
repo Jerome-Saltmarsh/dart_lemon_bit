@@ -69,7 +69,8 @@ class Isometric {
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
-  
+
+
   void update(){
     if (!server.gameRunning.value) {
       gamestream.io.writeByte(ClientRequest.Update);

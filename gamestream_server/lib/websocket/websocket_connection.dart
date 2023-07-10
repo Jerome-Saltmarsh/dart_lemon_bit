@@ -602,25 +602,70 @@ class WebSocketConnection with ByteReader {
 
     if (player == null) return errorPlayerNotFound();
 
-    final hex = readByte();
+    player.framesSinceClientRequest = 0;
 
+    final hex = readByte();
     final direction         = hex & 0xf;
     final mouseDownLeft     = hex & ByteHex.Hex_16 > 0;
     final mouseDownRight    = hex & ByteHex.Hex_32 > 0;
     final inputTypeDesktop  = hex & ByteHex.Hex_64 > 0;
     final keyDownSpace      = hex & ByteHex.Hex_128 > 0;
-
-    player.framesSinceClientRequest = 0;
-
-    player.mouseX = readInt16().toDouble();
-    player.mouseY = readInt16().toDouble();
-    player.screenLeft = readInt16().toDouble();
-    player.screenTop = readInt16().toDouble();
-    player.screenRight = readInt16().toDouble();
-    player.screenBottom = readInt16().toDouble();
-
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
     player.mouseLeftDown = mouseDownLeft;
+
+
+    final compress1 = readByte();
+    final compress2 = readByte();
+
+    final changeMouseWorldX = compress1 & Hex00000011;
+    final changeMouseWorldY = (compress1 & Hex00001100) >> 2;
+    final changeScreenLeft = compress2 & Hex00000011;
+    final changeScreenTop = (compress2 & Hex00001100) >> 2;
+    final changeScreenRight = (compress2 & Hex00110000) >> 4;
+    final changeScreenBottom = (compress2 & Hex11000000) >> 6;
+
+    if (changeMouseWorldX == ChangeType.Small){
+      player.mouseX += readInt8();
+    } else if (changeMouseWorldX == ChangeType.Big){
+      player.mouseX = readInt16().toDouble();
+    }
+
+    if (changeMouseWorldY == ChangeType.Small){
+      player.mouseY += readInt8();
+    } else if (changeMouseWorldY == ChangeType.Big){
+      player.mouseY = readInt16().toDouble();
+    }
+
+    if (changeScreenLeft == ChangeType.Small){
+      player.screenLeft += readInt8();
+    } else if (changeScreenLeft == ChangeType.Big){
+      player.screenLeft = readInt16().toDouble();
+    }
+
+    if (changeScreenTop == ChangeType.Small){
+      player.screenTop += readInt8();
+    } else if (changeScreenTop == ChangeType.Big){
+      player.screenTop = readInt16().toDouble();
+    }
+
+    if (changeScreenRight == ChangeType.Small){
+      player.screenRight += readInt8();
+    } else if (changeScreenRight == ChangeType.Big){
+      player.screenRight = readInt16().toDouble();
+    }
+
+    if (changeScreenBottom == ChangeType.Small){
+      player.screenBottom += readInt8();
+    } else if (changeScreenBottom == ChangeType.Big){
+      player.screenBottom = readInt16().toDouble();
+    }
+
+    // player.mouseX = readInt16().toDouble();
+    // player.mouseY = readInt16().toDouble();
+    // player.screenLeft = readInt16().toDouble();
+    // player.screenTop = readInt16().toDouble();
+    // player.screenRight = readInt16().toDouble();
+    // player.screenBottom = readInt16().toDouble();
 
     if (debug) return;
     player.game.onPlayerUpdateRequestReceived(

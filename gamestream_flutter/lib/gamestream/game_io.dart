@@ -10,6 +10,13 @@ import 'isometric/isometric.dart';
 
 class GameIO with ByteWriter {
 
+  var previousMouseX = 0;
+  var previousMouseY = 0;
+  var previousScreenLeft = 0;
+  var previousScreenRight = 0;
+  var previousScreenTop = 0;
+  var previousScreenBottom = 0;
+
   var joystickLeftX = 0.0;
   var joystickLeftY = 0.0;
   var joystickLeftDown = false;
@@ -30,6 +37,7 @@ class GameIO with ByteWriter {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
+  final updateSize = Watch(0);
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
   final touchController = TouchController();
@@ -170,16 +178,98 @@ class GameIO with ByteWriter {
   /// [6] Shift
   /// [7] Space
   void applyKeyboardInputToUpdateBuffer() {
+
+    final mouseX = engine.mouseWorldX.toInt();
+    final mouseY = engine.mouseWorldY.toInt();
+    final screenLeft = engine.Screen_Left.toInt();
+    final screenTop = engine.Screen_Top.toInt();
+    final screenRight = engine.Screen_Right.toInt();
+    final screenBottom = engine.Screen_Bottom.toInt();
+
+    final diffMouseWorldX = mouseX - previousMouseX;
+    final diffMouseWorldY = mouseY - previousMouseY;
+    final diffScreenLeft = screenLeft - previousScreenLeft;
+    final diffScreenTop = screenTop - previousScreenTop;
+    final diffScreenRight = screenRight - previousScreenRight;
+    final diffScreenBottom = screenBottom - previousScreenBottom;
+
+
+    previousMouseX = mouseX;
+    previousMouseY = mouseY;
+    previousScreenLeft = screenLeft;
+    previousScreenTop = screenTop;
+    previousScreenRight = screenRight;
+    previousScreenBottom = screenBottom;
+
+
+    final changeMouseWorldX = ChangeType.fromDiff(diffMouseWorldX);
+    final changeMouseWorldY = ChangeType.fromDiff(diffMouseWorldY);
+    final changeScreenLeft = ChangeType.fromDiff(diffScreenLeft);
+    final changeScreenTop = ChangeType.fromDiff(diffScreenTop);
+    final changeScreenRight = ChangeType.fromDiff(diffScreenRight);
+    final changeScreenBottom = ChangeType.fromDiff(diffScreenBottom);
+
+    final compress1 = changeMouseWorldX
+      | changeMouseWorldY << 2;
+
+    final compress2 = changeScreenLeft
+      | changeScreenTop << 2
+      | changeScreenRight << 4
+      | changeScreenBottom << 6;
+
     writeByte(gamestream.io.getInputAsByte());
-    writeInt16(engine.mouseWorldX.toInt());
-    writeInt16(engine.mouseWorldY.toInt());
-    writeInt16(engine.Screen_Left.toInt());
-    writeInt16(engine.Screen_Top.toInt());
-    writeInt16(engine.Screen_Right.toInt());
-    writeInt16(engine.Screen_Bottom.toInt());
+    writeByte(compress1);
+    writeByte(compress2);
+
+    if (changeMouseWorldX == ChangeType.Small){
+      writeInt8(diffMouseWorldX);
+    } else if (changeMouseWorldX == ChangeType.Big){
+      writeInt16(mouseX);
+    }
+
+    if (changeMouseWorldY == ChangeType.Small){
+      writeInt8(diffMouseWorldY);
+    } else if (changeMouseWorldY == ChangeType.Big){
+      writeInt16(mouseY);
+    }
+
+    if (changeScreenLeft == ChangeType.Small){
+      writeInt8(diffScreenLeft);
+    } else if (changeScreenLeft == ChangeType.Big){
+      writeInt16(screenLeft);
+    }
+
+    if (changeScreenTop == ChangeType.Small){
+      writeInt8(diffScreenTop);
+    } else if (changeScreenTop == ChangeType.Big){
+      writeInt16(screenTop);
+    }
+
+    if (changeScreenRight == ChangeType.Small){
+      writeInt8(diffScreenRight);
+    } else if (changeScreenRight == ChangeType.Big){
+      writeInt16(screenRight);
+    }
+
+    if (changeScreenBottom == ChangeType.Small){
+      writeInt8(diffScreenBottom);
+    } else if (changeScreenBottom == ChangeType.Big){
+      writeInt16(screenBottom);
+    }
+
+    // writeInt16(engine.mouseWorldX.toInt());
+    // writeInt16(engine.mouseWorldY.toInt());
+    // writeInt16(engine.Screen_Left.toInt());
+    // writeInt16(engine.Screen_Top.toInt());
+    // writeInt16(engine.Screen_Right.toInt());
+    // writeInt16(engine.Screen_Bottom.toInt());
   }
 
-  void sendUpdateBuffer() => gamestream.network.send(compile());
+  void sendUpdateBuffer() {
+    final bytes = compile();
+    updateSize.value = bytes.length;
+    gamestream.network.send(bytes);
+  }
 }
 
 class TouchController {

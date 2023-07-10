@@ -5,11 +5,10 @@ class ChangeType {
   static const Small = 1;
   static const Big = 2;
 
-  static int fromDiff(int diff){
-    if (diff == 0)
-      return None;
-    if (diff.abs() < 126)
-      return Small;
-    return Big;
-  }
+  static int fromDiff(num diff) =>
+      diff == 0
+          ? None
+            : diff.abs() < 128
+              ? Small
+                : Big;
 }

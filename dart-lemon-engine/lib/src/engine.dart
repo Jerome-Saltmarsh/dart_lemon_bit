@@ -368,7 +368,6 @@ class Engine extends StatelessWidget {
   void redrawCanvas() {
     final now = DateTime.now();
     final duration = now.difference(lastRenderTime);
-    if (duration.inMilliseconds < 10) return;
     lastRenderTime = now;
     notifierPaintFrame.value++;
     msRender.value = duration.inMilliseconds;
