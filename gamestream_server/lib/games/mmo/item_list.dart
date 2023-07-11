@@ -1,8 +1,6 @@
 
 import 'dart:typed_data';
 
-import 'package:gamestream_server/common/src/isometric/gameobject_type.dart';
-
 class ItemList {
   final int length;
   late final Uint8List types;
@@ -23,7 +21,7 @@ class ItemList {
 
   int getEmptyIndex(){
     for (var i = 0; i < length; i++){
-      if (types[i] == GameObjectType.Nothing)
+      if (types[i] == 0)
         return i;
     }
     return -1;

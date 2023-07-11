@@ -11,6 +11,7 @@ import 'inventory_type.dart';
 
 extension SurvivalGameUI on SurvivalGame {
 
+  static const Nothing = 0;
   static final atlasIconSlotEmpty = GameIsometricUI.buildAtlasIconType(IconType.Slot, scale: Slot_Scale);
   static const Slot_Size = 32.0;
   static const Slot_Scale = 1.5;
@@ -36,7 +37,7 @@ extension SurvivalGameUI on SurvivalGame {
                 top: 5,
                 child: buildText(mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
               ),
-              if (beltItemType != GameObjectType.Nothing)
+              if (beltItemType != Nothing)
                 Container(
                   width: 64,
                   height: 64,
@@ -47,7 +48,7 @@ extension SurvivalGameUI on SurvivalGame {
                   ),
                 ),
 
-              if (beltItemType != GameObjectType.Nothing)
+              if (beltItemType != Nothing)
                 Positioned(
                     right: 5,
                     bottom: 5,
@@ -203,7 +204,7 @@ extension SurvivalGameUI on SurvivalGame {
       buildWatch(inventoryReads, (int reads){
         final positioned = <Widget>[];
         for (var i = 0; i < gamestream.isometric.server.inventory.length; i++){
-          if (gamestream.isometric.server.inventory[i] == GameObjectType.Nothing) continue;
+          if (gamestream.isometric.server.inventory[i] == Nothing) continue;
           positioned.add(
               buildPositionInventoryItem(i)
           );
@@ -366,13 +367,13 @@ extension SurvivalGameUI on SurvivalGame {
 
 
   Widget buildContainerEquippedBody() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.body, GameObjectType.Nothing);
+      buildWatchEquippedItemType(gamestream.isometric.player.body, Nothing);
 
   Widget buildContainerEquippedHead() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.head, GameObjectType.Nothing);
+      buildWatchEquippedItemType(gamestream.isometric.player.head, Nothing);
 
   Widget buildContainerEquippedLegs() =>
-      buildWatchEquippedItemType(gamestream.isometric.player.legs, GameObjectType.Nothing);
+      buildWatchEquippedItemType(gamestream.isometric.player.legs, Nothing);
 
 
   Widget buildIconSlotEmpty() =>

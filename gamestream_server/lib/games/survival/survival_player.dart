@@ -23,12 +23,12 @@ class SurvivalPlayer extends IsometricPlayer {
   var npcOptions = <String, Function> {};
 
   var storeItems = <int>[];
-  var belt1_itemType = ObjectType.Nothing; // 1
-  var belt2_itemType = ObjectType.Nothing; // 2
-  var belt3_itemType = ObjectType.Nothing; // 3
-  var belt4_itemType = ObjectType.Nothing; // 4
-  var belt5_itemType = ObjectType.Nothing; // Q
-  var belt6_itemType = ObjectType.Nothing; // E
+  var belt1_itemType = 0; // 1
+  var belt2_itemType = 0; // 2
+  var belt3_itemType = 0; // 3
+  var belt4_itemType = 0; // 4
+  var belt5_itemType = 0; // Q
+  var belt6_itemType = 0; // E
 
   var belt1_quantity = 0; // 1
   var belt2_quantity = 0; // 2
@@ -468,7 +468,7 @@ class SurvivalPlayer extends IsometricPlayer {
   }
 
   void inventorySetEmptyAtIndex(int index) =>
-      inventorySet(index: index, itemType: GameObjectType.Nothing, itemQuantity: 0)
+      inventorySet(index: index, itemType: 0, itemQuantity: 0)
   ;
 
   void inventorySwapIndexes(int indexA, int indexB) {
@@ -739,7 +739,7 @@ class SurvivalPlayer extends IsometricPlayer {
 
   int? getEmptyInventoryIndex(){
     for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] != GameObjectType.Nothing) continue;
+      if (inventory[i] != 0) continue;
       return i;
     }
     return null;

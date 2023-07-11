@@ -13,6 +13,9 @@ class Images {
    static late Image character_dog;
    static late Image atlas_particles;
    static late Image template_shadow;
+   static late Image atlas_head;
+   static late Image atlas_body;
+   static late Image atlas_legs;
    static late Image atlas_gameobjects;
    static late Image atlas_gameobjects_transparent;
    static late Image atlas_nodes;
@@ -83,7 +86,7 @@ class Images {
          HeadType.Rogue_Hood => template_head_rogue,
          HeadType.Steel_Helm => template_head_steel,
          HeadType.Wizards_Hat => template_head_wizard,
-         HeadType.Head_Blonde => template_head_blonde,
+         HeadType.Blonde => template_head_blonde,
          HeadType.Swat => template_head_swat,
          _ => throw Exception('GameImages.getImageForHeadType($headType)')
       };
@@ -154,6 +157,9 @@ class Images {
       Engine.loadImageAsset('images/atlas-weapons.png').then((value) => atlas_weapons = value);
       Engine.loadImageAsset('images/atlas-icons.png').then((value) => atlas_icons = value);
       Engine.loadImageAsset('images/atlas-items.png').then((value) => atlas_items = value);
+      Engine.loadImageAsset('images/atlas_head.png').then((value) => atlas_head = value);
+      Engine.loadImageAsset('images/atlas_body.png').then((value) => atlas_body = value);
+      Engine.loadImageAsset('images/atlas_legs.png').then((value) => atlas_legs = value);
       Engine.loadImageAsset('images/character-dog.png').then((value) => character_dog = value);
       Engine.loadImageAsset('images/template/template-shadow.png').then((value) => template_shadow = value);
       Engine.loadImageAsset('images/template/head/template-head-plain.png').then((value) => template_head_plain = value);

@@ -2,7 +2,6 @@
 import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_objects.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';

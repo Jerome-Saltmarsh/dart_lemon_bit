@@ -63,14 +63,6 @@ class IsometricGameObject extends IsometricPosition {
       case ObjectType.Grenade:
         colorType = EmissionType.Ambient;
         break;
-      case ObjectType.Vending_Upgrades:
-        colorType = EmissionType.Color;
-        emissionHue = 209;
-        emissionSat = 66;
-        emissionVal = 90;
-        emissionAlp = 150;
-        refreshEmissionColor();
-        break;
       case ObjectType.Credits:
         colorType = EmissionType.Ambient;
         refreshEmissionColor();

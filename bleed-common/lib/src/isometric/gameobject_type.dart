@@ -5,7 +5,6 @@ import 'object_type.dart';
 import 'weapon_type.dart';
 
 class GameObjectType {
-  static const Nothing = 0;
   static const Weapon = 1;
   static const Legs = 2;
   static const Body = 3;
@@ -25,7 +24,6 @@ class GameObjectType {
   };
 
   static String getName(int value) => const {
-      Nothing: "Nothing",
       Weapon: "Weapon",
       Legs: "Legs",
       Body: "Body",
@@ -34,7 +32,6 @@ class GameObjectType {
     }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {
-      Nothing => 'Nothing',
       Head => HeadType.getName(subType),
       Body => BodyType.getName(subType),
       Legs => LegType.getName(subType),
@@ -44,7 +41,6 @@ class GameObjectType {
     };
 
   static const values = [
-    // Nothing,
     Weapon,
     Legs,
     Body,

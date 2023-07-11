@@ -72,7 +72,7 @@ extension MMOUI on MmoGame {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(itemLength, (index) => onPressed(
               action: () => selectItem(index),
-              child: buildText(
+              child: buildText(itemTypes[index] == 0 ? '-' :
                 '${GameObjectType.getName(itemTypes[index])} ${GameObjectType.getNameSubType(itemTypes[index], itemSubTypes[index])}'
               ),
             )),

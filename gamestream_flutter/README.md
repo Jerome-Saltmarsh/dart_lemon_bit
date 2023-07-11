@@ -9,6 +9,7 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] add missing atlas src
 [ ] fun loot engine
 [ ] player cast ability
 [ ] implement isometric ability

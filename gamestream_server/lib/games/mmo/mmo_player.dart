@@ -164,7 +164,7 @@ class MmoPlayer extends IsometricPlayer {
 
     final itemType = items.types[index];
 
-    if (itemType == GameObjectType.Nothing)
+    if (itemType == 0)
       return;
 
     equipItem(itemType, items.subTypes[index]);
