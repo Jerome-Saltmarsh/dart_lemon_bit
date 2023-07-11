@@ -1,10 +1,9 @@
 
-import 'dart:typed_data';
-
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/utils.dart';
 
+import 'item_list.dart';
 import 'mmo_npc.dart';
 
 class MmoPlayer extends IsometricPlayer {
@@ -12,14 +11,14 @@ class MmoPlayer extends IsometricPlayer {
   static const Destination_Radius_Interact = 80.0;
   static const Destination_Radius_Run = 50.0;
 
-  var destinationRadius = Destination_Radius_Run;
   var interacting = false;
 
   late final npcText = ChangeNotifier("", onChangedNpcText);
+  late final npcOptionText = <String>[];
+  late final npcOptionCallBacks = <Function>[];
 
-  late int itemLength;
-  late Uint8List itemTypes;
-  late Uint8List itemSubTypes;
+  late ItemList items;
+
 
   MmoPlayer({required super.game, required int itemLength}) {
     setWeaponType(WeaponType.Unarmed);
@@ -45,9 +44,7 @@ class MmoPlayer extends IsometricPlayer {
   bool get targetWithinInteractRadius => targetWithinRadius(Destination_Radius_Interact);
 
   void setItemLength(int value){
-    itemLength = value;
-    itemTypes = Uint8List(value);
-    itemSubTypes = Uint8List(value);
+    items = ItemList(value);
     writeItemLength(value);
   }
 
@@ -55,7 +52,7 @@ class MmoPlayer extends IsometricPlayer {
       addItem(type: gameObject.type, subType: gameObject.subType);
 
   bool addItem({required int type, required int subType}){
-    final emptyIndex = getEmptyItemIndex();
+    final emptyIndex = items.getEmptyIndex();
     if (emptyIndex == -1){
       writeGameError(GameError.Inventory_Full);
       return false;
@@ -64,19 +61,11 @@ class MmoPlayer extends IsometricPlayer {
     return true;
   }
 
-  int getEmptyItemIndex(){
-    for (var i = 0; i < itemLength; i++){
-      if (itemTypes[i] == GameObjectType.Nothing)
-        return i;
-    }
-    return -1;
-  }
-
   void setItem({required int index, required int type, required int subType}){
-    if (index < 0) throw Exception('invalid index $index');
-    if (index >= itemLength) throw Exception('invalid index $index');
-    itemTypes[index] = type;
-    itemSubTypes[index] = subType;
+    if (!items.isValidItemIndex(index))
+      throw Exception('invalid index $index');
+
+    items.set(index: index, type: type, subType: subType);
     writePlayerItem(index, type, subType);
   }
 
@@ -87,8 +76,6 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(type);
     writeByte(subType);
   }
-
-
 
   @override
   int getTargetCategory(IsometricPosition? value){
@@ -110,10 +97,6 @@ class MmoPlayer extends IsometricPlayer {
     }
     if (isEnemy(value)) return TargetCategory.Attack;
     return TargetCategory.Run;
-  }
-
-  void setDestinationRadiusToDestinationRadiusInteract() {
-    destinationRadius = Destination_Radius_Interact;
   }
 
   @override
@@ -173,17 +156,17 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void selectItem(int index) {
-    if (!isValidItemIndex(index)) {
+    if (!items.isValidItemIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
 
-    final itemType = itemTypes[index];
+    final itemType = items.types[index];
 
     if (itemType == GameObjectType.Nothing)
       return;
 
-    equipItem(itemType, itemSubTypes[index]);
+    equipItem(itemType, items.subTypes[index]);
   }
 
   void equipItem(int type, int subType){
@@ -228,5 +211,4 @@ class MmoPlayer extends IsometricPlayer {
         WeaponType.Smg: 10,
      }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
 
-  bool isValidItemIndex(int index) => index >= 0 && index < itemLength;
 }
