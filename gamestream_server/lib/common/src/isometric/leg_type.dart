@@ -20,7 +20,6 @@ class LegType {
   }
 
   static const values = [
-    Nothing,
     Red,
     Blue,
     White,

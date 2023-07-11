@@ -1,12 +1,8 @@
 import 'dart:ui';
 
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_head.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/src.dart';
 import 'package:gamestream_flutter/images.dart';
-
-import 'atlas_src_objects.dart';
-import 'atlas_src_weapons.dart';
-
 
 class Atlas {
 
@@ -25,9 +21,18 @@ class Atlas {
     WeaponType.Sniper_Rifle : AtlasSrcWeapons.Sniper_Rifle,
   };
 
-  static const Collection_Legs = <int, List<double>>{};
+  static const Collection_Legs = <int, List<double>>{
+    BodyType.Nothing: AtlasSrcBody.Plain,
+  };
 
-  static const Collection_Body = <int, List<double>>{};
+  static const Collection_Body = <int, List<double>>{
+    BodyType.Nothing: AtlasSrcBody.Plain,
+    BodyType.Shirt_Red: AtlasSrcBody.Shirt_Red,
+    BodyType.Shirt_Blue: AtlasSrcBody.Shirt_Blue,
+    BodyType.Shirt_Cyan: AtlasSrcBody.Shirt_Cyan,
+    BodyType.Swat: AtlasSrcBody.Swat,
+    BodyType.Tunic_Padded: AtlasSrcBody.Tunic,
+  };
 
   static const Collection_Head = <int, List<double>>{
     HeadType.Plain: AtlasSrcHead.Plain,
@@ -72,6 +77,8 @@ class Atlas {
     ObjectType.Neon_Sign_01: AtlasSrcObjects.Neon_Sign_01,
     ObjectType.Neon_Sign_02: AtlasSrcObjects.Neon_Sign_02,
     ObjectType.Flag_Spawn_Red: AtlasSrcObjects.Flag_Spawn_Red,
+    ObjectType.Flag_Spawn_Blue: AtlasSrcObjects.Flag_Spawn_Blue,
+    ObjectType.Grenade: AtlasSrcObjects.Grenade,
   };
 
   static const Collection = <Map<int, List<double>>>[

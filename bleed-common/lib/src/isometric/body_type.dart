@@ -18,7 +18,6 @@ class BodyType {
    }
 
    static const values = [
-      Nothing,
       Shirt_Red,
       Shirt_Blue,
       Shirt_Cyan,

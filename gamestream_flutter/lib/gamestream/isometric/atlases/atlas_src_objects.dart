@@ -296,4 +296,22 @@ class AtlasSrcObjects {
     0.5,  // scale
     0.5, // anchorY
   ];
+
+  static const Flag_Spawn_Blue = <double>[
+    368,  // x
+    401,    // y
+    128,   // width
+    128,   // height
+    0.5,  // scale
+    0.5, // anchorY
+  ];
+
+  static const Grenade = <double>[
+    53,  // x
+    148,    // y
+    7,   // width
+    9,   // height
+    1,  // scale
+    0.5, // anchorY
+  ];
 }

@@ -18,7 +18,6 @@ class HeadType {
    }
 
    static const values = [
-      Plain,
       Steel_Helm,
       Rogue_Hood,
       Wizards_Hat,
