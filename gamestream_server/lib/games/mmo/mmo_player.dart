@@ -2,6 +2,7 @@
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
+import 'package:gamestream_server/lemon_math.dart';
 
 import 'mmo_npc.dart';
 
@@ -9,13 +10,15 @@ class MmoPlayer extends IsometricPlayer {
 
   static const Interact_Radius = 80.0;
 
+  final MmoGame game;
+
   var interacting = false;
   var npcText = '';
   var npcOptions = <TalkOption>[];
 
   late ItemList items;
 
-  MmoPlayer({required super.game, required int itemLength}) {
+  MmoPlayer({required this.game, required int itemLength}) : super(game: game) {
     equipWeapon(WeaponType.Unarmed);
     setItemLength(itemLength);
 
@@ -24,16 +27,6 @@ class MmoPlayer extends IsometricPlayer {
         type: GameObjectType.Weapon,
         subType: WeaponType.Handgun,
     );
-    // setItem(
-    //     index: 1,
-    //     type: GameObjectType.Weapon,
-    //     subType: WeaponType.Shotgun,
-    // );
-    // setItem(
-    //     index: 2,
-    //     type: GameObjectType.Body,
-    //     subType: BodyType.Swat,
-    // );
   }
 
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
@@ -57,9 +50,6 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void setItem({required int index, required int type, required int subType}){
-    if (!items.isValidItemIndex(index))
-      throw Exception('invalid index $index');
-
     items.set(index: index, type: type, subType: subType);
     writePlayerItem(index, type, subType);
   }
@@ -156,6 +146,33 @@ class MmoPlayer extends IsometricPlayer {
     writeUInt16(value);
   }
 
+  void dropItem(int index){
+    if (!items.isValidItemIndex(index)) {
+      writeGameError(GameError.Invalid_Item_Index);
+      return;
+    }
+    final itemType = items.types[index];
+    final subType = items.subTypes[index];
+
+    if (itemType == 0)
+      return;
+
+    setItem(index: index, type: 0, subType: 0);
+
+    const spawnDistance = 40.0;
+    final spawnAngle = randomAngle();
+
+
+    game.spawnLoot(
+        x: x + adj(spawnAngle, spawnDistance),
+        y: y + opp(spawnAngle, spawnDistance),
+        z: z,
+        type: itemType,
+        subType: subType,
+    );
+
+  }
+
   void selectItem(int index) {
     if (!items.isValidItemIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
@@ -229,9 +246,11 @@ class MmoPlayer extends IsometricPlayer {
         WeaponType.Machine_Gun: 2,
         WeaponType.Sniper_Rifle: 5,
         WeaponType.Handgun: 2,
-        WeaponType.Smg: 2,
+        WeaponType.Smg: 1,
         WeaponType.Grenade: 10,
-     }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
+        WeaponType.Staff: 1,
+     // }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
+     }[weaponType] ?? 1;
 
   double getWeaponRange(int weaponType) => const <int, double> {
         WeaponType.Unarmed: 50,

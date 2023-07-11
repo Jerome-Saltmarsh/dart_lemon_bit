@@ -36,6 +36,9 @@ class MmoGame extends IsometricGame {
   void selectItem(int index) =>
       sendMMORequest(MMORequest.Select_Item, index);
 
+  void dropItem(int index) =>
+      sendMMORequest(MMORequest.Drop_Item, index);
+
   void selectTalkOption(int index) =>
       sendMMORequest(MMORequest.Select_Talk_Option, index);
 

@@ -47,9 +47,9 @@ class AtlasSrcHead {
   static const Wizards_Hat = <double>[
     165,  // x
     4,    // y
-    165,   // width
-    23,   // height
-    22,  // scale
+    23,   // width
+    22,   // height
+    1,  // scale
     0.5, // anchorY
   ];
 }

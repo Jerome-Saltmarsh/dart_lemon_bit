@@ -80,20 +80,37 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
     if (target is IsometricZombie) {
-       spawnLoot(target);
+       spawnRandomLootAtPosition(target);
        addJob(seconds: EnemyRespawnDuration, action: () {
          setCharacterStateSpawning(target);
        });
     }
   }
 
-  void spawnLoot(IsometricZombie target) {
+  void spawnRandomLootAtPosition(IsometricPosition position){
+    spawnRandomLoot(x: position.x, y: position.y, z: position.z);
+  }
+
+  void spawnRandomLoot({
+    required double x,
+    required double y,
+    required double z,
+  }){
     final type = randomItem(GameObjectType.items);
     final subType = getRandomSubType(type);
-    spawnGameObject(
-        x: target.x,
-        y: target.y,
-        z: target.z,
+    spawnLoot(x: x, y: y, z: z, type: type, subType: subType);
+  }
+
+  void spawnLoot({
+    required double x,
+    required double y,
+    required double z,
+    required int type,
+    required int subType,
+  }) => spawnGameObject(
+        x: x,
+        y: y,
+        z: z,
         type: type,
         subType: subType,
         team: TeamType.Neutral,
@@ -103,8 +120,10 @@ class MmoGame extends IsometricGame<MmoPlayer> {
        ..collectable = true
        ..persistable = false
        ..hitable = false
-       ..physical = false
-    ;
+       ..physical = false;
+
+  void setCollectableProperties(){
+
   }
 
   int getRandomSubType(int type) =>
