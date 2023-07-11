@@ -144,7 +144,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   void spawnCreeps() {
     for (final team in Teams) {
       for (var i = 0; i < Creeps_Per_Spawn; i++) {
-        spawn(MobaCreep(
+        add(MobaCreep(
           game: this,
           health: 10,
           weaponDamage: 1,

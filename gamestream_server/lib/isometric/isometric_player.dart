@@ -156,11 +156,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
   }
 
-
-  void refreshDamage() {
-    weaponDamage = game.getPlayerWeaponDamage(this);
-  }
-
   void writeErrorInvalidInventoryIndex(int index){
      writeGameError(GameError.Invalid_Inventory_Index);
   }

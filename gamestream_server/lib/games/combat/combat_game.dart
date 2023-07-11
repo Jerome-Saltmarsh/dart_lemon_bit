@@ -297,14 +297,14 @@ class CombatGame extends IsometricGame<CombatPlayer> {
 
   @override
   void customOnGameObjectDestroyed(IsometricGameObject gameObject) {
-    if (GameObjects_Respawnable.contains(gameObject.type)){
-      performScript(timer: GameObject_Respawn_Duration).writeSpawnGameObject(
-        type: gameObject.type,
-        x: gameObject.x,
-        y: gameObject.y,
-        z: gameObject.z,
-      );
-    }
+    // if (GameObjects_Respawnable.contains(gameObject.type)){
+    //   performScript(timer: GameObject_Respawn_Duration).writeSpawnGameObject(
+    //     type: gameObject.type,
+    //     x: gameObject.x,
+    //     y: gameObject.y,
+    //     z: gameObject.z,
+    //   );
+    // }
 
     if (GameObjects_Spawn_Loot.contains(gameObject.type)){
        spawnGemAtIndex(scene.getIndexPosition(gameObject));

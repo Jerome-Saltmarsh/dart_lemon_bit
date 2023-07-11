@@ -772,8 +772,5 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     WeaponType.Machine_Gun: 5,
   }[weaponType] ?? (throw Exception('getWeaponCooldown(${WeaponType.getName(weaponType)})'));
 
-  @override
-  int getExperienceForLevel(int level){
-    return level * 3;
-  }
+  int getExperienceForLevel(int level) => (((level - 1) * (level - 1))) * 6;
 }

@@ -258,6 +258,11 @@ abstract class IsometricCharacter extends IsometricCollider {
     stateDurationRemaining = 40;
   }
 
+  void setCharacterStateChanging() {
+    state = CharacterState.Changing;
+    stateDurationRemaining = 15;
+  }
+
   void setCharacterStateHurt(){
     if (dead) return;
     if (state == CharacterState.Hurt) return;

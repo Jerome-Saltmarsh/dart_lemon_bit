@@ -16,7 +16,7 @@ class MmoPlayer extends IsometricPlayer {
   late ItemList items;
 
   MmoPlayer({required super.game, required int itemLength}) {
-    setWeaponType(WeaponType.Unarmed);
+    equipWeapon(WeaponType.Unarmed);
     setItemLength(itemLength);
 
     setItem(
@@ -167,7 +167,7 @@ class MmoPlayer extends IsometricPlayer {
     if (itemType == 0)
       return;
 
-    equipItem(itemType, items.subTypes[index]);
+    equip(type: itemType, subType: items.subTypes[index]);
   }
 
   void selectNpcTalkOption(int index) {
@@ -178,19 +178,49 @@ class MmoPlayer extends IsometricPlayer {
      npcOptions[index].action();
   }
 
-  void equipItem(int type, int subType){
-    switch (type){
+  void equip({required int type, required int subType}) {
+    switch (type) {
       case GameObjectType.Weapon:
-        setWeaponType(subType);
+        equipWeapon(subType);
+        break;
+      case GameObjectType.Head:
+        equipHead(subType);
+        break;
+      case GameObjectType.Body:
+        equipBody(subType);
+        break;
+      case GameObjectType.Legs:
+        setLegsType(subType);
         break;
     }
   }
 
-  void setWeaponType(int weaponType){
+  void equipWeapon(int weaponType){
+    if (deadBusyOrWeaponStateBusy)
+      return;
     this.weaponType = weaponType;
     weaponDamage = getWeaponDamage(weaponType);
     weaponRange = getWeaponRange(weaponType);
     weaponCooldown = getWeaponCooldown(weaponType);
+  }
+
+  void equipHead(int value){
+    if (deadBusyOrWeaponStateBusy)
+      return;
+    headType = value;
+    setCharacterStateChanging();
+  }
+
+  void equipBody(int value){
+    if (deadBusyOrWeaponStateBusy)
+      return;
+    bodyType = value;
+    setCharacterStateChanging();
+  }
+
+  void setLegsType(int value){
+    legsType = value;
+    setCharacterStateChanging();
   }
 
   int getWeaponDamage(int weaponType) => const {
@@ -219,5 +249,4 @@ class MmoPlayer extends IsometricPlayer {
         WeaponType.Handgun: 15,
         WeaponType.Smg: 10,
      }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
-
 }

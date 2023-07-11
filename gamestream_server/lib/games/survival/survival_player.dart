@@ -89,7 +89,7 @@ class SurvivalPlayer extends IsometricPlayer {
       inventoryDirty = true;
       weaponState = WeaponState.Changing;
       game.dispatchV3(GameEventType.Character_Changing, this);
-      refreshDamage();
+      // refreshDamage();
       return;
     }
 
@@ -129,7 +129,7 @@ class SurvivalPlayer extends IsometricPlayer {
     weaponType = WeaponType.Unarmed;
     inventoryDirty = true;
     game.setCharacterStateChanging(this);
-    refreshDamage();
+    // refreshDamage();
   }
 
   int? getEmptyBeltIndex(){
@@ -464,7 +464,7 @@ class SurvivalPlayer extends IsometricPlayer {
     //   inventoryQuantity[index] = itemQuantity;
     //   inventoryDirty = true;
     // }
-    refreshDamage();
+    // refreshDamage();
   }
 
   void inventorySetEmptyAtIndex(int index) =>

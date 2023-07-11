@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
-import 'package:lemon_byte/byte_reader.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -17,8 +15,6 @@ import 'isometric_player.dart';
 import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
-import 'isometric_script.dart';
-import 'isometric_script_type.dart';
 import 'isometric_settings.dart';
 import 'isometric_time.dart';
 
@@ -39,8 +35,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
-  final scripts = <IsometricScript>[];
-  final scriptReader = ByteReader();
 
   IsometricGame({
     required this.scene,
@@ -64,7 +58,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   bool get running => _running;
 
-  void spawn(IsometricCollider value){
+  void add(IsometricCollider value){
     if (value is IsometricCharacter){
        characters.add(value);
        return;
@@ -85,19 +79,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final player in players) {
       player.writeGameProperties();
     }
-  }
-
-  IsometricScript performScript({required int timer}) {
-    for (final script in scripts) {
-      if (script.timer > 0) continue;
-      script.timer = timer;
-      script.clear();
-      return script;
-    }
-    final instance = IsometricScript();
-    scripts.add(instance);
-    instance.timer = timer;
-    return instance;
   }
 
   /// In seconds
@@ -960,49 +941,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     playersWriteWeather();
   }
 
-  void internalUpdateScripts() {
-    for (final script in scripts) {
-      if (script.timer <= 0) continue;
-      script.timer--;
-      if (script.timer > 0) continue;
-      readGameScript(script.compile());
-    }
-  }
-
-  void readGameScript(Uint8List script) {
-    scriptReader.values = script;
-    scriptReader.index = 0;
-    final length = script.length;
-    while (scriptReader.index < length) {
-      switch (scriptReader.readUInt8()) {
-        case IsometricScriptType.GameObject_Deactivate:
-          final id = scriptReader.readUInt16();
-          final instance = findGameObjectById(id);
-          if (instance != null) {
-            deactivate(instance);
-          }
-          break;
-        case IsometricScriptType.Spawn_GameObject:
-          final type = scriptReader.readByte();
-          final subType = scriptReader.readByte();
-          final x = scriptReader.readUInt16();
-          final y = scriptReader.readUInt16();
-          final z = scriptReader.readUInt16();
-          spawnGameObject(
-            x: x.toDouble(),
-            y: y.toDouble(),
-            z: z.toDouble(),
-            type: type,
-            subType: subType,
-            team: 0, // TODO
-          );
-          break;
-        default:
-          return;
-      }
-    }
-  }
-
   void updateColliderSceneCollisionHorizontal(IsometricCollider collider) {
     const Shifts = 5;
     final z = collider.z + Node_Height_Half;
@@ -1185,7 +1123,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     time.update();
     environment.update();
 
-    internalUpdateScripts();
     customUpdate();
     updateGameObjects();
     updateCollisions();
@@ -2406,33 +2343,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       gameObject.z = gameObject.startZ;
     }
   }
-
-  /// Safe to override to provide custom logic
-  int getPlayerWeaponDamage(IsometricPlayer player) => const <int, int> {
-        WeaponType.Bow: 06,
-        WeaponType.Unarmed: 01,
-        WeaponType.Smg: 02,
-        WeaponType.Machine_Gun: 02,
-        WeaponType.Sniper_Rifle: 12,
-        WeaponType.Musket: 04,
-        WeaponType.Bazooka: 10,
-        WeaponType.Flame_Thrower: 01,
-        WeaponType.Minigun: 01,
-        WeaponType.Handgun: 04,
-        WeaponType.Revolver: 06,
-        WeaponType.Pistol: 07,
-        WeaponType.Plasma_Pistol: 05,
-        WeaponType.Plasma_Rifle: 02,
-        WeaponType.Shotgun: 04,
-        WeaponType.Hammer: 03,
-        WeaponType.Pickaxe: 05,
-        WeaponType.Knife: 04,
-        WeaponType.Crowbar: 05,
-        WeaponType.Sword: 15,
-        WeaponType.Axe: 04,
-      } [player.weaponType] ?? 0;
-
-  int getExperienceForLevel(int level) => (((level - 1) * (level - 1))) * 6;
 
   void destroyGameObject(IsometricGameObject gameObject) {
     if (!gameObject.active) return;
