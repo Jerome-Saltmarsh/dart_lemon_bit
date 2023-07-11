@@ -510,9 +510,9 @@ class WebSocketConnection with ByteReader {
           return errorInvalidClientRequest();
         }
         final instance = player.game.spawnGameObject(
-          x: scene.getNodePositionX(index) + Node_Size_Half,
-          y: scene.getNodePositionY(index) + Node_Size_Half,
-          z: scene.getNodePositionZ(index),
+          x: scene.getIndexX(index) + Node_Size_Half,
+          y: scene.getIndexY(index) + Node_Size_Half,
+          z: scene.getIndexZ(index),
           type: GameObjectType.Object,
           subType: type,
           team: 0, // TODO

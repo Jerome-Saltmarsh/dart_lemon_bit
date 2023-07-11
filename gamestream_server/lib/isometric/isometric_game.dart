@@ -241,9 +241,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// ACTIONS
 
   void moveV3ToNodeIndex(IsometricPosition vector3, int nodeIndex) {
-    vector3.x = scene.getNodePositionX(nodeIndex);
-    vector3.y = scene.getNodePositionY(nodeIndex);
-    vector3.z = scene.getNodePositionZ(nodeIndex);
+    vector3.x = scene.getIndexX(nodeIndex);
+    vector3.y = scene.getIndexY(nodeIndex);
+    vector3.z = scene.getIndexZ(nodeIndex);
   }
 
   void move(IsometricPosition value, double angle, double distance) {
@@ -1945,9 +1945,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void moveToIndex(IsometricPosition position, int index) {
-    position.x = scene.getNodePositionX(index);
-    position.y = scene.getNodePositionY(index);
-    position.z = scene.getNodePositionZ(index);
+    position.x = scene.getIndexX(index);
+    position.y = scene.getIndexY(index);
+    position.z = scene.getIndexZ(index);
   }
 
   IsometricGameObject spawnGameObjectAtIndex({
@@ -1957,9 +1957,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int team,
   }) =>
       spawnGameObject(
-        x: scene.getNodePositionX(index),
-        y: scene.getNodePositionY(index),
-        z: scene.getNodePositionZ(index),
+        x: scene.getIndexX(index),
+        y: scene.getIndexY(index),
+        z: scene.getIndexZ(index),
         type: type,
         subType: subType,
         team: team,
@@ -2705,9 +2705,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterSetDestinationToPathNodeIndex(IsometricCharacter character) {
     final pathNodeIndex = character.pathCurrentIndex;
     assert (pathNodeIndex >= 0);
-    character.runX = scene.getNodePositionX(pathNodeIndex);
-    character.runY = scene.getNodePositionY(pathNodeIndex);
-    character.runZ = scene.getNodePositionZ(pathNodeIndex);
+    character.runX = scene.getIndexX(pathNodeIndex);
+    character.runY = scene.getIndexY(pathNodeIndex);
+    character.runZ = scene.getIndexZ(pathNodeIndex);
     character.arrivedAtDestination = false;
   }
 

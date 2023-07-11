@@ -159,13 +159,13 @@ class IsometricScene {
   void detectSpawnPoints() =>
       spawnPoints = Uint16List.fromList(findNodesOfType(NodeType.Spawn));
 
-  double getNodePositionX(int index) =>
+  double getIndexX(int index) =>
       (getRow(index) * Node_Size) + Node_Size_Half;
 
-  double getNodePositionY(int index) =>
+  double getIndexY(int index) =>
       (getColumn(index) * Node_Size) + Node_Size_Half;
 
-  double getNodePositionZ(int index) =>
+  double getIndexZ(int index) =>
       getZ(index) * Node_Height;
 
   int findPath(var indexStart, var indexEnd, {int max = 100}) {

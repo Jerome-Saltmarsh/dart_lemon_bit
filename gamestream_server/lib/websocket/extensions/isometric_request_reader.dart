@@ -110,9 +110,9 @@ extension IsometricRequestReader on WebSocketConnection {
         final index = scene.findEmptyIndex(player.mouseIndex);
         if (index == -1) return;
 
-        selectedCollider.x = scene.getNodePositionX(index);
-        selectedCollider.y = scene.getNodePositionY(index);
-        selectedCollider.z = scene.getNodePositionZ(index);
+        selectedCollider.x = scene.getIndexX(index);
+        selectedCollider.y = scene.getIndexY(index);
+        selectedCollider.z = scene.getIndexZ(index);
 
         if (selectedCollider is IsometricCharacter){
           selectedCollider.clearTarget();
