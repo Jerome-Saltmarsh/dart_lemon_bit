@@ -2,11 +2,13 @@
 import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_objects.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'isometric/atlases/atlas.dart';
 import 'operation_status.dart';
 import 'game.dart';
 import 'games.dart';
@@ -72,6 +74,18 @@ class Gamestream with ByteReader {
      Images.loadImages();
      engine.cursorType.value = CursorType.Basic;
      io.detectInputMode();
+
+     for (final entry in GameObjectType.Collection.entries){
+       final type = entry.key;
+       final values = entry.value;
+       final atlas = Atlas.Collection[type];
+       for (final value in values){
+         if (!atlas.containsKey(value)){
+           print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+         }
+       }
+     }
+
 
      error.onChanged((GameError? error) {
          if (error == null) return;

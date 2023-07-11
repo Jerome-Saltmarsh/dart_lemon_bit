@@ -151,7 +151,11 @@ extension ServerResponseReader on Gamestream {
     serverResponseStackIndex++;
     serverResponseStack[serverResponseStackIndex] = serverResponse;
     serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
-    return readEnd();
+    bufferSize.value = index;
+    index = 0;
+    if (renderResponse){
+      engine.redrawCanvas();
+    }
   }
 
   void readServerResponseFight2D(GameFight2D game) {
@@ -574,15 +578,6 @@ extension ServerResponseReader on Gamestream {
     isometric.server.weatherBreeze.value = readBool();
     isometric.server.lightningType.value = readByte();
     isometric.server.windTypeAmbient.value = readByte();
-  }
-
-  void readEnd() {
-    bufferSize.value = index;
-    index = 0;
-
-    if (renderResponse){
-      engine.redrawCanvas();
-    }
   }
 
   void readStoreItems() {

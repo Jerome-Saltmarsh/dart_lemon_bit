@@ -12,6 +12,18 @@ class GameObjectType {
   static const Head = 4;
   static const Object = 5;
 
+  static const items = [
+     Weapon, Legs, Body, Head
+  ];
+
+  static const Collection = {
+    Object: ObjectType.values,
+    Head: HeadType.values,
+    Body: BodyType.values,
+    Legs: LegType.values,
+    Weapon: WeaponType.values,
+  };
+
   static String getName(int value) => const {
       Nothing: "Nothing",
       Weapon: "Weapon",
@@ -32,7 +44,7 @@ class GameObjectType {
     };
 
   static const values = [
-    Nothing,
+    // Nothing,
     Weapon,
     Legs,
     Body,

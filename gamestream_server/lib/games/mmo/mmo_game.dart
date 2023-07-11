@@ -4,8 +4,12 @@ import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/games/mmo/mmo_npc.dart';
+import 'package:gamestream_server/lemon_math.dart';
 
 class MmoGame extends IsometricGame<MmoPlayer> {
+
+  static const GameObjectDeactivationTimer = 5000;
+  static const EnemyRespawnDuration = 30; // in seconds
 
   late MMONpc npcGuard;
 
@@ -77,30 +81,35 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   void customOnCharacterKilled(IsometricCharacter target, src) {
     if (target is IsometricZombie) {
        spawnLoot(target);
+       addJob(seconds: EnemyRespawnDuration, action: () {
+         setCharacterStateSpawning(target);
+       });
     }
   }
 
   void spawnLoot(IsometricZombie target) {
+    final type = randomItem(GameObjectType.items);
+    final subType = getRandomSubType(type);
     spawnGameObject(
         x: target.x,
         y: target.y,
         z: target.z,
-        type: GameObjectType.Weapon,
-        subType: WeaponType.Handgun,
+        type: type,
+        subType: subType,
         team: TeamType.Neutral,
     )
-       ..deactivationTimer = 5000
+       ..deactivationTimer = GameObjectDeactivationTimer
        ..fixed = true
        ..collectable = true
        ..persistable = false
        ..hitable = false
        ..physical = false
     ;
-
-    addJob(seconds: 30, action: () {
-      setCharacterStateSpawning(target);
-    });
   }
+
+  int getRandomSubType(int type) =>
+      randomItem(GameObjectType.Collection[type] ??
+          (throw Exception('getRandomSubType($type)')));
 
   @override
   MmoPlayer buildPlayer() => MmoPlayer(game: this, itemLength: 6)

@@ -22,18 +22,18 @@ class MmoPlayer extends IsometricPlayer {
     setItem(
         index: 0,
         type: GameObjectType.Weapon,
-        subType: WeaponType.Machine_Gun,
+        subType: WeaponType.Handgun,
     );
-    setItem(
-        index: 1,
-        type: GameObjectType.Weapon,
-        subType: WeaponType.Shotgun,
-    );
-    setItem(
-        index: 2,
-        type: GameObjectType.Body,
-        subType: BodyType.Swat,
-    );
+    // setItem(
+    //     index: 1,
+    //     type: GameObjectType.Weapon,
+    //     subType: WeaponType.Shotgun,
+    // );
+    // setItem(
+    //     index: 2,
+    //     type: GameObjectType.Body,
+    //     subType: BodyType.Swat,
+    // );
   }
 
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
