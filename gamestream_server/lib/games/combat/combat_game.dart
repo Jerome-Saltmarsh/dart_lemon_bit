@@ -324,7 +324,7 @@ class CombatGame extends IsometricGame<CombatPlayer> {
       player.score += Credits_Collected;
       player.writePlayerEventItemAcquired(gameObject.type);
       player.writeGameEventGameObjectDestroyed(gameObject);
-      deactivateCollider(gameObject);
+      deactivate(gameObject);
       player.health += Health_Gained_Per_Gem;
       player.energy += Energy_Gained_Per_Gem;
       return;

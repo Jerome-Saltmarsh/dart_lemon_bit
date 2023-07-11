@@ -357,7 +357,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     flag.respawnDuration = Flag_Respawn_Duration;
     flag.status = CaptureTheFlagFlagStatus.Respawning;
-    deactivateCollider(flag);
+    deactivate(flag);
     clearFlagHeldBy(flag);
 
     final response = flag == flagRed

@@ -567,7 +567,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..owner = player;
 
     addJob(seconds: IsometricSettings.Grenade_Cook_Duration, action: () {
-      deactivateCollider(instance);
+      deactivate(instance);
       final owner = instance.owner;
       if (owner == null) return;
       createExplosion(
@@ -908,7 +908,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void deactivateCollider(IsometricCollider collider) {
+  void deactivate(IsometricCollider collider) {
     if (!collider.active) return;
     collider.active = false;
     collider.velocityX = 0;
@@ -979,7 +979,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           final id = scriptReader.readUInt16();
           final instance = findGameObjectById(id);
           if (instance != null) {
-            deactivateCollider(instance);
+            deactivate(instance);
           }
           break;
         case IsometricScriptType.Spawn_GameObject:
@@ -1059,6 +1059,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         gameObject.dirty = true;
         sortRequired = true;
       }
+      if (gameObject.deactivationTimer > 0) {
+        gameObject.deactivationTimer--;
+        if (gameObject.deactivationTimer <= 0){
+          deactivate(gameObject);
+        }
+      }
       if (!gameObject.dirty) continue;
       gameObject.dirty = false;
       gameObject.synchronizePrevious();
@@ -1100,7 +1106,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         setCharacterStateDead(collider);
         return;
       }
-      deactivateCollider(collider);
+      deactivate(collider);
       return;
     }
 
@@ -1435,7 +1441,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.state = CharacterState.Dead;
     character.stateDuration = 0;
     character.animationFrame = 0;
-    deactivateCollider(character);
+    deactivate(character);
     character.clearPath();
     clearCharacterTarget(character);
     character.customOnDead();
@@ -2115,7 +2121,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void internalOnColliderEnteredWater(IsometricCollider collider) {
-    deactivateCollider(collider);
+    deactivate(collider);
     if (collider is IsometricCharacter) {
       setCharacterStateDead(collider);
     }
@@ -2125,7 +2131,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateColliderSceneCollisionVertical(IsometricCollider collider) {
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
-      deactivateCollider(collider);
+      deactivate(collider);
       if (collider is IsometricCharacter) {
         setCharacterStateDead(collider);
       }
@@ -2200,7 +2206,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateColliderSceneCollisionVertical2(IsometricCollider collider) {
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
-      deactivateCollider(collider);
+      deactivate(collider);
       if (collider is IsometricCharacter) {
         setCharacterStateDead(collider);
       }
@@ -2432,7 +2438,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void destroyGameObject(IsometricGameObject gameObject) {
     if (!gameObject.active) return;
     dispatchGameEventGameObjectDestroyed(gameObject);
-    deactivateCollider(gameObject);
+    deactivate(gameObject);
     customOnGameObjectDestroyed(gameObject);
   }
 

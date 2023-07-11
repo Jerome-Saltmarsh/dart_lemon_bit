@@ -23,6 +23,7 @@ abstract class IsometricCollider extends IsometricPosition {
   var gravity = true;
   var physical = true;
   var fixed = true;
+  var deactivationTimer = -1;
 
   var startX = 0.0;
   var startY = 0.0;

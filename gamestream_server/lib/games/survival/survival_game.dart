@@ -45,7 +45,7 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
         if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity) {
           player.inventoryQuantity[i] += quantityRemaining;
           player.inventoryDirty = true;
-          deactivateCollider(target);
+          deactivate(target);
           player.writePlayerEventItemAcquired(target.type);
           clearCharacterTarget(player);
           return;
@@ -65,7 +65,7 @@ class SurvivalGame extends IsometricGame<SurvivalPlayer> {
       player.inventoryQuantity[emptyInventoryIndex] =
           min(quantityRemaining, maxQuantity);
       player.inventoryDirty = true;
-      deactivateCollider(target);
+      deactivate(target);
       player.writePlayerEventItemAcquired(target.type);
       clearCharacterTarget(player);
     } else {
