@@ -45,8 +45,6 @@ extension CombatUI on CombatGame {
       WeaponType.Bazooka,
       WeaponType.Sniper_Rifle,
       WeaponType.Flame_Thrower,
-      WeaponType.Portal,
-      // ItemType.Weapon_Melee_Knife,
       WeaponType.Crowbar,
       WeaponType.Sword,
     ];

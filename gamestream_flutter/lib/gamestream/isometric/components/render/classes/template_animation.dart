@@ -114,7 +114,6 @@ class TemplateAnimation {
     if (const [
       WeaponType.Handgun,
       WeaponType.Pistol,
-      WeaponType.Desert_Eagle,
       WeaponType.Plasma_Pistol,
       WeaponType.Smg,
     ].contains(weaponType)) {

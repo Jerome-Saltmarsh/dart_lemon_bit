@@ -114,7 +114,6 @@ class Images {
 
    static Image getImageForWeaponType(int weaponType) => switch (weaponType) {
          WeaponType.Machine_Gun => template_weapon_ak47,
-         WeaponType.Portal => template_weapon_portal_gun,
          WeaponType.Plasma_Rifle => template_weapon_plasma_rifle,
          WeaponType.Knife => template_weapon_knife,
          WeaponType.Sniper_Rifle => template_weapon_sniper_rifle,
@@ -122,7 +121,6 @@ class Images {
          WeaponType.Musket => template_weapon_musket,
          WeaponType.Rifle => template_weapon_winchester,
          WeaponType.Smg => template_weapon_mp5,
-         WeaponType.Desert_Eagle => template_weapon_desert_eagle,
          WeaponType.Plasma_Pistol => template_weapon_plasma_pistol,
          WeaponType.Handgun => template_weapon_handgun_black,
          WeaponType.Pistol => template_weapon_handgun_flintlock,
@@ -154,7 +152,7 @@ class Images {
       Engine.loadImageAsset('images/atlas-nodes.png').then((value) => atlas_nodes = value);
       Engine.loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
       Engine.loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
-      Engine.loadImageAsset('images/atlas-weapons.png').then((value) => atlas_weapons = value);
+      Engine.loadImageAsset('images/atlas_weapons.png').then((value) => atlas_weapons = value);
       Engine.loadImageAsset('images/atlas-icons.png').then((value) => atlas_icons = value);
       Engine.loadImageAsset('images/atlas-items.png').then((value) => atlas_items = value);
       Engine.loadImageAsset('images/atlas_head.png').then((value) => atlas_head = value);

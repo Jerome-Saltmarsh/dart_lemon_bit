@@ -285,7 +285,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writePlayerStats(){
-    refreshDamage();
     writePlayerHealth();
     writePlayerAlive();
   }
@@ -756,12 +755,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeUInt16(entry.key);
       writeUInt16(entry.value);
     }
-  }
-
-  // @override
-  void onEquipmentChanged() {
-    refreshDamage();
-    writePlayerEquipment();
   }
 
   void writePlayerEquipment(){

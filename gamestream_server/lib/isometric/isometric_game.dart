@@ -2420,7 +2420,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         WeaponType.Minigun: 01,
         WeaponType.Handgun: 04,
         WeaponType.Revolver: 06,
-        WeaponType.Desert_Eagle: 08,
         WeaponType.Pistol: 07,
         WeaponType.Plasma_Pistol: 05,
         WeaponType.Plasma_Rifle: 02,

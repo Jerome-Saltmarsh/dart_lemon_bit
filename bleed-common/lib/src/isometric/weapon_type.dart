@@ -17,14 +17,12 @@ class WeaponType {
   static const Staff = 15;
   static const Musket = 16;
   static const Revolver = 17;
-  static const Desert_Eagle = 18;
   static const Pistol = 19;
   static const Plasma_Rifle = 20;
   static const Hammer = 21;
   static const Pickaxe = 22;
   static const Knife = 23;
   static const Axe = 24;
-  static const Portal = 25;
   static const Rifle = 26;
 
   static const Firearms = [
@@ -78,14 +76,12 @@ class WeaponType {
       Staff: "Staff",
       Musket: "Musket",
       Revolver: "Revolver",
-      Desert_Eagle: "Desert Eagle",
       Pistol: "Pistol",
       Plasma_Rifle: "Plasma Rifle",
       Hammer: "Hammer",
       Pickaxe: "Pickaxe",
       Knife: "Knife",
       Axe: "Axe",
-      Portal: "Portal",
       Rifle: "Rifle",
     }[value] ?? 'weapon-type-unknown-$value';
   }
@@ -109,14 +105,12 @@ class WeaponType {
     Staff,
     Musket,
     Revolver,
-    Desert_Eagle,
     Pistol,
     Plasma_Rifle,
     Hammer,
     Pickaxe,
     Knife,
     Axe,
-    Portal,
     Rifle,
   ];
 }
