@@ -487,11 +487,13 @@ class IsometricRender {
       renderHealthBarPosition(
           position: character,
           percentage: character.health,
+          color: character.color,
       );
 
   void renderHealthBarPosition({
     required IsometricPosition position,
     required double percentage,
+    int color = 1,
   }) => engine.renderSprite(
       image: Images.atlas_gameobjects,
       dstX: IsometricRender.getPositionRenderX(position) - 26,
@@ -501,7 +503,7 @@ class IsometricRender {
       srcWidth: 51.0 * percentage,
       srcHeight: 8,
       anchorX: 0.0,
-      color: 1,
+      color: color,
     );
 
   void renderBarBlue(double x, double y, double z, double percentage) {

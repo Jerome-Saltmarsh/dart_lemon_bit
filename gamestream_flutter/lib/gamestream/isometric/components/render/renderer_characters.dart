@@ -88,14 +88,14 @@ class RendererCharacters extends IsometricRenderer {
       case CharacterType.Template:
         renderCharacterTemplate(character);
         break;
+      case CharacterType.Zombie:
+        renderCharacterZombie(character);
+        break;
       case CharacterType.Slime:
         // renderCharacterSlime(character);
         break;
       case CharacterType.Rat:
         renderCharacterRat(character);
-        break;
-      case CharacterType.Zombie:
-        renderCharacterZombie(character);
         break;
       case CharacterType.Triangle:
         engine.renderSpriteRotated(

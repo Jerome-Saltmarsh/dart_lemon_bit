@@ -227,9 +227,10 @@ class MmoPlayer extends IsometricPlayer {
         WeaponType.Unarmed: 1,
         WeaponType.Shotgun: 2,
         WeaponType.Machine_Gun: 2,
-        WeaponType.Sniper_Rifle: 2,
+        WeaponType.Sniper_Rifle: 5,
         WeaponType.Handgun: 2,
         WeaponType.Smg: 2,
+        WeaponType.Grenade: 10,
      }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
 
   double getWeaponRange(int weaponType) => const <int, double> {
