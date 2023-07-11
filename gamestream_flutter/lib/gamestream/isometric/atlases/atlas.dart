@@ -21,8 +21,14 @@ class Atlas {
     WeaponType.Sniper_Rifle : AtlasSrcWeapons.Sniper_Rifle,
   };
 
-  static const Collection_Legs = <int, List<double>>{
-    BodyType.Nothing: AtlasSrcBody.Plain,
+  static const Collection_Legs = <int, List<double>> {
+    LegType.Nothing: AtlasSrcLegs.Nothing,
+    LegType.Swat: AtlasSrcLegs.Swat,
+    LegType.Blue: AtlasSrcLegs.Blue,
+    LegType.Red: AtlasSrcLegs.Red,
+    LegType.Brown: AtlasSrcLegs.Brown,
+    LegType.Green: AtlasSrcLegs.Green,
+    LegType.White: AtlasSrcLegs.Green,
   };
 
   static const Collection_Body = <int, List<double>>{
