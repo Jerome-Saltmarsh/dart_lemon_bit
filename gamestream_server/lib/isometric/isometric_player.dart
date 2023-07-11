@@ -31,6 +31,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var _aimTargetCategory = TargetCategory.Run;
   IsometricCollider? _aimTarget;
 
+  var weaponDurationPercentagePrevious = 0.0;
+  var accuracyPrevious = 0.0;
   var totalProjectiles = 0;
   var inputMode = InputMode.Keyboard;
   var screenLeft = 0.0;
@@ -83,9 +85,25 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     id = game.playerId++;
   }
 
+  @override
+  set maxHealth(int value){
+    if (maxHealth == value) return;
+    super.maxHealth = value;
+    writePlayerHealth();
+  }
+
+  set health (int value) {
+    if (health == value) return;
+    super.health = value;
+    writePlayerHealth();
+  }
+
   IsometricCollider? get aimTarget => _aimTarget;
 
   int get aimTargetCategory => _aimTargetCategory;
+
+  @override
+  bool get isPlayer => true;
 
   set aimTargetCategory(int value){
     if (_aimTargetCategory == value) return;
@@ -123,6 +141,22 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   double get mouseDistance => this.getDistanceXY(mouseSceneX, mouseSceneY);
 
+  set mouseLeftDown(bool value){
+    if (_mouseLeftDown != value) {
+      _mouseLeftDown = value;
+      if (value){
+        onMouseLeftClicked();
+      } else {
+        onMouseLeftReleased();
+      }
+    } else {
+      if (value){
+        onMouseLeftHeld();
+      }
+    }
+  }
+
+
   void refreshDamage() {
     weaponDamage = game.getPlayerWeaponDamage(this);
   }
@@ -135,9 +169,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Info);
     writeString(info);
   }
-
-  var weaponDurationPercentagePrevious = 0.0;
-  var accuracyPrevious = 0.0;
 
   void writeIsometricPlayer(){
     final weaponDurationPercentage = this.weaponDurationPercentage;
@@ -414,28 +445,20 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
   }
 
-  void writePlayerAimTargetName() {
-    final aimTarget = this.aimTarget;
-    if (aimTarget is! IsometricCharacter) return;
-    writeApiPlayerAimTargetName(aimTarget.name);
-  }
-
-  void writeApiPlayerAimTargetName(String value) {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Aim_Target_Name);
-    writeString(value);
-  }
-
   int getTargetCategory(IsometricPosition? value){
 
     if (value == null)
       return TargetCategory.Run;
 
     if (value is IsometricGameObject) {
-      if (isEnemy(value))
-        return TargetCategory.Attack;
-      if (value.interactable || value.collectable) {
+      if (value.interactable) {
+        return TargetCategory.Talk;
+      }
+      if (value.collectable){
         return TargetCategory.Collect;
+      }
+      if (value.physical && value.hitable){
+        return TargetCategory.Attack;
       }
       return TargetCategory.Run;
     }
@@ -456,8 +479,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void writeProjectiles(){
     final projectiles = game.projectiles;
     var totalActiveProjectiles = 0;
-    for (final gameObject in projectiles) {
-      if (!gameObject.active) continue;
+    for (final projectile in projectiles) {
+      if (!projectile.active) continue;
       totalActiveProjectiles++;
     }
     if (totalActiveProjectiles == 0){
@@ -766,9 +789,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt24(id);
   }
 
-  @override
-  bool get isPlayer => true;
-
   void writeGameEventGameObjectDestroyed(IsometricGameObject gameObject){
     writeGameEvent(
       type: GameEventType.Game_Object_Destroyed,
@@ -801,21 +821,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void onMouseLeftHeld(){
 
-  }
-
-  set mouseLeftDown(bool value){
-    if (_mouseLeftDown != value) {
-      _mouseLeftDown = value;
-      if (value){
-        onMouseLeftClicked();
-      } else {
-        onMouseLeftReleased();
-      }
-    } else {
-      if (value){
-        onMouseLeftHeld();
-      }
-    }
   }
 
   void setPathToMouse() => pathTargetIndex = mouseIndex;
@@ -968,20 +973,21 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeString(aimTarget!.name);
   }
 
-  @override
-  set maxHealth(int value){
-    super.maxHealth = value;
-    writePlayerHealth();
-  }
-
-  set health (int value) {
-    super.health = value;
-    writePlayerHealth();
-  }
-
   void writePlayerInitialized() {
     writeByte(ServerResponse.Isometric);
     writeByte(IsometricResponse.Player_Initialized);
+  }
+
+  void writePlayerAimTargetName() {
+    final aimTarget = this.aimTarget;
+    if (aimTarget is! IsometricCharacter) return;
+    writeApiPlayerAimTargetName(aimTarget.name);
+  }
+
+  void writeApiPlayerAimTargetName(String value) {
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Aim_Target_Name);
+    writeString(value);
   }
 }
 
