@@ -7,11 +7,9 @@ import 'mmo_npc.dart';
 
 class MmoPlayer extends IsometricPlayer {
 
-  static const Destination_Radius_Interact = 80.0;
-  static const Destination_Radius_Run = 50.0;
+  static const Interact_Radius = 80.0;
 
   var interacting = false;
-
   var npcText = '';
   var npcOptions = <TalkOption>[];
 
@@ -38,7 +36,7 @@ class MmoPlayer extends IsometricPlayer {
     );
   }
 
-  bool get targetWithinInteractRadius => targetWithinRadius(Destination_Radius_Interact);
+  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
   void setItemLength(int value){
     items = ItemList(value);
@@ -104,7 +102,7 @@ class MmoPlayer extends IsometricPlayer {
   void updateInteracting() {
     final target = this.target;
     if (interacting) {
-      if (target == null){
+      if (target == null || !targetWithinInteractRadius){
         endInteraction();
       }
       return;
