@@ -2664,7 +2664,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterCollectGameObject(IsometricCharacter character, IsometricGameObject gameObject){
     removeInstance(gameObject);
-    character.setCharacterStateIdle();
+    character.setDestinationToCurrentPosition();
   }
 
   void characterAttack(IsometricCharacter character){
