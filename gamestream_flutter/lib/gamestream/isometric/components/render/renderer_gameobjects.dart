@@ -25,7 +25,12 @@ class RendererGameObjects extends IsometricRenderer {
     final image = Atlas.getImage(type);
     final src = Atlas.getSrc(type, gameObject.subType);
 
-    final isCollectable = const [GameObjectType.Weapon, GameObjectType.Body].contains(type);
+    final isCollectable = const [
+      GameObjectType.Weapon,
+      GameObjectType.Head,
+      GameObjectType.Body,
+      GameObjectType.Legs,
+    ].contains(type);
 
     if (isCollectable){
       renderBouncingGameObjectShadow(gameObject);
