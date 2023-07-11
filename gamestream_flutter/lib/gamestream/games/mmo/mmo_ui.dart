@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
+import 'ui/item_image.dart';
+
 extension MMOUI on MmoGame {
 
   Widget buildMMOUI()=> Stack(
@@ -71,7 +73,7 @@ extension MMOUI on MmoGame {
           (int reads) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(itemLength, buildItemAtIndex),
+            children: List.generate(itemLength, buildItemImageAtIndex),
           ),
         ),
       ));
@@ -96,29 +98,14 @@ extension MMOUI on MmoGame {
         ));
   }
 
-  Widget buildItemAtIndex(int index) => onPressed(
+  Widget buildItemImageAtIndex(int index) => onPressed(
       onRightClick: () => dropItem(index),
       action: () => selectItem(index),
-      child: buildItem(itemTypes[index], itemSubTypes[index]),
+      child: ItemImage(
+          type: itemTypes[index],
+          subType: itemSubTypes[index],
+          size: 64,
+      ),
     );
-
-  Widget buildItem(int type, int subType) {
-
-    if (type == 0) {
-      return buildText(type == 0 ? '-' :
-      '${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, subType)}'
-      );
-    }
-
-    final src = Atlas.getSrc(type, subType);
-
-    return engine.buildAtlasImage(
-        image: Atlas.getImage(type),
-        srcX: src[Atlas.SrcX],
-        srcY: src[Atlas.SrcY],
-        srcWidth: src[Atlas.SrcWidth],
-        srcHeight: src[Atlas.SrcHeight],
-    );
-  }
 
 }

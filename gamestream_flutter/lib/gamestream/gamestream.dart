@@ -2,6 +2,7 @@
 import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -82,6 +83,14 @@ class Gamestream with ByteReader {
          if (!atlas.containsKey(value)){
            print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
          }
+       }
+     }
+
+     for (final weaponType in WeaponType.values){
+       try {
+         TemplateAnimation.getAttackAnimation(weaponType);
+       } catch (e){
+         print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
        }
      }
 
