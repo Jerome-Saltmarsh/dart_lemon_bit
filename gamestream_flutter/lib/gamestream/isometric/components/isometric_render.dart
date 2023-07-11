@@ -386,7 +386,7 @@ class IsometricRender {
   void renderCursor(Canvas canvas) {
     final cooldown = gamestream.isometric.player.weaponCooldown.value;
     final accuracy = gamestream.isometric.player.accuracy.value;
-    final distance = ((1.0 - cooldown) + accuracy) * 10.0 + 5;
+    final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
 
     switch (gamestream.isometric.client.cursorType) {
       case IsometricCursorType.CrossHair_White:
