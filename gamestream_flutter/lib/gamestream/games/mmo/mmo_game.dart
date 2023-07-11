@@ -12,6 +12,8 @@ class MmoGame extends IsometricGame {
   late Uint8List itemSubTypes;
 
   final npcText = Watch('');
+  final npcOptions = <String>[];
+  final npcOptionsReads = Watch(0);
 
   MmoGame({required super.isometric});
 

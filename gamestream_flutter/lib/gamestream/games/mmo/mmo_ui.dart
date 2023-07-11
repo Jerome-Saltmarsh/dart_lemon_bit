@@ -18,7 +18,15 @@ extension MMOUI on MmoGame {
     ],
   );
 
-  Positioned buildNpcText() => Positioned(
+  Positioned buildNpcText() {
+    final options = buildWatch(npcOptionsReads, (t) =>
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: npcOptions.map((option)=> onPressed(
+              action: (){},
+              child: buildText(option))).toList(growable: false)));
+
+    return Positioned(
       bottom: 16,
       child: buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
       GSDialog(
@@ -31,6 +39,9 @@ extension MMOUI on MmoGame {
               children: [
                 Positioned(child: buildText(npcText)),
                 Positioned(
+                  bottom: 8,
+                  child: options),
+                Positioned(
                   right: 8,
                   top: 8,
                   child: onPressed(
@@ -41,6 +52,7 @@ extension MMOUI on MmoGame {
             )),
       )),
     );
+  }
 
   Positioned buildPlayerItems() => Positioned(
         bottom: 16,

@@ -1,9 +1,8 @@
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
-import 'package:gamestream_server/utils.dart';
 
-import 'item_list.dart';
 import 'mmo_npc.dart';
 
 class MmoPlayer extends IsometricPlayer {
@@ -13,12 +12,10 @@ class MmoPlayer extends IsometricPlayer {
 
   var interacting = false;
 
-  late final npcText = ChangeNotifier("", onChangedNpcText);
-  late final npcOptionText = <String>[];
-  late final npcOptionCallBacks = <Function>[];
+  var npcText = '';
+  var npcOptions = <TalkOption>[];
 
   late ItemList items;
-
 
   MmoPlayer({required super.game, required int itemLength}) {
     setWeaponType(WeaponType.Unarmed);
@@ -108,8 +105,7 @@ class MmoPlayer extends IsometricPlayer {
     final target = this.target;
     if (interacting) {
       if (target == null){
-        interacting = false;
-        npcText.value = "";
+        endInteraction();
       }
       return;
     }
@@ -129,24 +125,31 @@ class MmoPlayer extends IsometricPlayer {
     interacting = true;
   }
 
-  void talk(String text) {
-     npcText.value = text;
+  void talk(String text, {List<TalkOption>? options}) {
+     npcText = text;
+     if (options != null){
+       this.npcOptions = options;
+     } else {
+       this.npcOptions.clear();
+     }
+     writeNpcTalk();
   }
-
-  void onChangedNpcText(String value) {
-    writeNpcText();
-  }
-
 
   void endInteraction() {
     if (!interacting) return;
+    interacting = false;
+    talk('');
     clearTarget();
   }
 
-  void writeNpcText() {
+  void writeNpcTalk() {
     writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Npc_Text);
-    writeString(npcText.value);
+    writeByte(MMOResponse.Npc_Talk);
+    writeString(npcText);
+    writeByte(npcOptions.length);
+    for (final option in npcOptions) {
+      writeString(option.text);
+    }
   }
 
   void writeItemLength(int value) {

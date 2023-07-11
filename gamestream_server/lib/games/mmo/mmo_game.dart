@@ -1,10 +1,9 @@
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/games/mmo/mmo_npc.dart';
-
-import 'mmo_player.dart';
 
 class MmoGame extends IsometricGame<MmoPlayer> {
 
@@ -29,7 +28,10 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponCooldown: 20,
       name: "Gus",
       interact: (player) {
-        player.talk("Hello there");
+        player.talk("Hello there", options: [
+          TalkOption("Goodbye", player.endInteraction),
+          TalkOption("Buy", player.endInteraction),
+        ]);
       }
     ));
 
