@@ -29,6 +29,11 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         if (index == null) return;
         player.selectItem(index);
         break;
+      case MMORequest.Select_Talk_Option:
+        final index = parseArg2(arguments);
+        if (index == null) return;
+        player.selectNpcTalkOption(index);
+        break;
 
     }
   }

@@ -172,6 +172,14 @@ class MmoPlayer extends IsometricPlayer {
     equipItem(itemType, items.subTypes[index]);
   }
 
+  void selectNpcTalkOption(int index) {
+     if (index < 0 || index >= npcOptions.length){
+       writeGameError(GameError.Invalid_Talk_Option);
+       return;
+     }
+     npcOptions[index].action();
+  }
+
   void equipItem(int type, int subType){
     switch (type){
       case GameObjectType.Weapon:

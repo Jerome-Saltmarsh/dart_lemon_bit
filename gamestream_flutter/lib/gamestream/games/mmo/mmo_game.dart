@@ -36,6 +36,9 @@ class MmoGame extends IsometricGame {
   void selectItem(int index) =>
       sendMMORequest(MMORequest.Select_Item, index);
 
+  void selectTalkOption(int index) =>
+      sendMMORequest(MMORequest.Select_Talk_Option, index);
+
   void endInteraction() =>
       sendMMORequest(MMORequest.End_Interaction);
 
@@ -44,4 +47,5 @@ class MmoGame extends IsometricGame {
         ClientRequest.MMO,
         '${request.index} $message'
       );
+
 }

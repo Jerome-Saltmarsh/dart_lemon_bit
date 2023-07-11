@@ -19,20 +19,27 @@ extension MMOUI on MmoGame {
   );
 
   Positioned buildNpcText() {
+
+    const width = 200.0;
+    const height = width * goldenRatio_0618;
+
     final options = buildWatch(npcOptionsReads, (t) =>
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: npcOptions.map((option)=> onPressed(
-              action: (){},
-              child: buildText(option))).toList(growable: false)));
+        Container(
+          width: width,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: npcOptions.map((option)=> onPressed(
+                action: () => selectTalkOption(npcOptions.indexOf(option)),
+                child: buildText(option))).toList(growable: false)),
+        ));
 
     return Positioned(
       bottom: 16,
       child: buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
       GSDialog(
         child: Container(
-            width: 200,
-            height: 200 * goldenRatio_0618,
+            width: width,
+            height: height,
             color: GS_CONTAINER_COLOR,
             child: Stack(
               alignment: Alignment.center,
