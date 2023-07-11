@@ -16,20 +16,25 @@ class RendererGameObjects extends IsometricRenderer {
   RendererGameObjects(super.scene);
 
   @override
-  int getTotal() {
-    return gameObjects.length;
-  }
+  int getTotal() => gameObjects.length;
 
   @override
   void renderFunction() {
 
-    final image = Atlas.getImage(gameObject.type);
-    final src = Atlas.getSrc(gameObject.type, gameObject.subType);
+    final type = gameObject.type;
+    final image = Atlas.getImage(type);
+    final src = Atlas.getSrc(type, gameObject.subType);
+
+    final isCollectable = const [GameObjectType.Weapon, GameObjectType.Body].contains(type);
+
+    if (isCollectable){
+      renderBouncingGameObjectShadow(gameObject);
+    }
 
     engine.renderSprite(
       image: image,
       dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,
       srcX: src[Atlas.SrcX],
       srcY: src[Atlas.SrcY],
       anchorY: src[Atlas.SrcAnchorY],
