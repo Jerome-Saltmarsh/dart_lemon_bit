@@ -1420,8 +1420,8 @@ extension IsometricEditorUI on IsometricEditor {
         gameObjectSelectedEmission,
             (int emissionType) => onPressed(
           action: () => gameObject
-              .value!.emissionType =
-          ((gameObject.value!.emissionType +
+              .value!.colorType =
+          ((gameObject.value!.colorType +
               1) %
               3),
           child: Column(
@@ -1445,8 +1445,7 @@ extension IsometricEditorUI on IsometricEditor {
                     onChanged:
                     setSelectedObjectedIntensity,
                   )),
-              if (emissionType ==
-                  IsometricEmissionType.Color)
+              if (emissionType == EmissionType.Color)
                 ColorPicker(
                   portraitOnly: true,
                   pickerColor: Color(gameObject
@@ -1458,14 +1457,14 @@ extension IsometricEditorUI on IsometricEditor {
                       return;
                     final hsv =
                     HSVColor.fromColor(color);
-                    gameObject.emission_alp =
+                    gameObject.emissionAlp =
                         (hsv.alpha * 255).round();
-                    gameObject.emission_hue =
+                    gameObject.emissionHue =
                         (hsv.hue).round();
-                    gameObject.emission_sat =
+                    gameObject.emissionSat =
                         (hsv.saturation * 100)
                             .round();
-                    gameObject.emission_val =
+                    gameObject.emissionVal =
                         (hsv.value * 100).round();
                     gameObject
                         .refreshEmissionColor();

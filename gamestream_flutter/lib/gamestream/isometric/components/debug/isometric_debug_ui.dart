@@ -388,10 +388,15 @@ extension isometricDebugUI on IsometricDebug {
           child: buildText('DEBUG'), ),
         height8,
         onPressed(
-          action: isometric.camera.followTarget.toggle,
-          child: buildRowWatchBool(
-            text: 'camera-follow',
-            watch: isometric.camera.followTarget,
+          child: buildRow(
+            text: 'camera-target',
+            value: GSRefresh((){
+              final target = isometric.camera.target;
+              if (target == null) {
+                return buildValueText('-');
+              }
+              return buildValueText(target.runtimeType);
+            }),
           ),
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
@@ -436,13 +441,6 @@ extension isometricDebugUI on IsometricDebug {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        onPressed(
-          action: isometric.camera.followTarget.toggle,
-          child: buildRowWatchBool(
-            text: 'camera-follow',
-            watch: isometric.camera.followTarget,
-          ),
-        ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
         buildRowWatchInt(text: 'team', watch: team),
         buildWatch(healthMax, (healthMax) => buildWatch(health, (health) =>

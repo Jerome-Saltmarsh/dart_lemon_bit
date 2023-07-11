@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricPosition {
@@ -23,9 +21,7 @@ class IsometricPosition {
 
   double get renderX => (x - y) * 0.5;
 
-  double get renderY => ((y + x) * 0.5) - z;
-
-  double get magnitudeXY => sqrt((x * x) + (y * y));
+  double get renderY => ((x + y) * 0.5) - z;
 
   void set indexZ(int value){
     z = value * Node_Size_Half;

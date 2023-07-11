@@ -87,24 +87,25 @@ class IsometricServer {
   }
 
   void applyEmissionGameObjects() {
+    final client = gamestream.isometric.client;
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      switch (gameObject.emissionType) {
-        case IsometricEmissionType.None:
+      switch (gameObject.colorType) {
+        case EmissionType.None:
           continue;
-        case IsometricEmissionType.Color:
-          gamestream.isometric.client.applyVector3Emission(
+        case EmissionType.Color:
+          client.applyVector3Emission(
             gameObject,
-            hue: gameObject.emission_hue,
-            saturation: gameObject.emission_sat,
-            value: gameObject.emission_val,
-            alpha: gameObject.emission_alp,
+            hue: gameObject.emissionHue,
+            saturation: gameObject.emissionSat,
+            value: gameObject.emissionVal,
+            alpha: gameObject.emissionAlp,
             intensity: gameObject.emission_intensity,
           );
           continue;
-        case IsometricEmissionType.Ambient:
-          gamestream.isometric.client.applyVector3EmissionAmbient(gameObject,
-            alpha: gameObject.emission_alp,
+        case EmissionType.Ambient:
+          client.applyVector3EmissionAmbient(gameObject,
+            alpha: gameObject.emissionAlp,
             intensity: gameObject.emission_intensity,
           );
           continue;

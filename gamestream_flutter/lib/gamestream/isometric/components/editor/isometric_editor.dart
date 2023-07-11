@@ -37,7 +37,7 @@ class IsometricEditor {
   final gameObjectSelectedParticleType = Watch(0);
   final gameObjectSelectedParticleSpawnRate = Watch(0);
   final gameObjectSelectedSpawnType = Watch(0);
-  final gameObjectSelectedEmission = Watch(IsometricEmissionType.None);
+  final gameObjectSelectedEmission = Watch(EmissionType.None);
 
   late final gameObjectSelectedEmissionIntensity = Watch(1.0, onChanged: (double value){
     gameObject.value?.emission_intensity = value;

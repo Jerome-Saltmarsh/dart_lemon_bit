@@ -5,8 +5,6 @@ import 'package:gamestream_flutter/library.dart';
 import '../classes/isometric_position.dart';
 
 class IsometricCamera {
-  final followTarget = WatchBool(true);
-
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;

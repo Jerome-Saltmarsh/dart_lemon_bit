@@ -69,7 +69,7 @@ mixin class IsometricClient {
 
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
-    if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.emissionType == IsometricEmissionType.None)){
+    if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.colorType == EmissionType.None)){
       gamestream.isometric.scene.emitLightAHSVShadowed(
         index: gamestream.isometric.editor.nodeSelectedIndex.value,
         hue: gamestream.isometric.scene.ambientHue,
