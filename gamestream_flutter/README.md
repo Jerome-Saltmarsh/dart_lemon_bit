@@ -9,7 +9,6 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] fix clear destination on attack
 [ ] player cast ability
 [ ] implement isometric ability
 [ ] merge interact logic into isometric collider
@@ -20,12 +19,13 @@ alt + m             : go to declaration
 [ ] modify selected object type
 [ ] character type alien slug
 [ ] npc store
-[ ] character items
 [ ] character selection
 [ ] character abilities
 [ ] character gold
 
 10.07.2023
+[x] player items
+[x] fix clear destination on attack
 [x] remove server response end
 [x] fixed cursor crosshair
 [x] optimize upload

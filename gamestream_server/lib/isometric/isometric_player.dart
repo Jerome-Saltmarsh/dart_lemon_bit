@@ -28,6 +28,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   static const Cache_Length = 100;
 
   var _mouseLeftDown = false;
+  var _aimTargetCategory = TargetCategory.Run;
+  IsometricCollider? _aimTarget;
 
   var totalProjectiles = 0;
   var inputMode = InputMode.Keyboard;
@@ -42,8 +44,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var id = 0;
   var selectedColliderDirty = false;
   var gameTimeInMinutes = 0;
-  var aimTargetCategory = TargetCategory.Run;
-  var aimTargetCategoryPrevious = -1;
   var mouseX = 0.0;
   var mouseY = 0.0;
 
@@ -63,7 +63,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
   IsometricCollider? selectedCollider;
-  IsometricCollider? _aimTarget;
 
   IsometricPlayer({
     required this.game,
@@ -85,6 +84,14 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   IsometricCollider? get aimTarget => _aimTarget;
+
+  int get aimTargetCategory => _aimTargetCategory;
+
+  set aimTargetCategory(int value){
+    if (_aimTargetCategory == value) return;
+    _aimTargetCategory = value;
+    writePlayerAimTargetCategory();
+  }
 
   set aimTarget(IsometricCollider? value){
     if (value == _aimTarget) return;
@@ -380,12 +387,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writePlayerAimTargetCategory() {
-    if (aimTargetCategoryPrevious == aimTargetCategory) return;
-
-    aimTargetCategoryPrevious = aimTargetCategory;
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Category);
-    writeByte(aimTargetCategory);
+    writeByte(_aimTargetCategory);
   }
 
   void writePlayerAimTargetType() {
