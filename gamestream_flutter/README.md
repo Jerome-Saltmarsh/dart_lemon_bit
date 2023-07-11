@@ -9,6 +9,7 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] fun loot engine
 [ ] player cast ability
 [ ] implement isometric ability
 [ ] merge interact logic into isometric collider
@@ -22,6 +23,9 @@ alt + m             : go to declaration
 [ ] character selection
 [ ] character abilities
 [ ] character gold
+
+11.07.2023
+[x] fixed zombies walk into trees
 
 10.07.2023
 [x] player items

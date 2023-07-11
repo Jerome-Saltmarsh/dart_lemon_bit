@@ -254,8 +254,6 @@ class IsometricScene {
     required int column,
     required int fromIndex,
   }) {
-    // print("visit(z: $z, row: $row, column: $column, fromZ: ${getZ(fromIndex)}, fromRow: ${getRow(fromIndex)}, fromColumn: ${getColumn(fromIndex)}");
-
     if (outOfBounds(z, row, column) || z <= 0)
       return;
 
@@ -266,11 +264,6 @@ class IsometricScene {
 
 
     final indexShape = shapes[index];
-
-
-    if (indexShape == NodeOrientation.Solid) {
-      return;
-    }
 
     if (NodeOrientation.slopeSymmetric.contains(indexShape)) {
       final fromRow = getRow(fromIndex);
@@ -330,20 +323,19 @@ class IsometricScene {
         }
         return;
       }
-    } else {
-      addToStack(index, fromIndex);
 
-      final indexOrientationBelow = shapes[index - area];
-      if (indexOrientationBelow == NodeOrientation.None) {
-        visit(z: z - 1, row: row, column: column, fromIndex: index);
-      }
+      return;
+    }
 
-      // assert (path[index] == Not_Visited);
-      // assert (index != fromIndex);
-      // path[index] = fromIndex;
-      // visitHistory[visitHistoryIndex++] = index;
-      // visitStackIndex++;
-      // visitStack[visitStackIndex] = index;
+    if (indexShape != NodeOrientation.None) {
+      return;
+    }
+
+    addToStack(index, fromIndex);
+
+    final indexOrientationBelow = shapes[index - area];
+    if (indexOrientationBelow == NodeOrientation.None) {
+      visit(z: z - 1, row: row, column: column, fromIndex: index);
     }
   }
 
