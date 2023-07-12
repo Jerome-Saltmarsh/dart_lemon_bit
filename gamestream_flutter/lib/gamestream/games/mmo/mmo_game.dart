@@ -15,6 +15,7 @@ class MmoGame extends IsometricGame {
   final npcText = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
+  final equippedWeaponIndex = Watch(-1);
 
   MmoGame({required super.isometric});
 

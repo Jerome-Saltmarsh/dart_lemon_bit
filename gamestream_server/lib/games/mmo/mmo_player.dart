@@ -18,7 +18,36 @@ class MmoPlayer extends IsometricPlayer {
 
   late List<MMOItem?> items;
 
-  MMOItem? equippedWeapon;
+  var _equippedWeaponIndex = -1;
+
+  set equippedWeaponIndex(int value){
+    if (_equippedWeaponIndex == value)
+      return;
+
+    if (value == -1){
+      _equippedWeaponIndex = value;
+      setCharacterStateChanging();
+      writeEquippedWeaponIndex(value);
+      return;
+    }
+    if (!isValidItemIndex(value)){
+       return;
+    }
+    final item = items[value];
+
+    if (item == null || item.type != GameObjectType.Weapon)
+      return;
+
+    _equippedWeaponIndex = value;
+    setCharacterStateChanging();
+    writeEquippedWeaponIndex(value);
+  }
+
+  void writeEquippedWeaponIndex(int value) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Equipped_Weapon_Index);
+    writeInt16(value);
+  }
 
   MmoPlayer({
     required this.game,
@@ -26,16 +55,15 @@ class MmoPlayer extends IsometricPlayer {
     required super.x,
     required super.y,
     required super.z,
-  })
-      : super(game: game, health: 10, team: MmoTeam.Human) {
-
-    equipWeapon(MMOItem.Rusty_Old_Sword);
+  }) : super(game: game, health: 10, team: MmoTeam.Human) {
 
     setItemLength(itemLength);
-
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Rusty_Old_Sword);
+    equippedWeaponIndex = 0;
   }
+
+  MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : items[_equippedWeaponIndex];
 
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
@@ -216,23 +244,11 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    equip(item);
-  }
-
-  void selectNpcTalkOption(int index) {
-     if (index < 0 || index >= npcOptions.length){
-       writeGameError(GameError.Invalid_Talk_Option);
-       return;
-     }
-     npcOptions[index].action();
-  }
-
-  void equip(MMOItem item) {
     switch (item.type) {
       case GameObjectType.Consumable:
         break;
       case GameObjectType.Weapon:
-        equipWeapon(item);
+        equippedWeaponIndex = index;
         break;
       case GameObjectType.Head:
         equipHead(item);
@@ -246,10 +262,12 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
-  void equipWeapon(MMOItem item){
-    if (deadBusyOrWeaponStateBusy)
-      return;
-    this.equippedWeapon = item;
+  void selectNpcTalkOption(int index) {
+     if (index < 0 || index >= npcOptions.length){
+       writeGameError(GameError.Invalid_Talk_Option);
+       return;
+     }
+     npcOptions[index].action();
   }
 
   @override

@@ -133,7 +133,7 @@ extension MMOUI on MmoGame {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildText(item.name),
+                    buildText(item.name.replaceAll('_', ' ')),
                     buildText('damage ${item.damage}'),
                     buildText('cooldown ${item.cooldown}'),
                     buildText('range ${item.range.toInt()}'),
