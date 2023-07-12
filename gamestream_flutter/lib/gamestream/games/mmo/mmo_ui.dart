@@ -116,7 +116,11 @@ extension MMOUI on MmoGame {
         child: onPressed(
             onRightClick: () => dropItem(index),
             action: () => selectItem(index),
-            child: MMOItemImage(item: item, size: 64),
+            child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
+                  width: 2,
+                  color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,
+                  child: MMOItemImage(item: item, size: 64),
+              )),
         ),
     );
   }
