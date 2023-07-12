@@ -142,25 +142,28 @@ extension MMOUI on MmoGame {
     );
   }
 
-  buildItemHoverDialog() => Positioned(
-      left: 16,
-      bottom: 130,
-      child: buildWatch(
-          itemHover,
-          (item) => item == null
-              ? nothing
-              : GSWindow(
-                  child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildText(item.name.replaceAll('_', ' ')),
-                    buildText('quality ${item.quality.name}'),
-                    buildText('damage ${item.damage}'),
-                    buildText('cooldown ${item.cooldown}'),
-                    buildText('range ${item.range.toInt()}'),
-                  ],
-                ))));
+  buildItemHoverDialog({double padding = 150}) => buildWatch(
+      itemHover,
+      (item) => item == null
+          ? Positioned(child: nothing, top: 0, left: 0,)
+          : Positioned(
+              left: engine.mousePositionX < engine.screenCenterX ? padding : null,
+              right: engine.mousePositionX > engine.screenCenterX ? padding : null,
+              top: engine.mousePositionY < engine.screenCenterY ? padding : null,
+              bottom: engine.mousePositionY > engine.screenCenterY ? padding : null,
+            child: GSWindow(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildText(item.name.replaceAll('_', ' ')),
+                  buildText('quality ${item.quality.name}'),
+                  buildText('damage ${item.damage}'),
+                  buildText('cooldown ${item.cooldown}'),
+                  buildText('range ${item.range.toInt()}'),
+                ],
+              )),
+          ));
 
   Widget buildPlayerItems() => Positioned(
       left: 16,
