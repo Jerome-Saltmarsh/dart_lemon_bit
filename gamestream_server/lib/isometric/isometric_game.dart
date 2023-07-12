@@ -281,7 +281,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (direction != IsometricDirection.None){
+    if (player.runInDirectionEnabled && direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;
       characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else if (!player.runToDestinationEnabled){

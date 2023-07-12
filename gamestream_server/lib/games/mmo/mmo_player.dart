@@ -29,7 +29,7 @@ class MmoPlayer extends IsometricPlayer {
     required super.y,
     required super.z,
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
-
+    runInDirectionEnabled = false;
     setInventoryLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Old_Bow);
@@ -41,8 +41,9 @@ class MmoPlayer extends IsometricPlayer {
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
   set equippedWeaponIndex(int value){
-    if (_equippedWeaponIndex == value)
+    if (_equippedWeaponIndex == value){
       return;
+    }
 
     if (value == -1){
       _equippedWeaponIndex = value;
@@ -59,8 +60,13 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     _equippedWeaponIndex = value;
-    setCharacterStateChanging();
     writeEquippedWeaponIndex(value);
+  }
+
+  void attack() {
+    setDestinationToCurrentPosition();
+    setCharacterStateIdle();
+    game.characterAttack(this);
   }
 
   void writeEquippedWeaponIndex(int value) {
@@ -254,6 +260,7 @@ class MmoPlayer extends IsometricPlayer {
         break;
       case GameObjectType.Weapon:
         equippedWeaponIndex = index;
+        attack();
         break;
       case GameObjectType.Head:
         equipHead(item);
