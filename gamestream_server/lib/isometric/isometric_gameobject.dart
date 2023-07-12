@@ -14,7 +14,7 @@ class IsometricGameObject extends IsometricCollider {
   var persistable = false;
   var destroyable = false;
   var recyclable = true;
-  var dirty = false;
+  var dirty = true;
   var previousX = 0.0;
   var previousY = 0.0;
   var previousZ = 0.0;

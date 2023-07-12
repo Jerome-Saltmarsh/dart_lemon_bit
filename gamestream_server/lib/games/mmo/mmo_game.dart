@@ -126,13 +126,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       z: z,
       item: item,
       id: generateId(),
-    )
-      ..deactivationTimer = GameObjectDeactivationTimer
-      ..fixed = true
-      ..collectable = true
-      ..persistable = false
-      ..hitable = false
-      ..physical = false);
+    ));
   }
 
   void setCollectableProperties(){

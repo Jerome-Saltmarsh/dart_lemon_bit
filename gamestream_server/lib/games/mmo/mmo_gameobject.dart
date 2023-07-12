@@ -2,6 +2,8 @@
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/isometric.dart';
 
+import 'mmo_game.dart';
+
 class MMOGameObject extends IsometricGameObject {
 
   final MMOItem item;
@@ -12,6 +14,11 @@ class MMOGameObject extends IsometricGameObject {
     required super.z,
     required super.id,
     required this.item,
-  }) : super(type: item.type, subType: item.subType, team: TeamType.Neutral);
-
+  }) : super(type: item.type, subType: item.subType, team: TeamType.Neutral) {
+    deactivationTimer = MmoGame.GameObjectDeactivationTimer;
+    fixed = true;
+    collectable = true;
+    persistable = false;
+    hitable = false;
+  }
 }
