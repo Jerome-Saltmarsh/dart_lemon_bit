@@ -38,7 +38,7 @@ class MmoPlayer extends IsometricPlayer {
     addItem(MMOItem.Old_Bow);
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Steel_Helmet);
-    addItem(MMOItem.Steel_Helmet);
+    addItem(MMOItem.Ancients_Hat);
     equippedWeaponIndex = 0;
   }
 
@@ -358,13 +358,34 @@ class MmoPlayer extends IsometricPlayer {
         }
         break;
       case GameObjectType.Head:
-        equipHead(item);
+        if (equippedHead != null){
+          final equipped = equippedHead;
+          equipHead(item);
+          setItem(index: index, item: equipped);
+        } else {
+          equipHead(item);
+          clearItem(index);
+        }
         break;
       case GameObjectType.Body:
-        equipBody(item);
+        if (equippedHead != null){
+          final equipped = equippedHead;
+          equipBody(item);
+          setItem(index: index, item: equipped);
+        } else {
+          equipHead(item);
+          clearItem(index);
+        }
         break;
       case GameObjectType.Legs:
-        setLegsType(item);
+        if (equippedLegs != null){
+          final equipped = equippedLegs;
+          equipLegs(item);
+          setItem(index: index, item: equipped);
+        } else {
+          equipLegs(item);
+          clearItem(index);
+        }
         break;
     }
   }
@@ -414,15 +435,48 @@ class MmoPlayer extends IsometricPlayer {
     setCharacterStateChanging();
   }
 
-  void equipBody(MMOItem item){
+  void equipBody(MMOItem? item){
     if (deadBusyOrWeaponStateBusy)
       return;
-    bodyType = item.subType;
+
+    if (equippedBody == item)
+      return;
+
+    if (item == null){
+      equippedBody = null;
+      writeEquipped(); // TODO make reactive
+      setCharacterStateChanging();
+      return;
+    }
+
+    if (!item.isBody)
+      return;
+
+    equippedBody = item;
+    writeEquipped(); // TODO make reaction
     setCharacterStateChanging();
+
   }
 
-  void setLegsType(MMOItem item){
-    legsType = item.subType;
+  void equipLegs(MMOItem? item){
+    if (deadBusyOrWeaponStateBusy)
+      return;
+
+    if (equippedLegs == item)
+      return;
+
+    if (item == null){
+      equippedLegs = null;
+      writeEquipped(); // TODO make reactive
+      setCharacterStateChanging();
+      return;
+    }
+
+    if (!item.isLegs)
+      return;
+
+    equippedLegs = item;
+    writeEquipped(); // TODO make reaction
     setCharacterStateChanging();
   }
 

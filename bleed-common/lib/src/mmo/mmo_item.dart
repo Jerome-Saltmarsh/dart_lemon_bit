@@ -23,6 +23,11 @@ enum MMOItem {
       subType: HeadType.Steel_Helm,
       quality: MMOItemQuality.Normal,
   ),
+  Ancients_Hat(
+      type: GameObjectType.Head,
+      subType: HeadType.Wizards_Hat,
+      quality: MMOItemQuality.Magic,
+  ),
   Health_Potion(
       type: GameObjectType.Consumable,
       subType: ConsumableType.Health_Potion,
