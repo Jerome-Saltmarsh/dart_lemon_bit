@@ -20,6 +20,7 @@ class MMOGameObject extends IsometricGameObject {
     collectable = true;
     persistable = false;
     hitable = false;
+    physical = false;
   }
 
   @override
