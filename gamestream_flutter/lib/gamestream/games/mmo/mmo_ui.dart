@@ -100,10 +100,6 @@ extension MMOUI on MmoGame {
 
   Widget buildItemImageAtIndex(int index) {
     final item = weapons[index];
-
-    if (item == null){
-      return buildText('-');
-    }
     return MouseRegion(
         onEnter: (_){
           itemHover.value = item;
@@ -114,8 +110,8 @@ extension MMOUI on MmoGame {
            itemHover.value = null;
         },
         child: onPressed(
-            onRightClick: () => dropItem(index),
-            action: () => selectItem(index),
+            onRightClick: item == null ? null : () => dropItem(index),
+            action: item == null ? null : () => selectItem(index),
             child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
                   width: 2,
                   color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,

@@ -32,7 +32,7 @@ class MmoPlayer extends IsometricPlayer {
 
     setInventoryLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
-    addItem(MMOItem.Rusty_Old_Sword);
+    addItem(MMOItem.Old_Bow);
     equippedWeaponIndex = 0;
   }
 
