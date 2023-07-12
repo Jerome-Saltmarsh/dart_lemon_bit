@@ -91,8 +91,28 @@ class MmoGame extends IsometricGame {
       selectWeapon(3);
       return;
     }
-
-
   }
 
+  @override
+  void drawCanvas(Canvas canvas, Size size) {
+    super.drawCanvas(canvas, size);
+    renderPlayerHoverItemRange();
+  }
+
+  void renderPlayerHoverItemRange() {
+    final item = itemHover.value;
+    if (item == null) return;
+    renderPlayerItemRange(item);
+  }
+
+  void renderPlayerItemRange(MMOItem item) {
+    if (item.range <= 0) return;
+    gamestream.isometric.renderer.renderCircle(
+      player.x,
+      player.y,
+      player.z,
+      item.range,
+      sections: 20
+    );
+  }
 }
