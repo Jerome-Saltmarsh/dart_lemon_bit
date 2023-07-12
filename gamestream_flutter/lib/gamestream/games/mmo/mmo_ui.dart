@@ -142,28 +142,56 @@ extension MMOUI on MmoGame {
     );
   }
 
-  buildItemHoverDialog({double padding = 150}) => buildWatch(
+  buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
       itemHover,
       (item) => item == null
           ? Positioned(child: nothing, top: 0, left: 0,)
           : Positioned(
-              left: engine.mousePositionX < engine.screenCenterX ? padding : null,
-              right: engine.mousePositionX > engine.screenCenterX ? padding : null,
-              top: engine.mousePositionY < engine.screenCenterY ? padding : null,
-              bottom: engine.mousePositionY > engine.screenCenterY ? padding : null,
+              left: engine.mousePositionX < engine.screenCenterX ? edgePadding : null,
+              right: engine.mousePositionX > engine.screenCenterX ? edgePadding : null,
+              top: engine.mousePositionY < engine.screenCenterY ? edgePadding : null,
+              bottom: engine.mousePositionY > engine.screenCenterY ? edgePadding : null,
             child: GSWindow(
+                width: 200,
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  buildText(item.name.replaceAll('_', ' ')),
-                  buildText('quality ${item.quality.name}'),
-                  buildText('damage ${item.damage}'),
-                  buildText('cooldown ${item.cooldown}'),
-                  buildText('range ${item.range.toInt()}'),
+                  Center(child: buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8))),
+                  height16,
+                  if (item.quality != null)
+                     buildItemRow('quality', item.quality!.name),
+                  buildItemRow('damage', item.damage),
+                  buildItemRow('cooldown', item.cooldown),
+                  buildItemRow('range', item.range),
+                  buildItemRow('health', item.health),
                 ],
               )),
           ));
+
+  static Widget buildItemRow(String text, dynamic value){
+     if (value == null || value == 0) return nothing;
+     if (value is double) {
+       value = value.toInt();
+     }
+     final textColor = Colors.white.withOpacity(0.8);
+     final textSize = 22;
+     return Container(
+       margin: const EdgeInsets.only(bottom: 4),
+       child: Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         children: [
+           buildText(text, color: textColor, size: textSize),
+           Container(
+               width: 70,
+               alignment: Alignment.centerRight,
+               color: Colors.white12,
+               padding: const EdgeInsets.all(4),
+               child: buildText(value, color: textColor, size: textSize)),
+         ],
+       ),
+     );
+  }
 
   Widget buildPlayerItems() => Positioned(
       left: 16,

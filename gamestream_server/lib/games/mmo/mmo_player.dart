@@ -12,6 +12,7 @@ class MmoPlayer extends IsometricPlayer {
 
   final MmoGame game;
 
+  var healthBase = 10;
   var interacting = false;
   var npcText = '';
   var npcOptions = <TalkOption>[];
@@ -422,8 +423,7 @@ class MmoPlayer extends IsometricPlayer {
 
     if (item == null){
       equippedHead = null;
-      writeEquipped(); // TODO make reactive
-      setCharacterStateChanging();
+      onEquipmentChanged();
       return;
     }
 
@@ -431,8 +431,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedHead = item;
-    writeEquipped(); // TODO make reaction
-    setCharacterStateChanging();
+    onEquipmentChanged();
   }
 
   void equipBody(MMOItem? item){
@@ -444,8 +443,7 @@ class MmoPlayer extends IsometricPlayer {
 
     if (item == null){
       equippedBody = null;
-      writeEquipped(); // TODO make reactive
-      setCharacterStateChanging();
+      onEquipmentChanged();
       return;
     }
 
@@ -453,9 +451,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedBody = item;
-    writeEquipped(); // TODO make reaction
-    setCharacterStateChanging();
-
+    onEquipmentChanged();
   }
 
   void equipLegs(MMOItem? item){
@@ -467,8 +463,7 @@ class MmoPlayer extends IsometricPlayer {
 
     if (item == null){
       equippedLegs = null;
-      writeEquipped(); // TODO make reactive
-      setCharacterStateChanging();
+      onEquipmentChanged();
       return;
     }
 
@@ -476,8 +471,31 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedLegs = item;
-    writeEquipped(); // TODO make reaction
+    onEquipmentChanged();
+  }
+
+  @override
+  int get maxHealth {
+    var health = healthBase;
+    if (equippedHead != null){
+      health += equippedHead!.health;
+    }
+    if (equippedBody != null){
+      health += equippedBody!.health;
+    }
+    if (equippedLegs != null){
+      health += equippedLegs!.health;
+    }
+    return health;
+  }
+
+  void onEquipmentChanged(){
     setCharacterStateChanging();
+    final maxHealth = this.maxHealth;
+    if (maxHealth > health){
+      health = maxHealth;
+    }
+    writeEquipped();
   }
 
   void writeEquipped(){

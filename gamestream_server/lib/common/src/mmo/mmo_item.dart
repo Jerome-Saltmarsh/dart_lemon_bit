@@ -22,22 +22,26 @@ enum MMOItem {
       type: GameObjectType.Head,
       subType: HeadType.Steel_Helm,
       quality: MMOItemQuality.Normal,
+      health: 10,
   ),
   Ancients_Hat(
       type: GameObjectType.Head,
       subType: HeadType.Wizards_Hat,
       quality: MMOItemQuality.Magic,
+      health: 5,
   ),
   Health_Potion(
       type: GameObjectType.Consumable,
       subType: ConsumableType.Health_Potion,
+      health: 10,
   );
 
-  final MMOItemQuality quality;
+  final MMOItemQuality? quality;
   final int damage;
   final int type;
   final int subType;
   final int cooldown;
+  final int health;
   final double range;
 
   bool get isWeapon => type == GameObjectType.Weapon;
@@ -51,9 +55,10 @@ enum MMOItem {
   const MMOItem({
     required this.type,
     required this.subType,
-    this.quality = MMOItemQuality.Normal,
+    this.quality,
     this.cooldown = 0,
     this.damage = 0,
     this.range = 0,
+    this.health = 0,
   });
 }
