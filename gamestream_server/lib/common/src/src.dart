@@ -7,7 +7,6 @@ export 'isometric/src.dart';
 export 'isometric_editor/src.dart';
 export 'moba/src.dart';
 export 'rock_paper_scissors/src.dart';
-export 'survival/src.dart';
 export 'mmo/src.dart';
 export 'functions/src.dart';
 

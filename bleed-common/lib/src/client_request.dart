@@ -6,8 +6,6 @@ class ClientRequest {
   static const Isometric                = 35;
   static const Isometric_Editor         = 36;
   static const Capture_The_Flag         = 37;
-  static const Survival                 = 38;
-  static const Combat                   = 39;
   static const MMO                      = 40;
   static const Debugging                = 41;
   static const Set_FPS                  = 42;

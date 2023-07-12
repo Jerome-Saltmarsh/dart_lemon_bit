@@ -155,12 +155,11 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   }
 
   @override
-  MobaPlayer buildPlayer() {
-    final player = MobaPlayer(game: this);
-    player.x = redSpawn.x;
-    player.y = redSpawn.y;
-    player.z = redSpawn.z;
-    player.team = redTeam;
-    return player;
-  }
+  MobaPlayer buildPlayer() => MobaPlayer(
+        game: this,
+        team: MobaGame.blueTeam,
+        x : redSpawn.x,
+        y : redSpawn.y,
+        z : redSpawn.z,
+    );
 }

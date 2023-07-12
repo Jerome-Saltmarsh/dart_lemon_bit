@@ -110,18 +110,6 @@ class WebSocketConnection with ByteReader {
 
     switch (clientRequest) {
 
-      case ClientRequest.Survival:
-        if (player is! SurvivalPlayer) {
-          errorInvalidPlayerType();
-          return;
-        }
-        handleClientRequestSurvival(player, arguments);
-        break;
-
-      case ClientRequest.Combat:
-        handleClientRequestCombat(player, arguments);
-        break;
-
       case ClientRequest.Isometric_Editor:
         if (game is! IsometricGame)
           return errorInvalidPlayerType();
@@ -313,84 +301,6 @@ class WebSocketConnection with ByteReader {
       case GameFight2DClientRequest.Toggle_Player_Edit:
         player.edit = !player.edit;
         break;
-    }
-  }
-
-  void handleClientRequestSurvival(SurvivalPlayer player, List<String> arguments){
-    final survivalRequestIndex = parseArg2(arguments);
-
-    if (survivalRequestIndex == null)
-      return;
-
-    if (!isValidIndex(survivalRequestIndex, SurvivalRequest.values)){
-       errorInvalidClientRequest();
-       return;
-    }
-
-    final survivalRequest = SurvivalRequest.values[survivalRequestIndex];
-
-    switch (survivalRequest) {
-
-      case SurvivalRequest.Deposit:
-        final index = parse(arguments[2]);
-        if (index == null) return;
-        player.inventoryDeposit(index);
-        break;
-      case SurvivalRequest.Unequip:
-        final index = parse(arguments[2]);
-        if (index == null) return;
-        player.inventoryUnequip(index);
-        break;
-      case SurvivalRequest.Buy:
-        if (insufficientArgs(arguments, 3)) return;
-        final index = parse(arguments[2]);
-        if (index == null) return;
-        player.inventoryBuy(index);
-        break;
-      case SurvivalRequest.Sell:
-        final index = parse(arguments[2]);
-        if (index == null) return;
-        player.inventorySell(index);
-        break;
-      case SurvivalRequest.Toggle:
-        player.inventoryOpen = !player.inventoryOpen;
-        if (player.inventoryOpen){
-          player.interactMode = InteractMode.Inventory;
-        } else {
-          player.interactMode = InteractMode.None;
-        }
-        break;
-      case SurvivalRequest.Drop:
-        final index = parse(arguments[2]);
-        if (index == null) return;
-        // if (!player.isValidInventoryIndex(index)){
-        //   player.writeErrorInvalidInventoryIndex(index);
-        //   return;
-        // }
-        player.inventoryDrop(index);
-        break;
-      case SurvivalRequest.Move:
-        if (insufficientArgs(arguments, 4)) return;
-        final indexFrom = parse(arguments[2]);
-        final indexTo = parse(arguments[3]);
-        if (indexFrom == null) return errorInvalidClientRequest();
-        if (indexTo == null) return errorInvalidClientRequest();
-        if (indexFrom < 0) return errorInvalidClientRequest();
-        if (indexTo < 0) return errorInvalidClientRequest();
-        player.inventorySwapIndexes(indexFrom, indexTo);
-        break;
-      case SurvivalRequest.Equip:
-        final index = parse(arguments[2]);
-        if (index == null) return;
-        if (index == player.equippedWeaponIndex){
-          player.unequipWeapon();
-          break;
-        }
-        player.inventoryEquip(index);
-        break;
-      default:
-        sendGameError(GameError.Invalid_Inventory_Request_Index);
-        return;
     }
   }
 

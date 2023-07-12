@@ -296,9 +296,6 @@ extension ServerResponseReader on Gamestream {
       case ApiPlayer.Experience_Percentage:
         isometric.server.playerExperiencePercentage.value = readPercentage();
         break;
-      case ApiPlayer.Interact_Mode:
-        isometric.server.interactMode.value = readByte();
-        break;
       case ApiPlayer.Health:
         readPlayerHealth();
         break;
@@ -311,63 +308,9 @@ extension ServerResponseReader on Gamestream {
       case ApiPlayer.Weapons:
         readPlayerWeapons();
         break;
-      // case ApiPlayer.Weapon_Quantity:
-      //   readPlayerWeaponQuantity();
-      //   break;
       case ApiPlayer.Aim_Angle:
         isometric.player.mouseAngle = readAngle();
         break;
-      case ApiPlayer.Inventory:
-        readPlayerInventory();
-        break;
-      case ApiPlayer.Inventory_Slot:
-        throw Exception();
-        // final index = readUInt16();
-        // final itemType = readUInt16();
-        // final itemQuantity = readUInt16();
-        //
-        // final survival = games.survival;
-        //
-        // if (index == ItemType.Belt_1){
-        //   isometric.server.playerBelt1_ItemType.value = itemType;
-        //   isometric.server.playerBelt1_Quantity.value = itemQuantity;
-        //   survival.redrawInventory();
-        //   return;
-        // }
-        // if (index == ItemType.Belt_2){
-        //   isometric.server.playerBelt2_ItemType.value = itemType;
-        //   isometric.server.playerBelt2_Quantity.value = itemQuantity;
-        //   survival.redrawInventory();
-        //   return;
-        // }
-        // if (index == ItemType.Belt_3){
-        //   isometric.server.playerBelt3_ItemType.value = itemType;
-        //   isometric.server.playerBelt3_Quantity.value = itemQuantity;
-        //   survival.redrawInventory();
-        //   return;
-        // }
-        // if (index == ItemType.Belt_4){
-        //   isometric.server.playerBelt4_ItemType.value = itemType;
-        //   isometric.server.playerBelt4_Quantity.value = itemQuantity;
-        //   survival.redrawInventory();
-        //   return;
-        // }
-        // if (index == ItemType.Belt_5){
-        //   isometric.server.playerBelt5_ItemType.value = itemType;
-        //   isometric.server.playerBelt5_Quantity.value = itemQuantity;
-        //   survival.redrawInventory();
-        //   return;
-        // }
-        // if (index == ItemType.Belt_6){
-        //   isometric.server.playerBelt6_ItemType.value = itemType;
-        //   isometric.server.playerBelt6_Quantity.value = itemQuantity;
-        //   survival.redrawInventory();
-        //   return;
-        // }
-        // isometric.server.inventory[index] = itemType;
-        // isometric.server.inventoryQuantity[index] = itemQuantity;
-        // survival.redrawInventory();
-        // break;
       case ApiPlayer.Message:
         isometric.player.message.value = readString();
         break;
@@ -436,38 +379,6 @@ extension ServerResponseReader on Gamestream {
   void readPlayerHealth() {
     isometric.server.playerHealth.value = readUInt16();
     isometric.server.playerMaxHealth.value = readUInt16();
-  }
-
-  void readPlayerInventory() {
-    isometric.player.head.value = readUInt16();
-    isometric.player.body.value = readUInt16();
-    isometric.player.legs.value = readUInt16();
-    isometric.player.weapon.value = readUInt16();
-    isometric.server.playerBelt1_ItemType.value = readUInt16();
-    isometric.server.playerBelt2_ItemType.value = readUInt16();
-    isometric.server.playerBelt3_ItemType.value = readUInt16();
-    isometric.server.playerBelt4_ItemType.value = readUInt16();
-    isometric.server.playerBelt5_ItemType.value = readUInt16();
-    isometric.server.playerBelt6_ItemType.value = readUInt16();
-    isometric.server.playerBelt1_Quantity.value = readUInt16();
-    isometric.server.playerBelt2_Quantity.value = readUInt16();
-    isometric.server.playerBelt3_Quantity.value = readUInt16();
-    isometric.server.playerBelt4_Quantity.value = readUInt16();
-    isometric.server.playerBelt5_Quantity.value = readUInt16();
-    isometric.server.playerBelt6_Quantity.value = readUInt16();
-    isometric.server.equippedWeaponIndex.value = readUInt16();
-    final total = readUInt16();
-    if (isometric.server.inventory.length != total){
-      isometric.server.inventory = Uint16List(total);
-      isometric.server.inventoryQuantity = Uint16List(total);
-    }
-    for (var i = 0; i < total; i++){
-      isometric.server.inventory[i] = readUInt16();
-    }
-    for (var i = 0; i < total; i++){
-      isometric.server.inventoryQuantity[i] = readUInt16();
-    }
-    games.survival.redrawInventory();
   }
 
   void readMapCoordinate() {

@@ -125,9 +125,6 @@ class Isometric {
   void setHour(int value) =>
       sendIsometricRequest(IsometricRequest.Time_Set_Hour, value);
 
-  void selectNpcTalkOption(int index) =>
-      sendIsometricRequest(IsometricRequest.Npc_Talk_Select_Option, index);
-
   void editorLoadGame(String name)=> sendIsometricRequest(IsometricRequest.Editor_Load_Game, name);
 
   void moveSelectedColliderToMouse() =>

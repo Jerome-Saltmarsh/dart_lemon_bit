@@ -39,11 +39,15 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   );
 
   CaptureTheFlagPlayer({
+    required super.team,
+    required super.x,
+    required super.y,
+    required super.z,
     required this.game,
     required this.power1,
     required this.power2,
     required this.power3,
-  }) : super(game: game) {
+  }) : super(game: game, health: 10) {
     writeScore();
     weaponDamage = 1;
     weaponType = WeaponType.Unarmed;

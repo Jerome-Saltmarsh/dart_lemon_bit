@@ -167,19 +167,11 @@ class Gamestream with ByteReader {
    }
 
    void startGameType(GameType gameType){
-      if (gameType.isSinglePlayer) {
-        this.gameType.value = gameType;
-        return;
-      }
       network.connectToGame(gameType);
    }
 
    void disconnect(){
-      if (gameType.value.isSinglePlayer){
-        gameType.value = GameType.Website;
-      } else {
-        network.disconnect();
-      }
+     network.disconnect();
    }
 
    void onError(Object error, StackTrace stack) {

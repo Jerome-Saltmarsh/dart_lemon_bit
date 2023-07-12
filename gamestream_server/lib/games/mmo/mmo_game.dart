@@ -13,6 +13,10 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   late MMONpc npcGuard;
 
+  final playerSpawnX = 1000.0;
+  final playerSpawnY = 1000.0;
+  final playerSpawnZ = 25.0;
+
   MmoGame({
     required super.scene,
     required super.time,
@@ -78,6 +82,13 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
+  void customOnPlayerDead(MmoPlayer player) {
+    addJob(seconds: 3, action: () {
+      setCharacterStateSpawning(player);
+    });
+  }
+
+  @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
     if (target is IsometricZombie) {
        spawnRandomLootAtPosition(target);
@@ -131,12 +142,13 @@ class MmoGame extends IsometricGame<MmoPlayer> {
           (throw Exception('getRandomSubType($type)')));
 
   @override
-  MmoPlayer buildPlayer() => MmoPlayer(game: this, itemLength: 6)
-    ..x = 880
-    ..y = 1100
-    ..z = 50
-    ..team = MmoTeam.Human
-    ..setDestinationToCurrentPosition();
+  MmoPlayer buildPlayer() => MmoPlayer(
+      game: this,
+      itemLength: 6,
+      x: playerSpawnX,
+      y: playerSpawnY,
+      z: playerSpawnZ,
+  );
 
   @override
   int get maxPlayers => 64;

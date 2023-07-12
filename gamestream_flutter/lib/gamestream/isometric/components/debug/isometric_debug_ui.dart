@@ -156,7 +156,6 @@ extension isometricDebugUI on IsometricDebug {
                   'player-body: ${BodyType.getName(gamestream.isometric.player.body.value)}\n'
                   'player-head: ${HeadType.getName(gamestream.isometric.player.head.value)}\n'
                   'player-weapon: ${WeaponType.getName(gamestream.isometric.player.weapon.value)}\n'
-                  'player-interact-mode: ${InteractMode.getName(gamestream.isometric.server.interactMode.value)}\n'
                   'aim-target-category: ${TargetCategory.getName(gamestream.isometric.player.aimTargetCategory)}\n'
                   'aim-target-type: ${gamestream.isometric.player.aimTargetType}\n'
                   'aim-target-name: ${gamestream.isometric.player.aimTargetName}\n'

@@ -604,8 +604,15 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   CaptureTheFlagPlayer buildPlayer() {
+
+    final team = getNewPlayerTeam();
+    final baseOwn = team == CaptureTheFlagTeam.Blue ? baseBlue : baseRed;
+
     final player = CaptureTheFlagPlayer(
       game: this,
+      x: baseOwn.x,
+      y: baseOwn.y,
+      z: baseOwn.z,
       power1: CaptureTheFlagPower(
         type: CaptureTheFlagPowerType.Blink,
         range: 300,
@@ -623,12 +630,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         cooldown: 300,
         duration: 120,
       ),
+      team: getNewPlayerTeam()
     );
-    player.team = countPlayersOnTeamBlue > countPlayersOnTeamRed
-        ? CaptureTheFlagTeam.Red
-        : CaptureTheFlagTeam.Blue;
 
-    player.moveTo(getBaseOwn(player));
     player.setDestinationToCurrentPosition();
 
     if (player.team == CaptureTheFlagTeam.Blue) {
@@ -643,6 +647,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     player.writePlayerLevel();
     player.writePlayerExperience();
     return player;
+  }
+
+  int getNewPlayerTeam() {
+    return countPlayersOnTeamBlue > countPlayersOnTeamRed
+        ? CaptureTheFlagTeam.Red
+        : CaptureTheFlagTeam.Blue;
   }
 
   @override

@@ -110,7 +110,6 @@ class Gamestream {
       GameType.Mmo => buildGameMMO(),
       GameType.Capture_The_Flag => buildGameCaptureTheFlag(),
       GameType.Moba => buildGameMoba(),
-      GameType.Combat => buildGameCombat(),
       GameType.Fight2D => buildGameFight2D(),
       GameType.Rock_Paper_Scissors => RockPaperScissorsGame(),
       GameType.Editor => IsometricEditor(),
@@ -134,8 +133,6 @@ class Gamestream {
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
     );
-
-  Game buildGameCombat() => CombatGame(scene: isometricScenes.mmoTown);
 
   Game buildGameFight2D() => GameFight2D(scene: GameFight2DSceneGenerator.generate());
 

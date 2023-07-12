@@ -202,7 +202,6 @@ mixin class IsometricClient {
     gamestream.isometric.server.totalPlayers = 0;
     gamestream.isometric.server.totalProjectiles = 0;
     gamestream.isometric.server.totalNpcs = 0;
-    gamestream.isometric.server.interactMode.value = InteractMode.None;
     gamestream.isometric.particles.particles.clear();
     engine.zoom = 1;
   }

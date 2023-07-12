@@ -7,7 +7,6 @@ enum IsometricRequest {
    Weather_Set_Lightning,
    Weather_Toggle_Breeze,
    Time_Set_Hour,
-   Npc_Talk_Select_Option,
    Editor_Load_Game,
    Move_Selected_Collider_To_Mouse,
    Debug_Character_Walk_To_Mouse,

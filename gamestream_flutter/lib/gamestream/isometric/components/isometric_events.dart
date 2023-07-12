@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/gamestream/games/survival/survival_game_ui.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client.dart';
@@ -592,28 +591,6 @@ class IsometricEvents {
     if (inputMode == InputMode.Touch){
       gamestream.isometric.camera.centerOnChaseTarget();
       gamestream.io.recenterCursor();
-    }
-  }
-
-  void onChangedPlayerInteractMode(int value) {
-    final camera = gamestream.isometric.camera;
-    gamestream.isometric.client.playSoundWindow();
-    switch (value) {
-      case InteractMode.Inventory:
-        camera.translateX = SurvivalGameUI.Inventory_Width * 0.5;
-        break;
-      case InteractMode.Talking:
-        camera.translateX = SurvivalGameUI.Inventory_Width * 0.5;
-        break;
-      case InteractMode.Trading:
-        camera.translateX = 0;
-        break;
-      case InteractMode.None:
-        camera.translateX = 0;
-        // todo doesn't belong
-        gamestream.games.survival.clearHoverIndex();
-        gamestream.isometric.ui.mouseOverDialog.setFalse();
-        break;
     }
   }
 

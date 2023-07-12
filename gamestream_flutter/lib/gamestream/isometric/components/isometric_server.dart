@@ -59,7 +59,6 @@ class IsometricServer {
   late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);
   late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
   late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
-  late final interactMode = Watch(InteractMode.None, onChanged: gamestream.isometric.events.onChangedPlayerInteractMode);
   late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
   late final watchBeltItemTypes = [
     playerBelt1_ItemType,

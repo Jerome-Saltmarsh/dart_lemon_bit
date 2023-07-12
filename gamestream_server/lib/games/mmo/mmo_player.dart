@@ -18,7 +18,14 @@ class MmoPlayer extends IsometricPlayer {
 
   late ItemList items;
 
-  MmoPlayer({required this.game, required int itemLength}) : super(game: game) {
+  MmoPlayer({
+    required this.game,
+    required int itemLength,
+    required super.x,
+    required super.y,
+    required super.z,
+  })
+      : super(game: game, health: 10, team: MmoTeam.Human) {
     equipWeapon(WeaponType.Unarmed);
     setItemLength(itemLength);
 

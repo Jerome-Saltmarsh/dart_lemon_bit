@@ -68,18 +68,18 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   IsometricPlayer({
     required this.game,
+    required super.x,
+    required super.y,
+    required super.z,
+    required super.health,
+    required super.team,
     bool autoTargetNearbyEnemies = false,
   }) : super(
     characterType: CharacterType.Template,
-    x: 0,
-    y: 0,
-    z: 0,
-    health: 10,
-    team: 0,
-    weaponType: WeaponType.Unarmed,
-    weaponRange: 20,
-    weaponDamage: 1,
     weaponCooldown: 20,
+    weaponRange: 100,
+    weaponType: WeaponType.Unarmed,
+    weaponDamage: 1,
   ){
     this.autoTarget = autoTargetNearbyEnemies;
     id = game.playerId++;

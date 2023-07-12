@@ -1,7 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games/isometric_editor/isometric_editor.dart';
-import 'package:gamestream_server/games/survival/survival_player.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/utils.dart';
 import 'package:gamestream_server/websocket/src.dart';
@@ -82,21 +81,6 @@ extension IsometricRequestReader on WebSocketConnection {
         final hour = parseArg2(arguments);
         if (hour == null) return;
         game.setHourMinutes(hour, 0);
-        break;
-
-      case IsometricRequest.Npc_Talk_Select_Option:
-        if (player.dead) return errorPlayerDead();
-        if (arguments.length != 2) return errorInvalidClientRequest();
-        if (player is! SurvivalPlayer) return;
-        final index = parseArg2(arguments);
-        if (index == null) {
-          return errorInvalidClientRequest();
-        }
-        if (index < 0 || index >= player.npcOptions.length){
-          return errorInvalidClientRequest();
-        }
-        final action = player.npcOptions.values.toList()[index];
-        action.call();
         break;
 
       case IsometricRequest.Editor_Load_Game:
