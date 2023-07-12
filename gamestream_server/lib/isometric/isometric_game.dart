@@ -2500,6 +2500,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     character.pathCurrent = -1;
+    character.pathStart = -1;
 
     final path = character.path;
     var endPath = scene.findPath(

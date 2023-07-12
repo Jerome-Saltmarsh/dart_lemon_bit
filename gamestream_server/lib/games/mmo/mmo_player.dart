@@ -1,6 +1,7 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
+import 'package:gamestream_server/games/mmo/mmo_item.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -15,6 +16,10 @@ class MmoPlayer extends IsometricPlayer {
   var interacting = false;
   var npcText = '';
   var npcOptions = <TalkOption>[];
+
+  MMOItem? _equippedWeapon;
+
+  MMOItem? get equippedWeapon => _equippedWeapon;
 
   late ItemList items;
 
@@ -34,9 +39,21 @@ class MmoPlayer extends IsometricPlayer {
         type: GameObjectType.Weapon,
         subType: WeaponType.Handgun,
     );
+
+    setItem(
+        index: 1,
+        type: GameObjectType.Consumable,
+        subType: ConsumableType.Health_Potion,
+    );
   }
 
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
+
+  set equippedWeapon(MMOItem? value){
+    if (_equippedWeapon == value) return;
+    _equippedWeapon = value;
+    // weaponType = value.subType;
+  }
 
   void setItemLength(int value){
     items = ItemList(value);
@@ -164,7 +181,7 @@ class MmoPlayer extends IsometricPlayer {
     if (itemType == 0)
       return;
 
-    setItem(index: index, type: 0, subType: 0);
+    clearItem(index);
 
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
@@ -180,6 +197,8 @@ class MmoPlayer extends IsometricPlayer {
 
   }
 
+  void clearItem(int index) => setItem(index: index, type: 0, subType: 0);
+
   void selectItem(int index) {
     if (!items.isValidItemIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
@@ -191,7 +210,17 @@ class MmoPlayer extends IsometricPlayer {
     if (itemType == 0)
       return;
 
-    equip(type: itemType, subType: items.subTypes[index]);
+    final subType = items.subTypes[index];
+
+    if (itemType == GameObjectType.Consumable){
+      if (subType == ConsumableType.Health_Potion){
+         health = maxHealth;
+         clearItem(index);
+      }
+      return;
+    }
+
+    equip(type: itemType, subType: subType);
   }
 
   void selectNpcTalkOption(int index) {
