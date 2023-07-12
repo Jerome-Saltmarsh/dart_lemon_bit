@@ -68,7 +68,7 @@ extension MMOUI on MmoGame {
         child: GSWindow(
         child: buildWatch(
           weaponsChangedNotifier,
-          (int reads) => Column(
+          (int reads) => Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(weapons.length, buildItemImageAtIndex),
@@ -122,8 +122,8 @@ extension MMOUI on MmoGame {
   }
 
   buildItemHoverDialog() => Positioned(
-      left: 150,
-      bottom: 16,
+      left: 16,
+      bottom: 100,
       child: buildWatch(
           itemHover,
           (item) => item == null
