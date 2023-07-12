@@ -36,6 +36,16 @@ extension MMOResponseReader on Gamestream {
        case MMOResponse.Player_Equipped_Weapon_Index:
          game.equippedWeaponIndex.value = readInt16();
          break;
+       case MMOResponse.Player_Equipped:
+         game.equippedHead.value = readMMOItem();
+         game.equippedBody.value = readMMOItem();
+         game.equippedLegs.value = readMMOItem();
+         break;
      }
+  }
+
+  MMOItem? readMMOItem(){
+    final mmoItemIndex = readInt16();
+    return mmoItemIndex == -1 ? null : MMOItem.values[mmoItemIndex];
   }
 }

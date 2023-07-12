@@ -19,6 +19,9 @@ class MmoPlayer extends IsometricPlayer {
   final weapons = List<MMOItem?>.generate(4, (index) => null);
 
   var _equippedWeaponIndex = -1;
+  MMOItem? equippedHead;
+  MMOItem? equippedBody;
+  MMOItem? equippedLegs;
 
   late List<MMOItem?> items;
 
@@ -34,6 +37,8 @@ class MmoPlayer extends IsometricPlayer {
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Old_Bow);
     addItem(MMOItem.Health_Potion);
+    addItem(MMOItem.Steel_Helmet);
+    addItem(MMOItem.Steel_Helmet);
     equippedWeaponIndex = 0;
   }
 
@@ -90,6 +95,14 @@ class MmoPlayer extends IsometricPlayer {
         return true;
       }
     }
+
+    if (item.isHead){
+      if (equippedHead == null){
+        equipHead(item);
+        return true;
+      }
+    }
+
     final emptyItemIndex = getEmptyItemIndex();
 
     if (emptyItemIndex == -1) {
@@ -376,10 +389,28 @@ class MmoPlayer extends IsometricPlayer {
   @override
   double get weaponRange => equippedWeapon != null ? equippedWeapon!.range : 30;
 
-  void equipHead(MMOItem item){
+  @override
+  int get headType => equippedHead != null ? equippedHead!.subType : HeadType.Plain;
+
+  void equipHead(MMOItem? item){
     if (deadBusyOrWeaponStateBusy)
       return;
-    headType = item.subType;
+
+    if (equippedHead == item)
+      return;
+
+    if (item == null){
+      equippedHead = null;
+      writeEquipped(); // TODO make reactive
+      setCharacterStateChanging();
+      return;
+    }
+
+    if (!item.isHead)
+      return;
+
+    equippedHead = item;
+    writeEquipped(); // TODO make reaction
     setCharacterStateChanging();
   }
 
@@ -393,5 +424,21 @@ class MmoPlayer extends IsometricPlayer {
   void setLegsType(MMOItem item){
     legsType = item.subType;
     setCharacterStateChanging();
+  }
+
+  void writeEquipped(){
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Equipped);
+    writeMMOItem(equippedHead);
+    writeMMOItem(equippedBody);
+    writeMMOItem(equippedLegs);
+  }
+
+  void writeMMOItem(MMOItem? value){
+    if (value == null){
+      writeInt16(-1);
+    } else{
+      writeInt16(value.index);
+    }
   }
 }

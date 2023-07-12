@@ -18,6 +18,11 @@ enum MMOItem {
       damage: 1,
       range: 200,
   ),
+  Steel_Helmet(
+      type: GameObjectType.Head,
+      subType: HeadType.Steel_Helm,
+      quality: MMOItemQuality.Normal,
+  ),
   Health_Potion(
       type: GameObjectType.Consumable,
       subType: ConsumableType.Health_Potion,
@@ -31,6 +36,12 @@ enum MMOItem {
   final double range;
 
   bool get isWeapon => type == GameObjectType.Weapon;
+
+  bool get isHead => type == GameObjectType.Head;
+
+  bool get isBody => type == GameObjectType.Body;
+
+  bool get isLegs => type == GameObjectType.Legs;
 
   const MMOItem({
     required this.type,

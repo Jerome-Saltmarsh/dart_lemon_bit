@@ -17,6 +17,7 @@ extension MMOUI on MmoGame {
       buildPlayerItems(),
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
+      buildPlayerEquipped(),
     ],
   );
 
@@ -183,4 +184,18 @@ extension MMOUI on MmoGame {
                       growable: false)))
       )
   );
+
+  Widget buildPlayerEquipped() => Positioned(
+        bottom: 16,
+        right: 16,
+        child: GSWindow(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            buildWatch(equippedHead, (equipped) => MMOItemImage(item: equipped, size: 64)),
+            buildWatch(equippedBody, (equipped) => MMOItemImage(item: equipped, size: 64)),
+            buildWatch(equippedLegs, (equipped) => MMOItemImage(item: equipped, size: 64)),
+          ],),
+        ));
 }

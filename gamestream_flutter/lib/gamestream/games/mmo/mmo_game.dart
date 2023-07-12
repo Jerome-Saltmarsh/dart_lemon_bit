@@ -19,6 +19,10 @@ class MmoGame extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
 
+  final equippedHead = Watch<MMOItem?>(null);
+  final equippedBody = Watch<MMOItem?>(null);
+  final equippedLegs = Watch<MMOItem?>(null);
+
   MmoGame({required super.isometric});
 
   void setWeapon({required int index, required MMOItem? item}){
