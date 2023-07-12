@@ -115,7 +115,17 @@ extension MMOUI on MmoGame {
             child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
                   width: 2,
                   color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,
-                  child: MMOItemImage(item: item, size: 64),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Positioned(child: MMOItemImage(item: item, size: 64)),
+                      Positioned(
+                          top: 8,
+                          left: 8,
+                          child: buildText(const['Q', 'W', 'E', 'R'][index], color: Colors.white70)
+                      ),
+                    ],
+                  ),
               )),
         ),
     );
