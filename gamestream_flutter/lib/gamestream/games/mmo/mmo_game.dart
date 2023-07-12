@@ -17,6 +17,7 @@ class MmoGame extends IsometricGame {
   MmoGame({required super.isometric});
 
   void setItem({required int index, required MMOItem? item}){
+    print('setItem(index: $index, value: $item)');
     items[index] = item;
     notifyItemsChanged();
   }

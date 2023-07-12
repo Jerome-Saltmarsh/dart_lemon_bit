@@ -190,7 +190,7 @@ class MmoPlayer extends IsometricPlayer {
     );
   }
 
-  void clearItem(int index) => items[index] = null;
+  void clearItem(int index) => setItem(index: index, item: null);
 
   bool isValidItemIndex(int index) => index >= 0 && index < items.length;
 

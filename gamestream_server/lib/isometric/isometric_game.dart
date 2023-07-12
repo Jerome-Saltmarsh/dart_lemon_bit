@@ -2513,6 +2513,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     while (endPath != characterIndex) {
       IsometricScene.compiledPath[totalPathLength++] = endPath;
       endPath = scene.path[endPath];
+      if (endPath == -1){
+        // TODO FIX
+        return;
+      }
     }
     final length = min(path.length, totalPathLength);
 
