@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
+import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
@@ -152,12 +153,19 @@ extension MMOUI on MmoGame {
               top: engine.mousePositionY < engine.screenCenterY ? edgePadding : null,
               bottom: engine.mousePositionY > engine.screenCenterY ? edgePadding : null,
             child: GSWindow(
-                width: 200,
+                width: 270,
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Center(child: buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
+                      width8,
+                      MMOItemImage(item: item, size: 64),
+                    ],
+                  ),
                   height16,
                   if (item.quality != null)
                      buildItemRow('quality', item.quality!.name),
