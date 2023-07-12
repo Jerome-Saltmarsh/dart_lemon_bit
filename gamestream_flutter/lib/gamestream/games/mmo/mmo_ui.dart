@@ -135,20 +135,10 @@ extension MMOUI on MmoGame {
 
   Widget buildItemImageAtIndex(int index) {
     final item = items[index];
-    return MouseRegion(
-        onEnter: (_){
-          itemHover.value = item;
-        },
-        onExit: (_){
-           if (itemHover.value != item)
-             return;
-           itemHover.value = null;
-        },
-        child: onPressed(
-            onRightClick: item == null ? null : () => dropItem(index),
-            action: item == null ? null : () => selectItem(index),
-            child: MMOItemImage(item: item, size: 64),
-        ),
+    return onPressed(
+        onRightClick: item == null ? null : () => dropItem(index),
+        action: item == null ? null : () => selectItem(index),
+        child: MMOItemImage(item: item, size: 64),
     );
   }
 

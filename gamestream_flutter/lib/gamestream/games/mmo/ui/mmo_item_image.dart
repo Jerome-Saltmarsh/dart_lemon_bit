@@ -3,6 +3,7 @@ import 'package:bleed_common/src.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 class MMOItemImage extends StatelessWidget {
   final double size;
@@ -17,5 +18,14 @@ class MMOItemImage extends StatelessWidget {
           height: size,
           child: buildText('-'),
       ) :
-        ItemImage(size: size, type: item!.type, subType: item!.subType);
+        MouseRegion(
+            onEnter: (_){
+              gamestream.games.mmo.itemHover.value = item;
+            },
+            onExit: (_){
+              if (gamestream.games.mmo.itemHover.value != item)
+                return;
+              gamestream.games.mmo.itemHover.value = null;
+            },
+            child: ItemImage(size: size, type: item!.type, subType: item!.subType));
 }
