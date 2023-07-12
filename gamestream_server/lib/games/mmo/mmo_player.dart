@@ -20,7 +20,7 @@ class MmoPlayer extends IsometricPlayer {
 
   var _equippedWeaponIndex = -1;
 
-  late List<MMOItem?> inventory;
+  late List<MMOItem?> items;
 
   MmoPlayer({
     required this.game,
@@ -30,9 +30,10 @@ class MmoPlayer extends IsometricPlayer {
     required super.z,
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     runInDirectionEnabled = false;
-    setInventoryLength(itemLength);
+    setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Old_Bow);
+    addItem(MMOItem.Health_Potion);
     equippedWeaponIndex = 0;
   }
 
@@ -75,22 +76,40 @@ class MmoPlayer extends IsometricPlayer {
     writeInt16(value);
   }
 
-  void setInventoryLength(int value){
-    inventory = List.generate(value, (index) => null);
+  void setItemsLength(int value){
+    items = List.generate(value, (index) => null);
     writeItemLength(value);
   }
 
-  bool addItem(MMOItem? item){
-    final emptyIndex = getEmptyIndex();
-    if (emptyIndex == -1){
+  bool addItem(MMOItem item){
+
+    if (item.isWeapon) {
+      final emptyIndex = getEmptyWeaponIndex();
+      if (emptyIndex != -1){
+        setWeapon(index: emptyIndex, item: item);
+        return true;
+      }
+    }
+    final emptyItemIndex = getEmptyItemIndex();
+
+    if (emptyItemIndex == -1) {
       writeGameError(GameError.Inventory_Full);
       return false;
     }
-    setWeapon(index: emptyIndex, item: item);
+
+    setItem(index: emptyItemIndex, item: item);
     return true;
   }
 
-  int getEmptyIndex(){
+  int getEmptyItemIndex(){
+    for (var i = 0; i < items.length; i++){
+      if (items[i] == null)
+        return i;
+    }
+    return -1;
+  }
+
+  int getEmptyWeaponIndex(){
      for (var i = 0; i < weapons.length; i++){
        if (weapons[i] == null)
          return i;
@@ -107,7 +126,27 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     weapons[index] = item;
+    writePlayerWeapon(index, item);
+  }
+
+  void setItem({required int index, required MMOItem? item}){
+    if (!isValidItemIndex(index)) {
+      writeGameError(GameError.Invalid_Item_Index);
+      return;
+    }
+    items[index] = item;
     writePlayerItem(index, item);
+  }
+
+  void writePlayerWeapon(int index, MMOItem? item) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Weapon);
+    writeUInt16(index);
+    if (item == null){
+      writeInt16(-1);
+      return;
+    }
+    writeInt16(item.index);
   }
 
   void writePlayerItem(int index, MMOItem? item) {
@@ -232,6 +271,8 @@ class MmoPlayer extends IsometricPlayer {
   void clearItem(int index) => setWeapon(index: index, item: null);
 
   bool isValidWeaponIndex(int index) => index >= 0 && index < weapons.length;
+
+  bool isValidItemIndex(int index) => index >= 0 && index < items.length;
 
   void selectItem(int index) {
     if (!isValidWeaponIndex(index)) {

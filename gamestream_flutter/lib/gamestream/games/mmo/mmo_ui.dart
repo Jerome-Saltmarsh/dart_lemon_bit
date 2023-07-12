@@ -13,6 +13,7 @@ extension MMOUI on MmoGame {
     alignment: Alignment.center,
     children: [
       buildNpcText(),
+      buildPlayerWeapons(),
       buildPlayerItems(),
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
@@ -62,7 +63,7 @@ extension MMOUI on MmoGame {
     );
   }
 
-  Positioned buildPlayerItems() => Positioned(
+  Positioned buildPlayerWeapons() => Positioned(
         bottom: 16,
         left: 16,
         child: GSWindow(
@@ -71,7 +72,7 @@ extension MMOUI on MmoGame {
           (int reads) => Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(weapons.length, buildItemImageAtIndex),
+            children: List.generate(weapons.length, buildWeaponImageAtIndex),
           ),
         ),
       ));
@@ -98,7 +99,7 @@ extension MMOUI on MmoGame {
         ));
   }
 
-  Widget buildItemImageAtIndex(int index) {
+  Widget buildWeaponImageAtIndex(int index) {
     final item = weapons[index];
     return MouseRegion(
         onEnter: (_){
@@ -110,8 +111,8 @@ extension MMOUI on MmoGame {
            itemHover.value = null;
         },
         child: onPressed(
-            onRightClick: item == null ? null : () => dropItem(index),
-            action: item == null ? null : () => selectItem(index),
+            onRightClick: item == null ? null : () => dropWeapon(index),
+            action: item == null ? null : () => selectWeapon(index),
             child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
                   width: 2,
                   color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,
@@ -131,6 +132,25 @@ extension MMOUI on MmoGame {
     );
   }
 
+  Widget buildItemImageAtIndex(int index) {
+    final item = items[index];
+    return MouseRegion(
+        onEnter: (_){
+          itemHover.value = item;
+        },
+        onExit: (_){
+           if (itemHover.value != item)
+             return;
+           itemHover.value = null;
+        },
+        child: onPressed(
+            onRightClick: item == null ? null : () => dropItem(index),
+            action: item == null ? null : () => selectItem(index),
+            child: MMOItemImage(item: item, size: 64),
+        ),
+    );
+  }
+
   buildItemHoverDialog() => Positioned(
       left: 16,
       bottom: 130,
@@ -144,9 +164,23 @@ extension MMOUI on MmoGame {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     buildText(item.name.replaceAll('_', ' ')),
+                    buildText('quality ${item.quality.name}'),
                     buildText('damage ${item.damage}'),
                     buildText('cooldown ${item.cooldown}'),
                     buildText('range ${item.range.toInt()}'),
                   ],
                 ))));
+
+  Widget buildPlayerItems() => Positioned(
+      left: 16,
+      bottom: 130,
+      child: buildWatch(
+          itemsChangedNotifier,
+          (_) => GSWindow(
+              child: Column(
+                  children: List.generate(
+                      items.length, (index) => buildItemImageAtIndex(index),
+                      growable: false)))
+      )
+  );
 }

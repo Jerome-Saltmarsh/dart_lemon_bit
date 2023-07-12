@@ -17,6 +17,10 @@ enum MMOItem {
       cooldown: 40,
       damage: 1,
       range: 200,
+  ),
+  Health_Potion(
+      type: GameObjectType.Consumable,
+      subType: ConsumableType.Health_Potion,
   );
 
   final MMOItemQuality quality;
@@ -29,9 +33,9 @@ enum MMOItem {
   bool get isWeapon => type == GameObjectType.Weapon;
 
   const MMOItem({
-    required this.quality,
     required this.type,
     required this.subType,
+    this.quality = MMOItemQuality.Normal,
     this.cooldown = 0,
     this.damage = 0,
     this.range = 0,

@@ -12,7 +12,7 @@ class MmoGame extends IsometricGame {
   final itemsChangedNotifier = Watch(0);
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
-  late List<MMOItem?> items;
+  var items = <MMOItem?>[];
 
   final npcText = Watch('');
   final npcOptions = <String>[];
@@ -26,6 +26,11 @@ class MmoGame extends IsometricGame {
     notifyWeaponsChanged();
   }
 
+  void setItem({required int index, required MMOItem? item}){
+    items[index] = item;
+    notifyItemsChanged();
+  }
+
   void setItemLength(int length){
     items = List.generate(length, (index) => null);
     notifyItemsChanged();
@@ -33,6 +38,9 @@ class MmoGame extends IsometricGame {
 
   @override
   Widget customBuildUI(BuildContext context) => buildMMOUI();
+
+  void selectWeapon(int index) =>
+      sendMMORequest(MMORequest.Select_Weapon, index);
 
   void selectItem(int index) =>
       sendMMORequest(MMORequest.Select_Item, index);
@@ -44,6 +52,9 @@ class MmoGame extends IsometricGame {
   void notifyWeaponsChanged() {
     weaponsChangedNotifier.value++;
   }
+
+  void dropWeapon(int index) =>
+      sendMMORequest(MMORequest.Drop_Weapon, index);
 
   void dropItem(int index) =>
       sendMMORequest(MMORequest.Drop_Item, index);
@@ -65,19 +76,19 @@ class MmoGame extends IsometricGame {
     super.onKeyPressed(key);
 
     if (key == KeyCode.Q){
-      selectItem(0);
+      selectWeapon(0);
       return;
     }
     if (key == KeyCode.W){
-      selectItem(1);
+      selectWeapon(1);
       return;
     }
     if (key == KeyCode.E){
-      selectItem(2);
+      selectWeapon(2);
       return;
     }
     if (key == KeyCode.R){
-      selectItem(3);
+      selectWeapon(3);
       return;
     }
 
