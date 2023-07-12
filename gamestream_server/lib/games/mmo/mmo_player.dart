@@ -16,9 +16,29 @@ class MmoPlayer extends IsometricPlayer {
   var npcText = '';
   var npcOptions = <TalkOption>[];
 
-  late List<MMOItem?> items;
+  final weapons = List<MMOItem?>.generate(4, (index) => null);
 
   var _equippedWeaponIndex = -1;
+
+  late List<MMOItem?> inventory;
+
+  MmoPlayer({
+    required this.game,
+    required int itemLength,
+    required super.x,
+    required super.y,
+    required super.z,
+  }) : super(game: game, health: 10, team: MmoTeam.Human) {
+
+    setInventoryLength(itemLength);
+    addItem(MMOItem.Rusty_Old_Sword);
+    addItem(MMOItem.Rusty_Old_Sword);
+    equippedWeaponIndex = 0;
+  }
+
+  MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+
+  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
   set equippedWeaponIndex(int value){
     if (_equippedWeaponIndex == value)
@@ -30,10 +50,10 @@ class MmoPlayer extends IsometricPlayer {
       writeEquippedWeaponIndex(value);
       return;
     }
-    if (!isValidItemIndex(value)){
-       return;
+    if (!isValidWeaponIndex(value)){
+      return;
     }
-    final item = items[value];
+    final item = weapons[value];
 
     if (item == null || item.type != GameObjectType.Weapon)
       return;
@@ -49,26 +69,8 @@ class MmoPlayer extends IsometricPlayer {
     writeInt16(value);
   }
 
-  MmoPlayer({
-    required this.game,
-    required int itemLength,
-    required super.x,
-    required super.y,
-    required super.z,
-  }) : super(game: game, health: 10, team: MmoTeam.Human) {
-
-    setItemLength(itemLength);
-    addItem(MMOItem.Rusty_Old_Sword);
-    addItem(MMOItem.Rusty_Old_Sword);
-    equippedWeaponIndex = 0;
-  }
-
-  MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : items[_equippedWeaponIndex];
-
-  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
-
-  void setItemLength(int value){
-    items = List.generate(value, (index) => null);
+  void setInventoryLength(int value){
+    inventory = List.generate(value, (index) => null);
     writeItemLength(value);
   }
 
@@ -78,24 +80,27 @@ class MmoPlayer extends IsometricPlayer {
       writeGameError(GameError.Inventory_Full);
       return false;
     }
-    setItem(index: emptyIndex, item: item);
+    setWeapon(index: emptyIndex, item: item);
     return true;
   }
 
   int getEmptyIndex(){
-     for (var i = 0; i < items.length; i++){
-       if (items[i] == null)
+     for (var i = 0; i < weapons.length; i++){
+       if (weapons[i] == null)
          return i;
      }
      return -1;
   }
 
-  void setItem({required int index, required MMOItem? item}){
-    if (!isValidItemIndex(index)){
-      writeGameError(GameError.Invalid_Inventory_Index);
+  void setWeapon({required int index, required MMOItem? item}){
+    if (!isValidWeaponIndex(index)) {
+      writeGameError(GameError.Invalid_Weapon_Index);
       return;
     }
-    items[index] = item;
+    if (item != null && !item.isWeapon)
+      return;
+
+    weapons[index] = item;
     writePlayerItem(index, item);
   }
 
@@ -195,12 +200,12 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void dropItem(int index){
-    if (!isValidItemIndex(index)) {
+    if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
 
-    final item = items[index];
+    final item = weapons[index];
     if (item == null) {
       return;
     }
@@ -218,17 +223,17 @@ class MmoPlayer extends IsometricPlayer {
     );
   }
 
-  void clearItem(int index) => setItem(index: index, item: null);
+  void clearItem(int index) => setWeapon(index: index, item: null);
 
-  bool isValidItemIndex(int index) => index >= 0 && index < items.length;
+  bool isValidWeaponIndex(int index) => index >= 0 && index < weapons.length;
 
   void selectItem(int index) {
-    if (!isValidItemIndex(index)) {
+    if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
 
-    final item = items[index];
+    final item = weapons[index];
 
     if (item == null)
       return;

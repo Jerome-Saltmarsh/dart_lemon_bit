@@ -26,6 +26,8 @@ enum MMOItem {
   final int cooldown;
   final double range;
 
+  bool get isWeapon => type == GameObjectType.Weapon;
+
   const MMOItem({
     required this.quality,
     required this.type,

@@ -67,11 +67,11 @@ extension MMOUI on MmoGame {
         left: 16,
         child: GSWindow(
         child: buildWatch(
-          itemsChangedNotifier,
+          weaponsChangedNotifier,
           (int reads) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(items.length, buildItemImageAtIndex),
+            children: List.generate(weapons.length, buildItemImageAtIndex),
           ),
         ),
       ));
@@ -99,7 +99,7 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildItemImageAtIndex(int index) {
-    final item = items[index];
+    final item = weapons[index];
 
     if (item == null){
       return buildText('-');

@@ -8,8 +8,10 @@ class MmoGame extends IsometricGame {
 
   final itemHover = Watch<MMOItem?>(null);
 
+  final weaponsChangedNotifier = Watch(0);
   final itemsChangedNotifier = Watch(0);
 
+  final weapons = List<MMOItem?>.generate(4, (index) => null);
   late List<MMOItem?> items;
 
   final npcText = Watch('');
@@ -19,10 +21,9 @@ class MmoGame extends IsometricGame {
 
   MmoGame({required super.isometric});
 
-  void setItem({required int index, required MMOItem? item}){
-    print('setItem(index: $index, value: $item)');
-    items[index] = item;
-    notifyItemsChanged();
+  void setWeapon({required int index, required MMOItem? item}){
+    weapons[index] = item;
+    notifyWeaponsChanged();
   }
 
   void setItemLength(int length){
@@ -38,6 +39,10 @@ class MmoGame extends IsometricGame {
 
   void notifyItemsChanged() {
     itemsChangedNotifier.value++;
+  }
+
+  void notifyWeaponsChanged() {
+    weaponsChangedNotifier.value++;
   }
 
   void dropItem(int index) =>
