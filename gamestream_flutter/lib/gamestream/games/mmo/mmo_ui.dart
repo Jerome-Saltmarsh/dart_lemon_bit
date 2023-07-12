@@ -67,11 +67,11 @@ extension MMOUI on MmoGame {
         left: 16,
         child: GSWindow(
         child: buildWatch(
-          itemListener,
+          itemsChangedNotifier,
           (int reads) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(itemLength, buildItemImageAtIndex),
+            children: List.generate(items.length, buildItemImageAtIndex),
           ),
         ),
       ));
@@ -98,14 +98,22 @@ extension MMOUI on MmoGame {
         ));
   }
 
-  Widget buildItemImageAtIndex(int index) => onPressed(
+  Widget buildItemImageAtIndex(int index) {
+    final item = items[index];
+
+    if (item == null){
+      return buildText('-');
+    }
+
+    return onPressed(
       onRightClick: () => dropItem(index),
       action: () => selectItem(index),
       child: ItemImage(
-          type: itemTypes[index],
-          subType: itemSubTypes[index],
+          type: item.type,
+          subType: item.subType,
           size: 64,
       ),
     );
+  }
 
 }

@@ -1,6 +1,7 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
+import 'package:gamestream_server/games/mmo/mmo_gameobject.dart';
 import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/games/mmo/mmo_npc.dart';
@@ -62,6 +63,9 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     characters.add(npcGuard);
   }
 
+  @override
+  int get maxPlayers => 64;
+
   void spawnMonsters() {
     final types = scene.types;
     final length = scene.types.length;
@@ -107,31 +111,29 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     required double y,
     required double z,
   }){
-    final type = randomItem(GameObjectType.items);
-    final subType = getRandomSubType(type);
-    spawnLoot(x: x, y: y, z: z, type: type, subType: subType);
+    spawnLoot(x: x, y: y, z: z, item: randomItem(MMOItem.values));
   }
 
   void spawnLoot({
     required double x,
     required double y,
     required double z,
-    required int type,
-    required int subType,
-  }) => spawnGameObject(
-        x: x,
-        y: y,
-        z: z,
-        type: type,
-        subType: subType,
-        team: TeamType.Neutral,
+    required MMOItem item,
+  }) {
+    gameObjects.add(MMOGameObject(
+      x: x,
+      y: y,
+      z: z,
+      item: item,
+      id: generateId(),
     )
-       ..deactivationTimer = GameObjectDeactivationTimer
-       ..fixed = true
-       ..collectable = true
-       ..persistable = false
-       ..hitable = false
-       ..physical = false;
+      ..deactivationTimer = GameObjectDeactivationTimer
+      ..fixed = true
+      ..collectable = true
+      ..persistable = false
+      ..hitable = false
+      ..physical = false);
+  }
 
   void setCollectableProperties(){
 
@@ -151,13 +153,15 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   );
 
   @override
-  int get maxPlayers => 64;
-
-  @override
-  void characterCollectGameObject(IsometricCharacter character, IsometricGameObject gameObject) {
+  void characterCollectGameObject(
+      IsometricCharacter character,
+      IsometricGameObject gameObject,
+      ) {
     if (character is! MmoPlayer) return;
-    if (character.addGameObject(gameObject)){
-      super.characterCollectGameObject(character, gameObject);
+    if (gameObject is MMOGameObject) {
+      if (character.addItem(gameObject.item)){
+        super.characterCollectGameObject(character, gameObject);
+      }
     }
   }
 }

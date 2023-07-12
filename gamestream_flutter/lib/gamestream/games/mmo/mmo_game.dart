@@ -6,10 +6,9 @@ import 'package:gamestream_flutter/library.dart';
 
 class MmoGame extends IsometricGame {
 
-  final itemListener = Watch(0);
-  late int itemLength;
-  late Uint8List itemTypes;
-  late Uint8List itemSubTypes;
+  final itemsChangedNotifier = Watch(0);
+
+  late List<MMOItem?> items;
 
   final npcText = Watch('');
   final npcOptions = <String>[];
@@ -17,17 +16,14 @@ class MmoGame extends IsometricGame {
 
   MmoGame({required super.isometric});
 
-  void setItem({required int index, required int type, required int subType}){
-    itemTypes[index] = type;
-    itemSubTypes[index] = subType;
-    itemListener.value++;
+  void setItem({required int index, required MMOItem? item}){
+    items[index] = item;
+    notifyItemsChanged();
   }
 
   void setItemLength(int length){
-    itemLength = length;
-    itemTypes = Uint8List(length);
-    itemSubTypes = Uint8List(length);
-    itemListener.value++;
+    items = List.generate(length, (index) => null);
+    notifyItemsChanged();
   }
 
   @override
@@ -35,6 +31,10 @@ class MmoGame extends IsometricGame {
 
   void selectItem(int index) =>
       sendMMORequest(MMORequest.Select_Item, index);
+
+  void notifyItemsChanged() {
+    itemsChangedNotifier.value++;
+  }
 
   void dropItem(int index) =>
       sendMMORequest(MMORequest.Drop_Item, index);

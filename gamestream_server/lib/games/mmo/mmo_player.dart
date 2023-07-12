@@ -1,7 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
-import 'package:gamestream_server/games/mmo/mmo_item.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -17,11 +16,9 @@ class MmoPlayer extends IsometricPlayer {
   var npcText = '';
   var npcOptions = <TalkOption>[];
 
-  MMOItem? _equippedWeapon;
+  late List<MMOItem?> items;
 
-  MMOItem? get equippedWeapon => _equippedWeapon;
-
-  late ItemList items;
+  MMOItem? equippedWeapon;
 
   MmoPlayer({
     required this.game,
@@ -31,59 +28,58 @@ class MmoPlayer extends IsometricPlayer {
     required super.z,
   })
       : super(game: game, health: 10, team: MmoTeam.Human) {
-    equipWeapon(WeaponType.Unarmed);
+
+    equipWeapon(MMOItem.Rusty_Old_Sword);
+
     setItemLength(itemLength);
 
-    setItem(
-        index: 0,
-        type: GameObjectType.Weapon,
-        subType: WeaponType.Handgun,
-    );
-
-    setItem(
-        index: 1,
-        type: GameObjectType.Consumable,
-        subType: ConsumableType.Health_Potion,
-    );
+    addItem(MMOItem.Rusty_Old_Sword);
+    addItem(MMOItem.Rusty_Old_Sword);
   }
 
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
-  set equippedWeapon(MMOItem? value){
-    if (_equippedWeapon == value) return;
-    _equippedWeapon = value;
-    // weaponType = value.subType;
-  }
-
   void setItemLength(int value){
-    items = ItemList(value);
+    items = List.generate(value, (index) => null);
     writeItemLength(value);
   }
 
-  bool addGameObject(IsometricGameObject gameObject) =>
-      addItem(type: gameObject.type, subType: gameObject.subType);
-
-  bool addItem({required int type, required int subType}){
-    final emptyIndex = items.getEmptyIndex();
+  bool addItem(MMOItem? item){
+    final emptyIndex = getEmptyIndex();
     if (emptyIndex == -1){
       writeGameError(GameError.Inventory_Full);
       return false;
     }
-    setItem(index: emptyIndex, type: type, subType: subType);
+    setItem(index: emptyIndex, item: item);
     return true;
   }
 
-  void setItem({required int index, required int type, required int subType}){
-    items.set(index: index, type: type, subType: subType);
-    writePlayerItem(index, type, subType);
+  int getEmptyIndex(){
+     for (var i = 0; i < items.length; i++){
+       if (items[i] == null)
+         return i;
+     }
+     return -1;
   }
 
-  void writePlayerItem(int index, int type, int subType) {
+  void setItem({required int index, required MMOItem? item}){
+    if (!isValidItemIndex(index)){
+      writeGameError(GameError.Invalid_Inventory_Index);
+      return;
+    }
+    items[index] = item;
+    writePlayerItem(index, item);
+  }
+
+  void writePlayerItem(int index, MMOItem? item) {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Item);
-    writeByte(index);
-    writeByte(type);
-    writeByte(subType);
+    writeUInt16(index);
+    if (item == null){
+      writeInt16(-1);
+      return;
+    }
+    writeInt16(item.index);
   }
 
   @override
@@ -171,46 +167,46 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void dropItem(int index){
-    if (!items.isValidItemIndex(index)) {
+    if (!isValidItemIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
-    final itemType = items.types[index];
-    final subType = items.subTypes[index];
 
-    if (itemType == 0)
+    final item = items[index];
+    if (item == null) {
       return;
+    }
 
     clearItem(index);
 
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
 
-
     game.spawnLoot(
         x: x + adj(spawnAngle, spawnDistance),
         y: y + opp(spawnAngle, spawnDistance),
         z: z,
-        type: itemType,
-        subType: subType,
+        item: item,
     );
-
   }
 
-  void clearItem(int index) => setItem(index: index, type: 0, subType: 0);
+  void clearItem(int index) => items[index] = null;
+
+  bool isValidItemIndex(int index) => index >= 0 && index < items.length;
 
   void selectItem(int index) {
-    if (!items.isValidItemIndex(index)) {
+    if (!isValidItemIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
 
-    final itemType = items.types[index];
+    final item = items[index];
 
-    if (itemType == 0)
+    if (item == null)
       return;
 
-    final subType = items.subTypes[index];
+    final itemType = item.type;
+    final subType = item.subType;
 
     if (itemType == GameObjectType.Consumable){
       if (subType == ConsumableType.Health_Potion){
@@ -220,7 +216,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    equip(type: itemType, subType: subType);
+    equip(item);
   }
 
   void selectNpcTalkOption(int index) {
@@ -231,49 +227,56 @@ class MmoPlayer extends IsometricPlayer {
      npcOptions[index].action();
   }
 
-  void equip({required int type, required int subType}) {
-    switch (type) {
+  void equip(MMOItem item) {
+    switch (item.type) {
+      case GameObjectType.Consumable:
+        break;
       case GameObjectType.Weapon:
-        equipWeapon(subType);
+        equipWeapon(item);
         break;
       case GameObjectType.Head:
-        equipHead(subType);
+        equipHead(item);
         break;
       case GameObjectType.Body:
-        equipBody(subType);
+        equipBody(item);
         break;
       case GameObjectType.Legs:
-        setLegsType(subType);
+        setLegsType(item);
         break;
     }
   }
 
-  void equipWeapon(int weaponType){
+  void equipWeapon(MMOItem item){
     if (deadBusyOrWeaponStateBusy)
       return;
-    this.weaponType = weaponType;
-    weaponDamage = getWeaponDamage(weaponType);
-    weaponRange = getWeaponRange(weaponType);
-    weaponCooldown = getWeaponCooldown(weaponType);
-    weaponAccuracy = getWeaponAccuracy(weaponType);
+    this.equippedWeapon = item;
   }
 
-  void equipHead(int value){
+  @override
+  int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
+
+  @override
+  int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
+
+  @override
+  int get weaponDamage => equippedWeapon != null ? equippedWeapon!.damage : 1;
+
+  void equipHead(MMOItem item){
     if (deadBusyOrWeaponStateBusy)
       return;
-    headType = value;
+    headType = item.subType;
     setCharacterStateChanging();
   }
 
-  void equipBody(int value){
+  void equipBody(MMOItem item){
     if (deadBusyOrWeaponStateBusy)
       return;
-    bodyType = value;
+    bodyType = item.subType;
     setCharacterStateChanging();
   }
 
-  void setLegsType(int value){
-    legsType = value;
+  void setLegsType(MMOItem item){
+    legsType = item.subType;
     setCharacterStateChanging();
   }
 

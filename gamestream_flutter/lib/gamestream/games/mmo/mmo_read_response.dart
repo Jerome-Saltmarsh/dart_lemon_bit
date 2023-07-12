@@ -22,10 +22,10 @@ extension MMOResponseReader on Gamestream {
          game.setItemLength(readUInt16());
          break;
        case MMOResponse.Player_Item:
-         final index = readByte();
-         final type = readByte();
-         final subType = readByte();
-         game.setItem(index: index, type: type, subType: subType);
+         final index = readUInt16();
+         final type = readInt16();
+         final item = type != -1 ? MMOItem.values[type] : null;
+         game.setItem(index: index, item: item);
          break;
      }
   }
