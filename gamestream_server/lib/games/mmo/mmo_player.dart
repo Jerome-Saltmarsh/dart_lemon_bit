@@ -226,6 +226,7 @@ class MmoPlayer extends IsometricPlayer {
     weaponDamage = getWeaponDamage(weaponType);
     weaponRange = getWeaponRange(weaponType);
     weaponCooldown = getWeaponCooldown(weaponType);
+    weaponAccuracy = getWeaponAccuracy(weaponType);
   }
 
   void equipHead(int value){
@@ -276,4 +277,8 @@ class MmoPlayer extends IsometricPlayer {
         WeaponType.Handgun: 15,
         WeaponType.Smg: 10,
      }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
+
+  double getWeaponAccuracy(int weaponType) {
+    return 0.5;
+  }
 }

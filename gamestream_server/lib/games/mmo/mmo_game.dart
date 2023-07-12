@@ -13,8 +13,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   late MMONpc npcGuard;
 
-  final playerSpawnX = 1000.0;
-  final playerSpawnY = 1000.0;
+  final playerSpawnX = 2030.0;
+  final playerSpawnY = 2040.0;
   final playerSpawnZ = 25.0;
 
   MmoGame({
@@ -27,8 +27,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
     characters.add(MMONpc(
       characterType: CharacterType.Template,
-      x: 900,
-      y: 1100,
+      x: playerSpawnX + giveOrTake(50),
+      y: playerSpawnY + giveOrTake(50),
       z: 25,
       health: 50,
       team: MmoTeam.Human,
@@ -47,8 +47,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
     npcGuard = MMONpc(
       characterType: CharacterType.Template,
-      x: 800,
-      y: 1000,
+      x: playerSpawnX + giveOrTake(50),
+      y: playerSpawnY + giveOrTake(50),
       z: 25,
       health: 200,
       weaponType: WeaponType.Machine_Gun,

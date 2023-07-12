@@ -174,11 +174,11 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePercentage(weaponDurationPercentage);
     }
 
-    if (accuracy != accuracyPrevious){
-      accuracyPrevious = accuracy;
+    if (weaponAccuracy != accuracyPrevious){
+      accuracyPrevious = weaponAccuracy;
       writeByte(ServerResponse.Isometric);
       writeByte(IsometricResponse.Player_Accuracy);
-      writePercentage(accuracy);
+      writePercentage(weaponAccuracy);
     }
 
     final diffX = -(positionCacheX - x.toInt()).toInt();

@@ -9,7 +9,7 @@ import 'isometric_position.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
-  var _accuracy = 0.0;
+  var _weaponAccuracy = 0.0;
   var _angle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
@@ -140,7 +140,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get isTemplate => characterType == CharacterType.Template;
 
-  double get accuracy => _accuracy;
+  double get weaponAccuracy => _weaponAccuracy;
 
   // TODO REMOVE
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
@@ -208,8 +208,8 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   int get maxHealth => _maxHealth;
 
-  set accuracy(double value) {
-    _accuracy = clamp01(value);
+  set weaponAccuracy(double value) {
+    _weaponAccuracy = clamp01(value);
   }
 
   set maxHealth(int value){
@@ -339,11 +339,11 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void update() {
     const change = 0.01;
-    if (accuracy.abs() > change){
-      if (accuracy > 0) {
-        accuracy -= change;
+    if (weaponAccuracy.abs() > change){
+      if (weaponAccuracy > 0) {
+        weaponAccuracy -= change;
       } else {
-        accuracy += change;
+        weaponAccuracy += change;
       }
     }
 

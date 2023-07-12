@@ -396,7 +396,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (WeaponType.isFirearm(weaponType)) {
       characterFireWeapon(character);
-      character.accuracy += 0.25;
+      character.weaponAccuracy += 0.25;
       return;
     }
 
@@ -854,7 +854,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     spawnProjectile(
       src: character,
-      accuracy: character.accuracy,
+      accuracy: character.weaponAccuracy,
       angle: angle,
       range: character.weaponRange,
       projectileType: ProjectileType.Bullet,
@@ -2499,17 +2499,20 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
+    character.pathCurrent = -1;
+
     final path = character.path;
     var endPath = scene.findPath(
         characterIndex, character.pathTargetIndex,
         max: character.path.length,
     );
+    if (endPath == -1)
+      return;
     var totalPathLength = 0;
     while (endPath != characterIndex) {
       IsometricScene.compiledPath[totalPathLength++] = endPath;
       endPath = scene.path[endPath];
     }
-    character.pathCurrent = -1;
     final length = min(path.length, totalPathLength);
 
     if (length < 0) return;
