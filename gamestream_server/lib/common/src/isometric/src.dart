@@ -29,3 +29,4 @@ export 'head_type.dart';
 export 'isometric_type.dart';
 export 'character_action.dart';
 export 'compress_type.dart';
+export 'consumable_type.dart';

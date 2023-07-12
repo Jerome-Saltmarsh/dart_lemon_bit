@@ -30,6 +30,7 @@ class RendererGameObjects extends IsometricRenderer {
       GameObjectType.Head,
       GameObjectType.Body,
       GameObjectType.Legs,
+      GameObjectType.Consumable,
     ].contains(type);
 
     if (isCollectable){

@@ -78,7 +78,7 @@ class Gamestream with ByteReader {
      for (final entry in GameObjectType.Collection.entries){
        final type = entry.key;
        final values = entry.value;
-       final atlas = Atlas.Collection[type];
+       final atlas = Atlas.SrcCollection[type];
        for (final value in values){
          if (!atlas.containsKey(value)){
            print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
@@ -93,7 +93,6 @@ class Gamestream with ByteReader {
          print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
        }
      }
-
 
      error.onChanged((GameError? error) {
          if (error == null) return;

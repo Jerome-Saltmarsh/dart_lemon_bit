@@ -109,17 +109,18 @@ class Atlas {
     ObjectType.Grenade: AtlasSrcObjects.Grenade,
   };
 
-  static const Collection = <Map<int, List<double>>>[
+  static const SrcCollection = <Map<int, List<double>>>[
     Collection_Nothing,
     Collection_Weapons,
     Collection_Legs,
     Collection_Body,
     Collection_Head,
-    Collection_Objects
+    Collection_Objects,
+    SrcConsumables.collection,
   ];
 
   static List<double> getSrc(int type, int subType) =>
-      Collection[type][subType] ??
+      SrcCollection[type][subType] ??
       (throw Exception(
           'Atlas.getSrc(type: ${GameObjectType.getName(type)}, subType: ${GameObjectType.getNameSubType(type, subType)})'
       ));
@@ -131,6 +132,7 @@ class Atlas {
           GameObjectType.Head => Images.atlas_head,
           GameObjectType.Body => Images.atlas_body,
           GameObjectType.Legs => Images.atlas_legs,
+          GameObjectType.Consumable => Images.atlas_consumables,
           _ => (throw Exception('Atlas.getImage(type: ${GameObjectType.getName(type)}})'))
       }
 ;

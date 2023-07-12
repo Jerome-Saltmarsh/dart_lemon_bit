@@ -9,9 +9,11 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] gameobject type consumable
 [ ] add missing atlas src
-[ ] fun loot engine
-[ ] player cast ability
+[ ] incredible loot engine
+[ ] incredible ability engine
+[ ] skeleton enemy
 [ ] implement isometric ability
 [ ] merge interact logic into isometric collider
 [ ] refactor lemon engine
