@@ -244,22 +244,18 @@ class MmoPlayer extends IsometricPlayer {
     writeUInt16(value);
   }
 
-  void dropItem(int index){
+  void dropWeapon(int index){
     if (!isValidWeaponIndex(index)) {
-      writeGameError(GameError.Invalid_Item_Index);
       return;
     }
-
     final item = weapons[index];
     if (item == null) {
       return;
     }
 
-    clearItem(index);
-
+    clearWeapon(index);
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
-
     game.spawnLoot(
         x: x + adj(spawnAngle, spawnDistance),
         y: y + opp(spawnAngle, spawnDistance),
@@ -268,19 +264,55 @@ class MmoPlayer extends IsometricPlayer {
     );
   }
 
-  void clearItem(int index) => setWeapon(index: index, item: null);
+  void dropItem(int index){
+    if (!isValidItemIndex(index)) {
+      return;
+    }
+    final item = items[index];
+    if (item == null) {
+      return;
+    }
+
+    clearItem(index);
+    const spawnDistance = 40.0;
+    final spawnAngle = randomAngle();
+    game.spawnLoot(
+        x: x + adj(spawnAngle, spawnDistance),
+        y: y + opp(spawnAngle, spawnDistance),
+        z: z,
+        item: item,
+    );
+  }
+
+  void clearWeapon(int index) => setWeapon(index: index, item: null);
+
+  void clearItem(int index) => setItem(index: index, item: null);
 
   bool isValidWeaponIndex(int index) => index >= 0 && index < weapons.length;
 
   bool isValidItemIndex(int index) => index >= 0 && index < items.length;
 
-  void selectItem(int index) {
+  void selectWeapon(int index) {
     if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
 
     final item = weapons[index];
+
+    if (item == null)
+      return;
+
+    equippedWeaponIndex = index;
+    attack();
+  }
+
+  void selectItem(int index) {
+    if (!isValidItemIndex(index)) {
+      return;
+    }
+
+    final item = items[index];
 
     if (item == null)
       return;
@@ -300,8 +332,17 @@ class MmoPlayer extends IsometricPlayer {
       case GameObjectType.Consumable:
         break;
       case GameObjectType.Weapon:
-        equippedWeaponIndex = index;
-        attack();
+        final emptyWeaponIndex = getEmptyWeaponIndex();
+        if (emptyWeaponIndex != -1){
+          setWeapon(index: emptyWeaponIndex, item: item);
+          clearItem(index);
+          setCharacterStateChanging();
+        } else {
+          final currentWeapon = equippedWeapon;
+          setWeapon(index: _equippedWeaponIndex, item: item);
+          setItem(index: index, item: currentWeapon);
+          setCharacterStateChanging();
+        }
         break;
       case GameObjectType.Head:
         equipHead(item);
