@@ -20,6 +20,7 @@ class IsometricGameObject extends IsometricCollider {
   var previousZ = 0.0;
   var health = 0;
   var healthMax = 0;
+  var deactivationTimer = -1;
 
   IsometricGameObject({
     required super.x,

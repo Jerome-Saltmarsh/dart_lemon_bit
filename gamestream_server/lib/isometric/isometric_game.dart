@@ -1531,6 +1531,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.x = character.startX;
     character.y = character.startY;
     character.z = character.startZ;
+    character.health = character.maxHealth;
     character.setCharacterStateSpawning();
   }
 
