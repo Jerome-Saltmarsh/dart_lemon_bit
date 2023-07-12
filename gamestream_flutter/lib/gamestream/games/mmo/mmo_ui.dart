@@ -123,7 +123,7 @@ extension MMOUI on MmoGame {
 
   buildItemHoverDialog() => Positioned(
       left: 16,
-      bottom: 100,
+      bottom: 130,
       child: buildWatch(
           itemHover,
           (item) => item == null

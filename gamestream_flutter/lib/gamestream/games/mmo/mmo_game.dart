@@ -60,4 +60,28 @@ class MmoGame extends IsometricGame {
         '${request.index} $message'
       );
 
+  @override
+  void onKeyPressed(int key) {
+    super.onKeyPressed(key);
+
+    if (key == KeyCode.Q){
+      selectItem(0);
+      return;
+    }
+    if (key == KeyCode.W){
+      selectItem(1);
+      return;
+    }
+    if (key == KeyCode.E){
+      selectItem(2);
+      return;
+    }
+    if (key == KeyCode.R){
+      selectItem(3);
+      return;
+    }
+
+
+  }
+
 }
