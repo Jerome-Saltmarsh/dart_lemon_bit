@@ -6,6 +6,8 @@ import 'package:gamestream_flutter/library.dart';
 
 class MmoGame extends IsometricGame {
 
+  final itemHover = Watch<MMOItem?>(null);
+
   final itemsChangedNotifier = Watch(0);
 
   late List<MMOItem?> items;

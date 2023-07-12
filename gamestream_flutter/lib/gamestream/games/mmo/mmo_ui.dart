@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
-import 'ui/item_image.dart';
+import 'ui/src.dart';
 
 extension MMOUI on MmoGame {
 
@@ -15,7 +15,7 @@ extension MMOUI on MmoGame {
       buildNpcText(),
       buildPlayerItems(),
       buildPlayerAimTarget(),
-
+      buildItemHoverDialog(),
     ],
   );
 
@@ -104,16 +104,39 @@ extension MMOUI on MmoGame {
     if (item == null){
       return buildText('-');
     }
-
-    return onPressed(
-      onRightClick: () => dropItem(index),
-      action: () => selectItem(index),
-      child: ItemImage(
-          type: item.type,
-          subType: item.subType,
-          size: 64,
-      ),
+    return MouseRegion(
+        onEnter: (_){
+          itemHover.value = item;
+        },
+        onExit: (_){
+           if (itemHover.value != item)
+             return;
+           itemHover.value = null;
+        },
+        child: onPressed(
+            onRightClick: () => dropItem(index),
+            action: () => selectItem(index),
+            child: MMOItemImage(item: item, size: 64),
+        ),
     );
   }
 
+  buildItemHoverDialog() => Positioned(
+      left: 150,
+      bottom: 16,
+      child: buildWatch(
+          itemHover,
+          (item) => item == null
+              ? nothing
+              : GSWindow(
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildText(item.name),
+                    buildText('damage ${item.damage}'),
+                    buildText('cooldown ${item.cooldown}'),
+                    buildText('range ${item.range.toInt()}'),
+                  ],
+                ))));
 }
