@@ -21,4 +21,7 @@ class MMOGameObject extends IsometricGameObject {
     persistable = false;
     hitable = false;
   }
+
+  @override
+  String get name => item.name;
 }
