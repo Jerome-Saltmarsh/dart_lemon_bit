@@ -291,6 +291,9 @@ class MmoPlayer extends IsometricPlayer {
   @override
   int get weaponDamage => equippedWeapon != null ? equippedWeapon!.damage : 1;
 
+  @override
+  double get weaponRange => equippedWeapon != null ? equippedWeapon!.range : 30;
+
   void equipHead(MMOItem item){
     if (deadBusyOrWeaponStateBusy)
       return;
@@ -308,39 +311,5 @@ class MmoPlayer extends IsometricPlayer {
   void setLegsType(MMOItem item){
     legsType = item.subType;
     setCharacterStateChanging();
-  }
-
-  int getWeaponDamage(int weaponType) => const {
-        WeaponType.Unarmed: 1,
-        WeaponType.Shotgun: 2,
-        WeaponType.Machine_Gun: 2,
-        WeaponType.Sniper_Rifle: 5,
-        WeaponType.Handgun: 2,
-        WeaponType.Smg: 1,
-        WeaponType.Grenade: 10,
-        WeaponType.Staff: 1,
-     // }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
-     }[weaponType] ?? 1;
-
-  double getWeaponRange(int weaponType) => const <int, double> {
-        WeaponType.Unarmed: 50,
-        WeaponType.Shotgun: 200,
-        WeaponType.Machine_Gun: 250,
-        WeaponType.Sniper_Rifle: 300,
-        WeaponType.Handgun: 200,
-        WeaponType.Smg: 180,
-     }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
-
-  int getWeaponCooldown(int weaponType) => {
-        WeaponType.Unarmed: 14,
-        WeaponType.Shotgun: 25,
-        WeaponType.Machine_Gun: 5,
-        WeaponType.Sniper_Rifle: 35,
-        WeaponType.Handgun: 15,
-        WeaponType.Smg: 10,
-     }[weaponType] ?? (throw Exception('getWeaponDamage(${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)})'));
-
-  double getWeaponAccuracy(int weaponType) {
-    return 0.5;
   }
 }

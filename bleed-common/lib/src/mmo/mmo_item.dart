@@ -15,8 +15,8 @@ enum MMOItem {
       subType: WeaponType.Bow,
       quality: MMOItemQuality.Low,
       cooldown: 40,
-      damage: 2,
-      range: 80,
+      damage: 1,
+      range: 200,
   );
 
   final MMOItemQuality quality;

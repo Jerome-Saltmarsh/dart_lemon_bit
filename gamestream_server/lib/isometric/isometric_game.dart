@@ -425,12 +425,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.weaponState = WeaponState.Firing;
         break;
       case WeaponType.Bow:
-        spawnProjectileArrow(
-          src: character,
-          damage: character.weaponDamage,
-          range: character.weaponRange,
-          angle: character.lookRadian,
-        );
+        // spawnProjectileArrow(
+        //   src: character,
+        //   damage: character.weaponDamage,
+        //   range: character.weaponRange,
+        //   angle: character.lookRadian,
+        // );
         character.weaponState = WeaponState.Firing;
         break;
     }
@@ -1685,6 +1685,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: target,
           damage: character.weaponDamage,
           hitType: IsometricHitType.Melee,
+        );
+      }
+    }
+
+    if (character.weaponStateFiring && character.weaponStateDuration == 5) {
+      if (character.weaponType == WeaponType.Bow){
+        spawnProjectileArrow(
+          src: character,
+          damage: character.weaponDamage,
+          range: character.weaponRange,
+          angle: character.lookRadian,
         );
       }
     }
