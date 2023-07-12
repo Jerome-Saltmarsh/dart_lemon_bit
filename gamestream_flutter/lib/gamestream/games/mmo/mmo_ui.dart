@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
@@ -9,6 +8,9 @@ import 'package:golden_ratio/constants.dart';
 import 'ui/src.dart';
 
 extension MMOUI on MmoGame {
+
+  static const Margin1 = 16.0;
+  static const Margin2 = 120.0;
 
   Widget buildMMOUI()=> Stack(
     alignment: Alignment.center,
@@ -19,6 +21,7 @@ extension MMOUI on MmoGame {
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
       buildPlayerEquipped(),
+      buildPlayerStats(),
     ],
   );
 
@@ -38,7 +41,7 @@ extension MMOUI on MmoGame {
         ));
 
     return Positioned(
-      bottom: 16,
+      bottom: Margin1,
       child: buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
       GSDialog(
         child: Container(
@@ -66,8 +69,8 @@ extension MMOUI on MmoGame {
   }
 
   Positioned buildPlayerWeapons() => Positioned(
-        bottom: 16,
-        left: 16,
+        bottom: Margin1,
+        left: Margin1,
         child: GSWindow(
         child: buildWatch(
           weaponsChangedNotifier,
@@ -202,8 +205,8 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildPlayerItems() => Positioned(
-      left: 16,
-      bottom: 130,
+      left: Margin1,
+      bottom: Margin2,
       child: buildWatch(
           itemsChangedNotifier,
           (_) => GSWindow(
@@ -215,8 +218,8 @@ extension MMOUI on MmoGame {
   );
 
   Widget buildPlayerEquipped() => Positioned(
-        bottom: 16,
-        right: 16,
+        bottom: Margin2,
+        right: Margin1,
         child: GSWindow(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -227,4 +230,50 @@ extension MMOUI on MmoGame {
             buildWatch(equippedLegs, (equipped) => MMOItemImage(item: equipped, size: 64)),
           ],),
         ));
+
+  Widget buildPlayerStats() => Positioned(
+        bottom: Margin1,
+        right: Margin1,
+        child: GSWindow(
+          child: Column(
+            children: [
+              buildPlayerHealthBar(),
+            ],
+          ),
+        )
+    );
+
+  Widget buildPlayerHealthBar(){
+    const width = 200.0;
+    const height = 40.0;
+     return buildWatch(playerMaxHealth, (maxHealth) {
+       if (maxHealth == 0) return nothing;
+       return buildWatch(playerHealth, (health) {
+         return Container(
+           width: width,
+           height: height,
+           child: Stack(
+             children: [
+               Container(
+                 width: width,
+                 height: height,
+                 color: Colors.white,
+               ),
+               Container(
+                 width: width * (health / maxHealth),
+                 height: height,
+                 color: Colors.green,
+               ),
+               Container(
+                   width: width,
+                   height: height,
+                   alignment: Alignment.center,
+                   child: buildText('$health / $maxHealth'),
+               ),
+             ],
+           ),
+         );
+       });
+     });
+  }
 }

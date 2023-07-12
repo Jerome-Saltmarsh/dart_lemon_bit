@@ -6,6 +6,9 @@ import 'package:gamestream_flutter/library.dart';
 
 class MmoGame extends IsometricGame {
 
+  Watch<int> get playerMaxHealth => gamestream.isometric.server.playerMaxHealth;
+  Watch<int> get playerHealth => gamestream.isometric.server.playerHealth;
+
   final itemHover = Watch<MMOItem?>(null);
 
   final weaponsChangedNotifier = Watch(0);
