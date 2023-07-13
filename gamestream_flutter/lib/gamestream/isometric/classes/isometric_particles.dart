@@ -759,26 +759,30 @@ class IsometricParticles {
   void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
     gamestream.audio.magical_impact_16.playXYZ(x, y, z, maxDistance: 600);
     for (var i = 0; i < amount; i++) {
-      // spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
-      spawnParticleFirePurple(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
+      spawnParticleFirePurple(
+          x: x + Engine.randomGiveOrTake(5),
+          y: y + Engine.randomGiveOrTake(5),
+          z: z, speed: 1,
+          angle: Engine.randomAngle(),
+      );
     }
 
-    spawnParticleLightEmission(
-      x: x,
-      y: y,
-      z: z,
-      hue: 259,
-      saturation: 45,
-      value: 95,
-      alpha: 0,
-    );
+    // spawnParticleLightEmission(
+    //   x: x,
+    //   y: y,
+    //   z: z,
+    //   hue: 259,
+    //   saturation: 45,
+    //   value: 95,
+    //   alpha: 0,
+    // );
   }
 
   void spawnParticleFirePurple({
     required double x,
     required double y,
     required double z,
-    int duration = 100,
+    int duration = 60,
     double scale = 1.0,
     double speed = 0.0,
     double angle = 0.0,

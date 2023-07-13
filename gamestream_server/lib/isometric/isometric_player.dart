@@ -29,6 +29,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   var mouseLeftDownDuration = 0;
   var mouseLeftDownIgnore = false;
+  var mouseRightDownDuration = 0;
+  var mouseRightDownIgnore = false;
   var _mouseLeftDown = false;
   var _aimTargetCategory = TargetCategory.Run;
   IsometricCollider? _aimTarget;

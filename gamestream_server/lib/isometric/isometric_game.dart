@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
+import 'package:gamestream_server/games.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -254,14 +255,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.target == null){
       player.lookAtMouse();
     }
-
-    if (mouseRightDown){
-      characterAttack(player);
-      player.clearTarget();
-      player.runToDestinationEnabled = false;
-    }
+    // if (mouseRightDown){
+    //   characterAttack(player);
+    //   player.clearTarget();
+    //   player.runToDestinationEnabled = false;
+    // }
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
+    final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseLeftDown) {
       player.mouseLeftDownDuration++;
@@ -270,15 +271,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.mouseLeftDownIgnore = false;
     }
 
+    if (mouseRightDown) {
+      player.mouseRightDownDuration++;
+    } else {
+      player.mouseRightDownDuration = 0;
+      player.mouseRightDownIgnore = false;
+    }
+
     if (!player.mouseLeftDownIgnore && mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
       final aimTarget = player.aimTarget;
+      if (player is MmoPlayer){
+        player.equippedWeaponIndex = 0;
+      }
       if (aimTarget == null){
         player.setDestinationToMouse();
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
         player.target = null;
       } else if (mouseLeftClicked) {
-
         player.target = aimTarget;
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
@@ -286,6 +296,30 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
       return;
     }
+
+    if (!player.mouseRightDownIgnore && mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
+      final aimTarget = player.aimTarget;
+      if (player is MmoPlayer){
+        player.equippedWeaponIndex = 1;
+      }
+      if (aimTarget == null){
+        player.setDestinationToMouse();
+        player.runToDestinationEnabled = true;
+        player.pathFindingEnabled = false;
+        player.target = null;
+      } else if (mouseRightClicked) {
+        if (player is MmoPlayer){
+          player.equippedWeaponIndex = 1;
+        }
+        player.target = aimTarget;
+        player.runToDestinationEnabled = true;
+        player.pathFindingEnabled = false;
+        player.mouseLeftDownIgnore = true;
+      }
+      return;
+    }
+
+
 
     if (player.runInDirectionEnabled && direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;
@@ -502,8 +536,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (completed) {
-      dispatch(GameEventType.Teleport_Start, startX, startY, startZ);
-      dispatchV3(GameEventType.Teleport_End, character);
+      dispatchGameEvent(GameEventType.Teleport_Start, startX, startY, startZ);
+      dispatchGameEventPosition(GameEventType.Teleport_End, character);
       if (character is IsometricPlayer) {
         character.writePlayerEvent(PlayerEvent.Teleported);
       }
@@ -1066,11 +1100,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     int damage = 25,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) return;
-    dispatch(GameEventType.Explosion, x, y, z);
+    dispatchGameEvent(GameEventType.Explosion, x, y, z);
     final length = characters.length;
 
     if (scene.inboundsXYZ(x, y, z - Node_Height_Half)) {
-      dispatch(
+      dispatchGameEvent(
         GameEventType.Node_Struck,
         x,
         y,
@@ -1349,7 +1383,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void setCharacterStateChanging(IsometricCharacter character) {
     if (!character.canChangeEquipment) return;
     character.weaponState = WeaponState.Changing;
-    dispatchV3(GameEventType.Character_Changing, character);
+    dispatchGameEventPosition(GameEventType.Character_Changing, character);
   }
 
   void setCharacterStateDead(IsometricCharacter character) {
@@ -1386,7 +1420,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     assert (projectile.active);
     switch (projectile.type) {
       case ProjectileType.Orb:
-        dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
+        dispatchGameEvent(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
             projectile.z);
         break;
       case ProjectileType.Rocket:
@@ -1400,7 +1434,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         );
         break;
       case ProjectileType.Bullet:
-        dispatch(
+        dispatchGameEvent(
           GameEventType.Bullet_Deactivated,
           projectile.x,
           projectile.y,
@@ -1577,10 +1611,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     deactivateProjectile(projectile);
 
     if (projectile.type == ProjectileType.Arrow) {
-      dispatch(GameEventType.Arrow_Hit, target.x, target.y, target.z);
+      dispatchGameEvent(GameEventType.Arrow_Hit, target.x, target.y, target.z);
     }
     if (projectile.type == ProjectileType.Orb) {
-      dispatch(
+      dispatchGameEvent(
           GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
   }
@@ -1610,7 +1644,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (target is IsometricGameObject) {
       if (ObjectType.isMaterialMetal(target.type)) {
-        dispatch(
+        dispatchGameEvent(
             GameEventType.Material_Struck_Metal, target.x, target.y, target.z,
             angle);
       }
@@ -1631,7 +1665,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     // TODO Remove Hack
     if (srcCharacter.characterTypeZombie) {
-      dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
+      dispatchGameEventPosition(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is IsometricCharacter) {
       if (!friendlyFire && IsometricCollider.onSameTeam(srcCharacter, target)) return;
@@ -1707,7 +1741,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             angle: character.angle,
         );
         if (character.nextFootstep++ >= 10) {
-          dispatch(
+          dispatchGameEvent(
             GameEventType.Footstep,
             character.x,
             character.y,
@@ -1730,7 +1764,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int damage,
     required double range,
   }) {
-    dispatchV3(GameEventType.Blue_Orb_Fired, src);
+    dispatchGameEventPosition(GameEventType.Blue_Orb_Fired, src);
     return spawnProjectile(
       src: src,
       accuracy: 0,
@@ -1753,7 +1787,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {
     assert (range > 0);
     assert (damage > 0);
-    dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
+    dispatchGameEvent(GameEventType.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
       accuracy: accuracy,
@@ -1955,15 +1989,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return instance;
   }
 
-  /// GameEventType
-  void dispatchV3(int type, IsometricPosition position, {double angle = 0}) {
-    dispatch(type, position.x, position.y, position.z, angle);
-  }
+  void dispatchGameEventPosition(int gameEventType, IsometricPosition position, {double angle = 0}) =>
+      dispatchGameEvent(gameEventType, position.x, position.y, position.z, angle);
 
-  /// GameEventType
-  void dispatch(int type, double x, double y, double z, [double angle = 0]) {
+  void dispatchGameEvent(int gameEventType, double x, double y, double z, [double angle = 0]) {
     for (final player in players) {
-      player.writeGameEvent(type: type,
+      if (!player.onScreen(x, y)) continue;
+      player.writeGameEvent(type: gameEventType,
           x: x,
           y: y,
           z: z,
@@ -2062,7 +2094,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (collider is IsometricCharacter) {
       setCharacterStateDead(collider);
     }
-    dispatchV3(GameEventType.Splash, collider);
+    dispatchGameEventPosition(GameEventType.Splash, collider);
   }
 
   void updateColliderSceneCollisionVertical(IsometricCollider collider) {
@@ -2093,7 +2125,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (collider.bounce) {
           collider.velocityZ =
               -collider.velocityZ * IsometricPhysics.Bounce_Friction;
-          dispatchV3(GameEventType.Item_Bounce, collider,
+          dispatchGameEventPosition(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
           collider.velocityZ = 0;
@@ -2120,7 +2152,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (collider.bounce) {
           collider.velocityZ =
               -collider.velocityZ * IsometricPhysics.Bounce_Friction;
-          dispatchV3(GameEventType.Item_Bounce, collider,
+          dispatchGameEventPosition(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
           collider.velocityZ = 0;
@@ -2171,7 +2203,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (collider.bounce) {
           collider.velocityZ =
               -collider.velocityZ * IsometricPhysics.Bounce_Friction;
-          dispatchV3(GameEventType.Item_Bounce, collider,
+          dispatchGameEventPosition(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
           collider.velocityZ = 0;
@@ -2200,7 +2232,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (collider.bounce) {
           collider.velocityZ =
               -collider.velocityZ * IsometricPhysics.Bounce_Friction;
-          dispatchV3(GameEventType.Item_Bounce, collider,
+          dispatchGameEventPosition(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
           collider.velocityZ = 0;
