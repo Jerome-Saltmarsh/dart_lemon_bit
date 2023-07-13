@@ -408,6 +408,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           angle: character.lookRadian,
         );
         character.weaponState = WeaponState.Firing;
+        character.setDestinationToCurrentPosition();
         return;
       case WeaponType.Staff:
         spawnProjectileFireball(
@@ -417,15 +418,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           range: character.weaponRange,
         );
         character.weaponState = WeaponState.Firing;
+        character.setDestinationToCurrentPosition();
         break;
       case WeaponType.Bow:
-        // spawnProjectileArrow(
-        //   src: character,
-        //   damage: character.weaponDamage,
-        //   range: character.weaponRange,
-        //   angle: character.lookRadian,
-        // );
         character.weaponState = WeaponState.Firing;
+        character.setDestinationToCurrentPosition();
         break;
     }
   }
@@ -639,6 +636,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final performZ = character.z;
 
     character.weaponState = WeaponState.Melee;
+    character.setDestinationToCurrentPosition();
 
     dispatchMeleeAttackPerformed(
       character.weaponType,

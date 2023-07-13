@@ -117,10 +117,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   set weaponState(int value){
     if (_weaponState == value)
       return;
-    if (value == WeaponState.Melee){
-      // add property clear target on target
-      clearTarget();
-    }
+
     _weaponState = value;
     weaponStateDuration = 0;
     weaponStateDurationTotal = getWeaponStateDurationTotal(value);
@@ -240,7 +237,7 @@ abstract class IsometricCharacter extends IsometricCollider {
       _angle = value % pi2;
 
   int getWeaponStateDurationTotal(int weaponState) =>
-      switch(weaponState) {
+      switch (weaponState) {
         WeaponState.Melee => weaponCooldown,
         WeaponState.Firing => weaponCooldown,
         WeaponState.Idle => 0,
@@ -366,21 +363,17 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (weaponStateDuration < weaponStateDurationTotal) {
       weaponStateDuration++;
       if (weaponStateDuration == weaponStateDurationTotal) {
+
+        if (clearTargetAfterAttack && const [WeaponState.Melee, WeaponState.Firing].contains(weaponState)){
+          clearTarget();
+        }
         switch (weaponState) {
           case WeaponState.Firing:
             weaponState = WeaponState.Aiming;
             weaponStateDurationTotal = 10;
             weaponStateDuration = 0;
-            if (clearTargetAfterAttack){
-              clearTarget();
-              setDestinationToCurrentPosition();
-            }
             break;
           default:
-            if (clearTargetAfterAttack){
-              clearTarget();
-              setDestinationToCurrentPosition();
-            }
             weaponState = WeaponState.Idle;
             weaponStateDurationTotal = 0;
             weaponStateDuration = 0;
@@ -448,7 +441,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
     clearPath();
     idle();
-    face(target);
     faceTarget();
 
     if (characterTypeTemplate){
