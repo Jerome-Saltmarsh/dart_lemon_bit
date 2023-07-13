@@ -248,12 +248,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required bool inputTypeKeyboard
   }) {
 
-    if (player.deadOrBusy) return;
-    if (!player.active) return;
+    if (player.deadOrBusy || !player.active || player.debugging) return;
 
     if (player.target == null){
       player.lookAtMouse();
     }
+
     // if (mouseRightDown){
     //   characterAttack(player);
     //   player.clearTarget();
