@@ -265,7 +265,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerAimTargetPosition();
     writePlayerAimTargetCategory();
     writePlayerDestination();
-    writePlayerArrivedAtDestination();
 
     writeSelectedCollider();
 
@@ -407,8 +406,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeIsometricPosition(target!);
   }
 
-  var _cacheArrivedAtDestination = false;
-
   void writePlayerDestination(){
     if (!runToDestinationEnabled)
       return;
@@ -422,12 +419,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writePlayerArrivedAtDestination(){
-    if (_cacheArrivedAtDestination == arrivedAtDestination)
-      return;
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Arrived_At_Destination);
     writeBool(arrivedAtDestination);
-    _cacheArrivedAtDestination = arrivedAtDestination;
   }
 
   void writePlayerAimTargetPosition() {
@@ -1015,4 +1009,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     pathFindingEnabled = false;
   }
 
+  @override
+  set arrivedAtDestination(bool value){
+    if (super.arrivedAtDestination == value)
+      return;
+
+    super.arrivedAtDestination = value;
+    writePlayerArrivedAtDestination();
+  }
 }
