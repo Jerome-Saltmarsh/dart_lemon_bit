@@ -27,6 +27,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   static const Cache_Length = 100;
 
+  var mouseLeftDownDuration = 0;
+  var mouseLeftDownIgnore = false;
   var _mouseLeftDown = false;
   var _aimTargetCategory = TargetCategory.Run;
   IsometricCollider? _aimTarget;
@@ -84,6 +86,25 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     this.autoTarget = autoTargetNearbyEnemies;
     aiDelayAfterPerformFinished = false;
     id = game.playerId++;
+  }
+
+
+  @override
+  set runToDestinationEnabled(bool value){
+    if (super.runToDestinationEnabled == value)
+      return;
+
+    super.runToDestinationEnabled = value;
+    writeRunToDestinationEnabled();
+  }
+
+  @override
+  set arrivedAtDestination(bool value){
+    if (super.arrivedAtDestination == value)
+      return;
+
+    super.arrivedAtDestination = value;
+    writePlayerArrivedAtDestination();
   }
 
   @override
@@ -1006,24 +1027,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     target = aimTarget;
     runToDestinationEnabled = true;
     pathFindingEnabled = false;
-  }
-
-  @override
-  set runToDestinationEnabled(bool value){
-     if (super.runToDestinationEnabled == value)
-       return;
-
-     super.runToDestinationEnabled = value;
-     writeRunToDestinationEnabled();
-  }
-
-  @override
-  set arrivedAtDestination(bool value){
-    if (super.arrivedAtDestination == value)
-      return;
-
-    super.arrivedAtDestination = value;
-    writePlayerArrivedAtDestination();
   }
 
   void writeRunToDestinationEnabled() {

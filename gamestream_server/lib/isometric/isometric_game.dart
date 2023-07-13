@@ -260,17 +260,27 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.runToDestinationEnabled = false;
     }
 
-    if (mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
+    final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
+
+    if (mouseLeftDown) {
+      player.mouseLeftDownDuration++;
+    } else {
+      player.mouseLeftDownDuration = 0;
+      player.mouseLeftDownIgnore = false;
+    }
+
+    if (!player.mouseLeftDownIgnore && mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
       final aimTarget = player.aimTarget;
       if (aimTarget == null){
         player.setDestinationToMouse();
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
         player.target = null;
-      } else {
+      } else if (mouseLeftClicked) {
         player.target = aimTarget;
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
+        player.mouseLeftDownIgnore = true;
       }
       return;
     }

@@ -357,7 +357,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     }
 
     if (runToDestinationEnabled && !arrivedAtDestination && withinRadiusXYZ(runX, runY, runZ, 8)){
-       arrivedAtDestination = true;
+       setDestinationToCurrentPosition();
     }
 
     if (weaponStateDuration < weaponStateDurationTotal) {
