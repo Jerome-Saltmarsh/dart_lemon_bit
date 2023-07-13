@@ -407,10 +407,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (target == null) {
       throw Exception('target is null');
     }
-    runX = target.x;
-    runY = target.y;
-    runZ = target.z;
-    arrivedAtDestination = false;
+    setRunDestination(target.x, target.y, target.z);
   }
 
   /// throws an exception if target is null
@@ -470,5 +467,12 @@ abstract class IsometricCharacter extends IsometricCollider {
       throw Exception('target is null');
     face(target);
     lookAt(target);
+  }
+
+  void setRunDestination(double x, double y, double z) {
+    runX = x;
+    runY = y;
+    runZ = z;
+    arrivedAtDestination = false;
   }
 }
