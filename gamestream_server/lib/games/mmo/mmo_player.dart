@@ -349,12 +349,12 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedWeaponIndex = index;
-
-    if (aimTarget == null) {
-      attack();
-    } else {
-      setTargetToAimTarget();
-    }
+    attack();
+    // if (aimTarget == null) {
+    //
+    // } else {
+    //   setTargetToAimTarget();
+    // }
   }
 
   void selectItem(int index) {
