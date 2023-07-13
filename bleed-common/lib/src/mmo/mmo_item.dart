@@ -39,7 +39,7 @@ enum MMOItem {
       type: GameObjectType.Item,
       subType: ItemType.Meat_Drumstick,
       health: 10,
-      collectable: true,
+      collectable: false,
   );
 
   final MMOItemQuality? quality;
@@ -67,6 +67,6 @@ enum MMOItem {
     this.damage = 0,
     this.range = 0,
     this.health = 0,
-    this.collectable = false,
+    this.collectable = true,
   });
 }

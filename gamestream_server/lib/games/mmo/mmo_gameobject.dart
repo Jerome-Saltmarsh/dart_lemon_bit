@@ -17,7 +17,8 @@ class MMOGameObject extends IsometricGameObject {
   }) : super(type: item.type, subType: item.subType, team: TeamType.Neutral) {
     deactivationTimer = MmoGame.GameObjectDeactivationTimer;
     fixed = true;
-    collectable = true;
+    collidable = true;
+    collectable = item.collectable;
     persistable = false;
     hitable = false;
     physical = false;

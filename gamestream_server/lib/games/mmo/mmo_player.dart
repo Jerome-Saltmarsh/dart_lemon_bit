@@ -1,7 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
-import 'package:gamestream_server/games/mmo/mmo_gameobject.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -544,10 +543,7 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
-  void collectItem(MMOItem item) {
-    if (!item.collectable)
-      return;
-
+  void pickupItem(MMOItem item) {
     health += item.health;
   }
 }

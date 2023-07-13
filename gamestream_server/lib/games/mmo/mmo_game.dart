@@ -169,10 +169,10 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(MmoPlayer player, IsometricGameObject gameObject) {
-    if (gameObject is! MMOGameObject || !gameObject.collectable)
+    if (gameObject is! MMOGameObject || gameObject.item.collectable)
       return;
 
-    player.collectItem(gameObject.item);
+    player.pickupItem(gameObject.item);
     deactivate(gameObject);
   }
 
