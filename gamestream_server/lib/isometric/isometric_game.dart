@@ -101,9 +101,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnColliderActivated(IsometricCollider collider) {}
 
   /// @override
-  void customOnCharacterSpawned(IsometricCharacter character) {}
-
-  /// @override
   void customOnCharacterKilled(IsometricCharacter target, dynamic src) {}
 
   /// @override
@@ -1713,9 +1710,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       case CharacterState.Performing:
         break;
       case CharacterState.Spawning:
-        if (character.stateDurationRemaining == 1) {
-          customOnCharacterSpawned(character);
-        }
         break;
     }
     character.stateDuration++;

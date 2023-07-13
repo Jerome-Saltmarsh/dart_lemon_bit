@@ -544,10 +544,10 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
-  void collect(MMOGameObject gameObject) {
-    if (!gameObject.active || !gameObject.collectable)
+  void collectItem(MMOItem item) {
+    if (!item.collectable)
       return;
 
-    health += gameObject.health;
+    health += item.health;
   }
 }

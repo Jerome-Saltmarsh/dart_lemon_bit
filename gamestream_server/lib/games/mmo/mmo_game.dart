@@ -114,6 +114,13 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     spawnLoot(x: x, y: y, z: z, item: randomItem(MMOItem.values));
   }
 
+  void spawnLootAtIndex({required int index, required MMOItem item}) => spawnLoot(
+    x: scene.getIndexX(index),
+    y: scene.getIndexY(index),
+    z: scene.getIndexZ(index),
+    item: item,
+  );
+
   void spawnLoot({
     required double x,
     required double y,
@@ -152,12 +159,21 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
+  void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
+    switch (nodeType){
+      case NodeType.Grass_Long:
+        spawnLootAtIndex(index: nodeIndex, item: MMOItem.Meat_Drumstick);
+        break;
+    }
+  }
+
+  @override
   void customOnCollisionBetweenPlayerAndGameObject(MmoPlayer player, IsometricGameObject gameObject) {
     if (gameObject is! MMOGameObject || !gameObject.collectable)
       return;
 
-    player.collect(gameObject);
-    remove(gameObject);
+    player.collectItem(gameObject.item);
+    deactivate(gameObject);
   }
 
 
