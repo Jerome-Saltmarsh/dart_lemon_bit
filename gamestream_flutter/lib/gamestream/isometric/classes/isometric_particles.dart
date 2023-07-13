@@ -767,15 +767,15 @@ class IsometricParticles {
       );
     }
 
-    // spawnParticleLightEmission(
-    //   x: x,
-    //   y: y,
-    //   z: z,
-    //   hue: 259,
-    //   saturation: 45,
-    //   value: 95,
-    //   alpha: 0,
-    // );
+    spawnParticleLightEmission(
+      x: x,
+      y: y,
+      z: z,
+      hue: 259,
+      saturation: 45,
+      value: 95,
+      alpha: 0,
+    );
   }
 
   void spawnParticleFirePurple({

@@ -72,6 +72,7 @@ class Engine extends StatelessWidget {
 
   var lastRenderTime = DateTime.now();
   var lastUpdateTime = DateTime.now();
+  var minMSPerRender = 10;
 
   List<Offset> touchPoints = [];
   var touches = 0;
@@ -369,6 +370,8 @@ class Engine extends StatelessWidget {
   void redrawCanvas() {
     final now = DateTime.now();
     final duration = now.difference(lastRenderTime);
+    if (duration.inMilliseconds < minMSPerRender)
+      return;
     lastRenderTime = now;
     notifierPaintFrame.value++;
     msRender.value = duration.inMilliseconds;
