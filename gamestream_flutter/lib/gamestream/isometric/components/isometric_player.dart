@@ -19,7 +19,11 @@ class IsometricPlayer {
   var indexRow = 0;
   var indexColumn = 0;
   var nodeIndex = 0;
+  var runX = 0.0;
+  var runY = 0.0;
+  var runZ = 0.0;
 
+  final arrivedAtDestination = Watch(false);
   final playerAimTargetSet = Watch(false);
   final playerAimTargetName = Watch('');
   final npcTalk = Watch('');
@@ -30,11 +34,6 @@ class IsometricPlayer {
   final aimTargetChanged = Watch(0);
   final id = Watch(0);
   final team = Watch(0);
-  final powerType = Watch(CombatPowerType.None);
-  final powerReady = Watch(true);
-  final attributeHealth = Watch(0);
-  final attributeMagic = Watch(0);
-  final attributeDamage = Watch(0);
   final body = Watch(0);
   final head = Watch(0);
   final legs = Watch(0);
@@ -62,7 +61,6 @@ class IsometricPlayer {
   late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
   late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final respawnTimer = Watch(0);
 
   int get areaNodeIndex => (indexRow * gamestream.isometric.scene.totalColumns) + indexColumn;
 

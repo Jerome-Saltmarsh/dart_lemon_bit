@@ -266,47 +266,40 @@ extension ServerResponseReader on Gamestream {
 
   void readApiPlayer() {
     final apiPlayer = readByte();
+    final player = isometric.player;
     switch (apiPlayer) {
       case ApiPlayer.Aim_Target_Category:
-        isometric.player.aimTargetCategory = readByte();
+        player.aimTargetCategory = readByte();
         break;
       case ApiPlayer.Aim_Target_Position:
-        readIsometricPosition(isometric.player.aimTargetPosition);
+        readIsometricPosition(player.aimTargetPosition);
         break;
       case ApiPlayer.Aim_Target_Type:
-        isometric.player.aimTargetType = readUInt16();
+        player.aimTargetType = readUInt16();
         break;
       case ApiPlayer.Aim_Target_Quantity:
-        isometric.player.aimTargetQuantity = readUInt16();
+        player.aimTargetQuantity = readUInt16();
         break;
       case ApiPlayer.Aim_Target_Name:
-        isometric.player.aimTargetName = readString();
+        player.aimTargetName = readString();
         break;
-      case ApiPlayer.Power:
-        isometric.player.powerType.value = readByte();
-        isometric.player.powerReady.value = readBool();
+      case ApiPlayer.Arrived_At_Destination:
+        player.arrivedAtDestination.value = readBool();
         break;
-      case ApiPlayer.Respawn_Timer:
-        isometric.player.respawnTimer.value = readUInt16();
+      case ApiPlayer.Destination:
+        player.runX = readDouble();
+        player.runY = readDouble();
+        player.runZ = readDouble();
         break;
       case ApiPlayer.Target_Position:
-        isometric.player.runningToTarget = true;
-        readIsometricPosition(isometric.player.targetPosition);
+        player.runningToTarget = true;
+        readIsometricPosition(player.targetPosition);
         break;
       case ApiPlayer.Experience_Percentage:
         isometric.server.playerExperiencePercentage.value = readPercentage();
         break;
       case ApiPlayer.Health:
         readPlayerHealth();
-        break;
-      case ApiPlayer.Credits:
-        isometric.player.credits.value = readUInt16();
-        break;
-      case ApiPlayer.Energy:
-        readApiPlayerEnergy();
-        break;
-      case ApiPlayer.Weapons:
-        readPlayerWeapons();
         break;
       case ApiPlayer.Aim_Angle:
         isometric.player.mouseAngle = readAngle();
@@ -325,19 +318,11 @@ extension ServerResponseReader on Gamestream {
       case ApiPlayer.Damage:
         isometric.player.weaponDamage.value = readUInt16();
         break;
-      case ApiPlayer.Equipment:
-        readPlayerEquipped();
-        break;
       case ApiPlayer.Id:
         isometric.player.id.value = readUInt24();
         break;
       case ApiPlayer.Active:
         isometric.player.active.value = readBool();
-        break;
-      case ApiPlayer.Attribute_Values:
-        isometric.player.attributeHealth.value = readUInt16();
-        isometric.player.attributeDamage.value = readUInt16();
-        isometric.player.attributeMagic.value = readUInt16();
         break;
       case ApiPlayer.Team:
         isometric.player.team.value = readByte();
@@ -349,32 +334,6 @@ extension ServerResponseReader on Gamestream {
 
   void readApiPlayerEnergy() =>
       isometric.player.energyPercentage = readPercentage();
-
-  void readPlayerWeapons() {
-    isometric.player.weapon.value = readUInt16();
-
-    isometric.player.weaponPrimary.value           = readUInt16();
-    // isometricEngine.player.weaponPrimaryQuantity.value   = readUInt16();
-    // isometricEngine.player.weaponPrimaryCapacity.value   = readUInt16();
-    // isometricEngine.player.weaponPrimaryLevel.value      = readUInt8();
-
-    isometric.player.weaponSecondary.value         = readUInt16();
-    // isometricEngine.player.weaponSecondaryQuantity.value = readUInt16();
-    // isometricEngine.player.weaponSecondaryCapacity.value = readUInt16();
-    // isometricEngine.player.weaponSecondaryLevel.value    = readUInt8();
-  }
-
-  // void readPlayerWeaponQuantity() {
-  //   isometricEngine.player.weaponPrimaryQuantity.value   = readUInt16();
-  //   isometricEngine.player.weaponSecondaryQuantity.value = readUInt16();
-  // }
-
-  void readPlayerEquipped() {
-    isometric.player.weapon.value = readUInt16();
-    isometric.player.head.value = readUInt16();
-    isometric.player.body.value = readUInt16();
-    isometric.player.legs.value = readUInt16();
-  }
 
   void readPlayerHealth() {
     isometric.player.health.value = readUInt16();

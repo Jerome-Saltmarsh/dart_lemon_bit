@@ -14,6 +14,5 @@ class PlayerEvent {
   static const Invalid_Request          = 13;
   static const Item_Consumed            = 14;
   static const Reloading                = 15;
-  static const Power_Used               = 16;
   static const Player_Deactivated       = 17;
 }

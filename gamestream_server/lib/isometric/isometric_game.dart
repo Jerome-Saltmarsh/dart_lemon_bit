@@ -1344,8 +1344,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.state == CharacterState.Dead) return;
 
     for (final otherCharacter in characters){
-      if (otherCharacter.target != character) continue;
-      otherCharacter.onTargetDead();
+      if (otherCharacter.target == character)
+        otherCharacter.onTargetDead();
     }
 
     dispatchGameEventCharacterDeath(character);

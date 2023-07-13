@@ -264,6 +264,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerTargetPosition();
     writePlayerAimTargetPosition();
     writePlayerAimTargetCategory();
+    writePlayerDestination();
+    writePlayerArrivedAtDestination();
 
     writeSelectedCollider();
 
@@ -403,6 +405,29 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Target_Position);
     writeIsometricPosition(target!);
+  }
+
+  var _cacheArrivedAtDestination = false;
+
+  void writePlayerDestination(){
+    if (!runToDestinationEnabled)
+      return;
+    if (arrivedAtDestination)
+      return;
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Destination);
+    writeDouble(runX);
+    writeDouble(runY);
+    writeDouble(runZ);
+  }
+
+  void writePlayerArrivedAtDestination(){
+    if (_cacheArrivedAtDestination == arrivedAtDestination)
+      return;
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Arrived_At_Destination);
+    writeBool(arrivedAtDestination);
+    _cacheArrivedAtDestination = arrivedAtDestination;
   }
 
   void writePlayerAimTargetPosition() {
@@ -751,15 +776,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeUInt16(entry.key);
       writeUInt16(entry.value);
     }
-  }
-
-  void writePlayerEquipment(){
-     writeByte(ServerResponse.Api_Player);
-     writeByte(ApiPlayer.Equipment);
-     writeUInt16(weaponType);
-     writeUInt16(headType);
-     writeUInt16(bodyType);
-     writeUInt16(legsType);
   }
 
   void writeMapListInt(Map<int, List<int>> value){

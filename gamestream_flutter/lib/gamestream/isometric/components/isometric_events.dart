@@ -413,15 +413,11 @@ class IsometricEvents {
       case PlayerEvent.Teleported:
         gamestream.audio.magical_swoosh_18();
         break;
-      case PlayerEvent.Power_Used:
-        onPlayerEventPowerUsed();
-        break;
       case PlayerEvent.Level_Increased:
         gamestream.audio.buff_1();
         gamestream.isometric.client.writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
-        readPlayerEventItemConsumed();
         break;
       case PlayerEvent.Recipe_Crafted:
         gamestream.audio.unlock();
@@ -462,60 +458,6 @@ class IsometricEvents {
         gamestream.isometric.client.writeMessage('Invalid Request');
         break;
     }
-  }
-
-  void onPlayerEventPowerUsed() {
-    switch (gamestream.isometric.player.powerType.value) {
-      case CombatPowerType.Shield:
-        gamestream.audio.buff_10();
-        break;
-      case CombatPowerType.Invisible:
-        gamestream.audio.buff_19();
-        break;
-      case CombatPowerType.Stun:
-        // gamestream.audio.debuff_4();
-        // GameState.spawnParticle(
-        //     type: ParticleType.Lightning_Bolt,
-        //     x: gamestream.isometricEngine.player.x,
-        //     y: gamestream.isometricEngine.player.y,
-        //     z: gamestream.isometricEngine.player.z,
-        //     duration: 10,
-        //     animation: true,
-        // );
-        // GameState.spawnParticleLightEmissionAmbient(
-        //     x: gamestream.isometricEngine.player.x,
-        //     y: gamestream.isometricEngine.player.y,
-        //     z: gamestream.isometricEngine.player.z,
-        // );
-        break;
-    }
-  }
-
-  void readPlayerEventItemConsumed() {
-    // switch (gamestream.readUInt16()){
-    //   case ItemType.Consumables_Potion_Red:
-    //     gamestream.audio.drink();
-    //     gamestream.audio.reviveHeal1();
-    //
-    //     for (var i = 0; i < 8; i++){
-    //       isometric.particles.spawnParticleConfettiByType(
-    //          gamestream.isometric.player.position.x,
-    //          gamestream.isometric.player.position.y,
-    //          gamestream.isometric.player.position.z,
-    //          ParticleType.Confetti_Green,
-    //       );
-    //     }
-    //     break;
-    //   case ItemType.Consumables_Potion_Blue:
-    //     gamestream.audio.drink();
-    //     break;
-    //   case ItemType.Consumables_Meat:
-    //     gamestream.audio.eat();
-    //     break;
-    //   case ItemType.Consumables_Apple:
-    //     gamestream.audio.eat();
-    //     break;
-    // }
   }
 
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
