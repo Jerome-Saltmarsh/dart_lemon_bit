@@ -24,11 +24,62 @@ enum MMOItem {
       quality: MMOItemQuality.Normal,
       health: 10,
   ),
+  Rogues_Hood(
+      type: GameObjectType.Head,
+      subType: HeadType.Rogue_Hood,
+      quality: MMOItemQuality.Normal,
+      health: 5,
+      movement: 0.1,
+  ),
   Ancients_Hat(
       type: GameObjectType.Head,
       subType: HeadType.Wizards_Hat,
       quality: MMOItemQuality.Magic,
+      health: 2,
+  ),
+  Travellers_Pants(
+      type: GameObjectType.Legs,
+      subType: LegType.Brown,
+      quality: MMOItemQuality.Normal,
+      health: 2,
+      movement: 0.1,
+  ),
+  Squires_Pants(
+      type: GameObjectType.Legs,
+      subType: LegType.Green,
+      quality: MMOItemQuality.Normal,
+      health: 3,
+  ),
+  Knights_Pants(
+      type: GameObjectType.Legs,
+      subType: LegType.Blue,
+      quality: MMOItemQuality.Normal,
       health: 5,
+      movement: -0.1,
+  ),
+  Worn_Red_Shirt (
+      type: GameObjectType.Body,
+      subType: BodyType.Shirt_Red,
+      quality: MMOItemQuality.Normal,
+      health: 2,
+  ),
+  Basic_Padded_Armour (
+      type: GameObjectType.Body,
+      subType: BodyType.Tunic_Padded,
+      quality: MMOItemQuality.Normal,
+      health: 5,
+  ),
+  Squires_Armour (
+      type: GameObjectType.Body,
+      subType: BodyType.Tunic_Padded,
+      quality: MMOItemQuality.Normal,
+      health: 7,
+  ),
+  Plated_Armour (
+      type: GameObjectType.Body,
+      subType: BodyType.Tunic_Padded,
+      quality: MMOItemQuality.Normal,
+      health: 10,
   ),
   Health_Potion(
       type: GameObjectType.Item,
@@ -38,9 +89,10 @@ enum MMOItem {
   Meat_Drumstick(
       type: GameObjectType.Item,
       subType: ItemType.Meat_Drumstick,
-      health: 5,
+      health: 4,
       collectable: false,
   );
+
 
   final MMOItemQuality? quality;
   final int damage;
@@ -48,8 +100,9 @@ enum MMOItem {
   final int subType;
   final int cooldown;
   final int health;
-  final double range;
   final bool collectable;
+  final double range;
+  final double movement;
 
   bool get isWeapon => type == GameObjectType.Weapon;
 
@@ -68,5 +121,6 @@ enum MMOItem {
     this.range = 0,
     this.health = 0,
     this.collectable = true,
+    this.movement = 0,
   });
 }

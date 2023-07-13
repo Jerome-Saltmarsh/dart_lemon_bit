@@ -162,13 +162,15 @@ extension MMOUI on MmoGame {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
-                      width8,
-                      MMOItemImage(item: item, size: 64),
-                    ],
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
+                        width8,
+                        MMOItemImage(item: item, size: 64),
+                      ],
+                    ),
                   ),
                   height16,
                   if (item.quality != null)
@@ -177,6 +179,7 @@ extension MMOUI on MmoGame {
                   buildItemRow('cooldown', item.cooldown),
                   buildItemRow('range', item.range),
                   buildItemRow('health', item.health),
+                  buildItemRow('movement', item.movement * 10),
                 ],
               )),
           ));

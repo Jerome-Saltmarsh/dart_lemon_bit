@@ -41,6 +41,10 @@ class MmoPlayer extends IsometricPlayer {
     addItem(MMOItem.Steel_Helmet);
     addItem(MMOItem.Ancients_Hat);
     equippedWeaponIndex = 0;
+    equipHead(MMOItem.Steel_Helmet);
+    equipBody(MMOItem.Basic_Padded_Armour);
+    equipLegs(MMOItem.Travellers_Pants);
+    health = maxHealth;
   }
 
   MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
@@ -545,5 +549,20 @@ class MmoPlayer extends IsometricPlayer {
 
   void pickupItem(MMOItem item) {
     health += item.health;
+  }
+
+  @override
+  double get runSpeed {
+    var base = 1.0;
+    if (equippedHead != null){
+      base += equippedHead!.movement;
+    }
+    if (equippedBody != null){
+      base += equippedBody!.movement;
+    }
+    if (equippedLegs != null){
+      base += equippedLegs!.movement;
+    }
+    return base;
   }
 }
