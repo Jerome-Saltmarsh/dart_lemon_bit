@@ -9,6 +9,7 @@ import 'package:gamestream_server/lemon_math.dart';
 
 class MmoGame extends IsometricGame<MmoPlayer> {
 
+  static const Chance_Drop_Item_On_Grass_Cut = 0.25;
   static const GameObjectDeactivationTimer = 5000;
   static const EnemyRespawnDuration = 30; // in seconds
 
@@ -162,7 +163,9 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     switch (nodeType){
       case NodeType.Grass_Long:
-        spawnLootAtIndex(index: nodeIndex, item: MMOItem.Meat_Drumstick);
+        if (randomChance(Chance_Drop_Item_On_Grass_Cut)){
+          spawnLootAtIndex(index: nodeIndex, item: MMOItem.Meat_Drumstick);
+        }
         break;
     }
   }

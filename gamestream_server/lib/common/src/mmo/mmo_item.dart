@@ -38,7 +38,7 @@ enum MMOItem {
   Meat_Drumstick(
       type: GameObjectType.Item,
       subType: ItemType.Meat_Drumstick,
-      health: 10,
+      health: 5,
       collectable: false,
   );
 

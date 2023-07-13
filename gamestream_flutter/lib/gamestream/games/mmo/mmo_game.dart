@@ -75,6 +75,24 @@ class MmoGame extends IsometricGame {
       selectWeapon(3);
       return;
     }
+
+
+    if (key == KeyCode.A){
+      selectWeapon(0);
+      return;
+    }
+    if (key == KeyCode.S){
+      selectWeapon(1);
+      return;
+    }
+    if (key == KeyCode.D){
+      selectWeapon(2);
+      return;
+    }
+    if (key == KeyCode.F){
+      selectWeapon(3);
+      return;
+    }
   }
 
   @override
