@@ -268,14 +268,31 @@ class MmoPlayer extends IsometricPlayer {
     }
 
     clearWeapon(index);
-    const spawnDistance = 40.0;
-    final spawnAngle = randomAngle();
-    game.spawnLoot(
-        x: x + adj(spawnAngle, spawnDistance),
-        y: y + opp(spawnAngle, spawnDistance),
-        z: z,
-        item: item,
-    );
+    spawnItem(item);
+  }
+
+  void dropEquippedHead(){
+    if (equippedHead == null)
+      return;
+
+    spawnItem(equippedHead!);
+    equipHead(null);
+  }
+
+  void dropEquippedBody(){
+    if (equippedBody == null)
+      return;
+
+    spawnItem(equippedBody!);
+    equipBody(null);
+  }
+
+  void dropEquippedLegs(){
+    if (equippedLegs == null)
+      return;
+
+    spawnItem(equippedLegs!);
+    equipLegs(null);
   }
 
   void dropItem(int index){
@@ -288,15 +305,21 @@ class MmoPlayer extends IsometricPlayer {
     }
 
     clearItem(index);
+    spawnItem(item);
+  }
+
+  void spawnItem(MMOItem item){
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
     game.spawnLoot(
-        x: x + adj(spawnAngle, spawnDistance),
-        y: y + opp(spawnAngle, spawnDistance),
-        z: z,
-        item: item,
+      x: x + adj(spawnAngle, spawnDistance),
+      y: y + opp(spawnAngle, spawnDistance),
+      z: z,
+      item: item,
     );
   }
+
+
 
   void clearWeapon(int index) => setWeapon(index: index, item: null);
 
@@ -312,13 +335,15 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    final item = weapons[index];
+    final weapon = weapons[index];
 
-    if (item == null)
+    if (weapon == null)
       return;
 
     equippedWeaponIndex = index;
-    attack();
+    // attack();
+    performPrimaryAction();
+
   }
 
   void selectItem(int index) {

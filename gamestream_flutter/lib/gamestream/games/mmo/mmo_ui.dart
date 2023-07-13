@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -225,9 +226,16 @@ extension MMOUI on MmoGame {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            buildWatch(equippedHead, (equipped) => MMOItemImage(item: equipped, size: 64)),
-            buildWatch(equippedBody, (equipped) => MMOItemImage(item: equipped, size: 64)),
-            buildWatch(equippedLegs, (equipped) => MMOItemImage(item: equipped, size: 64)),
+              buildWatch(equippedHead, (equipped) => onPressed(
+                  onRightClick: equipped == null ? null : dropEquippedHead,
+                  action: equipped == null ? null : null,
+                  child: MMOItemImage(item: equipped, size: 64))),
+              buildWatch(equippedBody, (equipped) => onPressed(
+                  onRightClick: equipped == null ? null : dropEquippedBody,
+                  child: MMOItemImage(item: equipped, size: 64))),
+              buildWatch(equippedLegs, (equipped) => onPressed(
+                  onRightClick: equipped == null ? null : dropEquippedLegs,
+                  child: MMOItemImage(item: equipped, size: 64))),
           ],),
         ));
 

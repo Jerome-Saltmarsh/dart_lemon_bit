@@ -654,10 +654,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       angle,
     );
 
-    character.applyForce(
-      force: 2.5,
-      angle: angle,
-    );
+    // character.applyForce(
+    //   force: 2.5,
+    //   angle: angle,
+    // );
 
     var attackHit = false;
 

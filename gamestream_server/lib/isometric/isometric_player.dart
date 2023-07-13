@@ -977,6 +977,20 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ApiPlayer.Aim_Target_Name);
     writeString(value);
   }
+
+  void performPrimaryAction() {
+    if (deadBusyOrWeaponStateBusy) return;
+
+    if (aimTarget == null) {
+      setDestinationToMouse();
+      runToDestinationEnabled = true;
+      pathFindingEnabled = false;
+      target = null;
+      return;
+    }
+
+    target = aimTarget;
+    runToDestinationEnabled = true;
+    pathFindingEnabled = false;
+  }
 }
-
-

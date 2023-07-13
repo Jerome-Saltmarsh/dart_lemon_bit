@@ -49,7 +49,24 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         if (index == null) return;
         player.selectNpcTalkOption(index);
         break;
-
+      case MMORequest.Drop_Equipped_Head:
+        player.dropEquippedHead();
+        break;
+      case MMORequest.Drop_Equipped_Body:
+        player.dropEquippedBody();
+        break;
+      case MMORequest.Select_Equipped_Head:
+        player.dropEquippedHead();
+        break;
+      case MMORequest.Select_Equipped_Body:
+        player.dropEquippedBody();
+        break;
+      case MMORequest.Drop_Equipped_Legs:
+        player.dropEquippedLegs();
+        break;
+      case MMORequest.Select_Equipped_Legs:
+        player.dropEquippedLegs();
+        break;
     }
   }
 }

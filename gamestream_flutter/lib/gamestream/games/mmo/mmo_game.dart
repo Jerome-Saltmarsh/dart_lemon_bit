@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -46,12 +47,6 @@ class MmoGame extends IsometricGame {
   @override
   Widget customBuildUI(BuildContext context) => buildMMOUI();
 
-  void selectWeapon(int index) =>
-      sendMMORequest(MMORequest.Select_Weapon, index);
-
-  void selectItem(int index) =>
-      sendMMORequest(MMORequest.Select_Item, index);
-
   void notifyItemsChanged() {
     itemsChangedNotifier.value++;
   }
@@ -59,24 +54,6 @@ class MmoGame extends IsometricGame {
   void notifyWeaponsChanged() {
     weaponsChangedNotifier.value++;
   }
-
-  void dropWeapon(int index) =>
-      sendMMORequest(MMORequest.Drop_Weapon, index);
-
-  void dropItem(int index) =>
-      sendMMORequest(MMORequest.Drop_Item, index);
-
-  void selectTalkOption(int index) =>
-      sendMMORequest(MMORequest.Select_Talk_Option, index);
-
-  void endInteraction() =>
-      sendMMORequest(MMORequest.End_Interaction);
-
-  void sendMMORequest(MMORequest request, [dynamic message]) =>
-      gamestream.network.sendClientRequest(
-        ClientRequest.MMO,
-        '${request.index} $message'
-      );
 
   @override
   void onKeyPressed(int key) {
