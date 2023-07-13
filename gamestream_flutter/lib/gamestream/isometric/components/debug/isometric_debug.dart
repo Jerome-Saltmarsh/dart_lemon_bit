@@ -47,6 +47,7 @@ class IsometricDebug {
   final autoAttack = Watch(false);
   final pathFindingEnabled = Watch(false);
   final runToDestinationEnabled = Watch(false);
+  final arrivedAtDestination = Watch(false);
   final selectedColliderType = Watch(-1);
 
   final selectedGameObjectType = Watch(-1);
@@ -104,15 +105,18 @@ class IsometricDebug {
         end: pathEnd.value,
       );
 
-      engine.setPaintColor(Colors.deepPurpleAccent);
-      renderer.renderLine(
-        x.value,
-        y.value,
-        z.value,
-        destinationX.value,
-        destinationY.value,
-        z.value,
-      );
+      if (!arrivedAtDestination.value){
+        engine.setPaintColor(Colors.deepPurpleAccent);
+        renderer.renderLine(
+          x.value,
+          y.value,
+          z.value,
+          destinationX.value,
+          destinationY.value,
+          z.value,
+        );
+      }
+
 
       final pathTargetIndexValue = pathTargetIndex.value;
       if (pathTargetIndexValue != -1) {

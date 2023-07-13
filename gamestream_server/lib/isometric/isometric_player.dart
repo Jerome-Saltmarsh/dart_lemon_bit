@@ -917,6 +917,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeBool(character.autoTarget);
       writeBool(character.pathFindingEnabled);
       writeBool(character.runToDestinationEnabled);
+      writeBool(character.arrivedAtDestination);
 
       final selectedCharacterTarget = character.target;
       if (selectedCharacterTarget == null){
