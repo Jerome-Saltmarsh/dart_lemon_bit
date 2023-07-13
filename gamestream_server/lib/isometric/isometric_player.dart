@@ -407,10 +407,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writePlayerDestination(){
-    if (!runToDestinationEnabled)
+    if (!runToDestinationEnabled || arrivedAtDestination)
       return;
-    if (arrivedAtDestination)
-      return;
+
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Destination);
     writeDouble(runX);
@@ -1010,11 +1009,26 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   @override
+  set runToDestinationEnabled(bool value){
+     if (super.runToDestinationEnabled == value)
+       return;
+
+     super.runToDestinationEnabled = value;
+     writeRunToDestinationEnabled();
+  }
+
+  @override
   set arrivedAtDestination(bool value){
     if (super.arrivedAtDestination == value)
       return;
 
     super.arrivedAtDestination = value;
     writePlayerArrivedAtDestination();
+  }
+
+  void writeRunToDestinationEnabled() {
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Run_To_Destination_Enabled);
+    writeBool(runToDestinationEnabled);
   }
 }

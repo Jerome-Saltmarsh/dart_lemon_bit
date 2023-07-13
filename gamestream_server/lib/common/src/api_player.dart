@@ -19,4 +19,5 @@ class ApiPlayer {
   static const Team                   = 36;
   static const Destination            = 37;
   static const Arrived_At_Destination = 38;
+  static const Run_To_Destination_Enabled = 39;
 }

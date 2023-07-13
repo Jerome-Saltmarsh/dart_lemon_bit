@@ -23,6 +23,7 @@ class IsometricPlayer {
   var runY = 0.0;
   var runZ = 0.0;
 
+  final runToDestinationEnabled = Watch(false);
   final arrivedAtDestination = Watch(false);
   final playerAimTargetSet = Watch(false);
   final playerAimTargetName = Watch('');
