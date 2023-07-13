@@ -198,6 +198,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
     if (character is MmoPlayer && target is MMONpc){
        target.interact?.call(character);
+       // character.interacting = true;
     }
   }
 }

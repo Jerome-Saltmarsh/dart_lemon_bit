@@ -1726,7 +1726,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         switch(character.state){
           case CharacterState.Performing:
             if (character.aiDelayAfterPerformFinished){
-              character.aiIdle();
+              character.aiIdleDelay();
             }
             break;
         }

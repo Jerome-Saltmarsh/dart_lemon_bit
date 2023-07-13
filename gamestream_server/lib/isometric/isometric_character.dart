@@ -296,8 +296,10 @@ abstract class IsometricCharacter extends IsometricCollider {
     setCharacterState(value: CharacterState.Idle, duration: 0);
   }
 
-  void aiIdle(){
-    if (!aiDelayAfterPerformFinished || deadBusyOrWeaponStateBusy) return;
+  void aiIdleDelay(){
+    if (!aiDelayAfterPerformFinished || deadBusyOrWeaponStateBusy)
+      return;
+
     setCharacterState(
       value: CharacterState.Idle,
       duration: randomInt(
