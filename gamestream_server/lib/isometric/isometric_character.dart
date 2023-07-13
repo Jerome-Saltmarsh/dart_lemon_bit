@@ -344,6 +344,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void update() {
     const change = 0.01;
+
     if (weaponAccuracy.abs() > change){
       if (weaponAccuracy > 0) {
         weaponAccuracy -= change;
@@ -470,6 +471,8 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void setRunDestination(double x, double y, double z) {
+    if (!runToDestinationEnabled || deadBusyOrWeaponStateBusy)
+      return;
     runX = x;
     runY = y;
     runZ = z;
