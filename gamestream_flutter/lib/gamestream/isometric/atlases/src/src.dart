@@ -1,3 +1,3 @@
 library src;
 
-export 'src_consumables.dart';
+export 'src_items.dart';

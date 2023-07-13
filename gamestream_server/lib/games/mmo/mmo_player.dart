@@ -1,6 +1,7 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
+import 'package:gamestream_server/games/mmo/mmo_gameobject.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -362,8 +363,8 @@ class MmoPlayer extends IsometricPlayer {
     final itemType = item.type;
     final subType = item.subType;
 
-    if (itemType == GameObjectType.Consumable){
-      if (subType == ConsumableType.Health_Potion){
+    if (itemType == GameObjectType.Item){
+      if (subType == ItemType.Health_Potion){
          health = maxHealth;
          setCharacterStateChanging();
          clearItem(index);
@@ -372,7 +373,7 @@ class MmoPlayer extends IsometricPlayer {
     }
 
     switch (item.type) {
-      case GameObjectType.Consumable:
+      case GameObjectType.Item:
         break;
       case GameObjectType.Weapon:
         final emptyWeaponIndex = getEmptyWeaponIndex();
@@ -541,5 +542,12 @@ class MmoPlayer extends IsometricPlayer {
     } else{
       writeInt16(value.index);
     }
+  }
+
+  void collect(MMOGameObject gameObject) {
+    if (!gameObject.active || !gameObject.collectable)
+      return;
+
+    health += gameObject.health;
   }
 }

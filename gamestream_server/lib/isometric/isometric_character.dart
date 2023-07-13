@@ -16,6 +16,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   var _weaponState = WeaponState.Idle;
 
+  var canSetCharacterStateHurt = true;
   var clearTargetAfterAttack = true;
   var characterType = 0;
   var weaponStateDurationTotal = 0;
@@ -33,7 +34,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var stateDurationRemaining = 0;
   var stateDuration = 0;
   var nextFootstep = 0;
-  // var animationFrame = 0;
+  var framesPerAnimation = 6;
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
@@ -42,6 +43,10 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
+
+  var aiEnabled = true;
+  var aiDelayAfterPerformFinishedMin = 25;
+  var aiDelayAfterPerformFinishedMax = 200;
 
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
@@ -95,7 +100,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
 
-  int get animationFrame => (stateDuration ~/ 6) % 32;
+  int get animationFrame => (stateDuration ~/ framesPerAnimation) % 32;
 
   int get compressedState => compressBytesToUInt32(
     characterType,
@@ -177,7 +182,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
 
-  bool get busy => stateDurationRemaining > 0 && !characterStateHurt;
+  bool get busy => stateDurationRemaining > 0;
 
   bool get deadOrBusy => dead || busy;
 
@@ -274,16 +279,21 @@ abstract class IsometricCharacter extends IsometricCollider {
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;
     stateDuration = 0;
-    // animationFrame = 0;
   }
-
-  /// can be safely overridden for custom logic
-  bool get canSetCharacterStateHurt => true;
 
   void setCharacterStateIdle(){
     if (deadOrBusy) return;
     if (characterStateIdle) return;
     setCharacterState(value: CharacterState.Idle, duration: 0);
+  }
+
+  void aiIdle(){
+    if (!aiEnabled || deadBusyOrWeaponStateBusy) return;
+    setCharacterState(
+      value: CharacterState.Idle,
+      duration: randomInt(
+          aiDelayAfterPerformFinishedMin, aiDelayAfterPerformFinishedMax),
+    );
   }
 
   void setCharacterState({required int value, required int duration}) {
@@ -363,11 +373,13 @@ abstract class IsometricCharacter extends IsometricCollider {
             weaponStateDuration = 0;
             if (clearTargetAfterAttack){
               clearTarget();
+              setDestinationToCurrentPosition();
             }
             break;
           default:
             if (clearTargetAfterAttack){
               clearTarget();
+              setDestinationToCurrentPosition();
             }
             weaponState = WeaponState.Idle;
             weaponStateDurationTotal = 0;

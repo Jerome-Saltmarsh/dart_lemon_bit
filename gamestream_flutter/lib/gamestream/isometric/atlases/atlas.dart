@@ -116,7 +116,7 @@ class Atlas {
     Collection_Body,
     Collection_Head,
     Collection_Objects,
-    SrcConsumables.collection,
+    SrcItems.collection,
   ];
 
   static List<double> getSrc(int type, int subType) =>
@@ -132,7 +132,7 @@ class Atlas {
           GameObjectType.Head => Images.atlas_head,
           GameObjectType.Body => Images.atlas_body,
           GameObjectType.Legs => Images.atlas_legs,
-          GameObjectType.Consumable => Images.atlas_consumables,
+          GameObjectType.Item => Images.atlas_items,
           _ => (throw Exception('Atlas.getImage(type: ${GameObjectType.getName(type)}})'))
       }
 ;

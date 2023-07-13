@@ -3,7 +3,7 @@ import 'head_type.dart';
 import 'leg_type.dart';
 import 'object_type.dart';
 import 'weapon_type.dart';
-import 'consumable_type.dart';
+import 'item_type.dart';
 
 class GameObjectType {
   static const Weapon = 1;
@@ -11,10 +11,10 @@ class GameObjectType {
   static const Body = 3;
   static const Head = 4;
   static const Object = 5;
-  static const Consumable = 6;
+  static const Item = 6;
 
   static const items = [
-     Weapon, Legs, Body, Head, Consumable,
+     Weapon, Legs, Body, Head, Item,
   ];
 
   static const Collection = {
@@ -23,7 +23,7 @@ class GameObjectType {
     Body: BodyType.values,
     Legs: LegType.values,
     Weapon: WeaponType.values,
-    Consumable: ConsumableType.values,
+    Item: ItemType.values,
   };
 
   static String getName(int value) => const {
@@ -32,7 +32,7 @@ class GameObjectType {
       Body: "Body",
       Head: "Head",
       Object: "Object",
-      Consumable: "Consumable",
+      Item: "Consumable",
     }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {
@@ -41,7 +41,7 @@ class GameObjectType {
       Legs => LegType.getName(subType),
       Object => ObjectType.getName(subType),
       Weapon => WeaponType.getName(subType),
-      Consumable => ConsumableType.getName(subType),
+      Item => ItemType.getName(subType),
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 
@@ -51,6 +51,6 @@ class GameObjectType {
     Body,
     Head,
     Object,
-    Consumable,
+    Item,
   ];
 }

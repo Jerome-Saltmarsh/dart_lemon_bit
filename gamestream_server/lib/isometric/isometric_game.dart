@@ -1450,7 +1450,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     checkProjectileCollision(gameObjects);
   }
 
-  void removeInstance(dynamic instance) {
+  void remove(IsometricPosition? instance) {
     if (instance == null) return;
 
     for (final character in characters){
@@ -1472,7 +1472,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (instance is IsometricGameObject) {
       instance.active = false;
       gameObjects.remove(instance);
-
       for (final player in players) {
         player.writeUInt8(ServerResponse.GameObject_Deleted);
         player.writeUInt16(instance.id);
@@ -1639,12 +1638,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.dead) return;
     if (!character.active) return;
-
+    character.update();
     updateColliderPhysics(character);
     updateCharacterTarget(character);
     updateCharacterPath(character);
     updateCharacterAction(character);
-    character.update();
     updateCharacterState(character);
 
     if (character is T) {
@@ -1682,6 +1680,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {
+        switch(character.state){
+          case CharacterState.Performing:
+            if (character.aiEnabled){
+              character.aiIdle();
+            }
+            break;
+        }
         character.setCharacterStateIdle();
         return;
       }
@@ -2033,7 +2038,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void playerDeleteEditorSelectedGameObject(IsometricPlayer player) {
-    removeInstance(player.editorSelectedGameObject);
+    remove(player.editorSelectedGameObject);
     playerDeselectEditorSelectedGameObject(player);
   }
 
@@ -2577,7 +2582,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void characterCollectGameObject(IsometricCharacter character, IsometricGameObject gameObject){
-    removeInstance(gameObject);
+    remove(gameObject);
     character.setDestinationToCurrentPosition();
   }
 

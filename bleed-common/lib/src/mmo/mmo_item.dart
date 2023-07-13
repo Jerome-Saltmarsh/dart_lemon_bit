@@ -31,9 +31,15 @@ enum MMOItem {
       health: 5,
   ),
   Health_Potion(
-      type: GameObjectType.Consumable,
-      subType: ConsumableType.Health_Potion,
+      type: GameObjectType.Item,
+      subType: ItemType.Health_Potion,
       health: 10,
+  ),
+  Meat_Drumstick(
+      type: GameObjectType.Item,
+      subType: ItemType.Meat_Drumstick,
+      health: 10,
+      collectable: true,
   );
 
   final MMOItemQuality? quality;
@@ -43,6 +49,7 @@ enum MMOItem {
   final int cooldown;
   final int health;
   final double range;
+  final bool collectable;
 
   bool get isWeapon => type == GameObjectType.Weapon;
 
@@ -60,5 +67,6 @@ enum MMOItem {
     this.damage = 0,
     this.range = 0,
     this.health = 0,
+    this.collectable = false,
   });
 }

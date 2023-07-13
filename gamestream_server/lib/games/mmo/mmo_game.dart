@@ -129,14 +129,6 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     ));
   }
 
-  void setCollectableProperties(){
-
-  }
-
-  int getRandomSubType(int type) =>
-      randomItem(GameObjectType.Collection[type] ??
-          (throw Exception('getRandomSubType($type)')));
-
   @override
   MmoPlayer buildPlayer() => MmoPlayer(
       game: this,
@@ -158,4 +150,15 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       }
     }
   }
+
+  @override
+  void customOnCollisionBetweenPlayerAndGameObject(MmoPlayer player, IsometricGameObject gameObject) {
+    if (gameObject is! MMOGameObject || !gameObject.collectable)
+      return;
+
+    player.collect(gameObject);
+    remove(gameObject);
+  }
+
+
 }

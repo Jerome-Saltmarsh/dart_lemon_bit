@@ -691,7 +691,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       for (var i = 0; i < characters.length; i++) {
         if (characters[i].team != CaptureTheFlagTeam.Red) continue;
         if (characters[i] is! CaptureTheFlagAI) continue;
-        removeInstance(characters[i]);
+        remove(characters[i]);
         amountToRemove--;
         if (amountToRemove == 0) break;
       }
@@ -711,7 +711,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       for (var i = 0; i < characters.length; i++) {
         if (characters[i].team != CaptureTheFlagTeam.Blue) continue;
         if (characters[i] is! CaptureTheFlagAI) continue;
-        removeInstance(characters[i]);
+        remove(characters[i]);
         amountToRemove--;
         if (amountToRemove == 0) break;
       }
