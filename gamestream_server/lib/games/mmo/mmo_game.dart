@@ -191,4 +191,13 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     player.pickupItem(gameObject.item);
     deactivate(gameObject);
   }
+
+  @override
+  void customOnInteraction(IsometricCharacter character, IsometricCharacter target) {
+    super.customOnInteraction(character, target);
+
+    if (character is MmoPlayer && target is MMONpc){
+       target.interact?.call(character);
+    }
+  }
 }

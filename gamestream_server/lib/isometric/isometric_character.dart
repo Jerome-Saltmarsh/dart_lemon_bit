@@ -116,7 +116,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   int get weaponState => _weaponState;
 
-  bool get pathSet => pathTargetIndex >= 0;
+  bool get pathSet => pathTargetIndex >= 0 && pathCurrent >= 0;
 
   bool get targetWithinCollectRange {
     final target = this.target;

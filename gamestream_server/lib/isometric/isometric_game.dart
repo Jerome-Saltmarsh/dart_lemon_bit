@@ -2832,6 +2832,28 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     // if (character.inter)
     // if (chara)
 
+    final target = character.target;
+
+    if (target is! IsometricCharacter)
+      throw Exception();
+
+    if (character.targetWithinRadius(IsometricSettings.Interact_Radius)){
+        customOnInteraction(character, target);
+        character.clearTarget();
+        character.setCharacterStateIdle();
+        character.setDestinationToCurrentPosition();
+        return;
+    }
+
+    if (character.targetPerceptible){
+        actionCharacterRunTowardsTarget(character);
+        return;
+    }
+
+    actionFollowPathToTarget(character);
+    return;
+
+
   }
 
   bool shouldCharacterFollowPathToCollectTarget(IsometricCharacter character) {
@@ -2844,4 +2866,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
        return false;
      return character.targetWithinCollectRange;
   }
+
+  void customOnInteraction(IsometricCharacter character, IsometricCharacter target) {}
 }
