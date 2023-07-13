@@ -6,6 +6,7 @@ import 'package:gamestream_server/lemon_math.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_position.dart';
+import 'isometric_settings.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
@@ -16,6 +17,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   var _weaponState = WeaponState.Idle;
 
+  var targetPerceptible = false;
   var canSetCharacterStateHurt = true;
   var clearTargetAfterAttack = true;
   var characterType = 0;
@@ -44,6 +46,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
+  var goal = CharacterGoal.Idle;
 
   var aiDelayAfterPerformFinished = true;
   var aiDelayAfterPerformFinishedMin = 25;
@@ -114,6 +117,14 @@ abstract class IsometricCharacter extends IsometricCollider {
   int get weaponState => _weaponState;
 
   bool get pathSet => pathTargetIndex >= 0;
+
+  bool get targetWithinCollectRange {
+    final target = this.target;
+    if (target == null)
+      throw Exception();
+
+    return withinRadiusPosition(target, IsometricSettings.Collect_Radius);
+  }
 
   set weaponState(int value){
     if (_weaponState == value)
@@ -386,6 +397,20 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void customOnDead() {}
 
+  void runStraightToTarget(){
+    action = CharacterAction.Run_To_Target;
+    if (pathFindingEnabled){
+      clearPath();
+    }
+    setRunDestinationToTarget();
+    runToDestination();
+  }
+
+  void runToDestination(){
+    faceRunDestination();
+    setCharacterStateRunning();
+  }
+
   void faceRunDestination() => faceXY(runX, runY);
 
   void clearTarget(){
@@ -441,15 +466,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     setDestinationToCurrentPosition();
   }
 
-  void runToTarget() {
-    final target = this.target;
-    if (target == null)
-      throw Exception('target is null');
-
-    faceTarget();
-    setCharacterStateRunning();
-  }
-
   void faceTarget() {
     final target = this.target;
     if (target == null)
@@ -457,6 +473,15 @@ abstract class IsometricCharacter extends IsometricCollider {
     face(target);
     lookAt(target);
   }
+
+  void setRunDestinationToTarget(){
+    final target = this.target;
+    if (target == null)
+      throw Exception();
+    setRunDestination(target.x, target.y, target.z);
+  }
+
+
 
   void setRunDestination(double x, double y, double z) {
     if (!runToDestinationEnabled || deadBusyOrWeaponStateBusy)

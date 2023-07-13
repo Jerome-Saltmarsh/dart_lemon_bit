@@ -8,6 +8,10 @@ class CharacterAction {
   static const Run_To_Target = 4;
   static const Interact_Target = 5;
   static const Collect_Target = 6;
+  static const Dead = 7;
+  static const Busy = 8;
+  static const Attacking = 9;
+  static const Stuck = 10;
 
   static String getName(int value) => {
       Idle: "Idle",

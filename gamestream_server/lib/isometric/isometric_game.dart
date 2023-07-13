@@ -1680,10 +1680,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.dead) return;
     if (!character.active) return;
     character.update();
-    updateColliderPhysics(character);
+
     updateCharacterTarget(character);
-    updateCharacterPath(character);
+    updateCharacterTargetPerceptible(character);
+    updateColliderPhysics(character);
     updateCharacterAction(character);
+    updateCharacterPath(character);
     updateCharacterState(character);
 
     if (character is T) {
@@ -2503,11 +2505,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    final target = character.target;
-    if (target != null) {
-      character.pathTargetIndex = scene.getIndexPosition(target);
-    }
-
     if (character.pathTargetIndex == -1){
       if (character.pathTargetIndexPrevious != -1){
         character.clearPath();
@@ -2565,61 +2562,93 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.pathStart = character.pathCurrent;
   }
 
-  bool characterTargetIsPerceptible(IsometricCharacter character) {
-    final target = character.target;
-    return target == null
-        ? false
-        : scene.isPerceptible(character, target);
-  }
-
   void updateCharacterAction(IsometricCharacter character) {
 
-    if (character.deadBusyOrWeaponStateBusy)
+    if (character.dead){
+      character.action = CharacterAction.Dead;
       return;
+    }
+
+    if (character.busy) {
+      character.action = CharacterAction.Busy;
+      return;
+    }
+
+    if (character.weaponStateBusy){
+      character.action = CharacterAction.Attacking;
+      return;
+    }
 
     if (characterShouldAttackTarget(character)) {
-      character.action = CharacterAction.Attack_Target;
-      characterActionAttackTarget(character);
+      characterGoalAttackTarget(character);
       return;
     }
 
     if (characterShouldInteractWithTarget(character)){
-      character.action = CharacterAction.Interact_Target;
-      character.setCharacterStateIdle();
+      characterGoalInteractWithTarget(character);
       return;
     }
 
     if (characterShouldCollectTarget(character)){
-      character.action = CharacterAction.Collect_Target;
-      characterCollectGameObject(character, character.target as IsometricGameObject);
-      return;
-    }
-
-    if (characterShouldRunToTarget(character)){
-      character.action = CharacterAction.Run_To_Target;
-      character.runToTarget();
+      characterGoalCollectTarget(character);
       return;
     }
 
     if (characterShouldFollowPath(character)){
-      character.action = CharacterAction.Follow_Path;
+      character.goal = CharacterGoal.Follow_Path;
       characterActionFollowPath(character);
       return;
     }
 
     if (characterShouldRunToDestination(character)){
+      character.goal = CharacterGoal.Run_To_Destination;
       character.action = CharacterAction.Run_To_Destination;
       characterActionRunToDestination(character);
       return;
     }
 
+    character.goal = CharacterGoal.Idle;
     character.action = CharacterAction.Idle;
     character.setCharacterStateIdle();
   }
 
-  void characterCollectGameObject(IsometricCharacter character, IsometricGameObject gameObject){
+
+  void characterRunToTarget(IsometricCharacter character){
+    character.runStraightToTarget();
+  }
+
+  void characterGoalCollectTarget(IsometricCharacter character){
+    character.goal = CharacterGoal.Collect_Target;
+
+    if (shouldCharacterCollectTarget(character)){
+      actionCharacterCollectTargetGameObject(character);
+      return;
+    }
+
+    if (shouldCharacterRunTowardsCollectTarget(character)){
+      actionCharacterRunTowardsTarget(character);
+      return;
+    }
+
+    if (shouldCharacterFollowPathToCollectTarget(character)){
+      actionFollowPathToTarget(character);
+      return;
+    }
+
+    character.action = CharacterAction.Stuck;
+  }
+
+  void actionCharacterCollectTargetGameObject(IsometricCharacter character){
+    final target = character.target;
+    if (target is! IsometricGameObject){
+      throw Exception();
+    }
+    character.action = CharacterAction.Collect_Target;
+    onCharacterCollectedGameObject(character, target);
+  }
+
+  void onCharacterCollectedGameObject(IsometricCharacter character, IsometricGameObject gameObject){
     remove(gameObject);
-    character.setDestinationToCurrentPosition();
   }
 
   void characterAttack(IsometricCharacter character){
@@ -2635,17 +2664,35 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  bool characterShouldAttackTarget(IsometricCharacter character) {
-    final target = character.target;
-    return
-        target is IsometricCollider &&
-        !character.isAlly(target) &&
+  bool characterShouldAttackTarget(IsometricCharacter character) =>
+      character.isEnemy(character.target);
+
+  bool shouldCharacterPerformAttackOnTarget(IsometricCharacter character){
+    return character.target != null &&
         character.targetWithinAttackRange &&
-        (target is! IsometricGameObject || target.physical) &&
-        characterTargetIsPerceptible(character);
+        character.targetPerceptible;
   }
 
-  void characterActionAttackTarget(IsometricCharacter character){
+  void characterGoalAttackTarget(IsometricCharacter character){
+    character.goal = CharacterGoal.Kill_Target;
+
+    if (shouldCharacterPerformAttackOnTarget(character)){
+      actionCharacterPerformAttack(character);
+      return;
+    }
+
+    if (shouldCharacterRunTowardsEnemy(character)){
+      actionCharacterRunTowardsEnemy(character);
+      return;
+    }
+
+    if (shouldCharacterFollowPathToEnemy(character)){
+      actionCharacterFollowPathToEnemy(character);
+      return;
+    }
+  }
+
+  void actionCharacterPerformAttack(IsometricCharacter character){
     character.attackTargetEnemy(this);
   }
 
@@ -2653,6 +2700,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.pathFindingEnabled && character.pathCurrent >= 0 ;
 
   void characterActionFollowPath(IsometricCharacter character) {
+    if (!character.pathSet)
+      return;
+
     characterSetDestinationToPathNodeIndex(character);
     characterActionRunToDestination(character);
   }
@@ -2672,6 +2722,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       !character.arrivedAtDestination;
 
   void characterActionRunToDestination(IsometricCharacter character) {
+    character.action = CharacterAction.Run_To_Destination;
     character.faceRunDestination();
     character.setCharacterStateRunning();
   }
@@ -2701,16 +2752,96 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return false;
   }
 
-  bool characterShouldInteractWithTarget(IsometricCharacter character) {
-    final target = character.target;
-    return target != null &&
-        character.isAlly(target) &&
-        character.withinInteractRange(target);
-  }
+  bool characterShouldInteractWithTarget(IsometricCharacter character) =>
+      character.isAlly(character.target);
 
   bool characterShouldCollectTarget(IsometricCharacter character) {
+    character.goal = CharacterGoal.Collect_Target;
     final target = character.target;
     if (target is! IsometricGameObject || !target.collectable) return false;
     return character.withinRadiusPosition(target, IsometricSettings.Collect_Radius);
+  }
+
+  void setPathTargetIndexToTarget(IsometricCharacter character){
+    final target = character.target;
+    if (target != null) {
+      character.pathTargetIndex = scene.getIndexPosition(target);
+    }
+  }
+
+  void updateCharacterTargetPerceptible(IsometricCharacter character) {
+     final target = character.target;
+     if (target == null) {
+       character.targetPerceptible = false;
+       return;
+     }
+     character.targetPerceptible = scene.isPerceptible(character, target);
+  }
+
+  bool shouldCharacterRunTowardsEnemy(IsometricCharacter character) =>
+       character.runToDestinationEnabled &&
+       character.targetPerceptible &&
+       !character.targetWithinAttackRange;
+
+  bool shouldCharacterRunTowardsCollectTarget(IsometricCharacter character) =>
+       character.runToDestinationEnabled &&
+       character.targetPerceptible &&
+       !character.targetWithinCollectRange;
+
+  void actionCharacterRunTowardsEnemy(IsometricCharacter character) {
+    character.runStraightToTarget();
+  }
+
+  void actionCharacterRunTowardsTarget(IsometricCharacter character) {
+    character.runStraightToTarget();
+  }
+
+  bool shouldCharacterFollowPathToEnemy(IsometricCharacter character) {
+     if (!character.pathFindingEnabled ||
+         character.target == null
+     ){
+       return false;
+     }
+     return !character.targetPerceptible;
+  }
+
+  void actionCharacterFollowPathToEnemy(IsometricCharacter character) =>
+      actionFollowPathToTarget(character);
+
+  void actionFollowPathToTarget(IsometricCharacter character) {
+    final target = character.target;
+    if (target == null)
+      throw Exception();
+
+    character.pathTargetIndex = scene.getIndexPosition(target);
+    if (character.pathSet){
+      characterActionFollowPath(character);
+    }
+  }
+
+  void setCharacterPathTarget(IsometricCharacter character) {
+    final target = character.target;
+    if (target == null)
+      throw Exception();
+
+    character.pathTargetIndex = scene.getIndexPosition(target);
+  }
+
+  void characterGoalInteractWithTarget(IsometricCharacter character) {
+    character.goal = CharacterGoal.Interact_With_Target;
+    // if (character.inter)
+    // if (chara)
+
+  }
+
+  bool shouldCharacterFollowPathToCollectTarget(IsometricCharacter character) {
+     return character.pathFindingEnabled;
+  }
+
+  bool shouldCharacterCollectTarget(IsometricCharacter character) {
+     final target = character.target;
+     if (target == null)
+       return false;
+     return character.targetWithinCollectRange;
   }
 }

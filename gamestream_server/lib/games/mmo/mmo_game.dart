@@ -154,14 +154,15 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   );
 
   @override
-  void characterCollectGameObject(
+  void onCharacterCollectedGameObject(
       IsometricCharacter character,
       IsometricGameObject gameObject,
       ) {
-    if (character is! MmoPlayer) return;
+    if (character is! MmoPlayer)
+      return;
     if (gameObject is MMOGameObject) {
       if (character.addItem(gameObject.item)){
-        super.characterCollectGameObject(character, gameObject);
+        super.onCharacterCollectedGameObject(character, gameObject);
       }
     }
   }
