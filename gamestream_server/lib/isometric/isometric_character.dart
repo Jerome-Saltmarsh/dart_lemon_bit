@@ -33,7 +33,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var stateDurationRemaining = 0;
   var stateDuration = 0;
   var nextFootstep = 0;
-  var animationFrame = 0;
+  // var animationFrame = 0;
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
@@ -94,6 +94,8 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
+
+  int get animationFrame => (stateDuration ~/ 6) % 32;
 
   int get compressedState => compressBytesToUInt32(
     characterType,
@@ -271,8 +273,8 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (!canSetCharacterStateHurt) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;
-    onCharacterStateChanged();
-    customOnHurt();
+    stateDuration = 0;
+    // animationFrame = 0;
   }
 
   /// can be safely overridden for custom logic
@@ -285,20 +287,14 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void setCharacterState({required int value, required int duration}) {
-    assert (value >= 0);
-    assert (value <= 5);
+    assert (duration >= 0);
     assert (value != CharacterState.Dead); // use game.setCharacterStateDead
     assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
     if (state == value) return;
     if (deadOrBusy) return;
     stateDurationRemaining = duration;
     state = value;
-    onCharacterStateChanged();
-  }
-
-  void onCharacterStateChanged(){
     stateDuration = 0;
-    animationFrame = 0;
   }
 
   bool withinInteractRange(IsometricPosition target){
@@ -384,8 +380,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   /// safe to override
   void customOnUpdate() {}
-
-  void customOnHurt(){ }
 
   void customOnDead() {}
 

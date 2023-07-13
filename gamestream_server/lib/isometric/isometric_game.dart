@@ -20,13 +20,10 @@ import 'isometric_time.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
-  static const framesPerCharacterAnimationFrame = 6;
-
   IsometricScene scene;
   IsometricEnvironment environment;
   IsometricTime time;
 
-  var _nextCharacterAnimationFrame = 0;
   var _running = true;
 
   var timerUpdateAITargets = 0;
@@ -1130,7 +1127,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
-    updateCharacterFrames();
     sortColliders();
   }
 
@@ -1139,15 +1135,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (character.name == name) return true;
     }
     return false;
-  }
-
-  void updateCharacterFrames() {
-    _nextCharacterAnimationFrame++;
-    if (_nextCharacterAnimationFrame < framesPerCharacterAnimationFrame) return;
-    _nextCharacterAnimationFrame = 0;
-    for (final character in characters) {
-      character.animationFrame = (character.animationFrame + 1) % 32;
-    }
   }
 
   void revive(T player) {
@@ -1352,13 +1339,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     IsometricPosition.sort(projectiles);
   }
 
-  void setCharacterStateStunned(IsometricCharacter character, {required int duration}) {
-    if (character.dead) return;
-    character.stateDurationRemaining = duration;
-    character.state = CharacterState.Stunned;
-    character.onCharacterStateChanged();
-  }
-
   void setCharacterStateChanging(IsometricCharacter character) {
     if (!character.canChangeEquipment) return;
     character.weaponState = WeaponState.Changing;
@@ -1377,7 +1357,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.health = 0;
     character.state = CharacterState.Dead;
     character.stateDuration = 0;
-    character.animationFrame = 0;
     deactivate(character);
     character.clearPath();
     clearCharacterTarget(character);
