@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
 
 import 'keycode.dart';
+import 'renderable.dart';
 
 class Engine extends StatelessWidget {
 
@@ -371,6 +372,10 @@ class Engine extends StatelessWidget {
     lastRenderTime = now;
     notifierPaintFrame.value++;
     msRender.value = duration.inMilliseconds;
+  }
+
+  void render(Renderable renderable){
+
   }
 
   void refreshPage(){

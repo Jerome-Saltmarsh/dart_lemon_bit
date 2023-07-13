@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/gamestream/games/website/enums/website_page.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
@@ -104,7 +104,7 @@ extension WebsiteUI on WebsiteGame {
     final _width = 300.0;
     final _height = 50.0;
     return buildFullScreen(
-      color: GameIsometricColors.black,
+      color: IsometricColors.black,
       child: buildWatch(download, (double value) {
         value = 0.6182;
         return Row(
@@ -176,12 +176,12 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
-        child: buildText(message, color: GameIsometricColors.white80, align: TextAlign.center),
+        child: buildText(message, color: IsometricColors.white80, align: TextAlign.center),
       );
 
   Widget buildLoadingPage() =>
       Container(
-        color: GameIsometricColors.black,
+        color: IsometricColors.black,
         alignment: Alignment.center,
         child: buildText('LOADING GAMESTREAM'),
       );
@@ -243,11 +243,11 @@ extension WebsiteUI on WebsiteGame {
   Widget buildErrorDialog(String message, {Widget? bottomRight}) => buildDialog(
         width: 200,
         height: 200 * goldenRatio_0618,
-        color: GameIsometricColors.brownDark,
-        borderColor: GameIsometricColors.none,
+        color: IsometricColors.brownDark,
+        borderColor: IsometricColors.none,
         child: buildLayout(
             child: Center(
-              child: buildText(message, color: GameIsometricColors.white),
+              child: buildText(message, color: IsometricColors.white),
             ),
             bottomRight: bottomRight ?? buildText('okay', onPressed: () => gamestream.games.website.error.value = null)
         )

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -12,9 +12,9 @@ class GameScissorsPaperRock {
   static var playerY = 0.0;
 
   static final players = List.generate(100, (index) => PlayerScissorsPaperRock());
-  static final colorAllie = GameIsometricColors.yellow;
-  static final colorEnemy = GameIsometricColors.red;
-  static final colorTarget = GameIsometricColors.green;
+  static final colorAllie = IsometricColors.yellow;
+  static final colorEnemy = IsometricColors.red;
+  static final colorTarget = IsometricColors.green;
 
   static void init(){
     engine.zoom = 0.5;

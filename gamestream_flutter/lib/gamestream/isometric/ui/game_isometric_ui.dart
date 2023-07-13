@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
-import 'game_isometric_colors.dart';
+import 'isometric_colors.dart';
 
 
 class GameIsometricUI {
@@ -440,7 +440,7 @@ class GameIsometricUI {
       children: List.generate(5, (i) => Container(
         width: 8,
         height: 15,
-        color: i < amount ? GameIsometricColors.blue : GameIsometricColors.blue05,
+        color: i < amount ? IsometricColors.blue : IsometricColors.blue05,
         margin: i < 4 ? const EdgeInsets.only(right: 5) : null,
       )
       )
@@ -497,7 +497,7 @@ class GameIsometricUI {
         return Container(
           width: 5,
           height: 20,
-          color: index < level ? GameIsometricColors.blue : GameIsometricColors.blue05,
+          color: index < level ? IsometricColors.blue : IsometricColors.blue05,
           margin: const EdgeInsets.only(right: 2),
         );
       }),
@@ -526,7 +526,7 @@ class GameIsometricUI {
     final width = height * goldenRatio_0618;
     return buildBorder(
       width: GameStyle.Player_Weapons_Border_Size,
-      color: GameIsometricColors.Red_3,
+      color: IsometricColors.Red_3,
       child: Container(
         width: width,
         height: height,
@@ -544,7 +544,7 @@ class GameIsometricUI {
                   return Container(
                     width: width,
                     height: height * percentage,
-                    color: GameIsometricColors.Red_3,
+                    color: IsometricColors.Red_3,
                   );
                 });
               }),
@@ -571,7 +571,7 @@ class GameIsometricUI {
     final width = height * goldenRatio_0618;
     return buildBorder(
       width: GameStyle.Player_Weapons_Border_Size,
-      color: GameIsometricColors.yellow,
+      color: IsometricColors.yellow,
       child: Container(
         width: width,
         height: height,
@@ -588,7 +588,7 @@ class GameIsometricUI {
                   return Container(
                     width: width,
                     height: height * energy / max(energyMax, 1),
-                    color:  GameIsometricColors.yellow,
+                    color:  IsometricColors.yellow,
                   );
                 });
               }),
@@ -644,7 +644,7 @@ class GameIsometricUI {
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',
             action: gamestream.isometric.actionToggleEdit,
-            color: GameIsometricColors.green,
+            color: IsometricColors.green,
             alignment: Alignment.center,
             width: 100);
       });
@@ -669,7 +669,7 @@ class GameIsometricUI {
                 alignment: Alignment.center,
                 child: 'RESPAWN',
                 action: gamestream.isometric.revive,
-                color: GameIsometricColors.Red_3,
+                color: IsometricColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )
             ],

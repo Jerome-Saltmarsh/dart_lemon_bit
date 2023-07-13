@@ -1,19 +1,14 @@
 class GameIsometricConstants {
-
-
   static const Sprite_Height = 72.0;
   static const Sprite_Height_Third = 24.0;
   static const Node_Height = 24.0;
   static const Sprite_Width = 48.0;
   static const Sprite_Width_Half = 24.0;
-
   static const Sprite_Anchor_Y = 0.3;
   static const Frames_Per_Particle_Animation_Frame = 3;
   static const Frames_Per_Lighting_Update = 15;
-
   static const Sprite_Height_Padded = Sprite_Height + 1;
   static const Sprite_Width_Padded = Sprite_Width + 1;
-
   static const Sprite_Width_Padded_1 = Sprite_Width + 1;
   static const Sprite_Width_Padded_2 = Sprite_Width_Padded * 2;
   static const Sprite_Width_Padded_3 = Sprite_Width_Padded * 3;
@@ -30,7 +25,6 @@ class GameIsometricConstants {
   static const Sprite_Width_Padded_14 = Sprite_Width_Padded * 14;
   static const Sprite_Width_Padded_15 = Sprite_Width_Padded * 15;
   static const Sprite_Width_Padded_16 = Sprite_Width_Padded * 16;
-
   static const Sprite_Height_Padded_00 = Sprite_Height_Padded * 0;
   static const Sprite_Height_Padded_01 = Sprite_Height_Padded * 1;
   static const Sprite_Height_Padded_02 = Sprite_Height_Padded * 2;

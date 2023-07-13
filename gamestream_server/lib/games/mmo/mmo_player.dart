@@ -492,7 +492,7 @@ class MmoPlayer extends IsometricPlayer {
   void onEquipmentChanged(){
     setCharacterStateChanging();
     final maxHealth = this.maxHealth;
-    if (maxHealth > health){
+    if (health > maxHealth){
       health = maxHealth;
     }
     writeEquipped();

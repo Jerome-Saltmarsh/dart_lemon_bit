@@ -268,7 +268,7 @@ extension MMOUI on MmoGame {
                    width: width,
                    height: height,
                    alignment: Alignment.center,
-                   child: buildText('$health / $maxHealth'),
+                   child: buildText('$health / $maxHealth', color: GameStyle.Container_Color),
                ),
              ],
            ),

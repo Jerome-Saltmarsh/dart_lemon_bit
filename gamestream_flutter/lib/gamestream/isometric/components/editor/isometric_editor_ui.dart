@@ -191,7 +191,7 @@ extension IsometricEditorUI on IsometricEditor {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
-        color: GameIsometricColors.brownLight,
+        color: IsometricColors.brownLight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -316,7 +316,7 @@ extension IsometricEditorUI on IsometricEditor {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
-        color: GameIsometricColors.brownLight,
+        color: IsometricColors.brownLight,
         child: Column(
           children: [
             Row(
@@ -333,7 +333,7 @@ extension IsometricEditorUI on IsometricEditor {
             buildRowGenerate(generateOctaves, 'Octaves'),
             buildRowGenerate(generateFrequency, 'Frequency'),
             height16,
-            buildButton(child: 'Generate', action: generateScene, color: GameIsometricColors.blue, alignment: Alignment.center),
+            buildButton(child: 'Generate', action: generateScene, color: IsometricColors.blue, alignment: Alignment.center),
           ],
         ),
       ),
@@ -366,7 +366,7 @@ extension IsometricEditorUI on IsometricEditor {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 300,
-        color: GameIsometricColors.brownLight,
+        color: IsometricColors.brownLight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -697,7 +697,7 @@ extension IsometricEditorUI on IsometricEditor {
       right: 70,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: GameIsometricColors.brown02,
+        color: IsometricColors.brown02,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1022,7 +1022,7 @@ extension IsometricEditorUI on IsometricEditor {
           child: Container(
             width: 200,
             height: 200,
-            color: GameIsometricColors.brownDark,
+            color: IsometricColors.brownDark,
             child: engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
@@ -1114,8 +1114,8 @@ extension IsometricEditorUI on IsometricEditor {
         child: editTab.name,
         width: 150,
         color: activeEditTab == editTab
-            ? GameIsometricColors.brownDark
-            : GameIsometricColors.brownLight,
+            ? IsometricColors.brownDark
+            : IsometricColors.brownLight,
         action: () => this.editTab.value = editTab,
       ))
           .toList(),

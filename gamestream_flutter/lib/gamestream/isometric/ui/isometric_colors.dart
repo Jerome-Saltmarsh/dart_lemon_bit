@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 
-class GameIsometricColors {
+class IsometricColors {
   static const facebook = Color.fromRGBO(66, 103, 178, 1);
   static const black = Color.fromRGBO(38, 34, 47, 1.0);
 
