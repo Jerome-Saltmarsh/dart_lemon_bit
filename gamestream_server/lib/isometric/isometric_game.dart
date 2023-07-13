@@ -245,7 +245,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required bool mouseLeftDown,
     required bool mouseRightDown,
     required bool keySpaceDown,
-    required bool inputTypeKeyboard}) {
+    required bool inputTypeKeyboard
+  }) {
 
     if (player.deadOrBusy) return;
     if (!player.active) return;
@@ -277,6 +278,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player.pathFindingEnabled = false;
         player.target = null;
       } else if (mouseLeftClicked) {
+
         player.target = aimTarget;
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;

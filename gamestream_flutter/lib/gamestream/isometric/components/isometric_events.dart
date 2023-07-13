@@ -464,7 +464,6 @@ class IsometricEvents {
     randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
     gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
     isometric.particles.spawnPurpleFireExplosion(x, y, z);
-    isometric.particles.spawnBubbles(x, y, z);
 
     for (var i = 0; i < 4; i++){
       isometric.particles.spawnParticleBlood(
