@@ -17,6 +17,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   var _weaponState = WeaponState.Idle;
 
+  var interacting = false;
   var targetPerceptible = false;
   var canSetCharacterStateHurt = true;
   var clearTargetAfterAttack = true;

@@ -2834,12 +2834,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     final target = character.target;
 
+    if (character.interacting) {
+      character.setCharacterStateIdle();
+      character.setDestinationToCurrentPosition();
+      return;
+    }
+
     if (target is! IsometricCharacter)
       throw Exception();
 
     if (character.targetWithinRadius(IsometricSettings.Interact_Radius)){
         customOnInteraction(character, target);
-        character.clearTarget();
         character.setCharacterStateIdle();
         character.setDestinationToCurrentPosition();
         return;

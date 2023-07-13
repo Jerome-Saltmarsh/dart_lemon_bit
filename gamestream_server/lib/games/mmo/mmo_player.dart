@@ -13,9 +13,9 @@ class MmoPlayer extends IsometricPlayer {
   final MmoGame game;
 
   var healthBase = 10;
-  var interacting = false;
   var npcText = '';
   var npcOptions = <TalkOption>[];
+
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
 
@@ -48,6 +48,20 @@ class MmoPlayer extends IsometricPlayer {
     health = maxHealth;
 
     writeWeapons();
+    writeInteracting();
+  }
+
+  set interacting(bool value){
+    if (super.interacting == value)
+      return;
+    super.interacting = value;
+    writeInteracting();
+  }
+
+  void writeInteracting() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Interacting);
+    writeBool(interacting);
   }
 
   MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
@@ -206,32 +220,43 @@ class MmoPlayer extends IsometricPlayer {
 
   @override
   void customOnUpdate() {
-    updateInteracting();
+    // updateInteracting();
   }
 
-  void updateInteracting() {
-    final target = this.target;
+  @override
+  set target(IsometricPosition? value){
+    if (super.target == value)
+      return;
+
     if (interacting) {
-      if (target == null || !targetWithinInteractRadius){
-        endInteraction();
-      }
-      return;
-    }
-
-    if (target is! MMONpc)
-      return;
-
-    if (!targetWithinInteractRadius)
-      return;
-
-    final interact = target.interact;
-
-    if (interact == null)
-      return;
-
-    interact(this);
-    interacting = true;
+       endInteraction();
+     }
+     super.target = value;
   }
+
+  // void updateInteracting() {
+  //   final target = this.target;
+  //   if (interacting) {
+  //     // if (!targetWithinInteractRadius){
+  //     //   endInteraction();
+  //     // }
+  //     return;
+  //   }
+  //
+  //   if (target is! MMONpc)
+  //     return;
+  //
+  //   if (!targetWithinInteractRadius)
+  //     return;
+  //
+  //   final interact = target.interact;
+  //
+  //   if (interact == null)
+  //     return;
+  //
+  //   interact(this);
+  //   interacting = true;
+  // }
 
   void talk(String text, {List<TalkOption>? options}) {
      npcText = text;

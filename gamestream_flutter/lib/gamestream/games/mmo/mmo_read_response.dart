@@ -8,6 +8,9 @@ extension MMOResponseReader on Gamestream {
   void readMMOResponse(){
     final game = games.mmo;
      switch (readByte()){
+       case MMOResponse.Player_Interacting:
+         game.playerInteracting.value = readBool();
+         break;
        case MMOResponse.Npc_Talk:
          game.npcText.value = readString();
          final length = readByte();

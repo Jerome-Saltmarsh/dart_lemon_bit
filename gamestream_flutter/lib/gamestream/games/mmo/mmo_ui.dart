@@ -43,7 +43,9 @@ extension MMOUI on MmoGame {
 
     return Positioned(
       bottom: Margin1,
-      child: buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
+      child:
+      buildWatch(playerInteracting, (interacting) => !interacting ? nothing :
+      buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
       GSDialog(
         child: Container(
             width: width,
@@ -66,6 +68,7 @@ extension MMOUI on MmoGame {
               ],
             )),
       )),
+    )
     );
   }
 
