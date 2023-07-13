@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class MmoGame extends IsometricGame {
 
-  Watch<int> get playerMaxHealth => gamestream.isometric.player.maxHealth;
-  Watch<int> get playerHealth => gamestream.isometric.player.health;
+  IsometricPlayer get player => gamestream.isometric.player;
 
   final itemHover = Watch<MMOItem?>(null);
 
@@ -99,6 +99,17 @@ class MmoGame extends IsometricGame {
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
     renderPlayerHoverItemRange();
+
+    if (!player.arrivedAtDestination.value) {
+      gamestream.isometric.renderer.renderLine(
+          player.x,
+          player.y,
+          player.z,
+          player.runX,
+          player.runY,
+          player.runZ,
+      );
+    }
   }
 
   void renderPlayerHoverItemRange() {

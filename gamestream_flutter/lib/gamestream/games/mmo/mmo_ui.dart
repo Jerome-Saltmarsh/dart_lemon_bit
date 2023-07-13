@@ -257,9 +257,9 @@ extension MMOUI on MmoGame {
   Widget buildPlayerHealthBar(){
     const width = 200.0;
     const height = 40.0;
-     return buildWatch(playerMaxHealth, (maxHealth) {
+     return buildWatch(player.maxHealth, (maxHealth) {
        if (maxHealth == 0) return nothing;
-       return buildWatch(playerHealth, (health) {
+       return buildWatch(player.health, (health) {
          return Container(
            width: width,
            height: height,
