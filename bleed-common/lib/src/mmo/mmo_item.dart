@@ -18,6 +18,14 @@ enum MMOItem {
       damage: 1,
       range: 200,
   ),
+  Holy_Bow(
+      type: GameObjectType.Weapon,
+      subType: WeaponType.Bow,
+      quality: MMOItemQuality.Rare,
+      cooldown: 20,
+      damage: 100,
+      range: 300,
+  ),
   Steel_Helmet(
       type: GameObjectType.Head,
       subType: HeadType.Steel_Helm,

@@ -2,6 +2,7 @@
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/games/mmo/mmo_gameobject.dart';
+import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/games/mmo/mmo_npc.dart';
@@ -136,7 +137,11 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       z: z,
       item: item,
       id: generateId(),
-    ));
+      frameSpawned: frame,
+    )
+      ..velocityZ = 10
+      ..setVelocity(randomAngle(), 1.0)
+    );
   }
 
   @override
@@ -177,9 +182,12 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     if (gameObject is! MMOGameObject || gameObject.item.collectable)
       return;
 
+    final duration = frame - gameObject.frameSpawned;
+
+    if (duration < Gamestream.Frames_Per_Second * 1)
+      return;
+
     player.pickupItem(gameObject.item);
     deactivate(gameObject);
   }
-
-
 }

@@ -1040,7 +1040,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (collider.physical && !collider.fixed) {
+    if (!collider.fixed) {
       updateColliderSceneCollision(collider);
     }
   }

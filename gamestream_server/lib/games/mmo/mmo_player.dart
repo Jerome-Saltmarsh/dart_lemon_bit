@@ -37,6 +37,7 @@ class MmoPlayer extends IsometricPlayer {
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Old_Bow);
+    addItem(MMOItem.Holy_Bow);
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Steel_Helmet);
     addItem(MMOItem.Ancients_Hat);

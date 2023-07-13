@@ -6,6 +6,7 @@ import 'mmo_game.dart';
 
 class MMOGameObject extends IsometricGameObject {
 
+  final int frameSpawned;
   final MMOItem item;
 
   MMOGameObject({
@@ -14,9 +15,11 @@ class MMOGameObject extends IsometricGameObject {
     required super.z,
     required super.id,
     required this.item,
+    required this.frameSpawned,
   }) : super(type: item.type, subType: item.subType, team: TeamType.Neutral) {
     deactivationTimer = MmoGame.GameObjectDeactivationTimer;
-    fixed = true;
+    fixed = false;
+    gravity = true;
     collidable = true;
     collectable = item.collectable;
     persistable = false;
