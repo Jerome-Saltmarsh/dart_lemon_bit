@@ -13,7 +13,7 @@ import 'debug_tab.dart';
 extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
-      buildWatchBool(enabled, () =>
+      buildWatchBool(gamestream.isometric.player.debugging, () =>
           GSDialog(
             child: GSContainer(
               child: WatchBuilder(tab, (DebugTab activeTab) => Column(

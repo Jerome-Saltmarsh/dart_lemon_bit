@@ -114,12 +114,14 @@ class IsometricScene {
     final indexRow = getIndexRow(index);
     final indexColumn = getIndexRow(index);
     final i = indexRow * totalColumns + indexColumn;
+    // TODO REFACTOR
     if (!gamestream.isometric.renderer.rendererNodes.island[i])
       return true;
     final indexZ = getIndexZ(index);
     if (indexZ > gamestream.isometric.player.indexZ + 2)
       return false;
 
+    // TODO REFACTOR
     return gamestream.isometric.renderer.rendererNodes.visible3D[index];
   }
 

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
-import 'package:gamestream_server/games.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -433,7 +432,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (WeaponType.isFirearm(weaponType)) {
       characterFireWeapon(character);
-      character.weaponAccuracy += 0.25;
       return;
     }
 
@@ -870,8 +868,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void characterFireWeapon(IsometricCharacter character) {
-    assert (!character.weaponStateBusy);
-    final angle = (character is IsometricPlayer)
+    if (character.deadBusyOrWeaponStateBusy)
+      return;
+
+    character.weaponAccuracy += character.weaponRecoil;
+    character.setDestinationToCurrentPosition();
+
+    final angle = character.isTemplate
         ? character.lookRadian
         : character.angle;
 

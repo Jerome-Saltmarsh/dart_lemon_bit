@@ -534,10 +534,10 @@ class RendererParticles extends IsometricRenderer {
       particle = particles[index++];
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
-      final dstX = IsometricRender.getPositionRenderX(particle);
+      final dstX = particle.renderX;
       if (dstX < engine.Screen_Left - 50) continue;
       if (dstX > engine.Screen_Right + 50) continue;
-      final dstY = IsometricRender.getPositionRenderY(particle);
+      final dstY = particle.renderY;
       if (dstY < engine.Screen_Top - 50) continue;
       if (dstY > engine.Screen_Bottom + 50) continue;
       if (!scene.isPerceptiblePosition(particle)) continue;
@@ -558,13 +558,13 @@ class RendererParticles extends IsometricRenderer {
     super.reset();
   }
 
-  static void casteShadowDownV3(IsometricPosition vector3){
+  void casteShadowDownV3(IsometricPosition vector3){
     if (vector3.z < Node_Height) return;
-    if (vector3.z >= gamestream.isometric.scene.lengthZ) return;
-    final nodeIndex = gamestream.isometric.scene.getIndexPosition(vector3);
-    if (nodeIndex > gamestream.isometric.scene.area) {
-      final nodeBelowIndex = nodeIndex - gamestream.isometric.scene.area;
-      final nodeBelowOrientation = gamestream.isometric.scene.nodeOrientations[nodeBelowIndex];
+    if (vector3.z >= scene.lengthZ) return;
+    final nodeIndex = scene.getIndexPosition(vector3);
+    if (nodeIndex > scene.area) {
+      final nodeBelowIndex = nodeIndex - scene.area;
+      final nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
         renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);

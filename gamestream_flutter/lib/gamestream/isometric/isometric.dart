@@ -169,6 +169,9 @@ class Isometric {
   void debugAttack() =>
       sendIsometricRequest(IsometricRequest.Debug_Attack);
 
+  void toggleDebugging() =>
+      sendIsometricRequest(IsometricRequest.Toggle_Debugging);
+
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Isometric,

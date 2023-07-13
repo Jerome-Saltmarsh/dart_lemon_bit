@@ -25,6 +25,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
 
+  var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
@@ -353,10 +354,6 @@ abstract class IsometricCharacter extends IsometricCollider {
       }
     }
 
-    if (!pathFindingEnabled && runToDestinationEnabled && target != null){
-      setDestinationToTarget();
-    }
-
     if (runToDestinationEnabled && !arrivedAtDestination && withinRadiusXYZ(runX, runY, runZ, 8)){
        setDestinationToCurrentPosition();
     }
@@ -400,15 +397,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     clearPath();
     setDestinationToCurrentPosition();
     setCharacterStateIdle();
-  }
-
-  /// throws an exception if target is null
-  void setDestinationToTarget() {
-    final target = this.target;
-    if (target == null) {
-      throw Exception('target is null');
-    }
-    setRunDestination(target.x, target.y, target.z);
   }
 
   /// throws an exception if target is null

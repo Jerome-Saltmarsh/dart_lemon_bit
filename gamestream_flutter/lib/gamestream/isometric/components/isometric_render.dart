@@ -26,7 +26,6 @@ class IsometricRender {
   final RendererParticles rendererParticles;
   final RendererGameObjects rendererGameObjects;
   late IsometricRenderer next = rendererNodes;
-  var renderDebug = false;
 
   IsometricRender({
     required this.rendererCharacters,

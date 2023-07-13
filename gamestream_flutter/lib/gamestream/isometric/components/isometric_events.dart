@@ -463,7 +463,7 @@ class IsometricEvents {
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
     gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
-    isometric.particles.spawnPurpleFireExplosion(x, y, z);
+    // isometric.particles.spawnPurpleFireExplosion(x, y, z);
 
     for (var i = 0; i < 4; i++){
       isometric.particles.spawnParticleBlood(
@@ -486,7 +486,7 @@ class IsometricEvents {
   }
 
   void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
-    final zPos = z + Node_Size_Half;
+    // final zPos = z + Node_Size_Half;
     // isometric.particles.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
     // isometric.particles.spawnParticleArm(
     //     x: x,

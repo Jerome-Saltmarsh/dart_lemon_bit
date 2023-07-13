@@ -53,13 +53,12 @@ class IsometricDebug {
   final selectedGameObjectSubType = Watch(-1);
 
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
-  late final enabled = WatchBool(false)..onChanged(onChangedEnabled);
 
   Isometric get isometric => gamestream.isometric;
 
 
   void render(IsometricRender renderer) {
-    if (!enabled.value) return;
+    if (!gamestream.isometric.player.debugging.value) return;
     if (!selectedCollider.value) return;
 
     engine.setPaintColor(Colors.white);
@@ -144,7 +143,6 @@ class IsometricDebug {
   }
 
   void onChangedCharacterSelected(bool characterSelected){
-     if (!enabled.value) return;
      if (characterSelected){
        isometric.camera.target = position;
      } else {

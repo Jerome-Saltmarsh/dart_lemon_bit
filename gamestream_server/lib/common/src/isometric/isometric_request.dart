@@ -20,4 +20,5 @@ enum IsometricRequest {
    Debug_Command,
    Debug_Attack,
    Select_GameObject,
+   Toggle_Debugging,
 }

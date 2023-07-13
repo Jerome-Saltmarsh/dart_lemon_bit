@@ -289,6 +289,9 @@ extension ServerResponseReader on Gamestream {
       case ApiPlayer.Run_To_Destination_Enabled:
         player.runToDestinationEnabled.value = readBool();
         break;
+      case ApiPlayer.Debugging:
+        player.debugging.value = readBool();
+        break;
       case ApiPlayer.Destination:
         player.runX = readDouble();
         player.runY = readDouble();

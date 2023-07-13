@@ -130,7 +130,6 @@ class IsometricParticles {
     countTotalActiveParticles();
 
     if (totalActiveParticles == 0) return;
-
     assert (verifyTotalActiveParticles());
 
     Engine.insertionSort(

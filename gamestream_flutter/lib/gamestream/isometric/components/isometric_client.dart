@@ -41,7 +41,6 @@ mixin class IsometricClient {
 
   late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
   late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
-  late final debugMode = Watch(false, onChanged: onChangedDebugMode);
   late final raining = Watch(false, onChanged: onChangedRaining);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
   late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
@@ -426,10 +425,6 @@ mixin class IsometricClient {
       gamestream.isometric.client.areaTypeVisibleDuration = value
           ? 150
           : 0;
-
-  void onChangedDebugMode(bool value){
-    gamestream.isometric.renderer.renderDebug = value;
-  }
 
   void onChangedCredits(int value){
     gamestream.audio.coins.play();

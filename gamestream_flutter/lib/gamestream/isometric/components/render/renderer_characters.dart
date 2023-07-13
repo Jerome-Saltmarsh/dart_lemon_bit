@@ -32,9 +32,9 @@ class RendererCharacters extends IsometricRenderer {
 
   void renderCurrentCharacter(){
 
-    if (gamestream.isometric.renderer.renderDebug) {
-      gamestream.isometric.renderer.renderCircle(character.x, character.y, character.z, character.radius);
-    }
+    // if (gamestream.isometric.renderer.renderDebug) {
+    //   gamestream.isometric.renderer.renderCircle(character.x, character.y, character.z, character.radius);
+    // }
 
     if (!character.allie && gamestream.isometric.options.renderHealthBarEnemies) {
       renderer.renderCharacterHealthBar(character);

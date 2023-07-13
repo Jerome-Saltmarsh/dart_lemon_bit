@@ -84,10 +84,6 @@ extension IsometricActions on Isometric {
     GameIsometricUI.messageBoxVisible.value = false;
   }
 
-  void toggleDebugMode(){
-    client.debugMode.value = !client.debugMode.value;;
-  }
-
   void toggleZoom(){
     gamestream.audio.weaponSwap2();
     if (engine.targetZoom != Zoom_Far){

@@ -27,6 +27,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   static const Cache_Length = 100;
 
+  var _debugging = false;
   var mouseLeftDownDuration = 0;
   var mouseLeftDownIgnore = false;
   var mouseRightDownDuration = 0;
@@ -90,6 +91,15 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     id = game.playerId++;
   }
 
+  set debugging(bool value){
+    if (_debugging == value)
+      return;
+
+    _debugging = value;
+    writeDebugging();
+  }
+
+  bool get debugging => _debugging;
 
   @override
   set runToDestinationEnabled(bool value){
@@ -277,6 +287,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePlayerHealth();
       writePlayerAlive();
       writeHighScore();
+      writeDebugging();
     }
 
     if (!sceneDownloaded){
@@ -1032,5 +1043,15 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Run_To_Destination_Enabled);
     writeBool(runToDestinationEnabled);
+  }
+
+  void writeDebugging() {
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Debugging);
+    writeBool(debugging);
+  }
+
+  void toggleDebugging() {
+    debugging = !debugging;
   }
 }

@@ -587,7 +587,6 @@ class RendererNodes extends IsometricRenderer {
   }
 
   bool assertOnScreen(){
-    if (!gamestream.isometric.client.debugMode.value) return true;
     if (currentNodeDstX < screenLeft){
       offscreenNodesLeft++;
       return true;

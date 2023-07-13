@@ -21,7 +21,7 @@ class IsometricGame extends Game {
     isometric.camera.target = isometric.player.position;
   }
 
-  bool get debugMode => isometric.debug.enabled.value;
+  bool get debugMode => gamestream.isometric.player.debugging.value;
 
   bool get editMode => isometric.client.edit.value;
 
@@ -124,7 +124,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Digit_0) {
-      toggleDebugMode();
+      gamestream.isometric.toggleDebugging();
       return;
     }
 
@@ -149,10 +149,6 @@ class IsometricGame extends Game {
       isometric.debug.onKeyPressed(key);
       return;
     }
-  }
-
-  void toggleDebugMode() {
-    isometric.debug.enabled.toggle();
   }
 
   void toggleEditMode() {
