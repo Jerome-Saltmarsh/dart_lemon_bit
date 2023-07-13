@@ -147,6 +147,9 @@ class IsometricDebug {
   }
 
   void onChangedCharacterSelected(bool characterSelected){
+    if (!isometric.player.debugging.value)
+      return;
+
      if (characterSelected){
        isometric.camera.target = position;
      } else {

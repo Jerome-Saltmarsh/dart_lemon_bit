@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_render.dart';
@@ -23,7 +24,7 @@ class IsometricPlayer {
   var runY = 0.0;
   var runZ = 0.0;
 
-  final debugging = Watch(false);
+  late final debugging = Watch(false, onChanged: onChangedDebugging);
   final runToDestinationEnabled = Watch(false);
   final arrivedAtDestination = Watch(false);
   final playerAimTargetSet = Watch(false);
@@ -123,6 +124,12 @@ class IsometricPlayer {
     previousPosition.x = position.x;
     previousPosition.y = position.y;
     previousPosition.z = position.z;
+  }
+
+  void onChangedDebugging(bool debugging){
+    if (!debugging){
+      gamestream.isometric.cameraTargetPlayer();
+    }
   }
 }
 
