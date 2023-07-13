@@ -989,8 +989,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       return;
     }
 
+    setTargetToAimTarget();
+  }
+
+  void setTargetToAimTarget() {
     target = aimTarget;
     runToDestinationEnabled = true;
     pathFindingEnabled = false;
   }
+
 }

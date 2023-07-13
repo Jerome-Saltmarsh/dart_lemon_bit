@@ -341,9 +341,12 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedWeaponIndex = index;
-    // attack();
-    performPrimaryAction();
 
+    if (aimTarget == null) {
+      attack();
+    } else {
+      setTargetToAimTarget();
+    }
   }
 
   void selectItem(int index) {
@@ -362,6 +365,7 @@ class MmoPlayer extends IsometricPlayer {
     if (itemType == GameObjectType.Consumable){
       if (subType == ConsumableType.Health_Potion){
          health = maxHealth;
+         setCharacterStateChanging();
          clearItem(index);
       }
       return;

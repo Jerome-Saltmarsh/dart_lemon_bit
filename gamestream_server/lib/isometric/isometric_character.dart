@@ -16,6 +16,7 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   var _weaponState = WeaponState.Idle;
 
+  var clearTargetAfterAttack = true;
   var characterType = 0;
   var weaponStateDurationTotal = 0;
   var autoTarget = true;
@@ -364,8 +365,14 @@ abstract class IsometricCharacter extends IsometricCollider {
             weaponState = WeaponState.Aiming;
             weaponStateDurationTotal = 10;
             weaponStateDuration = 0;
+            if (clearTargetAfterAttack){
+              clearTarget();
+            }
             break;
           default:
+            if (clearTargetAfterAttack){
+              clearTarget();
+            }
             weaponState = WeaponState.Idle;
             weaponStateDurationTotal = 0;
             weaponStateDuration = 0;
