@@ -208,26 +208,6 @@ mixin class IsometricClient {
 
   int get bodyPartDuration =>  randomInt(120, 200);
 
-  /// do this during the draw call so that particles are smoother
-
-  void interpolatePlayer(){
-
-    if (!gamestream.isometric.player.interpolating.value) return;
-    if (gamestream.rendersSinceUpdate.value == 0) {
-      return;
-    }
-    if (gamestream.rendersSinceUpdate.value != 1) return;
-
-    final playerCharacter = gamestream.isometric.server.getPlayerCharacter();
-    if (playerCharacter == null) return;
-    final velocityX = gamestream.isometric.player.position.x - gamestream.isometric.player.previousPosition.x;
-    final velocityY = gamestream.isometric.player.position.y - gamestream.isometric.player.previousPosition.y;
-    final velocityZ = gamestream.isometric.player.position.z - gamestream.isometric.player.previousPosition.z;
-    playerCharacter.x += velocityX;
-    playerCharacter.y += velocityY;
-    playerCharacter.z -= velocityZ;
-  }
-
   void updateTorchEmissionIntensity(){
     if (torch_emission_vel == 0) return;
     torch_emission_t += torch_emission_vel;
@@ -295,7 +275,7 @@ mixin class IsometricClient {
   void updateCredits() {
     _updateCredits = !_updateCredits;
     if (!_updateCredits) return;
-    final diff = playerCreditsAnimation.value - gamestream.isometric.server.playerCredits.value;
+    final diff = playerCreditsAnimation.value - gamestream.isometric.player.credits.value;
     if (diff == 0) return;
     final diffAbs = diff.abs();
     final speed = max(diffAbs ~/ 10, 1);

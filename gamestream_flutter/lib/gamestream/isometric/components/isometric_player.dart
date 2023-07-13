@@ -47,10 +47,12 @@ class IsometricPlayer {
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final weaponCooldown = Watch(1.0);
-  final interpolating = Watch(true);
   final target = IsometricPosition();
-  final questAdded = Watch(false);
+  final health = Watch(0);
+  final maxHealth = Watch(0);
+  final weaponDamage = Watch(0);
+  final weaponCooldown = Watch(1.0);
+  final credits = Watch(0);
 
   late final message = Watch('', onChanged: gamestream.isometric.events.onChangedPlayerMessage);
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);

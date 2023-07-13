@@ -300,7 +300,7 @@ extension ServerResponseReader on Gamestream {
         readPlayerHealth();
         break;
       case ApiPlayer.Credits:
-        isometric.server.playerCredits.value = readUInt16();
+        isometric.player.credits.value = readUInt16();
         break;
       case ApiPlayer.Energy:
         readApiPlayerEnergy();
@@ -323,7 +323,7 @@ extension ServerResponseReader on Gamestream {
         io.recenterCursor();
         break;
       case ApiPlayer.Damage:
-        isometric.server.playerDamage.value = readUInt16();
+        isometric.player.weaponDamage.value = readUInt16();
         break;
       case ApiPlayer.Equipment:
         readPlayerEquipped();
@@ -377,8 +377,8 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readPlayerHealth() {
-    isometric.server.playerHealth.value = readUInt16();
-    isometric.server.playerMaxHealth.value = readUInt16();
+    isometric.player.health.value = readUInt16();
+    isometric.player.maxHealth.value = readUInt16();
   }
 
   void readMapCoordinate() {

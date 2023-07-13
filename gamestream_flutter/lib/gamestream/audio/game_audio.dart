@@ -281,8 +281,8 @@ class GameAudio {
   }
 
   double getVolumeHeartBeat(){
-    if (gamestream.isometric.server.playerMaxHealth.value <= 0) return 0.0;
-    return 1.0 - gamestream.isometric.server.playerHealth.value / gamestream.isometric.server.playerMaxHealth.value;
+    if (gamestream.isometric.player.maxHealth.value <= 0) return 0.0;
+    return 1.0 - gamestream.isometric.player.health.value / gamestream.isometric.player.maxHealth.value;
   }
 
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){

@@ -169,7 +169,6 @@ extension isometricDebugUI on IsometricDebug {
                   'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
           )),
           buildWatch(gamestream.updateFrame, (t) => buildText('update-frame: $t')),
-          buildWatch(gamestream.isometric.player.interpolating, (bool interpolating) => buildText('interpolating: $interpolating', onPressed: () => gamestream.isometric.player.interpolating.value = !gamestream.isometric.player.interpolating.value)),
           buildWatch(gamestream.gameType, (GameType value) => buildText('game-type: ${value.name}')),
           buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
           buildWatch(gamestream.io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: gamestream.io.actionToggleInputMode)),

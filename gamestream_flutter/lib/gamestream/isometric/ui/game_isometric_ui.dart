@@ -232,20 +232,6 @@ class GameIsometricUI {
               (int frames) =>
               buildText('Warning: No message received from server $frames')));
 
-  static Positioned buildWatchInterpolation() => Positioned(
-    bottom: 0,
-    left: 0,
-    child: buildWatch(gamestream.isometric.player.interpolating, (bool value) {
-      if (!value)
-        return buildText('Interpolation Off',
-            onPressed: () => gamestream.isometric.player.interpolating.value = true);
-      return buildWatch(gamestream.rendersSinceUpdate, (int frames) {
-        return buildText('Frames: $frames',
-            onPressed: () => gamestream.isometric.player.interpolating.value = false);
-      });
-    }),
-  );
-
   static Widget buildPlayersScore(){
     return IgnorePointer(
       child: Column(
@@ -552,8 +538,8 @@ class GameIsometricUI {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
-                return buildWatch(gamestream.isometric.server.playerHealth, (int health){
+              child: buildWatch(gamestream.isometric.player.maxHealth, (int maxHealth) {
+                return buildWatch(gamestream.isometric.player.health, (int health){
                   final percentage = health / max(maxHealth, 1);
                   return Container(
                     width: width,

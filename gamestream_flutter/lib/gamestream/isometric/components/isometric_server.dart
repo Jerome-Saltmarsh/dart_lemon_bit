@@ -20,17 +20,12 @@ class IsometricServer {
   var inventory = Uint16List(0);
   var inventoryQuantity = Uint16List(0);
 
-  final tagTypes = <String, int> {};
   final playerScores = <IsometricPlayerScore>[];
   final gameObjects = <IsometricGameObject>[];
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
   final playerScoresReads = Watch(0);
   final highScore = Watch(0);
-  final playerHealth = Watch(0);
-  final playerMaxHealth = Watch(0);
-  final playerDamage = Watch(0);
-  final playerCredits = Watch(0);
   final playerExperiencePercentage = Watch(0.0);
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
@@ -39,19 +34,6 @@ class IsometricServer {
   final minutes = Watch(0);
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
-  final playerBelt1_ItemType = Watch(0);
-  final playerBelt2_ItemType = Watch(0);
-  final playerBelt3_ItemType = Watch(0);
-  final playerBelt4_ItemType = Watch(0);
-  final playerBelt5_ItemType = Watch(0);
-  final playerBelt6_ItemType = Watch(0);
-  final playerBelt1_Quantity = Watch(0);
-  final playerBelt2_Quantity = Watch(0);
-  final playerBelt3_Quantity = Watch(0);
-  final playerBelt4_Quantity = Watch(0);
-  final playerBelt5_Quantity = Watch(0);
-  final playerBelt6_Quantity = Watch(0);
-  final equippedWeaponIndex = Watch(0);
   final sceneUnderground = Watch(false);
 
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
@@ -60,14 +42,6 @@ class IsometricServer {
   late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
   late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
   late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
-  late final watchBeltItemTypes = [
-    playerBelt1_ItemType,
-    playerBelt2_ItemType,
-    playerBelt3_ItemType,
-    playerBelt4_ItemType,
-    playerBelt5_ItemType,
-    playerBelt6_ItemType,
-  ];
 
   IsometricCharacter getCharacterInstance(){
     if (characters.length <= totalCharacters){
@@ -232,155 +206,6 @@ class IsometricServer {
         );
       }
     }
-  }
-
-
-  int getWatchBeltItemTypeIndex(Watch<int> watchBelt){
-    // if (watchBelt == playerBelt1_ItemType) return ItemType.Belt_1;
-    // if (watchBelt == playerBelt2_ItemType) return ItemType.Belt_2;
-    // if (watchBelt == playerBelt3_ItemType) return ItemType.Belt_3;
-    // if (watchBelt == playerBelt4_ItemType) return ItemType.Belt_4;
-    // if (watchBelt == playerBelt5_ItemType) return ItemType.Belt_5;
-    // if (watchBelt == playerBelt6_ItemType) return ItemType.Belt_6;
-    throw Exception('ServerQuery.getWatchBeltIndex($watchBelt)');
-  }
-
-  Watch<int> getWatchBeltTypeWatchQuantity(Watch<int> watchBelt){
-    if (watchBelt == playerBelt1_ItemType) return playerBelt1_Quantity;
-    if (watchBelt == playerBelt2_ItemType) return playerBelt2_Quantity;
-    if (watchBelt == playerBelt3_ItemType) return playerBelt3_Quantity;
-    if (watchBelt == playerBelt4_ItemType) return playerBelt4_Quantity;
-    if (watchBelt == playerBelt5_ItemType) return playerBelt5_Quantity;
-    if (watchBelt == playerBelt6_ItemType) return playerBelt6_Quantity;
-    throw Exception('ServerQuery.getWatchBeltQuantity($watchBelt)');
-  }
-
-  int getItemTypeConsumesRemaining(int itemType) {
-    // final consumeAmount = ItemType.getConsumeAmount(itemType);
-    // if (consumeAmount <= 0) return 0;
-    // return countItemTypeQuantityInPlayerPossession(ItemType.getConsumeType(itemType)) ~/ consumeAmount;
-    return 0;
-  }
-
-  int mapWatchBeltTypeToItemType(Watch<int> watchBeltType){
-    // if (watchBeltType == playerBelt1_ItemType) return ItemType.Belt_1;
-    // if (watchBeltType == playerBelt2_ItemType) return ItemType.Belt_2;
-    // if (watchBeltType == playerBelt3_ItemType) return ItemType.Belt_3;
-    // if (watchBeltType == playerBelt4_ItemType) return ItemType.Belt_4;
-    // if (watchBeltType == playerBelt5_ItemType) return ItemType.Belt_5;
-    // if (watchBeltType == playerBelt6_ItemType) return ItemType.Belt_6;
-    throw Exception('ServerQuery.mapWatchBeltTypeToItemType($watchBeltType)');
-  }
-
-  int getItemQuantityAtIndex(int index){
-    // assert (index >= 0);
-    // if (index < inventory.length)
-    //   return inventoryQuantity[index];
-    // if (index == ItemType.Belt_1)
-    //   return playerBelt1_Quantity.value;
-    // if (index == ItemType.Belt_2)
-    //   return playerBelt2_Quantity.value;
-    // if (index == ItemType.Belt_3)
-    //   return playerBelt3_Quantity.value;
-    // if (index == ItemType.Belt_4)
-    //   return playerBelt4_Quantity.value;
-    // if (index == ItemType.Belt_5)
-    //   return playerBelt5_Quantity.value;
-    // if (index == ItemType.Belt_6)
-    //   return playerBelt6_Quantity.value;
-    //
-    throw Exception('ServerQuery.getItemQuantityAtIndex($index)');
-  }
-
-  int getItemTypeAtInventoryIndex(int index){
-    // if (index == ItemType.Equipped_Weapon)
-    //   return gamestream.isometric.player.weapon.value;
-    //
-    // if (index == ItemType.Equipped_Head)
-    //   return gamestream.isometric.player.head.value;
-    //
-    // if (index == ItemType.Equipped_Body)
-    //   return gamestream.isometric.player.body.value;
-    //
-    // if (index == ItemType.Equipped_Legs)
-    //   return gamestream.isometric.player.legs.value;
-    //
-    // if (index == ItemType.Belt_1){
-    //   return playerBelt1_ItemType.value;
-    // }
-    // if (index == ItemType.Belt_2){
-    //   return playerBelt2_ItemType.value;
-    // }
-    // if (index == ItemType.Belt_3){
-    //   return playerBelt3_ItemType.value;
-    // }
-    // if (index == ItemType.Belt_4){
-    //   return playerBelt4_ItemType.value;
-    // }
-    // if (index == ItemType.Belt_5){
-    //   return playerBelt5_ItemType.value;
-    // }
-    // if (index == ItemType.Belt_6){
-    //   return playerBelt6_ItemType.value;
-    // }
-    // if (index >= inventory.length){
-    //   throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index >= inventory.length');
-    // }
-    // if (index < 0){
-    //   throw Exception('ServerQuery.getItemTypeAtInventoryIndex($index) index < 0');
-    // }
-    // return inventory[index];
-    throw Exception();
-  }
-
-  int countItemTypeQuantityInPlayerPossession(int itemType){
-    var total = 0;
-    final inventoryLength = inventory.length;
-    for (var i = 0; i < inventoryLength; i++){
-      if (inventory[i] != itemType) continue;
-      total += inventoryQuantity[i];
-    }
-    if (playerBelt1_ItemType.value == itemType) {
-      total += playerBelt1_Quantity.value;
-    }
-    if (playerBelt2_ItemType.value == itemType) {
-      total += playerBelt2_Quantity.value;
-    }
-    if (playerBelt3_ItemType.value == itemType) {
-      total += playerBelt3_Quantity.value;
-    }
-    if (playerBelt4_ItemType.value == itemType) {
-      total += playerBelt4_Quantity.value;
-    }
-    if (playerBelt5_ItemType.value == itemType) {
-      total += playerBelt5_Quantity.value;
-    }
-    if (playerBelt6_ItemType.value == itemType) {
-      total += playerBelt6_Quantity.value;
-    }
-    return total;
-  }
-
-  int getEquippedWeaponType() =>
-      getItemTypeAtInventoryIndex(equippedWeaponIndex.value);
-
-  int getEquippedWeaponQuantity() =>
-      getItemQuantityAtIndex(equippedWeaponIndex.value);
-
-  int getEquippedItemType(int itemType) =>
-      // ItemType.isTypeWeapon (itemType) ? gamestream.isometric.player.weapon.value :
-      // ItemType.isTypeHead   (itemType) ? gamestream.isometric.player.head.value   :
-      // ItemType.isTypeBody   (itemType) ? gamestream.isometric.player.body.value   :
-      // ItemType.isTypeLegs   (itemType) ? gamestream.isometric.player.legs.value   :
-      // ItemType.Empty          ;
-  0;
-
-  int getEquippedWeaponConsumeType() =>
-      // ItemType.getConsumeType(getEquippedWeaponType());
-  0;
-
-  void onChangedAreaType(int areaType) {
-    gamestream.isometric.client.areaTypeVisible.value = true;
   }
 
   void onChangedLightningFlashing(bool lightningFlashing){
