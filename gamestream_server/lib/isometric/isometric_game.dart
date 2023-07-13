@@ -280,9 +280,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (!player.mouseLeftDownIgnore && mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
       final aimTarget = player.aimTarget;
-      if (player is MmoPlayer){
-        player.equippedWeaponIndex = 0;
-      }
       if (aimTarget == null){
         player.setDestinationToMouse();
         player.runToDestinationEnabled = true;

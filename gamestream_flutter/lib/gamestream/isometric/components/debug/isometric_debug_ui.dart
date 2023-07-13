@@ -270,6 +270,9 @@ extension isometricDebugUI on IsometricDebug {
       buildWatch(engine.msUpdate, (t) {
         return buildRowText(text: 'engine.fps-update', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
+      buildWatch(engine.renderFramesSkipped, (t) {
+        return buildRowText(text: 'render.frames-skipped', value:t);
+      }),
       onPressed(
           action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
@@ -320,7 +323,7 @@ extension isometricDebugUI on IsometricDebug {
     required Watch<String> watch,
   }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
 
-  static Widget buildRowText({required String text, required String value}) => Container(
+  static Widget buildRowText({required String text, required dynamic value}) => Container(
     margin: const EdgeInsets.only(bottom: 2),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

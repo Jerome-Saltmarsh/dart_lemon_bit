@@ -81,6 +81,7 @@ class Engine extends StatelessWidget {
   late ui.Image _bufferImage;
   var _bufferBlendMode = BlendMode.dstATop;
   final keyState = <int, bool>{ };
+  final renderFramesSkipped = Watch(0);
   final keyStateDuration = <int, int>{ };
   static final random = Random();
   var textPainter = TextPainter(
@@ -370,8 +371,11 @@ class Engine extends StatelessWidget {
   void redrawCanvas() {
     final now = DateTime.now();
     final duration = now.difference(lastRenderTime);
-    if (duration.inMilliseconds < minMSPerRender)
+    if (duration.inMilliseconds < minMSPerRender){
+      renderFramesSkipped.value++;
       return;
+    }
+
     lastRenderTime = now;
     notifierPaintFrame.value++;
     msRender.value = duration.inMilliseconds;
