@@ -15,6 +15,8 @@ class IsometricParticles {
   var totalParticles = 0;
   var totalActiveParticles = 0;
 
+  var nodeType = 0;
+
   final particles = <IsometricParticle>[];
   final particleOverflow = IsometricParticle();
   final IsometricScene scene;
@@ -171,7 +173,7 @@ class IsometricParticles {
     for (var i = 0; i < length; i++) {
       final particle = particles[i];
       if (!particle.active) continue;
-      if (particle.type != ParticleType.Light_Emission) continue;
+      if (!particle.emitsLight) continue;
       scene.emitLightAHSVShadowed(
         index: scene.getIndexPosition(particle),
         hue: particle.lightHue,
@@ -219,21 +221,21 @@ class IsometricParticles {
       return;
     }
 
-
-
-    final nodeIndex = gamestream.isometric.scene.getIndexPosition(particle);
+    final nodeIndex = scene.getIndexPosition(particle);
 
     assert (nodeIndex >= 0);
-    assert (nodeIndex < gamestream.isometric.scene.total);
+    assert (nodeIndex < scene.total);
 
-    final tile = gamestream.isometric.scene.nodeTypes[nodeIndex];
+    particle.nodeIndex = nodeIndex;
+    final nodeType = scene.nodeTypes[nodeIndex];
+    particle.nodeType = nodeType;
     final airBorn =
         !particle.checkNodeCollision || (
-            tile == NodeType.Empty        ||
-                tile == NodeType.Rain_Landing ||
-                tile == NodeType.Rain_Falling ||
-                tile == NodeType.Grass_Long   ||
-                tile == NodeType.Fireplace)    ;
+            nodeType == NodeType.Empty        ||
+                nodeType == NodeType.Rain_Landing ||
+                nodeType == NodeType.Rain_Falling ||
+                nodeType == NodeType.Grass_Long   ||
+                nodeType == NodeType.Fireplace)    ;
 
 
     if (particle.checkNodeCollision && !airBorn) {
@@ -260,7 +262,7 @@ class IsometricParticles {
     }
 
     if (bounce) {
-      if (tile == NodeType.Water){
+      if (nodeType == NodeType.Water){
         return particle.deactivate();
       }
       if (particle.zv < -0.1){
@@ -654,9 +656,9 @@ class IsometricParticles {
         scale: scale,
       )
         ..emitsLight = true
-        ..lightHue = gamestream.isometric.scene.ambientHue
-        ..lightSaturation = gamestream.isometric.scene.ambientSaturation
-        ..lightValue = gamestream.isometric.scene.ambientValue
+        ..lightHue = scene.ambientHue
+        ..lightSaturation = scene.ambientSaturation
+        ..lightValue = scene.ambientValue
         ..alpha = 0
         ..checkNodeCollision = false
         ..strength = 0.5
@@ -679,9 +681,9 @@ class IsometricParticles {
         checkCollision: false,
         animation: true,
       )
-        ..lightHue = gamestream.isometric.scene.ambientHue
-        ..lightSaturation = gamestream.isometric.scene.ambientSaturation
-        ..lightValue = gamestream.isometric.scene.ambientValue
+        ..lightHue = scene.ambientHue
+        ..lightSaturation = scene.ambientSaturation
+        ..lightValue = scene.ambientValue
         ..alpha = 0
         ..flash = true
         ..strength = 0.0

@@ -280,7 +280,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (!player.mouseLeftDownIgnore && mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
       final aimTarget = player.aimTarget;
-      if (aimTarget == null){
+      if (aimTarget == null || player.isEnemy(aimTarget)){
         player.setDestinationToMouse();
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
@@ -294,27 +294,27 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (!player.mouseRightDownIgnore && mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
-      final aimTarget = player.aimTarget;
-      if (player is MmoPlayer){
-        player.equippedWeaponIndex = 1;
-      }
-      if (aimTarget == null){
-        player.setDestinationToMouse();
-        player.runToDestinationEnabled = true;
-        player.pathFindingEnabled = false;
-        player.target = null;
-      } else if (mouseRightClicked) {
-        if (player is MmoPlayer){
-          player.equippedWeaponIndex = 1;
-        }
-        player.target = aimTarget;
-        player.runToDestinationEnabled = true;
-        player.pathFindingEnabled = false;
-        player.mouseLeftDownIgnore = true;
-      }
-      return;
-    }
+    // if (!player.mouseRightDownIgnore && mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
+    //   final aimTarget = player.aimTarget;
+    //   if (player is MmoPlayer){
+    //     player.equippedWeaponIndex = 1;
+    //   }
+    //   if (aimTarget == null){
+    //     player.setDestinationToMouse();
+    //     player.runToDestinationEnabled = true;
+    //     player.pathFindingEnabled = false;
+    //     player.target = null;
+    //   } else if (mouseRightClicked) {
+    //     if (player is MmoPlayer){
+    //       player.equippedWeaponIndex = 1;
+    //     }
+    //     player.target = aimTarget;
+    //     player.runToDestinationEnabled = true;
+    //     player.pathFindingEnabled = false;
+    //     player.mouseLeftDownIgnore = true;
+    //   }
+    //   return;
+    // }
 
 
 

@@ -327,8 +327,6 @@ class MmoPlayer extends IsometricPlayer {
     );
   }
 
-
-
   void clearWeapon(int index) => setWeapon(index: index, item: null);
 
   void clearItem(int index) => setItem(index: index, item: null);

@@ -19,6 +19,8 @@ class IsometricParticle extends IsometricPosition {
   /// Deactivates if this node hits a solid node
   var checkNodeCollision = true;
   var animation = false;
+  var nodeType = 0;
+  var nodeIndex = 0;
 
   var lightHue = 0;
   var lightSaturation = 0;

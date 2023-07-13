@@ -480,12 +480,6 @@ class IsometricEvents {
       case CharacterType.Zombie:
         return onCharacterDeathZombie(characterType, x, y, z, angle);
       case CharacterType.Dog:
-        // GameState.spawnParticleAnimation(
-        //     x: x,
-        //     y: y,
-        //     z: z,
-        //     type: ParticleType.Character_Animation_Dog_Death,
-        // );
         gamestream.audio.dog_woolf_howl_4();
         break;
     }
@@ -493,26 +487,26 @@ class IsometricEvents {
 
   void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
     final zPos = z + Node_Size_Half;
-    isometric.particles.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
-    isometric.particles.spawnParticleArm(
-        x: x,
-        y: y,
-        z: zPos,
-        angle: angle + Engine.randomGiveOrTake(0.5),
-        speed: 4.0 + Engine.randomGiveOrTake(0.5));
-    isometric.particles.spawnParticleLegZombie(
-        x: x,
-        y: y,
-        z: zPos,
-        angle: angle + Engine.randomGiveOrTake(0.5),
-        speed: 4.0 + Engine.randomGiveOrTake(0.5));
-    isometric.particles.spawnParticleOrgan(
-        x: x,
-        y: y,
-        z: zPos,
-        angle: angle + Engine.randomGiveOrTake(0.5),
-        speed: 4.0 + Engine.randomGiveOrTake(0.5),
-        zv: 0.1);
+    // isometric.particles.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
+    // isometric.particles.spawnParticleArm(
+    //     x: x,
+    //     y: y,
+    //     z: zPos,
+    //     angle: angle + Engine.randomGiveOrTake(0.5),
+    //     speed: 4.0 + Engine.randomGiveOrTake(0.5));
+    // isometric.particles.spawnParticleLegZombie(
+    //     x: x,
+    //     y: y,
+    //     z: zPos,
+    //     angle: angle + Engine.randomGiveOrTake(0.5),
+    //     speed: 4.0 + Engine.randomGiveOrTake(0.5));
+    // isometric.particles.spawnParticleOrgan(
+    //     x: x,
+    //     y: y,
+    //     z: zPos,
+    //     angle: angle + Engine.randomGiveOrTake(0.5),
+    //     speed: 4.0 + Engine.randomGiveOrTake(0.5),
+    //     zv: 0.1);
     Engine.randomItem(gamestream.audio.zombie_deaths).playXYZ(x, y, z);
   }
 
