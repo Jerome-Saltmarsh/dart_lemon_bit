@@ -82,7 +82,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     weaponDamage: 1,
   ){
     this.autoTarget = autoTargetNearbyEnemies;
-    aiEnabled = false;
+    aiDelayAfterPerformFinished = false;
     id = game.playerId++;
   }
 

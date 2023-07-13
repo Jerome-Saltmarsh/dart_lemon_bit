@@ -44,7 +44,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
 
-  var aiEnabled = true;
+  var aiDelayAfterPerformFinished = true;
   var aiDelayAfterPerformFinishedMin = 25;
   var aiDelayAfterPerformFinishedMax = 200;
 
@@ -285,7 +285,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   void aiIdle(){
-    if (!aiEnabled || deadBusyOrWeaponStateBusy) return;
+    if (!aiDelayAfterPerformFinished || deadBusyOrWeaponStateBusy) return;
     setCharacterState(
       value: CharacterState.Idle,
       duration: randomInt(

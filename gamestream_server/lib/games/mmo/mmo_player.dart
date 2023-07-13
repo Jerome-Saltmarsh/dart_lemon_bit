@@ -45,6 +45,8 @@ class MmoPlayer extends IsometricPlayer {
     equipBody(MMOItem.Basic_Padded_Armour);
     equipLegs(MMOItem.Travellers_Pants);
     health = maxHealth;
+
+    writeWeapons();
   }
 
   MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
@@ -144,7 +146,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     weapons[index] = item;
-    writePlayerWeapon(index, item);
+    writePlayerWeapon(index);
   }
 
   void setItem({required int index, required MMOItem? item}){
@@ -156,15 +158,16 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerItem(index, item);
   }
 
-  void writePlayerWeapon(int index, MMOItem? item) {
+  void writePlayerWeapon(int index) {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Weapon);
     writeUInt16(index);
-    if (item == null){
+    final weapon = weapons[index];
+    if (weapon == null){
       writeInt16(-1);
       return;
     }
-    writeInt16(item.index);
+    writeInt16(weapon.index);
   }
 
   void writePlayerItem(int index, MMOItem? item) {
@@ -564,5 +567,11 @@ class MmoPlayer extends IsometricPlayer {
       base += equippedLegs!.movement;
     }
     return base;
+  }
+
+  void writeWeapons() {
+    for (var i = 0; i < weapons.length; i++){
+      writePlayerWeapon(i);
+    }
   }
 }

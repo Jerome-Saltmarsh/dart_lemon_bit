@@ -45,7 +45,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
           TalkOption("Buy", player.endInteraction),
         ]);
       }
-    ));
+    )..aiDelayAfterPerformFinished = false
+    );
 
     npcGuard = MMONpc(
       characterType: CharacterType.Template,
@@ -60,6 +61,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       team: MmoTeam.Human,
       name: "Sam",
     );
+    npcGuard.aiDelayAfterPerformFinished = false;
 
     characters.add(npcGuard);
   }
