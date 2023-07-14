@@ -16,8 +16,8 @@ class MmoPlayer extends IsometricPlayer {
   var npcText = '';
   var npcOptions = <TalkOption>[];
 
-
   final weapons = List<MMOItem?>.generate(4, (index) => null);
+  final treasures = List<MMOItem?>.generate(4, (index) => null);
 
   var _equippedWeaponIndex = -1;
   MMOItem? equippedHead;
@@ -51,22 +51,72 @@ class MmoPlayer extends IsometricPlayer {
     writeInteracting();
   }
 
+  @override
+  int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
+
+  @override
+  int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
+
+  @override
+  int get weaponDamage => equippedWeapon != null ? equippedWeapon!.damage : 1;
+
+  @override
+  double get weaponRange => equippedWeapon != null ? equippedWeapon!.range : 30;
+
+  @override
+  int get headType => equippedHead != null ? equippedHead!.subType : HeadType.Plain;
+
+  @override
+  int get maxHealth {
+    var health = healthBase;
+    if (equippedHead != null){
+      health += equippedHead!.health;
+    }
+    if (equippedBody != null){
+      health += equippedBody!.health;
+    }
+    if (equippedLegs != null){
+      health += equippedLegs!.health;
+    }
+    return health;
+  }
+
+  @override
+  double get runSpeed {
+    var base = 1.0;
+    if (equippedHead != null){
+      base += equippedHead!.movement;
+    }
+    if (equippedBody != null){
+      base += equippedBody!.movement;
+    }
+    if (equippedLegs != null){
+      base += equippedLegs!.movement;
+    }
+    return base;
+  }
+
+  MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+
+  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
+
+  @override
+  set target(IsometricPosition? value){
+    if (super.target == value)
+      return;
+
+    if (interacting) {
+      endInteraction();
+    }
+    super.target = value;
+  }
+
   set interacting(bool value){
     if (super.interacting == value)
       return;
     super.interacting = value;
     writeInteracting();
   }
-
-  void writeInteracting() {
-    writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_Interacting);
-    writeBool(interacting);
-  }
-
-  MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
-
-  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
   set equippedWeaponIndex(int value){
     if (_equippedWeaponIndex == value){
@@ -95,12 +145,6 @@ class MmoPlayer extends IsometricPlayer {
     setDestinationToCurrentPosition();
     setCharacterStateIdle();
     game.characterAttack(this);
-  }
-
-  void writeEquippedWeaponIndex(int value) {
-    writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_Equipped_Weapon_Index);
-    writeInt16(value);
   }
 
   void setItemsLength(int value){
@@ -173,29 +217,6 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerItem(index, item);
   }
 
-  void writePlayerWeapon(int index) {
-    writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_Weapon);
-    writeUInt16(index);
-    final weapon = weapons[index];
-    if (weapon == null){
-      writeInt16(-1);
-      return;
-    }
-    writeInt16(weapon.index);
-  }
-
-  void writePlayerItem(int index, MMOItem? item) {
-    writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_Item);
-    writeUInt16(index);
-    if (item == null){
-      writeInt16(-1);
-      return;
-    }
-    writeInt16(item.index);
-  }
-
   @override
   int getTargetCategory(IsometricPosition? value){
     if (value == null) return TargetCategory.Nothing;
@@ -218,46 +239,6 @@ class MmoPlayer extends IsometricPlayer {
     return TargetCategory.Run;
   }
 
-  @override
-  void customOnUpdate() {
-    // updateInteracting();
-  }
-
-  @override
-  set target(IsometricPosition? value){
-    if (super.target == value)
-      return;
-
-    if (interacting) {
-       endInteraction();
-     }
-     super.target = value;
-  }
-
-  // void updateInteracting() {
-  //   final target = this.target;
-  //   if (interacting) {
-  //     // if (!targetWithinInteractRadius){
-  //     //   endInteraction();
-  //     // }
-  //     return;
-  //   }
-  //
-  //   if (target is! MMONpc)
-  //     return;
-  //
-  //   if (!targetWithinInteractRadius)
-  //     return;
-  //
-  //   final interact = target.interact;
-  //
-  //   if (interact == null)
-  //     return;
-  //
-  //   interact(this);
-  //   interacting = true;
-  // }
-
   void talk(String text, {List<TalkOption>? options}) {
      npcText = text;
      if (options != null){
@@ -273,22 +254,6 @@ class MmoPlayer extends IsometricPlayer {
     interacting = false;
     talk('');
     clearTarget();
-  }
-
-  void writeNpcTalk() {
-    writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Npc_Talk);
-    writeString(npcText);
-    writeByte(npcOptions.length);
-    for (final option in npcOptions) {
-      writeString(option.text);
-    }
-  }
-
-  void writeItemLength(int value) {
-    writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_Item_Length);
-    writeUInt16(value);
   }
 
   void dropWeapon(int index){
@@ -459,21 +424,6 @@ class MmoPlayer extends IsometricPlayer {
      npcOptions[index].action();
   }
 
-  @override
-  int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
-
-  @override
-  int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
-
-  @override
-  int get weaponDamage => equippedWeapon != null ? equippedWeapon!.damage : 1;
-
-  @override
-  double get weaponRange => equippedWeapon != null ? equippedWeapon!.range : 30;
-
-  @override
-  int get headType => equippedHead != null ? equippedHead!.subType : HeadType.Plain;
-
   void equipHead(MMOItem? item){
     if (deadBusyOrWeaponStateBusy)
       return;
@@ -534,19 +484,8 @@ class MmoPlayer extends IsometricPlayer {
     onEquipmentChanged();
   }
 
-  @override
-  int get maxHealth {
-    var health = healthBase;
-    if (equippedHead != null){
-      health += equippedHead!.health;
-    }
-    if (equippedBody != null){
-      health += equippedBody!.health;
-    }
-    if (equippedLegs != null){
-      health += equippedLegs!.health;
-    }
-    return health;
+  void pickupItem(MMOItem item) {
+    health += item.health;
   }
 
   void onEquipmentChanged(){
@@ -574,28 +513,60 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
-  void pickupItem(MMOItem item) {
-    health += item.health;
-  }
-
-  @override
-  double get runSpeed {
-    var base = 1.0;
-    if (equippedHead != null){
-      base += equippedHead!.movement;
-    }
-    if (equippedBody != null){
-      base += equippedBody!.movement;
-    }
-    if (equippedLegs != null){
-      base += equippedLegs!.movement;
-    }
-    return base;
-  }
-
   void writeWeapons() {
     for (var i = 0; i < weapons.length; i++){
       writePlayerWeapon(i);
     }
+  }
+
+  void writeInteracting() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Interacting);
+    writeBool(interacting);
+  }
+
+  void writeEquippedWeaponIndex(int value) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Equipped_Weapon_Index);
+    writeInt16(value);
+  }
+
+  void writePlayerWeapon(int index) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Weapon);
+    writeUInt16(index);
+    final weapon = weapons[index];
+    if (weapon == null){
+      writeInt16(-1);
+      return;
+    }
+    writeInt16(weapon.index);
+  }
+
+  void writePlayerItem(int index, MMOItem? item) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Item);
+    writeUInt16(index);
+    if (item == null){
+      writeInt16(-1);
+      return;
+    }
+    writeInt16(item.index);
+  }
+
+  void writeNpcTalk() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Npc_Talk);
+    writeString(npcText);
+    writeByte(npcOptions.length);
+    for (final option in npcOptions) {
+      writeString(option.text);
+    }
+  }
+
+  void writeItemLength(int value) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Item_Length);
+    writeUInt16(value);
   }
 }

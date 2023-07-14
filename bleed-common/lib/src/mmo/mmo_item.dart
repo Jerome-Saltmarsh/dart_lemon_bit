@@ -99,8 +99,14 @@ enum MMOItem {
       subType: ItemType.Meat_Drumstick,
       health: 4,
       collectable: false,
+  ),
+  Sapphire_Pendant(
+      type: GameObjectType.Item,
+      subType: ItemType.Pendant_1,
+      health: 5,
+      collectable: false,
+      isTreasure: true,
   );
-
 
   final MMOItemQuality? quality;
   final int damage;
@@ -109,6 +115,7 @@ enum MMOItem {
   final int cooldown;
   final int health;
   final bool collectable;
+  final bool isTreasure;
   final double range;
   final double movement;
 
@@ -130,5 +137,6 @@ enum MMOItem {
     this.health = 0,
     this.collectable = true,
     this.movement = 0,
+    this.isTreasure = false,
   });
 }
