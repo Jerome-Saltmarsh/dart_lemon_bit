@@ -27,12 +27,12 @@ class GameObjectType {
   };
 
   static String getName(int value) => const {
-      Weapon: "Weapon",
-      Legs: "Legs",
-      Body: "Body",
-      Head: "Head",
-      Object: "Object",
-      Item: "Consumable",
+      Weapon: 'Weapon',
+      Legs: 'Legs',
+      Body: 'Body',
+      Head: 'Head',
+      Object: 'Object',
+      Item: 'Consumable',
     }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {

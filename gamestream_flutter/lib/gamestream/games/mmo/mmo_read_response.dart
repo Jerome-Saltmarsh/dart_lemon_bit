@@ -1,6 +1,5 @@
 
-
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 
 extension MMOResponseReader on Gamestream {

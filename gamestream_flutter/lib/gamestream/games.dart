@@ -1,9 +1,9 @@
 
-import 'package:bleed_common/src.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 
+import '../common.dart';
 import 'game.dart';
 import 'games/fight2d/game_fight2d.dart';
 import 'games/website/website_game.dart';

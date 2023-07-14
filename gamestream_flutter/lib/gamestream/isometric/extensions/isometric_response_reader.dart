@@ -1,8 +1,7 @@
 
 
 import 'dart:typed_data';
-
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 

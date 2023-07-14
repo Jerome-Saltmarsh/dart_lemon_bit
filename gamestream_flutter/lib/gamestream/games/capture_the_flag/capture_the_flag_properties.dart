@@ -1,6 +1,5 @@
-import 'package:bleed_common/src/capture_the_flag/src.dart';
-
 import 'capture_the_flag_game.dart';
+import 'package:gamestream_flutter/common.dart';
 
 extension CaptureTheFlagProperties on CaptureTheFlagGame {
   bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;

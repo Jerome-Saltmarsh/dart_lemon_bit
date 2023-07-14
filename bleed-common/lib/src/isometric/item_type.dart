@@ -7,10 +7,10 @@ class ItemType {
   
 
   static String getName(int type) => const {
-      Health_Potion: "Health_Potion",
-      Magic_Potion: "Magic_Potion",
-      Meat_Drumstick: "Meat_Drumstick",
-      Pendant_1: "Pendant_1",
+      Health_Potion: 'Health_Potion',
+      Magic_Potion: 'Magic_Potion',
+      Meat_Drumstick: 'Meat_Drumstick',
+      Pendant_1: 'Pendant_1',
     }[type] ?? 'unknown-consumable-type-$type';
 
   static const values = [

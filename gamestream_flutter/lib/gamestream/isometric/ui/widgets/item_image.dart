@@ -1,5 +1,4 @@
-
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';

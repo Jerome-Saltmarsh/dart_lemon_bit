@@ -8,12 +8,12 @@ class HeadType {
 
    static String getName(int value) {
       return const {
-         Plain: "Plain",
-         Steel_Helm: "Steel Helm",
-         Rogue_Hood: "Rogue Hood",
+         Plain: 'Plain',
+         Steel_Helm: 'Steel Helm',
+         Rogue_Hood: 'Rogue Hood',
          Wizards_Hat: "Wizard's Hat",
-         Blonde: "Blonde",
-         Swat: "Swat",
+         Blonde: 'Blonde',
+         Swat: 'Swat',
       }[value] ?? 'head-type-unknown-$value';
    }
 

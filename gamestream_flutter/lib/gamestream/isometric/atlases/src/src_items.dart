@@ -1,4 +1,4 @@
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 
 class SrcItems {
   static const Health_Potion = <double>[

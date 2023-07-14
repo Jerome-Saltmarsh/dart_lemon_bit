@@ -10,14 +10,14 @@ class CharacterState {
   
   static String getName(int value){
     return const {
-      Idle: "Idle",
-      Running: "Running",
-      Dead: "Dead",
-      Changing: "Changing",
-      Performing: "Performing",
-      Hurt: "Hurt",
-      Stunned: "Stunned",
-      Spawning: "Spawning",
+      Idle: 'Idle',
+      Running: 'Running',
+      Dead: 'Dead',
+      Changing: 'Changing',
+      Performing: 'Performing',
+      Hurt: 'Hurt',
+      Stunned: 'Stunned',
+      Spawning: 'Spawning',
     }[value] ?? 'unknown-$value';
   }
 }

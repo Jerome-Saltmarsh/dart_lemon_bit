@@ -49,13 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.16"
-  bleed_common:
-    dependency: "direct main"
-    description:
-      path: "../bleed-common"
-      relative: true
-    source: path
-    version: "1.0.0"
   boolean_selector:
     dependency: transitive
     description:

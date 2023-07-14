@@ -19,12 +19,12 @@ class CombatPowerType {
    ];
    
    static String getName(int value) => const <int, String> {
-      None        : "None",
-      Bomb        : "Explode",
-      Teleport    : "Teleport", // Dash
-      Invisible   : "Vanish",
-      Shield      : "Shield",
-      Stun        : "Stun",
-      Revive      : "Revive",
-   }[value] ?? "power-type-?-$value";
+      None        : 'None',
+      Bomb        : 'Explode',
+      Teleport    : 'Teleport', // Dash
+      Invisible   : 'Vanish',
+      Shield      : 'Shield',
+      Stun        : 'Stun',
+      Revive      : 'Revive',
+   }[value] ?? 'power-type-?-$value';
 }

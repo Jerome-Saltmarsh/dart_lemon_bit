@@ -1,7 +1,6 @@
 
 import 'dart:typed_data';
-
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/images.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';

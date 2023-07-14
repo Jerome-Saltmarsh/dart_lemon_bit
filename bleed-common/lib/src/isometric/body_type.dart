@@ -8,12 +8,12 @@ class BodyType {
 
    static String getName(int value) {
       return const {
-         Nothing: "Nothing",
-         Shirt_Red: "Red Shirt",
-         Shirt_Blue: "Blue Shirt",
-         Shirt_Cyan: "Cyan Shirt",
-         Swat: "Swat",
-         Tunic_Padded: "Padded Tunic",
+         Nothing: 'Nothing',
+         Shirt_Red: 'Red Shirt',
+         Shirt_Blue: 'Blue Shirt',
+         Shirt_Cyan: 'Cyan Shirt',
+         Swat: 'Swat',
+         Tunic_Padded: 'Padded Tunic',
       }[value] ?? 'unknown-body-type-$value';
    }
 

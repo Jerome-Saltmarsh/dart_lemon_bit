@@ -6,9 +6,9 @@ class TeamsRockPaperScissors {
   
   static String getName(int value){
     return {
-       Rock: "Rock",
-       Paper: "Paper",
-       Scissors: "Scissors",
-    } [value] ?? "?";
+       Rock: 'Rock',
+       Paper: 'Paper',
+       Scissors: 'Scissors',
+    } [value] ?? '?';
   }
 }

@@ -9,13 +9,13 @@ class LegType {
 
   static String getName(int value) {
     return const {
-      Nothing: "Nothing",
-      Red: "Red",
-      Blue: "Blue",
-      White: "White",
-      Green: "Green",
-      Brown: "Brown",
-      Swat: "Swat",
+      Nothing: 'Nothing',
+      Red: 'Red',
+      Blue: 'Blue',
+      White: 'White',
+      Green: 'Green',
+      Brown: 'Brown',
+      Swat: 'Swat',
     }[value] ?? 'leg-type-unknown';
   }
 

@@ -14,12 +14,12 @@ class CharacterAction {
   static const Stuck = 10;
 
   static String getName(int value) => {
-      Idle: "Idle",
+      Idle: 'Idle',
       Attack_Target: 'Idle',
       Follow_Path: 'Follow Path',
-      Run_To_Destination: "Run To Destination",
-      Run_To_Target: "Run To Target",
-      Interact_Target: "Interact Target",
-      Collect_Target: "Collect Target"
+      Run_To_Destination: 'Run To Destination',
+      Run_To_Target: 'Run To Target',
+      Interact_Target: 'Interact Target',
+      Collect_Target: 'Collect Target'
     }[value] ?? 'unknown-charcter-action-$value';
 }

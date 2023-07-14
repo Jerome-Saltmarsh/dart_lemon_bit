@@ -9,8 +9,8 @@ class WindType {
   ];
   
   static String getName(int windType) => const {
-      Calm: "Calm",
-      Gentle: "Gentle",
-      Strong: "Strong",
+      Calm: 'Calm',
+      Gentle: 'Gentle',
+      Strong: 'Strong',
   }[windType] ?? 'wind-type-unknown-$windType';
 }

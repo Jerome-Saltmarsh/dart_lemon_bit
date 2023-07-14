@@ -42,9 +42,9 @@ class ParticleType {
 
   static String getName(int particleType){
     return const {
-      Smoke: "Smoke",
-      Zombie_Head: "Zombie_Head",
-      Shell: "Shell",
-    }[particleType] ?? "ParticleType name unknown (particleType: $particleType)";
+      Smoke: 'Smoke',
+      Zombie_Head: 'Zombie_Head',
+      Shell: 'Shell',
+    }[particleType] ?? 'ParticleType name unknown (particleType: $particleType)';
   }
 }

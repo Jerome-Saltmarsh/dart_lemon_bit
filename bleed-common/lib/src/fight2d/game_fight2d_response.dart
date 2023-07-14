@@ -45,12 +45,12 @@ class GameFight2DCharacterState {
         Striking_Up: 'Strike_Up',
         Hurting: 'Hurting',
         Hurting_Airborn: 'Hurting_Airborn',
-        Idle_Airborn: "Idle_Airborn",
-        Second_Jump: "Second_Jump",
-        Airborn_Strike_Down: "Airborn_Strike_Down",
-        Airborn_Strike_Up: "Airborn_Strike_Up",
-        Crouching_Strike: "Crouching_Strike",
-        Rolling: "Rolling",
+        Idle_Airborn: 'Idle_Airborn',
+        Second_Jump: 'Second_Jump',
+        Airborn_Strike_Down: 'Airborn_Strike_Down',
+        Airborn_Strike_Up: 'Airborn_Strike_Up',
+        Crouching_Strike: 'Crouching_Strike',
+        Rolling: 'Rolling',
       }[value] ??
       'unknown';
 

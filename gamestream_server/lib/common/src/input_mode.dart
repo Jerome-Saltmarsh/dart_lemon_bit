@@ -3,8 +3,8 @@ class InputMode {
   static const Keyboard = 1;
 
   static String getName(int value){
-    if (value == Touch) return "touch";
-    if (value == Keyboard) return "keyboard";
+    if (value == Touch) return 'touch';
+    if (value == Keyboard) return 'keyboard';
     return 'unknown($value)';
   }
 }

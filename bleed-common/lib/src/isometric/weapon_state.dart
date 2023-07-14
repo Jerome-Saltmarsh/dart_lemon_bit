@@ -9,12 +9,12 @@ class WeaponState {
    static const Melee = 6;
    
    static String getName(int weaponState) => const {
-         Firing: "Firing",
-         Idle: "Idle",
-         Reloading: "Reloading",
-         Aiming: "Aiming",
-         Changing: "Changing",
-         Throwing: "Throwing",
-         Melee: "Melee",
-   }[weaponState] ?? "unknown-weapon-state-$weaponState";
+         Firing: 'Firing',
+         Idle: 'Idle',
+         Reloading: 'Reloading',
+         Aiming: 'Aiming',
+         Changing: 'Changing',
+         Throwing: 'Throwing',
+         Melee: 'Melee',
+   }[weaponState] ?? 'unknown-weapon-state-$weaponState';
 }

@@ -1,5 +1,4 @@
-
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 

@@ -7,10 +7,10 @@ class TargetCategory {
    static const Collect    = 4;
 
    static String getName(int value) => const {
-      Nothing  : "Nothing",
-      Talk: "Talk",
-      Attack: "Attack",
-      Run      : "Run",
-      Collect  : "Collect",
-   }[value] ?? "target-category-unknown($value)";
+      Nothing  : 'Nothing',
+      Talk: 'Talk',
+      Attack: 'Attack',
+      Run      : 'Run',
+      Collect  : 'Collect',
+   }[value] ?? 'target-category-unknown($value)';
 }

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
-
-import 'package:bleed_common/src.dart';
+import 'package:gamestream_flutter/common.dart';
 
 class TemplateAnimation {
 

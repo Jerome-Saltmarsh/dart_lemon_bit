@@ -7,11 +7,11 @@ class CaptureTheFlagFlagStatus {
    static const Respawning        = 5;
 
    static String getName(int value)=> switch (value) {
-          At_Base => "At_Base",
-          Carried_By_Enemy => "Carried_By_Enemy",
-          Carried_By_Ally => "Carried_By_Allie",
-          Dropped => "Dropped",
-          Respawning => "Respawning",
+          At_Base => 'At_Base',
+          Carried_By_Enemy => 'Carried_By_Enemy',
+          Carried_By_Ally => 'Carried_By_Allie',
+          Dropped => 'Dropped',
+          Respawning => 'Respawning',
           _ => 'unknown-$value'
        };
 }
