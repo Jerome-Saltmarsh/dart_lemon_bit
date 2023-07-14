@@ -1270,8 +1270,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCollisions() {
     resolveCollisions(characters);
-    resolveCollisionsBetween(characters, gameObjects);
     resolveCollisions(gameObjects);
+    resolveCollisionsBetween(characters, gameObjects);
   }
 
   void resolveCollisions(List<IsometricCollider> colliders) {
@@ -1310,9 +1310,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var indexA = 0; indexA < aLength; indexA++) {
       final colliderA = collidersA[indexA];
       if (!colliderA.active) continue;
+      final colliderAOrder = colliderA.order;
+      final colliderARadius = colliderA.radius;
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.active) continue;
+        final colliderBOrder = colliderB.order;
+
+        if (colliderBOrder - colliderAOrder > colliderARadius + colliderB.radius)
+          break;
+
         if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
         if (colliderA.right < colliderB.left) continue;
