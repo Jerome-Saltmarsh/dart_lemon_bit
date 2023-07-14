@@ -6,69 +6,34 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_consta
 import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_particle.dart';
-import 'isometric_position.dart';
 
 class IsometricParticles {
   static const Particles_Max = 500;
 
   var nextParticleFrame = 0;
-  var totalParticles = 0;
-  var totalActiveParticles = 0;
-
   var nodeType = 0;
 
   final particles = <IsometricParticle>[];
-  final particleOverflow = IsometricParticle();
   final IsometricScene scene;
 
   IsometricParticles(this.scene);
 
   int get bodyPartDuration =>  randomInt(120, 200);
 
-
-  void countTotalActiveParticles(){
-    totalActiveParticles = 0;
-    totalParticles = particles.length;
-    for (; totalActiveParticles < totalParticles; totalActiveParticles++){
-      if (!particles[totalActiveParticles].active) break;
+  IsometricParticle getInstance() {
+    for (final particle in particles) {
+      if (!particle.active)
+        return particle;
     }
-  }
 
-  void sortParticlesActive(){
-    var total = particles.length;
-    totalParticles = total;
-
-    for (var pos = 1; pos < total; pos++) {
-      var min = 0;
-      var max = pos;
-      var element = particles[pos];
-      while (min < max) {
-        var mid = min + ((max - min) >> 1);
-        if (!particles[mid].active) {
-          max = mid;
-        } else {
-          min = mid + 1;
-        }
-      }
-      particles.setRange(min + 1, pos + 1, particles, min);
-      particles[min] = element;
-    }
-  }
-
-  IsometricParticle getInstanceParticle() {
-    totalActiveParticles++;
-    if (totalActiveParticles >= totalParticles){
-      final instance = IsometricParticle();
-      particles.add(instance);
-      return instance;
-    }
-    return particles[totalActiveParticles];
+    final instance = IsometricParticle();
+    instance.active = true;
+    particles.add(instance);
+    return instance;
   }
 
   void clearParticles(){
     particles.clear();
-    totalActiveParticles = 0;
-    totalParticles = 0;
   }
 
   IsometricParticle spawnParticle({
@@ -90,16 +55,13 @@ class IsometricParticles {
     bool animation = false,
     int delay = 0,
   }) {
-    if (totalActiveParticles >= Particles_Max) {
-      return particleOverflow;
-    }
     assert(duration > 0);
-    final particle = getInstanceParticle();
-    assert(!particle.active);
+    final particle = getInstance();
     particle.type = type;
     particle.x = x;
     particle.y = y;
     particle.z = z;
+    particle.active = true;
     particle.checkNodeCollision = checkCollision;
     particle.animation = animation;
     particle.emitsLight = false;
@@ -123,32 +85,6 @@ class IsometricParticles {
     particle.rotationVelocity = rotationV;
     particle.bounciness = bounciness;
     return particle;
-  }
-
-  void sortParticles() {
-    sortParticlesActive();
-    countTotalActiveParticles();
-
-    if (totalActiveParticles == 0) return;
-    assert (verifyTotalActiveParticles());
-
-    Engine.insertionSort(
-      particles,
-      compare: IsometricPosition.compareRenderOrder,
-      end: totalActiveParticles,
-    );
-  }
-
-  bool verifyTotalActiveParticles() =>
-      countActiveParticles() == totalActiveParticles;
-
-  int countActiveParticles(){
-    var active = 0;
-    for (var i = 0; i < particles.length; i++){
-      if (particles[i].active)
-        active++;
-    }
-    return active;
   }
 
   void updateParticles() {
@@ -1024,4 +960,7 @@ class IsometricParticles {
       delay: randomInt(0, 8),
     );
   }
+
+  int get countActiveParticles =>
+      particles.where((element) => element.active).length;
 }

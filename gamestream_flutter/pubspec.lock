@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "62.0.0"
+  algorithmic:
+    dependency: "direct main"
+    description:
+      name: algorithmic
+      sha256: "306e203894ad5a1b03b45483f2c912bb20d8aaa312907f1381db922eedbc331d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.11"
   analyzer:
     dependency: transitive
     description:
@@ -373,7 +381,7 @@ packages:
       path: "../dart-lemon-math"
       relative: true
     source: path
-    version: "1.2.22"
+    version: "1.2.25"
   lemon_watch:
     dependency: transitive
     description:

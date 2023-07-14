@@ -164,9 +164,6 @@ extension IsometricResponseReader on Gamestream {
     isometric.events.onChangedNodes();
     isometric.scene.refreshNodeVariations();
     isometric.client.sceneChanged.value++;
-
-    isometric.particles.totalActiveParticles = 0;
-    isometric.particles.totalParticles = 0;
     isometric.particles.particles.clear();
     io.recenterCursor();
   }

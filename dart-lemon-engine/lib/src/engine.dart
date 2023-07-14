@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/src/math.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universal_html/html.dart';
+import 'package:universal_html/html.dart' as html;
 
 import 'keycode.dart';
 import 'renderable.dart';
@@ -386,9 +386,9 @@ class Engine extends StatelessWidget {
   }
 
   void refreshPage(){
-    final window = document.window;
+    final window = html.document.window;
     if (window == null) return;
-    final domain = document.domain;
+    final domain = html.document.domain;
     if (domain == null) return;
     window.location.href = domain;
   }
@@ -396,19 +396,9 @@ class Engine extends StatelessWidget {
   void fullscreenToggle()  =>
     fullScreenActive ? fullScreenExit() : fullScreenEnter();
 
-  void fullScreenExit() => document.exitFullscreen();
+  void fullScreenExit() => html.document.exitFullscreen();
 
-  void fullScreenEnter() {
-    final element = document.documentElement;
-    if (element == null) {
-      return;
-    }
-    try {
-      element.requestFullscreen().catchError((error) {});
-    } catch(error) {
-      // ignore
-    }
-  }
+  void fullScreenEnter() => html.document.documentElement?.requestFullscreen();
 
   void panCamera() {
     final positionX = screenToWorldX(mousePositionX);
@@ -422,7 +412,7 @@ class Engine extends StatelessWidget {
   }
 
   void disableRightClickContextMenu() {
-    document.onContextMenu.listen((event) => event.preventDefault());
+    html.document.onContextMenu.listen((event) => event.preventDefault());
   }
 
   void setPaintColorWhite() {
@@ -567,7 +557,7 @@ class Engine extends StatelessWidget {
       }
     });
 
-    document.addEventListener('fullscreenchange', _internalOnFullScreenChanged);
+    html.document.addEventListener('fullscreenchange', _internalOnFullScreenChanged);
 
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
@@ -1128,7 +1118,7 @@ class Engine extends StatelessWidget {
   void drawLine(double x1, double y1, double x2, double y2) =>
     canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
 
-  bool get fullScreenActive => document.fullscreenElement != null;
+  bool get fullScreenActive => html.document.fullscreenElement != null;
 
   double screenToWorldX(double value)  =>
     cameraX + value / zoom;
@@ -1153,24 +1143,24 @@ class Engine extends StatelessWidget {
      distance(mouseWorldX, mouseWorldY, x, y);
 
   void requestPointerLock() {
-    var canvas = document.getElementById('canvas');
+    var canvas = html.document.getElementById('canvas');
     if (canvas != null) {
       canvas.requestPointerLock();
     }
   }
 
    void setDocumentTitle(String value){
-    document.title = value;
+     html.document.title = value;
   }
 
   void setFavicon(String filename){
-    final link = document.querySelector("link[rel*='icon']");
+    final link = html.document.querySelector("link[rel*='icon']");
     if (link == null) return;
     print("setFavicon($filename)");
     link.setAttribute("type", 'image/x-icon');
     link.setAttribute("rel", 'shortcut icon');
     link.setAttribute("href", filename);
-    document.getElementsByTagName('head')[0].append(link);
+    html.document.getElementsByTagName('head')[0].append(link);
   }
 
   void setCursorWait(){
@@ -1182,7 +1172,7 @@ class Engine extends StatelessWidget {
   }
 
   void setCursorByName(String name){
-    final body = document.body;
+    final body = html.document.body;
     if (body == null) return;
     body.style.cursor = name;
   }
@@ -1202,10 +1192,10 @@ class Engine extends StatelessWidget {
       }) {
     final _base64 = base64Encode(bytes);
     final anchor =
-    AnchorElement(href: 'data:application/octet-stream;base64,$_base64')
+    html.AnchorElement(href: 'data:application/octet-stream;base64,$_base64')
       ..target = 'blank';
     anchor.download = name;
-    document.body?.append(anchor);
+    html.document.body?.append(anchor);
     anchor.click();
     anchor.remove();
     return;

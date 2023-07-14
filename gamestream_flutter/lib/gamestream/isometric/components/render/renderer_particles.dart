@@ -13,7 +13,19 @@ class RendererParticles extends IsometricRenderer {
   late IsometricParticle particle;
   final screen = engine.screen;
 
+  var totalActiveParticles = 0;
+
   RendererParticles(super.scene, this.particles);
+
+  @override
+  int getTotal() => totalActiveParticles;
+
+  @override
+  void reset() {
+    particles.sort(IsometricParticle.compare);
+    totalActiveParticles = gamestream.isometric.particles.countActiveParticles;
+    super.reset();
+  }
 
   @override
   void renderFunction() {
@@ -547,15 +559,6 @@ class RendererParticles extends IsometricRenderer {
       index--;
       return;
     }
-  }
-
-  @override
-  int getTotal() => gamestream.isometric.particles.totalParticles;
-
-  @override
-  void reset() {
-    gamestream.isometric.particles.sortParticles();
-    super.reset();
   }
 
   void casteShadowDownV3(IsometricPosition vector3){

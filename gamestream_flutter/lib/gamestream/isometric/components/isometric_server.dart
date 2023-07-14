@@ -161,13 +161,6 @@ class IsometricServer {
     gamestream.isometric.scene.ambientStackIndex = -1;
   }
 
-  void sortGameObjects(){
-    Engine.insertionSort(
-      gameObjects,
-      compare: IsometricPosition.compareRenderOrder,
-    );
-  }
-
   void removeGameObjectById(int id )=>
       gameObjects.removeWhere((element) => element.id == id);
 

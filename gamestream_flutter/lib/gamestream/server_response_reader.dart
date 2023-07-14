@@ -261,7 +261,7 @@ extension ServerResponseReader on Gamestream {
     gameObject.health = readUInt16();
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
-    isometric.server.sortGameObjects();
+    isometric.server.gameObjects.sort();
   }
 
   void readApiPlayer() {

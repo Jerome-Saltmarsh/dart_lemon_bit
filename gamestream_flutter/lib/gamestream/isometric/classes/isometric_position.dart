@@ -1,9 +1,12 @@
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricPosition {
-  var x = 0.0;
-  var y = 0.0;
-  var z = 0.0;
+class IsometricPosition implements Comparable<IsometricPosition>{
+
+  double x;
+  double y;
+  double z;
+
+  IsometricPosition({this.x = 0, this.y = 0, this.z = 0});
 
   int get indexZ => z ~/ Node_Size_Half;
 
@@ -36,20 +39,60 @@ class IsometricPosition {
   @override
   String toString()=> '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}}';
 
-  static bool compareRenderOrder(IsometricPosition a, IsometricPosition b) {
-    final aRowColumn = a.indexRow + a.indexColumn;
-    final bRowColumn = b.indexRow + b.indexColumn;
+  // static int compareRenderOrder(IsometricPosition a, IsometricPosition b) {
+  //   // final aRowColumn = a.indexRow + a.indexColumn;
+  //   // final bRowColumn = b.indexRow + b.indexColumn;
+  //   //
+  //   // if (aRowColumn > bRowColumn) return false;
+  //   // if (aRowColumn < bRowColumn) return true;
+  //   //
+  //   // final aIndexZ = a.indexZ;
+  //   // final bIndexZ = b.indexZ;
+  //   //
+  //   // if (aIndexZ > bIndexZ) return false;
+  //   // if (aIndexZ < bIndexZ) return true;
+  //
+  //   // return a.sortOrder < b.sortOrder;
+  //   final aSortOrder = a.sortOrder;
+  //   final bSortUnder = b.sortOrder;
+  //
+  //   if (aSortOrder < bSortUnder)
+  //     return 1;
+  //
+  //   if (aSortOrder > bSortUnder)
+  //     return -1;
+  //
+  //   return 0;
+  // }
 
-    if (aRowColumn > bRowColumn) return false;
-    if (aRowColumn < bRowColumn) return true;
+  // static int compareRenderOrder2(IsometricPosition a, IsometricPosition b) {
+  //   final aRowColumn = a.indexRow + a.indexColumn;
+  //   final bRowColumn = b.indexRow + b.indexColumn;
+  //
+  //   if (aRowColumn > bRowColumn) return false;
+  //   if (aRowColumn < bRowColumn) return true;
+  //
+  //   final aIndexZ = a.indexZ;
+  //   final bIndexZ = b.indexZ;
+  //
+  //   if (aIndexZ > bIndexZ) return false;
+  //   if (aIndexZ < bIndexZ) return true;
+  //
+  //   return a.sortOrder < b.sortOrder;
+  // }
 
-    final aIndexZ = a.indexZ;
-    final bIndexZ = b.indexZ;
+  @override
+  int compareTo(IsometricPosition that) {
+    final thisSortThat = this.sortOrder;
+    final thatSortOrder = that.sortOrder;
 
-    if (aIndexZ > bIndexZ) return false;
-    if (aIndexZ < bIndexZ) return true;
+    if (thisSortThat < thatSortOrder)
+      return -1;
 
-    return a.sortOrder < b.sortOrder;
+    if (thisSortThat > thatSortOrder)
+      return 1;
+
+    return 0;
   }
 
 

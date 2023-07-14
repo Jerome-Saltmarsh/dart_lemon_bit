@@ -165,7 +165,7 @@ extension isometricDebugUI on IsometricDebug {
                   'total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n'
                   'total-characters: ${gamestream.isometric.server.totalCharacters}\n'
                   'total-particles: ${gamestream.isometric.particles.particles.length}\n'
-                  'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
+                  'total-particles-active: ${gamestream.isometric.particles.countActiveParticles}\n'
           )),
           buildWatch(gamestream.updateFrame, (t) => buildText('update-frame: $t')),
           buildWatch(gamestream.gameType, (GameType value) => buildText('game-type: ${value.name}')),
