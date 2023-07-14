@@ -1319,12 +1319,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (!colliderB.active) continue;
         final colliderBOrder = colliderB.order;
 
-        if (colliderBOrder - colliderAOrder  < -colliderARadius - colliderB.radius) {
+        final orderDiff = colliderBOrder - colliderAOrder;
+
+        if (orderDiff < -colliderARadius - colliderB.radius) {
           bStart++;
           continue;
         }
 
-        if (colliderBOrder - colliderAOrder > colliderARadius + colliderB.radius)
+        if (orderDiff > colliderARadius + colliderB.radius)
           break;
 
         if (colliderA.bottom < colliderB.top) continue;

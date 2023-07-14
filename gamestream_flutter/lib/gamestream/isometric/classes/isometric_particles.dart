@@ -211,7 +211,7 @@ class IsometricParticles {
     particle.applyLimits();
     particle.duration--;
 
-    if (!particle.active) {
+    if (particle.duration <= 0) {
       particle.deactivate();
     }
   }
