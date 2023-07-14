@@ -670,7 +670,7 @@ class GameIsometricUI {
                 child: 'RESPAWN',
                 action: gamestream.isometric.revive,
                 color: IsometricColors.Red_3,
-                width: width * Engine.GoldenRatio_0_618,
+                width: width * goldenRatio_0618,
               )
             ],
           ),

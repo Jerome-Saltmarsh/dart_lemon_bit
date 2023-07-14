@@ -471,7 +471,7 @@ class IsometricEvents {
         y: y,
         z: z,
         zv: randomBetween(1.5, 2),
-        angle: angle + giveOrTake(Engine.PI_Quarter),
+        angle: angle + giveOrTake(piQuarter),
         speed: randomBetween(1.5, 2.5),
       );
     }

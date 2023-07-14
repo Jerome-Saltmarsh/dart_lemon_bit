@@ -32,7 +32,7 @@ class RendererProjectiles extends IsometricRenderer {
           srcHeight: 7,
           dstX: projectile.renderX,
           dstY: projectile.renderY,
-          rotation: projectile.angle - Engine.PI_Quarter + Engine.PI_Half,
+          rotation: projectile.angle - piQuarter + piHalf,
           scale: 1,
         );
         break;
@@ -62,7 +62,7 @@ class RendererProjectiles extends IsometricRenderer {
       srcHeight: 32,
       dstX: x,
       dstY: y,
-      rotation: rotation - Engine.PI_Quarter,
+      rotation: rotation - piQuarter,
       scale: 1,
       anchorX: 0.5,
       anchorY: 0.5,
@@ -78,7 +78,7 @@ class RendererProjectiles extends IsometricRenderer {
       srcHeight: 44,
       dstX: x,
       dstY: y + 10,
-      rotation: rotation - Engine.PI_Quarter,
+      rotation: rotation - piQuarter,
       scale: 0.7,
     );
 
@@ -90,7 +90,7 @@ class RendererProjectiles extends IsometricRenderer {
       srcHeight: 44,
       dstX: x,
       dstY: y,
-      rotation: rotation - Engine.PI_Quarter,
+      rotation: rotation - piQuarter,
       scale: 0.7,
     );
   }

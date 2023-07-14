@@ -1,9 +1,10 @@
-import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 class FontSize {
-  static const VerySmall = Regular * Engine.GoldenRatio_0_381;
-  static const Small = Regular * Engine.GoldenRatio_0_618;
-  static const Regular = 18.0;
-  static const Large = Regular * Engine.GoldenRatio_1_381;
-  static const VeryLarge = Large * Engine.GoldenRatio_1_618;
+  static const smallX = regular * goldenRatio_0381;
+  static const Small = regular * goldenRatio_0618;
+  static const regular = 18.0;
+  static const large = regular * goldenRatio_1381;
+  static const largeX = large * goldenRatio_1618;
 }
+

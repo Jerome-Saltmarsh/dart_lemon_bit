@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 
 class GameStyle {
   static final Container_Color = IsometricColors.brownDark;
   static final Container_Color_Light = IsometricColors.brownLight;
   static final Container_Padding = EdgeInsets.all(16);
-  static final ExperienceBarColorBackground = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
+  static final ExperienceBarColorBackground = Colors.white.withOpacity(goldenRatio_0381);
   static final ExperienceBarColorFill = Colors.white;
   static final ExperienceBarWidth = 200.0;
   static final ExperienceBarHeight = 20.0;

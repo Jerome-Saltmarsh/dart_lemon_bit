@@ -186,20 +186,6 @@ class Engine extends StatelessWidget {
   static const Default_Background_Color = Colors.black;
   static const Default_Duration_Per_Update = Duration(milliseconds: 40);
   static const Default_Title = "DEMO";
-  // CONSTANTS
-  static const Milliseconds_Per_Second = 1000;
-  static const PI = pi;
-  static const PI_2 = pi + pi;
-  static const PI_Half = pi * 0.5;
-  static const PI_Quarter = pi * 0.25;
-  static const PI_Eight = pi * 0.125;
-  static const PI_SIXTEENTH = pi / 16;
-  static const Ratio_Radians_To_Degrees = 57.2958;
-  static const Ratio_Degrees_To_Radians = 0.0174533;
-  static const GoldenRatio_1_618 = 1.61803398875;
-  static const GoldenRatio_1_381 = 1.38196601125;
-  static const GoldenRatio_0_618 = 0.61803398875;
-  static const GoldenRatio_0_381 = 0.38196601125;
 
   var Screen_Top = 0.0;
   var Screen_Right = 0.0;
@@ -398,8 +384,8 @@ class Engine extends StatelessWidget {
     final positionY = screenToWorldY(mousePositionY);
     final previousX = screenToWorldX(previousMousePositionX);
     final previousY = screenToWorldY(previousMousePositionY);
-    final diffX = previousX - positionX;
-    final diffY = previousY - positionY;
+    final diffX = (previousX - positionX) / zoom;
+    final diffY = (previousY - positionY) / zoom;
     cameraX += diffX;
     cameraY += diffY;
   }
@@ -528,7 +514,7 @@ class Engine extends StatelessWidget {
     Duration(milliseconds: convertFramesPerSecondsToMilliseconds(framesPerSecond));
 
   int convertFramesPerSecondsToMilliseconds(int framesPerSecond) =>
-    Milliseconds_Per_Second ~/ framesPerSecond;
+    Duration.millisecondsPerSecond ~/ framesPerSecond;
 
   var _initCallAmount = 0;
 

@@ -172,7 +172,7 @@ extension WebsiteUI on WebsiteGame {
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
 
-  Widget buildLogoGameStream() => buildText('GAMESTREAM.ONLINE', size: FontSize.VeryLarge);
+  Widget buildLogoGameStream() => buildText('GAMESTREAM.ONLINE', size: FontSize.largeX);
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
@@ -198,7 +198,7 @@ extension WebsiteUI on WebsiteGame {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          buildText('Select Your Region', size: FontSize.Large),
+          buildText('Select Your Region', size: FontSize.large),
           height16,
           WatchBuilder(gamestream.network.region, (activeRegion) {
             return SingleChildScrollView(
