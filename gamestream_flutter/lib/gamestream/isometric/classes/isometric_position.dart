@@ -39,48 +39,6 @@ class IsometricPosition implements Comparable<IsometricPosition>{
   @override
   String toString()=> '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}}';
 
-  // static int compareRenderOrder(IsometricPosition a, IsometricPosition b) {
-  //   // final aRowColumn = a.indexRow + a.indexColumn;
-  //   // final bRowColumn = b.indexRow + b.indexColumn;
-  //   //
-  //   // if (aRowColumn > bRowColumn) return false;
-  //   // if (aRowColumn < bRowColumn) return true;
-  //   //
-  //   // final aIndexZ = a.indexZ;
-  //   // final bIndexZ = b.indexZ;
-  //   //
-  //   // if (aIndexZ > bIndexZ) return false;
-  //   // if (aIndexZ < bIndexZ) return true;
-  //
-  //   // return a.sortOrder < b.sortOrder;
-  //   final aSortOrder = a.sortOrder;
-  //   final bSortUnder = b.sortOrder;
-  //
-  //   if (aSortOrder < bSortUnder)
-  //     return 1;
-  //
-  //   if (aSortOrder > bSortUnder)
-  //     return -1;
-  //
-  //   return 0;
-  // }
-
-  // static int compareRenderOrder2(IsometricPosition a, IsometricPosition b) {
-  //   final aRowColumn = a.indexRow + a.indexColumn;
-  //   final bRowColumn = b.indexRow + b.indexColumn;
-  //
-  //   if (aRowColumn > bRowColumn) return false;
-  //   if (aRowColumn < bRowColumn) return true;
-  //
-  //   final aIndexZ = a.indexZ;
-  //   final bIndexZ = b.indexZ;
-  //
-  //   if (aIndexZ > bIndexZ) return false;
-  //   if (aIndexZ < bIndexZ) return true;
-  //
-  //   return a.sortOrder < b.sortOrder;
-  // }
-
   @override
   int compareTo(IsometricPosition that) {
     final thisSortThat = this.sortOrder;
