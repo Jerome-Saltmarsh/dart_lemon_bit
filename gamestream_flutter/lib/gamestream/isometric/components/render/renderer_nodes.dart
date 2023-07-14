@@ -104,7 +104,9 @@ class RendererNodes extends IsometricRenderer {
     if (currentNodeRow + 1 >= scene.totalRows) {
       return scene.ambientColor;
     }
-    return scene.nodeColors[currentNodeIndex + scene.totalColumns];
+    final color = scene.nodeColors[currentNodeIndex + scene.totalColumns];
+
+    return color;
   }
   int get currentNodeOrientation => scene.nodeOrientations[currentNodeIndex];
 
