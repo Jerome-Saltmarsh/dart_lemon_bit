@@ -10,6 +10,7 @@ enum MMOItem {
       cooldown: 40,
       damage: 2,
       range: 80,
+      attackType: MMOAttackType.Melee,
   ),
   Staff_Of_Flames(
       type: GameObjectType.Weapon,
@@ -17,7 +18,7 @@ enum MMOItem {
       quality: MMOItemQuality.Low,
       cooldown: 40,
       damage: 2,
-      range: 140,
+      range: 180,
       attackType: MMOAttackType.Fire_Ball,
   ),
   Old_Bow(
@@ -27,6 +28,7 @@ enum MMOItem {
       cooldown: 40,
       damage: 1,
       range: 200,
+      attackType: MMOAttackType.Arrow,
   ),
   Holy_Bow(
       type: GameObjectType.Weapon,
@@ -35,6 +37,7 @@ enum MMOItem {
       cooldown: 20,
       damage: 100,
       range: 300,
+      attackType: MMOAttackType.Arrow,
   ),
   Steel_Helmet(
       type: GameObjectType.Head,

@@ -164,21 +164,13 @@ class MmoPlayer extends IsometricPlayer {
             case MMOAttackType.Melee:
               break;
             case MMOAttackType.Arrow:
+              game.spawnProjectileArrow(src: this, damage: weapon.damage, range: weapon.range);
               break;
             case MMOAttackType.Bullet:
+              game.spawnProjectile(src: this, damage: weapon.damage, range: weapon.range, projectileType: ProjectileType.Bullet);
               break;
-            case MMOAttackType.Electric_Arrow:
-              break;
-            case MMOAttackType.Electricity_Ball:
-              break;
-            case MMOAttackType.Fire_Arrow:
-              break;
-            case MMOAttackType.Frost_Ball:
-              break;
-            case MMOAttackType.Ice_Arrow:
-              break;
-            case MMOAttackType.Rocket:
-              break;
+            default:
+              throw Exception(attackType.name);
           }
        }
     }
@@ -236,6 +228,9 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void setTreasure({required int index, required MMOItem? item}){
+    if (deadBusyOrWeaponStateBusy)
+      return;
+
     if (!isValidIndexTreasure(index)) {
       writeGameError(GameError.Invalid_Treasure_Index);
       return;
@@ -243,6 +238,7 @@ class MmoPlayer extends IsometricPlayer {
     if (item != null && !item.isTreasure)
       return;
 
+    setCharacterStateChanging();
     treasures[index] = item;
     writePlayerTreasure(index);
   }

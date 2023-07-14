@@ -12,9 +12,10 @@ class MmoGame extends IsometricGame {
 
   final itemHover = Watch<MMOItem?>(null);
 
-  final weaponsChangedNotifier = Watch(0);
-  final itemsChangedNotifier = Watch(0);
-  final treasuresChangedNotifier = Watch(0);
+  late final weaponsChangedNotifier = Watch(0, onChanged: onAnyChanged);
+  late final itemsChangedNotifier = Watch(0, onChanged: onAnyChanged);
+  late final treasuresChangedNotifier = Watch(0, onChanged: onAnyChanged);
+
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
   final treasures = List<MMOItem?>.generate(4, (index) => null);
@@ -147,7 +148,9 @@ class MmoGame extends IsometricGame {
   }
 
   @override
-  void onMouseEnter() {
-     itemHover.value = null;
-  }
+  void onMouseEnter() => clearItemHover();
+
+  void onAnyChanged(int value) => clearItemHover();
+
+  void clearItemHover() => itemHover.value = null;
 }

@@ -199,6 +199,8 @@ extension MMOUI on MmoGame {
                   buildItemRow('range', item.range),
                   buildItemRow('health', item.health),
                   buildItemRow('movement', item.movement * 10),
+                  if (item.attackType != null)
+                    buildItemRow('attack type', item.attackType!.name),
                 ],
               )),
           ));

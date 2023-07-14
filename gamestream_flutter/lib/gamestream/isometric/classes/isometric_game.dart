@@ -140,7 +140,7 @@ class IsometricGame extends Game {
 
     // play mode
 
-    if (key == KeyCode.F) {
+    if (key == KeyCode.Z) {
       gamestream.isometric.toggleZoom();
       return;
     }
