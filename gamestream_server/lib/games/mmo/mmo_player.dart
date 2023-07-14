@@ -40,14 +40,13 @@ class MmoPlayer extends IsometricPlayer {
     addItem(MMOItem.Holy_Bow);
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Steel_Helmet);
+    addItem(MMOItem.Staff_Of_Flames);
     addItem(MMOItem.Sapphire_Pendant);
-    equippedWeaponIndex = 0;
     equipHead(MMOItem.Steel_Helmet);
     equipBody(MMOItem.Basic_Padded_Armour);
     equipLegs(MMOItem.Travellers_Pants);
     health = maxHealth;
-
-    // setTreasure(index: 0, item: MMOItem.Sapphire_Pendant);
+    equippedWeaponIndex = 0;
 
     writeWeapons();
     writeTreasures();
@@ -151,7 +150,38 @@ class MmoPlayer extends IsometricPlayer {
   void attack() {
     setDestinationToCurrentPosition();
     setCharacterStateIdle();
+
     game.characterAttack(this);
+
+    final weapon = equippedWeapon;
+    if (weapon != null) {
+       final attackType = weapon.attackType;
+       if (attackType != null) {
+          switch (attackType) {
+            case MMOAttackType.Fire_Ball:
+              game.spawnProjectileFireball(src: this, damage: weapon.damage, range: weapon.range);
+              break;
+            case MMOAttackType.Melee:
+              break;
+            case MMOAttackType.Arrow:
+              break;
+            case MMOAttackType.Bullet:
+              break;
+            case MMOAttackType.Electric_Arrow:
+              break;
+            case MMOAttackType.Electricity_Ball:
+              break;
+            case MMOAttackType.Fire_Arrow:
+              break;
+            case MMOAttackType.Frost_Ball:
+              break;
+            case MMOAttackType.Ice_Arrow:
+              break;
+            case MMOAttackType.Rocket:
+              break;
+          }
+       }
+    }
   }
 
   void setItemsLength(int value){

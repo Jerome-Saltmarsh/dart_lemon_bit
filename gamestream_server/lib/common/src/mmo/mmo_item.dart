@@ -1,4 +1,5 @@
 import '../isometric/src.dart';
+import 'mmo_attack_type.dart';
 import 'mmo_item_quality.dart';
 
 enum MMOItem {
@@ -9,6 +10,15 @@ enum MMOItem {
       cooldown: 40,
       damage: 2,
       range: 80,
+  ),
+  Staff_Of_Flames(
+      type: GameObjectType.Weapon,
+      subType: WeaponType.Staff,
+      quality: MMOItemQuality.Low,
+      cooldown: 40,
+      damage: 2,
+      range: 140,
+      attackType: MMOAttackType.Fire_Ball,
   ),
   Old_Bow(
       type: GameObjectType.Weapon,
@@ -119,6 +129,7 @@ enum MMOItem {
   final bool consumable;
   final double range;
   final double movement;
+  final MMOAttackType? attackType;
 
   bool get isWeapon => type == GameObjectType.Weapon;
 
@@ -140,5 +151,6 @@ enum MMOItem {
     this.movement = 0,
     this.isTreasure = false,
     this.consumable = false,
+    this.attackType
   });
 }

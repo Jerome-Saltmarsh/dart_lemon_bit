@@ -48,6 +48,7 @@ class WeaponType {
     Sword,
     Crowbar,
     Hammer,
+    Staff,
   ];
 
   static bool isMelee(int value) => Melee.contains(value);
@@ -112,5 +113,6 @@ class WeaponType {
     Knife,
     Axe,
     Rifle,
+    Staff,
   ];
 }
