@@ -821,6 +821,38 @@ class RendererNodes extends IsometricRenderer {
         );
         return;
       case NodeType.Soil:
+
+        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
+          renderCustomNode(
+            srcX: 198,
+            srcY: 1760,
+            srcWidth: 48,
+            srcHeight: 47,
+            dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+            dstY: currentNodeDstY - IsometricConstants.Sprite_Width_Half,
+            color: currentNodeAboveColor,
+          );
+          renderCustomNode(
+            srcX: 247,
+            srcY: 1760,
+            srcWidth: 24,
+            srcHeight: 48,
+            dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+            dstY: currentNodeDstY,
+            color: currentNodeColumnInFrontColor,
+          );
+          renderCustomNode(
+            srcX: 272,
+            srcY: 1760,
+            srcWidth: 24,
+            srcHeight: 48,
+            dstX: currentNodeDstX,
+            dstY: currentNodeDstY,
+            color: currentNodeRowInFrontColor,
+          );
+          return;
+        }
+
         const index_grass = 7;
         const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
         renderNodeTemplateShaded(srcX);
