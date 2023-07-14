@@ -6,6 +6,8 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
+
+  algorithmic: ^0.0.11
   lemon_byte: ^1.0.41
   web_socket_channel: ^2.3.0
   shelf_web_socket: ^1.0.1

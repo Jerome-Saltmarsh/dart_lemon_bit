@@ -39,7 +39,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required this.environment,
     required super.gameType,
   }) {
-    IsometricPosition.sort(gameObjects);
+    gameObjects.sort();
 
     gameObjectId = scene.gameObjects.length;
     customInit();
@@ -1050,7 +1050,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (sortRequired) {
-      IsometricPosition.sort(gameObjects);
+      gameObjects.sort();
     }
   }
 
@@ -1376,8 +1376,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void sortColliders() {
-    IsometricPosition.sort(characters);
-    IsometricPosition.sort(projectiles);
+    characters.sort();
+    projectiles.sort();
   }
 
   void setCharacterStateChanging(IsometricCharacter character) {

@@ -5,7 +5,7 @@ import 'package:gamestream_server/common/src/isometric/node_size.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
-class IsometricPosition {
+class IsometricPosition implements Comparable<IsometricPosition> {
   double x;
   double y;
   double z;
@@ -71,42 +71,17 @@ class IsometricPosition {
     z = value.z;
   }
 
-  static bool compare(IsometricPosition a, IsometricPosition b){
-    final aRowColumn = a.indexRow + a.indexColumn;
-    final bRowColumn = b.indexRow + b.indexColumn;
+  @override
+  int compareTo(IsometricPosition that) {
+    final thisSortThat = this.order;
+    final thatSortOrder = that.order;
 
-    if (aRowColumn > bRowColumn) return false;
-    if (aRowColumn < bRowColumn) return true;
+    if (thisSortThat < thatSortOrder)
+      return -1;
 
-    final aIndexZ = a.z;
-    final bIndexZ = b.z;
+    if (thisSortThat > thatSortOrder)
+      return 1;
 
-    if (aIndexZ > bIndexZ) return false;
-    if (aIndexZ < bIndexZ) return true;
-
-    return a.order < b.order;
-  }
-
-
-  /// FUNCTIONS
-  ///
-  static void sort(List<IsometricPosition> items) {
-    var start = 0;
-    var end = items.length;
-    for (var pos = start + 1; pos < end; pos++) {
-      var min = start;
-      var max = pos;
-      var element = items[pos];
-      while (min < max) {
-        var mid = min + ((max - min) >> 1);
-        if (compare(element, items[mid])) {
-          max = mid;
-        } else {
-          min = mid + 1;
-        }
-      }
-      items.setRange(min + 1, pos + 1, items, min);
-      items[min] = element;
-    }
+    return 0;
   }
 }
