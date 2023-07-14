@@ -81,6 +81,10 @@ class MmoPlayer extends IsometricPlayer {
     if (equippedLegs != null){
       health += equippedLegs!.health;
     }
+    for (final treasure in treasures){
+      if (treasure != null)
+        health += treasure.health;
+    }
     return health;
   }
 
