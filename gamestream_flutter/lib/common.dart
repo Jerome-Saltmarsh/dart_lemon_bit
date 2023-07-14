@@ -1,2 +1,2 @@
 
-export 'package:bleed_common/src.dart';
+export 'common/src.dart';

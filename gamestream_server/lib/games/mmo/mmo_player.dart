@@ -40,14 +40,14 @@ class MmoPlayer extends IsometricPlayer {
     addItem(MMOItem.Holy_Bow);
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Steel_Helmet);
-    addItem(MMOItem.Ancients_Hat);
+    addItem(MMOItem.Sapphire_Pendant);
     equippedWeaponIndex = 0;
     equipHead(MMOItem.Steel_Helmet);
     equipBody(MMOItem.Basic_Padded_Armour);
     equipLegs(MMOItem.Travellers_Pants);
     health = maxHealth;
 
-    treasures[0] = MMOItem.Sapphire_Pendant;
+    // setTreasure(index: 0, item: MMOItem.Sapphire_Pendant);
 
     writeWeapons();
     writeTreasures();
@@ -187,21 +187,11 @@ class MmoPlayer extends IsometricPlayer {
     return true;
   }
 
-  int getEmptyItemIndex(){
-    for (var i = 0; i < items.length; i++){
-      if (items[i] == null)
-        return i;
-    }
-    return -1;
-  }
+  int getEmptyItemIndex()=> getEmptyIndex(items);
 
-  int getEmptyWeaponIndex(){
-     for (var i = 0; i < weapons.length; i++){
-       if (weapons[i] == null)
-         return i;
-     }
-     return -1;
-  }
+  int getEmptyWeaponIndex() => getEmptyIndex(weapons);
+
+  int getEmptyIndexTreasure() => getEmptyIndex(treasures);
 
   void setWeapon({required int index, required MMOItem? item}){
     if (!isValidWeaponIndex(index)) {
@@ -213,6 +203,18 @@ class MmoPlayer extends IsometricPlayer {
 
     weapons[index] = item;
     writePlayerWeapon(index);
+  }
+
+  void setTreasure({required int index, required MMOItem? item}){
+    if (!isValidIndexTreasure(index)) {
+      writeGameError(GameError.Invalid_Treasure_Index);
+      return;
+    }
+    if (item != null && !item.isTreasure)
+      return;
+
+    treasures[index] = item;
+    writePlayerTreasure(index);
   }
 
   void setItem({required int index, required MMOItem? item}){
@@ -276,6 +278,19 @@ class MmoPlayer extends IsometricPlayer {
     spawnItem(item);
   }
 
+  void dropTreasure(int index){
+    if (!isValidIndexTreasure(index)) {
+      return;
+    }
+    final item = treasures[index];
+    if (item == null) {
+      return;
+    }
+
+    clearTreasure(index);
+    spawnItem(item);
+  }
+
   void dropEquippedHead(){
     if (equippedHead == null)
       return;
@@ -326,11 +341,15 @@ class MmoPlayer extends IsometricPlayer {
 
   void clearWeapon(int index) => setWeapon(index: index, item: null);
 
+  void clearTreasure(int index) => setTreasure(index: index, item: null);
+
   void clearItem(int index) => setItem(index: index, item: null);
 
   bool isValidWeaponIndex(int index) => index >= 0 && index < weapons.length;
 
   bool isValidItemIndex(int index) => index >= 0 && index < items.length;
+
+  bool isValidIndexTreasure(int index) => index >= 0 && index < treasures.length;
 
   void selectWeapon(int index) {
     if (!isValidWeaponIndex(index)) {
@@ -345,11 +364,6 @@ class MmoPlayer extends IsometricPlayer {
 
     equippedWeaponIndex = index;
     attack();
-    // if (aimTarget == null) {
-    //
-    // } else {
-    //   setTargetToAimTarget();
-    // }
   }
 
   void selectItem(int index) {
@@ -365,11 +379,23 @@ class MmoPlayer extends IsometricPlayer {
     final itemType = item.type;
     final subType = item.subType;
 
+    if (item.isTreasure) {
+      final emptyTreasureIndex = getEmptyIndexTreasure();
+      if (emptyTreasureIndex == -1){
+        writeGameError(GameError.Treasures_Full);
+        return;
+      }
+
+      setTreasure(index: emptyTreasureIndex, item: item);
+      clearItem(index);
+      return;
+    }
+
     if (itemType == GameObjectType.Item){
       if (subType == ItemType.Health_Potion){
-         health = maxHealth;
-         setCharacterStateChanging();
-         clearItem(index);
+        health = maxHealth;
+        setCharacterStateChanging();
+        clearItem(index);
       }
       return;
     }
@@ -421,6 +447,27 @@ class MmoPlayer extends IsometricPlayer {
         }
         break;
     }
+  }
+
+  void selectTreasure(int index) {
+    if (!isValidIndexTreasure(index)) {
+      return;
+    }
+
+    final item = treasures[index];
+
+    if (item == null)
+      return;
+
+    final emptyItemIndex = getEmptyItemIndex();
+
+    if (emptyItemIndex == -1){
+      writeGameError(GameError.Inventory_Full);
+      return;
+    }
+
+    clearTreasure(index);
+    setItem(index: emptyItemIndex, item: item);
   }
 
   void selectNpcTalkOption(int index) {
@@ -594,4 +641,13 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(MMOResponse.Player_Item_Length);
     writeUInt16(value);
   }
+
+  static int getEmptyIndex(List<MMOItem?> items){
+    for (var i = 0; i < items.length; i++){
+      if (items[i] == null)
+        return i;
+    }
+    return -1;
+  }
+
 }

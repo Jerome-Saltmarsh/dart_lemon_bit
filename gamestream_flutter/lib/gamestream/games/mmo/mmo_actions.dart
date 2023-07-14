@@ -11,11 +11,17 @@ extension MMOActions on MmoGame {
   void selectItem(int index) =>
       sendMMORequest(MMORequest.Select_Item, index);
 
+  void selectTreasure(int index) =>
+      sendMMORequest(MMORequest.Select_Treasure, index);
+
   void dropWeapon(int index) =>
       sendMMORequest(MMORequest.Drop_Weapon, index);
 
   void dropItem(int index) =>
       sendMMORequest(MMORequest.Drop_Item, index);
+
+  void dropTreasure(int index) =>
+      sendMMORequest(MMORequest.Drop_Treasure, index);
 
   void dropEquippedHead() =>
       sendMMORequest(MMORequest.Drop_Equipped_Head);

@@ -94,7 +94,10 @@ extension MMOUI on MmoGame {
           (int reads) => Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(treasures.length, (index) => MMOItemImage(item: treasures[index], size: 64)),
+            children: List.generate(treasures.length, (index) => onPressed(
+                action: () => selectTreasure(index),
+                onRightClick: () => dropTreasure(index),
+                child: MMOItemImage(item: treasures[index], size: 64))),
           ),
         ),
       ));

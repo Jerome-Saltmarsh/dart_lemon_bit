@@ -66,7 +66,7 @@ enum GameError {
   GameObject_Not_Found,
   Invalid_Item_Index,
   Invalid_Talk_Option,
-  Invalid_Weapon_Index,
+  Invalid_Weapon_Index, Invalid_Treasure_Index, Treasures_Full,
 }
 
 GameError parseIndexToGameError(int index) {

@@ -33,8 +33,6 @@ dependencies:
     path: ..\dart-lemon-engine
   firestore_client:
     path: ..\firestore-client
-  bleed_common:
-    path: ..\bleed-common
 
 dev_dependencies:
   test: ^1.16.0

@@ -29,6 +29,11 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         if (index == null) return;
         player.selectItem(index);
         break;
+      case MMORequest.Select_Treasure:
+        final index = parseArg2(arguments);
+        if (index == null) return;
+        player.selectTreasure(index);
+        break;
       case MMORequest.Select_Weapon:
         final index = parseArg2(arguments);
         if (index == null) return;
@@ -43,6 +48,11 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         final index = parseArg2(arguments);
         if (index == null) return;
         player.dropWeapon(index);
+        break;
+      case MMORequest.Drop_Treasure:
+        final index = parseArg2(arguments);
+        if (index == null) return;
+        player.dropTreasure(index);
         break;
       case MMORequest.Select_Talk_Option:
         final index = parseArg2(arguments);

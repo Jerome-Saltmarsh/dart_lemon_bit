@@ -11,6 +11,7 @@ alt + m             : go to declaration
 [TODO]
 [ ] wearable trinkets
 [ ] town stash (automatically opens when nearby)
+[ ] 3d surface lighting
 [ ] attack speed modifier
 [ ] fix grid render order
 [ ] incredible loot engine
