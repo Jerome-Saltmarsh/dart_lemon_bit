@@ -27,6 +27,7 @@ class IsometricDebug {
   final pathIndex = Watch(0);
   final pathEnd = Watch(0);
   final action = Watch(0);
+  final goal = Watch(0);
   final pathTargetIndex = Watch(0);
   final targetSet = Watch(false);
   final targetType = Watch('');

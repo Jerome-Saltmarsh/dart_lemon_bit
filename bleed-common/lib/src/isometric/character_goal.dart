@@ -1,4 +1,3 @@
-
 class CharacterGoal {
  static const Idle = 0;
  static const Kill_Target = 1;
@@ -8,4 +7,13 @@ class CharacterGoal {
  static const Follow_Path = 5;
  static const Run_To_Destination = 6;
 
+ static String getName(int value) => const {
+  Idle: "Idle",
+  Kill_Target: "Kill Target",
+  Interact_With_Target: "Interact With Target",
+  Collect_Target: "Collect Target",
+  Roam: "Roam",
+  Follow_Path: "Follow Path",
+  Run_To_Destination: "Run to Destination"
+ }[value] ?? 'unknown-goal-value';
 }

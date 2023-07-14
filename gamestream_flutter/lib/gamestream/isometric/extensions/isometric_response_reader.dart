@@ -92,6 +92,7 @@ extension IsometricResponseReader on Gamestream {
     if (selectedColliderType == IsometricType.Character){
       debug.runTimeType.value = readString();
       debug.action.value = readByte();
+      debug.goal.value = readByte();
       debug.team.value = readUInt16();
       debug.radius.value = readUInt16();
       debug.health.value = readUInt16();

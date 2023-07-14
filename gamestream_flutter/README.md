@@ -9,8 +9,8 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] gameobject type consumable
-[ ] add missing atlas src
+[ ] fix collect item
+[ ] fix grid render order
 [ ] incredible loot engine
 [ ] incredible ability engine
 [ ] skeleton enemy
@@ -25,7 +25,11 @@ alt + m             : go to declaration
 [ ] npc store
 [ ] character selection
 [ ] character abilities
-[ ] character gold
+[?] character gold
+
+14.07.2023
+[x] add missing atlas src
+[x] gameobject type consumable
 
 11.07.2023
 [x] fixed zombies walk into trees
