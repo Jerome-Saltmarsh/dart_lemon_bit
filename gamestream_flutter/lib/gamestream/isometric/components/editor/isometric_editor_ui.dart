@@ -721,8 +721,8 @@ extension IsometricEditorUI on IsometricEditor {
       image: Images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
-      srcWidth: GameIsometricConstants.Sprite_Width,
-      srcHeight: GameIsometricConstants.Sprite_Height,
+      srcWidth: IsometricConstants.Sprite_Width,
+      srcHeight: IsometricConstants.Sprite_Height,
       scale: 0.75,
     );
 

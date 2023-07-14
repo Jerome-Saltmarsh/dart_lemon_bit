@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -131,7 +131,7 @@ class IsometricServer {
         NodeOrientation.Half_East,
         NodeOrientation.Half_West,
       ].contains(nodeOrientation)) {
-        z -= GameIsometricConstants.Node_Height;
+        z -= IsometricConstants.Node_Height;
         continue;
       }
       if (z > Node_Height){

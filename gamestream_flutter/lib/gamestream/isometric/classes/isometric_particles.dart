@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_particle.dart';
@@ -98,7 +98,7 @@ class IsometricParticles {
       }
     }
     if (nextParticleFrame <= 0) {
-      nextParticleFrame = GameIsometricConstants.Frames_Per_Particle_Animation_Frame;
+      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
     }
   }
 

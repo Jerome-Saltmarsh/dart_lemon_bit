@@ -596,10 +596,12 @@ class IsometricScene {
   }){
     assert (interpolation < interpolationLength);
 
+    final dynamicLighting = gamestream.isometric.renderer.rendererNodes.dynamicLighting;
+
     var velocity = vx.abs() + vy.abs() + vz.abs();
-    var paintBehindZ = vz == 0;
-    var paintBehindRow = vx == 0;
-    var paintBehindColumn = vy == 0;
+    var paintBehindZ = !dynamicLighting && vz == 0;
+    var paintBehindRow = !dynamicLighting && vx == 0;
+    var paintBehindColumn = !dynamicLighting && vy == 0;
 
     while (interpolation < interpolationLength) {
 
@@ -730,7 +732,6 @@ class IsometricScene {
           interpolation: interpolation,
         );
       }
-
 
       if (paintBehindRow) {
         applyAmbient(

@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ren
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/utils.dart';
 
 import '../../../../../library.dart';
@@ -162,7 +162,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     const Sprite_Size = 125.0;
     const Anchor_Y = 0.625;
 
-    if (character.z >= GameIsometricConstants.Node_Height){
+    if (character.z >= IsometricConstants.Node_Height){
       // gamestream.isometric.scene.markShadow(character);
 
       // final shadowAngle = gamestream.isometric.scene.shadow.z + pi;

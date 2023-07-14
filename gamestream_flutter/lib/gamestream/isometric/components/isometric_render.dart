@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_render
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../ui/game_isometric_constants.dart';
+import '../ui/isometric_constants.dart';
 import 'isometric_mouse.dart';
 import 'render/renderer_characters.dart';
 import 'render/renderer_gameobjects.dart';
@@ -179,9 +179,9 @@ class IsometricRender {
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
-      srcWidth: GameIsometricConstants.Sprite_Width,
-      srcHeight: GameIsometricConstants.Sprite_Height,
-      anchorY: GameIsometricConstants.Sprite_Anchor_Y,
+      srcWidth: IsometricConstants.Sprite_Width,
+      srcHeight: IsometricConstants.Sprite_Height,
+      anchorY: IsometricConstants.Sprite_Anchor_Y,
     );
     return;
   }
@@ -193,9 +193,9 @@ class IsometricRender {
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
-      srcWidth: GameIsometricConstants.Sprite_Width,
-      srcHeight: GameIsometricConstants.Sprite_Height,
-      anchorY: GameIsometricConstants.Sprite_Anchor_Y,
+      srcWidth: IsometricConstants.Sprite_Width,
+      srcHeight: IsometricConstants.Sprite_Height,
+      anchorY: IsometricConstants.Sprite_Anchor_Y,
     );
   }
 

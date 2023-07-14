@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
@@ -11,6 +11,7 @@ class RendererNodes extends IsometricRenderer {
 
   // VARIABLES
   var previousVisibility = 0;
+  var dynamicLighting = true;
 
   final bufferClr = engine.bufferClr;
   final bufferSrc = engine.bufferSrc;
@@ -78,17 +79,49 @@ class RendererNodes extends IsometricRenderer {
 
   RendererNodes(super.scene);
 
-  // GETTERS
   double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
+
   int get currentNodeColor => scene.nodeColors[currentNodeIndex];
+
+  int get currentNodeAboveColor {
+    final nodeAboveIndex = currentNodeIndex + scene.area;
+    if (nodeAboveIndex > scene.nodeColors.length)
+      return scene.ambientColor;
+    return scene.nodeColors[nodeAboveIndex];
+  }
+
+  int get currentNodeColumnInFrontColor {
+    final currentNodeColumn = scene.getIndexColumn(currentNodeIndex);
+    if (currentNodeColumn + 1 >= scene.totalColumns){
+      return scene.ambientColor;
+    }
+    return scene.nodeColors[currentNodeIndex + 1];
+  }
+
+  int get currentNodeRowInFrontColor {
+    final currentNodeRow = scene.getIndexRow(currentNodeIndex);
+
+    if (currentNodeRow + 1 >= scene.totalRows) {
+      return scene.ambientColor;
+    }
+    return scene.nodeColors[currentNodeIndex + scene.totalColumns];
+  }
   int get currentNodeOrientation => scene.nodeOrientations[currentNodeIndex];
+
   int get currentNodeWind => gamestream.isometric.server.windTypeAmbient.value;
+
   int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
+
   int get renderNodeOrientation => scene.nodeOrientations[currentNodeIndex];
+
   int get renderNodeWind => gamestream.isometric.server.windTypeAmbient.value;
+
   int get renderNodeVariation => scene.nodeVariations[currentNodeIndex];
+
   int get renderNodeBelowIndex => currentNodeIndex - scene.area;
+
   int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+
   int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - scene.area);
 
   int getNodeColorAtIndex(int index){
@@ -127,7 +160,7 @@ class RendererNodes extends IsometricRenderer {
       column--;
       orderZ = currentNodeZ;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;
-      currentNodeDstX += GameIsometricConstants.Sprite_Width;
+      currentNodeDstX += IsometricConstants.Sprite_Width;
     }
   }
 
@@ -635,23 +668,82 @@ class RendererNodes extends IsometricRenderer {
 
     engine.bufferImage = currentNodeTransparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
 
-
     switch (currentNodeType) {
       case NodeType.Grass:
+        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
+          renderCustomNode(
+            srcX: 99,
+            srcY: 1760,
+            srcWidth: 48,
+            srcHeight: 47,
+            dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+            dstY: currentNodeDstY - IsometricConstants.Sprite_Width_Half,
+            color: currentNodeAboveColor,
+          );
+          renderCustomNode(
+            srcX: 148,
+            srcY: 1760,
+            srcWidth: 24,
+            srcHeight: 48,
+            dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+            dstY: currentNodeDstY,
+            color: currentNodeColumnInFrontColor,
+          );
+          renderCustomNode(
+            srcX: 173,
+            srcY: 1760,
+            srcWidth: 24,
+            srcHeight: 48,
+            dstX: currentNodeDstX,
+            dstY: currentNodeDstY,
+            color: currentNodeRowInFrontColor,
+          );
+          return;
+        }
         renderNodeGrass();
         break;
       case NodeType.Brick:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_2);
+        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
+          renderCustomNode(
+              srcX: 0,
+              srcY: 1760,
+              srcWidth: 48,
+              srcHeight: 47,
+              dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+              dstY: currentNodeDstY - IsometricConstants.Sprite_Width_Half,
+              color: currentNodeAboveColor,
+          );
+          renderCustomNode(
+            srcX: 49,
+            srcY: 1760,
+            srcWidth: 24,
+            srcHeight: 48,
+            dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+            dstY: currentNodeDstY,
+            color: currentNodeColumnInFrontColor,
+          );
+          renderCustomNode(
+            srcX: 74,
+            srcY: 1760,
+            srcWidth: 24,
+            srcHeight: 48,
+            dstX: currentNodeDstX,
+            dstY: currentNodeDstY,
+            color: currentNodeRowInFrontColor,
+          );
+          return;
+        }
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_2);
         return;
       case NodeType.Bricks_Red:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_13);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_13);
         return;
       case NodeType.Bricks_Brown:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_14);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_14);
         return;
       case NodeType.Wood:
         const index_grass = 5;
-        const srcX = GameIsometricConstants.Sprite_Width_Padded * index_grass;
+        const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
         renderNodeTemplateShaded(srcX);
         break;
       case NodeType.Water:
@@ -673,13 +765,13 @@ class RendererNodes extends IsometricRenderer {
         );
         break;
       case NodeType.Concrete:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_8);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_8);
         return;
       case NodeType.Metal:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_4);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_4);
         return;
       case NodeType.Road:
-        renderNodeTemplateShadedOffset(GameIsometricConstants.Sprite_Width_Padded_9, offsetY: 7);
+        renderNodeTemplateShadedOffset(IsometricConstants.Sprite_Width_Padded_9, offsetY: 7);
         return;
       case NodeType.Tree_Bottom:
         renderTreeBottom();
@@ -688,13 +780,13 @@ class RendererNodes extends IsometricRenderer {
         renderTreeTop();
         break;
       case NodeType.Scaffold:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_15);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_15);
         break;
       case NodeType.Road_2:
         renderNodeShadedOffset(srcX: 1490, srcY: 305, offsetX: 0, offsetY: 7);
         return;
       case NodeType.Wooden_Plank:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_10);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_10);
         return;
       case NodeType.Torch:
         renderNodeTorch();
@@ -712,11 +804,11 @@ class RendererNodes extends IsometricRenderer {
         renderNodeTemplateShaded(588);
         return;
       case NodeType.Glass:
-        renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_16);
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_16);
         return;
       case NodeType.Bau_Haus:
         const index_grass = 6;
-        const srcX = GameIsometricConstants.Sprite_Width_Padded * index_grass;
+        const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
         renderNodeTemplateShaded(srcX);
         break;
       case NodeType.Sunflower:
@@ -728,7 +820,7 @@ class RendererNodes extends IsometricRenderer {
         return;
       case NodeType.Soil:
         const index_grass = 7;
-        const srcX = GameIsometricConstants.Sprite_Width_Padded * index_grass;
+        const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
         renderNodeTemplateShaded(srcX);
         return;
       case NodeType.Fireplace:
@@ -846,7 +938,7 @@ class RendererNodes extends IsometricRenderer {
         return;
       }
     }
-    renderNodeTemplateShaded(GameIsometricConstants.Sprite_Width_Padded_3);
+    renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_3);
   }
 
   void renderNodeGrassLong() {
@@ -873,8 +965,8 @@ class RendererNodes extends IsometricRenderer {
         image: Images.atlas_nodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
         srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + column) % 8), // TODO Expensive Operation
-        srcWidth: GameIsometricConstants.Sprite_Width,
-        srcHeight: GameIsometricConstants.Sprite_Height,
+        srcWidth: IsometricConstants.Sprite_Width,
+        srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
         dstY: currentNodeDstY + gamestream.isometric.animation.animationFrameWaterHeight + 14,
         anchorY: 0.3,
@@ -965,7 +1057,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Solid:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_00,
+          srcY: IsometricConstants.Sprite_Height_Padded_00,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -973,7 +1065,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_North:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
         );
@@ -981,7 +1073,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_South:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -989,7 +1081,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_East:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + offsetX,
           offsetY: -8 + offsetY,
         );
@@ -997,7 +1089,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -1006,14 +1098,14 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Top:
         renderNodeShadedCustom(
           srcX: srcX + 16,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + 16 + offsetX,
           offsetY: -8 + offsetY,
           srcWidth: 32,
         );
         renderNodeShadedCustom(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
           srcWidth: 32,
@@ -1023,13 +1115,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + offsetX,
           offsetY: -8 + offsetY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -1037,13 +1129,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Bottom:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -1051,13 +1143,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -1065,7 +1157,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_North:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_03,
+          srcY: IsometricConstants.Sprite_Height_Padded_03,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1073,7 +1165,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_East:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_04,
+          srcY: IsometricConstants.Sprite_Height_Padded_04,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1081,7 +1173,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_South:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_05,
+          srcY: IsometricConstants.Sprite_Height_Padded_05,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1089,7 +1181,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_06,
+          srcY: IsometricConstants.Sprite_Height_Padded_06,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1097,7 +1189,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Outer_South_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_07,
+          srcY: IsometricConstants.Sprite_Height_Padded_07,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1105,7 +1197,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Outer_North_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_08,
+          srcY: IsometricConstants.Sprite_Height_Padded_08,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1113,7 +1205,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Outer_North_East:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_09,
+          srcY: IsometricConstants.Sprite_Height_Padded_09,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1121,7 +1213,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Outer_South_East:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_10,
+          srcY: IsometricConstants.Sprite_Height_Padded_10,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1129,7 +1221,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Inner_South_East:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_11,
+          srcY: IsometricConstants.Sprite_Height_Padded_11,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1137,7 +1229,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Inner_North_East :
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_12,
+          srcY: IsometricConstants.Sprite_Height_Padded_12,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1145,7 +1237,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Inner_North_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_13,
+          srcY: IsometricConstants.Sprite_Height_Padded_13,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1153,7 +1245,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_Inner_South_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_14,
+          srcY: IsometricConstants.Sprite_Height_Padded_14,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1161,7 +1253,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Radial:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_15,
+          srcY: IsometricConstants.Sprite_Height_Padded_15,
           offsetX: offsetX,
           offsetY: offsetY,
         );
@@ -1169,7 +1261,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_Vertical_Top:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_16,
+          srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
           offsetY: -9 + offsetY,
         );
@@ -1177,7 +1269,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_Vertical_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_16,
+          srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
           offsetY: -1 + offsetY,
         );
@@ -1185,7 +1277,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_Vertical_Bottom:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_16,
+          srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
           offsetY: 2 + offsetY,
         );
@@ -1193,7 +1285,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Top_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
           offsetY: -16 + offsetY,
         );
@@ -1201,7 +1293,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Top_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
         );
@@ -1209,7 +1301,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Top_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -16 + offsetX,
           offsetY: 0 + offsetY,
         );
@@ -1217,7 +1309,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Center_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8 + offsetX,
           offsetY: -8 + offsetY,
         );
@@ -1225,7 +1317,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Center_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
           offsetY: 0 + offsetY,
         );
@@ -1233,7 +1325,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Center_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -1242,7 +1334,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Bottom_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
           offsetY: 16 + offsetY,
         );
@@ -1250,7 +1342,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Bottom_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
         );
@@ -1258,7 +1350,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Bottom_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 16 + offsetX,
           offsetY: 0 + offsetY,
         );
@@ -1271,13 +1363,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Solid:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_00,
+          srcY: IsometricConstants.Sprite_Height_Padded_00,
         );
         return;
       case NodeOrientation.Half_North:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
           offsetY: -8,
         );
@@ -1285,7 +1377,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_South:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
           offsetY: 8,
         );
@@ -1293,7 +1385,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_East:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8,
           offsetY: -8,
         );
@@ -1301,7 +1393,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_West:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
           offsetY: 8,
         );
@@ -1309,14 +1401,14 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Top:
         renderNodeShadedCustom(
           srcX: srcX + 16,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + 16,
           offsetY: -8,
           srcWidth: 32,
         );
         renderNodeShadedCustom(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
           offsetY: -8,
           srcWidth: 32,
@@ -1325,13 +1417,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8,
           offsetY: -8,
         );
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
           offsetY: 8,
         );
@@ -1339,13 +1431,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Bottom:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
           offsetY: 8,
         );
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
           offsetY: 8,
         );
@@ -1353,13 +1445,13 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_01,
+          srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
           offsetY: -8,
         );
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_02,
+          srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
           offsetY: 8,
         );
@@ -1367,85 +1459,85 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_North:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_03,
+          srcY: IsometricConstants.Sprite_Height_Padded_03,
         );
         return;
       case NodeOrientation.Slope_East:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_04,
+          srcY: IsometricConstants.Sprite_Height_Padded_04,
         );
         return;
       case NodeOrientation.Slope_South:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_05,
+          srcY: IsometricConstants.Sprite_Height_Padded_05,
         );
         return;
       case NodeOrientation.Slope_West:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_06,
+          srcY: IsometricConstants.Sprite_Height_Padded_06,
         );
         return;
       case NodeOrientation.Slope_Outer_South_West:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_07,
+          srcY: IsometricConstants.Sprite_Height_Padded_07,
         );
         return;
       case NodeOrientation.Slope_Outer_North_West:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_08,
+          srcY: IsometricConstants.Sprite_Height_Padded_08,
         );
         return;
       case NodeOrientation.Slope_Outer_North_East:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_09,
+          srcY: IsometricConstants.Sprite_Height_Padded_09,
         );
         return;
       case NodeOrientation.Slope_Outer_South_East:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_10,
+          srcY: IsometricConstants.Sprite_Height_Padded_10,
         );
         return;
       case NodeOrientation.Slope_Inner_South_East:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_11,
+          srcY: IsometricConstants.Sprite_Height_Padded_11,
         );
         return;
       case NodeOrientation.Slope_Inner_North_East :
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_12,
+          srcY: IsometricConstants.Sprite_Height_Padded_12,
         );
         return;
       case NodeOrientation.Slope_Inner_North_West:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_13,
+          srcY: IsometricConstants.Sprite_Height_Padded_13,
         );
         return;
       case NodeOrientation.Slope_Inner_South_West:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_14,
+          srcY: IsometricConstants.Sprite_Height_Padded_14,
         );
         return;
       case NodeOrientation.Radial:
         renderStandardNode(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_15,
+          srcY: IsometricConstants.Sprite_Height_Padded_15,
         );
         return;
       case NodeOrientation.Half_Vertical_Top:
         renderNodeShadedCustom(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_16,
+          srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: -8,
           color: scene.nodeColors[currentNodeIndex + scene.area < scene.total ? currentNodeIndex + scene.area : currentNodeIndex],
@@ -1454,7 +1546,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_Vertical_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_16,
+          srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: 0,
         );
@@ -1462,7 +1554,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_Vertical_Bottom:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_16,
+          srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: 8,
         );
@@ -1470,7 +1562,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Top_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
           offsetY: -16,
         );
@@ -1478,7 +1570,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Top_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8,
           offsetY: -8,
         );
@@ -1486,7 +1578,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Top_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -16,
           offsetY: 0,
         );
@@ -1494,7 +1586,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Center_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8,
           offsetY: -8,
         );
@@ -1502,7 +1594,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Center_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
           offsetY: 0,
         );
@@ -1510,7 +1602,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Center_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8,
           offsetY: 8,
         );
@@ -1519,7 +1611,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Bottom_Left:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
           offsetY: 16,
         );
@@ -1527,7 +1619,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Bottom_Center:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8,
           offsetY: 8,
         );
@@ -1535,7 +1627,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Column_Bottom_Right:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameIsometricConstants.Sprite_Height_Padded_17,
+          srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 16,
           offsetY: 0,
         );
@@ -1550,7 +1642,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_North:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: 80 + GameIsometricConstants.Sprite_Height_Padded,
+          srcY: 80 + IsometricConstants.Sprite_Height_Padded,
           offsetX: -8,
           offsetY: -8,
         );
@@ -1558,7 +1650,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Half_South:
         renderNodeShadedOffset(
           srcX: srcX,
-          srcY: 80 + GameIsometricConstants.Sprite_Height_Padded,
+          srcY: 80 + IsometricConstants.Sprite_Height_Padded,
           offsetX: 8,
           offsetY: 8,
         );
@@ -1589,8 +1681,8 @@ class RendererNodes extends IsometricRenderer {
         image: Images.atlas_nodes,
         srcX: 1552,
         srcY: 432 + (gamestream.isometric.animation.animationFrame6 * 72.0), // TODO Optimize
-        srcWidth: GameIsometricConstants.Sprite_Width,
-        srcHeight: GameIsometricConstants.Sprite_Height,
+        srcWidth: IsometricConstants.Sprite_Width,
+        srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
         dstY: currentNodeDstY,
         anchorY: 0.3334,
@@ -1602,8 +1694,8 @@ class RendererNodes extends IsometricRenderer {
         image: Images.atlas_nodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((gamestream.isometric.animation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
-        srcWidth: GameIsometricConstants.Sprite_Width,
-        srcHeight: GameIsometricConstants.Sprite_Height,
+        srcWidth: IsometricConstants.Sprite_Width,
+        srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
         dstY: currentNodeDstY + gamestream.isometric.animation.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
@@ -1619,12 +1711,35 @@ class RendererNodes extends IsometricRenderer {
     bufferClr[engine.bufferIndex] = currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + GameIsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + GameIsometricConstants.Sprite_Height;
+    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
     bufferDst[f] = 1.0; // scale
     bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (GameIsometricConstants.Sprite_Width_Half);
-    bufferDst[f + 3] = currentNodeDstY - (GameIsometricConstants.Sprite_Height_Third);
+    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half);
+    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third);
+    engine.incrementBufferIndex();
+  }
+
+  void renderCustomNode({
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    required double dstX,
+    required double dstY,
+    required int color,
+  }){
+    onscreenNodes++;
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = color;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + srcWidth;
+    bufferSrc[f + 3] = srcY + srcHeight;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = dstX;
+    bufferDst[f + 3] = dstY;
     engine.incrementBufferIndex();
   }
 
@@ -1639,12 +1754,12 @@ class RendererNodes extends IsometricRenderer {
     bufferClr[engine.bufferIndex] = currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + GameIsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + GameIsometricConstants.Sprite_Height;
+    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
     bufferDst[f] = 1.0; // scale
     bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (GameIsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (GameIsometricConstants.Sprite_Height_Third) + offsetY;
+    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
     engine.incrementBufferIndex();
   }
 
@@ -1662,12 +1777,16 @@ class RendererNodes extends IsometricRenderer {
     bufferClr[engine.bufferIndex] = color ?? currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + (srcWidth ?? GameIsometricConstants.Sprite_Width);
-    bufferSrc[f + 3] = srcY + (srcHeight ?? GameIsometricConstants.Sprite_Height);
+    bufferSrc[f + 2] = srcX + (srcWidth ?? IsometricConstants.Sprite_Width);
+    bufferSrc[f + 3] = srcY + (srcHeight ?? IsometricConstants.Sprite_Height);
     bufferDst[f] = 1.0; // scale
     bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (GameIsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (GameIsometricConstants.Sprite_Height_Third) + offsetY;
+    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
     engine.incrementBufferIndex();
+  }
+
+  void toggleDynamicLighting(){
+    dynamicLighting = !dynamicLighting;
   }
 }

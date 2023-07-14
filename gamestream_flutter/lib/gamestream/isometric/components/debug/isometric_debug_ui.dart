@@ -175,13 +175,16 @@ extension isometricDebugUI on IsometricDebug {
         ],
       );
 
-
   Widget buildTabLighting() =>
       Column(
         children: [
           onPressed(
               action: gamestream.isometric.client.toggleDynamicShadows,
               child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.client.dynamicShadows}'))
+          ),
+          onPressed(
+              action: gamestream.isometric.renderer.rendererNodes.toggleDynamicLighting,
+              child: GSRefresh(() => buildText('dynamic-lighting-enabled: ${gamestream.isometric.renderer.rendererNodes.dynamicLighting}'))
           ),
           onPressed(
               child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
