@@ -209,13 +209,13 @@ class GameAudio {
   void updateRandomAmbientSounds(){
     if (nextRandomSound-- > 0) return;
     playRandomAmbientSound();
-    nextRandomSound = Engine.randomInt(200, 1000);
+    nextRandomSound = randomInt(200, 1000);
   }
 
   void updateRandomMusic(){
     if (nextRandomMusic-- > 0) return;
     playRandomMusic();
-    nextRandomMusic = Engine.randomInt(800, 2000);
+    nextRandomMusic = randomInt(800, 2000);
   }
 
   var _nextAudioSourceUpdate = 0;
@@ -331,20 +331,20 @@ class GameAudio {
   }
 
   void playRandom(List<AudioSingle> items){
-    Engine.randomItem(items).play();
+    randomItem(items).play();
   }
 
   void updateCharacterNoises(){
     if (gamestream.isometric.server.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
-    nextCharacterNoise = Engine.randomInt(200, 300);
+    nextCharacterNoise = randomInt(200, 300);
 
     final index = randomInt(0, gamestream.isometric.server.totalCharacters);
     final character = gamestream.isometric.server.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:
-        Engine.randomItem(gamestream.audio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
+        randomItem(gamestream.audio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
         break;
       case CharacterType.Dog:
         gamestream.audio.dog_woolf_howl_4.playV3(character);

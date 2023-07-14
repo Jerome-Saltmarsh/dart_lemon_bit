@@ -77,7 +77,7 @@ class IsometricEvents {
       gamestream.audio.footstep_wood_4.playXYZ(x, y, z);
       return;
     }
-    if (Engine.randomBool()){
+    if (randomBool()){
       gamestream.audio.footstep_grass_8.playXYZ(x, y, z);
       return;
     }
@@ -115,7 +115,7 @@ class IsometricEvents {
         final characterType = gamestream.readByte();
         switch (characterType){
           case CharacterType.Zombie:
-            Engine.randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
+            randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
             break;
         }
         break;
@@ -137,7 +137,7 @@ class IsometricEvents {
         return onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
-          gamestream.isometric.particles.spawnParticleOrbShard(x: x, y: y, z: z, angle: Engine.randomAngle());
+          gamestream.isometric.particles.spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
         }
         return;
       case GameEventType.Splash:
@@ -149,20 +149,20 @@ class IsometricEvents {
       case GameEventType.Spawn_Dust_Cloud:
         break;
       case GameEventType.Player_Hit:
-        if (Engine.randomBool()) {
+        if (randomBool()) {
           // audio.humanHurt(x, y);
         }
         break;
       case GameEventType.Zombie_Target_Acquired:
-        Engine.randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
+        randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
         break;
       case GameEventType.Character_Changing:
         gamestream.audio.change_cloths.playXYZ(x, y, z);
         break;
       case GameEventType.Zombie_Strike:
-        Engine.randomItem(gamestream.audio.audioSingleZombieBits).playXYZ(x, y, z);
-        if (Engine.randomBool()){
-          Engine.randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
+        randomItem(gamestream.audio.audioSingleZombieBits).playXYZ(x, y, z);
+        if (randomBool()){
+          randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
         }
         break;
       case GameEventType.Player_Death:
@@ -206,7 +206,7 @@ class IsometricEvents {
         isometric.particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         for (var i = 0; i < 8; i++) {
           gamestream.isometric.particles.spawnParticleOrbShard(
-              x: x, y: y, z: z, duration: 30, speed: Engine.randomBetween(1, 2), angle: Engine.randomAngle());
+              x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
         }
         break;
 
@@ -470,9 +470,9 @@ class IsometricEvents {
         x: x,
         y: y,
         z: z,
-        zv: Engine.randomBetween(1.5, 2),
-        angle: angle + Engine.randomGiveOrTake(Engine.PI_Quarter),
-        speed: Engine.randomBetween(1.5, 2.5),
+        zv: randomBetween(1.5, 2),
+        angle: angle + giveOrTake(Engine.PI_Quarter),
+        speed: randomBetween(1.5, 2.5),
       );
     }
 
@@ -507,7 +507,7 @@ class IsometricEvents {
     //     angle: angle + Engine.randomGiveOrTake(0.5),
     //     speed: 4.0 + Engine.randomGiveOrTake(0.5),
     //     zv: 0.1);
-    Engine.randomItem(gamestream.audio.zombie_deaths).playXYZ(x, y, z);
+    randomItem(gamestream.audio.zombie_deaths).playXYZ(x, y, z);
   }
 
   void onChangedRendersSinceUpdate(int value){

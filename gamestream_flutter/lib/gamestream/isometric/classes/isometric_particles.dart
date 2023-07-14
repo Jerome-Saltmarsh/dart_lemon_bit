@@ -689,7 +689,7 @@ class IsometricParticles {
 
   void spawnBubbles(double x, double y, double z, {int amount = 5}){
     for (var i = 0; i < amount; i++) {
-      spawnParticleBubble(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
+      spawnParticleBubble(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
     }
   }
 
@@ -697,10 +697,10 @@ class IsometricParticles {
     gamestream.audio.magical_impact_16.playXYZ(x, y, z, maxDistance: 600);
     for (var i = 0; i < amount; i++) {
       spawnParticleFirePurple(
-          x: x + Engine.randomGiveOrTake(5),
-          y: y + Engine.randomGiveOrTake(5),
+          x: x + giveOrTake(5),
+          y: y + giveOrTake(5),
           z: z, speed: 1,
-          angle: Engine.randomAngle(),
+          angle: randomAngle(),
       );
     }
 

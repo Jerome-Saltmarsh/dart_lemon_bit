@@ -254,11 +254,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.lookAtMouse();
     }
 
-    // if (mouseRightDown){
-    //   characterAttack(player);
-    //   player.clearTarget();
-    //   player.runToDestinationEnabled = false;
-    // }
+    if (mouseRightDown){
+      characterAttack(player);
+      player.clearTarget();
+      player.runToDestinationEnabled = false;
+    }
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;

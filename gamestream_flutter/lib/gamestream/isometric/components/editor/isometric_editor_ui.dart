@@ -1187,13 +1187,15 @@ extension IsometricEditorUI on IsometricEditor {
                   child: Container(
                     width: 16,
                     height: 16,
-                    child: engine.buildAtlasImageButton(
-                      image: Images.atlas_icons,
-                      srcX: 80,
-                      srcY: 96,
-                      srcWidth: 16,
-                      srcHeight: 16,
+                    child: onPressed(
                       action: delete,
+                      child: engine.buildAtlasImage(
+                        image: Images.atlas_icons,
+                        srcX: 80,
+                        srcY: 96,
+                        srcWidth: 16,
+                        srcHeight: 16,
+                      ),
                     ),
                   ),
                 ),

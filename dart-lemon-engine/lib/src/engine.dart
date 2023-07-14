@@ -14,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'keycode.dart';
-import 'renderable.dart';
 
 class Engine extends StatelessWidget {
 
@@ -62,8 +61,6 @@ class Engine extends StatelessWidget {
   BasicWidgetBuilder? onBuildLoadingScreen;
   /// override safe
   Function(Object error, StackTrace stack)? onError;
-
-  // VARIABLES
 
   /// milliseconds elapsed since last render frame
   final msRender = Watch(0);
@@ -379,10 +376,6 @@ class Engine extends StatelessWidget {
     lastRenderTime = now;
     notifierPaintFrame.value++;
     msRender.value = duration.inMilliseconds;
-  }
-
-  void render(Renderable renderable){
-
   }
 
   void refreshPage(){
@@ -968,9 +961,8 @@ class Engine extends StatelessWidget {
     return const {'handled': true};
   }
 
-  Widget _internalBuildApp(){
-    return WatchBuilder(themeData, (ThemeData? themeData){
-      return MaterialApp(
+  Widget _internalBuildApp() => WatchBuilder(themeData, (ThemeData? themeData) =>
+      MaterialApp(
         title: title,
         theme: themeData,
         home: Scaffold(
@@ -995,9 +987,7 @@ class Engine extends StatelessWidget {
           }),
         ),
         debugShowCheckedModeBanner: false,
-      );
-    });
-  }
+      ));
 
   Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
@@ -1041,64 +1031,16 @@ class Engine extends StatelessWidget {
     );
   }
 
-
-  static void insertionSort<E>(List<E> list, {
-    required bool Function(E, E) compare,
-    int start = 0,
-    int? end,
-  }) {
-    end ??= list.length;
-    for (var pos = start + 1; pos < end; pos++) {
-      var min = start;
-      var max = pos;
-      var element = list[pos];
-      while (min < max) {
-        var mid = min + ((max - min) >> 1);
-        // var comparison = ;
-        if (compare(element, list[mid])) {
-          max = mid;
-        } else {
-          min = mid + 1;
-        }
-      }
-      list.setRange(min + 1, pos + 1, list, min);
-      list[min] = element;
-    }
-  }
-
-
-  double calculateRadianDifference(double a, double b){
-    final diff = b - a;
-    if (diff > pi) {
-      return -(PI_2 - diff);
-    }
-    if (diff < -pi){
-      return PI_2 + diff;
-    }
-    return diff;
-  }
-
-  static bool isNullOrEmpty(String? value) =>
-     value == null || value.isEmpty;
-
-  static int randomInt(int min, int max) => random.nextInt(max - min) + min;
-
-  /// Returns a random radian between 0 and pi2
-  static double randomAngle() {
-    const pi2 = pi + pi;
-    return random.nextDouble() * pi2;
-  }
-
-  static T randomItem<T>(List<T> list) => list[random.nextInt(list.length)];
-
-  static double randomGiveOrTake(num value) =>
-    randomBetween(-value, value);
-
-  static double randomBetween(num a, num b) =>
-    (random.nextDouble() * (b - a)) + a;
-
-  static bool randomBool() =>
-    random.nextDouble() > 0.5;
+  // double calculateRadianDifference(double a, double b){
+  //   final diff = b - a;
+  //   if (diff > pi) {
+  //     return -(PI_2 - diff);
+  //   }
+  //   if (diff < -pi){
+  //     return PI_2 + diff;
+  //   }
+  //   return diff;
+  // }
 
   SystemMouseCursor _internalMapCursorTypeToSystemMouseCursor(CursorType value){
     switch (value) {
@@ -1223,30 +1165,30 @@ class Engine extends StatelessWidget {
     return await picture.toImage(1, 1);
   }
 
-  Widget buildAtlasImageButton({
-    required ui.Image image,
-    required double srcX,
-    required double srcY,
-    required double srcWidth,
-    required double srcHeight,
-    required Function? action,
-    int color = 1,
-    double scale = 1.0,
-    String hint = "",
-  }) =>
-      buildOnPressed(
-        action: action,
-        hint: hint,
-        child: buildAtlasImage(
-          image: image,
-          srcX: srcX,
-          srcY: srcY,
-          srcWidth: srcWidth,
-          srcHeight: srcHeight,
-          scale: scale,
-          color: color,
-        ),
-      );
+  // Widget buildAtlasImageButton({
+  //   required ui.Image image,
+  //   required double srcX,
+  //   required double srcY,
+  //   required double srcWidth,
+  //   required double srcHeight,
+  //   required Function? action,
+  //   int color = 1,
+  //   double scale = 1.0,
+  //   String hint = "",
+  // }) =>
+  //     buildOnPressed(
+  //       action: action,
+  //       hint: hint,
+  //       child: buildAtlasImage(
+  //         image: image,
+  //         srcX: srcX,
+  //         srcY: srcY,
+  //         srcWidth: srcWidth,
+  //         srcHeight: srcHeight,
+  //         scale: scale,
+  //         color: color,
+  //       ),
+  //     );
 
   Widget buildAtlasImage({
     required ui.Image image,
@@ -1278,35 +1220,35 @@ class Engine extends StatelessWidget {
         ),
       );
 
-  Widget buildOnPressed({
-    required Widget child,
-    Function? action,
-    Function? onRightClick,
-    dynamic hint,
-  }) {
-    final widget = MouseRegion(
-        cursor: action != null
-            ? SystemMouseCursors.click
-            : SystemMouseCursors.forbidden,
-        child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            child: child,
-            onSecondaryTap: onRightClick != null ? (){
-              onRightClick.call();
-            } : null,
-            onTap: (){
-              if (action == null) return;
-              action();
-            }
-        ));
-
-    if (hint == null) return widget;
-
-    return Tooltip(
-      message: hint.toString(),
-      child: widget,
-    );
-  }
+  // Widget buildOnPressed({
+  //   required Widget child,
+  //   Function? action,
+  //   Function? onRightClick,
+  //   dynamic hint,
+  // }) {
+  //   final widget = MouseRegion(
+  //       cursor: action != null
+  //           ? SystemMouseCursors.click
+  //           : SystemMouseCursors.forbidden,
+  //       child: GestureDetector(
+  //           behavior: HitTestBehavior.opaque,
+  //           child: child,
+  //           onSecondaryTap: onRightClick != null ? (){
+  //             onRightClick.call();
+  //           } : null,
+  //           onTap: (){
+  //             if (action == null) return;
+  //             action();
+  //           }
+  //       ));
+  //
+  //   if (hint == null) return widget;
+  //
+  //   return Tooltip(
+  //     message: hint.toString(),
+  //     child: widget,
+  //   );
+  // }
 
   Widget buildCanvas({
     required PaintCanvas paint,
