@@ -254,14 +254,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.lookAtMouse();
     }
 
-    if (mouseRightDown){
-      characterAttack(player);
-      player.clearTarget();
-      player.runToDestinationEnabled = false;
-    }
+    // if (mouseRightDown){
+    //   characterAttack(player);
+    //   player.clearTarget();
+    //   player.runToDestinationEnabled = false;
+    // }
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
-    final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
+    // final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseLeftDown) {
       player.mouseLeftDownDuration++;
@@ -273,7 +273,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (mouseRightDown) {
       player.mouseRightDownDuration++;
     } else {
-      player.mouseRightDownDuration = 0;
+      if (player.mouseRightDownDuration > 0){
+        player.mouseRightDownDuration = 0;
+        characterActionIdle(player);
+      }
       player.mouseRightDownIgnore = false;
     }
 
@@ -293,29 +296,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    // if (!player.mouseRightDownIgnore && mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
-    //   final aimTarget = player.aimTarget;
-    //   if (player is MmoPlayer){
-    //     player.equippedWeaponIndex = 1;
-    //   }
-    //   if (aimTarget == null){
-    //     player.setDestinationToMouse();
-    //     player.runToDestinationEnabled = true;
-    //     player.pathFindingEnabled = false;
-    //     player.target = null;
-    //   } else if (mouseRightClicked) {
-    //     if (player is MmoPlayer){
-    //       player.equippedWeaponIndex = 1;
-    //     }
-    //     player.target = aimTarget;
-    //     player.runToDestinationEnabled = true;
-    //     player.pathFindingEnabled = false;
-    //     player.mouseLeftDownIgnore = true;
-    //   }
-    //   return;
-    // }
-
-
+    if (mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
+      player.setDestinationToMouse();
+      player.runToDestinationEnabled = true;
+      player.pathFindingEnabled = false;
+      player.target = null;
+      return;
+    }
 
     if (player.runInDirectionEnabled && direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;

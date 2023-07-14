@@ -9,28 +9,26 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] wearable trinkets
+[ ] fix zombie wander
+[ ] fix npc shooting
+[ ] character light emission
 [ ] town stash (automatically opens when nearby)
-[ ] 3d surface lighting
 [ ] attack speed modifier
-[ ] fix grid render order
-[ ] incredible loot engine
-[ ] incredible ability engine
-[ ] skeleton enemy
-[ ] implement isometric ability
-[ ] merge interact logic into isometric collider
-[ ] refactor lemon engine
-[ ] remove lemon engine global instance
-[ ] remove gamestream global instance
-[ ] remove all static instances
-[ ] modify selected object type
+[ ] caste ability
+[ ] skeleton character
 [ ] character type alien slug
 [ ] npc store
-[ ] character selection
-[ ] character abilities
+[-] merge interact logic into isometric collider
+[-] refactor lemon engine
+[-] remove lemon engine global instance
+[-] remove gamestream global instance
+[-] remove all static instances
+[*] fix grid render order
+[*] 3d surface lighting
 [?] character gold
 
 14.07.2023
+[x] wearable trinkets
 [x] fix hover dialog stays open
 [x] fix collect item
 [x] add missing atlas src

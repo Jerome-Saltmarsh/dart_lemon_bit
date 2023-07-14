@@ -93,6 +93,7 @@ enum MMOItem {
       type: GameObjectType.Item,
       subType: ItemType.Health_Potion,
       health: 10,
+      consumable: true,
   ),
   Meat_Drumstick(
       type: GameObjectType.Item,
@@ -104,7 +105,6 @@ enum MMOItem {
       type: GameObjectType.Item,
       subType: ItemType.Pendant_1,
       health: 5,
-      collectable: false,
       isTreasure: true,
   );
 
@@ -116,6 +116,7 @@ enum MMOItem {
   final int health;
   final bool collectable;
   final bool isTreasure;
+  final bool consumable;
   final double range;
   final double movement;
 
@@ -138,5 +139,6 @@ enum MMOItem {
     this.collectable = true,
     this.movement = 0,
     this.isTreasure = false,
+    this.consumable = false,
   });
 }
