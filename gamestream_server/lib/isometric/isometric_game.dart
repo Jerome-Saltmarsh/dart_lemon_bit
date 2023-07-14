@@ -2637,6 +2637,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.goal = CharacterGoal.Idle;
     character.action = CharacterAction.Idle;
     character.setCharacterStateIdle();
+    character.setDestinationToCurrentPosition();
+    character.clearPath();
+    character.clearTarget();
   }
 
 
@@ -2674,6 +2677,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     character.action = CharacterAction.Collect_Target;
     onCharacterCollectedGameObject(character, target);
+    characterActionIdle(character);
   }
 
   void onCharacterCollectedGameObject(IsometricCharacter character, IsometricGameObject gameObject){
