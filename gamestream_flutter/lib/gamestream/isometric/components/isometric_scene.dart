@@ -656,11 +656,14 @@ class IsometricScene {
               NodeOrientation.Half_South,
               NodeOrientation.Half_West,
             ].contains(nodeOrientation)){
-              applyAmbient(
-                index: index - area,
-                alpha: alpha,
-                interpolation: interpolation,
-              );
+              if (!dynamicLighting){
+                applyAmbient(
+                  index: index - area,
+                  alpha: alpha,
+                  interpolation: interpolation,
+                );
+              }
+
             }
             return;
           }
@@ -725,28 +728,30 @@ class IsometricScene {
 
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-      if (paintBehindZ) {
-        applyAmbient(
-          index: index - area,
-          alpha: alpha,
-          interpolation: interpolation,
-        );
-      }
+      if (!dynamicLighting){
+        if (paintBehindZ) {
+          applyAmbient(
+            index: index - area,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
 
-      if (paintBehindRow) {
-        applyAmbient(
-          index: index - totalColumns,
-          alpha: alpha,
-          interpolation: interpolation,
-        );
-      }
+        if (paintBehindRow) {
+          applyAmbient(
+            index: index - totalColumns,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
 
-      if (paintBehindColumn) {
-        applyAmbient(
-          index: index - 1,
-          alpha: alpha,
-          interpolation: interpolation,
-        );
+        if (paintBehindColumn) {
+          applyAmbient(
+            index: index - 1,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
       }
 
       if (const [
