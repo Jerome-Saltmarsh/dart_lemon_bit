@@ -225,7 +225,7 @@ extension WebsiteUI on WebsiteGame {
                           margin: const EdgeInsets.symmetric(vertical: 4),
                           color: activeRegion == region ? Colors.greenAccent : mouseOver ? Colors.green : Colors.white10,
                           child: buildText(
-                              '${engine.enumString(region)}',
+                              '${region.name}',
                               size: 24,
                               color: mouseOver ? Colors.white : Colors.white60
                           ),

@@ -57,6 +57,11 @@ class Engine extends StatelessWidget {
   /// override safe
   /// gets called when update timer is changed
   Function? onUpdateDurationChanged;
+
+  Function? onMouseEnter;
+
+  Function? onMouseExit;
+
   /// override safe
   BasicWidgetBuilder? onBuildLoadingScreen;
   /// override safe
@@ -384,8 +389,8 @@ class Engine extends StatelessWidget {
     final positionY = screenToWorldY(mousePositionY);
     final previousX = screenToWorldX(previousMousePositionX);
     final previousY = screenToWorldY(previousMousePositionY);
-    final diffX = (previousX - positionX) / zoom;
-    final diffY = (previousY - positionY) / zoom;
+    final diffX = (previousX - positionX) * zoom;
+    final diffY = (previousY - positionY) * zoom;
     cameraX += diffX;
     cameraY += diffY;
   }
@@ -991,22 +996,25 @@ class Engine extends StatelessWidget {
           onLongPress: _internalOnLongPress,
           onLongPressDown: _internalOnLongPressDown,
           onSecondaryTapDown: _internalOnSecondaryTapDown,
-          child: WatchBuilder(watchBackgroundColor, (Color backgroundColor){
-            return Container(
-                color: backgroundColor,
-                width: screen.width,
-                height: screen.height,
-                child: CustomPaint(
-                  isComplex: true,
-                  willChange: true,
-                  painter: _EnginePainter(repaint: notifierPaintFrame, engine: this),
-                  foregroundPainter: _EngineForegroundPainter(
-                      repaint: notifierPaintForeground,
-                      engine: this,
-                  ),
-                )
-            );
-          })),
+          child: WatchBuilder(watchBackgroundColor, (Color backgroundColor) =>
+            MouseRegion(
+              onEnter: (_) => onMouseEnter?.call(),
+              onExit: (_) => onMouseExit?.call(),
+              child: Container(
+                  color: backgroundColor,
+                  width: screen.width,
+                  height: screen.height,
+                  child: CustomPaint(
+                    isComplex: true,
+                    willChange: true,
+                    painter: _EnginePainter(repaint: notifierPaintFrame, engine: this),
+                    foregroundPainter: _EngineForegroundPainter(
+                        repaint: notifierPaintForeground,
+                        engine: this,
+                    ),
+                  )
+              ),
+            ))),
     );
 
     return WatchBuilder(this.cursorType, (CursorType cursorType) =>
@@ -1129,13 +1137,6 @@ class Engine extends StatelessWidget {
     return;
   }
 
-  String enumString(dynamic value){
-    final text = value.toString();
-    final index = text.indexOf(".");
-    if (index == -1) return text;
-    return text.substring(index + 1, text.length).replaceAll("_", " ");
-  }
-
   void incrementBufferIndex(){
     this.bufferIndex++;
     if (this.bufferIndex == 128) {
@@ -1150,31 +1151,6 @@ class Engine extends StatelessWidget {
     final picture = recorder.endRecording();
     return await picture.toImage(1, 1);
   }
-
-  // Widget buildAtlasImageButton({
-  //   required ui.Image image,
-  //   required double srcX,
-  //   required double srcY,
-  //   required double srcWidth,
-  //   required double srcHeight,
-  //   required Function? action,
-  //   int color = 1,
-  //   double scale = 1.0,
-  //   String hint = "",
-  // }) =>
-  //     buildOnPressed(
-  //       action: action,
-  //       hint: hint,
-  //       child: buildAtlasImage(
-  //         image: image,
-  //         srcX: srcX,
-  //         srcY: srcY,
-  //         srcWidth: srcWidth,
-  //         srcHeight: srcHeight,
-  //         scale: scale,
-  //         color: color,
-  //       ),
-  //     );
 
   Widget buildAtlasImage({
     required ui.Image image,
@@ -1206,49 +1182,17 @@ class Engine extends StatelessWidget {
         ),
       );
 
-  // Widget buildOnPressed({
-  //   required Widget child,
-  //   Function? action,
-  //   Function? onRightClick,
-  //   dynamic hint,
-  // }) {
-  //   final widget = MouseRegion(
-  //       cursor: action != null
-  //           ? SystemMouseCursors.click
-  //           : SystemMouseCursors.forbidden,
-  //       child: GestureDetector(
-  //           behavior: HitTestBehavior.opaque,
-  //           child: child,
-  //           onSecondaryTap: onRightClick != null ? (){
-  //             onRightClick.call();
-  //           } : null,
-  //           onTap: (){
-  //             if (action == null) return;
-  //             action();
-  //           }
-  //       ));
-  //
-  //   if (hint == null) return widget;
-  //
-  //   return Tooltip(
-  //     message: hint.toString(),
-  //     child: widget,
-  //   );
-  // }
-
   Widget buildCanvas({
     required PaintCanvas paint,
     ValueNotifier<int>? frame,
     ShouldRepaint? shouldRepaint,
-  }){
-    return CustomPaint(
+  })=> CustomPaint(
       painter: CustomPainterPainter(
           paint,
           shouldRepaint ?? _doNotRepaint,
           frame
       ),
     );
-  }
 
   bool _doNotRepaint(CustomPainter oldDelegate) {
     return false;
@@ -1262,9 +1206,6 @@ class Engine extends StatelessWidget {
     return FutureBuilder(
         future: _internalInit(),
         builder: (context, snapshot) {
-            // if (snapshot.connectionState != ConnectionState.done){
-            //   return onBuildLoadingScreen?.call() ?? buildDefaultLoadingScreen();
-            // }
             return _internalBuildApp();
         }
     );

@@ -18,4 +18,12 @@ abstract class Game {
   void onKeyPressed(int key) {
 
   }
+
+  void onMouseEnter(){
+
+  }
+
+  void onMouseExit(){
+
+  }
 }

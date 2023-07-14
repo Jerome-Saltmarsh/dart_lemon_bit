@@ -129,4 +129,14 @@ class MmoGame extends IsometricGame {
       sections: 20
     );
   }
+
+  @override
+  void onMouseExit() {
+
+  }
+
+  @override
+  void onMouseEnter() {
+     itemHover.value = null;
+  }
 }

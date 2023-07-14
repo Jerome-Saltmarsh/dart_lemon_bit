@@ -142,6 +142,8 @@ class Gamestream with ByteReader {
      engine.onLeftClicked = game.onLeftClicked;
      engine.onRightClicked = game.onRightClicked;
      engine.onKeyPressed = game.onKeyPressed;
+     engine.onMouseEnter = game.onMouseEnter;
+     engine.onMouseExit = game.onMouseExit;
      game.onActivated();
    }
 
