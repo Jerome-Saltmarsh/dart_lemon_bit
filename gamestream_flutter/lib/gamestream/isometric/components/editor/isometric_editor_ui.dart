@@ -186,7 +186,7 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildWindowEditCanvasSize() => Center(
-    child: GSDialog(
+    child: GSContainer(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -311,7 +311,7 @@ extension IsometricEditorUI on IsometricEditor {
   );
 
   Widget buildWindowGenerateScene() => Center(
-    child: GSDialog(
+    child: GSContainer(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -361,7 +361,7 @@ extension IsometricEditorUI on IsometricEditor {
 
 
   Widget buildWindowEditScene()=> Center(
-    child: GSDialog(
+    child: GSContainer(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -408,7 +408,7 @@ extension IsometricEditorUI on IsometricEditor {
   );
 
   Widget buildEditorTabGameObjects() =>
-      GSDialog(
+      GSContainer(
         child: buildWatch(gameObjectSelected, (bool objectSelected){
           if (objectSelected){
             return buildColumnSelectedGameObject();
@@ -1105,7 +1105,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildPaintType(int type) =>
       buildButton(child: NodeType.getName(type));
 
-  Widget buildEditorMenu(IsometricEditorTab activeEditTab) => GSDialog(
+  Widget buildEditorMenu(IsometricEditorTab activeEditTab) => GSContainer(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

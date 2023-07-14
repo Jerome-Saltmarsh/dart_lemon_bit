@@ -14,33 +14,31 @@ extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
       buildWatchBool(gamestream.isometric.player.debugging, () =>
-          GSDialog(
-            child: GSContainer(
-              child: WatchBuilder(tab, (DebugTab activeTab) => Column(
-                children: [
-                  buildRowDebugTabs(activeTab),
-                  height16,
-                  Container(
-                    constraints: BoxConstraints(
-                        minWidth: 300,
-                        maxWidth: 400,
-                        minHeight: 300,
-                        maxHeight: engine.screen.height - 150),
-                    child: SingleChildScrollView(
-                      child: switch (activeTab) {
-                        DebugTab.Selected => buildTabSelected(),
-                        DebugTab.Network => buildTabNetwork(),
-                        DebugTab.Stats => buildTabStats(),
-                        DebugTab.Lighting => buildTabLighting(),
-                        DebugTab.Engine => buildTabEngine(),
-                        DebugTab.Objects => buildTabObjects(),
-                        DebugTab.Isometric => buildTabIsometric(),
-                      },
-                    ),
+          GSContainer(
+            child: WatchBuilder(tab, (DebugTab activeTab) => Column(
+              children: [
+                buildRowDebugTabs(activeTab),
+                height16,
+                Container(
+                  constraints: BoxConstraints(
+                      minWidth: 300,
+                      maxWidth: 400,
+                      minHeight: 300,
+                      maxHeight: engine.screen.height - 150),
+                  child: SingleChildScrollView(
+                    child: switch (activeTab) {
+                      DebugTab.Selected => buildTabSelected(),
+                      DebugTab.Network => buildTabNetwork(),
+                      DebugTab.Stats => buildTabStats(),
+                      DebugTab.Lighting => buildTabLighting(),
+                      DebugTab.Engine => buildTabEngine(),
+                      DebugTab.Objects => buildTabObjects(),
+                      DebugTab.Isometric => buildTabIsometric(),
+                    },
                   ),
-                ],
-              )),
-            ),
+                ),
+              ],
+            )),
           )
       );
 

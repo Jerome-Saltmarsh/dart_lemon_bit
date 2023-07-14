@@ -48,33 +48,31 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     );
 
   Widget buildDebugWindow() =>
-      GSDialog(
-        child: GSContainer(
-          child: WatchBuilder(
-              tab,
-                  (selectedTab) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (selectedTab == CaptureTheFlagUITabs.GameObjects)
-                    buildWindowGameObjects(),
-                  if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
-                    buildWindowFlagStatus(),
-                  height8,
-                  Row(
-                    children: CaptureTheFlagUITabs.values
-                        .map((e) => onPressed(
-                        action: () => tab.value = e,
-                        child: Container(
-                            color: e == selectedTab
-                                ? Colors.white12
-                                : null,
-                            padding: const EdgeInsets.all(8),
-                            child: buildText(e.name))))
-                        .toList(growable: false),
-                  )
-                ],
-              )),
-        ),
+      GSContainer(
+        child: WatchBuilder(
+            tab,
+                (selectedTab) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (selectedTab == CaptureTheFlagUITabs.GameObjects)
+                  buildWindowGameObjects(),
+                if (selectedTab == CaptureTheFlagUITabs.Flag_Status)
+                  buildWindowFlagStatus(),
+                height8,
+                Row(
+                  children: CaptureTheFlagUITabs.values
+                      .map((e) => onPressed(
+                      action: () => tab.value = e,
+                      child: Container(
+                          color: e == selectedTab
+                              ? Colors.white12
+                              : null,
+                          padding: const EdgeInsets.all(8),
+                          child: buildText(e.name))))
+                      .toList(growable: false),
+                )
+              ],
+            )),
       );
 
   WatchBuilder<CaptureTheFlagGameStatus> buildWindowGameStatus() {
@@ -296,14 +294,14 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
     double? height,
     Alignment? alignment,
   }) =>
-      GSDialog(child: Container(
+      Container(
         alignment: alignment,
         padding: GameStyle.Container_Padding,
         color: GameStyle.Container_Color,
         child: child,
         width: width,
         height: height,
-      ));
+      );
 
   Widget buildWindowPlayer() => Container(
       width: engine.screen.width,
@@ -348,23 +346,20 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           buildWatch(skillPoints, (skillPoints) => (skillPoints <= 0) ? nothing :
-             GSDialog(
-               child: GSButton(
-                 action: () => upgradePower(power),
-                 child: Container(
-                    // color: GameStyle.Container_Color,
-                    color: GS_CONTAINER_COLOR,
-                    width: 40,
-                    height: 40,
-                    alignment: Alignment.center,
-                    child: buildText('+'),
-                   margin: const EdgeInsets.only(bottom: 6),
-                 ),
-               ),
-             )
-          ),
+          GSButton(
+            action: () => upgradePower(power),
+            child: Container(
+              // color: GameStyle.Container_Color,
+              color: GS_CONTAINER_COLOR,
+              width: 40,
+              height: 40,
+              alignment: Alignment.center,
+              child: buildText('+'),
+              margin: const EdgeInsets.only(bottom: 6),
+            ),
+          )),
           buildWatch(power.activated, (activated) =>
-            GSDialog(
+            GSContainer(
               child: Stack(
                   alignment: Alignment.center,
                   children: [

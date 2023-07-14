@@ -371,7 +371,7 @@ class IsometricEvents {
     } else {
       gamestream.isometric.cameraTargetPlayer();
       gamestream.isometric.editor.deselectGameObject();
-      gamestream.isometric.ui.mouseOverDialog.setFalse();
+      // gamestream.isometric.ui.mouseOverDialog.setFalse();
       if (gamestream.isometric.server.sceneEditable.value){
         gamestream.isometric.player.message.value = 'press tab to edit';
       }

@@ -46,27 +46,25 @@ extension MMOUI on MmoGame {
       child:
       buildWatch(playerInteracting, (interacting) => !interacting ? nothing :
       buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
-      GSDialog(
-        child: Container(
-            width: width,
-            height: height,
-            color: GS_CONTAINER_COLOR,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(child: buildText(npcText)),
-                Positioned(
-                  bottom: 8,
-                  child: options),
-                Positioned(
-                  right: 8,
-                  top: 8,
-                  child: onPressed(
-                      action: endInteraction,
-                      child: buildText('x', size: 25)),
-                ),
-              ],
-            )),
+      GSContainer(
+        width: width,
+        height: height,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(child: buildText(npcText)),
+            Positioned(
+              bottom: 8,
+              child: options),
+            Positioned(
+              right: 8,
+              top: 8,
+              child: onPressed(
+                  action: endInteraction,
+                  child: buildText('x', size: 25)),
+            ),
+          ],
+        ),
       )),
     )
     );
@@ -75,7 +73,7 @@ extension MMOUI on MmoGame {
   Positioned buildPlayerWeapons() => Positioned(
         bottom: Margin1,
         left: Margin1,
-        child: GSWindow(
+        child: GSContainer(
         child: buildWatch(
           weaponsChangedNotifier,
           (int reads) => Row(
@@ -91,7 +89,7 @@ extension MMOUI on MmoGame {
       alignment: Alignment.center,
       width: 120,
       child: FittedBox(
-        child: GSWindow(
+        child: GSContainer(
             child: buildWatch(player.playerAimTargetName, buildText)),
       ),
     );
@@ -159,7 +157,7 @@ extension MMOUI on MmoGame {
               right: engine.mousePositionX > engine.screenCenterX ? edgePadding : null,
               top: engine.mousePositionY < engine.screenCenterY ? edgePadding : null,
               bottom: engine.mousePositionY > engine.screenCenterY ? edgePadding : null,
-            child: GSWindow(
+            child: GSContainer(
                 width: 270,
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -216,7 +214,7 @@ extension MMOUI on MmoGame {
       bottom: Margin2,
       child: buildWatch(
           itemsChangedNotifier,
-          (_) => GSWindow(
+          (_) => GSContainer(
               child: Column(
                   children: List.generate(
                       items.length, (index) => buildItemImageAtIndex(index),
@@ -227,7 +225,7 @@ extension MMOUI on MmoGame {
   Widget buildPlayerEquipped() => Positioned(
         bottom: Margin2,
         right: Margin1,
-        child: GSWindow(
+        child: GSContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +246,7 @@ extension MMOUI on MmoGame {
   Widget buildPlayerStats() => Positioned(
         bottom: Margin1,
         right: Margin1,
-        child: GSWindow(
+        child: GSContainer(
           child: Column(
             children: [
               buildPlayerHealthBar(),

@@ -58,9 +58,9 @@ class Engine extends StatelessWidget {
   /// gets called when update timer is changed
   Function? onUpdateDurationChanged;
 
-  Function? onMouseEnter;
+  Function? onMouseEnterCanvas;
 
-  Function? onMouseExit;
+  Function? onMouseExitCanvas;
 
   /// override safe
   BasicWidgetBuilder? onBuildLoadingScreen;
@@ -75,7 +75,7 @@ class Engine extends StatelessWidget {
   var lastRenderTime = DateTime.now();
   var lastUpdateTime = DateTime.now();
   var minMSPerRender = 10;
-
+  var mouseOverCanvas = false;
   List<Offset> touchPoints = [];
   var touches = 0;
   var touchDownId = 0;
@@ -998,8 +998,14 @@ class Engine extends StatelessWidget {
           onSecondaryTapDown: _internalOnSecondaryTapDown,
           child: WatchBuilder(watchBackgroundColor, (Color backgroundColor) =>
             MouseRegion(
-              onEnter: (_) => onMouseEnter?.call(),
-              onExit: (_) => onMouseExit?.call(),
+              onEnter: (_) {
+                mouseOverCanvas = true;
+                onMouseEnterCanvas?.call();
+              },
+              onExit: (_) {
+                mouseOverCanvas = false;
+                onMouseExitCanvas?.call();
+              },
               child: Container(
                   color: backgroundColor,
                   width: screen.width,

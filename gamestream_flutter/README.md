@@ -9,7 +9,6 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] fix hover dialog stays open
 [ ] wearable trinkets
 [ ] attack speed modifier
 [ ] fix grid render order
@@ -30,6 +29,7 @@ alt + m             : go to declaration
 [?] character gold
 
 14.07.2023
+[x] fix hover dialog stays open
 [x] fix collect item
 [x] add missing atlas src
 [x] gameobject type consumable

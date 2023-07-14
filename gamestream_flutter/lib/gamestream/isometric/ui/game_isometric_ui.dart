@@ -64,7 +64,7 @@ class GameIsometricUI {
       );
 
   static Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
-      GSDialog(
+      GSContainer(
         child: Container(
           width: width,
           alignment: Alignment.center,
@@ -281,11 +281,11 @@ class GameIsometricUI {
     final controlTime = buildTime();
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
-        gamestream.isometric.ui.mouseOverDialog.value = true;
+        // gamestream.isometric.ui.mouseOverDialog.value = true;
         gamestream.isometric.ui.windowOpenMenu.value = true;
       },
       onExit: (PointerExitEvent event) {
-        gamestream.isometric.ui.mouseOverDialog.value = false;
+        // gamestream.isometric.ui.mouseOverDialog.value = false;
         gamestream.isometric.ui.windowOpenMenu.value = false;
       },
       child: buildWatch(gamestream.isometric.ui.windowOpenMenu, (bool menuVisible){
@@ -413,29 +413,6 @@ class GameIsometricUI {
     srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
   );
 
-  // static Widget buildPanelCredits() {
-  //   return Column(
-  //     children: [
-  //       Container(
-  //           width: 64,
-  //           height: 64,
-  //           // child: buildAtlasItemType(ItemType.Resource_Credit)),
-  //       // width4,
-  //       // buildWatch(gamestream.isometric.client.playerCreditsAnimation, (value) => buildText(value, size: 25)),
-  //     ],
-  //   );
-  // }
-
-  static Widget buildContainer({required Widget child, double? width}) =>
-      GSDialog(
-          child: Container(
-            padding: GameStyle.Padding_6,
-            color: GameStyle.Container_Color,
-            width: width,
-            child: child,
-          )
-      );
-
   static Widget buildItemTypeBars(int amount) => Row(
       children: List.generate(5, (i) => Container(
         width: 8,
@@ -445,33 +422,6 @@ class GameIsometricUI {
       )
       )
   );
-
-  // static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
-  //
-  //   final container = Container(
-  //     margin: const EdgeInsets.only(right: 4),
-  //     child: Column(
-  //       children: [
-  //         Container(
-  //           width: 64,
-  //           height: 64,
-  //           child: buildAtlasItemType(buffType),
-  //         ),
-  //         height4,
-  //         // Container(
-  //         //   color: Colors.black26,
-  //         //   child: watch(buffDuration, text),
-  //         // ),
-  //         buildText(ItemType.getName(buffType)),
-  //       ],
-  //     ),
-  //   );
-  //
-  //   return buildWatch(buffDuration, (int duration) {
-  //     if (duration <= 0) return nothing;
-  //     return container;
-  //   });
-  // }
 
   static Widget buildIconCombatPowerType(int powerType){
     assert (CombatPowerType.values.contains(powerType));
@@ -609,21 +559,6 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildPlayerExperienceBar(double experience) =>
-      GSDialog(
-        child: Container(
-          width: GameStyle.ExperienceBarWidth,
-          height: GameStyle.ExperienceBarHeight,
-          color: GameStyle.ExperienceBarColorBackground,
-          alignment: Alignment.centerLeft,
-          child: Container(
-            width: GameStyle.ExperienceBarWidth * experience,
-            height: GameStyle.ExperienceBarHeight,
-            color: GameStyle.ExperienceBarColorFill,
-          ),
-        ),
-      );
-
   static Decoration buildDecorationBorder({
     required Color colorBorder,
     required Color colorFill,
@@ -649,34 +584,6 @@ class GameIsometricUI {
             width: 100);
       });
     });
-  }
-
-  static Widget buildPositionedContainerRespawn(){
-    const width = 200;
-    return Positioned(
-      bottom: 150,
-      child: Container(
-        width: engine.screen.width,
-        alignment: Alignment.center,
-        child: GSDialog(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildText('YOU DIED', size: 30),
-              height8,
-              buildButton(
-                alignment: Alignment.center,
-                child: 'RESPAWN',
-                action: gamestream.isometric.revive,
-                color: IsometricColors.Red_3,
-                width: width * goldenRatio_0618,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   static Widget buildTime() => Row(

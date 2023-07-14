@@ -142,8 +142,8 @@ class Gamestream with ByteReader {
      engine.onLeftClicked = game.onLeftClicked;
      engine.onRightClicked = game.onRightClicked;
      engine.onKeyPressed = game.onKeyPressed;
-     engine.onMouseEnter = game.onMouseEnter;
-     engine.onMouseExit = game.onMouseExit;
+     engine.onMouseEnterCanvas = game.onMouseEnter;
+     engine.onMouseExitCanvas = game.onMouseExit;
      game.onActivated();
    }
 
@@ -223,7 +223,7 @@ class Gamestream with ByteReader {
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
-         gamestream.isometric.ui.mouseOverDialog.setFalse();
+         // gamestream.isometric.ui.mouseOverDialog.setFalse();
          isometric.client.timeConnectionEstablished = DateTime.now();
          audio.enabledSound.value = true;
          if (!engine.isLocalHost) {
