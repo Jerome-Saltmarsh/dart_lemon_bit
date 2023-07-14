@@ -4,7 +4,8 @@ class MMOResponse {
    static const Player_Item_Length = 1;
    static const Player_Weapon = 2;
    static const Player_Item = 3;
-   static const Player_Equipped_Weapon_Index = 4;
-   static const Player_Equipped = 5;
-   static const Player_Interacting = 6;
+   static const Player_Treasure = 4;
+   static const Player_Equipped_Weapon_Index = 5;
+   static const Player_Equipped = 6;
+   static const Player_Interacting = 7;
 }

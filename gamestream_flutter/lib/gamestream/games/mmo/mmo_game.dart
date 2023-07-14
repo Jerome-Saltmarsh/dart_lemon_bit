@@ -14,8 +14,10 @@ class MmoGame extends IsometricGame {
 
   final weaponsChangedNotifier = Watch(0);
   final itemsChangedNotifier = Watch(0);
+  final treasuresChangedNotifier = Watch(0);
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
+  final treasures = List<MMOItem?>.generate(4, (index) => null);
   var items = <MMOItem?>[];
 
   final playerInteracting = Watch(false);
@@ -33,6 +35,11 @@ class MmoGame extends IsometricGame {
   void setWeapon({required int index, required MMOItem? item}){
     weapons[index] = item;
     notifyWeaponsChanged();
+  }
+
+  void setTreasure({required int index, required MMOItem? item}){
+    treasures[index] = item;
+    notifyTreasuresChanged();
   }
 
   void setItem({required int index, required MMOItem? item}){
@@ -54,6 +61,10 @@ class MmoGame extends IsometricGame {
 
   void notifyWeaponsChanged() {
     weaponsChangedNotifier.value++;
+  }
+
+  void notifyTreasuresChanged() {
+    treasuresChangedNotifier.value++;
   }
 
   @override

@@ -29,10 +29,10 @@ class SrcItems {
   ];
 
   static const Pendant_1 = <double>[
-    67, // x
-    3, // y
-    25, // width
-    26, // height
+    100, // x
+    0, // y
+    27, // width
+    32, // height
     1, // scale
     0.5, // anchorY
   ];

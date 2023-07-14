@@ -18,6 +18,7 @@ extension MMOUI on MmoGame {
     children: [
       buildNpcText(),
       buildPlayerWeapons(),
+      buildPlayerTreasures(),
       buildPlayerItems(),
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
@@ -80,6 +81,20 @@ extension MMOUI on MmoGame {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(weapons.length, buildWeaponImageAtIndex),
+          ),
+        ),
+      ));
+
+  Positioned buildPlayerTreasures() => Positioned(
+        top: Margin1,
+        left: Margin1,
+        child: GSContainer(
+        child: buildWatch(
+          treasuresChangedNotifier,
+          (int reads) => Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(treasures.length, (index) => MMOItemImage(item: treasures[index], size: 64)),
           ),
         ),
       ));

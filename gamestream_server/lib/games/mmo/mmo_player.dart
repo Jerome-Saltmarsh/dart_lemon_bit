@@ -47,7 +47,10 @@ class MmoPlayer extends IsometricPlayer {
     equipLegs(MMOItem.Travellers_Pants);
     health = maxHealth;
 
+    treasures[0] = MMOItem.Sapphire_Pendant;
+
     writeWeapons();
+    writeTreasures();
     writeInteracting();
   }
 
@@ -519,6 +522,12 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
+  void writeTreasures() {
+    for (var i = 0; i < treasures.length; i++){
+      writePlayerTreasure(i);
+    }
+  }
+
   void writeInteracting() {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Interacting);
@@ -541,6 +550,18 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
     writeInt16(weapon.index);
+  }
+
+  void writePlayerTreasure(int index) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Treasure);
+    writeUInt16(index);
+    final treasure = treasures[index];
+    if (treasure == null){
+      writeInt16(-1);
+      return;
+    }
+    writeInt16(treasure.index);
   }
 
   void writePlayerItem(int index, MMOItem? item) {
