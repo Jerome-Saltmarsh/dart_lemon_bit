@@ -1281,14 +1281,23 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       final colliderI = colliders[i];
       if (!colliderI.active) continue;
       if (!colliderI.collidable) continue;
+      final colliderIOrder = colliderI.order;
+      final colliderIRadius = colliderI.radius;
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
         if (!colliderJ.active) continue;
         if (!colliderI.collidable) continue;
-        if (colliderJ.top > colliderI.bottom) continue;
-        if (colliderJ.left > colliderI.right) continue;
-        if (colliderJ.right < colliderI.left) continue;
-        if ((colliderJ.z - colliderI.z).abs() > Node_Height) continue;
+        final colliderJOrder = colliderJ.order;
+        if (colliderJOrder - colliderIOrder > (colliderIRadius + colliderJ.radius))
+          break;
+        if (colliderJ.top > colliderI.bottom)
+          continue;
+        if (colliderJ.left > colliderI.right)
+          continue;
+        if (colliderJ.right < colliderI.left)
+          continue;
+        if ((colliderJ.z - colliderI.z).abs() > Node_Height)
+          continue;
         internalOnCollisionBetweenColliders(colliderJ, colliderI);
       }
     }
