@@ -427,7 +427,7 @@ class IsometricScene {
     var vyStart = -1;
     var vyEnd = 1;
 
-    if (!isNodeTypeTransient(nodeType)){
+    if (!isNodeTypeTransparent(nodeType)){
       if (const [
         NodeOrientation.Half_North,
         NodeOrientation.Corner_Top,
@@ -525,7 +525,7 @@ class IsometricScene {
     var vyStart = -1;
     var vyEnd = 1;
 
-    if (!isNodeTypeTransient(nodeType)){
+    if (!isNodeTypeTransparent(nodeType)){
       if (const [
         NodeOrientation.Half_North,
         NodeOrientation.Corner_Top,
@@ -568,6 +568,9 @@ class IsometricScene {
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
+          if (vx.abs() + vy.abs() + vz.abs() == 0)
+            continue;
+
           shootLightTreeAmbient(
             row: row,
             column: column,
@@ -595,17 +598,11 @@ class IsometricScene {
     int vz = 0,
   }){
     assert (interpolation < interpolationLength);
-
-    final dynamicLighting = gamestream.isometric.renderer.rendererNodes.dynamicLighting;
-
     var velocity = vx.abs() + vy.abs() + vz.abs();
-    var paintBehindZ = vz == 0;
-    var paintBehindRow = vx == 0;
-    var paintBehindColumn =  vy == 0;
 
-    while (interpolation < interpolationLength) {
+    assert (velocity > 0);
 
-      if (velocity == 0) return;
+    while (velocity > 0 && interpolation < interpolationLength) {
 
       interpolation += velocity;
       if (interpolation >= interpolationLength) return;
@@ -627,132 +624,31 @@ class IsometricScene {
 
       final index = (z * area) + (row * totalColumns) + column;
       final nodeType = nodeTypes[index];
+      final nodeOrientation = nodeOrientations[index];
 
-      if (!isNodeTypeTransient(nodeType)) {
+      if (!isNodeTypeTransparent(nodeType)) {
 
-        final nodeOrientation = nodeOrientations[index];
-
-        if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
-          if (vz > 0) {
-            if (nodeOrientation != NodeOrientation.Half_Vertical_Top){
-              if (vx == 0 && vy == 0) return;
-              final previousNodeIndex = index - (vy) - (vx * totalColumns);
-              final previousNodeOrientation = nodeOrientations[previousNodeIndex];
-              if (nodeOrientationBlocksVertical(previousNodeOrientation)) return;
-            }
-          }
-          velocity = vx.abs() + vy.abs();
-          vz = 0;
-        }
-
-        final vx2 = vx;
-        final xBehind = vx > 0;
-        final yBehind = vy > 0;
-
-        if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
-          if (xBehind && yBehind)  {
-            if (const [
-              NodeOrientation.Corner_Bottom,
-              NodeOrientation.Half_South,
-              NodeOrientation.Half_West,
-            ].contains(nodeOrientation)){
-              if (!dynamicLighting){
-                applyAmbient(
-                  index: index - area,
-                  alpha: alpha,
-                  interpolation: interpolation,
-                );
-              }
-
-            }
-            return;
-          }
-          velocity = vy.abs() + vz.abs();
-          paintBehindColumn = false;
-          paintBehindZ = false;
-          if (vx < 0){
-            if (nodeOrientation == NodeOrientation.Half_North){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Top && vy < 0){
-              paintBehindZ = true;
-            }
-          } else {
-            if (nodeOrientation == NodeOrientation.Half_South){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Right && vy <= 0){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Bottom && vy >= 0){
-              paintBehindZ = true;
-            }
-          }
+        if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)){
+          return;
           vx = 0;
         }
 
-        if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
-          if (xBehind && yBehind)  return;
-          velocity = vx.abs() + vz.abs();
-          paintBehindRow = false;
-          paintBehindZ = false;
-
-          if (vy < 0) {
-            if (nodeOrientation == NodeOrientation.Half_East){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Top && vx2 <= 0){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
-              paintBehindZ = true;
-            }
-          } else {
-            if (nodeOrientation == NodeOrientation.Half_West){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Left && vx2 <= 2){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
-              paintBehindZ = true;
-            }
-          }
+        if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)){
+          return;
           vy = 0;
         }
 
-        if (vx == 1 && vy == 1 && vz == 0 && nodeOrientation == NodeOrientation.Column_Top_Left){
+        if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
           return;
+          vz = 0;
         }
       }
+
+      velocity = vx.abs() + vy.abs() + vz.abs();
+      if (velocity == 0)
+        return;
 
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
-
-      if (!dynamicLighting){
-        if (paintBehindZ) {
-          applyAmbient(
-            index: index - area,
-            alpha: alpha,
-            interpolation: interpolation,
-          );
-        }
-
-        if (paintBehindRow) {
-          applyAmbient(
-            index: index - totalColumns,
-            alpha: alpha,
-            interpolation: interpolation,
-          );
-        }
-
-        if (paintBehindColumn) {
-          applyAmbient(
-            index: index - 1,
-            alpha: alpha,
-            interpolation: interpolation,
-          );
-        }
-      }
 
       if (const [
         NodeType.Grass_Long,
@@ -764,14 +660,43 @@ class IsometricScene {
       }
 
       if (velocity > 1) {
-        if (vx != 0){
-          shootLightTreeAmbient(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, vx: vx);
+        if (vy.abs() + vz.abs() > 0){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: 0,
+            vy: vy,
+            vz: vz,
+          );
         }
-        if (vy != 0){
-          shootLightTreeAmbient(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, vy: vy);
+
+        if (vx.abs() + vz.abs() > 0){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: vx,
+            vy: 0,
+            vz: vz,
+          );
         }
-        if (vz != 0){
-          shootLightTreeAmbient(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, vz: vz);
+
+        if (vx.abs() + vy.abs() > 0){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: vx,
+            vy: vy,
+            vz: 0,
+          );
         }
       }
     }
@@ -823,7 +748,7 @@ class IsometricScene {
       final index = (z * area) + (row * totalColumns) + column;
       final nodeType = nodeTypes[index];
 
-      if (!isNodeTypeTransient(nodeType)) {
+      if (!isNodeTypeTransparent(nodeType)) {
 
         final nodeOrientation = nodeOrientations[index];
 
@@ -1112,7 +1037,7 @@ class IsometricScene {
     NodeOrientation.Corner_Left,
   ].contains(value);
 
-  bool isNodeTypeTransient(int nodeType) => const [
+  bool isNodeTypeTransparent(int nodeType) => const [
     NodeType.Empty,
     NodeType.Rain_Landing,
     NodeType.Rain_Falling,
