@@ -597,10 +597,11 @@ class IsometricScene {
     // final args = 'row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz';
     // print('shootLightTreeAmbient($args)');
 
+
     assert (interpolation < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    while (velocity > 0 && interpolation < interpolationLength) {
+    // while (velocity > 0 && interpolation < interpolationLength) {
 
       // if (vx < 0 && vy > 0 && vz > 0){
       //   print('test');
@@ -735,7 +736,23 @@ class IsometricScene {
 
       velocity = vx.abs() + vy.abs() + vz.abs();
 
-      if (velocity > 1) {
+      if (velocity == 0)
+        return;
+
+      // if (velocity > 1) {
+
+        if (vx.abs() + vy.abs() + vz.abs() == 3){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+          );
+        }
 
         if (vx.abs() + vy.abs() == 2){
           shootLightTreeAmbient(
@@ -815,8 +832,8 @@ class IsometricScene {
           );
         }
       }
-    }
-  }
+    // }
+  // }
 
   void shootLightTreeAHSV({
     required int row,
