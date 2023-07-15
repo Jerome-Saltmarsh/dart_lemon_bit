@@ -1906,12 +1906,18 @@ class RendererNodes extends IsometricRenderer {
     required double dstY,
   }){
     const srcX = 99.0;
-    renderNodeSideWest(srcX: 49, srcY: srcY, dstX: dstX, dstY: dstY + Node_Size_Sixth);
+    renderNodeSideWest(
+        srcX: 49,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY + Node_Size_Sixth,
+    );
     renderNodeSideSouth(
         srcX: 74,
-        srcY: srcY, width: Node_Size_Sixth,
-        dstX: 0,
-        dstY: 0
+        srcY: srcY,
+        width: Node_Size_Sixth,
+        dstX: dstX + Node_Size_Half,
+        dstY: dstY + Node_Size_Sixth
     );
     renderNodeSizeTopThird(
       srcX: srcX,
