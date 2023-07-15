@@ -677,19 +677,21 @@ class RendererNodes extends IsometricRenderer {
 
     switch (currentNodeType) {
       case NodeType.Grass:
+        const srcY = 1809.0;
           if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-            renderNodeSideTop(srcX: 0, srcY: 1809);
-            renderNodeSideWest(srcX: 49, srcY: 1809);
-            renderNodeSideSouth(srcX: 74, srcY: 1809);
+            renderNodeSideTop(srcX: 0, srcY: srcY);
+            renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
+            renderNodeSideSouth(srcX: 74, srcY: srcY);
             return;
           }
         renderNodeGrass();
         break;
       case NodeType.Brick:
+        const srcY = 1760.0;
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-          renderNodeSideTop(srcX: 0, srcY: 1760);
-          renderNodeSideWest(srcX: 49, srcY: 1760);
-          renderNodeSideSouth(srcX: 74, srcY: 1760);
+          renderNodeSideTop(srcX: 0, srcY: srcY);
+          renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
+          renderNodeSideSouth(srcX: 74, srcY: srcY);
           return;
         }
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_2);
@@ -704,12 +706,12 @@ class RendererNodes extends IsometricRenderer {
         const srcY = 1905.0;
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
           renderNodeSideTop(srcX: 0, srcY: srcY);
-          renderNodeSideWest(srcX: 49, srcY: srcY);
+          renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
           renderNodeSideSouth(srcX: 74, srcY: srcY);
           return;
         }
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Half_West){
-          renderNodeSideWest(srcX: 49, srcY: srcY);
+          renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
           renderNodeSideSouth(srcX: 74, srcY: srcY, width: Node_Size_Sixth);
           renderNodeSizeTopThird(
               srcX: 99,
@@ -732,6 +734,32 @@ class RendererNodes extends IsometricRenderer {
               dstY: Node_Size_Sixth,
               color: colorAbove,
           );
+          return;
+        }
+        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Half_South){
+          renderNodeSideWest(srcX: 49, srcY: srcY, width: Node_Size_Sixth);
+          renderNodeSideSouth(srcX: 74, srcY: srcY);
+          renderNodeSizeTopThird(
+            srcX: 99,
+            srcY: srcY,
+            dstX: -Node_Size_Half,
+            dstY: -Node_Size_Sixth,
+            color: colorAbove,
+          );
+          // renderNodeSizeTopThird(
+          //   srcX: 99,
+          //   srcY: srcY,
+          //   dstX: -Node_Size_Half + Node_Size_Sixth,
+          //   dstY: 0,
+          //   color: colorAbove,
+          // );
+          // renderNodeSizeTopThird(
+          //   srcX: 99,
+          //   srcY: srcY,
+          //   dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth,
+          //   dstY: Node_Size_Sixth,
+          //   color: colorAbove,
+          // );
           return;
         }
         const index_grass = 5;
@@ -812,10 +840,11 @@ class RendererNodes extends IsometricRenderer {
         return;
       case NodeType.Soil:
 
+        const srcY = 1857.0;
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-            renderNodeSideTop(srcX: 0, srcY: 1857);
-            renderNodeSideWest(srcX: 49, srcY: 1857);
-            renderNodeSideSouth(srcX: 74, srcY: 1857);
+            renderNodeSideTop(srcX: 0, srcY: srcY);
+            renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
+            renderNodeSideSouth(srcX: 74, srcY: srcY);
             return;
         }
 
@@ -1733,6 +1762,8 @@ class RendererNodes extends IsometricRenderer {
   void renderNodeSideWest({
     required double srcX,
     required double srcY,
+    double dstX = 0,
+    double dstY = 0,
     double width = Node_Size_Half,
     double height = Node_Size,
   }) => renderCustomNode(
@@ -1740,8 +1771,8 @@ class RendererNodes extends IsometricRenderer {
     srcY: srcY,
     srcWidth: width,
     srcHeight: height,
-    dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
-    dstY: currentNodeDstY,
+    dstX: currentNodeDstX + dstX,
+    dstY: currentNodeDstY + dstY,
     color: colorWest,
   );
 
