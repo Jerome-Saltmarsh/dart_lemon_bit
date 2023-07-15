@@ -628,9 +628,11 @@ class IsometricScene {
 
       if (!isNodeTypeTransparent(nodeType)) {
 
+        if (nodeOrientation == NodeOrientation.Solid)
+          return;
+
         if (vx < 0){
           if (const [
-            NodeOrientation.Solid,
             NodeOrientation.Half_South,
           ].contains(nodeOrientation))
             return;
@@ -641,7 +643,6 @@ class IsometricScene {
             vx = 0;
         } else if (vx > 0){
           if (const [
-            NodeOrientation.Solid,
             NodeOrientation.Half_North,
           ].contains(nodeOrientation))
             return;
@@ -654,7 +655,6 @@ class IsometricScene {
 
         if (vy < 0){
           if (const [
-            NodeOrientation.Solid,
             NodeOrientation.Half_West,
           ].contains(nodeOrientation))
             return;
@@ -665,19 +665,44 @@ class IsometricScene {
             vy = 0;
         } else if (vy > 0){
           if (const [
-            NodeOrientation.Solid,
-            NodeOrientation.Half_West,
+            NodeOrientation.Half_East,
           ].contains(nodeOrientation))
             return;
 
           if (const [
-            NodeOrientation.Half_East,
+            NodeOrientation.Half_West,
           ].contains(nodeOrientation))
             vy = 0;
         }
 
-        if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
-          return;
+        if (vz < 0){
+           if (const [
+             NodeOrientation.Half_Vertical_Bottom,
+           ].contains(nodeOrientation)){
+             return;
+           }
+
+           if (const [
+             NodeOrientation.Half_Vertical_Bottom,
+             NodeOrientation.Half_Vertical_Center,
+           ].contains(nodeOrientation)){
+             vz = 0;
+           }
+        }
+
+        if (vz > 0){
+          if (const [
+            NodeOrientation.Half_Vertical_Top
+          ].contains(nodeOrientation)){
+            return;
+          }
+
+          if (const [
+            NodeOrientation.Half_Vertical_Top,
+            NodeOrientation.Half_Vertical_Center,
+          ].contains(nodeOrientation)){
+            vz = 0;
+          }
         }
       }
 
