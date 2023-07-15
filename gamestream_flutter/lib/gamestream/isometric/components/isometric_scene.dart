@@ -594,246 +594,215 @@ class IsometricScene {
     required int vz,
   }){
 
-    // final args = 'row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz';
-    // print('shootLightTreeAmbient($args)');
-
-
     assert (interpolation < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    // while (velocity > 0 && interpolation < interpolationLength) {
+    interpolation += velocity;
 
-      // if (vx < 0 && vy > 0 && vz > 0){
-      //   print('test');
-      // }
+    if (interpolation >= interpolationLength) {
+      return;
+    }
 
-      // interpolation += min(velocity, 2);
-      interpolation += velocity;
-
-      if (interpolation >= interpolationLength) {
-        // print('interp-exceeded      (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)' );
+    if (vx != 0) {
+      row += vx;
+      if (row < 0 || row >= totalRows)
         return;
+    }
+
+    if (vy != 0) {
+      column += vy;
+      if (column < 0 || column >= totalColumns)
+        return;
+    }
+
+    if (vz != 0) {
+      z += vz;
+      if (z < 0 || z >= totalZ)
+        return;
+    }
+
+    final index = (z * area) + (row * totalColumns) + column;
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    if (!isNodeTypeTransparent(nodeType)) {
+      if (nodeOrientation == NodeOrientation.Solid)
+        return;
+
+      if (vx < 0) {
+        if (const [
+          NodeOrientation.Half_South,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_North,
+        ].contains(nodeOrientation)) vx = 0;
+      } else if (vx > 0) {
+        if (const [
+          NodeOrientation.Half_North,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_South,
+        ].contains(nodeOrientation)) vx = 0;
       }
 
-      if (vx != 0){
-        row += vx;
-        if (row < 0 || row >= totalRows) return;
+      if (vy < 0) {
+        if (const [
+          NodeOrientation.Half_West,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_East,
+        ].contains(nodeOrientation)) vy = 0;
+      } else if (vy > 0) {
+        if (const [
+          NodeOrientation.Half_East,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_West,
+        ].contains(nodeOrientation)) vy = 0;
       }
 
-      if (vy != 0){
-        column += vy;
-        if (column < 0 || column >= totalColumns) return;
-      }
-
-      if (vz != 0){
-        z += vz;
-        if (z < 0 || z >= totalZ) return;
-      }
-
-      // print('moved                (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)' );
-
-      final index = (z * area) + (row * totalColumns) + column;
-      final nodeType = nodeTypes[index];
-      final nodeOrientation = nodeOrientations[index];
-
-      if (!isNodeTypeTransparent(nodeType)) {
-
-        if (nodeOrientation == NodeOrientation.Solid)
-          // print('hit-wall       (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)');
+      if (vz < 0) {
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+        ].contains(nodeOrientation)) {
           return;
-
-        if (vx < 0){
-          if (const [
-            NodeOrientation.Half_South,
-          ].contains(nodeOrientation))
-            return;
-
-          if (const [
-            NodeOrientation.Half_North,
-          ].contains(nodeOrientation))
-            vx = 0;
-        } else if (vx > 0){
-          if (const [
-            NodeOrientation.Half_North,
-          ].contains(nodeOrientation))
-            return;
-
-          if (const [
-            NodeOrientation.Half_South,
-          ].contains(nodeOrientation))
-            vx = 0;
         }
 
-        if (vy < 0){
-          if (const [
-            NodeOrientation.Half_West,
-          ].contains(nodeOrientation))
-            return;
-
-          if (const [
-            NodeOrientation.Half_East,
-          ].contains(nodeOrientation))
-            vy = 0;
-        } else if (vy > 0){
-          if (const [
-            NodeOrientation.Half_East,
-          ].contains(nodeOrientation))
-            return;
-
-          if (const [
-            NodeOrientation.Half_West,
-          ].contains(nodeOrientation))
-            vy = 0;
-        }
-
-        if (vz < 0){
-           if (const [
-             NodeOrientation.Half_Vertical_Bottom,
-           ].contains(nodeOrientation)){
-             return;
-           }
-
-           if (const [
-             NodeOrientation.Half_Vertical_Bottom,
-             NodeOrientation.Half_Vertical_Center,
-           ].contains(nodeOrientation)){
-             vz = 0;
-           }
-        }
-
-        if (vz > 0){
-          if (const [
-            NodeOrientation.Half_Vertical_Top
-          ].contains(nodeOrientation)){
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_Vertical_Top,
-            NodeOrientation.Half_Vertical_Center,
-          ].contains(nodeOrientation)){
-            vz = 0;
-          }
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+          NodeOrientation.Half_Vertical_Center,
+        ].contains(nodeOrientation)) {
+          vz = 0;
         }
       }
 
-      // velocity = vx.abs() + vy.abs() + vz.abs();
-      // if (velocity == 0)
-      //   return;
+      if (vz > 0) {
+        if (const [NodeOrientation.Half_Vertical_Top]
+            .contains(nodeOrientation)) {
+          return;
+        }
 
-      // print('applyAmbient         (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)');
-      applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
-
-      if (const [
-        NodeType.Grass_Long,
-        NodeType.Tree_Bottom,
-        NodeType.Tree_Top,
-      ].contains(nodeType)){
-        interpolation ++;
-        if (interpolation >= interpolationLength) return;
+        if (const [
+          NodeOrientation.Half_Vertical_Top,
+          NodeOrientation.Half_Vertical_Center,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
       }
+    }
 
+    applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-      velocity = vx.abs() + vy.abs() + vz.abs();
-
-      if (velocity == 0)
+    if (const [
+      NodeType.Grass_Long,
+      NodeType.Tree_Bottom,
+      NodeType.Tree_Top,
+    ].contains(nodeType)) {
+      interpolation++;
+      if (interpolation >= interpolationLength)
         return;
+    }
 
-      // if (velocity > 1) {
+    velocity = vx.abs() + vy.abs() + vz.abs();
 
-        if (vx.abs() + vy.abs() + vz.abs() == 3){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: vx,
-            vy: vy,
-            vz: vz,
-          );
-        }
+    if (velocity == 0)
+      return;
 
-        if (vx.abs() + vy.abs() == 2){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: vx,
-            vy: vy,
-            vz: 0,
-          );
-        }
+    if (vx.abs() + vy.abs() + vz.abs() == 3) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: vx,
+        vy: vy,
+        vz: vz,
+      );
+    }
 
-        if (vx.abs() + vz.abs() == 2){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: vx,
-            vy: 0,
-            vz: vz,
-          );
-        }
+    if (vx.abs() + vy.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: vx,
+        vy: vy,
+        vz: 0,
+      );
+    }
 
-        if (vy.abs() + vz.abs() == 2){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: 0,
-            vy: vx,
-            vz: vz,
-          );
-        }
+    if (vx.abs() + vz.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: vx,
+        vy: 0,
+        vz: vz,
+      );
+    }
 
-        if (vy != 0){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: 0,
-            vy: vy,
-            vz: 0,
-          );
-        }
+    if (vy.abs() + vz.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: 0,
+        vy: vy,
+        vz: vz,
+      );
+    }
 
-        if (vx != 0){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: vx,
-            vy: 0,
-            vz: 0,
-          );
-        }
+    if (vy != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: 0,
+        vy: vy,
+        vz: 0,
+      );
+    }
 
-        if (vz != 0){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            vx: 0,
-            vy: 0,
-            vz: vz,
-          );
-        }
-      }
-    // }
-  // }
+    if (vx != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: vx,
+        vy: 0,
+        vz: 0,
+      );
+    }
+
+    if (vz != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        interpolation: interpolation,
+        alpha: alpha,
+        vx: 0,
+        vy: 0,
+        vz: vz,
+      );
+    }
+  }
 
   void shootLightTreeAHSV({
     required int row,
@@ -1100,7 +1069,6 @@ class IsometricScene {
     final currentHue = hsvHue[index];
     if (currentHue != ambientHue)
       return;
-
 
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
