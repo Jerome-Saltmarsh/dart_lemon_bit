@@ -718,48 +718,48 @@ class RendererNodes extends IsometricRenderer {
               srcY: srcY,
               dstX: -Node_Size_Half,
               dstY: -Node_Size_Sixth,
-              color: colorAbove,
           );
           renderNodeSizeTopThird(
               srcX: 99,
               srcY: srcY,
               dstX: -Node_Size_Half + Node_Size_Sixth,
               dstY: 0,
-              color: colorAbove,
           );
           renderNodeSizeTopThird(
               srcX: 99,
               srcY: srcY,
               dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth,
               dstY: Node_Size_Sixth,
-              color: colorAbove,
           );
           return;
         }
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Half_South){
-          renderNodeSideWest(srcX: 49, srcY: srcY, width: Node_Size_Sixth);
+          renderNodeSideWest(
+              srcX: 49,
+              srcY: srcY,
+              width: Node_Size_Sixth,
+              dstX: -Node_Size_Sixth,
+              dstY: Node_Size_Third,
+          );
           renderNodeSideSouth(srcX: 74, srcY: srcY);
           renderNodeSizeTopThird(
             srcX: 99,
             srcY: srcY,
-            dstX: -Node_Size_Half,
-            dstY: -Node_Size_Sixth,
-            color: colorAbove,
+            dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth,
+            dstY: -Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
           );
-          // renderNodeSizeTopThird(
-          //   srcX: 99,
-          //   srcY: srcY,
-          //   dstX: -Node_Size_Half + Node_Size_Sixth,
-          //   dstY: 0,
-          //   color: colorAbove,
-          // );
-          // renderNodeSizeTopThird(
-          //   srcX: 99,
-          //   srcY: srcY,
-          //   dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth,
-          //   dstY: Node_Size_Sixth,
-          //   color: colorAbove,
-          // );
+          renderNodeSizeTopThird(
+            srcX: 99,
+            srcY: srcY,
+            dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
+            dstY: -Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth - Node_Size_Sixth,
+          );
+          renderNodeSizeTopThird(
+            srcX: 99,
+            srcY: srcY,
+            dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
+            dstY: -Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+          );
           return;
         }
         const index_grass = 5;
@@ -1797,7 +1797,6 @@ class RendererNodes extends IsometricRenderer {
     required double srcY,
     double dstX = 0,
     double dstY = 0,
-    required int color,
   }) => renderCustomNode(
       srcX: srcX,
       srcY: srcY,
@@ -1805,7 +1804,7 @@ class RendererNodes extends IsometricRenderer {
       srcHeight: Node_Size_Third,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
-      color: color,
+      color: colorAbove,
     );
 
 
