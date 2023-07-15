@@ -737,8 +737,8 @@ class RendererNodes extends IsometricRenderer {
           if (currentNodeOrientation == NodeOrientation.Half_East){
             renderSideEastWest(
               srcY: srcY,
-              dstX: Node_Size_Half,
-              dstY: Node_Size_Sixth,
+              dstX: -Node_Size_Sixth,
+              dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
             );
             return;
           }
