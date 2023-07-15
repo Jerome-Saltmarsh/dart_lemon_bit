@@ -9,6 +9,9 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[*] 3d surface lighting
+[ ] 3d character shadows
+[ ] pathfinding separate and left and right stack frames
 [ ] fix zombie wander
 [ ] fix npc shooting
 [ ] character light emission
@@ -24,7 +27,6 @@ alt + m             : go to declaration
 [-] remove gamestream global instance
 [-] remove all static instances
 [*] fix grid render order
-[*] 3d surface lighting
 [?] character gold
 
 14.07.2023

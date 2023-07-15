@@ -9,6 +9,9 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  static const Node_Size = 48.0;
+  static const Node_Size_Half = 24.0;
+
   // VARIABLES
   var previousVisibility = 0;
   var dynamicLighting = true;
@@ -706,33 +709,9 @@ class RendererNodes extends IsometricRenderer {
         break;
       case NodeType.Brick:
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-          renderCustomNode(
-              srcX: 0,
-              srcY: 1760,
-              srcWidth: 48,
-              srcHeight: 47,
-              dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
-              dstY: currentNodeDstY - IsometricConstants.Sprite_Width_Half,
-              color: currentNodeAboveColor,
-          );
-          renderCustomNode(
-            srcX: 49,
-            srcY: 1760,
-            srcWidth: 24,
-            srcHeight: 48,
-            dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
-            dstY: currentNodeDstY,
-            color: currentNodeColumnInFrontColor,
-          );
-          renderCustomNode(
-            srcX: 74,
-            srcY: 1760,
-            srcWidth: 24,
-            srcHeight: 48,
-            dstX: currentNodeDstX,
-            dstY: currentNodeDstY,
-            color: currentNodeRowInFrontColor,
-          );
+          renderNodeSideTop(srcX: 0, srcY: 1760);
+          renderNodeSideWest(srcX: 49, srcY: 1760);
+          renderNodeSideSouth(srcX: 74, srcY: 1760);
           return;
         }
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_2);
@@ -1753,6 +1732,38 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third);
     engine.incrementBufferIndex();
   }
+
+  void renderNodeSideTop({required double srcX, required double srcY}) => renderCustomNode(
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: Node_Size,
+      srcHeight: Node_Size,
+      dstX: currentNodeDstX - Node_Size_Half,
+      dstY: currentNodeDstY - Node_Size_Half,
+      color: currentNodeAboveColor,
+    );
+
+  void renderNodeSideWest({required double srcX, required double srcY}) => renderCustomNode(
+    srcX: srcX,
+    srcY: srcY,
+    srcWidth: Node_Size_Half,
+    srcHeight: 48,
+    dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
+    dstY: currentNodeDstY,
+    color: currentNodeColumnInFrontColor,
+  );
+
+  void renderNodeSideSouth({required double srcX, required double srcY}) =>
+      renderCustomNode(
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: Node_Size_Half,
+        srcHeight: Node_Size,
+        dstX: currentNodeDstX,
+        dstY: currentNodeDstY,
+        color: currentNodeRowInFrontColor,
+      );
+
 
   void renderCustomNode({
     required double srcX,

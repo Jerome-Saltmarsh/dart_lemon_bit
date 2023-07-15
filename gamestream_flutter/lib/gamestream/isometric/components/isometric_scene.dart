@@ -599,9 +599,9 @@ class IsometricScene {
     final dynamicLighting = gamestream.isometric.renderer.rendererNodes.dynamicLighting;
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
-    var paintBehindZ = !dynamicLighting && vz == 0;
-    var paintBehindRow = !dynamicLighting && vx == 0;
-    var paintBehindColumn = !dynamicLighting && vy == 0;
+    var paintBehindZ = vz == 0;
+    var paintBehindRow = vx == 0;
+    var paintBehindColumn =  vy == 0;
 
     while (interpolation < interpolationLength) {
 
