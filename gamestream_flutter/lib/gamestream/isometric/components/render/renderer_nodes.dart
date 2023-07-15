@@ -681,7 +681,12 @@ class RendererNodes extends IsometricRenderer {
           if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
             renderNodeSideTop(srcX: 0, srcY: srcY);
             renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-            renderNodeSideSouth(srcX: 74, srcY: srcY);
+            renderNodeSideSouth(
+                srcX: 74,
+                srcY: srcY,
+                dstX: 0,
+                dstY: 0
+            );
             return;
           }
         renderNodeGrass();
@@ -691,7 +696,12 @@ class RendererNodes extends IsometricRenderer {
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
           renderNodeSideTop(srcX: 0, srcY: srcY);
           renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-          renderNodeSideSouth(srcX: 74, srcY: srcY);
+          renderNodeSideSouth(
+              srcX: 74,
+              srcY: srcY,
+              dstX: 0,
+              dstY: 0,
+          );
           return;
         }
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_2);
@@ -708,7 +718,12 @@ class RendererNodes extends IsometricRenderer {
           if (currentNodeOrientation == NodeOrientation.Solid){
             renderNodeSideTop(srcX: 0, srcY: srcY);
             renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-            renderNodeSideSouth(srcX: 74, srcY: srcY);
+            renderNodeSideSouth(
+                srcX: 74,
+                srcY: srcY,
+                dstX: 0,
+                dstY: 0
+            );
             return;
           }
           if (currentNodeOrientation == NodeOrientation.Half_West){
@@ -722,8 +737,8 @@ class RendererNodes extends IsometricRenderer {
           if (currentNodeOrientation == NodeOrientation.Half_East){
             renderSideEastWest(
               srcY: srcY,
-              dstX: 0,
-              dstY: 0,
+              dstX: Node_Size_Half,
+              dstY: Node_Size_Sixth,
             );
             return;
           }
@@ -735,7 +750,12 @@ class RendererNodes extends IsometricRenderer {
               dstX: -Node_Size_Sixth,
               dstY: Node_Size_Third,
             );
-            renderNodeSideSouth(srcX: 74, srcY: srcY);
+            renderNodeSideSouth(
+                srcX: 74,
+                srcY: srcY,
+                dstX: 0,
+                dstY: 0
+            );
             renderNodeSizeTopThird(
               srcX: 99,
               srcY: srcY,
@@ -839,7 +859,12 @@ class RendererNodes extends IsometricRenderer {
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
             renderNodeSideTop(srcX: 0, srcY: srcY);
             renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-            renderNodeSideSouth(srcX: 74, srcY: srcY);
+            renderNodeSideSouth(
+                srcX: 74,
+                srcY: srcY,
+                dstX: 0,
+                dstY: 0
+            );
             return;
         }
 
@@ -1774,6 +1799,8 @@ class RendererNodes extends IsometricRenderer {
   void renderNodeSideSouth({
     required double srcX,
     required double srcY,
+    required double dstX,
+    required double dstY,
     double width = Node_Size_Half,
     double height = Node_Size,
   }) =>
@@ -1782,8 +1809,8 @@ class RendererNodes extends IsometricRenderer {
         srcY: srcY,
         srcWidth: width,
         srcHeight: height,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY,
+        dstX: currentNodeDstX + dstX,
+        dstY: currentNodeDstY + dstY,
         color: colorSouth,
       );
   
@@ -1879,8 +1906,13 @@ class RendererNodes extends IsometricRenderer {
     required double dstY,
   }){
     const srcX = 99.0;
-    renderNodeSideWest(srcX: 49, srcY: srcY, dstX: dstX, dstY: 0);
-    renderNodeSideSouth(srcX: 74, srcY: srcY, width: Node_Size_Sixth);
+    renderNodeSideWest(srcX: 49, srcY: srcY, dstX: dstX, dstY: dstY);
+    renderNodeSideSouth(
+        srcX: 74,
+        srcY: srcY, width: Node_Size_Sixth,
+        dstX: 0,
+        dstY: 0
+    );
     renderNodeSizeTopThird(
       srcX: srcX,
       srcY: srcY,
