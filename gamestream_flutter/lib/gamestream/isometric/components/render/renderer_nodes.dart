@@ -699,6 +699,13 @@ class RendererNodes extends IsometricRenderer {
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_14);
         return;
       case NodeType.Wood:
+        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
+          const srcY = 1905.0;
+          renderNodeSideTop(srcX: 0, srcY: srcY);
+          renderNodeSideWest(srcX: 49, srcY: srcY);
+          renderNodeSideSouth(srcX: 74, srcY: srcY);
+          return;
+        }
         const index_grass = 5;
         const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
         renderNodeTemplateShaded(srcX);
