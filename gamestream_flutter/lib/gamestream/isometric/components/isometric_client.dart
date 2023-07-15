@@ -63,17 +63,18 @@ mixin class IsometricClient {
     applyEmissionsProjectiles();
     applyCharacterColors();
     gamestream.isometric.particles.applyEmissionsParticles();
+
     applyEmissionEditorSelectedNode();
   }
 
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
     if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.colorType == EmissionType.None)){
-      gamestream.isometric.scene.emitLightAHSVShadowed(
+      gamestream.isometric.scene.emitLightAmbient(
         index: gamestream.isometric.editor.nodeSelectedIndex.value,
-        hue: gamestream.isometric.scene.ambientHue,
-        saturation: gamestream.isometric.scene.ambientSaturation,
-        value: gamestream.isometric.scene.ambientValue,
+        // hue: gamestream.isometric.scene.ambientHue,
+        // saturation: gamestream.isometric.scene.ambientSaturation,
+        // value: gamestream.isometric.scene.ambientValue,
         alpha: 0,
       );
     }

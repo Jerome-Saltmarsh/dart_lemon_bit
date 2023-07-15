@@ -510,8 +510,6 @@ class IsometricEditor {
     loadScene(sceneBytes);
   }
 
-
-
   void toggleWindowEnabledScene(){
     windowEnabledScene.value = !windowEnabledScene.value;
   }
