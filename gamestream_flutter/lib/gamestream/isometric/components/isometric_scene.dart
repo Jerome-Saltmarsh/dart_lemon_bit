@@ -628,19 +628,56 @@ class IsometricScene {
 
       if (!isNodeTypeTransparent(nodeType)) {
 
-        if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)){
-          return;
-          vx = 0;
+        if (vx < 0){
+          if (const [
+            NodeOrientation.Solid,
+            NodeOrientation.Half_South,
+          ].contains(nodeOrientation))
+            return;
+
+          if (const [
+            NodeOrientation.Half_North,
+          ].contains(nodeOrientation))
+            vx = 0;
+        } else if (vx > 0){
+          if (const [
+            NodeOrientation.Solid,
+            NodeOrientation.Half_North,
+          ].contains(nodeOrientation))
+            return;
+
+          if (const [
+            NodeOrientation.Half_South,
+          ].contains(nodeOrientation))
+            vx = 0;
         }
 
-        if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)){
-          return;
-          vy = 0;
+        if (vy < 0){
+          if (const [
+            NodeOrientation.Solid,
+            NodeOrientation.Half_West,
+          ].contains(nodeOrientation))
+            return;
+
+          if (const [
+            NodeOrientation.Half_East,
+          ].contains(nodeOrientation))
+            vy = 0;
+        } else if (vy > 0){
+          if (const [
+            NodeOrientation.Solid,
+            NodeOrientation.Half_West,
+          ].contains(nodeOrientation))
+            return;
+
+          if (const [
+            NodeOrientation.Half_East,
+          ].contains(nodeOrientation))
+            vy = 0;
         }
 
         if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
           return;
-          vz = 0;
         }
       }
 
@@ -655,7 +692,7 @@ class IsometricScene {
         NodeType.Tree_Bottom,
         NodeType.Tree_Top,
       ].contains(nodeType)){
-        interpolation += 2;
+        interpolation ++;
         if (interpolation >= interpolationLength) return;
       }
 
@@ -1014,6 +1051,18 @@ class IsometricScene {
   }
 
   bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => const [
+    NodeOrientation.Solid,
+    NodeOrientation.Half_North,
+    NodeOrientation.Half_South,
+    NodeOrientation.Slope_North,
+    NodeOrientation.Slope_South,
+    NodeOrientation.Corner_Top,
+    NodeOrientation.Corner_Right,
+    NodeOrientation.Corner_Bottom,
+    NodeOrientation.Corner_Left,
+  ].contains(nodeOrientation);
+
+  bool nodeOrientationBlocksNorthSouthPos(int nodeOrientation) => const [
     NodeOrientation.Solid,
     NodeOrientation.Half_North,
     NodeOrientation.Half_South,
