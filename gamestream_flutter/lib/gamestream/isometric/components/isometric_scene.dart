@@ -503,15 +503,14 @@ class IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.client.interpolation_padding;
-    final rx = getIndexRenderX(index);
-    if (rx < engine.Screen_Left - padding) return;
-    if (rx > engine.Screen_Right + padding) return;
-    final ry = getIndexRenderY(index);
-    if (ry < engine.Screen_Top - padding) return;
-    if (ry > engine.Screen_Bottom + padding) return;
-
-    gamestream.isometric.client.lights_active++;
+    // final padding = gamestream.isometric.client.interpolation_padding;
+    // final rx = getIndexRenderX(index);
+    // if (rx < engine.Screen_Left - padding) return;
+    // if (rx > engine.Screen_Right + padding) return;
+    // final ry = getIndexRenderY(index);
+    // if (ry < engine.Screen_Top - padding) return;
+    // if (ry > engine.Screen_Bottom + padding) return;
+    // gamestream.isometric.client.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -568,9 +567,6 @@ class IsometricScene {
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
-          if (vx.abs() + vy.abs() + vz.abs() == 0)
-            continue;
-
           shootLightTreeAmbient(
             row: row,
             column: column,
@@ -593,19 +589,30 @@ class IsometricScene {
     required int z,
     required int interpolation,
     required int alpha,
-    int vx = 0,
-    int vy = 0,
-    int vz = 0,
+    required int vx,
+    required int vy,
+    required int vz,
   }){
+
+    // final args = 'row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz';
+    // print('shootLightTreeAmbient($args)');
+
     assert (interpolation < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    assert (velocity > 0);
-
     while (velocity > 0 && interpolation < interpolationLength) {
 
+      // if (vx < 0 && vy > 0 && vz > 0){
+      //   print('test');
+      // }
+
+      // interpolation += min(velocity, 2);
       interpolation += velocity;
-      if (interpolation >= interpolationLength) return;
+
+      if (interpolation >= interpolationLength) {
+        // print('interp-exceeded      (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)' );
+        return;
+      }
 
       if (vx != 0){
         row += vx;
@@ -622,6 +629,8 @@ class IsometricScene {
         if (z < 0 || z >= totalZ) return;
       }
 
+      // print('moved                (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)' );
+
       final index = (z * area) + (row * totalColumns) + column;
       final nodeType = nodeTypes[index];
       final nodeOrientation = nodeOrientations[index];
@@ -629,6 +638,7 @@ class IsometricScene {
       if (!isNodeTypeTransparent(nodeType)) {
 
         if (nodeOrientation == NodeOrientation.Solid)
+          // print('hit-wall       (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)');
           return;
 
         if (vx < 0){
@@ -706,10 +716,11 @@ class IsometricScene {
         }
       }
 
-      velocity = vx.abs() + vy.abs() + vz.abs();
-      if (velocity == 0)
-        return;
+      // velocity = vx.abs() + vy.abs() + vz.abs();
+      // if (velocity == 0)
+      //   return;
 
+      // print('applyAmbient         (row: $row, column: $column, z: $z, interpolation: $interpolation, alpha: $alpha, vx: $vx, vy: $vy, vz: $vz)');
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
       if (const [
@@ -721,21 +732,25 @@ class IsometricScene {
         if (interpolation >= interpolationLength) return;
       }
 
+
+      velocity = vx.abs() + vy.abs() + vz.abs();
+
       if (velocity > 1) {
-        if (vy.abs() + vz.abs() > 0){
+
+        if (vx.abs() + vy.abs() == 2){
           shootLightTreeAmbient(
             row: row,
             column: column,
             z: z,
             interpolation: interpolation,
             alpha: alpha,
-            vx: 0,
+            vx: vx,
             vy: vy,
-            vz: vz,
+            vz: 0,
           );
         }
 
-        if (vx.abs() + vz.abs() > 0){
+        if (vx.abs() + vz.abs() == 2){
           shootLightTreeAmbient(
             row: row,
             column: column,
@@ -748,7 +763,33 @@ class IsometricScene {
           );
         }
 
-        if (vx.abs() + vy.abs() > 0){
+        if (vy.abs() + vz.abs() == 2){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: 0,
+            vy: vx,
+            vz: vz,
+          );
+        }
+
+        if (vy != 0){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: 0,
+            vy: vy,
+            vz: 0,
+          );
+        }
+
+        if (vx != 0){
           shootLightTreeAmbient(
             row: row,
             column: column,
@@ -756,8 +797,21 @@ class IsometricScene {
             interpolation: interpolation,
             alpha: alpha,
             vx: vx,
-            vy: vy,
+            vy: 0,
             vz: 0,
+          );
+        }
+
+        if (vz != 0){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: interpolation,
+            alpha: alpha,
+            vx: 0,
+            vy: 0,
+            vz: vz,
           );
         }
       }
@@ -1017,15 +1071,20 @@ class IsometricScene {
     required int alpha,
     required int interpolation,
   }){
-    if (index < 0) return;
-    if (index >= total) return;
+    assert (index >= 0);
+    assert (index < total);
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
     final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambientAlpha, intensity);;
     final currentAlpha = hsvAlphas[index];
-    if (currentAlpha <= interpolatedAlpha) return;
+    if (currentAlpha <= interpolatedAlpha) {
+      return;
+    }
     final currentHue = hsvHue[index];
-    if (currentHue != ambientHue) return;
+    if (currentHue != ambientHue)
+      return;
+
+
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
     hsvAlphas[index] = interpolatedAlpha;

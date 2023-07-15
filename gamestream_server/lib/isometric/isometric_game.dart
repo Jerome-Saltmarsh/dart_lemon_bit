@@ -2859,7 +2859,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (target is! IsometricCharacter)
-      throw Exception();
+      return;
+      // throw Exception();
 
     if (character.targetWithinRadius(IsometricSettings.Interact_Radius)){
         customOnInteraction(character, target);

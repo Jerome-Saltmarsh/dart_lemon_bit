@@ -134,10 +134,12 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   @override
   void customOnGameObjectDestroyed(IsometricGameObject gameObject) {
     if (gameObject == redBase){
-       throw Exception('Blue Team Wins');
+       return;
+       // throw Exception('Blue Team Wins');
     }
     if (gameObject == blueBase){
-       throw Exception('Red Team Wins');
+      return;
+       // throw Exception('Red Team Wins');
     }
   }
 
