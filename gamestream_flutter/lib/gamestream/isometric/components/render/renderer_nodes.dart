@@ -722,8 +722,8 @@ class RendererNodes extends IsometricRenderer {
           if (currentNodeOrientation == NodeOrientation.Half_East){
             renderSideEastWest(
               srcY: srcY,
-              dstX: -Node_Size_Sixth,
-              dstY: -Node_Size_Third,
+              dstX: 0,
+              dstY: 0,
             );
             return;
           }
@@ -1878,22 +1878,23 @@ class RendererNodes extends IsometricRenderer {
     required double dstX,
     required double dstY,
   }){
+    const srcX = 99.0;
     renderNodeSideWest(srcX: 49, srcY: srcY, dstX: dstX - Node_Size_Half, dstY: 0);
     renderNodeSideSouth(srcX: 74, srcY: srcY, width: Node_Size_Sixth);
     renderNodeSizeTopThird(
-      srcX: 99,
+      srcX: srcX,
       srcY: srcY,
       dstX: dstX - Node_Size_Half,
       dstY: dstY - Node_Size_Sixth,
     );
     renderNodeSizeTopThird(
-      srcX: 99,
+      srcX: srcX,
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Node_Size_Sixth,
       dstY: dstY - Node_Size_Sixth + Node_Size_Sixth,
     );
     renderNodeSizeTopThird(
-      srcX: 99,
+      srcX: srcX,
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Node_Size_Third,
       dstY: dstY - Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
