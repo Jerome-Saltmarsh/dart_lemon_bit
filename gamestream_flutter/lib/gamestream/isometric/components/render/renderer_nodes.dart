@@ -11,6 +11,8 @@ class RendererNodes extends IsometricRenderer {
 
   static const Node_Size = 48.0;
   static const Node_Size_Half = 24.0;
+  static const Node_Size_Third = 16.0;
+  static const Node_Size_Sixth = 8.0;
 
   // VARIABLES
   var previousVisibility = 0;
@@ -86,14 +88,14 @@ class RendererNodes extends IsometricRenderer {
 
   int get currentNodeColor => scene.nodeColors[currentNodeIndex];
 
-  int get currentNodeAboveColor {
+  int get colorAbove {
     final nodeAboveIndex = currentNodeIndex + scene.area;
     if (nodeAboveIndex > scene.nodeColors.length)
       return scene.ambientColor;
     return scene.nodeColors[nodeAboveIndex];
   }
 
-  int get currentNodeColumnInFrontColor {
+  int get colorWest {
     final currentNodeColumn = scene.getIndexColumn(currentNodeIndex);
     if (currentNodeColumn + 1 >= scene.totalColumns){
       return scene.ambientColor;
@@ -101,7 +103,7 @@ class RendererNodes extends IsometricRenderer {
     return scene.nodeColors[currentNodeIndex + 1];
   }
 
-  int get currentNodeRowInFrontColor {
+  int get colorSouth {
     final currentNodeRow = scene.getIndexRow(currentNodeIndex);
 
     if (currentNodeRow + 1 >= scene.totalRows) {
@@ -699,11 +701,37 @@ class RendererNodes extends IsometricRenderer {
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_14);
         return;
       case NodeType.Wood:
+        const srcY = 1905.0;
         if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-          const srcY = 1905.0;
           renderNodeSideTop(srcX: 0, srcY: srcY);
           renderNodeSideWest(srcX: 49, srcY: srcY);
           renderNodeSideSouth(srcX: 74, srcY: srcY);
+          return;
+        }
+        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Half_West){
+          renderNodeSideWest(srcX: 49, srcY: srcY);
+          renderNodeSideSouth(srcX: 74, srcY: srcY, width: Node_Size_Sixth);
+          renderNodeSizeTopThird(
+              srcX: 99,
+              srcY: srcY,
+              dstX: -Node_Size_Half,
+              dstY: -Node_Size_Sixth,
+              color: colorAbove,
+          );
+          renderNodeSizeTopThird(
+              srcX: 99,
+              srcY: srcY,
+              dstX: -Node_Size_Half + Node_Size_Sixth,
+              dstY: 0,
+              color: colorAbove,
+          );
+          renderNodeSizeTopThird(
+              srcX: 99,
+              srcY: srcY,
+              dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth,
+              dstY: Node_Size_Sixth,
+              color: colorAbove,
+          );
           return;
         }
         const index_grass = 5;
@@ -1699,29 +1727,55 @@ class RendererNodes extends IsometricRenderer {
       srcHeight: Node_Size,
       dstX: currentNodeDstX - Node_Size_Half,
       dstY: currentNodeDstY - Node_Size_Half,
-      color: currentNodeAboveColor,
+      color: colorAbove,
     );
 
-  void renderNodeSideWest({required double srcX, required double srcY}) => renderCustomNode(
+  void renderNodeSideWest({
+    required double srcX,
+    required double srcY,
+    double width = Node_Size_Half,
+    double height = Node_Size,
+  }) => renderCustomNode(
     srcX: srcX,
     srcY: srcY,
-    srcWidth: Node_Size_Half,
-    srcHeight: 48,
+    srcWidth: width,
+    srcHeight: height,
     dstX: currentNodeDstX - IsometricConstants.Sprite_Width_Half,
     dstY: currentNodeDstY,
-    color: currentNodeColumnInFrontColor,
+    color: colorWest,
   );
 
-  void renderNodeSideSouth({required double srcX, required double srcY}) =>
+  void renderNodeSideSouth({
+    required double srcX,
+    required double srcY,
+    double width = Node_Size_Half,
+    double height = Node_Size,
+  }) =>
       renderCustomNode(
         srcX: srcX,
         srcY: srcY,
-        srcWidth: Node_Size_Half,
-        srcHeight: Node_Size,
+        srcWidth: width,
+        srcHeight: height,
         dstX: currentNodeDstX,
         dstY: currentNodeDstY,
-        color: currentNodeRowInFrontColor,
+        color: colorSouth,
       );
+  
+  void renderNodeSizeTopThird({
+    required double srcX, 
+    required double srcY,
+    double dstX = 0,
+    double dstY = 0,
+    required int color,
+  }) => renderCustomNode(
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: Node_Size_Third,
+      srcHeight: Node_Size_Third,
+      dstX: currentNodeDstX + dstX,
+      dstY: currentNodeDstY + dstY,
+      color: color,
+    );
 
 
   void renderCustomNode({
