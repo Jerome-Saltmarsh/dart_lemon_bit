@@ -743,36 +743,18 @@ class RendererNodes extends IsometricRenderer {
             return;
           }
           if (currentNodeOrientation == NodeOrientation.Half_South){
-            renderNodeSideWest(
-              srcX: 49,
+            renderSideNorthSouth(
               srcY: srcY,
-              width: Node_Size_Sixth,
               dstX: -Node_Size_Sixth,
               dstY: Node_Size_Third,
             );
-            renderNodeSideSouth(
-                srcX: 74,
-                srcY: srcY,
-                dstX: 0,
-                dstY: 0
-            );
-            renderNodeSizeTopThird(
-              srcX: 99,
+            return;
+          }
+          if (currentNodeOrientation == NodeOrientation.Half_North){
+            renderSideNorthSouth(
               srcY: srcY,
-              dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth,
-              dstY: -Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
-            );
-            renderNodeSizeTopThird(
-              srcX: 99,
-              srcY: srcY,
-              dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
-              dstY: -Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth - Node_Size_Sixth,
-            );
-            renderNodeSizeTopThird(
-              srcX: 99,
-              srcY: srcY,
-              dstX: -Node_Size_Half + Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth,
-              dstY: -Node_Size_Sixth + Node_Size_Sixth + Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+              dstX: -Node_Size_Half,
+              dstY: 0,
             );
             return;
           }
@@ -1898,6 +1880,44 @@ class RendererNodes extends IsometricRenderer {
 
   void toggleDynamicLighting(){
     dynamicLighting = !dynamicLighting;
+  }
+
+  void renderSideNorthSouth({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }){
+    renderNodeSideWest(
+      srcX: 49,
+      srcY: srcY,
+      width: Node_Size_Sixth,
+      dstX: dstX,
+      dstY: dstY,
+    );
+    renderNodeSideSouth(
+        srcX: 74,
+        srcY: srcY,
+        dstX: dstX + Node_Size_Sixth,
+        dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+    );
+    renderNodeSizeTopThird(
+      srcX: 99,
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY - Node_Size_Half + Node_Size_Third,
+    );
+    renderNodeSizeTopThird(
+      srcX: 99,
+      srcY: srcY,
+      dstX: dstX + Node_Size_Sixth,
+      dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+    );
+    renderNodeSizeTopThird(
+      srcX: 99,
+      srcY: srcY,
+      dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
+      dstY: dstY - Node_Size_Half,
+    );
   }
 
   void renderSideEastWest({
