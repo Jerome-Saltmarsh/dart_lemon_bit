@@ -721,43 +721,37 @@ class RendererNodes extends IsometricRenderer {
 
       case NodeType.Wood:
         if (dynamicLighting) {
-          if (currentNodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(SrcY_Wood);
-            return;
-          }
-          if (currentNodeOrientation == NodeOrientation.Half_West){
-            renderSideEastWest(
-              srcY: SrcY_Wood,
-              dstX: -Node_Size_Half,
-              dstY: -Node_Size_Sixth,
-            );
-            return;
-          }
-
-          if (currentNodeOrientation == NodeOrientation.Half_East){
-            renderSideEastWest(
-              srcY: SrcY_Wood,
-              dstX: -Node_Size_Sixth,
-              dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
-            );
-            return;
-          }
-          if (currentNodeOrientation == NodeOrientation.Half_South){
-            renderSideNorthSouth(
-              srcY: SrcY_Wood,
-              dstX: -Node_Size_Sixth,
-              dstY: Node_Size_Third,
-            );
-            return;
-          }
-          if (currentNodeOrientation == NodeOrientation.Half_North){
-            renderSideNorthSouth(
-              srcY: SrcY_Wood,
-              dstX: -Node_Size_Half,
-              dstY: 0,
-            );
-            return;
-          }
+          renderDynamic(currentNodeType, currentNodeOrientation);
+          return;
+          // if (currentNodeOrientation == NodeOrientation.Solid){
+          //   renderDynamicSolid(SrcY_Wood);
+          //   return;
+          // }
+          // if (currentNodeOrientation == NodeOrientation.Half_West){
+          //   renderDynamicHalfWest(SrcY_Wood);
+          //   return;
+          // }
+          //
+          // if (currentNodeOrientation == NodeOrientation.Half_East){
+          //   renderDynamicHalfEast(SrcY_Wood);
+          //   return;
+          // }
+          // if (currentNodeOrientation == NodeOrientation.Half_South){
+          //   renderSideNorthSouth(
+          //     srcY: SrcY_Wood,
+          //     dstX: -Node_Size_Sixth,
+          //     dstY: Node_Size_Third,
+          //   );
+          //   return;
+          // }
+          // if (currentNodeOrientation == NodeOrientation.Half_North){
+          //   renderSideNorthSouth(
+          //     srcY: SrcY_Wood,
+          //     dstX: -Node_Size_Half,
+          //     dstY: 0,
+          //   );
+          //   return;
+          // }
         }
         const index_grass = 5;
         const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
@@ -904,6 +898,51 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
+  void renderDynamic(int nodeType, int nodeOrientation) {
+    final srcY = mapNodeTypeToSrcY(nodeType);
+
+    if (nodeOrientation == NodeOrientation.Solid){
+      renderDynamicSolid(srcY);
+      return;
+    }
+
+    if (nodeOrientation == NodeOrientation.Half_West){
+      renderDynamicHalfWest(srcY);
+      return;
+    }
+
+    if (nodeOrientation == NodeOrientation.Half_East){
+      renderDynamicHalfEast(srcY);
+      return;
+    }
+
+    if (nodeOrientation == NodeOrientation.Half_South){
+      renderSideNorthSouth(
+        srcY: srcY,
+        dstX: -Node_Size_Sixth,
+        dstY: Node_Size_Third,
+      );
+      return;
+    }
+
+    if (nodeOrientation == NodeOrientation.Half_North){
+      renderSideNorthSouth(
+        srcY: srcY,
+        dstX: -Node_Size_Half,
+        dstY: 0,
+      );
+      return;
+    }
+  }
+
+  static double mapNodeTypeToSrcY(int nodeType) => const {
+     NodeType.Brick: 1760.0,
+     NodeType.Grass: 1808.0,
+     NodeType.Soil: 1856.0,
+     NodeType.Wood: 1904.0,
+    }[nodeType] ??
+      (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
+
   void renderDynamicSolid(double srcY) {
     renderNodeSideTop(srcX: SrcX_Top, srcY: srcY);
     renderNodeSideWest(srcX: SrcX_Side_Left, srcY: srcY, dstX: -Node_Size_Half);
@@ -912,6 +951,22 @@ class RendererNodes extends IsometricRenderer {
       srcY: srcY,
       dstX: 0,
       dstY: 0,
+    );
+  }
+
+  void renderDynamicHalfWest(double srcY) {
+    renderSideEastWest(
+      srcY: srcY,
+      dstX: -Node_Size_Half,
+      dstY: -Node_Size_Sixth,
+    );
+  }
+
+  void renderDynamicHalfEast(double srcY) {
+      renderSideEastWest(
+      srcY: srcY,
+      dstX: -Node_Size_Sixth,
+      dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
     );
   }
 
