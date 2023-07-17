@@ -109,7 +109,7 @@ class RendererNodes extends IsometricRenderer {
 
   double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
 
-  int get currentNodeColor => scene.nodeColors[currentNodeIndex];
+  int get colorCurrent => scene.nodeColors[currentNodeIndex];
 
   int get colorAbove {
     final nodeAboveIndex = currentNodeIndex + scene.area;
@@ -631,7 +631,7 @@ class RendererNodes extends IsometricRenderer {
         dstX: currentNodeDstX,
         dstY: currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
-        color: currentNodeColor,
+        color: colorCurrent,
       );
       return;
     }
@@ -644,7 +644,7 @@ class RendererNodes extends IsometricRenderer {
       dstX: currentNodeDstX,
       dstY: currentNodeDstY,
       anchorY: AtlasNodeAnchorY.Torch,
-      color: currentNodeColor,
+      color: colorCurrent,
     );
     return;
   }
@@ -860,7 +860,11 @@ class RendererNodes extends IsometricRenderer {
         renderDynamicSolid(srcY);
         break;
       case NodeOrientation.Half_West:
-        renderDynamicHalfWest(srcY);
+        renderDynamicHalfWest(
+            srcY: srcY,
+            colorWest: colorWest,
+            colorSouth: colorSouth,
+        );
         break;
       case NodeOrientation.Half_East:
         renderDynamicHalfEast(
@@ -873,7 +877,11 @@ class RendererNodes extends IsometricRenderer {
         renderDynamicHalfSouth(srcY);
         break;
       case NodeOrientation.Half_North:
-        renderDynamicHalfNorth(srcY);
+        renderDynamicHalfNorth(
+            srcY: srcY,
+            colorSouth: colorSouth,
+            colorWest: colorWest,
+        );
         break;
 
       case NodeOrientation.Corner_South_East:
@@ -882,7 +890,7 @@ class RendererNodes extends IsometricRenderer {
           srcY: srcY,
           dstX: -Node_Size_Sixth,
           dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
-          colorWest: currentNodeColor,
+          colorWest: colorCurrent,
           colorSouth: colorSouth,
         );
 
@@ -903,6 +911,7 @@ class RendererNodes extends IsometricRenderer {
           srcY: srcY,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+          colorSouth: colorSouth,
         );
 
         renderCellTop(
@@ -920,7 +929,11 @@ class RendererNodes extends IsometricRenderer {
         break;
 
       case NodeOrientation.Corner_North_East:
-        renderDynamicHalfNorth(srcY);
+        renderDynamicHalfNorth(
+            srcY: srcY,
+            colorWest: colorWest,
+            colorSouth: colorCurrent,
+        );
 
         final dstX = 0.0;
         final dstY = -Cell_Size;
@@ -931,7 +944,7 @@ class RendererNodes extends IsometricRenderer {
           dstX: dstX,
           dstY: dstY + Node_Size_Sixth,
           width: Cell_Size,
-          color: colorWest,
+          color: colorCurrent,
         );
 
         renderNodeSideSouth(
@@ -940,6 +953,7 @@ class RendererNodes extends IsometricRenderer {
           width: Node_Size_Sixth,
           dstX: dstX + Node_Size_Half - Cell_Size_Half,
           dstY: dstY + Node_Size_Sixth - Cell_Size_Half,
+          colorSouth: colorSouth,
         );
 
         renderCellTop(
@@ -957,13 +971,25 @@ class RendererNodes extends IsometricRenderer {
         break;
 
       case NodeOrientation.Corner_North_West:
-        renderDynamicHalfNorth(srcY);
-        renderDynamicHalfWest(srcY);
+        renderDynamicHalfNorth(
+          srcY: srcY,
+          colorSouth: colorCurrent,
+          colorWest: colorWest,
+        );
+        renderDynamicHalfWest(
+          srcY: srcY,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+        );
         break;
 
       case NodeOrientation.Corner_South_West:
         renderDynamicHalfSouth(srcY);
-        renderDynamicHalfWest(srcY);
+        renderDynamicHalfWest(
+          srcY: srcY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+        );
         break;
 
       case NodeOrientation.Slope_East:
@@ -976,11 +1002,17 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  void renderDynamicHalfNorth(double srcY) {
+  void renderDynamicHalfNorth({
+    required double srcY,
+    required int colorSouth,
+    required int colorWest,
+  }) {
     renderDynamicSideNorthSouth(
       srcY: srcY,
       dstX: -Node_Size_Half,
       dstY: 0,
+      colorSouth: colorSouth,
+      colorWest: colorWest,
     );
   }
 
@@ -989,6 +1021,8 @@ class RendererNodes extends IsometricRenderer {
       srcY: srcY,
       dstX: -Node_Size_Sixth,
       dstY: Node_Size_Third,
+      colorWest: colorWest,
+      colorSouth: colorSouth,
     );
   }
 
@@ -1000,15 +1034,21 @@ class RendererNodes extends IsometricRenderer {
         dstX: -Node_Size_Half,
         color: colorWest,
     );
+
     renderNodeSideSouth(
       srcX: SrcX_Side_Right,
       srcY: srcY,
       dstX: 0,
       dstY: 0,
+      colorSouth: colorSouth,
     );
   }
 
-  void renderDynamicHalfWest(double srcY) {
+  void renderDynamicHalfWest({
+    required double srcY,
+    required int colorWest,
+    required int colorSouth,
+  }) {
     renderSideEastWest(
       srcY: srcY,
       dstX: -Node_Size_Half,
@@ -1117,7 +1157,7 @@ class RendererNodes extends IsometricRenderer {
         dstX: currentNodeDstX,
         dstY: currentNodeDstY + gamestream.isometric.animation.animationFrameWaterHeight + 14,
         anchorY: 0.3,
-        color: currentNodeColor,
+        color: colorCurrent,
       );
       return;
     }
@@ -1833,7 +1873,7 @@ class RendererNodes extends IsometricRenderer {
         dstX: currentNodeDstX,
         dstY: currentNodeDstY,
         anchorY: 0.3334,
-        color: currentNodeColor,
+        color: colorCurrent,
       );
 
   void renderNodeWater() =>
@@ -1846,7 +1886,7 @@ class RendererNodes extends IsometricRenderer {
         dstX: currentNodeDstX,
         dstY: currentNodeDstY + gamestream.isometric.animation.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
-        color: currentNodeColor,
+        color: colorCurrent,
       );
 
   void renderStandardNode({
@@ -1855,7 +1895,7 @@ class RendererNodes extends IsometricRenderer {
   }){
     onscreenNodes++;
     final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = currentNodeColor;
+    bufferClr[engine.bufferIndex] = colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
@@ -1900,6 +1940,7 @@ class RendererNodes extends IsometricRenderer {
     required double srcY,
     required double dstX,
     required double dstY,
+    required int colorSouth,
     double width = Node_Size_Half,
     double height = Node_Size,
   }) =>
@@ -1932,7 +1973,7 @@ class RendererNodes extends IsometricRenderer {
   }){
     onscreenNodes++;
     final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = currentNodeColor;
+    bufferClr[engine.bufferIndex] = colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
@@ -1948,6 +1989,8 @@ class RendererNodes extends IsometricRenderer {
     required double srcY,
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorSouth,
   }){
     renderNodeSideWest(
       srcX: SrcX_Side_Left,
@@ -1963,6 +2006,7 @@ class RendererNodes extends IsometricRenderer {
         srcY: srcY,
         dstX: dstX + Node_Size_Sixth,
         dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+        colorSouth: colorSouth,
     );
 
     renderCellTop(
@@ -2006,6 +2050,7 @@ class RendererNodes extends IsometricRenderer {
       width: Node_Size_Sixth,
       dstX: dstX + Node_Size_Half,
       dstY: dstY + Node_Size_Sixth,
+      colorSouth: colorSouth,
     );
 
     renderCellTop(
@@ -2110,7 +2155,7 @@ class RendererNodes extends IsometricRenderer {
   }){
     onscreenNodes++;
     final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = color ?? currentNodeColor;
+    bufferClr[engine.bufferIndex] = color ?? colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + (srcWidth ?? IsometricConstants.Sprite_Width);
