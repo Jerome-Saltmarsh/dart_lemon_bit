@@ -919,13 +919,24 @@ class RendererNodes extends IsometricRenderer {
         break;
 
       case NodeOrientation.Slope_South:
-        renderNodeSideSouth(
-          dstX: -Node_Size_Half,
-          dstY: 0,
-          color: colorSouth,
-        );
+        renderSlopeSouth();
         break;
     }
+  }
+
+  void renderSlopeSouth() {
+
+    renderNodeSideSouth(
+      dstX: 0,
+      dstY: 0,
+      color: colorSouth,
+    );
+
+    renderCellWest(
+        dstX: -Cell_West_Width,
+        dstY: Node_Size_Half + Cell_South_Height,
+        color: colorWest,
+    );
   }
 
   void renderSlopeWest(double srcY) {
@@ -1236,12 +1247,11 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderDynamicSolid(double srcY) {
-    renderNodeSideTop(srcX: SrcX_Side_Top);
+    renderNodeSideTop();
     renderNodeSideWest(
         dstX: -Node_Size_Half,
         color: colorWest,
     );
-
     renderNodeSideSouth(
       dstX: 0,
       dstY: 0,
@@ -2104,8 +2114,8 @@ class RendererNodes extends IsometricRenderer {
     gamestream.engine.incrementBufferIndex();
   }
 
-  void renderNodeSideTop({required double srcX}) => renderCustomNode(
-      srcX: srcX,
+  void renderNodeSideTop() => renderCustomNode(
+      srcX: SrcX_Side_Top,
       srcY: srcY,
       srcWidth: Node_Size,
       srcHeight: Node_Size,
