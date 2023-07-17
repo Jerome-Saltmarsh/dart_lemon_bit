@@ -886,6 +886,9 @@ class RendererNodes extends IsometricRenderer {
 
       case NodeOrientation.Corner_South_East:
 
+        final dstX = -Cell_Size_Half;
+        final dstY = Cell_Size;
+
         renderSideEastWest(
           srcY: srcY,
           dstX: -Node_Size_Sixth,
@@ -894,16 +897,13 @@ class RendererNodes extends IsometricRenderer {
           colorSouth: colorSouth,
         );
 
-        final dstX = -Cell_Size_Half;
-        final dstY = Cell_Size;
-
         renderNodeSideWest(
           srcX: SrcX_Side_Left,
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
           width: Node_Size_Sixth,
-          color: colorSouth,
+          color: colorWest,
         );
 
         renderNodeSideSouth(
