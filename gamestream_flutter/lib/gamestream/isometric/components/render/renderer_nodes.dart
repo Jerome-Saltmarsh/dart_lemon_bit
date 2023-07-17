@@ -1885,15 +1885,6 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  void renderNodeSizeTopThird({
-    required double srcX, 
-    required double srcY,
-    double dstX = 0,
-    double dstY = 0,
-  }) {
-    renderCellTop(srcY: srcY, dstX: dstX, dstY: dstY);
-  }
-
   void renderCustomNode({
     required double srcX,
     required double srcY,
@@ -2004,34 +1995,34 @@ class RendererNodes extends IsometricRenderer {
     required double dstX,
     required double dstY,
   }){
-    const srcX = 99.0;
     renderNodeSideWest(
-        srcX: 49,
-        srcY: srcY,
-        dstX: dstX,
-        dstY: dstY + Node_Size_Sixth,
+      srcX: 49,
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY + Node_Size_Sixth,
     );
+
     renderNodeSideSouth(
-        srcX: 74,
-        srcY: srcY,
-        width: Node_Size_Sixth,
-        dstX: dstX + Node_Size_Half,
-        dstY: dstY + Node_Size_Sixth
+      srcX: 74,
+      srcY: srcY,
+      width: Node_Size_Sixth,
+      dstX: dstX + Node_Size_Half,
+      dstY: dstY + Node_Size_Sixth,
     );
-    renderNodeSizeTopThird(
-      srcX: srcX,
+
+    renderCellTop(
       srcY: srcY,
       dstX: dstX,
       dstY: dstY,
     );
-    renderNodeSizeTopThird(
-      srcX: srcX,
+
+    renderCellTop(
       srcY: srcY,
       dstX: dstX + Node_Size_Sixth,
       dstY: dstY + Node_Size_Sixth,
     );
-    renderNodeSizeTopThird(
-      srcX: srcX,
+
+    renderCellTop(
       srcY: srcY,
       dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
       dstY: dstY + Node_Size_Sixth + Node_Size_Sixth,
