@@ -153,6 +153,7 @@ extension ServerResponseReader on Gamestream {
     serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
     bufferSize.value = index;
     index = 0;
+
     if (renderResponse){
       engine.redrawCanvas();
     }

@@ -10,6 +10,7 @@ alt + m             : go to declaration
 
 [TODO]
 [*] 3d surface lighting
+[ ] character persistence
 [ ] 3d character shadows
 [ ] pathfinding separate and left and right stack frames
 [ ] fix zombie wander

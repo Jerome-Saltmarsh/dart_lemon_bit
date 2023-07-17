@@ -141,6 +141,8 @@ class Engine extends StatelessWidget {
   /// triggered upon key release
   void Function(int keyCode)? onKeyUp;
 
+
+
   // SETTERS
   set bufferImage(ui.Image image){
     if (_bufferImage == image) return;
@@ -321,7 +323,7 @@ class Engine extends StatelessWidget {
     // if (setPathUrlStrategy){
     //   us.setPathUrlStrategy();
     // }
-    WidgetsFlutterBinding.ensureInitialized();
+    // WidgetsFlutterBinding.ensureInitialized();
   }
 
   void _internalOnPointerScrollEvent(PointerScrollEvent event) {
