@@ -921,6 +921,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderSlopeWest(double srcY) {
+
     renderNodeSideWest(
       srcX: SrcX_Side_Left,
       srcY: srcY,
@@ -935,12 +936,14 @@ class RendererNodes extends IsometricRenderer {
       dstY: 0,
       color: colorSouth,
     );
+
     renderCellSouth(
       srcY: srcY,
       dstX: Cell_South_Width,
       dstY: -Cell_South_Height,
       color: colorSouth,
     );
+
     renderCellSouth(
       srcY: srcY,
       dstX: Cell_South_Width + Cell_South_Width,
@@ -967,6 +970,27 @@ class RendererNodes extends IsometricRenderer {
       dstX: 0,
       dstY: -Cell_South_Height - Cell_South_Height,
       color: colorSouth,
+    );
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: -Cell_Size_Half,
+        dstY: -Cell_Size - Cell_Size_Half,
+        color: colorAbove,
+    );
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: -Cell_Size_Half - Cell_Size_Half,
+        dstY: -Cell_Size - Cell_Size_Half - Cell_Size_Half,
+        color: colorAbove,
+    );
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: -Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
+        dstY: -Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
+        color: colorAbove,
     );
   }
 
