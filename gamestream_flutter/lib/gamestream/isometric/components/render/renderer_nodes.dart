@@ -37,6 +37,10 @@ class RendererNodes extends IsometricRenderer {
 
   static const Cell_Size = 16.0;
   static const Cell_Size_Half = 8.0;
+  static const Cell_West_Width = 8.0;
+  static const Cell_West_Height = 15.0;
+  static const Cell_South_Width = 8.0;
+  static const Cell_South_Height = 15.0;
 
   // VARIABLES
   var previousVisibility = 0;
@@ -993,11 +997,32 @@ class RendererNodes extends IsometricRenderer {
         break;
 
       case NodeOrientation.Slope_East:
-        renderCell(
-          srcY: srcY,
-          dstX: 0,
-          dstY: 0,
+        renderCellWest(
+            srcY: srcY,
+            dstX: -Node_Size_Half,
+            dstY: Cell_Size,
         );
+        renderCellWest(
+            srcY: srcY,
+            dstX: -Node_Size_Half + Cell_West_Width,
+            dstY: Cell_Size + Cell_Size_Half,
+        );
+        renderCellWest(
+            srcY: srcY,
+            dstX: -Node_Size_Half + Cell_West_Width + Cell_West_Width,
+            dstY: Cell_Size + Cell_Size_Half + Cell_Size_Half,
+        );
+        // renderCellWest(
+        //   srcY: srcY,
+        //   dstX: -Node_Size_Half + Cell_Size_Half,
+        //   dstY: Cell_Size + Cell_West_Height,
+        // );
+        // renderCellWest(
+        //   srcY: srcY,
+        //   dstX: -Node_Size_Half + Cell_Size_Half + Cell_Size_Half,
+        //   dstY: Cell_Size + Cell_West_Height + Cell_West_Height,
+        // );
+
         break;
     }
   }
@@ -2072,13 +2097,11 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-
   void renderCellTop({
     required double srcY,
     required double dstX,
     required double dstY,
-  }) {
-    renderCustomNode(
+  }) => renderCustomNode(
       srcX: SrcX_Cell,
       srcY: srcY,
       srcWidth: Cell_Size,
@@ -2087,39 +2110,34 @@ class RendererNodes extends IsometricRenderer {
       dstY: currentNodeDstY + dstY,
       color: colorAbove,
     );
-  }
 
   void renderCellWest({
     required double srcY,
     required double dstX,
     required double dstY,
-  }) {
-    renderCustomNode(
+  }) => renderCustomNode(
       srcX: SrcX_Cell,
       srcY: srcY + SrcY_Cell_West,
-      srcWidth: 8,
-      srcHeight: 15,
+      srcWidth: Cell_West_Width,
+      srcHeight: Cell_West_Height,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: colorWest,
     );
-  }
 
   void renderCellSouth({
     required double srcY,
     required double dstX,
     required double dstY,
-  }) {
-    renderCustomNode(
+  }) => renderCustomNode(
       srcX: SrcX_Cell,
       srcY: srcY + SrcY_Cell_South,
-      srcWidth: 8,
-      srcHeight: 15,
+      srcWidth: Cell_South_Width,
+      srcHeight: Cell_South_Height,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: colorSouth,
     );
-  }
 
   void renderCustomNode({
     required double srcX,
