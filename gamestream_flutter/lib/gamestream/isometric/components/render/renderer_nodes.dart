@@ -9,6 +9,10 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  static const SrcX_Top = 0.0;
+  static const SrcX_Side_Left = 49.0;
+  static const SrcX_Side_Right = 74.0;
+
   static const Node_Size = 48.0;
   static const Node_Size_Half = 24.0;
   static const Node_Size_Third = 16.0;
@@ -648,11 +652,6 @@ class RendererNodes extends IsometricRenderer {
   }
 
   bool get currentNodeTransparent {
-    // if (currentNodeWithinIsland) {
-    //   if (currentNodeZ >= playerZ + 2) {
-    //     return true;
-    //   }
-    // }
     if (currentNodeZ <= playerZ) return false;
     final currentNodeProjection = currentNodeIndex % scene.projection;
     if (!transparencyGrid[currentNodeProjection]) return false;
@@ -669,61 +668,60 @@ class RendererNodes extends IsometricRenderer {
     return row >= playerRow && column >= playerColumn;
   }
 
+
+
+  var previousNodeTransparent = false;
+
   void renderCurrentNode() {
 
     if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
 
-    engine.bufferImage = currentNodeTransparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
+    final transparent = currentNodeTransparent;
+    if (previousNodeTransparent != transparent) {
+      previousNodeTransparent = transparent;
+      engine.bufferImage = transparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
+    }
 
     switch (currentNodeType) {
-      case NodeType.Grass:
-        const srcY = 1809.0;
-          if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-            renderNodeSideTop(srcX: 0, srcY: srcY);
-            renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-            renderNodeSideSouth(
-                srcX: 74,
-                srcY: srcY,
-                dstX: 0,
-                dstY: 0
-            );
+      case NodeType.Brick:
+        if (dynamicLighting){
+          const srcY = 1760.0;
+          if (currentNodeOrientation == NodeOrientation.Solid){
+            renderDynamicSolid(srcY);
             return;
           }
-        renderNodeGrass();
-        break;
-      case NodeType.Brick:
-        const srcY = 1760.0;
-        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-          renderNodeSideTop(srcX: 0, srcY: srcY);
-          renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-          renderNodeSideSouth(
-              srcX: 74,
-              srcY: srcY,
-              dstX: 0,
-              dstY: 0,
-          );
-          return;
         }
+
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_2);
         return;
-      case NodeType.Bricks_Red:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_13);
+      case NodeType.Grass:
+        if (dynamicLighting){
+          const srcY = 1808.0;
+          if (currentNodeOrientation == NodeOrientation.Solid){
+            renderDynamicSolid(srcY);
+            return;
+          }
+        }
+        renderNodeGrass();
+        break;
+      case NodeType.Soil:
+        if (dynamicLighting){
+          const srcY = 1856.0;
+          if (currentNodeOrientation == NodeOrientation.Solid){
+            renderDynamicSolid(srcY);
+            return;
+          }
+        }
+
+        const srcX = IsometricConstants.Sprite_Width_Padded * 7;
+        renderNodeTemplateShaded(srcX);
         return;
-      case NodeType.Bricks_Brown:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_14);
-        return;
+
       case NodeType.Wood:
         if (dynamicLighting){
-          const srcY = 1905.0;
+          const srcY = 1904.0;
           if (currentNodeOrientation == NodeOrientation.Solid){
-            renderNodeSideTop(srcX: 0, srcY: srcY);
-            renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-            renderNodeSideSouth(
-                srcX: 74,
-                srcY: srcY,
-                dstX: 0,
-                dstY: 0
-            );
+            renderDynamicSolid(srcY);
             return;
           }
           if (currentNodeOrientation == NodeOrientation.Half_West){
@@ -763,6 +761,13 @@ class RendererNodes extends IsometricRenderer {
         const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
         renderNodeTemplateShaded(srcX);
         break;
+
+      case NodeType.Bricks_Red:
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_13);
+        return;
+      case NodeType.Bricks_Brown:
+        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_14);
+        return;
       case NodeType.Water:
         renderNodeWater();
         break;
@@ -835,25 +840,6 @@ class RendererNodes extends IsometricRenderer {
           srcY: 867.0,
         );
         return;
-      case NodeType.Soil:
-
-        const srcY = 1857.0;
-        if (dynamicLighting && currentNodeOrientation == NodeOrientation.Solid){
-            renderNodeSideTop(srcX: 0, srcY: srcY);
-            renderNodeSideWest(srcX: 49, srcY: srcY, dstX: -Node_Size_Half);
-            renderNodeSideSouth(
-                srcX: 74,
-                srcY: srcY,
-                dstX: 0,
-                dstY: 0
-            );
-            return;
-        }
-
-        const index_grass = 7;
-        const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
-        renderNodeTemplateShaded(srcX);
-        return;
       case NodeType.Fireplace:
         renderStandardNode(
           srcX: AtlasNode.Campfire_X,
@@ -914,6 +900,17 @@ class RendererNodes extends IsometricRenderer {
       default:
         throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(scene.nodeOrientations[currentNodeIndex])}');
     }
+  }
+
+  void renderDynamicSolid(double srcY) {
+    renderNodeSideTop(srcX: SrcX_Top, srcY: srcY);
+    renderNodeSideWest(srcX: SrcX_Side_Left, srcY: srcY, dstX: -Node_Size_Half);
+    renderNodeSideSouth(
+      srcX: SrcX_Side_Right,
+      srcY: srcY,
+      dstX: 0,
+      dstY: 0,
+    );
   }
 
   void renderNodeShoppingShelf() {
