@@ -9,6 +9,13 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  static const MapNodeTypeToSrcY = <int, double>{
+    NodeType.Brick: 1760,
+    NodeType.Grass: 1808,
+    NodeType.Soil: 1856,
+    NodeType.Wood: 1904,
+  };
+
   static const SrcY_Brick = 1760.0;
   static const SrcY_Grass = 1808.0;
   static const SrcY_Soil = 1856.0;
@@ -697,7 +704,7 @@ class RendererNodes extends IsometricRenderer {
     final nodeType = currentNodeType;
     final nodeOrientation = currentNodeOrientation;
 
-    if (mapNodeTypeToSrcY.containsKey(nodeType)){
+    if (MapNodeTypeToSrcY.containsKey(nodeType)){
       renderDynamic(nodeType, nodeOrientation);
       return;
     }
@@ -845,7 +852,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderDynamic(int nodeType, int nodeOrientation) {
-    final srcY = mapNodeTypeToSrcY[nodeType] ??
+    final srcY = MapNodeTypeToSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
@@ -872,16 +879,38 @@ class RendererNodes extends IsometricRenderer {
 
       case NodeOrientation.Corner_North_East:
         renderDynamicHalfNorth(srcY);
-        renderDynamicHalfEast(srcY);
-        // renderSideEastWest(
-        //   srcY: srcY,
-        //   dstX: -Node_Size_Sixth,
-        //   dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
-        // );
 
-        // renderCellWest(srcY: srcY, dstX: 0, dstY: 8);
-        // renderCellWest(srcY: srcY, dstX: 0, dstY: 0);
-        // renderCellWest(srcY: srcY, dstX: 0, dstY: -8);
+        final dstX = 0.0;
+        final dstY = -Cell_Size;
+
+        renderNodeSideWest(
+          srcX: SrcX_Side_Left,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY + Node_Size_Sixth,
+          width: Cell_Size,
+        );
+
+        renderNodeSideSouth(
+          srcX: SrcX_Side_Right,
+          srcY: srcY,
+          width: Node_Size_Sixth,
+          dstX: dstX + Node_Size_Half - Cell_Size_Half,
+          dstY: dstY + Node_Size_Sixth - Cell_Size_Half,
+        );
+
+        renderCellTop(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+        );
+
+        renderCellTop(
+          srcY: srcY,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+        );
+
         break;
 
       case NodeOrientation.Corner_North_West:
@@ -1837,6 +1866,107 @@ class RendererNodes extends IsometricRenderer {
     renderCellSouth(srcY: srcY, dstX: dstX, dstY: dstY);
   }
 
+
+  void renderNodeShadedOffset({
+    required double srcX,
+    required double srcY,
+    required double offsetX,
+    required double offsetY,
+  }){
+    onscreenNodes++;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = currentNodeColor;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
+    engine.incrementBufferIndex();
+  }
+
+  void renderDynamicSideNorthSouth({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }){
+    renderNodeSideWest(
+      srcX: SrcX_Side_Left,
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+      width: Node_Size_Sixth,
+    );
+
+    renderNodeSideSouth(
+        srcX: SrcX_Side_Right,
+        srcY: srcY,
+        dstX: dstX + Node_Size_Sixth,
+        dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+    );
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY - Node_Size_Half + Node_Size_Third,
+    );
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: dstX + Node_Size_Sixth,
+        dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+    );
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
+         dstY: dstY - Node_Size_Half,
+    );
+  }
+
+  void renderSideEastWest({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }){
+
+    renderNodeSideWest(
+      srcX: SrcX_Side_Left,
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY + Node_Size_Sixth,
+    );
+
+    renderNodeSideSouth(
+      srcX: SrcX_Side_Right,
+      srcY: srcY,
+      width: Node_Size_Sixth,
+      dstX: dstX + Node_Size_Half,
+      dstY: dstY + Node_Size_Sixth,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: dstX + Node_Size_Sixth,
+      dstY: dstY + Node_Size_Sixth,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
+      dstY: dstY + Node_Size_Sixth + Node_Size_Sixth,
+    );
+  }
+
+
   void renderCellTop({
     required double srcY,
     required double dstX,
@@ -1908,26 +2038,6 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  void renderNodeShadedOffset({
-    required double srcX,
-    required double srcY,
-    required double offsetX,
-    required double offsetY,
-  }){
-    onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = currentNodeColor;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
-  }
-
   void renderNodeShadedCustom({
     required double srcX,
     required double srcY,
@@ -1951,88 +2061,4 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  void renderDynamicSideNorthSouth({
-    required double srcY,
-    required double dstX,
-    required double dstY,
-  }){
-    renderNodeSideWest(
-      srcX: SrcX_Side_Left,
-      srcY: srcY,
-      dstX: dstX,
-      dstY: dstY,
-      width: Node_Size_Sixth,
-    );
-
-    renderNodeSideSouth(
-        srcX: SrcX_Side_Right,
-        srcY: srcY,
-        dstX: dstX + Node_Size_Sixth,
-        dstY: dstY - Node_Size_Half + Node_Size_Sixth,
-    );
-
-    renderCellTop(
-        srcY: srcY,
-        dstX: dstX,
-        dstY: dstY - Node_Size_Half + Node_Size_Third,
-    );
-
-    renderCellTop(
-        srcY: srcY,
-        dstX: dstX + Node_Size_Sixth,
-        dstY: dstY - Node_Size_Half + Node_Size_Sixth,
-    );
-
-    renderCellTop(
-        srcY: srcY,
-        dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
-         dstY: dstY - Node_Size_Half,
-    );
-  }
-
-  void renderSideEastWest({
-    required double srcY,
-    required double dstX,
-    required double dstY,
-  }){
-    renderNodeSideWest(
-      srcX: 49,
-      srcY: srcY,
-      dstX: dstX,
-      dstY: dstY + Node_Size_Sixth,
-    );
-
-    renderNodeSideSouth(
-      srcX: 74,
-      srcY: srcY,
-      width: Node_Size_Sixth,
-      dstX: dstX + Node_Size_Half,
-      dstY: dstY + Node_Size_Sixth,
-    );
-
-    renderCellTop(
-      srcY: srcY,
-      dstX: dstX,
-      dstY: dstY,
-    );
-
-    renderCellTop(
-      srcY: srcY,
-      dstX: dstX + Node_Size_Sixth,
-      dstY: dstY + Node_Size_Sixth,
-    );
-
-    renderCellTop(
-      srcY: srcY,
-      dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
-      dstY: dstY + Node_Size_Sixth + Node_Size_Sixth,
-    );
-  }
-
-  static const mapNodeTypeToSrcY = <int, double>{
-    NodeType.Brick: 1760,
-    NodeType.Grass: 1808,
-    NodeType.Soil: 1856,
-    NodeType.Wood: 1904,
-  };
 }
