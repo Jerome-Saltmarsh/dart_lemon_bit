@@ -632,6 +632,8 @@ class IsometricScene {
       if (vx < 0) {
         if (const [
           NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
         ].contains(nodeOrientation)) return;
 
         if (const [
@@ -640,6 +642,8 @@ class IsometricScene {
       } else if (vx > 0) {
         if (const [
           NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
         ].contains(nodeOrientation)) return;
 
         if (const [
@@ -650,6 +654,9 @@ class IsometricScene {
       if (vy < 0) {
         if (const [
           NodeOrientation.Half_West,
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Corner_South_West,
         ].contains(nodeOrientation)) return;
 
         if (const [
@@ -658,6 +665,8 @@ class IsometricScene {
       } else if (vy > 0) {
         if (const [
           NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
         ].contains(nodeOrientation)) return;
 
         if (const [
