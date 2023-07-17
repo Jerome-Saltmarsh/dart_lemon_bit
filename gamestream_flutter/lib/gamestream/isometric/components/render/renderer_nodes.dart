@@ -873,8 +873,38 @@ class RendererNodes extends IsometricRenderer {
         break;
 
       case NodeOrientation.Corner_South_East:
-        renderDynamicHalfSouth(srcY);
         renderDynamicHalfEast(srcY);
+        // renderDynamicHalfSouth(srcY);
+        final dstX = -Cell_Size_Half;
+        final dstY = Cell_Size;
+
+        renderNodeSideWest(
+          srcX: SrcX_Side_Left,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          width: Node_Size_Sixth,
+        );
+
+        renderNodeSideSouth(
+          srcX: SrcX_Side_Right,
+          srcY: srcY,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+        );
+
+        renderCellTop(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY - Node_Size_Half + Node_Size_Third,
+        );
+
+        renderCellTop(
+          srcY: srcY,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+        );
+
         break;
 
       case NodeOrientation.Corner_North_East:
