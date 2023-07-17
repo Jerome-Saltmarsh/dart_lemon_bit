@@ -26,14 +26,11 @@ class RendererNodes extends IsometricRenderer {
   static const SrcX_Side_South = 74.0;
   static const SrcX_Cell = 99.0;
 
-  static const Src_Cell_South_X = 110.0;
-
   static const Node_Size = 48.0;
 
   static const SrcY_Cell_Top = 0.0;
   static const SrcY_Cell_West =  18.0;
   static const Src_Cell_South_Y = 18.0;
-
 
   static const Node_Size_Half = 24.0;
   static const Node_Size_Third = 16.0;
@@ -43,10 +40,11 @@ class RendererNodes extends IsometricRenderer {
   static const Cell_Size_Half = 8.0;
   static const Cell_West_Width = 8.0;
   static const Cell_West_Height = 15.0;
-  static const Src_Cell_South_Width = 8.0;
-  static const Cell_South_Src_Height = 15.0;
+
+  static const Cell_South_Src_X = 110.0;
   static const Cell_South_Width = 8.0;
   static const Cell_South_Height = 8.0;
+  static const Cell_South_Height_Src = 15.0;
 
   static const Node_South_Height = 24.0;
 
@@ -937,6 +935,12 @@ class RendererNodes extends IsometricRenderer {
         dstY: Node_Size_Half + Cell_South_Height,
         color: colorWest,
     );
+
+    renderCellWest(
+        dstX: -Cell_West_Width - Cell_South_Width,
+        dstY: Node_Size_Half + Cell_South_Height,
+        color: colorWest,
+    );
   }
 
   void renderSlopeWest(double srcY) {
@@ -1160,12 +1164,12 @@ class RendererNodes extends IsometricRenderer {
         color: colorSouth,
     );
     renderCellSouth(
-        dstX: -Node_Size_Half + Cell_Size + Cell_Size + Src_Cell_South_Width,
+        dstX: -Node_Size_Half + Cell_Size + Cell_Size + Cell_South_Width,
         dstY: Node_South_Height -Cell_South_Height,
         color: colorSouth,
     );
     renderCellSouth(
-        dstX: -Node_Size_Half + Cell_Size + Cell_Size + Src_Cell_South_Width,
+        dstX: -Node_Size_Half + Cell_Size + Cell_Size + Cell_South_Width,
         dstY: Node_South_Height -Cell_South_Height - Cell_South_Height,
         color: colorSouth,
     );
@@ -2288,10 +2292,10 @@ class RendererNodes extends IsometricRenderer {
     required double dstY,
     required int color,
   }) => renderCustomNode(
-      srcX: Src_Cell_South_X,
+      srcX: Cell_South_Src_X,
       srcY: srcY + Src_Cell_South_Y,
-      srcWidth: Src_Cell_South_Width,
-      srcHeight: Cell_South_Src_Height,
+      srcWidth: Cell_South_Width,
+      srcHeight: Cell_South_Height_Src,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: color,
