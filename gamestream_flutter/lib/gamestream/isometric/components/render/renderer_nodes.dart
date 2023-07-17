@@ -26,10 +26,14 @@ class RendererNodes extends IsometricRenderer {
   static const SrcX_Side_Right = 74.0;
   static const SrcX_Cell = 99.0;
 
+  static const Src_Cell_South_X = 110.0;
+
   static const Node_Size = 48.0;
 
-  static const SrcY_Cell_West = 18.0;
-  static const SrcY_Cell_South = 34.0;
+  static const SrcY_Cell_Top = 0.0;
+  static const SrcY_Cell_West =  18.0;
+  static const Src_Cell_South_Y = 18.0;
+
 
   static const Node_Size_Half = 24.0;
   static const Node_Size_Third = 16.0;
@@ -39,7 +43,7 @@ class RendererNodes extends IsometricRenderer {
   static const Cell_Size_Half = 8.0;
   static const Cell_West_Width = 8.0;
   static const Cell_West_Height = 15.0;
-  static const Cell_South_Src_Width = 8.0;
+  static const Src_Cell_South_Width = 8.0;
   static const Cell_South_Src_Height = 15.0;
   static const Cell_South_Width = 8.0;
   static const Cell_South_Height = 8.0;
@@ -1032,13 +1036,13 @@ class RendererNodes extends IsometricRenderer {
         );
         renderCellSouth(
             srcY: srcY,
-            dstX: -Node_Size_Half + Cell_Size + Cell_Size + Cell_South_Src_Width,
+            dstX: -Node_Size_Half + Cell_Size + Cell_Size + Src_Cell_South_Width,
             dstY: Node_South_Height -Cell_South_Height,
             color: colorSouth,
         );
         renderCellSouth(
             srcY: srcY,
-            dstX: -Node_Size_Half + Cell_Size + Cell_Size + Cell_South_Src_Width,
+            dstX: -Node_Size_Half + Cell_Size + Cell_Size + Src_Cell_South_Width,
             dstY: Node_South_Height -Cell_South_Height - Cell_South_Height,
             color: colorSouth,
         );
@@ -1057,21 +1061,21 @@ class RendererNodes extends IsometricRenderer {
     renderCellWest(
       srcY: srcY,
       dstX: dstX,
-      dstY: dstY,
+      dstY: dstY + 1,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
       dstX: dstX + Cell_West_Width,
-      dstY: dstY + Cell_Size_Half,
+      dstY: dstY + Cell_Size_Half + 1,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
       dstX: dstX + Cell_West_Width + Cell_West_Width,
-      dstY: dstY + Cell_Size_Half + Cell_Size_Half,
+      dstY: dstY + Cell_Size_Half + Cell_Size_Half + 1,
       color: colorWest,
     );
 
@@ -2205,9 +2209,9 @@ class RendererNodes extends IsometricRenderer {
     required double dstY,
     required int color,
   }) => renderCustomNode(
-      srcX: SrcX_Cell,
-      srcY: srcY + SrcY_Cell_South,
-      srcWidth: Cell_South_Src_Width,
+      srcX: Src_Cell_South_X,
+      srcY: srcY + Src_Cell_South_Y,
+      srcWidth: Src_Cell_South_Width,
       srcHeight: Cell_South_Src_Height,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
