@@ -915,48 +915,59 @@ class RendererNodes extends IsometricRenderer {
         break;
 
       case NodeOrientation.Slope_West:
-        renderCellSouth(
-            srcY: srcY,
-            dstX: 0,
-            dstY: 0,
-            color: colorSouth,
-        );
-        renderCellSouth(
-          srcY: srcY,
-          dstX: Cell_South_Width,
-          dstY: -Cell_South_Height,
-          color: colorSouth,
-        );
-        renderCellSouth(
-          srcY: srcY,
-          dstX: Cell_South_Width + Cell_South_Width,
-          dstY: -Cell_South_Height - Cell_South_Height,
-          color: colorSouth,
-        );
-
-        renderCellSouth(
-          srcY: srcY,
-          dstX: 0,
-          dstY: -Cell_South_Height,
-          color: colorSouth,
-        );
-
-        renderCellSouth(
-          srcY: srcY,
-          dstX: Cell_South_Width,
-          dstY: -Cell_South_Height - Cell_South_Height,
-          color: colorSouth,
-        );
-
-        renderCellSouth(
-          srcY: srcY,
-          dstX: 0,
-          dstY: -Cell_South_Height -Cell_South_Height,
-          color: colorSouth,
-        );
-
+        renderSlopeWest(srcY);
         break;
     }
+  }
+
+  void renderSlopeWest(double srcY) {
+    renderNodeSideWest(
+      srcX: SrcX_Side_Left,
+      srcY: srcY,
+      dstX: -Node_Size_Half,
+      dstY: -Node_Size_Half - Cell_South_Height,
+      color: colorWest,
+    );
+
+    renderCellSouth(
+      srcY: srcY,
+      dstX: 0,
+      dstY: 0,
+      color: colorSouth,
+    );
+    renderCellSouth(
+      srcY: srcY,
+      dstX: Cell_South_Width,
+      dstY: -Cell_South_Height,
+      color: colorSouth,
+    );
+    renderCellSouth(
+      srcY: srcY,
+      dstX: Cell_South_Width + Cell_South_Width,
+      dstY: -Cell_South_Height - Cell_South_Height,
+      color: colorSouth,
+    );
+
+    renderCellSouth(
+      srcY: srcY,
+      dstX: 0,
+      dstY: -Cell_South_Height,
+      color: colorSouth,
+    );
+
+    renderCellSouth(
+      srcY: srcY,
+      dstX: Cell_South_Width,
+      dstY: -Cell_South_Height - Cell_South_Height,
+      color: colorSouth,
+    );
+
+    renderCellSouth(
+      srcY: srcY,
+      dstX: 0,
+      dstY: -Cell_South_Height - Cell_South_Height,
+      color: colorSouth,
+    );
   }
 
   void renderCornerSouthWest(double srcY) {
@@ -1025,7 +1036,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderCornerSouthEast(double srcY) {
-      final dstX = -Cell_Size_Half;
+    final dstX = -Cell_Size_Half;
     final dstY = Cell_Size;
 
     renderSideEastWest(
