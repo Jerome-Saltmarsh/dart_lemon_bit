@@ -30,7 +30,11 @@ class RendererNodes extends IsometricRenderer {
   static const Cell_Size_Half = 8.0;
 
   static const Cell_Top_Src_X =  99.0;
-  static const Cell_Top_Src_Y =  0;
+  static const Cell_Top_Src_Y =  0.0;
+  static const Cell_Top_Width =  8.0;
+  static const Cell_Top_Height =  8.0;
+  static const Cell_Top_Width_Src =  16.0;
+  static const Cell_Top_Height_Src =  16.0;
 
   static const Cell_South_Src_X = 110.0;
   static const Cell_South_Src_Y = 18.0;
@@ -919,7 +923,48 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Slope_South:
         renderSlopeSouth();
         break;
+
+      case NodeOrientation.Slope_North:
+        renderSlopeNorth();
+        break;
     }
+  }
+
+  void renderSlopeNorth() {
+
+    renderCellTopColumn(
+      dstX: -Node_Size_Half,
+      dstY: -Cell_South_Height,
+      color: colorAbove,
+    );
+
+    renderCellSouthColumn(
+      dstX: -Cell_South_Width - Cell_South_Width,
+      dstY: 0,
+      color: colorCurrent,
+    );
+  }
+
+  void renderCellSouthColumn({
+    required double dstX,
+    required double dstY,
+    required int color,
+  }) {
+    renderCellSouth(
+        dstX: dstX,
+        dstY: dstY,
+        color: color,
+    );
+    renderCellSouth(
+      dstX: dstX + Cell_South_Width,
+      dstY: dstY -Cell_South_Height,
+      color: color,
+    );
+    renderCellSouth(
+      dstX: dstX + Cell_South_Width + Cell_South_Width,
+      dstY: dstY -Cell_South_Height - Cell_South_Height,
+      color: color,
+    );
   }
 
   void renderSlopeSouth() {
@@ -930,6 +975,49 @@ class RendererNodes extends IsometricRenderer {
       color: colorSouth,
     );
 
+    // row 3
+
+    renderCellTop(
+      dstX: -Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
+      dstY: Cell_Top_Height,
+      color: colorAbove,
+    );
+
+    renderCellTop(
+      dstX: -Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
+      dstY: Cell_Top_Height - Cell_Top_Height,
+      color: colorAbove,
+    );
+
+    renderCellTop(
+      dstX: -Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
+      dstY: Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
+      color: colorAbove,
+    );
+
+
+    // row 2
+
+    renderCellTop(
+      dstX: -Cell_Top_Width - Cell_Top_Width,
+      dstY: Cell_Top_Height,
+      color: colorAbove,
+    );
+
+    renderCellTop(
+      dstX: -Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
+      dstY: Cell_Top_Height - Cell_Top_Height,
+      color: colorAbove,
+    );
+
+    renderCellTop(
+      dstX: -Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
+      dstY: Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
+      color: colorAbove,
+    );
+
+    // column 1
+
     renderCellWest(
         dstX: -Cell_West_Width,
         dstY: Node_Size_Half + Cell_South_Height,
@@ -937,9 +1025,57 @@ class RendererNodes extends IsometricRenderer {
     );
 
     renderCellWest(
-        dstX: -Cell_West_Width - Cell_South_Width,
-        dstY: Node_Size_Half + Cell_South_Height,
+        dstX: -Cell_West_Width,
+        dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height,
         color: colorWest,
+    );
+
+    renderCellWest(
+        dstX: -Cell_West_Width,
+        dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
+        color: colorWest,
+    );
+
+    // column 2
+
+    renderCellWest(
+      dstX: -Cell_West_Width - Cell_West_Width,
+      dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height,
+      color: colorWest,
+    );
+
+    renderCellWest(
+      dstX: -Cell_West_Width - Cell_West_Width,
+      dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
+      color: colorWest,
+    );
+
+    // column 3
+
+    renderCellWest(
+      dstX: -Cell_West_Width - Cell_West_Width - Cell_West_Width,
+      dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
+      color: colorWest,
+    );
+
+    // row 1
+
+    renderCellTop(
+        dstX: -Cell_Top_Width,
+        dstY: Cell_Top_Height,
+        color: colorAbove,
+    );
+
+    renderCellTop(
+      dstX: -Cell_Top_Width + Cell_Top_Width,
+      dstY: Cell_Top_Height - Cell_Top_Height,
+      color: colorAbove,
+    );
+
+    renderCellTop(
+      dstX: -Cell_Top_Width + Cell_Top_Width + Cell_Top_Width,
+      dstY: Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
+      color: colorAbove,
     );
   }
 
@@ -2259,15 +2395,40 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
+  void renderCellTopColumn({
+    required double dstX,
+    required double dstY,
+    required int color,
+  }){
+
+    renderCellTop(
+      dstX: dstX,
+      dstY: dstY,
+      color: color,
+    );
+
+    renderCellTop(
+      dstX: dstX + Cell_Top_Width,
+      dstY: dstY - Cell_Top_Height,
+      color: color,
+    );
+
+    renderCellTop(
+      dstX: dstX + Cell_Top_Width + Cell_Top_Width,
+      dstY: dstY - Cell_Top_Height - Cell_Top_Height,
+      color: color,
+    );
+  }
+
   void renderCellTop({
     required double dstX,
     required double dstY,
     required int color,
   }) => renderCustomNode(
-      srcX: Cell_West_Src_X,
+      srcX: Cell_Top_Src_X,
       srcY: srcY,
-      srcWidth: Cell_Size,
-      srcHeight: Cell_Size,
+      srcWidth: Cell_Top_Width_Src,
+      srcHeight: Cell_Top_Height_Src,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: color,
