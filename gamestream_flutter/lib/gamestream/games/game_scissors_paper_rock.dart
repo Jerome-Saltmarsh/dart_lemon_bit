@@ -17,11 +17,11 @@ class GameScissorsPaperRock {
   static final colorTarget = IsometricColors.green;
 
   static void init(){
-    engine.zoom = 0.5;
-    engine.targetZoom = 0.5;
-    engine.onDrawCanvas = render;
-    engine.buildUI = buildUI;
-    engine.onDrawForeground = renderForeground;
+    gamestream.engine.zoom = 0.5;
+    gamestream.engine.targetZoom = 0.5;
+    gamestream.engine.onDrawCanvas = render;
+    gamestream.engine.buildUI = buildUI;
+    gamestream.engine.onDrawForeground = renderForeground;
   }
 
   static const Radius_Min = 10.0;
@@ -31,8 +31,8 @@ class GameScissorsPaperRock {
 
   static void render(Canvas canvas, Size size) {
 
-    engine.paint.color = Colors.white;
-    canvas.drawCircle(const Offset(0, 0), 300, engine.paint);
+    gamestream.engine.paint.color = Colors.white;
+    canvas.drawCircle(const Offset(0, 0), 300, gamestream.engine.paint);
 
     final size = EaseFunctions.inOutQuad(radiusI) * Radius_Max + Radius_Min ;
     radiusI += radiusD;
@@ -46,13 +46,13 @@ class GameScissorsPaperRock {
 
     for (var i = 0; i < GameScissorsPaperRock.totalPlayers; i++) {
       final player = GameScissorsPaperRock.players[i];
-      engine.paint.color = getTeamColor(player.team);
-      canvas.drawCircle(Offset(player.x, player.y), size, engine.paint);
+      gamestream.engine.paint.color = getTeamColor(player.team);
+      canvas.drawCircle(Offset(player.x, player.y), size, gamestream.engine.paint);
       // engine.paint.color = Colors.black;
       // engine.renderText(TeamsRockPaperScissors.getName(player.team), player.x, player.y);
     }
-    engine.paint.color = Colors.white;
-    canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size, engine.paint);
+    gamestream.engine.paint.color = Colors.white;
+    canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size, gamestream.engine.paint);
     // engine.paint.color = colorAllie;
     // canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size * 0.5, engine.paint);
   }

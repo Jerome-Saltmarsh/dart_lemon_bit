@@ -7,7 +7,7 @@ import 'capture_the_flag_properties.dart';
 extension CaptureTheFlagRender on CaptureTheFlagGame {
 
   void renderCaptureTheFlag() {
-    engine.paint.color = Colors.orange;
+    gamestream.engine.paint.color = Colors.orange;
 
     if (objectiveLinesEnabled){
       renderObjectiveLines();
@@ -18,14 +18,14 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
 
   void renderLineToRedFlag() {
     if (flagRedStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
-    engine.paint.color = Colors.red;
-    engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
+    gamestream.engine.paint.color = Colors.red;
+    gamestream.engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
   }
 
   void renderLineToBlueFlag() {
     if (flagBlueStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
-    engine.paint.color = Colors.blue;
-    engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
+    gamestream.engine.paint.color = Colors.blue;
+    gamestream.engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
   }
 
   void renderLineToEnemyFlag(){
@@ -71,13 +71,13 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
   }
 
   void renderLineToRedBase() {
-    engine.paint.color = Colors.red;
-    engine.drawLine(player.renderX, player.renderY, basePositionRed.renderX, basePositionRed.renderY);
+    gamestream.engine.paint.color = Colors.red;
+    gamestream.engine.drawLine(player.renderX, player.renderY, basePositionRed.renderX, basePositionRed.renderY);
   }
 
   void renderLineToBlueBase() {
-    engine.paint.color = Colors.blue;
-    engine.drawLine(player.renderX, player.renderY, basePositionBlue.renderX, basePositionBlue.renderY);
+    gamestream.engine.paint.color = Colors.blue;
+    gamestream.engine.drawLine(player.renderX, player.renderY, basePositionBlue.renderX, basePositionBlue.renderY);
   }
 
   void renderPlayerActivatedPower() {
@@ -100,7 +100,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
         break;
       case CaptureTheFlagPowerMode.Targeted_Enemy:
         if (playerActivatedTargetSet) {
-          engine.setPaintColor(Colors.red);
+          gamestream.engine.setPaintColor(Colors.red);
           isometric.renderer.renderCircleAtIsometricPosition(
             position: playerActivatedTarget,
             radius: 40,
@@ -109,7 +109,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
         break;
       case CaptureTheFlagPowerMode.Targeted_Ally:
         if (playerActivatedTargetSet) {
-          engine.setPaintColor(Colors.green);
+          gamestream.engine.setPaintColor(Colors.green);
           isometric.renderer.renderCircleAtIsometricPosition(
             position: playerActivatedTarget,
             radius: 40,

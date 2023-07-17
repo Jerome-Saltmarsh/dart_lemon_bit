@@ -43,7 +43,7 @@ class WebsiteGame extends Game {
   @override
   void onActivated() {
     gamestream.audio.musicStop();
-    engine.fullScreenExit();
+    gamestream.engine.fullScreenExit();
   }
 
   @override
@@ -168,7 +168,7 @@ class WebsiteGame extends Game {
   void checkForLatestVersion() async {
     await saveVisitDateTime();
     gamestream.operationStatus.value = OperationStatus.Checking_For_Updates;
-    engine.refreshPage();
+    gamestream.engine.refreshPage();
   }
 
   Future saveVisitDateTime() async =>

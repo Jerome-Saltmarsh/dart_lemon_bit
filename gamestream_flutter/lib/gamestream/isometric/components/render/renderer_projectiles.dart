@@ -24,7 +24,7 @@ class RendererProjectiles extends IsometricRenderer {
       case ProjectileType.Wave:
         break;
       case ProjectileType.Rocket:
-        engine.renderSpriteRotated(
+        gamestream.engine.renderSpriteRotated(
           image: Images.atlas_items,
           srcX: 201,
           srcY: 109,
@@ -54,7 +54,7 @@ class RendererProjectiles extends IsometricRenderer {
   }
 
   static void renderBullet(double x, double y, double rotation) {
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_gameobjects,
       srcX: 87,
       srcY: 48,
@@ -70,7 +70,7 @@ class RendererProjectiles extends IsometricRenderer {
   }
 
   static void renderArrow(double x, double y, double rotation) {
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_gameobjects,
       srcX: 49,
       srcY: 48,
@@ -82,7 +82,7 @@ class RendererProjectiles extends IsometricRenderer {
       scale: 0.7,
     );
 
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_gameobjects,
       srcX: 59,
       srcY: 48,

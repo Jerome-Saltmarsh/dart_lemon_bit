@@ -37,7 +37,7 @@ class RendererGameObjects extends IsometricRenderer {
       renderBouncingGameObjectShadow(gameObject);
     }
 
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: image,
       dstX: gameObject.renderX,
       dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,

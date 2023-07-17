@@ -57,10 +57,10 @@ class IsometricGame extends Game {
     isometric.ui.windowOpenMenu.setFalse();
 
     gamestream.audio.musicStop();
-    engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
+    gamestream.engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
 
-    if (!engine.isLocalHost) {
-      engine.fullScreenEnter();
+    if (!gamestream.engine.isLocalHost) {
+      gamestream.engine.fullScreenEnter();
     }
   }
 

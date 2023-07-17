@@ -10,7 +10,7 @@ final _keys = _Keys();
 
 class StorageService {
 
-  bool get serverSaved => engine.sharedPreferences.containsKey(_keys.server);
+  bool get serverSaved => gamestream.engine.sharedPreferences.containsKey(_keys.server);
 
   void saveRegion(ConnectionRegion value){
     SharedPreferences.getInstance().then((instance){
@@ -26,9 +26,9 @@ class StorageService {
   }
 
   void forgetAuthorization(){
-    engine.sharedPreferences.remove(_keys.userId);
-    engine.sharedPreferences.remove(_keys.userEmail);
-    engine.sharedPreferences.remove(_keys.userName);
+    gamestream.engine.sharedPreferences.remove(_keys.userId);
+    gamestream.engine.sharedPreferences.remove(_keys.userEmail);
+    gamestream.engine.sharedPreferences.remove(_keys.userName);
   }
 
   DataAuthentication recallAuthorization() {
@@ -42,12 +42,12 @@ class StorageService {
     );
   }
 
-  bool get authorizationRemembered => engine.sharedPreferences.containsKey(_keys.userId);
+  bool get authorizationRemembered => gamestream.engine.sharedPreferences.containsKey(_keys.userId);
 
   String get userId => get(_keys.userId);
 
   void remove(String key){
-    engine.sharedPreferences.remove(key);
+    gamestream.engine.sharedPreferences.remove(key);
   }
 
   void put(String key, dynamic value){
@@ -59,27 +59,27 @@ class StorageService {
     }
 
     if (value is String){
-      engine.sharedPreferences.setString(key, value);
+      gamestream.engine.sharedPreferences.setString(key, value);
       return;
     }
 
     if (value is int){
-      engine.sharedPreferences.setInt(key, value);
+      gamestream.engine.sharedPreferences.setInt(key, value);
       return;
     }
 
     if (value is double){
-      engine.sharedPreferences.setDouble(key, value);
+      gamestream.engine.sharedPreferences.setDouble(key, value);
       return;
     }
 
     if (value is bool){
-      engine.sharedPreferences.setBool(key, value);
+      gamestream.engine.sharedPreferences.setBool(key, value);
       return;
     }
 
     if (value is DateTime){
-      engine.sharedPreferences.setString(key, value.toIso8601String());
+      gamestream.engine.sharedPreferences.setString(key, value.toIso8601String());
       return;
     }
 
@@ -87,27 +87,27 @@ class StorageService {
   }
 
   bool contains(String key){
-    return engine.sharedPreferences.containsKey(key);
+    return gamestream.engine.sharedPreferences.containsKey(key);
   }
 
   T get<T>(String key){
-    if (!engine.sharedPreferences.containsKey(key)){
+    if (!gamestream.engine.sharedPreferences.containsKey(key)){
       throw Exception('shared preference does not contain key $key');
     }
     if (T == int){
-      return engine.sharedPreferences.getInt(key) as T;
+      return gamestream.engine.sharedPreferences.getInt(key) as T;
     }
     if (T == double){
-      return engine.sharedPreferences.getDouble(key) as T;
+      return gamestream.engine.sharedPreferences.getDouble(key) as T;
     }
     if (T == String){
-      return engine.sharedPreferences.getString(key) as T;
+      return gamestream.engine.sharedPreferences.getString(key) as T;
     }
     if (T == bool){
-      return engine.sharedPreferences.getBool(key) as T;
+      return gamestream.engine.sharedPreferences.getBool(key) as T;
     }
     if (T.toString().startsWith('DateTime')){
-      return DateTime.parse(engine.sharedPreferences.getString(key)!) as T;
+      return DateTime.parse(gamestream.engine.sharedPreferences.getString(key)!) as T;
     }
     throw Exception('cannot get value for key $key');
   }

@@ -203,7 +203,7 @@ mixin class IsometricClient {
     gamestream.isometric.server.totalProjectiles = 0;
     gamestream.isometric.server.totalNpcs = 0;
     gamestream.isometric.particles.particles.clear();
-    engine.zoom = 1;
+    gamestream.engine.zoom = 1;
   }
 
   int get bodyPartDuration =>  randomInt(120, 200);
@@ -248,7 +248,7 @@ mixin class IsometricClient {
     updateTorchEmissionIntensity();
     updateParticleEmitters();
 
-    interpolation_padding = ((gamestream.isometric.scene.interpolationLength + 1) * Node_Size) / engine.zoom;
+    interpolation_padding = ((gamestream.isometric.scene.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;

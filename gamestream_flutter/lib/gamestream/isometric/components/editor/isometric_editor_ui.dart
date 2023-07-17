@@ -56,8 +56,8 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildPage({required List<Widget> children}) =>
       Container(
-          width: engine.screen.width,
-          height: engine.screen.height,
+          width: gamestream.engine.screen.width,
+          height: gamestream.engine.screen.height,
           child: Stack(children: children)
       );
 
@@ -68,7 +68,7 @@ extension IsometricEditorUI on IsometricEditor {
           bottom: 10,
           child: Container(
               alignment: Alignment.center,
-              width: engine.screen.width,
+              width: gamestream.engine.screen.width,
               child: buildRowWeatherControls()
           )
       ),
@@ -78,7 +78,7 @@ extension IsometricEditorUI on IsometricEditor {
           left: 0,
           top: 50,
           child: Container(
-              height: engine.screen.height - 100,
+              height: gamestream.engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
       if (activeEditTab == IsometricEditorTab.Grid)
@@ -179,7 +179,7 @@ extension IsometricEditorUI on IsometricEditor {
         buildButton(child: 'EDIT', action: toggleWindowEnabledScene),
         buildButton(child: 'MAP SIZE', action: toggleWindowEnabledCanvasSize),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
-        if (engine.isLocalHost)
+        if (gamestream.engine.isLocalHost)
           buildButton(child: 'SAVE', action: saveScene),
       ],
     );
@@ -207,7 +207,7 @@ extension IsometricEditorUI on IsometricEditor {
               child: Center(
                 child: Stack(
                   children: [
-                    engine.buildAtlasImage(
+                    gamestream.engine.buildAtlasImage(
                       image: Images.atlas_icons,
                       srcX: 193,
                       srcY: 32,
@@ -643,7 +643,7 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = engine.buildAtlasImage(
+    final canvas = gamestream.engine.buildAtlasImage(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -717,7 +717,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildOrientationIcon(int orientation) {
 
-    final canvas = engine.buildAtlasImage(
+    final canvas = gamestream.engine.buildAtlasImage(
       image: Images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
@@ -846,7 +846,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      engine.renderExternalCanvas(
+      gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: 304,
@@ -862,7 +862,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      engine.renderExternalCanvas(
+      gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: 352,
@@ -1023,7 +1023,7 @@ extension IsometricEditorUI on IsometricEditor {
             width: 200,
             height: 200,
             color: IsometricColors.brownDark,
-            child: engine.buildCanvas(paint: (Canvas canvas, Size size){
+            child: gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
                   renderIconSquareEmpty(
@@ -1131,7 +1131,7 @@ extension IsometricEditorUI on IsometricEditor {
           children: [
             child,
             Container(
-              height: engine.screen.height - 100,
+              height: gamestream.engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   children: children,
@@ -1147,7 +1147,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildColumnSelectNodeType() =>
       Container(
-        height: engine.screen.height - 70,
+        height: gamestream.engine.screen.height - 70,
         child: SingleChildScrollView(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1189,7 +1189,7 @@ extension IsometricEditorUI on IsometricEditor {
                     height: 16,
                     child: onPressed(
                       action: delete,
-                      child: engine.buildAtlasImage(
+                      child: gamestream.engine.buildAtlasImage(
                         image: Images.atlas_icons,
                         srcX: 80,
                         srcY: 96,
@@ -1300,8 +1300,8 @@ extension IsometricEditorUI on IsometricEditor {
     if (activeEditorDialog == null) return nothing;
 
     return Container(
-      width: engine.screen.width,
-      height: engine.screen.height,
+      width: gamestream.engine.screen.width,
+      height: gamestream.engine.screen.height,
       alignment: Alignment.center,
       child: Container(
           width: 350,

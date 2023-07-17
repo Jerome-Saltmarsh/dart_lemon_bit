@@ -95,10 +95,10 @@ class Isometric {
     if (!client.edit.value)
       return;
 
-    if (engine.keyPressedSpace) {
-      engine.panCamera();
+    if (gamestream.engine.keyPressedSpace) {
+      gamestream.engine.panCamera();
     }
-    if (engine.keyPressed(KeyCode.Delete)) {
+    if (gamestream.engine.keyPressed(KeyCode.Delete)) {
       editor.delete();
     }
     if (gamestream.io.getInputDirectionKeyboard() != IsometricDirection.None) {

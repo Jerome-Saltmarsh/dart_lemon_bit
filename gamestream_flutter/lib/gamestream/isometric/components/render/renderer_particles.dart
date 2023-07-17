@@ -11,7 +11,7 @@ class RendererParticles extends IsometricRenderer {
   final List<IsometricParticle> particles;
 
   late IsometricParticle particle;
-  final screen = engine.screen;
+  final screen = gamestream.engine.screen;
 
   var totalActiveParticles = 0;
 
@@ -32,15 +32,15 @@ class RendererParticles extends IsometricRenderer {
       assert (particle.active);
       assert (particle.delay <= 0);
       final dstX = IsometricRender.getPositionRenderX(particle);
-      assert (dstX > engine.Screen_Left - 50);
-      assert (dstX < engine.Screen_Right + 50);
+      assert (dstX > gamestream.engine.Screen_Left - 50);
+      assert (dstX < gamestream.engine.Screen_Right + 50);
       final dstY = IsometricRender.getPositionRenderY(particle);
-      assert (dstY > engine.Screen_Top - 50);
-      assert (dstY < engine.Screen_Bottom + 50);
+      assert (dstY > gamestream.engine.Screen_Top - 50);
+      assert (dstY < gamestream.engine.Screen_Bottom + 50);
 
       switch (particle.type) {
         case ParticleType.Water_Drop:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -53,7 +53,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Blood:
           casteShadowDownV3(particle);
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -69,7 +69,7 @@ class RendererParticles extends IsometricRenderer {
             particle.deactivate();
             break;
           }
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -81,7 +81,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Bubble_Small:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -93,7 +93,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Bullet_Ring:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -113,7 +113,7 @@ class RendererParticles extends IsometricRenderer {
             return;
           }
           final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -125,7 +125,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Block_Wood:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -138,7 +138,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Block_Grass:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -151,7 +151,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Confetti_Yellow:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.shades,
             dstX: dstX,
             dstY: dstY,
@@ -164,7 +164,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Confetti_Red:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.shades,
             dstX: dstX,
             dstY: dstY,
@@ -177,7 +177,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Confetti_Blue:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.shades,
             dstX: dstX,
             dstY: dstY,
@@ -190,7 +190,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Confetti_Green:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.shades,
             dstX: dstX,
             dstY: dstY,
@@ -203,7 +203,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Confetti_Purple:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.shades,
             dstX: dstX,
             dstY: dstY,
@@ -216,7 +216,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Confetti_Cyan:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.shades,
             dstX: dstX,
             dstY: dstY,
@@ -230,7 +230,7 @@ class RendererParticles extends IsometricRenderer {
           break;
 
         case ParticleType.Block_Brick:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -243,7 +243,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Block_Sand:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -259,7 +259,7 @@ class RendererParticles extends IsometricRenderer {
           if (particle.frame > 12 ) {
             return particle.deactivate();
           }
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -278,7 +278,7 @@ class RendererParticles extends IsometricRenderer {
             particle.deactivate();
             break;
           }
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -307,7 +307,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Orb_Shard:
           const size = 16.0;
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -322,7 +322,7 @@ class RendererParticles extends IsometricRenderer {
           if (particle.frame >= 7) {
             return particle.deactivate();
           }
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -334,7 +334,7 @@ class RendererParticles extends IsometricRenderer {
           return;
         case ParticleType.Zombie_Arm:
           casteShadowDownV3(particle);
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -347,7 +347,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Zombie_Head:
           casteShadowDownV3(particle);
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -360,7 +360,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Zombie_leg:
           casteShadowDownV3(particle);
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -374,7 +374,7 @@ class RendererParticles extends IsometricRenderer {
 
         case ParticleType.Zombie_Torso:
           casteShadowDownV3(particle);
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -398,7 +398,7 @@ class RendererParticles extends IsometricRenderer {
           renderParticleStrikeLight();
           break;
         case ParticleType.Shadow:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
               image: Images.atlas_particles,
               srcX: 8,
               srcY: 552,
@@ -410,7 +410,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Lightning_Bolt:
-          engine.renderSprite(
+          gamestream.engine.renderSprite(
             image: Images.atlas_particles,
             srcX: 1,
             srcY: 576,
@@ -428,7 +428,7 @@ class RendererParticles extends IsometricRenderer {
     }
 
   void renderParticleShell(double dstX, double dstY) {
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_particles,
       dstX: dstX,
       dstY: dstY,
@@ -443,7 +443,7 @@ class RendererParticles extends IsometricRenderer {
 
   void renderParticleSmoke() {
     // casteShadowDownV3(particle);
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -462,7 +462,7 @@ class RendererParticles extends IsometricRenderer {
       particle.deactivate();
       return;
     }
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -483,7 +483,7 @@ class RendererParticles extends IsometricRenderer {
       particle.deactivate();
       return;
     }
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -504,7 +504,7 @@ class RendererParticles extends IsometricRenderer {
       particle.deactivate();
       return;
     }
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -524,7 +524,7 @@ class RendererParticles extends IsometricRenderer {
       particle.deactivate();
       return;
     }
-    engine.renderSpriteRotated(
+    gamestream.engine.renderSpriteRotated(
       image: Images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -547,11 +547,11 @@ class RendererParticles extends IsometricRenderer {
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
       final dstX = particle.renderX;
-      if (dstX < engine.Screen_Left - 50) continue;
-      if (dstX > engine.Screen_Right + 50) continue;
+      if (dstX < gamestream.engine.Screen_Left - 50) continue;
+      if (dstX > gamestream.engine.Screen_Right + 50) continue;
       final dstY = particle.renderY;
-      if (dstY < engine.Screen_Top - 50) continue;
-      if (dstY > engine.Screen_Bottom + 50) continue;
+      if (dstY < gamestream.engine.Screen_Top - 50) continue;
+      if (dstY > gamestream.engine.Screen_Bottom + 50) continue;
       if (!scene.isPerceptiblePosition(particle)) continue;
 
       orderZ = particle.indexZ;

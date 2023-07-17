@@ -110,11 +110,11 @@ class IsometricGameObject extends IsometricPosition {
     const Pad_Distance = 75.0;
     final rx = renderX;
 
-    if (rx < engine.Screen_Left - Pad_Distance || rx > engine.Screen_Right + Pad_Distance)
+    if (rx < gamestream.engine.Screen_Left - Pad_Distance || rx > gamestream.engine.Screen_Right + Pad_Distance)
       return false;
 
     final ry = renderY;
-    return ry > engine.Screen_Top - Pad_Distance && ry < engine.Screen_Bottom + Pad_Distance;
+    return ry > gamestream.engine.Screen_Top - Pad_Distance && ry < gamestream.engine.Screen_Bottom + Pad_Distance;
   }
 
   @override

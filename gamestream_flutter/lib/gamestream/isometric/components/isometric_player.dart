@@ -72,8 +72,8 @@ class IsometricPlayer {
   double get z => position.z;
   double get renderX => IsometricRender.getPositionRenderX(position);
   double get renderY => IsometricRender.getPositionRenderY(position);
-  double get positionScreenX => engine.worldToScreenX(position.renderX);
-  double get positionScreenY => engine.worldToScreenY(position.renderY);
+  double get positionScreenX => gamestream.engine.worldToScreenX(position.renderX);
+  double get positionScreenY => gamestream.engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
   bool get inBounds => gamestream.isometric.scene.inBoundsPosition(position);

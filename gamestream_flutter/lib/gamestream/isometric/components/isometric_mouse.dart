@@ -9,8 +9,8 @@ import 'isometric_render.dart';
 class IsometricMouse {
   static IsometricPlayer get player => gamestream.isometric.player;
 
-  static double get positionX => IsometricRender.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + player.position.z;
-  static double get positionY => IsometricRender.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + player.position.z;
+  static double get positionX => IsometricRender.convertWorldToGridX(gamestream.engine.mouseWorldX, gamestream.engine.mouseWorldY) + player.position.z;
+  static double get positionY => IsometricRender.convertWorldToGridY(gamestream.engine.mouseWorldX, gamestream.engine.mouseWorldY) + player.position.z;
   static double get positionZ => player.position.z;
   static int get nodeIndex => gamestream.isometric.scene.getIndexXYZ(positionX, positionY, positionZ);
   static double get playerAngle => angleBetween(player.position.x, player.position.y, positionX, positionY);

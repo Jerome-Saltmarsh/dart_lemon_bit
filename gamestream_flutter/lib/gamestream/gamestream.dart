@@ -2,23 +2,25 @@
 import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'isometric/atlases/atlas.dart';
-import 'operation_status.dart';
 import 'game.dart';
 import 'games.dart';
+import 'isometric/atlases/atlas.dart';
 import 'isometric/isometric.dart';
+import 'isometric/ui/isometric_colors.dart';
 import 'network/enums/connection_region.dart';
 import 'network/enums/connection_status.dart';
 import 'network/game_network.dart';
+import 'operation_status.dart';
 import 'ui/widgets/build_text.dart';
 
-class Gamestream with ByteReader {
+class Gamestream extends StatelessWidget with ByteReader {
   var previousServerResponse = -1;
   var renderResponse = false;
 
@@ -30,6 +32,7 @@ class Gamestream with ByteReader {
   final operationStatus = Watch(OperationStatus.None);
   final isometric = Isometric();
 
+  late final Engine engine;
   late final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
   late final io = GameIO(isometric);
   late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
@@ -39,9 +42,10 @@ class Gamestream with ByteReader {
   late final GameNetwork network;
   late final Games games;
   late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
-
+  var engineBuilt = false;
 
   Gamestream() {
+    print('GameStream()');
     games = Games(this);
     network = GameNetwork(this);
     network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
@@ -259,5 +263,34 @@ class Gamestream with ByteReader {
 
   void onChangedUpdateFrame(int value){
     rendersSinceUpdate.value = 0;
+  }
+
+  void update(){
+
+  }
+
+  void render(Canvas canvas, Size size){
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+     if (engineBuilt){
+       return engine;
+     }
+
+
+     engineBuilt = true;
+    engine = Engine(
+      init: init,
+      update: update,
+      render: render,
+      themeData: ThemeData(fontFamily: 'VT323-Regular'),
+      backgroundColor: IsometricColors.black,
+      onError: onError,
+      buildUI: games.website.buildUI,
+      buildLoadingScreen: games.website.buildLoadingPage,
+    );
+    return engine;
   }
 }

@@ -137,7 +137,7 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
-  Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
+  Widget buildNotConnected()  => buildWatch(gamestream.engine.deviceType, buildPageWebsite);
 
   Widget buildPageWebsite(int deviceType) =>
       deviceType == DeviceType.Computer
@@ -147,7 +147,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildPageWebsiteMobile() =>
       Container(
         // width: 300,
-        width: engine.screen.width,
+        width: gamestream.engine.screen.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -205,7 +205,7 @@ extension WebsiteUI on WebsiteGame {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: (engine.isLocalHost ? ConnectionRegion.values : const [
+                children: (gamestream.engine.isLocalHost ? ConnectionRegion.values : const [
                   ConnectionRegion.America_North,
                   ConnectionRegion.America_South,
                   ConnectionRegion.Asia_North,

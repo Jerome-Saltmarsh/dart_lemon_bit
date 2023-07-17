@@ -101,13 +101,13 @@ class GameIsometricUI {
               ),
               height6,
               onPressed(
-                action: engine.fullscreenToggle,
+                action: gamestream.engine.fullscreenToggle,
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       buildText('FULLSCREEN', size: 20, color: Colors.white70),
-                      buildWatch(engine.fullScreen, buildIconCheckbox),
+                      buildWatch(gamestream.engine.fullScreen, buildIconCheckbox),
                     ],
                   ),
                 ),
@@ -129,7 +129,7 @@ class GameIsometricUI {
 
   static Widget buildGeneratedMiniMap({required double translate}){
     return buildWatch(gamestream.isometric.client.sceneChanged, (_){
-      return engine.buildCanvas(paint: (Canvas canvas, Size size){
+      return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
         const scale = 2.0;
         canvas.scale(scale, scale);
         final screenCenterX = size.width * 0.5;
@@ -153,7 +153,7 @@ class GameIsometricUI {
         for (var i = 0; i < serverState.totalCharacters; i++) {
           final character = serverState.characters[i];
           final isPlayer = player.isCharacter(character);
-          engine.renderExternalCanvas(
+          gamestream.engine.renderExternalCanvas(
               canvas: canvas,
               image: Images.atlas_gameobjects,
               srcX: 0,
@@ -173,7 +173,7 @@ class GameIsometricUI {
     bottom: 150,
     child: IgnorePointer(
       child: Container(
-        width: engine.screen.width,
+        width: gamestream.engine.screen.width,
         alignment: Alignment.center,
         child: buildWatch(gamestream.isometric.client.messageStatus, buildMessageStatus),
       ),
@@ -337,10 +337,10 @@ class GameIsometricUI {
       );
 
   static Widget buildIconFullscreen() => WatchBuilder(
-      engine.fullScreen,
+      gamestream.engine.fullScreen,
           (bool fullscreen) => onPressed(
           hint: 'toggle fullscreen',
-          action: engine.fullscreenToggle,
+          action: gamestream.engine.fullscreenToggle,
           child: Container(
               width: 32,
               child: GameIsometricUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
@@ -375,7 +375,7 @@ class GameIsometricUI {
   static Widget buildAtlasIconType(int iconType,
       {double scale = 1, int color = 1}) =>
       FittedBox(
-        child: engine.buildAtlasImage(
+        child: gamestream.engine.buildAtlasImage(
           image: Images.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
@@ -394,7 +394,7 @@ class GameIsometricUI {
     final src = Atlas.getSrc(type, subType);
 
     return FittedBox(
-        child: engine.buildAtlasImage(
+        child: gamestream.engine.buildAtlasImage(
           image: Images.getImageForGameObject(type),
           srcX: src[Atlas.SrcX],
           srcY: src[Atlas.SrcY],
@@ -405,7 +405,7 @@ class GameIsometricUI {
       );
   }
 
-  static Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
+  static Widget buildAtlasNodeType(int nodeType) => gamestream.engine.buildAtlasImage(
     image: Images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),

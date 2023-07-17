@@ -14,7 +14,7 @@ class IsometricUI {
           Atlas.getSrc(GameObjectType.Object, objectType),
       );
 
-  Widget buildImageFromSrc(ui.Image image, List<double> src) => engine.buildAtlasImage(
+  Widget buildImageFromSrc(ui.Image image, List<double> src) => gamestream.engine.buildAtlasImage(
       image: image,
       srcX: src[Atlas.SrcX],
       srcY: src[Atlas.SrcY],

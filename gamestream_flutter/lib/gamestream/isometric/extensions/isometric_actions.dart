@@ -86,10 +86,10 @@ extension IsometricActions on Isometric {
 
   void toggleZoom(){
     gamestream.audio.weaponSwap2();
-    if (engine.targetZoom != Zoom_Far){
-      engine.targetZoom = Zoom_Far;
+    if (gamestream.engine.targetZoom != Zoom_Far){
+      gamestream.engine.targetZoom = Zoom_Far;
     } else {
-      engine.targetZoom = Zoom_Close;
+      gamestream.engine.targetZoom = Zoom_Close;
     }
   }
 

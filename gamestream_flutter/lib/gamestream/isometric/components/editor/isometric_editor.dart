@@ -111,7 +111,7 @@ class IsometricEditor {
         selectPaintType();
         break;
       case KeyCode.Arrow_Up:
-        if (engine.keyPressedShiftLeft) {
+        if (gamestream.engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value){
             translate(x: 0, y: 0, z: 1);
             return;
@@ -132,7 +132,7 @@ class IsometricEditor {
         cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
-        if (engine.keyPressedShiftLeft) {
+        if (gamestream.engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value){
             return translate(x: 0, y: 0, z: -1);
           }
@@ -230,7 +230,7 @@ class IsometricEditor {
   }
 
   void cameraCenterSelectedObject() =>
-      engine.cameraCenter(
+      gamestream.engine.cameraCenter(
         gameObject.value!.renderX,
         gameObject.value!.renderY,
       );

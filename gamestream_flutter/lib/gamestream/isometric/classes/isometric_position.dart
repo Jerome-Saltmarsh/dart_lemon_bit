@@ -18,9 +18,9 @@ class IsometricPosition implements Comparable<IsometricPosition>{
 
   double get sortOrder => x + y + z;
 
-  double get screenX => engine.worldToScreenX(renderX);
+  double get screenX => gamestream.engine.worldToScreenX(renderX);
 
-  double get screenY => engine.worldToScreenY(renderY);
+  double get screenY => gamestream.engine.worldToScreenY(renderY);
 
   double get renderX => (x - y) * 0.5;
 

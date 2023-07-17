@@ -224,13 +224,13 @@ class IsometricScene {
 
     const r = 4;
     final dstXLeft = IsometricRender.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
-    if (dstXLeft < engine.Screen_Left)    return;
+    if (dstXLeft < gamestream.engine.Screen_Left)    return;
     final dstXRight = IsometricRender.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
-    if (dstXRight > engine.Screen_Right)   return;
+    if (dstXRight > gamestream.engine.Screen_Right)   return;
     final dstYTop = IsometricRender.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
-    if (dstYTop <  engine.Screen_Top) return;
+    if (dstYTop <  gamestream.engine.Screen_Top) return;
     final dstYBottom = IsometricRender.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
-    if (dstYBottom >  engine.Screen_Bottom) return;
+    if (dstYBottom >  gamestream.engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;
@@ -407,11 +407,11 @@ class IsometricScene {
 
     final padding = gamestream.isometric.client.interpolation_padding;
     final rx = getIndexRenderX(index);
-    if (rx < engine.Screen_Left - padding) return;
-    if (rx > engine.Screen_Right + padding) return;
+    if (rx < gamestream.engine.Screen_Left - padding) return;
+    if (rx > gamestream.engine.Screen_Right + padding) return;
     final ry = getIndexRenderY(index);
-    if (ry < engine.Screen_Top - padding) return;
-    if (ry > engine.Screen_Bottom + padding) return;
+    if (ry < gamestream.engine.Screen_Top - padding) return;
+    if (ry > gamestream.engine.Screen_Bottom + padding) return;
 
     gamestream.isometric.client.lights_active++;
 
@@ -505,11 +505,11 @@ class IsometricScene {
 
     final padding = gamestream.isometric.client.interpolation_padding;
     final rx = getIndexRenderX(index);
-    if (rx < engine.Screen_Left - padding) return;
-    if (rx > engine.Screen_Right + padding) return;
+    if (rx < gamestream.engine.Screen_Left - padding) return;
+    if (rx > gamestream.engine.Screen_Right + padding) return;
     final ry = getIndexRenderY(index);
-    if (ry < engine.Screen_Top - padding) return;
-    if (ry > engine.Screen_Bottom + padding) return;
+    if (ry < gamestream.engine.Screen_Top - padding) return;
+    if (ry > gamestream.engine.Screen_Bottom + padding) return;
     gamestream.isometric.client.lights_active++;
 
     final row = getIndexRow(index);
@@ -1213,12 +1213,12 @@ class IsometricScene {
     final column = getIndexColumn(index);
 
     final renderX = IsometricRender.rowColumnToRenderX(row, column);
-    if (renderX < engine.Screen_Left) return false;
-    if (renderX > engine.Screen_Right) return false;
+    if (renderX < gamestream.engine.Screen_Left) return false;
+    if (renderX > gamestream.engine.Screen_Right) return false;
 
     final renderY = IsometricRender.rowColumnZToRenderY(row, column, getIndexZ(index));
-    if (renderY < engine.Screen_Top) return false;
-    if (renderY > engine.Screen_Bottom) return false;
+    if (renderY < gamestream.engine.Screen_Top) return false;
+    if (renderY > gamestream.engine.Screen_Bottom) return false;
 
     return true;
   }

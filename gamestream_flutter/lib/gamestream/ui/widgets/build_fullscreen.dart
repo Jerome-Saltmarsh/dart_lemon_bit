@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/instances/engine.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 Widget buildFullScreen({
   required Widget child,
@@ -7,8 +7,8 @@ Widget buildFullScreen({
   Color? color,
 }) =>
     Container(
-      width: engine.screen.width,
-      height: engine.screen.height,
+      width: gamestream.engine.screen.width,
+      height: gamestream.engine.screen.height,
       alignment: alignment,
       child: child,
       color: color,

@@ -53,9 +53,9 @@ class RendererNodes extends IsometricRenderer {
   // VARIABLES
   var previousVisibility = 0;
 
-  final bufferClr = engine.bufferClr;
-  final bufferSrc = engine.bufferSrc;
-  final bufferDst = engine.bufferDst;
+  final bufferClr = gamestream.engine.bufferClr;
+  final bufferSrc = gamestream.engine.bufferSrc;
+  final bufferDst = gamestream.engine.bufferDst;
   final atlas_nodes = Images.atlas_nodes;
 
   var playerRenderRow = 0;
@@ -171,7 +171,7 @@ class RendererNodes extends IsometricRenderer {
 
   @override
   void renderFunction() {
-    engine.bufferImage = atlas_nodes;
+    gamestream.engine.bufferImage = atlas_nodes;
     previousNodeTransparent = false;
 
     final playerInsideIsland = gamestream.isometric.player.playerInsideIsland;
@@ -278,10 +278,10 @@ class RendererNodes extends IsometricRenderer {
     scene.offscreenNodes = 0;
     scene.onscreenNodes = 0;
 
-    screenRight = engine.Screen_Right + Node_Size;
-    screenLeft = engine.Screen_Left - Node_Size;
-    screenTop = engine.Screen_Top - 72;
-    screenBottom = engine.Screen_Bottom + 72;
+    screenRight = gamestream.engine.Screen_Right + Node_Size;
+    screenLeft = gamestream.engine.Screen_Left - Node_Size;
+    screenTop = gamestream.engine.Screen_Top - 72;
+    screenBottom = gamestream.engine.Screen_Bottom + 72;
     var screenTopLeftColumn = IsometricRender.convertWorldToColumn(screenLeft, screenTop, 0);
     nodesScreenBottomRightRow = clamp(IsometricRender.convertWorldToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
     nodesScreenTopLeftRow = IsometricRender.convertWorldToRow(screenLeft, screenTop, 0);
@@ -632,7 +632,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeTorch(){
     if (renderNodeWind == WindType.Calm){
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: AtlasNodeX.Torch,
         srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
@@ -645,7 +645,7 @@ class RendererNodes extends IsometricRenderer {
       );
       return;
     }
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: AtlasNode.X_Torch_Windy,
       srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
@@ -708,7 +708,7 @@ class RendererNodes extends IsometricRenderer {
     final transparent = currentNodeTransparent;
     if (previousNodeTransparent != transparent) {
       previousNodeTransparent = transparent;
-      engine.bufferImage = transparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
+      gamestream.engine.bufferImage = transparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
     }
 
     final nodeType = currentNodeType;
@@ -1314,7 +1314,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeRainLanding() {
     if (currentNodeIndex > scene.area && scene.nodeTypes[currentNodeIndex - scene.area] == NodeType.Water){
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
         srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + column) % 8), // TODO Expensive Operation
@@ -1346,7 +1346,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTopOak(){
     var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % IsometricAnimation.treeAnimation.length] * renderNodeWind;
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
       srcY: 433.0,
@@ -1362,7 +1362,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTopPine() {
     var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % IsometricAnimation.treeAnimation.length] * renderNodeWind;
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: 1262,
       srcY: 80 ,
@@ -1377,7 +1377,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeBottomOak() {
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
       srcY: 433.0,
@@ -1391,7 +1391,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeBottomPine() {
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: 1216,
       srcY: 80,
@@ -2030,7 +2030,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderNodeDust() =>
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: 1552,
         srcY: 432 + (gamestream.isometric.animation.animationFrame6 * 72.0), // TODO Optimize
@@ -2043,7 +2043,7 @@ class RendererNodes extends IsometricRenderer {
       );
 
   void renderNodeWater() =>
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((gamestream.isometric.animation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
@@ -2060,8 +2060,8 @@ class RendererNodes extends IsometricRenderer {
     required double srcY,
   }){
     onscreenNodes++;
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = colorCurrent;
+    final f = gamestream.engine.bufferIndex * 4;
+    bufferClr[gamestream.engine.bufferIndex] = colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
@@ -2070,7 +2070,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half);
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third);
-    engine.incrementBufferIndex();
+    gamestream.engine.incrementBufferIndex();
   }
 
   void renderNodeSideTop({required double srcX, required double srcY}) => renderCustomNode(
@@ -2127,8 +2127,8 @@ class RendererNodes extends IsometricRenderer {
     required double offsetY,
   }){
     onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = colorCurrent;
+    final f = gamestream.engine.bufferIndex << 2;
+    bufferClr[gamestream.engine.bufferIndex] = colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
@@ -2137,7 +2137,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
+    gamestream.engine.incrementBufferIndex();
   }
 
   void renderDynamicSideNorthSouth({
@@ -2288,8 +2288,8 @@ class RendererNodes extends IsometricRenderer {
     required int color,
   }){
     onscreenNodes++;
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = color;
+    final f = gamestream.engine.bufferIndex * 4;
+    bufferClr[gamestream.engine.bufferIndex] = color;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + srcWidth;
@@ -2298,7 +2298,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = dstX;
     bufferDst[f + 3] = dstY;
-    engine.incrementBufferIndex();
+    gamestream.engine.incrementBufferIndex();
   }
 
   void renderNodeShadedCustom({
@@ -2311,8 +2311,8 @@ class RendererNodes extends IsometricRenderer {
     double? srcHeight
   }){
     onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = color ?? colorCurrent;
+    final f =gamestream.engine.bufferIndex << 2;
+    bufferClr[gamestream.engine.bufferIndex] = color ?? colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + (srcWidth ?? IsometricConstants.Sprite_Width);
@@ -2321,7 +2321,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
+    gamestream.engine.incrementBufferIndex();
   }
 
 }

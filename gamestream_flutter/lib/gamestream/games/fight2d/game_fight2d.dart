@@ -54,7 +54,7 @@ class GameFight2D extends Game {
            GameFight2DNodeType.Grass: 34,
          }[nodeType] ?? 0;
 
-         engine.renderSprite(
+         gamestream.engine.renderSprite(
              image: Images.atlas_fight2d_nodes,
              srcX: srcY,
              srcY: 0,
@@ -104,7 +104,7 @@ class GameFight2D extends Game {
           _ => 0
       };
 
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
           image: Images.atlas_fight2d_character,
           srcX: frame * frameSize,
           srcY:  characterDirection[i] == GameFight2DDirection.Left ? 0 : frameSize,
@@ -115,15 +115,15 @@ class GameFight2D extends Game {
       );
 
       if (renderCharacterState.value){
-        engine.renderText(
+        gamestream.engine.renderText(
           GameFight2DCharacterState.getName(state),
           characterPositionX[i].toDouble(),
           characterPositionY[i].toDouble() - 100,
         );
       }
 
-      engine.paint.color = Colors.white;
-      engine.renderText(
+      gamestream.engine.paint.color = Colors.white;
+      gamestream.engine.renderText(
           characterIsBot[i] ? '${characterDamage[i]}-AI' : characterDamage[i].toString(),
         characterPositionX[i].toDouble() - 20,
         characterPositionY[i].toDouble() - 120,
@@ -147,7 +147,7 @@ class GameFight2D extends Game {
   void update() {
     gamestream.io.applyKeyboardInputToUpdateBuffer();
     gamestream.io.sendUpdateBuffer();
-    engine.cameraFollow(player.x, player.y);
+    gamestream.engine.cameraFollow(player.x, player.y);
   }
 
   void applyCharacterAudio() {
@@ -166,24 +166,24 @@ class GameFight2D extends Game {
 
   void updateCamera() {
     const speed = 4.0;
-    if (engine.keyPressed(KeyCode.Arrow_Up)){
-      engine.cameraY -= speed;
+    if (gamestream.engine.keyPressed(KeyCode.Arrow_Up)){
+      gamestream.engine.cameraY -= speed;
     }
-    if (engine.keyPressed(KeyCode.Arrow_Down)){
-      engine.cameraY += speed;
+    if (gamestream.engine.keyPressed(KeyCode.Arrow_Down)){
+      gamestream.engine.cameraY += speed;
     }
-    if (engine.keyPressed(KeyCode.Arrow_Left)){
-      engine.cameraX -= speed;
+    if (gamestream.engine.keyPressed(KeyCode.Arrow_Left)){
+      gamestream.engine.cameraX -= speed;
     }
-    if (engine.keyPressed(KeyCode.Arrow_Right)){
-      engine.cameraX += speed;
+    if (gamestream.engine.keyPressed(KeyCode.Arrow_Right)){
+      gamestream.engine.cameraX += speed;
     }
   }
 
   @override
   void onActivated() {
-    engine.zoom = Default_Camera_Zoom;
-    engine.targetZoom = engine.zoom;
+    gamestream.engine.zoom = Default_Camera_Zoom;
+    gamestream.engine.targetZoom = gamestream.engine.zoom;
   }
 
   @override

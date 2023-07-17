@@ -63,7 +63,7 @@ class IsometricDebug {
     if (!gamestream.isometric.player.debugging.value) return;
     if (!selectedCollider.value) return;
 
-    engine.setPaintColor(Colors.white);
+    gamestream.engine.setPaintColor(Colors.white);
     renderer.renderCircle(
       x.value,
       y.value,
@@ -71,7 +71,7 @@ class IsometricDebug {
       radius.value.toDouble(),
     );
 
-    engine.setPaintColor(Colors.green);
+    gamestream.engine.setPaintColor(Colors.green);
     renderer.renderCircle(
       x.value,
       y.value,
@@ -79,7 +79,7 @@ class IsometricDebug {
       weaponRange.value.toDouble(),
     );
 
-    engine.setPaintColor(Colors.red);
+    gamestream.engine.setPaintColor(Colors.red);
     if (selectedColliderType.value == IsometricType.Character) {
       if (targetSet.value) {
         renderer.renderLine(
@@ -92,14 +92,14 @@ class IsometricDebug {
         );
       }
 
-      engine.setPaintColor(Colors.blue);
+      gamestream.engine.setPaintColor(Colors.blue);
       renderPath(
         path: path,
         start: 0,
         end: pathIndex.value,
       );
 
-      engine.setPaintColor(Colors.yellow);
+      gamestream.engine.setPaintColor(Colors.yellow);
       renderPath(
         path: path,
         start: pathIndex.value,
@@ -107,7 +107,7 @@ class IsometricDebug {
       );
 
       if (!arrivedAtDestination.value){
-        engine.setPaintColor(Colors.deepPurpleAccent);
+        gamestream.engine.setPaintColor(Colors.deepPurpleAccent);
         renderer.renderLine(
           x.value,
           y.value,
@@ -138,7 +138,7 @@ class IsometricDebug {
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];
-      engine.drawLine(
+      gamestream.engine.drawLine(
         nodes.getIndexRenderX(a),
         nodes.getIndexRenderY(a),
         nodes.getIndexRenderX(b),
@@ -161,7 +161,7 @@ class IsometricDebug {
   void onMouseLeftClicked() => isometric.debugSelect();
 
   void onMouseRightClicked() {
-    if (engine.keyPressedShiftLeft){
+    if (gamestream.engine.keyPressedShiftLeft){
       isometric.debugAttack();
       return;
     }

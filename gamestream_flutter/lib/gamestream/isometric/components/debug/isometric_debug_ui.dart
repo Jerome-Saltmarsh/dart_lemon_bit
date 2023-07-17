@@ -24,7 +24,7 @@ extension isometricDebugUI on IsometricDebug {
                       minWidth: 300,
                       maxWidth: 400,
                       minHeight: 300,
-                      maxHeight: engine.screen.height - 150),
+                      maxHeight: gamestream.engine.screen.height - 150),
                   child: SingleChildScrollView(
                     child: switch (activeTab) {
                       DebugTab.Selected => buildTabSelected(),
@@ -142,8 +142,8 @@ extension isometricDebugUI on IsometricDebug {
         children: [
           GSRefresh(() =>  buildText(
               'mouse-scene: x: ${IsometricMouse.positionX.toInt()}, y: ${IsometricMouse.positionY.toInt()}\n'
-                  'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
-                  'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
+                  'mouse-world: x: ${gamestream.engine.mouseWorldX.toInt()}, y: ${gamestream.engine.mouseWorldY.toInt()}\n'
+                  'mouse-screen: x: ${gamestream.engine.mousePositionX.toInt()}, y: ${gamestream.engine.mousePositionY.toInt()}\n'
                   'player-alive: ${gamestream.isometric.player.alive.value}\n'
                   'player-position: ${gamestream.isometric.player.position}\n'
                   'player-render: x: ${gamestream.isometric.player.position.renderX}, y: ${gamestream.isometric.player.position.renderY}\n'
@@ -167,10 +167,10 @@ extension isometricDebugUI on IsometricDebug {
           )),
           buildWatch(gamestream.updateFrame, (t) => buildText('update-frame: $t')),
           buildWatch(gamestream.gameType, (GameType value) => buildText('game-type: ${value.name}')),
-          buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
+          buildWatch(gamestream.engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: gamestream.engine.toggleDeviceType)),
           buildWatch(gamestream.io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: gamestream.io.actionToggleInputMode)),
-          buildWatch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
-          buildWatch(engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
+          buildWatch(gamestream.engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
+          buildWatch(gamestream.engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
           // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
         ],
       );
@@ -183,11 +183,11 @@ extension isometricDebugUI on IsometricDebug {
               child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.client.dynamicShadows}'))
           ),
           onPressed(
-              child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
+              child: GSRefresh(() => buildText('blend-mode: ${gamestream.engine.bufferBlendMode.name}')),
               action: (){
-                final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
+                final currentIndex = BlendMode.values.indexOf(gamestream.engine.bufferBlendMode);
                 final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
-                engine.bufferBlendMode = BlendMode.values[nextIndex];
+                gamestream.engine.bufferBlendMode = BlendMode.values[nextIndex];
               }
           ),
           height8,
@@ -247,32 +247,32 @@ extension isometricDebugUI on IsometricDebug {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       GSRefresh(() => buildText('engine-touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
-      GSRefresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
-      GSRefresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
-      GSRefresh(() => buildText('engine-camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
-      GSRefresh(() => buildText('engine-render-frame: ${engine.paintFrame}')),
-      GSRefresh(() => buildText('engine-update-frame: ${engine.updateFrame}')),
-      buildRowWatchInt(text: 'engine.ms-render', watch: engine.msRender),
-      buildRowWatchInt(text: 'engine.ms-update', watch: engine.msUpdate),
-      buildWatch(engine.msRender, (t) {
+      GSRefresh(() => buildText('engine-render-batches: ${gamestream.engine.batchesRendered}')),
+      GSRefresh(() => buildText('engine-render-batch-1: ${gamestream.engine.batches1Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-2: ${gamestream.engine.batches2Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-4: ${gamestream.engine.batches4Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-8: ${gamestream.engine.batches8Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-16: ${gamestream.engine.batches16Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-32: ${gamestream.engine.batches32Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-64: ${gamestream.engine.batches64Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-128: ${gamestream.engine.batches128Rendered}')),
+      GSRefresh(() => buildText('engine-camera-zoom: ${gamestream.engine.targetZoom.toStringAsFixed(3)}')),
+      GSRefresh(() => buildText('engine-render-frame: ${gamestream.engine.paintFrame}')),
+      GSRefresh(() => buildText('engine-update-frame: ${gamestream.engine.updateFrame}')),
+      buildRowWatchInt(text: 'engine.ms-render', watch: gamestream.engine.msRender),
+      buildRowWatchInt(text: 'engine.ms-update', watch: gamestream.engine.msUpdate),
+      buildWatch(gamestream.engine.msRender, (t) {
         return buildRowText(text: 'engine.fps-render', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
-      buildWatch(engine.msUpdate, (t) {
+      buildWatch(gamestream.engine.msUpdate, (t) {
         return buildRowText(text: 'engine.fps-update', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
-      buildWatch(engine.renderFramesSkipped, (t) {
+      buildWatch(gamestream.engine.renderFramesSkipped, (t) {
         return buildRowText(text: 'render.frames-skipped', value:t);
       }),
       onPressed(
-          action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
-          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
+          action: () => gamestream.engine.drawCanvasAfterUpdate = !gamestream.engine.drawCanvasAfterUpdate,
+          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${gamestream.engine.drawCanvasAfterUpdate}'))
 
       ),
       onPressed(

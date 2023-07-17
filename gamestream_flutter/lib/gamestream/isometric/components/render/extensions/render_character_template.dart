@@ -24,7 +24,7 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (weaponType == WeaponType.Unarmed) return;
     const Sprite_Size = 125.0;
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
         image: Images.getImageForWeaponType(weaponType),
         srcX: frame * Sprite_Size,
         srcY: direction * Sprite_Size,
@@ -152,7 +152,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final color = invisible ? Color_Invisible : gamestream.isometric.scene.getRenderColorPosition(character);
 
     if (invisible) {
-      engine.bufferBlendMode = BlendMode.srcIn;
+      gamestream.engine.bufferBlendMode = BlendMode.srcIn;
     }
 
     if (!weaponInFront) {
@@ -171,7 +171,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       // final shadowY = character.y + opp(shadowAngle, shadowDistance);
       // final shadowZ = character.z;
 
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
         image: Images.template_shadow,
         srcX: frameLegs * 64,
         srcY: upperBodyDirection * 64,
@@ -185,7 +185,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       );
     }
 
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
         image: Images.getImageForLegType(character.legType),
         srcX: frameLegs * Sprite_Size,
         srcY: directionLegs * Sprite_Size,
@@ -197,7 +197,7 @@ extension RenderCharactersTemplate on RendererCharacters {
         color: color,
         anchorY: Anchor_Y
     );
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
         image: Images.getImageForBodyType(character.bodyType),
         srcX: frameBody * Sprite_Size,
         srcY: directionBody * Sprite_Size,
@@ -213,7 +213,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     // final height = gamestream.isometricEngine.nodes.heightMap[(character.indexRow * gamestream.isometricEngine.nodes.totalColumns) + character.indexColumn];
     // GameRender.renderTextV3(character, gamestream.isometricEngine.nodes.nodeAlps[character.nodeIndex - gamestream.isometricEngine.nodes.area], offsetY: -80);
 
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
         image: Images.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
         srcY: directionHead * Sprite_Size,
@@ -231,7 +231,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     }
 
     if (invisible) {
-      engine.bufferBlendMode = BlendMode.dstATop;
+      gamestream.engine.bufferBlendMode = BlendMode.dstATop;
     }
   }
 }

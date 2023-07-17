@@ -68,7 +68,7 @@ class IsometricRender {
   }
 
   void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
-      engine.renderLine(
+      gamestream.engine.renderLine(
         renderX(x1, y1, z1),
         renderY(x1, y1, z1),
         renderX(x2, y2, z2),
@@ -173,7 +173,7 @@ class IsometricRender {
       int row,
       int column,
       ) {
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
@@ -187,7 +187,7 @@ class IsometricRender {
   }
 
   void renderWireFrameRed(int row, int column, int z) {
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
@@ -200,7 +200,7 @@ class IsometricRender {
   }
 
   void canvasRenderCursorHand(ui.Canvas canvas){
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
       canvas: canvas,
       image: Images.atlas_icons,
       srcX: 0,
@@ -214,7 +214,7 @@ class IsometricRender {
   }
 
   void canvasRenderCursorTalk(ui.Canvas canvas){
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
       canvas: canvas,
       image: Images.atlas_icons,
       srcX: 0,
@@ -230,7 +230,7 @@ class IsometricRender {
   void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
     const srcX = 0;
     const srcY = 192;
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 29,
@@ -241,7 +241,7 @@ class IsometricRender {
         dstY: gamestream.io.getCursorScreenY() - range,
         anchorY: 1.0
     );
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 29,
@@ -252,7 +252,7 @@ class IsometricRender {
         dstY: gamestream.io.getCursorScreenY() + range,
         anchorY: 0.0
     );
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 0,
@@ -263,7 +263,7 @@ class IsometricRender {
         dstY: gamestream.io.getCursorScreenY(),
         anchorX: 1.0
     );
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 0,
@@ -280,7 +280,7 @@ class IsometricRender {
     const srcX = 0;
     const srcY = 384;
     const offset = 0;
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 29,
@@ -291,7 +291,7 @@ class IsometricRender {
         dstY: gamestream.io.getCursorScreenY() - range - offset,
         anchorY: 1.0
     );
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 29,
@@ -302,7 +302,7 @@ class IsometricRender {
         dstY: gamestream.io.getCursorScreenY() + range - offset,
         anchorY: 0.0
     );
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 0,
@@ -313,7 +313,7 @@ class IsometricRender {
         dstY: gamestream.io.getCursorScreenY() - offset,
         anchorX: 1.0
     );
-    engine.renderExternalCanvas(
+    gamestream.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: srcX + 0,
@@ -327,7 +327,7 @@ class IsometricRender {
   }
 
   void renderCircle32(double x, double y, double z){
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_gameobjects,
       srcX: 16,
       srcY: 48,
@@ -342,7 +342,7 @@ class IsometricRender {
       renderStars(v3.renderX, v3.renderY - 40);
 
   void renderStars(double x, double y) =>
-      engine.renderSprite(
+      gamestream.engine.renderSprite(
         image: Images.sprite_stars,
         srcX: 125.0 * gamestream.isometric.animation.animationFrame16,
         srcY: 0,
@@ -356,7 +356,7 @@ class IsometricRender {
   void renderForeground(Canvas canvas, Size size) {
 
     if (gamestream.io.inputModeKeyboard){
-      if (engine.mouseOverCanvas){
+      if (gamestream.engine.mouseOverCanvas){
         renderCursor(canvas);
       }
     }
@@ -374,10 +374,10 @@ class IsometricRender {
     if (gamestream.isometric.player.aimTargetName.isEmpty)
       return;
     const style = TextStyle(color: Colors.white, fontSize: 18);
-    engine.renderText(
+    gamestream.engine.renderText(
       gamestream.isometric.player.aimTargetName,
-      engine.worldToScreenX(gamestream.isometric.player.aimTargetPosition.renderX),
-      engine.worldToScreenY(gamestream.isometric.player.aimTargetPosition.renderY),
+      gamestream.engine.worldToScreenX(gamestream.isometric.player.aimTargetPosition.renderX),
+      gamestream.engine.worldToScreenY(gamestream.isometric.player.aimTargetPosition.renderY),
       style: style,
     );
   }
@@ -452,7 +452,7 @@ class IsometricRender {
   void renderObjectRadius() {
     for (var i = 0; i < gamestream.isometric.server.totalCharacters; i++) {
       final character = gamestream.isometric.server.characters[i];
-      engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
+      gamestream.engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }
 
@@ -493,7 +493,7 @@ class IsometricRender {
     required IsometricPosition position,
     required double percentage,
     int color = 1,
-  }) => engine.renderSprite(
+  }) => gamestream.engine.renderSprite(
       image: Images.atlas_gameobjects,
       dstX: IsometricRender.getPositionRenderX(position) - 26,
       dstY: IsometricRender.getPositionRenderY(position) - 45,
@@ -506,7 +506,7 @@ class IsometricRender {
     );
 
   void renderBarBlue(double x, double y, double z, double percentage) {
-    engine.renderSprite(
+    gamestream.engine.renderSprite(
       image: Images.atlas_gameobjects,
       dstX: getRenderX(x, y, z) - 26,
       dstY: getRenderY(x, y, z) - 55,
@@ -522,7 +522,7 @@ class IsometricRender {
   void renderEditMode() {
     if (gamestream.isometric.client.playMode) return;
     if (gamestream.isometric.editor.gameObjectSelected.value){
-      engine.renderCircleOutline(
+      gamestream.engine.renderCircleOutline(
         sides: 24,
         // radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
         radius: 30,
@@ -547,7 +547,7 @@ class IsometricRender {
 
   void renderText({required String text, required double x, required double y}){
     const charWidth = 4.5;
-    engine.writeText(text, x - charWidth * text.length, y);
+    gamestream.engine.writeText(text, x - charWidth * text.length, y);
   }
 
   static double rowColumnZToRenderX(int row, int column) =>
@@ -579,9 +579,9 @@ class IsometricRender {
   static int convertWorldToColumn(double x, double y, double z) => (y - x + z) ~/ Node_Size;
 
   /// converts grid coordinates to screen space
-  double getScreenX(double x, double y, double z) => engine.worldToScreenX(getRenderX(x, y, z));
+  double getScreenX(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderX(x, y, z));
   /// converts grid coordinates to screen space
-  double getScreenY(double x, double y, double z) => engine.worldToScreenX(getRenderY(x, y, z));
+  double getScreenY(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderY(x, y, z));
 
 }
 

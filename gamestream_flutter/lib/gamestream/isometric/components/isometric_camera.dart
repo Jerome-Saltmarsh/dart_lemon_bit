@@ -18,7 +18,7 @@ class IsometricCamera {
     }
   }
 
-  void centerOnV3(IsometricPosition v3) => engine.cameraCenter(v3.renderX, v3.renderY);
+  void centerOnV3(IsometricPosition v3) => gamestream.engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
     final target = this.target;
@@ -29,7 +29,7 @@ class IsometricCamera {
     final translateDistance = mouseDistance * mouseFollowSensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
-    engine.cameraFollow(
+    gamestream.engine.cameraFollow(
         target.renderX + translateX,
         target.renderY + translateY,
         chaseStrength,
@@ -43,18 +43,18 @@ class IsometricCamera {
   void cameraSetPosition(double x, double y, double z){
     final renderX = (x - y) * 0.5;
     final renderY = ((y + x) * 0.5) - z;
-    engine.cameraCenter(renderX, renderY);
+    gamestream.engine.cameraCenter(renderX, renderY);
   }
 
   double getMousePlayerRenderDistance(){
-    final adjacent = gamestream.isometric.player.renderX - engine.mouseWorldX;
-    final opposite = gamestream.isometric.player.renderY - engine.mouseWorldY;
+    final adjacent = gamestream.isometric.player.renderX - gamestream.engine.mouseWorldX;
+    final opposite = gamestream.isometric.player.renderY - gamestream.engine.mouseWorldY;
     return hyp2(adjacent, opposite);
   }
 
   static double getMousePlayerAngle(){
-    final adjacent = gamestream.isometric.player.renderX - engine.mouseWorldX;
-    final opposite = gamestream.isometric.player.renderY - engine.mouseWorldY;
+    final adjacent = gamestream.isometric.player.renderX - gamestream.engine.mouseWorldX;
+    final opposite = gamestream.isometric.player.renderY - gamestream.engine.mouseWorldY;
     return rad(adjacent, opposite);
   }
 

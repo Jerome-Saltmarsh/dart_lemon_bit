@@ -56,7 +56,7 @@ class GameIO with ByteWriter {
   }
 
   void detectInputMode() =>
-    inputMode.value = engine.deviceIsComputer
+    inputMode.value = gamestream.engine.deviceIsComputer
         ? InputMode.Keyboard
         : InputMode.Touch;
 
@@ -70,7 +70,7 @@ class GameIO with ByteWriter {
 
     var hex = getDirection();
 
-    if (engine.watchMouseLeftDown.value) {
+    if (gamestream.engine.watchMouseLeftDown.value) {
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -83,10 +83,10 @@ class GameIO with ByteWriter {
 
       hex = hex | ByteHex.Hex_64;
 
-      if (engine.mouseRightDown.value) {
+      if (gamestream.engine.mouseRightDown.value) {
         hex = hex | ByteHex.Hex_32;
       }
-      if (engine.keyPressedSpace){
+      if (gamestream.engine.keyPressedSpace){
         hex = hex | ByteHex.Hex_128;
       }
     }
@@ -96,17 +96,17 @@ class GameIO with ByteWriter {
 
   double getCursorScreenX() {
      if (inputModeTouch){
-       return engine.worldToScreenX(touchCursorWorldX);
+       return gamestream.engine.worldToScreenX(touchCursorWorldX);
      } else {
-       return engine.mousePositionX;
+       return gamestream.engine.mousePositionX;
      }
   }
 
   double getCursorScreenY() {
     if (inputModeTouch) {
-      return engine.worldToScreenY(touchCursorWorldY);
+      return gamestream.engine.worldToScreenY(touchCursorWorldY);
     } else {
-      return engine.mousePositionY;
+      return gamestream.engine.mousePositionY;
     }
   }
 
@@ -118,29 +118,29 @@ class GameIO with ByteWriter {
 
   int getInputDirectionKeyboard() {
 
-    if (engine.keyPressed(KeyCode.W)) {
-      if (engine.keyPressed(KeyCode.D)) {
+    if (gamestream.engine.keyPressed(KeyCode.W)) {
+      if (gamestream.engine.keyPressed(KeyCode.D)) {
         return InputDirection.Up_Right;
       }
-      if (engine.keyPressed(KeyCode.A)) {
+      if (gamestream.engine.keyPressed(KeyCode.A)) {
         return InputDirection.Up_Left;
       }
       return InputDirection.Up;
     }
 
-    if (engine.keyPressed(KeyCode.S)) {
-      if (engine.keyPressed(KeyCode.D)) {
+    if (gamestream.engine.keyPressed(KeyCode.S)) {
+      if (gamestream.engine.keyPressed(KeyCode.D)) {
         return InputDirection.Down_Right;
       }
-      if (engine.keyPressed(KeyCode.A)) {
+      if (gamestream.engine.keyPressed(KeyCode.A)) {
         return InputDirection.Down_Left;
       }
       return InputDirection.Down;
     }
-    if (engine.keyPressed(KeyCode.A)) {
+    if (gamestream.engine.keyPressed(KeyCode.A)) {
       return InputDirection.Left;
     }
-    if (engine.keyPressed(KeyCode.D)) {
+    if (gamestream.engine.keyPressed(KeyCode.D)) {
       return InputDirection.Right;
     }
     return InputDirection.None;
@@ -149,8 +149,8 @@ class GameIO with ByteWriter {
   void mouseRaycast(Function(int z, int row, int column) callback){
     final nodes = isometric.scene;
     var z = nodes.totalZ - 1;
-    final mouseWorldX = engine.mouseWorldX;
-    final mouseWorldY = engine.mouseWorldY;
+    final mouseWorldX = gamestream.engine.mouseWorldX;
+    final mouseWorldY = gamestream.engine.mouseWorldY;
     while (z >= 0){
       final row = IsometricRender.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
       final column = IsometricRender.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
@@ -179,12 +179,12 @@ class GameIO with ByteWriter {
   /// [7] Space
   void applyKeyboardInputToUpdateBuffer() {
 
-    final mouseX = engine.mouseWorldX.toInt();
-    final mouseY = engine.mouseWorldY.toInt();
-    final screenLeft = engine.Screen_Left.toInt();
-    final screenTop = engine.Screen_Top.toInt();
-    final screenRight = engine.Screen_Right.toInt();
-    final screenBottom = engine.Screen_Bottom.toInt();
+    final mouseX = gamestream.engine.mouseWorldX.toInt();
+    final mouseY = gamestream.engine.mouseWorldY.toInt();
+    final screenLeft = gamestream.engine.Screen_Left.toInt();
+    final screenTop = gamestream.engine.Screen_Top.toInt();
+    final screenRight = gamestream.engine.Screen_Right.toInt();
+    final screenBottom = gamestream.engine.Screen_Bottom.toInt();
 
     final diffMouseWorldX = mouseX - previousMouseX;
     final diffMouseWorldY = mouseY - previousMouseY;
@@ -294,24 +294,24 @@ class TouchController {
   double get dis => distanceBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
 
   void onClick() {
-    joystickCenterX = engine.mousePositionX;
-    joystickCenterY = engine.mousePositionY;
+    joystickCenterX = gamestream.engine.mousePositionX;
+    joystickCenterY = gamestream.engine.mousePositionY;
     joystickX = joystickCenterX;
     joystickY = joystickCenterY;
   }
 
   int getDirection() =>
-      engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
+      gamestream.engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
 
   void onMouseMoved(double x, double y){
-    joystickX = engine.mousePositionX;
-    joystickY = engine.mousePositionY;
+    joystickX = gamestream.engine.mousePositionX;
+    joystickY = gamestream.engine.mousePositionY;
   }
 
   void render(Canvas canvas){
-    if (engine.touches == 0) return;
+    if (gamestream.engine.touches == 0) return;
 
-    if (engine.watchMouseLeftDown.value) {
+    if (gamestream.engine.watchMouseLeftDown.value) {
       if (dis > maxDistance) {
         final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
         joystickCenterX = joystickX - adj(radian, maxDistance);

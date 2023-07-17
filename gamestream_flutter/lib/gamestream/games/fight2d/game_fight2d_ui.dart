@@ -39,9 +39,9 @@ class GameFight2DUI extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (engine.isLocalHost)
+                  if (gamestream.engine.isLocalHost)
                     height6,
-                  if (engine.isLocalHost)
+                  if (gamestream.engine.isLocalHost)
                     onPressed(
                       action: game.togglePlayerEdit,
                       child: Container(
@@ -54,9 +54,9 @@ class GameFight2DUI extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (engine.isLocalHost)
+                  if (gamestream.engine.isLocalHost)
                     height6,
-                  if (engine.isLocalHost)
+                  if (gamestream.engine.isLocalHost)
                     onPressed(
                       action: game.renderCharacterState.toggle,
                       child: Container(

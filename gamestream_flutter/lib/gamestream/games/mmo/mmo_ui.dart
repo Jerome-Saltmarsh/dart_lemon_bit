@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/instances/engine.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -115,7 +115,7 @@ extension MMOUI on MmoGame {
         top: 16,
         left: 0,
         child: Container(
-          width: engine.screen.width,
+          width: gamestream.engine.screen.width,
           alignment: Alignment.center,
           child: buildWatch(player.playerAimTargetSet, (t) {
             if (!t) return nothing;
@@ -171,10 +171,10 @@ extension MMOUI on MmoGame {
       (item) => item == null
           ? Positioned(child: nothing, top: 0, left: 0,)
           : Positioned(
-              left: engine.mousePositionX < engine.screenCenterX ? edgePadding : null,
-              right: engine.mousePositionX > engine.screenCenterX ? edgePadding : null,
-              top: engine.mousePositionY < engine.screenCenterY ? edgePadding : null,
-              bottom: engine.mousePositionY > engine.screenCenterY ? edgePadding : null,
+              left: gamestream.engine.mousePositionX < gamestream.engine.screenCenterX ? edgePadding : null,
+              right: gamestream.engine.mousePositionX > gamestream.engine.screenCenterX ? edgePadding : null,
+              top: gamestream.engine.mousePositionY < gamestream.engine.screenCenterY ? edgePadding : null,
+              bottom: gamestream.engine.mousePositionY > gamestream.engine.screenCenterY ? edgePadding : null,
             child: GSContainer(
                 width: 270,
                 child: Column(
