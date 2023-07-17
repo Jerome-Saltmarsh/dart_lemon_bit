@@ -23,6 +23,13 @@ class RendererNodes extends IsometricRenderer {
   static const Node_Size_Third = 16.0;
   static const Node_Size_Sixth = 8.0;
 
+  static const Dynamic_Node_Types = [
+     NodeType.Brick,
+     NodeType.Grass,
+     NodeType.Soil,
+     NodeType.Wood,
+  ];
+
   // VARIABLES
   var previousVisibility = 0;
   var dynamicLighting = true;
@@ -687,10 +694,18 @@ class RendererNodes extends IsometricRenderer {
       engine.bufferImage = transparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
     }
 
-    switch (currentNodeType) {
+    final nodeType = currentNodeType;
+    final nodeOrientation = currentNodeOrientation;
+
+    if (Dynamic_Node_Types.contains(nodeType)){
+      renderDynamic(nodeType, nodeOrientation);
+      return;
+    }
+
+    switch (nodeType) {
       case NodeType.Brick:
         if (dynamicLighting){
-          if (currentNodeOrientation == NodeOrientation.Solid){
+          if (nodeOrientation == NodeOrientation.Solid){
             renderDynamicSolid(SrcY_Brick);
             return;
           }
@@ -700,7 +715,7 @@ class RendererNodes extends IsometricRenderer {
         return;
       case NodeType.Grass:
         if (dynamicLighting){
-          if (currentNodeOrientation == NodeOrientation.Solid){
+          if (nodeOrientation == NodeOrientation.Solid){
             renderDynamicSolid(SrcY_Grass);
             return;
           }
@@ -723,35 +738,6 @@ class RendererNodes extends IsometricRenderer {
         if (dynamicLighting) {
           renderDynamic(currentNodeType, currentNodeOrientation);
           return;
-          // if (currentNodeOrientation == NodeOrientation.Solid){
-          //   renderDynamicSolid(SrcY_Wood);
-          //   return;
-          // }
-          // if (currentNodeOrientation == NodeOrientation.Half_West){
-          //   renderDynamicHalfWest(SrcY_Wood);
-          //   return;
-          // }
-          //
-          // if (currentNodeOrientation == NodeOrientation.Half_East){
-          //   renderDynamicHalfEast(SrcY_Wood);
-          //   return;
-          // }
-          // if (currentNodeOrientation == NodeOrientation.Half_South){
-          //   renderSideNorthSouth(
-          //     srcY: SrcY_Wood,
-          //     dstX: -Node_Size_Sixth,
-          //     dstY: Node_Size_Third,
-          //   );
-          //   return;
-          // }
-          // if (currentNodeOrientation == NodeOrientation.Half_North){
-          //   renderSideNorthSouth(
-          //     srcY: SrcY_Wood,
-          //     dstX: -Node_Size_Half,
-          //     dstY: 0,
-          //   );
-          //   return;
-          // }
         }
         const index_grass = 5;
         const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
