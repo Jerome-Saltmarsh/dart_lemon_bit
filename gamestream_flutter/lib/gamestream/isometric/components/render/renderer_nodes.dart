@@ -127,17 +127,14 @@ class RendererNodes extends IsometricRenderer {
   }
 
   int get colorWest {
-    final currentNodeColumn = scene.getIndexColumn(currentNodeIndex);
-    if (currentNodeColumn + 1 >= scene.totalColumns){
+    if (column + 1 >= scene.totalColumns){
       return scene.ambientColor;
     }
     return scene.nodeColors[currentNodeIndex + 1];
   }
 
   int get colorSouth {
-    final currentNodeRow = scene.getIndexRow(currentNodeIndex);
-
-    if (currentNodeRow + 1 >= scene.totalRows) {
+    if (row + 1 >= scene.totalRows) {
       return scene.ambientColor;
     }
     final color = scene.nodeColors[currentNodeIndex + scene.totalColumns];
@@ -171,6 +168,7 @@ class RendererNodes extends IsometricRenderer {
   @override
   void renderFunction() {
     engine.bufferImage = atlas_nodes;
+    previousNodeTransparent = false;
 
     final playerInsideIsland = gamestream.isometric.player.playerInsideIsland;
     final nodeTypes = scene.nodeTypes;
@@ -1055,18 +1053,21 @@ class RendererNodes extends IsometricRenderer {
     required int colorWest,
     required int colorTop,
   }) {
-      renderCellWest(
-        srcY: srcY,
-        dstX: dstX,
-        dstY: dstY,
-        color: colorWest,
+
+    renderCellWest(
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorWest,
     );
+
     renderCellWest(
       srcY: srcY,
       dstX: dstX + Cell_West_Width,
       dstY: dstY + Cell_Size_Half,
       color: colorWest,
     );
+
     renderCellWest(
       srcY: srcY,
       dstX: dstX + Cell_West_Width + Cell_West_Width,
@@ -2192,7 +2193,7 @@ class RendererNodes extends IsometricRenderer {
       srcX: SrcX_Cell,
       srcY: srcY + SrcY_Cell_West,
       srcWidth: Cell_West_Width,
-      srcHeight: Cell_West_Height,
+      srcHeight: 16,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: color,
