@@ -863,7 +863,11 @@ class RendererNodes extends IsometricRenderer {
         renderDynamicHalfWest(srcY);
         break;
       case NodeOrientation.Half_East:
-        renderDynamicHalfEast(srcY);
+        renderDynamicHalfEast(
+            srcY: srcY,
+            colorWest: colorWest,
+            colorSouth: colorSouth,
+        );
         break;
       case NodeOrientation.Half_South:
         renderDynamicHalfSouth(srcY);
@@ -878,7 +882,8 @@ class RendererNodes extends IsometricRenderer {
           srcY: srcY,
           dstX: -Node_Size_Sixth,
           dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
-          color: currentNodeColor,
+          colorWest: currentNodeColor,
+          colorSouth: colorSouth,
         );
 
         final dstX = -Cell_Size_Half;
@@ -890,6 +895,7 @@ class RendererNodes extends IsometricRenderer {
           dstX: dstX,
           dstY: dstY,
           width: Node_Size_Sixth,
+          color: colorSouth,
         );
 
         renderNodeSideSouth(
@@ -925,6 +931,7 @@ class RendererNodes extends IsometricRenderer {
           dstX: dstX,
           dstY: dstY + Node_Size_Sixth,
           width: Cell_Size,
+          color: colorWest,
         );
 
         renderNodeSideSouth(
@@ -987,7 +994,12 @@ class RendererNodes extends IsometricRenderer {
 
   void renderDynamicSolid(double srcY) {
     renderNodeSideTop(srcX: SrcX_Top, srcY: srcY);
-    renderNodeSideWest(srcX: SrcX_Side_Left, srcY: srcY, dstX: -Node_Size_Half);
+    renderNodeSideWest(
+        srcX: SrcX_Side_Left,
+        srcY: srcY,
+        dstX: -Node_Size_Half,
+        color: colorWest,
+    );
     renderNodeSideSouth(
       srcX: SrcX_Side_Right,
       srcY: srcY,
@@ -1001,14 +1013,22 @@ class RendererNodes extends IsometricRenderer {
       srcY: srcY,
       dstX: -Node_Size_Half,
       dstY: -Node_Size_Sixth,
+      colorWest: colorWest,
+      colorSouth: colorSouth,
     );
   }
 
-  void renderDynamicHalfEast(double srcY) {
+  void renderDynamicHalfEast({
+    required double srcY,
+    required int? colorWest,
+    required int? colorSouth,
+  }) {
     renderSideEastWest(
       srcY: srcY,
       dstX: -Node_Size_Sixth,
       dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+      colorSouth: colorSouth,
+      colorWest: colorWest,
     );
   }
 
@@ -1860,11 +1880,11 @@ class RendererNodes extends IsometricRenderer {
   void renderNodeSideWest({
     required double srcX,
     required double srcY,
+    required int color,
     double dstX = 0,
     double dstY = 0,
     double width = Node_Size_Half,
     double height = Node_Size,
-    int? color,
   }) => renderCustomNode(
     srcX: srcX,
     srcY: srcY,
@@ -1872,7 +1892,7 @@ class RendererNodes extends IsometricRenderer {
     srcHeight: height,
     dstX: currentNodeDstX + dstX,
     dstY: currentNodeDstY + dstY,
-    color: color ?? colorWest,
+    color: color,
   );
 
   void renderNodeSideSouth({
@@ -1935,6 +1955,7 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       width: Node_Size_Sixth,
+      color: colorWest
     );
 
     renderNodeSideSouth(
@@ -1967,7 +1988,8 @@ class RendererNodes extends IsometricRenderer {
     required double srcY,
     required double dstX,
     required double dstY,
-    int? color
+    required colorWest,
+    required colorSouth,
   }){
 
     renderNodeSideWest(
@@ -1975,7 +1997,7 @@ class RendererNodes extends IsometricRenderer {
       srcY: srcY,
       dstX: dstX,
       dstY: dstY + Node_Size_Sixth,
-      color: color,
+      color: colorWest,
     );
 
     renderNodeSideSouth(
