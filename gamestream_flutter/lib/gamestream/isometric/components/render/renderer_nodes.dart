@@ -1016,15 +1016,15 @@ class RendererNodes extends IsometricRenderer {
           srcY: srcY,
           dstX: -Node_Size_Half + Cell_Size_Half,
           dstY: Node_South_Height - Cell_South_Height - Cell_Size,
-          colorWest: colorWest,
+          colorWest: colorCurrent,
           colorTop: colorCurrent,
         );
         renderSlopeEastStep(
           srcY: srcY,
           dstX: -Node_Size_Half + Cell_Size_Half + Cell_Size_Half,
           dstY: Node_South_Height - Cell_South_Height - Cell_Size - Cell_Size,
-          colorWest: colorWest,
-          colorTop: colorCurrent,
+          colorWest: colorCurrent,
+          colorTop: colorAbove,
         );
         renderCellSouth(
             srcY: srcY,
