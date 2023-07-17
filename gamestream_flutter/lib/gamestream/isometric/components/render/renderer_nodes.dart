@@ -17,18 +17,19 @@ class RendererNodes extends IsometricRenderer {
   static const SrcX_Top = 0.0;
   static const SrcX_Side_Left = 49.0;
   static const SrcX_Side_Right = 74.0;
+  static const SrcX_Cell = 99.0;
 
   static const Node_Size = 48.0;
+
+  static const SrcY_Cell_West = 18.0;
+  static const SrcY_Cell_South = 34.0;
+
   static const Node_Size_Half = 24.0;
   static const Node_Size_Third = 16.0;
   static const Node_Size_Sixth = 8.0;
 
-  static const Dynamic_Node_Types = [
-     NodeType.Brick,
-     NodeType.Grass,
-     NodeType.Soil,
-     NodeType.Wood,
-  ];
+  static const Cell_Size = 16.0;
+  static const Cell_Size_Half = 8.0;
 
   // VARIABLES
   var previousVisibility = 0;
@@ -696,7 +697,7 @@ class RendererNodes extends IsometricRenderer {
     final nodeType = currentNodeType;
     final nodeOrientation = currentNodeOrientation;
 
-    if (Dynamic_Node_Types.contains(nodeType)){
+    if (mapNodeTypeToSrcY.containsKey(nodeType)){
       renderDynamic(nodeType, nodeOrientation);
       return;
     }
@@ -844,7 +845,8 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderDynamic(int nodeType, int nodeOrientation) {
-    final srcY = mapNodeTypeToSrcY(nodeType);
+    final srcY = mapNodeTypeToSrcY[nodeType] ??
+        (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
       case NodeOrientation.Solid:
@@ -871,6 +873,15 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_North_East:
         renderDynamicHalfNorth(srcY);
         renderDynamicHalfEast(srcY);
+        // renderSideEastWest(
+        //   srcY: srcY,
+        //   dstX: -Node_Size_Sixth,
+        //   dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+        // );
+
+        // renderCellWest(srcY: srcY, dstX: 0, dstY: 8);
+        // renderCellWest(srcY: srcY, dstX: 0, dstY: 0);
+        // renderCellWest(srcY: srcY, dstX: 0, dstY: -8);
         break;
 
       case NodeOrientation.Corner_North_West:
@@ -881,6 +892,14 @@ class RendererNodes extends IsometricRenderer {
       case NodeOrientation.Corner_South_West:
         renderDynamicHalfSouth(srcY);
         renderDynamicHalfWest(srcY);
+        break;
+
+      case NodeOrientation.Slope_East:
+        renderCell(
+          srcY: srcY,
+          dstX: 0,
+          dstY: 0,
+        );
         break;
     }
   }
@@ -900,14 +919,6 @@ class RendererNodes extends IsometricRenderer {
       dstY: Node_Size_Third,
     );
   }
-
-  static double mapNodeTypeToSrcY(int nodeType) => const {
-     NodeType.Brick: 1760.0,
-     NodeType.Grass: 1808.0,
-     NodeType.Soil: 1856.0,
-     NodeType.Wood: 1904.0,
-    }[nodeType] ??
-      (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
   void renderDynamicSolid(double srcY) {
     renderNodeSideTop(srcX: SrcX_Top, srcY: srcY);
@@ -929,7 +940,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderDynamicHalfEast(double srcY) {
-      renderSideEastWest(
+    renderSideEastWest(
       srcY: srcY,
       dstX: -Node_Size_Sixth,
       dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
@@ -1815,22 +1826,73 @@ class RendererNodes extends IsometricRenderer {
         dstY: currentNodeDstY + dstY,
         color: colorSouth,
       );
-  
+
+  void renderCell({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
+    renderCellTop(srcY: srcY, dstX: dstX, dstY: dstY);
+    renderCellWest(srcY: srcY, dstX: dstX, dstY: dstY);
+    renderCellSouth(srcY: srcY, dstX: dstX, dstY: dstY);
+  }
+
+  void renderCellTop({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
+    renderCustomNode(
+      srcX: SrcX_Cell,
+      srcY: srcY,
+      srcWidth: Cell_Size,
+      srcHeight: Cell_Size,
+      dstX: currentNodeDstX + dstX,
+      dstY: currentNodeDstY + dstY,
+      color: colorAbove,
+    );
+  }
+
+  void renderCellWest({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
+    renderCustomNode(
+      srcX: SrcX_Cell,
+      srcY: srcY + SrcY_Cell_West,
+      srcWidth: 8,
+      srcHeight: 15,
+      dstX: currentNodeDstX + dstX,
+      dstY: currentNodeDstY + dstY,
+      color: colorWest,
+    );
+  }
+
+  void renderCellSouth({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
+    renderCustomNode(
+      srcX: SrcX_Cell,
+      srcY: srcY + SrcY_Cell_South,
+      srcWidth: 8,
+      srcHeight: 15,
+      dstX: currentNodeDstX + dstX,
+      dstY: currentNodeDstY + dstY,
+      color: colorSouth,
+    );
+  }
+
   void renderNodeSizeTopThird({
     required double srcX, 
     required double srcY,
     double dstX = 0,
     double dstY = 0,
-  }) => renderCustomNode(
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: Node_Size_Third,
-      srcHeight: Node_Size_Third,
-      dstX: currentNodeDstX + dstX,
-      dstY: currentNodeDstY + dstY,
-      color: colorAbove,
-    );
-
+  }) {
+    renderCellTop(srcY: srcY, dstX: dstX, dstY: dstY);
+  }
 
   void renderCustomNode({
     required double srcX,
@@ -1904,35 +1966,36 @@ class RendererNodes extends IsometricRenderer {
     required double dstY,
   }){
     renderNodeSideWest(
-      srcX: 49,
+      srcX: SrcX_Side_Left,
       srcY: srcY,
-      width: Node_Size_Sixth,
       dstX: dstX,
       dstY: dstY,
+      width: Node_Size_Sixth,
     );
+
     renderNodeSideSouth(
-        srcX: 74,
+        srcX: SrcX_Side_Right,
         srcY: srcY,
         dstX: dstX + Node_Size_Sixth,
         dstY: dstY - Node_Size_Half + Node_Size_Sixth,
     );
-    renderNodeSizeTopThird(
-      srcX: 99,
-      srcY: srcY,
-      dstX: dstX,
-      dstY: dstY - Node_Size_Half + Node_Size_Third,
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY - Node_Size_Half + Node_Size_Third,
     );
-    renderNodeSizeTopThird(
-      srcX: 99,
-      srcY: srcY,
-      dstX: dstX + Node_Size_Sixth,
-      dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: dstX + Node_Size_Sixth,
+        dstY: dstY - Node_Size_Half + Node_Size_Sixth,
     );
-    renderNodeSizeTopThird(
-      srcX: 99,
-      srcY: srcY,
-      dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
-      dstY: dstY - Node_Size_Half,
+
+    renderCellTop(
+        srcY: srcY,
+        dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
+         dstY: dstY - Node_Size_Half,
     );
   }
 
@@ -1974,4 +2037,11 @@ class RendererNodes extends IsometricRenderer {
       dstY: dstY + Node_Size_Sixth + Node_Size_Sixth,
     );
   }
+
+  static const mapNodeTypeToSrcY = <int, double>{
+    NodeType.Brick: 1760,
+    NodeType.Grass: 1808,
+    NodeType.Soil: 1856,
+    NodeType.Wood: 1904,
+  };
 }
