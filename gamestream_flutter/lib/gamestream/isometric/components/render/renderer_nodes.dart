@@ -9,6 +9,11 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  static const SrcY_Brick = 1760.0;
+  static const SrcY_Grass = 1808.0;
+  static const SrcY_Soil = 1856.0;
+  static const SrcY_Wood = 1904.0;
+
   static const SrcX_Top = 0.0;
   static const SrcX_Side_Left = 49.0;
   static const SrcX_Side_Right = 74.0;
@@ -685,9 +690,8 @@ class RendererNodes extends IsometricRenderer {
     switch (currentNodeType) {
       case NodeType.Brick:
         if (dynamicLighting){
-          const srcY = 1760.0;
           if (currentNodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(srcY);
+            renderDynamicSolid(SrcY_Brick);
             return;
           }
         }
@@ -696,9 +700,8 @@ class RendererNodes extends IsometricRenderer {
         return;
       case NodeType.Grass:
         if (dynamicLighting){
-          const srcY = 1808.0;
           if (currentNodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(srcY);
+            renderDynamicSolid(SrcY_Grass);
             return;
           }
         }
@@ -706,9 +709,8 @@ class RendererNodes extends IsometricRenderer {
         break;
       case NodeType.Soil:
         if (dynamicLighting){
-          const srcY = 1856.0;
           if (currentNodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(srcY);
+            renderDynamicSolid(SrcY_Soil);
             return;
           }
         }
@@ -718,23 +720,23 @@ class RendererNodes extends IsometricRenderer {
         return;
 
       case NodeType.Wood:
-        if (dynamicLighting){
-          const srcY = 1904.0;
+        if (dynamicLighting) {
           if (currentNodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(srcY);
+            renderDynamicSolid(SrcY_Wood);
             return;
           }
           if (currentNodeOrientation == NodeOrientation.Half_West){
             renderSideEastWest(
-              srcY: srcY,
+              srcY: SrcY_Wood,
               dstX: -Node_Size_Half,
               dstY: -Node_Size_Sixth,
             );
             return;
           }
+
           if (currentNodeOrientation == NodeOrientation.Half_East){
             renderSideEastWest(
-              srcY: srcY,
+              srcY: SrcY_Wood,
               dstX: -Node_Size_Sixth,
               dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
             );
@@ -742,7 +744,7 @@ class RendererNodes extends IsometricRenderer {
           }
           if (currentNodeOrientation == NodeOrientation.Half_South){
             renderSideNorthSouth(
-              srcY: srcY,
+              srcY: SrcY_Wood,
               dstX: -Node_Size_Sixth,
               dstY: Node_Size_Third,
             );
@@ -750,7 +752,7 @@ class RendererNodes extends IsometricRenderer {
           }
           if (currentNodeOrientation == NodeOrientation.Half_North){
             renderSideNorthSouth(
-              srcY: srcY,
+              srcY: SrcY_Wood,
               dstX: -Node_Size_Half,
               dstY: 0,
             );
