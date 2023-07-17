@@ -256,7 +256,7 @@ class NodeType {
        return NodeOrientation.Half_North;
      }
      if (supportsOrientationCorner(value)) {
-       return NodeOrientation.Corner_Top;
+       return NodeOrientation.Corner_North_East;
      }
      if (supportsOrientationRadial(value)) {
        return NodeOrientation.Radial;

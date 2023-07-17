@@ -32,7 +32,6 @@ class RendererNodes extends IsometricRenderer {
 
   // VARIABLES
   var previousVisibility = 0;
-  var dynamicLighting = true;
 
   final bufferClr = engine.bufferClr;
   final bufferSrc = engine.bufferSrc;
@@ -703,46 +702,6 @@ class RendererNodes extends IsometricRenderer {
     }
 
     switch (nodeType) {
-      case NodeType.Brick:
-        if (dynamicLighting){
-          if (nodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(SrcY_Brick);
-            return;
-          }
-        }
-
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_2);
-        return;
-      case NodeType.Grass:
-        if (dynamicLighting){
-          if (nodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(SrcY_Grass);
-            return;
-          }
-        }
-        renderNodeGrass();
-        break;
-      case NodeType.Soil:
-        if (dynamicLighting){
-          if (currentNodeOrientation == NodeOrientation.Solid){
-            renderDynamicSolid(SrcY_Soil);
-            return;
-          }
-        }
-
-        const srcX = IsometricConstants.Sprite_Width_Padded * 7;
-        renderNodeTemplateShaded(srcX);
-        return;
-
-      case NodeType.Wood:
-        if (dynamicLighting) {
-          renderDynamic(currentNodeType, currentNodeOrientation);
-          return;
-        }
-        const index_grass = 5;
-        const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
-        renderNodeTemplateShaded(srcX);
-        break;
 
       case NodeType.Bricks_Red:
         renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_13);
@@ -887,38 +846,59 @@ class RendererNodes extends IsometricRenderer {
   void renderDynamic(int nodeType, int nodeOrientation) {
     final srcY = mapNodeTypeToSrcY(nodeType);
 
-    if (nodeOrientation == NodeOrientation.Solid){
-      renderDynamicSolid(srcY);
-      return;
-    }
+    switch (nodeOrientation) {
+      case NodeOrientation.Solid:
+        renderDynamicSolid(srcY);
+        break;
+      case NodeOrientation.Half_West:
+        renderDynamicHalfWest(srcY);
+        break;
+      case NodeOrientation.Half_East:
+        renderDynamicHalfEast(srcY);
+        break;
+      case NodeOrientation.Half_South:
+        renderDynamicHalfSouth(srcY);
+        break;
+      case NodeOrientation.Half_North:
+        renderDynamicHalfNorth(srcY);
+        break;
 
-    if (nodeOrientation == NodeOrientation.Half_West){
-      renderDynamicHalfWest(srcY);
-      return;
-    }
+      case NodeOrientation.Corner_South_East:
+        renderDynamicHalfSouth(srcY);
+        renderDynamicHalfEast(srcY);
+        break;
 
-    if (nodeOrientation == NodeOrientation.Half_East){
-      renderDynamicHalfEast(srcY);
-      return;
-    }
+      case NodeOrientation.Corner_North_East:
+        renderDynamicHalfNorth(srcY);
+        renderDynamicHalfEast(srcY);
+        break;
 
-    if (nodeOrientation == NodeOrientation.Half_South){
-      renderSideNorthSouth(
-        srcY: srcY,
-        dstX: -Node_Size_Sixth,
-        dstY: Node_Size_Third,
-      );
-      return;
-    }
+      case NodeOrientation.Corner_North_West:
+        renderDynamicHalfNorth(srcY);
+        renderDynamicHalfWest(srcY);
+        break;
 
-    if (nodeOrientation == NodeOrientation.Half_North){
-      renderSideNorthSouth(
-        srcY: srcY,
-        dstX: -Node_Size_Half,
-        dstY: 0,
-      );
-      return;
+      case NodeOrientation.Corner_South_West:
+        renderDynamicHalfSouth(srcY);
+        renderDynamicHalfWest(srcY);
+        break;
     }
+  }
+
+  void renderDynamicHalfNorth(double srcY) {
+    renderDynamicSideNorthSouth(
+      srcY: srcY,
+      dstX: -Node_Size_Half,
+      dstY: 0,
+    );
+  }
+
+  void renderDynamicHalfSouth(double srcY) {
+     renderDynamicSideNorthSouth(
+      srcY: srcY,
+      dstX: -Node_Size_Sixth,
+      dstY: Node_Size_Third,
+    );
   }
 
   static double mapNodeTypeToSrcY(int nodeType) => const {
@@ -1166,7 +1146,7 @@ class RendererNodes extends IsometricRenderer {
         );
         return;
 
-      case NodeOrientation.Corner_Top:
+      case NodeOrientation.Corner_North_East:
         renderNodeShadedCustom(
           srcX: srcX + 16,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
@@ -1183,7 +1163,7 @@ class RendererNodes extends IsometricRenderer {
         );
 
         return;
-      case NodeOrientation.Corner_Right:
+      case NodeOrientation.Corner_South_East:
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
@@ -1197,7 +1177,7 @@ class RendererNodes extends IsometricRenderer {
           offsetY: 8 + offsetY,
         );
         return;
-      case NodeOrientation.Corner_Bottom:
+      case NodeOrientation.Corner_South_West:
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
@@ -1211,7 +1191,7 @@ class RendererNodes extends IsometricRenderer {
           offsetY: 8 + offsetY,
         );
         return;
-      case NodeOrientation.Corner_Left:
+      case NodeOrientation.Corner_North_West:
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
@@ -1469,7 +1449,7 @@ class RendererNodes extends IsometricRenderer {
           offsetY: 8,
         );
         return;
-      case NodeOrientation.Corner_Top:
+      case NodeOrientation.Corner_North_East:
         renderNodeShadedCustom(
           srcX: srcX + 16,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
@@ -1485,7 +1465,7 @@ class RendererNodes extends IsometricRenderer {
           srcWidth: 32,
         );
         return;
-      case NodeOrientation.Corner_Right:
+      case NodeOrientation.Corner_South_East:
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
@@ -1499,7 +1479,7 @@ class RendererNodes extends IsometricRenderer {
           offsetY: 8,
         );
         return;
-      case NodeOrientation.Corner_Bottom:
+      case NodeOrientation.Corner_South_West:
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
@@ -1513,7 +1493,7 @@ class RendererNodes extends IsometricRenderer {
           offsetY: 8,
         );
         return;
-      case NodeOrientation.Corner_Left:
+      case NodeOrientation.Corner_North_West:
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
@@ -1918,11 +1898,7 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  void toggleDynamicLighting(){
-    dynamicLighting = !dynamicLighting;
-  }
-
-  void renderSideNorthSouth({
+  void renderDynamicSideNorthSouth({
     required double srcY,
     required double dstX,
     required double dstY,

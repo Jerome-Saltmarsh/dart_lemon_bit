@@ -153,13 +153,13 @@ class AtlasNodeY {
       return IsometricConstants.Sprite_Height_Padded_01;
     if (orientation == NodeOrientation.Half_West)
       return IsometricConstants.Sprite_Height_Padded_02;
-    if (orientation == NodeOrientation.Corner_Top)
+    if (orientation == NodeOrientation.Corner_North_East)
       return IsometricConstants.Sprite_Height_Padded_03;
-    if (orientation == NodeOrientation.Corner_Right)
+    if (orientation == NodeOrientation.Corner_South_East)
       return IsometricConstants.Sprite_Height_Padded_04;
-    if (orientation == NodeOrientation.Corner_Bottom)
+    if (orientation == NodeOrientation.Corner_South_West)
       return IsometricConstants.Sprite_Height_Padded_05;
-    if (orientation == NodeOrientation.Corner_Left)
+    if (orientation == NodeOrientation.Corner_North_West)
       return IsometricConstants.Sprite_Height_Padded_06;
     if (orientation == NodeOrientation.Slope_Outer_South_West)
       return Orientation_Slope_Outer_South_West;

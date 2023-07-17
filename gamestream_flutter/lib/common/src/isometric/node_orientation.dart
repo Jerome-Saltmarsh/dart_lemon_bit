@@ -6,10 +6,10 @@ class NodeOrientation {
    static const Slope_East = 2;
    static const Slope_South = 3;
    static const Slope_West = 4;
-   static const Corner_Left = 5;
-   static const Corner_Top = 6;
-   static const Corner_Right = 7;
-   static const Corner_Bottom = 8;
+   static const Corner_North_West = 5;
+   static const Corner_North_East = 6;
+   static const Corner_South_East = 7;
+   static const Corner_South_West = 8;
    static const Solid = 9;
    static const Half_North = 10;
    static const Half_East = 11;
@@ -70,10 +70,10 @@ class NodeOrientation {
    ];
 
    static const valuesCorners = [
-      Corner_Top,
-      Corner_Right,
-      Corner_Bottom,
-      Corner_Left,
+      Corner_North_East,
+      Corner_South_East,
+      Corner_South_West,
+      Corner_North_West,
    ];
 
    static const slopeSymmetric = [
@@ -84,10 +84,10 @@ class NodeOrientation {
    ];
 
    static bool isCorner(int value) =>
-       value == Corner_Top ||
-       value == Corner_Right ||
-       value == Corner_Bottom ||
-       value == Corner_Left ;
+       value == Corner_North_East ||
+       value == Corner_South_East ||
+       value == Corner_South_West ||
+       value == Corner_North_West ;
 
    static bool isEmpty(int value) =>
       value == None;
@@ -133,10 +133,10 @@ class NodeOrientation {
       Slope_East: 'Slope East',
          Slope_South: 'Slope South',
          Slope_West: 'Slope West',
-         Corner_Top: 'Corner Top',
-         Corner_Right: 'Corner Right',
-         Corner_Bottom: 'Corner Bottom',
-         Corner_Left: 'Corner Left',
+         Corner_North_East: 'Corner Top',
+         Corner_South_East: 'Corner Right',
+         Corner_South_West: 'Corner Bottom',
+         Corner_North_West: 'Corner Left',
          Solid: 'Solid',
          Half_North: 'Half North',
          Half_East: 'Half East',
@@ -177,19 +177,19 @@ class NodeOrientation {
          return x;
        case Slope_West:
          return y;
-       case Corner_Top:
+       case Corner_North_East:
          if (x < 0.33) return 1.0;
          if (y < 0.33) return 1.0;
          return 0;
-       case Corner_Right:
+       case Corner_South_East:
          if (x > 0.66) return 1.0;
          if (y < 0.33) return 1.0;
          return 0;
-       case Corner_Bottom:
+       case Corner_South_West:
          if (x > 0.66) return 1.0;
          if (y > 0.66) return 1.0;
          return 0;
-       case Corner_Left:
+       case Corner_North_West:
          if (x < 0.33) return 1.0;
          if (y > 0.66) return 1.0;
          return 0;

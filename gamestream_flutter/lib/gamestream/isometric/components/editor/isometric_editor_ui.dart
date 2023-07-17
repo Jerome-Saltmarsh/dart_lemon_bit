@@ -110,7 +110,7 @@ extension IsometricEditorUI on IsometricEditor {
                       if (NodeType.supportsOrientationCorner(
                           selectedNodeType))
                         buildOrientationIcon(
-                            NodeOrientation.Corner_Top),
+                            NodeOrientation.Corner_North_East),
                       if (NodeType.supportsOrientationSlopeSymmetric(
                           selectedNodeType))
                         buildOrientationIcon(
@@ -768,15 +768,15 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildColumnNodeOrientationCorner() => Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      buildOrientationIcon(NodeOrientation.Corner_Top),
+      buildOrientationIcon(NodeOrientation.Corner_North_East),
       Row(
         children: [
-          buildOrientationIcon(NodeOrientation.Corner_Left),
+          buildOrientationIcon(NodeOrientation.Corner_North_West),
           const SizedBox(width: 48),
-          buildOrientationIcon(NodeOrientation.Corner_Right),
+          buildOrientationIcon(NodeOrientation.Corner_South_East),
         ],
       ),
-      buildOrientationIcon(NodeOrientation.Corner_Bottom),
+      buildOrientationIcon(NodeOrientation.Corner_South_West),
     ],
   );
 

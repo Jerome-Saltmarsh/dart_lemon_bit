@@ -430,32 +430,32 @@ class IsometricScene {
     if (!isNodeTypeTransparent(nodeType)){
       if (const [
         NodeOrientation.Half_North,
-        NodeOrientation.Corner_Top,
-        NodeOrientation.Corner_Left
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_North_West
       ].contains(nodeOrientation)) {
         vxStart = 0;
       }
 
       if (const [
         NodeOrientation.Half_South,
-        NodeOrientation.Corner_Bottom,
-        NodeOrientation.Corner_Right
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_South_East
       ].contains(nodeOrientation)) {
         vxEnd = 0;
       }
 
       if (const [
         NodeOrientation.Half_East,
-        NodeOrientation.Corner_Top,
-        NodeOrientation.Corner_Right
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_South_East
       ].contains(nodeOrientation)) {
         vyStart = 0;
       }
 
       if (const [
         NodeOrientation.Half_West,
-        NodeOrientation.Corner_Bottom,
-        NodeOrientation.Corner_Left
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_North_West
       ].contains(nodeOrientation)) {
         vyEnd = 0;
       }
@@ -527,32 +527,32 @@ class IsometricScene {
     if (!isNodeTypeTransparent(nodeType)){
       if (const [
         NodeOrientation.Half_North,
-        NodeOrientation.Corner_Top,
-        NodeOrientation.Corner_Left
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_North_West
       ].contains(nodeOrientation)) {
         vxStart = 0;
       }
 
       if (const [
         NodeOrientation.Half_South,
-        NodeOrientation.Corner_Bottom,
-        NodeOrientation.Corner_Right
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_South_East
       ].contains(nodeOrientation)) {
         vxEnd = 0;
       }
 
       if (const [
         NodeOrientation.Half_East,
-        NodeOrientation.Corner_Top,
-        NodeOrientation.Corner_Right
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_South_East
       ].contains(nodeOrientation)) {
         vyStart = 0;
       }
 
       if (const [
         NodeOrientation.Half_West,
-        NodeOrientation.Corner_Bottom,
-        NodeOrientation.Corner_Left
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_North_West
       ].contains(nodeOrientation)) {
         vyEnd = 0;
       }
@@ -874,7 +874,7 @@ class IsometricScene {
         if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
           if (xBehind && yBehind)  {
             if (const [
-              NodeOrientation.Corner_Bottom,
+              NodeOrientation.Corner_South_West,
               NodeOrientation.Half_South,
               NodeOrientation.Half_West,
             ].contains(nodeOrientation)){
@@ -896,17 +896,17 @@ class IsometricScene {
             if (nodeOrientation == NodeOrientation.Half_North){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Top && vy < 0){
+            if (nodeOrientation == NodeOrientation.Corner_North_East && vy < 0){
               paintBehindZ = true;
             }
           } else {
             if (nodeOrientation == NodeOrientation.Half_South){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Right && vy <= 0){
+            if (nodeOrientation == NodeOrientation.Corner_South_East && vy <= 0){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Bottom && vy >= 0){
+            if (nodeOrientation == NodeOrientation.Corner_South_West && vy >= 0){
               paintBehindZ = true;
             }
           }
@@ -923,20 +923,20 @@ class IsometricScene {
             if (nodeOrientation == NodeOrientation.Half_East){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Top && vx2 <= 0){
+            if (nodeOrientation == NodeOrientation.Corner_North_East && vx2 <= 0){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
+            if (nodeOrientation == NodeOrientation.Corner_South_West && vx2 >= 0){
               paintBehindZ = true;
             }
           } else {
             if (nodeOrientation == NodeOrientation.Half_West){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Left && vx2 <= 2){
+            if (nodeOrientation == NodeOrientation.Corner_North_West && vx2 <= 2){
               paintBehindZ = true;
             } else
-            if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
+            if (nodeOrientation == NodeOrientation.Corner_South_West && vx2 >= 0){
               paintBehindZ = true;
             }
           }
@@ -1125,10 +1125,10 @@ class IsometricScene {
     NodeOrientation.Half_South,
     NodeOrientation.Slope_North,
     NodeOrientation.Slope_South,
-    NodeOrientation.Corner_Top,
-    NodeOrientation.Corner_Right,
-    NodeOrientation.Corner_Bottom,
-    NodeOrientation.Corner_Left,
+    NodeOrientation.Corner_North_East,
+    NodeOrientation.Corner_South_East,
+    NodeOrientation.Corner_South_West,
+    NodeOrientation.Corner_North_West,
   ].contains(nodeOrientation);
 
   bool nodeOrientationBlocksNorthSouthPos(int nodeOrientation) => const [
@@ -1137,10 +1137,10 @@ class IsometricScene {
     NodeOrientation.Half_South,
     NodeOrientation.Slope_North,
     NodeOrientation.Slope_South,
-    NodeOrientation.Corner_Top,
-    NodeOrientation.Corner_Right,
-    NodeOrientation.Corner_Bottom,
-    NodeOrientation.Corner_Left,
+    NodeOrientation.Corner_North_East,
+    NodeOrientation.Corner_South_East,
+    NodeOrientation.Corner_South_West,
+    NodeOrientation.Corner_North_West,
   ].contains(nodeOrientation);
 
   bool nodeOrientationBlocksEastWest(int value) => const [
@@ -1149,10 +1149,10 @@ class IsometricScene {
     NodeOrientation.Half_West,
     NodeOrientation.Slope_East,
     NodeOrientation.Slope_West,
-    NodeOrientation.Corner_Top,
-    NodeOrientation.Corner_Right,
-    NodeOrientation.Corner_Bottom,
-    NodeOrientation.Corner_Left,
+    NodeOrientation.Corner_North_East,
+    NodeOrientation.Corner_South_East,
+    NodeOrientation.Corner_South_West,
+    NodeOrientation.Corner_North_West,
   ].contains(value);
 
   bool isNodeTypeTransparent(int nodeType) => const [
