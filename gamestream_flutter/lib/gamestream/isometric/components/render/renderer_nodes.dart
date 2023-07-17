@@ -967,6 +967,46 @@ class RendererNodes extends IsometricRenderer {
       dstY: Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
     );
+
+    renderCellWest(
+        dstX: -Node_Size_Half,
+        dstY: 0,
+        color: colorWest,
+    );
+
+    renderCellWest(
+        dstX: -Node_Size_Half,
+        dstY: Cell_West_Height,
+        color: colorWest,
+    );
+
+    renderCellWest(
+        dstX: -Node_Size_Half,
+        dstY: Cell_West_Height + Cell_West_Height,
+        color: colorWest,
+    );
+
+    // column 2
+
+    renderCellWest(
+      dstX: -Node_Size_Half + Cell_West_Width,
+      dstY: Cell_West_Height + Cell_West_Height + Cell_West_Height,
+      color: colorWest,
+    );
+
+    renderCellWest(
+      dstX: -Node_Size_Half + Cell_West_Width,
+      dstY: Cell_West_Height + Cell_West_Height + Cell_West_Height - Cell_West_Height,
+      color: colorWest,
+    );
+
+    // column 3
+
+    renderCellWest(
+      dstX: -Node_Size_Half + Cell_West_Width + Cell_West_Width,
+      dstY: Cell_West_Height + Cell_West_Height + Cell_West_Height + Cell_West_Height,
+      color: colorWest,
+    );
   }
 
   void renderCellSouthColumn({
