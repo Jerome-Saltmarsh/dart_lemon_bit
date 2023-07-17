@@ -922,6 +922,48 @@ class RendererNodes extends IsometricRenderer {
 
   void renderSlopeWest(double srcY) {
 
+    renderCellTop(
+      srcY: srcY,
+      dstX: Cell_Size_Half,
+      dstY: -Cell_Size - Cell_Size_Half,
+      color: colorCurrent,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: 0,
+      dstY: -Cell_Size - Cell_Size_Half - Cell_Size_Half,
+      color: colorCurrent,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: - Cell_Size_Half,
+      dstY: -Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
+      color: colorCurrent,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: 0,
+      dstY: -Cell_Size - Cell_Size_Half,
+      color: colorCurrent,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: - Cell_Size_Half,
+      dstY: -Cell_Size - Cell_Size_Half - Cell_Size_Half,
+      color: colorCurrent,
+    );
+
+    renderCellTop(
+      srcY: srcY,
+      dstX: - Cell_Size_Half - Cell_Size_Half,
+      dstY: -Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
+      color: colorCurrent,
+    );
+
     renderNodeSideWest(
       srcX: SrcX_Side_Left,
       srcY: srcY,
