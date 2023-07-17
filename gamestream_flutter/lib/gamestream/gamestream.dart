@@ -52,6 +52,7 @@ class Gamestream extends StatelessWidget with ByteReader {
   }
 
    Future init(SharedPreferences sharedPreferences) async {
+     print('gamestream.init()');
      print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
 
      final visitDateTimeString = sharedPreferences.getString('visit-datetime');
@@ -275,13 +276,14 @@ class Gamestream extends StatelessWidget with ByteReader {
 
   @override
   Widget build(BuildContext context) {
+     print('gamestream.build()');
+
      if (engineBuilt){
        return engine;
      }
 
-
      engineBuilt = true;
-    engine = Engine(
+     engine = Engine(
       init: init,
       update: update,
       render: render,

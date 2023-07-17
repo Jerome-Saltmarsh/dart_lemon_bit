@@ -527,9 +527,9 @@ class Engine extends StatelessWidget {
 
   Future _internalInit() async {
     _initCallAmount++;
-    print("_internalInit()");
+    print("engine.internalInit()");
     if (_initCallAmount > 1){
-      print('warning init called ${_initCallAmount}');
+      print('engine - warning init called ${_initCallAmount}');
       return;
     }
     SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);

@@ -24,11 +24,13 @@ alt + m             : go to declaration
 [ ] npc store
 [-] merge interact logic into isometric collider
 [-] refactor lemon engine
-[-] remove lemon engine global instance
 [-] remove gamestream global instance
 [-] remove all static instances
 [*] fix grid render order
 [?] character gold
+
+17.07.2023
+[x] remove lemon engine global instance
 
 14.07.2023
 [x] wearable trinkets
