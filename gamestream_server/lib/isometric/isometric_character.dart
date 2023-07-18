@@ -28,6 +28,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
 
+  var defaultAttackBehavior = true;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;

@@ -192,8 +192,6 @@ extension MMOUI on MmoGame {
                     ),
                   ),
                   height16,
-                  if (item.quality != null)
-                     buildItemRow('quality', item.quality!.name),
                   buildItemRow('damage', item.damage),
                   buildItemRow('cooldown', item.cooldown),
                   buildItemRow('range', item.range),

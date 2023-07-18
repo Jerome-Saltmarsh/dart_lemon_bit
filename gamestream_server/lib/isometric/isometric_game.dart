@@ -1709,28 +1709,32 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacterState(IsometricCharacter character) {
 
-    if (character.weaponStateMelee && character.weaponStateDuration == 5){
-      final target = character.target;
-      if (target is IsometricCollider) {
-        applyHit(
-          srcCharacter: character,
-          target: target,
-          damage: character.weaponDamage,
-          hitType: IsometricHitType.Melee,
-        );
+    if (character.defaultAttackBehavior) {
+
+      if (character.weaponStateMelee && character.weaponStateDuration == 5){
+        final target = character.target;
+        if (target is IsometricCollider) {
+          applyHit(
+            srcCharacter: character,
+            target: target,
+            damage: character.weaponDamage,
+            hitType: IsometricHitType.Melee,
+          );
+        }
+      }
+
+      if (character.weaponStateFiring && character.weaponStateDuration == 5) {
+        if (character.weaponType == WeaponType.Bow){
+          spawnProjectileArrow(
+            src: character,
+            damage: character.weaponDamage,
+            range: character.weaponRange,
+            angle: character.lookRadian,
+          );
+        }
       }
     }
 
-    if (character.weaponStateFiring && character.weaponStateDuration == 5) {
-      if (character.weaponType == WeaponType.Bow){
-        spawnProjectileArrow(
-          src: character,
-          damage: character.weaponDamage,
-          range: character.weaponRange,
-          angle: character.lookRadian,
-        );
-      }
-    }
 
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
@@ -1746,6 +1750,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         return;
       }
     }
+
     switch (character.state) {
       case CharacterState.Idle:
         break;

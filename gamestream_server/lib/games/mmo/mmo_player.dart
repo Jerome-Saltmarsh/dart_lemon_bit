@@ -34,6 +34,7 @@ class MmoPlayer extends IsometricPlayer {
     required super.z,
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     runInDirectionEnabled = false;
+    defaultAttackBehavior = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Old_Bow);
@@ -159,15 +160,31 @@ class MmoPlayer extends IsometricPlayer {
        if (attackType != null) {
           switch (attackType) {
             case MMOAttackType.Fire_Ball:
-              game.spawnProjectileFireball(src: this, damage: weapon.damage, range: weapon.range);
+              game.spawnProjectileFireball(
+                src: this,
+                damage: weapon.damage,
+                range: weapon.range,
+                angle: lookRadian,
+              );
               break;
             case MMOAttackType.Melee:
               break;
             case MMOAttackType.Arrow:
-              game.spawnProjectileArrow(src: this, damage: weapon.damage, range: weapon.range);
+              game.spawnProjectileArrow(
+                src: this,
+                damage: weapon.damage,
+                range: weapon.range,
+                angle: lookRadian,
+              );
               break;
             case MMOAttackType.Bullet:
-              game.spawnProjectile(src: this, damage: weapon.damage, range: weapon.range, projectileType: ProjectileType.Bullet);
+              game.spawnProjectile(
+                src: this,
+                damage: weapon.damage,
+                range: weapon.range,
+                projectileType: ProjectileType.Bullet,
+                angle: lookRadian,
+              );
               break;
             default:
               throw Exception(attackType.name);
@@ -378,6 +395,9 @@ class MmoPlayer extends IsometricPlayer {
   bool isValidIndexTreasure(int index) => index >= 0 && index < treasures.length;
 
   void selectWeapon(int index) {
+     if (deadBusyOrWeaponStateBusy)
+       return;
+
     if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
@@ -393,6 +413,9 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void selectItem(int index) {
+    if (deadBusyOrWeaponStateBusy)
+      return;
+
     if (!isValidItemIndex(index)) {
       return;
     }

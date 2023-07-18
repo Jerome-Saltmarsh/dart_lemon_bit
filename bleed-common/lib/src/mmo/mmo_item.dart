@@ -1,12 +1,10 @@
 import '../isometric/src.dart';
 import 'mmo_attack_type.dart';
-import 'mmo_item_quality.dart';
 
 enum MMOItem {
   Rusty_Old_Sword(
       type: GameObjectType.Weapon,
       subType: WeaponType.Sword,
-      quality: MMOItemQuality.Low,
       cooldown: 40,
       damage: 2,
       range: 80,
@@ -15,7 +13,6 @@ enum MMOItem {
   Staff_Of_Flames(
       type: GameObjectType.Weapon,
       subType: WeaponType.Staff,
-      quality: MMOItemQuality.Low,
       cooldown: 40,
       damage: 2,
       range: 180,
@@ -24,7 +21,6 @@ enum MMOItem {
   Old_Bow(
       type: GameObjectType.Weapon,
       subType: WeaponType.Bow,
-      quality: MMOItemQuality.Low,
       cooldown: 40,
       damage: 1,
       range: 200,
@@ -33,7 +29,6 @@ enum MMOItem {
   Holy_Bow(
       type: GameObjectType.Weapon,
       subType: WeaponType.Bow,
-      quality: MMOItemQuality.Rare,
       cooldown: 20,
       damage: 100,
       range: 300,
@@ -42,64 +37,54 @@ enum MMOItem {
   Steel_Helmet(
       type: GameObjectType.Head,
       subType: HeadType.Steel_Helm,
-      quality: MMOItemQuality.Normal,
       health: 10,
   ),
   Rogues_Hood(
       type: GameObjectType.Head,
       subType: HeadType.Rogue_Hood,
-      quality: MMOItemQuality.Normal,
       health: 5,
       movement: 0.1,
   ),
   Ancients_Hat(
       type: GameObjectType.Head,
       subType: HeadType.Wizards_Hat,
-      quality: MMOItemQuality.Magic,
       health: 2,
   ),
   Travellers_Pants(
       type: GameObjectType.Legs,
       subType: LegType.Brown,
-      quality: MMOItemQuality.Normal,
       health: 2,
       movement: 0.1,
   ),
   Squires_Pants(
       type: GameObjectType.Legs,
       subType: LegType.Green,
-      quality: MMOItemQuality.Normal,
       health: 3,
   ),
   Knights_Pants(
       type: GameObjectType.Legs,
       subType: LegType.Blue,
-      quality: MMOItemQuality.Normal,
       health: 5,
       movement: -0.1,
   ),
   Worn_Red_Shirt (
       type: GameObjectType.Body,
       subType: BodyType.Shirt_Red,
-      quality: MMOItemQuality.Normal,
       health: 2,
   ),
   Basic_Padded_Armour (
       type: GameObjectType.Body,
       subType: BodyType.Tunic_Padded,
-      quality: MMOItemQuality.Normal,
       health: 5,
   ),
   Squires_Armour (
       type: GameObjectType.Body,
       subType: BodyType.Tunic_Padded,
-      quality: MMOItemQuality.Normal,
       health: 7,
   ),
   Plated_Armour (
       type: GameObjectType.Body,
       subType: BodyType.Tunic_Padded,
-      quality: MMOItemQuality.Normal,
       health: 10,
   ),
   Health_Potion(
@@ -121,7 +106,6 @@ enum MMOItem {
       isTreasure: true,
   );
 
-  final MMOItemQuality? quality;
   final int damage;
   final int type;
   final int subType;
@@ -145,7 +129,6 @@ enum MMOItem {
   const MMOItem({
     required this.type,
     required this.subType,
-    this.quality,
     this.cooldown = 0,
     this.damage = 0,
     this.range = 0,

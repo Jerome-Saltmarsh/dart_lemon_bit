@@ -9,17 +9,18 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[*] 3d surface lighting
+[ ] fix zombie wander
+[ ] player experience and level
+[ ] player skill points
 [ ] character persistence
 [ ] 3d character shadows
 [ ] pathfinding separate and left and right stack frames
-[ ] fix zombie wander
 [ ] fix npc shooting
 [ ] character light emission
 [ ] town stash (automatically opens when nearby)
 [ ] attack speed modifier
 [ ] caste ability
-[ ] skeleton character
+[ ] character type skeleton 
 [ ] character type alien slug
 [ ] npc store
 [-] merge interact logic into isometric collider
@@ -29,7 +30,11 @@ alt + m             : go to declaration
 [*] fix grid render order
 [?] character gold
 
+18.07.2023
+[x] fix player attack spawns two arrows
+
 17.07.2023
+[x] surface lighting
 [x] remove lemon engine global instance
 
 14.07.2023
