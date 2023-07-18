@@ -87,7 +87,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       x: scene.getIndexX(index),
       y: scene.getIndexY(index),
       z: scene.getIndexZ(index),
-      health: 5,
+      health: 3,
       weaponDamage: 1,
       characterType: CharacterType.Zombie,
       weaponType: WeaponType.Unarmed,
@@ -95,6 +95,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponCooldown: 30,
       doesWander: true,
       name: 'Zombie',
+      runSpeed: 0.75,
     ));
   }
 
@@ -105,10 +106,45 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     });
   }
 
+  MMOItemQuality? getRandomItemQuality({
+      double chanceOfMythical = 0.005,
+      double chanceOfRare = 0.015,
+      double chanceOfMagic = 0.05,
+      double chanceOfCommon = 0.3,
+    }){
+
+    final value = random.nextDouble();
+
+    if (value <= chanceOfMythical) {
+      return MMOItemQuality.Mythical;
+    }
+
+    if (value <= chanceOfRare) {
+      return MMOItemQuality.Rare;
+    }
+
+    if (value <= chanceOfMagic) {
+      return MMOItemQuality.Unique;
+    }
+
+    if (value <= chanceOfCommon) {
+      return MMOItemQuality.Common;
+    }
+
+    return null;
+  }
+
+
   @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
-    if (target is IsometricZombie) {
-       spawnRandomLootAtPosition(target);
+    if (target.characterType == CharacterType.Zombie) {
+
+      final itemQuality = getRandomItemQuality();
+
+      if (itemQuality != null){
+        spawnRandomLootAtPosition(target, itemQuality);
+      }
+
        addJob(seconds: EnemyRespawnDuration, action: () {
          setCharacterStateSpawning(target);
        });
@@ -134,17 +170,25 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     return 1;
   }
 
-  void spawnRandomLootAtPosition(IsometricPosition position){
-    spawnRandomLoot(x: position.x, y: position.y, z: position.z);
-  }
+  void spawnRandomLootAtPosition(IsometricPosition position, MMOItemQuality quality )=>
+      spawnRandomLoot(
+        x: position.x,
+        y: position.y,
+        z: position.z,
+        quality: quality,
+    );
 
   void spawnRandomLoot({
     required double x,
     required double y,
     required double z,
-  }){
-    spawnLoot(x: x, y: y, z: z, item: randomItem(MMOItem.values));
-  }
+    required MMOItemQuality quality,
+  }) => spawnLoot(
+      x: x,
+      y: y,
+      z: z,
+      item: randomItem(MMOItem.findByQuality(quality)),
+  );
 
   void spawnLootAtIndex({required int index, required MMOItem item}) => spawnLoot(
     x: scene.getIndexX(index),

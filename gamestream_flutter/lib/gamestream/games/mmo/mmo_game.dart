@@ -115,6 +115,10 @@ class MmoGame extends IsometricGame {
       selectWeapon(3);
       return;
     }
+    if (key == KeyCode.T){
+      toggleTalentsDialog();
+      return;
+    }
   }
 
   @override

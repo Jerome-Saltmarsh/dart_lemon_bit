@@ -1,5 +1,4 @@
 import 'package:gamestream_server/common/src.dart';
-import 'package:gamestream_server/common/src/mmo/mmo_talent_type.dart';
 import 'package:gamestream_server/games/mmo/mmo_player.dart';
 import 'package:gamestream_server/utils/src.dart';
 import 'package:gamestream_server/websocket/websocket_connection.dart';

@@ -37,7 +37,7 @@ extension MMOActions on MmoGame {
   void endInteraction() =>
       sendMMORequest(MMORequest.End_Interaction);
 
-  void toggleSkillsDialog() =>
+  void toggleTalentsDialog() =>
       sendMMORequest(MMORequest.Toggle_Skills_Dialog);
 
   void unlockTalent(MMOTalentType talentType) =>

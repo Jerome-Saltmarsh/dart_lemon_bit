@@ -1,6 +1,5 @@
 
 import 'package:gamestream_server/common.dart';
-import 'package:gamestream_server/common/src/mmo/mmo_talent_type.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';

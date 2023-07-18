@@ -86,6 +86,7 @@ class IsometricCharacter extends IsometricCollider {
     required this.weaponRange,
     required this.weaponCooldown,
     String? name,
+    this.runSpeed = 1.0,
     this.doesWander = false,
   }) : super(
     radius: CharacterType.getRadius(characterType),

@@ -286,7 +286,7 @@ extension MMOUI on MmoGame {
          return nothing;
 
        return onPressed(
-           action: toggleSkillsDialog,
+           action: toggleTalentsDialog,
            child: GSContainer(child: buildText('Skills: $skillPoints')));
     });
 

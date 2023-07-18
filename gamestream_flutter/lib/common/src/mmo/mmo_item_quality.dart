@@ -1,7 +1,7 @@
 
-enum ItemQuality {
-  Regular,
-  Magic,
+enum MMOItemQuality {
+  Common,
+  Unique,
   Rare,
   Mythical,
 }
