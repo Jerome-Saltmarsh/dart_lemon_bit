@@ -110,6 +110,19 @@ class MmoPlayer extends IsometricPlayer {
       if (treasure != null)
         health += treasure.health;
     }
+
+    if (talentUnlocked(MMOTalentType.Healthy_1)){
+        health += 10;
+    }
+
+    if (talentUnlocked(MMOTalentType.Healthy_2)){
+      health += 15;
+    }
+
+    if (talentUnlocked(MMOTalentType.Healthy_3)){
+      health += 20;
+    }
+
     return health;
   }
 
@@ -811,6 +824,7 @@ class MmoPlayer extends IsometricPlayer {
      talents[talent.index] = true;
      skillPoints--;
      writePlayerTalents();
+     writePlayerHealth();
   }
 
   void writePlayerTalents() {
