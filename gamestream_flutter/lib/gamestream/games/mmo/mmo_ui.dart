@@ -389,17 +389,24 @@ extension MMOUI on MmoGame {
   Widget buildTalent(MMOTalentType talent){
 
     if (talentUnlocked(talent)){
-      return buildText(talent.name, color: Colors.green);
+      return Tooltip(
+          message: '(UNLOCKED)\n${talent.description}',
+          child: buildText(talent.name, color: Colors.green));
     }
 
     if (talentCanBeUnlocked(talent)) {
-      return onPressed(
-          action: () => unlockTalent(talent),
-          child: buildText(talent.name, color: Colors.grey)
-          );
+      return Tooltip(
+        message: talent.description,
+        child: onPressed(
+            action: () => unlockTalent(talent),
+            child: buildText(talent.name, color: Colors.grey)
+            ),
+      );
     }
 
-    return buildText(talent.name, color: Colors.grey);
+    return Tooltip(
+        message: talent.description,
+        child: buildText(talent.name, color: Colors.grey));
   }
 
 }
