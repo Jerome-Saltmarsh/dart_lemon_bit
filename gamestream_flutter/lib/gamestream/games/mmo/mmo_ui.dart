@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -24,6 +25,11 @@ extension MMOUI on MmoGame {
       buildItemHoverDialog(),
       buildPlayerEquipped(),
       buildPlayerStats(),
+      Positioned(
+          top: 100,
+          right: 300,
+          child: buildPlayerExperience(),
+      ),
     ],
   );
 
@@ -306,4 +312,28 @@ extension MMOUI on MmoGame {
        });
      });
   }
+
+  Widget buildPlayerExperience({double width = 150, double height = 30}) => buildBorder(
+        width: 2,
+        color: Colors.white,
+        child: Container(
+          width: width,
+          height: height,
+          alignment: Alignment.centerLeft,
+          child: Container(
+            color: Colors.transparent,
+            child: buildWatch(
+                    playerExperienceRequired,
+                    (experienceRequired) =>
+                        buildWatch(playerExperience, (experience) {
+                          if (experienceRequired <= 0) return nothing;
+
+                          final percentage =
+                              clamp(experience / experienceRequired, 0, 1);
+                          return Container(
+                              color: Colors.white,
+                              width: width * percentage, height: height);
+                        })))
+      )
+      );
 }

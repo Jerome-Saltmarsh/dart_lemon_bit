@@ -49,6 +49,15 @@ extension MMOResponseReader on Gamestream {
          game.equippedBody.value = readMMOItem();
          game.equippedLegs.value = readMMOItem();
          break;
+       case MMOResponse.Player_Experience:
+         game.playerExperience.value = readUInt24();
+         break;
+       case MMOResponse.Player_Experience_Required:
+         game.playerExperienceRequired.value = readUInt24();
+         break;
+       case MMOResponse.Player_Level:
+         game.playerLevel.value = readByte();
+         break;
      }
   }
 

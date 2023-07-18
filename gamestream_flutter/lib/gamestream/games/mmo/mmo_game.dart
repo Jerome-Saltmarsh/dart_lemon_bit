@@ -31,6 +31,10 @@ class MmoGame extends IsometricGame {
   final equippedBody = Watch<MMOItem?>(null);
   final equippedLegs = Watch<MMOItem?>(null);
 
+  final playerLevel = Watch(0);
+  final playerExperience = Watch(0);
+  final playerExperienceRequired = Watch(0);
+
   MmoGame({required super.isometric});
 
   void setWeapon({required int index, required MMOItem? item}){

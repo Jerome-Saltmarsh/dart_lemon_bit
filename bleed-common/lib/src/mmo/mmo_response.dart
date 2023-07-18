@@ -8,4 +8,7 @@ class MMOResponse {
    static const Player_Equipped_Weapon_Index = 5;
    static const Player_Equipped = 6;
    static const Player_Interacting = 7;
+   static const Player_Experience = 8;
+   static const Player_Experience_Required = 9;
+   static const Player_Level = 10;
 }

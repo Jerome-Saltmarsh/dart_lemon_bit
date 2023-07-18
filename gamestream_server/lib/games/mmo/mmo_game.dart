@@ -94,6 +94,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponRange: 20,
       weaponCooldown: 30,
       doesWander: true,
+      name: 'Zombie',
     ));
   }
 
@@ -112,6 +113,24 @@ class MmoGame extends IsometricGame<MmoPlayer> {
          setCharacterStateSpawning(target);
        });
     }
+
+    if (src is MmoPlayer) {
+      playerGainExperience(src, getCharacterExperienceValue(target));
+    }
+  }
+
+  void playerGainExperience(MmoPlayer player, int experience){
+    player.experience += getCharacterExperienceValue(player);
+
+    while (player.experience > player.experienceRequired) {
+      player.level++;
+      player.experience -= player.experienceRequired;
+      player.experienceRequired = getExperienceRequiredForLevel(player.level);
+    }
+  }
+
+  int getCharacterExperienceValue(IsometricCharacter character){
+    return 1;
   }
 
   void spawnRandomLootAtPosition(IsometricPosition position){
@@ -152,6 +171,10 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     );
   }
 
+  int getExperienceRequiredForLevel(int level){
+    return level * 10;
+  }
+
   @override
   MmoPlayer buildPlayer() => MmoPlayer(
       game: this,
@@ -159,7 +182,9 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       x: playerSpawnX,
       y: playerSpawnY,
       z: playerSpawnZ,
-  );
+  )..level = 1
+   ..experience = 0
+   ..experienceRequired = getExperienceRequiredForLevel(2);
 
   @override
   void onCharacterCollectedGameObject(

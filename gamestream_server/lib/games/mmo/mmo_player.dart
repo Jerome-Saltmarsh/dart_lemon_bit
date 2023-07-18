@@ -19,12 +19,16 @@ class MmoPlayer extends IsometricPlayer {
   final weapons = List<MMOItem?>.generate(4, (index) => null);
   final treasures = List<MMOItem?>.generate(4, (index) => null);
 
-  var _equippedWeaponIndex = -1;
   MMOItem? equippedHead;
   MMOItem? equippedBody;
   MMOItem? equippedLegs;
 
   late List<MMOItem?> items;
+
+  var _experience = 0;
+  var _experienceRequired = 1;
+  var _level = 1;
+  var _equippedWeaponIndex = -1;
 
   MmoPlayer({
     required this.game,
@@ -53,6 +57,12 @@ class MmoPlayer extends IsometricPlayer {
     writeTreasures();
     writeInteracting();
   }
+
+  int get experience => _experience;
+
+  int get experienceRequired => _experienceRequired;
+
+  int get level => _level;
 
   @override
   int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
@@ -106,6 +116,21 @@ class MmoPlayer extends IsometricPlayer {
   MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
   bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
+
+  set experience(int value){
+    _experience = value;
+    writePlayerExperience();
+  }
+
+  set experienceRequired(int value){
+    _experienceRequired = value;
+    writePlayerExperienceRequired();
+  }
+
+  set level(int value){
+    _level = value;
+    writePlayerLevel();
+  }
 
   @override
   set target(IsometricPosition? value){
@@ -691,6 +716,25 @@ class MmoPlayer extends IsometricPlayer {
     writeUInt16(value);
   }
 
+  void writePlayerExperience() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Experience);
+    writeUInt24(experience);
+  }
+
+  void writePlayerExperienceRequired() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Experience_Required);
+    writeUInt24(experienceRequired);
+  }
+
+  void writePlayerLevel() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Level);
+    writeByte(level);
+  }
+
+
   static int getEmptyIndex(List<MMOItem?> items){
     for (var i = 0; i < items.length; i++){
       if (items[i] == null)
@@ -698,5 +742,4 @@ class MmoPlayer extends IsometricPlayer {
     }
     return -1;
   }
-
 }
