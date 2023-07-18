@@ -27,7 +27,7 @@ extension MMOUI on MmoGame {
       Positioned(
           top: Margin2,
           left: Margin2,
-          child: buildPlayerSkillsDialog()
+          child: buildPlayerTalentsDialog()
       ),
       Positioned(
           bottom: Margin1,
@@ -365,10 +365,24 @@ extension MMOUI on MmoGame {
         ),
   );
 
-  Widget buildPlayerSkillsDialog() =>
+  Widget buildPlayerTalentsDialog() =>
       buildWatch(
       playerSkillsDialogOpen,
       (playersDialogOpen) => !playersDialogOpen
           ? nothing
-          : GSContainer(child: buildText('SKILLS DIALOG')));
+          : GSContainer(
+               width: 450,
+              height: gamestream.engine.screen.height - 250,
+              alignment: Alignment.topLeft,
+          child: GridView.count(
+            crossAxisCount: 3,
+            children: MMOTalentType.rootValues
+                .map((talentType) => GSContainer(
+                child: Column(
+                  children: talentType.children
+                      .map((e) => buildText(e.name))
+                      .toList(growable: false),
+                ))).toList(growable: false)
+          )));
+
 }
