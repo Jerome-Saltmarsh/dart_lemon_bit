@@ -125,7 +125,6 @@ class MobaGame extends IsometricGame<MobaPlayer> {
              srcCharacter: character,
              target: target,
              damage: character.weaponDamage,
-             hitType: IsometricHitType.Melee,
          );
        }
     }

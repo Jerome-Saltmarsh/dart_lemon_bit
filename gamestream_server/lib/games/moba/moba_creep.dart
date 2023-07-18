@@ -17,7 +17,7 @@ class MobaCreep extends IsometricZombie {
     super.x = 0,
     super.y = 0,
     super.z = 0,
-  }) : super(game: game) {
+  }) {
     x = spawnOwn.x + giveOrTake(20);
     y = spawnOwn.y + giveOrTake(20);
     z = 25;

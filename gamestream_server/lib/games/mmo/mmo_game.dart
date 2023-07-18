@@ -26,7 +26,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     required super.environment,
   }) : super(gameType: GameType.Mmo) {
 
-    spawnMonsters();
+    spawnMonstersAtSpawnNodes();
 
     characters.add(MMONpc(
       characterType: CharacterType.Template,
@@ -70,23 +70,31 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   @override
   int get maxPlayers => 64;
 
-  void spawnMonsters() {
+  void spawnMonstersAtSpawnNodes() {
     final types = scene.types;
     final length = scene.types.length;
     for (var i = 0; i < length; i++){
        if (types[i] != NodeType.Spawn) continue;
        for (var j = 0; j < 3; j++){
-         characters.add(IsometricZombie(
-           team: MmoTeam.Monsters,
-           game: this,
-           x: scene.getIndexX(i),
-           y: scene.getIndexY(i),
-           z: scene.getIndexZ(i),
-           health: 5,
-           weaponDamage: 1,
-         ));
+         spawnZombieAtIndex(i);
        }
     }
+  }
+
+  void spawnZombieAtIndex(int index) {
+    characters.add(IsometricCharacter(
+      team: MmoTeam.Monsters,
+      x: scene.getIndexX(index),
+      y: scene.getIndexY(index),
+      z: scene.getIndexZ(index),
+      health: 5,
+      weaponDamage: 1,
+      characterType: CharacterType.Zombie,
+      weaponType: WeaponType.Unarmed,
+      weaponRange: 20,
+      weaponCooldown: 30,
+      doesWander: true,
+    ));
   }
 
   @override

@@ -9,7 +9,6 @@ import 'isometric_character.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
 import 'isometric_gameobject.dart';
-import 'isometric_hit_type.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_position.dart';
@@ -709,7 +708,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: other,
           damage: character.weaponDamage,
           srcCharacter: character,
-          hitType: IsometricHitType.Melee
       );
       attackHit = true;
     }
@@ -739,7 +737,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: gameObject,
           damage: character.weaponDamage,
           srcCharacter: character,
-          hitType: IsometricHitType.Melee
       );
       attackHit = true;
     }
@@ -749,7 +746,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: nearest,
           damage: character.weaponDamage,
           srcCharacter: character,
-          hitType: IsometricHitType.Melee);
+      );
     }
 
     if (!scene.inboundsXYZ(performX, performY, performZ)) return;
@@ -1111,7 +1108,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        hitType: IsometricHitType.Explosion,
       );
     }
 
@@ -1127,7 +1123,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        hitType: IsometricHitType.Explosion,
       );
     }
   }
@@ -1616,7 +1611,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         srcCharacter: owner,
         target: target,
         damage: projectile.damage,
-        hitType: IsometricHitType.Projectile,
       );
     }
 
@@ -1635,7 +1629,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required IsometricCharacter srcCharacter,
     required IsometricCollider target,
     required int damage,
-    required int hitType,
     double force = 20,
     double? angle,
     bool friendlyFire = false,
@@ -1718,7 +1711,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             srcCharacter: character,
             target: target,
             damage: character.weaponDamage,
-            hitType: IsometricHitType.Melee,
           );
         }
       }
@@ -1732,6 +1724,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             angle: character.lookRadian,
           );
         }
+      }
+
+      if (character.performing && character.stateDuration == 10){
+        final target = character.target;
+
+        if (target is IsometricCollider) {
+          applyHit(
+            srcCharacter: character,
+            target: target,
+            damage: character.weaponDamage,
+          );
+        }
+
       }
     }
 
@@ -2616,9 +2621,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (characterConditionRunToDestination(character)){
+    if (characterConditionRunToDestination(character)) {
       character.goal = CharacterGoal.Run_To_Destination;
       characterActionRunToDestination(character);
+      return;
+    }
+
+    if (characterConditionShouldWander(character)){
+      characterActionWander(character);
       return;
     }
 
@@ -2897,4 +2907,23 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void customOnInteraction(IsometricCharacter character, IsometricCharacter target) {}
+
+  bool characterConditionShouldWander(IsometricCharacter character) {
+     if (!character.doesWander || character.target != null)
+       return false;
+
+     return character.nextWander-- <= 0;
+  }
+
+  void characterActionWander(IsometricCharacter character) {
+    character.goal = CharacterGoal.Wander;
+    character.nextWander = randomInt(300, 500);
+    character.pathTargetIndex = scene.findRandomNodeTypeAround(
+      z: character.indexZ,
+      row: character.indexRow,
+      column: character.indexColumn,
+      radius: character.wanderRadius,
+      type: NodeType.Empty,
+    );
+  }
 }

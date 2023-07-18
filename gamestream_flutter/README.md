@@ -9,7 +9,6 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] fix zombie wander
 [ ] player experience and level
 [ ] player skill points
 [ ] character persistence
@@ -31,6 +30,7 @@ alt + m             : go to declaration
 [?] character gold
 
 18.07.2023
+[x] fix zombie wander
 [x] fix player attack spawns two arrows
 
 17.07.2023

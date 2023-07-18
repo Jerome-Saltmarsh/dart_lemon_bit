@@ -8,7 +8,7 @@ import 'isometric_collider.dart';
 import 'isometric_position.dart';
 import 'isometric_settings.dart';
 
-abstract class IsometricCharacter extends IsometricCollider {
+class IsometricCharacter extends IsometricCollider {
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _weaponAccuracy = 0.0;
   var _angle = 0.0;
@@ -68,6 +68,10 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   IsometricPosition? target;
 
+  var doesWander = false;
+  var nextWander = 0;
+  var wanderRadius = 3;
+
   final path = Uint32List(20);
 
   IsometricCharacter({
@@ -82,6 +86,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     required this.weaponRange,
     required this.weaponCooldown,
     String? name,
+    this.doesWander = false,
   }) : super(
     radius: CharacterType.getRadius(characterType),
   ) {
@@ -99,6 +104,10 @@ abstract class IsometricCharacter extends IsometricCollider {
     hitable = true;
     radius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
+
+    if (doesWander) {
+      nextWander = randomInt(50, 300);
+    }
   }
 
   int get compressedLookAndWeaponState => (lookDirection << 4) | weaponState;
