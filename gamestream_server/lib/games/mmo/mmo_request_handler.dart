@@ -77,6 +77,9 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case MMORequest.Select_Equipped_Legs:
         player.dropEquippedLegs();
         break;
+      case MMORequest.Toggle_Skills_Dialog:
+        player.toggleSkillsDialog();
+        break;
     }
   }
 }

@@ -25,6 +25,11 @@ extension MMOUI on MmoGame {
       buildItemHoverDialog(),
       buildPlayerEquipped(),
       Positioned(
+          top: Margin2,
+          left: Margin2,
+          child: buildPlayerSkillsDialog()
+      ),
+      Positioned(
           bottom: Margin1,
           right: Margin1,
           child: Row(
@@ -276,18 +281,14 @@ extension MMOUI on MmoGame {
           ],),
         ));
 
-  Widget buildSkillPointsRemaining(){
-    return buildWatch(playerSkillPoints, (skillPoints) {
+  Widget buildSkillPointsRemaining() => buildWatch(playerSkillPoints, (skillPoints) {
        if (skillPoints == 0)
          return nothing;
 
        return onPressed(
-           action: (){
-
-           },
+           action: toggleSkillsDialog,
            child: GSContainer(child: buildText('Skills: $skillPoints')));
     });
-  }
 
   Widget buildPlayerHealthBar(){
     const width = 200.0;
@@ -363,4 +364,11 @@ extension MMOUI on MmoGame {
         )
         ),
   );
+
+  Widget buildPlayerSkillsDialog() =>
+      buildWatch(
+      playerSkillsDialogOpen,
+      (playersDialogOpen) => !playersDialogOpen
+          ? nothing
+          : GSContainer(child: buildText('SKILLS DIALOG')));
 }

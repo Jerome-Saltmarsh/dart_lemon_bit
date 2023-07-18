@@ -14,4 +14,5 @@ enum MMORequest {
   Drop_Weapon,
   Drop_Treasure,
   Select_Talk_Option,
+  Toggle_Skills_Dialog,
 }

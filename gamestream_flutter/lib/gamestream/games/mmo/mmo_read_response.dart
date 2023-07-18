@@ -61,6 +61,9 @@ extension MMOResponseReader on Gamestream {
        case MMOResponse.Player_SkillPoints:
          game.playerSkillPoints.value = readByte();
          break;
+       case MMOResponse.Player_Skills_Dialog_Open:
+         game.playerSkillsDialogOpen.value = readBool();
+         break;
      }
   }
 

@@ -25,6 +25,7 @@ class MmoPlayer extends IsometricPlayer {
 
   late List<MMOItem?> items;
 
+  var _skillsDialogOpen = false;
   var _experience = 0;
   var _experienceRequired = 1;
   var _level = 1;
@@ -61,6 +62,7 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerExperience();
     writePlayerExperienceRequired();
     writePlayerSkillPoints();
+    writePlayerSkillsDialogOpen();
   }
 
   int get experience => _experience;
@@ -70,6 +72,8 @@ class MmoPlayer extends IsometricPlayer {
   int get level => _level;
 
   int get skillPoints => _skillPoints;
+
+  bool get skillsDialogOpen => _skillsDialogOpen;
 
   @override
   int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
@@ -142,6 +146,11 @@ class MmoPlayer extends IsometricPlayer {
   set skillPoints(int value){
     _skillPoints = value;
     writePlayerSkillPoints();
+  }
+
+  set skillsDialogOpen(bool value){
+    _skillsDialogOpen = value;
+    writePlayerSkillsDialogOpen();
   }
 
   @override
@@ -750,6 +759,16 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_SkillPoints);
     writeByte(skillPoints);
+  }
+
+  void writePlayerSkillsDialogOpen() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Skills_Dialog_Open);
+    writeBool(skillsDialogOpen);
+  }
+
+  void toggleSkillsDialog() {
+    skillsDialogOpen = !skillsDialogOpen;
   }
 
   static int getEmptyIndex(List<MMOItem?> items){

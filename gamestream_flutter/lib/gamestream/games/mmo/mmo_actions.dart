@@ -37,6 +37,9 @@ extension MMOActions on MmoGame {
   void endInteraction() =>
       sendMMORequest(MMORequest.End_Interaction);
 
+  void toggleSkillsDialog() =>
+      sendMMORequest(MMORequest.Toggle_Skills_Dialog);
+
   void sendMMORequest(MMORequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
           ClientRequest.MMO,
