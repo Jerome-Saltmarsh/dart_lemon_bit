@@ -15,4 +15,5 @@ enum MMORequest {
   Drop_Treasure,
   Select_Talk_Option,
   Toggle_Skills_Dialog,
+  Unlock_Talent,
 }

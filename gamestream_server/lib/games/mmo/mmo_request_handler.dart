@@ -1,4 +1,5 @@
 import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/common/src/mmo/mmo_talent_type.dart';
 import 'package:gamestream_server/games/mmo/mmo_player.dart';
 import 'package:gamestream_server/utils/src.dart';
 import 'package:gamestream_server/websocket/websocket_connection.dart';
@@ -79,6 +80,16 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         break;
       case MMORequest.Toggle_Skills_Dialog:
         player.toggleSkillsDialog();
+        break;
+      case MMORequest.Unlock_Talent:
+        final index = parseArg2(arguments);
+        if (index == null) return;
+        if (!isValidIndex(index, MMOTalentType.values)){
+          errorInvalidClientRequest();
+          return;
+        }
+        final mmoTalentType = MMOTalentType.values[index];
+        player.unlockTalent(mmoTalentType);
         break;
     }
   }

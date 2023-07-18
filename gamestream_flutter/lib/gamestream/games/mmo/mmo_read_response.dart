@@ -64,6 +64,13 @@ extension MMOResponseReader on Gamestream {
        case MMOResponse.Player_Skills_Dialog_Open:
          game.playerSkillsDialogOpen.value = readBool();
          break;
+       case MMOResponse.Player_Talents:
+         final playerTalents = game.playerTalents;
+         for (var i = 0; i < playerTalents.length; i++){
+          playerTalents[i] = readBool();
+         }
+         game.playerTalentsChangedNotifier.value++;
+         break;
      }
   }
 

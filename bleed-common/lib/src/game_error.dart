@@ -66,7 +66,7 @@ enum GameError {
   GameObject_Not_Found,
   Invalid_Item_Index,
   Invalid_Talk_Option,
-  Invalid_Weapon_Index, Invalid_Treasure_Index, Treasures_Full,
+  Invalid_Weapon_Index, Invalid_Treasure_Index, Treasures_Full, Talent_Already_Unlocked, Parent_Talent_Required_To_Unlock,
 }
 
 GameError parseIndexToGameError(int index) {

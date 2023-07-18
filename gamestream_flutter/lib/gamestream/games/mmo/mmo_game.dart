@@ -36,6 +36,9 @@ class MmoGame extends IsometricGame {
   final playerExperienceRequired = Watch(0);
   final playerSkillPoints = Watch(0);
   final playerSkillsDialogOpen = Watch(false);
+  final playerTalents = List.generate(MMOTalentType.values.length, (index) => false, growable: false);
+
+  final playerTalentsChangedNotifier = Watch(0);
 
   MmoGame({required super.isometric});
 
@@ -159,4 +162,15 @@ class MmoGame extends IsometricGame {
   void onAnyChanged(int value) => clearItemHover();
 
   void clearItemHover() => itemHover.value = null;
+
+  bool talentCanBeUnlocked(MMOTalentType value){
+    if (talentUnlocked(value)){
+      return false;
+    }
+
+    final parent = value.parent;
+    return parent == null || talentUnlocked(parent);
+  }
+
+  bool talentUnlocked(MMOTalentType value) => playerTalents[value.index];
 }

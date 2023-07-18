@@ -365,24 +365,41 @@ extension MMOUI on MmoGame {
         ),
   );
 
-  Widget buildPlayerTalentsDialog() =>
-      buildWatch(
-      playerSkillsDialogOpen,
-      (playersDialogOpen) => !playersDialogOpen
-          ? nothing
-          : GSContainer(
-               width: 450,
-              height: gamestream.engine.screen.height - 250,
-              alignment: Alignment.topLeft,
-          child: GridView.count(
-            crossAxisCount: 3,
-            children: MMOTalentType.rootValues
-                .map((talentType) => GSContainer(
-                child: Column(
-                  children: talentType.children
-                      .map((e) => buildText(e.name))
-                      .toList(growable: false),
-                ))).toList(growable: false)
-          )));
+  Widget buildPlayerTalentsDialog() => buildWatch(
+      playerTalentsChangedNotifier,
+      (_) => buildWatch(
+          playerSkillsDialogOpen,
+          (playersDialogOpen) => !playersDialogOpen
+              ? nothing
+              : GSContainer(
+                  width: 500,
+                  height: gamestream.engine.screen.height - 250,
+                  alignment: Alignment.topLeft,
+                  child: GridView.count(
+                      crossAxisCount: 3,
+                      children: MMOTalentType.rootValues
+                          .map((talentType) => GSContainer(
+                                  child: Column(
+                                children: talentType.children
+                                    .map(buildTalent)
+                                    .toList(growable: false),
+                              )))
+                          .toList(growable: false)))));
+
+  Widget buildTalent(MMOTalentType talent){
+
+    if (talentUnlocked(talent)){
+      return buildText(talent.name, color: Colors.green);
+    }
+
+    if (talentCanBeUnlocked(talent)) {
+      return onPressed(
+          action: () => unlockTalent(talent),
+          child: buildText(talent.name, color: Colors.grey)
+          );
+    }
+
+    return buildText(talent.name, color: Colors.grey);
+  }
 
 }

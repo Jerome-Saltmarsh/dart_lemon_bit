@@ -1,5 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/common/src/mmo/mmo_talent_type.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
@@ -18,12 +19,14 @@ class MmoPlayer extends IsometricPlayer {
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
   final treasures = List<MMOItem?>.generate(4, (index) => null);
+  final talents = List.generate(MMOTalentType.values.length, (index) => false, growable: false);
 
   MMOItem? equippedHead;
   MMOItem? equippedBody;
   MMOItem? equippedLegs;
 
   late List<MMOItem?> items;
+
 
   var _skillsDialogOpen = false;
   var _experience = 0;
@@ -63,6 +66,7 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerExperienceRequired();
     writePlayerSkillPoints();
     writePlayerSkillsDialogOpen();
+    writePlayerTalents();
   }
 
   int get experience => _experience;
@@ -777,5 +781,41 @@ class MmoPlayer extends IsometricPlayer {
         return i;
     }
     return -1;
+  }
+
+  bool parentTalentRequiredToUnlock(MMOTalentType talent){
+    final parent = talent.parent;
+    return parent != null && !talentUnlocked(parent);
+  }
+
+  bool talentUnlocked(MMOTalentType talent) => talents[talent.index];
+
+  void unlockTalent(MMOTalentType talent) {
+
+    if (skillPoints <= 0){
+      writeGameError(GameError.Insufficient_Skill_Points);
+      return;
+    }
+
+     if (talentUnlocked(talent)){
+       writeGameError(GameError.Talent_Already_Unlocked);
+       return;
+     }
+
+     if (parentTalentRequiredToUnlock(talent)){
+       writeGameError(GameError.Parent_Talent_Required_To_Unlock);
+       return;
+     }
+
+     assert (!talents[talent.index]);
+     talents[talent.index] = true;
+     skillPoints--;
+     writePlayerTalents();
+  }
+
+  void writePlayerTalents() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_Talents);
+    talents.forEach(writeBool);
   }
 }

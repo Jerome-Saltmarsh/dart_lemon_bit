@@ -40,6 +40,9 @@ extension MMOActions on MmoGame {
   void toggleSkillsDialog() =>
       sendMMORequest(MMORequest.Toggle_Skills_Dialog);
 
+  void unlockTalent(MMOTalentType talentType) =>
+      sendMMORequest(MMORequest.Unlock_Talent, talentType.index);
+
   void sendMMORequest(MMORequest request, [dynamic message]) =>
       gamestream.network.sendClientRequest(
           ClientRequest.MMO,
