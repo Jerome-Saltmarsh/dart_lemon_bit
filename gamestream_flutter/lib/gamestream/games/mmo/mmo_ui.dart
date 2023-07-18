@@ -29,6 +29,8 @@ extension MMOUI on MmoGame {
           right: Margin1,
           child: Row(
             children: [
+              buildSkillPointsRemaining(),
+              width8,
               buildPlayerLevel(),
               width8,
               buildPlayerExperienceBar(),
@@ -274,17 +276,18 @@ extension MMOUI on MmoGame {
           ],),
         ));
 
-  Widget buildPlayerStats() => Positioned(
-        bottom: Margin1,
-        right: Margin1,
-        child: GSContainer(
-          child: Column(
-            children: [
-              buildPlayerHealthBar(),
-            ],
-          ),
-        )
-    );
+  Widget buildSkillPointsRemaining(){
+    return buildWatch(playerSkillPoints, (skillPoints) {
+       if (skillPoints == 0)
+         return nothing;
+
+       return onPressed(
+           action: (){
+
+           },
+           child: GSContainer(child: buildText('Skills: $skillPoints')));
+    });
+  }
 
   Widget buildPlayerHealthBar(){
     const width = 200.0;

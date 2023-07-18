@@ -11,4 +11,5 @@ class MMOResponse {
    static const Player_Experience = 8;
    static const Player_Experience_Required = 9;
    static const Player_Level = 10;
+   static const Player_SkillPoints = 11;
 }

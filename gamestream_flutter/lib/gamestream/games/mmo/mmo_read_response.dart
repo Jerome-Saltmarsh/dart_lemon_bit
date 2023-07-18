@@ -58,6 +58,9 @@ extension MMOResponseReader on Gamestream {
        case MMOResponse.Player_Level:
          game.playerLevel.value = readByte();
          break;
+       case MMOResponse.Player_SkillPoints:
+         game.playerSkillPoints.value = readByte();
+         break;
      }
   }
 

@@ -29,6 +29,7 @@ class MmoPlayer extends IsometricPlayer {
   var _experienceRequired = 1;
   var _level = 1;
   var _equippedWeaponIndex = -1;
+  var _skillPoints = 1;
 
   MmoPlayer({
     required this.game,
@@ -56,6 +57,10 @@ class MmoPlayer extends IsometricPlayer {
     writeWeapons();
     writeTreasures();
     writeInteracting();
+    writePlayerLevel();
+    writePlayerExperience();
+    writePlayerExperienceRequired();
+    writePlayerSkillPoints();
   }
 
   int get experience => _experience;
@@ -63,6 +68,8 @@ class MmoPlayer extends IsometricPlayer {
   int get experienceRequired => _experienceRequired;
 
   int get level => _level;
+
+  int get skillPoints => _skillPoints;
 
   @override
   int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
@@ -130,6 +137,11 @@ class MmoPlayer extends IsometricPlayer {
   set level(int value){
     _level = value;
     writePlayerLevel();
+  }
+
+  set skillPoints(int value){
+    _skillPoints = value;
+    writePlayerSkillPoints();
   }
 
   @override
@@ -734,6 +746,11 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(level);
   }
 
+  void writePlayerSkillPoints() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Player_SkillPoints);
+    writeByte(skillPoints);
+  }
 
   static int getEmptyIndex(List<MMOItem?> items){
     for (var i = 0; i < items.length; i++){

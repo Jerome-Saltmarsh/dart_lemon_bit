@@ -34,6 +34,7 @@ class MmoGame extends IsometricGame {
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
+  final playerSkillPoints = Watch(0);
 
   MmoGame({required super.isometric});
 
