@@ -97,9 +97,11 @@ class IsometricRender {
   }
 
   void checkNext(IsometricRenderer renderer){
-    if (!renderer.remaining) return;
-    if (renderer.orderRowColumn > next.orderRowColumn) return;
-    if (renderer.orderZ > next.orderZ) return;
+    if (
+      !renderer.remaining ||
+      renderer.order > next.order ||
+      renderer.orderZ > next.orderZ
+    ) return;
     next = renderer;
   }
 

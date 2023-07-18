@@ -111,7 +111,7 @@ class RendererGameObjects extends IsometricRenderer {
     }
 
     orderZ = gameObject.indexZ;
-    orderRowColumn = gameObject.indexSum;
+    order = gameObject.indexSum;
   }
 
   static double getRenderYBouncing(IsometricPosition v3) =>

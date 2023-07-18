@@ -555,7 +555,7 @@ class RendererParticles extends IsometricRenderer {
       if (!scene.isPerceptiblePosition(particle)) continue;
 
       orderZ = particle.indexZ;
-      orderRowColumn = particle.indexSum;
+      order = particle.indexSum;
       index--;
       return;
     }

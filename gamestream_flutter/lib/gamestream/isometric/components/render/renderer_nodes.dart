@@ -250,7 +250,7 @@ class RendererNodes extends IsometricRenderer {
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = scene.nodeTypes[currentNodeIndex];
     orderZ = currentNodeZ;
-    orderRowColumn = (row + column).toDouble() - 0.5;
+    order = (row + column).toDouble() - 0.5;
   }
 
   @override
