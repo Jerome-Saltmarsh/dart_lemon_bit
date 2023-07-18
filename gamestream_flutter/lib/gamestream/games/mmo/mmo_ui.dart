@@ -24,11 +24,18 @@ extension MMOUI on MmoGame {
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
       buildPlayerEquipped(),
-      buildPlayerStats(),
       Positioned(
-          top: 100,
-          right: 300,
-          child: buildPlayerExperience(),
+          bottom: Margin1,
+          right: Margin1,
+          child: Row(
+            children: [
+              buildPlayerLevel(),
+              width8,
+              buildPlayerExperienceBar(),
+              width8,
+              buildPlayerHealthBar(),
+            ],
+          ),
       ),
     ],
   );
@@ -282,58 +289,75 @@ extension MMOUI on MmoGame {
   Widget buildPlayerHealthBar(){
     const width = 200.0;
     const height = 40.0;
-     return buildWatch(player.maxHealth, (maxHealth) {
-       if (maxHealth == 0) return nothing;
-       return buildWatch(player.health, (health) {
-         return Container(
-           width: width,
-           height: height,
-           child: Stack(
-             children: [
-               Container(
-                 width: width,
-                 height: height,
-                 color: Colors.white,
-               ),
-               Container(
-                 width: width * (health / maxHealth),
-                 height: height,
-                 color: Colors.green,
-               ),
-               Container(
+     return Tooltip(
+       message: 'Health',
+       child: buildWatch(player.maxHealth, (maxHealth) {
+         if (maxHealth == 0) return nothing;
+         return buildWatch(player.health, (health) {
+           return Container(
+             width: width,
+             height: height,
+             child: Stack(
+               children: [
+                 Container(
                    width: width,
                    height: height,
-                   alignment: Alignment.center,
-                   child: buildText('$health / $maxHealth', color: GameStyle.Container_Color),
-               ),
-             ],
-           ),
-         );
-       });
-     });
+                   color: Colors.white,
+                 ),
+                 Container(
+                   width: width * (health / maxHealth),
+                   height: height,
+                   color: Colors.green,
+                 ),
+                 Container(
+                     width: width,
+                     height: height,
+                     alignment: Alignment.center,
+                     child: buildText('$health / $maxHealth', color: GameStyle.Container_Color),
+                 ),
+               ],
+             ),
+           );
+         });
+       }),
+     );
   }
 
-  Widget buildPlayerExperience({double width = 150, double height = 30}) => buildBorder(
-        width: 2,
-        color: Colors.white,
-        child: Container(
-          width: width,
-          height: height,
-          alignment: Alignment.centerLeft,
-          child: Container(
-            color: Colors.transparent,
-            child: buildWatch(
-                    playerExperienceRequired,
-                    (experienceRequired) =>
-                        buildWatch(playerExperience, (experience) {
-                          if (experienceRequired <= 0) return nothing;
-
-                          final percentage =
-                              clamp(experience / experienceRequired, 0, 1);
-                          return Container(
-                              color: Colors.white,
-                              width: width * percentage, height: height);
-                        })))
-      )
+  Widget buildPlayerLevel({double size = 50}) =>
+      Tooltip(
+        message: 'Level',
+        child: GSContainer(
+          width: size,
+          height: size,
+          rounded: true,
+          child: buildWatch(playerLevel, (level) => buildText(level))
+        ),
       );
+
+  Widget buildPlayerExperienceBar({double width = 150, double height = 30}) => Tooltip(
+    message: 'Experience',
+    child: buildBorder(
+          width: 2,
+          color: Colors.white,
+          child: Container(
+            width: width,
+            height: height,
+            alignment: Alignment.centerLeft,
+            child: Container(
+              color: Colors.transparent,
+              child: buildWatch(
+                      playerExperienceRequired,
+                      (experienceRequired) =>
+                          buildWatch(playerExperience, (experience) {
+                            if (experienceRequired <= 0) return nothing;
+
+                            final percentage =
+                                clamp(experience / experienceRequired, 0, 1);
+                            return Container(
+                                color: Colors.white,
+                                width: width * percentage, height: height);
+                          })))
+        )
+        ),
+  );
 }

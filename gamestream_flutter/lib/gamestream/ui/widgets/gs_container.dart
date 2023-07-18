@@ -7,6 +7,7 @@ class GSContainer extends StatelessWidget {
   final double? width;
   final double? height;
   final Alignment alignment;
+  final bool rounded;
 
   const GSContainer({
     super.key,
@@ -14,6 +15,7 @@ class GSContainer extends StatelessWidget {
     this.alignment = Alignment.center,
     this.width,
     this.height,
+    this.rounded = false,
   });
 
   @override
@@ -21,9 +23,11 @@ class GSContainer extends StatelessWidget {
       width: width,
       height: height,
       alignment: alignment,
-      color: GameStyle.Container_Color,
       padding: GameStyle.Container_Padding,
       child: child,
+      decoration: BoxDecoration(
+        color: GameStyle.Container_Color,
+        borderRadius: rounded ? const BorderRadius.all(Radius.circular(4)) : null
+      ),
     );
-
 }
