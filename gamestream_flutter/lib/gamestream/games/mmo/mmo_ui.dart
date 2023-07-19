@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
@@ -11,8 +10,9 @@ import 'ui/src.dart';
 
 extension MMOUI on MmoGame {
 
-  static const Margin1 = 16.0;
-  static const Margin2 = 120.0;
+  static const itemImageSize = 64.0;
+  static const margin1 = 16.0;
+  static const margin2 = 130.0;
 
   Widget buildMMOUI()=> Stack(
     alignment: Alignment.center,
@@ -20,30 +20,35 @@ extension MMOUI on MmoGame {
       buildNpcText(),
       buildPlayerWeapons(),
       Positioned(
-        top: Margin1,
-        left: Margin1,
+        top: margin1,
+        left: margin1,
         child: buildPlayerTreasures(),
       ),
       Positioned(
-        left: Margin1,
-        bottom: Margin2,
+        bottom: margin2,
+        left: margin1,
+        child: buildInventoryButton(),
+      ),
+      Positioned(
+        left: margin2,
+        top: margin2,
         child: buildPlayerItems(),
       ),
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
       Positioned(
-          top: Margin1 + 100,
-          left: Margin1 + 100,
+          top: margin2,
+          left: margin1,
           child: buildPlayerEquipped(),
       ),
       Positioned(
-          top: Margin2,
-          left: Margin2,
+          top: margin2,
+          left: margin2,
           child: buildPlayerTalentsDialog()
       ),
       Positioned(
-          bottom: Margin1,
-          right: Margin1,
+          bottom: margin1,
+          right: margin1,
           child: buildPlayerStatsRow(),
       ),
     ],
@@ -65,7 +70,7 @@ extension MMOUI on MmoGame {
         ));
 
     return Positioned(
-      bottom: Margin1,
+      bottom: margin1,
       child:
       buildWatch(playerInteracting, (interacting) => !interacting ? nothing :
       buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
@@ -94,8 +99,8 @@ extension MMOUI on MmoGame {
   }
 
   Positioned buildPlayerWeapons() => Positioned(
-        bottom: Margin1,
-        left: Margin1,
+        bottom: margin1,
+        left: margin1,
         child: GSContainer(
         child: buildWatch(
           weaponsChangedNotifier,
@@ -183,7 +188,7 @@ extension MMOUI on MmoGame {
     return onPressed(
         onRightClick: item == null ? null : () => dropItem(index),
         action: item == null ? null : () => selectItem(index),
-        child: MMOItemImage(item: item, size: 64),
+        child: MMOItemImage(item: item, size: itemImageSize),
     );
   }
 
@@ -252,10 +257,21 @@ extension MMOUI on MmoGame {
     child: buildWatch(
         itemsChangedNotifier,
         (_) => GSContainer(
-            child: Column(
-                children: List.generate(
-                    items.length, (index) => buildItemImageAtIndex(index),
-                    growable: false)))
+            child: Row(
+              children: [
+                Column(
+                    children: List.generate(
+                        items.length ~/ 2, (index) => buildItemImageAtIndex(index),
+                        growable: false)
+                ),
+                width8,
+                Column(
+                    children: List.generate(
+                        items.length ~/ 2, (index) => buildItemImageAtIndex(index + (items.length ~/ 2)),
+                        growable: false)
+                ),
+              ],
+            ))
     ),
   );
 
@@ -431,6 +447,10 @@ extension MMOUI on MmoGame {
         buildPlayerHealthBar(),
       ],
     );
+
+  Widget buildInventoryButton() => onPressed(
+        action: toggleInventoryOpen,
+        child: GSContainer(child: buildText('INV')));
 
 }
 
