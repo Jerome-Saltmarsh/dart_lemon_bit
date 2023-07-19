@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
+import 'package:gamestream_server/lemon_math/src/functions/angle_diff.dart';
 
 import 'isometric_power.dart';
 import 'isometric_collider.dart';
@@ -41,10 +42,12 @@ class IsometricCharacter extends IsometricCollider {
   var weaponDamage = 1;
   var weaponRange = 20.0;
   var weaponStateDuration = 0;
+  var weaponPerformFrame = 5;
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
+  var performFrame = 10;
   var nextFootstep = 0;
   var framesPerAnimation = 6;
   var lookRadian = 0.0;
@@ -346,11 +349,20 @@ class IsometricCharacter extends IsometricCollider {
     return withinRadiusPosition(target, Interact_Radius);
   }
 
+  bool withinAttackRangeAndAngle(IsometricCollider collider){
+    if (!withinAttackRange(collider)){
+      return false;
+    }
+    final angle = this.getAngle(collider);
+    final angleD = angleDiff(angle, lookRadian);
+    return angleD < piQuarter; // TODO Replace constant with weaponAngleRange
+  }
+
   bool withinAttackRange(IsometricPosition target){
     if ((target.z - z).abs() > Character_Height)
       return false;
     if (target is IsometricCollider) {
-      return withinRadiusPosition(target, weaponRange + target.radius + 1);
+      return withinRadiusPosition(target, weaponRange + target.radius);
     }
     return withinRadiusPosition(target, weaponRange);
   }

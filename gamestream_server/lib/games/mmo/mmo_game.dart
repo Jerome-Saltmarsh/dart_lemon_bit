@@ -106,6 +106,50 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     });
   }
 
+  @override
+  void onApplyCustomCharacterPerformWeapon(IsometricCharacter character) {
+    if (character is! MmoPlayer) return;
+
+    final weapon = character.equippedWeapon;
+
+    if (weapon == null)
+      return;
+
+    switch (weapon.attackType) {
+      case MMOAttackType.Fire_Ball:
+        spawnProjectileFireball(
+          src: character,
+          damage: weapon.damage,
+          range: weapon.range,
+          angle: character.lookRadian,
+        );
+        break;
+      case MMOAttackType.Melee:
+        characterApplyMeleeHits(character);
+        break;
+      case MMOAttackType.Arrow:
+        spawnProjectileArrow(
+          src: character,
+          damage: weapon.damage,
+          range: weapon.range,
+          angle: character.lookRadian,
+        );
+        break;
+      case MMOAttackType.Bullet:
+        spawnProjectile(
+          src: character,
+          damage: weapon.damage,
+          range: weapon.range,
+          projectileType: ProjectileType.Bullet,
+          angle: character.lookRadian,
+        );
+        break;
+      default:
+        throw Exception(weapon.attackType?.name);
+    }
+
+  }
+
   MMOItemQuality? getRandomItemQuality({
       double chanceOfMythical = 0.005,
       double chanceOfRare = 0.015,

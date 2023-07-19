@@ -4,6 +4,7 @@ import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
+import 'package:gamestream_server/lemon_math/src/functions/angle_diff.dart';
 
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
@@ -678,29 +679,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     final angle = character.lookRadian;
     final attackRadius = character.weaponRange;
-    final attackRadiusHalf = attackRadius * 0.5;
-    final performX = character.x + adj(angle, attackRadiusHalf);
-    final performY = character.y + opp(angle, attackRadiusHalf);
-    final performZ = character.z;
     var attackHit = false;
 
     IsometricCollider? nearest;
-    var nearestDistance = 999.0;
+    var nearestDistance = attackRadius;
     final areaOfEffect = isMeleeAOE(character.weaponType);
 
     for (final other in characters) {
       if (!other.active) continue;
       if (!other.hitable) continue;
       if (IsometricCollider.onSameTeam(character, other)) continue;
-      if (!other.withinRadiusXYZ(
-        performX,
-        performY,
-        performZ,
-        attackRadiusHalf,
-      )) continue;
+      if (!character.withinAttackRangeAndAngle(other))
+         continue;
 
       if (!areaOfEffect) {
-        final distance = character.getDistance(other);
+        final distance = character.getDistance(other) - other.radius;
         if (distance > nearestDistance) continue;
         nearest = other;
         nearestDistance = distance;
@@ -721,12 +714,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       final gameObject = gameObjects[i];
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
-      if (!gameObject.withinRadiusXYZ(
-        performX,
-        performY,
-        performZ,
-        attackRadiusHalf,
-      )) continue;
+
+      if (!character.withinAttackRangeAndAngle(gameObject))
+        continue;
 
       if (!areaOfEffect) {
         final distance = character.getDistance(gameObject);
@@ -753,7 +743,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       );
     }
 
-    if (!scene.inboundsXYZ(performX, performY, performZ)) return;
+    final attackRadiusHalf = attackRadius * 0.5;
+    final performX = character.x + adj(angle, attackRadiusHalf);
+    final performY = character.y + opp(angle, attackRadiusHalf);
+    final performZ = character.z;
+
+    if (!scene.inboundsXYZ(performX, performY, performZ))
+      return;
+
     final nodeIndex = scene.getIndexXYZ(performX, performY, performZ);
     final nodeType = scene.types[nodeIndex];
 
@@ -1704,11 +1701,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.customOnUpdate();
   }
 
+  void onApplyCustomCharacterPerformWeapon(IsometricCharacter character){
+
+  }
+
+  void onApplyCustomCharacterPerform(IsometricCharacter character){
+
+  }
+
   void updateCharacterState(IsometricCharacter character) {
 
-    if (character.defaultAttackBehavior) {
 
-      if (character.weaponStateMelee && character.weaponStateDuration == 5){
+    if (character.weaponStateMelee &&
+        character.weaponStateDuration == character.weaponPerformFrame) {
+
+      if (character.defaultAttackBehavior) {
         if (character.attackAlwaysHitsTarget) {
           final target = character.target;
           if (target is IsometricCollider) {
@@ -1721,10 +1728,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         } else {
           characterApplyMeleeHits(character);
         }
-      }
 
-      if (character.weaponStateFiring && character.weaponStateDuration == 5) {
-        if (character.weaponType == WeaponType.Bow){
+      } else {
+        onApplyCustomCharacterPerformWeapon(character);
+      }
+    }
+
+    if (character.weaponStateFiring &&
+        character.weaponStateDuration == character.weaponPerformFrame) {
+
+      if (character.defaultAttackBehavior){
+        if (character.weaponType == WeaponType.Bow) {
           spawnProjectileArrow(
             src: character,
             damage: character.weaponDamage,
@@ -1732,11 +1746,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             angle: character.lookRadian,
           );
         }
+      } else {
+        onApplyCustomCharacterPerformWeapon(character);
       }
+    }
 
-      if (character.performing && character.stateDuration == 10){
+    if (character.performing &&
+        character.stateDuration == character.performFrame) {
+
+      if (character.defaultAttackBehavior){
         final target = character.target;
-
         if (target is IsometricCollider) {
           applyHit(
             srcCharacter: character,
@@ -1744,10 +1763,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             damage: character.weaponDamage,
           );
         }
-
+      } else {
+        onApplyCustomCharacterPerform(character);
       }
-    }
 
+    }
 
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;

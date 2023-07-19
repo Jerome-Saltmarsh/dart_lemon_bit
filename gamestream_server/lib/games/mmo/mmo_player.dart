@@ -222,38 +222,6 @@ class MmoPlayer extends IsometricPlayer {
     setDestinationToCurrentPosition();
     setCharacterStateIdle();
     game.characterAttack(this);
-
-    switch (attackType) {
-      case MMOAttackType.Fire_Ball:
-        game.spawnProjectileFireball(
-          src: this,
-          damage: weapon.damage,
-          range: weapon.range,
-          angle: lookRadian,
-        );
-        break;
-      case MMOAttackType.Melee:
-        break;
-      case MMOAttackType.Arrow:
-        game.spawnProjectileArrow(
-          src: this,
-          damage: weapon.damage,
-          range: weapon.range,
-          angle: lookRadian,
-        );
-        break;
-      case MMOAttackType.Bullet:
-        game.spawnProjectile(
-          src: this,
-          damage: weapon.damage,
-          range: weapon.range,
-          projectileType: ProjectileType.Bullet,
-          angle: lookRadian,
-        );
-        break;
-      default:
-        throw Exception(attackType.name);
-    }
   }
 
   void setItemsLength(int value){
