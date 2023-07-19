@@ -41,7 +41,11 @@ class MmoGame extends IsometricGame {
 
   final playerTalentsChangedNotifier = Watch(0);
 
-  MmoGame({required super.isometric});
+  MmoGame({required super.isometric}){
+    print('MmoGame()');
+    playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
+    playerSkillsDialogOpen.onChanged(onChangedPlayerSkillsDialogOpen);
+  }
 
   void setWeapon({required int index, required MMOItem? item}){
     weapons[index] = item;
@@ -178,4 +182,12 @@ class MmoGame extends IsometricGame {
   }
 
   bool talentUnlocked(MMOTalentType value) => playerTalents[value.index];
+
+  void onChangedPlayerInventoryOpen(bool value) {
+    gamestream.audio.click_sound_8();
+  }
+
+  void onChangedPlayerSkillsDialogOpen(bool value) {
+    gamestream.audio.click_sound_8();
+  }
 }
