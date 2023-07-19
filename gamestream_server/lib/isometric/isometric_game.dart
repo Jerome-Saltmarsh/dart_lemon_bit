@@ -672,12 +672,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       performZ,
       angle,
     );
+  }
 
-    // character.applyForce(
-    //   force: 2.5,
-    //   angle: angle,
-    // );
+  void characterApplyMeleeHits(IsometricCharacter character){
 
+    final angle = character.lookRadian;
+    final attackRadius = character.weaponRange;
+    final attackRadiusHalf = attackRadius * 0.5;
+    final performX = character.x + adj(angle, attackRadiusHalf);
+    final performY = character.y + opp(angle, attackRadiusHalf);
+    final performZ = character.z;
     var attackHit = false;
 
     IsometricCollider? nearest;
@@ -705,9 +709,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       applyHit(
-          target: other,
-          damage: character.weaponDamage,
-          srcCharacter: character,
+        target: other,
+        damage: character.weaponDamage,
+        srcCharacter: character,
       );
       attackHit = true;
     }
@@ -734,18 +738,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
 
       applyHit(
-          target: gameObject,
-          damage: character.weaponDamage,
-          srcCharacter: character,
+        target: gameObject,
+        damage: character.weaponDamage,
+        srcCharacter: character,
       );
       attackHit = true;
     }
 
     if (nearest != null) {
       applyHit(
-          target: nearest,
-          damage: character.weaponDamage,
-          srcCharacter: character,
+        target: nearest,
+        damage: character.weaponDamage,
+        srcCharacter: character,
       );
     }
 
@@ -1705,13 +1709,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.defaultAttackBehavior) {
 
       if (character.weaponStateMelee && character.weaponStateDuration == 5){
-        final target = character.target;
-        if (target is IsometricCollider) {
-          applyHit(
-            srcCharacter: character,
-            target: target,
-            damage: character.weaponDamage,
-          );
+        if (character.attackAlwaysHitsTarget) {
+          final target = character.target;
+          if (target is IsometricCollider) {
+            applyHit(
+              srcCharacter: character,
+              target: target,
+              damage: character.weaponDamage,
+            );
+          }
+        } else {
+          characterApplyMeleeHits(character);
         }
       }
 

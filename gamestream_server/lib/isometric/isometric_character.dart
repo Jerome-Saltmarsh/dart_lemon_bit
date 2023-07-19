@@ -77,6 +77,7 @@ class IsometricCharacter extends IsometricCollider {
   var doesWander = false;
   var nextWander = 0;
   var wanderRadius = 3;
+  var attackAlwaysHitsTarget = false;
 
   final path = Uint32List(20);
 
@@ -349,7 +350,7 @@ class IsometricCharacter extends IsometricCollider {
     if ((target.z - z).abs() > Character_Height)
       return false;
     if (target is IsometricCollider) {
-      return withinRadiusPosition(target, weaponRange + target.radius);
+      return withinRadiusPosition(target, weaponRange + target.radius + 1);
     }
     return withinRadiusPosition(target, weaponRange);
   }
