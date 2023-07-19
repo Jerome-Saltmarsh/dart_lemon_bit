@@ -1,16 +1,16 @@
 import '../../../common.dart';
 
 enum MMOAttackType {
-  Melee(PowerMode.Targeted_Enemy),
-  Arrow(PowerMode.Targeted_Enemy),
-  Fire_Arrow(PowerMode.Targeted_Enemy),
-  Ice_Arrow(PowerMode.Targeted_Enemy),
-  Electric_Arrow(PowerMode.Targeted_Enemy),
-  Bullet(PowerMode.Targeted_Enemy),
-  Rocket(PowerMode.Targeted_Enemy),
-  Frost_Ball(PowerMode.Targeted_Enemy),
-  Electricity_Ball(PowerMode.Targeted_Enemy),
-  Fire_Ball(PowerMode.Targeted_Enemy),
+  Melee(PowerMode.Equip),
+  Arrow(PowerMode.Equip),
+  Fire_Arrow(PowerMode.Equip),
+  Ice_Arrow(PowerMode.Equip),
+  Electric_Arrow(PowerMode.Equip),
+  Bullet(PowerMode.Equip),
+  Rocket(PowerMode.Equip),
+  Frost_Ball(PowerMode.Equip),
+  Electricity_Ball(PowerMode.Equip),
+  Fire_Ball(PowerMode.Equip),
   Freeze_Circle(PowerMode.Positional),
   Blink(PowerMode.Positional),
   Heal(PowerMode.Targeted_Ally);

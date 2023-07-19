@@ -96,6 +96,8 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     }
 
     switch (activatedPowerType.mode) {
+      case PowerMode.Equip:
+        break;
       case PowerMode.Self:
         break;
       case PowerMode.Targeted_Enemy:

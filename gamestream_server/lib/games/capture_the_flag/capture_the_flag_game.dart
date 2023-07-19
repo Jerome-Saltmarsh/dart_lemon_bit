@@ -492,6 +492,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (activatedPower == null) return;
 
     switch (activatedPower.type.mode){
+      case PowerMode.Equip:
+        break;
       case PowerMode.Self:
         break;
       case PowerMode.Positional:

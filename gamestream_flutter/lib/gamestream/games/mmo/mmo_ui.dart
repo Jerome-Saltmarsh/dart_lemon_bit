@@ -183,6 +183,20 @@ extension MMOUI on MmoGame {
                           left: 8,
                           child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
                       ),
+                      Positioned(child: buildWatch(activatedPowerIndex, (activatedPowerIndex){
+                        if (index != activatedPowerIndex)
+                          return nothing;
+                        return buildBorder(
+                          width: 2,
+                          color: Colors.green,
+                          child: Container(
+                            width: 64.0,
+                            height: 64.0,
+                            color: Colors.transparent,
+                          ),
+                        );
+
+                      }))
                     ],
                   ),
               )),

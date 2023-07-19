@@ -15,4 +15,5 @@ class MMOResponse {
    static const Player_Skills_Dialog_Open = 12;
    static const Player_Inventory_Open = 13;
    static const Player_Talents = 14;
+   static const Activated_Power_Index = 15;
 }

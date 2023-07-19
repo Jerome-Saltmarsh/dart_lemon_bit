@@ -33,6 +33,7 @@ class MmoPlayer extends IsometricPlayer {
   var _experienceRequired = 1;
   var _level = 1;
   var _equippedWeaponIndex = -1;
+  var _activatedPowerIndex = -1;
   var _skillPoints = 1;
 
   MmoPlayer({
@@ -60,6 +61,7 @@ class MmoPlayer extends IsometricPlayer {
     health = maxHealth;
     equippedWeaponIndex = 0;
 
+    writeActivatedPowerIndex();
     writeWeapons();
     writeTreasures();
     writeInteracting();
@@ -97,6 +99,8 @@ class MmoPlayer extends IsometricPlayer {
 
   @override
   int get headType => equippedHead != null ? equippedHead!.subType : HeadType.Plain;
+
+  int get activatedPowerIndex => _activatedPowerIndex;
 
   @override
   int get maxHealth {
@@ -195,6 +199,14 @@ class MmoPlayer extends IsometricPlayer {
       return;
     super.interacting = value;
     writeInteracting();
+  }
+
+  set activatedPowerIndex(int value){
+    if (_activatedPowerIndex == value)
+      return;
+
+    _activatedPowerIndex = value;
+    writeActivatedPowerIndex();
   }
 
   set equippedWeaponIndex(int value){
@@ -441,7 +453,6 @@ class MmoPlayer extends IsometricPlayer {
      if (deadBusyOrWeaponStateBusy)
        return;
 
-
     if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
@@ -452,13 +463,49 @@ class MmoPlayer extends IsometricPlayer {
     if (weapon == null)
       return;
 
-    equippedWeaponIndex = index;
+    final attackType = weapon.attackType;
 
-    if (!controlsCanTargetEnemies){
-      useEquippedWeapon();
+    if (attackType == null)
+      throw Exception();
+
+    switch (attackType.mode) {
+      case PowerMode.Equip:
+        equippedWeaponIndex = index;
+        deselectActivatedPower();
+        if (!controlsCanTargetEnemies){
+          useEquippedWeapon();
+        }
+        break;
+      case PowerMode.Positional:
+        if (activatedPowerIndex == index){
+          deselectActivatedPower();
+          return;
+        }
+        activatedPowerIndex = index;
+        break;
+      case PowerMode.Targeted_Ally:
+        if (activatedPowerIndex == index){
+          deselectActivatedPower();
+          return;
+        }
+        activatedPowerIndex = index;
+        break;
+      case PowerMode.Targeted_Enemy:
+        if (activatedPowerIndex == index){
+          deselectActivatedPower();
+          return;
+        }
+        activatedPowerIndex = index;
+        break;
+      case PowerMode.Self:
+        // TODO CASTE STRAIGHT AWAY
+        break;
     }
 
+
   }
+
+  int deselectActivatedPower() => activatedPowerIndex = -1;
 
   void selectItem(int index) {
     if (deadBusyOrWeaponStateBusy)
@@ -843,5 +890,11 @@ class MmoPlayer extends IsometricPlayer {
   void toggleInventoryOpen() {
     inventoryOpen = !inventoryOpen;
     setCharacterStateChanging();
+  }
+
+  void writeActivatedPowerIndex() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Activated_Power_Index);
+    writeInt8(_activatedPowerIndex);
   }
 }

@@ -74,6 +74,9 @@ extension MMOResponseReader on Gamestream {
          }
          game.playerTalentsChangedNotifier.value++;
          break;
+       case MMOResponse.Activated_Power_Index:
+         game.activatedPowerIndex.value = readInt8();
+         break;
      }
   }
 

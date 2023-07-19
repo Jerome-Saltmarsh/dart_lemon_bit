@@ -26,6 +26,7 @@ class MmoGame extends IsometricGame {
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
+  final activatedPowerIndex = Watch(-1);
 
   final equippedHead = Watch<MMOItem?>(null);
   final equippedBody = Watch<MMOItem?>(null);
