@@ -31,3 +31,4 @@ export 'compress_type.dart';
 export 'item_type.dart';
 export 'character_goal.dart';
 export 'power_type.dart';
+export 'power_mode.dart';

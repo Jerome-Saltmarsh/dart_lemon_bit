@@ -1,11 +1,11 @@
 
-import '../capture_the_flag/capture_the_flag_power_mode.dart';
+import 'power_mode.dart';
 
 enum PowerType {
-  Blink(CaptureTheFlagPowerMode.Positional),
-  Slow(CaptureTheFlagPowerMode.Targeted_Enemy),
-  Heal(CaptureTheFlagPowerMode.Targeted_Ally);
+  Blink(PowerMode.Positional),
+  Slow(PowerMode.Targeted_Enemy),
+  Heal(PowerMode.Targeted_Ally);
 
-  final CaptureTheFlagPowerMode mode;
+  final PowerMode mode;
   const PowerType(this.mode);
 }

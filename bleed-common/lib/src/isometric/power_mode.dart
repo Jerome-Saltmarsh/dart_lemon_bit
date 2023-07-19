@@ -1,4 +1,4 @@
-enum CaptureTheFlagPowerMode {
+enum PowerMode {
   Self,
   Positional,
   Targeted_Enemy,

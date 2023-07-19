@@ -96,9 +96,9 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     }
 
     switch (activatedPowerType.mode) {
-      case CaptureTheFlagPowerMode.Self:
+      case PowerMode.Self:
         break;
-      case CaptureTheFlagPowerMode.Targeted_Enemy:
+      case PowerMode.Targeted_Enemy:
         if (playerActivatedTargetSet) {
           gamestream.engine.setPaintColor(Colors.red);
           isometric.renderer.renderCircleAtIsometricPosition(
@@ -107,7 +107,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
           );
         }
         break;
-      case CaptureTheFlagPowerMode.Targeted_Ally:
+      case PowerMode.Targeted_Ally:
         if (playerActivatedTargetSet) {
           gamestream.engine.setPaintColor(Colors.green);
           isometric.renderer.renderCircleAtIsometricPosition(
@@ -116,7 +116,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
           );
         }
         break;
-      case CaptureTheFlagPowerMode.Positional:
+      case PowerMode.Positional:
         isometric.renderer.renderCircle(
           playerActivatedPowerX.value,
           playerActivatedPowerY.value,

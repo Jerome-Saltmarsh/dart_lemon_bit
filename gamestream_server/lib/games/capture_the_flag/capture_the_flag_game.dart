@@ -492,19 +492,19 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (activatedPower == null) return;
 
     switch (activatedPower.type.mode){
-      case CaptureTheFlagPowerMode.Self:
+      case PowerMode.Self:
         break;
-      case CaptureTheFlagPowerMode.Positional:
+      case PowerMode.Positional:
         if (player.canUpdatePowerPosition) {
           updatePlayerActivatedPowerPosition(player);
         }
         break;
-      case CaptureTheFlagPowerMode.Targeted_Enemy:
+      case PowerMode.Targeted_Enemy:
         if (player.canUpdatePowerTarget) {
           updatePlayerActivatedPowerTarget(player);
         }
         break;
-      case CaptureTheFlagPowerMode.Targeted_Ally:
+      case PowerMode.Targeted_Ally:
         if (player.canUpdatePowerTarget) {
           updatePlayerActivatedPowerTargetAlly(player);
         }

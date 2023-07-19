@@ -49,7 +49,7 @@ class MmoPlayer extends IsometricPlayer {
     addItem(MMOItem.Holy_Bow);
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Steel_Helmet);
-    addItem(MMOItem.Staff_Of_Flames);
+    addItem(MMOItem.Blink_Dagger);
     addItem(MMOItem.Sapphire_Pendant);
     equipHead(MMOItem.Steel_Helmet);
     equipBody(MMOItem.Basic_Padded_Armour);

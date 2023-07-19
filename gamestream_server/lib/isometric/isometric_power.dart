@@ -18,15 +18,15 @@ class IsometricPower {
     this.duration = 0,
   });
 
-  bool get isPositional => type.mode == CaptureTheFlagPowerMode.Positional;
+  bool get isPositional => type.mode == PowerMode.Positional;
 
   bool get isTargeted => isTargetedEnemy || isTargetedAlly;
 
-  bool get isTargetedEnemy => type.mode == CaptureTheFlagPowerMode.Targeted_Enemy;
+  bool get isTargetedEnemy => type.mode == PowerMode.Targeted_Enemy;
 
-  bool get isTargetedAlly => type.mode == CaptureTheFlagPowerMode.Targeted_Ally;
+  bool get isTargetedAlly => type.mode == PowerMode.Targeted_Ally;
 
-  bool get isSelf => type.mode == CaptureTheFlagPowerMode.Self;
+  bool get isSelf => type.mode == PowerMode.Self;
 
   bool get ready => cooldownRemaining <= 0;
 

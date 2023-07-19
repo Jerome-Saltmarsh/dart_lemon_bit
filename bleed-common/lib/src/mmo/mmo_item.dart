@@ -1,6 +1,14 @@
 import '../../../common.dart';
 
 enum MMOItem {
+  Blink_Dagger(
+    quality: MMOItemQuality.Rare,
+    type: GameObjectType.Weapon,
+    subType: WeaponType.Sword,
+    cooldown: 40,
+    range: 80,
+    attackType: MMOAttackType.Melee,
+  ),
   Rusty_Old_Sword(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Weapon,
