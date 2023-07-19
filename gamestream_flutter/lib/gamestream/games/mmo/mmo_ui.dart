@@ -158,7 +158,34 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildWeaponImageAtIndex(int index) {
+    const size = 64.0;
     final item = weapons[index];
+
+    final background = buildWatch(activatedPowerIndex, (activatedPowerIndex){
+      if (index != activatedPowerIndex)
+        return nothing;
+      return Positioned(
+        child: GSContainer(
+          color: activatedPowerIndex == activatedPowerIndex ? Colors.green : GS_CONTAINER_COLOR,
+          width: size,
+          height: size,
+        ),
+      );
+    });
+
+    final stack = Stack(
+      alignment: Alignment.center,
+      children: [
+        background,
+        Positioned(child: MMOItemImage(item: item, size: size)),
+        Positioned(
+            top: 8,
+            left: 8,
+            child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
+        ),
+      ],
+    );
+
     return MouseRegion(
         onEnter: (_){
           itemHover.value = item;
@@ -174,31 +201,7 @@ extension MMOUI on MmoGame {
             child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
                   width: 2,
                   color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(child: MMOItemImage(item: item, size: 64)),
-                      Positioned(
-                          top: 8,
-                          left: 8,
-                          child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
-                      ),
-                      Positioned(child: buildWatch(activatedPowerIndex, (activatedPowerIndex){
-                        if (index != activatedPowerIndex)
-                          return nothing;
-                        return buildBorder(
-                          width: 2,
-                          color: Colors.green,
-                          child: Container(
-                            width: 64.0,
-                            height: 64.0,
-                            color: Colors.transparent,
-                          ),
-                        );
-
-                      }))
-                    ],
-                  ),
+                  child: stack,
               )),
         ),
     );
