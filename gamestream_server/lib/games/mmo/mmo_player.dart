@@ -977,10 +977,6 @@ class MmoPlayer extends IsometricPlayer {
         throw Exception();
       }
 
-      if (equippedWeapon != null) {
-        weaponType = equippedWeapon!.type;
-      }
-
       final weapon = weapons[activatedPowerIndex];
 
       if (weapon == null)
@@ -1002,7 +998,15 @@ class MmoPlayer extends IsometricPlayer {
           throw Exception("Power Not Implemented $attackType");
       }
 
+      if (equippedWeapon != null) {
+        weaponType = equippedWeapon!.subType;
+      } else {
+        weaponType = WeaponType.Unarmed;
+      }
       deselectActivatedPower();
+      setCharacterStateIdle();
+      setDestinationToCurrentPosition();
+      clearPath();
   }
 
   int _weaponStateDuration = 0;
