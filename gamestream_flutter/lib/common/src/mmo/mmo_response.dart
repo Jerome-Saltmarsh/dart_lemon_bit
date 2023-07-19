@@ -13,5 +13,6 @@ class MMOResponse {
    static const Player_Level = 10;
    static const Player_SkillPoints = 11;
    static const Player_Skills_Dialog_Open = 12;
-   static const Player_Talents = 13;
+   static const Player_Inventory_Open = 13;
+   static const Player_Talents = 14;
 }

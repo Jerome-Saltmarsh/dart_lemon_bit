@@ -23,7 +23,11 @@ extension MMOUI on MmoGame {
       buildPlayerItems(),
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
-      buildPlayerEquipped(),
+      Positioned(
+          top: Margin1 + 100,
+          left: Margin1,
+          child: buildPlayerEquipped(),
+      ),
       Positioned(
           top: Margin2,
           left: Margin2,
@@ -250,35 +254,45 @@ extension MMOUI on MmoGame {
   Widget buildPlayerItems() => Positioned(
       left: Margin1,
       bottom: Margin2,
-      child: buildWatch(
-          itemsChangedNotifier,
-          (_) => GSContainer(
-              child: Column(
-                  children: List.generate(
-                      items.length, (index) => buildItemImageAtIndex(index),
-                      growable: false)))
+      child: buildInventory(
+        child: buildWatch(
+            itemsChangedNotifier,
+            (_) => GSContainer(
+                child: Column(
+                    children: List.generate(
+                        items.length, (index) => buildItemImageAtIndex(index),
+                        growable: false)))
+        ),
       )
   );
+
+  Widget buildInventory({required Widget child}) =>
+      buildWatch(
+        playerInventoryOpen,
+        (inventoryOpen) => inventoryOpen ? child : nothing,
+      );
 
   Widget buildPlayerEquipped() => Positioned(
         bottom: Margin2,
         right: Margin1,
-        child: GSContainer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildWatch(equippedHead, (equipped) => onPressed(
-                  onRightClick: equipped == null ? null : dropEquippedHead,
-                  action: equipped == null ? null : null,
-                  child: MMOItemImage(item: equipped, size: 64))),
-              buildWatch(equippedBody, (equipped) => onPressed(
-                  onRightClick: equipped == null ? null : dropEquippedBody,
-                  child: MMOItemImage(item: equipped, size: 64))),
-              buildWatch(equippedLegs, (equipped) => onPressed(
-                  onRightClick: equipped == null ? null : dropEquippedLegs,
-                  child: MMOItemImage(item: equipped, size: 64))),
-          ],),
+        child: buildInventory(
+          child: GSContainer(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildWatch(equippedHead, (equipped) => onPressed(
+                    onRightClick: equipped == null ? null : dropEquippedHead,
+                    action: equipped == null ? null : null,
+                    child: MMOItemImage(item: equipped, size: 64))),
+                buildWatch(equippedBody, (equipped) => onPressed(
+                    onRightClick: equipped == null ? null : dropEquippedBody,
+                    child: MMOItemImage(item: equipped, size: 64))),
+                buildWatch(equippedLegs, (equipped) => onPressed(
+                    onRightClick: equipped == null ? null : dropEquippedLegs,
+                    child: MMOItemImage(item: equipped, size: 64))),
+            ],),
+          ),
         ));
 
   Widget buildSkillPointsRemaining() => buildWatch(playerSkillPoints, (skillPoints) {
@@ -407,6 +421,13 @@ extension MMOUI on MmoGame {
     return Tooltip(
         message: talent.description,
         child: buildText(talent.name, color: Colors.grey));
+  }
+
+  Widget buildPlayerInventory() {
+    return Column(children: [
+      buildPlayerEquipped(),
+      // buildPlayerTalentsDialog()
+    ],);
   }
 
 }

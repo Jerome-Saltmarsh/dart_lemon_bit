@@ -80,6 +80,9 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case MMORequest.Toggle_Skills_Dialog:
         player.toggleSkillsDialog();
         break;
+      case MMORequest.Toggle_Inventory_Open:
+        player.toggleInventoryOpen();
+        break;
       case MMORequest.Unlock_Talent:
         final index = parseArg2(arguments);
         if (index == null) return;

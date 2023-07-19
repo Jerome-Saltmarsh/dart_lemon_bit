@@ -36,6 +36,7 @@ class MmoGame extends IsometricGame {
   final playerExperienceRequired = Watch(0);
   final playerSkillPoints = Watch(0);
   final playerSkillsDialogOpen = Watch(false);
+  final playerInventoryOpen = Watch(false);
   final playerTalents = List.generate(MMOTalentType.values.length, (index) => false, growable: false);
 
   final playerTalentsChangedNotifier = Watch(0);
@@ -82,7 +83,7 @@ class MmoGame extends IsometricGame {
     super.onKeyPressed(key);
 
     if (key == KeyCode.Q){
-      selectWeapon(0);
+      toggleInventoryOpen();
       return;
     }
     if (key == KeyCode.W){

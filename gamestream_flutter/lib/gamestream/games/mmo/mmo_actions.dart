@@ -4,6 +4,9 @@ import 'package:gamestream_flutter/instances/gamestream.dart';
 
 extension MMOActions on MmoGame {
 
+  void toggleInventoryOpen() =>
+      sendMMORequest(MMORequest.Toggle_Inventory_Open);
+
   void selectWeapon(int index) =>
       sendMMORequest(MMORequest.Select_Weapon, index);
 
