@@ -131,7 +131,11 @@ class IsometricDebug {
     }
   }
 
-  void renderPath({required Uint16List path, required int start, required int end}){
+  void renderPath({
+    required Uint16List path,
+    required int start,
+    required int end,
+  }){
     if (start < 0) return;
     if (end < 0) return;
     final nodes = gamestream.isometric.scene;

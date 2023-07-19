@@ -2659,7 +2659,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    characterActionIdle(character);
+    if (!character.idling) {
+      characterActionIdle(character);
+    }
   }
 
   void characterActionIdle(IsometricCharacter character) {
@@ -2933,6 +2935,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   bool characterConditionShouldWander(IsometricCharacter character) {
      if (!character.doesWander || character.target != null)
+       return false;
+
+     if (!character.idling)
        return false;
 
      return character.nextWander-- <= 0;
