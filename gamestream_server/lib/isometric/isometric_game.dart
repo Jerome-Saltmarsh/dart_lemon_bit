@@ -262,25 +262,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
+    final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
-    if (player.deadBusyOrWeaponStateBusy){
-      final aimTarget = player.aimTarget;
-      if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
-        player.setDestinationToMouse();
-        player.runToDestinationEnabled = true;
-        player.pathFindingEnabled = false;
-      }
+    if (mouseRightClicked){
+      characterAttack(player);
       return;
     }
-
-
-    // if (mouseRightDown){
-    //   characterAttack(player);
-    //   player.clearTarget();
-    //   player.runToDestinationEnabled = false;
-    // }
-
-    // final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseLeftDown) {
       player.mouseLeftDownDuration++;
@@ -289,15 +276,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.mouseLeftDownIgnore = false;
     }
 
-    if (mouseRightDown) {
-      player.mouseRightDownDuration++;
-    } else {
-      if (player.mouseRightDownDuration > 0){
-        player.mouseRightDownDuration = 0;
-        characterActionIdle(player);
-      }
-      player.mouseRightDownIgnore = false;
-    }
 
     if (!player.mouseLeftDownIgnore && mouseLeftDown) {
       final aimTarget = player.aimTarget;
@@ -316,13 +294,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
-      player.setDestinationToMouse();
-      player.runToDestinationEnabled = true;
-      player.pathFindingEnabled = false;
-      player.target = null;
-      return;
-    }
+    // if (mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
+    //   player.setDestinationToMouse();
+    //   player.runToDestinationEnabled = true;
+    //   player.pathFindingEnabled = false;
+    //   player.target = null;
+    //   return;
+    // }
 
     if (player.controlsRunInDirectionEnabled && direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;
