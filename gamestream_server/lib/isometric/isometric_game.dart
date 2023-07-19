@@ -2545,19 +2545,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateCharacterPath(IsometricCharacter character) {
-    if (!character.pathFindingEnabled) return;
+    if (!character.pathFindingEnabled)
+      return;
+
+    final pathChanged = character.pathTargetIndexPrevious != character.pathTargetIndex;
 
     character.pathTargetIndexPrevious = character.pathTargetIndex;
 
-    if (scene.outOfBoundsPosition(character)) {
+    if (scene.outOfBoundsPosition(character) || character.pathTargetIndex == -1) {
       character.clearPath();
-      return;
-    }
-
-    if (character.pathTargetIndex == -1){
-      if (character.pathTargetIndexPrevious != -1){
-        character.clearPath();
-      }
       return;
     }
 
@@ -2569,7 +2565,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.pathCurrent--;
     }
 
-    if (character.pathCurrent > 0)
+    if (!pathChanged && character.pathCurrent > 0)
       return;
 
     if (characterIndex == character.pathTargetIndex) {
