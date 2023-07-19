@@ -410,7 +410,7 @@ mixin class IsometricClient {
   }
 
   void onChangedRaining(bool raining){
-    raining ? gamestream.isometric.rainStart() : gamestream.isometric.rainStop();
+    raining ? gamestream.isometric.scene.rainStart() : gamestream.isometric.scene.rainStop();
     gamestream.isometric.scene.resetNodeColorsToAmbient();
   }
 

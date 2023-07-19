@@ -77,6 +77,43 @@ class IsometricScene {
 
   // FUNCTIONS
 
+  void rainStart(){
+    final rows = totalRows;
+    final columns = totalColumns;
+    final zs = totalZ - 1;
+    for (var row = 0; row < rows; row++) {
+      for (var column = 0; column < columns; column++) {
+        for (var z = zs; z >= 0; z--) {
+          final index = getIndexZRC(z, row, column);
+          final type = nodeTypes[index];
+          if (type != NodeType.Empty) {
+            if (type == NodeType.Water || nodeOrientations[index] == NodeOrientation.Solid) {
+              setNodeType(z + 1, row, column, NodeType.Rain_Landing);
+            }
+            setNodeType(z + 2, row, column, NodeType.Rain_Falling);
+            break;
+          }
+          if (
+          column == 0 ||
+              row == 0 ||
+              !gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
+              !gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
+          ){
+            setNodeType(z, row, column, NodeType.Rain_Falling);
+          }
+        }
+      }
+    }
+  }
+
+  void rainStop() {
+    for (var i = 0; i < total; i++) {
+      if (!NodeType.isRain(nodeTypes[i])) continue;
+      nodeTypes[i] = NodeType.Empty;
+      nodeOrientations[i] = NodeOrientation.None;
+    }
+  }
+
   void resetNodeColorsToAmbient() {
     ambientAlpha = clamp(ambientAlpha, 0, 255);
     ambientColor = hsvToColor(

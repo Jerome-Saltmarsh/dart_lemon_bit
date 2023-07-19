@@ -47,8 +47,8 @@ class IsometricEvents {
     gamestream.isometric.scene.refreshBakeMapLightSources();
 
     if (clientState.raining.value) {
-      gamestream.isometric.rainStop();
-      gamestream.isometric.rainStart();
+      gamestream.isometric.scene.rainStop();
+      gamestream.isometric.scene.rainStart();
     }
     gamestream.isometric.scene.resetNodeColorsToAmbient();
     gamestream.isometric.editor.refreshNodeSelectedIndex();

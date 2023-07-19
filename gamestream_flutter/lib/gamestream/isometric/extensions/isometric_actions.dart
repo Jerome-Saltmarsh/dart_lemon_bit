@@ -5,59 +5,14 @@ import 'package:gamestream_flutter/library.dart';
 import '../ui/game_isometric_ui.dart';
 
 extension IsometricActions on Isometric {
-  static const Zoom_Far = 1.0;
-  static const Zoom_Very_Far = 0.75;
-  static const Zoom_Default = Zoom_Close;
-  static const Zoom_Spawn = Zoom_Very_Far;
-  static const Zoom_Close = 1.5;
+  static const Zoom_Far = 0.4;
+  static const Zoom_Close = 1.3;
   
   void loadSelectedSceneName(){
     final sceneName = editor.selectedSceneName.value;
     if (sceneName == null) throw Exception('loadSelectedSceneNameException: selected scene name is null');
     editorLoadGame(sceneName);
     editor.actionGameDialogClose();
-  }
-
-  void rainStart(){
-    final rows = scene.totalRows;
-    final columns = scene.totalColumns;
-    final zs = scene.totalZ - 1;
-    for (var row = 0; row < rows; row++) {
-      for (var column = 0; column < columns; column++) {
-        for (var z = zs; z >= 0; z--) {
-          final index = scene.getIndexZRC(z, row, column);
-          final type = scene.nodeTypes[index];
-          if (type != NodeType.Empty) {
-            if (type == NodeType.Water || scene.nodeOrientations[index] == NodeOrientation.Solid) {
-              scene.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
-            }
-            scene.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
-            break;
-          }
-          if (
-              column == 0 ||
-              row == 0 ||
-              !scene.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
-              !scene.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
-          ){
-            scene.setNodeType(z, row, column, NodeType.Rain_Falling);
-          }
-        }
-      }
-    }
-  }
-
-  void rainStop() {
-    for (var i = 0; i < scene.total; i++) {
-      if (!NodeType.isRain(scene.nodeTypes[i])) continue;
-      scene.nodeTypes[i] = NodeType.Empty;
-      scene.nodeOrientations[i] = NodeOrientation.None;
-    }
-  }
-
-  ///
-  void rainFixBug(){
-
   }
 
   void actionSetModePlay(){
