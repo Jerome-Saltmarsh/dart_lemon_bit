@@ -951,7 +951,7 @@ class MmoPlayer extends IsometricPlayer {
         setCharacterStatePerforming(duration: weapon.performFrame + 1);
         break;
       case PowerMode.Positional:
-        performFrame = weapon.performFrame;
+        weaponPerformFrame = weapon.performFrame;
         weaponType = weapon.subType;
         weaponPerformFrame = performFrame + 1;
         performingActivePower = true;
@@ -962,7 +962,8 @@ class MmoPlayer extends IsometricPlayer {
         if (WeaponType.isMelee(weaponType)) {
           weaponState = WeaponState.Melee;
         }
-        weaponStateDuration = performFrame + 1;
+        weaponStateDuration = 0;
+        weaponStateDurationTotal = performFrame + 1;
         break;
     }
   }
@@ -977,6 +978,10 @@ class MmoPlayer extends IsometricPlayer {
       }
 
       deselectActivatedPower();
+
+      if (equippedWeapon != null) {
+        weaponType = equippedWeapon!.type;
+      }
 
       final weapon = weapons[activatedPowerIndex];
 
