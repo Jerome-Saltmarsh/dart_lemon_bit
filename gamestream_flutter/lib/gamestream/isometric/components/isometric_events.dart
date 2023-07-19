@@ -463,6 +463,9 @@ class IsometricEvents {
       case PlayerEvent.Invalid_Request:
         gamestream.isometric.client.writeMessage('Invalid Request');
         break;
+      case PlayerEvent.Character_State_Changing:
+        gamestream.audio.change_cloths();
+        break;
     }
   }
 

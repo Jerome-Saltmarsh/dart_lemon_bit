@@ -812,4 +812,10 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(MMOResponse.Player_Talents);
     talents.forEach(writeBool);
   }
+
+  @override
+  void setCharacterStateChanging({int duration = 15}) {
+    super.setCharacterStateChanging(duration: duration);
+    writePlayerEvent(PlayerEvent.Character_State_Changing);
+  }
 }

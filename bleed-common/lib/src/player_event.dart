@@ -17,4 +17,5 @@ class PlayerEvent {
   static const Drink                    = 16;
   static const Reloading                = 17;
   static const Player_Deactivated       = 18;
+  static const Character_State_Changing = 19;
 }

@@ -281,9 +281,9 @@ class IsometricCharacter extends IsometricCollider {
         _ => (throw Exception(''))
       };
 
-  void assignWeaponStateReloading(){
+  void assignWeaponStateReloading({int duration = 30}){
     weaponState = WeaponState.Reloading;
-    weaponStateDurationTotal = 30;
+    weaponStateDurationTotal = duration;
   }
 
   void setCharacterStatePerforming({required int duration}){
@@ -292,22 +292,22 @@ class IsometricCharacter extends IsometricCollider {
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
 
-  void setCharacterStateSpawning(){
+  void setCharacterStateSpawning({int duration = 40}){
     if (state == CharacterState.Spawning) return;
     state = CharacterState.Spawning;
-    stateDurationRemaining = 40;
+    stateDurationRemaining = duration;
   }
 
-  void setCharacterStateChanging() {
+  void setCharacterStateChanging({int duration = 15}) {
     state = CharacterState.Changing;
-    stateDurationRemaining = 15;
+    stateDurationRemaining = duration;
   }
 
-  void setCharacterStateHurt(){
+  void setCharacterStateHurt({int duration = 10}){
     if (dead) return;
     if (state == CharacterState.Hurt) return;
     if (!canSetCharacterStateHurt) return;
-    stateDurationRemaining = 10;
+    stateDurationRemaining = duration;
     state = CharacterState.Hurt;
     stateDuration = 0;
   }
