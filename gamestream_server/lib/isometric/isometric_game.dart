@@ -17,6 +17,13 @@ import 'isometric_scene.dart';
 import 'isometric_settings.dart';
 import 'isometric_time.dart';
 
+
+enum MouseAction {
+  Attack,
+  Target,
+  Target_Only_Allies,
+}
+
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   IsometricScene scene;
@@ -247,11 +254,25 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required bool inputTypeKeyboard
   }) {
 
-    if (player.deadOrBusy || !player.active || player.debugging) return;
+    if (player.deadOrBusy || !player.active || player.debugging)
+      return;
 
     if (player.target == null){
       player.lookAtMouse();
     }
+
+    final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
+
+    if (player.deadBusyOrWeaponStateBusy){
+      final aimTarget = player.aimTarget;
+      if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
+        player.setDestinationToMouse();
+        player.runToDestinationEnabled = true;
+        player.pathFindingEnabled = false;
+      }
+      return;
+    }
+
 
     // if (mouseRightDown){
     //   characterAttack(player);
@@ -259,7 +280,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     //   player.runToDestinationEnabled = false;
     // }
 
-    final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     // final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseLeftDown) {
@@ -279,9 +299,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.mouseRightDownIgnore = false;
     }
 
-    if (!player.mouseLeftDownIgnore && mouseLeftDown && !player.deadBusyOrWeaponStateBusy) {
+    if (!player.mouseLeftDownIgnore && mouseLeftDown) {
       final aimTarget = player.aimTarget;
-      if (aimTarget == null || player.isEnemy(aimTarget)){
+
+      if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         player.setDestinationToMouse();
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
@@ -303,7 +324,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (player.runInDirectionEnabled && direction != IsometricDirection.None){
+    if (player.controlsRunInDirectionEnabled && direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;
       characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
     } else if (!player.runToDestinationEnabled){

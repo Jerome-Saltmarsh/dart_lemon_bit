@@ -55,6 +55,8 @@ class IsometricPlayer {
   final weaponDamage = Watch(0);
   final weaponCooldown = Watch(1.0);
   final credits = Watch(0);
+  final controlsCanTargetEnemies = Watch(false);
+  final controlsRunInDirectionEnabled = Watch(false);
 
   late final message = Watch('', onChanged: gamestream.isometric.events.onChangedPlayerMessage);
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
@@ -130,6 +132,14 @@ class IsometricPlayer {
     if (!debugging){
       gamestream.isometric.cameraTargetPlayer();
     }
+  }
+
+  void toggleControlsRunInDirectionEnabled(){
+      gamestream.isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
+  }
+
+  void toggleControlsCanTargetEnemies(){
+    gamestream.isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
   }
 }
 

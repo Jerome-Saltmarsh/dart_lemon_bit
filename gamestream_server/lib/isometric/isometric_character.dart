@@ -62,7 +62,6 @@ class IsometricCharacter extends IsometricCollider {
 
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
-  var runInDirectionEnabled = true;
   var pathFindingEnabled = true;
   var runX = 0.0;
   var runY = 0.0;

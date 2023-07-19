@@ -25,9 +25,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   final IsometricPower power2;
   final IsometricPower power3;
 
-  /// The power the places has selected but must still caste
-  late final powerActivated = ChangeNotifier<IsometricPower?>(null, onActivatedPowerChanged);
-
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
       onChangedFlagStatus,
@@ -234,19 +231,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
       return;
     }
     powerActivated.value = value;
-  }
-
-
-  void onActivatedPowerChanged(IsometricPower? value){
-    writeByte(ServerResponse.Capture_The_Flag);
-    writeByte(CaptureTheFlagResponse.Activated_Power);
-    if (value == null) {
-      writeBool(false);
-      return;
-    }
-    writeBool(true);
-    writeByte(value.type.index);
-    writeUInt16(value.range.toInt());
   }
 
   void writePower1() {

@@ -28,6 +28,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   static const Cache_Length = 100;
 
+  /// The power the user has selected but must still caste
+  late final powerActivated = ChangeNotifier<IsometricPower?>(null, onActivatedPowerChanged);
+
   var _debugging = false;
   var mouseLeftDownDuration = 0;
   var mouseLeftDownIgnore = false;
@@ -71,6 +74,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   IsometricGameObject? editorSelectedGameObject;
   IsometricGame game;
   IsometricCollider? selectedCollider;
+
+  var controlsRunInDirectionEnabled = true;
+  var controlsCanTargetEnemies = false;
 
   IsometricPlayer({
     required this.game,
@@ -289,6 +295,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePlayerAlive();
       writeHighScore();
       writeDebugging();
+      writePlayerControls();
     }
 
     if (!sceneDownloaded){
@@ -1064,5 +1071,34 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt16(power.cooldownRemaining);
     // writeBool(powerActivated.value == power);
     writeByte(power.level);
+  }
+
+  void onActivatedPowerChanged(IsometricPower? value){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Activated_Power);
+    if (value == null) {
+      writeBool(false);
+      return;
+    }
+    writeBool(true);
+    writeByte(value.type.index);
+    writeUInt16(value.range.toInt());
+  }
+
+  void writePlayerControls(){
+    writeByte(ServerResponse.Isometric);
+    writeByte(IsometricResponse.Player_Controls);
+    writeBool(controlsCanTargetEnemies);
+    writeBool(controlsRunInDirectionEnabled);
+  }
+
+  void toggleControlsRunInDirectionEnabled() {
+    controlsRunInDirectionEnabled = !controlsRunInDirectionEnabled;
+    writePlayerControls();
+  }
+
+  void toggleControlsCanTargetEnemies() {
+    controlsCanTargetEnemies = !controlsCanTargetEnemies;
+    writePlayerControls();
   }
 }

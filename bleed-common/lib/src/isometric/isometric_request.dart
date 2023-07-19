@@ -21,4 +21,6 @@ enum IsometricRequest {
    Debug_Attack,
    Select_GameObject,
    Toggle_Debugging,
+   Toggle_Controls_Run_In_Direction_Enabled,
+   Toggle_Controls_Can_Target_Enemies,
 }

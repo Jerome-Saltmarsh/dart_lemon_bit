@@ -41,7 +41,7 @@ class MmoPlayer extends IsometricPlayer {
     required super.y,
     required super.z,
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
-    runInDirectionEnabled = false;
+    controlsRunInDirectionEnabled = false;
     defaultAttackBehavior = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
@@ -210,48 +210,47 @@ class MmoPlayer extends IsometricPlayer {
     writeEquippedWeaponIndex(value);
   }
 
-  void attack() {
-    setDestinationToCurrentPosition();
-    setCharacterStateIdle();
-
-    game.characterAttack(this);
+  void useEquippedWeapon() {
 
     final weapon = equippedWeapon;
-    if (weapon != null) {
-       final attackType = weapon.attackType;
-       if (attackType != null) {
-          switch (attackType) {
-            case MMOAttackType.Fire_Ball:
-              game.spawnProjectileFireball(
-                src: this,
-                damage: weapon.damage,
-                range: weapon.range,
-                angle: lookRadian,
-              );
-              break;
-            case MMOAttackType.Melee:
-              break;
-            case MMOAttackType.Arrow:
-              game.spawnProjectileArrow(
-                src: this,
-                damage: weapon.damage,
-                range: weapon.range,
-                angle: lookRadian,
-              );
-              break;
-            case MMOAttackType.Bullet:
-              game.spawnProjectile(
-                src: this,
-                damage: weapon.damage,
-                range: weapon.range,
-                projectileType: ProjectileType.Bullet,
-                angle: lookRadian,
-              );
-              break;
-            default:
-              throw Exception(attackType.name);
-          }
-       }
+    if (weapon == null) return;
+    final attackType = weapon.attackType;
+    if (attackType == null) return;
+
+    setDestinationToCurrentPosition();
+    setCharacterStateIdle();
+    game.characterAttack(this);
+
+    switch (attackType) {
+      case MMOAttackType.Fire_Ball:
+        game.spawnProjectileFireball(
+          src: this,
+          damage: weapon.damage,
+          range: weapon.range,
+          angle: lookRadian,
+        );
+        break;
+      case MMOAttackType.Melee:
+        break;
+      case MMOAttackType.Arrow:
+        game.spawnProjectileArrow(
+          src: this,
+          damage: weapon.damage,
+          range: weapon.range,
+          angle: lookRadian,
+        );
+        break;
+      case MMOAttackType.Bullet:
+        game.spawnProjectile(
+          src: this,
+          damage: weapon.damage,
+          range: weapon.range,
+          projectileType: ProjectileType.Bullet,
+          angle: lookRadian,
+        );
+        break;
+      default:
+        throw Exception(attackType.name);
     }
   }
 
@@ -460,6 +459,7 @@ class MmoPlayer extends IsometricPlayer {
      if (deadBusyOrWeaponStateBusy)
        return;
 
+
     if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
@@ -471,7 +471,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedWeaponIndex = index;
-    attack();
+    useEquippedWeapon();
   }
 
   void selectItem(int index) {

@@ -57,6 +57,11 @@ extension IsometricResponseReader on Gamestream {
       case IsometricResponse.Player_Initialized:
         isometric.onPlayerInitialized();
         break;
+
+      case IsometricResponse.Player_Controls:
+        isometric.player.controlsCanTargetEnemies.value = readBool();
+        isometric.player.controlsRunInDirectionEnabled.value = readBool();
+        break;
     }
   }
 
