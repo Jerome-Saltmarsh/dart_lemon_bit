@@ -8,6 +8,7 @@ enum MMOItem {
     cooldown: 40,
     range: 180,
     attackType: MMOAttackType.Blink,
+    performFrame: 15,
   ),
   Rusty_Old_Sword(
       quality: MMOItemQuality.Common,
@@ -17,6 +18,7 @@ enum MMOItem {
       damage: 2,
       range: 80,
       attackType: MMOAttackType.Melee,
+      performFrame: 20,
   ),
   Staff_Of_Flames(
       quality: MMOItemQuality.Unique,
@@ -26,6 +28,7 @@ enum MMOItem {
       damage: 2,
       range: 180,
       attackType: MMOAttackType.Fire_Ball,
+      performFrame: 20,
   ),
   Staff_Of_Frozen_Lake(
       quality: MMOItemQuality.Rare,
@@ -35,6 +38,7 @@ enum MMOItem {
       damage: 2,
       range: 180,
       attackType: MMOAttackType.Freeze_Circle,
+      performFrame: 20,
   ),
   Old_Bow(
       quality: MMOItemQuality.Common,
@@ -44,6 +48,7 @@ enum MMOItem {
       damage: 1,
       range: 200,
       attackType: MMOAttackType.Arrow,
+      performFrame: 20,
   ),
   Holy_Bow(
       quality: MMOItemQuality.Rare,
@@ -53,6 +58,7 @@ enum MMOItem {
       damage: 100,
       range: 300,
       attackType: MMOAttackType.Arrow,
+      performFrame: 20,
   ),
   Steel_Helmet(
       quality: MMOItemQuality.Common,
@@ -85,6 +91,7 @@ enum MMOItem {
       type: GameObjectType.Legs,
       subType: LegType.Green,
       health: 3,
+
   ),
   Knights_Pants(
       quality: MMOItemQuality.Unique,
@@ -166,6 +173,7 @@ enum MMOItem {
   final double movement;
   final MMOAttackType? attackType;
   final MMOItemQuality quality;
+  final int performFrame;
 
   bool get isWeapon => type == GameObjectType.Weapon;
 
@@ -188,6 +196,7 @@ enum MMOItem {
     this.isTreasure = false,
     this.consumable = false,
     this.experience = 0,
+    this.performFrame = 0,
     this.attackType
   });
 

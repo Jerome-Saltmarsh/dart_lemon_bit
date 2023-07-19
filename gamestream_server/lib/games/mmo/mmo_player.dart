@@ -15,6 +15,7 @@ class MmoPlayer extends IsometricPlayer {
   var healthBase = 10;
   var npcText = '';
   var npcOptions = <TalkOption>[];
+  var performingActivePower = false;
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
   final treasures = List<MMOItem?>.generate(4, (index) => null);
@@ -73,6 +74,13 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerTalents();
   }
 
+  int get equippedWeaponType {
+    final weapon = equippedWeapon;
+    if (weapon == null)
+      return WeaponType.Unarmed;
+    return weapon.subType;
+  }
+
   int get experience => _experience;
 
   int get experienceRequired => _experienceRequired;
@@ -84,9 +92,6 @@ class MmoPlayer extends IsometricPlayer {
   bool get skillsDialogOpen => _skillsDialogOpen;
 
   bool get inventoryOpen => _inventoryOpen;
-
-  @override
-  int get weaponType => equippedWeapon != null ? equippedWeapon!.subType : WeaponType.Unarmed;
 
   @override
   int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
@@ -220,6 +225,7 @@ class MmoPlayer extends IsometricPlayer {
 
     if (value == -1){
       _equippedWeaponIndex = value;
+      weaponType = equippedWeaponType;
       writeEquippedWeaponIndex(value);
       return;
     }
@@ -228,10 +234,12 @@ class MmoPlayer extends IsometricPlayer {
     }
     final item = weapons[value];
 
-    if (item == null || item.type != GameObjectType.Weapon)
+    if (item == null || item.type != GameObjectType.Weapon){
       return;
+    }
 
     _equippedWeaponIndex = value;
+    weaponType = equippedWeaponType;
     writeEquippedWeaponIndex(value);
   }
 
@@ -505,7 +513,10 @@ class MmoPlayer extends IsometricPlayer {
 
   }
 
-  int deselectActivatedPower() => activatedPowerIndex = -1;
+  void deselectActivatedPower() {
+    performingActivePower = false;
+    activatedPowerIndex = -1;
+  }
 
   void selectItem(int index) {
     if (deadBusyOrWeaponStateBusy)
@@ -896,5 +907,97 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Activated_Power_Index);
     writeInt8(_activatedPowerIndex);
+  }
+
+  void useActivatedPower(){
+    if (_activatedPowerIndex == -1)
+      return;
+
+    if (!isValidWeaponIndex(_activatedPowerIndex))
+      throw Exception();
+
+    final weapon = weapons[_activatedPowerIndex];
+
+    if (weapon == null){
+      throw Exception();
+    }
+
+    final attackType = weapon.attackType;
+
+    if (attackType == null)
+      throw Exception();
+
+    switch (attackType.mode) {
+      case PowerMode.Equip:
+        throw Exception();
+      case PowerMode.Self:
+        performFrame = weapon.performFrame;
+        setCharacterStatePerforming(duration: weapon.performFrame + 1);
+        break;
+      case PowerMode.Targeted_Enemy:
+        if (target == null) {
+          deselectActivatedPower();
+          return;
+        }
+        performFrame = weapon.performFrame;
+        setCharacterStatePerforming(duration: weapon.performFrame + 1);
+        break;
+      case PowerMode.Targeted_Ally:
+        if (target == null) {
+          deselectActivatedPower();
+          return;
+        }
+        performFrame = weapon.performFrame;
+        setCharacterStatePerforming(duration: weapon.performFrame + 1);
+        break;
+      case PowerMode.Positional:
+        performFrame = weapon.performFrame;
+        weaponType = weapon.subType;
+        weaponPerformFrame = performFrame + 1;
+        performingActivePower = true;
+
+        if (WeaponType.isFirearm(weaponType)) {
+          weaponState = WeaponState.Firing;
+        }
+        if (WeaponType.isMelee(weaponType)) {
+          weaponState = WeaponState.Melee;
+        }
+        weaponStateDuration = performFrame + 1;
+        break;
+    }
+  }
+
+  /// Gets called once the animation to perform the power strikes the perform state
+  void applyPerformingActivePower() {
+      if (activatedPowerIndex == -1)
+        throw Exception();
+
+      if (!isValidWeaponIndex(activatedPowerIndex)){
+        throw Exception();
+      }
+
+      deselectActivatedPower();
+
+      final weapon = weapons[activatedPowerIndex];
+
+      if (weapon == null)
+        throw Exception();
+
+      final attackType = weapon.attackType;
+
+      if (attackType == null){
+        throw Exception();
+      }
+
+      switch (attackType) {
+        case MMOAttackType.Blink:
+          x = mouseSceneX;
+          y = mouseSceneY;
+          z = mouseSceneZ;
+          break;
+        default:
+          throw Exception("Power Not Implemented $attackType");
+      }
+
   }
 }

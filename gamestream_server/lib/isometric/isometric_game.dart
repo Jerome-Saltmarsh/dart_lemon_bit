@@ -291,6 +291,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.mouseLeftDownIgnore = false;
     }
 
+    if (mouseLeftClicked &&
+        player is MmoPlayer &&
+        player.activatedPowerIndex != -1
+    ) {
+      player.useActivatedPower();
+      player.mouseLeftDownIgnore = true;
+      return;
+    }
 
     if (!player.mouseLeftDownIgnore && mouseLeftDown) {
       final aimTarget = player.aimTarget;

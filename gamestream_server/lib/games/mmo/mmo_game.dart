@@ -106,9 +106,15 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     });
   }
 
+
   @override
   void onApplyCustomCharacterPerformWeapon(IsometricCharacter character) {
     if (character is! MmoPlayer) return;
+
+    if (character.performingActivePower){
+      character.applyPerformingActivePower();
+      return;
+    }
 
     final weapon = character.equippedWeapon;
 

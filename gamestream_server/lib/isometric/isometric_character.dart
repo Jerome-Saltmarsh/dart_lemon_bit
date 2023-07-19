@@ -154,7 +154,7 @@ class IsometricCharacter extends IsometricCollider {
 
     _weaponState = value;
     weaponStateDuration = 0;
-    weaponStateDurationTotal = getWeaponStateDurationTotal(value);
+    weaponStateDurationTotal = getWeaponStateDurationTotal(value); // TODO THIS IS BAD
   }
 
   bool get shouldUpdatePath =>
