@@ -19,13 +19,21 @@ extension MMOUI on MmoGame {
     children: [
       buildNpcText(),
       buildPlayerWeapons(),
-      buildPlayerTreasures(),
-      buildPlayerItems(),
+      Positioned(
+        top: Margin1,
+        left: Margin1,
+        child: buildPlayerTreasures(),
+      ),
+      Positioned(
+        left: Margin1,
+        bottom: Margin2,
+        child: buildPlayerItems(),
+      ),
       buildPlayerAimTarget(),
       buildItemHoverDialog(),
       Positioned(
           top: Margin1 + 100,
-          left: Margin1,
+          left: Margin1 + 100,
           child: buildPlayerEquipped(),
       ),
       Positioned(
@@ -36,17 +44,7 @@ extension MMOUI on MmoGame {
       Positioned(
           bottom: Margin1,
           right: Margin1,
-          child: Row(
-            children: [
-              buildSkillPointsRemaining(),
-              width8,
-              buildPlayerLevel(),
-              width8,
-              buildPlayerExperienceBar(),
-              width8,
-              buildPlayerHealthBar(),
-            ],
-          ),
+          child: buildPlayerStatsRow(),
       ),
     ],
   );
@@ -109,22 +107,21 @@ extension MMOUI on MmoGame {
         ),
       ));
 
-  Positioned buildPlayerTreasures() => Positioned(
-        top: Margin1,
-        left: Margin1,
-        child: GSContainer(
-        child: buildWatch(
-          treasuresChangedNotifier,
-          (int reads) => Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(treasures.length, (index) => onPressed(
-                action: () => selectTreasure(index),
-                onRightClick: () => dropTreasure(index),
-                child: MMOItemImage(item: treasures[index], size: 64))),
-          ),
+  Widget buildPlayerTreasures() => buildInventory(
+    child: GSContainer(
+    child: buildWatch(
+      treasuresChangedNotifier,
+      (int reads) => Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(treasures.length, (index) => onPressed(
+            action: () => selectTreasure(index),
+            onRightClick: () => dropTreasure(index),
+            child: MMOItemImage(item: treasures[index], size: 64))),
+      ),
+    ),
         ),
-      ));
+  );
 
   buildPlayerAimTarget() {
     final name = Container(
@@ -251,19 +248,15 @@ extension MMOUI on MmoGame {
      );
   }
 
-  Widget buildPlayerItems() => Positioned(
-      left: Margin1,
-      bottom: Margin2,
-      child: buildInventory(
-        child: buildWatch(
-            itemsChangedNotifier,
-            (_) => GSContainer(
-                child: Column(
-                    children: List.generate(
-                        items.length, (index) => buildItemImageAtIndex(index),
-                        growable: false)))
-        ),
-      )
+  Widget buildPlayerItems() => buildInventory(
+    child: buildWatch(
+        itemsChangedNotifier,
+        (_) => GSContainer(
+            child: Column(
+                children: List.generate(
+                    items.length, (index) => buildItemImageAtIndex(index),
+                    growable: false)))
+    ),
   );
 
   Widget buildInventory({required Widget child}) =>
@@ -272,28 +265,25 @@ extension MMOUI on MmoGame {
         (inventoryOpen) => inventoryOpen ? child : nothing,
       );
 
-  Widget buildPlayerEquipped() => Positioned(
-        bottom: Margin2,
-        right: Margin1,
-        child: buildInventory(
-          child: GSContainer(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildWatch(equippedHead, (equipped) => onPressed(
-                    onRightClick: equipped == null ? null : dropEquippedHead,
-                    action: equipped == null ? null : null,
-                    child: MMOItemImage(item: equipped, size: 64))),
-                buildWatch(equippedBody, (equipped) => onPressed(
-                    onRightClick: equipped == null ? null : dropEquippedBody,
-                    child: MMOItemImage(item: equipped, size: 64))),
-                buildWatch(equippedLegs, (equipped) => onPressed(
-                    onRightClick: equipped == null ? null : dropEquippedLegs,
-                    child: MMOItemImage(item: equipped, size: 64))),
-            ],),
-          ),
-        ));
+  Widget buildPlayerEquipped() => buildInventory(
+    child: GSContainer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildWatch(equippedHead, (equipped) => onPressed(
+              onRightClick: equipped == null ? null : dropEquippedHead,
+              action: equipped == null ? null : null,
+              child: MMOItemImage(item: equipped, size: 64))),
+          buildWatch(equippedBody, (equipped) => onPressed(
+              onRightClick: equipped == null ? null : dropEquippedBody,
+              child: MMOItemImage(item: equipped, size: 64))),
+          buildWatch(equippedLegs, (equipped) => onPressed(
+              onRightClick: equipped == null ? null : dropEquippedLegs,
+              child: MMOItemImage(item: equipped, size: 64))),
+      ],),
+    ),
+  );
 
   Widget buildSkillPointsRemaining() => buildWatch(playerSkillPoints, (skillPoints) {
        if (skillPoints == 0)
@@ -430,4 +420,17 @@ extension MMOUI on MmoGame {
     ],);
   }
 
+  Widget buildPlayerStatsRow() => Row(
+      children: [
+        buildSkillPointsRemaining(),
+        width8,
+        buildPlayerLevel(),
+        width8,
+        buildPlayerExperienceBar(),
+        width8,
+        buildPlayerHealthBar(),
+      ],
+    );
+
 }
+
