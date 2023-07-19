@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/core/game.dart';
+import 'package:gamestream_server/games.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
@@ -264,9 +265,22 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
+    if (mouseRightDown){
+      player.mouseRightDownDuration++;
+    } else {
+      player.mouseRightDownDuration = 0;
+    }
+
     if (mouseRightClicked){
-      setCharacterStateIdle(player);
-      characterAttack(player);
+      if (player is MmoPlayer){
+        if (player.activatedPowerIndex == -1){
+          setCharacterStateIdle(player);
+          characterAttack(player);
+        } else {
+          player.deselectActivatedPower();
+        }
+      }
+
       return;
     }
 
