@@ -57,7 +57,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
           errorInvalidClientRequest();
           return;
         }
-        final powerType = CaptureTheFlagPowerType.values[powerTypeIndex];
+        final powerType = PowerType.values[powerTypeIndex];
         player.upgradePowerType(powerType);
         break;
       case CaptureTheFlagRequest.Debug_Selected_Character_AI:

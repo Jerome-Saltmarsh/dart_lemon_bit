@@ -17,6 +17,7 @@ import 'isometric_game.dart';
 import 'isometric_character.dart';
 import 'isometric_gameobject.dart';
 import 'isometric_position.dart';
+import 'isometric_power.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
 import 'isometric_scene_writer.dart';
@@ -1055,5 +1056,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void toggleDebugging() {
     debugging = !debugging;
+  }
+
+  void writePower(IsometricPower power) {
+    writeByte(power.type.index);
+    writeUInt16(power.cooldown);
+    writeUInt16(power.cooldownRemaining);
+    // writeBool(powerActivated.value == power);
+    writeByte(power.level);
   }
 }

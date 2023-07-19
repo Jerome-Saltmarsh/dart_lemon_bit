@@ -32,7 +32,7 @@ class CaptureTheFlagGame extends IsometricGame {
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
 
-  final playerActivatedPowerType = Watch<CaptureTheFlagPowerType?>(null);
+  final playerActivatedPowerType = Watch<PowerType?>(null);
   final playerActivatedPowerRange = Watch(0.0);
   final playerActivatedPowerX = Watch(0.0);
   final playerActivatedPowerY = Watch(0.0);

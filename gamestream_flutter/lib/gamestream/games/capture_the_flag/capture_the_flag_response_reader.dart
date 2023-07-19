@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/gamestream/gamestream.dart';
 
 extension CaptureTheFlagResponseReader on Gamestream {
 
+
   void readCaptureTheFlag() {
     final captureTheFlag = gamestream.games.captureTheFlag;
     switch (readByte()) {
@@ -71,14 +72,17 @@ extension CaptureTheFlagResponseReader on Gamestream {
 
       case CaptureTheFlagResponse.Power_1:
         readPower(captureTheFlag.playerPower1);
+        captureTheFlag.playerPower1.activated.value = readBool();
         break;
 
       case CaptureTheFlagResponse.Power_2:
         readPower(captureTheFlag.playerPower2);
+        captureTheFlag.playerPower2.activated.value = readBool();
         break;
 
       case CaptureTheFlagResponse.Power_3:
         readPower(captureTheFlag.playerPower3);
+        captureTheFlag.playerPower3.activated.value = readBool();
         break;
 
       case CaptureTheFlagResponse.Player_Experience:
@@ -107,11 +111,10 @@ extension CaptureTheFlagResponseReader on Gamestream {
     power.type.value = readPowerType();
     power.cooldown.value = readUInt16();
     power.cooldownRemaining.value = readUInt16();
-    power.activated.value = readBool();
     power.level.value = readByte();
   }
 
-  CaptureTheFlagPowerType readPowerType() =>
-      CaptureTheFlagPowerType.values[readByte()];
+  PowerType readPowerType() =>
+      PowerType.values[readByte()];
 
 }

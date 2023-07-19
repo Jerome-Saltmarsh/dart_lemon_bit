@@ -1,9 +1,7 @@
 
+import 'package:gamestream_server/common/src.dart';
 
-import 'package:gamestream_server/common/src/capture_the_flag/capture_the_flag_power_mode.dart';
-import 'package:gamestream_server/common/src/capture_the_flag/capture_the_flag_power_type.dart';
-
-class CaptureTheFlagPower {
+class IsometricPower {
 
   var cooldownRemaining = 0;
   var level = 1;
@@ -11,9 +9,9 @@ class CaptureTheFlagPower {
   final int duration;
   final int cooldown;
   final double range;
-  final CaptureTheFlagPowerType type;
+  final PowerType type;
 
-  CaptureTheFlagPower({
+  IsometricPower({
     required this.type,
     required this.range,
     required this.cooldown,

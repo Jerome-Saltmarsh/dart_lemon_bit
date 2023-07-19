@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
 class CaptureTheFlagPower {
-   final type = Watch(CaptureTheFlagPowerType.Blink);
+   final type = Watch(PowerType.Blink);
    final cooldown = Watch(0);
    final activated = Watch(false);
    final coolingDown = Watch(false);

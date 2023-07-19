@@ -9,7 +9,6 @@ import 'package:gamestream_server/lemon_math.dart';
 import 'capture_the_flag_ai.dart';
 import 'capture_the_flag_gameobject_flag.dart';
 import 'capture_the_flag_player.dart';
-import 'capture_the_flag_power.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   static const Target_Points = 11;
@@ -174,16 +173,16 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   int countPlayersOnTeam(int team) =>
       players.where((player) => player.team == team).length;
 
-  void playerUsePower(CaptureTheFlagPlayer player, CaptureTheFlagPower power) {
+  void playerUsePower(CaptureTheFlagPlayer player, IsometricPower power) {
 
     switch (power.type) {
 
-      case CaptureTheFlagPowerType.Blink:
+      case PowerType.Blink:
         player.x = player.activatedPowerX;
         player.y = player.activatedPowerY;
         break;
 
-      case CaptureTheFlagPowerType.Slow:
+      case PowerType.Slow:
         final target = player.powerPerformingTarget;
         assert (target != null);
         if (target == null) {
@@ -196,7 +195,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
         break;
 
-      case CaptureTheFlagPowerType.Heal:
+      case PowerType.Heal:
         final target = player.powerPerformingTarget;
         assert (target != null);
         if (target is! IsometricCharacter) return;
@@ -613,19 +612,19 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       x: baseOwn.x,
       y: baseOwn.y,
       z: baseOwn.z,
-      power1: CaptureTheFlagPower(
-        type: CaptureTheFlagPowerType.Blink,
+      power1: IsometricPower(
+        type: PowerType.Blink,
         range: 300,
         cooldown: 400,
       ),
-      power2: CaptureTheFlagPower(
-        type: CaptureTheFlagPowerType.Heal,
+      power2: IsometricPower(
+        type: PowerType.Heal,
         range: 300,
         cooldown: 300,
         duration: 120,
       ),
-      power3: CaptureTheFlagPower(
-        type: CaptureTheFlagPowerType.Slow,
+      power3: IsometricPower(
+        type: PowerType.Slow,
         range: 300,
         cooldown: 300,
         duration: 120,

@@ -20,3 +20,4 @@ export 'isometric_script_type.dart';
 export 'isometric_settings.dart';
 export 'isometric_side.dart';
 export 'isometric_time.dart';
+export 'isometric_power.dart';

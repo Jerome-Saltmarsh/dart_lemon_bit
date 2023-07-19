@@ -19,6 +19,15 @@ enum MMOItem {
       range: 180,
       attackType: MMOAttackType.Fire_Ball,
   ),
+  Staff_Of_Frozen_Lake(
+      quality: MMOItemQuality.Rare,
+      type: GameObjectType.Weapon,
+      subType: WeaponType.Staff,
+      cooldown: 40,
+      damage: 2,
+      range: 180,
+      attackType: MMOAttackType.Freeze_Circle,
+  ),
   Old_Bow(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Weapon,

@@ -30,3 +30,4 @@ export 'character_action.dart';
 export 'compress_type.dart';
 export 'item_type.dart';
 export 'character_goal.dart';
+export 'power_type.dart';

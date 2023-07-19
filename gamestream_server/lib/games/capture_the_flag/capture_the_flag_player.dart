@@ -7,14 +7,9 @@ import 'mixins/i_capture_the_flag_team.dart';
 
 import 'capture_the_flag_game.dart';
 import 'capture_the_flag_ai.dart';
-import 'capture_the_flag_power.dart';
 
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
-
-  IsometricPosition? powerActivatedTarget;
-  IsometricPosition? powerPerformingTarget;
-  CaptureTheFlagPower? powerPerforming;
 
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
@@ -26,12 +21,12 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   @override
   final CaptureTheFlagGame game;
-  final CaptureTheFlagPower power1;
-  final CaptureTheFlagPower power2;
-  final CaptureTheFlagPower power3;
+  final IsometricPower power1;
+  final IsometricPower power2;
+  final IsometricPower power3;
 
   /// The power the places has selected but must still caste
-  late final powerActivated = ChangeNotifier<CaptureTheFlagPower?>(null, onActivatedPowerChanged);
+  late final powerActivated = ChangeNotifier<IsometricPower?>(null, onActivatedPowerChanged);
 
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
@@ -233,7 +228,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void activatePower3() => activatePower(power3);
 
-  void activatePower(CaptureTheFlagPower value) {
+  void activatePower(IsometricPower value) {
     if (!value.ready) {
       writeGameError(GameError.Power_Not_Ready);
       return;
@@ -242,7 +237,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
 
-  void onActivatedPowerChanged(CaptureTheFlagPower? value){
+  void onActivatedPowerChanged(IsometricPower? value){
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Activated_Power);
     if (value == null) {
@@ -258,26 +253,21 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_1);
     writePower(power1);
+    writeBool(powerActivated.value == power1);
   }
 
   void writePower2() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_2);
     writePower(power2);
+    writeBool(powerActivated.value == power2);
   }
 
   void writePower3() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_3);
     writePower(power3);
-  }
-
-  void writePower(CaptureTheFlagPower power) {
-    writeByte(power.type.index);
-    writeUInt16(power.cooldown);
-    writeUInt16(power.cooldownRemaining);
-    writeBool(powerActivated.value == power);
-    writeByte(power.level);
+    writeBool(powerActivated.value == power3);
   }
 
   void performActivatedPower() {
@@ -321,7 +311,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     writeByte(CaptureTheFlagResponse.Player_Event_Skill_Upgraded);
   }
 
-  void upgradePowerType(CaptureTheFlagPowerType powerType) {
+  void upgradePowerType(PowerType powerType) {
      final power = getPowerByType(powerType);
      if (power == null) {
        writeGameError(GameError.Upgrade_Power_Error);
@@ -340,7 +330,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
      writePlayerEventSkillUpgraded();
   }
 
-  CaptureTheFlagPower? getPowerByType(CaptureTheFlagPowerType powerType) {
+  IsometricPower? getPowerByType(PowerType powerType) {
      if (power1.type == powerType)
        return power1;
      if (power2.type == powerType)

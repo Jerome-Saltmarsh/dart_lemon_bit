@@ -9,8 +9,9 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] player experience and level
-[ ] player skill points
+[ ] migrate capture the flag powers to isometric core
+[ ] zombie death animation
+[ ] ability and weapon cooldown
 [ ] character persistence
 [ ] 3d character shadows
 [ ] pathfinding separate and left and right stack frames
@@ -30,6 +31,8 @@ alt + m             : go to declaration
 [?] character gold
 
 18.07.2023
+[x] player experience and level
+[x] player skill points
 [x] fix zombie wander
 [x] fix player attack spawns two arrows
 

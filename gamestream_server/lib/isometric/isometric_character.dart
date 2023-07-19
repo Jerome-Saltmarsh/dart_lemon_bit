@@ -4,11 +4,17 @@ import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
+import 'isometric_power.dart';
 import 'isometric_collider.dart';
 import 'isometric_position.dart';
 import 'isometric_settings.dart';
 
 class IsometricCharacter extends IsometricCollider {
+
+  IsometricPosition? powerActivatedTarget;
+  IsometricPosition? powerPerformingTarget;
+  IsometricPower? powerPerforming;
+
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _weaponAccuracy = 0.0;
   var _angle = 0.0;

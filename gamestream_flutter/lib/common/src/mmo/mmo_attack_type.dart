@@ -9,5 +9,6 @@ enum MMOAttackType {
   Rocket,
   Frost_Ball,
   Electricity_Ball,
-  Fire_Ball
+  Fire_Ball,
+  Freeze_Circle,
 }
