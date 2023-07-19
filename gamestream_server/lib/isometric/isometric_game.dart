@@ -265,6 +265,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseRightClicked){
+      setCharacterStateIdle(player);
       characterAttack(player);
       return;
     }
@@ -2637,10 +2638,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterActionIdle(IsometricCharacter character) {
     character.goal = CharacterGoal.Idle;
     character.action = CharacterAction.Idle;
-    character.setCharacterStateIdle();
-    character.setDestinationToCurrentPosition();
-    character.clearPath();
-    character.clearTarget();
+    setCharacterStateIdle(character);
   }
 
 
@@ -2924,5 +2922,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       radius: character.wanderRadius,
       type: NodeType.Empty,
     );
+  }
+
+  void setCharacterStateIdle(IsometricCharacter character) {
+    character.setCharacterStateIdle();
+    character.setDestinationToCurrentPosition();
+    character.clearPath();
+    character.clearTarget();
   }
 }

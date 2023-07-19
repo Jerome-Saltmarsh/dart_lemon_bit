@@ -23,6 +23,7 @@ class IsometricCharacter extends IsometricCollider {
 
   var _weaponState = WeaponState.Idle;
 
+  var hurtStateBusy = true;
   var interacting = false;
   var targetPerceptible = false;
   var canSetCharacterStateHurt = true;
@@ -208,7 +209,7 @@ class IsometricCharacter extends IsometricCollider {
 
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
 
-  bool get busy => stateDurationRemaining > 0;
+  bool get busy => stateDurationRemaining > 0 && (!characterStateHurt || hurtStateBusy);
 
   bool get deadOrBusy => dead || busy;
 

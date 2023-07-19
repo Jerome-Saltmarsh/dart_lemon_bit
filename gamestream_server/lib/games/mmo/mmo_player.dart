@@ -42,7 +42,9 @@ class MmoPlayer extends IsometricPlayer {
     required super.z,
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     controlsRunInDirectionEnabled = false;
+    controlsCanTargetEnemies = true;
     defaultAttackBehavior = false;
+    hurtStateBusy = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Old_Bow);
@@ -471,7 +473,11 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     equippedWeaponIndex = index;
-    useEquippedWeapon();
+
+    if (!controlsCanTargetEnemies){
+      useEquippedWeapon();
+    }
+
   }
 
   void selectItem(int index) {
