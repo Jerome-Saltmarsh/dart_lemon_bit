@@ -404,7 +404,7 @@ class IsometricCharacter extends IsometricCollider {
 
     if (weaponStateDuration < weaponStateDurationTotal) {
       weaponStateDuration++;
-      if (weaponStateDuration == weaponStateDurationTotal) {
+      if (weaponStateDuration >= weaponStateDurationTotal) {
 
         if (clearTargetAfterAttack && const [WeaponState.Melee, WeaponState.Firing].contains(weaponState)){
           clearTarget();

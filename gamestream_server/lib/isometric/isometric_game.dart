@@ -1706,7 +1706,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.dead) return;
     if (!character.active) return;
-    character.update();
 
     updateCharacterTarget(character);
     updateCharacterTargetPerceptible(character);
@@ -1714,6 +1713,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateCharacterAction(character);
     updateCharacterPath(character);
     updateCharacterState(character);
+    character.update();
 
     if (character is T) {
       updatePlayer(character);
