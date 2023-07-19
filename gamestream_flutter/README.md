@@ -9,8 +9,6 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
-[ ] sound eat meat 
-[ ] sound consume drink 
 [ ] migrate capture the flag powers to isometric core
 [ ] zombie death animation
 [ ] ability and weapon cooldown
@@ -31,6 +29,10 @@ alt + m             : go to declaration
 [-] remove all static instances
 [*] fix grid render order
 [?] character gold
+
+19.07.2023
+[x] polish player controls
+[x] polish ui
 
 18.07.2023
 [x] player experience and level

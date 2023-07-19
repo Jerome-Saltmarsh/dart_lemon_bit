@@ -14,12 +14,17 @@ extension MMOUI on MmoGame {
   static const itemImageSize = 64.0;
   static const margin1 = 16.0;
   static const margin2 = 130.0;
+  static const margin3 = 315.0;
 
   Widget buildMMOUI()=> Stack(
     alignment: Alignment.center,
     children: [
       buildNpcText(),
-      buildPlayerWeapons(),
+      Positioned(
+        bottom: margin1,
+        left: margin1,
+        child: buildPlayerWeapons(),
+      ),
       Positioned(
         top: margin1,
         left: margin1,
@@ -36,7 +41,11 @@ extension MMOUI on MmoGame {
         child: buildPlayerItems(),
       ),
       buildPlayerAimTarget(),
-      buildItemHoverDialog(),
+      Positioned(
+         top: margin3,
+         left: margin3,
+         child: buildItemHoverDialog(),
+      ),
       Positioned(
           top: margin2,
           left: margin1,
@@ -99,10 +108,7 @@ extension MMOUI on MmoGame {
     );
   }
 
-  Positioned buildPlayerWeapons() => Positioned(
-        bottom: margin1,
-        left: margin1,
-        child: GSContainer(
+  Widget buildPlayerWeapons() => GSContainer(
         child: buildWatch(
           weaponsChangedNotifier,
           (int reads) => Row(
@@ -111,7 +117,7 @@ extension MMOUI on MmoGame {
             children: List.generate(weapons.length, buildWeaponImageAtIndex),
           ),
         ),
-      ));
+      );
 
   Widget buildPlayerTreasures() => buildInventory(
     child: GSContainer(
@@ -175,7 +181,7 @@ extension MMOUI on MmoGame {
                       Positioned(
                           top: 8,
                           left: 8,
-                          child: buildText(const['Q', 'W', 'E', 'R'][index], color: Colors.white70)
+                          child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
                       ),
                     ],
                   ),
@@ -196,39 +202,33 @@ extension MMOUI on MmoGame {
   buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
       itemHover,
       (item) => item == null
-          ? Positioned(child: nothing, top: 0, left: 0,)
-          : Positioned(
-              left: gamestream.engine.mousePositionX < gamestream.engine.screenCenterX ? edgePadding : null,
-              right: gamestream.engine.mousePositionX > gamestream.engine.screenCenterX ? edgePadding : null,
-              top: gamestream.engine.mousePositionY < gamestream.engine.screenCenterY ? edgePadding : null,
-              bottom: gamestream.engine.mousePositionY > gamestream.engine.screenCenterY ? edgePadding : null,
-            child: GSContainer(
-                width: 270,
-                child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  FittedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
-                        width8,
-                        MMOItemImage(item: item, size: 64),
-                      ],
-                    ),
+          ? nothing
+          : GSContainer(
+              width: 270,
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
+                      width8,
+                      MMOItemImage(item: item, size: 64),
+                    ],
                   ),
-                  height16,
-                  buildItemRow('damage', item.damage),
-                  buildItemRow('cooldown', item.cooldown),
-                  buildItemRow('range', item.range),
-                  buildItemRow('health', item.health),
-                  buildItemRow('movement', item.movement * 10),
-                  if (item.attackType != null)
-                    buildItemRow('attack type', item.attackType!.name),
-                ],
-              )),
-          ));
+                ),
+                height16,
+                buildItemRow('damage', item.damage),
+                buildItemRow('cooldown', item.cooldown),
+                buildItemRow('range', item.range),
+                buildItemRow('health', item.health),
+                buildItemRow('movement', item.movement * 10),
+                if (item.attackType != null)
+                  buildItemRow('attack type', item.attackType!.name),
+              ],
+            )));
 
   static Widget buildItemRow(String text, dynamic value){
      if (value == null || value == 0) return nothing;
@@ -450,15 +450,28 @@ extension MMOUI on MmoGame {
     );
 
   Widget buildInventoryButton() {
-    final iconOpen = IsometricIcon(iconType: IconType.Inventory_Open,);
-    final iconClosed = IsometricIcon(iconType: IconType.Inventory_Closed);
+    const scale = 1.8;
+    final iconOpen = IsometricIcon(iconType: IconType.Inventory_Open, scale: scale,);
+    final iconClosed = IsometricIcon(iconType: IconType.Inventory_Closed, scale: scale,);
     return onPressed(
         action: toggleInventoryOpen,
-        child: GSContainer(
-          width: itemImageSize,
-          height: itemImageSize,
-          child: buildWatch(playerInventoryOpen, (inventoryOpen) =>
-              inventoryOpen ? iconOpen : iconClosed)
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              child: GSContainer(
+                width: itemImageSize,
+                height: itemImageSize,
+                child: buildWatch(playerInventoryOpen, (inventoryOpen) =>
+                    inventoryOpen ? iconOpen : iconClosed)
+              ),
+            ),
+            Positioned(
+              top: 8,
+              left: 8,
+              child: buildText('Q', color: Colors.white70),
+            ),
+          ],
         )
     );
   }

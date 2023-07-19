@@ -9,12 +9,14 @@ class ItemImage extends StatelessWidget {
   final double size;
   final int type;
   final int subType;
+  final double scale;
 
   const ItemImage({
     super.key,
     required this.size,
     required this.type,
     required this.subType,
+    this.scale = 1.0,
   });
 
   @override
@@ -36,6 +38,7 @@ class ItemImage extends StatelessWidget {
           srcY: src[Atlas.SrcY],
           srcWidth: src[Atlas.SrcWidth],
           srcHeight: src[Atlas.SrcHeight],
+          scale: scale,
         ),
       ),
     );

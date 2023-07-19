@@ -835,5 +835,6 @@ class MmoPlayer extends IsometricPlayer {
 
   void toggleInventoryOpen() {
     inventoryOpen = !inventoryOpen;
+    setCharacterStateChanging();
   }
 }
