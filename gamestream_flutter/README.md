@@ -9,6 +9,8 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] sound pick up item
+[ ] ui items draggable
 [ ] migrate capture the flag powers to isometric core
 [ ] zombie death animation
 [ ] ability and weapon cooldown
@@ -31,6 +33,7 @@ alt + m             : go to declaration
 [?] character gold
 
 19.07.2023
+[x] fix bug player doesn't run to pick up item
 [x] polish player controls
 [x] polish ui
 

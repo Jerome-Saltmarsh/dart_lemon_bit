@@ -43,7 +43,7 @@ extension MMOUI on MmoGame {
       buildPlayerAimTarget(),
       Positioned(
          top: margin3,
-         left: margin3,
+         left: margin3 + 10,
          child: buildItemHoverDialog(),
       ),
       Positioned(

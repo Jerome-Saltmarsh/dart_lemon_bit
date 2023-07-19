@@ -309,6 +309,7 @@ class MmoPlayer extends IsometricPlayer {
     }
     items[index] = item;
     writePlayerItem(index, item);
+    setCharacterStateChanging();
   }
 
   @override
