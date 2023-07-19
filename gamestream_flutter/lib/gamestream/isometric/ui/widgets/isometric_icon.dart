@@ -17,7 +17,6 @@ class IsometricIcon extends StatelessWidget {
     this.color = 1,
   });
 
-
   @override
   Widget build(BuildContext context) =>
       FittedBox(

@@ -22,7 +22,8 @@ class AtlasIcons {
     IconType.Wind_Calm: 128,
     IconType.Wind_Gentle: 128,
     IconType.Wind_Strong: 128,
-    IconType.Inventory_Open: 64,
+    IconType.Inventory_Closed: 790,
+    IconType.Inventory_Open: 820,
     IconType.Sound_Enabled: 1,
     IconType.Sound_Disabled: 1,
     IconType.Plus: 32,
@@ -74,7 +75,8 @@ class AtlasIcons {
     IconType.Wind_Calm: 64 * 0,
     IconType.Wind_Gentle: 64 * 5,
     IconType.Wind_Strong: 64 * 6,
-    IconType.Inventory_Open: 32,
+    IconType.Inventory_Closed: 3,
+    IconType.Inventory_Open: 1,
     IconType.Plus: 96,
     IconType.Minus: 96,
     IconType.Heart: 209,
@@ -99,6 +101,8 @@ class AtlasIcons {
   }[itemType] ?? 0;
 
   static double getSrcWidth(IconType itemType) => const  <IconType, double> {
+    IconType.Inventory_Closed: 23,
+    IconType.Inventory_Open: 23,
     IconType.Checkbox_True: 112,
     IconType.Checkbox_False: 112,
     IconType.Home: 155,
@@ -128,6 +132,8 @@ class AtlasIcons {
 
 
   static double getSrcHeight(IconType itemType) => const  <IconType, double> {
+    IconType.Inventory_Closed: 26,
+    IconType.Inventory_Open: 30,
     IconType.Checkbox_True: 112,
     IconType.Checkbox_False: 112,
     IconType.Home: 155,

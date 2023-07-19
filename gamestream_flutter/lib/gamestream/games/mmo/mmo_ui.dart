@@ -450,10 +450,15 @@ extension MMOUI on MmoGame {
     );
 
   Widget buildInventoryButton() {
+    final iconOpen = IsometricIcon(iconType: IconType.Inventory_Open,);
+    final iconClosed = IsometricIcon(iconType: IconType.Inventory_Closed);
     return onPressed(
         action: toggleInventoryOpen,
         child: GSContainer(
-            child: IsometricIcon(iconType: IconType.Inventory_Open)
+          width: itemImageSize,
+          height: itemImageSize,
+          child: buildWatch(playerInventoryOpen, (inventoryOpen) =>
+              inventoryOpen ? iconOpen : iconClosed)
         )
     );
   }
