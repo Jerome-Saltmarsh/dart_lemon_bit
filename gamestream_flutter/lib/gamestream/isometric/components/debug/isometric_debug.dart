@@ -139,10 +139,10 @@ class IsometricDebug {
       final a = path[i];
       final b = path[i + 1];
       gamestream.engine.drawLine(
-        nodes.getIndexRenderX(a),
-        nodes.getIndexRenderY(a),
-        nodes.getIndexRenderX(b),
-        nodes.getIndexRenderY(b),
+        nodes.getIndexRenderX(a) + Node_Size_Half,
+        nodes.getIndexRenderY(a) + Node_Size_Half,
+        nodes.getIndexRenderX(b) + Node_Size_Half,
+        nodes.getIndexRenderY(b) + Node_Size_Half,
       );
     }
   }

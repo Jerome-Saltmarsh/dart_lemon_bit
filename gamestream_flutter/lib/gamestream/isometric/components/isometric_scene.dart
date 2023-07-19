@@ -1108,7 +1108,10 @@ class IsometricScene {
   bool isValidIndex(int index) => index >= 0 && index < total;
 
   double getIndexRenderX(int index) =>
-      IsometricRender.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));
+      IsometricRender.rowColumnToRenderX(
+          getIndexRow(index),
+          getIndexColumn(index),
+      );
 
   double getIndexRenderY(int index) =>
       IsometricRender.rowColumnZToRenderY(getIndexRow(index), getIndexColumn(index), getIndexZ(index));

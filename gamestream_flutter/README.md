@@ -8,12 +8,16 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
+[IDEAS]
+- sell items for xp
+
 [TODO]
-[ ] fix ai path following
-[ ] collect treasure to earn xp
-[ ] sound pick up item
-[ ] ui items draggable
 [ ] migrate capture the flag powers to isometric core
+[ ] fix ai path following
+[ ] floating txt on acquire health and xp
+[ ] sound pick up item
+[ ] sounds on item drop for treasures
+[ ] ui items draggable
 [ ] zombie death animation
 [ ] ability and weapon cooldown
 [ ] character persistence
@@ -27,14 +31,15 @@ alt + m             : go to declaration
 [ ] character type skeleton 
 [ ] character type alien slug
 [ ] npc store
-[-] merge interact logic into isometric collider
 [-] refactor lemon engine
 [-] remove gamestream global instance
 [-] remove all static instances
+[*] fix colored lights
 [*] fix grid render order
 [?] character gold
 
 19.07.2023
+[x] collect treasure to earn xp
 [x] fix bug player doesn't run to pick up item
 [x] polish player controls
 [x] polish ui
