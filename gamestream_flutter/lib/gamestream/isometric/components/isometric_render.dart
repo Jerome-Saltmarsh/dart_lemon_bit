@@ -35,6 +35,20 @@ class IsometricRender {
     required this.rendererProjectiles
   });
 
+  Color get color => gamestream.engine.paint.color;
+
+  set color(Color color) => gamestream.engine.paint.color = color;
+
+  void renderCircleAroundPlayer({required double radius}) =>
+      renderCircleAtIsometricPosition(
+        position: gamestream.isometric.player.position,
+        radius: radius,
+      );
+
+  void setColorWhite(){
+    gamestream.engine.setPaintColorWhite();
+  }
+
   void renderCircleAtIsometricPosition({
     required IsometricPosition position,
     required double radius,

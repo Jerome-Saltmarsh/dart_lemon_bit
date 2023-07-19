@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
+
+import 'mmo_actions.dart';
+import 'mmo_render.dart';
+import 'mmo_ui.dart';
 
 class MmoGame extends IsometricGame {
 
@@ -103,8 +105,6 @@ class MmoGame extends IsometricGame {
       selectWeapon(3);
       return;
     }
-
-
     if (key == KeyCode.A){
       selectWeapon(0);
       return;
@@ -130,35 +130,7 @@ class MmoGame extends IsometricGame {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
-    renderPlayerHoverItemRange();
-
-    if (!player.arrivedAtDestination.value) {
-      gamestream.isometric.renderer.renderLine(
-          player.x,
-          player.y,
-          player.z,
-          player.runX,
-          player.runY,
-          player.runZ,
-      );
-    }
-  }
-
-  void renderPlayerHoverItemRange() {
-    final item = itemHover.value;
-    if (item == null) return;
-    renderPlayerItemRange(item);
-  }
-
-  void renderPlayerItemRange(MMOItem item) {
-    if (item.range <= 0) return;
-    gamestream.isometric.renderer.renderCircle(
-      player.x,
-      player.y,
-      player.z,
-      item.range,
-      sections: 20
-    );
+    render(canvas, size);
   }
 
   @override

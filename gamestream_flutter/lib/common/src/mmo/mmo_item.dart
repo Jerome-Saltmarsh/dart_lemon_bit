@@ -6,7 +6,7 @@ enum MMOItem {
     type: GameObjectType.Weapon,
     subType: WeaponType.Sword,
     cooldown: 40,
-    range: 80,
+    range: 180,
     attackType: MMOAttackType.Blink,
   ),
   Rusty_Old_Sword(

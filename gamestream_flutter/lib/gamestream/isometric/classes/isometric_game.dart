@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -14,6 +15,8 @@ import 'package:gamestream_flutter/library.dart';
 import '../ui/game_isometric_ui.dart';
 
 class IsometricGame extends Game {
+
+  IsometricRender get renderer => isometric.renderer;
 
   final Isometric isometric;
 
