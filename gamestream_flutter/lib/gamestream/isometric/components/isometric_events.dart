@@ -419,6 +419,12 @@ class IsometricEvents {
         break;
       case PlayerEvent.Item_Consumed:
         break;
+      case PlayerEvent.Eat:
+        gamestream.audio.eat();
+        break;
+      case PlayerEvent.Drink:
+        gamestream.audio.drink();
+        break;
       case PlayerEvent.Recipe_Crafted:
         gamestream.audio.unlock();
         break;

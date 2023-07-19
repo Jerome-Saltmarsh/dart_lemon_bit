@@ -13,6 +13,8 @@ class PlayerEvent {
   static const Inventory_Full           = 12;
   static const Invalid_Request          = 13;
   static const Item_Consumed            = 14;
-  static const Reloading                = 15;
-  static const Player_Deactivated       = 17;
+  static const Eat                      = 15;
+  static const Drink                    = 16;
+  static const Reloading                = 17;
+  static const Player_Deactivated       = 18;
 }

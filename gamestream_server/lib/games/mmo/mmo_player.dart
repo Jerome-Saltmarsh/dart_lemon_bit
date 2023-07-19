@@ -198,7 +198,6 @@ class MmoPlayer extends IsometricPlayer {
       setCharacterStateChanging();
     }
 
-
     if (value == -1){
       _equippedWeaponIndex = value;
       writeEquippedWeaponIndex(value);
@@ -485,6 +484,7 @@ class MmoPlayer extends IsometricPlayer {
         health = maxHealth;
         setCharacterStateChanging();
         clearItem(index);
+        writePlayerEvent(PlayerEvent.Drink);
       }
       return;
     }
@@ -629,6 +629,9 @@ class MmoPlayer extends IsometricPlayer {
 
   void pickupItem(MMOItem item) {
     health += item.health;
+    if (item.type == ItemType.Meat_Drumstick){
+      writePlayerEvent(PlayerEvent.Eat);
+    }
   }
 
   void onEquipmentChanged(){

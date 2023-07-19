@@ -9,6 +9,8 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] sound eat meat 
+[ ] sound consume drink 
 [ ] migrate capture the flag powers to isometric core
 [ ] zombie death animation
 [ ] ability and weapon cooldown
