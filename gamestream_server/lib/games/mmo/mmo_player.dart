@@ -194,9 +194,13 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
+    if (controlsCanTargetEnemies){
+      setCharacterStateChanging();
+    }
+
+
     if (value == -1){
       _equippedWeaponIndex = value;
-      setCharacterStateChanging();
       writeEquippedWeaponIndex(value);
       return;
     }
