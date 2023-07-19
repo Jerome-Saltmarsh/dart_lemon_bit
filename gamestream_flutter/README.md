@@ -9,6 +9,8 @@ ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
 [TODO]
+[ ] fix ai path following
+[ ] collect treasure to earn xp
 [ ] sound pick up item
 [ ] ui items draggable
 [ ] migrate capture the flag powers to isometric core

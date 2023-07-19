@@ -425,6 +425,9 @@ class IsometricEvents {
       case PlayerEvent.Drink:
         gamestream.audio.drink();
         break;
+      case PlayerEvent.Experience_Collected:
+        gamestream.audio.collect_star_3();
+        break;
       case PlayerEvent.Recipe_Crafted:
         gamestream.audio.unlock();
         break;

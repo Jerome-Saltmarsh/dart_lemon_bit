@@ -637,9 +637,15 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void pickupItem(MMOItem item) {
-    health += item.health;
-    if (item.type == ItemType.Meat_Drumstick){
+
+    if (item.health > 0){
+      health += item.health;
       writePlayerEvent(PlayerEvent.Eat);
+    }
+
+    if (item.experience > 0){
+      experience += item.experience;
+      writePlayerEvent(PlayerEvent.Experience_Collected);
     }
   }
 

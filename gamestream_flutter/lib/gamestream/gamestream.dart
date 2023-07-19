@@ -83,7 +83,8 @@ class Gamestream extends StatelessWidget with ByteReader {
        final atlas = Atlas.SrcCollection[type];
        for (final value in values){
          if (!atlas.containsKey(value)){
-           print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+           // print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+           throw Exception('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
          }
        }
      }

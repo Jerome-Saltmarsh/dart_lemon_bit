@@ -18,4 +18,5 @@ class PlayerEvent {
   static const Reloading                = 17;
   static const Player_Deactivated       = 18;
   static const Character_State_Changing = 19;
+  static const Experience_Collected     = 20;
 }

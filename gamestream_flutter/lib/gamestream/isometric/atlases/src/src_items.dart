@@ -37,10 +37,20 @@ class SrcItems {
     0.5, // anchorY
   ];
 
+  static const Treasure_Box = <double>[
+    132, // x
+    4, // y
+    26, // width
+    25, // height
+    1, // scale
+    0.5, // anchorY
+  ];
+
   static const collection = <int, List<double>>{
     ItemType.Health_Potion: Health_Potion,
     ItemType.Magic_Potion: Magic_Potion,
     ItemType.Meat_Drumstick: Meat_Drumstick,
     ItemType.Pendant_1: Pendant_1,
+    ItemType.Treasure_Box: Treasure_Box,
   };
 }

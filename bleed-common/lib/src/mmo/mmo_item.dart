@@ -124,6 +124,13 @@ enum MMOItem {
       health: 10,
       consumable: true,
   ),
+  Treasure_Box(
+    quality: MMOItemQuality.Common,
+    type: GameObjectType.Item,
+    subType: ItemType.Treasure_Box,
+    collectable: false,
+    experience: 3,
+  ),
   Meat_Drumstick(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Item,
@@ -151,6 +158,7 @@ enum MMOItem {
   final int subType;
   final int cooldown;
   final int health;
+  final int experience;
   final bool collectable;
   final bool isTreasure;
   final bool consumable;
@@ -179,6 +187,7 @@ enum MMOItem {
     this.movement = 0,
     this.isTreasure = false,
     this.consumable = false,
+    this.experience = 0,
     this.attackType
   });
 
