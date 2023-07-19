@@ -4,7 +4,7 @@ class AtlasIcons {
 
   static const Size = 32.0;
 
-  static double getSrcX(int itemType) => const <int, double> {
+  static double getSrcX(IconType itemType) => const <IconType, double> {
     IconType.Checkbox_True: 304,
     IconType.Checkbox_False: 176,
     IconType.Zoom: Size * 1,
@@ -22,7 +22,7 @@ class AtlasIcons {
     IconType.Wind_Calm: 128,
     IconType.Wind_Gentle: 128,
     IconType.Wind_Strong: 128,
-    IconType.Inventory: 64,
+    IconType.Inventory_Open: 64,
     IconType.Sound_Enabled: 1,
     IconType.Sound_Disabled: 1,
     IconType.Plus: 32,
@@ -48,7 +48,7 @@ class AtlasIcons {
     IconType.Music_Disabled: 1,
   }[itemType] ?? 0;
 
-  static double getSrcY(int itemType) => const  <int, double> {
+  static double getSrcY(IconType itemType) => const  <IconType, double> {
     IconType.Checkbox_True: 704,
     IconType.Checkbox_False: 704,
     IconType.Arrows_Up: Size * 0,
@@ -74,7 +74,7 @@ class AtlasIcons {
     IconType.Wind_Calm: 64 * 0,
     IconType.Wind_Gentle: 64 * 5,
     IconType.Wind_Strong: 64 * 6,
-    IconType.Inventory: 32,
+    IconType.Inventory_Open: 32,
     IconType.Plus: 96,
     IconType.Minus: 96,
     IconType.Heart: 209,
@@ -98,7 +98,7 @@ class AtlasIcons {
     IconType.Music_Disabled: 609,
   }[itemType] ?? 0;
 
-  static double getSrcWidth(int itemType) => const  <int, double> {
+  static double getSrcWidth(IconType itemType) => const  <IconType, double> {
     IconType.Checkbox_True: 112,
     IconType.Checkbox_False: 112,
     IconType.Home: 155,
@@ -127,7 +127,7 @@ class AtlasIcons {
   }[itemType] ?? getSrcSize(itemType);
 
 
-  static double getSrcHeight(int itemType) => const  <int, double> {
+  static double getSrcHeight(IconType itemType) => const  <IconType, double> {
     IconType.Checkbox_True: 112,
     IconType.Checkbox_False: 112,
     IconType.Home: 155,
@@ -155,7 +155,7 @@ class AtlasIcons {
     IconType.Music_Disabled: 98,
   }[itemType] ?? getSrcSize(itemType);
 
-  static double getSrcSize(int itemType) => const  <int, double> {
+  static double getSrcSize(IconType itemType) => const  <IconType, double> {
     IconType.Heart: 48.0,
     IconType.Damage: 48.0,
     IconType.Energy: 48.0,

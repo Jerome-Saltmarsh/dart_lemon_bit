@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
+import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
@@ -448,9 +449,14 @@ extension MMOUI on MmoGame {
       ],
     );
 
-  Widget buildInventoryButton() => onPressed(
+  Widget buildInventoryButton() {
+    return onPressed(
         action: toggleInventoryOpen,
-        child: GSContainer(child: buildText('INV')));
+        child: GSContainer(
+            child: IsometricIcon(iconType: IconType.Inventory_Open)
+        )
+    );
+  }
 
 }
 

@@ -372,7 +372,7 @@ class GameIsometricUI {
       )
   );
 
-  static Widget buildAtlasIconType(int iconType,
+  static Widget buildAtlasIconType(IconType iconType,
       {double scale = 1, int color = 1}) =>
       FittedBox(
         child: gamestream.engine.buildAtlasImage(
@@ -425,7 +425,7 @@ class GameIsometricUI {
 
   static Widget buildIconCombatPowerType(int powerType){
     assert (CombatPowerType.values.contains(powerType));
-    final powerTypeIcon = const <int, int> {
+    final powerTypeIcon = const <int, IconType> {
       CombatPowerType.None      : IconType.Power_None,
       CombatPowerType.Bomb      : IconType.Power_Bomb,
       CombatPowerType.Teleport  : IconType.Power_Teleport,
@@ -433,7 +433,7 @@ class GameIsometricUI {
       CombatPowerType.Shield    : IconType.Power_Shield,
       CombatPowerType.Stun      : IconType.Power_Stun,
       CombatPowerType.Revive    : IconType.Power_Revive,
-    }[powerType] ?? -1;
+    }[powerType] ?? (throw Exception());
     return Container(
       height: 64,
       constraints: BoxConstraints(maxWidth: 120),

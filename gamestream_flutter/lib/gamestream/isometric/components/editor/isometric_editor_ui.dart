@@ -511,7 +511,7 @@ extension IsometricEditorUI on IsometricEditor {
         isActive: windType == activeWindType,
       ));
 
-  int convertRainToIconType(int rain) {
+  IconType convertRainToIconType(int rain) {
     switch (rain) {
       case RainType.None:
         return IconType.Rain_None;
@@ -524,7 +524,7 @@ extension IsometricEditorUI on IsometricEditor {
     }
   }
 
-  int convertLightningToIconType(int lightning) {
+  IconType convertLightningToIconType(int lightning) {
     switch (lightning) {
       case LightningType.Off:
         return IconType.Lightning_Off;
@@ -537,7 +537,7 @@ extension IsometricEditorUI on IsometricEditor {
     }
   }
 
-  int convertWindToIconType(int windType) {
+  IconType convertWindToIconType(int windType) {
     switch (windType) {
       case WindType.Calm:
         return IconType.Wind_Calm;
@@ -1278,7 +1278,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double top,
     required double left,
     required Function action,
-    required int iconType,
+    required IconType iconType,
     required String hint,
   }) =>
       Positioned(
