@@ -1122,4 +1122,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       }
     }
   }
+
+  double getMouseDistance() => this.getDistanceXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
+
+  double getMouseAngle() => getAngleXY(mouseSceneX, mouseSceneY);
 }

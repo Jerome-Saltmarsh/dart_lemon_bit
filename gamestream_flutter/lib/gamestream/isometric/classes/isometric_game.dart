@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/src.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -93,7 +94,24 @@ class IsometricGame extends Game {
           right: 16,
           child: GameIsometricUI.buildMainMenu(children: buildMenuItems()),
       ),
+      Positioned(
+        bottom: 16,
+        left: 0,
+        child: Container(
+            width: gamestream.engine.screen.width,
+            alignment: Alignment.center,
+            child: buildGameError()),
+      ),
     ]);
+
+  Widget buildGameError(){
+    return buildWatch(gamestream.error, (error){
+       if (error == null)
+         return nothing;
+
+       return buildText(error.name);
+    });
+  }
 
   @override
   void onLeftClicked() {

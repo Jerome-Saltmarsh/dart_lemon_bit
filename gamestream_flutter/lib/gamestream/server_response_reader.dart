@@ -135,7 +135,7 @@ extension ServerResponseReader on Gamestream {
           break;
         case ServerResponse.Game_Error:
           final errorTypeIndex = readByte();
-          error.value = parseIndexToGameError(errorTypeIndex);
+          error.value = GameError.fromIndex(errorTypeIndex);
           return;
         case ServerResponse.FPS:
           serverFPS.value = readUInt16();

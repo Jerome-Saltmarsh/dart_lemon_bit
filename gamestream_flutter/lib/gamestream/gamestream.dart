@@ -128,7 +128,6 @@ class Gamestream extends StatelessWidget with ByteReader {
    void _onChangedGame(Game game) {
      engine.onDrawCanvas = game.drawCanvas;
      engine.onDrawForeground = game.renderForeground;
-     // engine.onUpdate = game.update;
      engine.buildUI = game.buildUI;
      engine.onLeftClicked = game.onLeftClicked;
      engine.onRightClicked = game.onRightClicked;
@@ -183,8 +182,11 @@ class Gamestream extends StatelessWidget with ByteReader {
 
    void _onChangedGameError(GameError? gameError){
      print('_onChangedGameError($gameError)');
-     if (gameError == null) return;
-     gamestream.isometric.client.playAudioError();
+     if (gameError == null)
+       return;
+
+     clearErrorTimer = 300;
+     isometric.client.playAudioError();
      switch (gameError) {
        case GameError.Unable_To_Join_Game:
          gamestream.games.website.error.value = 'unable to join game';

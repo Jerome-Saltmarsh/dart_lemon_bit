@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -14,14 +15,15 @@ class MmoGame extends IsometricGame {
 
   final itemHover = Watch<MMOItem?>(null);
 
+  final activePowerPosition = IsometricPosition();
+  var items = <MMOItem?>[];
+
   late final weaponsChangedNotifier = Watch(0, onChanged: onAnyChanged);
   late final itemsChangedNotifier = Watch(0, onChanged: onAnyChanged);
   late final treasuresChangedNotifier = Watch(0, onChanged: onAnyChanged);
 
-
   final weapons = List<MMOItem?>.generate(4, (index) => null);
   final treasures = List<MMOItem?>.generate(4, (index) => null);
-  var items = <MMOItem?>[];
 
   final playerInteracting = Watch(false);
   final npcText = Watch('');

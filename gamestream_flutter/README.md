@@ -13,6 +13,7 @@ alt + m             : go to declaration
 - tier two talents cost two skills points etc
 
 [TODO]
+[ ] cast ability radial constraint and visualize
 [ ] fix ai path following
 [ ] floating txt on acquire health and xp
 [ ] sound pick up item

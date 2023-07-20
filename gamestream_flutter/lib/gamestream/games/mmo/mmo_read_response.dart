@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 
 extension MMOResponseReader on Gamestream {
 
@@ -76,6 +77,9 @@ extension MMOResponseReader on Gamestream {
          break;
        case MMOResponse.Activated_Power_Index:
          game.activatedPowerIndex.value = readInt8();
+         break;
+       case MMOResponse.Active_Power_Position:
+         readIsometricPosition(game.activePowerPosition);
          break;
      }
   }

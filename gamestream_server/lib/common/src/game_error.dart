@@ -66,12 +66,15 @@ enum GameError {
   GameObject_Not_Found,
   Invalid_Item_Index,
   Invalid_Talk_Option,
-  Invalid_Weapon_Index, Invalid_Treasure_Index, Treasures_Full, Talent_Already_Unlocked, Parent_Talent_Required_To_Unlock,
-}
+  Invalid_Weapon_Index,
+  Invalid_Treasure_Index,
+  Treasures_Full,
+  Talent_Already_Unlocked,
+  Parent_Talent_Required_To_Unlock;
 
-GameError parseIndexToGameError(int index) {
-  final values = GameError.values;
-  if (index < 0) throw Exception('$index < 0');
-  if (index >= values.length) throw Exception('$index > gameErrors.length');
-return values[index];
+  static GameError fromIndex(int index) {
+    if (index < 0) throw Exception('$index < 0');
+    if (index >= values.length) throw Exception('$index > gameErrors.length');
+    return values[index];
+  }
 }

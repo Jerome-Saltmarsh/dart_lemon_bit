@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/common/src/isometric/power_mode.dart';
 import 'package:gamestream_flutter/common/src/mmo/mmo_item.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 
@@ -9,6 +10,19 @@ extension MMORender on MmoGame {
     renderPlayerHoverItemRange();
     renderPlayerRunLine();
     renderActivatedPower();
+
+    if (activatedPowerIndex.value != -1){
+      final activePower = weapons[activatedPowerIndex.value];
+      final mode = activePower?.attackType?.mode;
+
+      if (mode == PowerMode.Positional) {
+          renderer.color = Colors.blue;
+          renderer.renderCircleAtPosition(
+            position: activePowerPosition,
+            radius: 10,
+          );
+      }
+    }
   }
 
   void renderPlayerRunLine({Color color = Colors.purple}) {

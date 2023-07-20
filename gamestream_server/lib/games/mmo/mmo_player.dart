@@ -3,6 +3,7 @@ import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
+import 'package:gamestream_server/utils/is_valid_index.dart';
 
 import 'mmo_npc.dart';
 
@@ -11,6 +12,10 @@ class MmoPlayer extends IsometricPlayer {
   static const Interact_Radius = 80.0;
 
   final MmoGame game;
+
+  var activePowerX = 0.0;
+  var activePowerY = 0.0;
+  var activePowerZ = 0.0;
 
   var healthBase = 10;
   var npcText = '';
@@ -625,6 +630,7 @@ class MmoPlayer extends IsometricPlayer {
 
     clearTreasure(index);
     setItem(index: emptyItemIndex, item: item);
+    onEquipmentChanged();
   }
 
   void selectNpcTalkOption(int index) {
@@ -1065,7 +1071,56 @@ class MmoPlayer extends IsometricPlayer {
     onEquipmentChanged();
   }
 
-  void reportInventoryFull(){
+  void reportInventoryFull() =>
+      writeGameError(GameError.Inventory_Full);
 
+  @override
+  void update() {
+    super.update();
+    updateActiveAbility();
   }
+
+  void updateActiveAbility() {
+    if (!activeAbilitySelected)
+      return;
+
+    final activeAbility = getWeaponAtIndex(activatedPowerIndex) ;
+
+    if (activeAbility == null)
+      return;
+
+    final attackType = activeAbility.attackType;
+
+    if (attackType == null)
+      return;
+
+    if (attackType.mode == PowerMode.Positional) {
+      final mouseDistance = getMouseDistance();
+      final maxRange = activeAbility.range;
+      if (mouseDistance <= maxRange){
+        activePowerX = mouseSceneX;
+        activePowerY = mouseSceneY;
+        activePowerZ = mouseSceneZ;
+      } else {
+        final mouseAngle = getMouseAngle();
+        activePowerX = x + adj(mouseAngle, maxRange);
+        activePowerY = y + opp(mouseAngle, maxRange);
+        activePowerZ = z;
+      }
+      writeActivePowerPosition();
+    }
+  }
+
+  void writeActivePowerPosition() {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Active_Power_Position);
+    writeDouble(activePowerX);
+    writeDouble(activePowerY);
+    writeDouble(activePowerZ);
+  }
+
+  MMOItem? getWeaponAtIndex(int index) =>
+      isValidIndex(index, weapons) ? weapons[index] : null;
+
+  bool get activeAbilitySelected => activatedPowerIndex != -1;
 }
