@@ -63,7 +63,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case CaptureTheFlagRequest.Debug_Selected_Character_AI:
         final selected = player.selectedCollider;
         if (selected is! CaptureTheFlagAI) break;
-        selected.customOnUpdate();
+        selected.update();
         break;
     }
   }

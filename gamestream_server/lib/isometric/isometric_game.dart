@@ -1718,8 +1718,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character is T) {
       updatePlayer(character);
     }
-
-    character.customOnUpdate();
   }
 
   void performCharacterActionCustom(IsometricCharacter character){

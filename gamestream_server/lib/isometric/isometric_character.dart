@@ -428,9 +428,6 @@ class IsometricCharacter extends IsometricCollider {
     }
   }
 
-  /// safe to override
-  void customOnUpdate() {}
-
   void customOnDead() {}
 
   void runStraightToTarget(){

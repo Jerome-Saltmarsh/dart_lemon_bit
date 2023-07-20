@@ -36,10 +36,9 @@ class MobaCreep extends IsometricZombie {
   IsometricGameObject get spawnOwn => isTeamBlue ? game.blueSpawn : game.redSpawn;
 
   @override
-  void customOnUpdate() {
-    super.customOnUpdate();
+  void update() {
+    super.update();
     final target = this.target;
-
     if (target == null) {
       this.target = baseEnemy;
     }

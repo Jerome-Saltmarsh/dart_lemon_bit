@@ -130,7 +130,8 @@ class CaptureTheFlagAI extends IsometricCharacter {
   }
 
   @override
-  void customOnUpdate() {
+  void update() {
+    super.update();
     if (deadOrBusy) return;
 
     if (slowed) {

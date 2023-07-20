@@ -95,11 +95,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   @override
-  void customOnUpdate() {
-    // if (shouldUpdatePathToMouse){
-    //   setPathToMouse();
-    // }
-
+  void update() {
+    super.update();
     updatePowers();
   }
 
