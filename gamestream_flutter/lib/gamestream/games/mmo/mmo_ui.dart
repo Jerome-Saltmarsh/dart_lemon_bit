@@ -291,9 +291,12 @@ extension MMOUI on MmoGame {
   );
 
   Widget buildInventoryContainer({required Widget child}) => Container(
-        color: Colors.black26,
         child: child,
         padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: const BorderRadius.all(Radius.circular(4))
+        ),
     );
 
   Widget buildPlayerEquipped() => buildInventoryContainer(

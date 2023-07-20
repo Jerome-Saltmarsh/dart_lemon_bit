@@ -14,7 +14,7 @@ extension MMOUIDialogs on MmoGame {
         width: 100,
         height: 100 * goldenRatio_0381,
         alignment: Alignment.center,
-        color: Colors.black12,
+        color: Colors.black26,
         child: buildText('x')
     ), action: action
   );
@@ -28,6 +28,7 @@ extension MMOUIDialogs on MmoGame {
          return buildInventoryButton();
        } else {
          return GSContainer(
+           rounded: true,
            width: 330,
            child: Column(
              mainAxisAlignment: MainAxisAlignment.start,
