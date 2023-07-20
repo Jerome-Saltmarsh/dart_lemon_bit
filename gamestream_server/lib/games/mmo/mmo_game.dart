@@ -119,7 +119,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
 
   @override
-  void onCharacterUseWeaponCustom(IsometricCharacter character) {
+  void characterUseWeaponCustom(IsometricCharacter character) {
     if (character is! MmoPlayer)
       return;
 

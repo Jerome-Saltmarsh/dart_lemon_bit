@@ -150,7 +150,6 @@ class IsometricCharacter extends IsometricCollider {
 
     _weaponState = value;
     weaponStateDuration = 0;
-    weaponStateDurationTotal = getWeaponStateDurationTotal(value); // TODO THIS IS BAD
   }
 
   bool get shouldUpdatePath =>
@@ -301,6 +300,9 @@ class IsometricCharacter extends IsometricCollider {
   }
 
   void setCharacterStateChanging({int duration = 15}) {
+    if (deadBusyOrWeaponStateBusy)
+      return;
+
     state = CharacterState.Changing;
     stateDuration = 0;
     stateDurationTotal = duration;
@@ -316,8 +318,9 @@ class IsometricCharacter extends IsometricCollider {
   }
 
   void setCharacterStateIdle({int duration = 0}){
-    if (deadOrBusy) return;
-    if (characterStateIdle) return;
+    if (deadOrBusy || characterStateIdle)
+      return;
+
     setCharacterState(value: CharacterState.Idle, duration: duration);
   }
 
@@ -405,7 +408,7 @@ class IsometricCharacter extends IsometricCollider {
 
         weaponStateDuration = 0;
 
-        if (WeaponType.isFirearm(weaponType)){
+        if (weaponStatePerforming && WeaponType.isFirearm(weaponType)){
           weaponState = WeaponState.Aiming;
           weaponStateDurationTotal = 10;
         } else {

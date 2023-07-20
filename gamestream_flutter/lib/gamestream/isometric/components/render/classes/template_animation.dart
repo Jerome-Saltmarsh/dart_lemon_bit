@@ -21,7 +21,7 @@ class TemplateAnimation {
   static const Hurt = [3];
   static const Changing = [1];
   static const Firing_Bow = [
-    5, 5, 5, 5, 8, 8, 8, 8, 10, 5
+    5, 5, 5, 5, 8, 8, 8, 8, 5
   ];
 
   static const Firing_One_Handed_Firearm = [8, 9, 9, 8];

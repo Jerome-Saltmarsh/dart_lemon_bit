@@ -19,5 +19,7 @@ class MMONpc extends IsometricCharacter {
     required super.z,
     required super.name,
     this.interact,
-  });
+  }) {
+    actionFrame = 1;
+  }
 }
