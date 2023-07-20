@@ -61,6 +61,7 @@ extension MMOResponseReader on Gamestream {
          break;
        case MMOResponse.Player_Talent_Points:
          game.playerTalentPoints.value = readByte();
+         game.playerTalentsChangedNotifier.value++;
          break;
        case MMOResponse.Player_Talent_Dialog_Open:
          game.playerTalentDialogOpen.value = readBool();
@@ -71,7 +72,7 @@ extension MMOResponseReader on Gamestream {
        case MMOResponse.Player_Talents:
          final playerTalents = game.playerTalents;
          for (var i = 0; i < playerTalents.length; i++){
-          playerTalents[i] = readBool();
+          playerTalents[i] = readByte();
          }
          game.playerTalentsChangedNotifier.value++;
          break;

@@ -42,7 +42,7 @@ class MmoGame extends IsometricGame {
   final playerTalentPoints = Watch(0);
   final playerTalentDialogOpen = Watch(false);
   final playerInventoryOpen = Watch(false);
-  final playerTalents = List.generate(MMOTalentType.values.length, (index) => false, growable: false);
+  final playerTalents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
 
   final playerTalentsChangedNotifier = Watch(0);
 
@@ -147,12 +147,6 @@ class MmoGame extends IsometricGame {
 
   void clearItemHover() => itemHover.value = null;
 
-  bool talentCanBeUnlocked(MMOTalentType value){
-    return true;
-  }
-
-  bool talentUnlocked(MMOTalentType value) => playerTalents[value.index];
-
   void onChangedPlayerInventoryOpen(bool value) {
     gamestream.audio.click_sound_8();
   }
@@ -160,4 +154,10 @@ class MmoGame extends IsometricGame {
   void onChangedPlayerSkillsDialogOpen(bool value) {
     gamestream.audio.click_sound_8();
   }
+
+  int getTalentLevel(MMOTalentType talent) =>
+      playerTalents[talent.index];
+
+  bool maxLevelReached(MMOTalentType talent) =>
+      getTalentLevel(talent) >= talent.maxLevel;
 }

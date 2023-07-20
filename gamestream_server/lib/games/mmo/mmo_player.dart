@@ -24,7 +24,7 @@ class MmoPlayer extends IsometricPlayer {
 
   final weapons = List<MMOItem?>.generate(4, (index) => null);
   final treasures = List<MMOItem?>.generate(4, (index) => null);
-  final talents = List.generate(MMOTalentType.values.length, (index) => false, growable: false);
+  final talents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
 
   MMOItem? equippedHead;
   MMOItem? equippedBody;
@@ -127,10 +127,6 @@ class MmoPlayer extends IsometricPlayer {
     for (final treasure in treasures){
       if (treasure != null)
         health += treasure.health;
-    }
-
-    if (talentUnlocked(MMOTalentType.Healthy)){
-        health += 10;
     }
 
     return health;
@@ -862,23 +858,26 @@ class MmoPlayer extends IsometricPlayer {
     return -1;
   }
 
-  bool talentUnlocked(MMOTalentType talent) => talents[talent.index];
+  void upgradeTalent(MMOTalentType talent) {
 
-  void unlockTalent(MMOTalentType talent) {
+     final currentLevel = talents[talent.index];
 
-    if (talentPoints <= 0){
-      writeGameError(GameError.Insufficient_Skill_Points);
-      return;
-    }
-
-     if (talentUnlocked(talent)){
-       writeGameError(GameError.Talent_Already_Unlocked);
+     if (currentLevel >= talent.maxLevel){
+       writeGameError(GameError.Talent_Max_Level);
        return;
      }
 
-     assert (!talents[talent.index]);
-     talents[talent.index] = true;
-     talentPoints--;
+     final nextLevel = currentLevel + 1;
+     final cost = nextLevel * talent.levelCostMultiplier;
+
+     if (talentPoints < cost){
+       writeGameError(GameError.Insufficient_Skill_Points);
+       return;
+     }
+
+     writePlayerEvent(PlayerEvent.Talent_Upgraded);
+     talents[talent.index]++;
+     talentPoints -= cost;
      writePlayerTalents();
      writePlayerHealth();
   }
@@ -886,7 +885,7 @@ class MmoPlayer extends IsometricPlayer {
   void writePlayerTalents() {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Talents);
-    talents.forEach(writeBool);
+    talents.forEach(writeByte);
   }
 
   @override

@@ -16,5 +16,5 @@ enum MMORequest {
   Select_Talk_Option,
   Toggle_Skills_Dialog,
   Toggle_Inventory_Open,
-  Unlock_Talent,
+  Upgrade_Talent,
 }

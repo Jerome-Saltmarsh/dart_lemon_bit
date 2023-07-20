@@ -393,19 +393,46 @@ extension MMOUI on MmoGame {
   );
 
   Widget buildTalent(MMOTalentType talent){
+    final currentLevel = getTalentLevel(talent);
+    final nextLevel = currentLevel + 1;
+    final maxLevel = talent.maxLevel;
+    final cost = nextLevel * talent.levelCostMultiplier;
+    final canUpgrade = currentLevel < maxLevel && cost <= playerTalentPoints.value;
+    const width = 100.0;
+    const height = 50.0;
 
-    if (talentUnlocked(talent)){
-      return buildText(talent.name, color: Colors.green);
-    }
+    return buildBorder(
+      width: 1,
+      color: canUpgrade ? Colors.green : Colors.transparent,
+      child: onPressed(
+        action: () => canUpgrade ? upgradeTalent(talent) : null,
+        child: Row(
+          children: [
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(2),
+              child: Stack(
+                children: [
+                  Container(
+                    color: Colors.green,
+                    alignment: Alignment.centerLeft,
+                    width: width * (currentLevel / maxLevel),
+                    height: height,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                      width: width,
+                      height: height,
+                      child: buildText('${talent.name} $currentLevel / $maxLevel', color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
 
-    if (talentCanBeUnlocked(talent)) {
-      return onPressed(
-          action: () => unlockTalent(talent),
-          child: buildText(talent.name, color: Colors.grey)
-          );
-    }
-
-    return buildText(talent.name, color: Colors.grey);
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildPlayerStatsRow() => Row(

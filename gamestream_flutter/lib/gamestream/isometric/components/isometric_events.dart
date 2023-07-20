@@ -478,6 +478,9 @@ class IsometricEvents {
       case PlayerEvent.Character_State_Changing:
         gamestream.audio.change_cloths();
         break;
+      case PlayerEvent.Talent_Upgraded:
+        gamestream.audio.collect_star_3();
+        break;
     }
   }
 

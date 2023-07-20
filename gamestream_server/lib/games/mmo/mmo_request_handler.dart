@@ -74,7 +74,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case MMORequest.Toggle_Inventory_Open:
         player.toggleInventoryOpen();
         break;
-      case MMORequest.Unlock_Talent:
+      case MMORequest.Upgrade_Talent:
         final index = parseArg2(arguments);
         if (index == null) return;
         if (!isValidIndex(index, MMOTalentType.values)){
@@ -82,7 +82,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
           return;
         }
         final mmoTalentType = MMOTalentType.values[index];
-        player.unlockTalent(mmoTalentType);
+        player.upgradeTalent(mmoTalentType);
         break;
       case MMORequest.Unequip_Head:
         player.unequipHead();
