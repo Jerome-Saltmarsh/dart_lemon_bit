@@ -55,10 +55,6 @@ class IsometricCharacter extends IsometricCollider {
   var action = CharacterAction.Idle;
   var goal = CharacterGoal.Idle;
 
-  var aiDelayAfterPerformFinished = true;
-  var aiDelayAfterPerformFinishedMin = 25;
-  var aiDelayAfterPerformFinishedMax = 200;
-
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
@@ -315,21 +311,10 @@ class IsometricCharacter extends IsometricCollider {
     stateDuration = 0;
   }
 
-  void setCharacterStateIdle(){
+  void setCharacterStateIdle({int duration = 0}){
     if (deadOrBusy) return;
     if (characterStateIdle) return;
-    setCharacterState(value: CharacterState.Idle, duration: 0);
-  }
-
-  void aiIdleDelay(){
-    if (!aiDelayAfterPerformFinished || deadBusyOrWeaponStateBusy)
-      return;
-
-    setCharacterState(
-      value: CharacterState.Idle,
-      duration: randomInt(
-          aiDelayAfterPerformFinishedMin, aiDelayAfterPerformFinishedMax),
-    );
+    setCharacterState(value: CharacterState.Idle, duration: duration);
   }
 
   void setCharacterState({required int value, required int duration}) {

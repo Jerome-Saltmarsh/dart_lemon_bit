@@ -46,7 +46,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
           TalkOption("Buy", player.endInteraction),
         ]);
       }
-    )..aiDelayAfterPerformFinished = false
+    )
     );
 
     npcGuard = MMONpc(
@@ -62,9 +62,17 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       team: MmoTeam.Human,
       name: "Sam",
     );
-    npcGuard.aiDelayAfterPerformFinished = false;
-
     characters.add(npcGuard);
+  }
+
+  @override
+  void onCharacterStateFinished(IsometricCharacter character) {
+    if (character.characterTypeZombie){
+      setCharacterStateIdle(character, duration: randomInt(50, 250));
+      return;
+    }
+
+    super.onCharacterStateFinished(character);
   }
 
   static void validate() => MMOItem.values.forEach((item) => item.validate());

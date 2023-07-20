@@ -1766,14 +1766,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void onCharacterStateFinished(IsometricCharacter character) {
-
-    if (character.performing && character.aiDelayAfterPerformFinished){
-      character.aiIdleDelay();
-      return;
-    }
-
     character.setCharacterStateIdle();
-    return;
   }
 
   void performCharacterActionDefault(IsometricCharacter character) {
@@ -2961,8 +2954,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  void setCharacterStateIdle(IsometricCharacter character) {
-    character.setCharacterStateIdle();
+  void setCharacterStateIdle(IsometricCharacter character, {int duration = 0}) {
+    character.setCharacterStateIdle(duration: duration);
     character.setDestinationToCurrentPosition();
     character.clearPath();
     character.clearTarget();
