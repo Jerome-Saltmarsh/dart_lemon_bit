@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/common/src/mmo/mmo_talent_type.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_ui.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
@@ -13,6 +14,53 @@ import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:golden_ratio/constants.dart';
 
 extension MMOUIDialogs on MmoGame {
+
+  Widget buildButtonClose({required Function action}) => onPressed(child: Container(
+        width: 100,
+        height: 100 * goldenRatio_0381,
+        alignment: Alignment.center,
+        color: Colors.black12,
+        child: buildText('x')
+    ), action: action
+  );
+
+  Widget buildDialogTitle(String text) =>
+      buildText(text, size: 28.0, color: Colors.white70);
+
+  Widget buildDialogPlayerInventory(){
+    return buildWatch(playerInventoryOpen, (inventoryOpen){
+       if (!inventoryOpen){
+         return buildInventoryButton();
+       } else {
+         return GSContainer(
+           width: 500,
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.start,
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: [
+                   buildInventoryButton(),
+                   buildDialogTitle('INVENTORY'),
+                   buildButtonClose(action: toggleInventoryOpen),
+                 ],
+               ),
+              buildPlayerTreasures(),
+              height8,
+              Row(
+                children: [
+                  buildPlayerEquipped(),
+                  width16,
+                  buildPlayerItems(),
+                ],
+              )
+           ],),
+         );
+       }
+    });
+  }
+
   Widget buildDialogPlayerTalents() => buildWatch(
       playerTalentsChangedNotifier,
           (_) => buildWatch(
@@ -29,15 +77,9 @@ extension MMOUIDialogs on MmoGame {
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: 20),
-                          child: buildText('TALENTS', size: 25)
+                          child: buildDialogTitle('TALENTS')
                       ),
-                      onPressed(child: Container(
-                          width: 100,
-                          height: 100 * goldenRatio_0381,
-                          alignment: Alignment.center,
-                          color: Colors.black12,
-                          child: buildText('x')
-                      ), action: toggleTalentsDialog),
+                      buildButtonClose(action: toggleTalentsDialog),
                     ],
                   ),
                 ),
