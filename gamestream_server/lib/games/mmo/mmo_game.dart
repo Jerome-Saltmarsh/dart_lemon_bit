@@ -66,13 +66,13 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
-  void onCharacterStateFinished(IsometricCharacter character) {
+  void onCharacterStateDurationFinished(IsometricCharacter character) {
     if (character.characterTypeZombie){
       setCharacterStateIdle(character, duration: randomInt(50, 250));
       return;
     }
 
-    super.onCharacterStateFinished(character);
+    super.onCharacterStateDurationFinished(character);
   }
 
   static void validate() => MMOItem.values.forEach((item) => item.validate());

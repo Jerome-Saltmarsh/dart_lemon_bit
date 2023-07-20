@@ -1426,12 +1426,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
     character.state = CharacterState.Dead;
+    character.stateDurationTotal = 0;
     character.stateDuration = 0;
     deactivate(character);
     character.clearPath();
     clearCharacterTarget(character);
-    character.customOnDead();
     customOnCharacterDead(character);
+
     if (character is T) {
       customOnPlayerDead(character);
       character.writePlayerAlive();
@@ -1738,11 +1739,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    if (character.stateDurationRemaining > 0) {
-      character.stateDurationRemaining--;
-      if (character.stateDurationRemaining == 0) {
-        onCharacterStateFinished(character);
-      }
+    if (
+      character.stateDurationTotal > 0 &&
+      character.stateDuration >= character.stateDurationTotal
+    ) {
+      onCharacterStateDurationFinished(character);
     }
 
     if (character.running) {
@@ -1765,7 +1766,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.stateDuration++;
   }
 
-  void onCharacterStateFinished(IsometricCharacter character) {
+  void onCharacterStateDurationFinished(IsometricCharacter character) {
     character.setCharacterStateIdle();
   }
 

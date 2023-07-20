@@ -42,8 +42,8 @@ class IsometricCharacter extends IsometricCollider {
   var weaponStateDuration = 0;
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
-  var stateDurationRemaining = 0;
   var stateDuration = 0;
+  var stateDurationTotal = -1;
   var nextFootstep = 0;
   var framesPerAnimation = 6;
   var lookRadian = 0.0;
@@ -209,7 +209,10 @@ class IsometricCharacter extends IsometricCollider {
 
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
 
-  bool get busy => stateDurationRemaining > 0 && (!characterStateHurt || hurtStateBusy);
+  bool get busy =>
+      stateDurationTotal > 0 &&
+      stateDuration < stateDurationTotal &&
+      (!characterStateHurt || hurtStateBusy);
 
   bool get deadOrBusy => dead || busy;
 
@@ -293,23 +296,27 @@ class IsometricCharacter extends IsometricCollider {
   }
 
   void setCharacterStateSpawning({int duration = 40}){
-    if (state == CharacterState.Spawning) return;
+    if (state == CharacterState.Spawning)
+      return;
+
     state = CharacterState.Spawning;
-    stateDurationRemaining = duration;
+    stateDuration = 0;
+    stateDurationTotal = duration;
   }
 
   void setCharacterStateChanging({int duration = 15}) {
     state = CharacterState.Changing;
-    stateDurationRemaining = duration;
+    stateDuration = 0;
+    stateDurationTotal = duration;
   }
 
   void setCharacterStateHurt({int duration = 10}){
     if (dead || state == CharacterState.Hurt || !hurtable)
       return;
 
-    stateDurationRemaining = duration;
     state = CharacterState.Hurt;
     stateDuration = 0;
+    stateDurationTotal = duration;
   }
 
   void setCharacterStateIdle({int duration = 0}){
@@ -322,11 +329,12 @@ class IsometricCharacter extends IsometricCollider {
     assert (duration >= 0);
     assert (value != CharacterState.Dead); // use game.setCharacterStateDead
     assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
-    if (state == value) return;
-    if (deadOrBusy) return;
-    stateDurationRemaining = duration;
+    if (state == value || deadOrBusy)
+      return;
+
     state = value;
     stateDuration = 0;
+    stateDurationTotal = duration;
   }
 
   bool withinInteractRange(IsometricPosition target){
@@ -413,8 +421,6 @@ class IsometricCharacter extends IsometricCollider {
       }
     }
   }
-
-  void customOnDead() {}
 
   void runStraightToTarget(){
     action = CharacterAction.Run_To_Target;

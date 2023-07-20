@@ -78,7 +78,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   bool get shouldUsePowerPerforming {
     if (!performing)
       return false;
-    if (stateDuration != 20)
+    if (stateDurationTotal != 20)
       return false;
     if (powerPerforming == null)
       return false;
