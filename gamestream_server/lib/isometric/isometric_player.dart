@@ -1101,4 +1101,26 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     controlsCanTargetEnemies = !controlsCanTargetEnemies;
     writePlayerControls();
   }
+
+  @override
+  void update() {
+    super.update();
+
+    framesSinceClientRequest++;
+
+    if (dead) return;
+    if (!active) return;
+
+    game.updatePlayerAimTarget(this);
+
+    if (idling && !weaponStateBusy) {
+      final diff = IsometricDirection.getDifference(
+          lookDirection, direction);
+      if (diff >= 2) {
+        angle += piQuarter;
+      } else if (diff <= -3) {
+        angle -= piQuarter;
+      }
+    }
+  }
 }

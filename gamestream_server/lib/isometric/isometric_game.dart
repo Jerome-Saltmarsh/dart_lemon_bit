@@ -1555,24 +1555,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     throw Exception();
   }
 
-  void updatePlayer(T player) {
-    player.framesSinceClientRequest++;
-
-    if (player.dead) return;
-    if (!player.active) return;
-
-    updatePlayerAimTarget(player);
-
-    if (player.idling && !player.weaponStateBusy) {
-      final diff = IsometricDirection.getDifference(
-          player.lookDirection, player.direction);
-      if (diff >= 2) {
-        player.angle += piQuarter;
-      } else if (diff <= -3) {
-        player.angle -= piQuarter;
-      }
-    }
-  }
+  // void updatePlayer(T player) {
+  //   player.framesSinceClientRequest++;
+  //
+  //   if (player.dead) return;
+  //   if (!player.active) return;
+  //
+  //   updatePlayerAimTarget(player);
+  //
+  //   if (player.idling && !player.weaponStateBusy) {
+  //     final diff = IsometricDirection.getDifference(
+  //         player.lookDirection, player.direction);
+  //     if (diff >= 2) {
+  //       player.angle += piQuarter;
+  //     } else if (diff <= -3) {
+  //       player.angle -= piQuarter;
+  //     }
+  //   }
+  // }
 
   void setCharacterStateSpawning(IsometricCharacter character) {
     character.active = true;
@@ -1714,10 +1714,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     updateCharacterPath(character);
     updateCharacterState(character);
     character.update();
-
-    if (character is T) {
-      updatePlayer(character);
-    }
+    //
+    // if (character is T) {
+    //   updatePlayer(character);
+    // }
   }
 
   void performCharacterActionCustom(IsometricCharacter character){

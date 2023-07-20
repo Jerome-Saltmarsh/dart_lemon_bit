@@ -480,40 +480,40 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     updateFlag(flagBlue);
   }
 
-  @override
-  void updatePlayer(CaptureTheFlagPlayer player) {
-    super.updatePlayer(player);
-
-    if (player.shouldUsePowerPerforming) {
-      playerUsePowerPerforming(player);
-    }
-
-    final activatedPower = player.powerActivated.value;
-    if (activatedPower == null) return;
-
-    switch (activatedPower.type.mode){
-      case PowerMode.Equip:
-        break;
-      case PowerMode.Self:
-        break;
-      case PowerMode.Positional:
-        if (player.canUpdatePowerPosition) {
-          updatePlayerActivatedPowerPosition(player);
-        }
-        break;
-      case PowerMode.Targeted_Enemy:
-        if (player.canUpdatePowerTarget) {
-          updatePlayerActivatedPowerTarget(player);
-        }
-        break;
-      case PowerMode.Targeted_Ally:
-        if (player.canUpdatePowerTarget) {
-          updatePlayerActivatedPowerTargetAlly(player);
-        }
-        break;
-    }
-
-  }
+  // @override
+  // void updatePlayer(CaptureTheFlagPlayer player) {
+  //   super.updatePlayer(player);
+  //
+  //   if (player.shouldUsePowerPerforming) {
+  //     playerUsePowerPerforming(player);
+  //   }
+  //
+  //   final activatedPower = player.powerActivated.value;
+  //   if (activatedPower == null) return;
+  //
+  //   switch (activatedPower.type.mode){
+  //     case PowerMode.Equip:
+  //       break;
+  //     case PowerMode.Self:
+  //       break;
+  //     case PowerMode.Positional:
+  //       if (player.canUpdatePowerPosition) {
+  //         updatePlayerActivatedPowerPosition(player);
+  //       }
+  //       break;
+  //     case PowerMode.Targeted_Enemy:
+  //       if (player.canUpdatePowerTarget) {
+  //         updatePlayerActivatedPowerTarget(player);
+  //       }
+  //       break;
+  //     case PowerMode.Targeted_Ally:
+  //       if (player.canUpdatePowerTarget) {
+  //         updatePlayerActivatedPowerTargetAlly(player);
+  //       }
+  //       break;
+  //   }
+  //
+  // }
 
   void playerUsePowerPerforming(CaptureTheFlagPlayer player){
     assert(player.shouldUsePowerPerforming);
