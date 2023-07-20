@@ -5,16 +5,12 @@ import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
 import 'package:gamestream_server/lemon_math/src/functions/angle_diff.dart';
 
-import 'isometric_power.dart';
 import 'isometric_collider.dart';
 import 'isometric_position.dart';
 import 'isometric_settings.dart';
 
 class IsometricCharacter extends IsometricCollider {
 
-  IsometricPosition? powerActivatedTarget;
-  IsometricPosition? powerPerformingTarget;
-  IsometricPower? powerPerforming;
 
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _weaponAccuracy = 0.0;
@@ -36,18 +32,17 @@ class IsometricCharacter extends IsometricCollider {
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
 
-  var defaultAttackBehavior = true;
+  var actionFrame = -1;
+  var defaultAction = true;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
   var weaponStateDuration = 0;
-  var weaponPerformFrame = 5;
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
-  var performFrame = 10;
   var nextFootstep = 0;
   var framesPerAnimation = 6;
   var lookRadian = 0.0;
@@ -98,6 +93,7 @@ class IsometricCharacter extends IsometricCollider {
     String? name,
     this.runSpeed = 1.0,
     this.doesWander = false,
+    this.actionFrame = -1,
   }) : super(
     radius: CharacterType.getRadius(characterType),
   ) {
@@ -135,6 +131,9 @@ class IsometricCharacter extends IsometricCollider {
     (healthPercentage * 255).toInt(),
   );
 
+  bool get shouldPerformAction =>
+      (!weaponStateIdle && weaponStateDuration == actionFrame) ||
+      (performing && stateDuration == actionFrame);
 
   int get weaponState => _weaponState;
 
@@ -286,9 +285,13 @@ class IsometricCharacter extends IsometricCollider {
     weaponStateDurationTotal = duration;
   }
 
-  void setCharacterStatePerforming({required int duration}){
+  void setCharacterStatePerforming({
+    required int duration,
+    required int actionFrame,
+  }){
     assert (active);
     assert (alive);
+    this.actionFrame = actionFrame;
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
 
@@ -490,7 +493,10 @@ class IsometricCharacter extends IsometricCollider {
     if (characterTypeTemplate){
       game.characterUseWeapon(this);
     } else {
-      setCharacterStatePerforming(duration: weaponCooldown);
+      setCharacterStatePerforming(
+          actionFrame: actionFrame,
+          duration: weaponCooldown,
+      );
     }
   }
 

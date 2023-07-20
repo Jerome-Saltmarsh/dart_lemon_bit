@@ -1722,7 +1722,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.customOnUpdate();
   }
 
-  void onApplyCustomCharacterPerformWeapon(IsometricCharacter character){
+  void performCharacterActionCustom(IsometricCharacter character){
 
   }
 
@@ -1732,62 +1732,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacterState(IsometricCharacter character) {
 
-
-    if (character.weaponStateMelee &&
-        character.weaponStateDuration == character.weaponPerformFrame) {
-
-      if (character.defaultAttackBehavior) {
-        if (character.attackAlwaysHitsTarget) {
-          final target = character.target;
-          if (target is IsometricCollider) {
-            applyHit(
-              srcCharacter: character,
-              target: target,
-              damage: character.weaponDamage,
-            );
-          }
-        } else {
-          characterApplyMeleeHits(character);
-        }
-
+    if (character.shouldPerformAction) {
+      if (character.defaultAction) {
+        performCharacterActionDefault(character);
       } else {
-        onApplyCustomCharacterPerformWeapon(character);
+        performCharacterActionCustom(character);
       }
-    }
-
-    if (character.weaponStateFiring &&
-        character.weaponStateDuration == character.weaponPerformFrame) {
-
-      if (character.defaultAttackBehavior){
-        if (character.weaponType == WeaponType.Bow) {
-          spawnProjectileArrow(
-            src: character,
-            damage: character.weaponDamage,
-            range: character.weaponRange,
-            angle: character.lookRadian,
-          );
-        }
-      } else {
-        onApplyCustomCharacterPerformWeapon(character);
-      }
-    }
-
-    if (character.performing &&
-        character.stateDuration == character.performFrame) {
-
-      if (character.defaultAttackBehavior){
-        final target = character.target;
-        if (target is IsometricCollider) {
-          applyHit(
-            srcCharacter: character,
-            target: target,
-            damage: character.weaponDamage,
-          );
-        }
-      } else {
-        onApplyCustomCharacterPerform(character);
-      }
-
     }
 
     if (character.stateDurationRemaining > 0) {
@@ -1805,31 +1755,67 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    switch (character.state) {
-      case CharacterState.Idle:
-        break;
-      case CharacterState.Running:
-        character.applyForce(
-            force: character.runSpeed,
-            angle: character.angle,
+    if (character.running) {
+      character.applyForce(
+        force: character.runSpeed,
+        angle: character.angle,
+      );
+      if (character.nextFootstep++ >= 10) {
+        dispatchGameEvent(
+          GameEventType.Footstep,
+          character.x,
+          character.y,
+          character.z,
         );
-        if (character.nextFootstep++ >= 10) {
-          dispatchGameEvent(
-            GameEventType.Footstep,
-            character.x,
-            character.y,
-            character.z,
-          );
-          character.nextFootstep = 0;
-          character.velocityZ += 1;
-        }
-        break;
-      case CharacterState.Performing:
-        break;
-      case CharacterState.Spawning:
-        break;
+        character.nextFootstep = 0;
+        character.velocityZ += 1;
+      }
     }
+
     character.stateDuration++;
+  }
+
+  void performCharacterActionDefault(IsometricCharacter character) {
+
+    if (character.performing){
+      final target = character.target;
+      if (target is IsometricCollider) {
+        applyHit(
+          srcCharacter: character,
+          target: target,
+          damage: character.weaponDamage,
+        );
+      }
+      return;
+    }
+
+    if (character.weaponStateFiring){
+      if (character.weaponType == WeaponType.Bow) {
+        spawnProjectileArrow(
+          src: character,
+          damage: character.weaponDamage,
+          range: character.weaponRange,
+          angle: character.lookRadian,
+        );
+        return;
+      }
+      return;
+    }
+
+    if (character.weaponStateMelee){
+      if (character.attackAlwaysHitsTarget) {
+        final target = character.target;
+        if (target is IsometricCollider) {
+          applyHit(
+            srcCharacter: character,
+            target: target,
+            damage: character.weaponDamage,
+          );
+        }
+        return;
+      }
+      characterApplyMeleeHits(character);
+    }
   }
 
   IsometricProjectile spawnProjectileOrb({
@@ -2738,7 +2724,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
     character.setCharacterStatePerforming(
-        duration: character.weaponCooldown
+        actionFrame: character.actionFrame,
+        duration: character.weaponCooldown,
     );
   }
 

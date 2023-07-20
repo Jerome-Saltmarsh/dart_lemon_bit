@@ -9,6 +9,7 @@ enum MMOItem {
     range: 180,
     attackType: MMOAttackType.Blink,
     performFrame: 15,
+    performDuration: 20,
   ),
   Rusty_Old_Sword(
       quality: MMOItemQuality.Common,
@@ -19,6 +20,7 @@ enum MMOItem {
       range: 80,
       attackType: MMOAttackType.Melee,
       performFrame: 20,
+      performDuration: 25,
   ),
   Staff_Of_Flames(
       quality: MMOItemQuality.Unique,
@@ -29,6 +31,7 @@ enum MMOItem {
       range: 180,
       attackType: MMOAttackType.Fire_Ball,
       performFrame: 20,
+      performDuration: 25,
   ),
   Staff_Of_Frozen_Lake(
       quality: MMOItemQuality.Rare,
@@ -174,6 +177,7 @@ enum MMOItem {
   final MMOAttackType? attackType;
   final MMOItemQuality quality;
   final int performFrame;
+  final int performDuration;
 
   bool get isWeapon => type == GameObjectType.Weapon;
 
@@ -197,6 +201,7 @@ enum MMOItem {
     this.consumable = false,
     this.experience = 0,
     this.performFrame = 0,
+    this.performDuration = 0,
     this.attackType
   });
 

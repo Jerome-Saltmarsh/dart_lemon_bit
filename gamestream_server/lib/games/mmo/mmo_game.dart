@@ -93,6 +93,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       weaponType: WeaponType.Unarmed,
       weaponRange: 20,
       weaponCooldown: 30,
+      actionFrame: 15,
       doesWander: true,
       name: 'Zombie',
       runSpeed: 0.75,
@@ -108,8 +109,9 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
 
   @override
-  void onApplyCustomCharacterPerformWeapon(IsometricCharacter character) {
-    if (character is! MmoPlayer) return;
+  void performCharacterActionCustom(IsometricCharacter character) {
+    if (character is! MmoPlayer)
+      return;
 
     if (character.performingActivePower){
       character.applyPerformingActivePower();

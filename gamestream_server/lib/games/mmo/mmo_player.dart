@@ -46,7 +46,7 @@ class MmoPlayer extends IsometricPlayer {
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     controlsRunInDirectionEnabled = false;
     controlsCanTargetEnemies = true;
-    defaultAttackBehavior = false;
+    defaultAction = false;
     hurtStateBusy = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
@@ -931,24 +931,31 @@ class MmoPlayer extends IsometricPlayer {
       case PowerMode.Equip:
         throw Exception();
       case PowerMode.Self:
-        performFrame = weapon.performFrame;
-        setCharacterStatePerforming(duration: weapon.performFrame + 1);
+        setCharacterStatePerforming(
+            actionFrame: weapon.performFrame,
+            duration: weapon.performDuration,
+        );
         break;
       case PowerMode.Targeted_Enemy:
         if (target == null) {
           deselectActivatedPower();
           return;
         }
-        performFrame = weapon.performFrame;
-        setCharacterStatePerforming(duration: weapon.performFrame + 1);
+        actionFrame = weapon.performFrame;
+        setCharacterStatePerforming(
+            actionFrame: weapon.performFrame,
+            duration: weapon.performDuration,
+        );
         break;
       case PowerMode.Targeted_Ally:
         if (target == null) {
           deselectActivatedPower();
           return;
         }
-        performFrame = weapon.performFrame;
-        setCharacterStatePerforming(duration: weapon.performFrame + 1);
+        setCharacterStatePerforming(
+          actionFrame: weapon.performFrame,
+          duration: weapon.performDuration,
+        );
         break;
       case PowerMode.Positional:
 
@@ -958,12 +965,11 @@ class MmoPlayer extends IsometricPlayer {
         if (WeaponType.isMelee(weaponType)) {
           weaponState = WeaponState.Melee;
         }
-        weaponPerformFrame = weapon.performFrame;
+        actionFrame = weapon.performFrame;
         weaponType = weapon.subType;
-        weaponPerformFrame = performFrame;
         performingActivePower = true;
         weaponStateDuration = 0;
-        weaponStateDurationTotal = performFrame + 1;
+        weaponStateDurationTotal = weapon.performDuration;
         break;
     }
   }

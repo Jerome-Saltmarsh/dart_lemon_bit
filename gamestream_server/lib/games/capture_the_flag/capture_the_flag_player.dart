@@ -10,6 +10,9 @@ import 'capture_the_flag_ai.dart';
 
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
+  IsometricPosition? powerActivatedTarget;
+  IsometricPosition? powerPerformingTarget;
+  IsometricPower? powerPerforming;
 
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
@@ -259,7 +262,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     powerPerformingTarget = powerActivatedTarget;
     powerPerforming = powerActivated.value;
     deselectActivatedPower();
-    setCharacterStatePerforming(duration: 30);
+    setCharacterStatePerforming(
+        actionFrame: 20,
+        duration: 30,
+    );
   }
 
   void deselectActivatedPower(){
