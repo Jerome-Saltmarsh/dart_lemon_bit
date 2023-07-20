@@ -716,6 +716,11 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void onEquipmentChanged(){
+    assert (equippedHead?.isHead ?? true);
+    assert (equippedBody?.isBody ?? true);
+    assert (equippedLegs?.isLegs ?? true);
+    assert (equippedWeapon?.isWeapon ?? true);
+
     setCharacterStateChanging();
     health = clamp(health, 0, maxHealth);
     headType = equippedHead?.subType ?? HeadType.Plain;
