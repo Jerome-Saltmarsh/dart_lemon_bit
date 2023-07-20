@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/common.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
@@ -18,7 +18,7 @@ class MMOItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      item == null ? buildText('-') :
+      item == null ? buildText('-', color: Colors.white54) :
         MouseRegion(
             onEnter: (_){
               gamestream.games.mmo.itemHover.value = item;

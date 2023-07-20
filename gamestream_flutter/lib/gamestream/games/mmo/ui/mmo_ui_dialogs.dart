@@ -37,7 +37,9 @@ extension MMOUIDialogs on MmoGame {
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                   buildDialogTitle('INVENTORY'),
+                   Container(
+                       margin: const EdgeInsets.only(left: 2),
+                       child: buildDialogTitle('INVENTORY')),
                    buildButtonClose(action: toggleInventoryOpen),
                  ],
                ),

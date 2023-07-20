@@ -118,7 +118,7 @@ extension MMOUI on MmoGame {
         children: List.generate(treasures.length, (index) => onPressed(
             action: () => selectTreasure(index),
             onRightClick: () => dropTreasure(index),
-            child: MMOItemImage(item: treasures[index], size: 64))),
+            child: buildInventoryItem(treasures[index]))),
       ),
     ),
   );
