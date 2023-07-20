@@ -200,7 +200,7 @@ extension MMOUI on MmoGame {
     return onPressed(
         onRightClick: item == null ? null : () => dropItem(index),
         action: item == null ? null : () => selectItem(index),
-        child: MMOItemImage(item: item, size: itemImageSize),
+        child: buildInventoryItem(item),
     );
   }
 
@@ -279,11 +279,19 @@ extension MMOUI on MmoGame {
     ),
   );
 
+  Widget buildInventoryItem(MMOItem? item) => Container(
+        color: Colors.black12,
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(2),
+        width: 64,
+        height: 64,
+        child: MMOItemImage(item: item, size: 64));
+
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-            color: Colors.black26,
+            // color: Colors.black26,
             borderRadius: const BorderRadius.all(Radius.circular(4))
         ),
     );
@@ -296,15 +304,15 @@ extension MMOUI on MmoGame {
         buildWatch(equippedHead, (equipped) => onPressed(
             onRightClick: equipped == null ? null : dropEquippedHead,
             action: equipped == null ? null : unequipHead,
-            child: MMOItemImage(item: equipped, size: 64))),
+            child: buildInventoryItem(equipped))),
         buildWatch(equippedBody, (equipped) => onPressed(
             onRightClick: equipped == null ? null : dropEquippedBody,
             action: equipped == null ? null : unequipBody,
-            child: MMOItemImage(item: equipped, size: 64))),
+            child: buildInventoryItem(equipped))),
         buildWatch(equippedLegs, (equipped) => onPressed(
             onRightClick: equipped == null ? null : dropEquippedLegs,
             action: equipped == null ? null : unequipLegs,
-            child: MMOItemImage(item: equipped, size: 64))),
+            child: buildInventoryItem(equipped))),
       ],),
   );
 
