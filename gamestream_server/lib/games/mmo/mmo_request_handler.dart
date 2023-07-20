@@ -65,16 +65,7 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
       case MMORequest.Drop_Equipped_Body:
         player.dropEquippedBody();
         break;
-      case MMORequest.Select_Equipped_Head:
-        player.dropEquippedHead();
-        break;
-      case MMORequest.Select_Equipped_Body:
-        player.dropEquippedBody();
-        break;
       case MMORequest.Drop_Equipped_Legs:
-        player.dropEquippedLegs();
-        break;
-      case MMORequest.Select_Equipped_Legs:
         player.dropEquippedLegs();
         break;
       case MMORequest.Toggle_Skills_Dialog:
@@ -92,6 +83,15 @@ extension CaptureTheFlagRequestHandler on WebSocketConnection {
         }
         final mmoTalentType = MMOTalentType.values[index];
         player.unlockTalent(mmoTalentType);
+        break;
+      case MMORequest.Unequip_Head:
+        player.unequipHead();
+        break;
+      case MMORequest.Unequip_Body:
+        player.unequipBody();
+        break;
+      case MMORequest.Unequip_Legs:
+        player.unequipLegs();
         break;
     }
   }

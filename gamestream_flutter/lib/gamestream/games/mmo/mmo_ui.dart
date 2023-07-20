@@ -307,13 +307,15 @@ extension MMOUI on MmoGame {
         children: [
           buildWatch(equippedHead, (equipped) => onPressed(
               onRightClick: equipped == null ? null : dropEquippedHead,
-              action: equipped == null ? null : null,
+              action: equipped == null ? null : unequipHead,
               child: MMOItemImage(item: equipped, size: 64))),
           buildWatch(equippedBody, (equipped) => onPressed(
               onRightClick: equipped == null ? null : dropEquippedBody,
+              action: equipped == null ? null : unequipBody,
               child: MMOItemImage(item: equipped, size: 64))),
           buildWatch(equippedLegs, (equipped) => onPressed(
               onRightClick: equipped == null ? null : dropEquippedLegs,
+              action: equipped == null ? null : unequipLegs,
               child: MMOItemImage(item: equipped, size: 64))),
       ],),
     ),

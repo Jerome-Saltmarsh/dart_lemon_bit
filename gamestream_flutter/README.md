@@ -10,14 +10,15 @@ alt + m             : go to declaration
 
 [IDEAS]
 - sell items for xp
+- tier two talents cost two skills points etc
 
 [TODO]
-[ ] migrate capture the flag powers to isometric core
 [ ] fix ai path following
 [ ] floating txt on acquire health and xp
 [ ] sound pick up item
 [ ] sounds on item drop for treasures
 [ ] ui items draggable
+[ ] fix torch height
 [ ] zombie death animation
 [ ] ability and weapon cooldown
 [ ] character persistence
@@ -38,7 +39,11 @@ alt + m             : go to declaration
 [*] fix grid render order
 [?] character gold
 
+20.07.2023
+[x] refactor character state
+
 19.07.2023
+[x] use item ability
 [x] collect treasure to earn xp
 [x] fix bug player doesn't run to pick up item
 [x] polish player controls

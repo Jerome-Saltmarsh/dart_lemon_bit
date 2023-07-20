@@ -710,10 +710,11 @@ class MmoPlayer extends IsometricPlayer {
 
   void onEquipmentChanged(){
     setCharacterStateChanging();
-    final maxHealth = this.maxHealth;
-    if (health > maxHealth){
-      health = maxHealth;
-    }
+    health = clamp(health, 0, maxHealth);
+    headType = equippedHead?.subType ?? HeadType.Plain;
+    bodyType = equippedBody?.subType ?? BodyType.Nothing;
+    legsType = equippedLegs?.subType ?? LegType.Nothing;
+    weaponType = equippedWeapon?.subType ?? WeaponType.Unarmed;
     writeEquipped();
   }
 
@@ -1017,5 +1018,54 @@ class MmoPlayer extends IsometricPlayer {
   @override
   set weaponStateDurationTotal(int value){
     _weaponStateDuration = value;
+  }
+
+  void unequipHead() {
+    if (equippedHead == null)
+      return;
+
+    final availableItemIndex = getEmptyItemIndex();
+    if (availableItemIndex == -1){
+      reportInventoryFull();
+      return;
+    }
+
+    setItem(index: availableItemIndex, item: equippedHead);
+    equippedHead = null;
+    onEquipmentChanged();
+  }
+
+  void unequipBody() {
+    if (equippedBody == null)
+      return;
+
+    final availableItemIndex = getEmptyItemIndex();
+    if (availableItemIndex == -1){
+      reportInventoryFull();
+      return;
+    }
+
+    setItem(index: availableItemIndex, item: equippedBody);
+    equippedBody = null;
+    onEquipmentChanged();
+  }
+
+  void unequipLegs() {
+    if (equippedLegs == null)
+      return;
+
+    final availableItemIndex = getEmptyItemIndex();
+    if (availableItemIndex == -1){
+      reportInventoryFull();
+      return;
+    }
+
+    setItem(index: availableItemIndex, item: equippedLegs);
+    equippedLegs = null;
+    onEquipmentChanged();
+  }
+
+  void reportInventoryFull(){
+
   }
 }

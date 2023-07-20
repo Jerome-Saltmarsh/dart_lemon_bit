@@ -9,7 +9,7 @@ Widget onPressed({
   final widget = MouseRegion(
       cursor: action != null
           ? SystemMouseCursors.click
-          : SystemMouseCursors.forbidden,
+          : SystemMouseCursors.basic,
       child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           child: child,

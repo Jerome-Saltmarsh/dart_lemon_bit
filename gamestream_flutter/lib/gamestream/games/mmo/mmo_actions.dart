@@ -34,6 +34,15 @@ extension MMOActions on MmoGame {
   void dropEquippedLegs() =>
       sendMMORequest(MMORequest.Drop_Equipped_Legs);
 
+  void unequipHead() =>
+      sendMMORequest(MMORequest.Unequip_Head);
+
+  void unequipBody() =>
+      sendMMORequest(MMORequest.Unequip_Body);
+
+  void unequipLegs() =>
+      sendMMORequest(MMORequest.Unequip_Legs);
+
   void selectTalkOption(int index) =>
       sendMMORequest(MMORequest.Select_Talk_Option, index);
 
