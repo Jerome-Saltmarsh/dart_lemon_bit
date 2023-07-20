@@ -11,11 +11,11 @@ import 'package:golden_ratio/constants.dart';
 extension MMOUIDialogs on MmoGame {
 
   Widget buildButtonClose({required Function action}) => onPressed(child: Container(
-        width: 100,
-        height: 100 * goldenRatio_0381,
+        width: 80,
+        height: 80 * goldenRatio_0381,
         alignment: Alignment.center,
         color: Colors.black26,
-        child: buildText('x')
+        child: buildText('x', color: Colors.white70, size: 22)
     ), action: action
   );
 
@@ -38,7 +38,7 @@ extension MMOUIDialogs on MmoGame {
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
                    Container(
-                       margin: const EdgeInsets.only(left: 2),
+                       margin: const EdgeInsets.only(left: 5),
                        child: buildDialogTitle('INVENTORY')),
                    buildButtonClose(action: toggleInventoryOpen),
                  ],
