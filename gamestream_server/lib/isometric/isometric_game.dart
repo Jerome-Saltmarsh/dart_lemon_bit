@@ -1741,15 +1741,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {
-        switch(character.state){
-          case CharacterState.Performing:
-            if (character.aiDelayAfterPerformFinished){
-              character.aiIdleDelay();
-            }
-            break;
-        }
-        character.setCharacterStateIdle();
-        return;
+        onCharacterStateFinished(character);
       }
     }
 
@@ -1771,6 +1763,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     character.stateDuration++;
+  }
+
+  void onCharacterStateFinished(IsometricCharacter character) {
+
+    if (character.performing && character.aiDelayAfterPerformFinished){
+      character.aiIdleDelay();
+      return;
+    }
+
+    character.setCharacterStateIdle();
+    return;
   }
 
   void performCharacterActionDefault(IsometricCharacter character) {
