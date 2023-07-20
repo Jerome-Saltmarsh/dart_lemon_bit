@@ -81,11 +81,14 @@ class GameIO with ByteWriter {
 
     if (inputModeKeyboard) {
 
-      hex = hex | ByteHex.Hex_64;
-
       if (gamestream.engine.mouseRightDown.value) {
         hex = hex | ByteHex.Hex_32;
       }
+
+      if (gamestream.engine.keyPressedShiftLeft){
+        hex = hex | ByteHex.Hex_64;
+      }
+
       if (gamestream.engine.keyPressedSpace){
         hex = hex | ByteHex.Hex_128;
       }

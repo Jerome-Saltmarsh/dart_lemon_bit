@@ -510,7 +510,7 @@ class WebSocketConnection with ByteReader {
     final direction         = hex & 0xf;
     final mouseDownLeft     = hex & ByteHex.Hex_16 > 0;
     final mouseDownRight    = hex & ByteHex.Hex_32 > 0;
-    final inputTypeDesktop  = hex & ByteHex.Hex_64 > 0;
+    final keyDownShift      = hex & ByteHex.Hex_64 > 0;
     final keyDownSpace      = hex & ByteHex.Hex_128 > 0;
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
     player.mouseLeftDown = mouseDownLeft;
@@ -569,7 +569,7 @@ class WebSocketConnection with ByteReader {
       mouseLeftDown: mouseDownLeft,
       mouseRightDown: mouseDownRight,
       keySpaceDown: keyDownSpace,
-      inputTypeKeyboard: inputTypeDesktop,
+      keyDownShift: keyDownShift,
     );
   }
 

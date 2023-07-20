@@ -41,7 +41,7 @@ abstract class Game <T extends Player> {
     required bool mouseLeftDown,
     required bool mouseRightDown,
     required bool keySpaceDown,
-    required bool inputTypeKeyboard,
+    required bool keyDownShift,
   });
 
   void writePlayerResponses() {

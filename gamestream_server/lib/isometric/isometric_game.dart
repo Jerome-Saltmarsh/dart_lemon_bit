@@ -252,7 +252,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required bool mouseLeftDown,
     required bool mouseRightDown,
     required bool keySpaceDown,
-    required bool inputTypeKeyboard
+    required bool keyDownShift
   }) {
 
     if (player.deadOrBusy || !player.active || player.debugging)
@@ -304,10 +304,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       final aimTarget = player.aimTarget;
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
-        player.setDestinationToMouse();
-        player.runToDestinationEnabled = true;
-        player.pathFindingEnabled = false;
-        player.target = null;
+        if (keyDownShift){
+          setCharacterStateIdle(player);
+          characterAttack(player);
+          return;
+        } else {
+          player.setDestinationToMouse();
+          player.runToDestinationEnabled = true;
+          player.pathFindingEnabled = false;
+          player.target = null;
+        }
       } else if (mouseLeftClicked) {
         player.target = aimTarget;
         player.runToDestinationEnabled = true;
@@ -316,14 +322,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
       return;
     }
-
-    // if (mouseRightDown && !player.deadBusyOrWeaponStateBusy) {
-    //   player.setDestinationToMouse();
-    //   player.runToDestinationEnabled = true;
-    //   player.pathFindingEnabled = false;
-    //   player.target = null;
-    //   return;
-    // }
 
     if (player.controlsRunInDirectionEnabled && direction != IsometricDirection.None){
       player.runToDestinationEnabled = false;

@@ -112,7 +112,7 @@ class RockPaperScissorsGame extends Game<RockPaperScissorsPlayer> {
     required bool mouseLeftDown,
     required bool mouseRightDown,
     required bool keySpaceDown,
-    required bool inputTypeKeyboard,
+    required bool keyDownShift,
   }) {
     if (mouseLeftDown) {
       player.targetX = player.mouseX;

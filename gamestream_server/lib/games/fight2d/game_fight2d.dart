@@ -52,7 +52,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool mouseLeftDown,
     required bool mouseRightDown,
     required bool keySpaceDown,
-    required bool inputTypeKeyboard,
+    required bool keyDownShift,
   }) {
     if (keySpaceDown || mouseLeftDown) {
       switch (direction) {
