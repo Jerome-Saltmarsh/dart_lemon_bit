@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/common/src/game_error.dart';
 
 abstract class Game {
   void drawCanvas(Canvas canvas, Size size);
@@ -26,4 +27,6 @@ abstract class Game {
   void onMouseExit(){
 
   }
+
+  void onGameError(GameError error){}
 }

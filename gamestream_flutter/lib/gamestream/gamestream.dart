@@ -18,11 +18,11 @@ import 'network/enums/connection_region.dart';
 import 'network/enums/connection_status.dart';
 import 'network/game_network.dart';
 import 'operation_status.dart';
-import 'ui/widgets/build_text.dart';
 
 class Gamestream extends StatelessWidget with ByteReader {
   var previousServerResponse = -1;
   var renderResponse = false;
+  var clearErrorTimer = -1;
 
   final serverFPS = Watch(0);
   final bufferSize = Watch(0);
@@ -99,19 +99,7 @@ class Gamestream extends StatelessWidget with ByteReader {
 
      error.onChanged((GameError? error) {
          if (error == null) return;
-
-         final controller = ScaffoldMessenger.of(engine.buildContext).showSnackBar(
-           SnackBar(
-             content: buildText(error.name),
-             duration: const Duration(milliseconds: 500),
-           ),
-         );
-
-         controller.closed.then((value) {
-            if (error == this.error.value){
-              this.error.value = null;
-            }
-         });
+         game.value.onGameError(error);
      });
 
      games.website.errorMessageEnabled.value = true;
@@ -140,7 +128,7 @@ class Gamestream extends StatelessWidget with ByteReader {
    void _onChangedGame(Game game) {
      engine.onDrawCanvas = game.drawCanvas;
      engine.onDrawForeground = game.renderForeground;
-     engine.onUpdate = game.update;
+     // engine.onUpdate = game.update;
      engine.buildUI = game.buildUI;
      engine.onLeftClicked = game.onLeftClicked;
      engine.onRightClicked = game.onRightClicked;
@@ -268,7 +256,19 @@ class Gamestream extends StatelessWidget with ByteReader {
   }
 
   void update(){
+    updateClearErrorTimer();
+    game.value.update();
+  }
 
+  void updateClearErrorTimer() {
+    if (clearErrorTimer <= 0)
+      return;
+
+    clearErrorTimer--;
+    if (clearErrorTimer > 0)
+      return;
+
+    error.value = null;
   }
 
   void render(Canvas canvas, Size size){
