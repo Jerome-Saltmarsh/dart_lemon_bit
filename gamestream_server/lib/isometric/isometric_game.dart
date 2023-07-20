@@ -410,28 +410,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     clearCharacterTarget(character);
   }
 
-  void characterUseWeaponCustom(IsometricCharacter character){
-
-  }
-
-  int getDefaultWeaponStateDuration(IsometricCharacter character) => const {
-    WeaponType.Unarmed: 25,
-    WeaponType.Sword: 15,
-    WeaponType.Bow: 15,
-  }[character.weaponType] ?? 1;
-
-  int getDefaultWeaponActionFrame(IsometricCharacter character) => const {
-    WeaponType.Unarmed: 15,
-    WeaponType.Sword: 10,
-    WeaponType.Bow: 10,
-  }[character.weaponType] ?? 1;
-
-  void characterUseWeaponDefault(IsometricCharacter character){
-    character.weaponStateDurationTotal = getDefaultWeaponStateDuration(
-        character
-    );
-  }
-
   void characterUseWeapon(IsometricCharacter character) {
     if (character.deadBusyOrWeaponStateBusy)
       return;
@@ -444,6 +422,32 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       characterUseWeaponCustom(character);
     }
   }
+
+  void characterUseWeaponDefault(IsometricCharacter character){
+    character.weaponState = WeaponState.Performing;
+    character.actionFrame = getDefaultWeaponActionFrame(character);
+    character.weaponStateDurationTotal = getDefaultWeaponPerformDuration(
+        character
+    );
+  }
+
+  int getDefaultWeaponPerformDuration(IsometricCharacter character) => const {
+    WeaponType.Unarmed: 25,
+    WeaponType.Sword: 35,
+    WeaponType.Bow: 30,
+  }[character.weaponType] ?? 15;
+
+  int getDefaultWeaponActionFrame(IsometricCharacter character) => const {
+    WeaponType.Unarmed: 15,
+    WeaponType.Sword: 10,
+    WeaponType.Bow: 10,
+  }[character.weaponType] ?? 1;
+
+  void characterUseWeaponCustom(IsometricCharacter character){
+
+  }
+
+
 
   void characterTeleport({
     required IsometricCharacter character,

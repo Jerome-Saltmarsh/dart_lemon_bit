@@ -402,10 +402,6 @@ class IsometricCharacter extends IsometricCollider {
       weaponStateDuration++;
       if (weaponStateDuration >= weaponStateDurationTotal) {
 
-        // if (weaponStatePerforming && clearTargetOnPerformFinished && weaponStatePerforming){
-        //   clearTarget();
-        // }
-
         if (weaponStatePerforming && WeaponType.isFirearm(weaponType)){
           weaponState = WeaponState.Aiming;
           weaponStateDurationTotal = 10;
