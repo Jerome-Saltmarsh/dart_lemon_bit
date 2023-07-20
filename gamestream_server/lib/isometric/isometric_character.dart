@@ -25,7 +25,7 @@ class IsometricCharacter extends IsometricCollider {
   var targetPerceptible = false;
   /// can have a characterState of type hurt
   var hurtable = true;
-  var clearTargetAfterAttack = true;
+  var clearTargetOnPerformAction = true;
   var characterType = 0;
   var weaponStateDurationTotal = 0;
   var autoTarget = true;
@@ -402,11 +402,9 @@ class IsometricCharacter extends IsometricCollider {
       weaponStateDuration++;
       if (weaponStateDuration >= weaponStateDurationTotal) {
 
-        if (clearTargetAfterAttack && weaponStatePerforming){
-          clearTarget();
-        }
-
-        weaponStateDuration = 0;
+        // if (weaponStatePerforming && clearTargetOnPerformFinished && weaponStatePerforming){
+        //   clearTarget();
+        // }
 
         if (weaponStatePerforming && WeaponType.isFirearm(weaponType)){
           weaponState = WeaponState.Aiming;

@@ -1702,6 +1702,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       } else {
         performCharacterActionCustom(character);
       }
+
+      if (character.clearTargetOnPerformAction) {
+        character.clearTarget();
+      }
     }
 
     if (
