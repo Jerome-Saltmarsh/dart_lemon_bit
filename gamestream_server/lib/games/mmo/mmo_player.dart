@@ -232,28 +232,29 @@ class MmoPlayer extends IsometricPlayer {
     if (!isValidWeaponIndex(value)){
       return;
     }
-    final item = weapons[value];
+    final weapon = weapons[value];
 
-    if (item == null || item.type != GameObjectType.Weapon){
+    if (weapon == null || weapon.type != GameObjectType.Weapon){
       return;
     }
 
     _equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
+    actionFrame = weapon.performFrame;
     writeEquippedWeaponIndex(value);
   }
 
-  void useEquippedWeapon() {
-
-    final weapon = equippedWeapon;
-    if (weapon == null) return;
-    final attackType = weapon.attackType;
-    if (attackType == null) return;
-
-    setDestinationToCurrentPosition();
-    setCharacterStateIdle();
-    game.characterAttack(this);
-  }
+  // void useEquippedWeapon() {
+  //
+  //   final weapon = equippedWeapon;
+  //   if (weapon == null) return;
+  //   final attackType = weapon.attackType;
+  //   if (attackType == null) return;
+  //
+  //   setDestinationToCurrentPosition();
+  //   setCharacterStateIdle();
+  //   game.characterAttack(this);
+  // }
 
   void setItemsLength(int value){
     items = List.generate(value, (index) => null);
@@ -481,7 +482,7 @@ class MmoPlayer extends IsometricPlayer {
         equippedWeaponIndex = index;
         deselectActivatedPower();
         if (!controlsCanTargetEnemies){
-          useEquippedWeapon();
+          // useEquippedWeapon();
         }
         break;
       case PowerMode.Positional:
@@ -958,13 +959,7 @@ class MmoPlayer extends IsometricPlayer {
         );
         break;
       case PowerMode.Positional:
-
-        if (WeaponType.isFirearm(weaponType)) {
-          weaponState = WeaponState.Firing;
-        }
-        if (WeaponType.isMelee(weaponType)) {
-          weaponState = WeaponState.Melee;
-        }
+        weaponState = WeaponState.Performing;
         actionFrame = weapon.performFrame;
         weaponType = weapon.subType;
         performingActivePower = true;

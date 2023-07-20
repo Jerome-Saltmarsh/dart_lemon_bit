@@ -129,7 +129,7 @@ class IsometricCharacter extends IsometricCollider {
   );
 
   bool get shouldPerformAction =>
-      (!weaponStateIdle && weaponStateDuration == actionFrame) ||
+      (weaponStatePerforming && weaponStateDuration == actionFrame) ||
       (performing && stateDuration == actionFrame);
 
   int get weaponState => _weaponState;
@@ -226,9 +226,7 @@ class IsometricCharacter extends IsometricCollider {
 
   bool get weaponStateReloading => weaponState == WeaponState.Reloading;
 
-  bool get weaponStateFiring => weaponState == WeaponState.Firing;
-
-  bool get weaponStateMelee => weaponState == WeaponState.Melee;
+  bool get weaponStatePerforming => weaponState == WeaponState.Performing;
 
   bool get weaponStateAiming => weaponState == WeaponState.Aiming;
 
@@ -271,12 +269,10 @@ class IsometricCharacter extends IsometricCollider {
 
   int getWeaponStateDurationTotal(int weaponState) =>
       switch (weaponState) {
-        WeaponState.Melee => weaponCooldown,
-        WeaponState.Firing => weaponCooldown,
         WeaponState.Idle => 0,
         WeaponState.Aiming => 10,
         WeaponState.Reloading => 10,
-        WeaponState.Throwing => 15,
+        WeaponState.Performing => 10, // TODO
         _ => (throw Exception(''))
       };
 
@@ -403,20 +399,18 @@ class IsometricCharacter extends IsometricCollider {
       weaponStateDuration++;
       if (weaponStateDuration >= weaponStateDurationTotal) {
 
-        if (clearTargetAfterAttack && const [WeaponState.Melee, WeaponState.Firing].contains(weaponState)){
+        if (clearTargetAfterAttack && weaponStatePerforming){
           clearTarget();
         }
-        switch (weaponState) {
-          case WeaponState.Firing:
-            weaponState = WeaponState.Aiming;
-            weaponStateDurationTotal = 10;
-            weaponStateDuration = 0;
-            break;
-          default:
-            weaponState = WeaponState.Idle;
-            weaponStateDurationTotal = 0;
-            weaponStateDuration = 0;
-            break;
+
+        weaponStateDuration = 0;
+
+        if (WeaponType.isFirearm(weaponType)){
+          weaponState = WeaponState.Aiming;
+          weaponStateDurationTotal = 10;
+        } else {
+          weaponState = WeaponState.Idle;
+          weaponStateDurationTotal = 0;
         }
       }
     }

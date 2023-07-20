@@ -91,7 +91,7 @@ class Gamestream extends StatelessWidget with ByteReader {
 
      for (final weaponType in WeaponType.values){
        try {
-         TemplateAnimation.getAttackAnimation(weaponType);
+         TemplateAnimation.getWeaponPerformAnimation(weaponType);
        } catch (e){
          print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
        }

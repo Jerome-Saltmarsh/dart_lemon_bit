@@ -96,7 +96,7 @@ class TemplateAnimation {
     return list;
   }();
 
-  static List<int> getAttackAnimation(int weaponType){
+  static List<int> getWeaponPerformAnimation(int weaponType){
 
     if (weaponType == WeaponType.Unarmed) {
       return Punch;

@@ -55,6 +55,8 @@ class WeaponType {
 
   static bool isFirearm(int value) => Firearms.contains(value);
 
+  static bool isThrowable(int value) => const [Grenade].contains(value);
+
   static bool isFirearmAutomatic(int value) => Firearms_Automatic.contains(value);
 
   static String getName(int value) {

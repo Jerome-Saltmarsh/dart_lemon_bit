@@ -30,13 +30,11 @@ class IsometricCharacter extends IsometricPosition {
   double get radius => CharacterType.getRadius(characterType);
 
   bool get weaponStateIdle => weaponState == WeaponState.Idle;
-  bool get weaponStateFiring => weaponState == WeaponState.Firing;
-  bool get weaponStateMelee => weaponState == WeaponState.Melee;
+  bool get weaponStatePerforming => weaponState == WeaponState.Performing;
   bool get weaponStateReloading => weaponState == WeaponState.Reloading;
   bool get weaponStateChanging => weaponState == WeaponState.Changing;
   bool get weaponStateAiming => weaponState == WeaponState.Aiming;
-  bool get weaponStateThrowing => weaponState == WeaponState.Throwing;
-  bool get weaponEngaged => weaponStateAiming || weaponStateFiring || weaponStateMelee;
+  bool get weaponEngaged => weaponStateAiming || weaponStatePerforming;
   bool get dead => state == CharacterState.Dead;
   bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
