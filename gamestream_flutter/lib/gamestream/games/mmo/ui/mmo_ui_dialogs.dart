@@ -33,7 +33,7 @@ extension MMOUIDialogs on MmoGame {
          return buildInventoryButton();
        } else {
          return GSContainer(
-           width: 500,
+           width: 330,
            child: Column(
              mainAxisAlignment: MainAxisAlignment.start,
              crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +47,7 @@ extension MMOUIDialogs on MmoGame {
                  ],
                ),
               buildPlayerTreasures(),
-              height8,
+              height16,
               Row(
                 children: [
                   buildPlayerEquipped(),

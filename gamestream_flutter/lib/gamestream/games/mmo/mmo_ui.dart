@@ -42,8 +42,8 @@ extension MMOUI on MmoGame {
       // ),
       buildPlayerAimTarget(),
       Positioned(
-         top: margin3,
-         left: margin3 + 10,
+         top: margin1,
+         left: margin3 + 50,
          child: buildItemHoverDialog(),
       ),
       // Positioned(
