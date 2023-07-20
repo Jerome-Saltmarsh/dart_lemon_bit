@@ -39,8 +39,8 @@ class MmoGame extends IsometricGame {
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
-  final playerSkillPoints = Watch(0);
-  final playerSkillsDialogOpen = Watch(false);
+  final playerTalentPoints = Watch(0);
+  final playerTalentDialogOpen = Watch(false);
   final playerInventoryOpen = Watch(false);
   final playerTalents = List.generate(MMOTalentType.values.length, (index) => false, growable: false);
 
@@ -49,7 +49,7 @@ class MmoGame extends IsometricGame {
   MmoGame({required super.isometric}){
     print('MmoGame()');
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
-    playerSkillsDialogOpen.onChanged(onChangedPlayerSkillsDialogOpen);
+    playerTalentDialogOpen.onChanged(onChangedPlayerSkillsDialogOpen);
   }
 
   void setWeapon({required int index, required MMOItem? item}){

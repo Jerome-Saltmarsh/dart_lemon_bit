@@ -74,8 +74,8 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerLevel();
     writePlayerExperience();
     writePlayerExperienceRequired();
-    writePlayerSkillPoints();
-    writePlayerSkillsDialogOpen();
+    writePlayerTalentPoints();
+    writePlayerTalentDialogOpen();
     writePlayerTalents();
   }
 
@@ -92,9 +92,9 @@ class MmoPlayer extends IsometricPlayer {
 
   int get level => _level;
 
-  int get skillPoints => _skillPoints;
+  int get talentPoints => _skillPoints;
 
-  bool get skillsDialogOpen => _skillsDialogOpen;
+  bool get talentDialogOpen => _skillsDialogOpen;
 
   bool get inventoryOpen => _inventoryOpen;
 
@@ -178,14 +178,14 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerLevel();
   }
 
-  set skillPoints(int value){
+  set talentPoints(int value){
     _skillPoints = value;
-    writePlayerSkillPoints();
+    writePlayerTalentPoints();
   }
 
-  set skillsDialogOpen(bool value){
+  set talentDialogOpen(bool value){
     _skillsDialogOpen = value;
-    writePlayerSkillsDialogOpen();
+    writePlayerTalentDialogOpen();
   }
 
   set inventoryOpen(bool value){
@@ -833,16 +833,16 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(level);
   }
 
-  void writePlayerSkillPoints() {
+  void writePlayerTalentPoints() {
     writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_SkillPoints);
-    writeByte(skillPoints);
+    writeByte(MMOResponse.Player_Talent_Points);
+    writeByte(talentPoints);
   }
 
-  void writePlayerSkillsDialogOpen() {
+  void writePlayerTalentDialogOpen() {
     writeByte(ServerResponse.MMO);
-    writeByte(MMOResponse.Player_Skills_Dialog_Open);
-    writeBool(skillsDialogOpen);
+    writeByte(MMOResponse.Player_Talent_Dialog_Open);
+    writeBool(talentDialogOpen);
   }
 
   void writePlayerInventoryOpen() {
@@ -852,7 +852,7 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void toggleSkillsDialog() {
-    skillsDialogOpen = !skillsDialogOpen;
+    talentDialogOpen = !talentDialogOpen;
   }
 
   static int getEmptyIndex(List<MMOItem?> items){
@@ -872,7 +872,7 @@ class MmoPlayer extends IsometricPlayer {
 
   void unlockTalent(MMOTalentType talent) {
 
-    if (skillPoints <= 0){
+    if (talentPoints <= 0){
       writeGameError(GameError.Insufficient_Skill_Points);
       return;
     }
@@ -889,7 +889,7 @@ class MmoPlayer extends IsometricPlayer {
 
      assert (!talents[talent.index]);
      talents[talent.index] = true;
-     skillPoints--;
+     talentPoints--;
      writePlayerTalents();
      writePlayerHealth();
   }
@@ -1017,15 +1017,6 @@ class MmoPlayer extends IsometricPlayer {
       setCharacterStateIdle();
       setDestinationToCurrentPosition();
       clearPath();
-  }
-
-  int _weaponStateDuration = 0;
-
-  int get weaponStateDurationTotal => _weaponStateDuration;
-
-  @override
-  set weaponStateDurationTotal(int value){
-    _weaponStateDuration = value;
   }
 
   void unequipHead() {

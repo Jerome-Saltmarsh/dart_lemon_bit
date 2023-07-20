@@ -237,7 +237,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
     while (player.experience > player.experienceRequired) {
       player.level++;
-      player.skillPoints++;
+      player.talentPoints++;
       player.experience -= player.experienceRequired;
       player.experienceRequired = getExperienceRequiredForLevel(player.level);
     }

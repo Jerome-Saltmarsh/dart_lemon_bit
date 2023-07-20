@@ -321,13 +321,13 @@ extension MMOUI on MmoGame {
     ),
   );
 
-  Widget buildSkillPointsRemaining() => buildWatch(playerSkillPoints, (skillPoints) {
+  Widget buildTalentPointsRemaining() => buildWatch(playerTalentPoints, (skillPoints) {
        if (skillPoints == 0)
          return nothing;
 
        return onPressed(
            action: toggleTalentsDialog,
-           child: GSContainer(child: buildText('Skills: $skillPoints')));
+           child: GSContainer(child: buildText('Talents: $skillPoints')));
     });
 
   Widget buildPlayerHealthBar(){
@@ -408,45 +408,62 @@ extension MMOUI on MmoGame {
   Widget buildPlayerTalentsDialog() => buildWatch(
       playerTalentsChangedNotifier,
       (_) => buildWatch(
-          playerSkillsDialogOpen,
+          playerTalentDialogOpen,
           (playersDialogOpen) => !playersDialogOpen
               ? nothing
-              : GSContainer(
+              : Container(
                   width: 500,
-                  height: gamestream.engine.screen.height - 250,
-                  alignment: Alignment.topLeft,
-                  child: GridView.count(
-                      crossAxisCount: 3,
-                      children: MMOTalentType.rootValues
-                          .map((talentType) => GSContainer(
-                                  child: Column(
-                                children: talentType.children
-                                    .map(buildTalent)
-                                    .toList(growable: false),
-                              )))
-                          .toList(growable: false)))));
+                child: Column(
+                  children: [
+                    GSContainer(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(left: 20),
+                              child: buildText('TALENTS', size: 25)
+                          ),
+                          onPressed(child: Container(
+                              width: 100,
+                              height: 100 * goldenRatio_0381,
+                              alignment: Alignment.center,
+                              color: Colors.black12,
+                              child: buildText('x')
+                          ), action: toggleTalentsDialog),
+                        ],
+                      ),
+                    ),
+                    GSContainer(
+                        height: gamestream.engine.screen.height - 250,
+                        alignment: Alignment.topLeft,
+                        child: GridView.count(
+                            crossAxisCount: 3,
+                            children: MMOTalentType.rootValues
+                                .map((talentType) => GSContainer(
+                                        child: Column(
+                                      children: talentType.children
+                                          .map(buildTalent)
+                                          .toList(growable: false),
+                                    )))
+                                .toList(growable: false))),
+                  ],
+                ),
+              )));
 
   Widget buildTalent(MMOTalentType talent){
 
     if (talentUnlocked(talent)){
-      return Tooltip(
-          message: '(UNLOCKED)\n${talent.description}',
-          child: buildText(talent.name, color: Colors.green));
+      return buildText(talent.name, color: Colors.green);
     }
 
     if (talentCanBeUnlocked(talent)) {
-      return Tooltip(
-        message: talent.description,
-        child: onPressed(
-            action: () => unlockTalent(talent),
-            child: buildText(talent.name, color: Colors.grey)
-            ),
-      );
+      return onPressed(
+          action: () => unlockTalent(talent),
+          child: buildText(talent.name, color: Colors.grey)
+          );
     }
 
-    return Tooltip(
-        message: talent.description,
-        child: buildText(talent.name, color: Colors.grey));
+    return buildText(talent.name, color: Colors.grey);
   }
 
   Widget buildPlayerInventory() {
@@ -458,7 +475,7 @@ extension MMOUI on MmoGame {
 
   Widget buildPlayerStatsRow() => Row(
       children: [
-        buildSkillPointsRemaining(),
+        buildTalentPointsRemaining(),
         width8,
         buildPlayerLevel(),
         width8,
