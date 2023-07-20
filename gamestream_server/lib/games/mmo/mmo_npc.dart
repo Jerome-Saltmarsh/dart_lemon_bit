@@ -20,6 +20,6 @@ class MMONpc extends IsometricCharacter {
     required super.name,
     this.interact,
   }) {
-    actionFrame = 1;
+    clearTargetOnPerformAction = false;
   }
 }

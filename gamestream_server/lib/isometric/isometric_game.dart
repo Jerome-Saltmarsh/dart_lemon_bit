@@ -429,18 +429,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.weaponStateDurationTotal = getDefaultWeaponPerformDuration(
         character
     );
+
+    if (character.actionFrame > character.weaponStateDurationTotal){
+      throw Exception();
+    }
   }
 
   int getDefaultWeaponPerformDuration(IsometricCharacter character) => const {
     WeaponType.Unarmed: 25,
     WeaponType.Sword: 35,
     WeaponType.Bow: 30,
+    WeaponType.Machine_Gun: 5,
   }[character.weaponType] ?? 15;
 
   int getDefaultWeaponActionFrame(IsometricCharacter character) => const {
     WeaponType.Unarmed: 15,
     WeaponType.Sword: 10,
     WeaponType.Bow: 10,
+    WeaponType.Machine_Gun: 2,
   }[character.weaponType] ?? 1;
 
   void characterUseWeaponCustom(IsometricCharacter character){
