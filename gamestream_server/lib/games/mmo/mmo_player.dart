@@ -589,12 +589,12 @@ class MmoPlayer extends IsometricPlayer {
         }
         break;
       case GameObjectType.Body:
-        if (equippedHead != null){
-          final equipped = equippedHead;
+        if (equippedBody != null){
+          final equipped = equippedBody;
           equipBody(item);
           setItem(index: index, item: equipped);
         } else {
-          equipHead(item);
+          equipBody(item);
           clearItem(index);
         }
         break;
@@ -655,7 +655,7 @@ class MmoPlayer extends IsometricPlayer {
     }
 
     if (!item.isHead)
-      return;
+      throw Exception();
 
     equippedHead = item;
     onEquipmentChanged();
@@ -674,8 +674,9 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    if (!item.isBody)
-      return;
+    if (!item.isBody){
+      throw Exception();
+    }
 
     equippedBody = item;
     onEquipmentChanged();
@@ -695,7 +696,7 @@ class MmoPlayer extends IsometricPlayer {
     }
 
     if (!item.isLegs)
-      return;
+      throw Exception();
 
     equippedLegs = item;
     onEquipmentChanged();
@@ -722,6 +723,7 @@ class MmoPlayer extends IsometricPlayer {
     legsType = equippedLegs?.subType ?? LegType.Nothing;
     weaponType = equippedWeapon?.subType ?? WeaponType.Unarmed;
     writeEquipped();
+    writePlayerHealth();
   }
 
   void writeEquipped(){
