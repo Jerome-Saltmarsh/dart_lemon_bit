@@ -118,7 +118,7 @@ extension IsometricResponseReader on Gamestream {
 
       debug.characterType.value = readByte();
       debug.characterState.value = readByte();
-      debug.characterStateDuration.value = readUInt16();
+      debug.characterStateDuration.value = readInt16();
       debug.characterStateDurationRemaining.value = readUInt16();
 
       debug.weaponType.value = readUInt16();
