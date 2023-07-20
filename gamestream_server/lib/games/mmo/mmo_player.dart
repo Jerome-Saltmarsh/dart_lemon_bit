@@ -311,9 +311,9 @@ class MmoPlayer extends IsometricPlayer {
     if (item != null && !item.isTreasure)
       return;
 
-    setCharacterStateChanging();
     treasures[index] = item;
     writePlayerTreasure(index);
+    onEquipmentChanged();
   }
 
   void setItem({required int index, required MMOItem? item}){
