@@ -296,12 +296,6 @@ extension MMOUI on MmoGame {
         padding: const EdgeInsets.all(8),
     );
 
-  Widget buildInventory({required Widget child}) =>
-      buildWatch(
-        playerInventoryOpen,
-        (inventoryOpen) => inventoryOpen ? child : nothing,
-      );
-
   Widget buildPlayerEquipped() => buildInventoryContainer(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,

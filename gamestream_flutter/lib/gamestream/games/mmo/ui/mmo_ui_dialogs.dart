@@ -5,11 +5,6 @@ import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/on_pressed.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -41,11 +36,11 @@ extension MMOUIDialogs on MmoGame {
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                   buildInventoryButton(),
                    buildDialogTitle('INVENTORY'),
                    buildButtonClose(action: toggleInventoryOpen),
                  ],
                ),
+              height16,
               buildPlayerTreasures(),
               height16,
               Row(
