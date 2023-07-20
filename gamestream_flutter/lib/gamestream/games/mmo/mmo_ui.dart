@@ -334,7 +334,7 @@ extension MMOUI on MmoGame {
                  Container(
                    width: width,
                    height: height,
-                   color: Colors.white,
+                   color: GS_CONTAINER_COLOR,
                  ),
                  Container(
                    width: width * (health / maxHealth),
@@ -345,7 +345,7 @@ extension MMOUI on MmoGame {
                      width: width,
                      height: height,
                      alignment: Alignment.center,
-                     child: buildText('$health / $maxHealth', color: GameStyle.Container_Color),
+                     child: buildText('$health / $maxHealth', color: Colors.white54),
                  ),
                ],
              ),
