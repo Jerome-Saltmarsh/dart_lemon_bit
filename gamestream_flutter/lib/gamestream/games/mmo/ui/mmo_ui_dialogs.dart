@@ -84,13 +84,8 @@ extension MMOUIDialogs on MmoGame {
                     alignment: Alignment.topLeft,
                     child: GridView.count(
                         crossAxisCount: 3,
-                        children: MMOTalentType.rootValues
-                            .map((talentType) => GSContainer(
-                            child: Column(
-                              children: talentType.children
-                                  .map(buildTalent)
-                                  .toList(growable: false),
-                            )))
+                        children: MMOTalentType.values
+                            .map(buildTalent)
                             .toList(growable: false))),
               ],
             ),

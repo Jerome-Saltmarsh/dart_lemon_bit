@@ -129,16 +129,8 @@ class MmoPlayer extends IsometricPlayer {
         health += treasure.health;
     }
 
-    if (talentUnlocked(MMOTalentType.Healthy_1)){
+    if (talentUnlocked(MMOTalentType.Healthy)){
         health += 10;
-    }
-
-    if (talentUnlocked(MMOTalentType.Healthy_2)){
-      health += 15;
-    }
-
-    if (talentUnlocked(MMOTalentType.Healthy_3)){
-      health += 20;
     }
 
     return health;
@@ -870,11 +862,6 @@ class MmoPlayer extends IsometricPlayer {
     return -1;
   }
 
-  bool parentTalentRequiredToUnlock(MMOTalentType talent){
-    final parent = talent.parent;
-    return parent != null && !talentUnlocked(parent);
-  }
-
   bool talentUnlocked(MMOTalentType talent) => talents[talent.index];
 
   void unlockTalent(MMOTalentType talent) {
@@ -886,11 +873,6 @@ class MmoPlayer extends IsometricPlayer {
 
      if (talentUnlocked(talent)){
        writeGameError(GameError.Talent_Already_Unlocked);
-       return;
-     }
-
-     if (parentTalentRequiredToUnlock(talent)){
-       writeGameError(GameError.Parent_Talent_Required_To_Unlock);
        return;
      }
 

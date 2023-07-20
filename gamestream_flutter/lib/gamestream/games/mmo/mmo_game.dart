@@ -148,12 +148,7 @@ class MmoGame extends IsometricGame {
   void clearItemHover() => itemHover.value = null;
 
   bool talentCanBeUnlocked(MMOTalentType value){
-    if (talentUnlocked(value)){
-      return false;
-    }
-
-    final parent = value.parent;
-    return parent == null || talentUnlocked(parent);
+    return true;
   }
 
   bool talentUnlocked(MMOTalentType value) => playerTalents[value.index];
