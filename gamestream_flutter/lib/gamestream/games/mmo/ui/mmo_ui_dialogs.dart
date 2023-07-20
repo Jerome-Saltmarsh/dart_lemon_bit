@@ -73,7 +73,7 @@ extension MMOUIDialogs on MmoGame {
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: 20),
-                          child: buildDialogTitle('TALENTS')
+                          child: buildDialogTitle('TALENTS ${playerTalentPoints.value}')
                       ),
                       buildButtonClose(action: toggleTalentsDialog),
                     ],

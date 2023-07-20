@@ -314,7 +314,8 @@ extension MMOUI on MmoGame {
 
        return onPressed(
            action: toggleTalentsDialog,
-           child: GSContainer(child: buildText('Talents: $skillPoints')));
+           child: GSContainer(
+               child: buildText('Talents: $skillPoints', color: Colors.green)));
     });
 
   Widget buildPlayerHealthBar(){
@@ -355,14 +356,11 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildPlayerLevel({double size = 50}) =>
-      Tooltip(
-        message: 'Level',
-        child: GSContainer(
-          width: size,
-          height: size,
-          rounded: true,
-          child: buildWatch(playerLevel, (level) => buildText(level))
-        ),
+      GSContainer(
+        width: size * goldenRatio_1618,
+        height: size,
+        rounded: true,
+        child: buildWatch(playerLevel, (level) => buildText('Lvl $level'))
       );
 
   Widget buildPlayerExperienceBar({double width = 150, double height = 30}) => Tooltip(
@@ -396,40 +394,58 @@ extension MMOUI on MmoGame {
     final currentLevel = getTalentLevel(talent);
     final nextLevel = currentLevel + 1;
     final maxLevel = talent.maxLevel;
+    final maxLevelReached = currentLevel >= maxLevel;
     final cost = nextLevel * talent.levelCostMultiplier;
     final canUpgrade = currentLevel < maxLevel && cost <= playerTalentPoints.value;
-    const width = 100.0;
-    const height = 50.0;
+    final talentPointsRemaining = playerTalentPoints.value > 0;
 
-    return buildBorder(
-      width: 1,
-      color: canUpgrade ? Colors.green : Colors.transparent,
-      child: onPressed(
-        action: () => canUpgrade ? upgradeTalent(talent) : null,
-        child: Row(
-          children: [
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(2),
-              child: Stack(
-                children: [
-                  Container(
-                    color: Colors.green,
-                    alignment: Alignment.centerLeft,
-                    width: width * (currentLevel / maxLevel),
-                    height: height,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                      width: width,
-                      height: height,
-                      child: buildText('${talent.name} $currentLevel / $maxLevel', color: Colors.grey),
-                  ),
-                ],
-              ),
+    const barWidth = 100.0;
+    const barHeight = barWidth * goldenRatio_0381 * goldenRatio_0618;
+
+    return Container(
+      margin: const EdgeInsets.all(4),
+      child: buildBorder(
+        width: 1,
+        color: !talentPointsRemaining ? Colors.transparent : maxLevelReached ? Colors.white : canUpgrade ? Colors.green : Colors.red,
+        child: onPressed(
+          action: () => canUpgrade ? upgradeTalent(talent) : null,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (!maxLevelReached)
+                  buildText('-$cost'),
+                buildText(talent.name),
+                Row(
+                  children: [
+                    Container(
+                      color: Colors.black26,
+                      // padding: const EdgeInsets.all(2),
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: Colors.green,
+                            alignment: Alignment.centerLeft,
+                            width: barWidth * (currentLevel / maxLevel),
+                            height: barHeight,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            width: barWidth,
+                            height: barHeight,
+                            child: buildText('$currentLevel / $maxLevel', color: Colors.white54),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ],
             ),
-
-          ],
+          ),
         ),
       ),
     );
