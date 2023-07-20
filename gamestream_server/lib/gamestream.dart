@@ -40,6 +40,8 @@ class Gamestream {
       highScore = value;
     });
 
+    MmoGame.validate();
+
     final sceneDirectoryExists = await isometricScenes.sceneDirectory.exists();
 
     if (!sceneDirectoryExists) {

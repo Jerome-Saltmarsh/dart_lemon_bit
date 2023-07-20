@@ -67,6 +67,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     characters.add(npcGuard);
   }
 
+  static void validate() => MMOItem.values.forEach((item) => item.validate());
+
   @override
   int get maxPlayers => 64;
 

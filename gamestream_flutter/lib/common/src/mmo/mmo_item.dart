@@ -42,6 +42,7 @@ enum MMOItem {
       range: 180,
       attackType: MMOAttackType.Freeze_Circle,
       performFrame: 20,
+      performDuration: 20
   ),
   Old_Bow(
       quality: MMOItemQuality.Common,
@@ -52,6 +53,7 @@ enum MMOItem {
       range: 200,
       attackType: MMOAttackType.Arrow,
       performFrame: 20,
+      performDuration: 30,
   ),
   Holy_Bow(
       quality: MMOItemQuality.Rare,
@@ -62,6 +64,7 @@ enum MMOItem {
       range: 300,
       attackType: MMOAttackType.Arrow,
       performFrame: 20,
+      performDuration: 25,
   ),
   Steel_Helmet(
       quality: MMOItemQuality.Common,
@@ -200,8 +203,8 @@ enum MMOItem {
     this.isTreasure = false,
     this.consumable = false,
     this.experience = 0,
-    this.performFrame = 0,
-    this.performDuration = 0,
+    this.performFrame = -1,
+    this.performDuration = -1,
     this.attackType
   });
 
@@ -221,4 +224,24 @@ enum MMOItem {
           MMOItemQuality.Mythical => valuesMythical,
         };
 
+  void validate(){
+    if (performFrame > performDuration){
+      validationError('performFrame cannot be greater than performDuration');
+    }
+
+    if (attackType != null && performDuration < 0){
+      validationError('performDuration cannot be less than 0');
+    }
+
+    if (attackType != null && performFrame < 0){
+      validationError('performFrame cannot be less than 0');
+    }
+
+    if (attackType != null && range <= 0) {
+      validationError('range must be greater than 0');
+    }
+  }
+
+  void validationError(String reason) =>
+      print('validation_error: {name: $this, reason: $reason}');
 }
