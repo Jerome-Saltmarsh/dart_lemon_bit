@@ -998,9 +998,11 @@ class MmoPlayer extends IsometricPlayer {
 
       switch (attackType) {
         case MMOAttackType.Blink:
+          game.dispatchGameEvent(GameEventType.Blink_Depart, x, y, z);
           x = activePowerX;
           y = activePowerY;
           z = activePowerZ;
+          game.dispatchGameEvent(GameEventType.Blink_Arrive, x, y, z);
           break;
         default:
           throw Exception("Power Not Implemented $attackType");

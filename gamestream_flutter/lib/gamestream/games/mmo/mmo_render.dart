@@ -11,18 +11,6 @@ extension MMORender on MmoGame {
     renderPlayerRunLine();
     renderActivatedPower();
 
-    if (activatedPowerIndex.value != -1){
-      final activePower = weapons[activatedPowerIndex.value];
-      final mode = activePower?.attackType?.mode;
-
-      if (mode == PowerMode.Positional) {
-          renderer.color = Colors.blue;
-          renderer.renderCircleAtPosition(
-            position: activePowerPosition,
-            radius: 10,
-          );
-      }
-    }
   }
 
   void renderPlayerRunLine({Color color = Colors.purple}) {
@@ -66,6 +54,15 @@ extension MMORender on MmoGame {
 
     if (activatedPower == null)
       return;
+
+    final mode = activatedPower.attackType?.mode;
+    if (mode == PowerMode.Positional) {
+      renderer.color = Colors.white;
+      renderer.renderCircleAtPosition(
+        position: activePowerPosition,
+        radius: 15,
+      );
+    }
 
     renderer.color = rangeColor;
     renderer.renderCircleAroundPlayer(radius: activatedPower.range);

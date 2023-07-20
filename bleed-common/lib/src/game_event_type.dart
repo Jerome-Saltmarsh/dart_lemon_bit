@@ -39,4 +39,6 @@ class GameEventType {
   static const Teleport_Start           = 80;
   static const Teleport_End             = 81;
   static const Power_Used               = 82;
+  static const Blink_Depart              = 83;
+  static const Blink_Arrive             = 84;
 }

@@ -239,6 +239,15 @@ class IsometricEvents {
           gamestream.readUInt16(),
         );
         return;
+
+      case GameEventType.Blink_Arrive:
+        gamestream.audio.sci_fi_blaster_1.playXYZ(x, y, z);
+        gamestream.isometric.particles.spawnParticleConfetti(x, y, z);
+        break;
+
+      case GameEventType.Blink_Depart:
+        gamestream.isometric.particles.spawnParticleConfetti(x, y, z);
+        break;
     }
   }
 
