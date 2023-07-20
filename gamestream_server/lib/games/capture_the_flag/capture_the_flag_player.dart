@@ -55,7 +55,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   bool get canDeselectActivatedPower => powerActivated.value != null;
 
   @override
-  bool get canSetCharacterStateHurt => !performing && !weaponStateBusy;
+  bool get hurtable => !performing && !weaponStateBusy;
 
   bool get canUpdatePowerPosition => powerActivated.value != null && !performing;
 
