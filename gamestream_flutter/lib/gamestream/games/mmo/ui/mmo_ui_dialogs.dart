@@ -29,7 +29,7 @@ extension MMOUIDialogs on MmoGame {
        } else {
          return GSContainer(
            rounded: true,
-           width: 330,
+           width: 340,
            child: Column(
              mainAxisAlignment: MainAxisAlignment.start,
              crossAxisAlignment: CrossAxisAlignment.start,

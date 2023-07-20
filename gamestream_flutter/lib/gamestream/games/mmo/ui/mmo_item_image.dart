@@ -18,10 +18,13 @@ class MMOItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      item == null ? GSContainer(
-          width: size,
-          height: size,
-          child: buildText('-'),
+      item == null ? Container(
+        margin: const EdgeInsets.all(4),
+        child: GSContainer(
+            width: size,
+            height: size,
+            child: buildText('-'),
+        ),
       ) :
         MouseRegion(
             onEnter: (_){
@@ -32,11 +35,15 @@ class MMOItemImage extends StatelessWidget {
                 return;
               gamestream.games.mmo.itemHover.value = null;
             },
-            child: ItemImage(
-              size: size,
-              type: item!.type,
-              subType: item!.subType,
-              scale: scale,
+            child: Container(
+              color: GS_CONTAINER_COLOR,
+              margin: const EdgeInsets.all(4),
+              child: ItemImage(
+                size: size,
+                type: item!.type,
+                subType: item!.subType,
+                scale: scale,
+              ),
             )
         );
 }

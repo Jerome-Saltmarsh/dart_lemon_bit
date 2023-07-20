@@ -25,21 +25,11 @@ extension MMOUI on MmoGame {
         left: margin1,
         child: buildPlayerWeapons(),
       ),
-      // Positioned(
-      //   top: margin1,
-      //   left: margin1,
-      //   child: buildPlayerTreasures(),
-      // ),
       Positioned(
         top: margin1,
         left: margin1,
         child: buildDialogPlayerInventory(),
       ),
-      // Positioned(
-      //   left: margin2,
-      //   top: margin2,
-      //   child: buildPlayerItems(),
-      // ),
       buildPlayerAimTarget(),
       Positioned(
          top: margin1,
@@ -279,7 +269,6 @@ extension MMOUI on MmoGame {
                     items.length ~/ 2, (index) => buildItemImageAtIndex(index),
                     growable: false)
             ),
-            width8,
             Column(
                 children: List.generate(
                     items.length ~/ 2, (index) => buildItemImageAtIndex(index + (items.length ~/ 2)),
