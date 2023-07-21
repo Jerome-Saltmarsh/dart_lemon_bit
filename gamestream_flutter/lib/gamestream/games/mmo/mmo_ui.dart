@@ -335,15 +335,14 @@ extension MMOUI on MmoGame {
       ],),
   );
 
-  Widget buildTalentPointsRemaining() => buildWatch(playerTalentPoints, (skillPoints) {
-       if (skillPoints == 0)
-         return nothing;
-
-       return onPressed(
-           action: toggleTalentsDialog,
-           child: GSContainer(
-               child: buildText('Talents: $skillPoints', color: Colors.green)));
-    });
+  Widget buildTalentPointsRemaining() =>
+      buildWatch(
+      playerTalentPoints,
+      (skillPoints) => onPressed(
+          action: toggleTalentsDialog,
+          child: GSContainer(
+              child: buildText('Talents $skillPoints',
+                  color: skillPoints > 0 ? Colors.green : Colors.white70))));
 
   Widget buildPlayerHealthBar(){
     const width = 200.0;
@@ -387,7 +386,7 @@ extension MMOUI on MmoGame {
         width: size * goldenRatio_1618,
         height: size,
         rounded: true,
-        child: buildWatch(playerLevel, (level) => buildText('Lvl $level'))
+        child: buildWatch(playerLevel, (level) => buildText('Lvl $level', color: Colors.white70))
       );
 
   Widget buildPlayerExperienceBar({double width = 150, double height = 30}) => Tooltip(
