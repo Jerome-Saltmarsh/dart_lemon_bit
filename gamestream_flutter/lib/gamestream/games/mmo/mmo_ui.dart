@@ -103,7 +103,7 @@ extension MMOUI on MmoGame {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(weapons.length, buildWeaponImageAtIndex),
+          children: List.generate(weapons.length, buildWeaponSlotAtIndex),
         ),
       );
 
@@ -140,22 +140,19 @@ extension MMOUI on MmoGame {
         ));
   }
 
-  Widget buildWeaponImageAtIndex(int index) {
-    const size = 64.0;
-    final slot = weapons[index];
+  Widget buildWeaponSlotAtIndex(int index, {double size = 64}) {
 
-    final backgroundSelectedWeapon = buildWatch(equippedWeaponIndex, (equippedWeaponIndex){
-      if (index != equippedWeaponIndex)
-        return nothing;
-
-      return Positioned(
-        child: GSContainer(
-          color: Colors.black26,
-          width: size,
-          height: size,
-        ),
-      );
-    });
+    final backgroundSelectedWeapon = buildWatch(
+        equippedWeaponIndex,
+        (equippedWeaponIndex) => Positioned(
+              child: GSContainer(
+                color: index != equippedWeaponIndex
+                    ? Colors.black12
+                    : Colors.black26,
+                width: size,
+                height: size,
+              ),
+            ));
 
     final backgroundActivePower = buildWatch(activatedPowerIndex, (activatedPowerIndex){
       if (index != activatedPowerIndex)
@@ -170,23 +167,26 @@ extension MMOUI on MmoGame {
       );
     });
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        backgroundSelectedWeapon,
-        backgroundActivePower,
-        Positioned(child: buildMMOItemSlot(
-            slot: slot,
-            size: size,
-            onLeftClick: () => selectWeapon(index),
-            onRightClick: () => dropWeapon(index),
-        )),
-        Positioned(
-            top: 8,
-            left: 8,
-            child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
-        ),
-      ],
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 2),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          backgroundSelectedWeapon,
+          backgroundActivePower,
+          Positioned(child: buildMMOItemSlot(
+              slot: weapons[index],
+              size: size,
+              onLeftClick: () => selectWeapon(index),
+              onRightClick: () => dropWeapon(index),
+          )),
+          Positioned(
+              top: 8,
+              left: 8,
+              child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
+          ),
+        ],
+      ),
     );
   }
 
