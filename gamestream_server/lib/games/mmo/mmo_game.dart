@@ -1,11 +1,9 @@
 
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/games.dart';
-import 'package:gamestream_server/games/mmo/mmo_gameobject.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/isometric.dart';
 
-import 'package:gamestream_server/games/mmo/mmo_npc.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
 class MmoGame extends IsometricGame<MmoPlayer> {
@@ -128,9 +126,14 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     if (weapon == null)
       return;
 
+    final item = weapon.item;
+
+    if (item == null)
+      return;
+
     character.weaponStateDuration = 0;
-    character.weaponStateDurationTotal = weapon.performDuration;
-    character.actionFrame = weapon.performFrame;
+    character.weaponStateDurationTotal = item.performDuration;
+    character.actionFrame = item.performFrame;
   }
 
   @override
@@ -148,12 +151,17 @@ class MmoGame extends IsometricGame<MmoPlayer> {
     if (weapon == null)
       return;
 
-    switch (weapon.attackType) {
+    final item = weapon.item;
+
+    if (item == null)
+      return;
+
+    switch (item.attackType) {
       case MMOAttackType.Fire_Ball:
         spawnProjectileFireball(
           src: character,
-          damage: weapon.damage,
-          range: weapon.range,
+          damage: item.damage,
+          range: item.range,
           angle: character.lookRadian,
         );
         break;
@@ -163,22 +171,22 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       case MMOAttackType.Arrow:
         spawnProjectileArrow(
           src: character,
-          damage: weapon.damage,
-          range: weapon.range,
+          damage: item.damage,
+          range: item.range,
           angle: character.lookRadian,
         );
         break;
       case MMOAttackType.Bullet:
         spawnProjectile(
           src: character,
-          damage: weapon.damage,
-          range: weapon.range,
+          damage: item.damage,
+          range: item.range,
           projectileType: ProjectileType.Bullet,
           angle: character.lookRadian,
         );
         break;
       default:
-        throw Exception(weapon.attackType?.name);
+        throw Exception(item.attackType?.name);
     }
 
   }

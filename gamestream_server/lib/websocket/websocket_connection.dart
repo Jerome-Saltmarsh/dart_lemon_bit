@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:gamestream_server/common/src.dart';
-import 'package:gamestream_server/games/mmo/mmo_request_handler.dart';
 import 'package:gamestream_server/games/src.dart';
 import 'package:gamestream_server/isometric/isometric_scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';

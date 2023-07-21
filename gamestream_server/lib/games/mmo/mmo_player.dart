@@ -5,12 +5,11 @@ import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
 import 'package:gamestream_server/utils/is_valid_index.dart';
 
-import 'mmo_npc.dart';
-
 class MmoPlayer extends IsometricPlayer {
 
   final MmoGame game;
 
+  var equipmentDirty = true;
   var activePowerX = 0.0;
   var activePowerY = 0.0;
   var activePowerZ = 0.0;
@@ -20,16 +19,15 @@ class MmoPlayer extends IsometricPlayer {
   var npcOptions = <TalkOption>[];
   var performingActivePower = false;
 
-  final weapons = List<MMOItem?>.generate(4, (index) => null);
-  final treasures = List<MMOItem?>.generate(4, (index) => null);
+  final weapons = List<MMOItemObject>.generate(4, (index) => MMOItemObject());
+  final treasures = List<MMOItemObject>.generate(4, (index) => MMOItemObject());
   final talents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
 
-  MMOItem? equippedHead;
-  MMOItem? equippedBody;
-  MMOItem? equippedLegs;
+  final equippedHead = MMOItemObject();
+  final equippedBody = MMOItemObject();
+  final equippedLegs = MMOItemObject();
 
-  late List<MMOItem?> items;
-
+  late List<MMOItemObject> items;
 
   var _inventoryOpen = false;
   var _skillsDialogOpen = false;
@@ -83,7 +81,13 @@ class MmoPlayer extends IsometricPlayer {
     final weapon = equippedWeapon;
     if (weapon == null)
       return WeaponType.Unarmed;
-    return weapon.subType;
+
+    final item = weapon.item;
+
+    if (item == null)
+      return WeaponType.Unarmed;
+
+    return item.subType;
   }
 
   int get experience => _experience;
@@ -102,31 +106,25 @@ class MmoPlayer extends IsometricPlayer {
   int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
 
   @override
-  int get weaponDamage => equippedWeapon != null ? equippedWeapon!.damage : 1;
+  int get weaponDamage => equippedWeapon?.item?.damage ?? 1;
 
   @override
-  double get weaponRange => equippedWeapon != null ? equippedWeapon!.range : 30;
+  double get weaponRange => equippedWeapon?.item?.range ?? 30;
 
   @override
-  int get headType => equippedHead != null ? equippedHead!.subType : HeadType.Plain;
+  int get headType => equippedHead.item?.subType ?? HeadType.Plain;
 
   int get activatedPowerIndex => _activatedPowerIndex;
 
   @override
   int get maxHealth {
     var health = healthBase;
-    if (equippedHead != null){
-      health += equippedHead!.health;
-    }
-    if (equippedBody != null){
-      health += equippedBody!.health;
-    }
-    if (equippedLegs != null){
-      health += equippedLegs!.health;
-    }
+    health += equippedHead.health;
+    health += equippedBody.health;
+    health += equippedLegs.health;
+
     for (final treasure in treasures){
-      if (treasure != null)
-        health += treasure.health;
+      health += treasure.health;
     }
 
     return health;
@@ -135,19 +133,14 @@ class MmoPlayer extends IsometricPlayer {
   @override
   double get runSpeed {
     var base = 1.0;
-    if (equippedHead != null){
-      base += equippedHead!.movement;
-    }
-    if (equippedBody != null){
-      base += equippedBody!.movement;
-    }
-    if (equippedLegs != null){
-      base += equippedLegs!.movement;
-    }
+
+    base += equippedHead.movement;
+    base += equippedBody.movement;
+    base += equippedLegs.movement;
     return base;
   }
 
-  MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+  MMOItemObject? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
   set experience(int value){
     _experience = value;
@@ -225,58 +218,70 @@ class MmoPlayer extends IsometricPlayer {
     }
     final weapon = weapons[value];
 
-    if (weapon == null || weapon.type != GameObjectType.Weapon){
+    final item = weapon.item;
+
+    if (item == null || item.type != GameObjectType.Weapon){
       return;
     }
 
     _equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
-    actionFrame = weapon.performFrame;
+    actionFrame = item.performFrame;
     writeEquippedWeaponIndex(value);
   }
 
-  // void useEquippedWeapon() {
-  //
-  //   final weapon = equippedWeapon;
-  //   if (weapon == null) return;
-  //   final attackType = weapon.attackType;
-  //   if (attackType == null) return;
-  //
-  //   setDestinationToCurrentPosition();
-  //   setCharacterStateIdle();
-  //   game.characterAttack(this);
-  // }
+  @override
+  void writePlayerGame() {
+    cleanEquipment();
+    super.writePlayerGame();
+  }
 
   void setItemsLength(int value){
-    items = List.generate(value, (index) => null);
+    items = List.generate(value, (index) => MMOItemObject());
     writeItemLength(value);
   }
 
   bool addItem(MMOItem item){
 
+    if (deadBusyOrWeaponStateBusy)
+      return false;
+
     if (item.isWeapon) {
       final emptyIndex = getEmptyWeaponIndex();
       if (emptyIndex != -1){
-        setWeapon(index: emptyIndex, item: item);
+        setWeapon(
+            index: emptyIndex,
+            item: item,
+            cooldown: item.cooldown,
+        );
         return true;
       }
     }
 
-    if (item.isHead){
-      if (equippedHead == null){
-        equipHead(item);
-        return true;
-      }
+    if (item.isHead && equippedHead.item == null){
+      equipHead(item);
+      return true;
     }
 
-    final emptyItemIndex = getEmptyItemIndex();
+    if (item.isBody && equippedBody.item == null){
+      equipBody(item);
+      return true;
+    }
 
-    if (emptyItemIndex == -1) {
+    if (item.isLegs && equippedLegs.item == null) {
+      equipLegs(item);
+      return true;
+    }
+
+    final emptyItemSlot = getEmptyItemSlot();
+    if (emptyItemSlot == null) {
       writeGameError(GameError.Inventory_Full);
       return false;
     }
 
-    setItem(index: emptyItemIndex, item: item);
+    emptyItemSlot.item = item;
+    emptyItemSlot.cooldown = item.cooldown;
+    notifyEquipmentDirty();
     return true;
   }
 
@@ -286,7 +291,11 @@ class MmoPlayer extends IsometricPlayer {
 
   int getEmptyIndexTreasure() => getEmptyIndex(treasures);
 
-  void setWeapon({required int index, required MMOItem? item}){
+  void setWeapon({
+    required int index,
+    required MMOItem? item,
+    required int cooldown,
+  }){
     if (!isValidWeaponIndex(index)) {
       writeGameError(GameError.Invalid_Weapon_Index);
       return;
@@ -294,7 +303,8 @@ class MmoPlayer extends IsometricPlayer {
     if (item != null && !item.isWeapon)
       return;
 
-    weapons[index] = item;
+    weapons[index].item = item;
+    weapons[index].cooldown = cooldown;
     writePlayerWeapon(index);
   }
 
@@ -309,18 +319,24 @@ class MmoPlayer extends IsometricPlayer {
     if (item != null && !item.isTreasure)
       return;
 
-    treasures[index] = item;
+    treasures[index].item = item;
     writePlayerTreasure(index);
-    onEquipmentChanged();
+    notifyEquipmentDirty();
   }
 
-  void setItem({required int index, required MMOItem? item}){
+  void setItem({
+    required int index,
+    required MMOItem? item,
+    required int cooldown,
+  }){
     if (!isValidItemIndex(index)) {
       writeGameError(GameError.Invalid_Item_Index);
       return;
     }
-    items[index] = item;
-    writePlayerItem(index, item);
+    final slot = items[index];
+    slot.item = item;
+    slot.cooldown = cooldown;
+    notifyEquipmentDirty();
     setCharacterStateChanging();
   }
 
@@ -367,7 +383,8 @@ class MmoPlayer extends IsometricPlayer {
     if (!isValidWeaponIndex(index)) {
       return;
     }
-    final item = weapons[index];
+    final item = weapons[index].item;
+
     if (item == null) {
       return;
     }
@@ -380,7 +397,7 @@ class MmoPlayer extends IsometricPlayer {
     if (!isValidIndexTreasure(index)) {
       return;
     }
-    final item = treasures[index];
+    final item = treasures[index].item;
     if (item == null) {
       return;
     }
@@ -390,26 +407,32 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   void dropEquippedHead(){
-    if (equippedHead == null)
+
+    final equippedHeadItem = equippedHead.item;
+
+    if (equippedHeadItem == null)
       return;
 
-    spawnItem(equippedHead!);
+    spawnItem(equippedHeadItem);
     equipHead(null);
   }
 
   void dropEquippedBody(){
-    if (equippedBody == null)
+
+    final item = equippedBody.item;
+
+    if (item == null)
       return;
 
-    spawnItem(equippedBody!);
+    spawnItem(item);
     equipBody(null);
   }
 
   void dropEquippedLegs(){
-    if (equippedLegs == null)
+    final item = equippedLegs.item;
+    if (item == null)
       return;
-
-    spawnItem(equippedLegs!);
+    spawnItem(item);
     equipLegs(null);
   }
 
@@ -417,7 +440,7 @@ class MmoPlayer extends IsometricPlayer {
     if (!isValidItemIndex(index)) {
       return;
     }
-    final item = items[index];
+    final item = items[index].item;
     if (item == null) {
       return;
     }
@@ -437,11 +460,19 @@ class MmoPlayer extends IsometricPlayer {
     );
   }
 
-  void clearWeapon(int index) => setWeapon(index: index, item: null);
+  void clearWeapon(int index) => setWeapon(
+      index: index,
+      item: null,
+      cooldown: 0,
+  );
 
   void clearTreasure(int index) => setTreasure(index: index, item: null);
 
-  void clearItem(int index) => setItem(index: index, item: null);
+  void clearItem(int index) => setItem(
+      index: index,
+      item: null,
+      cooldown: 0,
+  );
 
   bool isValidWeaponIndex(int index) => index >= 0 && index < weapons.length;
 
@@ -458,7 +489,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    final weapon = weapons[index];
+    final weapon = weapons[index].item;
 
     if (weapon == null)
       return;
@@ -518,7 +549,9 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    final item = items[index];
+    final selected = items[index];
+
+    final item = items[index].item;
 
     if (item == null)
       return;
@@ -527,14 +560,7 @@ class MmoPlayer extends IsometricPlayer {
     final subType = item.subType;
 
     if (item.isTreasure) {
-      final emptyTreasureIndex = getEmptyIndexTreasure();
-      if (emptyTreasureIndex == -1){
-        writeGameError(GameError.Treasures_Full);
-        return;
-      }
-
-      setTreasure(index: emptyTreasureIndex, item: item);
-      clearItem(index);
+      addToEmptyTreasureSlot(selected);
       return;
     }
 
@@ -554,45 +580,37 @@ class MmoPlayer extends IsometricPlayer {
       case GameObjectType.Weapon:
         final emptyWeaponIndex = getEmptyWeaponIndex();
         if (emptyWeaponIndex != -1){
-          setWeapon(index: emptyWeaponIndex, item: item);
+          setWeapon(
+              index: emptyWeaponIndex,
+              item: item,
+              cooldown: item.cooldown,
+          );
           clearItem(index);
           setCharacterStateChanging();
         } else {
           final currentWeapon = equippedWeapon;
-          setWeapon(index: _equippedWeaponIndex, item: item);
-          setItem(index: index, item: currentWeapon);
+          final currentCooldown = equippedWeapon?.cooldown ?? 0;
+          setWeapon(
+              index: _equippedWeaponIndex,
+              item: item,
+              cooldown: items[index].cooldown,
+          );
+          setItem(
+              index: index,
+              item: currentWeapon?.item,
+              cooldown: currentCooldown,
+          );
           setCharacterStateChanging();
         }
         break;
       case GameObjectType.Head:
-        if (equippedHead != null){
-          final equipped = equippedHead;
-          equipHead(item);
-          setItem(index: index, item: equipped);
-        } else {
-          equipHead(item);
-          clearItem(index);
-        }
+        swap(equippedHead, selected);
         break;
       case GameObjectType.Body:
-        if (equippedBody != null){
-          final equipped = equippedBody;
-          equipBody(item);
-          setItem(index: index, item: equipped);
-        } else {
-          equipBody(item);
-          clearItem(index);
-        }
+        swap(equippedBody, selected);
         break;
       case GameObjectType.Legs:
-        if (equippedLegs != null){
-          final equipped = equippedLegs;
-          equipLegs(item);
-          setItem(index: index, item: equipped);
-        } else {
-          equipLegs(item);
-          clearItem(index);
-        }
+        swap(equippedLegs, selected);
         break;
     }
   }
@@ -601,22 +619,7 @@ class MmoPlayer extends IsometricPlayer {
     if (!isValidIndexTreasure(index)) {
       return;
     }
-
-    final item = treasures[index];
-
-    if (item == null)
-      return;
-
-    final emptyItemIndex = getEmptyItemIndex();
-
-    if (emptyItemIndex == -1){
-      writeGameError(GameError.Inventory_Full);
-      return;
-    }
-
-    clearTreasure(index);
-    setItem(index: emptyItemIndex, item: item);
-    onEquipmentChanged();
+    swapWithAvailableItemSlot(treasures[index]);
   }
 
   void selectNpcTalkOption(int index) {
@@ -631,20 +634,22 @@ class MmoPlayer extends IsometricPlayer {
     if (deadBusyOrWeaponStateBusy)
       return;
 
-    if (equippedHead == item)
+    if (equippedHead.item == item)
       return;
 
     if (item == null){
-      equippedHead = null;
-      onEquipmentChanged();
+      clearSlot(equippedHead);
       return;
     }
 
     if (!item.isHead)
       throw Exception();
 
-    equippedHead = item;
-    onEquipmentChanged();
+    setSlot(
+      slot: equippedHead,
+      item: item,
+      cooldown: item.cooldown,
+    );
   }
 
   void equipBody(MMOItem? item){
@@ -655,8 +660,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     if (item == null){
-      equippedBody = null;
-      onEquipmentChanged();
+      clearSlot(equippedBody);
       return;
     }
 
@@ -664,28 +668,33 @@ class MmoPlayer extends IsometricPlayer {
       throw Exception();
     }
 
-    equippedBody = item;
-    onEquipmentChanged();
+    setSlot(
+      slot: equippedBody,
+      item: item,
+      cooldown: item.cooldown,
+    );
   }
 
   void equipLegs(MMOItem? item){
     if (deadBusyOrWeaponStateBusy)
       return;
 
-    if (equippedLegs == item)
+    if (equippedLegs.item == item)
       return;
 
     if (item == null){
-      equippedLegs = null;
-      onEquipmentChanged();
+      clearSlot(equippedLegs);
       return;
     }
 
     if (!item.isLegs)
       throw Exception();
 
-    equippedLegs = item;
-    onEquipmentChanged();
+    setSlot(
+        slot: equippedLegs,
+        item: item,
+        cooldown: item.cooldown,
+    );
   }
 
   void pickupItem(MMOItem item) {
@@ -701,28 +710,41 @@ class MmoPlayer extends IsometricPlayer {
     }
   }
 
-  void onEquipmentChanged(){
-    assert (equippedHead?.isHead ?? true);
-    assert (equippedBody?.isBody ?? true);
-    assert (equippedLegs?.isLegs ?? true);
-    assert (equippedWeapon?.isWeapon ?? true);
+  void cleanEquipment(){
+    if (!equipmentDirty)
+      return;
 
-    setCharacterStateChanging();
+    assert (equippedHead.item?.isHead ?? true);
+    assert (equippedBody.item?.isBody ?? true);
+    assert (equippedLegs.item?.isLegs ?? true);
+    assert (equippedWeapon?.item?.isWeapon ?? true);
+
     health = clamp(health, 0, maxHealth);
-    headType = equippedHead?.subType ?? HeadType.Plain;
-    bodyType = equippedBody?.subType ?? BodyType.Nothing;
-    legsType = equippedLegs?.subType ?? LegType.Nothing;
-    weaponType = equippedWeapon?.subType ?? WeaponType.Unarmed;
+    headType = equippedHead.item?.subType ?? HeadType.Plain;
+    bodyType = equippedBody.item?.subType ?? BodyType.Nothing;
+    legsType = equippedLegs.item?.subType ?? LegType.Nothing;
+    weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
+    equipmentDirty = false;
+
     writeEquipped();
     writePlayerHealth();
+    writeWeapons();
+    writeItems();
+    writeTreasures();
+  }
+
+  void writeItems() {
+     for (var i = 0; i < items.length; i++){
+       writePlayerItem(i, items[i].item);
+     }
   }
 
   void writeEquipped(){
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Equipped);
-    writeMMOItem(equippedHead);
-    writeMMOItem(equippedBody);
-    writeMMOItem(equippedLegs);
+    writeMMOItem(equippedHead.item);
+    writeMMOItem(equippedBody.item);
+    writeMMOItem(equippedLegs.item);
   }
 
   void writeMMOItem(MMOItem? value){
@@ -761,7 +783,7 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Weapon);
     writeUInt16(index);
-    final weapon = weapons[index];
+    final weapon = weapons[index].item;
     if (weapon == null){
       writeInt16(-1);
       return;
@@ -773,7 +795,7 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Treasure);
     writeUInt16(index);
-    final treasure = treasures[index];
+    final treasure = treasures[index].item;
     if (treasure == null){
       writeInt16(-1);
       return;
@@ -848,9 +870,17 @@ class MmoPlayer extends IsometricPlayer {
     talentDialogOpen = !talentDialogOpen;
   }
 
-  static int getEmptyIndex(List<MMOItem?> items){
+  static MMOItemObject? getEmptySlot(List<MMOItemObject> items){
+    for (final item in items) {
+      if (item.item == null)
+        return item;
+    }
+    return null;
+  }
+
+  static int getEmptyIndex(List<MMOItemObject> items){
     for (var i = 0; i < items.length; i++){
-      if (items[i] == null)
+      if (items[i].item == null)
         return i;
     }
     return -1;
@@ -912,11 +942,13 @@ class MmoPlayer extends IsometricPlayer {
 
     final weapon = weapons[_activatedPowerIndex];
 
-    if (weapon == null){
+    final item = weapon.item;
+
+    if (item == null){
       throw Exception();
     }
 
-    final attackType = weapon.attackType;
+    final attackType = item.attackType;
 
     if (attackType == null)
       throw Exception();
@@ -926,8 +958,8 @@ class MmoPlayer extends IsometricPlayer {
         throw Exception();
       case PowerMode.Self:
         setCharacterStatePerforming(
-            actionFrame: weapon.performFrame,
-            duration: weapon.performDuration,
+            actionFrame: item.performFrame,
+            duration: item.performDuration,
         );
         break;
       case PowerMode.Targeted_Enemy:
@@ -935,10 +967,10 @@ class MmoPlayer extends IsometricPlayer {
           deselectActivatedPower();
           return;
         }
-        actionFrame = weapon.performFrame;
+        actionFrame = item.performFrame;
         setCharacterStatePerforming(
-            actionFrame: weapon.performFrame,
-            duration: weapon.performDuration,
+            actionFrame: item.performFrame,
+            duration: item.performDuration,
         );
         break;
       case PowerMode.Targeted_Ally:
@@ -947,17 +979,17 @@ class MmoPlayer extends IsometricPlayer {
           return;
         }
         setCharacterStatePerforming(
-          actionFrame: weapon.performFrame,
-          duration: weapon.performDuration,
+          actionFrame: item.performFrame,
+          duration: item.performDuration,
         );
         break;
       case PowerMode.Positional:
         weaponState = WeaponState.Performing;
-        actionFrame = weapon.performFrame;
-        weaponType = weapon.subType;
+        actionFrame = item.performFrame;
+        weaponType = item.subType;
         performingActivePower = true;
         weaponStateDuration = 0;
-        weaponStateDurationTotal = weapon.performDuration;
+        weaponStateDurationTotal = item.performDuration;
         break;
     }
   }
@@ -973,10 +1005,12 @@ class MmoPlayer extends IsometricPlayer {
 
       final weapon = weapons[activatedPowerIndex];
 
-      if (weapon == null)
+      final item = weapon.item;
+
+      if (item == null)
         throw Exception();
 
-      final attackType = weapon.attackType;
+      final attackType = item.attackType;
 
       if (attackType == null){
         throw Exception();
@@ -994,61 +1028,22 @@ class MmoPlayer extends IsometricPlayer {
           throw Exception("Power Not Implemented $attackType");
       }
 
-      if (equippedWeapon != null) {
-        weaponType = equippedWeapon!.subType;
-      } else {
-        weaponType = WeaponType.Unarmed;
-      }
+      assignWeaponTypeToEquippedWeapon();
       deselectActivatedPower();
       setCharacterStateIdle();
       setDestinationToCurrentPosition();
       clearPath();
   }
 
-  void unequipHead() {
-    if (equippedHead == null)
-      return;
+  void assignWeaponTypeToEquippedWeapon() =>
+      weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
 
-    final availableItemIndex = getEmptyItemIndex();
-    if (availableItemIndex == -1){
-      reportInventoryFull();
-      return;
-    }
+  void unequipHead() =>
+      swapWithAvailableItemSlot(equippedHead);
 
-    setItem(index: availableItemIndex, item: equippedHead);
-    equippedHead = null;
-    onEquipmentChanged();
-  }
+  void unequipBody() => swapWithAvailableItemSlot(equippedBody);
 
-  void unequipBody() {
-    if (equippedBody == null)
-      return;
-
-    final availableItemIndex = getEmptyItemIndex();
-    if (availableItemIndex == -1){
-      reportInventoryFull();
-      return;
-    }
-
-    setItem(index: availableItemIndex, item: equippedBody);
-    equippedBody = null;
-    onEquipmentChanged();
-  }
-
-  void unequipLegs() {
-    if (equippedLegs == null)
-      return;
-
-    final availableItemIndex = getEmptyItemIndex();
-    if (availableItemIndex == -1){
-      reportInventoryFull();
-      return;
-    }
-
-    setItem(index: availableItemIndex, item: equippedLegs);
-    equippedLegs = null;
-    onEquipmentChanged();
-  }
+  void unequipLegs() => swapWithAvailableItemSlot(equippedLegs);
 
   void reportInventoryFull() =>
       writeGameError(GameError.Inventory_Full);
@@ -1099,6 +1094,72 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   MMOItem? getWeaponAtIndex(int index) =>
-      isValidIndex(index, weapons) ? weapons[index] : null;
+      isValidIndex(index, weapons) ? weapons[index].item : null;
 
+
+  void addToEmptyTreasureSlot(MMOItemObject slot){
+    final item = slot.item;
+
+    if (item == null || !item.isTreasure)
+      throw Exception();
+
+    final emptyTreasureSlot = getEmptySlot(treasures);
+    if (emptyTreasureSlot == null){
+      writeGameError(GameError.Treasures_Full);
+      return;
+    }
+    swap(slot, emptyTreasureSlot);
+  }
+
+  void swapWithAvailableItemSlot(MMOItemObject slot){
+    if (slot.item == null)
+      return;
+
+    final availableItemSlot = getEmptyItemSlot();
+    if (availableItemSlot == null){
+      reportInventoryFull();
+      return;
+    }
+    swap(availableItemSlot, slot);
+  }
+
+  MMOItemObject? getEmptyItemSlot() => getEmptySlot(items);
+
+
+  void clearSlot(MMOItemObject slot){
+    slot.clear();
+    notifyEquipmentDirty();
+  }
+
+  void setSlot({
+    required MMOItemObject slot,
+    required MMOItem? item,
+    required int cooldown,
+  }) {
+    slot.item = item;
+    slot.cooldown = cooldown;
+    notifyEquipmentDirty();
+  }
+
+  void swap(MMOItemObject a, MMOItemObject b){
+     final aItem = a.item;
+     final aCooldown = a.cooldown;
+     final bItem = b.item;
+     final bCooldown = b.cooldown;
+     a.item = bItem;
+     a.cooldown = bCooldown;
+     b.item = aItem;
+     b.cooldown = aCooldown;
+     a.validate();
+     b.validate();
+     notifyEquipmentDirty();
+  }
+
+  void notifyEquipmentDirty(){
+    if (equipmentDirty)
+      return;
+
+    setCharacterStateChanging();
+    equipmentDirty = true;
+  }
 }
