@@ -16,6 +16,8 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   final playerSpawnY = 2040.0;
   final playerSpawnZ = 25.0;
 
+  var cooldownTimer = 0;
+
   late MMONpc npcGuard;
 
   MmoGame({
@@ -65,6 +67,22 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   int get maxPlayers => 64;
+
+  @override
+  void update() {
+    super.update();
+    updateCooldownTimer();
+  }
+
+  void updateCooldownTimer() {
+    if (cooldownTimer-- > 0)
+      return;
+
+    cooldownTimer = Gamestream.Frames_Per_Second;
+    for (final player in players) {
+      player.reduceCooldown();
+    }
+  }
 
   @override
   void onCharacterStateDurationFinished(IsometricCharacter character) {

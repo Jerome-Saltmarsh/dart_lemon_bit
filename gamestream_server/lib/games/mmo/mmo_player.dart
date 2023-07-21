@@ -1162,4 +1162,15 @@ class MmoPlayer extends IsometricPlayer {
     setCharacterStateChanging();
     equipmentDirty = true;
   }
+
+  void reduceCooldown() {
+     for (var i = 0; i < weapons.length; i++) {
+       final weapon = weapons[i];
+       if (weapon.cooldown <= 0)
+         continue;
+
+       weapon.cooldown--;
+       writePlayerWeapon(i);
+     }
+  }
 }
