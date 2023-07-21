@@ -8,15 +8,15 @@ import 'package:gamestream_server/lemon_math.dart';
 
 class MmoGame extends IsometricGame<MmoPlayer> {
 
-  static const Chance_Drop_Item_On_Grass_Cut = 0.25;
-  static const GameObjectDeactivationTimer = 5000;
-  static const EnemyRespawnDuration = 30; // in seconds
-
-  late MMONpc npcGuard;
+  final chanceOfDropItemOnGrassCut = 0.25;
+  final gameObjectDeactivationTimer = 5000;
+  final enemyRespawnDuration = 30; // in seconds
 
   final playerSpawnX = 2030.0;
   final playerSpawnY = 2040.0;
   final playerSpawnZ = 25.0;
+
+  late MMONpc npcGuard;
 
   MmoGame({
     required super.scene,
@@ -64,6 +64,9 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
+  int get maxPlayers => 64;
+
+  @override
   void onCharacterStateDurationFinished(IsometricCharacter character) {
     if (character.characterTypeZombie){
       setCharacterStateIdle(character, duration: randomInt(50, 250));
@@ -74,9 +77,6 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   static void validate() => MMOItem.values.forEach((item) => item.validate());
-
-  @override
-  int get maxPlayers => 64;
 
   void spawnMonstersAtSpawnNodes() {
     final types = scene.types;
@@ -230,7 +230,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
         spawnRandomLootAtPosition(target, itemQuality);
       }
 
-       addJob(seconds: EnemyRespawnDuration, action: () {
+       addJob(seconds: enemyRespawnDuration, action: () {
          setCharacterStateSpawning(target);
        });
     }
@@ -295,6 +295,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       item: item,
       id: generateId(),
       frameSpawned: frame,
+      deactivationTimer: gameObjectDeactivationTimer,
     )
       ..velocityZ = 10
       ..setVelocity(randomAngle(), 1.0)
@@ -334,7 +335,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     switch (nodeType){
       case NodeType.Grass_Long:
-        if (randomChance(Chance_Drop_Item_On_Grass_Cut)){
+        if (randomChance(chanceOfDropItemOnGrassCut)){
           spawnLootAtIndex(index: nodeIndex, item: MMOItem.Meat_Drumstick);
         }
         break;

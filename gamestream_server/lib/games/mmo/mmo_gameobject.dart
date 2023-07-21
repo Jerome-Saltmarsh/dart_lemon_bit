@@ -2,8 +2,6 @@
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/isometric.dart';
 
-import 'mmo_game.dart';
-
 class MMOGameObject extends IsometricGameObject {
 
   final int frameSpawned;
@@ -16,8 +14,9 @@ class MMOGameObject extends IsometricGameObject {
     required super.id,
     required this.item,
     required this.frameSpawned,
+    required int deactivationTimer
   }) : super(type: item.type, subType: item.subType, team: TeamType.Neutral) {
-    deactivationTimer = MmoGame.GameObjectDeactivationTimer;
+    this.deactivationTimer = deactivationTimer;
     fixed = false;
     gravity = true;
     collidable = true;
