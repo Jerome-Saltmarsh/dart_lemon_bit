@@ -97,4 +97,11 @@ extension MMOUIDialogs on MmoGame {
     });
   }
 
+  Widget buildTalentHoverDialog() => buildWatch(
+      talentHover,
+      (talentType) => talentType == null
+          ? nothing
+          : GSContainer(
+              child: buildText(talentType.name),
+            ));
 }

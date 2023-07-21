@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/ui/talent_type_src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -18,6 +17,7 @@ extension MMOUI on MmoGame {
   static const margin1 = 16.0;
   static const margin2 = 130.0;
   static const margin3 = 315.0;
+  static const margin4 = 560.0;
 
   Widget buildMMOUI()=> Stack(
     alignment: Alignment.center,
@@ -43,6 +43,11 @@ extension MMOUI on MmoGame {
           bottom: margin2,
           right: margin1,
           child: buildDialogPlayerTalents()
+      ),
+      Positioned(
+          bottom: margin2,
+          right: margin4,
+          child: buildTalentHoverDialog()
       ),
       Positioned(
           bottom: margin1,
@@ -447,67 +452,77 @@ extension MMOUI on MmoGame {
     const barWidth = 130.0;
     const barHeight = barWidth * goldenRatio_0381 * goldenRatio_0618;
 
-    return GSContainer(
-      color: Colors.black26,
-      margin: const EdgeInsets.all(4),
-      padding: null,
-      rounded: true,
-      child: onPressed(
-        action: canUpgrade ? () => upgradeTalent(talentType) : null,
-        child: Container(
-          padding: const EdgeInsets.all(4),
-          width: 200,
-          height: 200,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: 32,
-                child: MMOTalentIcon(talentType: talentType, size: 50),
-              ),
-              Positioned(
-                bottom: 0,
-                child: Column(
-                  children: [
-                    // buildText(talentType.name.replaceAll('_', ' ')),
-                    Row(
-                      children: [
-                        Container(
-                          color: Colors.black26,
-                          child: Stack(
-                            children: [
-                              Container(
-                                color: Colors.green,
-                                alignment: Alignment.centerLeft,
-                                width: barWidth * (currentLevel / maxLevel),
-                                height: barHeight,
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                width: barWidth,
-                                height: barHeight,
-                                child: buildText('$currentLevel / $maxLevel', color: Colors.white54),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              if (!maxLevelReached)
+    return MouseRegion(
+      onEnter: (_){
+        talentHover.value = talentType;
+      },
+      onExit: (_){
+        if (talentHover.value == talentType){
+          talentHover.value = null;
+        }
+      },
+      child: GSContainer(
+        color: Colors.black26,
+        margin: const EdgeInsets.all(4),
+        padding: null,
+        rounded: true,
+        child: onPressed(
+          action: canUpgrade ? () => upgradeTalent(talentType) : null,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            width: 200,
+            height: 200,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
                 Positioned(
-                    top: 2,
-                    right: 2,
-                    child: GSContainer(
-                        rounded: true,
-                        color: Colors.black26,
-                        child: buildText(cost, color: canAfford ? Colors.green : Colors.red)
-                    )
+                  top: 32,
+                  child: MMOTalentIcon(talentType: talentType, size: 50),
                 ),
-            ],
+                Positioned(
+                  bottom: 0,
+                  child: Column(
+                    children: [
+                      // buildText(talentType.name.replaceAll('_', ' ')),
+                      Row(
+                        children: [
+                          Container(
+                            color: Colors.black26,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  color: Colors.green,
+                                  alignment: Alignment.centerLeft,
+                                  width: barWidth * (currentLevel / maxLevel),
+                                  height: barHeight,
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: barWidth,
+                                  height: barHeight,
+                                  child: buildText('$currentLevel / $maxLevel', color: Colors.white54),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                if (!maxLevelReached)
+                  Positioned(
+                      top: 2,
+                      right: 2,
+                      child: GSContainer(
+                          rounded: true,
+                          color: Colors.black26,
+                          child: buildText(cost, color: canAfford ? Colors.green : Colors.red)
+                      )
+                  ),
+              ],
+            ),
           ),
         ),
       ),

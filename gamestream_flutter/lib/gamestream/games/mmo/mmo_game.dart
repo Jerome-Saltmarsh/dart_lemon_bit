@@ -15,6 +15,7 @@ class MmoGame extends IsometricGame {
   var errorTimer = 0;
   var items = <MMOItemSlot>[];
 
+  final talentHover = Watch<MMOTalentType?>(null);
   final itemHover = Watch<MMOItem?>(null);
   final activePowerPosition = IsometricPosition();
   final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
@@ -41,7 +42,7 @@ class MmoGame extends IsometricGame {
   MmoGame({required super.isometric}){
     print('MmoGame()');
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
-    playerTalentDialogOpen.onChanged(onChangedPlayerSkillsDialogOpen);
+    playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     error.onChanged(onChangedError);
   }
 
@@ -160,8 +161,15 @@ class MmoGame extends IsometricGame {
     gamestream.audio.click_sound_8();
   }
 
-  void onChangedPlayerSkillsDialogOpen(bool value) {
+  void onChangedPlayerTalentsDialogOpen(bool talentsDialogOpen) {
     gamestream.audio.click_sound_8();
+    if (!talentsDialogOpen){
+      clearTalentHover();
+    }
+  }
+
+  void clearTalentHover() {
+    talentHover.value = null;
   }
 
   int getTalentLevel(MMOTalentType talent) =>
