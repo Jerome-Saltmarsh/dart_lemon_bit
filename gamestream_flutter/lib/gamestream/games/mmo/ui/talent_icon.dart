@@ -20,17 +20,19 @@ class MMOTalentIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final src = TalentTypeSrc.map[talentType];
-    return FittedBox(
-      child: Container(
-        width: size,
-        height: size,
-        child: src == null ? buildText('${talentType.name} src missing') :
-        gamestream.engine.buildAtlasImage(
-          image: Images.atlas_talents,
-          srcX: src[0],
-          srcY: src[1],
-          srcWidth: src[2],
-          srcHeight: src[3],
+    return Container(
+      width: size,
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Container(
+          child: src == null ? buildText('${talentType.name} src missing') :
+          gamestream.engine.buildAtlasImage(
+            image: Images.atlas_talents,
+            srcX: src[0],
+            srcY: src[1],
+            srcWidth: src[2],
+            srcHeight: src[3],
+          ),
         ),
       ),
     );
