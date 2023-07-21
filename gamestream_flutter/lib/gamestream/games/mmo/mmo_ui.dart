@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -99,13 +100,10 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildPlayerWeapons() => GSContainer(
-        child: buildWatch(
-          weaponsChangedNotifier,
-          (int reads) => Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(weapons.length, buildWeaponImageAtIndex),
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(weapons.length, buildWeaponImageAtIndex),
         ),
       );
 
@@ -165,7 +163,7 @@ extension MMOUI on MmoGame {
       alignment: Alignment.center,
       children: [
         background,
-        Positioned(child: MMOItemImage(item: slot.item.value, size: size)),
+        Positioned(child: buildMMOItemSlot(slot, size: size)),
         Positioned(
             top: 8,
             left: 8,
@@ -194,6 +192,21 @@ extension MMOUI on MmoGame {
         ),
     );
   }
+
+  Widget buildMMOItemSlot(MMOItemSlot slot, {double size = 64}) =>
+    MouseRegion(
+      onEnter: (_){
+        itemHover.value = slot.item.value;
+      },
+      onExit: (_){
+        if (itemHover.value == slot)
+          itemHover.value = null;
+      },
+      child: buildWatch(
+          slot.item,
+              (item) => MMOItemImage(item: item, size: size),
+      ),
+    );
 
   Widget buildItemImageAtIndex(int index) {
     final item = items[index];

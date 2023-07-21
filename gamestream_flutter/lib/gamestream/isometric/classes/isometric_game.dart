@@ -9,8 +9,6 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_act
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/builders/src.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/stack_fullscreen.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../ui/game_isometric_ui.dart';

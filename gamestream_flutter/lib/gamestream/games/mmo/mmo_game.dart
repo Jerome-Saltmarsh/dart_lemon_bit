@@ -19,7 +19,6 @@ class MmoGame extends IsometricGame {
   final activePowerPosition = IsometricPosition();
   var items = <MMOItem?>[];
 
-  late final weaponsChangedNotifier = Watch(0, onChanged: onAnyChanged);
   late final itemsChangedNotifier = Watch(0, onChanged: onAnyChanged);
   late final treasuresChangedNotifier = Watch(0, onChanged: onAnyChanged);
 
@@ -61,7 +60,6 @@ class MmoGame extends IsometricGame {
     final slot = weapons[index];
     slot.item.value = item;
     slot.cooldown.value = cooldown;
-    notifyWeaponsChanged();
   }
 
   void setTreasure({required int index, required MMOItem? item}){
@@ -84,10 +82,6 @@ class MmoGame extends IsometricGame {
 
   void notifyItemsChanged() {
     itemsChangedNotifier.value++;
-  }
-
-  void notifyWeaponsChanged() {
-    weaponsChangedNotifier.value++;
   }
 
   void notifyTreasuresChanged() {
