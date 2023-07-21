@@ -1385,19 +1385,21 @@ class IsometricScene {
       x >= lengthRows ||
       y >= lengthColumns;
 
-  int getNearestLightSourcePosition(IsometricPosition position) => getNearestLightSource(
+  int getNearestLightSourcePosition(IsometricPosition position, {int maxDistance = 5}) => getNearestLightSource(
         row: position.indexRow,
         column: position.indexColumn,
         z: position.indexZ,
+        maxDistance: maxDistance,
     );
 
   int getNearestLightSource({
     required int row,
     required int column,
     required int z,
+    int maxDistance = 5,
   }) {
      var nearestLightSourceIndex = -1;
-     var nearestLightSourceDistance = 1000;
+     var nearestLightSourceDistance = maxDistance;
 
      for (var i = 0; i < nodesLightSourcesTotal; i++){
        final lightSourceIndex = nodesLightSources[i];

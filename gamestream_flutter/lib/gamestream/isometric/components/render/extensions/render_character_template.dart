@@ -158,7 +158,7 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (character.z >= IsometricConstants.Node_Height){
 
-      final lightIndex = scene.getNearestLightSourcePosition(character);
+      final lightIndex = scene.getNearestLightSourcePosition(character, maxDistance: 5);
 
       if (lightIndex != -1){
          final lightRow = scene.getIndexRow(lightIndex);
@@ -168,7 +168,7 @@ extension RenderCharactersTemplate on RendererCharacters {
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;
 
          final angle = angleBetween(lightX, lightY, character.x, character.y);
-         const distance = 10.0;
+         const distance = 8.0;
 
          final x = character.x + adj(angle, distance);
          final y = character.y + opp(angle, distance);
