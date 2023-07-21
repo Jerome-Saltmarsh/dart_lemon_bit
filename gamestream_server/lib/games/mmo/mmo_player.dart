@@ -275,7 +275,7 @@ class MmoPlayer extends IsometricPlayer {
 
     final emptyItemSlot = getEmptyItemSlot();
     if (emptyItemSlot == null) {
-      writeGameError(GameError.Inventory_Full);
+      reportInventoryFull();
       return false;
     }
 
@@ -297,7 +297,7 @@ class MmoPlayer extends IsometricPlayer {
     required int cooldown,
   }){
     if (!isValidWeaponIndex(index)) {
-      writeGameError(GameError.Invalid_Weapon_Index);
+      writeMMOError('Invalid weapon index $index');
       return;
     }
     if (item != null && !item.isWeapon)
@@ -313,7 +313,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
 
     if (!isValidIndexTreasure(index)) {
-      writeGameError(GameError.Invalid_Treasure_Index);
+      writeMMOError('Invalid treasure index $index');
       return;
     }
     if (item != null && !item.isTreasure)
@@ -330,7 +330,7 @@ class MmoPlayer extends IsometricPlayer {
     required int cooldown,
   }){
     if (!isValidItemIndex(index)) {
-      writeGameError(GameError.Invalid_Item_Index);
+      writeMMOError('Invalid item index $index');
       return;
     }
     final slot = items[index];
@@ -485,7 +485,7 @@ class MmoPlayer extends IsometricPlayer {
        return;
 
     if (!isValidWeaponIndex(index)) {
-      writeGameError(GameError.Invalid_Item_Index);
+      writeMMOError('Invalid weapon index $index');
       return;
     }
 
@@ -497,8 +497,10 @@ class MmoPlayer extends IsometricPlayer {
 
     final attackType = weapon.attackType;
 
-    if (attackType == null)
-      throw Exception();
+    if (attackType == null) {
+      writeMMOError('selected weapon attack type is null ($index)');
+      return;
+    }
 
     if (slot.cooldown > 0) {
       writeMMOError('${slot.item?.name} is cooling down');
@@ -630,7 +632,7 @@ class MmoPlayer extends IsometricPlayer {
 
   void selectNpcTalkOption(int index) {
      if (index < 0 || index >= npcOptions.length){
-       writeGameError(GameError.Invalid_Talk_Option);
+       writeMMOError('Invalid talk option index $index');
        return;
      }
      npcOptions[index].action();
@@ -899,7 +901,7 @@ class MmoPlayer extends IsometricPlayer {
      final currentLevel = talents[talent.index];
 
      if (currentLevel >= talent.maxLevel){
-       writeGameError(GameError.Talent_Max_Level);
+       writeMMOError("Maximum talent level reached");
        return;
      }
 
@@ -907,7 +909,7 @@ class MmoPlayer extends IsometricPlayer {
      final cost = nextLevel * talent.levelCostMultiplier;
 
      if (talentPoints < cost){
-       writeGameError(GameError.Insufficient_Skill_Points);
+       writeMMOError('Insufficient talent points');
        return;
      }
 
@@ -1056,7 +1058,7 @@ class MmoPlayer extends IsometricPlayer {
   void unequipLegs() => swapWithAvailableItemSlot(equippedLegs);
 
   void reportInventoryFull() =>
-      writeGameError(GameError.Inventory_Full);
+      writeMMOError('Inventory is full');
 
   @override
   void update() {
@@ -1115,7 +1117,7 @@ class MmoPlayer extends IsometricPlayer {
 
     final emptyTreasureSlot = getEmptySlot(treasures);
     if (emptyTreasureSlot == null){
-      writeGameError(GameError.Treasures_Full);
+      writeMMOError("Treasure slots full");
       return;
     }
     swap(slot, emptyTreasureSlot);
