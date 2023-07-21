@@ -216,11 +216,13 @@ extension MMOUI on MmoGame {
       ),
     );
 
-  Widget buildItemImageAtIndex(int index) => buildMMOItemSlot(
-      slot: items[index],
-      onLeftClick: () => selectItem(index),
-      onRightClick: () => dropItem(index),
-    );
+  Widget buildItemSlotAtIndex(int index) => buildInventorySlot(
+    child: buildMMOItemSlot(
+        slot: items[index],
+        onLeftClick: () => selectItem(index),
+        onRightClick: () => dropItem(index),
+      ),
+  );
 
   buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
       itemHover,
@@ -282,17 +284,26 @@ extension MMOUI on MmoGame {
       children: [
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildItemImageAtIndex(index),
+                items.length ~/ 2, (index) => buildItemSlotAtIndex(index),
                 growable: false)
         ),
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildItemImageAtIndex(index + (items.length ~/ 2)),
+                items.length ~/ 2, (index) => buildItemSlotAtIndex(index + (items.length ~/ 2)),
                 growable: false)
         ),
       ],
     )
   );
+
+  Widget buildInventorySlot({required Widget child}) => Container(
+        color: Colors.black12,
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(2),
+        width: 64,
+        height: 64,
+        child: child,
+    );
 
   Widget buildInventoryItem(MMOItem? item) => Container(
         color: Colors.black12,
@@ -305,9 +316,6 @@ extension MMOUI on MmoGame {
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
         padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(4))
-        ),
     );
 
   Widget buildPlayerEquipped() => buildInventoryContainer(
