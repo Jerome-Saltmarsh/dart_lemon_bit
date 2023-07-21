@@ -14,7 +14,7 @@ alt + m             : go to declaration
 - floating txt on acquire health and xp
 
 [TODO]
-[ ] fix torch height
+[ ] zombie death animation
 [ ] sounds on item drop for treasures
 [ ] talent ui icons
 [ ] attack speed modifier
@@ -22,7 +22,6 @@ alt + m             : go to declaration
 [ ] ui items draggable
 [ ] fix ai path following
 [ ] fix character light emission
-[ ] zombie death animation
 [ ] 3d character shadows
 [ ] pathfinding separate and left and right stack frames
 [ ] town stash (automatically opens when nearby)
@@ -37,6 +36,7 @@ alt + m             : go to declaration
 [*] fix grid render order
 
 21.07.2023
+[x] fix torch height
 [x] character shadow direction
 [x] fixed inventory error message 
 [x] ability and weapon cooldown
