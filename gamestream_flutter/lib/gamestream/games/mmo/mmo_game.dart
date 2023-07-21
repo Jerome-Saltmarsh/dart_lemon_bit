@@ -62,9 +62,13 @@ class MmoGame extends IsometricGame {
     if (errorTimer > 0) {
       errorTimer--;
       if (errorTimer <= 0){
-        error.value = '';
+        clearError();
       }
     }
+  }
+
+  void clearError() {
+    error.value = '';
   }
 
   void setWeapon({

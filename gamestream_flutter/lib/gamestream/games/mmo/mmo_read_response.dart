@@ -84,6 +84,7 @@ extension MMOResponseReader on Gamestream {
          readIsometricPosition(game.activePowerPosition);
          break;
        case MMOResponse.Error:
+         game.clearError();
          game.error.value = readString();
          break;
      }
