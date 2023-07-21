@@ -157,13 +157,6 @@ extension RenderCharactersTemplate on RendererCharacters {
     const Anchor_Y = 0.625;
 
     if (character.z >= IsometricConstants.Node_Height){
-      // gamestream.isometric.scene.markShadow(character);
-
-
-      // final totalLightSources = scene.nodesLightSourcesTotal;
-      // for (var i = 0; i < totalLightSources; i++){
-      //    final lightSource = scene.nodesLightSources[i];
-      // }
 
       final lightIndex = scene.getNearestLightSourcePosition(character);
 
@@ -175,10 +168,11 @@ extension RenderCharactersTemplate on RendererCharacters {
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;
 
          final angle = angleBetween(lightX, lightY, character.x, character.y);
-         const distance = 12.0;
+         const distance = 10.0;
 
          final x = character.x + adj(angle, distance);
          final y = character.y + opp(angle, distance);
+         final z = character.z;
 
          gamestream.engine.renderSprite(
            image: Images.template_shadow,
@@ -186,13 +180,12 @@ extension RenderCharactersTemplate on RendererCharacters {
            srcY: upperBodyDirection * 64,
            srcWidth: 64,
            srcHeight: 64,
-           dstX: IsometricRender.getRenderX(x, y, character.z),
-           dstY: IsometricRender.getRenderY(x, y, character.z),
+           dstX: IsometricRender.getRenderX(x, y, z),
+           dstY: IsometricRender.getRenderY(x, y, z),
            scale: Scale,
            color: color,
            anchorY: Anchor_Y,
          );
-
       } else {
         gamestream.engine.renderSprite(
           image: Images.template_shadow,
