@@ -188,6 +188,11 @@ extension MMOUI on MmoGame {
               left: 8,
               child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
           ),
+          Positioned(
+            bottom: 8,
+            right: 8,
+            child: buildWatch(weapons[index].cooldown, (cooldown) => buildText(cooldown, color: Colors.white70))
+          )
         ],
       ),
     );

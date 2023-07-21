@@ -783,13 +783,14 @@ class MmoPlayer extends IsometricPlayer {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Weapon);
     writeUInt16(index);
-    final weapon = weapons[index].item;
+    final slot = weapons[index];
+    final weapon = slot.item;
     if (weapon == null){
       writeInt16(-1);
       return;
     }
     writeInt16(weapon.index);
-    writeUInt16(weapon.cooldown);
+    writeUInt16(slot.cooldown);
   }
 
   void writePlayerTreasure(int index) {
