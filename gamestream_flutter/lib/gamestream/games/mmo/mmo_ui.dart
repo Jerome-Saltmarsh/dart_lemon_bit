@@ -146,9 +146,9 @@ extension MMOUI on MmoGame {
         equippedWeaponIndex,
         (equippedWeaponIndex) => Positioned(
               child: GSContainer(
-                color: index != equippedWeaponIndex
-                    ? Colors.black12
-                    : Colors.black26,
+                color: index == equippedWeaponIndex
+                    ? Colors.white12
+                    : Colors.black12,
                 width: size,
                 height: size,
               ),
@@ -168,7 +168,7 @@ extension MMOUI on MmoGame {
     });
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       child: Stack(
         alignment: Alignment.center,
         children: [
