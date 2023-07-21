@@ -1121,9 +1121,6 @@ class Engine extends StatelessWidget {
     body.style.cursor = name;
   }
 
-  static int linerInterpolationInt(int a, int b, double t) =>
-      (a * (1.0 - t) + b * t).toInt();
-
   void downloadString({
     required String contents,
     required String filename,

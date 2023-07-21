@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -287,7 +286,7 @@ class IsometricScene {
           final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
           final nodeAlpha = hsvAlphas[nodeIndex];
           if (nodeAlpha < alpha) continue;
-          hsvAlphas[nodeIndex] = Engine.linerInterpolationInt(hsvAlphas[nodeIndex], alpha      , intensity);
+          hsvAlphas[nodeIndex] = linearInterpolateInt(hsvAlphas[nodeIndex], alpha      , intensity);
           refreshNodeColor(nodeIndex);
         }
       }
@@ -415,7 +414,7 @@ class IsometricScene {
         case NodeType.Torch:
           emitLightAmbient(
             index: nodeIndex,
-            alpha: Engine.linerInterpolationInt(
+            alpha: linearInterpolateInt(
               ambientHue,
               0,
               torch_emission_intensity,
@@ -499,10 +498,10 @@ class IsometricScene {
       }
     }
 
-    final h = Engine.linerInterpolationInt(ambientHue, hue , intensity);
-    final s = Engine.linerInterpolationInt(ambientSaturation, saturation, intensity);
-    final v = Engine.linerInterpolationInt(ambientValue, value, intensity);
-    final a = Engine.linerInterpolationInt(ambientAlpha, alpha, intensity);
+    final h = linearInterpolateInt(ambientHue, hue , intensity);
+    final s = linearInterpolateInt(ambientSaturation, saturation, intensity);
+    final v = linearInterpolateInt(ambientValue, value, intensity);
+    final a = linearInterpolateInt(ambientAlpha, alpha, intensity);
 
     applyAHSV(
       index: index,
@@ -1126,7 +1125,7 @@ class IsometricScene {
     assert (index < total);
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
-    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambientAlpha, intensity);;
+    final interpolatedAlpha = linearInterpolateInt(alpha, ambientAlpha, intensity);;
     final currentAlpha = hsvAlphas[index];
     if (currentAlpha <= interpolatedAlpha) {
       return;
@@ -1167,14 +1166,14 @@ class IsometricScene {
       } else {
         hueB += 360;
       }
-      hueI = Engine.linerInterpolationInt(hueA, hueB, intensity) % 360;
+      hueI = linearInterpolateInt(hueA, hueB, intensity) % 360;
     } else {
-      hueI = Engine.linerInterpolationInt(hueA, hueB, intensity);
+      hueI = linearInterpolateInt(hueA, hueB, intensity);
     }
 
-    final interpolatedA = Engine.linerInterpolationInt(alpha, hsvAlphas[index], intensity);
-    final interpolatedS = Engine.linerInterpolationInt(saturation, hsvSaturation[index], intensity);
-    final interpolatedV = Engine.linerInterpolationInt(value, hsvValues[index], intensity);
+    final interpolatedA = linearInterpolateInt(alpha, hsvAlphas[index], intensity);
+    final interpolatedS = linearInterpolateInt(saturation, hsvSaturation[index], intensity);
+    final interpolatedV = linearInterpolateInt(value, hsvValues[index], intensity);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
     hsvAlphas[index] = interpolatedA;

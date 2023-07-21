@@ -16,7 +16,7 @@ alt + m             : go to declaration
 [TODO]
 [ ] zombie death animation
 [ ] sounds on item drop for treasures
-[ ] talent ui icons
+[ ] character stats dialog
 [ ] attack speed modifier
 [ ] sound pick up item
 [ ] ui items draggable
@@ -26,16 +26,18 @@ alt + m             : go to declaration
 [ ] pathfinding separate and left and right stack frames
 [ ] town stash (automatically opens when nearby)
 [ ] character type skeleton 
-[ ] character type alien slug
+[ ] character type float skeleton head
 [ ] npc store
 [-] refactor lemon engine
 [-] remove gamestream global instance
 [-] remove all static instances
+[*] optimize light tree
 [*] character persistence
 [*] fix colored lights
 [*] fix grid render order
 
 21.07.2023
+[x] talent ui icons
 [x] fix torch height
 [x] character shadow direction
 [x] fixed inventory error message 

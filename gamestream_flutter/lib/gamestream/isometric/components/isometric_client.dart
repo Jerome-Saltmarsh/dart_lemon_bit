@@ -188,7 +188,7 @@ mixin class IsometricClient {
     if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
     gamestream.isometric.scene.emitLightAmbient(
       index: gamestream.isometric.scene.getIndexPosition(v),
-      alpha: Engine.linerInterpolationInt(gamestream.isometric.scene.ambientHue, alpha , intensity),
+      alpha: linearInterpolateInt(gamestream.isometric.scene.ambientHue, alpha , intensity),
     );
   }
 
