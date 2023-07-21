@@ -37,6 +37,7 @@ alt + m             : go to declaration
 [*] fix grid render order
 
 21.07.2023
+[x] character shadow direction
 [x] fixed inventory error message 
 [x] ability and weapon cooldown
 

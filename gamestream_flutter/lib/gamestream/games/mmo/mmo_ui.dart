@@ -476,8 +476,9 @@ extension MMOUI on MmoGame {
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 16,
-                  child: MMOTalentIcon(talentType: talentType, size: 50),
+                  top: 12,
+                  left: 12,
+                  child: MMOTalentIcon(talentType: talentType, size: 32),
                 ),
                 Positioned(
                   bottom: 0,
@@ -517,7 +518,8 @@ extension MMOUI on MmoGame {
                       right: 2,
                       child: GSContainer(
                           rounded: true,
-                          color: Colors.black26,
+                          color: Colors.black12,
+                          padding: const EdgeInsets.all(4),
                           child: buildText(cost, color: canAfford ? Colors.green : Colors.red)
                       )
                   ),

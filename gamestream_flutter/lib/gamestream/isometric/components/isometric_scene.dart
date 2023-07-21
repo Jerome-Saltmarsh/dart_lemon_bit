@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -1383,6 +1384,41 @@ class IsometricScene {
       z >= lengthZ ||
       x >= lengthRows ||
       y >= lengthColumns;
+
+  int getNearestLightSourcePosition(IsometricPosition position) => getNearestLightSource(
+        row: position.indexRow,
+        column: position.indexColumn,
+        z: position.indexZ,
+    );
+
+  int getNearestLightSource({
+    required int row,
+    required int column,
+    required int z,
+  }) {
+     var nearestLightSourceIndex = -1;
+     var nearestLightSourceDistance = 1000;
+
+     for (var i = 0; i < nodesLightSourcesTotal; i++){
+       final lightSourceIndex = nodesLightSources[i];
+       final lightSourceRow = getIndexRow(lightSourceIndex);
+       final lightSourceColumn = getIndexColumn(lightSourceIndex);
+       final lightSourceZ = getIndexZ(lightSourceIndex);
+
+       final distance =
+           (row - lightSourceRow).abs() +
+           (column - lightSourceColumn).abs()  +
+           (z - lightSourceZ).abs();
+
+       if (distance > nearestLightSourceDistance)
+         continue;
+
+       nearestLightSourceDistance = distance;
+       nearestLightSourceIndex = lightSourceIndex;
+     }
+
+    return nearestLightSourceIndex;
+  }
 }
 
 

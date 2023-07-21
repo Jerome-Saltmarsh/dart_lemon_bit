@@ -290,6 +290,7 @@ class Gamestream extends StatelessWidget with ByteReader {
       init: init,
       update: update,
       render: render,
+      title: 'AMULET',
       themeData: ThemeData(fontFamily: 'VT323-Regular'),
       backgroundColor: IsometricColors.black,
       onError: onError,

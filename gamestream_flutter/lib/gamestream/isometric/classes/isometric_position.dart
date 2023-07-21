@@ -53,6 +53,6 @@ class IsometricPosition implements Comparable<IsometricPosition>{
     return 0;
   }
 
-
+  double getAngle(double x, double y) => angleBetween(this.x, this.y, x, y);
 }
 
