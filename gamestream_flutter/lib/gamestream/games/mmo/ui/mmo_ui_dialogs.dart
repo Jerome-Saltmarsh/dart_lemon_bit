@@ -59,38 +59,42 @@ extension MMOUIDialogs on MmoGame {
       inventoryOpen ? dialog : inventoryButton);
   }
 
-  Widget buildDialogPlayerTalents() => buildWatch(
+  Widget buildDialogPlayerTalents() {
+    return buildWatch(
       playerTalentsChangedNotifier,
-          (_) => buildWatch(
-          playerTalentDialogOpen,
-              (playersDialogOpen) => !playersDialogOpen
-              ? nothing
-              : Container(
-            width: 500,
-            child: Column(
-              children: [
-                GSContainer(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 20),
-                          child: buildDialogTitle('TALENTS ${playerTalentPoints.value}')
-                      ),
-                      buildButtonClose(action: toggleTalentsDialog),
-                    ],
-                  ),
+          (_) {
+
+        final dialog = Container(
+          width: 500,
+          child: Column(
+            children: [
+              GSContainer(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: buildDialogTitle('TALENTS ${playerTalentPoints.value}')
+                    ),
+                    buildButtonClose(action: toggleTalentsDialog),
+                  ],
                 ),
-                GSContainer(
-                    height: gamestream.engine.screen.height - 270,
-                    alignment: Alignment.topLeft,
-                    child: GridView.count(
-                        crossAxisCount: 3,
-                        children: MMOTalentType.values
-                            .map(buildTalent)
-                            .toList(growable: false))),
-              ],
-            ),
-          )));
+              ),
+              GSContainer(
+                  height: gamestream.engine.screen.height - 270,
+                  alignment: Alignment.topLeft,
+                  child: GridView.count(
+                      crossAxisCount: 3,
+                      children: MMOTalentType.values
+                          .map(buildTalent)
+                          .toList(growable: false))),
+            ],
+          ),
+        );
+
+      return buildWatch(playerTalentDialogOpen,
+          (playersDialogOpen) => !playersDialogOpen ? nothing : dialog);
+    });
+  }
 
 }
