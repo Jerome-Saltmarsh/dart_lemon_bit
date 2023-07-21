@@ -37,11 +37,6 @@ extension MMOUI on MmoGame {
          left: margin3 + 50,
          child: buildItemHoverDialog(),
       ),
-      // Positioned(
-      //     top: margin2,
-      //     left: margin1,
-      //     child: buildPlayerEquipped(),
-      // ),
       Positioned(
           bottom: margin2,
           right: margin1,
@@ -52,8 +47,21 @@ extension MMOUI on MmoGame {
           right: margin1,
           child: buildPlayerStatsRow(),
       ),
+      Positioned(
+          bottom: margin2,
+          child: Container(
+              width: gamestream.engine.screen.width,
+              alignment: Alignment.center,
+              child: buildError(),
+          ),
+      ),
     ],
   );
+
+  Widget buildError() {
+    final color = Colors.red.withOpacity(0.7);
+    return buildWatch(error, (error) => buildText(error, color: color));
+  }
 
   Positioned buildNpcText() {
 

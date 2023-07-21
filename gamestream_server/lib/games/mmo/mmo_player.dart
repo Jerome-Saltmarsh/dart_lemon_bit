@@ -489,7 +489,8 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
 
-    final weapon = weapons[index].item;
+    final slot = weapons[index];
+    final weapon = slot.item;
 
     if (weapon == null)
       return;
@@ -498,6 +499,11 @@ class MmoPlayer extends IsometricPlayer {
 
     if (attackType == null)
       throw Exception();
+
+    if (slot.cooldown > 0) {
+      writeMMOError('${slot.item?.name} is cooling down');
+      return;
+    }
 
     switch (attackType.mode) {
       case PowerMode.Equip:
@@ -1176,5 +1182,11 @@ class MmoPlayer extends IsometricPlayer {
        weapon.cooldown--;
        writePlayerWeapon(i);
      }
+  }
+
+  void writeMMOError(String error) {
+    writeByte(ServerResponse.MMO);
+    writeByte(MMOResponse.Error);
+    writeString(error);
   }
 }

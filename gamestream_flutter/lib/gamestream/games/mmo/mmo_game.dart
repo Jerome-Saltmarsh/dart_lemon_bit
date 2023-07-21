@@ -12,27 +12,23 @@ import 'mmo_ui.dart';
 
 class MmoGame extends IsometricGame {
 
-  IsometricPlayer get player => gamestream.isometric.player;
-
-  final itemHover = Watch<MMOItem?>(null);
-
-  final activePowerPosition = IsometricPosition();
+  var errorTimer = 0;
   var items = <MMOItemSlot>[];
 
+  final itemHover = Watch<MMOItem?>(null);
+  final activePowerPosition = IsometricPosition();
   final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
   final treasures = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
-
+  final error = Watch('');
   final playerInteracting = Watch(false);
   final npcText = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
   final activatedPowerIndex = Watch(-1);
-
   final equippedHead = Watch<MMOItem?>(null);
   final equippedBody = Watch<MMOItem?>(null);
   final equippedLegs = Watch<MMOItem?>(null);
-
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
@@ -40,13 +36,35 @@ class MmoGame extends IsometricGame {
   final playerTalentDialogOpen = Watch(false);
   final playerInventoryOpen = Watch(false);
   final playerTalents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
-
   final playerTalentsChangedNotifier = Watch(0);
 
   MmoGame({required super.isometric}){
     print('MmoGame()');
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerSkillsDialogOpen);
+    error.onChanged(onChangedError);
+  }
+
+  IsometricPlayer get player => gamestream.isometric.player;
+
+  void onChangedError(String value){
+    if (value.isEmpty)
+      return;
+
+    gamestream.audio.errorSound15();
+    errorTimer = 70;
+  }
+
+  @override
+  void update() {
+    super.update();
+
+    if (errorTimer > 0) {
+      errorTimer--;
+      if (errorTimer <= 0){
+        error.value = '';
+      }
+    }
   }
 
   void setWeapon({
