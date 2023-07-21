@@ -23,40 +23,40 @@ extension MMOUIDialogs on MmoGame {
       buildText(text, size: 28.0, color: Colors.white70);
 
   Widget buildDialogPlayerInventory(){
-    return buildWatch(playerInventoryOpen, (inventoryOpen){
-       if (!inventoryOpen){
-         return buildInventoryButton();
-       } else {
-         return GSContainer(
-           rounded: true,
-           width: 340,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.start,
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Container(
-                       margin: const EdgeInsets.only(left: 5),
-                       child: buildDialogTitle('INVENTORY')),
-                   buildButtonClose(action: toggleInventoryOpen),
-                 ],
-               ),
-              height16,
-              buildPlayerTreasures(),
-              height16,
-              Row(
-                children: [
-                  buildPlayerEquipped(),
-                  width16,
-                  buildPlayerItems(),
-                ],
-              )
-           ],),
-         );
-       }
-    });
+
+    final dialog = GSContainer(
+      rounded: true,
+      width: 340,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  margin: const EdgeInsets.only(left: 5),
+                  child: buildDialogTitle('INVENTORY')),
+              buildButtonClose(action: toggleInventoryOpen),
+            ],
+          ),
+          height16,
+          buildPlayerTreasures(),
+          height16,
+          Row(
+            children: [
+              buildPlayerEquipped(),
+              width16,
+              buildPlayerItems(),
+            ],
+          )
+        ],),
+    );
+
+    final inventoryButton = buildInventoryButton();
+
+    return buildWatch(playerInventoryOpen, (inventoryOpen) =>
+      inventoryOpen ? dialog : inventoryButton);
   }
 
   Widget buildDialogPlayerTalents() => buildWatch(
