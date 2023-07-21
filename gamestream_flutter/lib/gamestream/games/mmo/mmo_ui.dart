@@ -118,7 +118,7 @@ extension MMOUI on MmoGame {
         children: List.generate(treasures.length, (index) => onPressed(
             action: () => selectTreasure(index),
             onRightClick: () => dropTreasure(index),
-            child: buildInventoryItem(treasures[index]))),
+            child: buildInventoryItem(treasures[index].item.value))),
       ),
     ),
   );
@@ -165,7 +165,7 @@ extension MMOUI on MmoGame {
       alignment: Alignment.center,
       children: [
         background,
-        Positioned(child: MMOItemImage(item: slot.item, size: size)),
+        Positioned(child: MMOItemImage(item: slot.item.value, size: size)),
         Positioned(
             top: 8,
             left: 8,
@@ -176,7 +176,7 @@ extension MMOUI on MmoGame {
 
     return MouseRegion(
         onEnter: (_){
-          itemHover.value = slot.item;
+          itemHover.value = slot.item.value;
         },
         onExit: (_){
            if (itemHover.value != slot)

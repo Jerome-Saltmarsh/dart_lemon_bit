@@ -252,7 +252,7 @@ class MmoPlayer extends IsometricPlayer {
         setWeapon(
             index: emptyIndex,
             item: item,
-            cooldown: item.cooldown,
+            cooldown: 0,
         );
         return true;
       }
@@ -280,7 +280,7 @@ class MmoPlayer extends IsometricPlayer {
     }
 
     emptyItemSlot.item = item;
-    emptyItemSlot.cooldown = item.cooldown;
+    emptyItemSlot.cooldown = 0;
     notifyEquipmentDirty();
     return true;
   }
@@ -1010,6 +1010,8 @@ class MmoPlayer extends IsometricPlayer {
 
       if (item == null)
         throw Exception();
+
+      weapon.cooldown = item.cooldown;
 
       final attackType = item.attackType;
 

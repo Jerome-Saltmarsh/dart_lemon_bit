@@ -24,7 +24,7 @@ class MmoGame extends IsometricGame {
   late final treasuresChangedNotifier = Watch(0, onChanged: onAnyChanged);
 
   final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
-  final treasures = List<MMOItem?>.generate(4, (index) => null);
+  final treasures = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
 
   final playerInteracting = Watch(false);
   final npcText = Watch('');
@@ -59,13 +59,13 @@ class MmoGame extends IsometricGame {
     required int cooldown,
   }){
     final slot = weapons[index];
-    slot.item = item;
+    slot.item.value = item;
     slot.cooldown.value = cooldown;
     notifyWeaponsChanged();
   }
 
   void setTreasure({required int index, required MMOItem? item}){
-    treasures[index] = item;
+    treasures[index].item.value = item;
     notifyTreasuresChanged();
   }
 
