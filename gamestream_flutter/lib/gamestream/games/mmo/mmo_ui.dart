@@ -147,23 +147,43 @@ extension MMOUI on MmoGame {
     const size = 64.0;
     final slot = weapons[index];
 
-    final background = buildWatch(activatedPowerIndex, (activatedPowerIndex){
-      if (index != activatedPowerIndex)
+    final backgroundSelectedWeapon = buildWatch(equippedWeaponIndex, (equippedWeaponIndex){
+      if (index != equippedWeaponIndex)
         return nothing;
+
       return Positioned(
         child: GSContainer(
-          color: activatedPowerIndex == activatedPowerIndex ? Colors.green : GS_CONTAINER_COLOR,
+          color: Colors.black26,
           width: size,
           height: size,
         ),
       );
     });
 
-    final stack = Stack(
+    final backgroundActivePower = buildWatch(activatedPowerIndex, (activatedPowerIndex){
+      if (index != activatedPowerIndex)
+        return nothing;
+
+      return Positioned(
+        child: GSContainer(
+          color: Colors.green,
+          width: size,
+          height: size,
+        ),
+      );
+    });
+
+    return Stack(
       alignment: Alignment.center,
       children: [
-        background,
-        Positioned(child: buildMMOItemSlot(slot, size: size)),
+        backgroundSelectedWeapon,
+        backgroundActivePower,
+        Positioned(child: buildMMOItemSlot(
+            slot: slot,
+            size: size,
+            onLeftClick: () => selectWeapon(index),
+            onRightClick: () => dropWeapon(index),
+        )),
         Positioned(
             top: 8,
             left: 8,
@@ -171,29 +191,14 @@ extension MMOUI on MmoGame {
         ),
       ],
     );
-
-    return MouseRegion(
-        onEnter: (_){
-          itemHover.value = slot.item.value;
-        },
-        onExit: (_){
-           if (itemHover.value != slot)
-             return;
-           itemHover.value = null;
-        },
-        child: onPressed(
-            onRightClick: slot == null ? null : () => dropWeapon(index),
-            action: slot == null ? null : () => selectWeapon(index),
-            child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
-                  width: 2,
-                  color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,
-                  child: stack,
-              )),
-        ),
-    );
   }
 
-  Widget buildMMOItemSlot(MMOItemSlot slot, {double size = 64}) =>
+  Widget buildMMOItemSlot({
+    required MMOItemSlot slot,
+    double size = 64,
+    Function? onLeftClick,
+    Function? onRightClick,
+  }) =>
     MouseRegion(
       onEnter: (_){
         itemHover.value = slot.item.value;
@@ -204,18 +209,18 @@ extension MMOUI on MmoGame {
       },
       child: buildWatch(
           slot.item,
-              (item) => MMOItemImage(item: item, size: size),
+              (item) => onPressed(
+                    action: item != null ? onLeftClick : null,
+                    onRightClick: item != null ? onRightClick : null,
+                    child: MMOItemImage(item: item, size: size)),
       ),
     );
 
-  Widget buildItemImageAtIndex(int index) {
-    final item = items[index];
-    return onPressed(
-        onRightClick: item == null ? null : () => dropItem(index),
-        action: item == null ? null : () => selectItem(index),
-        child: buildInventoryItem(item),
+  Widget buildItemImageAtIndex(int index) => buildMMOItemSlot(
+      slot: items[index],
+      onLeftClick: () => selectItem(index),
+      onRightClick: () => dropItem(index),
     );
-  }
 
   buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
       itemHover,
@@ -273,23 +278,20 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildPlayerItems() => buildInventoryContainer(
-    child: buildWatch(
-        itemsChangedNotifier,
-            (_) => Row(
-          children: [
-            Column(
-                children: List.generate(
-                    items.length ~/ 2, (index) => buildItemImageAtIndex(index),
-                    growable: false)
-            ),
-            Column(
-                children: List.generate(
-                    items.length ~/ 2, (index) => buildItemImageAtIndex(index + (items.length ~/ 2)),
-                    growable: false)
-            ),
-          ],
-        )
-    ),
+    child: Row(
+      children: [
+        Column(
+            children: List.generate(
+                items.length ~/ 2, (index) => buildItemImageAtIndex(index),
+                growable: false)
+        ),
+        Column(
+            children: List.generate(
+                items.length ~/ 2, (index) => buildItemImageAtIndex(index + (items.length ~/ 2)),
+                growable: false)
+        ),
+      ],
+    )
   );
 
   Widget buildInventoryItem(MMOItem? item) => Container(
@@ -304,7 +306,6 @@ extension MMOUI on MmoGame {
         child: child,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-            // color: Colors.black26,
             borderRadius: const BorderRadius.all(Radius.circular(4))
         ),
     );

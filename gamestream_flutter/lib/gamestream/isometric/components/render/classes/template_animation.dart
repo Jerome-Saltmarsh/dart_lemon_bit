@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:gamestream_flutter/common.dart';
 
 class WeaponSubType {
