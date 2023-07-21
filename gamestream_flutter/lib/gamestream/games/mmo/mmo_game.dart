@@ -19,8 +19,6 @@ class MmoGame extends IsometricGame {
   final activePowerPosition = IsometricPosition();
   var items = <MMOItemSlot>[];
 
-  late final treasuresChangedNotifier = Watch(0, onChanged: onAnyChanged);
-
   final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
   final treasures = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
 
@@ -63,7 +61,6 @@ class MmoGame extends IsometricGame {
 
   void setTreasure({required int index, required MMOItem? item}){
     treasures[index].item.value = item;
-    notifyTreasuresChanged();
   }
 
   void setItem({required int index, required MMOItem? item}){
@@ -76,10 +73,6 @@ class MmoGame extends IsometricGame {
 
   @override
   Widget customBuildUI(BuildContext context) => buildMMOUI();
-
-  void notifyTreasuresChanged() {
-    treasuresChangedNotifier.value++;
-  }
 
   @override
   void onKeyPressed(int key) {

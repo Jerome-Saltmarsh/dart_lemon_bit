@@ -108,18 +108,15 @@ extension MMOUI on MmoGame {
       );
 
   Widget buildPlayerTreasures() => buildInventoryContainer(
-    child: buildWatch(
-      treasuresChangedNotifier,
-          (int reads) => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(treasures.length, (index) => onPressed(
-            action: () => selectTreasure(index),
-            onRightClick: () => dropTreasure(index),
-            child: buildInventoryItem(treasures[index].item.value))),
-      ),
-    ),
-  );
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+                treasures.length,
+                buildTreasureSlotAtIndex
+            )
+        ),
+      );
 
   buildPlayerAimTarget() {
     final name = Container(
@@ -216,7 +213,7 @@ extension MMOUI on MmoGame {
       ),
     );
 
-  Widget buildItemSlotAtIndex(int index) => buildInventorySlot(
+  Widget buildInventoryItemSlotAtIndex(int index) => buildInventorySlot(
     child: buildMMOItemSlot(
         slot: items[index],
         onLeftClick: () => selectItem(index),
@@ -284,12 +281,12 @@ extension MMOUI on MmoGame {
       children: [
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildItemSlotAtIndex(index),
+                items.length ~/ 2, (index) => buildInventoryItemSlotAtIndex(index),
                 growable: false)
         ),
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildItemSlotAtIndex(index + (items.length ~/ 2)),
+                items.length ~/ 2, (index) => buildInventoryItemSlotAtIndex(index + (items.length ~/ 2)),
                 growable: false)
         ),
       ],
@@ -520,5 +517,14 @@ extension MMOUI on MmoGame {
     );
   }
 
+  Widget buildTreasureSlotAtIndex(int index) => buildInventorySlot(
+    child: buildMMOItemSlot(
+        slot: treasures[index],
+        onLeftClick: () => selectTreasure(index),
+        onRightClick: () => dropTreasure(index),
+      ),
+  );
+
 }
+
 
