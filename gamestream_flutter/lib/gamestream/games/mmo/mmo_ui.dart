@@ -60,7 +60,7 @@ extension MMOUI on MmoGame {
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
-    return buildWatch(error, (error) => buildText(error, color: color));
+    return IgnorePointer(child: buildWatch(error, (error) => buildText(error, color: color)));
   }
 
   Positioned buildNpcText() {
