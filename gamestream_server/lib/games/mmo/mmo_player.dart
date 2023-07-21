@@ -127,6 +127,8 @@ class MmoPlayer extends IsometricPlayer {
       health += treasure.health;
     }
 
+    final talentHealthLevel = talents[MMOTalentType.Healthy.index];
+    health += talentHealthLevel * MMOTalentType.Healthy_Health_Per_Level;
     return health;
   }
 
@@ -917,6 +919,11 @@ class MmoPlayer extends IsometricPlayer {
      talents[talent.index]++;
      talentPoints -= cost;
      writePlayerTalents();
+
+     if (talent == MMOTalentType.Healthy){
+       health = maxHealth;
+     }
+
      writePlayerHealth();
   }
 

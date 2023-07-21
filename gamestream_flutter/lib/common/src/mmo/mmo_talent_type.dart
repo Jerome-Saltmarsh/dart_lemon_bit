@@ -21,4 +21,6 @@ enum MMOTalentType {
       this.maxLevel = 1,
       this.levelCostMultiplier = 1,
    });
+
+   static const Healthy_Health_Per_Level = 5;
 }

@@ -64,27 +64,26 @@ extension MMOUIDialogs on MmoGame {
       playerTalentsChangedNotifier,
           (_) {
 
-        final dialog = Container(
+        final dialog = GSContainer(
           width: 500,
+          rounded: true,
           child: Column(
             children: [
-              GSContainer(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: buildDialogTitle('TALENTS ${playerTalentPoints.value}')
-                    ),
-                    buildButtonClose(action: toggleTalentsDialog),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: buildDialogTitle('TALENTS ${playerTalentPoints.value}')
+                  ),
+                  buildButtonClose(action: toggleTalentsDialog),
+                ],
               ),
               GSContainer(
                   height: gamestream.engine.screen.height - 270,
                   alignment: Alignment.topLeft,
                   child: GridView.count(
-                      crossAxisCount: 3,
+                      crossAxisCount: 4,
                       children: MMOTalentType.values
                           .map(buildTalent)
                           .toList(growable: false))),

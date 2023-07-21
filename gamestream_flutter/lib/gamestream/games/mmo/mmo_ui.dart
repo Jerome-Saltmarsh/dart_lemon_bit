@@ -476,7 +476,7 @@ extension MMOUI on MmoGame {
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 32,
+                  top: 16,
                   child: MMOTalentIcon(talentType: talentType, size: 50),
                 ),
                 Positioned(

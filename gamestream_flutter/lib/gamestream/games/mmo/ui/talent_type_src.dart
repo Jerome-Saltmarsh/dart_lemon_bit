@@ -34,5 +34,29 @@ class TalentTypeSrc {
         80, // width
         81, // height
     ],
+    MMOTalentType.Treasure_Slots: <double> [
+        1, // x,
+        131, // y
+        76, // width
+        76, // height
+    ],
+    MMOTalentType.Speedy: <double> [
+        87, // x,
+        128, // y
+        66, // width
+        80, // height
+    ],
+    MMOTalentType.Lucky: <double> [
+        165, // x,
+        117, // y
+        121, // width
+        116, // height
+    ],
+    MMOTalentType.Vampire: <double> [
+        307, // x,
+        113, // y
+        75, // width
+        71, // height
+    ],
   };
 }
