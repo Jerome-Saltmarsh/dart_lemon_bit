@@ -147,7 +147,7 @@ extension MMOUI on MmoGame {
 
   Widget buildWeaponImageAtIndex(int index) {
     const size = 64.0;
-    final item = weapons[index];
+    final slot = weapons[index];
 
     final background = buildWatch(activatedPowerIndex, (activatedPowerIndex){
       if (index != activatedPowerIndex)
@@ -165,7 +165,7 @@ extension MMOUI on MmoGame {
       alignment: Alignment.center,
       children: [
         background,
-        Positioned(child: MMOItemImage(item: item, size: size)),
+        Positioned(child: MMOItemImage(item: slot.item, size: size)),
         Positioned(
             top: 8,
             left: 8,
@@ -176,16 +176,16 @@ extension MMOUI on MmoGame {
 
     return MouseRegion(
         onEnter: (_){
-          itemHover.value = item;
+          itemHover.value = slot.item;
         },
         onExit: (_){
-           if (itemHover.value != item)
+           if (itemHover.value != slot)
              return;
            itemHover.value = null;
         },
         child: onPressed(
-            onRightClick: item == null ? null : () => dropWeapon(index),
-            action: item == null ? null : () => selectWeapon(index),
+            onRightClick: slot == null ? null : () => dropWeapon(index),
+            action: slot == null ? null : () => selectWeapon(index),
             child: buildWatch(equippedWeaponIndex, (equippedWeaponIndex) => buildBorder(
                   width: 2,
                   color: equippedWeaponIndex == index ? Colors.white : GS_CONTAINER_COLOR,

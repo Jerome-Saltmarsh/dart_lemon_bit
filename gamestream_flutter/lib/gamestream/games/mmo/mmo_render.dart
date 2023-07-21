@@ -50,7 +50,7 @@ extension MMORender on MmoGame {
     if (activatedPowerIndex.value == -1)
       return;
 
-    final activatedPower = weapons[activatedPowerIndex.value];
+    final activatedPower = weapons[activatedPowerIndex.value].item;
 
     if (activatedPower == null)
       return;

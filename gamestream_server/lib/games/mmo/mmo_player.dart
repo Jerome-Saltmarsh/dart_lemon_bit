@@ -789,6 +789,7 @@ class MmoPlayer extends IsometricPlayer {
       return;
     }
     writeInt16(weapon.index);
+    writeUInt16(weapon.cooldown);
   }
 
   void writePlayerTreasure(int index) {

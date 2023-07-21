@@ -33,8 +33,9 @@ extension MMOResponseReader on Gamestream {
        case MMOResponse.Player_Weapon:
          final index = readUInt16();
          final type = readInt16();
+         final cooldown = type != -1 ? readUInt16() : 0;
          final item = type != -1 ? MMOItem.values[type] : null;
-         game.setWeapon(index: index, item: item);
+         game.setWeapon(index: index, item: item, cooldown: cooldown);
          break;
        case MMOResponse.Player_Treasure:
          final index = readUInt16();

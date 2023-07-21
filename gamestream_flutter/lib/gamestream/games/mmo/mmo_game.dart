@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
@@ -22,7 +23,7 @@ class MmoGame extends IsometricGame {
   late final itemsChangedNotifier = Watch(0, onChanged: onAnyChanged);
   late final treasuresChangedNotifier = Watch(0, onChanged: onAnyChanged);
 
-  final weapons = List<MMOItem?>.generate(4, (index) => null);
+  final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
   final treasures = List<MMOItem?>.generate(4, (index) => null);
 
   final playerInteracting = Watch(false);
@@ -52,8 +53,14 @@ class MmoGame extends IsometricGame {
     playerTalentDialogOpen.onChanged(onChangedPlayerSkillsDialogOpen);
   }
 
-  void setWeapon({required int index, required MMOItem? item}){
-    weapons[index] = item;
+  void setWeapon({
+    required int index,
+    required MMOItem? item,
+    required int cooldown,
+  }){
+    final slot = weapons[index];
+    slot.item = item;
+    slot.cooldown.value = cooldown;
     notifyWeaponsChanged();
   }
 
