@@ -440,60 +440,74 @@ extension MMOUI on MmoGame {
     final maxLevel = talentType.maxLevel;
     final maxLevelReached = currentLevel >= maxLevel;
     final cost = nextLevel * talentType.levelCostMultiplier;
-    final canUpgrade = currentLevel < maxLevel && cost <= playerTalentPoints.value;
-    final talentPointsRemaining = playerTalentPoints.value > 0;
+    final talentPoints = playerTalentPoints.value;
+    final canUpgrade = currentLevel < maxLevel && cost <= talentPoints;
+    final canAfford = cost <= talentPoints;
 
     const barWidth = 100.0;
     const barHeight = barWidth * goldenRatio_0381 * goldenRatio_0618;
 
-    return Container(
+    return GSContainer(
+      color: Colors.black26,
       margin: const EdgeInsets.all(4),
-      child: buildBorder(
-        width: 1,
-        color: !talentPointsRemaining ? Colors.transparent : maxLevelReached ? Colors.white : canUpgrade ? Colors.green : Colors.red,
-        child: onPressed(
-          action: () => canUpgrade ? upgradeTalent(talentType) : null,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                MMOTalentIcon(talentType: talentType, size: 50),
-                Row(
+      padding: null,
+      rounded: true,
+      child: onPressed(
+        action: () => canUpgrade ? upgradeTalent(talentType) : null,
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          width: 200,
+          height: 200,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                top: 32,
+                child: MMOTalentIcon(talentType: talentType, size: 50),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Column(
                   children: [
-                    buildText(talentType.name),
-                    if (!maxLevelReached)
-                      buildText('-$cost'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      color: Colors.black26,
-                      // padding: const EdgeInsets.all(2),
-                      child: Stack(
-                        children: [
-                          Container(
-                            color: Colors.green,
-                            alignment: Alignment.centerLeft,
-                            width: barWidth * (currentLevel / maxLevel),
-                            height: barHeight,
+                    buildText(talentType.name.replaceAll('_', ' ')),
+                    Row(
+                      children: [
+                        Container(
+                          color: Colors.black26,
+                          child: Stack(
+                            children: [
+                              Container(
+                                color: Colors.green,
+                                alignment: Alignment.centerLeft,
+                                width: barWidth * (currentLevel / maxLevel),
+                                height: barHeight,
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                width: barWidth,
+                                height: barHeight,
+                                child: buildText('$currentLevel / $maxLevel', color: Colors.white54),
+                              ),
+                            ],
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            width: barWidth,
-                            height: barHeight,
-                            child: buildText('$currentLevel / $maxLevel', color: Colors.white54),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
 
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              if (!maxLevelReached)
+                Positioned(
+                    top: 2,
+                    right: 2,
+                    child: GSContainer(
+                        rounded: true,
+                        color: Colors.black26,
+                        child: buildText(cost, color: canAfford ? Colors.green : Colors.red)
+                    )
+                ),
+            ],
           ),
         ),
       ),

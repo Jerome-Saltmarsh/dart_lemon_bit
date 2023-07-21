@@ -9,14 +9,18 @@ class GSContainer extends StatelessWidget {
   final Alignment alignment;
   final bool rounded;
   final Color? color;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
 
   const GSContainer({
     super.key,
     this.child,
     this.alignment = Alignment.center,
     this.color = GS_CONTAINER_COLOR,
+    this.padding = GS_CONTAINER_PADDING,
     this.width,
     this.height,
+    this.margin,
     this.rounded = false,
   });
 
@@ -25,11 +29,12 @@ class GSContainer extends StatelessWidget {
       width: width,
       height: height,
       alignment: alignment,
-      padding: GameStyle.Container_Padding,
+      padding: padding,
+      margin: margin,
       child: child,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: rounded ? const BorderRadius.all(Radius.circular(4)) : null
+        borderRadius: rounded ? GS_CONTAINER_BORDER_RADIUS_ROUNDED : null
       ),
     );
 }

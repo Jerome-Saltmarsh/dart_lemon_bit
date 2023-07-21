@@ -12,6 +12,7 @@ class IsometricColors {
   static const brown04 = Color.fromRGBO(171, 148, 122, 1);
 
   static const brownDark = Color.fromRGBO(36, 33, 38, 1);
+  static const brownDarkX = Color.fromRGBO(29, 27, 31, 1.0);
   static const brownLight = Color.fromRGBO(48, 48, 48, 1.0);
   static final black05 = black.withOpacity(0.05);
   static final black10 = black.withOpacity(0.1);
