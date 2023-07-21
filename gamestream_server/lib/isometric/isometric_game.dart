@@ -284,6 +284,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
+    if (keyDownShift){
+      setCharacterStateIdle(player);
+    }
+
     if (mouseLeftDown) {
       player.mouseLeftDownDuration++;
     } else {
@@ -305,7 +309,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
-          setCharacterStateIdle(player);
+          // setCharacterStateIdle(player);
           characterAttack(player);
           return;
         } else {
