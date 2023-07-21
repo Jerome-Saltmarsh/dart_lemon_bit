@@ -241,7 +241,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     positionCacheX = x.toInt();
     positionCacheY = y.toInt();
     positionCacheZ = z.toInt();
-
   }
 
   void writePlayerHealth(){

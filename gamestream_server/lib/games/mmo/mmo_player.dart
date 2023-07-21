@@ -9,8 +9,6 @@ import 'mmo_npc.dart';
 
 class MmoPlayer extends IsometricPlayer {
 
-  static const Interact_Radius = 80.0;
-
   final MmoGame game;
 
   var activePowerX = 0.0;
@@ -78,6 +76,8 @@ class MmoPlayer extends IsometricPlayer {
     writePlayerTalentDialogOpen();
     writePlayerTalents();
   }
+
+  bool get activeAbilitySelected => activatedPowerIndex != -1;
 
   int get equippedWeaponType {
     final weapon = equippedWeapon;
@@ -148,8 +148,6 @@ class MmoPlayer extends IsometricPlayer {
   }
 
   MMOItem? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
-
-  bool get targetWithinInteractRadius => targetWithinRadius(Interact_Radius);
 
   set experience(int value){
     _experience = value;
@@ -1103,5 +1101,4 @@ class MmoPlayer extends IsometricPlayer {
   MMOItem? getWeaponAtIndex(int index) =>
       isValidIndex(index, weapons) ? weapons[index] : null;
 
-  bool get activeAbilitySelected => activatedPowerIndex != -1;
 }
