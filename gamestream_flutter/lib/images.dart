@@ -27,6 +27,7 @@ class Images {
    static late Image atlas_fight2d_nodes;
    static late Image atlas_nodes_mini;
    static late Image atlas_weapons;
+   static late Image atlas_talents;
    static late Image sprite_stars;
    static late Image sprite_shield;
 
@@ -152,6 +153,7 @@ class Images {
       Engine.loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
       Engine.loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
       Engine.loadImageAsset('images/atlas_weapons.png').then((value) => atlas_weapons = value);
+      Engine.loadImageAsset('images/atlas_talents.png').then((value) => atlas_talents = value);
       Engine.loadImageAsset('images/atlas-icons.png').then((value) => atlas_icons = value);
       Engine.loadImageAsset('images/atlas_items.png').then((value) => atlas_items = value);
       Engine.loadImageAsset('images/atlas_head.png').then((value) => atlas_head = value);

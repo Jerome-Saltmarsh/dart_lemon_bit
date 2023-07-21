@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/ui/talent_type_src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'ui/src.dart';
+import 'ui/talent_icon.dart';
 
 extension MMOUI on MmoGame {
 
@@ -432,12 +434,12 @@ extension MMOUI on MmoGame {
         ),
   );
 
-  Widget buildTalent(MMOTalentType talent){
-    final currentLevel = getTalentLevel(talent);
+  Widget buildTalent(MMOTalentType talentType){
+    final currentLevel = getTalentLevel(talentType);
     final nextLevel = currentLevel + 1;
-    final maxLevel = talent.maxLevel;
+    final maxLevel = talentType.maxLevel;
     final maxLevelReached = currentLevel >= maxLevel;
-    final cost = nextLevel * talent.levelCostMultiplier;
+    final cost = nextLevel * talentType.levelCostMultiplier;
     final canUpgrade = currentLevel < maxLevel && cost <= playerTalentPoints.value;
     final talentPointsRemaining = playerTalentPoints.value > 0;
 
@@ -450,16 +452,21 @@ extension MMOUI on MmoGame {
         width: 1,
         color: !talentPointsRemaining ? Colors.transparent : maxLevelReached ? Colors.white : canUpgrade ? Colors.green : Colors.red,
         child: onPressed(
-          action: () => canUpgrade ? upgradeTalent(talent) : null,
+          action: () => canUpgrade ? upgradeTalent(talentType) : null,
           child: Container(
             padding: const EdgeInsets.all(4),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (!maxLevelReached)
-                  buildText('-$cost'),
-                buildText(talent.name),
+                MMOTalentIcon(talentType: talentType),
+                Row(
+                  children: [
+                    buildText(talentType.name),
+                    if (!maxLevelReached)
+                      buildText('-$cost'),
+                  ],
+                ),
                 Row(
                   children: [
                     Container(

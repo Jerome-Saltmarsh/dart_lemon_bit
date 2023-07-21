@@ -11,36 +11,37 @@ alt + m             : go to declaration
 [IDEAS]
 - sell items for xp
 - tier two talents cost two skills points etc
+- floating txt on acquire health and xp
 
 [TODO]
-[ ] cast ability radial constraint and visualize
-[ ] fix ai path following
-[ ] floating txt on acquire health and xp
+[ ] talent ui icons
+[ ] attack speed modifier
 [ ] sound pick up item
 [ ] sounds on item drop for treasures
 [ ] ui items draggable
+[ ] fix ai path following
 [ ] fix torch height
+[ ] fix character light emission
 [ ] zombie death animation
-[ ] ability and weapon cooldown
-[ ] character persistence
 [ ] 3d character shadows
 [ ] pathfinding separate and left and right stack frames
-[ ] fix npc shooting
-[ ] character light emission
 [ ] town stash (automatically opens when nearby)
-[ ] attack speed modifier
-[ ] caste ability
 [ ] character type skeleton 
 [ ] character type alien slug
 [ ] npc store
 [-] refactor lemon engine
 [-] remove gamestream global instance
 [-] remove all static instances
+[*] character persistence
 [*] fix colored lights
 [*] fix grid render order
-[?] character gold
+
+21.07.2023
+[x] fixed inventory error message 
+[x] ability and weapon cooldown
 
 20.07.2023
+[x] cast ability radial constraint and visualize
 [x] refactor character state
 
 19.07.2023
