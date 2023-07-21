@@ -191,7 +191,7 @@ extension MMOUI on MmoGame {
           Positioned(
             bottom: 8,
             right: 8,
-            child: buildWatch(weapons[index].cooldown, (cooldown) => buildText(cooldown, color: Colors.white70))
+            child: buildWatch(weapons[index].cooldown, (cooldown) => cooldown <= 0 ? nothing: buildText(cooldown, color: Colors.red))
           )
         ],
       ),
