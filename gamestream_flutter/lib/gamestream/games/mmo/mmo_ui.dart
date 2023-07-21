@@ -100,7 +100,8 @@ extension MMOUI on MmoGame {
   }
 
   Widget buildPlayerWeapons() => GSContainer(
-        child: Row(
+    rounded: true,
+    child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: List.generate(weapons.length, buildWeaponSlotAtIndex),
@@ -151,6 +152,7 @@ extension MMOUI on MmoGame {
                     : Colors.black12,
                 width: size,
                 height: size,
+                rounded: true,
               ),
             ));
 
@@ -163,6 +165,7 @@ extension MMOUI on MmoGame {
           color: Colors.green,
           width: size,
           height: size,
+          rounded: true,
         ),
       );
     });
