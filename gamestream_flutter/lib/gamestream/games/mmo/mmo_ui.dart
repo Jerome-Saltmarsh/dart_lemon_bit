@@ -459,7 +459,7 @@ extension MMOUI on MmoGame {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                MMOTalentIcon(talentType: talentType),
+                MMOTalentIcon(talentType: talentType, size: 50),
                 Row(
                   children: [
                     buildText(talentType.name),
