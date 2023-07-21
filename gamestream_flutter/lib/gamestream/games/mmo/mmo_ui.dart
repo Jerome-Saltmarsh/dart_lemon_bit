@@ -444,7 +444,7 @@ extension MMOUI on MmoGame {
     final canUpgrade = currentLevel < maxLevel && cost <= talentPoints;
     final canAfford = cost <= talentPoints;
 
-    const barWidth = 100.0;
+    const barWidth = 130.0;
     const barHeight = barWidth * goldenRatio_0381 * goldenRatio_0618;
 
     return GSContainer(
@@ -453,7 +453,7 @@ extension MMOUI on MmoGame {
       padding: null,
       rounded: true,
       child: onPressed(
-        action: () => canUpgrade ? upgradeTalent(talentType) : null,
+        action: canUpgrade ? () => upgradeTalent(talentType) : null,
         child: Container(
           padding: const EdgeInsets.all(4),
           width: 200,
@@ -469,7 +469,7 @@ extension MMOUI on MmoGame {
                 bottom: 0,
                 child: Column(
                   children: [
-                    buildText(talentType.name.replaceAll('_', ' ')),
+                    // buildText(talentType.name.replaceAll('_', ' ')),
                     Row(
                       children: [
                         Container(
