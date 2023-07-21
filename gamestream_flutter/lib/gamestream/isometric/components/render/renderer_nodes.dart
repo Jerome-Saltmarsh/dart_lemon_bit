@@ -633,24 +633,15 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderNodeTorch(){
-    if (renderNodeWind == WindType.Calm){
-      gamestream.engine.renderSprite(
-        image: Images.atlas_nodes,
-        srcX: AtlasNodeX.Torch,
-        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
-        srcWidth: AtlasNode.Width_Torch,
-        srcHeight: AtlasNode.Height_Torch,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY,
-        anchorY: AtlasNodeAnchorY.Torch,
-        color: colorCurrent,
-      );
-      return;
-    }
+
+    const torchSrcY = 735;
+    const torchSrcXCalm = 1665.0;
+    const torchSrcXWindy = 1691.0;
+
     gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
-      srcX: AtlasNode.X_Torch_Windy,
-      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+      srcX: renderNodeWind == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
+      srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: currentNodeDstX,

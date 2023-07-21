@@ -27,7 +27,7 @@ class AtlasNodeX {
   static const Grass = 0.0;
   static const Grass_Long = 1218.0;
   static const Grass_Flowers = 49.0;
-  static const Torch = 1655.0;
+  static const Torch = 1659.0;
   static const Stone = 1508.0;
   static const Plain_Solid = 1557.0;
   static const Oven = 618.0;
@@ -86,7 +86,7 @@ class AtlasNodeY {
   static const Water = 512.0;
   static const Stone = 0.0;
   static const Plain_Solid = 0.0;
-  static const Torch = 728.0;
+  static const Torch = 749.0;
   static const Water_Flowing = 0.0;
   static const Window = 80.0;
   static const Oven = 804.0;
@@ -341,8 +341,8 @@ class AtlasNode {
   static const Y_Bed_Bottom = 585.0;
   static const X_Bed_Top = X_Bed_Bottom + Sprite_Width_Padded;
   static const Y_Bed_Top = Y_Bed_Bottom;
-  static const X_Torch_Windy = 1681.0;
-  static const Y_Torch_Windy = 728.0;
+  static const X_Torch_Windy = 1691.0;
+  static const Y_Torch_Windy = 749.0;
   static const Width_Torch = 25.0;
-  static const Height_Torch = 70.0;
+  static const Height_Torch = 51.0;
 }

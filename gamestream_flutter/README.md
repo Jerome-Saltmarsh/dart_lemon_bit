@@ -14,13 +14,13 @@ alt + m             : go to declaration
 - floating txt on acquire health and xp
 
 [TODO]
+[ ] fix torch height
+[ ] sounds on item drop for treasures
 [ ] talent ui icons
 [ ] attack speed modifier
 [ ] sound pick up item
-[ ] sounds on item drop for treasures
 [ ] ui items draggable
 [ ] fix ai path following
-[ ] fix torch height
 [ ] fix character light emission
 [ ] zombie death animation
 [ ] 3d character shadows

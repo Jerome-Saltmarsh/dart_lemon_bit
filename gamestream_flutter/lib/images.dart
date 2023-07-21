@@ -149,7 +149,7 @@ class Images {
       Engine.loadImageAsset('images/atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
       Engine.loadImageAsset('images/atlas-particles.png').then((value) => atlas_particles = value);
       Engine.loadImageAsset('images/atlas-projectiles.png').then((value) => projectiles = value);
-      Engine.loadImageAsset('images/atlas-nodes.png').then((value) => atlas_nodes = value);
+      Engine.loadImageAsset('images/atlas_nodes.png').then((value) => atlas_nodes = value);
       Engine.loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
       Engine.loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
       Engine.loadImageAsset('images/atlas_weapons.png').then((value) => atlas_weapons = value);
