@@ -44,8 +44,7 @@ class RendererProjectiles extends IsometricRenderer {
   @override
   void updateFunction() {
     projectile = gamestream.isometric.server.projectiles[index];
-    order = projectile.indexSum;
-    orderZ = projectile.indexZ;
+    order = projectile.sortOrder;
   }
 
   @override

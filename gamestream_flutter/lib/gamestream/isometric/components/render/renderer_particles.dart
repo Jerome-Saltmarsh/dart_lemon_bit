@@ -554,8 +554,8 @@ class RendererParticles extends IsometricRenderer {
       if (dstY > gamestream.engine.Screen_Bottom + 50) continue;
       if (!scene.isPerceptiblePosition(particle)) continue;
 
-      orderZ = particle.indexZ;
-      order = particle.indexSum;
+      // orderZ = particle.indexZ;
+      order = particle.sortOrder;
       index--;
       return;
     }

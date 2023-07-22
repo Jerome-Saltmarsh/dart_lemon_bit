@@ -19,8 +19,7 @@ class RendererCharacters extends IsometricRenderer {
   void updateFunction() {
     while (index < gamestream.isometric.server.totalCharacters){
       character = gamestream.isometric.server.characters[index];
-      orderZ = character.indexZ;
-      order = character.indexSum;
+      order = character.sortOrder;
       if (scene.isPerceptiblePosition(character))
         break;
       index++;

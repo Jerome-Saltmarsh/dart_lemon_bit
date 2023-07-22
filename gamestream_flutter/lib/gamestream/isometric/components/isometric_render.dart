@@ -113,8 +113,7 @@ class IsometricRender {
   void checkNext(IsometricRenderer renderer){
     if (
       !renderer.remaining ||
-      renderer.order > next.order ||
-      renderer.orderZ > next.orderZ
+      renderer.order > next.order
     ) return;
     next = renderer;
   }

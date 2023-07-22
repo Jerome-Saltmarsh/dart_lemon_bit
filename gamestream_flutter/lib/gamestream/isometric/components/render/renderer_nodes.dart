@@ -26,6 +26,8 @@ class RendererNodes extends IsometricRenderer {
   static const Node_Size_Third = 16.0;
   static const Node_Size_Sixth = 8.0;
 
+  static const Node_Sprite_Width = 48.0;
+
   static const Cell_Size = 16.0;
   static const Cell_Size_Half = 8.0;
 
@@ -74,6 +76,7 @@ class RendererNodes extends IsometricRenderer {
   var currentNodeZ = 0;
   var row = 0;
   var column = 0;
+  var z = 0;
   var currentNodeDstX = 0.0;
   var currentNodeDstY = 0.0;
   var currentNodeIndex = 0;
@@ -165,6 +168,9 @@ class RendererNodes extends IsometricRenderer {
   void renderFunction() {
     gamestream.engine.bufferImage = atlas_nodes;
     previousNodeTransparent = false;
+    renderPlain();
+    return;
+
 
     final playerInsideIsland = gamestream.isometric.player.playerInsideIsland;
     final nodeTypes = scene.nodeTypes;
@@ -190,7 +196,6 @@ class RendererNodes extends IsometricRenderer {
       if (row + 1 > nodesRowsMax) return;
       row++;
       column--;
-      orderZ = currentNodeZ;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;
       currentNodeDstX += IsometricConstants.Sprite_Width;
     }
@@ -198,24 +203,115 @@ class RendererNodes extends IsometricRenderer {
 
   var plainIndex = 0;
 
-  void updateFunctionPlains(){
+  var plainStartRow = 0;
+  var plainStartColumn = 0;
+  var plainStartZ = 0;
+  var totalPlains = 0;
+
+  void updatePlain(){
 
   }
 
-  void renderPlain(){
+  void onPlainIndexChanged(){
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
     final height = scene.totalZ;
+    final rowMax = rows - 1;
+    final columnMax = columns - 1;
+    final heightMax = height - 1;
+    plainStartRow = clamp(plainIndex - (height + columns), 0, rowMax);
+    plainStartColumn = clamp(plainIndex - height + 1, 0, columnMax);
+    plainStartZ = clamp(plainIndex, 0, heightMax);
+    order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height);
+  }
 
-    final startRow = clamp(index - (height + columns), 0, rows - 1);
-    final startColumn = clamp(index - height + 1, 0, columns - 1);
-    final startZ = clamp(index, 0, height - 1);
+  void renderPlain(){
+
+    if (plainIndex < 0)
+      return;
+
+    final height = scene.totalZ;
+    final columns = scene.totalColumns;
+    final rows = scene.totalRows;
+    final rowMax = rows - 1;
+    final columnMax = columns - 1;
+    final heightMax = height - 1;
+    final shiftRight = columns - 1;
+
+    plainStartRow = clamp(plainIndex - (height + columns), 0, rowMax);
+    plainStartColumn = clamp(plainIndex - height + 1, 0, columnMax);
+    plainStartZ = clamp(plainIndex, 0, heightMax);
+
+    var lineColumn = plainStartColumn;
+    var lineRow = plainStartRow;
+    var lineZ = plainStartZ;
+
+    column = lineColumn;
+    row = lineRow;
 
 
+    while (lineZ >= 0) {
+      // increment line
+      z = lineZ;
+      currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height) - Node_Height;
+
+      if (currentNodeDstY > screenTop) {
+
+        if (currentNodeDstY > screenBottom){
+          break;
+        }
+
+        currentNodeIndex = scene.getIndexZRC(lineZ, lineRow, lineColumn);
+        currentNodeDstX = (row - column) * Node_Size_Half - Node_Sprite_Width;
+
+        while (true) {
+          if (currentNodeDstX > screenLeft &&
+              currentNodeDstX < screenRight
+          ) {
+            currentNodeType = scene.nodeTypes[currentNodeIndex];
+            if (currentNodeType != NodeType.Empty) {
+              renderCurrentNode();
+            }
+          }
+
+          row++;
+          column--;
+
+          if (column < 0 || row >= rowMax)
+            break;
+
+          currentNodeIndex += shiftRight;
+          currentNodeDstX += Node_Sprite_Width;
+          currentNodeDstY += Node_Height;
+        }
+      }
+
+      if (lineColumn < rowMax){
+        lineColumn++;
+      } else {
+        lineRow++;
+      }
+
+      column = lineColumn;
+      row = lineRow;
+      lineZ--;
+    }
+
+    plainIndex++;
+
+    if (plainIndex < totalPlains) {
+      onPlainIndexChanged();
+      return;
+    }
+
+    end();
   }
 
   @override
   void updateFunction() {
+    updatePlain();
+    return;
+
     currentNodeZ++;
     if (currentNodeZ > nodesMaxZ) {
       currentNodeZ = 0;
@@ -257,7 +353,7 @@ class RendererNodes extends IsometricRenderer {
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = scene.nodeTypes[currentNodeIndex];
-    orderZ = currentNodeZ;
+    // orderZ = currentNodeZ;
     order = (row + column).toDouble() - 0.5;
   }
 
@@ -266,6 +362,12 @@ class RendererNodes extends IsometricRenderer {
 
   @override
   void reset() {
+    final columns = scene.totalColumns;
+    final rows = scene.totalRows;
+    final height = scene.totalZ;
+    totalPlains = columns + rows + height - 2;
+    plainIndex = 0;
+    onPlainIndexChanged();
     nodesRowsMax = scene.totalRows - 1;
     nodesGridTotalZMinusOne = scene.totalZ - 1;
     offscreenNodesTop = 0;
@@ -275,7 +377,7 @@ class RendererNodes extends IsometricRenderer {
     offscreenNodes = 0;
     onscreenNodes = 0;
     nodesMinZ = 0;
-    orderZ = 0;
+    // orderZ = 0;
     currentNodeZ = 0;
     nodesGridTotalColumnsMinusOne = scene.totalColumns - 1;
     playerZ = gamestream.isometric.player.position.indexZ;

@@ -6,7 +6,6 @@ abstract class IsometricRenderer {
   var _index = 0;
   var total = 0;
   var order = 0.0;
-  var orderZ = 0;
   var remaining = true;
 
   final IsometricScene scene;
