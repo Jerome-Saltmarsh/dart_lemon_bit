@@ -1420,6 +1420,12 @@ class IsometricScene {
 
     return nearestLightSourceIndex;
   }
+
+  int getNumberOfPlanes() => totalRows + totalColumns + totalZ - 2;
+
+  void generatePlain(){
+
+  }
 }
 
 

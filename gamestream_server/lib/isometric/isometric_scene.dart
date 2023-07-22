@@ -497,4 +497,9 @@ class IsometricScene {
     }
     return -1;
   }
+
+  var indexRenderOrder = Uint16List(0);
+  var nodePlains = Uint16List(0);
+  var nodePlainIndex = Uint16List(0);
+  var nodePlainLength = Uint16List(0);
 }
