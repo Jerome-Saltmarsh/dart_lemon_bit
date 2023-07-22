@@ -282,7 +282,6 @@ class RendererNodes extends IsometricRenderer {
 
           currentNodeIndex += shiftRight;
           currentNodeDstX += Node_Sprite_Width;
-          currentNodeDstY += Node_Height;
         }
       }
 
@@ -295,6 +294,7 @@ class RendererNodes extends IsometricRenderer {
       column = lineColumn;
       row = lineRow;
       lineZ--;
+      currentNodeDstY += Node_Height;
     }
 
     plainIndex++;
