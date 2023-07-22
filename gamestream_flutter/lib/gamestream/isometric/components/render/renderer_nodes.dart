@@ -163,13 +163,7 @@ class RendererNodes extends IsometricRenderer {
 
   int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
 
-  int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - scene.area);
-
-  int getNodeColorAtIndex(int index){
-    if (index < 0) return scene.ambientColor;
-    if (index >= scene.total) return scene.ambientColor;
-    return scene.nodeColors[index];
-  }
+  int get renderNodeBelowColor => scene.getNodeColorAtIndex(currentNodeIndex - scene.area);
 
   @override
   void renderFunction() {
@@ -1621,8 +1615,7 @@ class RendererNodes extends IsometricRenderer {
       srcHeight: AtlasNode.Node_Tree_Bottom_Height,
       dstX: currentNodeDstX,
       dstY: currentNodeDstY,
-      // color: renderNodeBelowColor,
-      color: getNodeColorAtIndex(currentNodeIndex),
+      color: scene.getNodeColorAtIndex(currentNodeIndex),
     );
   }
 
@@ -1635,8 +1628,7 @@ class RendererNodes extends IsometricRenderer {
       srcHeight: 72,
       dstX: currentNodeDstX,
       dstY: currentNodeDstY,
-      // color: renderNodeBelowColor,
-      color: getNodeColorAtIndex(currentNodeIndex),
+      color: scene.getNodeColorAtIndex(currentNodeIndex),
       anchorY: 0.5,
     );
   }

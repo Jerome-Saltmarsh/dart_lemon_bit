@@ -1421,6 +1421,9 @@ class IsometricScene {
     return nearestLightSourceIndex;
   }
 
+  int getNodeColorAtIndex(int index )=>
+      index < 0 || index >= total ? ambientColor : nodeColors[index];
+
   int getNumberOfPlanes() => totalRows + totalColumns + totalZ - 2;
 
   void generatePlain(){
