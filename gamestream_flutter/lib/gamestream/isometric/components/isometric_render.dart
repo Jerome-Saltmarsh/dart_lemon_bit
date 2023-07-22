@@ -465,8 +465,8 @@ class IsometricRender {
 
 
   void renderObjectRadius() {
-    for (var i = 0; i < gamestream.isometric.server.totalCharacters; i++) {
-      final character = gamestream.isometric.server.characters[i];
+    for (var i = 0; i < gamestream.isometric.scene.totalCharacters; i++) {
+      final character = gamestream.isometric.scene.characters[i];
       gamestream.engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }

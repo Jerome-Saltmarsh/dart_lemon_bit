@@ -177,10 +177,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                 final serverState = isometric.server;
                 final player = isometric.player;
-                final totalCharacters = serverState.totalCharacters;
+                final totalCharacters = isometric.scene.totalCharacters;
 
                 for (var i = 0; i < totalCharacters; i++) {
-                  final character = serverState.characters[i];
+                  final character = isometric.scene.characters[i];
                   final isPlayer = player.isCharacter(character);
                   gamestream.engine.renderExternalCanvas(
                       canvas: canvas,

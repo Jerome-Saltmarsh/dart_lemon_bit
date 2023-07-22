@@ -23,7 +23,7 @@ extension ServerResponseReader on Gamestream {
     assert (values.isNotEmpty);
     updateFrame.value++;
     index = 0;
-    isometric.server.totalCharacters = 0;
+    isometric.scene.totalCharacters = 0;
     this.values = values;
     bufferSize.value = values.length;
     bufferSizeTotal.value += values.length;
@@ -370,11 +370,12 @@ extension ServerResponseReader on Gamestream {
 
   void readIsometricCharacters(){
      final server = isometric.server;
+     final scene = isometric.scene;
      while (true) {
 
        final compressionLevel = readByte();
       if (compressionLevel == CHARACTER_END) break;
-      final character = server.getCharacterInstance();
+      final character = scene.getCharacterInstance();
 
 
       final stateAChanged = readBitFromByte(compressionLevel, 0);
@@ -424,7 +425,7 @@ extension ServerResponseReader on Gamestream {
       if (character.characterType == CharacterType.Template){
         readCharacterTemplate(character);
       }
-      server.totalCharacters++;
+      scene.totalCharacters++;
     }
   }
 

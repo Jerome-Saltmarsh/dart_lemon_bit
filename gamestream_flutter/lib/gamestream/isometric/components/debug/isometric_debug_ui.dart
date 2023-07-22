@@ -161,7 +161,7 @@ extension isometricDebugUI on IsometricDebug {
                   'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
                   'scene-light-active: ${gamestream.isometric.client.lights_active}\n'
                   'total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n'
-                  'total-characters: ${gamestream.isometric.server.totalCharacters}\n'
+                  'total-characters: ${gamestream.isometric.scene.totalCharacters}\n'
                   'total-particles: ${gamestream.isometric.particles.particles.length}\n'
                   'total-particles-active: ${gamestream.isometric.particles.countActiveParticles}\n'
           )),
@@ -179,8 +179,8 @@ extension isometricDebugUI on IsometricDebug {
       Column(
         children: [
           onPressed(
-              action: gamestream.isometric.client.toggleDynamicShadows,
-              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.client.dynamicShadows}'))
+              action: gamestream.isometric.scene.toggleDynamicShadows,
+              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.scene.dynamicShadows}'))
           ),
           onPressed(
               child: GSRefresh(() => buildText('blend-mode: ${gamestream.engine.bufferBlendMode.name}')),

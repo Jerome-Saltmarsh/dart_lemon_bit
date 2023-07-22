@@ -27,8 +27,6 @@ mixin class IsometricClient {
   var nextLightingUpdate = 0;
   var lights_active = 0;
   var interpolation_padding = 0.0;
-  var dynamicShadows = true;
-  var emissionAlphaCharacter = 50;
   var torch_emission_start = 0.8;
   var torch_emission_end = 1.0;
   var torch_emission_vel = 0.061;
@@ -57,7 +55,7 @@ mixin class IsometricClient {
   void applyEmissions(){
     lights_active = 0;
     gamestream.isometric.scene.applyEmissionsLightSources();
-    applyEmissionsCharacters();
+    gamestream.isometric.scene.applyEmissionsCharacters();
     gamestream.isometric.server.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
@@ -80,37 +78,13 @@ mixin class IsometricClient {
   }
 
   void applyCharacterColors(){
-    for (var i = 0; i < gamestream.isometric.server.totalCharacters; i++){
-      applyCharacterColor(gamestream.isometric.server.characters[i]);
+    for (var i = 0; i < gamestream.isometric.scene.totalCharacters; i++){
+      applyCharacterColor(gamestream.isometric.scene.characters[i]);
     }
   }
 
   void applyCharacterColor(IsometricCharacter character){
     character.color = gamestream.isometric.scene.getRenderColorPosition(character);
-  }
-
-  void applyEmissionsCharacters() {
-    final serverState = gamestream.isometric.server;
-    final characters = serverState.characters;
-    for (var i = 0; i < serverState.totalCharacters; i++) {
-      final character = characters[i];
-      if (!character.allie) continue;
-
-      if (character.weaponType == WeaponType.Staff){
-        applyVector3Emission(
-          character,
-          alpha: 150,
-          saturation: 100,
-          value: 100,
-          hue: 50,
-        );
-      } else {
-        applyVector3EmissionAmbient(
-          character,
-          alpha: emissionAlphaCharacter,
-        );
-      }
-    }
   }
 
   void applyEmissionsProjectiles() {
@@ -121,7 +95,7 @@ mixin class IsometricClient {
 
   void applyProjectileEmission(IsometricProjectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      applyVector3Emission(projectile,
+      gamestream.isometric.scene.applyVector3Emission(projectile,
         hue: 100,
         saturation: 1,
         value: 1,
@@ -130,13 +104,13 @@ mixin class IsometricClient {
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      applyVector3EmissionAmbient(projectile,
+      gamestream.isometric.scene.applyVector3EmissionAmbient(projectile,
         alpha: 50,
       );
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      applyVector3Emission(projectile,
+      gamestream.isometric.scene.applyVector3Emission(projectile,
         hue: 167,
         alpha: 50,
         saturation: 1,
@@ -145,51 +119,11 @@ mixin class IsometricClient {
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      applyVector3EmissionAmbient(projectile,
+      gamestream.isometric.scene.applyVector3EmissionAmbient(projectile,
         alpha: 50,
       );
       return;
     }
-  }
-
-  /// @hue a number between 0 and 360
-  /// @saturation a number between 0 and 100
-  /// @value a number between 0 and 100
-  /// @alpha a number between 0 and 255
-  /// @intensity a number between 0.0 and 1.0
-  void applyVector3Emission(IsometricPosition v, {
-    required int hue,
-    required int saturation,
-    required int value,
-    required int alpha,
-    double intensity = 1.0,
-  }){
-    if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
-    gamestream.isometric.scene.emitLightAHSVShadowed(
-      index: gamestream.isometric.scene.getIndexPosition(v),
-      hue: hue,
-      saturation: saturation,
-      value: value,
-      alpha: alpha,
-      intensity: intensity,
-    );
-  }
-
-  /// @alpha a number between 0 and 255
-  /// @intensity a number between 0.0 and 1.0
-  void applyVector3EmissionAmbient(IsometricPosition v, {
-    required int alpha,
-    double intensity = 1.0,
-  }){
-    assert (intensity >= 0);
-    assert (intensity <= 1);
-    assert (alpha >= 0);
-    assert (alpha <= 255);
-    if (!gamestream.isometric.scene.inBoundsPosition(v)) return;
-    gamestream.isometric.scene.emitLightAmbient(
-      index: gamestream.isometric.scene.getIndexPosition(v),
-      alpha: linearInterpolateInt(gamestream.isometric.scene.ambientHue, alpha , intensity),
-    );
   }
 
   void clear() {
@@ -368,8 +302,6 @@ mixin class IsometricClient {
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
-
-  void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
 
   void showMessage(String message){
     messageStatus.value = '';

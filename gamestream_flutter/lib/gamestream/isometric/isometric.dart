@@ -188,10 +188,10 @@ class Isometric {
     player.indexZ = 0;
     player.indexRow = 0;
     player.indexColumn = 0;
-    server.characters.clear();
+    scene.characters.clear();
     server.projectiles.clear();
     server.gameObjects.clear();
     server.totalProjectiles = 0;
-    server.totalCharacters = 0;
+    scene.totalCharacters = 0;
   }
 }

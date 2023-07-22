@@ -2,12 +2,18 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../classes/isometric_position.dart';
 
 class IsometricScene {
+
+  var emissionAlphaCharacter = 50;
+  var dynamicShadows = true;
+  var totalCharacters = 0;
+  final characters = <IsometricCharacter>[];
 
   var ambientColorRGB  = Color.fromRGBO(31, 1, 86, 0.5);
   late var ambientColorHSV  = HSVColor.fromColor(ambientColorRGB);
@@ -235,7 +241,7 @@ class IsometricScene {
     required int alpha,
   }){
 
-    if (gamestream.isometric.client.dynamicShadows) {
+    if (dynamicShadows) {
       emitLightAmbientShadows(
         index: index,
         alpha: alpha,
@@ -1424,11 +1430,76 @@ class IsometricScene {
   int getNodeColorAtIndex(int index )=>
       index < 0 || index >= total ? ambientColor : nodeColors[index];
 
-  int getNumberOfPlanes() => totalRows + totalColumns + totalZ - 2;
-
-  void generatePlain(){
-
+  IsometricCharacter getCharacterInstance(){
+    if (characters.length <= totalCharacters){
+      characters.add(IsometricCharacter());
+    }
+    return characters[totalCharacters];
   }
+
+  void applyEmissionsCharacters() {
+    for (var i = 0; i < totalCharacters; i++) {
+      final character = characters[i];
+      if (!character.allie) continue;
+
+      if (character.weaponType == WeaponType.Staff){
+        applyVector3Emission(
+          character,
+          alpha: 150,
+          saturation: 100,
+          value: 100,
+          hue: 50,
+        );
+      } else {
+        applyVector3EmissionAmbient(
+          character,
+          alpha: emissionAlphaCharacter,
+        );
+      }
+    }
+  }
+
+  /// @hue a number between 0 and 360
+  /// @saturation a number between 0 and 100
+  /// @value a number between 0 and 100
+  /// @alpha a number between 0 and 255
+  /// @intensity a number between 0.0 and 1.0
+  void applyVector3Emission(IsometricPosition v, {
+    required int hue,
+    required int saturation,
+    required int value,
+    required int alpha,
+    double intensity = 1.0,
+  }){
+    if (!inBoundsPosition(v)) return;
+    emitLightAHSVShadowed(
+      index: getIndexPosition(v),
+      hue: hue,
+      saturation: saturation,
+      value: value,
+      alpha: alpha,
+      intensity: intensity,
+    );
+  }
+
+  /// @alpha a number between 0 and 255
+  /// @intensity a number between 0.0 and 1.0
+  void applyVector3EmissionAmbient(IsometricPosition v, {
+    required int alpha,
+    double intensity = 1.0,
+  }){
+    assert (intensity >= 0);
+    assert (intensity <= 1);
+    assert (alpha >= 0);
+    assert (alpha <= 255);
+    if (!inBoundsPosition(v)) return;
+    emitLightAmbient(
+      index: getIndexPosition(v),
+      alpha: linearInterpolateInt(ambientHue, alpha , intensity),
+    );
+  }
+
+  void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
 }
 
 

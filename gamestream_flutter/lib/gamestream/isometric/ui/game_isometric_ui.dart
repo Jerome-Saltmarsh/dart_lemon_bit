@@ -147,11 +147,12 @@ class GameIsometricUI {
 
         gamestream.isometric.minimap.renderCanvas(canvas);
 
+        final scene = gamestream.isometric.scene;
         final serverState = gamestream.isometric.server;
         final player = gamestream.isometric.player;
 
-        for (var i = 0; i < serverState.totalCharacters; i++) {
-          final character = serverState.characters[i];
+        for (var i = 0; i < scene.totalCharacters; i++) {
+          final character = scene.characters[i];
           final isPlayer = player.isCharacter(character);
           gamestream.engine.renderExternalCanvas(
               canvas: canvas,
