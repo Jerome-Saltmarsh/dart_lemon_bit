@@ -232,51 +232,6 @@ class GameIsometricUI {
               (int frames) =>
               buildText('Warning: No message received from server $frames')));
 
-  static Widget buildPlayersScore(){
-    return IgnorePointer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildWatch(gamestream.isometric.server.highScore, (int highScore){
-            return buildText('WORLD RECORD: $highScore');
-          }),
-          height8,
-          buildWatch(gamestream.isometric.server.playerScoresReads, (_) => Container(
-            padding: GameStyle.Padding_6,
-            color: Colors.black26,
-            constraints: BoxConstraints(
-              maxHeight: 400,
-            ),
-            width: 180,
-            child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: gamestream.isometric.server.playerScores
-                      .map(buildRowPlayerScore)
-                      .toList(growable: false)
-              ),
-            ),
-          )),
-        ],
-      ),
-    );
-  }
-
-  static Widget buildRowPlayerScore(IsometricPlayerScore playerScore) =>
-      Container(
-        color: playerScore.id == gamestream.isometric.player.id.value
-            ? Colors.white10
-            : Colors.transparent,
-        padding: GameStyle.Padding_4,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            buildText(playerScore.name, bold: playerScore.id == gamestream.isometric.player.id.value),
-            buildText(playerScore.credits, bold: playerScore.id == gamestream.isometric.player.id.value),
-          ],
-        ),
-      );
-
   static Widget buildMainMenu({List<Widget>? children}) {
     final controlTime = buildTime();
     return MouseRegion(

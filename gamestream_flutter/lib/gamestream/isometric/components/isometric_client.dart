@@ -197,10 +197,7 @@ mixin class IsometricClient {
     gamestream.isometric.player.position.y = -1;
     gamestream.isometric.player.gameDialog.value = null;
     gamestream.isometric.player.npcTalkOptions.value = [];
-    gamestream.isometric.server.totalZombies = 0;
-    gamestream.isometric.server.totalPlayers = 0;
     gamestream.isometric.server.totalProjectiles = 0;
-    gamestream.isometric.server.totalNpcs = 0;
     gamestream.isometric.particles.particles.clear();
     gamestream.engine.zoom = 1;
   }

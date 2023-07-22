@@ -13,14 +13,10 @@ import '../classes/isometric_projectile.dart';
 /// the data inside server state belongs to the server and can only be written by serverResponseReader
 class IsometricServer {
   var totalCharacters = 0;
-  var totalPlayers = 0;
-  var totalNpcs = 0;
-  var totalZombies = 0;
   var totalProjectiles = 0;
   var inventory = Uint16List(0);
   var inventoryQuantity = Uint16List(0);
 
-  final playerScores = <IsometricPlayerScore>[];
   final gameObjects = <IsometricGameObject>[];
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
@@ -163,20 +159,6 @@ class IsometricServer {
 
   void removeGameObjectById(int id )=>
       gameObjects.removeWhere((element) => element.id == id);
-
-  void sortPlayerScores(){
-    playerScores.sort(IsometricPlayerScore.compare);
-  }
-
-  bool get playerScoresInOrder {
-    final total = playerScores.length;
-    if (total <= 1) return true;
-    for (var i = 0; i < total - 1; i++){
-      if (playerScores[i].credits > playerScores[i + 1].credits)
-        return false;
-    }
-    return true;
-  }
 
   void updateProjectiles() {
     for (var i = 0; i < totalProjectiles; i++) {

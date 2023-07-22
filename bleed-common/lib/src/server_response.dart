@@ -20,7 +20,6 @@ class ServerResponse {
   static const GameObjects                = 23;
   static const GameObject_Deleted         = 24;
   static const Info                       = 26;
-  static const Api_Players                = 27;
   static const Api_SPR                    = 28;
   static const High_Score                 = 29;
   static const Fight2D                    = 30;
@@ -55,7 +54,6 @@ class ServerResponse {
       GameObjects: 'GameObjects',
       GameObject_Deleted: 'GameObject_Deleted',
       Info: 'Info',
-      Api_Players: 'Api_Players',
       Api_SPR: 'Api_SPR',
       High_Score: 'High_Score',
       Fight2D: 'Fight2D',

@@ -481,6 +481,7 @@ class IsometricScene {
       y >= columnLength ||
       z >= heightLength;
 
+
   int getRow(int nodeIndex) => (nodeIndex % area) ~/ columns;
 
   int getColumn(int nodeIndex) => (nodeIndex) % columns;

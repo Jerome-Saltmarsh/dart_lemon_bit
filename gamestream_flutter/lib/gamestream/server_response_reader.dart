@@ -69,9 +69,6 @@ extension ServerResponseReader on Gamestream {
         case ServerResponse.Player_Event:
           readPlayerEvent();
           break;
-        case ServerResponse.Api_Players:
-          readApiPlayers();
-          break;
         case ServerResponse.Game_Time:
           readGameTime();
           break;
@@ -566,51 +563,6 @@ extension ServerResponseReader on Gamestream {
       valueMap[key] = values;
     }
     return valueMap;
-  }
-
-  void readApiPlayers() {
-    switch (readUInt8()) {
-      case ApiPlayers.All:
-        readApiPlayersAll();
-        break;
-      case ApiPlayers.Score:
-        readApiPlayersScore();
-        break;
-      default:
-        throw Exception('readApiPlayers()');
-    }
-  }
-
-  void readApiPlayersAll() {
-     final total = readUInt16();
-     isometric.server.playerScores.clear();
-     for (var i = 0; i < total; i++) {
-       final id = readUInt24();
-       final name = readString();
-       final credits = readUInt24();
-       isometric.server.playerScores.add(
-         IsometricPlayerScore(
-           id: id,
-           name: name,
-           credits: credits,
-         )
-       );
-     }
-     isometric.server.sortPlayerScores();
-     isometric.server.playerScoresReads.value++;
-  }
-
-  void readApiPlayersScore() {
-    final id = readUInt24();
-    final credits = readUInt24();
-
-    for (final player in isometric.server.playerScores) {
-      if (player.id != id) continue;
-      player.credits = credits;
-      break;
-    }
-    isometric.server.sortPlayerScores();
-    isometric.server.playerScoresReads.value++;
   }
 
   void readServerResponseApiSPR() {

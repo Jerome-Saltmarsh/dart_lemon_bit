@@ -14,6 +14,7 @@ alt + m             : go to declaration
 - floating txt on acquire health and xp
 
 [TODO]
+[ ] add torch tree cache
 [ ] zombie death animation
 [ ] sounds on item drop for treasures
 [ ] character stats dialog
@@ -34,6 +35,8 @@ alt + m             : go to declaration
 [*] optimize light tree
 [*] character persistence
 [*] fix colored lights
+
+22.07.2023
 [*] fix grid render order
 
 21.07.2023

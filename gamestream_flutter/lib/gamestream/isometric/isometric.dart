@@ -3,7 +3,6 @@
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
@@ -194,8 +193,5 @@ class Isometric {
     server.gameObjects.clear();
     server.totalProjectiles = 0;
     server.totalCharacters = 0;
-    server.totalPlayers = 0;
-    server.totalZombies = 0;
-    server.totalNpcs = 0;
   }
 }
