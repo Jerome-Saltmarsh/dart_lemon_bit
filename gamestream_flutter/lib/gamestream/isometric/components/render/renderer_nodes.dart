@@ -253,7 +253,7 @@ class RendererNodes extends IsometricRenderer {
     while (lineZ >= 0) {
       // increment line
       z = lineZ;
-      currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height) - Node_Height;
+      currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
       if (currentNodeDstY > screenTop) {
 
@@ -262,7 +262,7 @@ class RendererNodes extends IsometricRenderer {
         }
 
         currentNodeIndex = scene.getIndexZRC(lineZ, lineRow, lineColumn);
-        currentNodeDstX = (row - column) * Node_Size_Half - Node_Sprite_Width;
+        currentNodeDstX = (row - column) * Node_Size_Half;
 
         while (true) {
           if (currentNodeDstX > screenLeft &&
