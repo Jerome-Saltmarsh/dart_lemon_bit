@@ -9,14 +9,14 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
-  var orderShiftY = 150.0;
+  var orderShiftY = 151.0;
 
   void increaseOrderShiftY(){
-    orderShiftY += 5;
+    orderShiftY++;
   }
 
   void decreaseOrderShiftY(){
-    orderShiftY -= 5;
+    orderShiftY--;
   }
 
   static const MapNodeTypeToSrcY = <int, double>{
