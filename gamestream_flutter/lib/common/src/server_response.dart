@@ -21,7 +21,6 @@ class ServerResponse {
   static const GameObject_Deleted         = 24;
   static const Info                       = 26;
   static const Api_SPR                    = 28;
-  static const High_Score                 = 29;
   static const Fight2D                    = 30;
   static const Capture_The_Flag           = 31;
   static const MMO                        = 32;
@@ -55,7 +54,6 @@ class ServerResponse {
       GameObject_Deleted: 'GameObject_Deleted',
       Info: 'Info',
       Api_SPR: 'Api_SPR',
-      High_Score: 'High_Score',
       Fight2D: 'Fight2D',
       Capture_The_Flag: 'Capture_The_Flag',
       MMO: 'MMO',

@@ -291,7 +291,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writePlayerSpawned();
       writePlayerHealth();
       writePlayerAlive();
-      writeHighScore();
       writeDebugging();
       writePlayerControls();
     }
@@ -311,19 +310,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeProjectiles();
     writeCharacters();
     writeEditorGameObjectSelected();
-
     writeGameTime();
-
-  }
-
-  void writeHighScore(){
-    writeByte(ServerResponse.High_Score);
-    writeUInt24(0);
-  }
-
-  void writePlayerStats(){
-    writePlayerHealth();
-    writePlayerAlive();
   }
 
   void writeGameObjects(){

@@ -1176,7 +1176,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.writePlayerMoved();
     player.writeApiPlayerSpawned();
     player.writePlayerAlive();
-    player.writePlayerStats();
+    player.writePlayerHealth();
     player.writeGameTime();
     player.health = player.maxHealth;
   }

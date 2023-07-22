@@ -20,8 +20,6 @@ class IsometricServer {
   final gameObjects = <IsometricGameObject>[];
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
-  final playerScoresReads = Watch(0);
-  final highScore = Watch(0);
   final playerExperiencePercentage = Watch(0.0);
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);

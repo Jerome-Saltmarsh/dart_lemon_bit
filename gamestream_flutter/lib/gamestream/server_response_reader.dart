@@ -118,9 +118,6 @@ extension ServerResponseReader on Gamestream {
         case ServerResponse.MMO:
           readMMOResponse();
           break;
-        case ServerResponse.High_Score:
-          isometric.server.highScore.value = readUInt24();
-          break;
         case ServerResponse.Download_Scene:
           final name = readString();
           final length = readUInt16();

@@ -19,26 +19,12 @@ class Gamestream {
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
   late final server = WebSocketServer(this);
 
-  var _highScore = 0;
   var frame = 0;
 
-  int get highScore => _highScore;
-
-  set highScore(int value) {
-    if (_highScore == value) return;
-    _highScore = value;
-    database.writeHighScore(_highScore);
-    dispatchHighScore();
-  }
 
   Future run() async {
     print('gamestream-version: $version');
     print('dart-version: ${Platform.version}');
-
-    await database.connect();
-    database.getHighScore().then((value) {
-      highScore = value;
-    });
 
     MmoGame.validate();
 
@@ -60,16 +46,6 @@ class Gamestream {
     Timer.periodic(
         Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
     server.start();
-  }
-
-  void dispatchHighScore() {
-    for (final game in games) {
-      for (final player in game.players) {
-        if (player is IsometricPlayer) {
-          player.writeHighScore();
-        }
-      }
-    }
   }
 
   void _fixedUpdate(Timer timer) {
