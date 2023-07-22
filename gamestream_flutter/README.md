@@ -14,7 +14,8 @@ alt + m             : go to declaration
 - floating txt on acquire health and xp
 
 [TODO]
-[ ] add torch tree cache
+[ ] fix node transparency
+[ ] fix select position when up higher
 [ ] zombie death animation
 [ ] sounds on item drop for treasures
 [ ] character stats dialog
@@ -23,15 +24,16 @@ alt + m             : go to declaration
 [ ] ui items draggable
 [ ] fix ai path following
 [ ] fix character light emission
-[ ] 3d character shadows
 [ ] pathfinding separate and left and right stack frames
 [ ] town stash (automatically opens when nearby)
 [ ] character type skeleton 
 [ ] character type float skeleton head
 [ ] npc store
-[-] refactor lemon engine
+[-] remove isometric client
+[-] remove isometric server
 [-] remove gamestream global instance
 [-] remove all static instances
+[*] optimize render nodes
 [*] optimize light tree
 [*] character persistence
 [*] fix colored lights

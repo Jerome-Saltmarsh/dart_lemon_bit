@@ -8,13 +8,12 @@ import '../atlases/atlas_nodes.dart';
 import '../enums/emission_type.dart';
 import '../enums/touch_button_side.dart';
 import '../classes/isometric_character.dart';
-import '../classes/isometric_position.dart';
 import '../classes/isometric_projectile.dart';
 import 'functions/format_bytes.dart';
 
 
 mixin class IsometricClient {
-  final sceneChanged = Watch(0);
+  final nodesChangedNotifier = Watch(0);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   final overrideColor = WatchBool(false);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
@@ -25,12 +24,12 @@ mixin class IsometricClient {
   var messageStatusDuration = 0;
   var areaTypeVisibleDuration = 0;
   var nextLightingUpdate = 0;
-  var lights_active = 0;
+  var totalActiveLights = 0;
   var interpolation_padding = 0.0;
-  var torch_emission_start = 0.8;
-  var torch_emission_end = 1.0;
-  var torch_emission_vel = 0.061;
-  var torch_emission_t = 0.0;
+  var torchEmissionStart = 0.8;
+  var torchEmissionEnd = 1.0;
+  var torchEmissionVal = 0.061;
+  var torchEmissionT = 0.0;
   var nodesRaycast = 0;
   var windLine = 0;
 
@@ -53,7 +52,7 @@ mixin class IsometricClient {
   // ACTIONS
 
   void applyEmissions(){
-    lights_active = 0;
+    totalActiveLights = 0;
     gamestream.isometric.scene.applyEmissionsLightSources();
     gamestream.isometric.scene.applyEmissionsCharacters();
     gamestream.isometric.server.applyEmissionGameObjects();
@@ -139,21 +138,21 @@ mixin class IsometricClient {
   int get bodyPartDuration =>  randomInt(120, 200);
 
   void updateTorchEmissionIntensity(){
-    if (torch_emission_vel == 0) return;
-    torch_emission_t += torch_emission_vel;
+    if (torchEmissionVal == 0) return;
+    torchEmissionT += torchEmissionVal;
 
     if (
-    torch_emission_t < torch_emission_start ||
-        torch_emission_t > torch_emission_end
+    torchEmissionT < torchEmissionStart ||
+        torchEmissionT > torchEmissionEnd
     ) {
-      torch_emission_t = clamp(torch_emission_t, torch_emission_start, torch_emission_end);
-      torch_emission_vel = -torch_emission_vel;
+      torchEmissionT = clamp(torchEmissionT, torchEmissionStart, torchEmissionEnd);
+      torchEmissionVal = -torchEmissionVal;
     }
 
     gamestream.isometric.scene.torch_emission_intensity = interpolateDouble(
-      start: torch_emission_start,
-      end: torch_emission_end,
-      t: torch_emission_t,
+      start: torchEmissionStart,
+      end: torchEmissionEnd,
+      t: torchEmissionT,
     );
   }
 

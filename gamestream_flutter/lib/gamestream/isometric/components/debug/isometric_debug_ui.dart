@@ -159,7 +159,7 @@ extension isometricDebugUI on IsometricDebug {
                   'aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n'
                   'target-position: ${gamestream.isometric.player.targetPosition}\n'
                   'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
-                  'scene-light-active: ${gamestream.isometric.client.lights_active}\n'
+                  'scene-light-active: ${gamestream.isometric.client.totalActiveLights}\n'
                   'total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n'
                   'total-characters: ${gamestream.isometric.scene.totalCharacters}\n'
                   'total-particles: ${gamestream.isometric.particles.particles.length}\n'

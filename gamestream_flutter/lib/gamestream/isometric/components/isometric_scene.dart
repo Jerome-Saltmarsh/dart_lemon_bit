@@ -456,7 +456,7 @@ class IsometricScene {
     if (ry < gamestream.engine.Screen_Top - padding) return;
     if (ry > gamestream.engine.Screen_Bottom + padding) return;
 
-    gamestream.isometric.client.lights_active++;
+    gamestream.isometric.client.totalActiveLights++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -553,7 +553,7 @@ class IsometricScene {
     final ry = getIndexRenderY(index);
     if (ry < gamestream.engine.Screen_Top - padding) return;
     if (ry > gamestream.engine.Screen_Bottom + padding) return;
-    gamestream.isometric.client.lights_active++;
+    gamestream.isometric.client.totalActiveLights++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);

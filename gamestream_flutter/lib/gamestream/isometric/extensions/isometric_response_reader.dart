@@ -168,7 +168,7 @@ extension IsometricResponseReader on Gamestream {
     isometric.client.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
     isometric.events.onChangedNodes();
     isometric.scene.refreshNodeVariations();
-    isometric.client.sceneChanged.value++;
+    isometric.client.nodesChangedNotifier.value++;
     isometric.particles.particles.clear();
     io.recenterCursor();
   }
