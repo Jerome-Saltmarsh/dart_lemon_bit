@@ -41,13 +41,13 @@ class IsometricPosition implements Comparable<IsometricPosition>{
 
   @override
   int compareTo(IsometricPosition that) {
-    final thisSortThat = this.sortOrder;
-    final thatSortOrder = that.sortOrder;
+    final thisRenderOrder = this.sortOrder;
+    final thatRenderOrder = that.sortOrder;
 
-    if (thisSortThat < thatSortOrder)
+    if (thisRenderOrder < thatRenderOrder)
       return -1;
 
-    if (thisSortThat > thatSortOrder)
+    if (thisRenderOrder > thatRenderOrder)
       return 1;
 
     return 0;

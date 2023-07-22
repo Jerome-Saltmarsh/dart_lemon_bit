@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
@@ -70,7 +71,6 @@ class Isometric {
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
 
-
   void update(){
     if (!server.gameRunning.value) {
       gamestream.io.writeByte(ClientRequest.Update);
@@ -78,6 +78,7 @@ class Isometric {
       gamestream.io.sendUpdateBuffer();
       return;
     }
+
     gamestream.audio.update();
     particles.updateParticles();
     animation.updateAnimationFrame();

@@ -9,6 +9,16 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  var orderShiftY = 150.0;
+
+  void increaseOrderShiftY(){
+    orderShiftY += 5;
+  }
+
+  void decreaseOrderShiftY(){
+    orderShiftY -= 5;
+  }
+
   static const MapNodeTypeToSrcY = <int, double>{
     NodeType.Brick: 1760,
     NodeType.Grass: 1808,
@@ -222,7 +232,7 @@ class RendererNodes extends IsometricRenderer {
     plainStartRow = clamp(plainIndex - (height + columns), 0, rowMax);
     plainStartColumn = clamp(plainIndex - height + 1, 0, columnMax);
     plainStartZ = clamp(plainIndex, 0, heightMax);
-    order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height) + Node_Size_Half + 140;
+    order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height) + orderShiftY;
 
   }
 

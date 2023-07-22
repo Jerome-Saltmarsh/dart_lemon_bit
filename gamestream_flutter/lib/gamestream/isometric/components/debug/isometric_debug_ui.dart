@@ -464,6 +464,19 @@ extension isometricDebugUI on IsometricDebug {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.renderer.rendererNodes.orderShiftY))),
+        onPressed(
+          action: isometric.renderer.rendererNodes.increaseOrderShiftY,
+          child: buildText('increase'),
+        ),
+        onPressed(
+          action: isometric.renderer.rendererNodes.decreaseOrderShiftY,
+          child: buildText('decrease'),
+        ),
+        onPressed(
+          action: isometric.options.toggleRenderHealthbarAllies,
+          child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarAllies))),
+        ),
         onPressed(
             action: isometric.options.toggleRenderHealthbarAllies,
             child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarAllies))),

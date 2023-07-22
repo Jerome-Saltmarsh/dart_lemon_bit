@@ -7,8 +7,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/extens
 import 'package:gamestream_flutter/library.dart';
 
 class RendererCharacters extends IsometricRenderer {
-  static const Character_Shadow_Distance_Max = 20.0;
-  static const Character_Shadow_Distance_Ratio = 0.15;
   late IsometricCharacter character;
 
   RendererCharacters(super.scene);
@@ -17,8 +15,11 @@ class RendererCharacters extends IsometricRenderer {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    while (index < gamestream.isometric.server.totalCharacters){
-      character = gamestream.isometric.server.characters[index];
+    final totalCharacters = gamestream.isometric.server.totalCharacters;
+    final characters = gamestream.isometric.server.characters;
+
+    while (index < totalCharacters){
+      character = characters[index];
       order = character.sortOrder;
       if (scene.isPerceptiblePosition(character))
         break;
@@ -30,10 +31,6 @@ class RendererCharacters extends IsometricRenderer {
   int getTotal() => gamestream.isometric.server.totalCharacters;
 
   void renderCurrentCharacter(){
-
-    // if (gamestream.isometric.renderer.renderDebug) {
-    //   gamestream.isometric.renderer.renderCircle(character.x, character.y, character.z, character.radius);
-    // }
 
     if (!character.allie && gamestream.isometric.options.renderHealthBarEnemies) {
       renderer.renderCharacterHealthBar(character);
