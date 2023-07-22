@@ -16,8 +16,7 @@ void main() {
     final volume = area * height;
     final types = Uint8List(volume);
     final orientations = Uint8List(volume);
-    final alphas = Uint8List(volume);
-
+    final alphas = Uint8ClampedList(volume);
     final scene = IsometricScene();
 
     scene.hsvAlphas = alphas;

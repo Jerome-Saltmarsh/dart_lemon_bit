@@ -21,9 +21,9 @@ class IsometricScene {
   var nodesLightSourcesTotal = 0;
   var nodeColors = Uint32List(0);
   var hsvHue = Uint16List(0);
-  var hsvSaturation = Uint8List(0);
-  var hsvValues = Uint8List(0);
-  var hsvAlphas = Uint8List(0);
+  var hsvSaturation = Uint8ClampedList(0);
+  var hsvValues = Uint8ClampedList(0);
+  var hsvAlphas = Uint8ClampedList(0);
   var nodeOrientations = Uint8List(0);
   var nodeTypes = Uint8List(0);
   var nodeVariations = Uint8List(0);
@@ -128,9 +128,9 @@ class IsometricScene {
       colorStack = Uint16List(total);
       nodeColors = Uint32List(total);
       hsvHue = Uint16List(total);
-      hsvSaturation = Uint8List(total);
-      hsvValues = Uint8List(total);
-      hsvAlphas = Uint8List(total);
+      hsvSaturation = Uint8ClampedList(total);
+      hsvValues = Uint8ClampedList(total);
+      hsvAlphas = Uint8ClampedList(total);
     }
     for (var i = 0; i < total; i++) {
       nodeColors[i] = ambientColor;
