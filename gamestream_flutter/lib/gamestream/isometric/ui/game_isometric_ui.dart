@@ -127,7 +127,7 @@ class GameIsometricUI {
     );
 
   static Widget buildGeneratedMiniMap({required double translate}){
-    return buildWatch(gamestream.isometric.nodesChangedNotifier, (_){
+    return buildWatch(gamestream.nodesChangedNotifier, (_){
       return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
         const scale = 2.0;
         canvas.scale(scale, scale);
@@ -135,7 +135,7 @@ class GameIsometricUI {
         final screenCenterY = size.height * 0.5;
         const ratio = 2 / 48.0;
 
-        final chaseTarget = gamestream.isometric.camera.target;
+        final chaseTarget = gamestream.camera.target;
         if (chaseTarget != null){
           final targetX = chaseTarget.renderX * ratio;
           final targetY = chaseTarget.renderY * ratio;
@@ -144,10 +144,10 @@ class GameIsometricUI {
           canvas.translate(-cameraX, -cameraY);
         }
 
-        gamestream.isometric.minimap.renderCanvas(canvas);
+        gamestream.minimap.renderCanvas(canvas);
 
-        final scene = gamestream.isometric;
-        final player = gamestream.isometric.player;
+        final scene = gamestream;
+        final player = gamestream.player;
 
         for (var i = 0; i < scene.totalCharacters; i++) {
           final character = scene.characters[i];
@@ -174,7 +174,7 @@ class GameIsometricUI {
       child: Container(
         width: gamestream.engine.screen.width,
         alignment: Alignment.center,
-        child: buildWatch(gamestream.isometric.messageStatus, buildMessageStatus),
+        child: buildWatch(gamestream.messageStatus, buildMessageStatus),
       ),
     ),
   );
@@ -184,12 +184,12 @@ class GameIsometricUI {
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        gamestream.isometric.messageClear();
+        gamestream.messageClear();
       },
       child: Container(
         padding: const EdgeInsets.all(10),
         color: Colors.black12,
-        child: buildText(message, onPressed: gamestream.isometric.messageClear),),
+        child: buildText(message, onPressed: gamestream.messageClear),),
     );
   }
 
@@ -206,13 +206,13 @@ class GameIsometricUI {
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
         // gamestream.isometric.ui.mouseOverDialog.value = true;
-        gamestream.isometric.ui.windowOpenMenu.value = true;
+        gamestream.ui.windowOpenMenu.value = true;
       },
       onExit: (PointerExitEvent event) {
         // gamestream.isometric.ui.mouseOverDialog.value = false;
-        gamestream.isometric.ui.windowOpenMenu.value = false;
+        gamestream.ui.windowOpenMenu.value = false;
       },
-      child: buildWatch(gamestream.isometric.ui.windowOpenMenu, (bool menuVisible){
+      child: buildWatch(gamestream.ui.windowOpenMenu, (bool menuVisible){
         return Container(
           color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
           child: Column(
@@ -270,10 +270,10 @@ class GameIsometricUI {
               child: GameIsometricUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   static Widget buildIconZoom() => onPressed(
-      action: gamestream.isometric.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: gamestream.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconMenu() => onPressed(
-      action: gamestream.isometric.ui.windowOpenMenu.toggle,
+      action: gamestream.ui.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
@@ -281,7 +281,7 @@ class GameIsometricUI {
   );
 
   static Widget buildIconCog() => onPressed(
-      action: gamestream.isometric.ui.windowOpenMenu.toggle,
+      action: gamestream.ui.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog),
@@ -289,7 +289,7 @@ class GameIsometricUI {
   );
 
   static Widget buildIconCogTurned() => onPressed(
-      action: gamestream.isometric.ui.windowOpenMenu.toggle,
+      action: gamestream.ui.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog_Turned),
@@ -412,8 +412,8 @@ class GameIsometricUI {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(gamestream.isometric.player.maxHealth, (int maxHealth) {
-                return buildWatch(gamestream.isometric.player.health, (int health){
+              child: buildWatch(gamestream.player.maxHealth, (int maxHealth) {
+                return buildWatch(gamestream.player.health, (int health){
                   final percentage = health / max(maxHealth, 1);
                   return Container(
                     width: width,
@@ -457,8 +457,8 @@ class GameIsometricUI {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(gamestream.isometric.player.energyMax, (int energyMax) {
-                return buildWatch(gamestream.isometric.player.energy, (int energy){
+              child: buildWatch(gamestream.player.energyMax, (int energyMax) {
+                return buildWatch(gamestream.player.energy, (int energy){
                   return Container(
                     width: width,
                     height: height * energy / max(energyMax, 1),
@@ -496,13 +496,13 @@ class GameIsometricUI {
       );
 
   static Widget buildButtonTogglePlayMode() {
-    return buildWatch(gamestream.isometric.sceneEditable, (bool isOwner) {
+    return buildWatch(gamestream.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return buildWatch(gamestream.isometric.edit, (bool edit) {
+      return buildWatch(gamestream.edit, (bool edit) {
         return buildButton(
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',
-            action: gamestream.isometric.actionToggleEdit,
+            action: gamestream.actionToggleEdit,
             color: IsometricColors.green,
             alignment: Alignment.center,
             width: 100);
@@ -513,11 +513,11 @@ class GameIsometricUI {
   static Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(gamestream.isometric.hours, (int hours){
+      WatchBuilder(gamestream.hours, (int hours){
         return buildText(padZero(hours), size: 22);
       }),
       buildText(':', size: 22),
-      WatchBuilder(gamestream.isometric.minutes, (int minutes){
+      WatchBuilder(gamestream.minutes, (int minutes){
         return buildText(padZero(minutes), size: 22);
       }),
     ],

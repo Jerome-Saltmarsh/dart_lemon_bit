@@ -23,7 +23,7 @@ class RendererParticles extends IsometricRenderer {
   @override
   void reset() {
     particles.sort(IsometricParticle.compare);
-    totalActiveParticles = gamestream.isometric.countActiveParticles;
+    totalActiveParticles = gamestream.countActiveParticles;
     super.reset();
   }
 

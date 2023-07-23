@@ -56,11 +56,11 @@ class IsometricDebug {
 
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
-  Isometric get isometric => gamestream.isometric;
+  Isometric get isometric => gamestream;
 
 
   void render(IsometricRender renderer) {
-    if (!gamestream.isometric.player.debugging.value) return;
+    if (!gamestream.player.debugging.value) return;
     if (!selectedCollider.value) return;
 
     gamestream.engine.setPaintColor(Colors.white);
@@ -138,7 +138,7 @@ class IsometricDebug {
   }){
     if (start < 0) return;
     if (end < 0) return;
-    final nodes = gamestream.isometric;
+    final nodes = gamestream;
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];

@@ -30,35 +30,35 @@ extension IsometricEvents on Isometric {
   }
 
   void onChangedNodes(){
-    gamestream.isometric.refreshGridMetrics();
-    gamestream.isometric.generateHeightMap();
-    gamestream.isometric.generateMiniMap();
-    gamestream.isometric.minimap.generateSrcDst();
-    gamestream.isometric.refreshBakeMapLightSources();
+    gamestream.refreshGridMetrics();
+    gamestream.generateHeightMap();
+    gamestream.generateMiniMap();
+    gamestream.minimap.generateSrcDst();
+    gamestream.refreshBakeMapLightSources();
 
     if (raining.value) {
-      gamestream.isometric.rainStop();
-      gamestream.isometric.rainStart();
+      gamestream.rainStop();
+      gamestream.rainStart();
     }
-    gamestream.isometric.resetNodeColorsToAmbient();
-    gamestream.isometric.editor.refreshNodeSelectedIndex();
+    gamestream.resetNodeColorsToAmbient();
+    gamestream.editor.refreshNodeSelectedIndex();
   }
 
   void onFootstep(double x, double y, double z) {
     if (raining.value && (
-        gamestream.isometric.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
+        gamestream.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
             ||
-            gamestream.isometric.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
+            gamestream.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
       gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = gamestream.isometric.rainType.value == RainType.Heavy ? 3 : 2;
+      final amount = gamestream.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
     }
 
-    final nodeType = gamestream.isometric.getTypeXYZSafe(x, y, z - 2);
+    final nodeType = gamestream.getTypeXYZSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
       gamestream.audio.footstep_stone.playXYZ(x, y, z);
       return;
@@ -92,7 +92,7 @@ extension IsometricEvents on Isometric {
         gamestream.audio.metal_struck.playXYZ(x, y, z);
         return;
       case GameEventType.Player_Spawn_Started:
-        gamestream.isometric.camera.centerOnChaseTarget();
+        gamestream.camera.centerOnChaseTarget();
         gamestream.audio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
@@ -242,7 +242,7 @@ extension IsometricEvents on Isometric {
   }
 
   void onGameEventExplosion(double x, double y, double z) {
-    gamestream.isometric.createExplosion(x, y, z);
+    gamestream.createExplosion(x, y, z);
   }
 
   void onNodeSet(double x, double y, double z) {
@@ -250,10 +250,10 @@ extension IsometricEvents on Isometric {
   }
 
   void onNodeStruck(double x, double y, double z) {
-    if (!gamestream.isometric.inBoundsXYZ(x, y, z)) return;
+    if (!gamestream.inBoundsXYZ(x, y, z)) return;
 
-    final nodeIndex = gamestream.isometric.getIndexXYZ(x, y, z);
-    final nodeType = gamestream.isometric.nodeTypes[nodeIndex];
+    final nodeIndex = gamestream.getIndexXYZ(x, y, z);
+    final nodeType = gamestream.nodeTypes[nodeIndex];
 
     if (NodeType.isMaterialWood(nodeType)){
       gamestream.audio.material_struck_wood.playXYZ(x, y, z);
@@ -363,16 +363,16 @@ extension IsometricEvents on Isometric {
 
   void onChangedEdit(bool value) {
     if (value) {
-      gamestream.isometric.camera.target = null;
-      gamestream.isometric.editor.cursorSetToPlayer();
-      gamestream.isometric.player.message.value = '-press arrow keys to move\n\n-press tab to play';
-      gamestream.isometric.player.messageTimer = 300;
+      gamestream.camera.target = null;
+      gamestream.editor.cursorSetToPlayer();
+      gamestream.player.message.value = '-press arrow keys to move\n\n-press tab to play';
+      gamestream.player.messageTimer = 300;
     } else {
-      gamestream.isometric.cameraTargetPlayer();
-      gamestream.isometric.editor.deselectGameObject();
+      gamestream.cameraTargetPlayer();
+      gamestream.editor.deselectGameObject();
       // gamestream.isometric.ui.mouseOverDialog.setFalse();
-      if (gamestream.isometric.sceneEditable.value){
-        gamestream.isometric.player.message.value = 'press tab to edit';
+      if (gamestream.sceneEditable.value){
+        gamestream.player.message.value = 'press tab to edit';
       }
     }
   }
@@ -382,14 +382,14 @@ extension IsometricEvents on Isometric {
   }
 
   void onChangedHour(int hour){
-    if (gamestream.isometric.sceneUnderground.value) return;
+    if (gamestream.sceneUnderground.value) return;
     updateGameLighting();
   }
 
   void onChangedSeconds(int seconds){
     final minutes = seconds ~/ 60;
-    gamestream.isometric.hours.value = minutes ~/ Duration.minutesPerHour;
-    gamestream.isometric.minutes.value = minutes % Duration.minutesPerHour;
+    gamestream.hours.value = minutes ~/ Duration.minutesPerHour;
+    gamestream.minutes.value = minutes % Duration.minutesPerHour;
   }
 
   void onChangedRain(int value) {
@@ -401,7 +401,7 @@ extension IsometricEvents on Isometric {
   void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Reloading:
-        switch (gamestream.isometric.player.weapon.value){
+        switch (gamestream.player.weapon.value){
           case WeaponType.Handgun:
             gamestream.audio.reload_6();
             break;
@@ -433,7 +433,7 @@ extension IsometricEvents on Isometric {
       case PlayerEvent.Loot_Collected:
         return gamestream.audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        gamestream.isometric.camera.centerOnChaseTarget();
+        gamestream.camera.centerOnChaseTarget();
         break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
@@ -445,15 +445,15 @@ extension IsometricEvents on Isometric {
         gamestream.audio.coins_24();
         break;
       case PlayerEvent.GameObject_Deselected:
-        gamestream.isometric.editor.gameObjectSelected.value = false;
+        gamestream.editor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
         if (gamestream.gameType.value == GameType.Editor){
-          gamestream.isometric.editor.row = gamestream.isometric.player.indexRow;
-          gamestream.isometric.editor.column = gamestream.isometric.player.indexColumn;
-          gamestream.isometric.editor.z = gamestream.isometric.player.indexZ;
+          gamestream.editor.row = gamestream.player.indexRow;
+          gamestream.editor.column = gamestream.player.indexColumn;
+          gamestream.editor.z = gamestream.player.indexZ;
         }
-        gamestream.isometric.camera.centerOnChaseTarget();
+        gamestream.camera.centerOnChaseTarget();
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
@@ -530,15 +530,15 @@ extension IsometricEvents on Isometric {
 
   void onChangedPlayerMessage(String value){
     if (value.isNotEmpty) {
-      gamestream.isometric.player.messageTimer = 200;
+      gamestream.player.messageTimer = 200;
     } else {
-      gamestream.isometric.player.messageTimer = 0;
+      gamestream.player.messageTimer = 0;
     }
   }
 
   void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
-      gamestream.isometric.camera.centerOnChaseTarget();
+      gamestream.camera.centerOnChaseTarget();
       gamestream.io.recenterCursor();
     }
   }
@@ -616,16 +616,16 @@ extension IsometricEvents on Isometric {
           gamestream.audio.debuff_4();
           spawnParticle(
             type: ParticleType.Lightning_Bolt,
-            x: gamestream.isometric.player.x,
-            y: gamestream.isometric.player.y,
-            z: gamestream.isometric.player.z,
+            x: gamestream.player.x,
+            y: gamestream.player.y,
+            z: gamestream.player.z,
             duration: 10,
             animation: true,
           );
           spawnParticleLightEmissionAmbient(
-            x: gamestream.isometric.player.x,
-            y: gamestream.isometric.player.y,
-            z: gamestream.isometric.player.z,
+            x: gamestream.player.x,
+            y: gamestream.player.y,
+            z: gamestream.player.z,
           );
           break;
       }

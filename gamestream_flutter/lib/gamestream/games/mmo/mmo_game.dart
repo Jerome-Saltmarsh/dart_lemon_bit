@@ -46,7 +46,7 @@ class MmoGame extends IsometricGame {
     error.onChanged(onChangedError);
   }
 
-  IsometricPlayer get player => gamestream.isometric.player;
+  IsometricPlayer get player => gamestream.player;
 
   void onChangedError(String value){
     if (value.isEmpty)

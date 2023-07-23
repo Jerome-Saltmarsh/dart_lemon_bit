@@ -2,10 +2,12 @@
 
 import 'dart:typed_data';
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 
-extension IsometricResponseReader on Gamestream {
+import '../../games/fight2d/game_fight2d.dart';
+
+extension IsometricResponseReader on Isometric {
 
   void readIsometricResponse() {
     switch (readByte()) {
@@ -27,7 +29,6 @@ extension IsometricResponseReader on Gamestream {
         break;
 
       case IsometricResponse.Player_Position_Change:
-        final player = isometric.player;
         final position = player.position;
         player.savePositionPrevious();
         final changeX = readInt8().toDouble();
@@ -39,35 +40,34 @@ extension IsometricResponseReader on Gamestream {
         player.indexColumn = position.indexColumn;
         player.indexRow = position.indexRow;
         player.indexZ = position.indexZ;
-        player.nodeIndex = isometric.getIndexPosition(position);
+        player.nodeIndex = getIndexPosition(position);
         break;
 
       case IsometricResponse.Player_Accuracy:
-        isometric.player.accuracy.value = readPercentage();
+        player.accuracy.value = readPercentage();
         break;
 
       case IsometricResponse.Player_Weapon_Duration_Percentage:
-        isometric.player.weaponCooldown.value = readPercentage();
+        player.weaponCooldown.value = readPercentage();
         break;
 
       case IsometricResponse.GameObjects:
-        isometric.gameObjects.clear();
+        gameObjects.clear();
         break;
 
       case IsometricResponse.Player_Initialized:
-        isometric.onPlayerInitialized();
+        onPlayerInitialized();
         break;
 
       case IsometricResponse.Player_Controls:
-        isometric.player.controlsCanTargetEnemies.value = readBool();
-        isometric.player.controlsRunInDirectionEnabled.value = readBool();
+        player.controlsCanTargetEnemies.value = readBool();
+        player.controlsRunInDirectionEnabled.value = readBool();
         break;
     }
   }
 
 
   void readSelectedCollider() {
-    final debug = isometric.debug;
     debug.selectedCollider.value = readBool();
 
     if (!debug.selectedCollider.value)
@@ -144,54 +144,226 @@ extension IsometricResponseReader on Gamestream {
 
   void readScene() {
     final scenePart = readByte(); /// DO NOT DELETE
-    isometric.totalZ = readUInt16();
-    isometric.totalRows = readUInt16();
-    isometric.totalColumns = readUInt16();
+    totalZ = readUInt16();
+    totalRows = readUInt16();
+    totalColumns = readUInt16();
 
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationsLength = readUInt24();
 
     final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
-    final nodeTypes = decoder.decodeBytes(compressedNodeTypes);
 
-    isometric.nodeTypes = Uint8List.fromList(nodeTypes);
-    isometric.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    isometric.area = isometric.totalRows * isometric.totalColumns;
-    isometric.area2 = isometric.area * 2;
-    isometric.projection = isometric.area2 + isometric.totalColumns + 1;
-    isometric.projectionHalf =  isometric.projection ~/ 2;
-    final totalNodes = isometric.totalZ * isometric.totalRows * isometric.totalColumns;
-    isometric.colorStack = Uint16List(totalNodes);
-    isometric.ambientStack = Uint16List(totalNodes);
-    isometric.totalNodes = totalNodes;
-    isometric.nodesRaycast = isometric.area +  isometric.area + isometric.totalColumns + 1;
-    isometric.onChangedNodes();
-    isometric.refreshNodeVariations();
-    isometric.nodesChangedNotifier.value++;
-    isometric.particles.clear();
+    nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
+    nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+    area = totalRows * totalColumns;
+    area2 = area * 2;
+    projection = area2 + totalColumns + 1;
+    projectionHalf =  projection ~/ 2;
+    totalNodes = totalZ * totalRows * totalColumns;
+    colorStack = Uint16List(totalNodes);
+    ambientStack = Uint16List(totalNodes);
+    totalNodes = totalNodes;
+    nodesRaycast = area +  area + totalColumns + 1;
+    onChangedNodes();
+    refreshNodeVariations();
+    nodesChangedNotifier.value++;
+    particles.clear();
     io.recenterCursor();
   }
 
   void readIsometricPlayerPosition() {
-    final player = isometric.player;
     final position = player.position;
     player.savePositionPrevious();
     readIsometricPosition(position);
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
-    player.nodeIndex = isometric.getIndexPosition(position);
+    player.nodeIndex = getIndexPosition(position);
   }
 
   void readPlayerAimTarget() {
-    final player = isometric.player;
     final aimTargetSet = readBool();
     player.playerAimTargetSet.value = aimTargetSet;
     if (aimTargetSet) {
       player.playerAimTargetName.value = readString();
     } else {
       player.playerAimTargetName.value = '';
+    }
+  }
+
+
+  void readServerResponseEnvironment() {
+    final environmentResponse = readByte();
+    switch (environmentResponse) {
+      case EnvironmentResponse.Rain:
+        rainType.value = readByte();
+        break;
+      case EnvironmentResponse.Lightning:
+        lightningType.value = readByte();
+        break;
+      case EnvironmentResponse.Wind:
+        windTypeAmbient.value = readByte();
+        break;
+      case EnvironmentResponse.Breeze:
+        weatherBreeze.value = readBool();
+        break;
+      case EnvironmentResponse.Underground:
+        sceneUnderground.value = readBool();
+        break;
+      case EnvironmentResponse.Lightning_Flashing:
+        lightningFlashing.value = readBool();
+        break;
+      case EnvironmentResponse.Time_Enabled:
+        gameTimeEnabled.value = readBool();
+        break;
+    }
+  }
+
+  void readGameObject() {
+    final id = readUInt16();
+    final gameObject = findOrCreateGameObject(id);
+    gameObject.active = readBool();
+    gameObject.type = readByte();
+    gameObject.subType = readByte();
+    gameObject.health = readUInt16();
+    gameObject.maxHealth = readUInt16();
+    readIsometricPosition(gameObject);
+    gameObjects.sort();
+  }
+
+  void readApiPlayer() {
+    final apiPlayer = readByte();
+    switch (apiPlayer) {
+      case ApiPlayer.Aim_Target_Category:
+        player.aimTargetCategory = readByte();
+        break;
+      case ApiPlayer.Aim_Target_Position:
+        readIsometricPosition(player.aimTargetPosition);
+        break;
+      case ApiPlayer.Aim_Target_Type:
+        player.aimTargetType = readUInt16();
+        break;
+      case ApiPlayer.Aim_Target_Quantity:
+        player.aimTargetQuantity = readUInt16();
+        break;
+      case ApiPlayer.Aim_Target_Name:
+        player.aimTargetName = readString();
+        break;
+      case ApiPlayer.Arrived_At_Destination:
+        player.arrivedAtDestination.value = readBool();
+        break;
+      case ApiPlayer.Run_To_Destination_Enabled:
+        player.runToDestinationEnabled.value = readBool();
+        break;
+      case ApiPlayer.Debugging:
+        player.debugging.value = readBool();
+        break;
+      case ApiPlayer.Destination:
+        player.runX = readDouble();
+        player.runY = readDouble();
+        player.runZ = readDouble();
+        break;
+      case ApiPlayer.Target_Position:
+        player.runningToTarget = true;
+        readIsometricPosition(player.targetPosition);
+        break;
+      case ApiPlayer.Experience_Percentage:
+        playerExperiencePercentage.value = readPercentage();
+        break;
+      case ApiPlayer.Health:
+        readPlayerHealth();
+        break;
+      case ApiPlayer.Aim_Angle:
+        player.mouseAngle = readAngle();
+        break;
+      case ApiPlayer.Message:
+        player.message.value = readString();
+        break;
+      case ApiPlayer.Alive:
+        player.alive.value = readBool();
+        // isometric.ui.mouseOverDialog.setFalse();
+        break;
+      case ApiPlayer.Spawned:
+        camera.centerOnChaseTarget();
+        io.recenterCursor();
+        break;
+      case ApiPlayer.Damage:
+        player.weaponDamage.value = readUInt16();
+        break;
+      case ApiPlayer.Id:
+        player.id.value = readUInt24();
+        break;
+      case ApiPlayer.Active:
+        player.active.value = readBool();
+        break;
+      case ApiPlayer.Team:
+        player.team.value = readByte();
+        break;
+      default:
+        throw Exception('Cannot parse apiPlayer $apiPlayer');
+    }
+  }
+
+  void readServerResponseFight2D(GameFight2D game) {
+    final fight2DResponse = readByte();
+    switch (fight2DResponse) {
+      case GameFight2DResponse.Characters:
+        readGameFight2DResponseCharacters(game);
+        break;
+      case GameFight2DResponse.Player:
+        final player = game.player;
+        player.state = readByte();
+        player.x = readInt16().toDouble();
+        player.y = readInt16().toDouble();
+        break;
+      case GameFight2DResponse.Event:
+        readFight2DEvent();
+        break;
+      case GameFight2DResponse.Scene:
+        game.sceneWidth = readUInt16();
+        game.sceneHeight = readUInt16();
+        game.sceneNodes = readUint8List(game.sceneTotal);
+        break;
+      case GameFight2DResponse.Player_Edit:
+        game.player.edit.value = readBool();
+        break;
+      default:
+        throw Exception('unknown fight2DResponse $fight2DResponse');
+    }
+  }
+
+  void readFight2DEvent() {
+    final eventType = readByte();
+    final x = readInt16().toDouble();
+    final y = readInt16().toDouble();
+
+    switch (eventType) {
+      case GameFight2DEvents.Punch:
+        audio.playAudioSingle2D(audio.heavy_punch_13, x, y);
+        break;
+      case GameFight2DEvents.Jump:
+        audio.playAudioSingle2D(audio.jump, x, y);
+        break;
+      case GameFight2DEvents.Footstep:
+        audio.playAudioSingle2D(audio.footstep_stone, x, y);
+        break;
+      case GameFight2DEvents.Strike_Swing:
+        audio.playAudioSingle2D(audio.arm_swing_whoosh_11, x, y);
+        break;
+      case GameFight2DEvents.Death:
+        audio.playAudioSingle2D(audio.magical_impact_16, x, y);
+        break;
+    }
+  }
+
+  void readMap(Map<int, int> map){
+    final length = readUInt16();
+    map.clear();
+    for (var i = 0; i < length; i++) {
+      final key = readUInt16();
+      final value = readUInt16();
+      map[key] = value;
     }
   }
 

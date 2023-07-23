@@ -146,7 +146,7 @@ mixin IsometricScene {
   }
 
   bool isPerceptiblePosition(IsometricPosition position) {
-    if (!gamestream.isometric.player.playerInsideIsland)
+    if (!gamestream.player.playerInsideIsland)
       return true;
     if (outOfBoundsPosition(position))
       return false;
@@ -156,14 +156,14 @@ mixin IsometricScene {
     final indexColumn = getIndexRow(index);
     final i = indexRow * totalColumns + indexColumn;
     // TODO REFACTOR
-    if (!gamestream.isometric.renderer.rendererNodes.island[i])
+    if (!gamestream.renderer.rendererNodes.island[i])
       return true;
     final indexZ = getIndexZ(index);
-    if (indexZ > gamestream.isometric.player.indexZ + 2)
+    if (indexZ > gamestream.player.indexZ + 2)
       return false;
 
     // TODO REFACTOR
-    return gamestream.isometric.renderer.rendererNodes.visible3D[index];
+    return gamestream.renderer.rendererNodes.visible3D[index];
   }
 
   int getHeightAt(int row, int column){
@@ -446,7 +446,7 @@ mixin IsometricScene {
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    final padding = gamestream.isometric.interpolationPadding;
+    final padding = gamestream.interpolationPadding;
     final rx = getIndexRenderX(index);
     if (rx < gamestream.engine.Screen_Left - padding) return;
     if (rx > gamestream.engine.Screen_Right + padding) return;
@@ -454,7 +454,7 @@ mixin IsometricScene {
     if (ry < gamestream.engine.Screen_Top - padding) return;
     if (ry > gamestream.engine.Screen_Bottom + padding) return;
 
-    gamestream.isometric.totalActiveLights++;
+    gamestream.totalActiveLights++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -544,14 +544,14 @@ mixin IsometricScene {
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    final padding = gamestream.isometric.interpolationPadding;
+    final padding = gamestream.interpolationPadding;
     final rx = getIndexRenderX(index);
     if (rx < gamestream.engine.Screen_Left - padding) return;
     if (rx > gamestream.engine.Screen_Right + padding) return;
     final ry = getIndexRenderY(index);
     if (ry < gamestream.engine.Screen_Top - padding) return;
     if (ry > gamestream.engine.Screen_Bottom + padding) return;
-    gamestream.isometric.totalActiveLights++;
+    gamestream.totalActiveLights++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);

@@ -10,7 +10,7 @@ abstract class IsometricRenderer {
 
   final Isometric scene;
 
-  IsometricRender get renderer => gamestream.isometric.renderer;
+  IsometricRender get renderer => gamestream.renderer;
 
   IsometricRenderer(this.scene);
 

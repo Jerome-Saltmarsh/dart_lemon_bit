@@ -151,7 +151,7 @@ class GameIO with ByteWriter {
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    var z = gamestream.isometric.totalZ - 1;
+    var z = gamestream.totalZ - 1;
     final mouseWorldX = gamestream.engine.mouseWorldX;
     final mouseWorldY = gamestream.engine.mouseWorldY;
     while (z >= 0){

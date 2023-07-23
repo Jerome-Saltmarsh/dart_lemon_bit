@@ -41,7 +41,7 @@ class IsometricRender {
 
   void renderCircleAroundPlayer({required double radius}) =>
       renderCircleAtPosition(
-        position: gamestream.isometric.player.position,
+        position: gamestream.player.position,
         radius: radius,
       );
 
@@ -101,13 +101,13 @@ class IsometricRender {
   }
 
   void renderMouseTargetName() {
-    if (!gamestream.isometric.player.mouseTargetAllie.value) return;
-    final mouseTargetName = gamestream.isometric.player.mouseTargetName.value;
+    if (!gamestream.player.mouseTargetAllie.value) return;
+    final mouseTargetName = gamestream.player.mouseTargetName.value;
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,
-        x: gamestream.isometric.player.aimTargetPosition.renderX,
-        y: gamestream.isometric.player.aimTargetPosition.renderY - 55);
+        x: gamestream.player.aimTargetPosition.renderX,
+        y: gamestream.player.aimTargetPosition.renderY - 55);
   }
 
   void checkNext(IsometricRenderer renderer){
@@ -359,7 +359,7 @@ class IsometricRender {
   void renderStars(double x, double y) =>
       gamestream.engine.renderSprite(
         image: Images.sprite_stars,
-        srcX: 125.0 * gamestream.isometric.animationFrame16,
+        srcX: 125.0 * gamestream.animationFrame16,
         srcY: 0,
         srcWidth: 125,
         srcHeight: 125,
@@ -384,25 +384,25 @@ class IsometricRender {
   }
 
   void playerAimTargetNameText(){
-    if (gamestream.isometric.player.aimTargetCategory == TargetCategory.Nothing)
+    if (gamestream.player.aimTargetCategory == TargetCategory.Nothing)
       return;
-    if (gamestream.isometric.player.aimTargetName.isEmpty)
+    if (gamestream.player.aimTargetName.isEmpty)
       return;
     const style = TextStyle(color: Colors.white, fontSize: 18);
     gamestream.engine.renderText(
-      gamestream.isometric.player.aimTargetName,
-      gamestream.engine.worldToScreenX(gamestream.isometric.player.aimTargetPosition.renderX),
-      gamestream.engine.worldToScreenY(gamestream.isometric.player.aimTargetPosition.renderY),
+      gamestream.player.aimTargetName,
+      gamestream.engine.worldToScreenX(gamestream.player.aimTargetPosition.renderX),
+      gamestream.engine.worldToScreenY(gamestream.player.aimTargetPosition.renderY),
       style: style,
     );
   }
 
   void renderCursor(Canvas canvas) {
-    final cooldown = gamestream.isometric.player.weaponCooldown.value;
-    final accuracy = gamestream.isometric.player.accuracy.value;
+    final cooldown = gamestream.player.weaponCooldown.value;
+    final accuracy = gamestream.player.accuracy.value;
     final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
 
-    switch (gamestream.isometric.cursorType) {
+    switch (gamestream.cursorType) {
       case IsometricCursorType.CrossHair_White:
         canvasRenderCursorCrossHair(canvas, distance);
         break;
@@ -419,25 +419,25 @@ class IsometricRender {
   }
 
   void renderPlayerEnergy() {
-    if (gamestream.isometric.player.dead) return;
-    if (!gamestream.isometric.player.active.value) return;
+    if (gamestream.player.dead) return;
+    if (!gamestream.player.active.value) return;
     renderBarBlue(
-      gamestream.isometric.player.position.x,
-      gamestream.isometric.player.position.y,
-      gamestream.isometric.player.position.z,
-      gamestream.isometric.player.energyPercentage,
+      gamestream.player.position.x,
+      gamestream.player.position.y,
+      gamestream.player.position.z,
+      gamestream.player.energyPercentage,
     );
   }
 
   void debugRenderHeightMapValues() {
     var i = 0;
-    for (var row = 0; row < gamestream.isometric.totalRows; row++){
-      for (var column = 0; column < gamestream.isometric.totalColumns; column++){
-        gamestream.isometric.renderer.renderTextXYZ(
+    for (var row = 0; row < gamestream.totalRows; row++){
+      for (var column = 0; column < gamestream.totalColumns; column++){
+        gamestream.renderer.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
-          text: gamestream.isometric.heightMap[i].toString(),
+          text: gamestream.heightMap[i].toString(),
         );
         i++;
       }
@@ -465,8 +465,8 @@ class IsometricRender {
 
 
   void renderObjectRadius() {
-    for (var i = 0; i < gamestream.isometric.totalCharacters; i++) {
-      final character = gamestream.isometric.characters[i];
+    for (var i = 0; i < gamestream.totalCharacters; i++) {
+      final character = gamestream.characters[i];
       gamestream.engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }
@@ -477,10 +477,10 @@ class IsometricRender {
 
     final jumps = mouseDistance ~/ Node_Height_Half;
 
-    var x1 = gamestream.isometric.player.position.x;
-    var y1 = gamestream.isometric.player.position.y;
-    var i1 = gamestream.isometric.player.nodeIndex;
-    final z = gamestream.isometric.player.position.z + Node_Height_Half;
+    var x1 = gamestream.player.position.x;
+    var y1 = gamestream.player.position.y;
+    var i1 = gamestream.player.nodeIndex;
+    final z = gamestream.player.position.z + Node_Height_Half;
 
     final tX = adj(mouseAngle, Node_Height_Half);
     final tY = opp(mouseAngle, Node_Height_Half);
@@ -488,13 +488,13 @@ class IsometricRender {
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
-      final i2 = gamestream.isometric.getIndexXYZ(x2, y2, z);
-      if (!NodeType.isTransient(gamestream.isometric.nodeTypes[i2])) break;
+      final i2 = gamestream.getIndexXYZ(x2, y2, z);
+      if (!NodeType.isTransient(gamestream.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
       i1 = i2;
     }
-    gamestream.isometric.renderer.renderCircle32(x1, y1, z);
+    gamestream.renderer.renderCircle32(x1, y1, z);
   }
 
   void renderCharacterHealthBar(IsometricCharacter character) =>
@@ -535,29 +535,29 @@ class IsometricRender {
   }
 
   void renderEditMode() {
-    if (gamestream.isometric.playMode) return;
-    if (gamestream.isometric.editor.gameObjectSelected.value){
+    if (gamestream.playMode) return;
+    if (gamestream.editor.gameObjectSelected.value){
       gamestream.engine.renderCircleOutline(
         sides: 24,
         // radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
         radius: 30,
-        x: gamestream.isometric.editor.gameObject.value!.renderX,
-        y: gamestream.isometric.editor.gameObject.value!.renderY,
+        x: gamestream.editor.gameObject.value!.renderX,
+        y: gamestream.editor.gameObject.value!.renderY,
         color: Colors.white,
       );
-      renderCircleAtPosition(position: gamestream.isometric.editor.gameObject.value!, radius: 50);
+      renderCircleAtPosition(position: gamestream.editor.gameObject.value!, radius: 50);
       return;
     }
 
     renderEditWireFrames();
-    gamestream.isometric.renderer.renderMouseWireFrame();
+    gamestream.renderer.renderMouseWireFrame();
   }
 
   void renderEditWireFrames() {
-    for (var z = 0; z < gamestream.isometric.editor.z; z++) {
-      gamestream.isometric.renderer.renderWireFrameBlue(z, gamestream.isometric.editor.row, gamestream.isometric.editor.column);
+    for (var z = 0; z < gamestream.editor.z; z++) {
+      gamestream.renderer.renderWireFrameBlue(z, gamestream.editor.row, gamestream.editor.column);
     }
-    gamestream.isometric.renderer.renderWireFrameRed(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
+    gamestream.renderer.renderWireFrameRed(gamestream.editor.row, gamestream.editor.column, gamestream.editor.z);
   }
 
   void renderText({required String text, required double x, required double y}){

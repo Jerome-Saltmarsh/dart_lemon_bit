@@ -201,7 +201,7 @@ class GameAudio {
   ];
 
   double getVolumeTargetDayAmbience() {
-    final hours = gamestream.isometric.hours.value;
+    final hours = gamestream.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
@@ -238,16 +238,16 @@ class GameAudio {
   }
 
   double getVolumeTargetWind() {
-    final windLineDistance = (gamestream.engine.screenCenterRenderX - gamestream.isometric.windLineRenderX).abs();
+    final windLineDistance = (gamestream.engine.screenCenterRenderX - gamestream.windLineRenderX).abs();
     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
-    if (gamestream.isometric.windLineRenderX - 250 <= gamestream.engine.screenCenterRenderX) {
+    if (gamestream.windLineRenderX - 250 <= gamestream.engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = gamestream.isometric.windTypeAmbient.value;
+    final index = gamestream.windTypeAmbient.value;
     if (index <= WindType.Calm) {
-      if (gamestream.isometric.hours.value < 6) return target;
-      if (gamestream.isometric.hours.value < 18) return target + 0.1;
+      if (gamestream.hours.value < 6) return target;
+      if (gamestream.hours.value < 18) return target + 0.1;
       return target;
     }
     if (index <= WindType.Gentle) return target + 0.5;
@@ -255,7 +255,7 @@ class GameAudio {
   }
 
   double getVolumeTargetRain() {
-    switch (gamestream.isometric.rainType.value){
+    switch (gamestream.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -268,7 +268,7 @@ class GameAudio {
   }
 
   double getVolumeTargetCrickets() {
-    final hour = gamestream.isometric.hours.value;
+    final hour = gamestream.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -276,13 +276,13 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (gamestream.isometric.lightningOn) return 1.0;
+    if (gamestream.lightningOn) return 1.0;
     return 0;
   }
 
   double getVolumeHeartBeat(){
-    if (gamestream.isometric.player.maxHealth.value <= 0) return 0.0;
-    return 1.0 - gamestream.isometric.player.health.value / gamestream.isometric.player.maxHealth.value;
+    if (gamestream.player.maxHealth.value <= 0) return 0.0;
+    return 1.0 - gamestream.player.health.value / gamestream.player.maxHealth.value;
   }
 
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
@@ -303,14 +303,14 @@ class GameAudio {
   }
 
   void playRandomMusic(){
-    final hours = gamestream.isometric.hours.value;
+    final hours = gamestream.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
   void playRandomAmbientSound(){
-    final hour = gamestream.isometric.hours.value;
+    final hour = gamestream.hours.value;
 
     if (hour > 22 && hour < 4){
       playRandom(soundsNight);
@@ -335,12 +335,12 @@ class GameAudio {
   }
 
   void updateCharacterNoises(){
-    if (gamestream.isometric.totalCharacters <= 0) return;
+    if (gamestream.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = randomInt(200, 300);
 
-    final index = randomInt(0, gamestream.isometric.totalCharacters);
-    final character = gamestream.isometric.characters[index];
+    final index = randomInt(0, gamestream.totalCharacters);
+    final character = gamestream.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:

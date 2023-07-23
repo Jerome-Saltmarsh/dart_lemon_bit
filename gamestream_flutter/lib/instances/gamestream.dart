@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 
 // todo remove global instance
-final gamestream = Gamestream();
+final gamestream = Isometric();

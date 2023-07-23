@@ -1,9 +1,9 @@
-import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/lemon_websocket_client/websocket_client_builder.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'enums/connection_region.dart';
-import 'enums/connection_status.dart';
+import '../gamestream/network/enums/connection_region.dart';
+import 'connection_status.dart';
 
 
 class GameNetwork {
@@ -18,7 +18,7 @@ class GameNetwork {
   DateTime? connectionEstablished;
   late final region = Watch<ConnectionRegion?>(null);
 
-  final Gamestream gamestream;
+  final WebsocketClientBuilder gamestream;
 
   GameNetwork(this.gamestream);
 
@@ -35,11 +35,11 @@ class GameNetwork {
     }
     if (region == ConnectionRegion.Custom) {
       print('connecting to custom server');
-      print(gamestream.games.website.customConnectionStrongController.text);
-      connectToServer(
-        gamestream.games.website.customConnectionStrongController.text,
-        message,
-      );
+      // print(gamestream.games.website.customConnectionStrongController.text);
+      // connectToServer(
+      //   gamestream.games.website.customConnectionStrongController.text,
+      //   message,
+      // );
       return;
     }
     connectToServer(convertHttpToWSS(region.url), message);
@@ -84,7 +84,9 @@ class GameNetwork {
         }
 
         if (webSocketChannel.closeCode != null){
-          gamestream.games.website.error.value = 'Lost Connection';
+          gamestream.onConnectionLost();
+
+
         }
       });
       connectionUri = uri;
@@ -116,7 +118,6 @@ class GameNetwork {
         sink.add('pong');
         return;
       }
-      gamestream.games.website.error.value = response;
       return;
     }
     throw Exception('cannot parse response: $response');

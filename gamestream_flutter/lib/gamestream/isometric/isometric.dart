@@ -1,17 +1,30 @@
 
 
 import 'dart:math';
-import 'dart:ui';
 
+import 'package:firestore_client/firestoreService.dart';
+import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/game.dart';
+import 'package:gamestream_flutter/gamestream/games.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
+import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
+import 'package:gamestream_flutter/gamestream/games/game_scissors_paper_rock.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
+import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
+import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import '../network/functions/detect_connection_region.dart';
+import 'atlases/atlas.dart';
 import 'atlases/atlas_nodes.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
+import 'components/render/classes/template_animation.dart';
 import 'components/render/renderer_characters.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
@@ -21,16 +34,29 @@ import 'components/render/renderer_gameobjects.dart';
 import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 import 'ui/isometric_constants.dart';
+import '../../lemon_websocket_client/websocket_client_builder.dart';
 
-class Isometric with
+class Isometric extends WebsocketClientBuilder with
     IsometricScene,
     IsometricCharacters,
     IsometricParticles,
     IsometricAnimation
 {
 
+  final updateFrame = Watch(0);
+  final audio = GameAudio();
+  final serverFPS = Watch(0);
+  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
+  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
+  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
+  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
+  late final Games games;
+  late final io = GameIO(this);
+  late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
+  late final Engine engine;
+  var clearErrorTimer = -1;
   var nextEmissionSmoke = 0;
   var cursorType = IsometricCursorType.Hand;
   var srcXRainFalling = 6640.0;
@@ -91,6 +117,38 @@ class Isometric with
     rendererProjectiles: RendererProjectiles(this),
   );
 
+  Isometric(){
+    print('Isometric()');
+    games = Games(this);
+    updateFrame.onChanged(onChangedUpdateFrame);
+
+    games.website.errorMessageEnabled.value = true;
+    error.onChanged((GameError? error) {
+      if (error == null) return;
+      game.value.onGameError(error);
+    });
+
+    for (final entry in GameObjectType.Collection.entries){
+      final type = entry.key;
+      final values = entry.value;
+      final atlas = Atlas.SrcCollection[type];
+      for (final value in values){
+        if (!atlas.containsKey(value)){
+          // print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+          throw Exception('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+        }
+      }
+    }
+
+    for (final weaponType in WeaponType.values){
+      try {
+        TemplateAnimation.getWeaponPerformAnimation(weaponType);
+      } catch (e){
+        print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
+      }
+    }
+  }
+
   bool get playMode => !editMode;
 
   bool get editMode => edit.value;
@@ -111,7 +169,7 @@ class Isometric with
 
     debug.render(renderer);
 
-    gamestream.rendersSinceUpdate.value++;
+    rendersSinceUpdate.value++;
   }
 
   double get windLineRenderX {
@@ -127,15 +185,19 @@ class Isometric with
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
 
+  @override
   void update(){
     if (!gameRunning.value) {
-      gamestream.io.writeByte(ClientRequest.Update);
-      gamestream.io.applyKeyboardInputToUpdateBuffer();
-      gamestream.io.sendUpdateBuffer();
+      io.writeByte(ClientRequest.Update);
+      io.applyKeyboardInputToUpdateBuffer();
+      io.sendUpdateBuffer();
       return;
     }
 
-    gamestream.audio.update();
+    updateClearErrorTimer();
+    game.value.update();
+
+    audio.update();
     updateParticles();
     updateAnimationFrame();
     updateProjectiles();
@@ -143,8 +205,8 @@ class Isometric with
     player.updateMessageTimer();
     readPlayerInputEdit();
 
-    gamestream.io.applyKeyboardInputToUpdateBuffer();
-    gamestream.io.sendUpdateBuffer();
+    io.applyKeyboardInputToUpdateBuffer();
+    io.sendUpdateBuffer();
 
 
     updateTorchEmissionIntensity();
@@ -709,7 +771,7 @@ class Isometric with
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
-        final wind = gamestream.isometric.windTypeAmbient.value * 0.01;
+        final wind = gamestream.windTypeAmbient.value * 0.01;
         particle.xv -= wind;
         particle.yv += wind;
       }
@@ -811,4 +873,578 @@ class Isometric with
         ..flash = true
         ..strength = 0.0
   ;
+
+  @override
+  void readResponse(int serverResponse){
+    updateFrame.value++;
+
+    switch (serverResponse) {
+      case ServerResponse.Isometric_Characters:
+        readIsometricCharacters();
+        break;
+      case ServerResponse.Api_Player:
+        readApiPlayer();
+        break;
+      case ServerResponse.Api_SPR:
+        readServerResponseApiSPR();
+        break;
+      case ServerResponse.Isometric:
+        readIsometricResponse();
+        break;
+      case ServerResponse.GameObject:
+        readGameObject();
+        break;
+      case ServerResponse.Projectiles:
+        readProjectiles();
+        break;
+      case ServerResponse.Game_Event:
+        readGameEvent();
+        break;
+      case ServerResponse.Player_Event:
+        readPlayerEvent();
+        break;
+      case ServerResponse.Game_Time:
+        readGameTime();
+        break;
+      case ServerResponse.Game_Type:
+        final index = readByte();
+        if (index >= GameType.values.length){
+          throw Exception('invalid game type index $index');
+        }
+        gameType.value = GameType.values[index];
+        break;
+      case ServerResponse.Environment:
+        readServerResponseEnvironment();
+        break;
+      case ServerResponse.Node:
+        readNode();
+        break;
+      case ServerResponse.Player_Target:
+        readIsometricPosition(player.target);
+        break;
+      case ServerResponse.Store_Items:
+        readStoreItems();
+        break;
+      case ServerResponse.Npc_Talk:
+        readNpcTalk();
+        break;
+      case ServerResponse.Weather:
+        readWeather();
+        break;
+      case ServerResponse.Game_Properties:
+        readGameProperties();
+        break;
+      case ServerResponse.Map_Coordinate:
+        readMapCoordinate();
+        break;
+      case ServerResponse.Editor_GameObject_Selected:
+        readEditorGameObjectSelected();
+        break;
+      case ServerResponse.Info:
+        readServerResponseInfo();
+        break;
+      case ServerResponse.Fight2D:
+        readServerResponseFight2D(games.fight2D);
+        break;
+      case ServerResponse.Capture_The_Flag:
+        readCaptureTheFlag();
+        break;
+      case ServerResponse.MMO:
+        readMMOResponse();
+        break;
+      case ServerResponse.Download_Scene:
+        final name = readString();
+        final length = readUInt16();
+        final bytes = readBytes(length);
+        engine.downloadBytes(bytes, name: '$name.scene');
+        break;
+      case ServerResponse.GameObject_Deleted:
+        removeGameObjectById(readUInt16());
+        break;
+      case ServerResponse.Game_Error:
+        final errorTypeIndex = readByte();
+        error.value = GameError.fromIndex(errorTypeIndex);
+        return;
+      case ServerResponse.FPS:
+        serverFPS.value = readUInt16();
+        return;
+      default:
+        print('read error; index: $index, previous-server-response: $previousServerResponse');
+        print(values);
+        return;
+    }
+  }
+
+  @override
+  void onConnectionLost() {
+    games.website.error.value = 'Lost Connection';
+  }
+
+  void onChangedUpdateFrame(int value){
+    rendersSinceUpdate.value = 0;
+  }
+
+  @override
+  void onError(Object error, StackTrace stack) {
+    if (error.toString().contains('NotAllowedError')){
+      // https://developer.chrome.com/blog/autoplay/
+      // This error appears when the game attempts to fullscreen
+      // without the user having interacted first
+      // TODO dispatch event on fullscreen failed
+      onErrorFullscreenAuto();
+      return;
+    }
+    print(error.toString());
+    print(stack);
+    games.website.error.value = error.toString();
+  }
+
+  @override
+  void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
+    engine.onDrawForeground = null;
+    bufferSizeTotal.value = 0;
+
+    switch (connection) {
+      case ConnectionStatus.Connected:
+        engine.cursorType.value = CursorType.None;
+        engine.zoomOnScroll = true;
+        engine.zoom = 1.0;
+        engine.targetZoom = 1.0;
+        timeConnectionEstablished = DateTime.now();
+        audio.enabledSound.value = true;
+        if (!engine.isLocalHost) {
+          engine.fullScreenEnter();
+        }
+        break;
+
+      case ConnectionStatus.Done:
+        engine.cameraX = 0;
+        engine.cameraY = 0;
+        engine.zoom = 1.0;
+        engine.drawCanvasAfterUpdate = true;
+        engine.cursorType.value = CursorType.Basic;
+        engine.fullScreenExit();
+        player.active.value = false;
+        timeConnectionEstablished = null;
+        clear();
+        clean();
+        gameObjects.clear();
+        sceneEditable.value = false;
+        gameType.value = GameType.Website;
+        audio.enabledSound.value = false;
+        break;
+      case ConnectionStatus.Failed_To_Connect:
+        games.website.error.value = 'Failed to connect';
+        break;
+      case ConnectionStatus.Invalid_Connection:
+        games.website.error.value = 'Invalid Connection';
+        break;
+      case ConnectionStatus.Error:
+        games.website.error.value = 'Connection Error';
+        break;
+      default:
+        break;
+    }
+
+  }
+
+
+  void readServerResponseInfo() {
+    final info = readString();
+    print(info);
+  }
+
+  void readApiPlayerEnergy() =>
+      player.energyPercentage = readPercentage();
+
+  void readPlayerHealth() {
+    player.health.value = readUInt16();
+    player.maxHealth.value = readUInt16();
+  }
+
+  void readMapCoordinate() {
+    readByte(); // DO NOT DELETE
+  }
+
+  void readEditorGameObjectSelected() {
+    // readVector3(isometricEngine.editor.gameObject);
+
+    final id = readUInt16();
+    final gameObject = findGameObjectById(id);
+    if (gameObject == null) throw Exception('could not find gameobject with id $id');
+    editor.gameObject.value = gameObject;
+    editor.gameObjectSelectedCollidable   .value = readBool();
+    editor.gameObjectSelectedFixed        .value = readBool();
+    editor.gameObjectSelectedCollectable  .value = readBool();
+    editor.gameObjectSelectedPhysical     .value = readBool();
+    editor.gameObjectSelectedPersistable  .value = readBool();
+    editor.gameObjectSelectedGravity      .value = readBool();
+
+    editor.gameObjectSelectedType.value          = gameObject.type;
+    editor.gameObjectSelectedSubType.value       = gameObject.subType;
+    editor.gameObjectSelected.value              = true;
+    editor.cameraCenterSelectedObject();
+
+    editor.gameObjectSelectedEmission.value = gameObject.colorType;
+    editor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
+  }
+
+  void readIsometricCharacters(){
+    totalCharacters = 0;
+
+    while (true) {
+
+      final compressionLevel = readByte();
+      if (compressionLevel == CHARACTER_END) break;
+      final character = getCharacterInstance();
+
+
+      final stateAChanged = readBitFromByte(compressionLevel, 0);
+      final stateBChanged = readBitFromByte(compressionLevel, 1);
+      final changeTypeX = (compressionLevel & Hex00001100) >> 2;
+      final changeTypeY =  (compressionLevel & Hex00110000) >> 4;
+      final changeTypeZ = (compressionLevel & Hex11000000) >> 6;
+
+      if (stateAChanged) {
+        character.characterType = readByte();
+        character.state = readByte();
+        character.team = readByte();
+        character.health = readPercentage();
+      }
+
+      if (stateBChanged){
+        final animationAndFrameDirection = readByte();
+        character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
+        assert (character.direction >= 0 && character.direction <= 7);
+        character.animationFrame = (animationAndFrameDirection & Hex00011111);
+      }
+
+
+
+      assert (changeTypeX >= 0 && changeTypeX <= 2);
+      assert (changeTypeY >= 0 && changeTypeY <= 2);
+      assert (changeTypeZ >= 0 && changeTypeZ <= 2);
+
+      if (changeTypeX == ChangeType.Small) {
+        character.x += readInt8();
+      } else if (changeTypeX == ChangeType.Big) {
+        character.x = readDouble();
+      }
+
+      if (changeTypeY == ChangeType.Small) {
+        character.y += readInt8();
+      } else if (changeTypeY == ChangeType.Big) {
+        character.y = readDouble();
+      }
+
+      if (changeTypeZ == ChangeType.Small) {
+        character.z += readInt8();
+      } else if (changeTypeZ == ChangeType.Big) {
+        character.z = readDouble();
+      }
+
+      if (character.characterType == CharacterType.Template){
+        readCharacterTemplate(character);
+      }
+      totalCharacters++;
+    }
+  }
+
+  void readNpcTalk() {
+    player.npcTalk.value = readString();
+    final totalOptions = readByte();
+    final options = <String>[];
+    for (var i = 0; i < totalOptions; i++) {
+      options.add(readString());
+    }
+    player.npcTalkOptions.value = options;
+  }
+
+  void readGameProperties() {
+    sceneEditable.value = readBool();
+    sceneName.value = readString();
+    gameRunning.value = readBool();
+  }
+
+  void readWeather() {
+    rainType.value = readByte();
+    weatherBreeze.value = readBool();
+    lightningType.value = readByte();
+    windTypeAmbient.value = readByte();
+  }
+
+  void readStoreItems() {
+    final length = readUInt16();
+    if (player.storeItems.value.length != length){
+      player.storeItems.value = Uint16List(length);
+    }
+    for (var i = 0; i < length; i++){
+      player.storeItems.value[i] = readUInt16();
+    }
+  }
+
+  void readNode() {
+    final nodeIndex = readUInt24();
+    final nodeType = readByte();
+    final nodeOrientation = readByte();
+    assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
+    nodeTypes[nodeIndex] = nodeType;
+    nodeOrientations[nodeIndex] = nodeOrientation;
+    /// TODO optimize
+    onChangedNodes();
+    editor.refreshNodeSelectedIndex();
+  }
+
+  void readPlayerTarget() {
+    readIsometricPosition(player.abilityTarget);
+  }
+
+  void readGameTime() {
+    seconds.value = readUInt24();
+  }
+
+  double readDouble() => readInt16().toDouble();
+
+  void readGameEvent(){
+    final type = readByte();
+    final x = readDouble();
+    final y = readDouble();
+    final z = readDouble();
+    final angle = readDouble() * degreesToRadians;
+    onGameEvent(type, x, y, z, angle);
+  }
+
+  void readProjectiles(){
+    totalProjectiles = readUInt16();
+    while (totalProjectiles >= projectiles.length){
+      projectiles.add(IsometricProjectile());
+    }
+    for (var i = 0; i < totalProjectiles; i++) {
+      final projectile = projectiles[i];
+      projectile.x = readDouble();
+      projectile.y = readDouble();
+      projectile.z = readDouble();
+      projectile.type = readByte();
+      projectile.angle = readDouble() * degreesToRadians;
+    }
+  }
+
+  void readCharacterTemplate(IsometricCharacter character){
+
+    final compression = readByte();
+
+    final readA = readBitFromByte(compression, 0);
+    final readB = readBitFromByte(compression, 1);
+    final readC = readBitFromByte(compression, 2);
+
+    if (readA){
+      character.weaponType = readByte();
+      character.bodyType = readByte();
+      character.headType = readByte();
+      character.legType = readByte();
+    }
+
+    if (readB){
+      final lookDirectionWeaponState = readByte();
+      character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
+      final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
+      character.weaponState = weaponState;
+    }
+
+    if (readC) {
+      character.weaponStateDuration = readByte();
+    } else {
+      character.weaponStateDuration = 0;
+    }
+  }
+
+  void readPlayerEvent() {
+    onPlayerEvent(readByte());
+  }
+
+  void readIsometricPosition(IsometricPosition value){
+    value.x = readDouble();
+    value.y = readDouble();
+    value.z = readDouble();
+  }
+
+  double readPercentage() => readByte() / 255.0;
+
+  double readAngle() => readDouble() * degreesToRadians;
+
+  Map<int, List<int>> readMapListInt(){
+    final valueMap = <int, List<int>> {};
+    final totalEntries = readUInt16();
+    for (var i = 0; i < totalEntries; i++) {
+      final key = readUInt16();
+      final valueLength = readUInt16();
+      final values = readUint16List(valueLength);
+      valueMap[key] = values;
+    }
+    return valueMap;
+  }
+
+  void readServerResponseApiSPR() {
+    switch (readByte()){
+      case ApiSPR.Player_Positions:
+        GameScissorsPaperRock.playerTeam = readByte();
+        GameScissorsPaperRock.playerX = readDouble();
+        GameScissorsPaperRock.playerY = readDouble();
+
+        final total = readUInt16();
+        GameScissorsPaperRock.totalPlayers = total;
+        for (var i = 0; i < total; i++) {
+          final player     = GameScissorsPaperRock.players[i];
+          player.team      = readUInt8();
+          player.x         = readInt16().toDouble();
+          player.y         = readInt16().toDouble();
+          player.targetX   = readInt16().toDouble();
+          player.targetY   = readInt16().toDouble();
+        }
+        break;
+    }
+  }
+
+  void readGameFight2DResponseCharacters(GameFight2D game) {
+    final totalPlayers = readUInt16();
+    assert (totalPlayers < GameFight2D.length);
+    game.charactersTotal = totalPlayers;
+    for (var i = 0; i < totalPlayers; i++) {
+      game.characterState[i] = readByte();
+      game.characterDirection[i] = readByte();
+      game.characterIsBot[i] = readBool();
+      game.characterDamage[i] = readUInt16();
+      game.characterPositionX[i] = readInt16().toDouble();
+      game.characterPositionY[i] = readInt16().toDouble();
+      game.characterStateDuration[i] = readByte();
+    }
+  }
+
+  CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
+
+  CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
+
+
+  void onChangedGameType(GameType value) {
+    print('onChangedGameType(${value.name})');
+    io.reset();
+    startGameByType(value);
+  }
+
+  void startGameByType(GameType gameType){
+    game.value = games.mapGameTypeToGame(gameType);
+  }
+
+  @override
+  void onScreenSizeChanged(
+      double previousWidth,
+      double previousHeight,
+      double newWidth,
+      double newHeight,
+      ) => io.detectInputMode();
+
+  void onDeviceTypeChanged(int deviceType){
+    io.detectInputMode();
+  }
+
+  void startGameType(GameType gameType){
+    network.connectToGame(gameType);
+  }
+
+  /// EVENT HANDLER (DO NOT CALL)
+  void _onChangedGame(Game game) {
+    engine.onDrawCanvas = game.drawCanvas;
+    engine.onDrawForeground = game.renderForeground;
+    engine.buildUI = game.buildUI;
+    engine.onLeftClicked = game.onLeftClicked;
+    engine.onRightClicked = game.onRightClicked;
+    engine.onKeyPressed = game.onKeyPressed;
+    engine.onMouseEnterCanvas = game.onMouseEnter;
+    engine.onMouseExitCanvas = game.onMouseExit;
+    game.onActivated();
+  }
+
+  void _onChangedGameError(GameError? gameError){
+    print('_onChangedGameError($gameError)');
+    if (gameError == null)
+      return;
+
+    clearErrorTimer = 300;
+    playAudioError();
+    switch (gameError) {
+      case GameError.Unable_To_Join_Game:
+        gamestream.games.website.error.value = 'unable to join game';
+        network.disconnect();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void onChangedAccount(Account? account) {
+    if (account == null) return;
+    final flag = 'subscription_status_${account.userId}';
+    if (storage.contains(flag)){
+      final storedSubscriptionStatusString = storage.get<String>(flag);
+      final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
+    }
+  }
+
+  void updateClearErrorTimer() {
+    if (clearErrorTimer <= 0)
+      return;
+
+    clearErrorTimer--;
+    if (clearErrorTimer > 0)
+      return;
+
+    error.value = null;
+  }
+
+  void render(Canvas canvas, Size size){
+    // game.value.drawCanvas(canvas, size);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('isometric.build()');
+
+    if (engineBuilt){
+      return engine;
+    }
+
+    engineBuilt = true;
+    engine = Engine(
+      init: init,
+      update: update,
+      render: render,
+      title: 'AMULET',
+      themeData: ThemeData(fontFamily: 'VT323-Regular'),
+      backgroundColor: IsometricColors.black,
+      onError: onError,
+      buildUI: games.website.buildUI,
+      buildLoadingScreen: games.website.buildLoadingPage,
+    );
+
+    print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
+
+
+    print('time zone: ${detectConnectionRegion()}');
+    engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
+    engine.drawCanvasAfterUpdate = false;
+    renderResponse = true;
+    Images.loadImages();
+    engine.cursorType.value = CursorType.Basic;
+    engine.deviceType.onChanged(onDeviceTypeChanged);
+    engine.onScreenSizeChanged = onScreenSizeChanged;
+    return engine;
+  }
+
+  @override
+  void onReadRespondFinished() {
+    if (renderResponse){
+      engine.redrawCanvas();
+    }
+  }
+
 }

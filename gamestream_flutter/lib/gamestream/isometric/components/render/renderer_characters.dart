@@ -32,11 +32,11 @@ class RendererCharacters extends IsometricRenderer {
 
   void renderCurrentCharacter(){
 
-    if (!character.allie && gamestream.isometric.options.renderHealthBarEnemies) {
+    if (!character.allie && gamestream.options.renderHealthBarEnemies) {
       renderer.renderCharacterHealthBar(character);
     }
 
-    if (character.allie && gamestream.isometric.options.renderHealthBarAllies) {
+    if (character.allie && gamestream.options.renderHealthBarAllies) {
       renderer.renderCharacterHealthBar(character);
     }
 
@@ -192,7 +192,7 @@ class RendererCharacters extends IsometricRenderer {
     }
 
     if (character.state == CharacterState.Stunned){
-      gamestream.isometric.renderer.renderStarsV3(character);
+      gamestream.renderer.renderStarsV3(character);
       gamestream.engine.renderSprite(
         image: Images.character_dog,
         dstX: character.renderX,
@@ -296,7 +296,7 @@ class RendererCharacters extends IsometricRenderer {
           framesPerDirection: framesPerDirection,
         );
       case CharacterState.Stunned:
-        gamestream.isometric.renderer.renderStarsV3(character);
+        gamestream.renderer.renderStarsV3(character);
 
         return single(
             frame: 1,
@@ -320,7 +320,7 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.isometric.getRenderColorPosition(character),
+        color: gamestream.getRenderColorPosition(character),
       );
     }
 
@@ -335,7 +335,7 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.isometric.getRenderColorPosition(character),
+        color: gamestream.getRenderColorPosition(character),
       );
     }
 
@@ -349,7 +349,7 @@ class RendererCharacters extends IsometricRenderer {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: gamestream.isometric.getRenderColorPosition(character),
+      color: gamestream.getRenderColorPosition(character),
     );
   }
 

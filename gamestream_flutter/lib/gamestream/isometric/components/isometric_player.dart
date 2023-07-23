@@ -59,16 +59,16 @@ class IsometricPlayer {
   final controlsCanTargetEnemies = Watch(false);
   final controlsRunInDirectionEnabled = Watch(false);
 
-  late final message = Watch('', onChanged: gamestream.isometric.onChangedPlayerMessage);
+  late final message = Watch('', onChanged: gamestream.onChangedPlayerMessage);
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
-  late final active = Watch(false, onChanged: gamestream.isometric.onChangedPlayerActive);
+  late final active = Watch(false, onChanged: gamestream.onChangedPlayerActive);
   late final alive = Watch(true);
-  late final weapon = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
-  late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
-  late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
-  late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
+  late final weapon = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
+  late final weaponPrimary = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
+  late final weaponSecondary = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
+  late final weaponTertiary = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
 
-  int get areaNodeIndex => (indexRow * gamestream.isometric.totalColumns) + indexColumn;
+  int get areaNodeIndex => (indexRow * gamestream.totalColumns) + indexColumn;
 
   double get x => position.x;
   double get y => position.y;
@@ -79,7 +79,7 @@ class IsometricPlayer {
   double get positionScreenY => gamestream.engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
-  bool get inBounds => gamestream.isometric.inBoundsPosition(position);
+  bool get inBounds => gamestream.inBoundsPosition(position);
 
 
   bool isCharacter(IsometricCharacter character){
@@ -95,7 +95,7 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final scene = gamestream.isometric;
+    final scene = gamestream;
     final index = nodeIndex + scene.area;
     while (index < scene.totalNodes){
       if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;
@@ -131,15 +131,15 @@ class IsometricPlayer {
 
   void onChangedDebugging(bool debugging){
     if (!debugging){
-      gamestream.isometric.cameraTargetPlayer();
+      gamestream.cameraTargetPlayer();
     }
   }
 
   void toggleControlsRunInDirectionEnabled() =>
-      gamestream.isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
+      gamestream.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
 
   void toggleControlsCanTargetEnemies() =>
-      gamestream.isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
+      gamestream.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

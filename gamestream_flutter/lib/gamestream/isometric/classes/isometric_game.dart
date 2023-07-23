@@ -23,7 +23,7 @@ class IsometricGame extends Game {
     isometric.camera.target = isometric.player.position;
   }
 
-  bool get debugMode => gamestream.isometric.player.debugging.value;
+  bool get debugMode => gamestream.player.debugging.value;
 
   bool get editMode => isometric.edit.value;
 
@@ -44,9 +44,7 @@ class IsometricGame extends Game {
     isometric.renderer.renderForeground(canvas, size);
   }
 
-  @override
   void update() {
-    isometric.update();
   }
 
   void sendIsometricClientRequest([dynamic message]) {
@@ -143,7 +141,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Digit_0) {
-      gamestream.isometric.toggleDebugging();
+      gamestream.toggleDebugging();
       return;
     }
 
@@ -160,7 +158,7 @@ class IsometricGame extends Game {
     // play mode
 
     if (key == KeyCode.Z) {
-      gamestream.isometric.toggleZoom();
+      gamestream.toggleZoom();
       return;
     }
 

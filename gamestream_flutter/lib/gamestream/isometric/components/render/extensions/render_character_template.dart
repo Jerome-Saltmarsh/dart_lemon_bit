@@ -100,7 +100,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       case CharacterState.Stunned:
         frameLegs = 0;
         frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
-        gamestream.isometric.renderer.renderStarsV3(character);
+        gamestream.renderer.renderStarsV3(character);
         break;
     }
 
@@ -143,7 +143,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = IsometricRender.getPositionRenderY(character);
 
     const Color_Invisible = IsometricColors.White38_Value;
-    final color = invisible ? Color_Invisible : gamestream.isometric.getRenderColorPosition(character);
+    final color = invisible ? Color_Invisible : gamestream.getRenderColorPosition(character);
 
     if (invisible) {
       gamestream.engine.bufferBlendMode = BlendMode.srcIn;

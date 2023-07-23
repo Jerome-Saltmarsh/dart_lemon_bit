@@ -387,7 +387,7 @@ extension IsometricEditorUI on IsometricEditor {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     buildText('Underground'),
-                    buildWatch(gamestream.isometric.sceneUnderground, buildText),
+                    buildWatch(gamestream.sceneUnderground, buildText),
                   ],
                 ),
               ),
@@ -431,7 +431,7 @@ extension IsometricEditorUI on IsometricEditor {
           padding: const EdgeInsets.all(4),
           color: GS_CONTAINER_COLOR,
           child: FittedBox(
-            child: gamestream.isometric.ui.buildImageGameObject(objectType),
+            child: gamestream.ui.buildImageGameObject(objectType),
           ),
         ),
       );
@@ -483,30 +483,30 @@ extension IsometricEditorUI on IsometricEditor {
       );
 
   Widget buildIconRain(int rain) => buildWatch(
-      gamestream.isometric.rainType,
+      gamestream.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
-        action: () => gamestream.isometric.setRain(rain),
+        action: () => gamestream.setRain(rain),
         icon: GameIsometricUI.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
 
   Widget buildIconLightning(int lightning) => buildWatch(
-      gamestream.isometric.lightningType,
+      gamestream.lightningType,
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
-            gamestream.isometric.setLightning(lightning),
+            gamestream.setLightning(lightning),
         icon: GameIsometricUI.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
       ));
 
   Widget buildIconWind(int windType) => buildWatch(
-      gamestream.isometric.windTypeAmbient,
+      gamestream.windTypeAmbient,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
-        action: () => gamestream.isometric.setWind(windType),
+        action: () => gamestream.setWind(windType),
         icon: GameIsometricUI.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
@@ -576,7 +576,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = buildWatch(gamestream.isometric.hours, (int hours) {
+    final buttons = buildWatch(gamestream.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -587,7 +587,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple4,
-              action: () => gamestream.isometric.setHour(i),
+              action: () => gamestream.setHour(i),
             ),
           ),
         );
@@ -599,7 +599,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple3,
-              action: () => gamestream.isometric.setHour(i),
+              action: () => gamestream.setHour(i),
             ),
           ),
         );
@@ -617,9 +617,9 @@ extension IsometricEditorUI on IsometricEditor {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildWatch(gamestream.isometric.hours, (num hour) => buildText(padZero(hour))),
+        buildWatch(gamestream.hours, (num hour) => buildText(padZero(hour))),
         buildText(':'),
-        buildWatch(gamestream.isometric.minutes, (num hour) => buildText(padZero(hour))),
+        buildWatch(gamestream.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
     return Container(
@@ -661,8 +661,8 @@ extension IsometricEditorUI on IsometricEditor {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (gamestream.isometric.playMode) {
-              gamestream.isometric.actionSetModePlay();
+            if (gamestream.playMode) {
+              gamestream.actionSetModePlay();
               return;
             }
             paint(nodeType: nodeType);
@@ -701,7 +701,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(gamestream.isometric.gameRunning, (gameRunning) {
+            buildWatch(gamestream.gameRunning, (gameRunning) {
               return buildText('Game Running: $gameRunning', onPressed: () => toggleGameRunning);
             }),
             buildText ('Reset', onPressed: editSceneReset),
@@ -1061,7 +1061,7 @@ extension IsometricEditorUI on IsometricEditor {
                               onPressed: sendGameObjectRequestDeselect
                           ),
                         ),
-                        Center(child: gamestream.isometric.ui.buildImageGameObject(subType)),
+                        Center(child: gamestream.ui.buildImageGameObject(subType)),
                         height8,
                         buidButtonDuplicate(),
                         height8,
