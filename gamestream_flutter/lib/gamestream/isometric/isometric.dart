@@ -3,24 +3,20 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
-import 'package:gamestream_flutter/gamestream/isometric/mixins/isometric_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'atlases/atlas_nodes.dart';
-import 'classes/isometric_character.dart';
-import 'classes/isometric_position.dart';
-import 'classes/isometric_projectile.dart';
+import 'classes/src.dart';
+import 'components/isometric_options.dart';
 import 'components/render/renderer_characters.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
+import 'mixins/src.dart';
 import 'ui/game_isometric_minimap.dart';
-import 'classes/isometric_particles.dart';
 import 'components/render/renderer_gameobjects.dart';
 import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
@@ -38,7 +34,7 @@ class Isometric with IsometricScene, IsometricCharacters {
   var areaTypeVisibleDuration = 0;
   var nextLightingUpdate = 0;
   var totalActiveLights = 0;
-  var interpolation_padding = 0.0;
+  var interpolationPadding = 0.0;
   var torchEmissionStart = 0.8;
   var torchEmissionEnd = 1.0;
   var torchEmissionVal = 0.061;
@@ -152,7 +148,7 @@ class Isometric with IsometricScene, IsometricCharacters {
     updateTorchEmissionIntensity();
     updateParticleEmitters();
 
-    interpolation_padding = ((gamestream.isometric.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
+    interpolationPadding = ((gamestream.isometric.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -416,12 +412,12 @@ class Isometric with IsometricScene, IsometricCharacters {
 
   void applyEmissions(){
     totalActiveLights = 0;
-    gamestream.isometric.applyEmissionsLightSources();
-    gamestream.isometric.applyEmissionsCharacters();
-    gamestream.isometric.applyEmissionGameObjects();
+    applyEmissionsLightSources();
+    applyEmissionsCharacters();
+    applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
-    gamestream.isometric.particles.applyEmissionsParticles();
+    particles.applyEmissionsParticles();
 
     applyEmissionEditorSelectedNode();
   }

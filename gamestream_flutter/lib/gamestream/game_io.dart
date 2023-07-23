@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../library.dart';

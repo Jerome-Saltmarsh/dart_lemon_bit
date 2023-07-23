@@ -2,7 +2,7 @@ import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 

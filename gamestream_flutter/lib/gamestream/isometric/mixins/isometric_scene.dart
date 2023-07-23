@@ -446,7 +446,7 @@ mixin IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.interpolation_padding;
+    final padding = gamestream.isometric.interpolationPadding;
     final rx = getIndexRenderX(index);
     if (rx < gamestream.engine.Screen_Left - padding) return;
     if (rx > gamestream.engine.Screen_Right + padding) return;
@@ -544,7 +544,7 @@ mixin IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.interpolation_padding;
+    final padding = gamestream.isometric.interpolationPadding;
     final rx = getIndexRenderX(index);
     if (rx < gamestream.engine.Screen_Left - padding) return;
     if (rx > gamestream.engine.Screen_Right + padding) return;

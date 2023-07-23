@@ -3,7 +3,7 @@ import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';

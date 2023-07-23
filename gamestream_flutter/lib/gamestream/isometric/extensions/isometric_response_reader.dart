@@ -3,7 +3,7 @@
 import 'dart:typed_data';
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 
 extension IsometricResponseReader on Gamestream {
