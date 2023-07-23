@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../gamestream/isometric/components/functions/format_bytes.dart';
 import 'connection_status.dart';
 
 abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
@@ -39,43 +38,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
 
   bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
 
-   // Future init(SharedPreferences sharedPreferences) async {
-   //   print('gamestream.init()');
-   //
-   //   final visitDateTimeString = sharedPreferences.getString('visit-datetime');
-   //   if (visitDateTimeString != null) {
-   //     final visitDateTime = DateTime.parse(visitDateTimeString);
-   //     final durationSinceLastVisit = DateTime.now().difference(visitDateTime);
-   //     print('duration since last visit: ${durationSinceLastVisit.inSeconds} seconds');
-   //     // games.website.saveVisitDateTime();
-   //     // if (durationSinceLastVisit.inSeconds > 45){
-   //     //   games.website.checkForLatestVersion();
-   //     //   return;
-   //     // }
-   //   }
-   //
-   //   // io.detectInputMode();
-   //
-   //   // final visitCount = sharedPreferences.getInt('visit-count');
-   //   // if (visitCount == null){
-   //   //   sharedPreferences.putAny('visit-count', 1);
-   //   //   games.website.visitCount.value = 1;
-   //   // } else {
-   //   //   sharedPreferences.putAny('visit-count', visitCount + 1);
-   //   //   games.website.visitCount.value = visitCount + 1;
-   //   //
-   //   //   final cachedVersion = sharedPreferences.getString('version');
-   //   //   if (cachedVersion != null){
-   //   //     if (version != cachedVersion){
-   //   //       print('New version detected (previous: $cachedVersion, latest: $version)');
-   //   //     }
-   //   //   }
-   //   //
-   //   //   // network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
-   //   // }
-   //   await Future.delayed(const Duration(seconds: 4));
-   // }
-
    void onError(Object error, StackTrace stack);
 
    void onChangedNetworkConnectionStatus(ConnectionStatus connection);
@@ -88,45 +50,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   Duration? get connectionDuration {
     if (timeConnectionEstablished == null) return null;
     return DateTime.now().difference(timeConnectionEstablished!);
-  }
-
-  String get formattedConnectionDuration {
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    final seconds = duration.inSeconds % 60;
-    final minutes = duration.inMinutes;
-    return 'minutes: $minutes, seconds: $seconds';
-  }
-
-  String formatAverageBufferSize(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    final seconds = duration.inSeconds;
-    final bytesPerSecond = (bytes / seconds).round();
-    final bytesPerMinute = bytesPerSecond * 60;
-    final bytesPerHour = bytesPerMinute * 60;
-    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
-  }
-
-  String formatAverageBytePerSecond(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round());
-  }
-
-  String formatAverageBytePerMinute(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round() * 60);
-  }
-
-  String formatAverageBytePerHour(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
 
   void readServerResponse(Uint8List values) {

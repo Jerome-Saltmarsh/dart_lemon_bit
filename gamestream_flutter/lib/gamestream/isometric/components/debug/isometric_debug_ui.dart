@@ -106,7 +106,7 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          GSRefresh(() => buildText('connection-duration: ${gamestream.formattedConnectionDuration}\n')),
+          GSRefresh(() => buildText('connection-duration: ${formattedConnectionDuration}\n')),
           buildText('network-server-fps: $serverFPS'),
           buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
           buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
@@ -501,5 +501,48 @@ extension isometricDebugUI on IsometricDebug {
         ),
       ],
     );
+
+
+
+
+
+  String get formattedConnectionDuration {
+    final duration = isometric.connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds % 60;
+    final minutes = duration.inMinutes;
+    return 'minutes: $minutes, seconds: $seconds';
+  }
+
+  String formatAverageBufferSize(int bytes){
+    final duration = isometric.connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds;
+    final bytesPerSecond = (bytes / seconds).round();
+    final bytesPerMinute = bytesPerSecond * 60;
+    final bytesPerHour = bytesPerMinute * 60;
+    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
+  }
+
+  String formatAverageBytePerSecond(int bytes){
+    final duration = isometric.connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round());
+  }
+
+  String formatAverageBytePerMinute(int bytes){
+    final duration = isometric.connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 60);
+  }
+
+  String formatAverageBytePerHour(int bytes){
+    final duration = isometric.connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 3600);
+  }
 }
 
