@@ -33,13 +33,10 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
 
   bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
 
-   void onError(Object error, StackTrace stack);
+  void onError(Object error, StackTrace stack);
 
-   void onChangedNetworkConnectionStatus(ConnectionStatus connection);
+  void onChangedNetworkConnectionStatus(ConnectionStatus connection);
 
-  void update();
-
-  @override
   Widget build(BuildContext context);
 
   Duration? get connectionDuration {
@@ -54,18 +51,15 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     bufferSize.value = values.length;
     bufferSizeTotal.value += values.length;
 
-    var serverResponse = -1;
     final length = values.length - 1;
 
     while (index < length) {
-      serverResponse = readByte();
-      readResponse(serverResponse);
+      readResponse(readByte());
     }
 
     bufferSize.value = index;
     onReadRespondFinished();
     index = 0;
-    serverResponse = -1;
   }
 
   void onReadRespondFinished();
@@ -160,6 +154,4 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     }
     sink.add(message);
   }
-
-
 }

@@ -56,11 +56,6 @@ class GameIO with ByteWriter {
     touchCursorWorldY = isometric.player.renderY;
   }
 
-  void detectInputMode() =>
-    inputMode.value = gamestream.engine.deviceIsComputer
-        ? InputMode.Keyboard
-        : InputMode.Touch;
-
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
@@ -180,14 +175,14 @@ class GameIO with ByteWriter {
   /// [5] Mouse_Right
   /// [6] Shift
   /// [7] Space
-  void applyKeyboardInputToUpdateBuffer() {
+  void applyKeyboardInputToUpdateBuffer(Isometric isometric) {
 
-    final mouseX = gamestream.engine.mouseWorldX.toInt();
-    final mouseY = gamestream.engine.mouseWorldY.toInt();
-    final screenLeft = gamestream.engine.Screen_Left.toInt();
-    final screenTop = gamestream.engine.Screen_Top.toInt();
-    final screenRight = gamestream.engine.Screen_Right.toInt();
-    final screenBottom = gamestream.engine.Screen_Bottom.toInt();
+    final mouseX = isometric.engine.mouseWorldX.toInt();
+    final mouseY = isometric.engine.mouseWorldY.toInt();
+    final screenLeft = isometric.engine.Screen_Left.toInt();
+    final screenTop = isometric.engine.Screen_Top.toInt();
+    final screenRight = isometric.engine.Screen_Right.toInt();
+    final screenBottom = isometric.engine.Screen_Bottom.toInt();
 
     final diffMouseWorldX = mouseX - previousMouseX;
     final diffMouseWorldY = mouseY - previousMouseY;
@@ -220,7 +215,7 @@ class GameIO with ByteWriter {
       | changeScreenRight << 4
       | changeScreenBottom << 6;
 
-    writeByte(gamestream.io.getInputAsByte());
+    writeByte(isometric.io.getInputAsByte());
     writeByte(compress1);
     writeByte(compress2);
 

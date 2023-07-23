@@ -190,11 +190,14 @@ class Isometric extends WebsocketClientBuilder with
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
 
-  @override
   void update(){
+
+    if (!connected)
+      return;
+
     if (!gameRunning.value) {
       io.writeByte(ClientRequest.Update);
-      io.applyKeyboardInputToUpdateBuffer();
+      io.applyKeyboardInputToUpdateBuffer(this);
       io.sendUpdateBuffer();
       return;
     }
@@ -210,7 +213,7 @@ class Isometric extends WebsocketClientBuilder with
     player.updateMessageTimer();
     readPlayerInputEdit();
 
-    io.applyKeyboardInputToUpdateBuffer();
+    io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
 
 
@@ -1347,10 +1350,10 @@ class Isometric extends WebsocketClientBuilder with
       double previousHeight,
       double newWidth,
       double newHeight,
-      ) => io.detectInputMode();
+      ) => detectInputMode();
 
   void onDeviceTypeChanged(int deviceType){
-    io.detectInputMode();
+    detectInputMode();
   }
 
   void startGameType(GameType gameType){
@@ -1388,12 +1391,12 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void onChangedAccount(Account? account) {
-    if (account == null) return;
-    final flag = 'subscription_status_${account.userId}';
-    if (storage.contains(flag)){
-      final storedSubscriptionStatusString = storage.get<String>(flag);
-      final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
-    }
+    // if (account == null) return;
+    // final flag = 'subscription_status_${account.userId}';
+    // if (storage.contains(flag)){
+    //   final storedSubscriptionStatusString = storage.get<String>(flag);
+    //   final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
+    // }
   }
 
   void updateClearErrorTimer() {
@@ -1517,5 +1520,9 @@ class Isometric extends WebsocketClientBuilder with
   void sendClientRequest(int value, [dynamic message]) =>
       message != null ? send('${value} $message') : send(value);
 
+  void detectInputMode() =>
+      io.inputMode.value = engine.deviceIsComputer
+          ? InputMode.Keyboard
+          : InputMode.Touch;
 
 }

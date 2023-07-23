@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_percentage.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
 

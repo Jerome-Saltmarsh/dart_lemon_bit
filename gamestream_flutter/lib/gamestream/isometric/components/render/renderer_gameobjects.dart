@@ -11,12 +11,10 @@ import 'functions/render_shadow.dart';
 class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;
 
-  static final gameObjects = gamestream.gameObjects;
-
   RendererGameObjects(super.isometric);
 
   @override
-  int getTotal() => gameObjects.length;
+  int getTotal() => isometric.gameObjects.length;
 
   @override
   void renderFunction() {
@@ -102,28 +100,28 @@ class RendererGameObjects extends IsometricRenderer {
 
   @override
   void updateFunction() {
-    gameObject = gameObjects[index];
+    gameObject = isometric.gameObjects[index];
 
     while (!gameObject.active || !gameObject.onscreen || !isometric.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
-      gameObject = gameObjects[index];
+      gameObject = isometric.gameObjects[index];
     }
 
     order = gameObject.sortOrder;
   }
 
-  static double getRenderYBouncing(IsometricPosition v3) =>
-      ((v3.y + v3.x) * 0.5) - v3.z + gamestream.animationFrameWaterHeight;
+  double getRenderYBouncing(IsometricPosition v3) =>
+      ((v3.y + v3.x) * 0.5) - v3.z + isometric.animationFrameWaterHeight;
 
-  static void renderBouncingGameObjectShadow(IsometricPosition gameObject){
+  void renderBouncingGameObjectShadow(IsometricPosition gameObject){
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
     renderShadow(
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * gamestream.animationFrameWaterHeight.toDouble())
+        scale: shadowScale + (shadowScaleHeight * isometric.animationFrameWaterHeight.toDouble())
     );
   }
 }

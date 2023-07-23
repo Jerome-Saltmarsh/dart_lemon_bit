@@ -3,7 +3,6 @@ library game_library;
 export 'gamestream/audio/game_audio.dart';
 export 'images.dart';
 export 'gamestream/game_io.dart';
-export 'persistence.dart';
 export 'gamestream/isometric/mixins/isometric_animation.dart';
 export 'dart:typed_data';
 export 'common.dart';

@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/website_dialog.dart';
@@ -166,18 +165,18 @@ class WebsiteGame extends Game {
   }
 
   void checkForLatestVersion() async {
-    await saveVisitDateTime();
+    // await saveVisitDateTime();
     gamestream.operationStatus.value = OperationStatus.Checking_For_Updates;
     gamestream.engine.refreshPage();
   }
 
-  Future saveVisitDateTime() async =>
-      save('visit-datetime', DateTime.now().toIso8601String());
+  // Future saveVisitDateTime() async =>
+  //     save('visit-datetime', DateTime.now().toIso8601String());
+  //
+  // Future saveVersion() async =>
+  //     await save('version', version);
 
-  Future saveVersion() async =>
-      await save('version', version);
-
-  Future save(String key, dynamic value) async =>
-      (await SharedPreferences.getInstance()).putAny(key, value);
+  // Future save(String key, dynamic value) async =>
+  //     (await SharedPreferences.getInstance()).putAny(key, value);
 
 }
