@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -12,8 +11,6 @@ mixin IsometricScene {
 
   var emissionAlphaCharacter = 50;
   var dynamicShadows = true;
-  var totalCharacters = 0;
-  final characters = <IsometricCharacter>[];
 
   var ambientColorRGB  = Color.fromRGBO(31, 1, 86, 0.5);
   late var ambientColorHSV  = HSVColor.fromColor(ambientColorRGB);
@@ -1430,35 +1427,6 @@ mixin IsometricScene {
 
   int getNodeColorAtIndex(int index )=>
       index < 0 || index >= total ? ambientColor : nodeColors[index];
-
-  IsometricCharacter getCharacterInstance(){
-    if (characters.length <= totalCharacters){
-      characters.add(IsometricCharacter());
-    }
-    return characters[totalCharacters];
-  }
-
-  void applyEmissionsCharacters() {
-    for (var i = 0; i < totalCharacters; i++) {
-      final character = characters[i];
-      if (!character.allie) continue;
-
-      if (character.weaponType == WeaponType.Staff){
-        applyVector3Emission(
-          character,
-          alpha: 150,
-          saturation: 100,
-          value: 100,
-          hue: 50,
-        );
-      } else {
-        applyVector3EmissionAmbient(
-          character,
-          alpha: emissionAlphaCharacter,
-        );
-      }
-    }
-  }
 
   /// @hue a number between 0 and 360
   /// @saturation a number between 0 and 100

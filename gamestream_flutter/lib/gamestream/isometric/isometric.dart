@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_opt
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
+import 'package:gamestream_flutter/gamestream/isometric/mixins/isometric_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -25,7 +26,7 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 import 'ui/isometric_constants.dart';
 
-class Isometric with IsometricScene {
+class Isometric with IsometricScene, IsometricCharacters {
 
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
