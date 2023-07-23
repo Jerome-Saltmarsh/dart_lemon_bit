@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
+import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class GameFight2DUI extends StatelessWidget {
   final GameFight2D game;
@@ -13,66 +14,70 @@ class GameFight2DUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        buildWatch(tutorialVisible, (tutorialVisible) {
-           return Positioned(
-               left: 16,
-               top: 16,
-               child: tutorialVisible ? buildContainerTutorial() : nothing,
-           );
-        }),
-        Positioned(
-            top: 16,
-            right: 16,
-            child: GameIsometricUI.buildWindowMenu(
-                children: [
-                  onPressed(
-                    action: tutorialVisible.toggle,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText('TUTORIAL', size: 20, color: Colors.white70),
-                          buildWatch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (gamestream.engine.isLocalHost)
-                    height6,
-                  if (gamestream.engine.isLocalHost)
-                    onPressed(
-                      action: game.togglePlayerEdit,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('EDIT', size: 20, color: Colors.white70),
-                            BoolWatchBuilderCheckBox(watchBool: game.player.edit),
-                          ],
+    return IsometricBuilder(
+      builder: (context, isometric) {
+        return Stack(
+          children: [
+            buildWatch(tutorialVisible, (tutorialVisible) {
+               return Positioned(
+                   left: 16,
+                   top: 16,
+                   child: tutorialVisible ? buildContainerTutorial() : nothing,
+               );
+            }),
+            Positioned(
+                top: 16,
+                right: 16,
+                child: isometric.buildWindowMenu(
+                    children: [
+                      onPressed(
+                        action: tutorialVisible.toggle,
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText('TUTORIAL', size: 20, color: Colors.white70),
+                              buildWatch(tutorialVisible, (bool renderName) => isometric.buildIconCheckbox(renderName)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  if (gamestream.engine.isLocalHost)
-                    height6,
-                  if (gamestream.engine.isLocalHost)
-                    onPressed(
-                      action: game.renderCharacterState.toggle,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('DEBUG', size: 20, color: Colors.white70),
-                            buildWatch(game.renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
-                          ],
+                      if (game.isometric.engine.isLocalHost)
+                        height6,
+                      if (game.isometric.engine.isLocalHost)
+                        onPressed(
+                          action: game.togglePlayerEdit,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                buildText('EDIT', size: 20, color: Colors.white70),
+                                BoolWatchBuilderCheckBox(watchBool: game.player.edit),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    )
-                ]
+                      if (game.isometric.engine.isLocalHost)
+                        height6,
+                      if (game.isometric.engine.isLocalHost)
+                        onPressed(
+                          action: game.renderCharacterState.toggle,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                buildText('DEBUG', size: 20, color: Colors.white70),
+                                buildWatch(game.renderCharacterState, (bool renderName) => isometric.buildIconCheckbox(renderName)),
+                              ],
+                            ),
+                          ),
+                        )
+                    ]
+                )
             )
-        )
-      ],
+          ],
+        );
+      }
     );
   }
 

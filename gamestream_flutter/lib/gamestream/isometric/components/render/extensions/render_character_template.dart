@@ -24,7 +24,7 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (weaponType == WeaponType.Unarmed) return;
     const Sprite_Size = 125.0;
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
         image: Images.getImageForWeaponType(weaponType),
         srcX: frame * Sprite_Size,
         srcY: direction * Sprite_Size,
@@ -100,7 +100,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       case CharacterState.Stunned:
         frameLegs = 0;
         frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
-        gamestream.renderStarsV3(character);
+        isometric.renderStarsV3(character);
         break;
     }
 
@@ -143,10 +143,10 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = IsometricRender.getPositionRenderY(character);
 
     const Color_Invisible = IsometricColors.White38_Value;
-    final color = invisible ? Color_Invisible : gamestream.getRenderColorPosition(character);
+    final color = invisible ? Color_Invisible : isometric.getRenderColorPosition(character);
 
     if (invisible) {
-      gamestream.engine.bufferBlendMode = BlendMode.srcIn;
+      isometric.engine.bufferBlendMode = BlendMode.srcIn;
     }
 
     if (!weaponInFront) {
@@ -187,7 +187,7 @@ extension RenderCharactersTemplate on RendererCharacters {
            anchorY: Anchor_Y,
          );
       } else {
-        gamestream.engine.renderSprite(
+        isometric.engine.renderSprite(
           image: Images.template_shadow,
           srcX: frameLegs * 64,
           srcY: upperBodyDirection * 64,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
-import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class ItemImage extends StatelessWidget {
 
@@ -29,18 +29,22 @@ class ItemImage extends StatelessWidget {
 
     final src = Atlas.getSrc(type, subType);
     return FittedBox(
-      child: Container(
-        width: size,
-        height: size,
-        color: Colors.transparent,
-        child: gamestream.engine.buildAtlasImage(
-          image: Atlas.getImage(type),
-          srcX: src[Atlas.SrcX],
-          srcY: src[Atlas.SrcY],
-          srcWidth: src[Atlas.SrcWidth],
-          srcHeight: src[Atlas.SrcHeight],
-          scale: scale,
-        ),
+      child: IsometricBuilder(
+        builder: (context, isometric) {
+          return Container(
+            width: size,
+            height: size,
+            color: Colors.transparent,
+            child: isometric.engine.buildAtlasImage(
+              image: Atlas.getImage(type),
+              srcX: src[Atlas.SrcX],
+              srcY: src[Atlas.SrcY],
+              srcWidth: src[Atlas.SrcWidth],
+              srcHeight: src[Atlas.SrcHeight],
+              scale: scale,
+            ),
+          );
+        }
       ),
     );
   }

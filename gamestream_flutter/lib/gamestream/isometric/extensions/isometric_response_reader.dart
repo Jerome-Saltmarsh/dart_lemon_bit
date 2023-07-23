@@ -180,6 +180,7 @@ extension IsometricResponseReader on Isometric {
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
     player.nodeIndex = getIndexPosition(position);
+    player.areaNodeIndex = (position.indexRow * totalColumns) + position.indexColumn;
   }
 
   void readPlayerAimTarget() {

@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../isometric_render.dart';
 
 class IsometricDebug {
+  final Isometric isometric;
   final tab = Watch(DebugTab.Selected);
   final health = Watch(0);
   final healthMax = Watch(0);
@@ -56,33 +57,32 @@ class IsometricDebug {
 
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
-  Isometric get isometric => gamestream;
-
+  IsometricDebug(this.isometric);
 
   void render(IsometricRender renderer) {
-    if (!gamestream.player.debugging.value) return;
+    if (!isometric.player.debugging.value) return;
     if (!selectedCollider.value) return;
 
-    gamestream.engine.setPaintColor(Colors.white);
-    renderer.renderCircle(
+    isometric.engine.setPaintColor(Colors.white);
+    isometric.renderCircle(
       x.value,
       y.value,
       z.value,
       radius.value.toDouble(),
     );
 
-    gamestream.engine.setPaintColor(Colors.green);
-    renderer.renderCircle(
+    isometric.engine.setPaintColor(Colors.green);
+    isometric.renderCircle(
       x.value,
       y.value,
       z.value,
       weaponRange.value.toDouble(),
     );
 
-    gamestream.engine.setPaintColor(Colors.red);
+    isometric.engine.setPaintColor(Colors.red);
     if (selectedColliderType.value == IsometricType.Character) {
       if (targetSet.value) {
-        renderer.renderLine(
+        isometric.renderLine(
           x.value,
           y.value,
           z.value,
@@ -92,14 +92,14 @@ class IsometricDebug {
         );
       }
 
-      gamestream.engine.setPaintColor(Colors.blue);
+      isometric.engine.setPaintColor(Colors.blue);
       renderPath(
         path: path,
         start: 0,
         end: pathIndex.value,
       );
 
-      gamestream.engine.setPaintColor(Colors.yellow);
+      isometric.engine.setPaintColor(Colors.yellow);
       renderPath(
         path: path,
         start: pathIndex.value,
@@ -107,8 +107,8 @@ class IsometricDebug {
       );
 
       if (!arrivedAtDestination.value){
-        gamestream.engine.setPaintColor(Colors.deepPurpleAccent);
-        renderer.renderLine(
+        isometric.engine.setPaintColor(Colors.deepPurpleAccent);
+        isometric.renderLine(
           x.value,
           y.value,
           z.value,
@@ -138,15 +138,14 @@ class IsometricDebug {
   }){
     if (start < 0) return;
     if (end < 0) return;
-    final nodes = gamestream;
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];
-      gamestream.engine.drawLine(
-        nodes.getIndexRenderX(a) + Node_Size_Half,
-        nodes.getIndexRenderY(a) + Node_Size_Half,
-        nodes.getIndexRenderX(b) + Node_Size_Half,
-        nodes.getIndexRenderY(b) + Node_Size_Half,
+      isometric.engine.drawLine(
+        isometric.getIndexRenderX(a) + Node_Size_Half,
+        isometric.getIndexRenderY(a) + Node_Size_Half,
+        isometric.getIndexRenderX(b) + Node_Size_Half,
+        isometric.getIndexRenderY(b) + Node_Size_Half,
       );
     }
   }

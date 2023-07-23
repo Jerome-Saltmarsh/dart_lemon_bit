@@ -13,7 +13,7 @@ extension IsometricEvents on Isometric {
   void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
       case WeaponType.Shotgun:
-        gamestream.audio.cock_shotgun_3.playXYZ(x, y, z);
+        playAudioXYZ(audio.cock_shotgun_3, x, y, z);
         break;
       default:
         break;
@@ -30,48 +30,50 @@ extension IsometricEvents on Isometric {
   }
 
   void onChangedNodes(){
-    gamestream.refreshGridMetrics();
-    gamestream.generateHeightMap();
-    gamestream.generateMiniMap();
-    gamestream.minimap.generateSrcDst();
-    gamestream.refreshBakeMapLightSources();
+    refreshGridMetrics();
+    generateHeightMap();
+    generateMiniMap();
+    minimap.generateSrcDst();
+    refreshBakeMapLightSources();
 
     if (raining.value) {
-      gamestream.rainStop();
-      gamestream.rainStart();
+      rainStop();
+      rainStart();
     }
-    gamestream.resetNodeColorsToAmbient();
-    gamestream.editor.refreshNodeSelectedIndex();
+    resetNodeColorsToAmbient();
+    editor.refreshNodeSelectedIndex();
   }
 
   void onFootstep(double x, double y, double z) {
     if (raining.value && (
-        gamestream.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
+        getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
             ||
-            gamestream.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
+            getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
-      gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = gamestream.rainType.value == RainType.Heavy ? 3 : 2;
+
+      playAudioXYZ(audio.footstep_mud_6, x, y, z);
+
+      final amount = rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
     }
 
-    final nodeType = gamestream.getTypeXYZSafe(x, y, z - 2);
+    final nodeType = getTypeXYZSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
-      gamestream.audio.footstep_stone.playXYZ(x, y, z);
+      playAudioXYZ(audio.footstep_stone, x, y, z);
       return;
     }
     if (NodeType.isMaterialWood(nodeType)) {
-      gamestream.audio.footstep_wood_4.playXYZ(x, y, z);
+      playAudioXYZ(audio.footstep_wood_4, x, y, z);
       return;
     }
     if (randomBool()){
-      gamestream.audio.footstep_grass_8.playXYZ(x, y, z);
+      playAudioXYZ(audio.footstep_grass_8, x, y, z);
       return;
     }
-    gamestream.audio.footstep_grass_7.playXYZ(x, y, z);
+    playAudioXYZ(audio.footstep_grass_7, x, y, z);
   }
 
   void onGameEvent(int type, double x, double y, double z, double angle) {
@@ -86,26 +88,26 @@ extension IsometricEvents on Isometric {
         onMeleeAttackPerformed(x, y, z, angle);
         return;
       case GameEventType.Bullet_Deactivated:
-        gamestream.audio.metal_light_3.playXYZ(x, y, z);
+        playAudioXYZ(audio.metal_light_3, x, y, z);
         return;
       case GameEventType.Material_Struck_Metal:
-        gamestream.audio.metal_struck.playXYZ(x, y, z);
+        playAudioXYZ(audio.metal_struck, x, y, z);
         return;
       case GameEventType.Player_Spawn_Started:
-        gamestream.camera.centerOnChaseTarget();
-        gamestream.audio.teleport.playXYZ(x, y, z);
+        camera.centerOnChaseTarget();
+        // audio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
         onGameEventExplosion(x, y, z);
         return;
       case GameEventType.Power_Used:
-        onGameEventPowerUsed(x, y, z, gamestream.readByte());
+        onGameEventPowerUsed(x, y, z, readByte());
         break;
       case GameEventType.AI_Target_Acquired:
-        final characterType = gamestream.readByte();
+        final characterType = readByte();
         switch (characterType){
           case CharacterType.Zombie:
-            randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
+            playAudioXYZ(randomItem(audio.audioSingleZombieTalking), x, y, z);
             break;
         }
         break;
@@ -120,10 +122,10 @@ extension IsometricEvents on Isometric {
         onNodeStruck(x, y, z);
         break;
       case GameEventType.Node_Deleted:
-        gamestream.audio.hover_over_button_sound_30.playXYZ(x, y, z);
+        playAudioXYZ(audio.hover_over_button_sound_30, x, y, z);
         break;
       case GameEventType.Weapon_Type_Equipped:
-        final attackType =  gamestream.readByte();
+        final attackType =  readByte();
         return onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
@@ -134,7 +136,7 @@ extension IsometricEvents on Isometric {
         onSplash(x, y, z);
         return;
       case GameEventType.Item_Bounce:
-        gamestream.audio.grenade_bounce.playXYZ(x, y, z);
+        playAudioXYZ(audio.grenade_bounce, x, y, z);
         return;
       case GameEventType.Spawn_Dust_Cloud:
         break;
@@ -144,50 +146,53 @@ extension IsometricEvents on Isometric {
         }
         break;
       case GameEventType.Zombie_Target_Acquired:
-        randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
+        playAudioXYZ(randomItem(audio.audioSingleZombieTalking), x, y, z);
         break;
       case GameEventType.Character_Changing:
-        gamestream.audio.change_cloths.playXYZ(x, y, z);
+        playAudioXYZ(audio.change_cloths, x, y, z);
         break;
       case GameEventType.Zombie_Strike:
-        randomItem(gamestream.audio.audioSingleZombieBits).playXYZ(x, y, z);
+        playAudioXYZ(randomItem(audio.audioSingleZombieBits), x, y, z);
         if (randomBool()){
-          randomItem(gamestream.audio.audioSingleZombieTalking).playXYZ(x, y, z);
+          playAudioXYZ(randomItem(audio.audioSingleZombieTalking), x, y, z);
         }
         break;
       case GameEventType.Player_Death:
         break;
       case GameEventType.Teleported:
-        gamestream.audio.magical_impact_16();
+        audio.magical_impact_16();
         break;
       case GameEventType.Blue_Orb_Fired:
-        gamestream.audio.sci_fi_blaster_1.playXYZ(x, y, z);
+        playAudioXYZ(audio.sci_fi_blaster_1, x, y, z);
         break;
       case GameEventType.Arrow_Hit:
-        gamestream.audio.arrow_impact.playXYZ(x, y, z);
+        playAudioXYZ(audio.arrow_impact, x, y, z);
         break;
       case GameEventType.Draw_Bow:
-        return gamestream.audio.bow_draw.playXYZ(x, y, z);
+        playAudioXYZ(audio.bow_draw, x, y, z);
+        break;
       case GameEventType.Release_Bow:
-        return gamestream.audio.bow_release.playXYZ(x, y, z);
+        playAudioXYZ(audio.bow_release, x, y, z);
+        break;
       case GameEventType.Sword_Woosh:
-        return gamestream.audio.swing_sword.playXYZ(x, y, z);
+        playAudioXYZ(audio.swing_sword, x, y, z);
+        break;
       case GameEventType.EnemyTargeted:
         break;
       case GameEventType.Attack_Missed:
-        final attackType = gamestream.readUInt16();
+        final attackType = readUInt16();
         switch (attackType) {
           case WeaponType.Unarmed:
-            gamestream.audio.arm_swing_whoosh_11.playXYZ(x, y, z);
+            playAudioXYZ(audio.arm_swing_whoosh_11, x, y, z);
             break;
           case WeaponType.Sword:
-            gamestream.audio.arm_swing_whoosh_11.playXYZ(x, y, z);
+            playAudioXYZ(audio.arm_swing_whoosh_11, x, y, z);
             break;
         }
         break;
       case GameEventType.Arrow_Fired:
-        return gamestream.audio.arrow_flying_past_6.playXYZ(x, y, z);
-
+        playAudioXYZ(audio.arrow_flying_past_6, x, y, z);
+        break;
       case GameEventType.Crate_Breaking:
         // return audio.crateBreaking(x, y);
         break;
@@ -213,11 +218,11 @@ extension IsometricEvents on Isometric {
         break;
 
       case GameEventType.Character_Death:
-        onCharacterDeath(gamestream.readByte(), x, y, z, angle);
+        onCharacterDeath(readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Character_Hurt:
-        onGameEventCharacterHurt(gamestream.readByte(), x, y, z, angle);
+        onGameEventCharacterHurt(readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Game_Object_Destroyed:
@@ -226,12 +231,12 @@ extension IsometricEvents on Isometric {
             y,
             z,
             angle,
-          gamestream.readUInt16(),
+          readUInt16(),
         );
         return;
 
       case GameEventType.Blink_Arrive:
-        gamestream.audio.sci_fi_blaster_1.playXYZ(x, y, z);
+        playAudioXYZ(audio.sci_fi_blaster_1, x, y, z);
         spawnParticleConfetti(x, y, z);
         break;
 
@@ -242,42 +247,42 @@ extension IsometricEvents on Isometric {
   }
 
   void onGameEventExplosion(double x, double y, double z) {
-    gamestream.createExplosion(x, y, z);
+    createExplosion(x, y, z);
   }
 
   void onNodeSet(double x, double y, double z) {
-    gamestream.audio.hover_over_button_sound_43.playXYZ(x, y, z);
+    playAudioXYZ(audio.hover_over_button_sound_43, x, y, z);
   }
 
   void onNodeStruck(double x, double y, double z) {
-    if (!gamestream.inBoundsXYZ(x, y, z)) return;
+    if (!inBoundsXYZ(x, y, z)) return;
 
-    final nodeIndex = gamestream.getIndexXYZ(x, y, z);
-    final nodeType = gamestream.nodeTypes[nodeIndex];
+    final nodeIndex = getIndexXYZ(x, y, z);
+    final nodeType = nodeTypes[nodeIndex];
 
     if (NodeType.isMaterialWood(nodeType)){
-      gamestream.audio.material_struck_wood.playXYZ(x, y, z);
+      playAudioXYZ(audio.material_struck_wood, x, y, z);
       spawnParticleBlockWood(x, y, z);
     }
 
     if (NodeType.isMaterialGrass(nodeType)){
-      gamestream.audio.grass_cut.playXYZ(x, y, z);
+      playAudioXYZ(audio.grass_cut, x, y, z);
       spawnParticleBlockGrass(x, y, z);
     }
 
     if (NodeType.isMaterialStone(nodeType)){
-      gamestream.audio.material_struck_stone.playXYZ(x, y, z);
+      playAudioXYZ(audio.material_struck_stone, x, y, z);
       spawnParticleBlockBrick(x, y, z);
     }
 
     if (NodeType.isMaterialDirt(nodeType)){
-      gamestream.audio.material_struck_dirt.playXYZ(x, y, z);
+      playAudioXYZ(audio.material_struck_dirt, x, y, z);
       spawnParticleBlockSand(x, y, z);
     }
   }
 
   void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
-    gamestream.audio.swing_sword.playXYZ(x, y, z);
+    playAudioXYZ(audio.swing_sword, x, y, z);
   }
 
   void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
@@ -295,7 +300,7 @@ extension IsometricEvents on Isometric {
       final zv = randomBetween(1.5, 5);
       spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
     }
-    return gamestream.audio.splash.playXYZ(x, y, z);
+    playAudioXYZ(audio.splash, x, y, z);
   }
 
   void onAttackPerformed(double x, double y, double z, double angle) {
@@ -303,7 +308,7 @@ extension IsometricEvents on Isometric {
     final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttack[attackType];
 
     if (attackTypeAudio != null) {
-      attackTypeAudio.playXYZ(x, y, z);
+      playAudioXYZ(attackTypeAudio, x, y, z);
     }
 
     if (attackType == WeaponType.Unarmed){
@@ -341,7 +346,7 @@ extension IsometricEvents on Isometric {
     final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
-      attackTypeAudio.playXYZ(x, y, z);
+      playAudioXYZ(attackTypeAudio, x, y, z);
     }
 
     if (attackType == WeaponType.Unarmed){
@@ -445,16 +450,16 @@ extension IsometricEvents on Isometric {
         gamestream.audio.coins_24();
         break;
       case PlayerEvent.GameObject_Deselected:
-        gamestream.editor.gameObjectSelected.value = false;
+        editor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
-        if (gamestream.gameType.value == GameType.Editor){
-          gamestream.editor.row = gamestream.player.indexRow;
-          gamestream.editor.column = gamestream.player.indexColumn;
-          gamestream.editor.z = gamestream.player.indexZ;
+        if (gameType.value == GameType.Editor){
+          editor.row = player.indexRow;
+          editor.column = player.indexColumn;
+          editor.z = player.indexZ;
         }
-        gamestream.camera.centerOnChaseTarget();
-        gamestream.io.recenterCursor();
+        camera.centerOnChaseTarget();
+        io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
         writeMessage('Not Enough Gold');
@@ -466,18 +471,17 @@ extension IsometricEvents on Isometric {
         writeMessage('Invalid Request');
         break;
       case PlayerEvent.Character_State_Changing:
-        gamestream.audio.change_cloths();
+        audio.change_cloths();
         break;
       case PlayerEvent.Talent_Upgraded:
-        gamestream.audio.collect_star_3();
+        audio.collect_star_3();
         break;
     }
   }
 
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
-    randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
-    gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
-    // isometric.particles.spawnPurpleFireExplosion(x, y, z);
+    playAudioXYZ(randomItem(audio.bloody_punches), x, y, z);
+    playAudioXYZ(audio.heavy_punch_13, x, y, z);
 
     for (var i = 0; i < 4; i++){
       spawnParticleBlood(
@@ -494,7 +498,7 @@ extension IsometricEvents on Isometric {
       case CharacterType.Zombie:
         return onCharacterDeathZombie(characterType, x, y, z, angle);
       case CharacterType.Dog:
-        gamestream.audio.dog_woolf_howl_4();
+        playAudioXYZ(audio.dog_woolf_howl_4, x, y, z);
         break;
     }
   }
@@ -521,7 +525,8 @@ extension IsometricEvents on Isometric {
     //     angle: angle + Engine.randomGiveOrTake(0.5),
     //     speed: 4.0 + Engine.randomGiveOrTake(0.5),
     //     zv: 0.1);
-    randomItem(gamestream.audio.zombie_deaths).playXYZ(x, y, z);
+
+    playAudioXYZ(randomItem(gamestream.audio.zombie_deaths), x, y, z);
   }
 
   void onChangedRendersSinceUpdate(int value){
@@ -637,9 +642,8 @@ extension IsometricEvents on Isometric {
 
   void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
 
-    randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
-
-    gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
+    playAudioXYZ(randomItem(gamestream.audio.bloody_punches), x, y, z);
+    playAudioXYZ(audio.heavy_punch_13, x, y, z);
 
     for (var i = 0; i < 4; i++){
       spawnParticleBlood(
@@ -656,19 +660,19 @@ extension IsometricEvents on Isometric {
     switch (type) {
       case CharacterType.Zombie:
         if (randomBool()){
-          gamestream.audio.zombie_hurt_1.playXYZ(x, y, z);
+          playAudioXYZ(audio.zombie_hurt_1, x, y, z);
         } else {
-          gamestream.audio.zombie_hurt_4.playXYZ(x, y, z);
+          playAudioXYZ(audio.zombie_hurt_4, x, y, z);
         }
         break;
       case CharacterType.Rat:
-        gamestream.audio.rat_squeak.playXYZ(x, y, z);
+        playAudioXYZ(audio.rat_squeak, x, y, z);
         break;
       case CharacterType.Slime:
-        gamestream.audio.bloody_punches_3.playXYZ(x, y, z);
+        playAudioXYZ(audio.bloody_punches_3, x, y, z);
         break;
       case CharacterType.Dog:
-        gamestream.audio.dog_woolf_howl_4();
+        playAudioXYZ(audio.dog_woolf_howl_4, x, y, z);
         break;
     }
   }
@@ -682,19 +686,19 @@ extension IsometricEvents on Isometric {
       ){
     switch (type){
       case ObjectType.Barrel:
-        gamestream.audio.crate_breaking.playXYZ(x, y, z);
+        playAudioXYZ(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           spawnParticleBlockWood(x, y, z);
         }
         break;
       case ObjectType.Toilet:
-        gamestream.audio.crate_breaking.playXYZ(x, y, z);
+        playAudioXYZ(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           spawnParticleBlockWood(x, y, z);
         }
         break;
       case ObjectType.Crate_Wooden:
-        gamestream.audio.crate_breaking.playXYZ(x, y, z);
+        playAudioXYZ(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           spawnParticleBlockWood(x, y, z);
         }

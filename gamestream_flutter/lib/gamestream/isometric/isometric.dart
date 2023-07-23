@@ -4,16 +4,16 @@ import 'dart:math';
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
-import 'package:gamestream_flutter/gamestream/games/game_scissors_paper_rock.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
@@ -47,11 +47,23 @@ class Isometric extends WebsocketClientBuilder with
     IsometricRender
 {
 
+  static const Server_FPS = 45;
+
+  late final messageBoxVisible = Watch(false, clamp: (bool value) {
+    return value;
+  }, onChanged: onVisibilityChangedMessageBox);
+
+  final textEditingControllerMessage = TextEditingController();
+  final textFieldMessage = FocusNode();
+  final panelTypeKey = <int, GlobalKey>{};
+  final playerTextStyle = TextStyle(color: Colors.white);
+  final timeVisible = Watch(true);
+
+  final windowOpenMenu = WatchBool(false);
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   var engineBuilt = false;
   final updateFrame = Watch(0);
-  final audio = GameAudio();
   final serverFPS = Watch(0);
   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
@@ -106,12 +118,13 @@ class Isometric extends WebsocketClientBuilder with
 
   final gameObjects = <IsometricGameObject>[];
 
-  final debug = IsometricDebug();
-  final minimap = IsometricMinimap();
-  final editor = IsometricEditor();
-  final player = IsometricPlayer();
-  final camera = IsometricCamera();
-  final ui = IsometricUI();
+  late final GameAudio audio;
+  late final IsometricDebug debug;
+  late final IsometricEditor editor;
+  late final IsometricMinimap minimap;
+  late final IsometricCamera camera;
+  late final IsometricMouse mouse;
+  late final IsometricPlayer player;
   final options = IsometricOptions();
 
   var totalProjectiles = 0;
@@ -119,6 +132,13 @@ class Isometric extends WebsocketClientBuilder with
 
   Isometric(){
     print('Isometric()');
+    audio = GameAudio(this);
+    editor = IsometricEditor(this);
+    debug = IsometricDebug(this);
+    minimap = IsometricMinimap(this);
+    camera = IsometricCamera(this);
+    mouse = IsometricMouse(this);
+    player = IsometricPlayer(this);
     games = Games(this);
     updateFrame.onChanged(onChangedUpdateFrame);
 
@@ -220,7 +240,7 @@ class Isometric extends WebsocketClientBuilder with
     updateTorchEmissionIntensity();
     updateParticleEmitters();
 
-    interpolationPadding = (( interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
+    interpolationPadding = (( interpolationLength + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -246,13 +266,13 @@ class Isometric extends WebsocketClientBuilder with
     if (!edit.value)
       return;
 
-    if (gamestream.engine.keyPressedSpace) {
-      gamestream.engine.panCamera();
+    if (engine.keyPressedSpace) {
+      engine.panCamera();
     }
-    if (gamestream.engine.keyPressed(KeyCode.Delete)) {
+    if (engine.keyPressed(KeyCode.Delete)) {
       editor.delete();
     }
-    if (gamestream.io.getInputDirectionKeyboard() != IsometricDirection.None) {
+    if (io.getInputDirectionKeyboard() != IsometricDirection.None) {
       actionSetModePlay();
     }
     return;
@@ -324,7 +344,7 @@ class Isometric extends WebsocketClientBuilder with
       sendIsometricRequest(IsometricRequest.Toggle_Debugging);
 
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
-      gamestream.sendClientRequest(
+      sendClientRequest(
         ClientRequest.Isometric,
         '${request.index} $message',
       );
@@ -375,13 +395,13 @@ class Isometric extends WebsocketClientBuilder with
             saturation: gameObject.emissionSat,
             value: gameObject.emissionVal,
             alpha: gameObject.emissionAlp,
-            intensity: gameObject.emission_intensity,
+            intensity: gameObject.emissionIntensity,
           );
           continue;
         case EmissionType.Ambient:
           applyVector3EmissionAmbient(gameObject,
             alpha: gameObject.emissionAlp,
-            intensity: gameObject.emission_intensity,
+            intensity: gameObject.emissionIntensity,
           );
           continue;
       }
@@ -472,14 +492,14 @@ class Isometric extends WebsocketClientBuilder with
 
   void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
-      gamestream.audio.thunder(1.0);
+      audio.thunder(1.0);
     } else {
       updateGameLighting();
     }
   }
 
   void onChangedGameTimeEnabled(bool value){
-    GameIsometricUI.timeVisible.value = value;
+    timeVisible.value = value;
   }
 
   void applyEmissions(){
@@ -563,7 +583,7 @@ class Isometric extends WebsocketClientBuilder with
      player.npcTalkOptions.value = [];
      totalProjectiles = 0;
      particles.clear();
-    gamestream.engine.zoom = 1;
+    engine.zoom = 1;
   }
 
   int get bodyPartDuration =>  randomInt(120, 200);
@@ -675,7 +695,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void playSoundWindow() =>
-      gamestream.audio.click_sound_8(1);
+      audio.click_sound_8(1);
 
   void messageClear(){
     writeMessage('');
@@ -686,7 +706,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void playAudioError(){
-    gamestream.audio.errorSound15();
+    audio.errorSound15();
   }
 
   void onChangedAttributesWindowVisible(bool value){
@@ -712,7 +732,7 @@ class Isometric extends WebsocketClientBuilder with
           : 0;
 
   void onChangedCredits(int value){
-    gamestream.audio.coins.play();
+    audio.coins.play();
   }
 
   void updateParticle(IsometricParticle particle) {
@@ -779,7 +799,7 @@ class Isometric extends WebsocketClientBuilder with
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
-        final wind = gamestream.windTypeAmbient.value * 0.01;
+        final wind = windTypeAmbient.value * 0.01;
         particle.xv -= wind;
         particle.yv += wind;
       }
@@ -893,9 +913,6 @@ class Isometric extends WebsocketClientBuilder with
         break;
       case ServerResponse.Api_Player:
         readApiPlayer();
-        break;
-      case ServerResponse.Api_SPR:
-        readServerResponseApiSPR();
         break;
       case ServerResponse.Isometric:
         readIsometricResponse();
@@ -1095,7 +1112,7 @@ class Isometric extends WebsocketClientBuilder with
     editor.cameraCenterSelectedObject();
 
     editor.gameObjectSelectedEmission.value = gameObject.colorType;
-    editor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
+    editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
   }
 
   void readIsometricCharacters(){
@@ -1293,27 +1310,6 @@ class Isometric extends WebsocketClientBuilder with
     return valueMap;
   }
 
-  void readServerResponseApiSPR() {
-    switch (readByte()){
-      case ApiSPR.Player_Positions:
-        GameScissorsPaperRock.playerTeam = readByte();
-        GameScissorsPaperRock.playerX = readDouble();
-        GameScissorsPaperRock.playerY = readDouble();
-
-        final total = readUInt16();
-        GameScissorsPaperRock.totalPlayers = total;
-        for (var i = 0; i < total; i++) {
-          final player     = GameScissorsPaperRock.players[i];
-          player.team      = readUInt8();
-          player.x         = readInt16().toDouble();
-          player.y         = readInt16().toDouble();
-          player.targetX   = readInt16().toDouble();
-          player.targetY   = readInt16().toDouble();
-        }
-        break;
-    }
-  }
-
   void readGameFight2DResponseCharacters(GameFight2D game) {
     final totalPlayers = readUInt16();
     assert (totalPlayers < GameFight2D.length);
@@ -1382,7 +1378,7 @@ class Isometric extends WebsocketClientBuilder with
     playAudioError();
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
-        gamestream.games.website.error.value = 'unable to join game';
+        games.website.error.value = 'unable to join game';
         disconnect();
         break;
       default:
@@ -1524,5 +1520,540 @@ class Isometric extends WebsocketClientBuilder with
       io.inputMode.value = engine.deviceIsComputer
           ? InputMode.Keyboard
           : InputMode.Touch;
+
+
+  void playAudioSingleV3({
+    required AudioSingle audioSingle,
+    required IsometricPosition position,
+    double maxDistance = 600}) => playAudioXYZ(
+        audioSingle,
+        position.x,
+        position.y,
+        position.z,
+        maxDistance: maxDistance,
+    );
+
+  void playAudioXYZ(
+    AudioSingle audioSingle,
+    double x,
+    double y,
+    double z,{
+      double maxDistance = 600,
+    }){
+    if (!audio.enabledSound.value) return;
+    // TODO calculate distance from camera
+
+    final distanceFromPlayer = getDistanceXYZ(x, y, z, player.x, player.y, player.z);;
+    final distanceVolume = GameAudio.convertDistanceToVolume(
+      distanceFromPlayer,
+      maxDistance: maxDistance,
+    );
+    audioSingle.play(volume: distanceVolume);
+    // play(volume: distanceVolume);
+  }
+
+  void refreshGameObjectEmissionColor(IsometricGameObject gameObject){
+    gameObject.emissionColor = hsvToColor(
+      hue: interpolate(start: ambientHue, end: gameObject.emissionHue , t: gameObject.emissionIntensity),
+      saturation: interpolate(start: ambientSaturation, end: gameObject.emissionSat, t: gameObject.emissionIntensity),
+      value: interpolate(start: ambientValue, end: gameObject.emissionVal, t: gameObject.emissionIntensity),
+      opacity: interpolate(start: ambientAlpha, end: gameObject.emissionAlp, t: gameObject.emissionIntensity),
+    );
+  }
+
+  bool isOnscreen(IsometricPosition position) {
+    const Pad_Distance = 75.0;
+    final rx = position.renderX;
+
+    if (rx < engine.Screen_Left - Pad_Distance || rx > engine.Screen_Right + Pad_Distance)
+      return false;
+
+    final ry = position.renderY;
+    return ry > engine.Screen_Top - Pad_Distance && ry < engine.Screen_Bottom + Pad_Distance;
+  }
+
+  Color get color => engine.paint.color;
+
+  set color(Color color) => engine.paint.color = color;
+
+  void applyEmissionsParticles() {
+    final length = particles.length;
+    for (var i = 0; i < length; i++) {
+      final particle = particles[i];
+      if (!particle.active) continue;
+      if (!particle.emitsLight) continue;
+      emitLightAHSVShadowed(
+        index: getIndexPosition(particle),
+        hue: particle.lightHue,
+        saturation: particle.lightSaturation,
+        value: particle.lightValue,
+        alpha: particle.alpha,
+      );
+    }
+  }
+
+  void renderShadow(double x, double y, double z, {double scale = 1}) =>
+      engine.renderSprite(
+        image: Images.atlas_gameobjects,
+        dstX: (x - y) * 0.5,
+        dstY: ((y + x) * 0.5) - z,
+        srcX: 0,
+        srcY: 32,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: scale,
+      );
+
+  bool isPerceptiblePosition(IsometricPosition position) {
+    if (!player.playerInsideIsland)
+      return true;
+
+    if (outOfBoundsPosition(position))
+      return false;
+
+    final index = getIndexPosition(position);
+    final indexRow = getIndexRow(index);
+    final indexColumn = getIndexRow(index);
+    final i = indexRow * totalColumns + indexColumn;
+    // TODO REFACTOR
+    if (!rendererNodes.island[i])
+      return true;
+    final indexZ = getIndexZ(index);
+    if (indexZ > player.indexZ + 2)
+      return false;
+
+    // TODO REFACTOR
+    return rendererNodes.visible3D[index];
+  }
+
+  void emitLightAmbient({
+    required int index,
+    required int alpha,
+  }){
+
+    if (dynamicShadows) {
+      emitLightAmbientShadows(
+        index: index,
+        alpha: alpha,
+      );
+      return;
+    }
+
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final zIndex = index ~/ area;
+    final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
+    final columnIndex = convertNodeIndexToIndexY(index);
+    final radius = 6;
+    final zMin = max(zIndex - radius, 0);
+    final zMax = min(zIndex + radius, totalZ);
+    final rowMin = max(rowIndex - radius, 0);
+    final rowMax = min(rowIndex + radius, totalRows);
+    final columnMin = max(columnIndex - radius, 0);
+    final columnMax = min(columnIndex + radius, totalColumns);
+    final rowInitInit = totalColumns * rowMin;
+    var zTotal = zMin * area;
+
+    const r = 4;
+    final dstXLeft = IsometricRender.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
+    if (dstXLeft < engine.Screen_Left)    return;
+    final dstXRight = IsometricRender.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
+    if (dstXRight > engine.Screen_Right)   return;
+    final dstYTop = IsometricRender.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
+    if (dstYTop <  engine.Screen_Top) return;
+    final dstYBottom = IsometricRender.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
+    if (dstYBottom > engine.Screen_Bottom) return;
+
+    for (var z = zMin; z < zMax; z++) {
+      var rowInit = rowInitInit;
+
+      for (var row = rowMin; row <= rowMax; row++){
+        final a = (zTotal) + (rowInit);
+        rowInit += totalColumns;
+        final b = (z - zIndex).abs() + (row - rowIndex).abs();
+        for (var column = columnMin; column <= columnMax; column++) {
+          final nodeIndex = a + column;
+          final distanceValue = clamp(b + (column - columnIndex).abs() - 2, 0, 6);
+          if (distanceValue > 5) continue;
+          ambientStackIndex++;
+          ambientStack[ambientStackIndex] = nodeIndex;
+
+          final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
+          final nodeAlpha = hsvAlphas[nodeIndex];
+          if (nodeAlpha < alpha) continue;
+          hsvAlphas[nodeIndex] = linearInterpolateInt(hsvAlphas[nodeIndex], alpha      , intensity);
+          refreshNodeColor(nodeIndex);
+        }
+      }
+      zTotal += area;
+    }
+  }
+
+  void applyEmissionsLightSources() {
+    for (var i = 0; i < nodesLightSourcesTotal; i++){
+      final nodeIndex = nodesLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+
+      switch (nodeType){
+        case NodeType.Torch:
+          emitLightAmbient(
+            index: nodeIndex,
+            alpha: linearInterpolateInt(
+              ambientHue,
+              0,
+              torch_emission_intensity,
+            ),
+          );
+          break;
+      }
+    }
+  }
+
+  void applyVector3EmissionAmbient(IsometricPosition v, {
+    required int alpha,
+    double intensity = 1.0,
+  }){
+    assert (intensity >= 0);
+    assert (intensity <= 1);
+    assert (alpha >= 0);
+    assert (alpha <= 255);
+    if (!inBoundsPosition(v)) return;
+    emitLightAmbient(
+      index: getIndexPosition(v),
+      alpha: linearInterpolateInt(ambientHue, alpha , intensity),
+    );
+  }
+
+  void renderCircleAroundPlayer({required double radius}) =>
+      renderCircleAtPosition(
+        position: player.position,
+        radius: radius,
+      );
+
+  void setColorWhite(){
+    engine.setPaintColorWhite();
+  }
+
+  void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
+
+    playAudioXYZ(audio.magical_impact_16,x, y, z);
+
+    for (var i = 0; i < amount; i++) {
+      spawnParticleFirePurple(
+        x: x + giveOrTake(5),
+        y: y + giveOrTake(5),
+        z: z, speed: 1,
+        angle: randomAngle(),
+      );
+    }
+
+    spawnParticleLightEmission(
+      x: x,
+      y: y,
+      z: z,
+      hue: 259,
+      saturation: 45,
+      value: 95,
+      alpha: 0,
+    );
+  }
+
+  void emitLightAHSVShadowed({
+    required int index,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    double intensity = 1.0,
+  }){
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final padding = interpolationPadding;
+    final rx = getIndexRenderX(index);
+    if (rx < engine.Screen_Left - padding) return;
+    if (rx > engine.Screen_Right + padding) return;
+    final ry = getIndexRenderY(index);
+    if (ry < engine.Screen_Top - padding) return;
+    if (ry > engine.Screen_Bottom + padding) return;
+
+    totalActiveLights++;
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    var vxStart = -1;
+    var vxEnd = 1;
+    var vyStart = -1;
+    var vyEnd = 1;
+
+    if (!isNodeTypeTransparent(nodeType)){
+      if (const [
+        NodeOrientation.Half_North,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vxStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_South,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vxEnd = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_East,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vyStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_West,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vyEnd = 0;
+      }
+    }
+
+    final h = linearInterpolateInt(ambientHue, hue , intensity);
+    final s = linearInterpolateInt(ambientSaturation, saturation, intensity);
+    final v = linearInterpolateInt(ambientValue, value, intensity);
+    final a = linearInterpolateInt(ambientAlpha, alpha, intensity);
+
+    applyAHSV(
+      index: index,
+      alpha: a,
+      hue: h,
+      saturation: s,
+      value: v,
+      interpolation: 0,
+    );
+
+    for (var vz = -1; vz <= 1; vz++){
+      for (var vx = vxStart; vx <= vxEnd; vx++){
+        for (var vy = vyStart; vy <= vyEnd; vy++){
+          shootLightTreeAHSV(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: -1,
+            alpha: a,
+            hue: h,
+            saturation: s,
+            value: v,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+          );
+        }
+      }
+    }
+  }
+
+  /// @hue a number between 0 and 360
+  /// @saturation a number between 0 and 100
+  /// @value a number between 0 and 100
+  /// @alpha a number between 0 and 255
+  /// @intensity a number between 0.0 and 1.0
+  void applyVector3Emission(IsometricPosition v, {
+    required int hue,
+    required int saturation,
+    required int value,
+    required int alpha,
+    double intensity = 1.0,
+  }){
+    if (!inBoundsPosition(v)) return;
+    emitLightAHSVShadowed(
+      index: getIndexPosition(v),
+      hue: hue,
+      saturation: saturation,
+      value: value,
+      alpha: alpha,
+      intensity: intensity,
+    );
+  }
+
+
+  void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
+      engine.renderLine(
+        renderX(x1, y1, z1),
+        renderY(x1, y1, z1),
+        renderX(x2, y2, z2),
+        renderY(x2, y2, z2),
+      );
+
+
+  static double renderX(double x, double y, double z) => (x - y) * 0.5;
+
+  static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
+
+  void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
+    if (radius <= 0) return;
+    if (sections < 3) return;
+
+    final anglePerSection = pi2 / sections;
+    var lineX1 = adj(0, radius);
+    var lineY1 = opp(0, radius);
+    var lineX2 = lineX1;
+    var lineY2 = lineY1;
+    for (var i = 1; i <= sections; i++){
+      final a = i * anglePerSection;
+      lineX2 = adj(a, radius);
+      lineY2 = opp(a, radius);
+      renderLine(
+        x + lineX1,
+        y + lineY1,
+        z,
+        x + lineX2,
+        y + lineY2,
+        z,
+      );
+      lineX1 = lineX2;
+      lineY1 = lineY2;
+    }
+  }
+
+  void renderCircleAtPosition({
+    required IsometricPosition position,
+    required double radius,
+    int sections = 12,
+  })=> renderCircle(position.x, position.y, position.z, radius, sections: sections);
+
+  void renderEditMode() {
+    if (playMode) return;
+    if (editor.gameObjectSelected.value){
+      engine.renderCircleOutline(
+        sides: 24,
+        radius: 30,
+        x: editor.gameObject.value!.renderX,
+        y: editor.gameObject.value!.renderY,
+        color: Colors.white,
+      );
+      renderCircleAtPosition(position: editor.gameObject.value!, radius: 50);
+      return;
+    }
+
+    renderEditWireFrames();
+    renderMouseWireFrame();
+  }
+
+
+  double getVolumeTargetWind() {
+    final windLineDistance = (engine.screenCenterRenderX - windLineRenderX).abs();
+    final windLineDistanceVolume = GameAudio.convertDistanceToVolume(windLineDistance, maxDistance: 300);
+    var target = 0.0;
+    if (windLineRenderX - 250 <= engine.screenCenterRenderX) {
+      target += windLineDistanceVolume;
+    }
+    final index = windTypeAmbient.value;
+    if (index <= WindType.Calm) {
+      if (hours.value < 6) return target;
+      if (hours.value < 18) return target + 0.1;
+      return target;
+    }
+    if (index <= WindType.Gentle) return target + 0.5;
+    return 1.0;
+  }
+
+  void emitLightAmbientShadows({
+    required int index,
+    required int alpha,
+  }){
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final padding = interpolationPadding;
+    final rx = getIndexRenderX(index);
+    if (rx < engine.Screen_Left - padding) return;
+    if (rx > engine.Screen_Right + padding) return;
+    final ry = getIndexRenderY(index);
+    if (ry < engine.Screen_Top - padding) return;
+    if (ry > engine.Screen_Bottom + padding) return;
+    totalActiveLights++;
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    var vxStart = -1;
+    var vxEnd = 1;
+    var vyStart = -1;
+    var vyEnd = 1;
+
+    if (!isNodeTypeTransparent(nodeType)){
+      if (const [
+        NodeOrientation.Half_North,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vxStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_South,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vxEnd = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_East,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vyStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_West,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vyEnd = 0;
+      }
+    }
+
+    applyAmbient(
+      index: index,
+      alpha: alpha,
+      interpolation: 0,
+    );
+
+    for (var vz = -1; vz <= 1; vz++){
+      for (var vx = vxStart; vx <= vxEnd; vx++){
+        for (var vy = vyStart; vy <= vyEnd; vy++){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: -1,
+            alpha: alpha,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+          );
+        }
+      }
+    }
+  }
+
+  void renderMouseWireFrame() {
+    io.mouseRaycast(renderWireFrameBlue);
+  }
 
 }

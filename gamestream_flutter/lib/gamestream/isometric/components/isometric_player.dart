@@ -1,6 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_render.dart';
@@ -8,6 +9,9 @@ import '../enums/game_dialog.dart';
 import '../classes/isometric_position.dart';
 
 class IsometricPlayer {
+
+  final Isometric isometric;
+
   var playerInsideIsland = false;
   var energyPercentage = 0.0;
   var runningToTarget = false;
@@ -24,6 +28,7 @@ class IsometricPlayer {
   var runX = 0.0;
   var runY = 0.0;
   var runZ = 0.0;
+  var areaNodeIndex = 0;
 
   late final debugging = Watch(false, onChanged: onChangedDebugging);
   final runToDestinationEnabled = Watch(false);
@@ -59,27 +64,25 @@ class IsometricPlayer {
   final controlsCanTargetEnemies = Watch(false);
   final controlsRunInDirectionEnabled = Watch(false);
 
-  late final message = Watch('', onChanged: gamestream.onChangedPlayerMessage);
+  late final message = Watch('');
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
-  late final active = Watch(false, onChanged: gamestream.onChangedPlayerActive);
+  late final active = Watch(false);
   late final alive = Watch(true);
-  late final weapon = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
-  late final weaponPrimary = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
-  late final weaponSecondary = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
-  late final weaponTertiary = Watch(0, onChanged: gamestream.onChangedPlayerWeapon);
+  late final weapon = Watch(0);
 
-  int get areaNodeIndex => (indexRow * gamestream.totalColumns) + indexColumn;
+  IsometricPlayer(this.isometric);
 
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
   double get renderX => IsometricRender.getPositionRenderX(position);
   double get renderY => IsometricRender.getPositionRenderY(position);
-  double get positionScreenX => gamestream.engine.worldToScreenX(position.renderX);
-  double get positionScreenY => gamestream.engine.worldToScreenY(position.renderY);
+
+  double get positionScreenX => isometric.engine.worldToScreenX(position.renderX);
+  double get positionScreenY => isometric.engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
-  bool get inBounds => gamestream.inBoundsPosition(position);
+  bool get inBounds => isometric.inBoundsPosition(position);
 
 
   bool isCharacter(IsometricCharacter character){
@@ -87,7 +90,7 @@ class IsometricPlayer {
   }
 
   void onChangedGameDialog(GameDialog? value){
-    gamestream.audio.click_sound_8();
+    isometric.audio.click_sound_8();
     if (value == GameDialog.Quests) {
       // actionHideQuestAdded();
     }
@@ -95,10 +98,9 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final scene = gamestream;
-    final index = nodeIndex + scene.area;
-    while (index < scene.totalNodes){
-      if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;
+    final index = nodeIndex + isometric.area;
+    while (index < isometric.totalNodes){
+      if (NodeType.isRainOrEmpty(isometric.nodeTypes[index])) continue;
       return true;
     }
     return false;
@@ -131,15 +133,15 @@ class IsometricPlayer {
 
   void onChangedDebugging(bool debugging){
     if (!debugging){
-      gamestream.cameraTargetPlayer();
+      isometric.cameraTargetPlayer();
     }
   }
 
   void toggleControlsRunInDirectionEnabled() =>
-      gamestream.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
+      isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
 
   void toggleControlsCanTargetEnemies() =>
-      gamestream.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
+      isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -12,6 +13,8 @@ import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
 class WebsiteGame extends Game {
+
+  final Isometric isometric;
 
   final gameTypes = [
     GameType.Fight2D,
@@ -33,6 +36,8 @@ class WebsiteGame extends Game {
   final errorMessageEnabled = Watch(true);
 
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
+
+  WebsiteGame(this.isometric);
   
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -41,8 +46,8 @@ class WebsiteGame extends Game {
 
   @override
   void onActivated() {
-    gamestream.audio.musicStop();
-    gamestream.engine.fullScreenExit();
+    isometric.audio.musicStop();
+    isometric.engine.fullScreenExit();
   }
 
   @override
@@ -52,7 +57,7 @@ class WebsiteGame extends Game {
 
   @override
   void update() {
-    gamestream.updateAnimationFrame();
+    isometric.updateAnimationFrame();
   }
 
   onChangedVisitCount(int value){
@@ -64,7 +69,7 @@ class WebsiteGame extends Game {
   }
 
   void setError(String message){
-    gamestream.games.website.error.value = message;
+    isometric.games.website.error.value = message;
   }
 
   void renderCanvas(Canvas canvas, Size size) {
@@ -74,7 +79,7 @@ class WebsiteGame extends Game {
   @override
   Widget buildUI(BuildContext context) => Stack(
       children: [
-        buildWatch(gamestream.operationStatus, buildOperationStatus),
+        buildWatch(isometric.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ]);
 
@@ -100,40 +105,40 @@ class WebsiteGame extends Game {
       launchUrl(Uri.parse('https://discord.com/channels/888728235653885962/888728235653885965'));
 
   void showDialogChangePublicName(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Change_Public_Name;
+    isometric.games.website.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
   void showDialogConfirmCancelSubscription() {
-    gamestream.games.website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
+    isometric.games.website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
   }
 
   void showDialogAccount(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Account;
+    isometric.games.website.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogWelcome(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Account_Created;
+    isometric.games.website.dialog.value = WebsiteDialog.Account_Created;
   }
 
   void showDialogWelcome2(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Welcome_2;
+    isometric.games.website.dialog.value = WebsiteDialog.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Subscription_Successful;
+    isometric.games.website.dialog.value = WebsiteDialog.Subscription_Successful;
   }
 
   void showDialogSubscriptionStatusChanged(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
+    isometric.games.website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
   }
 
   void showDialogSubscriptionRequired(){
-    gamestream.games.website.dialog.value = WebsiteDialog.Subscription_Required;
+    isometric.games.website.dialog.value = WebsiteDialog.Subscription_Required;
   }
 
   void showDialogCustomMaps(){
     _log('showDialogCustomMaps');
-    gamestream.games.website.dialog.value = WebsiteDialog.Custom_Maps;
+    isometric.games.website.dialog.value = WebsiteDialog.Custom_Maps;
   }
 
   void connectToCustomGame(String customGame){
@@ -166,8 +171,8 @@ class WebsiteGame extends Game {
 
   void checkForLatestVersion() async {
     // await saveVisitDateTime();
-    gamestream.operationStatus.value = OperationStatus.Checking_For_Updates;
-    gamestream.engine.refreshPage();
+    isometric.operationStatus.value = OperationStatus.Checking_For_Updates;
+    isometric.engine.refreshPage();
   }
 
   // Future saveVisitDateTime() async =>

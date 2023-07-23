@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -10,6 +11,8 @@ import 'game_fight2d_player.dart';
 class GameFight2D extends Game {
   static const length = 1000;
   static const Default_Camera_Zoom = 0.5;
+
+  final Isometric isometric;
 
   final renderCharacterState = WatchBool(false);
 
@@ -30,7 +33,7 @@ class GameFight2D extends Game {
 
   int get sceneTotal => sceneWidth * sceneHeight;
 
-  GameFight2D();
+  GameFight2D(this.isometric);
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -54,7 +57,7 @@ class GameFight2D extends Game {
            GameFight2DNodeType.Grass: 34,
          }[nodeType] ?? 0;
 
-         gamestream.engine.renderSprite(
+         isometric.engine.renderSprite(
              image: Images.atlas_fight2d_nodes,
              srcX: srcY,
              srcY: 0,
@@ -104,7 +107,7 @@ class GameFight2D extends Game {
           _ => 0
       };
 
-      gamestream.engine.renderSprite(
+      isometric.engine.renderSprite(
           image: Images.atlas_fight2d_character,
           srcX: frame * frameSize,
           srcY:  characterDirection[i] == GameFight2DDirection.Left ? 0 : frameSize,
@@ -115,15 +118,15 @@ class GameFight2D extends Game {
       );
 
       if (renderCharacterState.value){
-        gamestream.engine.renderText(
+        isometric.engine.renderText(
           GameFight2DCharacterState.getName(state),
           characterPositionX[i].toDouble(),
           characterPositionY[i].toDouble() - 100,
         );
       }
 
-      gamestream.engine.paint.color = Colors.white;
-      gamestream.engine.renderText(
+      isometric.engine.paint.color = Colors.white;
+      isometric.engine.renderText(
           characterIsBot[i] ? '${characterDamage[i]}-AI' : characterDamage[i].toString(),
         characterPositionX[i].toDouble() - 20,
         characterPositionY[i].toDouble() - 120,
@@ -145,17 +148,17 @@ class GameFight2D extends Game {
 
   @override
   void update() {
-    gamestream.io.applyKeyboardInputToUpdateBuffer(gamestream);
-    gamestream.io.sendUpdateBuffer();
-    gamestream.engine.cameraFollow(player.x, player.y);
+    isometric.io.applyKeyboardInputToUpdateBuffer(isometric);
+    isometric.io.sendUpdateBuffer();
+    isometric.engine.cameraFollow(player.x, player.y);
   }
 
   void applyCharacterAudio() {
     for (var i = 0; i < charactersTotal; i++){
        if (characterState[i] == GameFight2DCharacterState.Running){
           if (characterStateDuration[i] % 8 == 0){
-            gamestream.audio.playAudioSingle2D(
-                gamestream.audio.footstep_grass_7,
+            isometric.audio.playAudioSingle2D(
+              isometric.audio.footstep_grass_7,
                 characterPositionX[i],
                 characterPositionY[i],
             );
@@ -166,31 +169,31 @@ class GameFight2D extends Game {
 
   void updateCamera() {
     const speed = 4.0;
-    if (gamestream.engine.keyPressed(KeyCode.Arrow_Up)){
-      gamestream.engine.cameraY -= speed;
+    if (isometric.engine.keyPressed(KeyCode.Arrow_Up)){
+      isometric.engine.cameraY -= speed;
     }
-    if (gamestream.engine.keyPressed(KeyCode.Arrow_Down)){
-      gamestream.engine.cameraY += speed;
+    if (isometric.engine.keyPressed(KeyCode.Arrow_Down)){
+      isometric.engine.cameraY += speed;
     }
-    if (gamestream.engine.keyPressed(KeyCode.Arrow_Left)){
-      gamestream.engine.cameraX -= speed;
+    if (isometric.engine.keyPressed(KeyCode.Arrow_Left)){
+      isometric.engine.cameraX -= speed;
     }
-    if (gamestream.engine.keyPressed(KeyCode.Arrow_Right)){
-      gamestream.engine.cameraX += speed;
+    if (isometric.engine.keyPressed(KeyCode.Arrow_Right)){
+      isometric.engine.cameraX += speed;
     }
   }
 
   @override
   void onActivated() {
-    gamestream.engine.zoom = Default_Camera_Zoom;
-    gamestream.engine.targetZoom = gamestream.engine.zoom;
+    isometric.engine.zoom = Default_Camera_Zoom;
+    isometric.engine.targetZoom = isometric.engine.zoom;
   }
 
   @override
   Widget buildUI(BuildContext context) => GameFight2DUI(this);
 
   void togglePlayerEdit() =>
-      gamestream.sendClientRequest(
+      isometric.sendClientRequest(
           ClientRequest.Fight2D,
           GameFight2DClientRequest.Toggle_Player_Edit,
       );

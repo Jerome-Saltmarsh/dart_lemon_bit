@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../ui/game_isometric_ui.dart';
+import 'isometric_ui.dart';
 
 extension IsometricActions on Isometric {
   static const Zoom_Far = 0.4;
@@ -28,29 +28,29 @@ extension IsometricActions on Isometric {
   }
 
   void messageBoxToggle(){
-    GameIsometricUI.messageBoxVisible.value = !GameIsometricUI.messageBoxVisible.value;
+    messageBoxVisible.value = !messageBoxVisible.value;
   }
 
   void messageBoxShow(){
-    GameIsometricUI.messageBoxVisible.value = true;
+    messageBoxVisible.value = true;
   }
 
   void messageBoxHide(){
-    GameIsometricUI.messageBoxVisible.value = false;
+    messageBoxVisible.value = false;
   }
 
   void toggleZoom(){
-    gamestream.audio.weaponSwap2();
-    if (gamestream.engine.targetZoom != Zoom_Far){
-      gamestream.engine.targetZoom = Zoom_Far;
+    audio.weaponSwap2();
+    if (engine.targetZoom != Zoom_Far){
+      engine.targetZoom = Zoom_Far;
     } else {
-      gamestream.engine.targetZoom = Zoom_Close;
+      engine.targetZoom = Zoom_Close;
     }
   }
 
   void createExplosion(double x, double y, double z){
     spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
-    gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
+    playAudioXYZ(audio.explosion_grenade_04, x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;

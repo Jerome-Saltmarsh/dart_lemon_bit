@@ -20,7 +20,7 @@ class RendererParticles extends IsometricRenderer {
   @override
   void reset() {
     isometric.particles.sort(IsometricParticle.compare);
-    totalActiveParticles = gamestream.countActiveParticles;
+    totalActiveParticles = isometric.countActiveParticles;
     super.reset();
   }
 
@@ -29,15 +29,15 @@ class RendererParticles extends IsometricRenderer {
       assert (particle.active);
       assert (particle.delay <= 0);
       final dstX = IsometricRender.getPositionRenderX(particle);
-      assert (dstX > gamestream.engine.Screen_Left - 50);
-      assert (dstX < gamestream.engine.Screen_Right + 50);
+      assert (dstX > isometric.engine.Screen_Left - 50);
+      assert (dstX < isometric.engine.Screen_Right + 50);
       final dstY = IsometricRender.getPositionRenderY(particle);
-      assert (dstY > gamestream.engine.Screen_Top - 50);
-      assert (dstY < gamestream.engine.Screen_Bottom + 50);
+      assert (dstY > isometric.engine.Screen_Top - 50);
+      assert (dstY < isometric.engine.Screen_Bottom + 50);
 
       switch (particle.type) {
         case ParticleType.Water_Drop:
-          gamestream.engine.renderSprite(
+          isometric.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -50,7 +50,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Blood:
           casteShadowDownV3(particle);
-          gamestream.engine.renderSprite(
+          isometric.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -66,7 +66,7 @@ class RendererParticles extends IsometricRenderer {
             particle.deactivate();
             break;
           }
-          gamestream.engine.renderSprite(
+          isometric.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -78,7 +78,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Bubble_Small:
-          gamestream.engine.renderSprite(
+          isometric.engine.renderSprite(
             image: Images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -567,7 +567,7 @@ class RendererParticles extends IsometricRenderer {
       final nodeBelowOrientation = isometric.nodeOrientations[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
-        renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);
+        isometric.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);
       }
     }
   }

@@ -4,6 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/ui.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -55,10 +56,14 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildPage({required List<Widget> children}) =>
-      Container(
-          width: gamestream.engine.screen.width,
-          height: gamestream.engine.screen.height,
-          child: Stack(children: children)
+      IsometricBuilder(
+        builder: (context, isometric) {
+          return Container(
+              width: isometric.engine.screen.width,
+              height: isometric.engine.screen.height,
+              child: Stack(children: children)
+          );
+        }
       );
 
   Widget buildUI(IsometricEditorTab activeEditTab) => buildPage(
@@ -68,7 +73,7 @@ extension IsometricEditorUI on IsometricEditor {
           bottom: 10,
           child: Container(
               alignment: Alignment.center,
-              width: gamestream.engine.screen.width,
+              width: isometric.engine.screen.width,
               child: buildRowWeatherControls()
           )
       ),
@@ -78,7 +83,7 @@ extension IsometricEditorUI on IsometricEditor {
           left: 0,
           top: 50,
           child: Container(
-              height: gamestream.engine.screen.height - 100,
+              height: isometric.engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
       if (activeEditTab == IsometricEditorTab.Grid)
@@ -179,7 +184,7 @@ extension IsometricEditorUI on IsometricEditor {
         buildButton(child: 'EDIT', action: toggleWindowEnabledScene),
         buildButton(child: 'MAP SIZE', action: toggleWindowEnabledCanvasSize),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
-        if (gamestream.engine.isLocalHost)
+        if (isometric.engine.isLocalHost)
           buildButton(child: 'SAVE', action: saveScene),
       ],
     );
@@ -431,7 +436,7 @@ extension IsometricEditorUI on IsometricEditor {
           padding: const EdgeInsets.all(4),
           color: GS_CONTAINER_COLOR,
           child: FittedBox(
-            child: gamestream.ui.buildImageGameObject(objectType),
+            child: isometric.buildImageGameObject(objectType),
           ),
         ),
       );
@@ -471,7 +476,7 @@ extension IsometricEditorUI on IsometricEditor {
               Container(
                 width: 64,
                 height: 64,
-                decoration: GameIsometricUI.buildDecorationBorder(
+                decoration: IsometricUI.buildDecorationBorder(
                   colorBorder: Colors.white,
                   colorFill: Colors.transparent,
                   width: 2,
@@ -487,7 +492,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
         action: () => gamestream.setRain(rain),
-        icon: GameIsometricUI.buildAtlasIconType(convertRainToIconType(rain)),
+        icon: isometric.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
 
@@ -497,7 +502,7 @@ extension IsometricEditorUI on IsometricEditor {
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
             gamestream.setLightning(lightning),
-        icon: GameIsometricUI.buildAtlasIconType(
+        icon: isometric.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
       ));
@@ -507,7 +512,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
         action: () => gamestream.setWind(windType),
-        icon: GameIsometricUI.buildAtlasIconType(convertWindToIconType(windType)),
+        icon: isometric.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
 
@@ -1061,7 +1066,7 @@ extension IsometricEditorUI on IsometricEditor {
                               onPressed: sendGameObjectRequestDeselect
                           ),
                         ),
-                        Center(child: gamestream.ui.buildImageGameObject(subType)),
+                        Center(child: gamestream.buildImageGameObject(subType)),
                         height8,
                         buidButtonDuplicate(),
                         height8,
@@ -1244,7 +1249,7 @@ extension IsometricEditorUI on IsometricEditor {
                       height: 72,
                       width: 72,
                       alignment: Alignment.center,
-                      child: buildWatch(nodeSelectedType, GameIsometricUI.buildAtlasNodeType)
+                      child: buildWatch(nodeSelectedType, isometric.buildAtlasNodeType)
                   ),
                   buildPositionedIconButton(
                       top: 50 + shiftY,
@@ -1287,7 +1292,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: onPressed(
           action: action,
           child: MouseOver(builder: (bool mouseOver) =>
-              GameIsometricUI.buildAtlasIconType(
+              isometric.buildAtlasIconType(
                 iconType,
                 color: mouseOver ? Colors.black38.value : Colors.white.value,
               )
@@ -1442,7 +1447,7 @@ extension IsometricEditorUI on IsometricEditor {
                   gameObjectSelectedEmissionIntensity,
                       (double value) => Slider(
                     value: gameObject.value
-                        ?.emission_intensity ??
+                        ?.emissionIntensity ??
                         0,
                     onChanged:
                     setSelectedObjectedIntensity,
@@ -1468,8 +1473,8 @@ extension IsometricEditorUI on IsometricEditor {
                             .round();
                     gameObject.emissionVal =
                         (hsv.value * 100).round();
-                    gameObject
-                        .refreshEmissionColor();
+
+                    isometric.refreshGameObjectEmissionColor(gameObject);
                   },
                 )
             ],

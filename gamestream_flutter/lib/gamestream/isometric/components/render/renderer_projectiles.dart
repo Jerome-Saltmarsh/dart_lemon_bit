@@ -24,7 +24,7 @@ class RendererProjectiles extends IsometricRenderer {
       case ProjectileType.Wave:
         break;
       case ProjectileType.Rocket:
-        gamestream.engine.renderSpriteRotated(
+        isometric.engine.renderSpriteRotated(
           image: Images.atlas_items,
           srcX: 201,
           srcY: 109,
@@ -43,17 +43,17 @@ class RendererProjectiles extends IsometricRenderer {
 
   @override
   void updateFunction() {
-    projectile = gamestream.projectiles[index];
+    projectile = isometric.projectiles[index];
     order = projectile.sortOrder;
   }
 
   @override
   int getTotal() {
-    return gamestream.totalProjectiles;
+    return isometric.totalProjectiles;
   }
 
-  static void renderBullet(double x, double y, double rotation) {
-    gamestream.engine.renderSpriteRotated(
+  void renderBullet(double x, double y, double rotation) {
+    isometric.engine.renderSpriteRotated(
       image: Images.atlas_gameobjects,
       srcX: 87,
       srcY: 48,
@@ -68,8 +68,8 @@ class RendererProjectiles extends IsometricRenderer {
     );
   }
 
-  static void renderArrow(double x, double y, double rotation) {
-    gamestream.engine.renderSpriteRotated(
+  void renderArrow(double x, double y, double rotation) {
+    isometric.engine.renderSpriteRotated(
       image: Images.atlas_gameobjects,
       srcX: 49,
       srcY: 48,
@@ -81,7 +81,7 @@ class RendererProjectiles extends IsometricRenderer {
       scale: 0.7,
     );
 
-    gamestream.engine.renderSpriteRotated(
+    isometric.engine.renderSpriteRotated(
       image: Images.atlas_gameobjects,
       srcX: 59,
       srcY: 48,

@@ -66,7 +66,7 @@ class GameIO with ByteWriter {
 
     var hex = getDirection();
 
-    if (gamestream.engine.watchMouseLeftDown.value) {
+    if (isometric.engine.watchMouseLeftDown.value) {
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -77,15 +77,15 @@ class GameIO with ByteWriter {
 
     if (inputModeKeyboard) {
 
-      if (gamestream.engine.mouseRightDown.value) {
+      if (isometric.engine.mouseRightDown.value) {
         hex = hex | ByteHex.Hex_32;
       }
 
-      if (gamestream.engine.keyPressedShiftLeft){
+      if (isometric.engine.keyPressedShiftLeft){
         hex = hex | ByteHex.Hex_64;
       }
 
-      if (gamestream.engine.keyPressedSpace){
+      if (isometric.engine.keyPressedSpace){
         hex = hex | ByteHex.Hex_128;
       }
     }
@@ -95,17 +95,17 @@ class GameIO with ByteWriter {
 
   double getCursorScreenX() {
      if (inputModeTouch){
-       return gamestream.engine.worldToScreenX(touchCursorWorldX);
+       return isometric.engine.worldToScreenX(touchCursorWorldX);
      } else {
-       return gamestream.engine.mousePositionX;
+       return isometric.engine.mousePositionX;
      }
   }
 
   double getCursorScreenY() {
     if (inputModeTouch) {
-      return gamestream.engine.worldToScreenY(touchCursorWorldY);
+      return isometric.engine.worldToScreenY(touchCursorWorldY);
     } else {
-      return gamestream.engine.mousePositionY;
+      return isometric.engine.mousePositionY;
     }
   }
 
@@ -117,11 +117,11 @@ class GameIO with ByteWriter {
 
   int getInputDirectionKeyboard() {
 
-    if (gamestream.engine.keyPressed(KeyCode.W)) {
-      if (gamestream.engine.keyPressed(KeyCode.D)) {
+    if (isometric.engine.keyPressed(KeyCode.W)) {
+      if (isometric.engine.keyPressed(KeyCode.D)) {
         return InputDirection.Up_Right;
       }
-      if (gamestream.engine.keyPressed(KeyCode.A)) {
+      if (isometric.engine.keyPressed(KeyCode.A)) {
         return InputDirection.Up_Left;
       }
       return InputDirection.Up;

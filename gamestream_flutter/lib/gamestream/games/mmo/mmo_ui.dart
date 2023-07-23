@@ -57,7 +57,7 @@ extension MMOUI on MmoGame {
       Positioned(
           bottom: margin2,
           child: Container(
-              width: gamestream.engine.screen.width,
+              width: isometric.engine.screen.width,
               alignment: Alignment.center,
               child: buildError(),
           ),
@@ -147,7 +147,7 @@ extension MMOUI on MmoGame {
         top: 16,
         left: 0,
         child: Container(
-          width: gamestream.engine.screen.width,
+          width: isometric.engine.screen.width,
           alignment: Alignment.center,
           child: buildWatch(player.playerAimTargetSet, (t) {
             if (!t) return nothing;

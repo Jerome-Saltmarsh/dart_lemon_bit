@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/images.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class IsometricIcon extends StatelessWidget {
 
@@ -19,15 +20,17 @@ class IsometricIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      FittedBox(
-        child: gamestream.engine.buildAtlasImage(
-          image: Images.atlas_icons,
-          srcX: AtlasIcons.getSrcX(iconType),
-          srcY: AtlasIcons.getSrcY(iconType),
-          srcWidth: AtlasIcons.getSrcWidth(iconType),
-          srcHeight: AtlasIcons.getSrcHeight(iconType),
-          scale: scale,
-          color: color,
-        ),
+      IsometricBuilder(
+        builder: (context, isometric) => FittedBox(
+            child: isometric.engine.buildAtlasImage(
+              image: Images.atlas_icons,
+              srcX: AtlasIcons.getSrcX(iconType),
+              srcY: AtlasIcons.getSrcY(iconType),
+              srcWidth: AtlasIcons.getSrcWidth(iconType),
+              srcHeight: AtlasIcons.getSrcHeight(iconType),
+              scale: scale,
+              color: color,
+            ),
+          )
       );
 }

@@ -11,18 +11,20 @@ import 'games/website/website_game.dart';
 import 'isometric/classes/isometric_game.dart';
 
 class Games {
-  late final fight2D = GameFight2D();
-  late final website = WebsiteGame();
+  late final GameFight2D fight2D;
+  late final WebsiteGame website;
   late final IsometricGame isometricEditor;
   late final CaptureTheFlagGame captureTheFlag;
   late final Moba moba;
   late final MmoGame mmo;
 
-  Games(Isometric gamestream) {
-     captureTheFlag = CaptureTheFlagGame(gamestream: gamestream);
-     isometricEditor = IsometricGame(isometric: gamestream);
-     moba = Moba(isometric: gamestream);
-     mmo = MmoGame(isometric: gamestream);
+  Games(Isometric isometric) {
+     fight2D  = GameFight2D(isometric);
+     website = WebsiteGame(isometric);
+     captureTheFlag = CaptureTheFlagGame(gamestream: isometric);
+     isometricEditor = IsometricGame(isometric: isometric);
+     moba = Moba(isometric: isometric);
+     mmo = MmoGame(isometric: isometric);
   }
 
   Game mapGameTypeToGame(GameType gameType) => switch (gameType) {

@@ -5,7 +5,7 @@ import '../enums/emission_type.dart';
 
 class IsometricGameObject extends IsometricPosition {
   final int id;
-  var _type = -1;
+  var type = -1;
   var subType = -1;
   var health = -1;
   var maxHealth = -1;
@@ -25,58 +25,12 @@ class IsometricGameObject extends IsometricPosition {
 
   IsometricGameObject(this.id); // PROPERTIES
   
-  int get type => _type;
-
   double get healthPercentage => maxHealth <= 0 ? 0 : health / maxHealth;
 
-  // TODO REFACTOR
-  set type(int value) {
-    if (_type == value) return;
-    _type = value;
+  double get emissionIntensity => _emission_intensity;
 
-    if (value != GameObjectType.Object) return;
-
-    switch (value) {
-      case ObjectType.Neon_Sign_01:
-        colorType = EmissionType.Color;
-        emissionHue = 344;
-        emissionSat = 67;
-        emissionVal = 94;
-        emissionAlp = 156;
-        emission_intensity_vel = 0.05;
-        refreshEmissionColor();
-        break;
-      case ObjectType.Neon_Sign_02:
-        colorType = EmissionType.Color;
-        emissionHue = 166;
-        emissionSat = 78;
-        emissionVal = 88;
-        emissionAlp = 156;
-        refreshEmissionColor();
-        break;
-      case ObjectType.Barrel_Flaming:
-        colorType = EmissionType.Color;
-        emission_intensity_vel = 0.1;
-        emission_intensity_start = 0.78;
-        emission_intensity_end = 1.0;
-        break;
-      case ObjectType.Grenade:
-        colorType = EmissionType.Ambient;
-        break;
-      case ObjectType.Credits:
-        colorType = EmissionType.Ambient;
-        refreshEmissionColor();
-        break;
-    }
-  }
-
-  double get emission_intensity => _emission_intensity;
-
-  set emission_intensity(double value){
-     final clamped = clamp01(value);
-     if (_emission_intensity == clamped) return;
-     _emission_intensity = value;
-     refreshEmissionColor();
+  set emissionIntensity(double value){
+    _emission_intensity = clamp01(value);
   }
 
   // METHODS
@@ -90,31 +44,11 @@ class IsometricGameObject extends IsometricPosition {
       emission_intensity_vel = -emission_intensity_vel;
     }
 
-    emission_intensity = interpolateDouble(
+    emissionIntensity = interpolateDouble(
       start: emission_intensity_start,
       end: emission_intensity_end,
       t: emission_intensity_t,
     );
-  }
-
-  void refreshEmissionColor(){
-    emissionColor = hsvToColor(
-        hue: interpolate(start: gamestream.ambientHue, end: emissionHue , t: emission_intensity),
-        saturation: interpolate(start: gamestream.ambientSaturation, end: emissionSat, t: emission_intensity),
-        value: interpolate(start: gamestream.ambientValue, end: emissionVal, t: emission_intensity),
-        opacity: interpolate(start: gamestream.ambientAlpha, end: emissionAlp, t: emission_intensity),
-    );
-  }
-
-  bool get onscreen {
-    const Pad_Distance = 75.0;
-    final rx = renderX;
-
-    if (rx < gamestream.engine.Screen_Left - Pad_Distance || rx > gamestream.engine.Screen_Right + Pad_Distance)
-      return false;
-
-    final ry = renderY;
-    return ry > gamestream.engine.Screen_Top - Pad_Distance && ry < gamestream.engine.Screen_Bottom + Pad_Distance;
   }
 
   @override

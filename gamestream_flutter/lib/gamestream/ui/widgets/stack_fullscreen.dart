@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class StackFullscreen extends StatelessWidget {
 
@@ -10,10 +11,12 @@ class StackFullscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-    Container(
-        width: gamestream.engine.screen.width,
-        height: gamestream.engine.screen.height,
-        child: Stack(children:children)
+    IsometricBuilder(
+      builder: (context, isometric) => Container(
+            width: isometric.engine.screen.width,
+            height: isometric.engine.screen.height,
+            child: Stack(children:children)
+        )
     );
 
 

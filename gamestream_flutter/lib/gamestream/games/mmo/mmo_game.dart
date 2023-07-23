@@ -46,13 +46,13 @@ class MmoGame extends IsometricGame {
     error.onChanged(onChangedError);
   }
 
-  IsometricPlayer get player => gamestream.player;
+  IsometricPlayer get player => isometric.player;
 
   void onChangedError(String value){
     if (value.isEmpty)
       return;
 
-    gamestream.audio.errorSound15();
+    isometric.audio.errorSound15();
     errorTimer = 70;
   }
 
@@ -158,11 +158,11 @@ class MmoGame extends IsometricGame {
   void clearItemHover() => itemHover.value = null;
 
   void onChangedPlayerInventoryOpen(bool value) {
-    gamestream.audio.click_sound_8();
+    isometric.audio.click_sound_8();
   }
 
   void onChangedPlayerTalentsDialogOpen(bool talentsDialogOpen) {
-    gamestream.audio.click_sound_8();
+    isometric.audio.click_sound_8();
     if (!talentsDialogOpen){
       clearTalentHover();
     }

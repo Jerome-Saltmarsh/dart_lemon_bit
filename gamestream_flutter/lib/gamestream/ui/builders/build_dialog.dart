@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/border_radius.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 Widget buildDialog({
   required Widget child,
@@ -14,20 +15,24 @@ Widget buildDialog({
   Alignment alignment = Alignment.center,
   EdgeInsets margin = EdgeInsets.zero,
 }) {
-  return Container(
-    width: gamestream.engine.screen.width,
-    height: gamestream.engine.screen.height,
-    alignment: alignment,
-    child: Container(
-      margin: margin,
-      decoration: BoxDecoration(
-          border: Border.all(color: borderColor, width: borderWidth),
-          borderRadius: borderRadius,
-          color: color),
-      padding: EdgeInsets.all(padding),
-      width: width,
-      height: height,
-      child: child,
-    ),
+  return IsometricBuilder(
+    builder: (context, isometric) {
+      return Container(
+        width: isometric.engine.screen.width,
+        height: isometric.engine.screen.height,
+        alignment: alignment,
+        child: Container(
+          margin: margin,
+          decoration: BoxDecoration(
+              border: Border.all(color: borderColor, width: borderWidth),
+              borderRadius: borderRadius,
+              color: color),
+          padding: EdgeInsets.all(padding),
+          width: width,
+          height: height,
+          child: child,
+        ),
+      );
+    }
   );
 }

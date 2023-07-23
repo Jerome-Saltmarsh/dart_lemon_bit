@@ -14,12 +14,12 @@ import 'package:golden_ratio/constants.dart';
 extension WebsiteUI on WebsiteGame {
 
   Widget buildSelectGameType() => WatchBuilder(
-        gamestream.gameType,
+        isometric.gameType,
             (activeGameType) => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: gameTypes.map((gameType) => onPressed(
-              action: () => gamestream.startGameType(gameType),
+              action: () => isometric.startGameType(gameType),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 child: Column(
@@ -39,7 +39,7 @@ extension WebsiteUI on WebsiteGame {
         if (websitePage == WebsitePage.Region){
           return buildSelectRegionColumn();
         }
-        return WatchBuilder(gamestream.region, (ConnectionRegion? region) {
+        return WatchBuilder(isometric.region, (ConnectionRegion? region) {
           if (region == null) return buildSelectRegionColumn();
 
           final regionButton = onPressed(
@@ -81,7 +81,7 @@ extension WebsiteUI on WebsiteGame {
     );
 
   Widget buildWatchErrorMessage() =>
-      WatchBuilder(gamestream.games.website.error, (String? message) {
+      WatchBuilder(isometric.games.website.error, (String? message) {
         if (message == null) return nothing;
         return buildErrorDialog(message);
       });
@@ -89,7 +89,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(gamestream.connectionStatus, buildConnectionStatus);
+          : buildWatch(isometric.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {
@@ -137,7 +137,7 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
-  Widget buildNotConnected()  => buildWatch(gamestream.engine.deviceType, buildPageWebsite);
+  Widget buildNotConnected()  => buildWatch(isometric.engine.deviceType, buildPageWebsite);
 
   Widget buildPageWebsite(int deviceType) =>
       deviceType == DeviceType.Computer
@@ -146,8 +146,7 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteMobile() =>
       Container(
-        // width: 300,
-        width: gamestream.engine.screen.width,
+        width: isometric.engine.screen.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -157,12 +156,6 @@ extension WebsiteUI on WebsiteGame {
               gameType: GameType.Mobile_Aeon,
               gameName: 'AEON',
             ),
-            height16,
-            buildButtonJoinGameType(
-              gameType: GameType.Rock_Paper_Scissors,
-              gameName: 'CHASE',
-            ),
-            height16,
           ],
         ),
       );

@@ -1,8 +1,6 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
-import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 
 class AudioSingle {
@@ -32,29 +30,11 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void playV3(IsometricPosition value, {double maxDistance = 600}){
-    playXYZ(value.x, value.y, value.z, maxDistance: maxDistance);
-  }
-
-  void playXYZ(double x, double y, double z, {double maxDistance = 600}){
-    if (!gamestream.audio.enabledSound.value) return;
-    // TODO calculate distance from camera
-
-    final player = gamestream.player.position;
-    final distanceFromPlayer = getDistanceXYZ(x, y, z, player.x, player.y, player.z);;
-    final distanceVolume = gamestream.audio.convertDistanceToVolume(
-        distanceFromPlayer,
-        maxDistance: maxDistance,
-    );
-    play(volume: distanceVolume);
-  }
-
   void stop(){
     audioPlayer.stop();
   }
 
   void play({double volume = 1.0}) async {
-    if (!gamestream.audio.enabledSound.value) return;
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
     await audioPlayer.setVolume(min(playVolume, 1));

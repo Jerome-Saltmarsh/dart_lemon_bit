@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../library.dart';
@@ -10,6 +11,10 @@ import 'audio_tracks.dart';
 
 
 class GameAudio {
+
+  final Isometric isometric;
+
+  GameAudio(this.isometric);
 
   void toggleMutedSound() => enabledSound.value = !enabledSound.value;
   void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
@@ -78,7 +83,7 @@ class GameAudio {
   ];
 
   late final audioLoops = <AudioLoop> [
-    AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
+    AudioLoop(name: 'wind', getTargetVolume: isometric.getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
     AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
@@ -201,7 +206,7 @@ class GameAudio {
   ];
 
   double getVolumeTargetDayAmbience() {
-    final hours = gamestream.hours.value;
+    final hours = isometric.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
@@ -221,7 +226,7 @@ class GameAudio {
   var _nextAudioSourceUpdate = 0;
 
   void update() {
-    if (!gamestream.audio.enabledSound.value) {
+    if (!isometric.audio.enabledSound.value) {
       return;
     }
 
@@ -237,25 +242,8 @@ class GameAudio {
     updateCharacterNoises();
   }
 
-  double getVolumeTargetWind() {
-    final windLineDistance = (gamestream.engine.screenCenterRenderX - gamestream.windLineRenderX).abs();
-    final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
-    var target = 0.0;
-    if (gamestream.windLineRenderX - 250 <= gamestream.engine.screenCenterRenderX) {
-      target += windLineDistanceVolume;
-    }
-    final index = gamestream.windTypeAmbient.value;
-    if (index <= WindType.Calm) {
-      if (gamestream.hours.value < 6) return target;
-      if (gamestream.hours.value < 18) return target + 0.1;
-      return target;
-    }
-    if (index <= WindType.Gentle) return target + 0.5;
-    return 1.0;
-  }
-
   double getVolumeTargetRain() {
-    switch (gamestream.rainType.value){
+    switch (isometric.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -295,7 +283,7 @@ class GameAudio {
     audioSingle.play(volume: 1 / distanceSrtClamped);
   }
 
-  double convertDistanceToVolume(double distance, {required double maxDistance}){
+  static double convertDistanceToVolume(double distance, {required double maxDistance}){
     if (distance > maxDistance) return 0;
     if (distance < 1) return 1.0;
     final perc = distance / maxDistance;
@@ -335,19 +323,27 @@ class GameAudio {
   }
 
   void updateCharacterNoises(){
-    if (gamestream.totalCharacters <= 0) return;
+    if (isometric.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = randomInt(200, 300);
 
-    final index = randomInt(0, gamestream.totalCharacters);
-    final character = gamestream.characters[index];
+    final index = randomInt(0, isometric.totalCharacters);
+    final character = isometric.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:
-        randomItem(gamestream.audio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
+        isometric.playAudioSingleV3(
+            audioSingle: randomItem(isometric.audio.audioSingleZombieTalking),
+            position: character,
+            maxDistance: 500,
+        );
         break;
       case CharacterType.Dog:
-        gamestream.audio.dog_woolf_howl_4.playV3(character);
+        isometric.playAudioSingleV3(
+            audioSingle: isometric.audio.dog_woolf_howl_4,
+            position: character,
+            maxDistance: 500,
+        );
         break;
     }
   }

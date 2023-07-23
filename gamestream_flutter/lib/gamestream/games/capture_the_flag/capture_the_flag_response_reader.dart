@@ -7,7 +7,7 @@ extension CaptureTheFlagResponseReader on Isometric {
 
 
   void readCaptureTheFlag() {
-    final captureTheFlag = gamestream.games.captureTheFlag;
+    final captureTheFlag = games.captureTheFlag;
     switch (readByte()) {
       case CaptureTheFlagResponse.Score:
         captureTheFlag.scoreRed.value = readUInt16();
@@ -95,12 +95,12 @@ extension CaptureTheFlagResponseReader on Isometric {
 
       case CaptureTheFlagResponse.Player_Event_Level_Gained:
         captureTheFlag.audioOnLevelGain.play();
-        gamestream.spawnConfettiPlayer();
+        spawnConfettiPlayer();
         break;
 
       case CaptureTheFlagResponse.Player_Event_Skill_Upgraded:
         captureTheFlag.audioOnLevelGain.play();
-        gamestream.spawnConfettiPlayer();
+        spawnConfettiPlayer();
         break;
     }
   }

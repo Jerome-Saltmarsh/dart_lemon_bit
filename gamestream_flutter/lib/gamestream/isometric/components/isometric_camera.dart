@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../classes/isometric_position.dart';
 
 class IsometricCamera {
+  final Isometric isometric;
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;
@@ -12,13 +14,15 @@ class IsometricCamera {
 
   IsometricPosition? target;
 
+  IsometricCamera(this.isometric);
+
   void centerOnChaseTarget() {
     if (target != null){
       centerOnV3(target!);
     }
   }
 
-  void centerOnV3(IsometricPosition v3) => gamestream.engine.cameraCenter(v3.renderX, v3.renderY);
+  void centerOnV3(IsometricPosition v3) => isometric.engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
     final target = this.target;
@@ -29,7 +33,7 @@ class IsometricCamera {
     final translateDistance = mouseDistance * mouseFollowSensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
-    gamestream.engine.cameraFollow(
+    isometric.engine.cameraFollow(
         target.renderX + translateX,
         target.renderY + translateY,
         chaseStrength,
@@ -43,18 +47,18 @@ class IsometricCamera {
   void cameraSetPosition(double x, double y, double z){
     final renderX = (x - y) * 0.5;
     final renderY = ((y + x) * 0.5) - z;
-    gamestream.engine.cameraCenter(renderX, renderY);
+    isometric.engine.cameraCenter(renderX, renderY);
   }
 
   double getMousePlayerRenderDistance(){
-    final adjacent = gamestream.player.renderX - gamestream.engine.mouseWorldX;
-    final opposite = gamestream.player.renderY - gamestream.engine.mouseWorldY;
+    final adjacent = isometric.player.renderX - isometric.engine.mouseWorldX;
+    final opposite = isometric.player.renderY - isometric.engine.mouseWorldY;
     return hyp2(adjacent, opposite);
   }
 
-  static double getMousePlayerAngle(){
-    final adjacent = gamestream.player.renderX - gamestream.engine.mouseWorldX;
-    final opposite = gamestream.player.renderY - gamestream.engine.mouseWorldY;
+  double getMousePlayerAngle(){
+    final adjacent = isometric.player.renderX - isometric.engine.mouseWorldX;
+    final opposite = isometric.player.renderY - isometric.engine.mouseWorldY;
     return rad(adjacent, opposite);
   }
 

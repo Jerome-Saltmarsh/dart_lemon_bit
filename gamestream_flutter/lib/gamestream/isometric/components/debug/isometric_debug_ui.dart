@@ -11,7 +11,7 @@ import 'debug_tab.dart';
 extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
-      buildWatchBool(gamestream.player.debugging, () =>
+      buildWatchBool(isometric.player.debugging, () =>
           GSContainer(
             child: WatchBuilder(tab, (DebugTab activeTab) => Column(
               children: [
@@ -22,7 +22,7 @@ extension isometricDebugUI on IsometricDebug {
                       minWidth: 300,
                       maxWidth: 400,
                       minHeight: 300,
-                      maxHeight: gamestream.engine.screen.height - 150),
+                      maxHeight: isometric.engine.screen.height - 150),
                   child: SingleChildScrollView(
                     child: switch (activeTab) {
                       DebugTab.Selected => buildTabSelected(),
@@ -101,21 +101,21 @@ extension isometricDebugUI on IsometricDebug {
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      buildWatch(gamestream.serverFPS, (serverFPS) => Column(
+      buildWatch(isometric.serverFPS, (serverFPS) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GSRefresh(() => buildText('connection-duration: ${formattedConnectionDuration}\n')),
           buildText('network-server-fps: $serverFPS'),
-          buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
-          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
-          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
-          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
-          buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+          buildWatch(isometric.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
+          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
+          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
+          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
+          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
           height8,
-          buildWatch(gamestream.io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
-          buildWatch(gamestream.io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+          buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
+          buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
         ],
       )),
       height16,
@@ -128,36 +128,36 @@ extension isometricDebugUI on IsometricDebug {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GSRefresh(() =>  buildText(
-              'mouse-scene: x: ${IsometricMouse.positionX.toInt()}, y: ${IsometricMouse.positionY.toInt()}\n'
-                  'mouse-world: x: ${gamestream.engine.mouseWorldX.toInt()}, y: ${gamestream.engine.mouseWorldY.toInt()}\n'
-                  'mouse-screen: x: ${gamestream.engine.mousePositionX.toInt()}, y: ${gamestream.engine.mousePositionY.toInt()}\n'
-                  'player-alive: ${gamestream.player.alive.value}\n'
-                  'player-position: ${gamestream.player.position}\n'
-                  'player-render: x: ${gamestream.player.position.renderX}, y: ${gamestream.player.position.renderY}\n'
-                  'player-screen: x: ${gamestream.player.positionScreenX.toInt()}, y: ${gamestream.player.positionScreenY.toInt()}\n'
-                  'player-index: z: ${gamestream.player.position.indexZ}, row: ${gamestream.player.position.indexRow}, column: ${gamestream.player.position.indexColumn}\n'
-                  'player-legs: ${LegType.getName(gamestream.player.legs.value)}\n'
-                  'player-body: ${BodyType.getName(gamestream.player.body.value)}\n'
-                  'player-head: ${HeadType.getName(gamestream.player.head.value)}\n'
-                  'player-weapon: ${WeaponType.getName(gamestream.player.weapon.value)}\n'
-                  'aim-target-category: ${TargetCategory.getName(gamestream.player.aimTargetCategory)}\n'
-                  'aim-target-type: ${gamestream.player.aimTargetType}\n'
-                  'aim-target-name: ${gamestream.player.aimTargetName}\n'
-                  'aim-target-position: ${gamestream.player.aimTargetPosition}\n'
-                  'target-position: ${gamestream.player.targetPosition}\n'
-                  'scene-light-sources: ${gamestream.nodesLightSourcesTotal}\n'
-                  'scene-light-active: ${gamestream.totalActiveLights}\n'
-                  'total-gameobjects: ${gamestream.gameObjects.length}\n'
-                  'total-characters: ${gamestream.totalCharacters}\n'
-                  'total-particles: ${gamestream.particles.length}\n'
-                  'total-particles-active: ${gamestream.countActiveParticles}\n'
+              'mouse-scene: x: ${isometric.mouse.positionX.toInt()}, y: ${isometric.mouse.positionY.toInt()}\n'
+                  'mouse-world: x: ${isometric.engine.mouseWorldX.toInt()}, y: ${isometric.engine.mouseWorldY.toInt()}\n'
+                  'mouse-screen: x: ${isometric.engine.mousePositionX.toInt()}, y: ${isometric.engine.mousePositionY.toInt()}\n'
+                  'player-alive: ${isometric.player.alive.value}\n'
+                  'player-position: ${isometric.player.position}\n'
+                  'player-render: x: ${isometric.player.position.renderX}, y: ${isometric.player.position.renderY}\n'
+                  'player-screen: x: ${isometric.player.positionScreenX.toInt()}, y: ${isometric.player.positionScreenY.toInt()}\n'
+                  'player-index: z: ${isometric.player.position.indexZ}, row: ${isometric.player.position.indexRow}, column: ${isometric.player.position.indexColumn}\n'
+                  'player-legs: ${LegType.getName(isometric.player.legs.value)}\n'
+                  'player-body: ${BodyType.getName(isometric.player.body.value)}\n'
+                  'player-head: ${HeadType.getName(isometric.player.head.value)}\n'
+                  'player-weapon: ${WeaponType.getName(isometric.player.weapon.value)}\n'
+                  'aim-target-category: ${TargetCategory.getName(isometric.player.aimTargetCategory)}\n'
+                  'aim-target-type: ${isometric.player.aimTargetType}\n'
+                  'aim-target-name: ${isometric.player.aimTargetName}\n'
+                  'aim-target-position: ${isometric.player.aimTargetPosition}\n'
+                  'target-position: ${isometric.player.targetPosition}\n'
+                  'scene-light-sources: ${isometric.nodesLightSourcesTotal}\n'
+                  'scene-light-active: ${isometric.totalActiveLights}\n'
+                  'total-gameobjects: ${isometric.gameObjects.length}\n'
+                  'total-characters: ${isometric.totalCharacters}\n'
+                  'total-particles: ${isometric.particles.length}\n'
+                  'total-particles-active: ${isometric.countActiveParticles}\n'
           )),
-          buildWatch(gamestream.updateFrame, (t) => buildText('update-frame: $t')),
-          buildWatch(gamestream.gameType, (GameType value) => buildText('game-type: ${value.name}')),
-          buildWatch(gamestream.engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: gamestream.engine.toggleDeviceType)),
-          buildWatch(gamestream.io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: gamestream.io.actionToggleInputMode)),
-          buildWatch(gamestream.engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
-          buildWatch(gamestream.engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
+          buildWatch(isometric.updateFrame, (t) => buildText('update-frame: $t')),
+          buildWatch(isometric.gameType, (GameType value) => buildText('game-type: ${value.name}')),
+          buildWatch(isometric.engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: isometric.engine.toggleDeviceType)),
+          buildWatch(isometric.io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: isometric.io.actionToggleInputMode)),
+          buildWatch(isometric.engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
+          buildWatch(isometric.engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
           // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
         ],
       );
@@ -166,15 +166,15 @@ extension isometricDebugUI on IsometricDebug {
       Column(
         children: [
           onPressed(
-              action: gamestream.toggleDynamicShadows,
-              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.dynamicShadows}'))
+              action: isometric.toggleDynamicShadows,
+              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${isometric.dynamicShadows}'))
           ),
           onPressed(
-              child: GSRefresh(() => buildText('blend-mode: ${gamestream.engine.bufferBlendMode.name}')),
+              child: GSRefresh(() => buildText('blend-mode: ${isometric.engine.bufferBlendMode.name}')),
               action: (){
-                final currentIndex = BlendMode.values.indexOf(gamestream.engine.bufferBlendMode);
+                final currentIndex = BlendMode.values.indexOf(isometric.engine.bufferBlendMode);
                 final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
-                gamestream.engine.bufferBlendMode = BlendMode.values[nextIndex];
+                isometric.engine.bufferBlendMode = BlendMode.values[nextIndex];
               }
           ),
           height8,
@@ -182,11 +182,11 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                gamestream.setInterpolationLength(gamestream.interpolationLength - 1);
+                isometric.setInterpolationLength(isometric.interpolationLength - 1);
               }),
-              GSRefresh(() => buildText('light-size: ${gamestream.interpolationLength}')),
+              GSRefresh(() => buildText('light-size: ${isometric.interpolationLength}')),
               buildText('->', onPressed: (){
-                gamestream.setInterpolationLength(gamestream.interpolationLength + 1);
+                isometric.setInterpolationLength(isometric.interpolationLength + 1);
               }),
             ],
           ),
@@ -194,15 +194,15 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(gamestream.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(isometric.interpolationEaseType.value);
                 final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                gamestream.interpolationEaseType.value = EaseType.values[indexNext];
+                isometric.interpolationEaseType.value = EaseType.values[indexNext];
               }),
-              buildWatch(gamestream.interpolationEaseType, buildText),
+              buildWatch(isometric.interpolationEaseType, buildText),
               buildText('->', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(gamestream.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(isometric.interpolationEaseType.value);
                 final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                gamestream.interpolationEaseType.value = EaseType.values[indexNext];
+                isometric.interpolationEaseType.value = EaseType.values[indexNext];
               }),
             ],
           ),
@@ -212,19 +212,19 @@ extension isometricDebugUI on IsometricDebug {
           ColorPicker(
             portraitOnly: true,
             pickerColor: HSVColor.fromAHSV(
-              gamestream.ambientAlpha / 255,
-              gamestream.ambientHue.toDouble(),
-              gamestream.ambientSaturation / 100,
-              gamestream.ambientValue / 100,
+              isometric.ambientAlpha / 255,
+              isometric.ambientHue.toDouble(),
+              isometric.ambientSaturation / 100,
+              isometric.ambientValue / 100,
             ).toColor(),
             onColorChanged: (color){
-              gamestream.overrideColor.value = true;
+              isometric.overrideColor.value = true;
               final hsvColor = HSVColor.fromColor(color);
-              gamestream.ambientAlpha = (hsvColor.alpha * 255).round();
-              gamestream.ambientHue = hsvColor.hue.round();
-              gamestream.ambientSaturation = (hsvColor.saturation * 100).round();
-              gamestream.ambientValue = (hsvColor.value * 100).round();
-              gamestream.resetNodeColorsToAmbient();
+              isometric.ambientAlpha = (hsvColor.alpha * 255).round();
+              isometric.ambientHue = hsvColor.hue.round();
+              isometric.ambientSaturation = (hsvColor.saturation * 100).round();
+              isometric.ambientValue = (hsvColor.value * 100).round();
+              isometric.resetNodeColorsToAmbient();
             },
           ),
         ],
@@ -233,38 +233,38 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabEngine() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      GSRefresh(() => buildText('engine-touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
-      GSRefresh(() => buildText('engine-render-batches: ${gamestream.engine.batchesRendered}')),
-      GSRefresh(() => buildText('engine-render-batch-1: ${gamestream.engine.batches1Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-2: ${gamestream.engine.batches2Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-4: ${gamestream.engine.batches4Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-8: ${gamestream.engine.batches8Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-16: ${gamestream.engine.batches16Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-32: ${gamestream.engine.batches32Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-64: ${gamestream.engine.batches64Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-128: ${gamestream.engine.batches128Rendered}')),
-      GSRefresh(() => buildText('engine-camera-zoom: ${gamestream.engine.targetZoom.toStringAsFixed(3)}')),
-      GSRefresh(() => buildText('engine-render-frame: ${gamestream.engine.paintFrame}')),
-      GSRefresh(() => buildText('engine-update-frame: ${gamestream.engine.updateFrame}')),
-      buildRowWatchInt(text: 'engine.ms-render', watch: gamestream.engine.msRender),
-      buildRowWatchInt(text: 'engine.ms-update', watch: gamestream.engine.msUpdate),
-      buildWatch(gamestream.engine.msRender, (t) {
+      GSRefresh(() => buildText('engine-touch-world: x: ${isometric.io.touchCursorWorldX.toInt()}, y: ${isometric.io.touchCursorWorldY.toInt()}')),
+      GSRefresh(() => buildText('engine-render-batches: ${isometric.engine.batchesRendered}')),
+      GSRefresh(() => buildText('engine-render-batch-1: ${isometric.engine.batches1Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-2: ${isometric.engine.batches2Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-4: ${isometric.engine.batches4Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-8: ${isometric.engine.batches8Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-16: ${isometric.engine.batches16Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-32: ${isometric.engine.batches32Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-64: ${isometric.engine.batches64Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-128: ${isometric.engine.batches128Rendered}')),
+      GSRefresh(() => buildText('engine-camera-zoom: ${isometric.engine.targetZoom.toStringAsFixed(3)}')),
+      GSRefresh(() => buildText('engine-render-frame: ${isometric.engine.paintFrame}')),
+      GSRefresh(() => buildText('engine-update-frame: ${isometric.engine.updateFrame}')),
+      buildRowWatchInt(text: 'engine.ms-render', watch: isometric.engine.msRender),
+      buildRowWatchInt(text: 'engine.ms-update', watch: isometric.engine.msUpdate),
+      buildWatch(isometric.engine.msRender, (t) {
         return buildRowText(text: 'engine.fps-render', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
-      buildWatch(gamestream.engine.msUpdate, (t) {
+      buildWatch(isometric.engine.msUpdate, (t) {
         return buildRowText(text: 'engine.fps-update', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
-      buildWatch(gamestream.engine.renderFramesSkipped, (t) {
+      buildWatch(isometric.engine.renderFramesSkipped, (t) {
         return buildRowText(text: 'render.frames-skipped', value:t);
       }),
       onPressed(
-          action: () => gamestream.engine.drawCanvasAfterUpdate = !gamestream.engine.drawCanvasAfterUpdate,
-          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${gamestream.engine.drawCanvasAfterUpdate}'))
+          action: () => isometric.engine.drawCanvasAfterUpdate = !isometric.engine.drawCanvasAfterUpdate,
+          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${isometric.engine.drawCanvasAfterUpdate}'))
 
       ),
       onPressed(
-          action: () => gamestream.renderResponse = !gamestream.renderResponse,
-          child: GSRefresh(() => buildText(' gamestream.renderResponse = ${gamestream.renderResponse}'))
+          action: () => isometric.renderResponse = !isometric.renderResponse,
+          child: GSRefresh(() => buildText(' isometric.renderResponse = ${isometric.renderResponse}'))
       ),
     ],
   );
@@ -273,9 +273,9 @@ extension isometricDebugUI on IsometricDebug {
         () => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: gamestream.gameObjects
+          children: isometric.gameObjects
               .map((gameObject) => onPressed(
-                action: () => gamestream.selectGameObject(gameObject),
+                action: () => isometric.selectGameObject(gameObject),
                 child: buildText(
                     '${GameObjectType.getName(gameObject.type)} - ${GameObjectType.getNameSubType(gameObject.type, gameObject.subType)}'),
               ))

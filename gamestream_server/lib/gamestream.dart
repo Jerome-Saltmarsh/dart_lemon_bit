@@ -89,7 +89,6 @@ class Gamestream {
       GameType.Capture_The_Flag => buildGameCaptureTheFlag(),
       GameType.Moba => buildGameMoba(),
       GameType.Fight2D => buildGameFight2D(),
-      GameType.Rock_Paper_Scissors => RockPaperScissorsGame(),
       GameType.Editor => IsometricEditor(),
       _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
   };

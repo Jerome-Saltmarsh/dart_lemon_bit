@@ -27,69 +27,11 @@ mixin IsometricRender {
   late final RendererGameObjects rendererGameObjects;
   late IsometricRenderer next = rendererNodes;
 
-  Color get color => gamestream.engine.paint.color;
-
-  set color(Color color) => gamestream.engine.paint.color = color;
-
-  void renderCircleAroundPlayer({required double radius}) =>
-      renderCircleAtPosition(
-        position: gamestream.player.position,
-        radius: radius,
-      );
-
-  void setColorWhite(){
-    gamestream.engine.setPaintColorWhite();
-  }
-
-  void renderCircleAtPosition({
-    required IsometricPosition position,
-    required double radius,
-    int sections = 12,
-  })=> renderCircle(position.x, position.y, position.z, radius, sections: sections);
-
-  void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
-    if (radius <= 0) return;
-    if (sections < 3) return;
-
-    final anglePerSection = pi2 / sections;
-    var lineX1 = adj(0, radius);
-    var lineY1 = opp(0, radius);
-    var lineX2 = lineX1;
-    var lineY2 = lineY1;
-    for (var i = 1; i <= sections; i++){
-      final a = i * anglePerSection;
-      lineX2 = adj(a, radius);
-      lineY2 = opp(a, radius);
-      renderLine(
-        x + lineX1,
-        y + lineY1,
-        z,
-        x + lineX2,
-        y + lineY2,
-        z,
-      );
-      lineX1 = lineX2;
-      lineY1 = lineY2;
-    }
-  }
-
-  void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
-      gamestream.engine.renderLine(
-        renderX(x1, y1, z1),
-        renderY(x1, y1, z1),
-        renderX(x2, y2, z2),
-        renderY(x2, y2, z2),
-      );
-
   void resetRenderOrder(IsometricRenderer value){
     value.reset();
     if (value.remaining){
       totalRemaining++;
     }
-  }
-
-  void renderMouseWireFrame() {
-    gamestream.io.mouseRaycast(renderWireFrameBlue);
   }
 
   void renderMouseTargetName() {
@@ -448,31 +390,31 @@ mixin IsometricRender {
     }
   }
 
-  void drawMouse() {
-    final mouseAngle = IsometricMouse.playerAngle;
-    final mouseDistance = min(200.0, IsometricMouse.playerDistance);
-
-    final jumps = mouseDistance ~/ Node_Height_Half;
-
-    var x1 = gamestream.player.position.x;
-    var y1 = gamestream.player.position.y;
-    var i1 = gamestream.player.nodeIndex;
-    final z = gamestream.player.position.z + Node_Height_Half;
-
-    final tX = adj(mouseAngle, Node_Height_Half);
-    final tY = opp(mouseAngle, Node_Height_Half);
-
-    for (var i = 0; i < jumps; i++) {
-      final x2 = x1 - tX;
-      final y2 = y1 - tY;
-      final i2 = gamestream.getIndexXYZ(x2, y2, z);
-      if (!NodeType.isTransient(gamestream.nodeTypes[i2])) break;
-      x1 = x2;
-      y1 = y2;
-      i1 = i2;
-    }
-    gamestream.renderCircle32(x1, y1, z);
-  }
+  // void drawMouse() {
+  //   final mouseAngle = mouse.playerAngle;
+  //   final mouseDistance = min(200.0, IsometricMouse.playerDistance);
+  //
+  //   final jumps = mouseDistance ~/ Node_Height_Half;
+  //
+  //   var x1 = gamestream.player.position.x;
+  //   var y1 = gamestream.player.position.y;
+  //   var i1 = gamestream.player.nodeIndex;
+  //   final z = gamestream.player.position.z + Node_Height_Half;
+  //
+  //   final tX = adj(mouseAngle, Node_Height_Half);
+  //   final tY = opp(mouseAngle, Node_Height_Half);
+  //
+  //   for (var i = 0; i < jumps; i++) {
+  //     final x2 = x1 - tX;
+  //     final y2 = y1 - tY;
+  //     final i2 = gamestream.getIndexXYZ(x2, y2, z);
+  //     if (!NodeType.isTransient(gamestream.nodeTypes[i2])) break;
+  //     x1 = x2;
+  //     y1 = y2;
+  //     i1 = i2;
+  //   }
+  //   gamestream.renderCircle32(x1, y1, z);
+  // }
 
   void renderCharacterHealthBar(IsometricCharacter character) =>
       renderHealthBarPosition(
@@ -511,25 +453,6 @@ mixin IsometricRender {
     );
   }
 
-  void renderEditMode() {
-    if (gamestream.playMode) return;
-    if (gamestream.editor.gameObjectSelected.value){
-      gamestream.engine.renderCircleOutline(
-        sides: 24,
-        // radius: ItemType.getRadius(gamestream.isometric.editor.gameObjectSelectedType.value),
-        radius: 30,
-        x: gamestream.editor.gameObject.value!.renderX,
-        y: gamestream.editor.gameObject.value!.renderY,
-        color: Colors.white,
-      );
-      renderCircleAtPosition(position: gamestream.editor.gameObject.value!, radius: 50);
-      return;
-    }
-
-    renderEditWireFrames();
-    gamestream.renderMouseWireFrame();
-  }
-
   void renderEditWireFrames() {
     for (var z = 0; z < gamestream.editor.z; z++) {
       gamestream.renderWireFrameBlue(z, gamestream.editor.row, gamestream.editor.column);
@@ -554,9 +477,6 @@ mixin IsometricRender {
   static double rowColumnToRenderY(int row, int column) =>
       (row + column) * Node_Size_Half;
 
-
-  static double renderX(double x, double y, double z) => (x - y) * 0.5;
-  static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 
   static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
   static double getPositionRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);

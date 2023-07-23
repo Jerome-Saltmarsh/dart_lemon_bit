@@ -35,7 +35,7 @@ class RendererGameObjects extends IsometricRenderer {
       renderBouncingGameObjectShadow(gameObject);
     }
 
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
       image: image,
       dstX: gameObject.renderX,
       dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,
@@ -102,7 +102,7 @@ class RendererGameObjects extends IsometricRenderer {
   void updateFunction() {
     gameObject = isometric.gameObjects[index];
 
-    while (!gameObject.active || !gameObject.onscreen || !isometric.isPerceptiblePosition(gameObject)) {
+    while (!gameObject.active || !isometric.isOnscreen(gameObject) || !isometric.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = isometric.gameObjects[index];
@@ -117,7 +117,7 @@ class RendererGameObjects extends IsometricRenderer {
   void renderBouncingGameObjectShadow(IsometricPosition gameObject){
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
-    renderShadow(
+    isometric.renderShadow(
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,

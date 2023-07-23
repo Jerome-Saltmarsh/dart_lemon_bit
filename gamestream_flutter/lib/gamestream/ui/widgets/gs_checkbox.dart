@@ -1,7 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:gamestream_flutter/isometric.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class GSCheckBox extends StatelessWidget {
   final bool value;
@@ -9,9 +10,11 @@ class GSCheckBox extends StatelessWidget {
   GSCheckBox(this.value);
 
   @override
-  Widget build(BuildContext context) => Container(
-      width: 32,
-      child: GameIsometricUI.buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
-    );
+  Widget build(BuildContext context) => IsometricBuilder(
+    builder: (context, isometric) => Container(
+          width: 32,
+          child: isometric.buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
+        )
+  );
 
 }

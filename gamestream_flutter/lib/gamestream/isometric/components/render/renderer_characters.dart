@@ -320,12 +320,12 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.getRenderColorPosition(character),
+        color: isometric.getRenderColorPosition(character),
       );
     }
 
     if (character.state == CharacterState.Performing){
-      gamestream.engine.renderSprite(
+      isometric.engine.renderSprite(
         image: Images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -335,11 +335,11 @@ class RendererCharacters extends IsometricRenderer {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: gamestream.getRenderColorPosition(character),
+        color: isometric.getRenderColorPosition(character),
       );
     }
 
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
       image: Images.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
@@ -349,7 +349,7 @@ class RendererCharacters extends IsometricRenderer {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: gamestream.getRenderColorPosition(character),
+      color: isometric.getRenderColorPosition(character),
     );
   }
 

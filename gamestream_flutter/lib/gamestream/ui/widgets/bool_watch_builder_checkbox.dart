@@ -1,7 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class BoolWatchBuilderCheckBox extends StatelessWidget {
 
@@ -10,7 +11,8 @@ class BoolWatchBuilderCheckBox extends StatelessWidget {
   const BoolWatchBuilderCheckBox({super.key, required this.watchBool});
 
   @override
-  Widget build(BuildContext context) {
-    return WatchBuilder(watchBool, GameIsometricUI.buildIconCheckbox);
-  }
+  Widget build(BuildContext context) => IsometricBuilder(
+      builder: (context, isometric) =>
+          WatchBuilder(watchBool, isometric.buildIconCheckbox)
+    );
 }

@@ -1,32 +1,27 @@
 import 'dart:math';
 
+
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
-import 'isometric_colors.dart';
+import '../ui/isometric_colors.dart';
 
 
-class GameIsometricUI {
-  static const Server_FPS = 45;
+extension IsometricUI on Isometric {
   static const Icon_Scale = 1.5;
-  static final messageBoxVisible = Watch(false, clamp: (bool value) {
-    return value;
-  }, onChanged: onVisibilityChangedMessageBox);
-  static final textEditingControllerMessage = TextEditingController();
-  static final textFieldMessage = FocusNode();
-  static final panelTypeKey = <int, GlobalKey>{};
-  static final playerTextStyle = TextStyle(color: Colors.white);
-  static final timeVisible = Watch(true);
 
-  static Widget buildMapCircle({required double size}) {
+  Widget buildMapCircle({required double size}) {
     return IgnorePointer(
       child: Container(
         width: size + 3,
@@ -51,7 +46,7 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildWindowMenuItem({
+  Widget buildWindowMenuItem({
     required String title,
     required  Widget child,
   }) => Row(
@@ -62,157 +57,162 @@ class GameIsometricUI {
         ],
       );
 
-  static Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
+  Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
       GSContainer(
         child: Container(
           width: width,
           alignment: Alignment.center,
           color: GameStyle.Container_Color,
           padding: GameStyle.Container_Padding,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              onPressed(
-                action: gamestream.audio.toggleMutedSound,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText('SOUND', size: 20, color: Colors.white70),
-                      buildWatch(gamestream.audio.enabledSound, buildIconCheckbox),
-                    ],
+          child: IsometricBuilder(
+            builder: (context, isometric) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  onPressed(
+                    action: isometric.audio.toggleMutedSound,
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('SOUND', size: 20, color: Colors.white70),
+                          buildWatch(isometric.audio.enabledSound, buildIconCheckbox),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              height6,
-              onPressed(
-                action: gamestream.audio.toggleMutedMusic,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText('MUSIC', size: 20, color: Colors.white70),
-                      buildWatch(gamestream.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
-                    ],
+                  height6,
+                  onPressed(
+                    action: isometric.audio.toggleMutedMusic,
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('MUSIC', size: 20, color: Colors.white70),
+                          buildWatch(isometric.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              height6,
-              onPressed(
-                action: gamestream.engine.fullscreenToggle,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText('FULLSCREEN', size: 20, color: Colors.white70),
-                      buildWatch(gamestream.engine.fullScreen, buildIconCheckbox),
-                    ],
+                  height6,
+                  onPressed(
+                    action: isometric.engine.fullscreenToggle,
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('FULLSCREEN', size: 20, color: Colors.white70),
+                          buildWatch(isometric.engine.fullScreen, buildIconCheckbox),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              if (children != null)
-                height6,
-              if (children != null)
-                ...children,
-              height24,
-              onPressed(
-                action: gamestream.disconnect,
-                child: buildText('DISCONNECT', size: 25),
-              ),
-              height24,
-            ],
+                  if (children != null)
+                    height6,
+                  if (children != null)
+                    ...children,
+                  height24,
+                  onPressed(
+                    action: isometric.disconnect,
+                    child: buildText('DISCONNECT', size: 25),
+                  ),
+                  height24,
+                ],
+              );
+            }
           ),
         ),
     );
 
-  static Widget buildGeneratedMiniMap({required double translate}){
-    return buildWatch(gamestream.nodesChangedNotifier, (_){
-      return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
-        const scale = 2.0;
-        canvas.scale(scale, scale);
-        final screenCenterX = size.width * 0.5;
-        final screenCenterY = size.height * 0.5;
-        const ratio = 2 / 48.0;
+  Widget buildGeneratedMiniMap({required double translate}){
+    return IsometricBuilder(
+      builder: (context, isometric) {
+        return buildWatch(isometric.nodesChangedNotifier, (_){
+          return isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
+            const scale = 2.0;
+            canvas.scale(scale, scale);
+            final screenCenterX = size.width * 0.5;
+            final screenCenterY = size.height * 0.5;
+            const ratio = 2 / 48.0;
 
-        final chaseTarget = gamestream.camera.target;
-        if (chaseTarget != null){
-          final targetX = chaseTarget.renderX * ratio;
-          final targetY = chaseTarget.renderY * ratio;
-          final cameraX = targetX - (screenCenterX / scale) - translate;
-          final cameraY = targetY - (screenCenterY / scale) - translate;
-          canvas.translate(-cameraX, -cameraY);
-        }
+            final chaseTarget = isometric.camera.target;
+            if (chaseTarget != null){
+              final targetX = chaseTarget.renderX * ratio;
+              final targetY = chaseTarget.renderY * ratio;
+              final cameraX = targetX - (screenCenterX / scale) - translate;
+              final cameraY = targetY - (screenCenterY / scale) - translate;
+              canvas.translate(-cameraX, -cameraY);
+            }
 
-        gamestream.minimap.renderCanvas(canvas);
+            isometric.minimap.renderCanvas(canvas);
 
-        final scene = gamestream;
-        final player = gamestream.player;
+            final player = isometric.player;
 
-        for (var i = 0; i < scene.totalCharacters; i++) {
-          final character = scene.characters[i];
-          final isPlayer = player.isCharacter(character);
-          gamestream.engine.renderExternalCanvas(
-              canvas: canvas,
-              image: Images.atlas_gameobjects,
-              srcX: 0,
-              srcY: isPlayer ? 96 : character.allie ? 81 : 72,
-              srcWidth: 8,
-              srcHeight: 8,
-              dstX: character.renderX * ratio,
-              dstY: character.renderY * ratio,
-              scale: 0.25
-          );
-        }
-      });
-    });
+            for (var i = 0; i < isometric.totalCharacters; i++) {
+              final character = isometric.characters[i];
+              final isPlayer = player.isCharacter(character);
+              isometric.engine.renderExternalCanvas(
+                  canvas: canvas,
+                  image: Images.atlas_gameobjects,
+                  srcX: 0,
+                  srcY: isPlayer ? 96 : character.allie ? 81 : 72,
+                  srcWidth: 8,
+                  srcHeight: 8,
+                  dstX: character.renderX * ratio,
+                  dstY: character.renderY * ratio,
+                  scale: 0.25
+              );
+            }
+          });
+        });
+      }
+    );
   }
 
-  static Positioned buildPositionedMessageStatus() => Positioned(
+  Positioned buildPositionedMessageStatus() => Positioned(
     bottom: 150,
     child: IgnorePointer(
       child: Container(
-        width: gamestream.engine.screen.width,
+        width: engine.screen.width,
         alignment: Alignment.center,
-        child: buildWatch(gamestream.messageStatus, buildMessageStatus),
+        child: buildWatch(messageStatus, buildMessageStatus),
       ),
     ),
   );
 
 
-  static Widget buildMessageStatus(String message){
+  Widget buildMessageStatus(String message){
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        gamestream.messageClear();
+        messageClear();
       },
       child: Container(
-        padding: const EdgeInsets.all(10),
-        color: Colors.black12,
-        child: buildText(message, onPressed: gamestream.messageClear),),
+          padding: const EdgeInsets.all(10),
+          color: Colors.black12,
+          child: buildText(message, onPressed: messageClear)),
     );
   }
 
-  static Widget buildDialogFramesSinceUpdate() => Positioned(
+  Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,
       child: buildWatch(
-          gamestream.rendersSinceUpdate,
+          rendersSinceUpdate,
               (int frames) =>
               buildText('Warning: No message received from server $frames')));
 
-  static Widget buildMainMenu({List<Widget>? children}) {
+  Widget buildMainMenu({List<Widget>? children}) {
     final controlTime = buildTime();
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
-        // gamestream.isometric.ui.mouseOverDialog.value = true;
-        gamestream.ui.windowOpenMenu.value = true;
+        windowOpenMenu.value = true;
       },
       onExit: (PointerExitEvent event) {
-        // gamestream.isometric.ui.mouseOverDialog.value = false;
-        gamestream.ui.windowOpenMenu.value = false;
+        windowOpenMenu.value = false;
       },
-      child: buildWatch(gamestream.ui.windowOpenMenu, (bool menuVisible){
+      child: buildWatch(windowOpenMenu, (bool menuVisible){
         return Container(
           color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
           child: Column(
@@ -237,66 +237,66 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildIconAudioSound() =>
+  Widget buildIconAudioSound() =>
       onPressed(
         hint: 'toggle sound',
-        action: gamestream.audio.toggleMutedSound,
+        action: audio.toggleMutedSound,
         child: Container(
           width: 32,
-          child: buildWatch(gamestream.audio.enabledSound, (bool t) =>
-              GameIsometricUI.buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
+          child: buildWatch(audio.enabledSound, (bool t) =>
+              buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
           ),
         ),
       );
 
-  static Widget buildIconAudioMusic() =>
+  Widget buildIconAudioMusic() =>
       onPressed(
         hint: 'toggle music',
-        action: gamestream.audio.toggleMutedMusic,
-        child: buildWatch(gamestream.audio.mutedMusic, (bool musicMuted) =>
+        action: audio.toggleMutedMusic,
+        child: buildWatch(audio.mutedMusic, (bool musicMuted) =>
             Container(
                 width: 32,
-                child: GameIsometricUI.buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
+                child: buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
         ),
       );
 
-  static Widget buildIconFullscreen() => WatchBuilder(
-      gamestream.engine.fullScreen,
+  Widget buildIconFullscreen() => WatchBuilder(
+      engine.fullScreen,
           (bool fullscreen) => onPressed(
           hint: 'toggle fullscreen',
-          action: gamestream.engine.fullscreenToggle,
+          action: engine.fullscreenToggle,
           child: Container(
               width: 32,
-              child: GameIsometricUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
+              child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
-  static Widget buildIconZoom() => onPressed(
-      action: gamestream.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+  Widget buildIconZoom() => onPressed(
+      action: toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
-  static Widget buildIconMenu() => onPressed(
-      action: gamestream.ui.windowOpenMenu.toggle,
+  Widget buildIconMenu() => onPressed(
+      action: windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
       )
   );
 
-  static Widget buildIconCog() => onPressed(
-      action: gamestream.ui.windowOpenMenu.toggle,
+  Widget buildIconCog() => onPressed(
+      action: windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog),
       )
   );
 
-  static Widget buildIconCogTurned() => onPressed(
-      action: gamestream.ui.windowOpenMenu.toggle,
+  Widget buildIconCogTurned() => onPressed(
+      action: windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog_Turned),
       )
   );
 
-  static Widget buildAtlasIconType(IconType iconType,
+  Widget buildAtlasIconType(IconType iconType,
       {double scale = 1, int color = 1}) =>
       FittedBox(
         child: gamestream.engine.buildAtlasImage(
@@ -310,7 +310,7 @@ class GameIsometricUI {
         ),
       );
 
-  static Widget buildAtlasItemType({
+  Widget buildAtlasItemType({
     required int type,
     required int subType,
     int color = 1,
@@ -329,7 +329,7 @@ class GameIsometricUI {
       );
   }
 
-  static Widget buildAtlasNodeType(int nodeType) => gamestream.engine.buildAtlasImage(
+  Widget buildAtlasNodeType(int nodeType) => gamestream.engine.buildAtlasImage(
     image: Images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -337,7 +337,7 @@ class GameIsometricUI {
     srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
   );
 
-  static Widget buildItemTypeBars(int amount) => Row(
+  Widget buildItemTypeBars(int amount) => Row(
       children: List.generate(5, (i) => Container(
         width: 8,
         height: 15,
@@ -347,7 +347,7 @@ class GameIsometricUI {
       )
   );
 
-  static Widget buildIconCombatPowerType(int powerType){
+  Widget buildIconCombatPowerType(int powerType){
     assert (CombatPowerType.values.contains(powerType));
     final powerTypeIcon = const <int, IconType> {
       CombatPowerType.None      : IconType.Power_None,
@@ -365,7 +365,7 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildRowItemTypeLevel(int level){
+  Widget buildRowItemTypeLevel(int level){
     return Row(
       children: List.generate(5, (index) {
         return Container(
@@ -378,24 +378,7 @@ class GameIsometricUI {
     );
   }
 
-  // static Widget buildIconPlayerWeaponMelee(){
-  //   return buildWatch(gamestream.isometric.player.weapon, (int playerWeaponType){
-  //     return buildWatch(gamestream.isometric.player.weaponTertiary, (int itemType) {
-  //       return buildBorder(
-  //         color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
-  //         width: 3,
-  //         child: Container(
-  //           height: GameStyle.Player_Weapons_Icon_Size,
-  //           color: Colors.black45,
-  //           padding: GameStyle.Padding_2,
-  //           child: buildAtlasItemType(itemType),
-  //         ),
-  //       );
-  //     });
-  //   });
-  // }
-
-  static Widget buildPlayerHealth() {
+  Widget buildPlayerHealth() {
     final height = 87.0;
     final width = height * goldenRatio_0618;
     return buildBorder(
@@ -440,7 +423,7 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildPlayerEnergy() {
+  Widget buildPlayerEnergy() {
     final height = 87.0;
     final width = height * goldenRatio_0618;
     return buildBorder(
@@ -483,26 +466,14 @@ class GameIsometricUI {
     );
   }
 
-  static Decoration buildDecorationBorder({
-    required Color colorBorder,
-    required Color colorFill,
-    required double width,
-    double borderRadius = 0.0,
-  }) =>
-      BoxDecoration(
-          border: Border.all(color: colorBorder, width: width),
-          borderRadius: BorderRadius.circular(borderRadius),
-          color: colorFill
-      );
-
-  static Widget buildButtonTogglePlayMode() {
-    return buildWatch(gamestream.sceneEditable, (bool isOwner) {
+  Widget buildButtonTogglePlayMode() {
+    return buildWatch(sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return buildWatch(gamestream.edit, (bool edit) {
+      return buildWatch(edit, (bool edit) {
         return buildButton(
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',
-            action: gamestream.actionToggleEdit,
+            action: actionToggleEdit,
             color: IsometricColors.green,
             alignment: Alignment.center,
             width: 100);
@@ -510,7 +481,7 @@ class GameIsometricUI {
     });
   }
 
-  static Widget buildTime() => Row(
+  Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       WatchBuilder(gamestream.hours, (int hours){
@@ -529,19 +500,46 @@ class GameIsometricUI {
     }[itemType] ?? 0;
   }
 
-  static Widget buildIconCheckbox(bool value) => Container(
+  Widget buildIconCheckbox(bool value) => Container(
     width: 32,
     child: buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
   );
 
-  static void onVisibilityChangedMessageBox(bool visible){
+  void onVisibilityChangedMessageBox(bool visible){
     if (visible) {
-      GameIsometricUI.textFieldMessage.requestFocus();
+      textFieldMessage.requestFocus();
       return;
     }
-    GameIsometricUI.textFieldMessage.unfocus();
-    GameIsometricUI.textEditingControllerMessage.text = '';
+    textFieldMessage.unfocus();
+    textEditingControllerMessage.text = '';
   }
 
 
+  static Decoration buildDecorationBorder({
+    required Color colorBorder,
+    required Color colorFill,
+    required double width,
+    double borderRadius = 0.0,
+  }) =>
+      BoxDecoration(
+          border: Border.all(color: colorBorder, width: width),
+          borderRadius: BorderRadius.circular(borderRadius),
+          color: colorFill
+      );
+
+  Widget buildImageGameObject(int objectType) =>
+      buildImageFromSrc(
+        Images.atlas_gameobjects,
+        Atlas.getSrc(GameObjectType.Object, objectType),
+      );
+
+  Widget buildImageFromSrc(ui.Image image, List<double> src) =>
+      IsometricBuilder(builder: (context, isometric) =>
+          isometric.engine.buildAtlasImage(
+            image: image,
+            srcX: src[Atlas.SrcX],
+            srcY: src[Atlas.SrcY],
+            srcWidth: src[Atlas.SrcWidth],
+            srcHeight: src[Atlas.SrcHeight],
+          ));
 }

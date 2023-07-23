@@ -68,7 +68,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
 
   void onConnectionLost();
 
-
   void connect({required String uri, required dynamic message}) {
     print('webSocket.connect($uri)');
     connectionStatus.value = ConnectionStatus.Connecting;
@@ -89,7 +88,7 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
         }
 
         if (webSocketChannel.closeCode != null){
-          gamestream.onConnectionLost();
+          onConnectionLost();
 
 
         }
@@ -116,7 +115,7 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     }
 
     if (response is Uint8List) {
-      return gamestream.readServerResponse(response);
+      return readServerResponse(response);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){

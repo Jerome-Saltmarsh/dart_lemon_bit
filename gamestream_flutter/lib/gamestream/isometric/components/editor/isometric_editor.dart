@@ -1,5 +1,6 @@
 
 import 'package:file_picker/file_picker.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../enums/editor_dialog.dart';
@@ -11,6 +12,7 @@ import 'isometric_editor_tab.dart';
 
 class IsometricEditor {
 
+  final Isometric isometric;
   final style = IsometricEditorStyle();
   final windowEnabledScene = Watch(false);
   final windowEnabledCanvasSize = Watch(false);
@@ -40,7 +42,7 @@ class IsometricEditor {
   final gameObjectSelectedEmission = Watch(EmissionType.None);
 
   late final gameObjectSelectedEmissionIntensity = Watch(1.0, onChanged: (double value){
-    gameObject.value?.emission_intensity = value;
+    gameObject.value?.emissionIntensity = value;
   });
 
   late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
@@ -53,31 +55,33 @@ class IsometricEditor {
 
   late var nodeSelectedIndex = Watch(0, clamp: (int value){
     if (value < 0) return 0;
-    if (value >= gamestream.totalNodes) return gamestream.totalNodes - 1;
+    if (value >= isometric.totalNodes) return isometric.totalNodes - 1;
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  int get z => gamestream.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
-  int get row => gamestream.convertNodeIndexToIndexX(nodeSelectedIndex.value);
-  int get column => gamestream.convertNodeIndexToIndexY(nodeSelectedIndex.value);
+  IsometricEditor(this.isometric);
+
+  int get z => isometric.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  int get row => isometric.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  int get column => isometric.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   set z(int value){
     if (value < 0) return;
-    if (value >= gamestream.totalZ) return;
+    if (value >= isometric.totalZ) return;
     final difference = value - z;
-    nodeSelectedIndex.value += difference * gamestream.area;
+    nodeSelectedIndex.value += difference * isometric.area;
   }
 
   set row(int value){
     if (value < 0) return;
-    if (value >= gamestream.totalRows) return;
+    if (value >= isometric.totalRows) return;
     final difference = value - row;
-    nodeSelectedIndex.value += difference * gamestream.totalColumns;
+    nodeSelectedIndex.value += difference * isometric.totalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
-    if (value >= gamestream.totalColumns) return;
+    if (value >= isometric.totalColumns) return;
     nodeSelectedIndex.value += value - column;
   }
 
@@ -104,14 +108,14 @@ class IsometricEditor {
         if (gameObjectSelected.value) {
           sendGameObjectRequestMoveToMouse();
         } else {
-          gamestream.camera.cameraSetPositionGrid(row, column, z);
+          isometric.camera.cameraSetPositionGrid(row, column, z);
         }
         break;
       case KeyCode.R:
         selectPaintType();
         break;
       case KeyCode.Arrow_Up:
-        if (gamestream.engine.keyPressedShiftLeft) {
+        if (isometric.engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value){
             translate(x: 0, y: 0, z: 1);
             return;
@@ -132,7 +136,7 @@ class IsometricEditor {
         cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
-        if (gamestream.engine.keyPressedShiftLeft) {
+        if (isometric.engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value){
             return translate(x: 0, y: 0, z: -1);
           }
@@ -155,8 +159,8 @@ class IsometricEditor {
 
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = gamestream.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = gamestream.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = isometric.nodeTypes[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = isometric.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
@@ -355,7 +359,7 @@ class IsometricEditor {
   }
 
   void setSelectedObjectedIntensity(double value){
-    gameObject.value?.emission_intensity = value;
+    gameObject.value?.emissionIntensity = value;
   }
 
   void onMouseLeftClicked() {

@@ -79,23 +79,6 @@ mixin IsometricParticles {
     return particle;
   }
 
-  void applyEmissionsParticles() {
-    final length = particles.length;
-    final scene = gamestream;
-    for (var i = 0; i < length; i++) {
-      final particle = particles[i];
-      if (!particle.active) continue;
-      if (!particle.emitsLight) continue;
-      scene.emitLightAHSVShadowed(
-        index: scene.getIndexPosition(particle),
-        hue: particle.lightHue,
-        saturation: particle.lightSaturation,
-        value: particle.lightValue,
-        alpha: particle.alpha,
-      );
-    }
-  }
-
   void spawnParticleWaterDrop({
     required double x,
     required double y,
@@ -516,28 +499,6 @@ mixin IsometricParticles {
     for (var i = 0; i < amount; i++) {
       spawnParticleBubble(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
     }
-  }
-
-  void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
-    gamestream.audio.magical_impact_16.playXYZ(x, y, z, maxDistance: 600);
-    for (var i = 0; i < amount; i++) {
-      spawnParticleFirePurple(
-          x: x + giveOrTake(5),
-          y: y + giveOrTake(5),
-          z: z, speed: 1,
-          angle: randomAngle(),
-      );
-    }
-
-    spawnParticleLightEmission(
-      x: x,
-      y: y,
-      z: z,
-      hue: 259,
-      saturation: 45,
-      value: 95,
-      alpha: 0,
-    );
   }
 
   void spawnParticleFirePurple({
