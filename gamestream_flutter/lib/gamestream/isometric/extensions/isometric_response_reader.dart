@@ -165,12 +165,12 @@ extension IsometricResponseReader on Gamestream {
     final totalNodes = isometric.totalZ * isometric.totalRows * isometric.totalColumns;
     isometric.colorStack = Uint16List(totalNodes);
     isometric.ambientStack = Uint16List(totalNodes);
-    isometric.total = totalNodes;
+    isometric.totalNodes = totalNodes;
     isometric.nodesRaycast = isometric.area +  isometric.area + isometric.totalColumns + 1;
     isometric.onChangedNodes();
     isometric.refreshNodeVariations();
     isometric.nodesChangedNotifier.value++;
-    isometric.particles.particles.clear();
+    isometric.particles.clear();
     io.recenterCursor();
   }
 

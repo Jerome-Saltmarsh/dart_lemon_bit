@@ -36,7 +36,7 @@ mixin IsometricScene {
   var heightMap = Uint16List(0);
   var colorStackIndex = -1;
   var ambientStackIndex = -1;
-  var total = 0;
+  var totalNodes = 0;
   var area = 0;
   var area2 = 0;
   var projection = 0;
@@ -111,7 +111,7 @@ mixin IsometricScene {
   }
 
   void rainStop() {
-    for (var i = 0; i < total; i++) {
+    for (var i = 0; i < totalNodes; i++) {
       if (!NodeType.isRain(nodeTypes[i])) continue;
       nodeTypes[i] = NodeType.Empty;
       nodeOrientations[i] = NodeOrientation.None;
@@ -128,15 +128,15 @@ mixin IsometricScene {
     );
     colorStackIndex = -1;
 
-    if (nodeColors.length != total) {
-      colorStack = Uint16List(total);
-      nodeColors = Uint32List(total);
-      hsvHue = Uint16List(total);
-      hsvSaturation = Uint8ClampedList(total);
-      hsvValues = Uint8ClampedList(total);
-      hsvAlphas = Uint8ClampedList(total);
+    if (nodeColors.length != totalNodes) {
+      colorStack = Uint16List(totalNodes);
+      nodeColors = Uint32List(totalNodes);
+      hsvHue = Uint16List(totalNodes);
+      hsvSaturation = Uint8ClampedList(totalNodes);
+      hsvValues = Uint8ClampedList(totalNodes);
+      hsvAlphas = Uint8ClampedList(totalNodes);
     }
-    for (var i = 0; i < total; i++) {
+    for (var i = 0; i < totalNodes; i++) {
       nodeColors[i] = ambientColor;
       hsvHue[i] = ambientHue;
       hsvSaturation[i] = ambientSaturation;
@@ -167,7 +167,7 @@ mixin IsometricScene {
   }
 
   int getHeightAt(int row, int column){
-    var i = total - area + ((row * totalColumns) + column);
+    var i = totalNodes - area + ((row * totalColumns) + column);
     for (var z = totalZ - 1; z >= 0; z--){
       if (nodeOrientations[i] != NodeOrientation.None) return z;
       i -= area;
@@ -195,7 +195,7 @@ mixin IsometricScene {
     var index = 0;
     for (var row = 0; row < totalRows; row++){
       for (var column = 0; column < totalColumns; column++){
-        var searchIndex = total - area +  index;
+        var searchIndex = totalNodes - area +  index;
         var typeFound = NodeType.Empty;
         while (true) {
           if (searchIndex < 0) break;
@@ -248,7 +248,7 @@ mixin IsometricScene {
     }
 
     if (index < 0) return;
-    if (index >= total) return;
+    if (index >= totalNodes) return;
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
@@ -324,7 +324,7 @@ mixin IsometricScene {
     for (var row = 0; row < 3; row++){
       for (var column = 0; column < 3; column++){
         final searchIndex = initialSearchIndex + rowIndex + column;
-        if (searchIndex >= total) break;
+        if (searchIndex >= totalNodes) break;
         if (nodeTypes[searchIndex] != NodeType.Torch) continue;
         torchIndex = searchIndex;
         break;
@@ -341,11 +341,11 @@ mixin IsometricScene {
   }
 
   void refreshNodeVariations() {
-    if (nodeVariations.length < total) {
-      nodeVariations = Uint8List(total);
+    if (nodeVariations.length < totalNodes) {
+      nodeVariations = Uint8List(totalNodes);
     }
-    assert (nodeTypes.length == total);
-    for (var i = 0; i < total; i++){
+    assert (nodeTypes.length == totalNodes);
+    for (var i = 0; i < totalNodes; i++){
       final nodeType = nodeTypes[i];
       switch (nodeType) {
         case NodeType.Grass:
@@ -364,7 +364,7 @@ mixin IsometricScene {
   void markShadow(IsometricPosition position){
     final index = getIndexPosition(position) - area;
     if (index < 0) return;
-    if (index >= total) return;
+    if (index >= totalNodes) return;
 
     final indexRow = getIndexRow(index);
     final indexColumn = getIndexColumn(index);
@@ -444,7 +444,7 @@ mixin IsometricScene {
     double intensity = 1.0,
   }){
     if (index < 0) return;
-    if (index >= total) return;
+    if (index >= totalNodes) return;
 
     final padding = gamestream.isometric.interpolationPadding;
     final rx = getIndexRenderX(index);
@@ -542,7 +542,7 @@ mixin IsometricScene {
     required int alpha,
   }){
     if (index < 0) return;
-    if (index >= total) return;
+    if (index >= totalNodes) return;
 
     final padding = gamestream.isometric.interpolationPadding;
     final rx = getIndexRenderX(index);
@@ -1109,7 +1109,7 @@ mixin IsometricScene {
   }
 
 
-  bool isValidIndex(int index) => index >= 0 && index < total;
+  bool isValidIndex(int index) => index >= 0 && index < totalNodes;
 
   double getIndexRenderX(int index) =>
       IsometricRender.rowColumnToRenderX(
@@ -1126,7 +1126,7 @@ mixin IsometricScene {
     required int interpolation,
   }){
     assert (index >= 0);
-    assert (index < total);
+    assert (index < totalNodes);
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
     final interpolatedAlpha = linearInterpolateInt(alpha, ambientAlpha, intensity);;
@@ -1156,7 +1156,7 @@ mixin IsometricScene {
     required int interpolation,
   }){
     if (index < 0) return;
-    if (index >= total) return;
+    if (index >= totalNodes) return;
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
 
@@ -1270,7 +1270,7 @@ mixin IsometricScene {
   int getTypeBelow(int index){
     if (index < area) return NodeType.Boundary;
     final indexBelow = index - area;
-    if (indexBelow >= total) return NodeType.Boundary;
+    if (indexBelow >= totalNodes) return NodeType.Boundary;
     return nodeTypes[indexBelow];
   }
 
@@ -1318,7 +1318,7 @@ mixin IsometricScene {
 
   void refreshBakeMapLightSources() {
     nodesLightSourcesTotal = 0;
-    for (var i = 0; i < total; i++){
+    for (var i = 0; i < totalNodes; i++){
       if (!NodeType.emitsLight(nodeTypes[i])) continue;
       if (nodesLightSourcesTotal >= nodesLightSources.length) {
         nodesLightSources = Uint16List(nodesLightSources.length + 100);
@@ -1426,7 +1426,7 @@ mixin IsometricScene {
   }
 
   int getNodeColorAtIndex(int index )=>
-      index < 0 || index >= total ? ambientColor : nodeColors[index];
+      index < 0 || index >= totalNodes ? ambientColor : nodeColors[index];
 
   /// @hue a number between 0 and 360
   /// @saturation a number between 0 and 100

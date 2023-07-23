@@ -7,17 +7,11 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_particle.dart';
 
-class IsometricParticles {
-  static const Particles_Max = 500;
-
+mixin IsometricParticles {
   var nextParticleFrame = 0;
   var nodeType = 0;
 
   final particles = <IsometricParticle>[];
-  final IsometricScene scene;
-
-  IsometricParticles(this.scene);
-
   int get bodyPartDuration =>  randomInt(120, 200);
 
   IsometricParticle getInstance() {
@@ -87,21 +81,6 @@ class IsometricParticles {
     return particle;
   }
 
-  void updateParticles() {
-    nextParticleFrame--;
-
-    for (final particle in particles) {
-      if (!particle.active) continue;
-      updateParticle(particle);
-      if (nextParticleFrame <= 0){
-        particle.frame++;
-      }
-    }
-    if (nextParticleFrame <= 0) {
-      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
-    }
-  }
-
   void applyEmissionsParticles() {
     final length = particles.length;
     final scene = gamestream.isometric;
@@ -116,103 +95,6 @@ class IsometricParticles {
         value: particle.lightValue,
         alpha: particle.alpha,
       );
-    }
-  }
-
-  void updateParticle(IsometricParticle particle) {
-    if (!particle.active) return;
-    if (particle.delay > 0) {
-      particle.delay--;
-      return;
-    }
-
-    if (scene.outOfBoundsPosition(particle)){
-      particle.deactivate();
-      return;
-    }
-
-    if (particle.type == ParticleType.Light_Emission){
-      const change = 0.125;
-      if (particle.flash){
-        particle.strength += change;
-        if (particle.strength >= 1){
-          particle.strength = 1.0;
-          particle.flash = false;
-        }
-        return;
-      }
-      particle.strength -= change;
-      if (particle.strength <= 0){
-        particle.strength = 0;
-        particle.duration = 0;
-      }
-      return;
-    }
-
-    if (particle.animation) {
-      if (particle.duration-- <= 0) {
-        particle.deactivate();
-      }
-      return;
-    }
-
-    final nodeIndex = scene.getIndexPosition(particle);
-
-    assert (nodeIndex >= 0);
-    assert (nodeIndex < scene.total);
-
-    particle.nodeIndex = nodeIndex;
-    final nodeType = scene.nodeTypes[nodeIndex];
-    particle.nodeType = nodeType;
-    final airBorn =
-        !particle.checkNodeCollision || (
-            nodeType == NodeType.Empty        ||
-                nodeType == NodeType.Rain_Landing ||
-                nodeType == NodeType.Rain_Falling ||
-                nodeType == NodeType.Grass_Long   ||
-                nodeType == NodeType.Fireplace)    ;
-
-
-    if (particle.checkNodeCollision && !airBorn) {
-      particle.deactivate();
-      return;
-    }
-
-    if (!airBorn){
-      particle.z = (particle.indexZ + 1) * Node_Height;
-      particle.applyFloorFriction();
-    } else {
-      if (particle.type == ParticleType.Smoke){
-        final wind = gamestream.isometric.windTypeAmbient.value * 0.01;
-        particle.xv -= wind;
-        particle.yv += wind;
-      }
-    }
-    final bounce = particle.zv < 0 && !airBorn;
-    particle.updateMotion();
-
-    if (scene.outOfBoundsPosition(particle)){
-      particle.deactivate();
-      return;
-    }
-
-    if (bounce) {
-      if (nodeType == NodeType.Water){
-        return particle.deactivate();
-      }
-      if (particle.zv < -0.1){
-        particle.zv = -particle.zv * particle.bounciness;
-      } else {
-        particle.zv = 0;
-      }
-    } else if (airBorn) {
-      particle.applyAirFriction();
-    }
-    particle.applyLimits();
-    particle.duration--;
-
-    if (particle.duration <= 0) {
-      particle.deactivate();
     }
   }
 
@@ -568,61 +450,6 @@ class IsometricParticles {
       scale: scale,
     );
   }
-
-  IsometricParticle spawnParticleFire({
-    required double x,
-    required double y,
-    required double z,
-    int duration = 100,
-    double scale = 1.0
-  }) =>
-      spawnParticle(
-        type: ParticleType.Fire,
-        x: x,
-        y: y,
-        z: z,
-        zv: 1,
-        angle: 0,
-        rotation: 0,
-        speed: 0,
-        scaleV: 0.01,
-        weight: -1,
-        duration: duration,
-        scale: scale,
-      )
-        ..emitsLight = true
-        ..lightHue = scene.ambientHue
-        ..lightSaturation = scene.ambientSaturation
-        ..lightValue = scene.ambientValue
-        ..alpha = 0
-        ..checkNodeCollision = false
-        ..strength = 0.5
-  ;
-
-  void spawnParticleLightEmissionAmbient({
-    required double x,
-    required double y,
-    required double z,
-  }) =>
-      spawnParticle(
-        type: ParticleType.Light_Emission,
-        x: x,
-        y: y,
-        z: z,
-        angle: 0,
-        speed: 0,
-        weight: 0,
-        duration: 35,
-        checkCollision: false,
-        animation: true,
-      )
-        ..lightHue = scene.ambientHue
-        ..lightSaturation = scene.ambientSaturation
-        ..lightValue = scene.ambientValue
-        ..alpha = 0
-        ..flash = true
-        ..strength = 0.0
-  ;
 
   void spawnParticleLegZombie({
     required double x,

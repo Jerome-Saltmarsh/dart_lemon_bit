@@ -53,7 +53,7 @@ class IsometricEditor {
 
   late var nodeSelectedIndex = Watch(0, clamp: (int value){
     if (value < 0) return 0;
-    if (value >= gamestream.isometric.total) return gamestream.isometric.total - 1;
+    if (value >= gamestream.isometric.totalNodes) return gamestream.isometric.totalNodes - 1;
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 

@@ -22,7 +22,7 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 import 'ui/isometric_constants.dart';
 
-class Isometric with IsometricScene, IsometricCharacters {
+class Isometric with IsometricScene, IsometricCharacters, IsometricParticles {
 
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
@@ -42,7 +42,7 @@ class Isometric with IsometricScene, IsometricCharacters {
   var nodesRaycast = 0;
   var windLine = 0;
 
-  late final edit = Watch(false, onChanged: gamestream.isometric.onChangedEdit);
+  late final edit = Watch(false, onChanged:  onChangedEdit);
   late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
   late final raining = Watch(false, onChanged: onChangedRaining);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
@@ -61,16 +61,15 @@ class Isometric with IsometricScene, IsometricCharacters {
 
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
   late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
-  late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.onChangedRain);
-  late final seconds = Watch(0, onChanged: gamestream.isometric.onChangedSeconds);
-  late final hours = Watch(0, onChanged: gamestream.isometric.onChangedHour);
-  late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.onChangedWindType);
+  late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
+  late final seconds = Watch(0, onChanged:  onChangedSeconds);
+  late final hours = Watch(0, onChanged:  onChangedHour);
+  late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
 
   final gameObjects = <IsometricGameObject>[];
 
   final animation = IsometricAnimation();
   final debug = IsometricDebug();
-  // final scene = IsometricScene();
   final minimap = IsometricMinimap();
   final editor = IsometricEditor();
   final player = IsometricPlayer();
@@ -80,10 +79,9 @@ class Isometric with IsometricScene, IsometricCharacters {
 
   var totalProjectiles = 0;
   final projectiles = <IsometricProjectile>[];
-  late final particles = IsometricParticles(this);
   late final renderer = IsometricRender(
     rendererGameObjects: RendererGameObjects(this),
-    rendererParticles: RendererParticles(this, particles.particles),
+    rendererParticles: RendererParticles(this, particles),
     rendererCharacters: RendererCharacters(this),
     rendererNodes: RendererNodes(this),
     rendererProjectiles: RendererProjectiles(this),
@@ -93,7 +91,7 @@ class Isometric with IsometricScene, IsometricCharacters {
 
   bool get editMode => edit.value;
 
-  bool get lightningOn => gamestream.isometric.lightningType.value != LightningType.Off;
+  bool get lightningOn =>  lightningType.value != LightningType.Off;
 
 
   void drawCanvas(Canvas canvas, Size size) {
@@ -134,7 +132,7 @@ class Isometric with IsometricScene, IsometricCharacters {
     }
 
     gamestream.audio.update();
-    particles.updateParticles();
+    updateParticles();
     animation.updateAnimationFrame();
     updateProjectiles();
     updateGameObjects();
@@ -148,7 +146,7 @@ class Isometric with IsometricScene, IsometricCharacters {
     updateTorchEmissionIntensity();
     updateParticleEmitters();
 
-    interpolationPadding = ((gamestream.isometric.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
+    interpolationPadding = (( interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -328,16 +326,16 @@ class Isometric with IsometricScene, IsometricCharacters {
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        gamestream.isometric.particles.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+         spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        gamestream.isometric.particles.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+         spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-        gamestream.isometric.particles.spawnParticleOrbShard(
+         spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,
@@ -348,11 +346,11 @@ class Isometric with IsometricScene, IsometricCharacters {
   }
 
   void projectShadow(IsometricPosition v3){
-    if (!gamestream.isometric.inBoundsPosition(v3)) return;
+    if (!inBoundsPosition(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
-    gamestream.isometric.particles.spawnParticle(
+    spawnParticle(
       type: ParticleType.Shadow,
       x: v3.x,
       y: v3.y,
@@ -371,8 +369,8 @@ class Isometric with IsometricScene, IsometricCharacters {
 
     while (true) {
       if (z < 0) return -1;
-      final nodeIndex = gamestream.isometric.getIndexXYZ(x, y, z);
-      final nodeOrientation = gamestream.isometric.nodeOrientations[nodeIndex];
+      final nodeIndex =  getIndexXYZ(x, y, z);
+      final nodeOrientation =  nodeOrientations[nodeIndex];
 
       if (const <int> [
         NodeOrientation.None,
@@ -394,8 +392,8 @@ class Isometric with IsometricScene, IsometricCharacters {
   }
 
   void clean() {
-    gamestream.isometric.colorStackIndex = -1;
-    gamestream.isometric.ambientStackIndex = -1;
+     colorStackIndex = -1;
+     ambientStackIndex = -1;
   }
 
   void onChangedLightningFlashing(bool lightningFlashing){
@@ -417,43 +415,43 @@ class Isometric with IsometricScene, IsometricCharacters {
     applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
-    particles.applyEmissionsParticles();
+    applyEmissionsParticles();
 
     applyEmissionEditorSelectedNode();
   }
 
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
-    if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.colorType == EmissionType.None)){
-      gamestream.isometric.emitLightAmbient(
-        index: gamestream.isometric.editor.nodeSelectedIndex.value,
-        // hue: gamestream.isometric.scene.ambientHue,
-        // saturation: gamestream.isometric.scene.ambientSaturation,
-        // value: gamestream.isometric.scene.ambientValue,
+    if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
+       emitLightAmbient(
+        index:  editor.nodeSelectedIndex.value,
+        // hue:  scene.ambientHue,
+        // saturation:  scene.ambientSaturation,
+        // value:  scene.ambientValue,
         alpha: 0,
       );
     }
   }
 
   void applyCharacterColors(){
-    for (var i = 0; i < gamestream.isometric.totalCharacters; i++){
-      applyCharacterColor(gamestream.isometric.characters[i]);
+    for (var i = 0; i <  totalCharacters; i++){
+      applyCharacterColor( characters[i]);
     }
   }
 
   void applyCharacterColor(IsometricCharacter character){
-    character.color = gamestream.isometric.getRenderColorPosition(character);
+    character.color =  getRenderColorPosition(character);
   }
 
   void applyEmissionsProjectiles() {
-    for (var i = 0; i < gamestream.isometric.totalProjectiles; i++){
-      applyProjectileEmission(gamestream.isometric.projectiles[i]);
+    for (var i = 0; i <  totalProjectiles; i++){
+      applyProjectileEmission( projectiles[i]);
     }
   }
 
   void applyProjectileEmission(IsometricProjectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      gamestream.isometric.applyVector3Emission(projectile,
+       applyVector3Emission(projectile,
         hue: 100,
         saturation: 1,
         value: 1,
@@ -462,13 +460,13 @@ class Isometric with IsometricScene, IsometricCharacters {
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      gamestream.isometric.applyVector3EmissionAmbient(projectile,
+       applyVector3EmissionAmbient(projectile,
         alpha: 50,
       );
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      gamestream.isometric.applyVector3Emission(projectile,
+       applyVector3Emission(projectile,
         hue: 167,
         alpha: 50,
         saturation: 1,
@@ -477,7 +475,7 @@ class Isometric with IsometricScene, IsometricCharacters {
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      gamestream.isometric.applyVector3EmissionAmbient(projectile,
+       applyVector3EmissionAmbient(projectile,
         alpha: 50,
       );
       return;
@@ -485,12 +483,12 @@ class Isometric with IsometricScene, IsometricCharacters {
   }
 
   void clear() {
-    gamestream.isometric.player.position.x = -1;
-    gamestream.isometric.player.position.y = -1;
-    gamestream.isometric.player.gameDialog.value = null;
-    gamestream.isometric.player.npcTalkOptions.value = [];
-    gamestream.isometric.totalProjectiles = 0;
-    gamestream.isometric.particles.particles.clear();
+     player.position.x = -1;
+     player.position.y = -1;
+     player.gameDialog.value = null;
+     player.npcTalkOptions.value = [];
+     totalProjectiles = 0;
+     particles.clear();
     gamestream.engine.zoom = 1;
   }
 
@@ -508,7 +506,7 @@ class Isometric with IsometricScene, IsometricCharacters {
       torchEmissionVal = -torchEmissionVal;
     }
 
-    gamestream.isometric.torch_emission_intensity = interpolateDouble(
+     torch_emission_intensity = interpolateDouble(
       start: torchEmissionStart,
       end: torchEmissionEnd,
       t: torchEmissionT,
@@ -519,11 +517,10 @@ class Isometric with IsometricScene, IsometricCharacters {
     nextEmissionSmoke--;
     if (nextEmissionSmoke > 0) return;
     nextEmissionSmoke = 20;
-    final gameObjects = gamestream.isometric.gameObjects;
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ObjectType.Barrel_Flaming) continue;
-      gamestream.isometric.particles.spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
+       spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
     }
   }
 
@@ -534,7 +531,7 @@ class Isometric with IsometricScene, IsometricCharacters {
   void updateCredits() {
     _updateCredits = !_updateCredits;
     if (!_updateCredits) return;
-    final diff = playerCreditsAnimation.value - gamestream.isometric.player.credits.value;
+    final diff = playerCreditsAnimation.value -  player.credits.value;
     if (diff == 0) return;
     final diffAbs = diff.abs();
     final speed = max(diffAbs ~/ 10, 1);
@@ -547,31 +544,31 @@ class Isometric with IsometricScene, IsometricCharacters {
 
   void updateGameLighting(){
     if (overrideColor.value) return;
-    if (gamestream.isometric.lightningFlashing.value) return;
+    if ( lightningFlashing.value) return;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
-    final totalSeconds = (gamestream.isometric.hours.value * Seconds_Per_Hour) + (gamestream.isometric.minutes.value * 60);
+    final totalSeconds = ( hours.value * Seconds_Per_Hour) + ( minutes.value * 60);
 
-    gamestream.isometric.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
+     ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
-    if (gamestream.isometric.rainType.value == RainType.Light){
-      gamestream.isometric.ambientAlpha += 20;
+    if ( rainType.value == RainType.Light){
+       ambientAlpha += 20;
     }
-    if (gamestream.isometric.rainType.value == RainType.Heavy){
-      gamestream.isometric.ambientAlpha += 40;
+    if ( rainType.value == RainType.Heavy){
+       ambientAlpha += 40;
     }
-    gamestream.isometric.resetNodeColorsToAmbient();
+     resetNodeColorsToAmbient();
   }
 
   void refreshRain(){
-    switch (gamestream.isometric.rainType.value) {
+    switch ( rainType.value) {
       case RainType.None:
         break;
       case RainType.Light:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        if (gamestream.isometric.windTypeAmbient.value == WindType.Calm){
+        if ( windTypeAmbient.value == WindType.Calm){
           srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
         } else {
           srcXRainFalling = 1851;
@@ -579,7 +576,7 @@ class Isometric with IsometricScene, IsometricCharacters {
         break;
       case RainType.Heavy:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
-        if (gamestream.isometric.windTypeAmbient.value == WindType.Calm){
+        if ( windTypeAmbient.value == WindType.Calm){
           srcXRainFalling = 1900;
         } else {
           srcXRainFalling = 1606;
@@ -595,10 +592,10 @@ class Isometric with IsometricScene, IsometricCharacters {
 
   void spawnConfettiPlayer() {
     for (var i = 0; i < 10; i++){
-      gamestream.isometric.particles.spawnParticleConfetti(
-        gamestream.isometric.player.position.x,
-        gamestream.isometric.player.position.y,
-        gamestream.isometric.player.position.z,
+      spawnParticleConfetti(
+        player.position.x,
+        player.position.y,
+         player.position.z,
       );
     }
   }
@@ -611,7 +608,7 @@ class Isometric with IsometricScene, IsometricCharacters {
   }
 
   void writeMessage(String value){
-    gamestream.isometric.messageStatus.value = value;
+     messageStatus.value = value;
   }
 
   void playAudioError(){
@@ -619,28 +616,195 @@ class Isometric with IsometricScene, IsometricCharacters {
   }
 
   void onChangedAttributesWindowVisible(bool value){
-    gamestream.isometric.playSoundWindow();
+     playSoundWindow();
   }
 
   void onChangedRaining(bool raining){
-    raining ? gamestream.isometric.rainStart() : gamestream.isometric.rainStop();
-    gamestream.isometric.resetNodeColorsToAmbient();
+    raining ?  rainStart() :  rainStop();
+     resetNodeColorsToAmbient();
   }
 
   void onChangedMessageStatus(String value){
     if (value.isEmpty){
-      gamestream.isometric.messageStatusDuration = 0;
+       messageStatusDuration = 0;
     } else {
-      gamestream.isometric.messageStatusDuration = 150;
+       messageStatusDuration = 150;
     }
   }
 
   void onChangedAreaTypeVisible(bool value) =>
-      gamestream.isometric.areaTypeVisibleDuration = value
+       areaTypeVisibleDuration = value
           ? 150
           : 0;
 
   void onChangedCredits(int value){
     gamestream.audio.coins.play();
   }
+
+  void updateParticle(IsometricParticle particle) {
+    if (!particle.active) return;
+    if (particle.delay > 0) {
+      particle.delay--;
+      return;
+    }
+
+    if (outOfBoundsPosition(particle)){
+      particle.deactivate();
+      return;
+    }
+
+    if (particle.type == ParticleType.Light_Emission){
+      const change = 0.125;
+      if (particle.flash){
+        particle.strength += change;
+        if (particle.strength >= 1){
+          particle.strength = 1.0;
+          particle.flash = false;
+        }
+        return;
+      }
+      particle.strength -= change;
+      if (particle.strength <= 0){
+        particle.strength = 0;
+        particle.duration = 0;
+      }
+      return;
+    }
+
+    if (particle.animation) {
+      if (particle.duration-- <= 0) {
+        particle.deactivate();
+      }
+      return;
+    }
+
+    final nodeIndex = getIndexPosition(particle);
+
+    assert (nodeIndex >= 0);
+    assert (nodeIndex < totalNodes);
+
+    particle.nodeIndex = nodeIndex;
+    final nodeType = nodeTypes[nodeIndex];
+    particle.nodeType = nodeType;
+    final airBorn =
+        !particle.checkNodeCollision || (
+            nodeType == NodeType.Empty        ||
+                nodeType == NodeType.Rain_Landing ||
+                nodeType == NodeType.Rain_Falling ||
+                nodeType == NodeType.Grass_Long   ||
+                nodeType == NodeType.Fireplace)    ;
+
+
+    if (particle.checkNodeCollision && !airBorn) {
+      particle.deactivate();
+      return;
+    }
+
+    if (!airBorn){
+      particle.z = (particle.indexZ + 1) * Node_Height;
+      particle.applyFloorFriction();
+    } else {
+      if (particle.type == ParticleType.Smoke){
+        final wind = gamestream.isometric.windTypeAmbient.value * 0.01;
+        particle.xv -= wind;
+        particle.yv += wind;
+      }
+    }
+    final bounce = particle.zv < 0 && !airBorn;
+    particle.updateMotion();
+
+    if (outOfBoundsPosition(particle)){
+      particle.deactivate();
+      return;
+    }
+
+    if (bounce) {
+      if (nodeType == NodeType.Water){
+        return particle.deactivate();
+      }
+      if (particle.zv < -0.1){
+        particle.zv = -particle.zv * particle.bounciness;
+      } else {
+        particle.zv = 0;
+      }
+    } else if (airBorn) {
+      particle.applyAirFriction();
+    }
+    particle.applyLimits();
+    particle.duration--;
+
+    if (particle.duration <= 0) {
+      particle.deactivate();
+    }
+  }
+
+  void updateParticles() {
+    nextParticleFrame--;
+
+    for (final particle in particles) {
+      if (!particle.active) continue;
+      updateParticle(particle);
+      if (nextParticleFrame <= 0){
+        particle.frame++;
+      }
+    }
+    if (nextParticleFrame <= 0) {
+      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
+    }
+  }
+
+  IsometricParticle spawnParticleFire({
+    required double x,
+    required double y,
+    required double z,
+    int duration = 100,
+    double scale = 1.0
+  }) =>
+      spawnParticle(
+        type: ParticleType.Fire,
+        x: x,
+        y: y,
+        z: z,
+        zv: 1,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        scaleV: 0.01,
+        weight: -1,
+        duration: duration,
+        scale: scale,
+      )
+        ..emitsLight = true
+        ..lightHue = ambientHue
+        ..lightSaturation = ambientSaturation
+        ..lightValue = ambientValue
+        ..alpha = 0
+        ..checkNodeCollision = false
+        ..strength = 0.5
+  ;
+
+  void spawnParticleLightEmissionAmbient({
+    required double x,
+    required double y,
+    required double z,
+  }) =>
+      spawnParticle(
+        type: ParticleType.Light_Emission,
+        x: x,
+        y: y,
+        z: z,
+        angle: 0,
+        speed: 0,
+        weight: 0,
+        duration: 35,
+        checkCollision: false,
+        animation: true,
+      )
+        ..lightHue = ambientHue
+        ..lightSaturation = ambientSaturation
+        ..lightValue = ambientValue
+        ..alpha = 0
+        ..flash = true
+        ..strength = 0.0
+  ;
 }

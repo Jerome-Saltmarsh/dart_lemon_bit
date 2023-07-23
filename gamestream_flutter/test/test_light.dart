@@ -25,7 +25,7 @@ void main() {
     scene.totalColumns = columns;
     scene.totalRows = rows;
     scene.totalZ = height;
-    scene.total = volume;
+    scene.totalNodes = volume;
     scene.area = area;
     scene.ambientStack = Uint16List(10000);
     scene.refreshGridMetrics();

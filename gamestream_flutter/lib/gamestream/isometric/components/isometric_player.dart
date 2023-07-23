@@ -97,7 +97,7 @@ class IsometricPlayer {
     if (!inBounds) return false;
     final scene = gamestream.isometric;
     final index = nodeIndex + scene.area;
-    while (index < scene.total){
+    while (index < scene.totalNodes){
       if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;
       return true;
     }

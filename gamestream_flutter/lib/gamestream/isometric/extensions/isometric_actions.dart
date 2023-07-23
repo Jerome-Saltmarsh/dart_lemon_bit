@@ -49,14 +49,14 @@ extension IsometricActions on Isometric {
   }
 
   void createExplosion(double x, double y, double z){
-    particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+    spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      particles.spawnParticleFire(
+      spawnParticleFire(
           x: x,
           y: y,
           z: z,
@@ -66,13 +66,13 @@ extension IsometricActions on Isometric {
       ;
     }
 
-    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
-    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
-    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
-    particles.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+    spawnParticleFire(x: x, y: y, z: z)..delay = 0;
+    spawnParticleFire(x: x, y: y, z: z)..delay = 2;
+    spawnParticleFire(x: x, y: y, z: z)..delay = 4;
+    spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
     for (var i = 0; i < 7; i++) {
-      particles.spawnParticle(
+      spawnParticle(
         type: ParticleType.Fire,
         x: x,
         y: y,
@@ -92,7 +92,7 @@ extension IsometricActions on Isometric {
 
     for (var i = 0; i < 7; i++) {
       const r = 5.0;
-      particles.spawnParticleSmoke(
+      spawnParticleSmoke(
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),

@@ -55,7 +55,7 @@ class IsometricGame extends Game {
 
   @override
   void onActivated() {
-    isometric.particles.clearParticles();
+    isometric.clearParticles();
     isometric.ui.windowOpenMenu.setFalse();
 
     gamestream.audio.musicStop();

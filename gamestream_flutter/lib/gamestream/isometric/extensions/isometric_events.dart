@@ -54,7 +54,7 @@ extension IsometricEvents on Isometric {
       gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
       final amount = gamestream.isometric.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
-        gamestream.isometric.particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
+        spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
     }
 
@@ -114,7 +114,7 @@ extension IsometricEvents on Isometric {
         onNodeSet(x, y, z);
         return;
       case GameEventType.GameObject_Timeout:
-        particles.spawnBubbles(x, y, z);
+        spawnBubbles(x, y, z);
         break;
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
@@ -127,7 +127,7 @@ extension IsometricEvents on Isometric {
         return onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
-          gamestream.isometric.particles.spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
+          spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
         }
         return;
       case GameEventType.Splash:
@@ -193,22 +193,22 @@ extension IsometricEvents on Isometric {
         break;
 
       case GameEventType.Blue_Orb_Deactivated:
-        particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+        spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         for (var i = 0; i < 8; i++) {
-          gamestream.isometric.particles.spawnParticleOrbShard(
+          spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
         }
         break;
 
       case GameEventType.Teleport_Start:
         for (var i = 0; i < 5; i++) {
-          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
       case GameEventType.Teleport_End:
         for (var i = 0; i < 5; i++) {
-          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
@@ -232,11 +232,11 @@ extension IsometricEvents on Isometric {
 
       case GameEventType.Blink_Arrive:
         gamestream.audio.sci_fi_blaster_1.playXYZ(x, y, z);
-        gamestream.isometric.particles.spawnParticleConfetti(x, y, z);
+        spawnParticleConfetti(x, y, z);
         break;
 
       case GameEventType.Blink_Depart:
-        gamestream.isometric.particles.spawnParticleConfetti(x, y, z);
+        spawnParticleConfetti(x, y, z);
         break;
     }
   }
@@ -257,22 +257,22 @@ extension IsometricEvents on Isometric {
 
     if (NodeType.isMaterialWood(nodeType)){
       gamestream.audio.material_struck_wood.playXYZ(x, y, z);
-      particles.spawnParticleBlockWood(x, y, z);
+      spawnParticleBlockWood(x, y, z);
     }
 
     if (NodeType.isMaterialGrass(nodeType)){
       gamestream.audio.grass_cut.playXYZ(x, y, z);
-      particles.spawnParticleBlockGrass(x, y, z);
+      spawnParticleBlockGrass(x, y, z);
     }
 
     if (NodeType.isMaterialStone(nodeType)){
       gamestream.audio.material_struck_stone.playXYZ(x, y, z);
-      particles.spawnParticleBlockBrick(x, y, z);
+      spawnParticleBlockBrick(x, y, z);
     }
 
     if (NodeType.isMaterialDirt(nodeType)){
       gamestream.audio.material_struck_dirt.playXYZ(x, y, z);
-      particles.spawnParticleBlockSand(x, y, z);
+      spawnParticleBlockSand(x, y, z);
     }
   }
 
@@ -281,7 +281,7 @@ extension IsometricEvents on Isometric {
   }
 
   void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
-    particles.spawnParticleBubbles(
+    spawnParticleBubbles(
       count: 3,
       x: x,
       y: y,
@@ -293,7 +293,7 @@ extension IsometricEvents on Isometric {
   void onSplash(double x, double y, double z) {
     for (var i = 0; i < 12; i++){
       final zv = randomBetween(1.5, 5);
-      particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
+      spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
     }
     return gamestream.audio.splash.playXYZ(x, y, z);
   }
@@ -307,15 +307,15 @@ extension IsometricEvents on Isometric {
     }
 
     if (attackType == WeaponType.Unarmed){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (attackType == WeaponType.Melee){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (WeaponType.isMelee(attackType)) {
-      particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
@@ -326,14 +326,14 @@ extension IsometricEvents on Isometric {
     final gunY = y - opp(angle, gun_distance);
 
     if (WeaponType.isFirearm(attackType)){
-      particles.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
-      particles.spawnParticleShell(gunX, gunY, z);
+      spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
+      spawnParticleShell(gunX, gunY, z);
     }
     if (WeaponType.Firearms_Automatic.contains(attackType)){
-      particles.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
       return;
     }
-    particles.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
+    spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
@@ -345,19 +345,19 @@ extension IsometricEvents on Isometric {
     }
 
     if (attackType == WeaponType.Unarmed){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (attackType == WeaponType.Knife){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (WeaponType.isMelee(attackType)) {
-      particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
-    particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+    spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
     return;
   }
 
@@ -480,7 +480,7 @@ extension IsometricEvents on Isometric {
     // isometric.particles.spawnPurpleFireExplosion(x, y, z);
 
     for (var i = 0; i < 4; i++){
-      particles.spawnParticleBlood(
+      spawnParticleBlood(
         x: x,
         y: y,
         z: z,
@@ -614,7 +614,7 @@ extension IsometricEvents on Isometric {
       switch (powerType){
         case CombatPowerType.Stun:
           gamestream.audio.debuff_4();
-          gamestream.isometric.particles.spawnParticle(
+          spawnParticle(
             type: ParticleType.Lightning_Bolt,
             x: gamestream.isometric.player.x,
             y: gamestream.isometric.player.y,
@@ -622,7 +622,7 @@ extension IsometricEvents on Isometric {
             duration: 10,
             animation: true,
           );
-          particles.spawnParticleLightEmissionAmbient(
+          spawnParticleLightEmissionAmbient(
             x: gamestream.isometric.player.x,
             y: gamestream.isometric.player.y,
             z: gamestream.isometric.player.z,
@@ -642,7 +642,7 @@ extension IsometricEvents on Isometric {
     gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
 
     for (var i = 0; i < 4; i++){
-      gamestream.isometric.particles.spawnParticleBlood(
+      spawnParticleBlood(
         x: x,
         y: y,
         z: z,
@@ -684,25 +684,25 @@ extension IsometricEvents on Isometric {
       case ObjectType.Barrel:
         gamestream.audio.crate_breaking.playXYZ(x, y, z);
         for (var i = 0; i < 5; i++) {
-          gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
+          spawnParticleBlockWood(x, y, z);
         }
         break;
       case ObjectType.Toilet:
         gamestream.audio.crate_breaking.playXYZ(x, y, z);
         for (var i = 0; i < 5; i++) {
-          gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
+          spawnParticleBlockWood(x, y, z);
         }
         break;
       case ObjectType.Crate_Wooden:
         gamestream.audio.crate_breaking.playXYZ(x, y, z);
         for (var i = 0; i < 5; i++) {
-          gamestream.isometric.particles.spawnParticleBlockWood(x, y, z);
+          spawnParticleBlockWood(x, y, z);
         }
         break;
 
       case ObjectType.Credits:
         for (var i = 0; i < 8; i++){
-          gamestream.isometric.particles.spawnParticleConfettiByType(
+          spawnParticleConfettiByType(
             x,
             y,
             z,

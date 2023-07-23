@@ -360,7 +360,7 @@ class RendererNodes extends IsometricRenderer {
     assert (currentNodeZ < scene.totalZ);
     assert (row < scene.totalRows);
     assert (column < scene.totalColumns);
-    assert (currentNodeIndex < scene.total);
+    assert (currentNodeIndex < scene.totalNodes);
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = scene.nodeTypes[currentNodeIndex];
@@ -369,7 +369,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   @override
-  int getTotal() => scene.total;
+  int getTotal() => scene.totalNodes;
 
   @override
   void reset() {
@@ -490,8 +490,8 @@ class RendererNodes extends IsometricRenderer {
 
   void updateHeightMapPerception() {
 
-    if (visible3D.length != scene.total) {
-      visible3D = List.generate(scene.total, (index) => false);
+    if (visible3D.length != scene.totalNodes) {
+      visible3D = List.generate(scene.totalNodes, (index) => false);
       visible3DIndex = 0;
     }
 
@@ -581,7 +581,7 @@ class RendererNodes extends IsometricRenderer {
 
      while (true) {
        searchIndex += scene.area;
-        if (searchIndex >= scene.total) break;
+        if (searchIndex >= scene.totalNodes) break;
         final nodeOrientation = scene.nodeOrientations[searchIndex];
         if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Center) break;
@@ -2248,7 +2248,7 @@ class RendererNodes extends IsometricRenderer {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: -8,
-          color: scene.nodeColors[currentNodeIndex + scene.area < scene.total ? currentNodeIndex + scene.area : currentNodeIndex],
+          color: scene.nodeColors[currentNodeIndex + scene.area < scene.totalNodes ? currentNodeIndex + scene.area : currentNodeIndex],
         );
         return;
       case NodeOrientation.Half_Vertical_Center:
