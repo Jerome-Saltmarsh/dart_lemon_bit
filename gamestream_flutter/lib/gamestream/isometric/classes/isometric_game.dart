@@ -131,7 +131,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Digit_0) {
-      gamestream.toggleDebugging();
+      isometric.toggleDebugging();
       return;
     }
 
@@ -148,7 +148,7 @@ class IsometricGame extends Game {
     // play mode
 
     if (key == KeyCode.Z) {
-      gamestream.toggleZoom();
+      isometric.toggleZoom();
       return;
     }
 

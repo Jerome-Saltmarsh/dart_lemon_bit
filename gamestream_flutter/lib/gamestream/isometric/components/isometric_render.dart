@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../ui/isometric_constants.dart';
-import 'isometric_mouse.dart';
 import 'render/renderer_characters.dart';
 import 'render/renderer_gameobjects.dart';
 import 'render/renderer_nodes.dart';

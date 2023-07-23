@@ -256,7 +256,7 @@ class GameAudio {
   }
 
   double getVolumeTargetCrickets() {
-    final hour = gamestream.hours.value;
+    final hour = isometric.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -264,19 +264,19 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (gamestream.lightningOn) return 1.0;
+    if (isometric.lightningOn) return 1.0;
     return 0;
   }
 
   double getVolumeHeartBeat(){
-    if (gamestream.player.maxHealth.value <= 0) return 0.0;
-    return 1.0 - gamestream.player.health.value / gamestream.player.maxHealth.value;
+    if (isometric.player.maxHealth.value <= 0) return 0.0;
+    return 1.0 - isometric.player.health.value / isometric.player.maxHealth.value;
   }
 
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
     if (!enabledSound.value) return;
-    final distanceX = gamestream.engine.screenCenterWorldX - x;
-    final distanceY = gamestream.engine.screenCenterWorldY - y;
+    final distanceX = isometric.engine.screenCenterWorldX - x;
+    final distanceY = isometric.engine.screenCenterWorldY - y;
     final distance = hyp2(distanceX, distanceY);
     final distanceSqrt = sqrt(distance);
     final distanceSrtClamped = max(distanceSqrt * 0.5, 1);
@@ -291,14 +291,14 @@ class GameAudio {
   }
 
   void playRandomMusic(){
-    final hours = gamestream.hours.value;
+    final hours = isometric.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
   void playRandomAmbientSound(){
-    final hour = gamestream.hours.value;
+    final hour = isometric.hours.value;
 
     if (hour > 22 && hour < 4){
       playRandom(soundsNight);

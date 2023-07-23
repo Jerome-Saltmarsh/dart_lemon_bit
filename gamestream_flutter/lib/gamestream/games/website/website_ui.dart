@@ -161,7 +161,7 @@ extension WebsiteUI on WebsiteGame {
       );
 
   Widget buildButtonJoinGameType({required GameType gameType, required String gameName}) => onPressed(
-      action: () => gamestream.connectToGame(gameType),
+      action: () => isometric.connectToGame(gameType),
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
 
@@ -186,12 +186,12 @@ extension WebsiteUI on WebsiteGame {
         children: [
           buildText('Select Your Region', size: FontSize.large),
           height16,
-          WatchBuilder(gamestream.region, (activeRegion) {
+          WatchBuilder(isometric.region, (activeRegion) {
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: (gamestream.engine.isLocalHost ? ConnectionRegion.values : const [
+                children: (isometric.engine.isLocalHost ? ConnectionRegion.values : const [
                   ConnectionRegion.America_North,
                   ConnectionRegion.America_South,
                   ConnectionRegion.Asia_North,
@@ -202,8 +202,8 @@ extension WebsiteUI on WebsiteGame {
                     .map((ConnectionRegion region) =>
                     onPressed(
                       action: () {
-                        gamestream.region.value = region;
-                        gamestream.games.website.websitePage.value = WebsitePage.Games;
+                        isometric.region.value = region;
+                        isometric.games.website.websitePage.value = WebsitePage.Games;
                       },
                       child: MouseOver(builder: (bool mouseOver) {
                         return Container(
@@ -235,7 +235,7 @@ extension WebsiteUI on WebsiteGame {
             child: Center(
               child: buildText(message, color: IsometricColors.white),
             ),
-            bottomRight: bottomRight ?? buildText('okay', onPressed: () => gamestream.games.website.error.value = null)
+            bottomRight: bottomRight ?? buildText('okay', onPressed: () => isometric.games.website.error.value = null)
         )
     );
 }

@@ -156,7 +156,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             width: mapSize,
             height: mapSize,
             child:   buildWatch(isometric.nodesChangedNotifier, (_){
-              return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
+              return isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
                 const scale = 2.0;
                 canvas.scale(scale, scale);
                 final screenCenterX = size.width * 0.5;
@@ -181,7 +181,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 for (var i = 0; i < totalCharacters; i++) {
                   final character = isometric.characters[i];
                   final isPlayer = player.isCharacter(character);
-                  gamestream.engine.renderExternalCanvas(
+                  isometric.engine.renderExternalCanvas(
                       canvas: canvas,
                       image: Images.atlas_gameobjects,
                       srcX: 0,
@@ -196,7 +196,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                 if (flagRedStatus.value != CaptureTheFlagFlagStatus.Respawning) {
 
-                  gamestream.engine.renderExternalCanvas(
+                  isometric.engine.renderExternalCanvas(
                       canvas: canvas,
                       image: Images.atlas_gameobjects,
                       srcX: AtlasSrcObjects.Flag_Red[Atlas.SrcX],
@@ -210,7 +210,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 }
 
                 if (flagBlueStatus.value != CaptureTheFlagFlagStatus.Respawning) {
-                  gamestream.engine.renderExternalCanvas(
+                  isometric.engine.renderExternalCanvas(
                       canvas: canvas,
                       image: Images.atlas_gameobjects,
                       srcX: AtlasSrcObjects.Flag_Blue[Atlas.SrcX],
@@ -223,7 +223,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   );
                 }
 
-                gamestream.engine.renderExternalCanvas(
+                isometric.engine.renderExternalCanvas(
                     canvas: canvas,
                     image: Images.atlas_gameobjects,
                     srcX: AtlasSrcObjects.Base_Red[Atlas.SrcX],
@@ -235,7 +235,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     scale: 0.1
                 );
 
-                gamestream.engine.renderExternalCanvas(
+                isometric.engine.renderExternalCanvas(
                     canvas: canvas,
                     image: Images.atlas_gameobjects,
                     srcX: AtlasSrcObjects.Base_Blue[Atlas.SrcX],
@@ -261,7 +261,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: gamestream.gameObjects.map((e){
+              children: isometric.gameObjects.map((e){
                 return onPressed(
                     action: () {
 
@@ -303,7 +303,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       );
 
   Widget buildWindowPlayer() => Container(
-      width: gamestream.engine.screen.width,
+      width: isometric.engine.screen.width,
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

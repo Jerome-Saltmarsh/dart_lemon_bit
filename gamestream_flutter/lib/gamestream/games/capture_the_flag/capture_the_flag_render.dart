@@ -7,7 +7,7 @@ import 'capture_the_flag_properties.dart';
 extension CaptureTheFlagRender on CaptureTheFlagGame {
 
   void renderCaptureTheFlag() {
-    gamestream.engine.paint.color = Colors.orange;
+    isometric.engine.paint.color = Colors.orange;
 
     if (objectiveLinesEnabled){
       renderObjectiveLines();
@@ -18,14 +18,14 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
 
   void renderLineToRedFlag() {
     if (flagRedStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
-    gamestream.engine.paint.color = Colors.red;
-    gamestream.engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
+    isometric.engine.paint.color = Colors.red;
+    isometric.engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
   }
 
   void renderLineToBlueFlag() {
     if (flagBlueStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
-    gamestream.engine.paint.color = Colors.blue;
-    gamestream.engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
+    isometric.engine.paint.color = Colors.blue;
+    isometric.engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
   }
 
   void renderLineToEnemyFlag(){
@@ -71,13 +71,13 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
   }
 
   void renderLineToRedBase() {
-    gamestream.engine.paint.color = Colors.red;
-    gamestream.engine.drawLine(player.renderX, player.renderY, basePositionRed.renderX, basePositionRed.renderY);
+    isometric.engine.paint.color = Colors.red;
+    isometric.engine.drawLine(player.renderX, player.renderY, basePositionRed.renderX, basePositionRed.renderY);
   }
 
   void renderLineToBlueBase() {
-    gamestream.engine.paint.color = Colors.blue;
-    gamestream.engine.drawLine(player.renderX, player.renderY, basePositionBlue.renderX, basePositionBlue.renderY);
+    isometric.engine.paint.color = Colors.blue;
+    isometric.engine.drawLine(player.renderX, player.renderY, basePositionBlue.renderX, basePositionBlue.renderY);
   }
 
   void renderPlayerActivatedPower() {
