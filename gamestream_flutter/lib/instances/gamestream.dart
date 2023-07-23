@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:provider/provider.dart';
 
+
 // todo remove global instance
 final gamestream = Isometric();
 

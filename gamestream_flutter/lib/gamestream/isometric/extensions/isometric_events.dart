@@ -304,8 +304,8 @@ extension IsometricEvents on Isometric {
   }
 
   void onAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = gamestream.readUInt16();
-    final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttack[attackType];
+    final attackType = readUInt16();
+    final attackTypeAudio = audio.MapItemTypeAudioSinglesAttack[attackType];
 
     if (attackTypeAudio != null) {
       playAudioXYZ(attackTypeAudio, x, y, z);
@@ -342,8 +342,8 @@ extension IsometricEvents on Isometric {
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = gamestream.readUInt16();
-    final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttackMelee[attackType];
+    final attackType = readUInt16();
+    final attackTypeAudio = audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
       playAudioXYZ(attackTypeAudio, x, y, z);
@@ -368,16 +368,16 @@ extension IsometricEvents on Isometric {
 
   void onChangedEdit(bool value) {
     if (value) {
-      gamestream.camera.target = null;
-      gamestream.editor.cursorSetToPlayer();
-      gamestream.player.message.value = '-press arrow keys to move\n\n-press tab to play';
-      gamestream.player.messageTimer = 300;
+      camera.target = null;
+      editor.cursorSetToPlayer();
+      player.message.value = '-press arrow keys to move\n\n-press tab to play';
+      player.messageTimer = 300;
     } else {
-      gamestream.cameraTargetPlayer();
-      gamestream.editor.deselectGameObject();
-      // gamestream.isometric.ui.mouseOverDialog.setFalse();
-      if (gamestream.sceneEditable.value){
-        gamestream.player.message.value = 'press tab to edit';
+      cameraTargetPlayer();
+      editor.deselectGameObject();
+      // isometric.ui.mouseOverDialog.setFalse();
+      if (sceneEditable.value){
+        player.message.value = 'press tab to edit';
       }
     }
   }
@@ -387,14 +387,14 @@ extension IsometricEvents on Isometric {
   }
 
   void onChangedHour(int hour){
-    if (gamestream.sceneUnderground.value) return;
+    if (sceneUnderground.value) return;
     updateGameLighting();
   }
 
   void onChangedSeconds(int seconds){
     final minutes = seconds ~/ 60;
-    gamestream.hours.value = minutes ~/ Duration.minutesPerHour;
-    gamestream.minutes.value = minutes % Duration.minutesPerHour;
+    hours.value = minutes ~/ Duration.minutesPerHour;
+    this.minutes.value = minutes % Duration.minutesPerHour;
   }
 
   void onChangedRain(int value) {
@@ -406,48 +406,48 @@ extension IsometricEvents on Isometric {
   void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Reloading:
-        switch (gamestream.player.weapon.value){
+        switch (player.weapon.value){
           case WeaponType.Handgun:
-            gamestream.audio.reload_6();
+            audio.reload_6();
             break;
           default:
-            gamestream.audio.reload_6();
+            audio.reload_6();
         }
         break;
       case PlayerEvent.Teleported:
-        gamestream.audio.magical_swoosh_18();
+        audio.magical_swoosh_18();
         break;
       case PlayerEvent.Level_Increased:
-        gamestream.audio.buff_1();
+        audio.buff_1();
         writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
         break;
       case PlayerEvent.Eat:
-        gamestream.audio.eat();
+        audio.eat();
         break;
       case PlayerEvent.Drink:
-        gamestream.audio.drink();
+        audio.drink();
         break;
       case PlayerEvent.Experience_Collected:
-        gamestream.audio.collect_star_3();
+        audio.collect_star_3();
         break;
       case PlayerEvent.Recipe_Crafted:
-        gamestream.audio.unlock();
+        audio.unlock();
         break;
       case PlayerEvent.Loot_Collected:
-        return gamestream.audio.collect_star_3();
+        return audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        gamestream.camera.centerOnChaseTarget();
+        camera.centerOnChaseTarget();
         break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
         break;
       case PlayerEvent.Item_Dropped:
-        gamestream.audio.popSounds14();
+        audio.popSounds14();
         break;
       case PlayerEvent.Item_Sold:
-        gamestream.audio.coins_24();
+        audio.coins_24();
         break;
       case PlayerEvent.GameObject_Deselected:
         editor.gameObjectSelected.value = false;
@@ -526,7 +526,7 @@ extension IsometricEvents on Isometric {
     //     speed: 4.0 + Engine.randomGiveOrTake(0.5),
     //     zv: 0.1);
 
-    playAudioXYZ(randomItem(gamestream.audio.zombie_deaths), x, y, z);
+    playAudioXYZ(randomItem(audio.zombie_deaths), x, y, z);
   }
 
   void onChangedRendersSinceUpdate(int value){
@@ -535,16 +535,16 @@ extension IsometricEvents on Isometric {
 
   void onChangedPlayerMessage(String value){
     if (value.isNotEmpty) {
-      gamestream.player.messageTimer = 200;
+      player.messageTimer = 200;
     } else {
-      gamestream.player.messageTimer = 0;
+      player.messageTimer = 0;
     }
   }
 
   void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
-      gamestream.camera.centerOnChaseTarget();
-      gamestream.io.recenterCursor();
+      camera.centerOnChaseTarget();
+      io.recenterCursor();
     }
   }
 
@@ -553,62 +553,62 @@ extension IsometricEvents on Isometric {
 
     switch (weaponType) {
       case WeaponType.Plasma_Rifle:
-        gamestream.audio.gun_pickup_01();
+        audio.gun_pickup_01();
         break;
       case WeaponType.Plasma_Pistol:
-        gamestream.audio.revolver_reload_1();
+        audio.revolver_reload_1();
         break;
       case WeaponType.Revolver:
-        gamestream.audio.revolver_reload_1();
+        audio.revolver_reload_1();
         break;
       case WeaponType.Handgun:
-        gamestream.audio.reload_6();
+        audio.reload_6();
         break;
       case WeaponType.Shotgun:
-        gamestream.audio.cock_shotgun_3();
+        audio.cock_shotgun_3();
         break;
       case WeaponType.Sword:
-        gamestream.audio.sword_unsheathe();
+        audio.sword_unsheathe();
         break;
       case WeaponType.Bow:
-        gamestream.audio.bow_draw();
+        audio.bow_draw();
         break;
       default:
-        gamestream.audio.gun_pickup_01();
+        audio.gun_pickup_01();
         break;
     }
   }
 
   void readPlayerEventItemAcquired() {
-    final itemType = gamestream.readUInt16();
+    final itemType = readUInt16();
     // todo read subtype
     if (itemType == WeaponType.Unarmed) return;
 
     switch (itemType) {
       case WeaponType.Plasma_Rifle:
-        gamestream.audio.gun_pickup_01();
+        audio.gun_pickup_01();
         break;
       case WeaponType.Plasma_Pistol:
-        gamestream.audio.revolver_reload_1();
+        audio.revolver_reload_1();
         break;
       case WeaponType.Revolver:
-        gamestream.audio.revolver_reload_1();
+        audio.revolver_reload_1();
         break;
       case WeaponType.Handgun:
-        gamestream.audio.reload_6();
+        audio.reload_6();
         break;
       case WeaponType.Shotgun:
-        gamestream.audio.cock_shotgun_3();
+        audio.cock_shotgun_3();
         break;
       case WeaponType.Sword:
-        gamestream.audio.sword_unsheathe();
+        audio.sword_unsheathe();
         break;
       case WeaponType.Bow:
-        gamestream.audio.bow_draw();
+        audio.bow_draw();
         break;
       default:
         // if (ItemType.isTypeWeapon(itemType)){
-        //   gamestream.audio.gun_pickup_01();
+        //   audio.gun_pickup_01();
         // }
         break;
     }
@@ -618,19 +618,19 @@ extension IsometricEvents on Isometric {
   void onGameEventPowerUsed(double x, double y, double z, int powerType) {
       switch (powerType){
         case CombatPowerType.Stun:
-          gamestream.audio.debuff_4();
+          audio.debuff_4();
           spawnParticle(
             type: ParticleType.Lightning_Bolt,
-            x: gamestream.player.x,
-            y: gamestream.player.y,
-            z: gamestream.player.z,
+            x: player.x,
+            y: player.y,
+            z: player.z,
             duration: 10,
             animation: true,
           );
           spawnParticleLightEmissionAmbient(
-            x: gamestream.player.x,
-            y: gamestream.player.y,
-            z: gamestream.player.z,
+            x: player.x,
+            y: player.y,
+            z: player.z,
           );
           break;
       }
@@ -642,7 +642,7 @@ extension IsometricEvents on Isometric {
 
   void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
 
-    playAudioXYZ(randomItem(gamestream.audio.bloody_punches), x, y, z);
+    playAudioXYZ(randomItem(audio.bloody_punches), x, y, z);
     playAudioXYZ(audio.heavy_punch_13, x, y, z);
 
     for (var i = 0; i < 4; i++){

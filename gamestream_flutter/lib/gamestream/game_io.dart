@@ -1,7 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../library.dart';
@@ -38,14 +37,16 @@ class GameIO with ByteWriter {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
+  final Isometric isometric;
   final updateSize = Watch(0);
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
-  final touchController = TouchController();
-  final Isometric isometric;
-  late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.onChangedInputMode);
+  late final TouchController touchController;
+  final inputMode = Watch(InputMode.Keyboard);
 
-  GameIO(this.isometric);
+  GameIO(this.isometric) {
+    touchController = TouchController(isometric);
+  }
 
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
 
@@ -127,28 +128,28 @@ class GameIO with ByteWriter {
       return InputDirection.Up;
     }
 
-    if (gamestream.engine.keyPressed(KeyCode.S)) {
-      if (gamestream.engine.keyPressed(KeyCode.D)) {
+    if (isometric.engine.keyPressed(KeyCode.S)) {
+      if (isometric.engine.keyPressed(KeyCode.D)) {
         return InputDirection.Down_Right;
       }
-      if (gamestream.engine.keyPressed(KeyCode.A)) {
+      if (isometric.engine.keyPressed(KeyCode.A)) {
         return InputDirection.Down_Left;
       }
       return InputDirection.Down;
     }
-    if (gamestream.engine.keyPressed(KeyCode.A)) {
+    if (isometric.engine.keyPressed(KeyCode.A)) {
       return InputDirection.Left;
     }
-    if (gamestream.engine.keyPressed(KeyCode.D)) {
+    if (isometric.engine.keyPressed(KeyCode.D)) {
       return InputDirection.Right;
     }
     return InputDirection.None;
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    var z = gamestream.totalZ - 1;
-    final mouseWorldX = gamestream.engine.mouseWorldX;
-    final mouseWorldY = gamestream.engine.mouseWorldY;
+    var z = isometric.totalZ - 1;
+    final mouseWorldX = isometric.engine.mouseWorldX;
+    final mouseWorldY = isometric.engine.mouseWorldY;
     while (z >= 0){
       final row = IsometricRender.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
       final column = IsometricRender.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
@@ -266,7 +267,7 @@ class GameIO with ByteWriter {
   void sendUpdateBuffer() {
     final bytes = compile();
     updateSize.value = bytes.length;
-    gamestream.send(bytes);
+    isometric.send(bytes);
   }
 
   void reset() {
@@ -280,6 +281,9 @@ class GameIO with ByteWriter {
 }
 
 class TouchController {
+
+  final Isometric isometric;
+
   var joystickCenterX = 0.0;
   var joystickCenterY = 0.0;
   var joystickX = 0.0;
@@ -288,28 +292,30 @@ class TouchController {
 
   static const maxDistance = 15.0;
 
+  TouchController(this.isometric);
+
   double get angle => angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
   double get dis => distanceBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
 
   void onClick() {
-    joystickCenterX = gamestream.engine.mousePositionX;
-    joystickCenterY = gamestream.engine.mousePositionY;
+    joystickCenterX = isometric.engine.mousePositionX;
+    joystickCenterY = isometric.engine.mousePositionY;
     joystickX = joystickCenterX;
     joystickY = joystickCenterY;
   }
 
   int getDirection() =>
-      gamestream.engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
+      isometric.engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
 
   void onMouseMoved(double x, double y){
-    joystickX = gamestream.engine.mousePositionX;
-    joystickY = gamestream.engine.mousePositionY;
+    joystickX = isometric.engine.mousePositionX;
+    joystickY = isometric.engine.mousePositionY;
   }
 
   void render(Canvas canvas){
-    if (gamestream.engine.touches == 0) return;
+    if (isometric.engine.touches == 0) return;
 
-    if (gamestream.engine.watchMouseLeftDown.value) {
+    if (isometric.engine.watchMouseLeftDown.value) {
       if (dis > maxDistance) {
         final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
         joystickCenterX = joystickX - adj(radian, maxDistance);
