@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../library.dart';
@@ -42,7 +43,7 @@ class GameIO with ByteWriter {
   final panDirection = Watch(0.0);
   final touchController = TouchController();
   final Isometric isometric;
-  late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.events.onChangedInputMode);
+  late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.onChangedInputMode);
 
   GameIO(this.isometric);
 

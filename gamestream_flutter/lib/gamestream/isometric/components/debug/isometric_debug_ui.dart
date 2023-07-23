@@ -107,7 +107,7 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          GSRefresh(() => buildText('connection-duration: ${gamestream.isometric.client.formattedConnectionDuration}\n')),
+          GSRefresh(() => buildText('connection-duration: ${gamestream.isometric.formattedConnectionDuration}\n')),
           buildText('network-server-fps: $serverFPS'),
           buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
           buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
@@ -159,7 +159,7 @@ extension isometricDebugUI on IsometricDebug {
                   'aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n'
                   'target-position: ${gamestream.isometric.player.targetPosition}\n'
                   'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
-                  'scene-light-active: ${gamestream.isometric.client.totalActiveLights}\n'
+                  'scene-light-active: ${gamestream.isometric.totalActiveLights}\n'
                   'total-gameobjects: ${gamestream.isometric.gameObjects.length}\n'
                   'total-characters: ${gamestream.isometric.scene.totalCharacters}\n'
                   'total-particles: ${gamestream.isometric.particles.particles.length}\n'
@@ -231,7 +231,7 @@ extension isometricDebugUI on IsometricDebug {
               gamestream.isometric.scene.ambientValue / 100,
             ).toColor(),
             onColorChanged: (color){
-              gamestream.isometric.client.overrideColor.value = true;
+              gamestream.isometric.overrideColor.value = true;
               final hsvColor = HSVColor.fromColor(color);
               gamestream.isometric.scene.ambientAlpha = (hsvColor.alpha * 255).round();
               gamestream.isometric.scene.ambientHue = hsvColor.hue.round();

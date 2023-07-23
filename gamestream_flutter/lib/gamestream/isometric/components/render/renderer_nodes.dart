@@ -448,7 +448,7 @@ class RendererNodes extends IsometricRenderer {
     remaining = total > 0;
     scene.resetNodeColorStack();
     scene.resetNodeAmbientStack();
-    gamestream.isometric.client.applyEmissions();
+    gamestream.isometric.applyEmissions();
 
     // highlightCharacterNearMouse();
   }
@@ -941,21 +941,21 @@ class RendererNodes extends IsometricRenderer {
         renderNodeWindow();
         break;
       case NodeType.Spawn:
-        if (gamestream.isometric.client.playMode) return;
+        if (gamestream.isometric.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_X,
           srcY: AtlasNode.Spawn_Y,
         );
         break;
       case NodeType.Spawn_Weapon:
-        if (gamestream.isometric.client.playMode) return;
+        if (gamestream.isometric.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Weapon_X,
           srcY: AtlasNode.Spawn_Weapon_Y,
         );
         break;
       case NodeType.Spawn_Player:
-        if (gamestream.isometric.client.playMode) return;
+        if (gamestream.isometric.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Player_X,
           srcY: AtlasNode.Spawn_Player_Y,
@@ -1685,14 +1685,14 @@ class RendererNodes extends IsometricRenderer {
       return;
     }
     renderStandardNode(
-      srcX: gamestream.isometric.client.srcXRainLanding,
+      srcX: gamestream.isometric.srcXRainLanding,
       srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   void renderNodeRainFalling() {
     renderStandardNode(
-      srcX: gamestream.isometric.client.srcXRainFalling,
+      srcX: gamestream.isometric.srcXRainFalling,
       srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }

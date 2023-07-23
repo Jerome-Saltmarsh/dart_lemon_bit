@@ -276,7 +276,7 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (gamestream.isometric.client.lightningOn) return 1.0;
+    if (gamestream.isometric.lightningOn) return 1.0;
     return 0;
   }
 

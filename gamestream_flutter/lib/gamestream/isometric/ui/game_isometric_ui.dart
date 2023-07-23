@@ -127,7 +127,7 @@ class GameIsometricUI {
     );
 
   static Widget buildGeneratedMiniMap({required double translate}){
-    return buildWatch(gamestream.isometric.client.nodesChangedNotifier, (_){
+    return buildWatch(gamestream.isometric.scene.nodesChangedNotifier, (_){
       return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
         const scale = 2.0;
         canvas.scale(scale, scale);
@@ -174,7 +174,7 @@ class GameIsometricUI {
       child: Container(
         width: gamestream.engine.screen.width,
         alignment: Alignment.center,
-        child: buildWatch(gamestream.isometric.client.messageStatus, buildMessageStatus),
+        child: buildWatch(gamestream.isometric.messageStatus, buildMessageStatus),
       ),
     ),
   );
@@ -184,44 +184,14 @@ class GameIsometricUI {
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        gamestream.isometric.client.messageClear();
+        gamestream.isometric.messageClear();
       },
       child: Container(
         padding: const EdgeInsets.all(10),
         color: Colors.black12,
-        child: buildText(message, onPressed: gamestream.isometric.client.messageClear),),
+        child: buildText(message, onPressed: gamestream.isometric.messageClear),),
     );
   }
-
-  static Widget buildStackInputModeTouch(bool side) => Stack(children: [
-    // Positioned(
-    //   right: side ? GameUIConfig.runButtonPadding : null,
-    //   left: side ? null : GameUIConfig.runButtonPadding,
-    //   child: Container(
-    //     height: engine.screen.height,
-    //     alignment: Alignment.center,
-    //     child: onPressed(
-    //       action: GameUIConfig.runButtonPressed,
-    //       child: Container(
-    //         width: GameUIConfig.runButtonSize,
-    //         height: GameUIConfig.runButtonSize,
-    //         alignment: Alignment.center,
-    //         child: watch(gamestream.isometricEngine.player.weapon, (int itemType) => buildAtlasItemType(itemType)),
-    //         decoration: BoxDecoration(
-    //           shape: BoxShape.circle,
-    //           border: Border.all(color: Colors.white70, width: 5),
-    //           color: GameUIConfig.runButtonColor,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // ),
-  ]);
-
-  static Widget buildStackInputMode(int inputMode) =>
-      inputMode == InputMode.Keyboard
-          ? nothing
-          : buildWatch(gamestream.isometric.client.touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
@@ -528,7 +498,7 @@ class GameIsometricUI {
   static Widget buildButtonTogglePlayMode() {
     return buildWatch(gamestream.isometric.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return buildWatch(gamestream.isometric.client.edit, (bool edit) {
+      return buildWatch(gamestream.isometric.edit, (bool edit) {
         return buildButton(
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',

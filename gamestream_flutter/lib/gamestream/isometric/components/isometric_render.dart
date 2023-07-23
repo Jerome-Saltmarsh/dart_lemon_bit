@@ -402,7 +402,7 @@ class IsometricRender {
     final accuracy = gamestream.isometric.player.accuracy.value;
     final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
 
-    switch (gamestream.isometric.client.cursorType) {
+    switch (gamestream.isometric.cursorType) {
       case IsometricCursorType.CrossHair_White:
         canvasRenderCursorCrossHair(canvas, distance);
         break;
@@ -535,7 +535,7 @@ class IsometricRender {
   }
 
   void renderEditMode() {
-    if (gamestream.isometric.client.playMode) return;
+    if (gamestream.isometric.playMode) return;
     if (gamestream.isometric.editor.gameObjectSelected.value){
       gamestream.engine.renderCircleOutline(
         sides: 24,

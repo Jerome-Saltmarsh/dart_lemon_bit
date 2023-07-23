@@ -1,5 +1,6 @@
 
 
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
@@ -10,9 +11,13 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'atlases/atlas_nodes.dart';
+import 'classes/isometric_character.dart';
 import 'classes/isometric_position.dart';
 import 'classes/isometric_projectile.dart';
+import 'components/functions/format_bytes.dart';
 import 'components/render/renderer_characters.dart';
+import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'classes/isometric_particles.dart';
@@ -23,6 +28,36 @@ import 'ui/isometric_constants.dart';
 
 class Isometric {
 
+  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+
+  var cursorType = IsometricCursorType.Hand;
+  var srcXRainFalling = 6640.0;
+  var srcXRainLanding = 6739.0;
+  var messageStatusDuration = 0;
+  var areaTypeVisibleDuration = 0;
+  var nextLightingUpdate = 0;
+  var totalActiveLights = 0;
+  var interpolation_padding = 0.0;
+  var torchEmissionStart = 0.8;
+  var torchEmissionEnd = 1.0;
+  var torchEmissionVal = 0.061;
+  var torchEmissionT = 0.0;
+  var nodesRaycast = 0;
+  var windLine = 0;
+
+  DateTime? timeConnectionEstablished;
+
+  late final edit = Watch(false, onChanged: gamestream.isometric.onChangedEdit);
+  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
+  late final raining = Watch(false, onChanged: onChangedRaining);
+  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
+  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
+
+  final gridShadows = Watch(true, onChanged: (bool value){
+    gamestream.isometric.scene.resetNodeColorsToAmbient();
+  });
+
+  final overrideColor = WatchBool(false);
   final playerExperiencePercentage = Watch(0.0);
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
@@ -35,16 +70,15 @@ class Isometric {
 
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
   late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
-  late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);
-  late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
-  late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
-  late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
+  late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.onChangedRain);
+  late final seconds = Watch(0, onChanged: gamestream.isometric.onChangedSeconds);
+  late final hours = Watch(0, onChanged: gamestream.isometric.onChangedHour);
+  late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.onChangedWindType);
 
   final gameObjects = <IsometricGameObject>[];
 
   final animation = IsometricAnimation();
   final debug = IsometricDebug();
-  final client = IsometricClient();
   final scene = IsometricScene();
   final minimap = IsometricMinimap();
   final editor = IsometricEditor();
@@ -56,7 +90,6 @@ class Isometric {
   var totalProjectiles = 0;
   final projectiles = <IsometricProjectile>[];
   late final particles = IsometricParticles(scene);
-  late final events = IsometricEvents(client, gamestream);
   late final renderer = IsometricRender(
     rendererGameObjects: RendererGameObjects(scene),
     rendererParticles: RendererParticles(scene, particles.particles),
@@ -64,6 +97,13 @@ class Isometric {
     rendererNodes: RendererNodes(scene),
     rendererProjectiles: RendererProjectiles(scene),
   );
+
+  bool get playMode => !editMode;
+
+  bool get editMode => edit.value;
+
+  bool get lightningOn => gamestream.isometric.lightningType.value != LightningType.Off;
+
 
   void drawCanvas(Canvas canvas, Size size) {
     if (gameRunning.value){
@@ -84,12 +124,12 @@ class Isometric {
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
-    if (client.windLine < scene.totalRows){
+    if (windLine < scene.totalRows){
       windLineColumn = 0;
-      windLineRow =  scene.totalRows - client.windLine - 1;
+      windLineRow =  scene.totalRows - windLine - 1;
     } else {
       windLineRow = 0;
-      windLineColumn = client.windLine - scene.totalRows + 1;
+      windLineColumn = windLine - scene.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
@@ -107,16 +147,40 @@ class Isometric {
     animation.updateAnimationFrame();
     updateProjectiles();
     updateGameObjects();
-    client.update();
     player.updateMessageTimer();
     readPlayerInputEdit();
 
     gamestream.io.applyKeyboardInputToUpdateBuffer();
     gamestream.io.sendUpdateBuffer();
+
+
+    updateTorchEmissionIntensity();
+    updateParticleEmitters();
+
+    interpolation_padding = ((gamestream.isometric.scene.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
+    if (areaTypeVisible.value) {
+      if (areaTypeVisibleDuration-- <= 0) {
+        areaTypeVisible.value = false;
+      }
+    }
+
+    if (messageStatusDuration > 0) {
+      messageStatusDuration--;
+      if (messageStatusDuration <= 0) {
+        messageStatus.value = '';
+      }
+    }
+
+    if (nextLightingUpdate-- <= 0){
+      nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
+      updateGameLighting();
+    }
+
+    updateCredits();
   }
 
   void readPlayerInputEdit() {
-    if (!client.edit.value)
+    if (!edit.value)
       return;
 
     if (gamestream.engine.keyPressedSpace) {
@@ -347,11 +411,293 @@ class Isometric {
     if (lightningFlashing) {
       gamestream.audio.thunder(1.0);
     } else {
-      gamestream.isometric.client.updateGameLighting();
+      updateGameLighting();
     }
   }
 
   void onChangedGameTimeEnabled(bool value){
     GameIsometricUI.timeVisible.value = value;
+  }
+
+  void applyEmissions(){
+    totalActiveLights = 0;
+    gamestream.isometric.scene.applyEmissionsLightSources();
+    gamestream.isometric.scene.applyEmissionsCharacters();
+    gamestream.isometric.applyEmissionGameObjects();
+    applyEmissionsProjectiles();
+    applyCharacterColors();
+    gamestream.isometric.particles.applyEmissionsParticles();
+
+    applyEmissionEditorSelectedNode();
+  }
+
+  void applyEmissionEditorSelectedNode() {
+    if (!editMode) return;
+    if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.colorType == EmissionType.None)){
+      gamestream.isometric.scene.emitLightAmbient(
+        index: gamestream.isometric.editor.nodeSelectedIndex.value,
+        // hue: gamestream.isometric.scene.ambientHue,
+        // saturation: gamestream.isometric.scene.ambientSaturation,
+        // value: gamestream.isometric.scene.ambientValue,
+        alpha: 0,
+      );
+    }
+  }
+
+  void applyCharacterColors(){
+    for (var i = 0; i < gamestream.isometric.scene.totalCharacters; i++){
+      applyCharacterColor(gamestream.isometric.scene.characters[i]);
+    }
+  }
+
+  void applyCharacterColor(IsometricCharacter character){
+    character.color = gamestream.isometric.scene.getRenderColorPosition(character);
+  }
+
+  void applyEmissionsProjectiles() {
+    for (var i = 0; i < gamestream.isometric.totalProjectiles; i++){
+      applyProjectileEmission(gamestream.isometric.projectiles[i]);
+    }
+  }
+
+  void applyProjectileEmission(IsometricProjectile projectile) {
+    if (projectile.type == ProjectileType.Orb) {
+      gamestream.isometric.scene.applyVector3Emission(projectile,
+        hue: 100,
+        saturation: 1,
+        value: 1,
+        alpha: 20,
+      );
+      return;
+    }
+    if (projectile.type == ProjectileType.Bullet) {
+      gamestream.isometric.scene.applyVector3EmissionAmbient(projectile,
+        alpha: 50,
+      );
+      return;
+    }
+    if (projectile.type == ProjectileType.Fireball) {
+      gamestream.isometric.scene.applyVector3Emission(projectile,
+        hue: 167,
+        alpha: 50,
+        saturation: 1,
+        value: 1,
+      );
+      return;
+    }
+    if (projectile.type == ProjectileType.Arrow) {
+      gamestream.isometric.scene.applyVector3EmissionAmbient(projectile,
+        alpha: 50,
+      );
+      return;
+    }
+  }
+
+  void clear() {
+    gamestream.isometric.player.position.x = -1;
+    gamestream.isometric.player.position.y = -1;
+    gamestream.isometric.player.gameDialog.value = null;
+    gamestream.isometric.player.npcTalkOptions.value = [];
+    gamestream.isometric.totalProjectiles = 0;
+    gamestream.isometric.particles.particles.clear();
+    gamestream.engine.zoom = 1;
+  }
+
+  int get bodyPartDuration =>  randomInt(120, 200);
+
+  void updateTorchEmissionIntensity(){
+    if (torchEmissionVal == 0) return;
+    torchEmissionT += torchEmissionVal;
+
+    if (
+    torchEmissionT < torchEmissionStart ||
+        torchEmissionT > torchEmissionEnd
+    ) {
+      torchEmissionT = clamp(torchEmissionT, torchEmissionStart, torchEmissionEnd);
+      torchEmissionVal = -torchEmissionVal;
+    }
+
+    gamestream.isometric.scene.torch_emission_intensity = interpolateDouble(
+      start: torchEmissionStart,
+      end: torchEmissionEnd,
+      t: torchEmissionT,
+    );
+  }
+
+  void toggleShadows () => gridShadows.value = !gridShadows.value;
+
+  var nextEmissionSmoke = 0;
+
+  void updateParticleEmitters(){
+    nextEmissionSmoke--;
+    if (nextEmissionSmoke > 0) return;
+    nextEmissionSmoke = 20;
+    final gameObjects = gamestream.isometric.gameObjects;
+    for (final gameObject in gameObjects){
+      if (!gameObject.active) continue;
+      if (gameObject.type != ObjectType.Barrel_Flaming) continue;
+      gamestream.isometric.particles.spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
+    }
+  }
+
+  // PROPERTIES
+
+  var _updateCredits = true;
+
+  void updateCredits() {
+    _updateCredits = !_updateCredits;
+    if (!_updateCredits) return;
+    final diff = playerCreditsAnimation.value - gamestream.isometric.player.credits.value;
+    if (diff == 0) return;
+    final diffAbs = diff.abs();
+    final speed = max(diffAbs ~/ 10, 1);
+    if (diff > 0) {
+      playerCreditsAnimation.value -= speed;
+    } else {
+      playerCreditsAnimation.value += speed;
+    }
+  }
+
+  void updateGameLighting(){
+    if (overrideColor.value) return;
+    if (gamestream.isometric.lightningFlashing.value) return;
+    const Seconds_Per_Hour = 3600;
+    const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
+    final totalSeconds = (gamestream.isometric.hours.value * Seconds_Per_Hour) + (gamestream.isometric.minutes.value * 60);
+
+    gamestream.isometric.scene.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
+        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
+
+    if (gamestream.isometric.rainType.value == RainType.Light){
+      gamestream.isometric.scene.ambientAlpha += 20;
+    }
+    if (gamestream.isometric.rainType.value == RainType.Heavy){
+      gamestream.isometric.scene.ambientAlpha += 40;
+    }
+    gamestream.isometric.scene.resetNodeColorsToAmbient();
+  }
+
+  void refreshRain(){
+    switch (gamestream.isometric.rainType.value) {
+      case RainType.None:
+        break;
+      case RainType.Light:
+        srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
+        if (gamestream.isometric.windTypeAmbient.value == WindType.Calm){
+          srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
+        } else {
+          srcXRainFalling = 1851;
+        }
+        break;
+      case RainType.Heavy:
+        srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
+        if (gamestream.isometric.windTypeAmbient.value == WindType.Calm){
+          srcXRainFalling = 1900;
+        } else {
+          srcXRainFalling = 1606;
+        }
+        break;
+    }
+  }
+
+  Duration? get connectionDuration {
+    if (timeConnectionEstablished == null) return null;
+    return DateTime.now().difference(timeConnectionEstablished!);
+  }
+
+  String get formattedConnectionDuration {
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds % 60;
+    final minutes = duration.inMinutes;
+    return 'minutes: $minutes, seconds: $seconds';
+  }
+
+  String formatAverageBufferSize(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds;
+    final bytesPerSecond = (bytes / seconds).round();
+    final bytesPerMinute = bytesPerSecond * 60;
+    final bytesPerHour = bytesPerMinute * 60;
+    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
+  }
+
+  String formatAverageBytePerSecond(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round());
+  }
+
+  String formatAverageBytePerMinute(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 60);
+  }
+
+  String formatAverageBytePerHour(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 3600);
+  }
+
+  void showMessage(String message){
+    messageStatus.value = '';
+    messageStatus.value = message;
+  }
+
+  void spawnConfettiPlayer() {
+    for (var i = 0; i < 10; i++){
+      gamestream.isometric.particles.spawnParticleConfetti(
+        gamestream.isometric.player.position.x,
+        gamestream.isometric.player.position.y,
+        gamestream.isometric.player.position.z,
+      );
+    }
+  }
+
+  void playSoundWindow() =>
+      gamestream.audio.click_sound_8(1);
+
+  void messageClear(){
+    writeMessage('');
+  }
+
+  void writeMessage(String value){
+    gamestream.isometric.messageStatus.value = value;
+  }
+
+  void playAudioError(){
+    gamestream.audio.errorSound15();
+  }
+
+  void onChangedAttributesWindowVisible(bool value){
+    gamestream.isometric.playSoundWindow();
+  }
+
+  void onChangedRaining(bool raining){
+    raining ? gamestream.isometric.scene.rainStart() : gamestream.isometric.scene.rainStop();
+    gamestream.isometric.scene.resetNodeColorsToAmbient();
+  }
+
+  void onChangedMessageStatus(String value){
+    if (value.isEmpty){
+      gamestream.isometric.messageStatusDuration = 0;
+    } else {
+      gamestream.isometric.messageStatusDuration = 150;
+    }
+  }
+
+  void onChangedAreaTypeVisible(bool value) =>
+      gamestream.isometric.areaTypeVisibleDuration = value
+          ? 150
+          : 0;
+
+  void onChangedCredits(int value){
+    gamestream.audio.coins.play();
   }
 }

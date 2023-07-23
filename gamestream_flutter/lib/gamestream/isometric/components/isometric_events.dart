@@ -1,20 +1,10 @@
 
-import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../isometric.dart';
 
-class IsometricEvents {
-
-  final Gamestream gamestream;
-  final IsometricClient clientState;
-  late final Isometric isometric;
-
-  IsometricEvents(this.clientState, this.gamestream) {
-    this.isometric = gamestream.isometric;
-  }
+extension IsometricEvents on Isometric {
 
   void onErrorFullscreenAuto(){
      // TODO show a dialog box asking the user to go fullscreen
@@ -31,11 +21,11 @@ class IsometricEvents {
   }
 
   void onChangedError(String error) {
-    clientState.messageStatus.value = error;
+    messageStatus.value = error;
     if (error.isNotEmpty) {
-      clientState.messageStatusDuration = 200;
+      messageStatusDuration = 200;
     } else {
-      clientState.messageStatusDuration = 0;
+      messageStatusDuration = 0;
     }
   }
 
@@ -46,7 +36,7 @@ class IsometricEvents {
     gamestream.isometric.minimap.generateSrcDst();
     gamestream.isometric.scene.refreshBakeMapLightSources();
 
-    if (clientState.raining.value) {
+    if (raining.value) {
       gamestream.isometric.scene.rainStop();
       gamestream.isometric.scene.rainStart();
     }
@@ -55,7 +45,7 @@ class IsometricEvents {
   }
 
   void onFootstep(double x, double y, double z) {
-    if (clientState.raining.value && (
+    if (raining.value && (
         gamestream.isometric.scene.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
             ||
             gamestream.isometric.scene.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
@@ -87,7 +77,7 @@ class IsometricEvents {
   void onGameEvent(int type, double x, double y, double z, double angle) {
     switch (type) {
       case GameEventType.Footstep:
-        gamestream.isometric.events.onFootstep(x, y, z);
+        onFootstep(x, y, z);
         return;
       case GameEventType.Attack_Performed:
         onAttackPerformed(x, y, z, angle);
@@ -124,7 +114,7 @@ class IsometricEvents {
         onNodeSet(x, y, z);
         return;
       case GameEventType.GameObject_Timeout:
-        isometric.particles.spawnBubbles(x, y, z);
+        particles.spawnBubbles(x, y, z);
         break;
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
@@ -203,7 +193,7 @@ class IsometricEvents {
         break;
 
       case GameEventType.Blue_Orb_Deactivated:
-        isometric.particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+        particles.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         for (var i = 0; i < 8; i++) {
           gamestream.isometric.particles.spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
@@ -212,13 +202,13 @@ class IsometricEvents {
 
       case GameEventType.Teleport_Start:
         for (var i = 0; i < 5; i++) {
-          isometric.particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
       case GameEventType.Teleport_End:
         for (var i = 0; i < 5; i++) {
-          isometric.particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
@@ -267,22 +257,22 @@ class IsometricEvents {
 
     if (NodeType.isMaterialWood(nodeType)){
       gamestream.audio.material_struck_wood.playXYZ(x, y, z);
-      isometric.particles.spawnParticleBlockWood(x, y, z);
+      particles.spawnParticleBlockWood(x, y, z);
     }
 
     if (NodeType.isMaterialGrass(nodeType)){
       gamestream.audio.grass_cut.playXYZ(x, y, z);
-      isometric.particles.spawnParticleBlockGrass(x, y, z);
+      particles.spawnParticleBlockGrass(x, y, z);
     }
 
     if (NodeType.isMaterialStone(nodeType)){
       gamestream.audio.material_struck_stone.playXYZ(x, y, z);
-      isometric.particles.spawnParticleBlockBrick(x, y, z);
+      particles.spawnParticleBlockBrick(x, y, z);
     }
 
     if (NodeType.isMaterialDirt(nodeType)){
       gamestream.audio.material_struck_dirt.playXYZ(x, y, z);
-      isometric.particles.spawnParticleBlockSand(x, y, z);
+      particles.spawnParticleBlockSand(x, y, z);
     }
   }
 
@@ -291,7 +281,7 @@ class IsometricEvents {
   }
 
   void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
-    isometric.particles.spawnParticleBubbles(
+    particles.spawnParticleBubbles(
       count: 3,
       x: x,
       y: y,
@@ -303,7 +293,7 @@ class IsometricEvents {
   void onSplash(double x, double y, double z) {
     for (var i = 0; i < 12; i++){
       final zv = randomBetween(1.5, 5);
-      isometric.particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
+      particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
     }
     return gamestream.audio.splash.playXYZ(x, y, z);
   }
@@ -317,15 +307,15 @@ class IsometricEvents {
     }
 
     if (attackType == WeaponType.Unarmed){
-      isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (attackType == WeaponType.Melee){
-      isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (WeaponType.isMelee(attackType)) {
-      isometric.particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
@@ -336,14 +326,14 @@ class IsometricEvents {
     final gunY = y - opp(angle, gun_distance);
 
     if (WeaponType.isFirearm(attackType)){
-      isometric.particles.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
-      isometric.particles.spawnParticleShell(gunX, gunY, z);
+      particles.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
+      particles.spawnParticleShell(gunX, gunY, z);
     }
     if (WeaponType.Firearms_Automatic.contains(attackType)){
-      isometric.particles.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
       return;
     }
-    isometric.particles.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
+    particles.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
@@ -355,19 +345,19 @@ class IsometricEvents {
     }
 
     if (attackType == WeaponType.Unarmed){
-      isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (attackType == WeaponType.Knife){
-      isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (WeaponType.isMelee(attackType)) {
-      isometric.particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
-    isometric.particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+    particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
     return;
   }
 
@@ -388,12 +378,12 @@ class IsometricEvents {
   }
 
   void onChangedWindType(int windType) {
-    clientState.refreshRain();
+    refreshRain();
   }
 
   void onChangedHour(int hour){
     if (gamestream.isometric.sceneUnderground.value) return;
-    clientState.updateGameLighting();
+    updateGameLighting();
   }
 
   void onChangedSeconds(int seconds){
@@ -403,9 +393,9 @@ class IsometricEvents {
   }
 
   void onChangedRain(int value) {
-    clientState.raining.value = value != RainType.None;
-    clientState.refreshRain();
-    clientState.updateGameLighting();
+    raining.value = value != RainType.None;
+    refreshRain();
+    updateGameLighting();
   }
 
   void onPlayerEvent(int event) {
@@ -424,7 +414,7 @@ class IsometricEvents {
         break;
       case PlayerEvent.Level_Increased:
         gamestream.audio.buff_1();
-        gamestream.isometric.client.writeMessage('Level Gained');
+        writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
         break;
@@ -467,13 +457,13 @@ class IsometricEvents {
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
-        gamestream.isometric.client.writeMessage('Not Enough Gold');
+        writeMessage('Not Enough Gold');
         break;
       case PlayerEvent.Inventory_Full:
-        gamestream.isometric.client.writeMessage('Inventory Full');
+        writeMessage('Inventory Full');
         break;
       case PlayerEvent.Invalid_Request:
-        gamestream.isometric.client.writeMessage('Invalid Request');
+        writeMessage('Invalid Request');
         break;
       case PlayerEvent.Character_State_Changing:
         gamestream.audio.change_cloths();
@@ -490,7 +480,7 @@ class IsometricEvents {
     // isometric.particles.spawnPurpleFireExplosion(x, y, z);
 
     for (var i = 0; i < 4; i++){
-      isometric.particles.spawnParticleBlood(
+      particles.spawnParticleBlood(
         x: x,
         y: y,
         z: z,
@@ -535,7 +525,7 @@ class IsometricEvents {
   }
 
   void onChangedRendersSinceUpdate(int value){
-    clientState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
+    triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
   void onChangedPlayerMessage(String value){
@@ -632,7 +622,7 @@ class IsometricEvents {
             duration: 10,
             animation: true,
           );
-          isometric.particles.spawnParticleLightEmissionAmbient(
+          particles.spawnParticleLightEmissionAmbient(
             x: gamestream.isometric.player.x,
             y: gamestream.isometric.player.y,
             z: gamestream.isometric.player.z,

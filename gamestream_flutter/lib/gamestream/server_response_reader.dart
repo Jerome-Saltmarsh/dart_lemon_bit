@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -468,7 +469,7 @@ extension ServerResponseReader on Gamestream {
     isometric.scene.nodeTypes[nodeIndex] = nodeType;
     isometric.scene.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
-    isometric.events.onChangedNodes();
+    isometric.onChangedNodes();
     isometric.editor.refreshNodeSelectedIndex();
   }
 
@@ -488,7 +489,7 @@ extension ServerResponseReader on Gamestream {
       final y = readDouble();
       final z = readDouble();
       final angle = readDouble() * degreesToRadians;
-      isometric.events.onGameEvent(type, x, y, z, angle);
+      isometric.onGameEvent(type, x, y, z, angle);
   }
 
   void readProjectiles(){
@@ -536,7 +537,7 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readPlayerEvent() {
-    isometric.events.onPlayerEvent(readByte());
+    isometric.onPlayerEvent(readByte());
   }
 
   void readIsometricPosition(IsometricPosition value){

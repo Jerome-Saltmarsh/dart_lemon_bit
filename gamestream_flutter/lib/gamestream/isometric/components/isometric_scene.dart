@@ -56,6 +56,7 @@ class IsometricScene {
   var onscreenNodes = 0;
   var torch_emission_intensity = 1.0;
 
+  final nodesChangedNotifier = Watch(0);
   final shadow = IsometricPosition();
   late var interpolationLength = 6;
 
@@ -448,7 +449,7 @@ class IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.client.interpolation_padding;
+    final padding = gamestream.isometric.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < gamestream.engine.Screen_Left - padding) return;
     if (rx > gamestream.engine.Screen_Right + padding) return;
@@ -456,7 +457,7 @@ class IsometricScene {
     if (ry < gamestream.engine.Screen_Top - padding) return;
     if (ry > gamestream.engine.Screen_Bottom + padding) return;
 
-    gamestream.isometric.client.totalActiveLights++;
+    gamestream.isometric.totalActiveLights++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -546,14 +547,14 @@ class IsometricScene {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometric.client.interpolation_padding;
+    final padding = gamestream.isometric.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < gamestream.engine.Screen_Left - padding) return;
     if (rx > gamestream.engine.Screen_Right + padding) return;
     final ry = getIndexRenderY(index);
     if (ry < gamestream.engine.Screen_Top - padding) return;
     if (ry > gamestream.engine.Screen_Bottom + padding) return;
-    gamestream.isometric.client.totalActiveLights++;
+    gamestream.isometric.totalActiveLights++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);

@@ -16,15 +16,15 @@ extension IsometricActions on Isometric {
   }
 
   void actionSetModePlay(){
-    client.edit.value = false;
+    edit.value = false;
   }
 
   void actionSetModeEdit(){
-    client.edit.value = true;
+    edit.value = true;
   }
 
   void actionToggleEdit() {
-    client.edit.value = !client.edit.value;
+    edit.value = !edit.value;
   }
 
   void messageBoxToggle(){

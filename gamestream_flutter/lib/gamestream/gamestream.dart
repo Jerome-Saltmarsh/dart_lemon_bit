@@ -3,6 +3,7 @@ import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -41,7 +42,7 @@ class Gamestream extends StatelessWidget with ByteReader {
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
   late final GameNetwork network;
   late final Games games;
-  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
+  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.onChangedRendersSinceUpdate);
   var engineBuilt = false;
 
   Gamestream() {
@@ -172,7 +173,7 @@ class Gamestream extends StatelessWidget with ByteReader {
        // This error appears when the game attempts to fullscreen
        // without the user having interacted first
        // TODO dispatch event on fullscreen failed
-       isometric.events.onErrorFullscreenAuto();
+       isometric.onErrorFullscreenAuto();
        return;
      }
      print(error.toString());
@@ -186,7 +187,7 @@ class Gamestream extends StatelessWidget with ByteReader {
        return;
 
      clearErrorTimer = 300;
-     isometric.client.playAudioError();
+     isometric.playAudioError();
      switch (gameError) {
        case GameError.Unable_To_Join_Game:
          gamestream.games.website.error.value = 'unable to join game';
@@ -217,7 +218,7 @@ class Gamestream extends StatelessWidget with ByteReader {
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
          // gamestream.isometric.ui.mouseOverDialog.setFalse();
-         isometric.client.timeConnectionEstablished = DateTime.now();
+         isometric.timeConnectionEstablished = DateTime.now();
          audio.enabledSound.value = true;
          if (!engine.isLocalHost) {
            engine.fullScreenEnter();
@@ -232,8 +233,8 @@ class Gamestream extends StatelessWidget with ByteReader {
          engine.cursorType.value = CursorType.Basic;
          engine.fullScreenExit();
          isometric.player.active.value = false;
-         isometric.client.timeConnectionEstablished = null;
-         isometric.client.clear();
+         isometric.timeConnectionEstablished = null;
+         isometric.clear();
          isometric.clean();
          isometric.gameObjects.clear();
          isometric.sceneEditable.value = false;

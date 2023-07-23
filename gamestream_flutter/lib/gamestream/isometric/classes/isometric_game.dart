@@ -25,7 +25,7 @@ class IsometricGame extends Game {
 
   bool get debugMode => gamestream.isometric.player.debugging.value;
 
-  bool get editMode => isometric.client.edit.value;
+  bool get editMode => isometric.edit.value;
 
   IsometricPlayer get player => isometric.player;
 
@@ -36,7 +36,7 @@ class IsometricGame extends Game {
   }
 
   void updateCursorType() {
-    isometric.client.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
+    isometric.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
   }
 
   @override
@@ -77,10 +77,10 @@ class IsometricGame extends Game {
   @override
   Widget buildUI(BuildContext context) => StackFullscreen(children: [
       buildWatchBool(
-          isometric.client.triggerAlarmNoMessageReceivedFromServer,
+          isometric.triggerAlarmNoMessageReceivedFromServer,
           GameIsometricUI.buildDialogFramesSinceUpdate,
       ),
-      WatchBuilder(isometric.client.edit, (edit) =>
+      WatchBuilder(isometric.edit, (edit) =>
         edit ? isometric.editor.buildEditor() : customBuildUI(context)),
       Positioned(
           top: 16,
@@ -152,7 +152,7 @@ class IsometricGame extends Game {
       return;
     }
 
-    if (isometric.client.editMode){
+    if (isometric.editMode){
       isometric.editor.onKeyPressedModeEdit(key);
       return;
     }
@@ -171,7 +171,7 @@ class IsometricGame extends Game {
   }
 
   void toggleEditMode() {
-    isometric.client.edit.value = !editMode;
+    isometric.edit.value = !editMode;
   }
 
   /// override to customize cursor type

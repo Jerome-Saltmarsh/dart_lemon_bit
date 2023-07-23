@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 
 extension IsometricResponseReader on Gamestream {
@@ -165,10 +166,10 @@ extension IsometricResponseReader on Gamestream {
     isometric.scene.colorStack = Uint16List(totalNodes);
     isometric.scene.ambientStack = Uint16List(totalNodes);
     isometric.scene.total = totalNodes;
-    isometric.client.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
-    isometric.events.onChangedNodes();
+    isometric.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
+    isometric.onChangedNodes();
     isometric.scene.refreshNodeVariations();
-    isometric.client.nodesChangedNotifier.value++;
+    isometric.scene.nodesChangedNotifier.value++;
     isometric.particles.particles.clear();
     io.recenterCursor();
   }

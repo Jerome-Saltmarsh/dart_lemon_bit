@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -58,14 +59,14 @@ class IsometricPlayer {
   final controlsCanTargetEnemies = Watch(false);
   final controlsRunInDirectionEnabled = Watch(false);
 
-  late final message = Watch('', onChanged: gamestream.isometric.events.onChangedPlayerMessage);
+  late final message = Watch('', onChanged: gamestream.isometric.onChangedPlayerMessage);
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
-  late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
+  late final active = Watch(false, onChanged: gamestream.isometric.onChangedPlayerActive);
   late final alive = Watch(true);
-  late final weapon = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weapon = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
+  late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
+  late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
+  late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
 
   int get areaNodeIndex => (indexRow * gamestream.isometric.scene.totalColumns) + indexColumn;
 
