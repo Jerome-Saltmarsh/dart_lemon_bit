@@ -3,6 +3,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
@@ -22,7 +23,12 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 import 'ui/isometric_constants.dart';
 
-class Isometric with IsometricScene, IsometricCharacters, IsometricParticles {
+class Isometric with
+    IsometricScene,
+    IsometricCharacters,
+    IsometricParticles,
+    IsometricAnimation
+{
 
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
@@ -68,7 +74,6 @@ class Isometric with IsometricScene, IsometricCharacters, IsometricParticles {
 
   final gameObjects = <IsometricGameObject>[];
 
-  final animation = IsometricAnimation();
   final debug = IsometricDebug();
   final minimap = IsometricMinimap();
   final editor = IsometricEditor();
@@ -133,7 +138,7 @@ class Isometric with IsometricScene, IsometricCharacters, IsometricParticles {
 
     gamestream.audio.update();
     updateParticles();
-    animation.updateAnimationFrame();
+    updateAnimationFrame();
     updateProjectiles();
     updateGameObjects();
     player.updateMessageTimer();

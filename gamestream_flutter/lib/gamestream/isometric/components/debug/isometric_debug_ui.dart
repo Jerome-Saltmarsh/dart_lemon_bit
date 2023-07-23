@@ -4,7 +4,6 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_percentage.dart';
-import 'package:gamestream_flutter/gamestream/server_response_reader.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -124,9 +123,9 @@ extension isometricDebugUI on IsometricDebug {
       buildWatch(gamestream.bufferSize, (bytes){
         bytes--; // remove the final end byte
         var text = '';
-        for (var i = 0; i < ServerResponseReader.serverResponseStackIndex; i++){
-          final serverResponse = ServerResponseReader.serverResponseStack[i];
-          final length = ServerResponseReader.serverResponseStackLength[i];
+        for (var i = 0; i < gamestream.serverResponseStackIndex; i++){
+          final serverResponse = gamestream.serverResponseStack[i];
+          final length = gamestream.serverResponseStackLength[i];
           final lengthPercentage = formatPercentage(length / bytes);
           text += '${ServerResponse.getName(serverResponse)}, ($length / $bytes, $lengthPercentage\n';
         }

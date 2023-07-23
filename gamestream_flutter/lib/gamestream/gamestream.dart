@@ -22,6 +22,11 @@ import 'network/game_network.dart';
 import 'operation_status.dart';
 
 class Gamestream extends StatelessWidget with ByteReader {
+
+  final serverResponseStack = Uint8List(1000);
+  final serverResponseStackLength = Uint16List(1000);
+  var serverResponseStackIndex = 0;
+
   var previousServerResponse = -1;
   var renderResponse = false;
   var clearErrorTimer = -1;

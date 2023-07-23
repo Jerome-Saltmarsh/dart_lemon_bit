@@ -1,7 +1,7 @@
 
 import '../../../library.dart';
 
-class IsometricAnimation {
+mixin IsometricAnimation {
   var animationFrame = 0;
   var animationFrameWater = 0;
   var animationFrameWaterHeight = 0;

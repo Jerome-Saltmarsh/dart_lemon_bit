@@ -762,7 +762,7 @@ class RendererNodes extends IsometricRenderer {
     gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: windType == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
-      srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+      srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (gamestream.isometric.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: currentNodeDstX,
@@ -916,7 +916,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeType.Fireplace:
         renderStandardNode(
           srcX: AtlasNode.Campfire_X,
-          srcY: AtlasNode.Node_Campfire_Y + ((gamestream.isometric.animation.animationFrame % 6) * 72),
+          srcY: AtlasNode.Node_Campfire_Y + ((gamestream.isometric.animationFrame % 6) * 72),
         );
         return;
       case NodeType.Boulder:
@@ -1662,7 +1662,7 @@ class RendererNodes extends IsometricRenderer {
         return;
       default:
         renderStandardNode(
-          srcX: AtlasNodeX.Grass_Long + ((((row - column) + gamestream.isometric.animation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
+          srcX: AtlasNodeX.Grass_Long + ((((row - column) + gamestream.isometric.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
           srcY: 0,
         );
         return;
@@ -1674,11 +1674,11 @@ class RendererNodes extends IsometricRenderer {
       gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + column) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((gamestream.isometric.animationFrame + row + column) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
-        dstY: currentNodeDstY + gamestream.isometric.animation.animationFrameWaterHeight + 14,
+        dstY: currentNodeDstY + gamestream.isometric.animationFrameWaterHeight + 14,
         anchorY: 0.3,
         color: colorCurrent,
       );
@@ -1686,14 +1686,14 @@ class RendererNodes extends IsometricRenderer {
     }
     renderStandardNode(
       srcX: gamestream.isometric.srcXRainLanding,
-      srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((gamestream.isometric.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   void renderNodeRainFalling() {
     renderStandardNode(
       srcX: gamestream.isometric.srcXRainFalling,
-      srcY: 72.0 * ((gamestream.isometric.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((gamestream.isometric.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }
 
@@ -1702,7 +1702,7 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
+    var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
     gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
@@ -1718,7 +1718,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeTopPine() {
-    var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animation.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
+    var shift = IsometricAnimation.treeAnimation[((row - column) + gamestream.isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
     gamestream.engine.renderSprite(
       image: Images.atlas_nodes,
       srcX: 1262,
@@ -2388,7 +2388,7 @@ class RendererNodes extends IsometricRenderer {
       gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: 1552,
-        srcY: 432 + (gamestream.isometric.animation.animationFrame6 * 72.0), // TODO Optimize
+        srcY: 432 + (gamestream.isometric.animationFrame6 * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
@@ -2401,11 +2401,11 @@ class RendererNodes extends IsometricRenderer {
       gamestream.engine.renderSprite(
         image: Images.atlas_nodes,
         srcX: AtlasNodeX.Water,
-        srcY: AtlasNodeY.Water + (((gamestream.isometric.animation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
+        srcY: AtlasNodeY.Water + (((gamestream.isometric.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
-        dstY: currentNodeDstY + gamestream.isometric.animation.animationFrameWaterHeight + 14,
+        dstY: currentNodeDstY + gamestream.isometric.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
         color: colorCurrent,
       );

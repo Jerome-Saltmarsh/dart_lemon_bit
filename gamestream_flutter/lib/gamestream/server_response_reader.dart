@@ -15,10 +15,6 @@ import 'gamestream.dart';
 
 extension ServerResponseReader on Gamestream {
 
-  static final serverResponseStack = Uint8List(1000);
-  static final serverResponseStackLength = Uint16List(1000);
-  static var serverResponseStackIndex = 0;
-
   void readServerResponse(Uint8List values) {
     assert (values.isNotEmpty);
     updateFrame.value++;
@@ -604,12 +600,4 @@ extension ServerResponseReader on Gamestream {
 }
 
 
-int readFirstFiveBits(int byte) {
-  if (byte < 0 || byte > 255) {
-    throw ArgumentError('Invalid byte value. Expected values between 0 and 255.');
-  }
-
-  int result = byte & 0x11111;
-  return result;
-}
 
