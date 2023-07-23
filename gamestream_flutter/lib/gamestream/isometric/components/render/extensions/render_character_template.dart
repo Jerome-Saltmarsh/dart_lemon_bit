@@ -100,7 +100,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       case CharacterState.Stunned:
         frameLegs = 0;
         frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
-        gamestream.renderer.renderStarsV3(character);
+        gamestream.renderStarsV3(character);
         break;
     }
 
@@ -158,11 +158,11 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (character.z >= IsometricConstants.Node_Height){
 
-      final lightIndex = scene.getNearestLightSourcePosition(character, maxDistance: 5);
+      final lightIndex = isometric.getNearestLightSourcePosition(character, maxDistance: 5);
 
       if (lightIndex != -1){
-         final lightRow = scene.getIndexRow(lightIndex);
-         final lightColumn = scene.getIndexColumn(lightIndex);
+         final lightRow = isometric.getIndexRow(lightIndex);
+         final lightColumn = isometric.getIndexColumn(lightIndex);
 
          final lightX = (lightRow * Node_Size) + Node_Size_Half;
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;

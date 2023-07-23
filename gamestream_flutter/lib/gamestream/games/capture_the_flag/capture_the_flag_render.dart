@@ -86,7 +86,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     if (activatedPowerType == null) return;
 
     if (playerActivatedPowerRange.value > 0) {
-      isometric.renderer.renderCircle(
+      isometric.renderCircle(
         player.x,
         player.y,
         player.z,
@@ -103,7 +103,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
       case PowerMode.Targeted_Enemy:
         if (playerActivatedTargetSet) {
           gamestream.engine.setPaintColor(Colors.red);
-          isometric.renderer.renderCircleAtPosition(
+          isometric.renderCircleAtPosition(
             position: playerActivatedTarget,
             radius: 40,
           );
@@ -112,14 +112,14 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
       case PowerMode.Targeted_Ally:
         if (playerActivatedTargetSet) {
           gamestream.engine.setPaintColor(Colors.green);
-          isometric.renderer.renderCircleAtPosition(
+          isometric.renderCircleAtPosition(
             position: playerActivatedTarget,
             radius: 40,
           );
         }
         break;
       case PowerMode.Positional:
-        isometric.renderer.renderCircle(
+        isometric.renderCircle(
           playerActivatedPowerX.value,
           playerActivatedPowerY.value,
           player.z,

@@ -122,7 +122,7 @@ class IsometricDebug {
       final pathTargetIndexValue = pathTargetIndex.value;
       if (pathTargetIndexValue != -1) {
         final scene = isometric;
-        isometric.renderer.renderWireFrameBlue(
+        isometric.renderWireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
           scene.getIndexRow(pathTargetIndexValue),
           scene.getIndexColumn(pathTargetIndexValue),

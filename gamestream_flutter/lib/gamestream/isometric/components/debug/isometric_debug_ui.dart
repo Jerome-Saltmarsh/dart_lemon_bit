@@ -463,13 +463,13 @@ extension isometricDebugUI on IsometricDebug {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.renderer.rendererNodes.orderShiftY))),
+        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.rendererNodes.orderShiftY))),
         onPressed(
-          action: isometric.renderer.rendererNodes.increaseOrderShiftY,
+          action: isometric.rendererNodes.increaseOrderShiftY,
           child: buildText('increase'),
         ),
         onPressed(
-          action: isometric.renderer.rendererNodes.decreaseOrderShiftY,
+          action: isometric.rendererNodes.decreaseOrderShiftY,
           child: buildText('decrease'),
         ),
         onPressed(

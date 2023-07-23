@@ -17,23 +17,15 @@ import 'render/renderer_nodes.dart';
 import 'render/renderer_particles.dart';
 import 'render/renderer_projectiles.dart';
 
-class IsometricRender {
+mixin IsometricRender {
   var totalRemaining = 0;
   var totalIndex = 0;
-  final RendererNodes rendererNodes;
-  final RendererProjectiles rendererProjectiles;
-  final RendererCharacters rendererCharacters;
-  final RendererParticles rendererParticles;
-  final RendererGameObjects rendererGameObjects;
+  late final RendererNodes rendererNodes;
+  late final RendererProjectiles rendererProjectiles;
+  late final RendererCharacters rendererCharacters;
+  late final RendererParticles rendererParticles;
+  late final RendererGameObjects rendererGameObjects;
   late IsometricRenderer next = rendererNodes;
-
-  IsometricRender({
-    required this.rendererCharacters,
-    required this.rendererGameObjects,
-    required this.rendererParticles,
-    required this.rendererNodes,
-    required this.rendererProjectiles
-  });
 
   Color get color => gamestream.engine.paint.color;
 
@@ -368,21 +360,6 @@ class IsometricRender {
         scale: 0.4,
       );
 
-  void renderForeground(Canvas canvas, Size size) {
-
-    if (gamestream.io.inputModeKeyboard){
-      if (gamestream.engine.mouseOverCanvas){
-        renderCursor(canvas);
-      }
-    }
-
-    if (gamestream.io.inputModeTouch) {
-      gamestream.io.touchController.render(canvas);
-    }
-
-    playerAimTargetNameText();
-  }
-
   void playerAimTargetNameText(){
     if (gamestream.player.aimTargetCategory == TargetCategory.Nothing)
       return;
@@ -433,7 +410,7 @@ class IsometricRender {
     var i = 0;
     for (var row = 0; row < gamestream.totalRows; row++){
       for (var column = 0; column < gamestream.totalColumns; column++){
-        gamestream.renderer.renderTextXYZ(
+        gamestream.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
@@ -494,7 +471,7 @@ class IsometricRender {
       y1 = y2;
       i1 = i2;
     }
-    gamestream.renderer.renderCircle32(x1, y1, z);
+    gamestream.renderCircle32(x1, y1, z);
   }
 
   void renderCharacterHealthBar(IsometricCharacter character) =>
@@ -550,14 +527,14 @@ class IsometricRender {
     }
 
     renderEditWireFrames();
-    gamestream.renderer.renderMouseWireFrame();
+    gamestream.renderMouseWireFrame();
   }
 
   void renderEditWireFrames() {
     for (var z = 0; z < gamestream.editor.z; z++) {
-      gamestream.renderer.renderWireFrameBlue(z, gamestream.editor.row, gamestream.editor.column);
+      gamestream.renderWireFrameBlue(z, gamestream.editor.row, gamestream.editor.column);
     }
-    gamestream.renderer.renderWireFrameRed(gamestream.editor.row, gamestream.editor.column, gamestream.editor.z);
+    gamestream.renderWireFrameRed(gamestream.editor.row, gamestream.editor.column, gamestream.editor.z);
   }
 
   void renderText({required String text, required double x, required double y}){
@@ -597,6 +574,22 @@ class IsometricRender {
   double getScreenX(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderX(x, y, z));
   /// converts grid coordinates to screen space
   double getScreenY(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderY(x, y, z));
+
+  void renderForeground(Canvas canvas, Size size) {
+
+    renderCursor(canvas);
+    // if (gamestream.io.inputModeKeyboard){
+    //   if (gamestream.engine.mouseOverCanvas){
+    //     renderCursor(canvas);
+    //   }
+    // }
+
+    if (gamestream.io.inputModeTouch) {
+      gamestream.io.touchController.render(canvas);
+    }
+
+    playerAimTargetNameText();
+  }
 
 }
 

@@ -156,14 +156,14 @@ mixin IsometricScene {
     final indexColumn = getIndexRow(index);
     final i = indexRow * totalColumns + indexColumn;
     // TODO REFACTOR
-    if (!gamestream.renderer.rendererNodes.island[i])
+    if (!gamestream.rendererNodes.island[i])
       return true;
     final indexZ = getIndexZ(index);
     if (indexZ > gamestream.player.indexZ + 2)
       return false;
 
     // TODO REFACTOR
-    return gamestream.renderer.rendererNodes.visible3D[index];
+    return gamestream.rendererNodes.visible3D[index];
   }
 
   int getHeightAt(int row, int column){

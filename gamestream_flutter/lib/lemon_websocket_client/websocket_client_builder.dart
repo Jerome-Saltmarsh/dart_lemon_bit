@@ -3,7 +3,6 @@ import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../gamestream/isometric/components/functions/format_bytes.dart';

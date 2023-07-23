@@ -21,7 +21,6 @@ class GameScissorsPaperRock {
     gamestream.engine.targetZoom = 0.5;
     gamestream.engine.onDrawCanvas = render;
     gamestream.engine.buildUI = buildUI;
-    gamestream.engine.onDrawForeground = renderForeground;
   }
 
   static const Radius_Min = 10.0;

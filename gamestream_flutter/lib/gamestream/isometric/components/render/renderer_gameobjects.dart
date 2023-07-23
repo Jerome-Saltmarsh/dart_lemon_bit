@@ -13,7 +13,7 @@ class RendererGameObjects extends IsometricRenderer {
 
   static final gameObjects = gamestream.gameObjects;
 
-  RendererGameObjects(super.scene);
+  RendererGameObjects(super.isometric);
 
   @override
   int getTotal() => gameObjects.length;
@@ -48,8 +48,8 @@ class RendererGameObjects extends IsometricRenderer {
       srcHeight: src[Atlas.SrcHeight],
       scale: src[Atlas.SrcScale],
       color: switch (gameObject.colorType){
-         EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
-         EmissionType.None => scene.getRenderColorPosition(gameObject),
+         EmissionType.Ambient => isometric.getRenderColorPosition(gameObject),
+         EmissionType.None => isometric.getRenderColorPosition(gameObject),
          EmissionType.Color => gameObject.emissionColor,
          _ => throw Exception()
       }
@@ -57,11 +57,11 @@ class RendererGameObjects extends IsometricRenderer {
 
 
     if (gameObject.maxHealth > 0) {
-        renderer.renderHealthBarPosition(
+      isometric.renderHealthBarPosition(
           position: gameObject,
           percentage: gameObject.healthPercentage,
         );
-        renderer.renderTextPosition(gameObject, formatPercentage(gameObject.healthPercentage));
+      isometric.renderTextPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     }
 
     //
@@ -104,7 +104,7 @@ class RendererGameObjects extends IsometricRenderer {
   void updateFunction() {
     gameObject = gameObjects[index];
 
-    while (!gameObject.active || !gameObject.onscreen || !scene.isPerceptiblePosition(gameObject)) {
+    while (!gameObject.active || !gameObject.onscreen || !isometric.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];

@@ -129,7 +129,7 @@ class Engine extends StatelessWidget {
   final cursorType = Watch(CursorType.Precise);
   final notifierPaintFrame = ValueNotifier<int>(0);
   final notifierPaintForeground = ValueNotifier<int>(0);
-  final screen = _Screen();
+  final screen = Screen();
   var cameraX = 0.0;
   var cameraY = 0.0;
   var updateFrame = 0;
@@ -1241,7 +1241,7 @@ typedef CallbackOnScreenSizeChanged = void Function(
 // global typedefs
 typedef DrawCanvas(Canvas canvas, Size size);
 
-class _Screen {
+class Screen {
   var initialized = false;
   var width = 0.0;
   var height = 0.0;

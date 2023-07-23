@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -14,8 +13,6 @@ import 'package:gamestream_flutter/library.dart';
 import '../ui/game_isometric_ui.dart';
 
 class IsometricGame extends Game {
-
-  IsometricRender get renderer => isometric.renderer;
 
   final Isometric isometric;
 
@@ -31,7 +28,7 @@ class IsometricGame extends Game {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    isometric.drawCanvas(canvas, size);
+    // isometric.drawCanvas(canvas, size);
     updateCursorType();
   }
 
@@ -39,9 +36,8 @@ class IsometricGame extends Game {
     isometric.cursorType = mapTargetCategoryToCursorType(isometric.player.aimTargetCategory);
   }
 
-  @override
   void renderForeground(Canvas canvas, Size size) {
-    isometric.renderer.renderForeground(canvas, size);
+    isometric.renderForeground(canvas, size);
   }
 
   void update() {

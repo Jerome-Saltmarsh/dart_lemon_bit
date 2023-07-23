@@ -179,13 +179,6 @@ extension WebsiteUI on WebsiteGame {
         child: buildText(message, color: IsometricColors.white80, align: TextAlign.center),
       );
 
-  Widget buildLoadingPage() =>
-      Container(
-        color: IsometricColors.black,
-        alignment: Alignment.center,
-        child: buildText('LOADING GAMESTREAM'),
-      );
-
   Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
       GameType.Fight2D: 'images/website/game-fight2d.png',
       GameType.Capture_The_Flag: 'images/website/game-isometric.png',

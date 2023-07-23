@@ -9,35 +9,35 @@ import 'package:gamestream_flutter/library.dart';
 class RendererCharacters extends IsometricRenderer {
   late IsometricCharacter character;
 
-  RendererCharacters(super.scene);
+  RendererCharacters(super.isometric);
 
   @override
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    final totalCharacters = scene.totalCharacters;
-    final characters = scene.characters;
+    final totalCharacters = isometric.totalCharacters;
+    final characters = isometric.characters;
 
     while (index < totalCharacters){
       character = characters[index];
       order = character.sortOrder;
-      if (scene.isPerceptiblePosition(character))
+      if (isometric.isPerceptiblePosition(character))
         break;
       index++;
     }
   }
 
   @override
-  int getTotal() => scene.totalCharacters;
+  int getTotal() => isometric.totalCharacters;
 
   void renderCurrentCharacter(){
 
     if (!character.allie && gamestream.options.renderHealthBarEnemies) {
-      renderer.renderCharacterHealthBar(character);
+      isometric.renderCharacterHealthBar(character);
     }
 
     if (character.allie && gamestream.options.renderHealthBarAllies) {
-      renderer.renderCharacterHealthBar(character);
+      isometric.renderCharacterHealthBar(character);
     }
 
     if (character.spawning) {
@@ -192,7 +192,7 @@ class RendererCharacters extends IsometricRenderer {
     }
 
     if (character.state == CharacterState.Stunned){
-      gamestream.renderer.renderStarsV3(character);
+      gamestream.renderStarsV3(character);
       gamestream.engine.renderSprite(
         image: Images.character_dog,
         dstX: character.renderX,
@@ -296,7 +296,7 @@ class RendererCharacters extends IsometricRenderer {
           framesPerDirection: framesPerDirection,
         );
       case CharacterState.Stunned:
-        gamestream.renderer.renderStarsV3(character);
+        gamestream.renderStarsV3(character);
 
         return single(
             frame: 1,
