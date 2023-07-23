@@ -4,6 +4,6 @@ import 'library.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(gamestream);
+  runApp(IsometricProvider(gamestream));
 }
 

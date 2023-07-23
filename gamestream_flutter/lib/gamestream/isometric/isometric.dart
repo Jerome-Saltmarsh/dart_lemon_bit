@@ -22,6 +22,7 @@ import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import '../../lemon_websocket_client/websocket_client_builder.dart';
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas.dart';
 import 'atlases/atlas_nodes.dart';
@@ -29,15 +30,14 @@ import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/render/classes/template_animation.dart';
 import 'components/render/renderer_characters.dart';
+import 'components/render/renderer_gameobjects.dart';
+import 'components/render/renderer_particles.dart';
+import 'components/src.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
 import 'mixins/src.dart';
 import 'ui/game_isometric_minimap.dart';
-import 'components/render/renderer_gameobjects.dart';
-import 'components/render/renderer_particles.dart';
-import 'components/src.dart';
 import 'ui/isometric_constants.dart';
-import '../../lemon_websocket_client/websocket_client_builder.dart';
 
 class Isometric extends WebsocketClientBuilder with
     IsometricScene,
