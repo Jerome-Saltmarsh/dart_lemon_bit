@@ -11,7 +11,7 @@ import 'functions/render_shadow.dart';
 class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;
 
-  static final gameObjects = gamestream.isometric.server.gameObjects;
+  static final gameObjects = gamestream.isometric.gameObjects;
 
   RendererGameObjects(super.scene);
 

@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'components/render/renderer_characters.dart';
+import 'enums/emission_type.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'classes/isometric_particles.dart';
 import 'components/render/renderer_gameobjects.dart';
@@ -17,6 +18,9 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 
 class Isometric {
+
+  final gameObjects = <IsometricGameObject>[];
+
   final animation = IsometricAnimation();
   final debug = IsometricDebug();
   final client = IsometricClient();
@@ -45,12 +49,10 @@ class Isometric {
       /// this makes them much smoother as they don't freeze
       // particles.updateParticles();
     }
-    // client.interpolatePlayer();
     camera.update();
     renderer.render3D();
     renderer.renderEditMode();
     renderer.renderMouseTargetName();
-    renderer.renderPlayerEnergy();
 
     debug.render(renderer);
 
@@ -82,7 +84,7 @@ class Isometric {
     particles.updateParticles();
     animation.updateAnimationFrame();
     server.updateProjectiles();
-    server.updateGameObjects();
+    updateGameObjects();
     client.update();
     player.updateMessageTimer();
     readPlayerInputEdit();
@@ -190,8 +192,58 @@ class Isometric {
     player.indexColumn = 0;
     scene.characters.clear();
     server.projectiles.clear();
-    server.gameObjects.clear();
+    gameObjects.clear();
     server.totalProjectiles = 0;
     scene.totalCharacters = 0;
+  }
+
+  IsometricGameObject findOrCreateGameObject(int id) {
+    final instance = findGameObjectById(id) ?? IsometricGameObject(id);
+    gameObjects.add(instance);
+    return instance;
+  }
+
+  IsometricGameObject? findGameObjectById(int id) {
+    for (final gameObject in gameObjects) {
+      if (gameObject.id == id) return gameObject;
+    }
+    return null;
+  }
+
+  void removeGameObjectById(int id )=>
+      gameObjects.removeWhere((element) => element.id == id);
+
+  void applyEmissionGameObjects() {
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+      switch (gameObject.colorType) {
+        case EmissionType.None:
+          continue;
+        case EmissionType.Color:
+          scene.applyVector3Emission(
+            gameObject,
+            hue: gameObject.emissionHue,
+            saturation: gameObject.emissionSat,
+            value: gameObject.emissionVal,
+            alpha: gameObject.emissionAlp,
+            intensity: gameObject.emission_intensity,
+          );
+          continue;
+        case EmissionType.Ambient:
+          scene.applyVector3EmissionAmbient(gameObject,
+            alpha: gameObject.emissionAlp,
+            intensity: gameObject.emission_intensity,
+          );
+          continue;
+      }
+    }
+  }
+
+  /// TODO Optimize
+  void updateGameObjects() {
+    for (final gameObject in gameObjects){
+      if (!gameObject.active) continue;
+      gameObject.update();
+    }
   }
 }

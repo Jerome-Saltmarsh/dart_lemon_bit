@@ -55,7 +55,7 @@ mixin class IsometricClient {
     totalActiveLights = 0;
     gamestream.isometric.scene.applyEmissionsLightSources();
     gamestream.isometric.scene.applyEmissionsCharacters();
-    gamestream.isometric.server.applyEmissionGameObjects();
+    gamestream.isometric.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
     gamestream.isometric.particles.applyEmissionsParticles();
@@ -164,7 +164,8 @@ mixin class IsometricClient {
     nextEmissionSmoke--;
     if (nextEmissionSmoke > 0) return;
     nextEmissionSmoke = 20;
-    for (final gameObject in gamestream.isometric.server.gameObjects){
+    final gameObjects = gamestream.isometric.gameObjects;
+    for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ObjectType.Barrel_Flaming) continue;
       gamestream.isometric.particles.spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);

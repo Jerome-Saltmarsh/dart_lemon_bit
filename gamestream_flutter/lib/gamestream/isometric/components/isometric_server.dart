@@ -2,9 +2,6 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.d
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../enums/emission_type.dart';
-import '../classes/isometric_character.dart';
-import '../classes/isometric_gameobject.dart';
 import '../classes/isometric_position.dart';
 import '../classes/isometric_projectile.dart';
 
@@ -15,7 +12,6 @@ class IsometricServer {
   var inventory = Uint16List(0);
   var inventoryQuantity = Uint16List(0);
 
-  final gameObjects = <IsometricGameObject>[];
   final projectiles = <IsometricProjectile>[];
   final playerExperiencePercentage = Watch(0.0);
   final sceneEditable = Watch(false);
@@ -33,42 +29,6 @@ class IsometricServer {
   late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
   late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
   late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
-
-  void applyEmissionGameObjects() {
-    for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
-      switch (gameObject.colorType) {
-        case EmissionType.None:
-          continue;
-        case EmissionType.Color:
-          gamestream.isometric.scene.applyVector3Emission(
-            gameObject,
-            hue: gameObject.emissionHue,
-            saturation: gameObject.emissionSat,
-            value: gameObject.emissionVal,
-            alpha: gameObject.emissionAlp,
-            intensity: gameObject.emission_intensity,
-          );
-          continue;
-        case EmissionType.Ambient:
-          gamestream.isometric.scene.applyVector3EmissionAmbient(gameObject,
-            alpha: gameObject.emissionAlp,
-            intensity: gameObject.emission_intensity,
-          );
-          continue;
-      }
-    }
-  }
-
-  /// TODO Optimize
-  void updateGameObjects() {
-    for (final gameObject in gameObjects){
-      if (!gameObject.active) continue;
-      gameObject.update();
-      // if (gameObject.type != ItemType.Weapon_Thrown_Grenade) continue;
-      // projectShadow(gameObject);
-    }
-  }
 
   void projectShadow(IsometricPosition v3){
     if (!gamestream.isometric.scene.inBoundsPosition(v3)) return;
@@ -116,27 +76,10 @@ class IsometricServer {
     }
   }
 
-  IsometricGameObject findOrCreateGameObject(int id) {
-    final instance = findGameObjectById(id) ?? IsometricGameObject(id);
-    gameObjects.add(instance);
-    return instance;
-  }
-
-  IsometricGameObject? findGameObjectById(int id) {
-    for (final gameObject in gameObjects) {
-      if (gameObject.id == id) return gameObject;
-    }
-    return null;
-  }
-
   void clean() {
-    gameObjects.clear();
     gamestream.isometric.scene.colorStackIndex = -1;
     gamestream.isometric.scene.ambientStackIndex = -1;
   }
-
-  void removeGameObjectById(int id )=>
-      gameObjects.removeWhere((element) => element.id == id);
 
   void updateProjectiles() {
     for (var i = 0; i < totalProjectiles; i++) {

@@ -51,7 +51,7 @@ extension IsometricResponseReader on Gamestream {
         break;
 
       case IsometricResponse.GameObjects:
-        isometric.server.gameObjects.clear();
+        isometric.gameObjects.clear();
         break;
 
       case IsometricResponse.Player_Initialized:

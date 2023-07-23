@@ -262,7 +262,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: gamestream.isometric.server.gameObjects.map((e){
+              children: gamestream.isometric.gameObjects.map((e){
                 return onPressed(
                     action: () {
 

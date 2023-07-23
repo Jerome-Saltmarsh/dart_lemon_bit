@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'games/game_scissors_paper_rock.dart';
 import 'isometric/classes/isometric_character.dart';
-import 'isometric/components/isometric_player_score.dart';
 import 'isometric/classes/isometric_projectile.dart';
 
 import 'gamestream.dart';
@@ -125,7 +124,7 @@ extension ServerResponseReader on Gamestream {
           engine.downloadBytes(bytes, name: '$name.scene');
           break;
         case ServerResponse.GameObject_Deleted:
-          isometric.server.removeGameObjectById(readUInt16());
+          isometric.removeGameObjectById(readUInt16());
           break;
         case ServerResponse.Game_Error:
           final errorTypeIndex = readByte();
@@ -249,14 +248,14 @@ extension ServerResponseReader on Gamestream {
 
   void readGameObject() {
     final id = readUInt16();
-    final gameObject = isometric.server.findOrCreateGameObject(id);
+    final gameObject = isometric.findOrCreateGameObject(id);
     gameObject.active = readBool();
     gameObject.type = readByte();
     gameObject.subType = readByte();
     gameObject.health = readUInt16();
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
-    isometric.server.gameObjects.sort();
+    isometric.gameObjects.sort();
   }
 
   void readApiPlayer() {
@@ -349,7 +348,7 @@ extension ServerResponseReader on Gamestream {
     // readVector3(isometricEngine.editor.gameObject);
 
     final id = readUInt16();
-    final gameObject = isometric.server.findGameObjectById(id);
+    final gameObject = isometric.findGameObjectById(id);
     if (gameObject == null) throw Exception('could not find gameobject with id $id');
     isometric.editor.gameObject.value = gameObject;
     isometric.editor.gameObjectSelectedCollidable   .value = readBool();
