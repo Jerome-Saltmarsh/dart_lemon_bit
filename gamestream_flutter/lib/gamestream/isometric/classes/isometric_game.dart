@@ -31,7 +31,7 @@ class IsometricGame extends Game {
   }
 
   void renderForeground(Canvas canvas, Size size) {
-    isometric.renderForeground(canvas, size);
+
   }
 
   void update() {

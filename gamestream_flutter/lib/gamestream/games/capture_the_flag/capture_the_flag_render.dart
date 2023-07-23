@@ -102,7 +102,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
         break;
       case PowerMode.Targeted_Enemy:
         if (playerActivatedTargetSet) {
-          gamestream.engine.setPaintColor(Colors.red);
+          isometric.engine.setPaintColor(Colors.red);
           isometric.renderCircleAtPosition(
             position: playerActivatedTarget,
             radius: 40,
@@ -111,7 +111,7 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
         break;
       case PowerMode.Targeted_Ally:
         if (playerActivatedTargetSet) {
-          gamestream.engine.setPaintColor(Colors.green);
+          isometric.engine.setPaintColor(Colors.green);
           isometric.renderCircleAtPosition(
             position: playerActivatedTarget,
             radius: 40,

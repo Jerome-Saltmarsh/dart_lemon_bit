@@ -164,7 +164,7 @@ class IsometricDebug {
   void onMouseLeftClicked() => isometric.debugSelect();
 
   void onMouseRightClicked() {
-    if (gamestream.engine.keyPressedShiftLeft){
+    if (isometric.engine.keyPressedShiftLeft){
       isometric.debugAttack();
       return;
     }

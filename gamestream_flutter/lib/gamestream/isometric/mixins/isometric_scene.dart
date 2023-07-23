@@ -959,22 +959,6 @@ mixin IsometricScene {
 
   int getProjectionIndex(int nodeIndex) => nodeIndex % projection;
 
-  bool isIndexOnScreen(int index){
-
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
-
-    final renderX = IsometricRender.rowColumnToRenderX(row, column);
-    if (renderX < gamestream.engine.Screen_Left) return false;
-    if (renderX > gamestream.engine.Screen_Right) return false;
-
-    final renderY = IsometricRender.rowColumnZToRenderY(row, column, getIndexZ(index));
-    if (renderY < gamestream.engine.Screen_Top) return false;
-    if (renderY > gamestream.engine.Screen_Bottom) return false;
-
-    return true;
-  }
-
   int getTypeBelow(int index){
     if (index < area) return NodeType.Boundary;
     final indexBelow = index - area;

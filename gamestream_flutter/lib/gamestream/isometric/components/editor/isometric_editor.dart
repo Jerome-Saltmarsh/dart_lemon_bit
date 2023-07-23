@@ -194,7 +194,7 @@ class IsometricEditor {
   }
 
   void selectMouseBlock(){
-    gamestream.io.mouseRaycast(selectBlock);
+    isometric.io.mouseRaycast(selectBlock);
   }
 
   void selectMouseGameObject(){
@@ -226,7 +226,7 @@ class IsometricEditor {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = gamestream.getIndexZRC(z, row, column);
+    nodeSelectedIndex.value = isometric.getIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){
@@ -234,7 +234,7 @@ class IsometricEditor {
   }
 
   void cameraCenterSelectedObject() =>
-      gamestream.engine.cameraCenter(
+      isometric.engine.cameraCenter(
         gameObject.value!.renderX,
         gameObject.value!.renderY,
       );
@@ -254,12 +254,12 @@ class IsometricEditor {
 
   void raise(){
     final nodeIndex = nodeSelectedIndex.value;
-    if (nodeIndex <= gamestream.area) return;
-    final nodeIndexBelow = nodeIndex - gamestream.area;
+    if (nodeIndex <= isometric.area) return;
+    final nodeIndexBelow = nodeIndex - isometric.area;
     sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
-      type: gamestream.nodeTypes[nodeIndexBelow],
-      orientation: gamestream.nodeOrientations[nodeIndexBelow],
+      type: isometric.nodeTypes[nodeIndexBelow],
+      orientation: isometric.nodeOrientations[nodeIndexBelow],
     );
   }
 
@@ -293,8 +293,8 @@ class IsometricEditor {
   }
 
   void cursorSetToPlayer() {
-    if (!gamestream.player.inBounds) return;
-    nodeSelectedIndex.value = gamestream.getIndexPosition(gamestream.player.position);
+    if (!isometric.player.inBounds) return;
+    nodeSelectedIndex.value = isometric.getIndexPosition(isometric.player.position);
   }
   void cursorRowIncrease() => row++;
   void cursorRowDecrease() => row--;
@@ -308,7 +308,7 @@ class IsometricEditor {
   }
 
   void actionRecenterCamera() =>
-      gamestream.camera.cameraSetPositionGrid(
+      isometric.camera.cameraSetPositionGrid(
         row,
         column,
         z,
@@ -322,8 +322,8 @@ class IsometricEditor {
   }
 
   void onChangedSelectedNodeIndex(int index){
-    nodeSelectedOrientation.value = gamestream.nodeOrientations[index];
-    nodeSelectedType.value = gamestream.nodeTypes[index];
+    nodeSelectedOrientation.value = isometric.nodeOrientations[index];
+    nodeSelectedType.value = isometric.nodeTypes[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();
@@ -490,7 +490,7 @@ class IsometricEditor {
   void saveScene()=> sendIsometricEditorRequest(IsometricEditorRequest.Save);
 
   void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
-      gamestream.sendClientRequest(
+      isometric.sendClientRequest(
         ClientRequest.Isometric_Editor,
         '${request.index} $message',
       );
@@ -503,12 +503,12 @@ class IsometricEditor {
       allowedExtensions: ['scene'],
     );
     if (result == null) {
-      gamestream.showMessage('result == null');
+      isometric.showMessage('result == null');
       return;
     }
     final sceneBytes = result.files[0].bytes;
     if (sceneBytes == null) {
-      gamestream.showMessage('contents == null');
+      isometric.showMessage('contents == null');
       return;
     }
     loadScene(sceneBytes);

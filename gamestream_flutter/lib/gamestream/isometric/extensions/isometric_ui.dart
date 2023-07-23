@@ -299,7 +299,7 @@ extension IsometricUI on Isometric {
   Widget buildAtlasIconType(IconType iconType,
       {double scale = 1, int color = 1}) =>
       FittedBox(
-        child: gamestream.engine.buildAtlasImage(
+        child: engine.buildAtlasImage(
           image: Images.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
@@ -318,7 +318,7 @@ extension IsometricUI on Isometric {
     final src = Atlas.getSrc(type, subType);
 
     return FittedBox(
-        child: gamestream.engine.buildAtlasImage(
+        child: engine.buildAtlasImage(
           image: Images.getImageForGameObject(type),
           srcX: src[Atlas.SrcX],
           srcY: src[Atlas.SrcY],
@@ -329,7 +329,7 @@ extension IsometricUI on Isometric {
       );
   }
 
-  Widget buildAtlasNodeType(int nodeType) => gamestream.engine.buildAtlasImage(
+  Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
     image: Images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -395,8 +395,8 @@ extension IsometricUI on Isometric {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(gamestream.player.maxHealth, (int maxHealth) {
-                return buildWatch(gamestream.player.health, (int health){
+              child: buildWatch(player.maxHealth, (int maxHealth) {
+                return buildWatch(player.health, (int health){
                   final percentage = health / max(maxHealth, 1);
                   return Container(
                     width: width,
@@ -440,8 +440,8 @@ extension IsometricUI on Isometric {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(gamestream.player.energyMax, (int energyMax) {
-                return buildWatch(gamestream.player.energy, (int energy){
+              child: buildWatch(player.energyMax, (int energyMax) {
+                return buildWatch(player.energy, (int energy){
                   return Container(
                     width: width,
                     height: height * energy / max(energyMax, 1),
@@ -484,13 +484,11 @@ extension IsometricUI on Isometric {
   Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(gamestream.hours, (int hours){
-        return buildText(padZero(hours), size: 22);
-      }),
+      WatchBuilder(hours, (int hours) =>
+          buildText(padZero(hours), size: 22)),
       buildText(':', size: 22),
-      WatchBuilder(gamestream.minutes, (int minutes){
-        return buildText(padZero(minutes), size: 22);
-      }),
+      WatchBuilder(minutes, (int minutes) =>
+          buildText(padZero(minutes), size: 22)),
     ],
   );
 

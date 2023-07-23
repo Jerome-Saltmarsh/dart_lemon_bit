@@ -212,7 +212,7 @@ extension IsometricEditorUI on IsometricEditor {
               child: Center(
                 child: Stack(
                   children: [
-                    gamestream.engine.buildAtlasImage(
+                    isometric.engine.buildAtlasImage(
                       image: Images.atlas_icons,
                       srcX: 193,
                       srcY: 32,
@@ -392,7 +392,7 @@ extension IsometricEditorUI on IsometricEditor {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     buildText('Underground'),
-                    buildWatch(gamestream.sceneUnderground, buildText),
+                    buildWatch(isometric.sceneUnderground, buildText),
                   ],
                 ),
               ),
@@ -488,30 +488,30 @@ extension IsometricEditorUI on IsometricEditor {
       );
 
   Widget buildIconRain(int rain) => buildWatch(
-      gamestream.rainType,
+      isometric.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
-        action: () => gamestream.setRain(rain),
+        action: () => isometric.setRain(rain),
         icon: isometric.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
 
   Widget buildIconLightning(int lightning) => buildWatch(
-      gamestream.lightningType,
+      isometric.lightningType,
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
-            gamestream.setLightning(lightning),
+            isometric.setLightning(lightning),
         icon: isometric.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
       ));
 
   Widget buildIconWind(int windType) => buildWatch(
-      gamestream.windTypeAmbient,
+      isometric.windTypeAmbient,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
-        action: () => gamestream.setWind(windType),
+        action: () => isometric.setWind(windType),
         icon: isometric.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
@@ -581,7 +581,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = buildWatch(gamestream.hours, (int hours) {
+    final buttons = buildWatch(isometric.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -592,7 +592,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple4,
-              action: () => gamestream.setHour(i),
+              action: () => isometric.setHour(i),
             ),
           ),
         );
@@ -604,7 +604,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple3,
-              action: () => gamestream.setHour(i),
+              action: () => isometric.setHour(i),
             ),
           ),
         );
@@ -622,9 +622,9 @@ extension IsometricEditorUI on IsometricEditor {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildWatch(gamestream.hours, (num hour) => buildText(padZero(hour))),
+        buildWatch(isometric.hours, (num hour) => buildText(padZero(hour))),
         buildText(':'),
-        buildWatch(gamestream.minutes, (num hour) => buildText(padZero(hour))),
+        buildWatch(isometric.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
     return Container(
@@ -648,7 +648,7 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = gamestream.engine.buildAtlasImage(
+    final canvas = isometric.engine.buildAtlasImage(
       image: Images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -666,8 +666,8 @@ extension IsometricEditorUI on IsometricEditor {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (gamestream.playMode) {
-              gamestream.actionSetModePlay();
+            if (isometric.playMode) {
+              isometric.actionSetModePlay();
               return;
             }
             paint(nodeType: nodeType);
@@ -706,7 +706,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(gamestream.gameRunning, (gameRunning) {
+            buildWatch(isometric.gameRunning, (gameRunning) {
               return buildText('Game Running: $gameRunning', onPressed: () => toggleGameRunning);
             }),
             buildText ('Reset', onPressed: editSceneReset),
@@ -722,7 +722,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildOrientationIcon(int orientation) {
 
-    final canvas = gamestream.engine.buildAtlasImage(
+    final canvas = isometric.engine.buildAtlasImage(
       image: Images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
@@ -851,7 +851,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      gamestream.engine.renderExternalCanvas(
+      isometric.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: 304,
@@ -867,7 +867,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      gamestream.engine.renderExternalCanvas(
+      isometric.engine.renderExternalCanvas(
         canvas: canvas,
         image: Images.atlas_icons,
         srcX: 352,
@@ -1028,7 +1028,7 @@ extension IsometricEditorUI on IsometricEditor {
             width: 200,
             height: 200,
             color: IsometricColors.brownDark,
-            child: gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
+            child: isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
                   renderIconSquareEmpty(
@@ -1066,7 +1066,7 @@ extension IsometricEditorUI on IsometricEditor {
                               onPressed: sendGameObjectRequestDeselect
                           ),
                         ),
-                        Center(child: gamestream.buildImageGameObject(subType)),
+                        Center(child: isometric.buildImageGameObject(subType)),
                         height8,
                         buidButtonDuplicate(),
                         height8,
@@ -1136,7 +1136,7 @@ extension IsometricEditorUI on IsometricEditor {
           children: [
             child,
             Container(
-              height: gamestream.engine.screen.height - 100,
+              height: isometric.engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   children: children,
@@ -1152,7 +1152,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildColumnSelectNodeType() =>
       Container(
-        height: gamestream.engine.screen.height - 70,
+        height: isometric.engine.screen.height - 70,
         child: SingleChildScrollView(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1194,7 +1194,7 @@ extension IsometricEditorUI on IsometricEditor {
                     height: 16,
                     child: onPressed(
                       action: delete,
-                      child: gamestream.engine.buildAtlasImage(
+                      child: isometric.engine.buildAtlasImage(
                         image: Images.atlas_icons,
                         srcX: 80,
                         srcY: 96,
@@ -1305,8 +1305,8 @@ extension IsometricEditorUI on IsometricEditor {
     if (activeEditorDialog == null) return nothing;
 
     return Container(
-      width: gamestream.engine.screen.width,
-      height: gamestream.engine.screen.height,
+      width: isometric.engine.screen.width,
+      height: isometric.engine.screen.height,
       alignment: Alignment.center,
       child: Container(
           width: 350,

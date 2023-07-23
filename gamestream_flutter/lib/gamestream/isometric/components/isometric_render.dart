@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../ui/isometric_constants.dart';
@@ -174,54 +173,6 @@ mixin IsometricRender {
     );
   }
 
-  void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
-    const srcX = 0;
-    const srcY = 192;
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: gamestream.io.getCursorScreenX(),
-        dstY: gamestream.io.getCursorScreenY() - range,
-        anchorY: 1.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: gamestream.io.getCursorScreenX(),
-        dstY: gamestream.io.getCursorScreenY() + range,
-        anchorY: 0.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: gamestream.io.getCursorScreenX() - range,
-        dstY: gamestream.io.getCursorScreenY(),
-        anchorX: 1.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: gamestream.io.getCursorScreenX() + range,
-        dstY: gamestream.io.getCursorScreenY(),
-        anchorX: 0.0
-    );
-  }
 
   void canvasRenderCursorCrossHairRed(ui.Canvas canvas, double range){
     const srcX = 0;
@@ -299,52 +250,6 @@ mixin IsometricRender {
         dstY: y,
         scale: 0.4,
       );
-
-  void playerAimTargetNameText(){
-    if (gamestream.player.aimTargetCategory == TargetCategory.Nothing)
-      return;
-    if (gamestream.player.aimTargetName.isEmpty)
-      return;
-    const style = TextStyle(color: Colors.white, fontSize: 18);
-    gamestream.engine.renderText(
-      gamestream.player.aimTargetName,
-      gamestream.engine.worldToScreenX(gamestream.player.aimTargetPosition.renderX),
-      gamestream.engine.worldToScreenY(gamestream.player.aimTargetPosition.renderY),
-      style: style,
-    );
-  }
-
-  void renderCursor(Canvas canvas) {
-    final cooldown = gamestream.player.weaponCooldown.value;
-    final accuracy = gamestream.player.accuracy.value;
-    final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
-
-    switch (gamestream.cursorType) {
-      case IsometricCursorType.CrossHair_White:
-        canvasRenderCursorCrossHair(canvas, distance);
-        break;
-      case IsometricCursorType.Hand:
-        canvasRenderCursorHand(canvas);
-        return;
-      case IsometricCursorType.Talk:
-        canvasRenderCursorTalk(canvas);
-        return;
-      case IsometricCursorType.CrossHair_Red:
-        canvasRenderCursorCrossHairRed(canvas, distance);
-        break;
-    }
-  }
-
-  void renderPlayerEnergy() {
-    if (gamestream.player.dead) return;
-    if (!gamestream.player.active.value) return;
-    renderBarBlue(
-      gamestream.player.position.x,
-      gamestream.player.position.y,
-      gamestream.player.position.z,
-      gamestream.player.energyPercentage,
-    );
-  }
 
   void debugRenderHeightMapValues() {
     var i = 0;
@@ -492,22 +397,6 @@ mixin IsometricRender {
   double getScreenX(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderX(x, y, z));
   /// converts grid coordinates to screen space
   double getScreenY(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderY(x, y, z));
-
-  void renderForeground(Canvas canvas, Size size) {
-
-    renderCursor(canvas);
-    // if (gamestream.io.inputModeKeyboard){
-    //   if (gamestream.engine.mouseOverCanvas){
-    //     renderCursor(canvas);
-    //   }
-    // }
-
-    if (gamestream.io.inputModeTouch) {
-      gamestream.io.touchController.render(canvas);
-    }
-
-    playerAimTargetNameText();
-  }
 
 }
 

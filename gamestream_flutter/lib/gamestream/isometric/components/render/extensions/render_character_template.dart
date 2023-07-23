@@ -174,7 +174,7 @@ extension RenderCharactersTemplate on RendererCharacters {
          final y = character.y + opp(angle, distance);
          final z = character.z;
 
-         gamestream.engine.renderSprite(
+         isometric.engine.renderSprite(
            image: Images.template_shadow,
            srcX: frameLegs * 64,
            srcY: upperBodyDirection * 64,
@@ -202,7 +202,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       }
     }
 
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
         image: Images.getImageForLegType(character.legType),
         srcX: frameLegs * Sprite_Size,
         srcY: directionLegs * Sprite_Size,
@@ -214,7 +214,7 @@ extension RenderCharactersTemplate on RendererCharacters {
         color: color,
         anchorY: Anchor_Y
     );
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
         image: Images.getImageForBodyType(character.bodyType),
         srcX: frameBody * Sprite_Size,
         srcY: directionBody * Sprite_Size,
@@ -230,7 +230,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     // final height = gamestream.isometricEngine.nodes.heightMap[(character.indexRow * gamestream.isometricEngine.nodes.totalColumns) + character.indexColumn];
     // GameRender.renderTextV3(character, gamestream.isometricEngine.nodes.nodeAlps[character.nodeIndex - gamestream.isometricEngine.nodes.area], offsetY: -80);
 
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
         image: Images.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
         srcY: directionHead * Sprite_Size,
@@ -248,7 +248,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     }
 
     if (invisible) {
-      gamestream.engine.bufferBlendMode = BlendMode.dstATop;
+      isometric.engine.bufferBlendMode = BlendMode.dstATop;
     }
   }
 }

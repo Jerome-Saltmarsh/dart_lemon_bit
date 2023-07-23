@@ -22,8 +22,8 @@ class CharacterAction {
       Interact_Target: 'Interact Target',
       Collect_Target: 'Collect Target',
       Dead: 'Dead',
-      Busy: "Busy",
+      Busy: 'Busy',
       Attacking: 'Attacking',
       Stuck: 'Stuck',
-    }[value] ?? 'unknown-charcter-action-$value';
+    }[value] ?? 'unknown-character-action-$value';
 }

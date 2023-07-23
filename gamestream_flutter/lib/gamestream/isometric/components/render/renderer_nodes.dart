@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 

@@ -2,7 +2,6 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric_ui.dart';
 
 extension IsometricActions on Isometric {
   static const Zoom_Far = 0.4;

@@ -8,16 +8,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
     if (playerIsTeamRed) {
       switch (flagStatus) {
         case CaptureTheFlagFlagStatus.Carried_By_Ally:
-          gamestream.audio.voiceYourTeamHasYourFlag.play();
+          isometric.audio.voiceYourTeamHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-          gamestream.audio.voiceTheEnemyHasYourFlag.play();
+          isometric.audio.voiceTheEnemyHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.At_Base:
-          gamestream.audio.voiceYourFlagIsAtYourBase.play();
+          isometric.audio.voiceYourFlagIsAtYourBase.play();
           break;
         case CaptureTheFlagFlagStatus.Dropped:
-          gamestream.audio.voiceYourFlagHasBeenDropped.play();
+          isometric.audio.voiceYourFlagHasBeenDropped.play();
           break;
       }
       return;
@@ -27,16 +27,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
 
     switch (flagStatus) {
       case CaptureTheFlagFlagStatus.Carried_By_Ally:
-        gamestream.audio.voiceTheEnemyHasTheirFlag.play();
+        isometric.audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        gamestream.audio.voiceYourTeamHasTheEnemyFlag.play();
+        isometric.audio.voiceYourTeamHasTheEnemyFlag.play();
         break;
       case CaptureTheFlagFlagStatus.At_Base:
-        gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
+        isometric.audio.voiceTheEnemyFlagIsAtTheirBase.play();
         break;
       case CaptureTheFlagFlagStatus.Dropped:
-        gamestream.audio.voiceTheEnemyFlagHasBeenDropped.play();
+        isometric.audio.voiceTheEnemyFlagHasBeenDropped.play();
         break;
     }
   }
@@ -45,16 +45,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
     if (playerIsTeamBlue) {
       switch (flagStatus) {
         case CaptureTheFlagFlagStatus.Carried_By_Ally:
-          gamestream.audio.voiceYourTeamHasYourFlag.play();
+          isometric.audio.voiceYourTeamHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-          gamestream.audio.voiceTheEnemyHasYourFlag.play();
+          isometric.audio.voiceTheEnemyHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.At_Base:
-          gamestream.audio.voiceYourFlagIsAtYourBase.play();
+          isometric.audio.voiceYourFlagIsAtYourBase.play();
           break;
         case CaptureTheFlagFlagStatus.Dropped:
-          gamestream.audio.voiceYourFlagHasBeenDropped.play();
+          isometric.audio.voiceYourFlagHasBeenDropped.play();
           break;
       }
       return;
@@ -64,16 +64,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
 
     switch (flagStatus) {
       case CaptureTheFlagFlagStatus.Carried_By_Ally:
-        gamestream.audio.voiceTheEnemyHasTheirFlag.play();
+        isometric.audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        gamestream.audio.voiceYourTeamHasTheEnemyFlag.play();
+        isometric.audio.voiceYourTeamHasTheEnemyFlag.play();
         break;
       case CaptureTheFlagFlagStatus.At_Base:
-        gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
+        isometric.audio.voiceTheEnemyFlagIsAtTheirBase.play();
         break;
       case CaptureTheFlagFlagStatus.Dropped:
-        gamestream.audio.voiceTheEnemyFlagHasBeenDropped.play();
+        isometric.audio.voiceTheEnemyFlagHasBeenDropped.play();
         break;
     }
   }
@@ -81,18 +81,18 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
   void onRedTeamScore(){
     print('onRedTeamScore()');
     if (playerIsTeamRed){
-      gamestream.audio.voiceYourTeamHasScoredAPoint.play();
+      isometric.audio.voiceYourTeamHasScoredAPoint.play();
     } else {
-      gamestream.audio.voiceTheEnemyHasScored.play();
+      isometric.audio.voiceTheEnemyHasScored.play();
     }
   }
 
   void onBlueTeamScore() {
     print('onBlueTeamScore()');
     if (playerIsTeamBlue){
-      gamestream.audio.voiceYourTeamHasScoredAPoint.play();
+      isometric.audio.voiceYourTeamHasScoredAPoint.play();
     } else {
-      gamestream.audio.voiceTheEnemyHasScored.play();
+      isometric.audio.voiceTheEnemyHasScored.play();
     }
   }
 }

@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_render
 import 'package:gamestream_flutter/library.dart';
 
 import '../functions/format_percentage.dart';
-import 'functions/render_shadow.dart';
 
 class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;

@@ -1,5 +1,5 @@
 
-
+import 'dart:ui' as ui;
 import 'dart:math';
 
 import 'package:firestore_client/firestoreService.dart';
@@ -13,7 +13,6 @@ import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
@@ -1418,7 +1417,13 @@ class Isometric extends WebsocketClientBuilder with
     if (!connected)
       return;
 
-    renderForeground(canvas, size);
+    renderCursor(canvas);
+    playerAimTargetNameText();
+
+    if (io.inputModeTouch) {
+      io.touchController.render(canvas);
+    }
+
     game.value.renderForeground(canvas, size);
   }
 
@@ -2054,6 +2059,102 @@ class Isometric extends WebsocketClientBuilder with
 
   void renderMouseWireFrame() {
     io.mouseRaycast(renderWireFrameBlue);
+  }
+
+
+  void playerAimTargetNameText(){
+    if (player.aimTargetCategory == TargetCategory.Nothing)
+      return;
+    if (player.aimTargetName.isEmpty)
+      return;
+    const style = TextStyle(color: Colors.white, fontSize: 18);
+    engine.renderText(
+      player.aimTargetName,
+      engine.worldToScreenX(player.aimTargetPosition.renderX),
+      engine.worldToScreenY(player.aimTargetPosition.renderY),
+      style: style,
+    );
+  }
+
+  void renderCursor(Canvas canvas) {
+    final cooldown = player.weaponCooldown.value;
+    final accuracy = player.accuracy.value;
+    final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
+
+    switch (gamestream.cursorType) {
+      case IsometricCursorType.CrossHair_White:
+        canvasRenderCursorCrossHair(canvas, distance);
+        break;
+      case IsometricCursorType.Hand:
+        canvasRenderCursorHand(canvas);
+        return;
+      case IsometricCursorType.Talk:
+        canvasRenderCursorTalk(canvas);
+        return;
+      case IsometricCursorType.CrossHair_Red:
+        canvasRenderCursorCrossHairRed(canvas, distance);
+        break;
+    }
+  }
+
+  void renderPlayerEnergy() {
+    if (gamestream.player.dead) return;
+    if (!gamestream.player.active.value) return;
+    renderBarBlue(
+      gamestream.player.position.x,
+      gamestream.player.position.y,
+      gamestream.player.position.z,
+      gamestream.player.energyPercentage,
+    );
+  }
+
+  void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 192;
+    gamestream.engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY() - range,
+        anchorY: 1.0
+    );
+    gamestream.engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY() + range,
+        anchorY: 0.0
+    );
+    gamestream.engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: gamestream.io.getCursorScreenX() - range,
+        dstY: gamestream.io.getCursorScreenY(),
+        anchorX: 1.0
+    );
+    gamestream.engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: gamestream.io.getCursorScreenX() + range,
+        dstY: gamestream.io.getCursorScreenY(),
+        anchorX: 0.0
+    );
   }
 
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/border_radius.dart';
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 Widget buildDialog({
