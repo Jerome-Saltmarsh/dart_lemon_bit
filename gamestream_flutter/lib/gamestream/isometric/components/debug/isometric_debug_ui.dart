@@ -107,7 +107,7 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          GSRefresh(() => buildText('connection-duration: ${gamestream.isometric.formattedConnectionDuration}\n')),
+          GSRefresh(() => buildText('connection-duration: ${gamestream.formattedConnectionDuration}\n')),
           buildText('network-server-fps: $serverFPS'),
           buildWatch(gamestream.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
           buildWatch(gamestream.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),

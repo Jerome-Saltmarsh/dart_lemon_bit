@@ -30,6 +30,7 @@ class Isometric {
 
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
+  var nextEmissionSmoke = 0;
   var cursorType = IsometricCursorType.Hand;
   var srcXRainFalling = 6640.0;
   var srcXRainLanding = 6739.0;
@@ -45,17 +46,11 @@ class Isometric {
   var nodesRaycast = 0;
   var windLine = 0;
 
-  DateTime? timeConnectionEstablished;
-
   late final edit = Watch(false, onChanged: gamestream.isometric.onChangedEdit);
   late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
   late final raining = Watch(false, onChanged: onChangedRaining);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
   late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
-
-  final gridShadows = Watch(true, onChanged: (bool value){
-    gamestream.isometric.scene.resetNodeColorsToAmbient();
-  });
 
   final overrideColor = WatchBool(false);
   final playerExperiencePercentage = Watch(0.0);
@@ -524,10 +519,6 @@ class Isometric {
     );
   }
 
-  void toggleShadows () => gridShadows.value = !gridShadows.value;
-
-  var nextEmissionSmoke = 0;
-
   void updateParticleEmitters(){
     nextEmissionSmoke--;
     if (nextEmissionSmoke > 0) return;
@@ -599,50 +590,6 @@ class Isometric {
         }
         break;
     }
-  }
-
-  Duration? get connectionDuration {
-    if (timeConnectionEstablished == null) return null;
-    return DateTime.now().difference(timeConnectionEstablished!);
-  }
-
-  String get formattedConnectionDuration {
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    final seconds = duration.inSeconds % 60;
-    final minutes = duration.inMinutes;
-    return 'minutes: $minutes, seconds: $seconds';
-  }
-
-  String formatAverageBufferSize(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    final seconds = duration.inSeconds;
-    final bytesPerSecond = (bytes / seconds).round();
-    final bytesPerMinute = bytesPerSecond * 60;
-    final bytesPerHour = bytesPerMinute * 60;
-    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
-  }
-
-  String formatAverageBytePerSecond(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round());
-  }
-
-  String formatAverageBytePerMinute(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round() * 60);
-  }
-
-  String formatAverageBytePerHour(int bytes){
-    final duration = connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
 
   void showMessage(String message){

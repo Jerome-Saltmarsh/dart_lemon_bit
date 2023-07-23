@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'game.dart';
 import 'games.dart';
 import 'isometric/atlases/atlas.dart';
+import 'isometric/components/functions/format_bytes.dart';
 import 'isometric/isometric.dart';
 import 'isometric/ui/isometric_colors.dart';
 import 'network/enums/connection_region.dart';
@@ -24,6 +25,8 @@ class Gamestream extends StatelessWidget with ByteReader {
   var previousServerResponse = -1;
   var renderResponse = false;
   var clearErrorTimer = -1;
+
+  DateTime? timeConnectionEstablished;
 
   final serverFPS = Watch(0);
   final bufferSize = Watch(0);
@@ -217,8 +220,7 @@ class Gamestream extends StatelessWidget with ByteReader {
          engine.zoomOnScroll = true;
          engine.zoom = 1.0;
          engine.targetZoom = 1.0;
-         // gamestream.isometric.ui.mouseOverDialog.setFalse();
-         isometric.timeConnectionEstablished = DateTime.now();
+         timeConnectionEstablished = DateTime.now();
          audio.enabledSound.value = true;
          if (!engine.isLocalHost) {
            engine.fullScreenEnter();
@@ -233,7 +235,7 @@ class Gamestream extends StatelessWidget with ByteReader {
          engine.cursorType.value = CursorType.Basic;
          engine.fullScreenExit();
          isometric.player.active.value = false;
-         isometric.timeConnectionEstablished = null;
+         timeConnectionEstablished = null;
          isometric.clear();
          isometric.clean();
          isometric.gameObjects.clear();
@@ -300,5 +302,50 @@ class Gamestream extends StatelessWidget with ByteReader {
       buildLoadingScreen: games.website.buildLoadingPage,
     );
     return engine;
+  }
+
+  Duration? get connectionDuration {
+    if (timeConnectionEstablished == null) return null;
+    return DateTime.now().difference(timeConnectionEstablished!);
+  }
+
+
+  String get formattedConnectionDuration {
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds % 60;
+    final minutes = duration.inMinutes;
+    return 'minutes: $minutes, seconds: $seconds';
+  }
+
+  String formatAverageBufferSize(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds;
+    final bytesPerSecond = (bytes / seconds).round();
+    final bytesPerMinute = bytesPerSecond * 60;
+    final bytesPerHour = bytesPerMinute * 60;
+    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
+  }
+
+  String formatAverageBytePerSecond(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round());
+  }
+
+  String formatAverageBytePerMinute(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 60);
+  }
+
+  String formatAverageBytePerHour(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
 }
