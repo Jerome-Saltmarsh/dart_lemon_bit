@@ -47,7 +47,7 @@ mixin class IsometricClient {
 
   bool get playMode => !editMode;
   bool get editMode => edit.value;
-  bool get lightningOn => gamestream.isometric.server.lightningType.value != LightningType.Off;
+  bool get lightningOn => gamestream.isometric.lightningType.value != LightningType.Off;
 
   // ACTIONS
 
@@ -87,8 +87,8 @@ mixin class IsometricClient {
   }
 
   void applyEmissionsProjectiles() {
-    for (var i = 0; i < gamestream.isometric.server.totalProjectiles; i++){
-      applyProjectileEmission(gamestream.isometric.server.projectiles[i]);
+    for (var i = 0; i < gamestream.isometric.totalProjectiles; i++){
+      applyProjectileEmission(gamestream.isometric.projectiles[i]);
     }
   }
 
@@ -130,7 +130,7 @@ mixin class IsometricClient {
     gamestream.isometric.player.position.y = -1;
     gamestream.isometric.player.gameDialog.value = null;
     gamestream.isometric.player.npcTalkOptions.value = [];
-    gamestream.isometric.server.totalProjectiles = 0;
+    gamestream.isometric.totalProjectiles = 0;
     gamestream.isometric.particles.particles.clear();
     gamestream.engine.zoom = 1;
   }
@@ -218,31 +218,31 @@ mixin class IsometricClient {
 
   void updateGameLighting(){
     if (overrideColor.value) return;
-    if (gamestream.isometric.server.lightningFlashing.value) return;
+    if (gamestream.isometric.lightningFlashing.value) return;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
-    final totalSeconds = (gamestream.isometric.server.hours.value * Seconds_Per_Hour) + (gamestream.isometric.server.minutes.value * 60);
+    final totalSeconds = (gamestream.isometric.hours.value * Seconds_Per_Hour) + (gamestream.isometric.minutes.value * 60);
 
     gamestream.isometric.scene.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
-    if (gamestream.isometric.server.rainType.value == RainType.Light){
+    if (gamestream.isometric.rainType.value == RainType.Light){
       gamestream.isometric.scene.ambientAlpha += 20;
     }
-    if (gamestream.isometric.server.rainType.value == RainType.Heavy){
+    if (gamestream.isometric.rainType.value == RainType.Heavy){
       gamestream.isometric.scene.ambientAlpha += 40;
     }
     gamestream.isometric.scene.resetNodeColorsToAmbient();
   }
 
   void refreshRain(){
-    switch (gamestream.isometric.server.rainType.value) {
+    switch (gamestream.isometric.rainType.value) {
       case RainType.None:
         break;
       case RainType.Light:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        if (gamestream.isometric.server.windTypeAmbient.value == WindType.Calm){
+        if (gamestream.isometric.windTypeAmbient.value == WindType.Calm){
           srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
         } else {
           srcXRainFalling = 1851;
@@ -250,7 +250,7 @@ mixin class IsometricClient {
         break;
       case RainType.Heavy:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
-        if (gamestream.isometric.server.windTypeAmbient.value == WindType.Calm){
+        if (gamestream.isometric.windTypeAmbient.value == WindType.Calm){
           srcXRainFalling = 1900;
         } else {
           srcXRainFalling = 1606;

@@ -223,25 +223,25 @@ extension ServerResponseReader on Gamestream {
     final environmentResponse = readByte();
     switch (environmentResponse) {
       case EnvironmentResponse.Rain:
-        isometric.server.rainType.value = readByte();
+        isometric.rainType.value = readByte();
         break;
       case EnvironmentResponse.Lightning:
-        isometric.server.lightningType.value = readByte();
+        isometric.lightningType.value = readByte();
         break;
       case EnvironmentResponse.Wind:
-        isometric.server.windTypeAmbient.value = readByte();
+        isometric.windTypeAmbient.value = readByte();
         break;
       case EnvironmentResponse.Breeze:
-        isometric.server.weatherBreeze.value = readBool();
+        isometric.weatherBreeze.value = readBool();
         break;
       case EnvironmentResponse.Underground:
-        isometric.server.sceneUnderground.value = readBool();
+        isometric.sceneUnderground.value = readBool();
         break;
       case EnvironmentResponse.Lightning_Flashing:
-        isometric.server.lightningFlashing.value = readBool();
+        isometric.lightningFlashing.value = readBool();
         break;
       case EnvironmentResponse.Time_Enabled:
-        isometric.server.gameTimeEnabled.value = readBool();
+        isometric.gameTimeEnabled.value = readBool();
         break;
     }
   }
@@ -296,7 +296,7 @@ extension ServerResponseReader on Gamestream {
         readIsometricPosition(player.targetPosition);
         break;
       case ApiPlayer.Experience_Percentage:
-        isometric.server.playerExperiencePercentage.value = readPercentage();
+        isometric.playerExperiencePercentage.value = readPercentage();
         break;
       case ApiPlayer.Health:
         readPlayerHealth();
@@ -368,7 +368,6 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readIsometricCharacters(){
-     final server = isometric.server;
      final scene = isometric.scene;
      while (true) {
 
@@ -439,16 +438,16 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readGameProperties() {
-    isometric.server.sceneEditable.value = readBool();
-    isometric.server.sceneName.value = readString();
-    isometric.server.gameRunning.value = readBool();
+    isometric.sceneEditable.value = readBool();
+    isometric.sceneName.value = readString();
+    isometric.gameRunning.value = readBool();
   }
 
   void readWeather() {
-    isometric.server.rainType.value = readByte();
-    isometric.server.weatherBreeze.value = readBool();
-    isometric.server.lightningType.value = readByte();
-    isometric.server.windTypeAmbient.value = readByte();
+    isometric.rainType.value = readByte();
+    isometric.weatherBreeze.value = readBool();
+    isometric.lightningType.value = readByte();
+    isometric.windTypeAmbient.value = readByte();
   }
 
   void readStoreItems() {
@@ -478,7 +477,7 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readGameTime() {
-    isometric.server.seconds.value = readUInt24();
+    isometric.seconds.value = readUInt24();
   }
 
   double readDouble() => readInt16().toDouble();
@@ -493,12 +492,12 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readProjectiles(){
-    isometric.server.totalProjectiles = readUInt16();
-    while (isometric.server.totalProjectiles >= isometric.server.projectiles.length){
-      isometric.server.projectiles.add(IsometricProjectile());
+    isometric.totalProjectiles = readUInt16();
+    while (isometric.totalProjectiles >= isometric.projectiles.length){
+      isometric.projectiles.add(IsometricProjectile());
     }
-    for (var i = 0; i < isometric.server.totalProjectiles; i++) {
-      final projectile = isometric.server.projectiles[i];
+    for (var i = 0; i < isometric.totalProjectiles; i++) {
+      final projectile = isometric.projectiles[i];
       projectile.x = readDouble();
       projectile.y = readDouble();
       projectile.z = readDouble();

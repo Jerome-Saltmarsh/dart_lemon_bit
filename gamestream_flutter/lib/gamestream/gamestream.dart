@@ -234,9 +234,9 @@ class Gamestream extends StatelessWidget with ByteReader {
          isometric.player.active.value = false;
          isometric.client.timeConnectionEstablished = null;
          isometric.client.clear();
-         isometric.server.clean();
+         isometric.clean();
          isometric.gameObjects.clear();
-         isometric.server.sceneEditable.value = false;
+         isometric.sceneEditable.value = false;
          gameType.value = GameType.Website;
          audio.enabledSound.value = false;
          break;

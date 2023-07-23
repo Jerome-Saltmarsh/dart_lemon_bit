@@ -175,7 +175,6 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                 isometric.minimap.renderCanvas(canvas);
 
-                final serverState = isometric.server;
                 final player = isometric.player;
                 final totalCharacters = isometric.scene.totalCharacters;
 

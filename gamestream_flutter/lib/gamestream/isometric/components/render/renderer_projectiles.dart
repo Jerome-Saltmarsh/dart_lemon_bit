@@ -43,13 +43,13 @@ class RendererProjectiles extends IsometricRenderer {
 
   @override
   void updateFunction() {
-    projectile = gamestream.isometric.server.projectiles[index];
+    projectile = gamestream.isometric.projectiles[index];
     order = projectile.sortOrder;
   }
 
   @override
   int getTotal() {
-    return gamestream.isometric.server.totalProjectiles;
+    return gamestream.isometric.totalProjectiles;
   }
 
   static void renderBullet(double x, double y, double rotation) {

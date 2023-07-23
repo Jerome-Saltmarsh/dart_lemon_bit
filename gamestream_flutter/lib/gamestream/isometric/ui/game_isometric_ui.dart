@@ -147,7 +147,6 @@ class GameIsometricUI {
         gamestream.isometric.minimap.renderCanvas(canvas);
 
         final scene = gamestream.isometric.scene;
-        final serverState = gamestream.isometric.server;
         final player = gamestream.isometric.player;
 
         for (var i = 0; i < scene.totalCharacters; i++) {
@@ -527,7 +526,7 @@ class GameIsometricUI {
       );
 
   static Widget buildButtonTogglePlayMode() {
-    return buildWatch(gamestream.isometric.server.sceneEditable, (bool isOwner) {
+    return buildWatch(gamestream.isometric.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
       return buildWatch(gamestream.isometric.client.edit, (bool edit) {
         return buildButton(
@@ -544,11 +543,11 @@ class GameIsometricUI {
   static Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(gamestream.isometric.server.hours, (int hours){
+      WatchBuilder(gamestream.isometric.hours, (int hours){
         return buildText(padZero(hours), size: 22);
       }),
       buildText(':', size: 22),
-      WatchBuilder(gamestream.isometric.server.minutes, (int minutes){
+      WatchBuilder(gamestream.isometric.minutes, (int minutes){
         return buildText(padZero(minutes), size: 22);
       }),
     ],

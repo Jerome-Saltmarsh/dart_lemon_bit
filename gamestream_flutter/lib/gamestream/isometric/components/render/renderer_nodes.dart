@@ -160,7 +160,7 @@ class RendererNodes extends IsometricRenderer {
   }
   int get currentNodeOrientation => scene.nodeOrientations[currentNodeIndex];
 
-  int get windType => gamestream.isometric.server.windTypeAmbient.value;
+  int get windType => gamestream.isometric.windTypeAmbient.value;
 
   int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
 

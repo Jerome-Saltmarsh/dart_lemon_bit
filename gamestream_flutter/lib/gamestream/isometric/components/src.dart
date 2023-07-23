@@ -12,7 +12,6 @@ export 'isometric_scene.dart';
 export 'isometric_player.dart';
 export 'isometric_player_score.dart';
 export 'isometric_render.dart';
-export 'isometric_server.dart';
 export 'isometric_ui.dart';
 
 export 'editor/src.dart';

@@ -387,7 +387,7 @@ extension IsometricEditorUI on IsometricEditor {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     buildText('Underground'),
-                    buildWatch(gamestream.isometric.server.sceneUnderground, buildText),
+                    buildWatch(gamestream.isometric.sceneUnderground, buildText),
                   ],
                 ),
               ),
@@ -483,7 +483,7 @@ extension IsometricEditorUI on IsometricEditor {
       );
 
   Widget buildIconRain(int rain) => buildWatch(
-      gamestream.isometric.server.rainType,
+      gamestream.isometric.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
         action: () => gamestream.isometric.setRain(rain),
@@ -492,7 +492,7 @@ extension IsometricEditorUI on IsometricEditor {
       ));
 
   Widget buildIconLightning(int lightning) => buildWatch(
-      gamestream.isometric.server.lightningType,
+      gamestream.isometric.lightningType,
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
@@ -503,7 +503,7 @@ extension IsometricEditorUI on IsometricEditor {
       ));
 
   Widget buildIconWind(int windType) => buildWatch(
-      gamestream.isometric.server.windTypeAmbient,
+      gamestream.isometric.windTypeAmbient,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
         action: () => gamestream.isometric.setWind(windType),
@@ -576,7 +576,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = buildWatch(gamestream.isometric.server.hours, (int hours) {
+    final buttons = buildWatch(gamestream.isometric.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -617,9 +617,9 @@ extension IsometricEditorUI on IsometricEditor {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildWatch(gamestream.isometric.server.hours, (num hour) => buildText(padZero(hour))),
+        buildWatch(gamestream.isometric.hours, (num hour) => buildText(padZero(hour))),
         buildText(':'),
-        buildWatch(gamestream.isometric.server.minutes, (num hour) => buildText(padZero(hour))),
+        buildWatch(gamestream.isometric.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
     return Container(
@@ -701,7 +701,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(gamestream.isometric.server.gameRunning, (gameRunning) {
+            buildWatch(gamestream.isometric.gameRunning, (gameRunning) {
               return buildText('Game Running: $gameRunning', onPressed: () => toggleGameRunning);
             }),
             buildText ('Reset', onPressed: editSceneReset),

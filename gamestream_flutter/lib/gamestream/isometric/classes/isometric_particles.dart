@@ -183,7 +183,7 @@ class IsometricParticles {
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
-        final wind = gamestream.isometric.server.windTypeAmbient.value * 0.01;
+        final wind = gamestream.isometric.windTypeAmbient.value * 0.01;
         particle.xv -= wind;
         particle.yv += wind;
       }
