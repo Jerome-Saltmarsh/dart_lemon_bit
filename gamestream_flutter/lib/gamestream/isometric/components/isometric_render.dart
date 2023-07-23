@@ -1,10 +1,9 @@
-import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../ui/isometric_constants.dart';
@@ -29,16 +28,6 @@ mixin IsometricRender {
     if (value.remaining){
       totalRemaining++;
     }
-  }
-
-  void renderMouseTargetName() {
-    if (!gamestream.player.mouseTargetAllie.value) return;
-    final mouseTargetName = gamestream.player.mouseTargetName.value;
-    if (mouseTargetName == null) return;
-    renderText(
-        text: mouseTargetName,
-        x: gamestream.player.aimTargetPosition.renderX,
-        y: gamestream.player.aimTargetPosition.renderY - 55);
   }
 
   void checkNext(IsometricRenderer renderer){
@@ -97,8 +86,8 @@ mixin IsometricRender {
   void renderTextPosition(IsometricPosition v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
-      x: IsometricRender.getPositionRenderX(v3),
-      y: IsometricRender.getPositionRenderY(v3) + offsetY,
+      x: Isometric.getPositionRenderX(v3),
+      y: Isometric.getPositionRenderY(v3) + offsetY,
     );
   }
 
@@ -110,8 +99,8 @@ mixin IsometricRender {
   }) =>
       renderText(
         text: text.toString(),
-        x: IsometricRender.getRenderX(x, y, z),
-        y: IsometricRender.getRenderY(x, y, z),
+        x: Isometric.getRenderX(x, y, z),
+        y: Isometric.getRenderY(x, y, z),
       );
 
   void renderWireFrameBlue(
@@ -145,85 +134,6 @@ mixin IsometricRender {
     );
   }
 
-  void canvasRenderCursorHand(ui.Canvas canvas){
-    gamestream.engine.renderExternalCanvas(
-      canvas: canvas,
-      image: Images.atlas_icons,
-      srcX: 0,
-      srcY: 256,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: gamestream.io.getCursorScreenX(),
-      dstY: gamestream.io.getCursorScreenY(),
-      scale: 0.5,
-    );
-  }
-
-  void canvasRenderCursorTalk(ui.Canvas canvas){
-    gamestream.engine.renderExternalCanvas(
-      canvas: canvas,
-      image: Images.atlas_icons,
-      srcX: 0,
-      srcY: 320,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: gamestream.io.getCursorScreenX(),
-      dstY: gamestream.io.getCursorScreenY(),
-      scale: 0.5,
-    );
-  }
-
-
-  void canvasRenderCursorCrossHairRed(ui.Canvas canvas, double range){
-    const srcX = 0;
-    const srcY = 384;
-    const offset = 0;
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: gamestream.io.getCursorScreenX(),
-        dstY: gamestream.io.getCursorScreenY() - range - offset,
-        anchorY: 1.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: gamestream.io.getCursorScreenX(),
-        dstY: gamestream.io.getCursorScreenY() + range - offset,
-        anchorY: 0.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: gamestream.io.getCursorScreenX() - range,
-        dstY: gamestream.io.getCursorScreenY() - offset,
-        anchorX: 1.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: gamestream.io.getCursorScreenX() + range,
-        dstY: gamestream.io.getCursorScreenY() - offset,
-        anchorX: 0.0
-    );
-  }
-
   void renderCircle32(double x, double y, double z){
     gamestream.engine.renderSprite(
       image: Images.atlas_gameobjects,
@@ -231,93 +141,10 @@ mixin IsometricRender {
       srcY: 48,
       srcWidth: 32,
       srcHeight: 32,
-      dstX: getRenderX(x, y, z),
-      dstY: getRenderY(x, y, z),
+      dstX: Isometric.getRenderX(x, y, z),
+      dstY: Isometric.getRenderY(x, y, z),
     );
   }
-
-  void renderStarsV3(IsometricPosition v3) =>
-      renderStars(v3.renderX, v3.renderY - 40);
-
-  void renderStars(double x, double y) =>
-      gamestream.engine.renderSprite(
-        image: Images.sprite_stars,
-        srcX: 125.0 * gamestream.animationFrame16,
-        srcY: 0,
-        srcWidth: 125,
-        srcHeight: 125,
-        dstX: x,
-        dstY: y,
-        scale: 0.4,
-      );
-
-  void debugRenderHeightMapValues() {
-    var i = 0;
-    for (var row = 0; row < gamestream.totalRows; row++){
-      for (var column = 0; column < gamestream.totalColumns; column++){
-        gamestream.renderTextXYZ(
-          x: row * Node_Size,
-          y: column * Node_Size,
-          z: 5,
-          text: gamestream.heightMap[i].toString(),
-        );
-        i++;
-      }
-    }
-  }
-
-  // void debugRenderIsland() {
-  //   var i = 0;
-  //   for (var row = 0; row < gamestream.isometric.scene.totalRows; row++){
-  //     for (var column = 0; column < gamestream.isometric.scene.totalColumns; column++){
-  //       if (!RendererNodes.island[i]) {
-  //         i++;
-  //         continue;
-  //       }
-  //       gamestream.isometric.renderer.renderTextXYZ(
-  //         x: row * Node_Size,
-  //         y: column * Node_Size,
-  //         z: 5,
-  //         text: RendererNodes.island[i].toString(),
-  //       );
-  //       i++;
-  //     }
-  //   }
-  // }
-
-
-  void renderObjectRadius() {
-    for (var i = 0; i < gamestream.totalCharacters; i++) {
-      final character = gamestream.characters[i];
-      gamestream.engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
-    }
-  }
-
-  // void drawMouse() {
-  //   final mouseAngle = mouse.playerAngle;
-  //   final mouseDistance = min(200.0, IsometricMouse.playerDistance);
-  //
-  //   final jumps = mouseDistance ~/ Node_Height_Half;
-  //
-  //   var x1 = gamestream.player.position.x;
-  //   var y1 = gamestream.player.position.y;
-  //   var i1 = gamestream.player.nodeIndex;
-  //   final z = gamestream.player.position.z + Node_Height_Half;
-  //
-  //   final tX = adj(mouseAngle, Node_Height_Half);
-  //   final tY = opp(mouseAngle, Node_Height_Half);
-  //
-  //   for (var i = 0; i < jumps; i++) {
-  //     final x2 = x1 - tX;
-  //     final y2 = y1 - tY;
-  //     final i2 = gamestream.getIndexXYZ(x2, y2, z);
-  //     if (!NodeType.isTransient(gamestream.nodeTypes[i2])) break;
-  //     x1 = x2;
-  //     y1 = y2;
-  //     i1 = i2;
-  //   }
-  //   gamestream.renderCircle32(x1, y1, z);
-  // }
 
   void renderCharacterHealthBar(IsometricCharacter character) =>
       renderHealthBarPosition(
@@ -332,8 +159,8 @@ mixin IsometricRender {
     int color = 1,
   }) => gamestream.engine.renderSprite(
       image: Images.atlas_gameobjects,
-      dstX: IsometricRender.getPositionRenderX(position) - 26,
-      dstY: IsometricRender.getPositionRenderY(position) - 45,
+      dstX: Isometric.getPositionRenderX(position) - 26,
+      dstY: Isometric.getPositionRenderY(position) - 45,
       srcX: 171,
       srcY: 16,
       srcWidth: 51.0 * percentage,
@@ -341,20 +168,6 @@ mixin IsometricRender {
       anchorX: 0.0,
       color: color,
     );
-
-  void renderBarBlue(double x, double y, double z, double percentage) {
-    gamestream.engine.renderSprite(
-      image: Images.atlas_gameobjects,
-      dstX: getRenderX(x, y, z) - 26,
-      dstY: getRenderY(x, y, z) - 55,
-      srcX: 171,
-      srcY: 48,
-      srcWidth: 51.0 * percentage,
-      srcHeight: 8,
-      anchorX: 0.0,
-      color: 1,
-    );
-  }
 
   void renderEditWireFrames() {
     for (var z = 0; z < gamestream.editor.z; z++) {
@@ -380,24 +193,11 @@ mixin IsometricRender {
   static double rowColumnToRenderY(int row, int column) =>
       (row + column) * Node_Size_Half;
 
-
-  static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
-  static double getPositionRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
-
-  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
-  static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
-
   static double convertWorldToGridX(double x, double y) => x + y;
   static double convertWorldToGridY(double x, double y) => y - x;
 
   static int convertWorldToRow(double x, double y, double z) => (x + y + z) ~/ Node_Size;
   static int convertWorldToColumn(double x, double y, double z) => (y - x + z) ~/ Node_Size;
-
-  /// converts grid coordinates to screen space
-  double getScreenX(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderX(x, y, z));
-  /// converts grid coordinates to screen space
-  double getScreenY(double x, double y, double z) => gamestream.engine.worldToScreenX(getRenderY(x, y, z));
-
 }
 
 

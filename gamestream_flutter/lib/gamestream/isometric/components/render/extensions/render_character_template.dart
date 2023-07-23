@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_charac
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -139,8 +140,8 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     final invisible = false;
 
-    final dstX = IsometricRender.getPositionRenderX(character);
-    final dstY = IsometricRender.getPositionRenderY(character);
+    final dstX = Isometric.getPositionRenderX(character);
+    final dstY = Isometric.getPositionRenderY(character);
 
     const Color_Invisible = IsometricColors.White38_Value;
     final color = invisible ? Color_Invisible : isometric.getRenderColorPosition(character);
@@ -180,8 +181,8 @@ extension RenderCharactersTemplate on RendererCharacters {
            srcY: upperBodyDirection * 64,
            srcWidth: 64,
            srcHeight: 64,
-           dstX: IsometricRender.getRenderX(x, y, z),
-           dstY: IsometricRender.getRenderY(x, y, z),
+           dstX: Isometric.getRenderX(x, y, z),
+           dstY: Isometric.getRenderY(x, y, z),
            scale: Scale,
            color: color,
            anchorY: Anchor_Y,
@@ -193,8 +194,8 @@ extension RenderCharactersTemplate on RendererCharacters {
           srcY: upperBodyDirection * 64,
           srcWidth: 64,
           srcHeight: 64,
-          dstX: IsometricRender.getPositionRenderX(character),
-          dstY: IsometricRender.getPositionRenderY(character),
+          dstX: Isometric.getPositionRenderX(character),
+          dstY: Isometric.getPositionRenderY(character),
           scale: Scale,
           color: color,
           anchorY: Anchor_Y,

@@ -2076,12 +2076,150 @@ class Isometric extends WebsocketClientBuilder with
     );
   }
 
+  void renderPlayerEnergy() {
+    if (player.dead) return;
+    if (!player.active.value) return;
+    renderBarBlue(
+      player.position.x,
+      player.position.y,
+      player.position.z,
+      player.energyPercentage,
+    );
+  }
+
+  void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 192;
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() - range,
+        anchorY: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() + range,
+        anchorY: 0.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() - range,
+        dstY: io.getCursorScreenY(),
+        anchorX: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() + range,
+        dstY: io.getCursorScreenY(),
+        anchorX: 0.0
+    );
+  }
+
+  void canvasRenderCursorCrossHairRed(ui.Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 384;
+    const offset = 0;
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() - range - offset,
+        anchorY: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() + range - offset,
+        anchorY: 0.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() - range,
+        dstY: io.getCursorScreenY() - offset,
+        anchorX: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: Images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() + range,
+        dstY: io.getCursorScreenY() - offset,
+        anchorX: 0.0
+    );
+  }
+
+  void canvasRenderCursorHand(ui.Canvas canvas){
+    engine.renderExternalCanvas(
+      canvas: canvas,
+      image: Images.atlas_icons,
+      srcX: 0,
+      srcY: 256,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: io.getCursorScreenX(),
+      dstY: io.getCursorScreenY(),
+      scale: 0.5,
+    );
+  }
+
+  void canvasRenderCursorTalk(ui.Canvas canvas){
+    engine.renderExternalCanvas(
+      canvas: canvas,
+      image: Images.atlas_icons,
+      srcX: 0,
+      srcY: 320,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: io.getCursorScreenX(),
+      dstY: io.getCursorScreenY(),
+      scale: 0.5,
+    );
+  }
+
   void renderCursor(Canvas canvas) {
     final cooldown = player.weaponCooldown.value;
     final accuracy = player.accuracy.value;
     final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
 
-    switch (gamestream.cursorType) {
+    switch (cursorType) {
       case IsometricCursorType.CrossHair_White:
         canvasRenderCursorCrossHair(canvas, distance);
         break;
@@ -2097,64 +2235,54 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void renderPlayerEnergy() {
-    if (gamestream.player.dead) return;
-    if (!gamestream.player.active.value) return;
-    renderBarBlue(
-      gamestream.player.position.x,
-      gamestream.player.position.y,
-      gamestream.player.position.z,
-      gamestream.player.energyPercentage,
+
+  void renderBarBlue(double x, double y, double z, double percentage) {
+    engine.renderSprite(
+      image: Images.atlas_gameobjects,
+      dstX: getRenderX(x, y, z) - 26,
+      dstY: getRenderY(x, y, z) - 55,
+      srcX: 171,
+      srcY: 48,
+      srcWidth: 51.0 * percentage,
+      srcHeight: 8,
+      anchorX: 0.0,
+      color: 1,
     );
   }
 
-  void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
-    const srcX = 0;
-    const srcY = 192;
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: gamestream.io.getCursorScreenX(),
-        dstY: gamestream.io.getCursorScreenY() - range,
-        anchorY: 1.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: gamestream.io.getCursorScreenX(),
-        dstY: gamestream.io.getCursorScreenY() + range,
-        anchorY: 0.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: gamestream.io.getCursorScreenX() - range,
-        dstY: gamestream.io.getCursorScreenY(),
-        anchorX: 1.0
-    );
-    gamestream.engine.renderExternalCanvas(
-        canvas: canvas,
-        image: Images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: gamestream.io.getCursorScreenX() + range,
-        dstY: gamestream.io.getCursorScreenY(),
-        anchorX: 0.0
-    );
+  void renderMouseTargetName() {
+    if (!player.mouseTargetAllie.value) return;
+    final mouseTargetName = player.mouseTargetName.value;
+    if (mouseTargetName == null) return;
+    renderText(
+        text: mouseTargetName,
+        x: player.aimTargetPosition.renderX,
+        y: player.aimTargetPosition.renderY - 55);
   }
+
+  void renderStarsV3(IsometricPosition v3) =>
+      renderStars(v3.renderX, v3.renderY - 40);
+
+  void renderStars(double x, double y) =>
+      engine.renderSprite(
+        image: Images.sprite_stars,
+        srcX: 125.0 * animationFrame16,
+        srcY: 0,
+        srcWidth: 125,
+        srcHeight: 125,
+        dstX: x,
+        dstY: y,
+        scale: 0.4,
+      );
+
+
+  static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
+
+  static double getPositionRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
+
+  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+
+  static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
+
 
 }
