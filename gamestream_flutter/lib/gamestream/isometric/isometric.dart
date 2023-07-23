@@ -881,6 +881,7 @@ class Isometric extends WebsocketClientBuilder with
 
   @override
   void readResponse(int serverResponse){
+
     updateFrame.value++;
 
     switch (serverResponse) {
@@ -974,8 +975,9 @@ class Isometric extends WebsocketClientBuilder with
         serverFPS.value = readUInt16();
         return;
       default:
-        print('read error; index: $index, previous-server-response: $previousServerResponse');
+        print('read error; index: $index');
         print(values);
+        disconnect();
         return;
     }
   }
@@ -1468,6 +1470,7 @@ class Isometric extends WebsocketClientBuilder with
 
   @override
   void onReadRespondFinished() {
+
     if (renderResponse){
       engine.redrawCanvas();
     }

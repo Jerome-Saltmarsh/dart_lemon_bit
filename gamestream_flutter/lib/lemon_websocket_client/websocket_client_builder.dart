@@ -15,11 +15,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   String connectionUri = '';
   DateTime? connectionEstablished;
 
-  final serverResponseStack = Uint8List(1000);
-  final serverResponseStackLength = Uint16List(1000);
-  var serverResponseStackIndex = 0;
-
-  var previousServerResponse = -1;
   var renderResponse = false;
 
   DateTime? timeConnectionEstablished;
@@ -59,33 +54,18 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     bufferSize.value = values.length;
     bufferSizeTotal.value += values.length;
 
-    var serverResponseStart = -1;
     var serverResponse = -1;
-    serverResponseStackIndex = -1;
     final length = values.length - 1;
 
     while (index < length) {
-
-      if (serverResponse != -1) {
-        serverResponseStackIndex++;
-        serverResponseStack[serverResponseStackIndex] = serverResponse;
-        serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
-      }
-
-      serverResponseStart = index;
       serverResponse = readByte();
       readResponse(serverResponse);
-
-      previousServerResponse = serverResponse;
     }
 
-    serverResponseStackIndex++;
-    serverResponseStack[serverResponseStackIndex] = serverResponse;
-    serverResponseStackLength[serverResponseStackIndex] = index - serverResponseStart;
     bufferSize.value = index;
-    index = 0;
-
     onReadRespondFinished();
+    index = 0;
+    serverResponse = -1;
   }
 
   void onReadRespondFinished();

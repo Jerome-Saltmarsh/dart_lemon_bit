@@ -120,17 +120,6 @@ extension isometricDebugUI on IsometricDebug {
         ],
       )),
       height16,
-      buildWatch(gamestream.bufferSize, (bytes){
-        bytes--; // remove the final end byte
-        var text = '';
-        for (var i = 0; i < gamestream.serverResponseStackIndex; i++){
-          final serverResponse = gamestream.serverResponseStack[i];
-          final length = gamestream.serverResponseStackLength[i];
-          final lengthPercentage = formatPercentage(length / bytes);
-          text += '${ServerResponse.getName(serverResponse)}, ($length / $bytes, $lengthPercentage\n';
-        }
-        return buildText(text);
-      }),
     ],
   );
 
