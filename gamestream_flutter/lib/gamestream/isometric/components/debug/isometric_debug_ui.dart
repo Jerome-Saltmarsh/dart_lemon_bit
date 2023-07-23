@@ -158,10 +158,10 @@ extension isometricDebugUI on IsometricDebug {
                   'aim-target-name: ${gamestream.isometric.player.aimTargetName}\n'
                   'aim-target-position: ${gamestream.isometric.player.aimTargetPosition}\n'
                   'target-position: ${gamestream.isometric.player.targetPosition}\n'
-                  'scene-light-sources: ${gamestream.isometric.scene.nodesLightSourcesTotal}\n'
+                  'scene-light-sources: ${gamestream.isometric.nodesLightSourcesTotal}\n'
                   'scene-light-active: ${gamestream.isometric.totalActiveLights}\n'
                   'total-gameobjects: ${gamestream.isometric.gameObjects.length}\n'
-                  'total-characters: ${gamestream.isometric.scene.totalCharacters}\n'
+                  'total-characters: ${gamestream.isometric.totalCharacters}\n'
                   'total-particles: ${gamestream.isometric.particles.particles.length}\n'
                   'total-particles-active: ${gamestream.isometric.particles.countActiveParticles}\n'
           )),
@@ -179,8 +179,8 @@ extension isometricDebugUI on IsometricDebug {
       Column(
         children: [
           onPressed(
-              action: gamestream.isometric.scene.toggleDynamicShadows,
-              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.scene.dynamicShadows}'))
+              action: gamestream.isometric.toggleDynamicShadows,
+              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${gamestream.isometric.dynamicShadows}'))
           ),
           onPressed(
               child: GSRefresh(() => buildText('blend-mode: ${gamestream.engine.bufferBlendMode.name}')),
@@ -195,11 +195,11 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                gamestream.isometric.scene.setInterpolationLength(gamestream.isometric.scene.interpolationLength - 1);
+                gamestream.isometric.setInterpolationLength(gamestream.isometric.interpolationLength - 1);
               }),
-              GSRefresh(() => buildText('light-size: ${gamestream.isometric.scene.interpolationLength}')),
+              GSRefresh(() => buildText('light-size: ${gamestream.isometric.interpolationLength}')),
               buildText('->', onPressed: (){
-                gamestream.isometric.scene.setInterpolationLength(gamestream.isometric.scene.interpolationLength + 1);
+                gamestream.isometric.setInterpolationLength(gamestream.isometric.interpolationLength + 1);
               }),
             ],
           ),
@@ -207,15 +207,15 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(gamestream.isometric.scene.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(gamestream.isometric.interpolationEaseType.value);
                 final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                gamestream.isometric.scene.interpolationEaseType.value = EaseType.values[indexNext];
+                gamestream.isometric.interpolationEaseType.value = EaseType.values[indexNext];
               }),
-              buildWatch(gamestream.isometric.scene.interpolationEaseType, buildText),
+              buildWatch(gamestream.isometric.interpolationEaseType, buildText),
               buildText('->', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(gamestream.isometric.scene.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(gamestream.isometric.interpolationEaseType.value);
                 final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                gamestream.isometric.scene.interpolationEaseType.value = EaseType.values[indexNext];
+                gamestream.isometric.interpolationEaseType.value = EaseType.values[indexNext];
               }),
             ],
           ),
@@ -225,19 +225,19 @@ extension isometricDebugUI on IsometricDebug {
           ColorPicker(
             portraitOnly: true,
             pickerColor: HSVColor.fromAHSV(
-              gamestream.isometric.scene.ambientAlpha / 255,
-              gamestream.isometric.scene.ambientHue.toDouble(),
-              gamestream.isometric.scene.ambientSaturation / 100,
-              gamestream.isometric.scene.ambientValue / 100,
+              gamestream.isometric.ambientAlpha / 255,
+              gamestream.isometric.ambientHue.toDouble(),
+              gamestream.isometric.ambientSaturation / 100,
+              gamestream.isometric.ambientValue / 100,
             ).toColor(),
             onColorChanged: (color){
               gamestream.isometric.overrideColor.value = true;
               final hsvColor = HSVColor.fromColor(color);
-              gamestream.isometric.scene.ambientAlpha = (hsvColor.alpha * 255).round();
-              gamestream.isometric.scene.ambientHue = hsvColor.hue.round();
-              gamestream.isometric.scene.ambientSaturation = (hsvColor.saturation * 100).round();
-              gamestream.isometric.scene.ambientValue = (hsvColor.value * 100).round();
-              gamestream.isometric.scene.resetNodeColorsToAmbient();
+              gamestream.isometric.ambientAlpha = (hsvColor.alpha * 255).round();
+              gamestream.isometric.ambientHue = hsvColor.hue.round();
+              gamestream.isometric.ambientSaturation = (hsvColor.saturation * 100).round();
+              gamestream.isometric.ambientValue = (hsvColor.value * 100).round();
+              gamestream.isometric.resetNodeColorsToAmbient();
             },
           ),
         ],

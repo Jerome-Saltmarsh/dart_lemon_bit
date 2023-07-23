@@ -23,7 +23,7 @@ extension ServerResponseReader on Gamestream {
     assert (values.isNotEmpty);
     updateFrame.value++;
     index = 0;
-    isometric.scene.totalCharacters = 0;
+    isometric.totalCharacters = 0;
     this.values = values;
     bufferSize.value = values.length;
     bufferSizeTotal.value += values.length;
@@ -369,7 +369,7 @@ extension ServerResponseReader on Gamestream {
   }
 
   void readIsometricCharacters(){
-     final scene = isometric.scene;
+     final scene = isometric;
      while (true) {
 
        final compressionLevel = readByte();
@@ -466,8 +466,8 @@ extension ServerResponseReader on Gamestream {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    isometric.scene.nodeTypes[nodeIndex] = nodeType;
-    isometric.scene.nodeOrientations[nodeIndex] = nodeOrientation;
+    isometric.nodeTypes[nodeIndex] = nodeType;
+    isometric.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
     isometric.onChangedNodes();
     isometric.editor.refreshNodeSelectedIndex();

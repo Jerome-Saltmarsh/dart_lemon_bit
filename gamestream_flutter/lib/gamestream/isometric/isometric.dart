@@ -15,7 +15,6 @@ import 'atlases/atlas_nodes.dart';
 import 'classes/isometric_character.dart';
 import 'classes/isometric_position.dart';
 import 'classes/isometric_projectile.dart';
-import 'components/functions/format_bytes.dart';
 import 'components/render/renderer_characters.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
@@ -26,7 +25,7 @@ import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 import 'ui/isometric_constants.dart';
 
-class Isometric {
+class Isometric with IsometricScene {
 
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
@@ -74,7 +73,7 @@ class Isometric {
 
   final animation = IsometricAnimation();
   final debug = IsometricDebug();
-  final scene = IsometricScene();
+  // final scene = IsometricScene();
   final minimap = IsometricMinimap();
   final editor = IsometricEditor();
   final player = IsometricPlayer();
@@ -84,13 +83,13 @@ class Isometric {
 
   var totalProjectiles = 0;
   final projectiles = <IsometricProjectile>[];
-  late final particles = IsometricParticles(scene);
+  late final particles = IsometricParticles(this);
   late final renderer = IsometricRender(
-    rendererGameObjects: RendererGameObjects(scene),
-    rendererParticles: RendererParticles(scene, particles.particles),
-    rendererCharacters: RendererCharacters(scene),
-    rendererNodes: RendererNodes(scene),
-    rendererProjectiles: RendererProjectiles(scene),
+    rendererGameObjects: RendererGameObjects(this),
+    rendererParticles: RendererParticles(this, particles.particles),
+    rendererCharacters: RendererCharacters(this),
+    rendererNodes: RendererNodes(this),
+    rendererProjectiles: RendererProjectiles(this),
   );
 
   bool get playMode => !editMode;
@@ -119,12 +118,12 @@ class Isometric {
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
-    if (windLine < scene.totalRows){
+    if (windLine < totalRows){
       windLineColumn = 0;
-      windLineRow =  scene.totalRows - windLine - 1;
+      windLineRow =  totalRows - windLine - 1;
     } else {
       windLineRow = 0;
-      windLineColumn = windLine - scene.totalRows + 1;
+      windLineColumn = windLine - totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
@@ -152,7 +151,7 @@ class Isometric {
     updateTorchEmissionIntensity();
     updateParticleEmitters();
 
-    interpolation_padding = ((gamestream.isometric.scene.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
+    interpolation_padding = ((gamestream.isometric.interpolationLength + 1) * Node_Size) / gamestream.engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -271,11 +270,11 @@ class Isometric {
     player.indexZ = 0;
     player.indexRow = 0;
     player.indexColumn = 0;
-    scene.characters.clear();
+    characters.clear();
     projectiles.clear();
     gameObjects.clear();
     totalProjectiles = 0;
-    scene.totalCharacters = 0;
+    totalCharacters = 0;
   }
 
   IsometricGameObject findOrCreateGameObject(int id) {
@@ -301,7 +300,7 @@ class Isometric {
         case EmissionType.None:
           continue;
         case EmissionType.Color:
-          scene.applyVector3Emission(
+          applyVector3Emission(
             gameObject,
             hue: gameObject.emissionHue,
             saturation: gameObject.emissionSat,
@@ -311,7 +310,7 @@ class Isometric {
           );
           continue;
         case EmissionType.Ambient:
-          scene.applyVector3EmissionAmbient(gameObject,
+          applyVector3EmissionAmbient(gameObject,
             alpha: gameObject.emissionAlp,
             intensity: gameObject.emission_intensity,
           );
@@ -352,7 +351,7 @@ class Isometric {
   }
 
   void projectShadow(IsometricPosition v3){
-    if (!gamestream.isometric.scene.inBoundsPosition(v3)) return;
+    if (!gamestream.isometric.inBoundsPosition(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
@@ -375,8 +374,8 @@ class Isometric {
 
     while (true) {
       if (z < 0) return -1;
-      final nodeIndex = gamestream.isometric.scene.getIndexXYZ(x, y, z);
-      final nodeOrientation = gamestream.isometric.scene.nodeOrientations[nodeIndex];
+      final nodeIndex = gamestream.isometric.getIndexXYZ(x, y, z);
+      final nodeOrientation = gamestream.isometric.nodeOrientations[nodeIndex];
 
       if (const <int> [
         NodeOrientation.None,
@@ -398,8 +397,8 @@ class Isometric {
   }
 
   void clean() {
-    gamestream.isometric.scene.colorStackIndex = -1;
-    gamestream.isometric.scene.ambientStackIndex = -1;
+    gamestream.isometric.colorStackIndex = -1;
+    gamestream.isometric.ambientStackIndex = -1;
   }
 
   void onChangedLightningFlashing(bool lightningFlashing){
@@ -416,8 +415,8 @@ class Isometric {
 
   void applyEmissions(){
     totalActiveLights = 0;
-    gamestream.isometric.scene.applyEmissionsLightSources();
-    gamestream.isometric.scene.applyEmissionsCharacters();
+    gamestream.isometric.applyEmissionsLightSources();
+    gamestream.isometric.applyEmissionsCharacters();
     gamestream.isometric.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
@@ -429,7 +428,7 @@ class Isometric {
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
     if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.colorType == EmissionType.None)){
-      gamestream.isometric.scene.emitLightAmbient(
+      gamestream.isometric.emitLightAmbient(
         index: gamestream.isometric.editor.nodeSelectedIndex.value,
         // hue: gamestream.isometric.scene.ambientHue,
         // saturation: gamestream.isometric.scene.ambientSaturation,
@@ -440,13 +439,13 @@ class Isometric {
   }
 
   void applyCharacterColors(){
-    for (var i = 0; i < gamestream.isometric.scene.totalCharacters; i++){
-      applyCharacterColor(gamestream.isometric.scene.characters[i]);
+    for (var i = 0; i < gamestream.isometric.totalCharacters; i++){
+      applyCharacterColor(gamestream.isometric.characters[i]);
     }
   }
 
   void applyCharacterColor(IsometricCharacter character){
-    character.color = gamestream.isometric.scene.getRenderColorPosition(character);
+    character.color = gamestream.isometric.getRenderColorPosition(character);
   }
 
   void applyEmissionsProjectiles() {
@@ -457,7 +456,7 @@ class Isometric {
 
   void applyProjectileEmission(IsometricProjectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      gamestream.isometric.scene.applyVector3Emission(projectile,
+      gamestream.isometric.applyVector3Emission(projectile,
         hue: 100,
         saturation: 1,
         value: 1,
@@ -466,13 +465,13 @@ class Isometric {
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      gamestream.isometric.scene.applyVector3EmissionAmbient(projectile,
+      gamestream.isometric.applyVector3EmissionAmbient(projectile,
         alpha: 50,
       );
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      gamestream.isometric.scene.applyVector3Emission(projectile,
+      gamestream.isometric.applyVector3Emission(projectile,
         hue: 167,
         alpha: 50,
         saturation: 1,
@@ -481,7 +480,7 @@ class Isometric {
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      gamestream.isometric.scene.applyVector3EmissionAmbient(projectile,
+      gamestream.isometric.applyVector3EmissionAmbient(projectile,
         alpha: 50,
       );
       return;
@@ -512,7 +511,7 @@ class Isometric {
       torchEmissionVal = -torchEmissionVal;
     }
 
-    gamestream.isometric.scene.torch_emission_intensity = interpolateDouble(
+    gamestream.isometric.torch_emission_intensity = interpolateDouble(
       start: torchEmissionStart,
       end: torchEmissionEnd,
       t: torchEmissionT,
@@ -556,17 +555,17 @@ class Isometric {
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = (gamestream.isometric.hours.value * Seconds_Per_Hour) + (gamestream.isometric.minutes.value * 60);
 
-    gamestream.isometric.scene.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
+    gamestream.isometric.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
     if (gamestream.isometric.rainType.value == RainType.Light){
-      gamestream.isometric.scene.ambientAlpha += 20;
+      gamestream.isometric.ambientAlpha += 20;
     }
     if (gamestream.isometric.rainType.value == RainType.Heavy){
-      gamestream.isometric.scene.ambientAlpha += 40;
+      gamestream.isometric.ambientAlpha += 40;
     }
-    gamestream.isometric.scene.resetNodeColorsToAmbient();
+    gamestream.isometric.resetNodeColorsToAmbient();
   }
 
   void refreshRain(){
@@ -627,8 +626,8 @@ class Isometric {
   }
 
   void onChangedRaining(bool raining){
-    raining ? gamestream.isometric.scene.rainStart() : gamestream.isometric.scene.rainStop();
-    gamestream.isometric.scene.resetNodeColorsToAmbient();
+    raining ? gamestream.isometric.rainStart() : gamestream.isometric.rainStop();
+    gamestream.isometric.resetNodeColorsToAmbient();
   }
 
   void onChangedMessageStatus(String value){

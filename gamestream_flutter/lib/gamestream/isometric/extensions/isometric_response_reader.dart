@@ -40,7 +40,7 @@ extension IsometricResponseReader on Gamestream {
         player.indexColumn = position.indexColumn;
         player.indexRow = position.indexRow;
         player.indexZ = position.indexZ;
-        player.nodeIndex = isometric.scene.getIndexPosition(position);
+        player.nodeIndex = isometric.getIndexPosition(position);
         break;
 
       case IsometricResponse.Player_Accuracy:
@@ -145,9 +145,9 @@ extension IsometricResponseReader on Gamestream {
 
   void readScene() {
     final scenePart = readByte(); /// DO NOT DELETE
-    isometric.scene.totalZ = readUInt16();
-    isometric.scene.totalRows = readUInt16();
-    isometric.scene.totalColumns = readUInt16();
+    isometric.totalZ = readUInt16();
+    isometric.totalRows = readUInt16();
+    isometric.totalColumns = readUInt16();
 
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationsLength = readUInt24();
@@ -156,20 +156,20 @@ extension IsometricResponseReader on Gamestream {
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
     final nodeTypes = decoder.decodeBytes(compressedNodeTypes);
 
-    isometric.scene.nodeTypes = Uint8List.fromList(nodeTypes);
-    isometric.scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    isometric.scene.area = isometric.scene.totalRows * isometric.scene.totalColumns;
-    isometric.scene.area2 = isometric.scene.area * 2;
-    isometric.scene.projection = isometric.scene.area2 + isometric.scene.totalColumns + 1;
-    isometric.scene.projectionHalf =  isometric.scene.projection ~/ 2;
-    final totalNodes = isometric.scene.totalZ * isometric.scene.totalRows * isometric.scene.totalColumns;
-    isometric.scene.colorStack = Uint16List(totalNodes);
-    isometric.scene.ambientStack = Uint16List(totalNodes);
-    isometric.scene.total = totalNodes;
-    isometric.nodesRaycast = isometric.scene.area +  isometric.scene.area + isometric.scene.totalColumns + 1;
+    isometric.nodeTypes = Uint8List.fromList(nodeTypes);
+    isometric.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+    isometric.area = isometric.totalRows * isometric.totalColumns;
+    isometric.area2 = isometric.area * 2;
+    isometric.projection = isometric.area2 + isometric.totalColumns + 1;
+    isometric.projectionHalf =  isometric.projection ~/ 2;
+    final totalNodes = isometric.totalZ * isometric.totalRows * isometric.totalColumns;
+    isometric.colorStack = Uint16List(totalNodes);
+    isometric.ambientStack = Uint16List(totalNodes);
+    isometric.total = totalNodes;
+    isometric.nodesRaycast = isometric.area +  isometric.area + isometric.totalColumns + 1;
     isometric.onChangedNodes();
-    isometric.scene.refreshNodeVariations();
-    isometric.scene.nodesChangedNotifier.value++;
+    isometric.refreshNodeVariations();
+    isometric.nodesChangedNotifier.value++;
     isometric.particles.particles.clear();
     io.recenterCursor();
   }
@@ -182,7 +182,7 @@ extension IsometricResponseReader on Gamestream {
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
-    player.nodeIndex = isometric.scene.getIndexPosition(position);
+    player.nodeIndex = isometric.getIndexPosition(position);
   }
 
   void readPlayerAimTarget() {

@@ -143,7 +143,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = IsometricRender.getPositionRenderY(character);
 
     const Color_Invisible = IsometricColors.White38_Value;
-    final color = invisible ? Color_Invisible : gamestream.isometric.scene.getRenderColorPosition(character);
+    final color = invisible ? Color_Invisible : gamestream.isometric.getRenderColorPosition(character);
 
     if (invisible) {
       gamestream.engine.bufferBlendMode = BlendMode.srcIn;

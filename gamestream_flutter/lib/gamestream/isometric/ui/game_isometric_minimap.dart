@@ -26,7 +26,7 @@ class IsometricMinimap {
 
   void generateSrcDst(){
     var index = 0;
-    final nodes = gamestream.isometric.scene;
+    final nodes = gamestream.isometric;
     final rows = nodes.totalRows;
     final columns = nodes.totalColumns;
     final area = nodes.area;

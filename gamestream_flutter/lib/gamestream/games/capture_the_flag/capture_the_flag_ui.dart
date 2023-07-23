@@ -155,7 +155,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             ),
             width: mapSize,
             height: mapSize,
-            child:   buildWatch(isometric.scene.nodesChangedNotifier, (_){
+            child:   buildWatch(isometric.nodesChangedNotifier, (_){
               return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
                 const scale = 2.0;
                 canvas.scale(scale, scale);
@@ -176,10 +176,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 isometric.minimap.renderCanvas(canvas);
 
                 final player = isometric.player;
-                final totalCharacters = isometric.scene.totalCharacters;
+                final totalCharacters = isometric.totalCharacters;
 
                 for (var i = 0; i < totalCharacters; i++) {
-                  final character = isometric.scene.characters[i];
+                  final character = isometric.characters[i];
                   final isPlayer = player.isCharacter(character);
                   gamestream.engine.renderExternalCanvas(
                       canvas: canvas,

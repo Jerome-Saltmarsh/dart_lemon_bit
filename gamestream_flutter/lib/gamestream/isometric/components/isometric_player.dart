@@ -68,7 +68,7 @@ class IsometricPlayer {
   late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
   late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.onChangedPlayerWeapon);
 
-  int get areaNodeIndex => (indexRow * gamestream.isometric.scene.totalColumns) + indexColumn;
+  int get areaNodeIndex => (indexRow * gamestream.isometric.totalColumns) + indexColumn;
 
   double get x => position.x;
   double get y => position.y;
@@ -79,7 +79,7 @@ class IsometricPlayer {
   double get positionScreenY => gamestream.engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
-  bool get inBounds => gamestream.isometric.scene.inBoundsPosition(position);
+  bool get inBounds => gamestream.isometric.inBoundsPosition(position);
 
 
   bool isCharacter(IsometricCharacter character){
@@ -95,7 +95,7 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final scene = gamestream.isometric.scene;
+    final scene = gamestream.isometric;
     final index = nodeIndex + scene.area;
     while (index < scene.total){
       if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;

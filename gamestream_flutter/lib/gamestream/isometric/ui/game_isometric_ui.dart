@@ -127,7 +127,7 @@ class GameIsometricUI {
     );
 
   static Widget buildGeneratedMiniMap({required double translate}){
-    return buildWatch(gamestream.isometric.scene.nodesChangedNotifier, (_){
+    return buildWatch(gamestream.isometric.nodesChangedNotifier, (_){
       return gamestream.engine.buildCanvas(paint: (Canvas canvas, Size size){
         const scale = 2.0;
         canvas.scale(scale, scale);
@@ -146,7 +146,7 @@ class GameIsometricUI {
 
         gamestream.isometric.minimap.renderCanvas(canvas);
 
-        final scene = gamestream.isometric.scene;
+        final scene = gamestream.isometric;
         final player = gamestream.isometric.player;
 
         for (var i = 0; i < scene.totalCharacters; i++) {

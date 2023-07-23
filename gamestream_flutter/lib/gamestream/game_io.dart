@@ -151,8 +151,7 @@ class GameIO with ByteWriter {
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    final nodes = isometric.scene;
-    var z = nodes.totalZ - 1;
+    var z = gamestream.isometric.totalZ - 1;
     final mouseWorldX = gamestream.engine.mouseWorldX;
     final mouseWorldY = gamestream.engine.mouseWorldY;
     while (z >= 0){
@@ -160,11 +159,11 @@ class GameIO with ByteWriter {
       final column = IsometricRender.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
-      if (row >= nodes.totalRows) break;
-      if (column >= nodes.totalColumns) break;
-      if (z >= nodes.totalZ) break;
-      final index = nodes.getIndexZRC(z, row, column);
-      if (NodeType.isRainOrEmpty(nodes.nodeTypes[index])) {
+      if (row >= isometric.totalRows) break;
+      if (column >= isometric.totalColumns) break;
+      if (z >= isometric.totalZ) break;
+      final index = isometric.getIndexZRC(z, row, column);
+      if (NodeType.isRainOrEmpty(isometric.nodeTypes[index])) {
         z--;
         continue;
       }

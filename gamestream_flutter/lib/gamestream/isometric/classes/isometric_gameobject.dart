@@ -99,10 +99,10 @@ class IsometricGameObject extends IsometricPosition {
 
   void refreshEmissionColor(){
     emissionColor = hsvToColor(
-        hue: interpolate(start: gamestream.isometric.scene.ambientHue, end: emissionHue , t: emission_intensity),
-        saturation: interpolate(start: gamestream.isometric.scene.ambientSaturation, end: emissionSat, t: emission_intensity),
-        value: interpolate(start: gamestream.isometric.scene.ambientValue, end: emissionVal, t: emission_intensity),
-        opacity: interpolate(start: gamestream.isometric.scene.ambientAlpha, end: emissionAlp, t: emission_intensity),
+        hue: interpolate(start: gamestream.isometric.ambientHue, end: emissionHue , t: emission_intensity),
+        saturation: interpolate(start: gamestream.isometric.ambientSaturation, end: emissionSat, t: emission_intensity),
+        value: interpolate(start: gamestream.isometric.ambientValue, end: emissionVal, t: emission_intensity),
+        opacity: interpolate(start: gamestream.isometric.ambientAlpha, end: emissionAlp, t: emission_intensity),
     );
   }
 

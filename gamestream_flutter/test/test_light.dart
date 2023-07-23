@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -17,7 +17,7 @@ void main() {
     final types = Uint8List(volume);
     final orientations = Uint8List(volume);
     final alphas = Uint8ClampedList(volume);
-    final scene = IsometricScene();
+    final scene = Isometric();
 
     scene.hsvAlphas = alphas;
     scene.nodeTypes = types;

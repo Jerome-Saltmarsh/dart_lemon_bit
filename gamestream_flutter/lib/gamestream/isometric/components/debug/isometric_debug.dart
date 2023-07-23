@@ -121,7 +121,7 @@ class IsometricDebug {
 
       final pathTargetIndexValue = pathTargetIndex.value;
       if (pathTargetIndexValue != -1) {
-        final scene = isometric.scene;
+        final scene = isometric;
         isometric.renderer.renderWireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
           scene.getIndexRow(pathTargetIndexValue),
@@ -138,7 +138,7 @@ class IsometricDebug {
   }){
     if (start < 0) return;
     if (end < 0) return;
-    final nodes = gamestream.isometric.scene;
+    final nodes = gamestream.isometric;
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];

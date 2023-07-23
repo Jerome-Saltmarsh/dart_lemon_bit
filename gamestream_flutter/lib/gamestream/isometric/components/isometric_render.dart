@@ -431,13 +431,13 @@ class IsometricRender {
 
   void debugRenderHeightMapValues() {
     var i = 0;
-    for (var row = 0; row < gamestream.isometric.scene.totalRows; row++){
-      for (var column = 0; column < gamestream.isometric.scene.totalColumns; column++){
+    for (var row = 0; row < gamestream.isometric.totalRows; row++){
+      for (var column = 0; column < gamestream.isometric.totalColumns; column++){
         gamestream.isometric.renderer.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
-          text: gamestream.isometric.scene.heightMap[i].toString(),
+          text: gamestream.isometric.heightMap[i].toString(),
         );
         i++;
       }
@@ -465,8 +465,8 @@ class IsometricRender {
 
 
   void renderObjectRadius() {
-    for (var i = 0; i < gamestream.isometric.scene.totalCharacters; i++) {
-      final character = gamestream.isometric.scene.characters[i];
+    for (var i = 0; i < gamestream.isometric.totalCharacters; i++) {
+      final character = gamestream.isometric.characters[i];
       gamestream.engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }
@@ -488,8 +488,8 @@ class IsometricRender {
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
-      final i2 = gamestream.isometric.scene.getIndexXYZ(x2, y2, z);
-      if (!NodeType.isTransient(gamestream.isometric.scene.nodeTypes[i2])) break;
+      final i2 = gamestream.isometric.getIndexXYZ(x2, y2, z);
+      if (!NodeType.isTransient(gamestream.isometric.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
       i1 = i2;

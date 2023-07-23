@@ -467,7 +467,7 @@ class RendererNodes extends IsometricRenderer {
 
     const r = 2;
 
-    final nodes = gamestream.isometric.scene;
+    final nodes = gamestream.isometric;
     for (var z = playerZ; z <= playerZ + 1; z++){
       if (z >= nodes.totalZ) break;
       final indexZ = z * nodes.area;

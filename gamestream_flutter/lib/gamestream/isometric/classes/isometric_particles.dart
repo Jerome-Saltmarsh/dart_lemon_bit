@@ -104,7 +104,7 @@ class IsometricParticles {
 
   void applyEmissionsParticles() {
     final length = particles.length;
-    final scene = gamestream.isometric.scene;
+    final scene = gamestream.isometric;
     for (var i = 0; i < length; i++) {
       final particle = particles[i];
       if (!particle.active) continue;

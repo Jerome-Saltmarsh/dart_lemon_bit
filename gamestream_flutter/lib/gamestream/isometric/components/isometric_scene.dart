@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../classes/isometric_position.dart';
 
-class IsometricScene {
+mixin IsometricScene {
 
   var emissionAlphaCharacter = 50;
   var dynamicShadows = true;

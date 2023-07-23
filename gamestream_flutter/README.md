@@ -29,14 +29,16 @@ alt + m             : go to declaration
 [ ] character type skeleton 
 [ ] character type float skeleton head
 [ ] npc store
-[-] remove isometric client
-[-] remove isometric server
 [-] remove gamestream global instance
 [-] remove all static instances
 [*] optimize render nodes
 [*] optimize light tree
 [*] character persistence
 [*] fix colored lights
+
+23.07.2023
+[x] remove isometric client
+[x] remove isometric server
 
 22.07.2023
 [*] fix grid render order
