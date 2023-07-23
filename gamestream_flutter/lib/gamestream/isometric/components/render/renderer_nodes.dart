@@ -707,7 +707,7 @@ class RendererNodes extends IsometricRenderer {
     }
 
     if (column - nodesGridTotalColumnsMinusOne >= isometric.totalRows){
-      isometric.rendererNodes.remaining = false;
+      remaining = false;
       return;
     }
 
@@ -733,7 +733,7 @@ class RendererNodes extends IsometricRenderer {
       nodesMinZ++;
       renderY -= Node_Height;
       if (nodesMinZ >= isometric.totalZ){
-        isometric.rendererNodes.remaining = false;
+        isometric.render.rendererNodes.remaining = false;
         return;
       }
     }

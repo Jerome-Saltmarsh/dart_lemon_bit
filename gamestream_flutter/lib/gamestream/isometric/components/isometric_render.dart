@@ -13,15 +13,28 @@ import 'render/renderer_nodes.dart';
 import 'render/renderer_particles.dart';
 import 'render/renderer_projectiles.dart';
 
-mixin IsometricRender {
+class IsometricRender {
+
+  final Isometric isometric;
+
   var totalRemaining = 0;
   var totalIndex = 0;
+
   late final RendererNodes rendererNodes;
   late final RendererProjectiles rendererProjectiles;
   late final RendererCharacters rendererCharacters;
   late final RendererParticles rendererParticles;
   late final RendererGameObjects rendererGameObjects;
   late IsometricRenderer next = rendererNodes;
+
+  IsometricRender(this.isometric){
+    print('IsometricRender()');
+    rendererNodes = RendererNodes(isometric);
+    rendererProjectiles = RendererProjectiles(isometric);
+    rendererCharacters = RendererCharacters(isometric);
+    rendererParticles = RendererParticles(isometric);
+    rendererGameObjects = RendererGameObjects(isometric);
+  }
 
   void resetRenderOrder(IsometricRenderer value){
     value.reset();
@@ -108,7 +121,7 @@ mixin IsometricRender {
       int row,
       int column,
       ) {
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
       image: Images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
@@ -122,7 +135,7 @@ mixin IsometricRender {
   }
 
   void renderWireFrameRed(int row, int column, int z) {
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
       image: Images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
@@ -135,7 +148,7 @@ mixin IsometricRender {
   }
 
   void renderCircle32(double x, double y, double z){
-    gamestream.engine.renderSprite(
+    isometric.engine.renderSprite(
       image: Images.atlas_gameobjects,
       srcX: 16,
       srcY: 48,
@@ -157,7 +170,7 @@ mixin IsometricRender {
     required IsometricPosition position,
     required double percentage,
     int color = 1,
-  }) => gamestream.engine.renderSprite(
+  }) => isometric.engine.renderSprite(
       image: Images.atlas_gameobjects,
       dstX: Isometric.getPositionRenderX(position) - 26,
       dstY: Isometric.getPositionRenderY(position) - 45,
@@ -170,15 +183,15 @@ mixin IsometricRender {
     );
 
   void renderEditWireFrames() {
-    for (var z = 0; z < gamestream.editor.z; z++) {
-      gamestream.renderWireFrameBlue(z, gamestream.editor.row, gamestream.editor.column);
+    for (var z = 0; z < isometric.editor.z; z++) {
+      isometric.render.renderWireFrameBlue(z, isometric.editor.row, isometric.editor.column);
     }
-    gamestream.renderWireFrameRed(gamestream.editor.row, gamestream.editor.column, gamestream.editor.z);
+    isometric.render.renderWireFrameRed(isometric.editor.row, isometric.editor.column, isometric.editor.z);
   }
 
   void renderText({required String text, required double x, required double y}){
     const charWidth = 4.5;
-    gamestream.engine.writeText(text, x - charWidth * text.length, y);
+    isometric.engine.writeText(text, x - charWidth * text.length, y);
   }
 
   static double rowColumnZToRenderX(int row, int column) =>

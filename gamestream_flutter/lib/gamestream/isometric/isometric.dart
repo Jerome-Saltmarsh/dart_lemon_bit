@@ -10,8 +10,6 @@ import 'package:gamestream_flutter/gamestream/games.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
@@ -28,9 +26,6 @@ import 'atlases/atlas_nodes.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/render/classes/template_animation.dart';
-import 'components/render/renderer_characters.dart';
-import 'components/render/renderer_gameobjects.dart';
-import 'components/render/renderer_particles.dart';
 import 'components/src.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
@@ -42,8 +37,7 @@ class Isometric extends WebsocketClientBuilder with
     IsometricScene,
     IsometricCharacters,
     IsometricParticles,
-    IsometricAnimation,
-    IsometricRender
+    IsometricAnimation
 {
 
   static const Server_FPS = 45;
@@ -117,6 +111,7 @@ class Isometric extends WebsocketClientBuilder with
 
   final gameObjects = <IsometricGameObject>[];
 
+  late final IsometricRender render;
   late final GameAudio audio;
   late final IsometricDebug debug;
   late final IsometricEditor editor;
@@ -131,6 +126,7 @@ class Isometric extends WebsocketClientBuilder with
 
   Isometric(){
     print('Isometric()');
+    render = IsometricRender(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
     debug = IsometricDebug(this);
@@ -140,12 +136,6 @@ class Isometric extends WebsocketClientBuilder with
     player = IsometricPlayer(this);
     games = Games(this);
     updateFrame.onChanged(onChangedUpdateFrame);
-
-    rendererNodes = RendererNodes(this);
-    rendererProjectiles = RendererProjectiles(this);
-    rendererCharacters = RendererCharacters(this);
-    rendererParticles = RendererParticles(this);
-    rendererGameObjects = RendererGameObjects(this);
 
     games.website.errorMessageEnabled.value = true;
     error.onChanged((GameError? error) {
@@ -188,10 +178,10 @@ class Isometric extends WebsocketClientBuilder with
       // particles.updateParticles();
     }
     camera.update();
-    render3D();
+    render.render3D();
     renderEditMode();
     renderMouseTargetName();
-    debug.render(this);
+    debug.render();
 
     rendersSinceUpdate.value++;
   }
@@ -1405,7 +1395,7 @@ class Isometric extends WebsocketClientBuilder with
     error.value = null;
   }
 
-  void render(Canvas canvas, Size size){
+  void renderCanvas(Canvas canvas, Size size){
     if (!connected)
       return;
 
@@ -1444,7 +1434,7 @@ class Isometric extends WebsocketClientBuilder with
     engine = Engine(
       init: init,
       update: update,
-      render: render,
+      render: renderCanvas,
       onDrawForeground: doRenderForeground,
       title: 'AMULET',
       themeData: ThemeData(fontFamily: 'VT323-Regular'),
@@ -1621,14 +1611,14 @@ class Isometric extends WebsocketClientBuilder with
     final indexColumn = getIndexRow(index);
     final i = indexRow * totalColumns + indexColumn;
     // TODO REFACTOR
-    if (!rendererNodes.island[i])
+    if (!render.rendererNodes.island[i])
       return true;
     final indexZ = getIndexZ(index);
     if (indexZ > player.indexZ + 2)
       return false;
 
     // TODO REFACTOR
-    return rendererNodes.visible3D[index];
+    return render.rendererNodes.visible3D[index];
   }
 
   void emitLightAmbient({
@@ -1949,7 +1939,7 @@ class Isometric extends WebsocketClientBuilder with
       return;
     }
 
-    renderEditWireFrames();
+    render.renderEditWireFrames();
     renderMouseWireFrame();
   }
 
@@ -2058,7 +2048,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void renderMouseWireFrame() {
-    io.mouseRaycast(renderWireFrameBlue);
+    io.mouseRaycast(render.renderWireFrameBlue);
   }
 
 
@@ -2254,7 +2244,7 @@ class Isometric extends WebsocketClientBuilder with
     if (!player.mouseTargetAllie.value) return;
     final mouseTargetName = player.mouseTargetName.value;
     if (mouseTargetName == null) return;
-    renderText(
+    render.renderText(
         text: mouseTargetName,
         x: player.aimTargetPosition.renderX,
         y: player.aimTargetPosition.renderY - 55);

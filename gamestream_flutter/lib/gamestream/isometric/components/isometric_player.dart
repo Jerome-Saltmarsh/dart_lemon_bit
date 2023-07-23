@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_act
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric_render.dart';
 import '../enums/game_dialog.dart';
 import '../classes/isometric_position.dart';
 

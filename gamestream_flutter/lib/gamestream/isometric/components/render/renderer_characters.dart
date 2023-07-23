@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -34,11 +33,11 @@ class RendererCharacters extends IsometricRenderer {
   void renderCurrentCharacter(){
 
     if (!character.allie && isometric.options.renderHealthBarEnemies) {
-      isometric.renderCharacterHealthBar(character);
+      isometric.render.renderCharacterHealthBar(character);
     }
 
     if (character.allie && isometric.options.renderHealthBarAllies) {
-      isometric.renderCharacterHealthBar(character);
+      isometric.render.renderCharacterHealthBar(character);
     }
 
     if (character.spawning) {

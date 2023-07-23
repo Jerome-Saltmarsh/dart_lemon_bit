@@ -6,8 +6,6 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../isometric_render.dart';
-
 class IsometricDebug {
   final Isometric isometric;
   final tab = Watch(DebugTab.Selected);
@@ -59,7 +57,7 @@ class IsometricDebug {
 
   IsometricDebug(this.isometric);
 
-  void render(IsometricRender renderer) {
+  void render() {
     if (!isometric.player.debugging.value) return;
     if (!selectedCollider.value) return;
 
@@ -122,7 +120,7 @@ class IsometricDebug {
       final pathTargetIndexValue = pathTargetIndex.value;
       if (pathTargetIndexValue != -1) {
         final scene = isometric;
-        isometric.renderWireFrameBlue(
+        isometric.render.renderWireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
           scene.getIndexRow(pathTargetIndexValue),
           scene.getIndexColumn(pathTargetIndexValue),

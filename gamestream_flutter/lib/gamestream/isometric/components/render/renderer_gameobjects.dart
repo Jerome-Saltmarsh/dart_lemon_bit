@@ -54,11 +54,11 @@ class RendererGameObjects extends IsometricRenderer {
 
 
     if (gameObject.maxHealth > 0) {
-      isometric.renderHealthBarPosition(
+      isometric.render.renderHealthBarPosition(
           position: gameObject,
           percentage: gameObject.healthPercentage,
         );
-      isometric.renderTextPosition(gameObject, formatPercentage(gameObject.healthPercentage));
+      isometric.render.renderTextPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     }
 
     //

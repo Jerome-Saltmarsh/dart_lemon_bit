@@ -29,7 +29,6 @@ alt + m             : go to declaration
 [ ] character type skeleton 
 [ ] character type float skeleton head
 [ ] npc store
-[-] remove gamestream global instance
 [-] remove all static instances
 [*] optimize render nodes
 [*] optimize light tree
@@ -37,6 +36,7 @@ alt + m             : go to declaration
 [*] fix colored lights
 
 23.07.2023
+[x] remove gamestream global instance
 [x] remove isometric client
 [x] remove isometric server
 
