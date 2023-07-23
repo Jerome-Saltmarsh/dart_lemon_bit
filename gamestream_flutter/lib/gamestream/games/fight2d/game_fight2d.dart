@@ -190,7 +190,7 @@ class GameFight2D extends Game {
   Widget buildUI(BuildContext context) => GameFight2DUI(this);
 
   void togglePlayerEdit() =>
-      gamestream.network.sendClientRequest(
+      gamestream.sendClientRequest(
           ClientRequest.Fight2D,
           GameFight2DClientRequest.Toggle_Player_Edit,
       );

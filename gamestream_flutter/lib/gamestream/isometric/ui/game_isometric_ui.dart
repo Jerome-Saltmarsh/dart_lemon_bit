@@ -117,7 +117,7 @@ class GameIsometricUI {
                 ...children,
               height24,
               onPressed(
-                action: gamestream.network.disconnect,
+                action: gamestream.disconnect,
                 child: buildText('DISCONNECT', size: 25),
               ),
               height24,

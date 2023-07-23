@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../gamestream/isometric/components/functions/format_bytes.dart';
-import '../gamestream/network/enums/connection_region.dart';
 import 'connection_status.dart';
-import 'game_network.dart';
-import '../gamestream/operation_status.dart';
 
 abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
+
+  late WebSocketChannel webSocketChannel;
+  late WebSocketSink sink;
+  late final connectionStatus = Watch(ConnectionStatus.None);
+  String connectionUri = '';
+  DateTime? connectionEstablished;
 
   final serverResponseStack = Uint8List(1000);
   final serverResponseStackLength = Uint16List(1000);
@@ -25,59 +29,53 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
   final decoder = ZLibDecoder();
-  final operationStatus = Watch(OperationStatus.None);
 
-  late final GameNetwork network;
-  var engineBuilt = false;
 
   WebsocketClientBuilder() {
-    print('GameStream()');
-    network = GameNetwork(this);
-    network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
+    print('WebsocketClientBuilder()');
+    connectionStatus.onChanged(onChangedNetworkConnectionStatus);
   }
 
-   Future init(SharedPreferences sharedPreferences) async {
-     print('gamestream.init()');
+  bool get connected => connectionStatus.value == ConnectionStatus.Connected;
 
-     final visitDateTimeString = sharedPreferences.getString('visit-datetime');
-     if (visitDateTimeString != null) {
-       final visitDateTime = DateTime.parse(visitDateTimeString);
-       final durationSinceLastVisit = DateTime.now().difference(visitDateTime);
-       print('duration since last visit: ${durationSinceLastVisit.inSeconds} seconds');
-       // games.website.saveVisitDateTime();
-       // if (durationSinceLastVisit.inSeconds > 45){
-       //   games.website.checkForLatestVersion();
-       //   return;
-       // }
-     }
+  bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
 
-     // io.detectInputMode();
-
-     // final visitCount = sharedPreferences.getInt('visit-count');
-     // if (visitCount == null){
-     //   sharedPreferences.putAny('visit-count', 1);
-     //   games.website.visitCount.value = 1;
-     // } else {
-     //   sharedPreferences.putAny('visit-count', visitCount + 1);
-     //   games.website.visitCount.value = visitCount + 1;
-     //
-     //   final cachedVersion = sharedPreferences.getString('version');
-     //   if (cachedVersion != null){
-     //     if (version != cachedVersion){
-     //       print('New version detected (previous: $cachedVersion, latest: $version)');
-     //     }
-     //   }
-     //
-     //   // network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
-     // }
-     network.region.value = ConnectionRegion.LocalHost;
-     await Future.delayed(const Duration(seconds: 4));
-   }
-
-
-   void disconnect(){
-     network.disconnect();
-   }
+   // Future init(SharedPreferences sharedPreferences) async {
+   //   print('gamestream.init()');
+   //
+   //   final visitDateTimeString = sharedPreferences.getString('visit-datetime');
+   //   if (visitDateTimeString != null) {
+   //     final visitDateTime = DateTime.parse(visitDateTimeString);
+   //     final durationSinceLastVisit = DateTime.now().difference(visitDateTime);
+   //     print('duration since last visit: ${durationSinceLastVisit.inSeconds} seconds');
+   //     // games.website.saveVisitDateTime();
+   //     // if (durationSinceLastVisit.inSeconds > 45){
+   //     //   games.website.checkForLatestVersion();
+   //     //   return;
+   //     // }
+   //   }
+   //
+   //   // io.detectInputMode();
+   //
+   //   // final visitCount = sharedPreferences.getInt('visit-count');
+   //   // if (visitCount == null){
+   //   //   sharedPreferences.putAny('visit-count', 1);
+   //   //   games.website.visitCount.value = 1;
+   //   // } else {
+   //   //   sharedPreferences.putAny('visit-count', visitCount + 1);
+   //   //   games.website.visitCount.value = visitCount + 1;
+   //   //
+   //   //   final cachedVersion = sharedPreferences.getString('version');
+   //   //   if (cachedVersion != null){
+   //   //     if (version != cachedVersion){
+   //   //       print('New version detected (previous: $cachedVersion, latest: $version)');
+   //   //     }
+   //   //   }
+   //   //
+   //   //   // network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
+   //   // }
+   //   await Future.delayed(const Duration(seconds: 4));
+   // }
 
    void onError(Object error, StackTrace stack);
 
@@ -173,4 +171,93 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   void readResponse(int serverResponse);
 
   void onConnectionLost();
+
+
+  void connect({required String uri, required dynamic message}) {
+    print('webSocket.connect($uri)');
+    connectionStatus.value = ConnectionStatus.Connecting;
+    try {
+      webSocketChannel = WebSocketChannel.connect(
+          Uri.parse(uri), protocols: ['gamestream.online']);
+
+      webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
+      sink = webSocketChannel.sink;
+      connectionEstablished = DateTime.now();
+      sink.done.then((value){
+        print('Connection Finished');
+        print('webSocketChannel.closeCode: ${webSocketChannel.closeCode}');
+        print('webSocketChannel.closeReason: ${webSocketChannel.closeReason}');
+        if (connectionEstablished != null){
+          final duration = DateTime.now().difference(connectionEstablished!);
+          print('Connection Duration ${duration.inSeconds} seconds');
+        }
+
+        if (webSocketChannel.closeCode != null){
+          gamestream.onConnectionLost();
+
+
+        }
+      });
+      connectionUri = uri;
+      sink.add(message);
+    } catch(e) {
+      connectionStatus.value = ConnectionStatus.Failed_To_Connect;
+    }
+  }
+
+
+  void disconnect() {
+    print('websocketClientBuilder.disconnect()');
+    if (connected){
+      sink.close();
+    }
+    connectionStatus.value = ConnectionStatus.None;
+  }
+
+  void _onEvent(dynamic response) {
+    if (connecting) {
+      connectionStatus.value = ConnectionStatus.Connected;
+    }
+
+    if (response is Uint8List) {
+      return gamestream.readServerResponse(response);
+    }
+    if (response is String) {
+      if (response.toLowerCase() == 'ping'){
+        print('ping request received');
+        sink.add('pong');
+        return;
+      }
+      return;
+    }
+    throw Exception('cannot parse response: $response');
+  }
+  void _onError(Object error, StackTrace stackTrace) {
+    print('network.onError()');
+    // core.actions.setError(error.toString());
+  }
+
+
+  void _onDone() {
+    print('network.onDone()');
+
+    connectionUri = '';
+    if (connecting) {
+      connectionStatus.value = ConnectionStatus.Failed_To_Connect;
+    } else {
+      connectionStatus.value = ConnectionStatus.Done;
+    }
+    sink.close();
+  }
+
+
+  void send(dynamic message) {
+    if (!connected) {
+      print('warning cannot send because not connected');
+      return;
+    }
+    sink.add(message);
+  }
+
+
 }

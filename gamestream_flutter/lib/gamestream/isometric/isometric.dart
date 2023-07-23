@@ -16,7 +16,10 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
+import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../network/functions/detect_connection_region.dart';
@@ -43,6 +46,9 @@ class Isometric extends WebsocketClientBuilder with
     IsometricAnimation
 {
 
+  final operationStatus = Watch(OperationStatus.None);
+  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
+  var engineBuilt = false;
   final updateFrame = Watch(0);
   final audio = GameAudio();
   final serverFPS = Watch(0);
@@ -316,7 +322,7 @@ class Isometric extends WebsocketClientBuilder with
       sendIsometricRequest(IsometricRequest.Toggle_Debugging);
 
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
-      gamestream.network.sendClientRequest(
+      gamestream.sendClientRequest(
         ClientRequest.Isometric,
         '${request.index} $message',
       );
@@ -1348,7 +1354,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void startGameType(GameType gameType){
-    network.connectToGame(gameType);
+    connectToGame(gameType);
   }
 
   /// EVENT HANDLER (DO NOT CALL)
@@ -1374,7 +1380,7 @@ class Isometric extends WebsocketClientBuilder with
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         gamestream.games.website.error.value = 'unable to join game';
-        network.disconnect();
+        disconnect();
         break;
       default:
         break;
@@ -1405,6 +1411,10 @@ class Isometric extends WebsocketClientBuilder with
     // game.value.drawCanvas(canvas, size);
   }
 
+  Future init(sharedPreferences) async {
+    Images.loadImages();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('isometric.build()');
@@ -1433,7 +1443,6 @@ class Isometric extends WebsocketClientBuilder with
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.drawCanvasAfterUpdate = false;
     renderResponse = true;
-    Images.loadImages();
     engine.cursorType.value = CursorType.Basic;
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
@@ -1446,5 +1455,47 @@ class Isometric extends WebsocketClientBuilder with
       engine.redrawCanvas();
     }
   }
+
+
+  // FUNCTIONS
+  void connectToRegion(ConnectionRegion region, String message) {
+    print('connectToRegion(${region.name}');
+    if (region == ConnectionRegion.LocalHost) {
+      const portLocalhost = '8080';
+      final wsLocalHost = 'ws://localhost:${portLocalhost}';
+      connectToServer(wsLocalHost, message);
+      return;
+    }
+    if (region == ConnectionRegion.Custom) {
+      print('connecting to custom server');
+      // print(gamestream.games.website.customConnectionStrongController.text);
+      // connectToServer(
+      //   gamestream.games.website.customConnectionStrongController.text,
+      //   message,
+      // );
+      return;
+    }
+    connectToServer(convertHttpToWSS(region.url), message);
+  }
+
+  void connectLocalHost({int port = 8080, required String message}) {
+    connectToServer('ws://localhost:$port', message);
+  }
+
+  void connectToServer(String uri, String message) {
+    connect(uri: uri, message: '${ClientRequest.Join} $message');
+  }
+
+  void connectToGame(GameType gameType, [String message = '']) {
+    final regionValue = region.value;
+    if (regionValue == null) {
+      throw Exception('region is null');
+    }
+    connectToRegion(regionValue, '${gameType.index} $message');
+  }
+
+  void sendClientRequest(int value, [dynamic message]) =>
+      message != null ? send('${value} $message') : send(value);
+
 
 }

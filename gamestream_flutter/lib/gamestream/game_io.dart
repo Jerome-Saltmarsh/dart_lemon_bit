@@ -271,7 +271,7 @@ class GameIO with ByteWriter {
   void sendUpdateBuffer() {
     final bytes = compile();
     updateSize.value = bytes.length;
-    gamestream.network.send(bytes);
+    gamestream.send(bytes);
   }
 
   void reset() {

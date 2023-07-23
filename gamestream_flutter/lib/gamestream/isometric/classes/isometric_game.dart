@@ -48,7 +48,7 @@ class IsometricGame extends Game {
   }
 
   void sendIsometricClientRequest([dynamic message]) {
-    gamestream.network.sendClientRequest(ClientRequest.Isometric, message);
+    gamestream.sendClientRequest(ClientRequest.Isometric, message);
   }
 
   @override

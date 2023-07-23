@@ -486,7 +486,7 @@ class IsometricEditor {
   void saveScene()=> sendIsometricEditorRequest(IsometricEditorRequest.Save);
 
   void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
-      gamestream.network.sendClientRequest(
+      gamestream.sendClientRequest(
         ClientRequest.Isometric_Editor,
         '${request.index} $message',
       );

@@ -39,7 +39,7 @@ extension WebsiteUI on WebsiteGame {
         if (websitePage == WebsitePage.Region){
           return buildSelectRegionColumn();
         }
-        return WatchBuilder(gamestream.network.region, (ConnectionRegion? region) {
+        return WatchBuilder(gamestream.region, (ConnectionRegion? region) {
           if (region == null) return buildSelectRegionColumn();
 
           final regionButton = onPressed(
@@ -89,7 +89,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(gamestream.network.connectionStatus, buildConnectionStatus);
+          : buildWatch(gamestream.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {
@@ -168,7 +168,7 @@ extension WebsiteUI on WebsiteGame {
       );
 
   Widget buildButtonJoinGameType({required GameType gameType, required String gameName}) => onPressed(
-      action: () => gamestream.network.connectToGame(gameType),
+      action: () => gamestream.connectToGame(gameType),
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
 
@@ -200,7 +200,7 @@ extension WebsiteUI on WebsiteGame {
         children: [
           buildText('Select Your Region', size: FontSize.large),
           height16,
-          WatchBuilder(gamestream.network.region, (activeRegion) {
+          WatchBuilder(gamestream.region, (activeRegion) {
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -216,7 +216,7 @@ extension WebsiteUI on WebsiteGame {
                     .map((ConnectionRegion region) =>
                     onPressed(
                       action: () {
-                        gamestream.network.region.value = region;
+                        gamestream.region.value = region;
                         gamestream.games.website.websitePage.value = WebsitePage.Games;
                       },
                       child: MouseOver(builder: (bool mouseOver) {

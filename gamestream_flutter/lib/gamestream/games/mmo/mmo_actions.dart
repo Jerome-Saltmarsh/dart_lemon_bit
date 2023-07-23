@@ -56,7 +56,7 @@ extension MMOActions on MmoGame {
       sendMMORequest(MMORequest.Upgrade_Talent, talentType.index);
 
   void sendMMORequest(MMORequest request, [dynamic message]) =>
-      gamestream.network.sendClientRequest(
+      gamestream.sendClientRequest(
           ClientRequest.MMO,
           '${request.index} $message'
       );
