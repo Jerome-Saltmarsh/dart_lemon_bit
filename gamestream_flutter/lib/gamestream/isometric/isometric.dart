@@ -1,7 +1,7 @@
 
 import 'dart:async';
-import 'dart:ui' as ui;
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -1335,7 +1334,6 @@ class Isometric extends WebsocketClientBuilder with
     game.value = games.mapGameTypeToGame(gameType);
   }
 
-  @override
   void onScreenSizeChanged(
       double previousWidth,
       double previousHeight,
@@ -1451,8 +1449,8 @@ class Isometric extends WebsocketClientBuilder with
       buildLoadingScreen: buildLoadingPage,
     );
 
-    print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
-    print('time zone: ${detectConnectionRegion()}');
+    print('uri-base-host: ${Uri.base.host}');
+    print('region-detected: ${detectConnectionRegion()}');
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.drawCanvasAfterUpdate = false;
     renderResponse = true;

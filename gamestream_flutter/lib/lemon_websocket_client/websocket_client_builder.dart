@@ -12,7 +12,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   late WebSocketChannel webSocketChannel;
   late WebSocketSink sink;
   late final connectionStatus = Watch(ConnectionStatus.None);
-  String connectionUri = '';
   DateTime? connectionEstablished;
 
   var renderResponse = false;
@@ -93,7 +92,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
 
         }
       });
-      connectionUri = uri;
       sink.add(message);
     } catch(e) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
@@ -132,11 +130,9 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     // core.actions.setError(error.toString());
   }
 
-
   void _onDone() {
     print('network.onDone()');
 
-    connectionUri = '';
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
     } else {

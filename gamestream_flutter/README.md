@@ -16,23 +16,23 @@ alt + m             : go to declaration
 [TODO]
 [ ] fix node transparency
 [ ] fix select position when up higher
-[ ] zombie death animation
-[ ] sounds on item drop for treasures
-[ ] character stats dialog
-[ ] attack speed modifier
-[ ] sound pick up item
-[ ] ui items draggable
 [ ] fix ai path following
 [ ] fix character light emission
-[ ] pathfinding separate and left and right stack frames
-[ ] town stash (automatically opens when nearby)
-[ ] character type skeleton 
-[ ] character type float skeleton head
-[ ] npc store
-[*] optimize render nodes
-[*] optimize light tree
-[*] character persistence
-[*] fix colored lights
+[ ] fix colored lights
+[ ] optimize render nodes
+[ ] optimize light tree
+[ ] implement pathfinding separate and left and right stack frames
+[ ] implement zombie death animation
+[ ] implement sounds on item drop for treasures
+[ ] implement character stats dialog
+[ ] implement attack speed modifier
+[ ] implement sound pick up item
+[ ] implement ui items draggable
+[ ] implement town stash (automatically opens when nearby)
+[ ] implement character type skeleton 
+[ ] implement character type float skeleton head
+[ ] implement npc store
+[ ] implement character persistence
 
 24.07.2023
 [x] remove all static instances

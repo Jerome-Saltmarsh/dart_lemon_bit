@@ -9,15 +9,12 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  var plainIndex = 0;
+  var plainStartRow = 0;
+  var plainStartColumn = 0;
+  var plainStartZ = 0;
+  var totalPlains = 0;
   var orderShiftY = 151.0;
-
-  void increaseOrderShiftY(){
-    orderShiftY++;
-  }
-
-  void decreaseOrderShiftY(){
-    orderShiftY--;
-  }
 
   static const MapNodeTypeToSrcY = <int, double>{
     NodeType.Brick: 1760,
@@ -213,13 +210,6 @@ class RendererNodes extends IsometricRenderer {
     // }
   }
 
-  var plainIndex = 0;
-
-  var plainStartRow = 0;
-  var plainStartColumn = 0;
-  var plainStartZ = 0;
-  var totalPlains = 0;
-
   void updatePlain(){
 
   }
@@ -239,9 +229,6 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderPlain(){
-
-    if (plainIndex < 0)
-      return;
 
     final height = isometric.totalZ;
     final columns = isometric.totalColumns;
@@ -2681,6 +2668,14 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
     isometric.engine.incrementBufferIndex();
+  }
+
+  void increaseOrderShiftY(){
+    orderShiftY++;
+  }
+
+  void decreaseOrderShiftY(){
+    orderShiftY--;
   }
 
 }
