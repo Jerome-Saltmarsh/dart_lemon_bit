@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
-import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
@@ -963,9 +962,6 @@ class Isometric extends WebsocketClientBuilder with
       case ServerResponse.Info:
         readServerResponseInfo();
         break;
-      case ServerResponse.Fight2D:
-        readServerResponseFight2D(games.fight2D);
-        break;
       case ServerResponse.Capture_The_Flag:
         readCaptureTheFlag();
         break;
@@ -1302,21 +1298,6 @@ class Isometric extends WebsocketClientBuilder with
       valueMap[key] = values;
     }
     return valueMap;
-  }
-
-  void readGameFight2DResponseCharacters(GameFight2D game) {
-    final totalPlayers = readUInt16();
-    assert (totalPlayers < GameFight2D.length);
-    game.charactersTotal = totalPlayers;
-    for (var i = 0; i < totalPlayers; i++) {
-      game.characterState[i] = readByte();
-      game.characterDirection[i] = readByte();
-      game.characterIsBot[i] = readBool();
-      game.characterDamage[i] = readUInt16();
-      game.characterPositionX[i] = readInt16().toDouble();
-      game.characterPositionY[i] = readInt16().toDouble();
-      game.characterStateDuration[i] = readByte();
-    }
   }
 
   CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];

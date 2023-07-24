@@ -17,7 +17,6 @@ class WebsiteGame extends Game {
   final Isometric isometric;
 
   final gameTypes = [
-    GameType.Fight2D,
     GameType.Capture_The_Flag,
     GameType.Moba,
     GameType.Mmo,

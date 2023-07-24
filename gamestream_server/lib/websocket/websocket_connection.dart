@@ -251,23 +251,6 @@ class WebSocketConnection with ByteReader {
         handleClientRequestMMORequest(arguments);
         break;
 
-      case ClientRequest.Fight2D:
-        if (player is! GameFight2DPlayer) {
-          errorInvalidPlayerType();
-          return;
-        }
-        if (arguments.length < 2){
-          errorInvalidClientRequest();
-          return;
-        }
-        final gameFight2DClientRequest = parseArg1(arguments);
-        if (gameFight2DClientRequest == null){
-          errorInvalidClientRequest();
-          return;
-        }
-        handleClientRequestFight2D(player, gameFight2DClientRequest, arguments);
-        break;
-
       case ClientRequest.Set_FPS:
         final value = parseArg1(arguments);
         if (value == null) return;
@@ -293,14 +276,6 @@ class WebSocketConnection with ByteReader {
        return true;
      }
      return false;
-  }
-
-  void handleClientRequestFight2D(GameFight2DPlayer player, int gameFightClientRequest, List<String> arguments){
-    switch (gameFightClientRequest) {
-      case GameFight2DClientRequest.Toggle_Player_Edit:
-        player.edit = !player.edit;
-        break;
-    }
   }
 
   void handleIsometricEditorRequestSetNode(List<String> arguments) {

@@ -5,8 +5,6 @@ import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 
-import '../../games/fight2d/game_fight2d.dart';
-
 extension IsometricResponseReader on Isometric {
 
   void readIsometricResponse() {
@@ -303,58 +301,6 @@ extension IsometricResponseReader on Isometric {
         break;
       default:
         throw Exception('Cannot parse apiPlayer $apiPlayer');
-    }
-  }
-
-  void readServerResponseFight2D(GameFight2D game) {
-    final fight2DResponse = readByte();
-    switch (fight2DResponse) {
-      case GameFight2DResponse.Characters:
-        readGameFight2DResponseCharacters(game);
-        break;
-      case GameFight2DResponse.Player:
-        final player = game.player;
-        player.state = readByte();
-        player.x = readInt16().toDouble();
-        player.y = readInt16().toDouble();
-        break;
-      case GameFight2DResponse.Event:
-        readFight2DEvent();
-        break;
-      case GameFight2DResponse.Scene:
-        game.sceneWidth = readUInt16();
-        game.sceneHeight = readUInt16();
-        game.sceneNodes = readUint8List(game.sceneTotal);
-        break;
-      case GameFight2DResponse.Player_Edit:
-        game.player.edit.value = readBool();
-        break;
-      default:
-        throw Exception('unknown fight2DResponse $fight2DResponse');
-    }
-  }
-
-  void readFight2DEvent() {
-    final eventType = readByte();
-    final x = readInt16().toDouble();
-    final y = readInt16().toDouble();
-
-    switch (eventType) {
-      case GameFight2DEvents.Punch:
-        audio.playAudioSingle2D(audio.heavy_punch_13, x, y);
-        break;
-      case GameFight2DEvents.Jump:
-        audio.playAudioSingle2D(audio.jump, x, y);
-        break;
-      case GameFight2DEvents.Footstep:
-        audio.playAudioSingle2D(audio.footstep_stone, x, y);
-        break;
-      case GameFight2DEvents.Strike_Swing:
-        audio.playAudioSingle2D(audio.arm_swing_whoosh_11, x, y);
-        break;
-      case GameFight2DEvents.Death:
-        audio.playAudioSingle2D(audio.magical_impact_16, x, y);
-        break;
     }
   }
 

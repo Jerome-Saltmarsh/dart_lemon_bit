@@ -14,6 +14,7 @@ alt + m             : go to declaration
 - floating txt on acquire health and xp
 
 [TODO]
+[ ] extract fight2d into separate project
 [ ] fix node transparency
 [ ] fix select position when up higher
 [ ] fix ai path following

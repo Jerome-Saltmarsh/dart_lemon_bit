@@ -88,7 +88,6 @@ class Gamestream {
       GameType.Mmo => buildGameMMO(),
       GameType.Capture_The_Flag => buildGameCaptureTheFlag(),
       GameType.Moba => buildGameMoba(),
-      GameType.Fight2D => buildGameFight2D(),
       GameType.Editor => IsometricEditor(),
       _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
   };
@@ -110,8 +109,6 @@ class Gamestream {
       time: IsometricTime(enabled: false, hour: 14),
       environment: IsometricEnvironment(),
     );
-
-  Game buildGameFight2D() => GameFight2D(scene: GameFight2DSceneGenerator.generate());
 
   Player joinGame(Game game) {
     final player = game.createPlayer();

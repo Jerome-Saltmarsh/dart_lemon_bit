@@ -173,7 +173,6 @@ extension WebsiteUI on WebsiteGame {
       );
 
   Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
-      GameType.Fight2D: 'images/website/game-fight2d.png',
       GameType.Capture_The_Flag: 'images/website/game-isometric.png',
       GameType.Moba: 'images/website/game-isometric.png',
       GameType.Mmo: 'images/website/game-isometric.png',

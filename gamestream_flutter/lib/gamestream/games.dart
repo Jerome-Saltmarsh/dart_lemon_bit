@@ -6,12 +6,10 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 
 import '../common.dart';
 import 'game.dart';
-import 'games/fight2d/game_fight2d.dart';
 import 'games/website/website_game.dart';
 import 'isometric/classes/isometric_game.dart';
 
 class Games {
-  late final GameFight2D fight2D;
   late final WebsiteGame website;
   late final IsometricGame isometricEditor;
   late final CaptureTheFlagGame captureTheFlag;
@@ -19,7 +17,6 @@ class Games {
   late final MmoGame mmo;
 
   Games(Isometric isometric) {
-     fight2D  = GameFight2D(isometric);
      website = WebsiteGame(isometric);
      captureTheFlag = CaptureTheFlagGame(gamestream: isometric);
      isometricEditor = IsometricGame(isometric: isometric);
@@ -29,7 +26,6 @@ class Games {
 
   Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
       GameType.Website => website,
-      GameType.Fight2D => fight2D,
       GameType.Capture_The_Flag => captureTheFlag,
       GameType.Editor => isometricEditor,
       GameType.Moba => moba,

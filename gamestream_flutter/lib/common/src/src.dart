@@ -2,7 +2,6 @@ library src;
 
 export 'capture_the_flag/src.dart';
 export 'combat/src.dart';
-export 'fight2d/src.dart';
 export 'isometric/src.dart';
 export 'isometric_editor/src.dart';
 export 'moba/src.dart';
