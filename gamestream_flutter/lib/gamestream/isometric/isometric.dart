@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -44,7 +45,8 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
-  var engineBuilt = false;
+  final decoder = ZLibDecoder();
+  var renderResponse = false;
   var renderCursorEnable = true;
   var clearErrorTimer = -1;
   var nextEmissionSmoke = 0;
@@ -990,7 +992,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   @override
-  void onConnectionLost() {
+  void onConnectionDone() {
     games.website.error.value = 'Lost Connection';
   }
 
@@ -1015,6 +1017,7 @@ class Isometric extends WebsocketClientBuilder with
 
   @override
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
+    print('isometric.onChangedNetworkConnectionStatus($connection)');
     bufferSizeTotal.value = 0;
 
     switch (connection) {
@@ -1335,8 +1338,8 @@ class Isometric extends WebsocketClientBuilder with
     engine.onLeftClicked = game.onLeftClicked;
     engine.onRightClicked = game.onRightClicked;
     engine.onKeyPressed = game.onKeyPressed;
-    engine.onMouseEnterCanvas = game.onMouseEnter;
-    engine.onMouseExitCanvas = game.onMouseExit;
+    // engine.onMouseEnterCanvas = game.onMouseEnter;
+    // engine.onMouseExitCanvas = game.onMouseExit;
     game.onActivated();
   }
 
@@ -1380,7 +1383,6 @@ class Isometric extends WebsocketClientBuilder with
   void renderCanvas(Canvas canvas, Size size){
     if (!connected)
       return;
-
     drawCanvas(canvas, size);
     game.value.drawCanvas(canvas, size);
   }
@@ -1388,7 +1390,6 @@ class Isometric extends WebsocketClientBuilder with
   void doRenderForeground(Canvas canvas, Size size){
     if (!connected)
       return;
-
     renderCursor(canvas);
     playerAimTargetNameText();
 
@@ -1405,15 +1406,22 @@ class Isometric extends WebsocketClientBuilder with
     await imagesLoadedCompleted.future;
   }
 
+  void onMouseEnterCanvas(){
+    renderCursorEnable = true;
+  }
+
+  void onMouseExitCanvas(){
+    renderCursorEnable = false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     print('isometric.build()');
+    print('uri-base-host: ${Uri.base.host}');
+    print('region-detected: ${detectConnectionRegion()}');
+    renderResponse = true;
 
-    if (engineBuilt){
-      return engine;
-    }
-
-    engineBuilt = true;
     engine = Engine(
       init: init,
       update: update,
@@ -1427,14 +1435,13 @@ class Isometric extends WebsocketClientBuilder with
       buildLoadingScreen: buildLoadingPage,
     );
 
-    print('uri-base-host: ${Uri.base.host}');
-    print('region-detected: ${detectConnectionRegion()}');
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.drawCanvasAfterUpdate = false;
-    renderResponse = true;
     engine.cursorType.value = CursorType.Basic;
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
+    engine.onMouseEnterCanvas = onMouseEnterCanvas;
+    engine.onMouseExitCanvas = onMouseExitCanvas;
     return engine;
   }
 

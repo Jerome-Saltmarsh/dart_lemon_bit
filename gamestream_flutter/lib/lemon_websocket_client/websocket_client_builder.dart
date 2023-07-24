@@ -1,5 +1,4 @@
 
-import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -9,28 +8,29 @@ import 'connection_status.dart';
 
 abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
 
-  late WebSocketChannel webSocketChannel;
-  late WebSocketSink sink;
-  late final connectionStatus = Watch(ConnectionStatus.None);
   DateTime? connectionEstablished;
-
-  var renderResponse = false;
-
   DateTime? timeConnectionEstablished;
 
+  late WebSocketChannel webSocketChannel;
+  late WebSocketSink sink;
+
+  final connectionStatus = Watch(ConnectionStatus.None);
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
-  final decoder = ZLibDecoder();
-
 
   WebsocketClientBuilder() {
     print('WebsocketClientBuilder()');
-    connectionStatus.onChanged(onChangedNetworkConnectionStatus);
+    connectionStatus.onChanged(_onConnectionStatusChanged);
   }
 
   bool get connected => connectionStatus.value == ConnectionStatus.Connected;
 
   bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
+
+  void _onConnectionStatusChanged(ConnectionStatus value){
+    print('websocketClientBuilder.connectionStatusChanged($value)');
+    onChangedNetworkConnectionStatus(value);
+  }
 
   void onError(Object error, StackTrace stack);
 
@@ -65,7 +65,7 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
 
   void readResponse(int serverResponse);
 
-  void onConnectionLost();
+  void onConnectionDone();
 
   void connect({required String uri, required dynamic message}) {
     print('webSocket.connect($uri)');
@@ -77,21 +77,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
       webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
       sink = webSocketChannel.sink;
       connectionEstablished = DateTime.now();
-      sink.done.then((value){
-        print('Connection Finished');
-        print('webSocketChannel.closeCode: ${webSocketChannel.closeCode}');
-        print('webSocketChannel.closeReason: ${webSocketChannel.closeReason}');
-        if (connectionEstablished != null){
-          final duration = DateTime.now().difference(connectionEstablished!);
-          print('Connection Duration ${duration.inSeconds} seconds');
-        }
-
-        if (webSocketChannel.closeCode != null){
-          onConnectionLost();
-
-
-        }
-      });
       sink.add(message);
     } catch(e) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
@@ -104,7 +89,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     if (connected){
       sink.close();
     }
-    connectionStatus.value = ConnectionStatus.None;
   }
 
   void _onEvent(dynamic response) {
@@ -127,11 +111,14 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   }
   void _onError(Object error, StackTrace stackTrace) {
     print('network.onError()');
-    // core.actions.setError(error.toString());
   }
 
   void _onDone() {
-    print('network.onDone()');
+
+    if (connectionEstablished != null){
+      final duration = DateTime.now().difference(connectionEstablished!);
+      print('websocket-connection-duration: ${duration.inSeconds} seconds');
+    }
 
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
@@ -139,6 +126,7 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
       connectionStatus.value = ConnectionStatus.Done;
     }
     sink.close();
+    onConnectionDone();
   }
 
   void send(dynamic message) {
