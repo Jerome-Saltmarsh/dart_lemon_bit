@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:golden_ratio/constants.dart';
 
-class MMOItemImage extends IsometricWidget {
+class MMOItemImage extends StatelessWidget {
   final double size;
   final MMOItem? item;
   final double scale;
@@ -17,22 +17,26 @@ class MMOItemImage extends IsometricWidget {
   });
 
   @override
-  Widget buildIsometric(BuildContext context, Isometric isometric) =>
+  Widget build(BuildContext context) =>
       item == null ? buildText('-', color: Colors.white54) :
-        MouseRegion(
-            onEnter: (_){
-              isometric.games.mmo.itemHover.value = item;
-            },
-            onExit: (_){
-              if (isometric.games.mmo.itemHover.value != item)
-                return;
-              isometric.games.mmo.itemHover.value = null;
-            },
-            child: ItemImage(
-              size: size,
-              type: item!.type,
-              subType: item!.subType,
-              scale: scale,
-            )
+        IsometricBuilder(
+          builder: (context, isometric) {
+            return MouseRegion(
+                onEnter: (_){
+                  isometric.games.mmo.itemHover.value = item;
+                },
+                onExit: (_){
+                  if (isometric.games.mmo.itemHover.value != item)
+                    return;
+                  isometric.games.mmo.itemHover.value = null;
+                },
+                child: ItemImage(
+                  size: size,
+                  type: item!.type,
+                  subType: item!.subType,
+                  scale: scale,
+                )
+            );
+          }
         );
 }

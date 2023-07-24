@@ -13,12 +13,3 @@ class IsometricBuilder extends StatelessWidget {
   Widget build(BuildContext context) =>
       builder(context, Provider.of<Isometric>(context));
 }
-
-abstract class IsometricWidget extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) =>
-      buildIsometric(context, Provider.of<Isometric>(context));
-
-  Widget buildIsometric(BuildContext context, Isometric isometric);
-}
