@@ -328,24 +328,6 @@ extension IsometricUI on Isometric {
       )
   );
 
-  Widget buildIconCombatPowerType(int powerType){
-    assert (CombatPowerType.values.contains(powerType));
-    final powerTypeIcon = const <int, IconType> {
-      CombatPowerType.None      : IconType.Power_None,
-      CombatPowerType.Bomb      : IconType.Power_Bomb,
-      CombatPowerType.Teleport  : IconType.Power_Teleport,
-      CombatPowerType.Invisible : IconType.Power_Invisible,
-      CombatPowerType.Shield    : IconType.Power_Shield,
-      CombatPowerType.Stun      : IconType.Power_Stun,
-      CombatPowerType.Revive    : IconType.Power_Revive,
-    }[powerType] ?? (throw Exception());
-    return Container(
-      height: 64,
-      constraints: BoxConstraints(maxWidth: 120),
-      child: buildAtlasIconType(powerTypeIcon),
-    );
-  }
-
   Widget buildRowItemTypeLevel(int level){
     return Row(
       children: List.generate(5, (index) {

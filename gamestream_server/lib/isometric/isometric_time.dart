@@ -16,10 +16,10 @@ class IsometricTime {
     assert (hour <= 24);
     assert (minute >= 0);
     assert (minute <= 60);
-    time = (hour * Seconds_Per_Hour) + (minute * Seconds_Per_Minute);
+    time = (hour * Duration.secondsPerHour) + (minute * Seconds_Per_Minute);
   }
 
-  int get hour => time ~/ Seconds_Per_Hour;
+  int get hour => time ~/ Duration.secondsPerHour;
 
   set hour(int value) {
     time = value * 60 * 60;
@@ -31,7 +31,7 @@ class IsometricTime {
   }
 
   void setTime(int value) {
-    time = value % secondsPerDay;
+    time = value % Duration.secondsPerDay;
   }
 
 }

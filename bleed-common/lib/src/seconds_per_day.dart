@@ -1,1 +1,0 @@
-const secondsPerDay = 86400;

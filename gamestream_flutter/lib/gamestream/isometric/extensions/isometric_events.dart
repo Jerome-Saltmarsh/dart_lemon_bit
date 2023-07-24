@@ -100,9 +100,6 @@ extension IsometricEvents on Isometric {
       case GameEventType.Explosion:
         onGameEventExplosion(x, y, z);
         return;
-      case GameEventType.Power_Used:
-        onGameEventPowerUsed(x, y, z, readByte());
-        break;
       case GameEventType.AI_Target_Acquired:
         final characterType = readByte();
         switch (characterType){
@@ -612,28 +609,6 @@ extension IsometricEvents on Isometric {
         // }
         break;
     }
-  }
-
-
-  void onGameEventPowerUsed(double x, double y, double z, int powerType) {
-      switch (powerType){
-        case CombatPowerType.Stun:
-          audio.debuff_4();
-          spawnParticle(
-            type: ParticleType.Lightning_Bolt,
-            x: player.x,
-            y: player.y,
-            z: player.z,
-            duration: 10,
-            animation: true,
-          );
-          spawnParticleLightEmissionAmbient(
-            x: player.x,
-            y: player.y,
-            z: player.z,
-          );
-          break;
-      }
   }
 
   void onChangedPlayerActive(bool playerActive){
