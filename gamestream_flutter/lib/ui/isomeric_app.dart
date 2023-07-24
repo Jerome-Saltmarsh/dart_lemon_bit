@@ -8,6 +8,7 @@ class IsometricApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('isometricApp.build()');
+
     WidgetsFlutterBinding.ensureInitialized();
     return IsometricProvider(Isometric());
   }

@@ -45,8 +45,7 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
-  final decoder = ZLibDecoder();
-  var renderResponse = false;
+  var renderResponse = true;
   var renderCursorEnable = true;
   var clearErrorTimer = -1;
   var nextEmissionSmoke = 0;
@@ -66,6 +65,7 @@ class Isometric extends WebsocketClientBuilder with
   var windLine = 0;
   var totalProjectiles = 0;
 
+  final decoder = ZLibDecoder();
   final imagesLoadedCompleted = Completer();
   final textEditingControllerMessage = TextEditingController();
   final textFieldMessage = FocusNode();
@@ -1381,8 +1381,9 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void renderCanvas(Canvas canvas, Size size){
-    if (!connected)
+    if (gameType.value == GameType.Website)
       return;
+
     drawCanvas(canvas, size);
     game.value.drawCanvas(canvas, size);
   }
@@ -1420,7 +1421,6 @@ class Isometric extends WebsocketClientBuilder with
     print('isometric.build()');
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
-    renderResponse = true;
 
     engine = Engine(
       init: init,
@@ -1436,7 +1436,7 @@ class Isometric extends WebsocketClientBuilder with
     );
 
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
-    engine.drawCanvasAfterUpdate = false;
+    engine.drawCanvasAfterUpdate = true;
     engine.cursorType.value = CursorType.Basic;
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
