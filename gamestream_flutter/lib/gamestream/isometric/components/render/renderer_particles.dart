@@ -147,7 +147,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Confetti_Yellow:
           isometric.engine.renderSprite(
-            image: Images.shades,
+            image: isometric.images.shades,
             dstX: dstX,
             dstY: dstY,
             srcX: 216,
@@ -160,7 +160,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Confetti_Red:
           isometric.engine.renderSprite(
-            image: Images.shades,
+            image: isometric.images.shades,
             dstX: dstX,
             dstY: dstY,
             srcX: 192,
@@ -173,7 +173,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Confetti_Blue:
           isometric.engine.renderSprite(
-            image: Images.shades,
+            image: isometric.images.shades,
             dstX: dstX,
             dstY: dstY,
             srcX: 560,
@@ -186,7 +186,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Confetti_Green:
           isometric.engine.renderSprite(
-            image: Images.shades,
+            image: isometric.images.shades,
             dstX: dstX,
             dstY: dstY,
             srcX: 384,
@@ -199,7 +199,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Confetti_Purple:
           isometric.engine.renderSprite(
-            image: Images.shades,
+            image: isometric.images.shades,
             dstX: dstX,
             dstY: dstY,
             srcX: 616,
@@ -212,7 +212,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Confetti_Cyan:
           isometric.engine.renderSprite(
-            image: Images.shades,
+            image: isometric.images.shades,
             dstX: dstX,
             dstY: dstY,
             srcX: 504,

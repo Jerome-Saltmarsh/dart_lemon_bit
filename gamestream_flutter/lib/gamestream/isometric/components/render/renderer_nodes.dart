@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'dart:ui' as ui;
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
@@ -129,6 +130,9 @@ class RendererNodes extends IsometricRenderer {
   var transparencyGridStack = Uint16List(0);
   var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
+  var atlasNodesLoaded = false;
+
+  late final ui.Image atlasNodes;
 
   RendererNodes(super.isometric);
 
@@ -174,7 +178,7 @@ class RendererNodes extends IsometricRenderer {
 
   @override
   void renderFunction() {
-    isometric.engine.bufferImage = Images.atlas_nodes;
+    isometric.engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
     renderPlain();
     return;
@@ -367,7 +371,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   @override
-  int getTotal() => isometric.totalNodes;
+  int getTotal() => atlasNodesLoaded ? isometric.totalNodes : 0;
 
   @override
   void reset() {
@@ -757,7 +761,7 @@ class RendererNodes extends IsometricRenderer {
     const torchSrcXWindy = 1691.0;
 
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       srcX: windType == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
       srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (isometric.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
@@ -819,7 +823,7 @@ class RendererNodes extends IsometricRenderer {
     final transparent = currentNodeTransparent;
     if (previousNodeTransparent != transparent) {
       previousNodeTransparent = transparent;
-      isometric.engine.bufferImage = transparent ? Images.atlas_nodes_transparent : Images.atlas_nodes;
+      isometric.engine.bufferImage = transparent ? Images.atlas_nodes_transparent : isometric.images.atlas_nodes;
     }
 
     final nodeType = currentNodeType;
@@ -1669,7 +1673,7 @@ class RendererNodes extends IsometricRenderer {
   void renderNodeRainLanding() {
     if (currentNodeIndex > isometric.area && isometric.nodeTypes[currentNodeIndex - isometric.area] == NodeType.Water){
       isometric.engine.renderSprite(
-        image: Images.atlas_nodes,
+        image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
         srcY: 72.0 * ((isometric.animationFrame + row + column) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
@@ -1701,7 +1705,7 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeTopOak(){
     var shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
       srcY: 433.0,
       srcWidth: AtlasNode.Node_Tree_Top_Width,
@@ -1717,7 +1721,7 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeTopPine() {
     var shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: atlasNodes,
       srcX: 1262,
       srcY: 80 ,
       srcWidth: 45,
@@ -1732,7 +1736,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeBottomOak() {
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
       srcY: 433.0,
       srcWidth: AtlasNode.Width_Tree_Bottom,
@@ -1745,7 +1749,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeBottomPine() {
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       srcX: 1216,
       srcY: 80,
       srcWidth: 45,
@@ -2383,7 +2387,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeDust() =>
       isometric.engine.renderSprite(
-        image: Images.atlas_nodes,
+        image: atlasNodes,
         srcX: 1552,
         srcY: 432 + (isometric.animationFrame6 * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
@@ -2396,7 +2400,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeWater() =>
       isometric.engine.renderSprite(
-        image: Images.atlas_nodes,
+        image: atlasNodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((isometric.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,

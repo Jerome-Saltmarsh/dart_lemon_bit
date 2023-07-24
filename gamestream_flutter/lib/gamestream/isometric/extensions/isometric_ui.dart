@@ -330,7 +330,7 @@ extension IsometricUI on Isometric {
   }
 
   Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
-    image: Images.atlas_nodes,
+    image: images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
     srcWidth: AtlasNodeWidth.mapNodeType(nodeType),

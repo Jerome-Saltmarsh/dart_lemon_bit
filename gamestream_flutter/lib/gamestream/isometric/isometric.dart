@@ -58,6 +58,7 @@ class Isometric extends WebsocketClientBuilder with
   var engineBuilt = false;
   final updateFrame = Watch(0);
   final serverFPS = Watch(0);
+  final images = Images();
   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
   late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
@@ -1418,6 +1419,8 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   Future init(sharedPreferences) async {
+    print('isometric.init()');
+    images.load(this);
     Images.loadImages();
     await Future.delayed(Duration(seconds: 3));
   }
@@ -2265,6 +2268,11 @@ class Isometric extends WebsocketClientBuilder with
         scale: 0.4,
       );
 
+  void onImageLoadedAtlasNodes(ui.Image atlasNodes){
+    print('isometric.onImageLoadedAtlasNodes()');
+    render.rendererNodes.atlasNodes = atlasNodes;
+    render.rendererNodes.atlasNodesLoaded = true;
+  }
 
   static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
 

@@ -122,7 +122,7 @@ class IsometricRender {
       int column,
       ) {
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
@@ -136,7 +136,7 @@ class IsometricRender {
 
   void renderWireFrameRed(int row, int column, int z) {
     isometric.engine.renderSprite(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       dstX: rowColumnToRenderX(row, column),
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,

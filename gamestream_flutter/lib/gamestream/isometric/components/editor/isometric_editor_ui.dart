@@ -649,7 +649,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildButtonSelectNodeType(int nodeType) {
     final canvas = isometric.engine.buildAtlasImage(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -723,7 +723,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildOrientationIcon(int orientation) {
 
     final canvas = isometric.engine.buildAtlasImage(
-      image: Images.atlas_nodes,
+      image: isometric.images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: IsometricConstants.Sprite_Width,

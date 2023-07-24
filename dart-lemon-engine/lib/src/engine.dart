@@ -244,14 +244,6 @@ class Engine extends StatelessWidget {
       deviceType.value =
       deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
-  static Future<ui.Image> loadImageAsset(String url) async {
-    final byteData = await rootBundle.load(url);
-    final bytes = Uint8List.view(byteData.buffer);
-    final codec = await ui.instantiateImageCodec(bytes);
-    final frameInfo = await codec.getNextFrame();
-    return frameInfo.image;
-  }
-
   TextSpan getTextSpan(String text) {
     var value = textSpans[text];
     if (value != null) return value;
