@@ -14,7 +14,6 @@ alt + m             : go to declaration
 - floating txt on acquire health and xp
 
 [TODO]
-[ ] extract fight2d into separate project
 [ ] fix node transparency
 [ ] fix select position when up higher
 [ ] fix ai path following
@@ -36,6 +35,8 @@ alt + m             : go to declaration
 [ ] implement character persistence
 
 24.07.2023
+[x] extract lemon bits library from common
+[x] extract fight2d into separate project
 [x] remove all static instances
 
 23.07.2023

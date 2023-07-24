@@ -6,8 +6,6 @@ export 'isometric_editor/src.dart';
 export 'moba/src.dart';
 export 'rock_paper_scissors/src.dart';
 export 'mmo/src.dart';
-export 'functions/src.dart';
-
 export 'input_type.dart';
 export 'api_player.dart';
 export 'byte_hex.dart';
