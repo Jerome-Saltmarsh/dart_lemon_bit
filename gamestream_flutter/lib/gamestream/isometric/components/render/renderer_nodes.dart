@@ -810,7 +810,7 @@ class RendererNodes extends IsometricRenderer {
     final transparent = currentNodeTransparent;
     if (previousNodeTransparent != transparent) {
       previousNodeTransparent = transparent;
-      isometric.engine.bufferImage = transparent ? Images.atlas_nodes_transparent : isometric.images.atlas_nodes;
+      isometric.engine.bufferImage = transparent ? isometric.images.atlas_nodes_transparent : isometric.images.atlas_nodes;
     }
 
     final nodeType = currentNodeType;

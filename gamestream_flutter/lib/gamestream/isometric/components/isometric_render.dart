@@ -149,7 +149,7 @@ class IsometricRender {
 
   void renderCircle32(double x, double y, double z){
     isometric.engine.renderSprite(
-      image: Images.atlas_gameobjects,
+      image: isometric.images.atlas_gameobjects,
       srcX: 16,
       srcY: 48,
       srcWidth: 32,
@@ -171,7 +171,7 @@ class IsometricRender {
     required double percentage,
     int color = 1,
   }) => isometric.engine.renderSprite(
-      image: Images.atlas_gameobjects,
+      image: isometric.images.atlas_gameobjects,
       dstX: Isometric.getPositionRenderX(position) - 26,
       dstY: Isometric.getPositionRenderY(position) - 45,
       srcX: 171,

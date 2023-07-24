@@ -22,7 +22,7 @@ class IsometricIcon extends StatelessWidget {
       IsometricBuilder(
         builder: (context, isometric) => FittedBox(
             child: isometric.engine.buildAtlasImage(
-              image: Images.atlas_icons,
+              image: isometric.images.atlas_icons,
               srcX: AtlasIcons.getSrcX(iconType),
               srcY: AtlasIcons.getSrcY(iconType),
               srcWidth: AtlasIcons.getSrcWidth(iconType),

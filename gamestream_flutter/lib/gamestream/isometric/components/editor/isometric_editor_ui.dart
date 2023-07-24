@@ -213,7 +213,7 @@ extension IsometricEditorUI on IsometricEditor {
                 child: Stack(
                   children: [
                     isometric.engine.buildAtlasImage(
-                      image: Images.atlas_icons,
+                      image: isometric.images.atlas_icons,
                       srcX: 193,
                       srcY: 32,
                       srcWidth: 96,
@@ -853,7 +853,7 @@ extension IsometricEditorUI on IsometricEditor {
   }) =>
       isometric.engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: isometric.images.atlas_icons,
         srcX: 304,
         srcY: 32,
         srcWidth: 48,
@@ -869,7 +869,7 @@ extension IsometricEditorUI on IsometricEditor {
   }) =>
       isometric.engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: isometric.images.atlas_icons,
         srcX: 352,
         srcY: 32,
         srcWidth: 48,
@@ -1195,7 +1195,7 @@ extension IsometricEditorUI on IsometricEditor {
                     child: onPressed(
                       action: delete,
                       child: isometric.engine.buildAtlasImage(
-                        image: Images.atlas_icons,
+                        image: isometric.images.atlas_icons,
                         srcX: 80,
                         srcY: 96,
                         srcWidth: 16,

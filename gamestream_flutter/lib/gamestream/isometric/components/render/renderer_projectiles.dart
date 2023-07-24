@@ -25,7 +25,7 @@ class RendererProjectiles extends IsometricRenderer {
         break;
       case ProjectileType.Rocket:
         isometric.engine.renderSpriteRotated(
-          image: Images.atlas_items,
+          image: isometric.images.atlas_items,
           srcX: 201,
           srcY: 109,
           srcWidth: 16,
@@ -54,7 +54,7 @@ class RendererProjectiles extends IsometricRenderer {
 
   void renderBullet(double x, double y, double rotation) {
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_gameobjects,
+      image: isometric.images.atlas_gameobjects,
       srcX: 87,
       srcY: 48,
       srcWidth: 2,
@@ -70,7 +70,7 @@ class RendererProjectiles extends IsometricRenderer {
 
   void renderArrow(double x, double y, double rotation) {
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_gameobjects,
+      image: isometric.images.atlas_gameobjects,
       srcX: 49,
       srcY: 48,
       srcWidth: 9,
@@ -82,7 +82,7 @@ class RendererProjectiles extends IsometricRenderer {
     );
 
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_gameobjects,
+      image: isometric.images.atlas_gameobjects,
       srcX: 59,
       srcY: 48,
       srcWidth: 9,

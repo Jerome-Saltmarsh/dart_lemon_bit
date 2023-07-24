@@ -17,9 +17,8 @@ class RendererGameObjects extends IsometricRenderer {
 
   @override
   void renderFunction() {
-
     final type = gameObject.type;
-    final image = Atlas.getImage(type);
+    final image = isometric.getImageForGameObjectType(type);
     final src = Atlas.getSrc(type, gameObject.subType);
 
     final isCollectable = const [

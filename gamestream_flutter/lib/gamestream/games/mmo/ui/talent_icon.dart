@@ -29,7 +29,7 @@ class MMOTalentIcon extends StatelessWidget {
             return Container(
               child: src == null ? buildText('${talentType.name} src missing') :
               isometric.engine.buildAtlasImage(
-                image: Images.atlas_talents,
+                image: isometric.images.atlas_talents,
                 srcX: src[0],
                 srcY: src[1],
                 srcWidth: src[2],

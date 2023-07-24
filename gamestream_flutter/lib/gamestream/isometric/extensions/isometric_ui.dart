@@ -154,7 +154,7 @@ extension IsometricUI on Isometric {
               final isPlayer = player.isCharacter(character);
               isometric.engine.renderExternalCanvas(
                   canvas: canvas,
-                  image: Images.atlas_gameobjects,
+                  image: isometric.images.atlas_gameobjects,
                   srcX: 0,
                   srcY: isPlayer ? 96 : character.allie ? 81 : 72,
                   srcWidth: 8,
@@ -300,7 +300,7 @@ extension IsometricUI on Isometric {
       {double scale = 1, int color = 1}) =>
       FittedBox(
         child: engine.buildAtlasImage(
-          image: Images.atlas_icons,
+          image: images.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
           srcWidth: AtlasIcons.getSrcWidth(iconType),
@@ -490,7 +490,7 @@ extension IsometricUI on Isometric {
 
   Widget buildImageGameObject(int objectType) =>
       buildImageFromSrc(
-        Images.atlas_gameobjects,
+        images.atlas_gameobjects,
         Atlas.getSrc(GameObjectType.Object, objectType),
       );
 

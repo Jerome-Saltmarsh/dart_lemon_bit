@@ -25,7 +25,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     if (weaponType == WeaponType.Unarmed) return;
     const Sprite_Size = 125.0;
     isometric.engine.renderSprite(
-        image: Images.getImageForWeaponType(weaponType),
+        image: isometric.images.getImageForWeaponType(weaponType),
         srcX: frame * Sprite_Size,
         srcY: direction * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -175,7 +175,7 @@ extension RenderCharactersTemplate on RendererCharacters {
          final z = character.z;
 
          isometric.engine.renderSprite(
-           image: Images.template_shadow,
+           image: isometric.images.template_shadow,
            srcX: frameLegs * 64,
            srcY: upperBodyDirection * 64,
            srcWidth: 64,
@@ -188,7 +188,7 @@ extension RenderCharactersTemplate on RendererCharacters {
          );
       } else {
         isometric.engine.renderSprite(
-          image: Images.template_shadow,
+          image: isometric.images.template_shadow,
           srcX: frameLegs * 64,
           srcY: upperBodyDirection * 64,
           srcWidth: 64,
@@ -203,7 +203,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     }
 
     isometric.engine.renderSprite(
-        image: Images.getImageForLegType(character.legType),
+        image: isometric.images.getImageForLegType(character.legType),
         srcX: frameLegs * Sprite_Size,
         srcY: directionLegs * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -215,7 +215,7 @@ extension RenderCharactersTemplate on RendererCharacters {
         anchorY: Anchor_Y
     );
     isometric.engine.renderSprite(
-        image: Images.getImageForBodyType(character.bodyType),
+        image: isometric.images.getImageForBodyType(character.bodyType),
         srcX: frameBody * Sprite_Size,
         srcY: directionBody * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -231,7 +231,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     // GameRender.renderTextV3(character, gamestream.isometricEngine.nodes.nodeAlps[character.nodeIndex - gamestream.isometricEngine.nodes.area], offsetY: -80);
 
     isometric.engine.renderSprite(
-        image: Images.getImageForHeadType(character.headType),
+        image: isometric.images.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
         srcY: directionHead * Sprite_Size,
         srcWidth: Sprite_Size,

@@ -183,7 +183,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   final isPlayer = player.isCharacter(character);
                   isometric.engine.renderExternalCanvas(
                       canvas: canvas,
-                      image: Images.atlas_gameobjects,
+                      image: isometric.images.atlas_gameobjects,
                       srcX: 0,
                       srcY: isPlayer ? 96 : character.allie ? 81 : 72,
                       srcWidth: 8,
@@ -198,7 +198,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                   isometric.engine.renderExternalCanvas(
                       canvas: canvas,
-                      image: Images.atlas_gameobjects,
+                      image: isometric.images.atlas_gameobjects,
                       srcX: AtlasSrcObjects.Flag_Red[Atlas.SrcX],
                       srcY: AtlasSrcObjects.Flag_Red[Atlas.SrcY],
                       srcWidth: AtlasSrcObjects.Flag_Red[Atlas.SrcWidth],
@@ -212,7 +212,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 if (flagBlueStatus.value != CaptureTheFlagFlagStatus.Respawning) {
                   isometric.engine.renderExternalCanvas(
                       canvas: canvas,
-                      image: Images.atlas_gameobjects,
+                      image: isometric.images.atlas_gameobjects,
                       srcX: AtlasSrcObjects.Flag_Blue[Atlas.SrcX],
                       srcY: AtlasSrcObjects.Flag_Blue[Atlas.SrcY],
                       srcWidth: AtlasSrcObjects.Flag_Blue[Atlas.SrcWidth],
@@ -225,7 +225,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                 isometric.engine.renderExternalCanvas(
                     canvas: canvas,
-                    image: Images.atlas_gameobjects,
+                    image: isometric.images.atlas_gameobjects,
                     srcX: AtlasSrcObjects.Base_Red[Atlas.SrcX],
                     srcY: AtlasSrcObjects.Base_Red[Atlas.SrcY],
                     srcWidth: AtlasSrcObjects.Base_Red[Atlas.SrcWidth],
@@ -237,7 +237,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                 isometric.engine.renderExternalCanvas(
                     canvas: canvas,
-                    image: Images.atlas_gameobjects,
+                    image: isometric.images.atlas_gameobjects,
                     srcX: AtlasSrcObjects.Base_Blue[Atlas.SrcX],
                     srcY: AtlasSrcObjects.Base_Blue[Atlas.SrcY],
                     srcWidth: AtlasSrcObjects.Base_Blue[Atlas.SrcWidth],

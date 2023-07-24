@@ -93,6 +93,6 @@ class IsometricMinimap {
     ..strokeWidth = 1;
 
   void renderCanvas(Canvas canvas){
-    canvas.drawRawAtlas(Images.atlas_nodes_mini, dst, src, null, null, null, paint);
+    canvas.drawRawAtlas(isometric.images.atlas_nodes_mini, dst, src, null, null, null, paint);
   }
 }

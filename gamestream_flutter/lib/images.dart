@@ -6,83 +6,83 @@ import 'package:gamestream_flutter/library.dart';
 
 class Images {
    late final Image shades;
-   static late Image pixel;
-   static late Image projectiles;
-   static late Image zombie;
-   static late Image zombie_shadow;
-   static late Image character_dog;
-   static late Image atlas_particles;
-   static late Image template_shadow;
-   static late Image atlas_head;
-   static late Image atlas_body;
-   static late Image atlas_legs;
-   static late Image atlas_gameobjects;
-   static late Image atlas_gameobjects_transparent;
+   late final Image pixel;
+   late final Image projectiles;
+   late final Image zombie;
+   late final Image zombie_shadow;
+   late final Image character_dog;
+   late final Image atlas_particles;
+   late final Image template_shadow;
+   late final Image atlas_head;
+   late final Image atlas_body;
+   late final Image atlas_legs;
+   late final Image atlas_gameobjects;
+   late final Image atlas_gameobjects_transparent;
    late final Image atlas_nodes;
-   static late Image atlas_nodes_transparent;
-   static late Image atlas_characters;
-   static late Image atlas_icons;
-   static late Image atlas_items;
-   static late Image atlas_fight2d;
-   static late Image atlas_fight2d_character;
-   static late Image atlas_fight2d_nodes;
-   static late Image atlas_nodes_mini;
-   static late Image atlas_weapons;
-   static late Image atlas_talents;
-   static late Image sprite_stars;
-   static late Image sprite_shield;
+   late final Image atlas_nodes_transparent;
+   late final Image atlas_characters;
+   late final Image atlas_icons;
+   late final Image atlas_items;
+   late final Image atlas_fight2d;
+   late final Image atlas_fight2d_character;
+   late final Image atlas_fight2d_nodes;
+   late final Image atlas_nodes_mini;
+   late final Image atlas_weapons;
+   late final Image atlas_talents;
+   late final Image sprite_stars;
+   late final Image sprite_shield;
 
-   static late Image template_head_plain;
-   static late Image template_head_rogue;
-   static late Image template_head_steel;
-   static late Image template_head_swat;
-   static late Image template_head_wizard;
-   static late Image template_head_blonde;
+   late final Image template_head_plain;
+   late final Image template_head_rogue;
+   late final Image template_head_steel;
+   late final Image template_head_swat;
+   late final Image template_head_wizard;
+   late final Image template_head_blonde;
 
-   static late Image template_body_empty;
-   static late Image template_body_blue;
-   static late Image template_body_red;
-   static late Image template_body_cyan;
-   static late Image template_body_swat;
-   static late Image template_body_tunic;
+   late final Image template_body_empty;
+   late final Image template_body_blue;
+   late final Image template_body_red;
+   late final Image template_body_cyan;
+   late final Image template_body_swat;
+   late final Image template_body_tunic;
 
-   static late Image template_legs_none;
-   static late Image template_legs_blue;
-   static late Image template_legs_white;
-   static late Image template_legs_green;
-   static late Image template_legs_brown;
-   static late Image template_legs_red;
-   static late Image template_legs_swat;
+   late final Image template_legs_none;
+   late final Image template_legs_blue;
+   late final Image template_legs_white;
+   late final Image template_legs_green;
+   late final Image template_legs_brown;
+   late final Image template_legs_red;
+   late final Image template_legs_swat;
 
-   static late Image template_weapon_bow;
-   static late Image template_weapon_grenade;
-   static late Image template_weapon_shotgun;
-   static late Image template_weapon_desert_eagle;
-   static late Image template_weapon_plasma_pistol;
-   static late Image template_weapon_plasma_rifle;
-   static late Image template_weapon_handgun_black;
-   static late Image template_weapon_handgun_flintlock;
-   static late Image template_weapon_sniper_rifle;
-   static late Image template_weapon_ak47;
-   static late Image template_weapon_mp5;
-   static late Image template_weapon_staff;
-   static late Image template_weapon_sword_steel;
-   static late Image template_weapon_sword_wooden;
-   static late Image template_weapon_pickaxe;
-   static late Image template_weapon_axe;
-   static late Image template_weapon_hammer;
-   static late Image template_weapon_knife;
-   static late Image template_weapon_flamethrower;
-   static late Image template_weapon_bazooka;
-   static late Image template_weapon_minigun;
-   static late Image template_weapon_m4;
-   static late Image template_weapon_revolver;
-   static late Image template_weapon_winchester;
-   static late Image template_weapon_musket;
-   static late Image template_weapon_crowbar;
-   static late Image template_weapon_portal_gun;
+   late final Image template_weapon_bow;
+   late final Image template_weapon_grenade;
+   late final Image template_weapon_shotgun;
+   late final Image template_weapon_desert_eagle;
+   late final Image template_weapon_plasma_pistol;
+   late final Image template_weapon_plasma_rifle;
+   late final Image template_weapon_handgun_black;
+   late final Image template_weapon_handgun_flintlock;
+   late final Image template_weapon_sniper_rifle;
+   late final Image template_weapon_ak47;
+   late final Image template_weapon_mp5;
+   late final Image template_weapon_staff;
+   late final Image template_weapon_sword_steel;
+   late final Image template_weapon_sword_wooden;
+   late final Image template_weapon_pickaxe;
+   late final Image template_weapon_axe;
+   late final Image template_weapon_hammer;
+   late final Image template_weapon_knife;
+   late final Image template_weapon_flamethrower;
+   late final Image template_weapon_bazooka;
+   late final Image template_weapon_minigun;
+   late final Image template_weapon_m4;
+   late final Image template_weapon_revolver;
+   late final Image template_weapon_winchester;
+   late final Image template_weapon_musket;
+   late final Image template_weapon_crowbar;
+   late final Image template_weapon_portal_gun;
 
-   static Image getImageForHeadType(int headType) => switch (headType) {
+   Image getImageForHeadType(int headType) => switch (headType) {
          HeadType.Plain => template_head_plain,
          HeadType.Rogue_Hood => template_head_rogue,
          HeadType.Steel_Helm => template_head_steel,
@@ -92,7 +92,7 @@ class Images {
          _ => throw Exception('GameImages.getImageForHeadType($headType)')
       };
 
-   static Image getImageForBodyType(int bodyType) => switch (bodyType) {
+   Image getImageForBodyType(int bodyType) => switch (bodyType) {
         BodyType.Nothing => template_body_empty,
         BodyType.Shirt_Blue => template_body_blue,
         BodyType.Shirt_Red => template_body_red,
@@ -102,7 +102,7 @@ class Images {
         _ => throw Exception('GameImages.getImageForBodyType($bodyType)')
       };
 
-  static Image getImageForLegType(int legType) => switch (legType) {
+  Image getImageForLegType(int legType) => switch (legType) {
     LegType.Nothing => template_legs_none,
     LegType.White => template_legs_white,
     LegType.Blue => template_legs_blue,
@@ -113,7 +113,7 @@ class Images {
          _ => throw Exception('GameImages.getImageForLegType(${legType})')
       };
 
-   static Image getImageForWeaponType(int weaponType) => switch (weaponType) {
+   Image getImageForWeaponType(int weaponType) => switch (weaponType) {
          WeaponType.Machine_Gun => template_weapon_ak47,
          WeaponType.Plasma_Rifle => template_weapon_plasma_rifle,
          WeaponType.Knife => template_weapon_knife,

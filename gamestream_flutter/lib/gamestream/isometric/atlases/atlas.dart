@@ -125,15 +125,15 @@ class Atlas {
           'Atlas.getSrc(type: ${GameObjectType.getName(type)}, subType: ${GameObjectType.getNameSubType(type, subType)})'
       ));
 
-  static Image getImage(int type) =>
-      switch (type) {
-          GameObjectType.Weapon => Images.atlas_weapons,
-          GameObjectType.Object => Images.atlas_gameobjects,
-          GameObjectType.Head => Images.atlas_head,
-          GameObjectType.Body => Images.atlas_body,
-          GameObjectType.Legs => Images.atlas_legs,
-          GameObjectType.Item => Images.atlas_items,
-          _ => (throw Exception('Atlas.getImage(type: ${GameObjectType.getName(type)}})'))
-      }
-;
+//   Image getImage(int type) =>
+//       switch (type) {
+//           GameObjectType.Weapon => Images.atlas_weapons,
+//           GameObjectType.Object => Images.atlas_gameobjects,
+//           GameObjectType.Head => Images.atlas_head,
+//           GameObjectType.Body => Images.atlas_body,
+//           GameObjectType.Legs => Images.atlas_legs,
+//           GameObjectType.Item => Images.atlas_items,
+//           _ => (throw Exception('Atlas.getImage(type: ${GameObjectType.getName(type)}})'))
+//       }
+// ;
 }

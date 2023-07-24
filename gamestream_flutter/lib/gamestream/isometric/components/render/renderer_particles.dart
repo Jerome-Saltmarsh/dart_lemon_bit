@@ -36,7 +36,7 @@ class RendererParticles extends IsometricRenderer {
       switch (particle.type) {
         case ParticleType.Water_Drop:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0.0,
@@ -49,7 +49,7 @@ class RendererParticles extends IsometricRenderer {
         case ParticleType.Blood:
           casteShadowDownV3(particle);
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 171,
@@ -65,7 +65,7 @@ class RendererParticles extends IsometricRenderer {
             break;
           }
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0.0,
@@ -77,7 +77,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Bubble_Small:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0.0,
@@ -89,7 +89,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Bullet_Ring:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0.0,
@@ -109,7 +109,7 @@ class RendererParticles extends IsometricRenderer {
           }
           final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 544,
@@ -121,7 +121,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Block_Wood:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0,
@@ -134,7 +134,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Block_Grass:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0,
@@ -226,7 +226,7 @@ class RendererParticles extends IsometricRenderer {
 
         case ParticleType.Block_Brick:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0,
@@ -239,7 +239,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Block_Sand:
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 0,
@@ -255,7 +255,7 @@ class RendererParticles extends IsometricRenderer {
             return particle.deactivate();
           }
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 0,
@@ -274,7 +274,7 @@ class RendererParticles extends IsometricRenderer {
             break;
           }
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 291,
@@ -303,7 +303,7 @@ class RendererParticles extends IsometricRenderer {
         case ParticleType.Orb_Shard:
           const size = 16.0;
           isometric.engine.renderSprite(
-            image: Images.atlas_gameobjects,
+            image: isometric.images.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
             srcX: 224 ,
@@ -318,7 +318,7 @@ class RendererParticles extends IsometricRenderer {
             return particle.deactivate();
           }
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 234.0,
@@ -330,7 +330,7 @@ class RendererParticles extends IsometricRenderer {
         case ParticleType.Zombie_Arm:
           casteShadowDownV3(particle);
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0,
@@ -343,7 +343,7 @@ class RendererParticles extends IsometricRenderer {
         case ParticleType.Zombie_Head:
           casteShadowDownV3(particle);
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0 + 64,
@@ -356,7 +356,7 @@ class RendererParticles extends IsometricRenderer {
         case ParticleType.Zombie_leg:
           casteShadowDownV3(particle);
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0 + (64 * 2),
@@ -370,7 +370,7 @@ class RendererParticles extends IsometricRenderer {
         case ParticleType.Zombie_Torso:
           casteShadowDownV3(particle);
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0 + (64 * 3),
@@ -394,7 +394,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Shadow:
           isometric.engine.renderSprite(
-              image: Images.atlas_particles,
+              image: isometric.images.atlas_particles,
               srcX: 8,
               srcY: 552,
               srcWidth: 16,
@@ -406,7 +406,7 @@ class RendererParticles extends IsometricRenderer {
           break;
         case ParticleType.Lightning_Bolt:
           isometric.engine.renderSprite(
-            image: Images.atlas_particles,
+            image: isometric.images.atlas_particles,
             srcX: 1,
             srcY: 576,
             srcWidth: 51,
@@ -424,7 +424,7 @@ class RendererParticles extends IsometricRenderer {
 
   void renderParticleShell(double dstX, double dstY) {
     isometric.engine.renderSprite(
-      image: Images.atlas_particles,
+      image: isometric.images.atlas_particles,
       dstX: dstX,
       dstY: dstY,
       srcX: particle.direction * 32,
@@ -439,7 +439,7 @@ class RendererParticles extends IsometricRenderer {
   void renderParticleSmoke() {
     // casteShadowDownV3(particle);
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_particles,
+      image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 552,
@@ -458,7 +458,7 @@ class RendererParticles extends IsometricRenderer {
       return;
     }
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_particles,
+      image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 688,
@@ -479,7 +479,7 @@ class RendererParticles extends IsometricRenderer {
       return;
     }
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_particles,
+      image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 592,
@@ -500,7 +500,7 @@ class RendererParticles extends IsometricRenderer {
       return;
     }
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_particles,
+      image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 624,
@@ -520,7 +520,7 @@ class RendererParticles extends IsometricRenderer {
       return;
     }
     isometric.engine.renderSpriteRotated(
-      image: Images.atlas_particles,
+      image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 656,

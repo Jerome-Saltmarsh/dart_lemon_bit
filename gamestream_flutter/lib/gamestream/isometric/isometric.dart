@@ -43,6 +43,7 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
+  late final Map<int, ui.Image> mapGameObjectTypeToImage;
   late final messageBoxVisible = Watch(false, clamp: (bool value) {
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
@@ -1594,7 +1595,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void renderShadow(double x, double y, double z, {double scale = 1}) =>
       engine.renderSprite(
-        image: Images.atlas_gameobjects,
+        image: images.atlas_gameobjects,
         dstX: (x - y) * 0.5,
         dstY: ((y + x) * 0.5) - z,
         srcX: 0,
@@ -2087,7 +2088,7 @@ class Isometric extends WebsocketClientBuilder with
     const srcY = 192;
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -2098,7 +2099,7 @@ class Isometric extends WebsocketClientBuilder with
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -2109,7 +2110,7 @@ class Isometric extends WebsocketClientBuilder with
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -2120,7 +2121,7 @@ class Isometric extends WebsocketClientBuilder with
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -2137,7 +2138,7 @@ class Isometric extends WebsocketClientBuilder with
     const offset = 0;
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -2148,7 +2149,7 @@ class Isometric extends WebsocketClientBuilder with
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -2159,7 +2160,7 @@ class Isometric extends WebsocketClientBuilder with
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -2170,7 +2171,7 @@ class Isometric extends WebsocketClientBuilder with
     );
     engine.renderExternalCanvas(
         canvas: canvas,
-        image: Images.atlas_icons,
+        image: images.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -2184,7 +2185,7 @@ class Isometric extends WebsocketClientBuilder with
   void canvasRenderCursorHand(ui.Canvas canvas){
     engine.renderExternalCanvas(
       canvas: canvas,
-      image: Images.atlas_icons,
+      image: images.atlas_icons,
       srcX: 0,
       srcY: 256,
       srcWidth: 64,
@@ -2198,7 +2199,7 @@ class Isometric extends WebsocketClientBuilder with
   void canvasRenderCursorTalk(ui.Canvas canvas){
     engine.renderExternalCanvas(
       canvas: canvas,
-      image: Images.atlas_icons,
+      image: images.atlas_icons,
       srcX: 0,
       srcY: 320,
       srcWidth: 64,
@@ -2233,7 +2234,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void renderBarBlue(double x, double y, double z, double percentage) {
     engine.renderSprite(
-      image: Images.atlas_gameobjects,
+      image: images.atlas_gameobjects,
       dstX: getRenderX(x, y, z) - 26,
       dstY: getRenderY(x, y, z) - 55,
       srcX: 171,
@@ -2260,7 +2261,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void renderStars(double x, double y) =>
       engine.renderSprite(
-        image: Images.sprite_stars,
+        image: images.sprite_stars,
         srcX: 125.0 * animationFrame16,
         srcY: 0,
         srcWidth: 125,
@@ -2283,5 +2284,21 @@ class Isometric extends WebsocketClientBuilder with
     render.rendererNodes.atlasNodes = images.atlas_nodes;
     render.rendererNodes.atlasNodesLoaded = true;
     imagesLoadedCompleted.complete(true);
+
+    mapGameObjectTypeToImage = <int, ui.Image> {
+      GameObjectType.Weapon: images.atlas_weapons,
+      GameObjectType.Object: images.atlas_gameobjects,
+      GameObjectType.Head: images.atlas_head,
+      GameObjectType.Body: images.atlas_body,
+      GameObjectType.Legs: images.atlas_legs,
+      GameObjectType.Item: images.atlas_items,
+    };
   }
+
+  ui.Image getImageForGameObjectType(int type) =>
+      mapGameObjectTypeToImage [type] ?? (
+          throw Exception(
+              'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
+          )
+      );
 }
