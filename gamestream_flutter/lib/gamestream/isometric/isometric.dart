@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:ui' as ui;
 import 'dart:math';
 
@@ -47,6 +48,7 @@ class Isometric extends WebsocketClientBuilder with
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
 
+  final imagesLoadedCompleted = Completer();
   final textEditingControllerMessage = TextEditingController();
   final textFieldMessage = FocusNode();
   final panelTypeKey = <int, GlobalKey>{};
@@ -68,6 +70,8 @@ class Isometric extends WebsocketClientBuilder with
   late final io = GameIO(this);
   late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+
+  final imagesLoaded = Future.value(false);
 
   late final Engine engine;
   var clearErrorTimer = -1;
@@ -1422,7 +1426,7 @@ class Isometric extends WebsocketClientBuilder with
   Future init(sharedPreferences) async {
     print('isometric.init()');
     images.load(this);
-    await Future.delayed(Duration(seconds: 3));
+    await imagesLoadedCompleted.future;
   }
 
   @override
@@ -2286,12 +2290,6 @@ class Isometric extends WebsocketClientBuilder with
         scale: 0.4,
       );
 
-  void onImageLoadedAtlasNodes(ui.Image atlasNodes){
-    print('isometric.onImageLoadedAtlasNodes()');
-    render.rendererNodes.atlasNodes = atlasNodes;
-    render.rendererNodes.atlasNodesLoaded = true;
-  }
-
   static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
 
   static double getPositionRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
@@ -2300,5 +2298,10 @@ class Isometric extends WebsocketClientBuilder with
 
   static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 
-
+  void notifyLoadImagesCompleted() {
+    print('isometric.notifyLoadImagesCompleted()');
+    render.rendererNodes.atlasNodes = images.atlas_nodes;
+    render.rendererNodes.atlasNodesLoaded = true;
+    imagesLoadedCompleted.complete(true);
+  }
 }

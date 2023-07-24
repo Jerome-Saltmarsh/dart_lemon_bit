@@ -150,18 +150,16 @@ class Images {
      totalImages.value++;
      final image = await loadImageAsset('images/$fileName');
      totalImagesLoaded.value++;
+
      return image;
    }
 
+
    void load(Isometric isometric){
      print('isometric.images.load()');
+
      loadImage('shades.png').then((value) => shades = value);
-
-     loadImage('atlas_nodes.png').then((value) {
-       atlas_nodes = value;
-       isometric.onImageLoadedAtlasNodes(value);
-     });
-
+     loadImage('atlas_nodes.png').then((value) => atlas_nodes = value);
      loadImage('atlas-characters.png').then((value) => atlas_characters = value);
      loadImage('atlas-zombie.png').then((value) => zombie = value);
      loadImage('atlas-zombie-shadow.png').then((value) => zombie_shadow = value);
@@ -232,6 +230,13 @@ class Images {
      loadImage('atlas-fight2d.png').then((value) => atlas_fight2d = value);
      loadImage('atlas-fight2d-nodes.png').then((value) => atlas_fight2d_nodes = value);
      loadImage('atlas-fight2d-character.png').then((value) => atlas_fight2d_character = value);
+
+     totalImagesLoaded.onChanged((totalImagesLoaded) {
+       if (totalImagesLoaded < totalImages.value)
+         return;
+
+       isometric.notifyLoadImagesCompleted();
+     });
    }
 
    static Image getImageForGameObject(int type){
