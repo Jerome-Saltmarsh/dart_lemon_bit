@@ -1477,9 +1477,10 @@ class Isometric extends WebsocketClientBuilder with
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildText('Images '),
-              totalImages,
-              buildText('/'),
               totalImagesLoaded,
+              buildText('/'),
+              totalImages,
+
             ],
           )
         ],
@@ -1495,10 +1496,9 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-
   // FUNCTIONS
   void connectToRegion(ConnectionRegion region, String message) {
-    print('connectToRegion(${region.name}');
+    print('isometric.connectToRegion(${region.name})');
     if (region == ConnectionRegion.LocalHost) {
       const portLocalhost = '8080';
       final wsLocalHost = 'ws://localhost:${portLocalhost}';

@@ -310,25 +310,6 @@ extension IsometricUI on Isometric {
         ),
       );
 
-  Widget buildAtlasItemType({
-    required int type,
-    required int subType,
-    int color = 1,
-  }) {
-    final src = Atlas.getSrc(type, subType);
-
-    return FittedBox(
-        child: engine.buildAtlasImage(
-          image: Images.getImageForGameObject(type),
-          srcX: src[Atlas.SrcX],
-          srcY: src[Atlas.SrcY],
-          srcWidth: src[Atlas.SrcWidth],
-          srcHeight: src[Atlas.SrcHeight],
-          color: color,
-        ),
-      );
-  }
-
   Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
     image: images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),

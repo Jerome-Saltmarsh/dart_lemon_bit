@@ -29,11 +29,13 @@ alt + m             : go to declaration
 [ ] character type skeleton 
 [ ] character type float skeleton head
 [ ] npc store
-[-] remove all static instances
 [*] optimize render nodes
 [*] optimize light tree
 [*] character persistence
 [*] fix colored lights
+
+24.07.2023
+[x] remove all static instances
 
 23.07.2023
 [x] remove gamestream global instance

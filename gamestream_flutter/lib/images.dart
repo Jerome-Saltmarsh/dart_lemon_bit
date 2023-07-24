@@ -238,15 +238,6 @@ class Images {
        isometric.notifyLoadImagesCompleted();
      });
    }
-
-   static Image getImageForGameObject(int type){
-     switch(type){
-       case GameObjectType.Weapon:
-         return atlas_weapons;
-       default:
-         throw Exception();
-     }
-   }
 }
 
 
