@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/build_text.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
@@ -1421,7 +1422,6 @@ class Isometric extends WebsocketClientBuilder with
   Future init(sharedPreferences) async {
     print('isometric.init()');
     images.load(this);
-    Images.loadImages();
     await Future.delayed(Duration(seconds: 3));
   }
 
@@ -1458,12 +1458,30 @@ class Isometric extends WebsocketClientBuilder with
     return engine;
   }
 
-  Widget buildLoadingPage() =>
-      Container(
-        color: IsometricColors.black,
-        alignment: Alignment.center,
-        child: buildText('LOADING GAMESTREAM'),
-      );
+  Widget buildLoadingPage() {
+    final totalImages = buildWatch(images.totalImages, buildText);
+    final totalImagesLoaded = buildWatch(images.totalImagesLoaded, buildText);
+    return Container(
+      color: IsometricColors.black,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          buildText('Loading GameStream'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildText('Images '),
+              totalImages,
+              buildText('/'),
+              totalImagesLoaded,
+            ],
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   void onReadRespondFinished() {

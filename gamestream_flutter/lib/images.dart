@@ -1,8 +1,10 @@
 
 import 'dart:ui';
+
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_watch/src.dart';
 
 class Images {
    late final Image shades;
@@ -141,87 +143,95 @@ class Images {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
+   final totalImages = Watch(0);
+   final totalImagesLoaded = Watch(0);
+
+   Future<Image> loadImage(String fileName) async {
+     totalImages.value++;
+     final image = await loadImageAsset('images/$fileName');
+     totalImagesLoaded.value++;
+     return image;
+   }
+
    void load(Isometric isometric){
      print('isometric.images.load()');
-     loadImageAsset('images/shades.png').then((value) => shades = value);
+     loadImage('shades.png').then((value) => shades = value);
 
-     loadImageAsset('images/atlas_nodes.png').then((value) {
+     loadImage('atlas_nodes.png').then((value) {
        atlas_nodes = value;
        isometric.onImageLoadedAtlasNodes(value);
      });
-   }
 
-   static void loadImages() {
-      loadImageAsset('images/atlas-characters.png').then((value) => atlas_characters = value);
-      loadImageAsset('images/atlas-zombie.png').then((value) => zombie = value);
-      loadImageAsset('images/atlas-zombie-shadow.png').then((value) => zombie_shadow = value);
-      loadImageAsset('images/atlas-gameobjects.png').then((value) => atlas_gameobjects = value);
-      loadImageAsset('images/atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
-      loadImageAsset('images/atlas-particles.png').then((value) => atlas_particles = value);
-      loadImageAsset('images/atlas-projectiles.png').then((value) => projectiles = value);
-      loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
-      loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
-      loadImageAsset('images/atlas_weapons.png').then((value) => atlas_weapons = value);
-      loadImageAsset('images/atlas_talents.png').then((value) => atlas_talents = value);
-      loadImageAsset('images/atlas-icons.png').then((value) => atlas_icons = value);
-      loadImageAsset('images/atlas_items.png').then((value) => atlas_items = value);
-      loadImageAsset('images/atlas_head.png').then((value) => atlas_head = value);
-      loadImageAsset('images/atlas_body.png').then((value) => atlas_body = value);
-      loadImageAsset('images/atlas_legs.png').then((value) => atlas_legs = value);
-      loadImageAsset('images/character-dog.png').then((value) => character_dog = value);
-      loadImageAsset('images/template/template-shadow.png').then((value) => template_shadow = value);
-      loadImageAsset('images/template/head/template-head-plain.png').then((value) => template_head_plain = value);
-      loadImageAsset('images/template/head/template-head-rogue.png').then((value) => template_head_rogue = value);
-      loadImageAsset('images/template/head/template-head-steel.png').then((value) => template_head_steel = value);
-      loadImageAsset('images/template/head/template-head-swat.png').then((value) => template_head_swat = value);
-      loadImageAsset('images/template/head/template-head-wizard.png').then((value) => template_head_wizard = value);
-      loadImageAsset('images/template/head/template-head-blonde.png').then((value) => template_head_blonde = value);
-      loadImageAsset('images/template/body/template-body-blue.png').then((value) => template_body_blue = value);
-      loadImageAsset('images/template/body/template-body-red.png').then((value) => template_body_red = value);
-      loadImageAsset('images/template/body/template-body-cyan.png').then((value) => template_body_cyan = value);
-      loadImageAsset('images/template/body/template-body-swat.png').then((value) => template_body_swat = value);
-      loadImageAsset('images/template/body/template-body-tunic.png').then((value) => template_body_tunic = value);
-      loadImageAsset('images/template/body/template-body-empty.png').then((value) => template_body_empty = value);
-      loadImageAsset('images/template/legs/template-legs-none.png').then((value) => template_legs_none = value);
-      loadImageAsset('images/template/legs/template-legs-blue.png').then((value) => template_legs_blue = value);
-      loadImageAsset('images/template/legs/template-legs-white.png').then((value) => template_legs_white = value);
-      loadImageAsset('images/template/legs/template-legs-green.png').then((value) => template_legs_green = value);
-      loadImageAsset('images/template/legs/template-legs-brown.png').then((value) => template_legs_brown = value);
-      loadImageAsset('images/template/legs/template-legs-red.png').then((value) => template_legs_red = value);
-      loadImageAsset('images/template/legs/template-legs-swat.png').then((value) => template_legs_swat = value);
-      loadImageAsset('images/template/weapons/template-weapons-bow.png').then((value) => template_weapon_bow = value);
-      loadImageAsset('images/template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
-      loadImageAsset('images/template/weapons/template-weapons-desert-eagle.png').then((value) => template_weapon_desert_eagle = value);
-      loadImageAsset('images/template/weapons/template-weapons-plasma-pistol.png').then((value) => template_weapon_plasma_pistol = value);
-      loadImageAsset('images/template/weapons/template-weapons-plasma-rifle.png').then((value) => template_weapon_plasma_rifle = value);
-      loadImageAsset('images/template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
-      loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
-      loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);
-      loadImageAsset('images/template/weapons/template-weapons-ak47.png').then((value) => template_weapon_ak47 = value);
-      loadImageAsset('images/template/weapons/template-weapons-shotgun.png').then((value) => template_weapon_shotgun = value);
-      loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png').then((value) => template_weapon_staff = value);
-      loadImageAsset('images/template/weapons/template-weapons-sword-steel.png').then((value) => template_weapon_sword_steel = value);
-      loadImageAsset('images/template/weapons/template-weapons-axe.png').then((value) => template_weapon_axe = value);
-      loadImageAsset('images/template/weapons/template-weapons-pickaxe.png').then((value) => template_weapon_pickaxe = value);
-      loadImageAsset('images/template/weapons/template-weapons-hammer.png').then((value) => template_weapon_hammer = value);
-      loadImageAsset('images/template/weapons/template-weapons-knife.png').then((value) => template_weapon_knife = value);
-      loadImageAsset('images/template/weapons/template-weapons-flamethrower.png').then((value) => template_weapon_flamethrower = value);
-      loadImageAsset('images/template/weapons/template-weapons-bazooka.png').then((value) => template_weapon_bazooka = value);
-      loadImageAsset('images/template/weapons/template-weapons-mp5.png').then((value) => template_weapon_mp5 = value);
-      loadImageAsset('images/template/weapons/template-weapons-minigun.png').then((value) => template_weapon_minigun = value);
-      loadImageAsset('images/template/weapons/template-weapons-m4.png').then((value) => template_weapon_m4 = value);
-      loadImageAsset('images/template/weapons/template-weapons-revolver.png').then((value) => template_weapon_revolver = value);
-      loadImageAsset('images/template/weapons/template-weapons-winchester.png').then((value) => template_weapon_winchester = value);
-      loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_musket = value);
-      loadImageAsset('images/template/weapons/template-weapons-crowbar.png').then((value) => template_weapon_crowbar = value);
-      loadImageAsset('images/template/weapons/template-weapons-portal-gun.png').then((value) => template_weapon_portal_gun = value);
+     loadImage('atlas-characters.png').then((value) => atlas_characters = value);
+     loadImage('atlas-zombie.png').then((value) => zombie = value);
+     loadImage('atlas-zombie-shadow.png').then((value) => zombie_shadow = value);
+     loadImage('atlas-gameobjects.png').then((value) => atlas_gameobjects = value);
+     loadImage('atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
+     loadImage('atlas-particles.png').then((value) => atlas_particles = value);
+     loadImage('atlas-projectiles.png').then((value) => projectiles = value);
+     loadImage('atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
+     loadImage('atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
+     loadImage('atlas_weapons.png').then((value) => atlas_weapons = value);
+     loadImage('atlas_talents.png').then((value) => atlas_talents = value);
+     loadImage('atlas-icons.png').then((value) => atlas_icons = value);
+     loadImage('atlas_items.png').then((value) => atlas_items = value);
+     loadImage('atlas_head.png').then((value) => atlas_head = value);
+     loadImage('atlas_body.png').then((value) => atlas_body = value);
+     loadImage('atlas_legs.png').then((value) => atlas_legs = value);
+     loadImage('character-dog.png').then((value) => character_dog = value);
+     loadImage('template/template-shadow.png').then((value) => template_shadow = value);
+     loadImage('template/head/template-head-plain.png').then((value) => template_head_plain = value);
+     loadImage('template/head/template-head-rogue.png').then((value) => template_head_rogue = value);
+     loadImage('template/head/template-head-steel.png').then((value) => template_head_steel = value);
+     loadImage('template/head/template-head-swat.png').then((value) => template_head_swat = value);
+     loadImage('template/head/template-head-wizard.png').then((value) => template_head_wizard = value);
+     loadImage('template/head/template-head-blonde.png').then((value) => template_head_blonde = value);
+     loadImage('template/body/template-body-blue.png').then((value) => template_body_blue = value);
+     loadImage('template/body/template-body-red.png').then((value) => template_body_red = value);
+     loadImage('template/body/template-body-cyan.png').then((value) => template_body_cyan = value);
+     loadImage('template/body/template-body-swat.png').then((value) => template_body_swat = value);
+     loadImage('template/body/template-body-tunic.png').then((value) => template_body_tunic = value);
+     loadImage('template/body/template-body-empty.png').then((value) => template_body_empty = value);
+     loadImage('template/legs/template-legs-none.png').then((value) => template_legs_none = value);
+     loadImage('template/legs/template-legs-blue.png').then((value) => template_legs_blue = value);
+     loadImage('template/legs/template-legs-white.png').then((value) => template_legs_white = value);
+     loadImage('template/legs/template-legs-green.png').then((value) => template_legs_green = value);
+     loadImage('template/legs/template-legs-brown.png').then((value) => template_legs_brown = value);
+     loadImage('template/legs/template-legs-red.png').then((value) => template_legs_red = value);
+     loadImage('template/legs/template-legs-swat.png').then((value) => template_legs_swat = value);
+     loadImage('template/weapons/template-weapons-bow.png').then((value) => template_weapon_bow = value);
+     loadImage('template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
+     loadImage('template/weapons/template-weapons-desert-eagle.png').then((value) => template_weapon_desert_eagle = value);
+     loadImage('template/weapons/template-weapons-plasma-pistol.png').then((value) => template_weapon_plasma_pistol = value);
+     loadImage('template/weapons/template-weapons-plasma-rifle.png').then((value) => template_weapon_plasma_rifle = value);
+     loadImage('template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
+     loadImage('template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
+     loadImage('template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);
+     loadImage('template/weapons/template-weapons-ak47.png').then((value) => template_weapon_ak47 = value);
+     loadImage('template/weapons/template-weapons-shotgun.png').then((value) => template_weapon_shotgun = value);
+     loadImage('template/weapons/template-weapons-staff-wooden.png').then((value) => template_weapon_staff = value);
+     loadImage('template/weapons/template-weapons-sword-steel.png').then((value) => template_weapon_sword_steel = value);
+     loadImage('template/weapons/template-weapons-axe.png').then((value) => template_weapon_axe = value);
+     loadImage('template/weapons/template-weapons-pickaxe.png').then((value) => template_weapon_pickaxe = value);
+     loadImage('template/weapons/template-weapons-hammer.png').then((value) => template_weapon_hammer = value);
+     loadImage('template/weapons/template-weapons-knife.png').then((value) => template_weapon_knife = value);
+     loadImage('template/weapons/template-weapons-flamethrower.png').then((value) => template_weapon_flamethrower = value);
+     loadImage('template/weapons/template-weapons-bazooka.png').then((value) => template_weapon_bazooka = value);
+     loadImage('template/weapons/template-weapons-mp5.png').then((value) => template_weapon_mp5 = value);
+     loadImage('template/weapons/template-weapons-minigun.png').then((value) => template_weapon_minigun = value);
+     loadImage('template/weapons/template-weapons-m4.png').then((value) => template_weapon_m4 = value);
+     loadImage('template/weapons/template-weapons-revolver.png').then((value) => template_weapon_revolver = value);
+     loadImage('template/weapons/template-weapons-winchester.png').then((value) => template_weapon_winchester = value);
+     loadImage('template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_musket = value);
+     loadImage('template/weapons/template-weapons-crowbar.png').then((value) => template_weapon_crowbar = value);
+     loadImage('template/weapons/template-weapons-portal-gun.png').then((value) => template_weapon_portal_gun = value);
 
-      loadImageAsset('images/sprites/sprite-stars.png').then((value) => sprite_stars = value);
-      loadImageAsset('images/sprites/sprite-shield.png').then((value) => sprite_shield = value);
+     loadImage('sprites/sprite-stars.png').then((value) => sprite_stars = value);
+     loadImage('sprites/sprite-shield.png').then((value) => sprite_shield = value);
 
-      loadImageAsset('images/atlas-fight2d.png').then((value) => atlas_fight2d = value);
-      loadImageAsset('images/atlas-fight2d-nodes.png').then((value) => atlas_fight2d_nodes = value);
-      loadImageAsset('images/atlas-fight2d-character.png').then((value) => atlas_fight2d_character = value);
+     loadImage('atlas-fight2d.png').then((value) => atlas_fight2d = value);
+     loadImage('atlas-fight2d-nodes.png').then((value) => atlas_fight2d_nodes = value);
+     loadImage('atlas-fight2d-character.png').then((value) => atlas_fight2d_character = value);
    }
 
    static Image getImageForGameObject(int type){

@@ -145,7 +145,6 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
     sink.close();
   }
 
-
   void send(dynamic message) {
     if (!connected) {
       print('warning cannot send because not connected');
