@@ -44,37 +44,8 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
-  late final Map<int, ui.Image> mapGameObjectTypeToImage;
-  late final messageBoxVisible = Watch(false, clamp: (bool value) {
-    return value;
-  }, onChanged: onVisibilityChangedMessageBox);
-
-  final imagesLoadedCompleted = Completer();
-  final textEditingControllerMessage = TextEditingController();
-  final textFieldMessage = FocusNode();
-  final panelTypeKey = <int, GlobalKey>{};
-  final playerTextStyle = TextStyle(color: Colors.white);
-  final timeVisible = Watch(true);
-
-  final windowOpenMenu = WatchBool(false);
-  final operationStatus = Watch(OperationStatus.None);
-  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   var engineBuilt = false;
-  final updateFrame = Watch(0);
-  final serverFPS = Watch(0);
-  final images = Images();
-  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
-  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
-  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
-  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
-  late final Games games;
-  late final io = GameIO(this);
-  late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
-  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-
-  final imagesLoaded = Future.value(false);
-
-  late final Engine engine;
+  var renderCursorEnable = true;
   var clearErrorTimer = -1;
   var nextEmissionSmoke = 0;
   var cursorType = IsometricCursorType.Hand;
@@ -91,13 +62,23 @@ class Isometric extends WebsocketClientBuilder with
   var torchEmissionT = 0.0;
   var nodesRaycast = 0;
   var windLine = 0;
+  var totalProjectiles = 0;
 
-  late final edit = Watch(false, onChanged:  onChangedEdit);
-  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
-  late final raining = Watch(false, onChanged: onChangedRaining);
-  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
-
+  final imagesLoadedCompleted = Completer();
+  final textEditingControllerMessage = TextEditingController();
+  final textFieldMessage = FocusNode();
+  final panelTypeKey = <int, GlobalKey>{};
+  final playerTextStyle = TextStyle(color: Colors.white);
+  final timeVisible = Watch(true);
+  final windowOpenMenu = WatchBool(false);
+  final operationStatus = Watch(OperationStatus.None);
+  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
+  final updateFrame = Watch(0);
+  final serverFPS = Watch(0);
+  final images = Images();
+  final options = IsometricOptions();
+  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+  final imagesLoaded = Future.value(false);
   final overrideColor = WatchBool(false);
   final playerExperiencePercentage = Watch(0.0);
   final sceneEditable = Watch(false);
@@ -108,15 +89,32 @@ class Isometric extends WebsocketClientBuilder with
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
   final sceneUnderground = Watch(false);
+  final gameObjects = <GameObject>[];
+  final projectiles = <Projectile>[];
 
+  late final Map<int, ui.Image> mapGameObjectTypeToImage;
+  late final messageBoxVisible = Watch(false, clamp: (bool value) {
+    return value;
+  }, onChanged: onVisibilityChangedMessageBox);
+  late final edit = Watch(false, onChanged:  onChangedEdit);
+  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
+  late final raining = Watch(false, onChanged: onChangedRaining);
+  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
+  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
   late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
   late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
   late final seconds = Watch(0, onChanged:  onChangedSeconds);
   late final hours = Watch(0, onChanged:  onChangedHour);
   late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
-
-  final gameObjects = <GameObject>[];
+  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
+  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
+  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
+  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
+  late final Games games;
+  late final io = GameIO(this);
+  late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
+  late final Engine engine;
 
   late final IsometricRender render;
   late final GameAudio audio;
@@ -126,10 +124,6 @@ class Isometric extends WebsocketClientBuilder with
   late final IsometricCamera camera;
   late final IsometricMouse mouse;
   late final IsometricPlayer player;
-  final options = IsometricOptions();
-
-  var totalProjectiles = 0;
-  final projectiles = <Projectile>[];
 
   Isometric(){
     print('Isometric()');
@@ -2212,6 +2206,10 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void renderCursor(Canvas canvas) {
+
+    if (!renderCursorEnable)
+      return;
+
     final cooldown = player.weaponCooldown.value;
     final accuracy = player.accuracy.value;
     final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
