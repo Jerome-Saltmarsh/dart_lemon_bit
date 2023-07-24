@@ -1,9 +1,9 @@
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../enums/emission_type.dart';
+import '../../gamestream/isometric/enums/emission_type.dart';
 
-class IsometricGameObject extends IsometricPosition {
+class GameObject extends Position {
   final int id;
   var type = -1;
   var subType = -1;
@@ -23,7 +23,7 @@ class IsometricGameObject extends IsometricPosition {
   var emission_intensity_vel = 0.00;
   var highlight = false;
 
-  IsometricGameObject(this.id); // PROPERTIES
+  GameObject(this.id); // PROPERTIES
   
   double get healthPercentage => maxHealth <= 0 ? 0 : health / maxHealth;
 

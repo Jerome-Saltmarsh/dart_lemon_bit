@@ -1,10 +1,10 @@
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../enums/game_dialog.dart';
-import '../classes/isometric_position.dart';
+import '../../../isometric/classes/position.dart';
 
 class IsometricPlayer {
 
@@ -34,9 +34,9 @@ class IsometricPlayer {
   final playerAimTargetSet = Watch(false);
   final playerAimTargetName = Watch('');
   final npcTalk = Watch('');
-  final aimTargetPosition = IsometricPosition();
-  final targetPosition = IsometricPosition();
-  final position = IsometricPosition();
+  final aimTargetPosition = Position();
+  final targetPosition = Position();
+  final position = Position();
   final npcTalkOptions = Watch<List<String>>([]);
   final aimTargetChanged = Watch(0);
   final id = Watch(0);
@@ -44,16 +44,16 @@ class IsometricPlayer {
   final body = Watch(0);
   final head = Watch(0);
   final legs = Watch(0);
-  final previousPosition = IsometricPosition();
+  final previousPosition = Position();
   final accuracy = Watch(1.0);
   final storeItems = Watch(<int>[]);
   final energy = Watch(0);
   final energyMax = Watch(0);
-  final abilityTarget = IsometricPosition();
+  final abilityTarget = Position();
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final target = IsometricPosition();
+  final target = Position();
   final health = Watch(0);
   final maxHealth = Watch(0);
   final weaponDamage = Watch(0);
@@ -83,7 +83,7 @@ class IsometricPlayer {
   bool get inBounds => isometric.inBoundsPosition(position);
 
 
-  bool isCharacter(IsometricCharacter character){
+  bool isCharacter(Character character){
     return position.x == character.x && position.y == character.y && position.z == character.z;
   }
 

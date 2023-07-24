@@ -1,13 +1,13 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 
 mixin IsometricCharacters {
-  final characters = <IsometricCharacter>[];
+  final characters = <Character>[];
   var totalCharacters = 0;
 
-  IsometricCharacter getCharacterInstance(){
+  Character getCharacterInstance(){
     if (characters.length <= totalCharacters){
-      characters.add(IsometricCharacter());
+      characters.add(Character());
     }
     return characters[totalCharacters];
   }

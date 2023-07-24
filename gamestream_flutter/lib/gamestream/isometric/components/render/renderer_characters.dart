@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererCharacters extends IsometricRenderer {
-  late IsometricCharacter character;
+  late Character character;
 
   RendererCharacters(super.isometric);
 
@@ -114,7 +114,7 @@ class RendererCharacters extends IsometricRenderer {
   }
 
 
-  void renderCharacterDog(IsometricCharacter character){
+  void renderCharacterDog(Character character){
     const Src_Size = 80.0;
     const Anchor_Y = 0.66;
 
@@ -209,7 +209,7 @@ class RendererCharacters extends IsometricRenderer {
     }
   }
 
-  void renderCharacterZombie(IsometricCharacter character) {
+  void renderCharacterZombie(Character character) {
     if (character.dead) return;
     if (character.spawning) return;
 
@@ -268,7 +268,7 @@ class RendererCharacters extends IsometricRenderer {
     );
   }
 
-  double getZombieSrcX(IsometricCharacter character) {
+  double getZombieSrcX(Character character) {
     const framesPerDirection = 0;
     switch (character.state) {
       case CharacterState.Running:
@@ -308,7 +308,7 @@ class RendererCharacters extends IsometricRenderer {
     }
   }
 
-  void renderCharacterRat(IsometricCharacter character){
+  void renderCharacterRat(Character character){
     if (character.state == CharacterState.Running){
       isometric.engine.renderSprite(
         image: isometric.images.atlas_gameobjects,
@@ -364,7 +364,7 @@ class RendererCharacters extends IsometricRenderer {
 
   double loop4({
     required List<int> animation,
-    required IsometricCharacter character,
+    required Character character,
     required int framesPerDirection,
     double size = 64,
   }) => (character.renderDirection * framesPerDirection * size) +
@@ -372,7 +372,7 @@ class RendererCharacters extends IsometricRenderer {
 
   double animate({
     required List<int> animation,
-    required IsometricCharacter character,
+    required Character character,
     required int framesPerDirection,
     double size = 64.0
   }) {

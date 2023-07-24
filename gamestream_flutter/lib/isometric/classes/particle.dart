@@ -1,7 +1,7 @@
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricParticle extends IsometricPosition {
+class Particle extends Position {
 
   var active = false;
   var delay = 0;
@@ -32,7 +32,7 @@ class IsometricParticle extends IsometricPosition {
   var flash = true;
   var emitsLight = false;
 
-  IsometricParticle({super.x, super.y, super.z, this.active = false});
+  Particle({super.x, super.y, super.z, this.active = false});
 
   int get direction => IsometricDirection.fromRadian(rotation);
   double get duration01 => duration / durationTotal;
@@ -102,7 +102,7 @@ class IsometricParticle extends IsometricPosition {
     return '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}, active: $active}';
   }
 
-  static int compare(IsometricParticle a, IsometricParticle b){
+  static int compare(Particle a, Particle b){
      final aActive = a.active;
      final bActive = b.active;
 

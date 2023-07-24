@@ -1,12 +1,12 @@
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricPosition implements Comparable<IsometricPosition>{
+class Position implements Comparable<Position>{
 
   double x;
   double y;
   double z;
 
-  IsometricPosition({this.x = 0, this.y = 0, this.z = 0});
+  Position({this.x = 0, this.y = 0, this.z = 0});
 
   int get indexZ => z ~/ Node_Size_Half;
 
@@ -36,7 +36,7 @@ class IsometricPosition implements Comparable<IsometricPosition>{
   String toString()=> '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}}';
 
   @override
-  int compareTo(IsometricPosition that) {
+  int compareTo(Position that) {
     final thisRenderOrder = this.sortOrder;
     final thatRenderOrder = that.sortOrder;
 

@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_math/src.dart';
 
-class IsometricCharacter extends IsometricPosition {
+class Character extends Position {
   var characterType = CharacterType.Template;
   var weaponType = WeaponType.Unarmed;
   var weaponState = 0;

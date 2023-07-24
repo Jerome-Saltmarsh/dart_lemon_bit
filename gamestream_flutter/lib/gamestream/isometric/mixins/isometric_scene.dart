@@ -5,7 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../classes/isometric_position.dart';
+import '../../../isometric/classes/position.dart';
 
 mixin IsometricScene {
 
@@ -54,7 +54,7 @@ mixin IsometricScene {
   var torch_emission_intensity = 1.0;
 
   final nodesChangedNotifier = Watch(0);
-  final shadow = IsometricPosition();
+  final shadow = Position();
   late var interpolationLength = 6;
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
@@ -276,7 +276,7 @@ mixin IsometricScene {
     }
   }
 
-  void markShadow(IsometricPosition position){
+  void markShadow(Position position){
     final index = getIndexPosition(position) - area;
     if (index < 0) return;
     if (index >= totalNodes) return;
@@ -968,7 +968,7 @@ mixin IsometricScene {
 
   int getIndexBelow(int index) => index - area;
 
-  int getIndexBelowPosition(IsometricPosition position) =>
+  int getIndexBelowPosition(Position position) =>
       getIndexZRC(
         position.indexZ - 1,
         position.indexRow,
@@ -1003,7 +1003,7 @@ mixin IsometricScene {
   int convertNodeIndexToIndexZ(int index) =>
       index ~/ area;
 
-  int getRenderColorPosition(IsometricPosition position) =>
+  int getRenderColorPosition(Position position) =>
       outOfBoundsPosition(position)
           ? ambientColor
           : nodeColors[getIndexPosition(position)];
@@ -1022,7 +1022,7 @@ mixin IsometricScene {
     }
   }
 
-  bool outOfBoundsPosition(IsometricPosition position) =>
+  bool outOfBoundsPosition(Position position) =>
       outOfBoundsXYZ(position.x, position.y, position.z);
 
   int getTypeXYZSafe(double x, double y, double z) =>
@@ -1031,7 +1031,7 @@ mixin IsometricScene {
   int getTypeXYZ(double x, double y, double z) =>
       nodeTypes[getIndexXYZ(x, y, z)];
 
-  bool inBoundsPosition(IsometricPosition position) =>
+  bool inBoundsPosition(Position position) =>
       inBoundsXYZ(position.x, position.y, position.z);
 
   bool inBoundsXYZ(double x, double y, double z) =>
@@ -1052,7 +1052,7 @@ mixin IsometricScene {
           column < totalColumns;
 
 
-  int getIndexPosition(IsometricPosition position) =>
+  int getIndexPosition(Position position) =>
       getIndexZRC(
         position.indexZ,
         position.indexRow,
@@ -1080,7 +1080,7 @@ mixin IsometricScene {
       x >= lengthRows ||
       y >= lengthColumns;
 
-  int getNearestLightSourcePosition(IsometricPosition position, {int maxDistance = 5}) => getNearestLightSource(
+  int getNearestLightSourcePosition(Position position, {int maxDistance = 5}) => getNearestLightSource(
         row: position.indexRow,
         column: position.indexColumn,
         z: position.indexZ,

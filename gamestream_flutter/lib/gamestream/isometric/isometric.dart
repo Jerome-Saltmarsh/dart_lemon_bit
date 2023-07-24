@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/lemon_bits.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
@@ -115,7 +116,7 @@ class Isometric extends WebsocketClientBuilder with
   late final hours = Watch(0, onChanged:  onChangedHour);
   late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
 
-  final gameObjects = <IsometricGameObject>[];
+  final gameObjects = <GameObject>[];
 
   late final IsometricRender render;
   late final GameAudio audio;
@@ -128,7 +129,7 @@ class Isometric extends WebsocketClientBuilder with
   final options = IsometricOptions();
 
   var totalProjectiles = 0;
-  final projectiles = <IsometricProjectile>[];
+  final projectiles = <Projectile>[];
 
   Isometric(){
     print('Isometric()');
@@ -311,7 +312,7 @@ class Isometric extends WebsocketClientBuilder with
   void debugCharacterDebugUpdate() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
 
-  void selectGameObject(IsometricGameObject gameObject) =>
+  void selectGameObject(GameObject gameObject) =>
       sendIsometricRequest(IsometricRequest.Select_GameObject, '${gameObject.id}');
 
   void debugCharacterSetCharacterType(int characterType) =>
@@ -361,13 +362,13 @@ class Isometric extends WebsocketClientBuilder with
     totalCharacters = 0;
   }
 
-  IsometricGameObject findOrCreateGameObject(int id) {
-    final instance = findGameObjectById(id) ?? IsometricGameObject(id);
+  GameObject findOrCreateGameObject(int id) {
+    final instance = findGameObjectById(id) ?? GameObject(id);
     gameObjects.add(instance);
     return instance;
   }
 
-  IsometricGameObject? findGameObjectById(int id) {
+  GameObject? findGameObjectById(int id) {
     for (final gameObject in gameObjects) {
       if (gameObject.id == id) return gameObject;
     }
@@ -434,7 +435,7 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void projectShadow(IsometricPosition v3){
+  void projectShadow(Position v3){
     if (!inBoundsPosition(v3)) return;
 
     final z = getProjectionZ(v3);
@@ -450,7 +451,7 @@ class Isometric extends WebsocketClientBuilder with
     );
   }
 
-  double getProjectionZ(IsometricPosition vector3){
+  double getProjectionZ(Position vector3){
 
     final x = vector3.x;
     final y = vector3.y;
@@ -528,7 +529,7 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void applyCharacterColor(IsometricCharacter character){
+  void applyCharacterColor(Character character){
     character.color =  getRenderColorPosition(character);
   }
 
@@ -538,7 +539,7 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void applyProjectileEmission(IsometricProjectile projectile) {
+  void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
        applyVector3Emission(projectile,
         hue: 100,
@@ -730,7 +731,7 @@ class Isometric extends WebsocketClientBuilder with
     audio.coins.play();
   }
 
-  void updateParticle(IsometricParticle particle) {
+  void updateParticle(Particle particle) {
     if (!particle.active) return;
     if (particle.delay > 0) {
       particle.delay--;
@@ -842,7 +843,7 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  IsometricParticle spawnParticleFire({
+  Particle spawnParticleFire({
     required double x,
     required double y,
     required double z,
@@ -1235,7 +1236,7 @@ class Isometric extends WebsocketClientBuilder with
   void readProjectiles(){
     totalProjectiles = readUInt16();
     while (totalProjectiles >= projectiles.length){
-      projectiles.add(IsometricProjectile());
+      projectiles.add(Projectile());
     }
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
@@ -1247,7 +1248,7 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void readCharacterTemplate(IsometricCharacter character){
+  void readCharacterTemplate(Character character){
 
     final compression = readByte();
 
@@ -1280,7 +1281,7 @@ class Isometric extends WebsocketClientBuilder with
     onPlayerEvent(readByte());
   }
 
-  void readIsometricPosition(IsometricPosition value){
+  void readIsometricPosition(Position value){
     value.x = readDouble();
     value.y = readDouble();
     value.z = readDouble();
@@ -1525,7 +1526,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void playAudioSingleV3({
     required AudioSingle audioSingle,
-    required IsometricPosition position,
+    required Position position,
     double maxDistance = 600}) => playAudioXYZ(
         audioSingle,
         position.x,
@@ -1553,7 +1554,7 @@ class Isometric extends WebsocketClientBuilder with
     // play(volume: distanceVolume);
   }
 
-  void refreshGameObjectEmissionColor(IsometricGameObject gameObject){
+  void refreshGameObjectEmissionColor(GameObject gameObject){
     gameObject.emissionColor = hsvToColor(
       hue: interpolate(start: ambientHue, end: gameObject.emissionHue , t: gameObject.emissionIntensity),
       saturation: interpolate(start: ambientSaturation, end: gameObject.emissionSat, t: gameObject.emissionIntensity),
@@ -1562,7 +1563,7 @@ class Isometric extends WebsocketClientBuilder with
     );
   }
 
-  bool isOnscreen(IsometricPosition position) {
+  bool isOnscreen(Position position) {
     const Pad_Distance = 75.0;
     final rx = position.renderX;
 
@@ -1605,7 +1606,7 @@ class Isometric extends WebsocketClientBuilder with
         scale: scale,
       );
 
-  bool isPerceptiblePosition(IsometricPosition position) {
+  bool isPerceptiblePosition(Position position) {
     if (!player.playerInsideIsland)
       return true;
 
@@ -1711,7 +1712,7 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void applyVector3EmissionAmbient(IsometricPosition v, {
+  void applyVector3EmissionAmbient(Position v, {
     required int alpha,
     double intensity = 1.0,
   }){
@@ -1867,7 +1868,7 @@ class Isometric extends WebsocketClientBuilder with
   /// @value a number between 0 and 100
   /// @alpha a number between 0 and 255
   /// @intensity a number between 0.0 and 1.0
-  void applyVector3Emission(IsometricPosition v, {
+  void applyVector3Emission(Position v, {
     required int hue,
     required int saturation,
     required int value,
@@ -1926,7 +1927,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void renderCircleAtPosition({
-    required IsometricPosition position,
+    required Position position,
     required double radius,
     int sections = 12,
   })=> renderCircle(position.x, position.y, position.z, radius, sections: sections);
@@ -2256,7 +2257,7 @@ class Isometric extends WebsocketClientBuilder with
         y: player.aimTargetPosition.renderY - 55);
   }
 
-  void renderStarsV3(IsometricPosition v3) =>
+  void renderStarsV3(Position v3) =>
       renderStars(v3.renderX, v3.renderY - 40);
 
   void renderStars(double x, double y) =>
@@ -2271,9 +2272,9 @@ class Isometric extends WebsocketClientBuilder with
         scale: 0.4,
       );
 
-  static double getPositionRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double getPositionRenderX(Position v3) => getRenderX(v3.x, v3.y, v3.z);
 
-  static double getPositionRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
+  static double getPositionRenderY(Position v3) => getRenderY(v3.x, v3.y, v3.z);
 
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
 

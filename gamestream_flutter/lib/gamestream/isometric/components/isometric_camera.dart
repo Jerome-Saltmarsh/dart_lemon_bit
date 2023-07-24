@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../classes/isometric_position.dart';
+import '../../../isometric/classes/position.dart';
 
 class IsometricCamera {
   final Isometric isometric;
@@ -12,7 +12,7 @@ class IsometricCamera {
   var translateY = 0.0;
   var mouseFollowSensitivity = 0.1;
 
-  IsometricPosition? target;
+  Position? target;
 
   IsometricCamera(this.isometric);
 
@@ -22,7 +22,7 @@ class IsometricCamera {
     }
   }
 
-  void centerOnV3(IsometricPosition v3) => isometric.engine.cameraCenter(v3.renderX, v3.renderY);
+  void centerOnV3(Position v3) => isometric.engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
     final target = this.target;

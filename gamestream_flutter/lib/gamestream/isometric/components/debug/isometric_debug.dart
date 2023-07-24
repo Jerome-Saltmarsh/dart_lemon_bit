@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -12,7 +12,7 @@ class IsometricDebug {
   final health = Watch(0);
   final healthMax = Watch(0);
   final radius = Watch(0);
-  final position = IsometricPosition();
+  final position = Position();
   final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
   final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
   final destinationX = Watch(0.0);

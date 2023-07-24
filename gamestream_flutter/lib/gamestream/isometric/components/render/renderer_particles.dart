@@ -1,12 +1,12 @@
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_particle.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererParticles extends IsometricRenderer {
 
-  late IsometricParticle particle;
+  late Particle particle;
 
   var totalActiveParticles = 0;
 
@@ -17,7 +17,7 @@ class RendererParticles extends IsometricRenderer {
 
   @override
   void reset() {
-    isometric.particles.sort(IsometricParticle.compare);
+    isometric.particles.sort(Particle.compare);
     totalActiveParticles = isometric.countActiveParticles;
     super.reset();
   }
@@ -556,7 +556,7 @@ class RendererParticles extends IsometricRenderer {
     }
   }
 
-  void casteShadowDownV3(IsometricPosition vector3){
+  void casteShadowDownV3(Position vector3){
     if (vector3.z < Node_Height) return;
     if (vector3.z >= isometric.lengthZ) return;
     final nodeIndex = isometric.getIndexPosition(vector3);

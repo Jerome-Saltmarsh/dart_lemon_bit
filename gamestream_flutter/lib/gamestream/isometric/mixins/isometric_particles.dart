@@ -3,22 +3,22 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric_particle.dart';
+import '../../../isometric/classes/particle.dart';
 
 mixin IsometricParticles {
   var nextParticleFrame = 0;
   var nodeType = 0;
 
-  final particles = <IsometricParticle>[];
+  final particles = <Particle>[];
   int get bodyPartDuration =>  randomInt(120, 200);
 
-  IsometricParticle getInstance() {
+  Particle getInstance() {
     for (final particle in particles) {
       if (!particle.active)
         return particle;
     }
 
-    final instance = IsometricParticle();
+    final instance = Particle();
     instance.active = true;
     particles.add(instance);
     return instance;
@@ -28,7 +28,7 @@ mixin IsometricParticles {
     particles.clear();
   }
 
-  IsometricParticle spawnParticle({
+  Particle spawnParticle({
     required int type,
     required double x,
     required double y,
@@ -203,7 +203,7 @@ mixin IsometricParticles {
     );
   }
 
-  IsometricParticle spawnParticleSmoke({
+  Particle spawnParticleSmoke({
     required double x,
     required double y,
     required double z,

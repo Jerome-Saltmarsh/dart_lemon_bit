@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -96,7 +96,7 @@ class IsometricRender {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
 
-  void renderTextPosition(IsometricPosition v3, dynamic text, {double offsetY = 0}){
+  void renderTextPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
       x: Isometric.getPositionRenderX(v3),
@@ -159,7 +159,7 @@ class IsometricRender {
     );
   }
 
-  void renderCharacterHealthBar(IsometricCharacter character) =>
+  void renderCharacterHealthBar(Character character) =>
       renderHealthBarPosition(
           position: character,
           percentage: character.health,
@@ -167,7 +167,7 @@ class IsometricRender {
       );
 
   void renderHealthBarPosition({
-    required IsometricPosition position,
+    required Position position,
     required double percentage,
     int color = 1,
   }) => isometric.engine.renderSprite(

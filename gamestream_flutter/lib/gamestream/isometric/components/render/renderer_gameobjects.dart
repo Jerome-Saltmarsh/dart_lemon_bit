@@ -1,14 +1,14 @@
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_gameobject.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../functions/format_percentage.dart';
 
 class RendererGameObjects extends IsometricRenderer {
-  static late IsometricGameObject gameObject;
+  static late GameObject gameObject;
 
   RendererGameObjects(super.isometric);
 
@@ -109,10 +109,10 @@ class RendererGameObjects extends IsometricRenderer {
     order = gameObject.sortOrder;
   }
 
-  double getRenderYBouncing(IsometricPosition v3) =>
+  double getRenderYBouncing(Position v3) =>
       ((v3.y + v3.x) * 0.5) - v3.z + isometric.animationFrameWaterHeight;
 
-  void renderBouncingGameObjectShadow(IsometricPosition gameObject){
+  void renderBouncingGameObjectShadow(Position gameObject){
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
     isometric.renderShadow(

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -38,7 +38,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     );
   }
 
-  void renderCharacterTemplate(IsometricCharacter character, {
+  void renderCharacterTemplate(Character character, {
     bool renderHealthBar = true,
   }) {
     assert(character.direction >= 0);

@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -21,10 +21,10 @@ class CaptureTheFlagGame extends IsometricGame {
 
   final Isometric gamestream;
   final tab = Watch(CaptureTheFlagUITabs.Flag_Status);
-  final flagPositionRed = IsometricPosition();
-  final flagPositionBlue = IsometricPosition();
-  final basePositionRed = IsometricPosition();
-  final basePositionBlue = IsometricPosition();
+  final flagPositionRed = Position();
+  final flagPositionBlue = Position();
+  final basePositionRed = Position();
+  final basePositionBlue = Position();
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
   final scoreRed = Watch(0);
   final scoreBlue = Watch(0);
@@ -36,7 +36,7 @@ class CaptureTheFlagGame extends IsometricGame {
   final playerActivatedPowerRange = Watch(0.0);
   final playerActivatedPowerX = Watch(0.0);
   final playerActivatedPowerY = Watch(0.0);
-  final playerActivatedTarget = IsometricPosition();
+  final playerActivatedTarget = Position();
   final playerPower1 = CaptureTheFlagPower();
   final playerPower2 = CaptureTheFlagPower();
   final playerPower3 = CaptureTheFlagPower();

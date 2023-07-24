@@ -1,10 +1,10 @@
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_projectile.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererProjectiles extends IsometricRenderer {
 
-  late IsometricProjectile projectile;
+  late Projectile projectile;
 
   RendererProjectiles(super.scene);
   

@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../../enums/editor_dialog.dart';
 import '../../enums/emission_type.dart';
-import '../../classes/isometric_gameobject.dart';
+import '../../../../isometric/classes/gameobject.dart';
 import 'isometric_editor_style.dart';
 import 'isometric_editor_tab.dart';
 
@@ -25,7 +25,7 @@ class IsometricEditor {
   final generateFrequency = WatchInt(1, min: 0, max: 100);
 
   final selectedSceneName = Watch<String?>(null);
-  final gameObject = Watch<IsometricGameObject?>(null);
+  final gameObject = Watch<GameObject?>(null);
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
   final gameObjectSelectedSubType = Watch(0);
