@@ -1793,14 +1793,6 @@ class Isometric extends WebsocketClientBuilder with
       }
     }
 
-    applyColor(
-      index: index,
-      brightness: 5,
-      hue: hue,
-      saturation: saturation,
-      value: value,
-    );
-
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
@@ -1820,6 +1812,14 @@ class Isometric extends WebsocketClientBuilder with
         }
       }
     }
+
+    setColor(
+      alpha: 250,
+      index: index,
+      hue: hue,
+      saturation: saturation,
+      value: value,
+    );
   }
 
   void shootLightTreeColor({
@@ -2284,11 +2284,6 @@ class Isometric extends WebsocketClientBuilder with
       }
     }
 
-    applyAmbient(
-      index: index,
-      alpha: alpha,
-    );
-
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
@@ -2296,7 +2291,7 @@ class Isometric extends WebsocketClientBuilder with
             row: row,
             column: column,
             z: z,
-            brightness: -1,
+            brightness: 6,
             alpha: alpha,
             vx: vx,
             vy: vy,

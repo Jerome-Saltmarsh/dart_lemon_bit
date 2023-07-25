@@ -39,12 +39,12 @@ extension IsometricLighting on Isometric {
     required int vy,
     required int vz,
   }){
-    assert (brightness < interpolationLength);
+    // assert (brightness < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    brightness += velocity;
+    brightness -= velocity;
 
-    if (brightness >= interpolationLength) {
+    if (brightness < 0) {
       return;
     }
 
@@ -183,11 +183,11 @@ extension IsometricLighting on Isometric {
       }
     }
 
-    final intensity = interpolations[brightness < 0 ? 0 : brightness];
+    final intensity = interpolations[brightness > 5 ? 5 : brightness];
 
     applyAmbient(
       index: index,
-      alpha: linearInterpolateInt(alpha, ambientAlpha, intensity),
+      alpha: linearInterpolateInt(ambientAlpha, alpha, intensity),
     );
 
     if (const [
@@ -195,7 +195,7 @@ extension IsometricLighting on Isometric {
       NodeType.Tree_Bottom,
       NodeType.Tree_Top,
     ].contains(nodeType)) {
-      brightness++;
+      brightness--;
       if (brightness >= interpolationLength)
         return;
     }

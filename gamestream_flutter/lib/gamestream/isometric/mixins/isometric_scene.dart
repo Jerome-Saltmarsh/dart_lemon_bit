@@ -75,7 +75,7 @@ mixin IsometricScene {
   }
 
 
-  late final Watch<EaseType> interpolationEaseType = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
+  late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Out_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEaseType(
       length: interpolationLength,
       easeType: EaseType.In_Out_Quad,
@@ -357,6 +357,22 @@ mixin IsometricScene {
     hsvHue[index] = interpolatedHue;
     hsvSaturation[index] = interpolatedS;
     hsvValues[index] = interpolatedV;
+    refreshNodeColor(index);
+  }
+
+  void setColor({
+    required int index,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+  }){
+    colorStackIndex++;
+    colorStack[colorStackIndex] = index;
+    hsvAlphas[index] = alpha;
+    hsvHue[index] = hue;
+    hsvSaturation[index] = saturation;
+    hsvValues[index] = value;
     refreshNodeColor(index);
   }
 
