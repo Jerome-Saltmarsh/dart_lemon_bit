@@ -353,7 +353,7 @@ mixin IsometricScene {
     final interpolatedV = linearInterpolateInt(value, hsvValues[index], intensity);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = 150;
+    hsvAlphas[index] = interpolatedA;
     hsvHue[index] = interpolatedHue;
     hsvSaturation[index] = interpolatedS;
     hsvValues[index] = interpolatedV;
