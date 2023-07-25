@@ -181,6 +181,9 @@ class Isometric extends WebsocketClientBuilder with
     if (gameType.value == GameType.Website)
       return;
 
+
+    jobBatchResetNodeColorsToAmbient();
+
     totalAmbientOffscreen = 0;
     totalAmbientOnscreen = 0;
 
@@ -252,7 +255,7 @@ class Isometric extends WebsocketClientBuilder with
 
     if (nextLightingUpdate-- <= 0){
       nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
-      updateGameLighting();
+      updateAmbientAlphaAccordingToTime();
     }
 
     updateCredits();
@@ -490,7 +493,7 @@ class Isometric extends WebsocketClientBuilder with
     if (lightningFlashing) {
       audio.thunder(1.0);
     } else {
-      updateGameLighting();
+      updateAmbientAlphaAccordingToTime();
     }
   }
 
@@ -632,9 +635,9 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-  void updateGameLighting(){
+  void updateAmbientAlphaAccordingToTime(){
     if (overrideColor.value) return;
-    if ( lightningFlashing.value) return;
+
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = ( hours.value * Seconds_Per_Hour) + ( minutes.value * 60);
@@ -649,7 +652,7 @@ class Isometric extends WebsocketClientBuilder with
     if ( rainType.value == RainType.Heavy){
        ambientAlpha += 40;
     }
-     resetNodeColorsToAmbient();
+     // resetNodeColorsToAmbient();
   }
 
   void refreshRain(){

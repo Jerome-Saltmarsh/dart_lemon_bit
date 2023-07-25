@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -115,7 +117,19 @@ mixin IsometricScene {
     }
   }
 
+  void generateStacks(){
+    print('isometric_scene.generateStacks() - EXPENSIVE CALL');
+    colorStack = Uint16List(totalNodes);
+    nodeColors = Uint32List(totalNodes);
+    hsvHue = Uint16List(totalNodes);
+    hsvSaturation = Uint8ClampedList(totalNodes);
+    hsvValues = Uint8ClampedList(totalNodes);
+    hsvAlphas = Uint8ClampedList(totalNodes);
+  }
+
   void resetNodeColorsToAmbient() {
+    print('isometric_scene.resetNodeColorsToAmbient() - EXPENSIVE CALL');
+    ambientResetIndex = 0;
     ambientAlpha = clamp(ambientAlpha, 0, 255);
     ambientColor = hsvToColor(
         hue: ambientHue,
@@ -126,12 +140,7 @@ mixin IsometricScene {
     colorStackIndex = -1;
 
     if (nodeColors.length != totalNodes) {
-      colorStack = Uint16List(totalNodes);
-      nodeColors = Uint32List(totalNodes);
-      hsvHue = Uint16List(totalNodes);
-      hsvSaturation = Uint8ClampedList(totalNodes);
-      hsvValues = Uint8ClampedList(totalNodes);
-      hsvAlphas = Uint8ClampedList(totalNodes);
+      generateStacks();
     }
     for (var i = 0; i < totalNodes; i++) {
       nodeColors[i] = ambientColor;
@@ -139,6 +148,26 @@ mixin IsometricScene {
       hsvSaturation[i] = ambientSaturation;
       hsvValues[i] = ambientValue;
       hsvAlphas[i] = ambientAlpha;
+    }
+  }
+
+  var ambientResetIndex = 0;
+
+  void jobBatchResetNodeColorsToAmbient(){
+    const ambientResetBatchSize = 100;
+    final targetEnd = ambientResetIndex + ambientResetBatchSize;
+    final amount = min(targetEnd, totalNodes);
+
+    for (ambientResetIndex; ambientResetIndex < amount; ambientResetIndex++){
+      nodeColors[ambientResetIndex] = ambientColor;
+      hsvHue[ambientResetIndex] = ambientHue;
+      hsvSaturation[ambientResetIndex] = ambientSaturation;
+      hsvValues[ambientResetIndex] = ambientValue;
+      hsvAlphas[ambientResetIndex] = ambientAlpha;
+    }
+
+    if (ambientStackIndex >= totalNodes -1) {
+      ambientStackIndex = 0;
     }
   }
 

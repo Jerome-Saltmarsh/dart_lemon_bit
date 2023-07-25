@@ -290,6 +290,7 @@ extension IsometricLighting on Isometric {
       totalAmbientOnscreen++;
     } else {
       totalAmbientOffscreen++;
+      return;
     }
 
     final currentAlpha = hsvAlphas[index];

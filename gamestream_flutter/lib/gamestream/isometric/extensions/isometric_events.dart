@@ -40,6 +40,8 @@ extension IsometricEvents on Isometric {
       rainStop();
       rainStart();
     }
+    // resetNodeColorsToAmbient();
+    updateAmbientAlphaAccordingToTime();
     resetNodeColorsToAmbient();
     editor.refreshNodeSelectedIndex();
   }
@@ -385,7 +387,8 @@ extension IsometricEvents on Isometric {
 
   void onChangedHour(int hour){
     if (sceneUnderground.value) return;
-    updateGameLighting();
+    updateAmbientAlphaAccordingToTime();
+    resetNodeColorsToAmbient();
   }
 
   void onChangedSeconds(int seconds){
@@ -397,7 +400,8 @@ extension IsometricEvents on Isometric {
   void onChangedRain(int value) {
     raining.value = value != RainType.None;
     refreshRain();
-    updateGameLighting();
+    updateAmbientAlphaAccordingToTime();
+    resetNodeColorsToAmbient();
   }
 
   void onPlayerEvent(int event) {
