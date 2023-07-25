@@ -388,7 +388,7 @@ extension IsometricEvents on Isometric {
   void onChangedHour(int hour){
     if (sceneUnderground.value) return;
     updateAmbientAlphaAccordingToTime();
-    resetNodeColorsToAmbient();
+    // resetNodeColorsToAmbient();
   }
 
   void onChangedSeconds(int seconds){

@@ -164,6 +164,7 @@ mixin IsometricScene {
       hsvSaturation[ambientResetIndex] = ambientSaturation;
       hsvValues[ambientResetIndex] = ambientValue;
       hsvAlphas[ambientResetIndex] = ambientAlpha;
+      refreshNodeColor(ambientResetIndex);
     }
 
     if (ambientStackIndex >= totalNodes -1) {

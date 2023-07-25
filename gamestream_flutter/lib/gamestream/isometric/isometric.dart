@@ -176,11 +176,9 @@ class Isometric extends WebsocketClientBuilder with
 
   bool get lightningOn =>  lightningType.value != LightningType.Off;
 
-
   void drawCanvas(Canvas canvas, Size size) {
     if (gameType.value == GameType.Website)
       return;
-
 
     jobBatchResetNodeColorsToAmbient();
 
