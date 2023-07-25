@@ -355,7 +355,7 @@ mixin IsometricScene {
     colorStack[colorStackIndex] = index;
     hsvAlphas[index] = 150;
     hsvHue[index] = interpolatedHue;
-    hsvSaturation[index] = saturation;
+    hsvSaturation[index] = interpolatedS;
     hsvValues[index] = interpolatedV;
     refreshNodeColor(index);
   }

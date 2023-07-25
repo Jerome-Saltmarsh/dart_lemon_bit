@@ -1980,11 +1980,12 @@ class Isometric extends WebsocketClientBuilder with
       }
     }
 
-    final intensity = interpolations[brightness < 0 ? 0 : brightness];
-
-    applyAmbient(
+    applyColor(
       index: index,
-      alpha: linearInterpolateInt(alpha, ambientAlpha, intensity),
+      brightness: brightness,
+      hue: hue,
+      saturation: saturation,
+      value: value,
     );
 
     if (const [
@@ -2003,7 +2004,10 @@ class Isometric extends WebsocketClientBuilder with
       return;
 
     if (vx.abs() + vy.abs() + vz.abs() == 3) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
@@ -2016,7 +2020,10 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     if (vx.abs() + vy.abs() == 2) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
@@ -2029,7 +2036,10 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     if (vx.abs() + vz.abs() == 2) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
@@ -2042,7 +2052,10 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     if (vy.abs() + vz.abs() == 2) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
@@ -2055,7 +2068,10 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     if (vy != 0) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
@@ -2068,7 +2084,10 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     if (vx != 0) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
@@ -2081,7 +2100,10 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     if (vz != 0) {
-      shootLightTreeAmbient(
+      shootLightTreeColor(
+        hue: hue,
+        saturation: saturation,
+        value: value,
         row: row,
         column: column,
         z: z,
