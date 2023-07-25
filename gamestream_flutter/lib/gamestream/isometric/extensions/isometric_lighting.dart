@@ -39,7 +39,6 @@ extension IsometricLighting on Isometric {
     required int vy,
     required int vz,
   }){
-
     assert (brightness < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
@@ -67,7 +66,26 @@ extension IsometricLighting on Isometric {
         return;
     }
 
+    const padding = Node_Size + Node_Size_Half;
+
     final index = (z * area) + (row * totalColumns) + column;
+
+    final renderX = getIndexRenderX(index);
+
+    if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
+      return;
+
+    if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
+      return;
+
+    final renderY = getIndexRenderY(index);
+
+    if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+      return;
+
+    if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+      return;
+
     final nodeType = nodeTypes[index];
     final nodeOrientation = nodeOrientations[index];
 
