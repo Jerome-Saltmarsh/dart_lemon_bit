@@ -254,16 +254,6 @@ mixin IsometricScene {
         opacity: hsvAlphas[index],
       );
 
-
-  void refreshNodeColor2(int index) =>
-      nodeColors[index] = hsvToColor(
-        hue: hsvHue[index],
-        saturation: hsvSaturation[index],
-        value: hsvValues[index],
-        opacity: hsvAlphas[index],
-      );
-
-
   int getTorchIndex(int nodeIndex){
     final initialSearchIndex = nodeIndex - totalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
     var torchIndex = -1;
@@ -345,7 +335,7 @@ mixin IsometricScene {
 
     var hueA = hue;
     var hueB = hsvHue[index];
-    int hueI;
+    int interpolatedHue;
 
     if ((hueA - hueB).abs() > 180){
       if (hueA < hueB){
@@ -353,9 +343,9 @@ mixin IsometricScene {
       } else {
         hueB += 360;
       }
-      hueI = linearInterpolateInt(hueA, hueB, intensity) % 360;
+      interpolatedHue = linearInterpolateInt(hueA, hueB, intensity) % 360;
     } else {
-      hueI = linearInterpolateInt(hueA, hueB, intensity);
+      interpolatedHue = linearInterpolateInt(hueA, hueB, intensity);
     }
 
     final interpolatedA = linearInterpolateInt(brightness, hsvAlphas[index], intensity);
@@ -363,11 +353,11 @@ mixin IsometricScene {
     final interpolatedV = linearInterpolateInt(value, hsvValues[index], intensity);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = interpolatedA;
-    hsvHue[index] = hueI;
-    hsvSaturation[index] = interpolatedS;
+    hsvAlphas[index] = 150;
+    hsvHue[index] = interpolatedHue;
+    hsvSaturation[index] = saturation;
     hsvValues[index] = interpolatedV;
-    refreshNodeColor2(index);
+    refreshNodeColor(index);
   }
 
   bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => const [
