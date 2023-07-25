@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -12,13 +10,8 @@ mixin IsometricScene {
   var emissionAlphaCharacter = 50;
   var dynamicShadows = true;
 
-  var ambientColorRGB  = Color.fromRGBO(31, 1, 86, 0.5);
-  late var ambientColorHSV  = HSVColor.fromColor(ambientColorRGB);
-  late var ambientHue        = ((ambientColorHSV.hue)).round();
-  late var ambientSaturation        = (ambientColorHSV.saturation * 100).round();
-  late var ambientValue        = (ambientColorHSV.value * 100).round();
-  late var ambientAlpha        = (ambientColorHSV.alpha * 255).round();
-  var ambientColor      = 0;
+  var ambientColorRGB = Color.fromRGBO(31, 1, 86, 0.5);
+  var ambientColor = 0;
 
   var nodesLightSources = Uint16List(0);
   var nodesLightSourcesTotal = 0;
@@ -41,21 +34,25 @@ mixin IsometricScene {
   var area2 = 0;
   var projection = 0;
   var projectionHalf = 0;
-
   var totalZ = 0;
   var totalRows = 0;
   var totalColumns = 0;
   var lengthRows = 0.0;
   var lengthColumns = 0.0;
   var lengthZ = 0.0;
-
   var offscreenNodes = 0;
   var onscreenNodes = 0;
   var torch_emission_intensity = 1.0;
 
-  final nodesChangedNotifier = Watch(0);
-  final shadow = Position();
+  late var ambientColorHSV = HSVColor.fromColor(ambientColorRGB);
+  late var ambientHue = ((ambientColorHSV.hue)).round();
+  late var ambientSaturation = (ambientColorHSV.saturation * 100).round();
+  late var ambientValue = (ambientColorHSV.value * 100).round();
+  late var ambientAlpha = (ambientColorHSV.alpha * 255).round();
   late var interpolationLength = 6;
+
+  final nodesChangedNotifier = Watch(0);
+
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEaseType(
@@ -274,54 +271,6 @@ mixin IsometricScene {
           break;
       }
     }
-  }
-
-  void markShadow(Position position){
-    final index = getIndexPosition(position) - area;
-    if (index < 0) return;
-    if (index >= totalNodes) return;
-
-    final indexRow = getIndexRow(index);
-    final indexColumn = getIndexColumn(index);
-
-    final vectorX = position.x;
-    final vectorY = position.y;
-
-    var vx = 0.0;
-    var vy = 0.0;
-    const r = 1;
-
-    for (var row = -r; row <= r; row++) {
-      final searchRow = indexRow + row;
-      if (searchRow < 0) continue;
-      if (searchRow >= totalRows) break;
-      final rowAddition = index + (row * totalColumns);
-      for (var column = -r; column <= r; column++){
-        final searchColumn = indexColumn + column;
-        if (searchColumn < 0) continue;
-        if (searchColumn >= totalColumns) break;
-        final searchIndex = rowAddition + column;
-        final alpha = hsvAlphas[searchIndex];
-        if (alpha >= ambientAlpha) continue;
-        final x = (searchRow * Node_Size);
-        final y = (searchColumn * Node_Size);
-
-        final distanceX = x - vectorX;
-        final distanceY = y - vectorY;
-        final distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-        final distance = sqrt(distanceSquared);
-        final distanceChecked = max(distance, Node_Size);
-
-        final angle = angleBetween(vectorX, vectorY, x, y);
-        final strength = (alpha / distanceChecked) * 4.0;
-        vx += (cos(angle) * strength);
-        vy += (sin(angle) * strength);
-      }
-    }
-
-    shadow.x = vx;
-    shadow.y = vy;
-    shadow.z = rad(vx, vy);
   }
 
   int getIndexRow(int index) => (index % area) ~/ totalColumns;
