@@ -1057,9 +1057,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (sortRequired) {
-      print('gameObjects.sort()');
-      gameObjects.sort();
+      sortGameObjects();
     }
+  }
+
+  void sortGameObjects(){
+    playersWriteByte(ServerResponse.Sort_GameObjects);
+    gameObjects.sort();
   }
 
   void updateCharacterTarget(IsometricCharacter character){

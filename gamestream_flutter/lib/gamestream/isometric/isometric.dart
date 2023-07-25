@@ -996,6 +996,9 @@ class Isometric extends WebsocketClientBuilder with
       case ServerResponse.FPS:
         serverFPS.value = readUInt16();
         return;
+      case ServerResponse.Sort_GameObjects:
+        gameObjects.sort();
+        break;
       default:
         print('read error; index: $index');
         print(values);

@@ -228,7 +228,6 @@ extension IsometricResponseReader on Isometric {
     gameObject.health = readUInt16();
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
-    gameObjects.sort();
   }
 
   void readApiPlayer() {
