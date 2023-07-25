@@ -661,6 +661,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void onAmbientAlphaChanged(){
     ambientResetIndex = 0;
+    updateAmbientColor();
   }
 
   void refreshRain(){

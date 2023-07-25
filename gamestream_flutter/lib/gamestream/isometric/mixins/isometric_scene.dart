@@ -128,16 +128,20 @@ mixin IsometricScene {
     hsvAlphas = Uint8ClampedList(totalNodes);
   }
 
-  void resetNodeColorsToAmbient() {
-    print('isometric_scene.resetNodeColorsToAmbient() - EXPENSIVE CALL');
-    ambientResetIndex = 0;
-    ambientAlpha = clamp(ambientAlpha, 0, 255);
+  void updateAmbientColor() {
     ambientColor = hsvToColor(
         hue: ambientHue,
         saturation: ambientSaturation,
         value: ambientValue,
         opacity: ambientAlpha
     );
+  }
+
+  void resetNodeColorsToAmbient() {
+    print('isometric_scene.resetNodeColorsToAmbient() - EXPENSIVE CALL');
+    ambientResetIndex = 0;
+    ambientAlpha = clamp(ambientAlpha, 0, 255);
+    updateAmbientColor();
     colorStackIndex = -1;
 
     if (nodeColors.length != totalNodes) {
@@ -163,8 +167,8 @@ mixin IsometricScene {
       hsvSaturation[ambientResetIndex] = ambientSaturation;
       hsvValues[ambientResetIndex] = ambientValue;
       hsvAlphas[ambientResetIndex] = ambientAlpha;
-      refreshNodeColor(ambientResetIndex);
     }
+
   }
 
   int getHeightAt(int row, int column){

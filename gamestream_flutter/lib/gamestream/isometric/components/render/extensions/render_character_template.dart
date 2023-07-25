@@ -169,18 +169,15 @@ extension RenderCharactersTemplate on RendererCharacters {
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;
 
          final angle = angleBetween(lightX, lightY, character.x, character.y);
-
          final diff = angleDiff(angle, 4.0);
-
          final totalDiff = 1.0 - (diff / pi);
          final distance = 20.0 * totalDiff;
 
-         isometric.render.renderTextPosition(
-           character,
-           totalDiff,
-           offsetY: -50,
-         );
-
+         // isometric.render.renderTextPosition(
+         //   character,
+         //   totalDiff,
+         //   offsetY: -50,
+         // );
 
          final x = character.x + adj(angle, distance);
          final y = character.y + opp(angle, distance);
