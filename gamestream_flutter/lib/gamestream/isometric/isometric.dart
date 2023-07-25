@@ -601,7 +601,7 @@ class Isometric extends WebsocketClientBuilder with
       torchEmissionVal = -torchEmissionVal;
     }
 
-     torch_emission_intensity = interpolateDouble(
+     torchEmissionIntensity = interpolateDouble(
       start: torchEmissionStart,
       end: torchEmissionEnd,
       t: torchEmissionT,
@@ -1604,7 +1604,7 @@ class Isometric extends WebsocketClientBuilder with
       final particle = particles[i];
       if (!particle.active) continue;
       if (!particle.emitsLight) continue;
-      emitLightAHSVShadowed(
+      emitLightColored(
         index: getIndexPosition(particle),
         hue: particle.lightHue,
         saturation: particle.lightSaturation,
@@ -1660,18 +1660,18 @@ class Isometric extends WebsocketClientBuilder with
             alpha: linearInterpolateInt(
               ambientHue,
               0,
-              torch_emission_intensity,
+              torchEmissionIntensity,
             ),
           );
           break;
         case NodeType.Torch_Blue:
-          emitLightAmbient(
+          emitLightColored(
             index: nodeIndex,
-            alpha: linearInterpolateInt(
-              ambientHue,
-              0,
-              torch_emission_intensity,
-            ),
+            alpha: 255,
+            hue: 209,
+            saturation: 66,
+            value: 90,
+            intensity: 1.0,
           );
           break;
       }
@@ -1727,7 +1727,7 @@ class Isometric extends WebsocketClientBuilder with
     );
   }
 
-  void emitLightAHSVShadowed({
+  void emitLightColored({
     required int index,
     required int alpha,
     required int hue,
@@ -1745,7 +1745,6 @@ class Isometric extends WebsocketClientBuilder with
     final ry = getIndexRenderY(index);
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
-
     totalActiveLights++;
 
     final row = getIndexRow(index);
@@ -1794,40 +1793,307 @@ class Isometric extends WebsocketClientBuilder with
       }
     }
 
-    final h = linearInterpolateInt(ambientHue, hue , intensity);
-    final s = linearInterpolateInt(ambientSaturation, saturation, intensity);
-    final v = linearInterpolateInt(ambientValue, value, intensity);
-    final a = linearInterpolateInt(ambientAlpha, alpha, intensity);
-
-    applyAHSV(
+    applyColor(
       index: index,
-      alpha: a,
-      hue: h,
-      saturation: s,
-      value: v,
-      interpolation: 0,
+      brightness: 0,
+      hue: hue,
+      saturation: saturation,
+      value: value,
     );
 
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
-          shootLightTreeAHSV(
+          shootLightTreeColor(
             row: row,
             column: column,
             z: z,
-            interpolation: -1,
-            alpha: a,
-            hue: h,
-            saturation: s,
-            value: v,
+            brightness: -1,
             vx: vx,
             vy: vy,
             vz: vz,
+            alpha: alpha,
+            hue: hue,
+            saturation: saturation,
+            value: value,
           );
         }
       }
     }
   }
+
+  void shootLightTreeColor({
+    required int row,
+    required int column,
+    required int z,
+    required int brightness,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    int vx = 0,
+    int vy = 0,
+    int vz = 0,
+
+  }){
+    assert (brightness < interpolationLength);
+    var velocity = vx.abs() + vy.abs() + vz.abs();
+
+    brightness += velocity;
+
+    if (brightness >= interpolationLength) {
+      return;
+    }
+
+    if (vx != 0) {
+      row += vx;
+      if (row < 0 || row >= totalRows)
+        return;
+    }
+
+    if (vy != 0) {
+      column += vy;
+      if (column < 0 || column >= totalColumns)
+        return;
+    }
+
+    if (vz != 0) {
+      z += vz;
+      if (z < 0 || z >= totalZ)
+        return;
+    }
+
+    const padding = Node_Size + Node_Size_Half;
+
+    final index = (z * area) + (row * totalColumns) + column;
+
+    final renderX = getIndexRenderX(index);
+
+    if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
+      return;
+
+    if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
+      return;
+
+    final renderY = getIndexRenderY(index);
+
+    if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+      return;
+
+    if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+      return;
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    if (!isNodeTypeTransparent(nodeType)) {
+      if (nodeOrientation == NodeOrientation.Solid)
+        return;
+
+      if (vx < 0) {
+        if (const [
+          NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_South,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_North,
+        ].contains(nodeOrientation)) vx = 0;
+      } else if (vx > 0) {
+        if (const [
+          NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_North,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_South,
+        ].contains(nodeOrientation)) vx = 0;
+      }
+
+      if (vy < 0) {
+        if (const [
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Slope_East,
+        ].contains(nodeOrientation)) vy = 0;
+      } else if (vy > 0) {
+        if (const [
+          NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Slope_East,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) vy = 0;
+      }
+
+      if (vz < 0) {
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+        ].contains(nodeOrientation)) {
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+          NodeOrientation.Half_Vertical_Center,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
+      }
+
+      if (vz > 0) {
+        if (const [NodeOrientation.Half_Vertical_Top]
+            .contains(nodeOrientation)) {
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_Vertical_Top,
+          NodeOrientation.Half_Vertical_Center,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
+      }
+    }
+
+    final intensity = interpolations[brightness < 0 ? 0 : brightness];
+
+    applyAmbient(
+      index: index,
+      alpha: linearInterpolateInt(alpha, ambientAlpha, intensity),
+    );
+
+    if (const [
+      NodeType.Grass_Long,
+      NodeType.Tree_Bottom,
+      NodeType.Tree_Top,
+    ].contains(nodeType)) {
+      brightness++;
+      if (brightness >= interpolationLength)
+        return;
+    }
+
+    velocity = vx.abs() + vy.abs() + vz.abs();
+
+    if (velocity == 0)
+      return;
+
+    if (vx.abs() + vy.abs() + vz.abs() == 3) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: vy,
+        vz: vz,
+      );
+    }
+
+    if (vx.abs() + vy.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: vy,
+        vz: 0,
+      );
+    }
+
+    if (vx.abs() + vz.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: 0,
+        vz: vz,
+      );
+    }
+
+    if (vy.abs() + vz.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: 0,
+        vy: vy,
+        vz: vz,
+      );
+    }
+
+    if (vy != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: 0,
+        vy: vy,
+        vz: 0,
+      );
+    }
+
+    if (vx != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: 0,
+        vz: 0,
+      );
+    }
+
+    if (vz != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: 0,
+        vy: 0,
+        vz: vz,
+      );
+    }
+  }
+
 
   /// @hue a number between 0 and 360
   /// @saturation a number between 0 and 100
@@ -1842,7 +2108,7 @@ class Isometric extends WebsocketClientBuilder with
     double intensity = 1.0,
   }){
     if (!inBoundsPosition(v)) return;
-    emitLightAHSVShadowed(
+    emitLightColored(
       index: getIndexPosition(v),
       hue: hue,
       saturation: saturation,
@@ -1999,7 +2265,6 @@ class Isometric extends WebsocketClientBuilder with
     applyAmbient(
       index: index,
       alpha: alpha,
-      // interpolation: 0,
     );
 
     for (var vz = -1; vz <= 1; vz++){

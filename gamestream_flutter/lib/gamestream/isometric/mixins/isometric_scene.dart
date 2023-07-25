@@ -15,7 +15,7 @@ mixin IsometricScene {
   var ambientColorRGB = Color.fromRGBO(31, 1, 86, 0.5);
   var ambientColor = 0;
 
-  var nodesLightSources = Uint16List(0);
+  var nodesLightSources = Uint16List(1000);
   var nodesLightSourcesTotal = 0;
   var nodeColors = Uint32List(0);
   var hsvHue = Uint16List(0);
@@ -44,7 +44,7 @@ mixin IsometricScene {
   var lengthZ = 0.0;
   var offscreenNodes = 0;
   var onscreenNodes = 0;
-  var torch_emission_intensity = 1.0;
+  var torchEmissionIntensity = 1.0;
 
   late var ambientColorHSV = HSVColor.fromColor(ambientColorRGB);
   late var ambientHue = ((ambientColorHSV.hue)).round();
@@ -316,247 +316,6 @@ mixin IsometricScene {
   int getIndexColumn(int index) => index % totalColumns;
 
 
-
-  void shootLightTreeAHSV({
-    required int row,
-    required int column,
-    required int z,
-    required int interpolation,
-    required int alpha,
-    required int hue,
-    required int saturation,
-    required int value,
-    int vx = 0,
-    int vy = 0,
-    int vz = 0,
-
-  }){
-    assert (interpolation < interpolationLength);
-
-    var velocity = vx.abs() + vy.abs() + vz.abs();
-    var paintBehindZ = vz == 0;
-    var paintBehindRow = vx == 0;
-    var paintBehindColumn = vy == 0;
-
-    while (interpolation < interpolationLength) {
-
-      if (velocity == 0) return;
-
-      interpolation += velocity;
-      if (interpolation >= interpolationLength) return;
-
-      if (vx != 0){
-        row += vx;
-        if (row < 0 || row >= totalRows) return;
-      }
-
-      if (vy != 0){
-        column += vy;
-        if (column < 0 || column >= totalColumns) return;
-      }
-
-      if (vz != 0){
-        z += vz;
-        if (z < 0 || z >= totalZ) return;
-      }
-
-      final index = (z * area) + (row * totalColumns) + column;
-      final nodeType = nodeTypes[index];
-
-      if (!isNodeTypeTransparent(nodeType)) {
-
-        final nodeOrientation = nodeOrientations[index];
-
-        if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
-          if (vz > 0) {
-            if (nodeOrientation != NodeOrientation.Half_Vertical_Top){
-              if (vx == 0 && vy == 0) return;
-              final previousNodeIndex = index - (vy) - (vx * totalColumns);
-              final previousNodeOrientation = nodeOrientations[previousNodeIndex];
-              if (nodeOrientationBlocksVertical(previousNodeOrientation)) return;
-            }
-          }
-          velocity = vx.abs() + vy.abs();
-          vz = 0;
-        }
-
-        final vx2 = vx;
-        final xBehind = vx > 0;
-        final yBehind = vy > 0;
-
-        if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
-          if (xBehind && yBehind)  {
-            if (const [
-              NodeOrientation.Corner_South_West,
-              NodeOrientation.Half_South,
-              NodeOrientation.Half_West,
-            ].contains(nodeOrientation)){
-              applyAHSV(
-                index: index - area,
-                alpha: alpha,
-                hue: hue,
-                saturation: saturation,
-                value: value,
-                interpolation: interpolation,
-              );
-            }
-            return;
-          }
-          velocity = vy.abs() + vz.abs();
-          paintBehindColumn = false;
-          paintBehindZ = false;
-          if (vx < 0){
-            if (nodeOrientation == NodeOrientation.Half_North){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_North_East && vy < 0){
-              paintBehindZ = true;
-            }
-          } else {
-            if (nodeOrientation == NodeOrientation.Half_South){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_South_East && vy <= 0){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_South_West && vy >= 0){
-              paintBehindZ = true;
-            }
-          }
-          vx = 0;
-        }
-
-        if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
-          if (xBehind && yBehind)  return;
-          velocity = vx.abs() + vz.abs();
-          paintBehindRow = false;
-          paintBehindZ = false;
-
-          if (vy < 0) {
-            if (nodeOrientation == NodeOrientation.Half_East){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_North_East && vx2 <= 0){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_South_West && vx2 >= 0){
-              paintBehindZ = true;
-            }
-          } else {
-            if (nodeOrientation == NodeOrientation.Half_West){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_North_West && vx2 <= 2){
-              paintBehindZ = true;
-            } else
-            if (nodeOrientation == NodeOrientation.Corner_South_West && vx2 >= 0){
-              paintBehindZ = true;
-            }
-          }
-          vy = 0;
-        }
-
-        if (vx == 1 && vy == 1 && vz == 0 && nodeOrientation == NodeOrientation.Column_Top_Left){
-          return;
-        }
-      }
-
-      applyAHSV(
-        index: index,
-        alpha: alpha,
-        hue: hue,
-        saturation: saturation,
-        value: value,
-        interpolation: interpolation,
-      );
-
-      if (paintBehindZ) {
-        applyAHSV(
-          index: index - area,
-          alpha: alpha,
-          hue: hue,
-          saturation: saturation,
-          value: value,
-          interpolation: interpolation,
-        );
-      }
-
-      if (paintBehindRow) {
-        applyAHSV(
-          index: index - totalColumns,
-          alpha: alpha,
-          hue: hue,
-          saturation: saturation,
-          value: value,
-          interpolation: interpolation,
-        );
-      }
-
-      if (paintBehindColumn) {
-        applyAHSV(
-          index: index - 1,
-          alpha: alpha,
-          hue: hue,
-          saturation: saturation,
-          value: value,
-          interpolation: interpolation,
-        );
-      }
-
-      if (const [
-        NodeType.Grass_Long,
-        NodeType.Tree_Bottom,
-        NodeType.Tree_Top,
-      ].contains(nodeType)) {
-        interpolation += 2;
-        if (interpolation >= interpolationLength) return;
-      }
-
-      if (velocity > 1) {
-        if (vx != 0){
-          shootLightTreeAHSV(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            hue: hue,
-            saturation: saturation,
-            value: value,
-            vx: vx,
-          );
-        }
-        if (vy != 0) {
-          shootLightTreeAHSV(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            hue: hue,
-            saturation: saturation,
-            value: value,
-            vy: vy,
-          );
-        }
-        if (vz != 0){
-          shootLightTreeAHSV(
-            row: row,
-            column: column,
-            z: z,
-            interpolation: interpolation,
-            alpha: alpha,
-            hue: hue,
-            saturation: saturation,
-            value: value,
-            vz: vz,
-          );
-        }
-      }
-    }
-  }
-
-
   bool isValidIndex(int index) => index >= 0 && index < totalNodes;
 
   double getIndexRenderX(int index) =>
@@ -572,18 +331,17 @@ mixin IsometricScene {
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
       NodeType.isRainOrEmpty(getTypeZRC(z, row, column));
 
-  void applyAHSV({
+  void applyColor({
     required int index,
-    required int alpha,
+    required int brightness,
     required int hue,
     required int saturation,
     required int value,
-    required int interpolation,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
+    final intensity = interpolations[brightness < 0 ? 0 : brightness];
 
     var hueA = hue;
     var hueB = hsvHue[index];
@@ -600,7 +358,7 @@ mixin IsometricScene {
       hueI = linearInterpolateInt(hueA, hueB, intensity);
     }
 
-    final interpolatedA = linearInterpolateInt(alpha, hsvAlphas[index], intensity);
+    final interpolatedA = linearInterpolateInt(brightness, hsvAlphas[index], intensity);
     final interpolatedS = linearInterpolateInt(saturation, hsvSaturation[index], intensity);
     final interpolatedV = linearInterpolateInt(value, hsvValues[index], intensity);
     colorStackIndex++;
