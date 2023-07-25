@@ -1666,13 +1666,13 @@ class Isometric extends WebsocketClientBuilder with
     var zTotal = zMin * area;
 
     const r = 4;
-    final dstXLeft = IsometricRender.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
+    final dstXLeft = IsometricRender.getRenderXOfRowAndColumn(rowIndex + r, columnIndex - r);
     if (dstXLeft < engine.Screen_Left)    return;
-    final dstXRight = IsometricRender.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
+    final dstXRight = IsometricRender.getRenderXOfRowAndColumn(rowIndex - r, columnIndex + r);
     if (dstXRight > engine.Screen_Right)   return;
-    final dstYTop = IsometricRender.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
+    final dstYTop = IsometricRender.getRenderYOfRowColumnZ(rowIndex + r, columnIndex + r, zIndex);
     if (dstYTop <  engine.Screen_Top) return;
-    final dstYBottom = IsometricRender.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
+    final dstYBottom = IsometricRender.getRenderYOfRowColumnZ(rowIndex - r, columnIndex - r, zIndex);
     if (dstYBottom > engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {

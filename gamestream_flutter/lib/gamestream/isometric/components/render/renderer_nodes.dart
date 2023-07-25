@@ -133,7 +133,7 @@ class RendererNodes extends IsometricRenderer {
 
   RendererNodes(super.isometric);
 
-  double get currentNodeRenderY => IsometricRender.rowColumnZToRenderY(row, column, currentNodeZ);
+  double get currentNodeRenderY => IsometricRender.getRenderYOfRowColumnZ(row, column, currentNodeZ);
 
   int get colorCurrent => isometric.nodeColors[currentNodeIndex];
 

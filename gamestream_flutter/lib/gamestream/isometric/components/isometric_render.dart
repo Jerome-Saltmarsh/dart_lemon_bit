@@ -123,8 +123,8 @@ class IsometricRender {
       ) {
     isometric.engine.renderSprite(
       image: isometric.images.atlas_nodes,
-      dstX: rowColumnToRenderX(row, column),
-      dstY: rowColumnZToRenderY(row, column,z),
+      dstX: getRenderXOfRowAndColumn(row, column),
+      dstY: getRenderYOfRowColumnZ(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
       srcWidth: IsometricConstants.Sprite_Width,
@@ -137,8 +137,8 @@ class IsometricRender {
   void renderWireFrameRed(int row, int column, int z) {
     isometric.engine.renderSprite(
       image: isometric.images.atlas_nodes,
-      dstX: rowColumnToRenderX(row, column),
-      dstY: rowColumnZToRenderY(row, column,z),
+      dstX: getRenderXOfRowAndColumn(row, column),
+      dstY: getRenderYOfRowColumnZ(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
       srcWidth: IsometricConstants.Sprite_Width,
@@ -194,17 +194,14 @@ class IsometricRender {
     isometric.engine.writeText(text, x - charWidth * text.length, y);
   }
 
-  static double rowColumnZToRenderX(int row, int column) =>
+  static double getRenderXOfRowAndColumn(int row, int column) =>
       (row - column) * Node_Size_Half;
 
-  static double rowColumnToRenderX(int row, int column) =>
-      (row - column) * Node_Size_Half;
-
-  static double rowColumnZToRenderY(int row, int column, int z) =>
-      (row + column - z) * Node_Size_Half;
-
-  static double rowColumnToRenderY(int row, int column) =>
+  static double getRenderYfOfRowColumn(int row, int column) =>
       (row + column) * Node_Size_Half;
+
+  static double getRenderYOfRowColumnZ(int row, int column, int z) =>
+      (row + column - z) * Node_Size_Half;
 
   static double convertWorldToGridX(double x, double y) => x + y;
 

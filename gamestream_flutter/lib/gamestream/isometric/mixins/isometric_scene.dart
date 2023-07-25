@@ -524,13 +524,13 @@ mixin IsometricScene {
   bool isValidIndex(int index) => index >= 0 && index < totalNodes;
 
   double getIndexRenderX(int index) =>
-      IsometricRender.rowColumnToRenderX(
+      IsometricRender.getRenderXOfRowAndColumn(
           getIndexRow(index),
           getIndexColumn(index),
       );
 
   double getIndexRenderY(int index) =>
-      IsometricRender.rowColumnZToRenderY(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
+      IsometricRender.getRenderYOfRowColumnZ(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
 
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
