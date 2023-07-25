@@ -1010,7 +1010,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateGameObjects() {
     var sortRequired = false;
-    for (final gameObject in gameObjects) {
+    final totalGameObjects = gameObjects.length;
+    for (var i = 0; i < totalGameObjects; i++) {
+      final gameObject = gameObjects[i];
       if (!gameObject.active) {
         if (gameObject.recyclable && !gameObject.available) {
           gameObject.available = true;
@@ -1020,7 +1022,20 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
-        sortRequired = true;
+
+        if (i > 0){
+          final previousGameObject = gameObjects[i - 1];
+          if (previousGameObject.order > gameObject.order){
+            sortRequired = true;
+          }
+        }
+
+        if (!sortRequired && i < totalGameObjects - 1){
+          final nextGameobject = gameObjects[i + 1];
+          if (nextGameobject.order < gameObject.order){
+            sortRequired = true;
+          }
+        }
       }
       if (gameObject.deactivationTimer > 0) {
         gameObject.deactivationTimer--;
@@ -1037,6 +1052,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (sortRequired) {
+      print('gameObjects.sort()');
       gameObjects.sort();
     }
   }

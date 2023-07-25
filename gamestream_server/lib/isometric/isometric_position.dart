@@ -84,4 +84,7 @@ class IsometricPosition implements Comparable<IsometricPosition> {
 
     return 0;
   }
+
+  @override
+  String toString() => '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}}';
 }

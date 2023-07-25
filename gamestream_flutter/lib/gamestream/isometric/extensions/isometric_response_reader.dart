@@ -220,6 +220,7 @@ extension IsometricResponseReader on Isometric {
   }
 
   void readGameObject() {
+    print('readGameObject()');
     final id = readUInt16();
     final gameObject = findOrCreateGameObject(id);
     gameObject.active = readBool();

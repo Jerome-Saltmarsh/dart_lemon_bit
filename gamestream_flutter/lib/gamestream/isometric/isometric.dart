@@ -180,6 +180,7 @@ class Isometric extends WebsocketClientBuilder with
     if (gameType.value == GameType.Website)
       return;
 
+    updateParticles();
     jobBatchResetNodeColorsToAmbient();
 
     totalAmbientOffscreen = 0;
