@@ -882,6 +882,17 @@ class RendererNodes extends IsometricRenderer {
       case NodeType.Torch:
         renderNodeTorch();
         break;
+      case NodeType.Torch_Blue:
+        renderCustomNode(
+            srcX: 0,
+            srcY: 1657,
+            srcWidth: 17,
+            srcHeight: 49,
+            dstX: currentNodeDstX - 8.5,
+            dstY: currentNodeDstY - 18,
+            color: colorCurrent,
+        );
+        break;
       case NodeType.Shopping_Shelf:
         renderNodeShoppingShelf();
         break;

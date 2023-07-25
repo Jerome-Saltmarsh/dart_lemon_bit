@@ -45,6 +45,7 @@ class NodeType {
   static const Bricks_Brown = 85;
   static const Scaffold = 86;
   static const Glass = 87;
+  static const Torch_Blue = 88;
 
   static bool isMaterialWood(int value) => const [
     Torch,
@@ -120,6 +121,7 @@ class NodeType {
         Tree_Bottom,
         Tree_Top,
         Torch,
+        Torch_Blue,
         Concrete,
         Brick,
         Bricks_Red,
@@ -361,5 +363,6 @@ class NodeType {
     Scaffold: 'Scaffold',
     Sandbag: 'Sandbag',
     Glass: 'Glass',
+    Torch_Blue: 'Torch_Blue',
   }[type] ?? 'unknown($type)';
 }

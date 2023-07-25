@@ -48,6 +48,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Bookshelf,
     NodeType.Tile,
     NodeType.Glass,
+    NodeType.Torch_Blue,
   ];
 
 
