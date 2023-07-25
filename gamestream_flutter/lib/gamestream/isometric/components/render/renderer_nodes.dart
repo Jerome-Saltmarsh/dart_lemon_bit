@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'dart:ui' as ui;
+import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
@@ -804,6 +805,14 @@ class RendererNodes extends IsometricRenderer {
   var previousNodeTransparent = false;
 
   void renderCurrentNode() {
+
+    // assert (isometric.indexOnscreen(currentNodeIndex));
+    // assert((){}())
+    // if (isometric.indexOnscreen(currentNodeIndex)) {
+    //   onscreenNodes++;
+    // } else {
+    //   offscreenNodes++;
+    // }
 
     if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
 

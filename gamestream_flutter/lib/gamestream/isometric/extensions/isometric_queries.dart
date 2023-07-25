@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 
 extension IsometricQueries on Isometric {
 
-  bool isIndexOnScreen(int index){
+  bool indexOnscreen(int index){
     const padding = Node_Size;
     final x = getIndexRenderX(index);
     if (x < engine.Screen_Left - padding || x > engine.Screen_Right + padding)

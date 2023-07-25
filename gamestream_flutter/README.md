@@ -20,7 +20,6 @@ alt + m             : go to declaration
 [ ] fix character light emission
 [ ] fix colored lights
 [ ] optimize render nodes
-[ ] optimize light tree
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
 [ ] implement sounds on item drop for treasures
@@ -33,6 +32,10 @@ alt + m             : go to declaration
 [ ] implement character type float skeleton head
 [ ] implement npc store
 [ ] implement character persistence
+
+25.07.2023
+[x] optimize light tree
+[x] batch job reset ambient 
 
 24.07.2023
 [x] extract lemon bits library from common

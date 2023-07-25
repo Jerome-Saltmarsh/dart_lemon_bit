@@ -451,8 +451,10 @@ extension isometricDebugUI on IsometricDebug {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildRow(text: 'ambient-on-screen', value: GSRefresh(() => buildText(isometric.totalAmbientOnscreen))),
-        buildRow(text: 'ambient-off-screen', value: GSRefresh(() => buildText(isometric.totalAmbientOffscreen))),
+        buildRow(text: 'ambient-screen-on', value: GSRefresh(() => buildText(isometric.totalAmbientOnscreen))),
+        buildRow(text: 'ambient-screen-off', value: GSRefresh(() => buildText(isometric.totalAmbientOffscreen))),
+        buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(isometric.render.rendererNodes.onscreenNodes))),
+        buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(isometric.render.rendererNodes.offscreenNodes))),
         buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.render.rendererNodes.orderShiftY))),
         onPressed(
           action: isometric.render.rendererNodes.increaseOrderShiftY,

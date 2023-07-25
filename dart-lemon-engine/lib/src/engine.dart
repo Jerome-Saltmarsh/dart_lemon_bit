@@ -1275,7 +1275,7 @@ class _EnginePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
 class _EngineForegroundPainter extends CustomPainter {

@@ -153,7 +153,7 @@ mixin IsometricScene {
   }
 
   void jobBatchResetNodeColorsToAmbient() {
-    const ambientResetBatchSize = 1000;
+    const ambientResetBatchSize = 5000;
     final targetEnd = ambientResetIndex + ambientResetBatchSize;
     final amount = min(targetEnd, totalNodes);
 
