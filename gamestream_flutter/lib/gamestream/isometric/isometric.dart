@@ -45,6 +45,9 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
+  var totalAmbientOffscreen = 0;
+  var totalAmbientOnscreen = 0;
+
   var renderResponse = true;
   var renderCursorEnable = true;
   var clearErrorTimer = -1;
@@ -177,6 +180,9 @@ class Isometric extends WebsocketClientBuilder with
   void drawCanvas(Canvas canvas, Size size) {
     if (gameType.value == GameType.Website)
       return;
+
+    totalAmbientOffscreen = 0;
+    totalAmbientOnscreen = 0;
 
     camera.update();
     render.render3D();

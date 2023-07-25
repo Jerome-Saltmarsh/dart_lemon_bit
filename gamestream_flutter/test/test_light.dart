@@ -63,16 +63,16 @@ void main() {
     //   vz: 1,
     //   vy: 1,
     // );
-    scene.shootLightTreeAmbient(
-      row: lightRow,
-      column: lightColumn,
-      z: lightZ,
-      brightness: 2,
-      alpha: 0,
-      vx: -1,
-      vz: 1,
-      vy: -1,
-    );
+    // scene.shootLightTreeAmbient(
+    //   row: lightRow,
+    //   column: lightColumn,
+    //   z: lightZ,
+    //   brightness: 2,
+    //   alpha: 0,
+    //   vx: -1,
+    //   vz: 1,
+    //   vy: -1,
+    // );
     // scene.emitLightAmbientShadows(index: lightIndex, alpha: 1);
   });
 }
