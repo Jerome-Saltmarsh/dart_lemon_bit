@@ -165,10 +165,6 @@ mixin IsometricScene {
       hsvAlphas[ambientResetIndex] = ambientAlpha;
       refreshNodeColor(ambientResetIndex);
     }
-
-    if (ambientResetIndex >= totalNodes -1) {
-      ambientResetIndex = 0;
-    }
   }
 
   int getHeightAt(int row, int column){

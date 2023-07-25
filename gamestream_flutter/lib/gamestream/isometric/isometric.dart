@@ -640,6 +640,8 @@ class Isometric extends WebsocketClientBuilder with
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = ( hours.value * Seconds_Per_Hour) + ( minutes.value * 60);
 
+    final previousAmbientAlpha = ambientAlpha;
+
      ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
@@ -650,7 +652,15 @@ class Isometric extends WebsocketClientBuilder with
     if ( rainType.value == RainType.Heavy){
        ambientAlpha += 40;
     }
+
+    if (previousAmbientAlpha == ambientAlpha)
+      return;
      // resetNodeColorsToAmbient();
+    onAmbientAlphaChanged();
+  }
+
+  void onAmbientAlphaChanged(){
+    ambientResetIndex = 0;
   }
 
   void refreshRain(){
