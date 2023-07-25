@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -168,7 +169,18 @@ extension RenderCharactersTemplate on RendererCharacters {
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;
 
          final angle = angleBetween(lightX, lightY, character.x, character.y);
-         const distance = 8.0;
+
+         final diff = angleDiff(angle, 4.0);
+
+         final totalDiff = 1.0 - (diff / pi);
+         final distance = 20.0 * totalDiff;
+
+         isometric.render.renderTextPosition(
+           character,
+           totalDiff,
+           offsetY: -50,
+         );
+
 
          final x = character.x + adj(angle, distance);
          final y = character.y + opp(angle, distance);

@@ -3,6 +3,7 @@ library src;
 
 export 'adj.dart';
 export 'angle_between.dart';
+export 'angle_diff.dart';
 export 'clamp.dart';
 export 'clamp01.dart';
 export 'distance_between.dart';

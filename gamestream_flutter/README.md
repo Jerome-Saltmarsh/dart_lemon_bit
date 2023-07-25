@@ -34,6 +34,7 @@ alt + m             : go to declaration
 [ ] implement character persistence
 
 25.07.2023
+[x] fixed template shadow position
 [x] optimize light tree
 [x] batch job reset ambient 
 
