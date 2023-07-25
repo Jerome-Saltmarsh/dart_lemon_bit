@@ -1808,7 +1808,7 @@ class Isometric extends WebsocketClientBuilder with
             row: row,
             column: column,
             z: z,
-            brightness: 1,
+            brightness: 0,
             vx: vx,
             vy: vy,
             vz: vz,

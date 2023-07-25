@@ -87,11 +87,6 @@ mixin IsometricScene {
     easeType: interpolationEaseType.value,
   );
 
-  late var interpolationsColor = interpolateEaseType(
-    length: 7,
-    easeType: interpolationEaseType.value,
-  );
-
   void setInterpolationLength(int value){
     if (value < 1) return;
     if (interpolationLength == value) return;
@@ -337,7 +332,6 @@ mixin IsometricScene {
     if (index >= totalNodes) return;
 
     final intensity = interpolations[brightness < 0 ? 0 : brightness];
-    // final intensity = interpolationsColor[brightness < 0 ? 0 : brightness];
 
     var hueA = hue;
     var hueB = hsvHue[index];
