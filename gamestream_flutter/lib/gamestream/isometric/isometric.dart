@@ -1648,70 +1648,6 @@ class Isometric extends WebsocketClientBuilder with
     return render.rendererNodes.visible3D[index];
   }
 
-  void emitLightAmbient({
-    required int index,
-    required int alpha,
-  }){
-
-    if (dynamicShadows) {
-      emitLightAmbientShadows(
-        index: index,
-        alpha: alpha,
-      );
-      return;
-    }
-
-    if (index < 0) return;
-    if (index >= totalNodes) return;
-
-    final zIndex = index ~/ area;
-    final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
-    final columnIndex = convertNodeIndexToIndexY(index);
-    final radius = 6;
-    final zMin = max(zIndex - radius, 0);
-    final zMax = min(zIndex + radius, totalZ);
-    final rowMin = max(rowIndex - radius, 0);
-    final rowMax = min(rowIndex + radius, totalRows);
-    final columnMin = max(columnIndex - radius, 0);
-    final columnMax = min(columnIndex + radius, totalColumns);
-    final rowInitInit = totalColumns * rowMin;
-    var zTotal = zMin * area;
-
-    const r = 4;
-    final dstXLeft = IsometricRender.getRenderXOfRowAndColumn(rowIndex + r, columnIndex - r);
-    if (dstXLeft < engine.Screen_Left)    return;
-    final dstXRight = IsometricRender.getRenderXOfRowAndColumn(rowIndex - r, columnIndex + r);
-    if (dstXRight > engine.Screen_Right)   return;
-    final dstYTop = IsometricRender.getRenderYOfRowColumnZ(rowIndex + r, columnIndex + r, zIndex);
-    if (dstYTop <  engine.Screen_Top) return;
-    final dstYBottom = IsometricRender.getRenderYOfRowColumnZ(rowIndex - r, columnIndex - r, zIndex);
-    if (dstYBottom > engine.Screen_Bottom) return;
-
-    for (var z = zMin; z < zMax; z++) {
-      var rowInit = rowInitInit;
-
-      for (var row = rowMin; row <= rowMax; row++){
-        final a = (zTotal) + (rowInit);
-        rowInit += totalColumns;
-        final b = (z - zIndex).abs() + (row - rowIndex).abs();
-        for (var column = columnMin; column <= columnMax; column++) {
-          final nodeIndex = a + column;
-          final distanceValue = clamp(b + (column - columnIndex).abs() - 2, 0, 6);
-          if (distanceValue > 5) continue;
-          ambientStackIndex++;
-          ambientStack[ambientStackIndex] = nodeIndex;
-
-          final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
-          final nodeAlpha = hsvAlphas[nodeIndex];
-          if (nodeAlpha < alpha) continue;
-          hsvAlphas[nodeIndex] = linearInterpolateInt(hsvAlphas[nodeIndex], alpha      , intensity);
-          refreshNodeColor(nodeIndex);
-        }
-      }
-      zTotal += area;
-    }
-  }
-
   void applyEmissionsLightSources() {
     for (var i = 0; i < nodesLightSourcesTotal; i++){
       final nodeIndex = nodesLightSources[i];
@@ -1719,6 +1655,16 @@ class Isometric extends WebsocketClientBuilder with
 
       switch (nodeType){
         case NodeType.Torch:
+          emitLightAmbient(
+            index: nodeIndex,
+            alpha: linearInterpolateInt(
+              ambientHue,
+              0,
+              torch_emission_intensity,
+            ),
+          );
+          break;
+        case NodeType.Torch_Blue:
           emitLightAmbient(
             index: nodeIndex,
             alpha: linearInterpolateInt(
@@ -1988,7 +1934,7 @@ class Isometric extends WebsocketClientBuilder with
     return 1.0;
   }
 
-  void emitLightAmbientShadows({
+  void emitLightAmbient({
     required int index,
     required int alpha,
   }){

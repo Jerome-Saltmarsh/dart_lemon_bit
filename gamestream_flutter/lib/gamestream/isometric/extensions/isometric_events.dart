@@ -34,7 +34,7 @@ extension IsometricEvents on Isometric {
     generateHeightMap();
     generateMiniMap();
     minimap.generateSrcDst();
-    refreshBakeMapLightSources();
+    refreshLightSources();
 
     if (raining.value) {
       rainStop();

@@ -231,9 +231,7 @@ class NodeType {
     value == Rain_Landing     ;
 
   static bool emitsLight(int value) =>
-    value == Torch          ||
-    value == Fireplace       ;
-
+    const [Torch, Torch_Blue, Fireplace].contains(value);
 
   static bool blocksPerception(int value) =>
      supportsOrientationSolid(value);

@@ -166,10 +166,6 @@ extension isometricDebugUI on IsometricDebug {
       Column(
         children: [
           onPressed(
-              action: isometric.toggleDynamicShadows,
-              child: GSRefresh(() => buildText('dynamic-shadows-enabled: ${isometric.dynamicShadows}'))
-          ),
-          onPressed(
               child: GSRefresh(() => buildText('blend-mode: ${isometric.engine.bufferBlendMode.name}')),
               action: (){
                 final currentIndex = BlendMode.values.indexOf(isometric.engine.bufferBlendMode);

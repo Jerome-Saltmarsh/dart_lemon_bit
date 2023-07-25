@@ -11,7 +11,6 @@ mixin IsometricScene {
 
   var ambientResetIndex = 0;
   var emissionAlphaCharacter = 50;
-  var dynamicShadows = true;
 
   var ambientColorRGB = Color.fromRGBO(31, 1, 86, 0.5);
   var ambientColor = 0;
@@ -726,13 +725,13 @@ mixin IsometricScene {
           ? ambientColor
           : nodeColors[getIndexPosition(position)];
 
-  void refreshBakeMapLightSources() {
+  void refreshLightSources() {
     nodesLightSourcesTotal = 0;
     for (var i = 0; i < totalNodes; i++){
       if (!NodeType.emitsLight(nodeTypes[i])) continue;
       if (nodesLightSourcesTotal >= nodesLightSources.length) {
         nodesLightSources = Uint16List(nodesLightSources.length + 100);
-        refreshBakeMapLightSources();
+        refreshLightSources();
         return;
       }
       nodesLightSources[nodesLightSourcesTotal] = i;
@@ -838,10 +837,6 @@ mixin IsometricScene {
   int getNodeColorAtIndex(int index )=>
       index < 0 || index >= totalNodes ? ambientColor : nodeColors[index];
 
-  /// @alpha a number between 0 and 255
-  /// @intensity a number between 0.0 and 1.0
-
-  void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
 }
 
 
