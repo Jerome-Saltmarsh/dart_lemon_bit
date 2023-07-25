@@ -160,7 +160,7 @@ mixin IsometricScene {
       hsvHue[i] = ambientHue;
       hsvSaturation[i] = ambientSaturation;
       hsvValues[i] = ambientValue;
-      hsvAlphas[i] = ambientAlpha;
+      hsvAlphas[i] = _ambientAlpha;
     }
   }
 
@@ -174,7 +174,7 @@ mixin IsometricScene {
       hsvHue[ambientResetIndex] = ambientHue;
       hsvSaturation[ambientResetIndex] = ambientSaturation;
       hsvValues[ambientResetIndex] = ambientValue;
-      hsvAlphas[ambientResetIndex] = ambientAlpha;
+      hsvAlphas[ambientResetIndex] = _ambientAlpha;
     }
 
   }
@@ -231,7 +231,7 @@ mixin IsometricScene {
       hsvHue[i] = ambientHue;
       hsvSaturation[i] = ambientSaturation;
       hsvValues[i] = ambientValue;
-      hsvAlphas[i] = ambientAlpha;
+      hsvAlphas[i] = _ambientAlpha;
       colorStackIndex--;
     }
     colorStackIndex = -1;
@@ -241,7 +241,7 @@ mixin IsometricScene {
     while (ambientStackIndex >= 0) {
       final i = ambientStack[ambientStackIndex];
       nodeColors[i] = ambientColor;
-      hsvAlphas[i] = ambientAlpha;
+      hsvAlphas[i] = _ambientAlpha;
       ambientStackIndex--;
     }
     ambientStackIndex = -1;
