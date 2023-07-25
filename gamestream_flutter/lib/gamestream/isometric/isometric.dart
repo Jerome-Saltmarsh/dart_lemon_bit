@@ -1795,7 +1795,7 @@ class Isometric extends WebsocketClientBuilder with
 
     applyColor(
       index: index,
-      brightness: 0,
+      brightness: 5,
       hue: hue,
       saturation: saturation,
       value: value,
@@ -1808,7 +1808,7 @@ class Isometric extends WebsocketClientBuilder with
             row: row,
             column: column,
             z: z,
-            brightness: -1,
+            brightness: 1,
             vx: vx,
             vy: vy,
             vz: vz,
