@@ -67,7 +67,7 @@ void main() {
       row: lightRow,
       column: lightColumn,
       z: lightZ,
-      interpolation: 2,
+      brightness: 2,
       alpha: 0,
       vx: -1,
       vz: 1,

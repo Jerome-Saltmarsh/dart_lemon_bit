@@ -175,17 +175,15 @@ class Isometric extends WebsocketClientBuilder with
 
 
   void drawCanvas(Canvas canvas, Size size) {
-    if (gameRunning.value){
-      /// particles are only on the ui and thus can update every frame
-      /// this makes them much smoother as they don't freeze
-      // particles.updateParticles();
-    }
+    if (gameType.value == GameType.Website)
+      return;
+
     camera.update();
     render.render3D();
     renderEditMode();
     renderMouseTargetName();
     debug.render();
-
+    game.value.drawCanvas(canvas, size);
     rendersSinceUpdate.value++;
   }
 
@@ -1380,14 +1378,6 @@ class Isometric extends WebsocketClientBuilder with
     error.value = null;
   }
 
-  void renderCanvas(Canvas canvas, Size size){
-    if (gameType.value == GameType.Website)
-      return;
-
-    drawCanvas(canvas, size);
-    game.value.drawCanvas(canvas, size);
-  }
-
   void doRenderForeground(Canvas canvas, Size size){
     if (!connected)
       return;
@@ -1415,9 +1405,19 @@ class Isometric extends WebsocketClientBuilder with
     renderCursorEnable = false;
   }
 
+  var initialized = false;
 
   @override
   Widget build(BuildContext context) {
+    print('isometric.build()');
+
+    if (initialized){
+      print('isometric.build already initialized - skipping');
+      return engine;
+    }
+
+    initialized = true;
+
     print('isometric.build()');
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
@@ -1425,7 +1425,7 @@ class Isometric extends WebsocketClientBuilder with
     engine = Engine(
       init: init,
       update: update,
-      render: renderCanvas,
+      render: drawCanvas,
       onDrawForeground: doRenderForeground,
       title: 'AMULET',
       themeData: ThemeData(fontFamily: 'VT323-Regular'),
@@ -1473,6 +1473,7 @@ class Isometric extends WebsocketClientBuilder with
 
   @override
   void onReadRespondFinished() {
+    engine.onDrawCanvas = drawCanvas;
 
     if (renderResponse){
       engine.redrawCanvas();
@@ -2034,7 +2035,7 @@ class Isometric extends WebsocketClientBuilder with
     applyAmbient(
       index: index,
       alpha: alpha,
-      interpolation: 0,
+      // interpolation: 0,
     );
 
     for (var vz = -1; vz <= 1; vz++){
@@ -2044,7 +2045,7 @@ class Isometric extends WebsocketClientBuilder with
             row: row,
             column: column,
             z: z,
-            interpolation: -1,
+            brightness: -1,
             alpha: alpha,
             vx: vx,
             vy: vy,

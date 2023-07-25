@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/ui/talent_type_src.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/images.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
 
 class MMOTalentIcon extends StatelessWidget {

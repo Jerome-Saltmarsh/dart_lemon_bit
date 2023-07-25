@@ -281,23 +281,24 @@ mixin IsometricScene {
 
 
   /// illuminates the square it reaches then fires consecutive beams for each direction of movement
+  /// @brightness 0 is the most bright
   void shootLightTreeAmbient({
     required int row,
     required int column,
     required int z,
-    required int interpolation,
+    required int brightness,
     required int alpha,
     required int vx,
     required int vy,
     required int vz,
   }){
 
-    assert (interpolation < interpolationLength);
+    assert (brightness < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    interpolation += velocity;
+    brightness += velocity;
 
-    if (interpolation >= interpolationLength) {
+    if (brightness >= interpolationLength) {
       return;
     }
 
@@ -417,15 +418,20 @@ mixin IsometricScene {
       }
     }
 
-    applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
+    final intensity = interpolations[brightness < 0 ? 0 : brightness];
+
+    applyAmbient(
+        index: index,
+        alpha: linearInterpolateInt(alpha, ambientAlpha, intensity),
+    );
 
     if (const [
       NodeType.Grass_Long,
       NodeType.Tree_Bottom,
       NodeType.Tree_Top,
     ].contains(nodeType)) {
-      interpolation++;
-      if (interpolation >= interpolationLength)
+      brightness++;
+      if (brightness >= interpolationLength)
         return;
     }
 
@@ -439,7 +445,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: vx,
         vy: vy,
@@ -452,7 +458,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: vx,
         vy: vy,
@@ -465,7 +471,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: vx,
         vy: 0,
@@ -478,7 +484,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: 0,
         vy: vy,
@@ -491,7 +497,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: 0,
         vy: vy,
@@ -504,7 +510,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: vx,
         vy: 0,
@@ -517,7 +523,7 @@ mixin IsometricScene {
         row: row,
         column: column,
         z: z,
-        interpolation: interpolation,
+        brightness: brightness,
         alpha: alpha,
         vx: 0,
         vy: 0,
@@ -780,15 +786,12 @@ mixin IsometricScene {
   void applyAmbient({
     required int index,
     required int alpha,
-    required int interpolation,
   }){
     assert (index >= 0);
     assert (index < totalNodes);
 
-    final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
-    final interpolatedAlpha = linearInterpolateInt(alpha, ambientAlpha, intensity);;
     final currentAlpha = hsvAlphas[index];
-    if (currentAlpha <= interpolatedAlpha) {
+    if (currentAlpha <= alpha) {
       return;
     }
     final currentHue = hsvHue[index];
@@ -797,7 +800,7 @@ mixin IsometricScene {
 
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
-    hsvAlphas[index] = interpolatedAlpha;
+    hsvAlphas[index] = alpha;
     refreshNodeColor(index);
   }
 
