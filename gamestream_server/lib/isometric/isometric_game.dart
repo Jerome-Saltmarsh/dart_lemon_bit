@@ -1020,22 +1020,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       } else {
         updateColliderPhysics(gameObject);
       }
+
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
-
-        if (i > 0){
-          final previousGameObject = gameObjects[i - 1];
-          if (previousGameObject.order > gameObject.order){
-            sortRequired = true;
-          }
-        }
-
-        if (!sortRequired && i < totalGameObjects - 1){
-          final nextGameobject = gameObjects[i + 1];
-          if (nextGameobject.order < gameObject.order){
-            sortRequired = true;
-          }
-        }
       }
 
       if (gameObject.deactivationTimer > 0) {
@@ -1047,6 +1034,20 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (!gameObject.dirty)
         continue;
+
+      if (i > 0){
+        final previousGameObject = gameObjects[i - 1];
+        if (previousGameObject.order > gameObject.order){
+          sortRequired = true;
+        }
+      }
+
+      if (!sortRequired && i < totalGameObjects - 1){
+        final nextGameobject = gameObjects[i + 1];
+        if (nextGameobject.order < gameObject.order){
+          sortRequired = true;
+        }
+      }
 
       gameObject.dirty = false;
       gameObject.synchronizePrevious();
