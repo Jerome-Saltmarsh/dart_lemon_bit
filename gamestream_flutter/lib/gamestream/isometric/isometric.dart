@@ -365,8 +365,11 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   GameObject findOrCreateGameObject(int id) {
-    final instance = findGameObjectById(id) ?? GameObject(id);
-    gameObjects.add(instance);
+    var instance = findGameObjectById(id);
+    if (instance == null) {
+      instance = GameObject(id);
+      gameObjects.add(instance);
+    }
     return instance;
   }
 

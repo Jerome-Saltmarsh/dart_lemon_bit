@@ -1037,13 +1037,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           }
         }
       }
+
       if (gameObject.deactivationTimer > 0) {
         gameObject.deactivationTimer--;
         if (gameObject.deactivationTimer <= 0){
           deactivate(gameObject);
         }
       }
-      if (!gameObject.dirty) continue;
+
+      if (!gameObject.dirty)
+        continue;
+
       gameObject.dirty = false;
       gameObject.synchronizePrevious();
       for (final player in players) {
