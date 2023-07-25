@@ -9,6 +9,7 @@ import '../../../isometric/classes/position.dart';
 
 mixin IsometricScene {
 
+  var ambientResetIndex = 0;
   var emissionAlphaCharacter = 50;
   var dynamicShadows = true;
 
@@ -151,10 +152,8 @@ mixin IsometricScene {
     }
   }
 
-  var ambientResetIndex = 0;
-
-  void jobBatchResetNodeColorsToAmbient(){
-    const ambientResetBatchSize = 100;
+  void jobBatchResetNodeColorsToAmbient() {
+    const ambientResetBatchSize = 1000;
     final targetEnd = ambientResetIndex + ambientResetBatchSize;
     final amount = min(targetEnd, totalNodes);
 
@@ -167,8 +166,8 @@ mixin IsometricScene {
       refreshNodeColor(ambientResetIndex);
     }
 
-    if (ambientStackIndex >= totalNodes -1) {
-      ambientStackIndex = 0;
+    if (ambientResetIndex >= totalNodes -1) {
+      ambientResetIndex = 0;
     }
   }
 

@@ -401,7 +401,8 @@ extension IsometricEvents on Isometric {
     raining.value = value != RainType.None;
     refreshRain();
     updateAmbientAlphaAccordingToTime();
-    resetNodeColorsToAmbient();
+
+    // resetNodeColorsToAmbient();
   }
 
   void onPlayerEvent(int event) {
