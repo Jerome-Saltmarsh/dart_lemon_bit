@@ -51,10 +51,29 @@ mixin IsometricScene {
   late var ambientHue = ((ambientColorHSV.hue)).round();
   late var ambientSaturation = (ambientColorHSV.saturation * 100).round();
   late var ambientValue = (ambientColorHSV.value * 100).round();
-  late var ambientAlpha = (ambientColorHSV.alpha * 255).round();
+  late var _ambientAlpha = (ambientColorHSV.alpha * 255).round();
   late var interpolationLength = 6;
 
   final nodesChangedNotifier = Watch(0);
+
+  int get ambientAlpha => _ambientAlpha;
+
+  set ambientAlpha(int value){
+     final clampedValue = clamp(value, 0, 255);
+
+     if (clampedValue == _ambientAlpha)
+       return;
+
+     _ambientAlpha = clampedValue;
+     ambientResetIndex = 0;
+
+     ambientColor = hsvToColor(
+         hue: ambientHue,
+         saturation: ambientSaturation,
+         value: ambientValue,
+         opacity: ambientAlpha
+     );
+  }
 
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
@@ -128,20 +147,9 @@ mixin IsometricScene {
     hsvAlphas = Uint8ClampedList(totalNodes);
   }
 
-  void updateAmbientColor() {
-    ambientColor = hsvToColor(
-        hue: ambientHue,
-        saturation: ambientSaturation,
-        value: ambientValue,
-        opacity: ambientAlpha
-    );
-  }
-
   void resetNodeColorsToAmbient() {
     print('isometric_scene.resetNodeColorsToAmbient() - EXPENSIVE CALL');
     ambientResetIndex = 0;
-    ambientAlpha = clamp(ambientAlpha, 0, 255);
-    updateAmbientColor();
     colorStackIndex = -1;
 
     if (nodeColors.length != totalNodes) {

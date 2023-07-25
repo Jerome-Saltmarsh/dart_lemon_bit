@@ -304,6 +304,7 @@ extension IsometricLighting on Isometric {
     assert (index >= 0);
     assert (index < totalNodes);
 
+
     if (indexOnscreen(index)){
       totalAmbientOnscreen++;
     } else {
