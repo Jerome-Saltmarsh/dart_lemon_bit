@@ -47,6 +47,13 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
+
+  var bakeStackRecording = true;
+  var bakeStackTotal = 0;
+  var bakeStackIndex = Uint16List(10000);
+  var bakeStackBrightness = Uint8ClampedList(10000);
+
+
   var totalAmbientOffscreen = 0;
   var totalAmbientOnscreen = 0;
 
@@ -1666,7 +1673,7 @@ class Isometric extends WebsocketClientBuilder with
           emitLightAmbient(
             index: nodeIndex,
             alpha: interpolate(
-              ambientHue,
+              ambientAlpha,
               0,
               torchEmissionIntensity,
             ).toInt(),

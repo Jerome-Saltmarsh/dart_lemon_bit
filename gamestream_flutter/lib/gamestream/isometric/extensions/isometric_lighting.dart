@@ -38,7 +38,10 @@ extension IsometricLighting on Isometric {
     required int vy,
     required int vz,
   }){
-    // assert (brightness < interpolationLength);
+    // assert (brightness >= 0);
+    if (brightness < 0)
+      return;
+
     while (true) {
       var velocity = vx.abs() + vy.abs() + vz.abs();
       brightness -= velocity;
@@ -187,6 +190,13 @@ extension IsometricLighting on Isometric {
         index: index,
         alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
       );
+
+      // if (bakeStackRecording){
+      //   bakeStackIndex[bakeStackTotal] = index;
+      //   bakeStackBrightness[bakeStackTotal] = index;
+      // }
+
+      // record mode
 
       if (const [
         NodeType.Grass_Long,
