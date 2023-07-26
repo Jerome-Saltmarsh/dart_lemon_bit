@@ -36,6 +36,8 @@ import 'mixins/src.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
+const TorchColorEmissionAlpha = 90;
+
 class Isometric extends WebsocketClientBuilder with
     IsometricScene,
     IsometricCharacters,
@@ -1667,7 +1669,7 @@ class Isometric extends WebsocketClientBuilder with
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
-            alpha: 90,
+            alpha: TorchColorEmissionAlpha,
             hue: 209,
             saturation: 66,
             value: 90,
