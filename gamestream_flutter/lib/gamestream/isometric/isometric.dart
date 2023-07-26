@@ -50,8 +50,8 @@ class Isometric extends WebsocketClientBuilder with
 
   var bakeStackRecording = true;
   var bakeStackTotal = 0;
-  var bakeStackIndex = Uint16List(10000);
-  var bakeStackBrightness = Uint8ClampedList(10000);
+  var bakeStackIndex = Uint16List(100000);
+  var bakeStackBrightness = Uint8ClampedList(100000);
 
 
   var totalAmbientOffscreen = 0;
@@ -515,6 +515,26 @@ class Isometric extends WebsocketClientBuilder with
   void applyEmissions(){
     totalActiveLights = 0;
     applyEmissionsLightSources();
+
+    if (bakeStackRecording){
+      recordBakeStack();
+    } else {
+      final alpha = interpolate(
+        ambientAlpha,
+        0,
+        torchEmissionIntensity,
+      ).toInt();
+      for (var i = 0; i < bakeStackTotal; i++){
+        final brightness = bakeStackBrightness[i];
+        final index = bakeStackIndex[i];
+        final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+        applyAmbient(
+          index: index,
+          alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
+        );
+      }
+    }
+
     applyEmissionsCharacters();
     applyEmissionGameObjects();
     applyEmissionsProjectiles();
@@ -1669,16 +1689,16 @@ class Isometric extends WebsocketClientBuilder with
       final nodeType = nodeTypes[nodeIndex];
 
       switch (nodeType){
-        case NodeType.Torch:
-          emitLightAmbient(
-            index: nodeIndex,
-            alpha: interpolate(
-              ambientAlpha,
-              0,
-              torchEmissionIntensity,
-            ).toInt(),
-          );
-          break;
+        // case NodeType.Torch:
+        //   emitLightAmbient(
+        //     index: nodeIndex,
+        //     alpha: interpolate(
+        //       ambientAlpha,
+        //       0,
+        //       torchEmissionIntensity,
+        //     ).toInt(),
+        //   );
+        //   break;
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
@@ -1690,6 +1710,32 @@ class Isometric extends WebsocketClientBuilder with
           break;
       }
     }
+  }
+
+  void recordBakeStack() {
+    print('recordBakeStack()');
+    bakeStackRecording = true;
+    for (var i = 0; i < nodesLightSourcesTotal; i++){
+      final nodeIndex = nodesLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+      final alpha = interpolate(
+        ambientAlpha,
+        0,
+        torchEmissionIntensity,
+      ).toInt();
+
+      switch (nodeType){
+        case NodeType.Torch:
+          emitLightAmbient(
+            index: nodeIndex,
+            alpha: alpha,
+          );
+          break;
+      }
+    }
+
+    bakeStackRecording = false;
+    print('recordBakeStack() finished recording total: ${bakeStackTotal}');
   }
 
   void applyVector3EmissionAmbient(Position v, {
@@ -2242,13 +2288,16 @@ class Isometric extends WebsocketClientBuilder with
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    final padding = interpolationPadding;
-    final rx = getIndexRenderX(index);
-    if (rx < engine.Screen_Left - padding) return;
-    if (rx > engine.Screen_Right + padding) return;
-    final ry = getIndexRenderY(index);
-    if (ry < engine.Screen_Top - padding) return;
-    if (ry > engine.Screen_Bottom + padding) return;
+    if (!bakeStackRecording){
+      final padding = interpolationPadding;
+      final rx = getIndexRenderX(index);
+      if (rx < engine.Screen_Left - padding) return;
+      if (rx > engine.Screen_Right + padding) return;
+      final ry = getIndexRenderY(index);
+      if (ry < engine.Screen_Top - padding) return;
+      if (ry > engine.Screen_Bottom + padding) return;
+    }
+
     totalActiveLights++;
 
     final row = getIndexRow(index);

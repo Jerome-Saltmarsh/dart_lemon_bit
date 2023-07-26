@@ -71,21 +71,24 @@ extension IsometricLighting on Isometric {
 
       final index = (z * area) + (row * totalColumns) + column;
 
-      final renderX = getIndexRenderX(index);
+      if (!bakeStackRecording){
+        final renderX = getIndexRenderX(index);
 
-      if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
-        return;
+        if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
+          return;
 
-      if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
-        return;
+        if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
+          return;
 
-      final renderY = getIndexRenderY(index);
+        final renderY = getIndexRenderY(index);
 
-      if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
-        return;
+        if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+          return;
 
-      if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
-        return;
+        if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+          return;
+      }
+
 
       final nodeType = nodeTypes[index];
       final nodeOrientation = nodeOrientations[index];
@@ -191,12 +194,11 @@ extension IsometricLighting on Isometric {
         alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
       );
 
-      // if (bakeStackRecording){
-      //   bakeStackIndex[bakeStackTotal] = index;
-      //   bakeStackBrightness[bakeStackTotal] = index;
-      // }
-
-      // record mode
+      if (bakeStackRecording) {
+        bakeStackIndex[bakeStackTotal] = index;
+        bakeStackBrightness[bakeStackTotal] = brightness;
+        bakeStackTotal++;
+      }
 
       if (const [
         NodeType.Grass_Long,
@@ -315,12 +317,12 @@ extension IsometricLighting on Isometric {
     assert (index >= 0);
     assert (index < totalNodes);
 
-    if (indexOnscreen(index)){
-      totalAmbientOnscreen++;
-    } else {
-      totalAmbientOffscreen++;
-      return;
-    }
+    // if (indexOnscreen(index)){
+    //   totalAmbientOnscreen++;
+    // } else {
+    //   totalAmbientOffscreen++;
+    //   return;
+    // }
 
     final currentAlpha = hsvAlphas[index];
     if (currentAlpha <= alpha) {
