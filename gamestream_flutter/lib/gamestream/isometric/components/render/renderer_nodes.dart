@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  var highResolution = true;
   var plainIndex = 0;
   var plainStartRow = 0;
   var plainStartColumn = 0;
@@ -360,6 +361,7 @@ class RendererNodes extends IsometricRenderer {
 
   @override
   void reset() {
+    highResolution = isometric.engine.zoom >= 0.8;
     final columns = isometric.totalColumns;
     final rows = isometric.totalRows;
     final height = isometric.totalZ;
@@ -2433,15 +2435,31 @@ class RendererNodes extends IsometricRenderer {
     isometric.engine.incrementBufferIndex();
   }
 
-  void renderNodeSideTop() => renderCustomNode(
-      srcX: SrcX_Side_Top,
-      srcY: srcY,
-      srcWidth: Node_Size,
-      srcHeight: Node_Size,
-      dstX: currentNodeDstX - Node_Size_Half,
-      dstY: currentNodeDstY - Node_Size_Half,
-      color: colorAbove,
-    );
+  void renderNodeSideTop() {
+
+    if (highResolution){
+      renderCustomNode(
+        srcX: SrcX_Side_Top,
+        srcY: srcY,
+        srcWidth: Node_Size,
+        srcHeight: Node_Size,
+        dstX: currentNodeDstX - Node_Size_Half,
+        dstY: currentNodeDstY - Node_Size_Half,
+        color: colorAbove,
+      );
+    } else {
+      renderCustomNode(
+        srcX: 128,
+        srcY: srcY,
+        srcWidth: 32,
+        srcHeight: 32,
+        dstX: currentNodeDstX - Node_Size_Half,
+        dstY: currentNodeDstY - Node_Size_Half,
+        color: colorAbove,
+        scale: 1.5
+      );
+    }
+  }
 
   void renderNodeSideWest({
     required int color,
@@ -2649,6 +2667,7 @@ class RendererNodes extends IsometricRenderer {
     required double dstX,
     required double dstY,
     required int color,
+    double scale = 1.0,
   }){
     onscreenNodes++;
     final f = isometric.engine.bufferIndex * 4;
@@ -2657,7 +2676,7 @@ class RendererNodes extends IsometricRenderer {
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + srcWidth;
     bufferSrc[f + 3] = srcY + srcHeight;
-    bufferDst[f] = 1.0; // scale
+    bufferDst[f] = scale; // scale
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = dstX;
     bufferDst[f + 3] = dstY;

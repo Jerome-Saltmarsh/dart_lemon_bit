@@ -229,6 +229,7 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabEngine() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      GSRefresh(() => buildText('engine-zoom: ${isometric.engine.zoom.toStringAsFixed(3)}')),
       GSRefresh(() => buildText('engine-touch-world: x: ${isometric.io.touchCursorWorldX.toInt()}, y: ${isometric.io.touchCursorWorldY.toInt()}')),
       GSRefresh(() => buildText('engine-render-batches: ${isometric.engine.batchesRendered}')),
       GSRefresh(() => buildText('engine-render-batch-1: ${isometric.engine.batches1Rendered}')),

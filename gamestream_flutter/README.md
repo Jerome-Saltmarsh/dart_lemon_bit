@@ -31,6 +31,7 @@ alt + m             : go to declaration
 [ ] implement character type float skeleton head
 [ ] implement npc store
 [ ] implement character persistence
+[ ] implement dynamic resolution scaling
 
 26.07.2023
 [x] implement blue torch
