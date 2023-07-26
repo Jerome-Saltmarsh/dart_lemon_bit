@@ -1576,10 +1576,10 @@ class Isometric extends WebsocketClientBuilder with
 
   void refreshGameObjectEmissionColor(GameObject gameObject){
     gameObject.emissionColor = hsvToColor(
-      hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity),
-      saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity),
-      value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity),
-      opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity),
+      hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity).toInt(),
+      saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity).toInt(),
+      value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity).toInt(),
+      opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
     );
   }
 
@@ -1661,7 +1661,7 @@ class Isometric extends WebsocketClientBuilder with
               ambientHue,
               0,
               torchEmissionIntensity,
-            ),
+            ).toInt(),
           );
           break;
         case NodeType.Torch_Blue:
@@ -1688,7 +1688,7 @@ class Isometric extends WebsocketClientBuilder with
     if (!inBoundsPosition(v)) return;
     emitLightAmbient(
       index: getIndexPosition(v),
-      alpha: interpolate(ambientHue, alpha , intensity),
+      alpha: interpolate(ambientHue, alpha , intensity).toInt(),
     );
   }
 

@@ -184,7 +184,7 @@ extension IsometricLighting on Isometric {
 
     applyAmbient(
       index: index,
-      alpha: interpolate(ambientAlpha, alpha, intensity),
+      alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
     );
 
     if (brightness < 0) {
@@ -316,9 +316,13 @@ extension IsometricLighting on Isometric {
     if (currentAlpha <= alpha) {
       return;
     }
+
     final currentHue = hsvHue[index];
     if (currentHue != ambientHue){
-      // BLEND ALPHA
+      final currentAlpha = hsvAlphas[index];
+      final currentIntensity = (ambientAlpha - currentAlpha) / 255;
+      final alphaBlend = 1.0 - currentIntensity;
+      alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
     }
 
     ambientStackIndex++;
@@ -339,25 +343,11 @@ extension IsometricLighting on Isometric {
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    var currentHue = hsvHue[index];
-    int interpolatedHue;
-
     final ambientIntensity = intensity * (ambientAlpha / 255);
-
-    if ((hue - currentHue).abs() > 180){
-      if (hue < currentHue){
-        hue += 360;
-      } else {
-        currentHue += 360;
-      }
-      interpolatedHue = interpolate(currentHue, hue, ambientIntensity) % 360;
-    } else {
-      interpolatedHue = interpolate(currentHue, hue, ambientIntensity);
-    }
-
-    final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, ambientIntensity), intensity);
-    final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , ambientIntensity);
-    final interpolatedValue = interpolate(hsvValues[index], value, ambientIntensity);
+    final interpolatedHue = interpolateDegrees(hsvHue[index], hue, ambientIntensity).toInt();
+    final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, ambientIntensity), intensity).toInt();
+    final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , ambientIntensity).toInt();
+    final interpolatedValue = interpolate(hsvValues[index], value, ambientIntensity).toInt();
 
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
