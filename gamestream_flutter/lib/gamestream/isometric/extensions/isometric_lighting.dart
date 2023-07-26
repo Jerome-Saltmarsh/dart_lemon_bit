@@ -320,7 +320,6 @@ extension IsometricLighting on Isometric {
     final currentHue = hsvHue[index];
     if (currentHue != ambientHue){
       final currentAlpha = hsvAlphas[index];
-      // final currentIntensity = (ambientAlpha - currentAlpha) / 255;
       final currentIntensity = (ambientAlpha - currentAlpha) / 128;
       final alphaBlend = 1.0 - currentIntensity;
       alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();

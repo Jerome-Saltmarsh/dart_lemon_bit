@@ -18,8 +18,8 @@ alt + m             : go to declaration
 [ ] fix select position when up higher
 [ ] fix ai path following
 [ ] fix character light emission
-[ ] fix colored lights
 [ ] optimize render nodes
+[ ] implement blue torch
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
 [ ] implement sounds on item drop for treasures
@@ -32,6 +32,9 @@ alt + m             : go to declaration
 [ ] implement character type float skeleton head
 [ ] implement npc store
 [ ] implement character persistence
+
+26.07.2023
+[x] fix colored lights
 
 25.07.2023
 [x] fixed template shadow position
