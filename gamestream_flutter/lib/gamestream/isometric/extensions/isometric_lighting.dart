@@ -329,15 +329,13 @@ extension IsometricLighting on Isometric {
 
   void applyColor({
     required int index,
-    required int brightness,
     required int hue,
     required int saturation,
     required int value,
+    required double intensity,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
-
-    final intensity = interpolations[brightness > 5 ? 5 : brightness];
 
     var currentHue = hsvHue[index];
     int interpolatedHue;
@@ -353,16 +351,16 @@ extension IsometricLighting on Isometric {
       interpolatedHue = interpolate(hue, currentHue, intensity);
     }
 
-    final interpolatedA = interpolate(brightness, hsvAlphas[index], intensity);
-    final interpolatedS = interpolate(saturation, hsvSaturation[index], intensity);
-    final interpolatedV = interpolate(value, hsvValues[index], intensity);
+    final interpolatedAlpha = interpolate(hsvAlphas[index], 255, intensity);
+    final interpolatedSaturation = interpolate(saturation, hsvSaturation[index], intensity);
+    final interpolatedValue = interpolate(value, hsvValues[index], intensity);
 
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = interpolatedA;
+    hsvAlphas[index] = interpolatedAlpha;
     hsvHue[index] = interpolatedHue;
-    hsvSaturation[index] = interpolatedS;
-    hsvValues[index] = interpolatedV;
+    hsvSaturation[index] = interpolatedSaturation;
+    hsvValues[index] = interpolatedValue;
     refreshNodeColor(index);
   }
 
