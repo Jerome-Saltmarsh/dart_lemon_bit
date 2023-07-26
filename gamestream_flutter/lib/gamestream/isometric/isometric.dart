@@ -134,7 +134,7 @@ class Isometric extends WebsocketClientBuilder with
 
   Isometric(){
     print('Isometric()');
-    render = IsometricRender(this);
+    // render = IsometricRender(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
     debug = IsometricDebug(this);
@@ -1438,7 +1438,6 @@ class Isometric extends WebsocketClientBuilder with
 
     initialized = true;
 
-    print('isometric.build()');
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
 
@@ -1462,7 +1461,13 @@ class Isometric extends WebsocketClientBuilder with
     engine.onScreenSizeChanged = onScreenSizeChanged;
     engine.onMouseEnterCanvas = onMouseEnterCanvas;
     engine.onMouseExitCanvas = onMouseExitCanvas;
+    onEngineBuilt();
     return engine;
+  }
+
+  void onEngineBuilt(){
+    print('isometric.onEngineBuilt()');
+    render = IsometricRender(this);
   }
 
   Widget buildLoadingPage() {

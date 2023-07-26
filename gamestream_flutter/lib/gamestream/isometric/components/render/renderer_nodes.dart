@@ -9,6 +9,10 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  var nodeSideTopSrcX = 0.0;
+  var nodeSideWestSrcX = 0.0;
+  var nodeSize = Node_Size;
+  var nodeScale = 1.0;
   var highResolution = true;
   var plainIndex = 0;
   var plainStartRow = 0;
@@ -65,9 +69,9 @@ class RendererNodes extends IsometricRenderer {
   // VARIABLES
   var previousVisibility = 0;
 
-  late final bufferClr = isometric.engine.bufferClr;
-  late final bufferSrc = isometric.engine.bufferSrc;
-  late final bufferDst = isometric.engine.bufferDst;
+  late final Int32List bufferClr;
+  late final Float32List bufferSrc;
+  late final Float32List bufferDst;
 
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
@@ -132,7 +136,12 @@ class RendererNodes extends IsometricRenderer {
 
   late final ui.Image atlasNodes;
 
-  RendererNodes(super.isometric);
+  RendererNodes(super.isometric) : super(){
+    print('RendererNodes()');
+    bufferClr = isometric.engine.bufferClr;
+    bufferDst = isometric.engine.bufferDst;
+    bufferSrc = isometric.engine.bufferSrc;
+  }
 
   double get currentNodeRenderY => IsometricRender.getRenderYOfRowColumnZ(row, column, currentNodeZ);
 
@@ -176,7 +185,7 @@ class RendererNodes extends IsometricRenderer {
 
   @override
   void renderFunction() {
-    isometric.engine.bufferImage = atlasNodes;
+    engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
     renderPlain();
     return;
@@ -359,9 +368,16 @@ class RendererNodes extends IsometricRenderer {
   @override
   int getTotal() => atlasNodesLoaded ? isometric.totalNodes : 0;
 
+  var dynamicResolutionEnabled = true;
+
   @override
   void reset() {
-    highResolution = isometric.engine.zoom >= 0.8;
+    highResolution = !dynamicResolutionEnabled || engine.zoom >= 0.8;
+    nodeScale = highResolution ? 1.0 : 1.5;
+    nodeSize = Node_Size / nodeScale;
+    nodeSideTopSrcX = highResolution ? 0.0 : 128.0;
+    nodeSideWestSrcX = highResolution ? 49.0 : 161.0;
+
     final columns = isometric.totalColumns;
     final rows = isometric.totalRows;
     final height = isometric.totalZ;
@@ -390,10 +406,10 @@ class RendererNodes extends IsometricRenderer {
     isometric.offscreenNodes = 0;
     isometric.onscreenNodes = 0;
 
-    screenRight = isometric.engine.Screen_Right + Node_Size;
-    screenLeft = isometric.engine.Screen_Left - Node_Size;
-    screenTop = isometric.engine.Screen_Top - 72;
-    screenBottom = isometric.engine.Screen_Bottom + 72;
+    screenRight = engine.Screen_Right + Node_Size;
+    screenLeft = engine.Screen_Left - Node_Size;
+    screenTop = engine.Screen_Top - 72;
+    screenBottom = engine.Screen_Bottom + 72;
     var screenTopLeftColumn = IsometricRender.convertWorldToColumn(screenLeft, screenTop, 0);
     nodesScreenBottomRightRow = clamp(IsometricRender.convertWorldToRow(screenRight, screenBottom, 0), 0, isometric.totalRows - 1);
     nodesScreenTopLeftRow = IsometricRender.convertWorldToRow(screenLeft, screenTop, 0);
@@ -747,7 +763,7 @@ class RendererNodes extends IsometricRenderer {
     const torchSrcXCalm = 1665.0;
     const torchSrcXWindy = 1691.0;
 
-    isometric.engine.renderSprite(
+    engine.renderSprite(
       image: isometric.images.atlas_nodes,
       srcX: windType == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
       srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (isometric.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
@@ -818,7 +834,7 @@ class RendererNodes extends IsometricRenderer {
     final transparent = currentNodeTransparent;
     if (previousNodeTransparent != transparent) {
       previousNodeTransparent = transparent;
-      isometric.engine.bufferImage = transparent ? isometric.images.atlas_nodes_transparent : isometric.images.atlas_nodes;
+      engine.bufferImage = transparent ? isometric.images.atlas_nodes_transparent : isometric.images.atlas_nodes;
     }
 
     final nodeType = currentNodeType;
@@ -1678,7 +1694,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeRainLanding() {
     if (currentNodeIndex > isometric.area && isometric.nodeTypes[currentNodeIndex - isometric.area] == NodeType.Water){
-      isometric.engine.renderSprite(
+      engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
         srcY: 72.0 * ((isometric.animationFrame + row + column) % 8), // TODO Expensive Operation
@@ -1710,7 +1726,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTopOak(){
     var shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
-    isometric.engine.renderSprite(
+    engine.renderSprite(
       image: isometric.images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
       srcY: 433.0,
@@ -1726,7 +1742,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTopPine() {
     var shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
-    isometric.engine.renderSprite(
+    engine.renderSprite(
       image: atlasNodes,
       srcX: 1262,
       srcY: 80 ,
@@ -1741,7 +1757,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeBottomOak() {
-    isometric.engine.renderSprite(
+    engine.renderSprite(
       image: isometric.images.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
       srcY: 433.0,
@@ -1754,7 +1770,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeBottomPine() {
-    isometric.engine.renderSprite(
+    engine.renderSprite(
       image: isometric.images.atlas_nodes,
       srcX: 1216,
       srcY: 80,
@@ -2392,7 +2408,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderNodeDust() =>
-      isometric.engine.renderSprite(
+      engine.renderSprite(
         image: atlasNodes,
         srcX: 1552,
         srcY: 432 + (isometric.animationFrame6 * 72.0), // TODO Optimize
@@ -2405,7 +2421,7 @@ class RendererNodes extends IsometricRenderer {
       );
 
   void renderNodeWater() =>
-      isometric.engine.renderSprite(
+      engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((isometric.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
@@ -2422,8 +2438,8 @@ class RendererNodes extends IsometricRenderer {
     required double srcY,
   }){
     onscreenNodes++;
-    final f = isometric.engine.bufferIndex * 4;
-    bufferClr[isometric.engine.bufferIndex] = colorCurrent;
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
@@ -2432,34 +2448,19 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half);
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third);
-    isometric.engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 
-  void renderNodeSideTop() {
-
-    if (highResolution){
-      renderCustomNode(
-        srcX: SrcX_Side_Top,
-        srcY: srcY,
-        srcWidth: Node_Size,
-        srcHeight: Node_Size,
-        dstX: currentNodeDstX - Node_Size_Half,
-        dstY: currentNodeDstY - Node_Size_Half,
-        color: colorAbove,
-      );
-    } else {
-      renderCustomNode(
-        srcX: 128,
-        srcY: srcY,
-        srcWidth: 32,
-        srcHeight: 32,
-        dstX: currentNodeDstX - Node_Size_Half,
-        dstY: currentNodeDstY - Node_Size_Half,
-        color: colorAbove,
-        scale: 1.5
-      );
-    }
-  }
+  void renderNodeSideTop() => renderCustomNode(
+      srcX: nodeSideTopSrcX,
+      srcY: srcY,
+      srcWidth: nodeSize,
+      srcHeight: nodeSize,
+      dstX: currentNodeDstX - Node_Size_Half,
+      dstY: currentNodeDstY - Node_Size_Half,
+      color: colorAbove,
+      scale: nodeScale,
+    );
 
   void renderNodeSideWest({
     required int color,
@@ -2468,13 +2469,14 @@ class RendererNodes extends IsometricRenderer {
     double width = Node_Size_Half,
     double height = Node_Size,
   }) => renderCustomNode(
-    srcX: SrcX_Side_West,
+    srcX: nodeSideWestSrcX,
     srcY: srcY,
-    srcWidth: width,
-    srcHeight: height,
+    srcWidth: width * nodeScale,
+    srcHeight: height * nodeScale,
     dstX: currentNodeDstX + dstX,
     dstY: currentNodeDstY + dstY,
     color: color,
+    scale: nodeScale,
   );
 
   void renderNodeSideSouth({
@@ -2501,8 +2503,8 @@ class RendererNodes extends IsometricRenderer {
     required double offsetY,
   }){
     onscreenNodes++;
-    final f = isometric.engine.bufferIndex << 2;
-    bufferClr[isometric.engine.bufferIndex] = colorCurrent;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
@@ -2511,7 +2513,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    isometric.engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 
   void renderDynamicSideNorthSouth({
@@ -2670,8 +2672,8 @@ class RendererNodes extends IsometricRenderer {
     double scale = 1.0,
   }){
     onscreenNodes++;
-    final f = isometric.engine.bufferIndex * 4;
-    bufferClr[isometric.engine.bufferIndex] = color;
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = color;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + srcWidth;
@@ -2680,7 +2682,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = dstX;
     bufferDst[f + 3] = dstY;
-    isometric.engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 
   void renderNodeShadedCustom({
@@ -2693,8 +2695,8 @@ class RendererNodes extends IsometricRenderer {
     double? srcHeight
   }){
     onscreenNodes++;
-    final f =isometric.engine.bufferIndex << 2;
-    bufferClr[isometric.engine.bufferIndex] = color ?? colorCurrent;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = color ?? colorCurrent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + (srcWidth ?? IsometricConstants.Sprite_Width);
@@ -2703,7 +2705,7 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    isometric.engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 
   void increaseOrderShiftY(){
@@ -2714,4 +2716,7 @@ class RendererNodes extends IsometricRenderer {
     orderShiftY--;
   }
 
+  void toggleDynamicResolutionEnabled(){
+    dynamicResolutionEnabled = !dynamicResolutionEnabled;
+  }
 }
