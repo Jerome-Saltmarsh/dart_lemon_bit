@@ -74,7 +74,6 @@ mixin IsometricScene {
      );
   }
 
-
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEaseType(
       length: interpolationLength,
