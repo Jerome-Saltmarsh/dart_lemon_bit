@@ -1671,7 +1671,6 @@ class Isometric extends WebsocketClientBuilder with
             hue: 209,
             saturation: 66,
             value: 90,
-            intensity: 1.0,
           );
           break;
       }
@@ -1733,7 +1732,6 @@ class Isometric extends WebsocketClientBuilder with
     required int hue,
     required int saturation,
     required int value,
-    double intensity = 1.0,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
@@ -2137,7 +2135,6 @@ class Isometric extends WebsocketClientBuilder with
       saturation: saturation,
       value: value,
       alpha: alpha,
-      intensity: intensity,
     );
   }
 
