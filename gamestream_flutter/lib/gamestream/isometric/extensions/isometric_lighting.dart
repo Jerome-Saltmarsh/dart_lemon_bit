@@ -329,6 +329,7 @@ extension IsometricLighting on Isometric {
 
   /// @intensity a value between 0 and 1 from least to most bright respectively
   void applyColor({
+    required int alpha,
     required int index,
     required int hue,
     required int saturation,
@@ -361,9 +362,7 @@ extension IsometricLighting on Isometric {
       interpolatedHue = interpolate(currentHue, hue, intensity);
     }
 
-    final alpha = interpolate(0, 255, intensity);
-
-    final interpolatedAlpha = interpolate(hsvAlphas[index], alpha, intensity);
+    final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, intensity), intensity);
     final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , intensity);
     final interpolatedValue = interpolate(hsvValues[index], value, intensity);
 

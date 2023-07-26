@@ -1667,7 +1667,7 @@ class Isometric extends WebsocketClientBuilder with
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
-            alpha: 255,
+            alpha: 150,
             hue: 209,
             saturation: 66,
             value: 90,
@@ -1980,6 +1980,7 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     applyColor(
+      alpha: alpha,
       index: index,
       hue: hue,
       saturation: saturation,
