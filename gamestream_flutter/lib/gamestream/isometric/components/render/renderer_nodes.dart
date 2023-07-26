@@ -887,7 +887,7 @@ class RendererNodes extends IsometricRenderer {
             srcWidth: 14,
             srcHeight: 45,
             dstX: currentNodeDstX - 7,
-            dstY: currentNodeDstY - 18,
+            dstY: currentNodeDstY - 8,
             color: colorCurrent,
         );
         break;
