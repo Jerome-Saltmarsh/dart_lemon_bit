@@ -339,17 +339,10 @@ extension IsometricLighting on Isometric {
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    // setColor(
-    //     index: index,
-    //     alpha: interpolate(0, 255, intensity),
-    //     hue: hue,
-    //     saturation: saturation,
-    //     value: value,
-    // );
-    // return;
-
     var currentHue = hsvHue[index];
     int interpolatedHue;
+
+    final ambientIntensity = intensity * (ambientAlpha / 255);
 
     if ((hue - currentHue).abs() > 180){
       if (hue < currentHue){
@@ -357,14 +350,14 @@ extension IsometricLighting on Isometric {
       } else {
         currentHue += 360;
       }
-      interpolatedHue = interpolate(currentHue, hue, intensity) % 360;
+      interpolatedHue = interpolate(currentHue, hue, ambientIntensity) % 360;
     } else {
-      interpolatedHue = interpolate(currentHue, hue, intensity);
+      interpolatedHue = interpolate(currentHue, hue, ambientIntensity);
     }
 
-    final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, intensity), intensity);
-    final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , intensity);
-    final interpolatedValue = interpolate(hsvValues[index], value, intensity);
+    final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, ambientIntensity), intensity);
+    final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , ambientIntensity);
+    final interpolatedValue = interpolate(hsvValues[index], value, ambientIntensity);
 
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
