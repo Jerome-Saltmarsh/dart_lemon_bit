@@ -230,6 +230,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderPlain(){
 
+    final nodeTypes = isometric.nodeTypes;
     final height = isometric.totalZ;
     final columns = isometric.totalColumns;
     final rows = isometric.totalRows;
@@ -249,14 +250,11 @@ class RendererNodes extends IsometricRenderer {
     column = lineColumn;
     row = lineRow;
 
-
     while (lineZ >= 0) {
-      // increment line
       z = lineZ;
       currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
       if (currentNodeDstY > screenTop) {
-
         if (currentNodeDstY > screenBottom){
           break;
         }
@@ -268,7 +266,7 @@ class RendererNodes extends IsometricRenderer {
           if (currentNodeDstX > screenLeft &&
               currentNodeDstX < screenRight
           ) {
-            currentNodeType = isometric.nodeTypes[currentNodeIndex];
+            currentNodeType = nodeTypes[currentNodeIndex];
             if (currentNodeType != NodeType.Empty) {
               renderCurrentNode();
             }

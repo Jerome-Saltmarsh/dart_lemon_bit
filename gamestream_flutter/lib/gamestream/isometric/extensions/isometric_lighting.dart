@@ -27,7 +27,6 @@ extension IsometricLighting on Isometric {
   }
 
 
-  /// illuminates the square it reaches then fires consecutive beams for each direction of movement
   /// @brightness 0 is the most bright
   void shootLightTreeAmbient({
     required int row,
@@ -41,12 +40,10 @@ extension IsometricLighting on Isometric {
   }){
     // assert (brightness < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
-
     brightness -= velocity;
 
-    if (brightness < 0) {
+    if (brightness < 0)
       return;
-    }
 
     if (vx != 0) {
       row += vx;
@@ -183,12 +180,16 @@ extension IsometricLighting on Isometric {
       }
     }
 
-    final intensity = interpolations[brightness > 5 ? 5 : brightness];
+    final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
 
     applyAmbient(
       index: index,
-      alpha: linearInterpolateInt(ambientAlpha, alpha, intensity),
+      alpha: interpolate(ambientAlpha, alpha, intensity),
     );
+
+    if (brightness < 0) {
+      return;
+    }
 
     if (const [
       NodeType.Grass_Long,
@@ -304,7 +305,6 @@ extension IsometricLighting on Isometric {
     assert (index >= 0);
     assert (index < totalNodes);
 
-
     if (indexOnscreen(index)){
       totalAmbientOnscreen++;
     } else {
@@ -317,12 +317,68 @@ extension IsometricLighting on Isometric {
       return;
     }
     final currentHue = hsvHue[index];
-    if (currentHue != ambientHue)
-      return;
+    if (currentHue != ambientHue){
+      // BLEND ALPHA
+    }
 
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
     hsvAlphas[index] = alpha;
+    refreshNodeColor(index);
+  }
+
+  void applyColor({
+    required int index,
+    required int brightness,
+    required int hue,
+    required int saturation,
+    required int value,
+  }){
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final intensity = interpolations[brightness > 5 ? 5 : brightness];
+
+    var currentHue = hsvHue[index];
+    int interpolatedHue;
+
+    if ((hue - currentHue).abs() > 180){
+      if (hue < currentHue){
+        hue += 360;
+      } else {
+        currentHue += 360;
+      }
+      interpolatedHue = interpolate(hue, currentHue, intensity) % 360;
+    } else {
+      interpolatedHue = interpolate(hue, currentHue, intensity);
+    }
+
+    final interpolatedA = interpolate(brightness, hsvAlphas[index], intensity);
+    final interpolatedS = interpolate(saturation, hsvSaturation[index], intensity);
+    final interpolatedV = interpolate(value, hsvValues[index], intensity);
+
+    colorStackIndex++;
+    colorStack[colorStackIndex] = index;
+    hsvAlphas[index] = interpolatedA;
+    hsvHue[index] = interpolatedHue;
+    hsvSaturation[index] = interpolatedS;
+    hsvValues[index] = interpolatedV;
+    refreshNodeColor(index);
+  }
+
+  void setColor({
+    required int index,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+  }){
+    colorStackIndex++;
+    colorStack[colorStackIndex] = index;
+    hsvAlphas[index] = alpha;
+    hsvHue[index] = hue;
+    hsvSaturation[index] = saturation;
+    hsvValues[index] = value;
     refreshNodeColor(index);
   }
 

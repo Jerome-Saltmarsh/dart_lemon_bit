@@ -44,10 +44,10 @@ class GameObject extends Position {
       emission_intensity_vel = -emission_intensity_vel;
     }
 
-    emissionIntensity = interpolateDouble(
-      start: emission_intensity_start,
-      end: emission_intensity_end,
-      t: emission_intensity_t,
+    emissionIntensity = interpolate(
+      emission_intensity_start,
+      emission_intensity_end,
+      emission_intensity_t,
     );
   }
 

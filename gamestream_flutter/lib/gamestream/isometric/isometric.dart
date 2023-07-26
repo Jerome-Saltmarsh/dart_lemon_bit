@@ -601,10 +601,10 @@ class Isometric extends WebsocketClientBuilder with
       torchEmissionVal = -torchEmissionVal;
     }
 
-     torchEmissionIntensity = interpolateDouble(
-      start: torchEmissionStart,
-      end: torchEmissionEnd,
-      t: torchEmissionT,
+     torchEmissionIntensity = interpolate(
+      torchEmissionStart,
+      torchEmissionEnd,
+      torchEmissionT,
     );
   }
 
@@ -1576,10 +1576,10 @@ class Isometric extends WebsocketClientBuilder with
 
   void refreshGameObjectEmissionColor(GameObject gameObject){
     gameObject.emissionColor = hsvToColor(
-      hue: interpolate(start: ambientHue, end: gameObject.emissionHue , t: gameObject.emissionIntensity),
-      saturation: interpolate(start: ambientSaturation, end: gameObject.emissionSat, t: gameObject.emissionIntensity),
-      value: interpolate(start: ambientValue, end: gameObject.emissionVal, t: gameObject.emissionIntensity),
-      opacity: interpolate(start: ambientAlpha, end: gameObject.emissionAlp, t: gameObject.emissionIntensity),
+      hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity),
+      saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity),
+      value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity),
+      opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity),
     );
   }
 
@@ -1657,7 +1657,7 @@ class Isometric extends WebsocketClientBuilder with
         case NodeType.Torch:
           emitLightAmbient(
             index: nodeIndex,
-            alpha: linearInterpolateInt(
+            alpha: interpolate(
               ambientHue,
               0,
               torchEmissionIntensity,
@@ -1689,7 +1689,7 @@ class Isometric extends WebsocketClientBuilder with
     if (!inBoundsPosition(v)) return;
     emitLightAmbient(
       index: getIndexPosition(v),
-      alpha: linearInterpolateInt(ambientHue, alpha , intensity),
+      alpha: interpolate(ambientHue, alpha , intensity),
     );
   }
 
@@ -1800,7 +1800,7 @@ class Isometric extends WebsocketClientBuilder with
             row: row,
             column: column,
             z: z,
-            brightness: 0,
+            brightness: 6,
             vx: vx,
             vy: vy,
             vz: vz,
@@ -1813,13 +1813,13 @@ class Isometric extends WebsocketClientBuilder with
       }
     }
 
-    setColor(
-      alpha: 250,
-      index: index,
-      hue: hue,
-      saturation: saturation,
-      value: value,
-    );
+    // setColor(
+    //   alpha: 250,
+    //   index: index,
+    //   hue: hue,
+    //   saturation: saturation,
+    //   value: value,
+    // );
   }
 
   void shootLightTreeColor({
@@ -1836,12 +1836,11 @@ class Isometric extends WebsocketClientBuilder with
     int vz = 0,
 
   }){
-    assert (brightness < interpolationLength);
+    // assert (brightness < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    brightness += velocity;
-
-    if (brightness >= interpolationLength) {
+    brightness -= velocity;
+    if (brightness < 0) {
       return;
     }
 
@@ -1993,7 +1992,7 @@ class Isometric extends WebsocketClientBuilder with
       NodeType.Tree_Bottom,
       NodeType.Tree_Top,
     ].contains(nodeType)) {
-      brightness++;
+      brightness--;
       if (brightness >= interpolationLength)
         return;
     }
@@ -2114,6 +2113,7 @@ class Isometric extends WebsocketClientBuilder with
         vz: vz,
       );
     }
+
   }
 
 
@@ -2291,7 +2291,7 @@ class Isometric extends WebsocketClientBuilder with
             row: row,
             column: column,
             z: z,
-            brightness: 6,
+            brightness: 7,
             alpha: alpha,
             vx: vx,
             vy: vy,

@@ -75,7 +75,7 @@ mixin IsometricScene {
   }
 
 
-  late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Out_Quad, onChanged: (EaseType easeType){
+  late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEaseType(
       length: interpolationLength,
       easeType: EaseType.In_Out_Quad,
@@ -320,61 +320,6 @@ mixin IsometricScene {
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
       NodeType.isRainOrEmpty(getTypeZRC(z, row, column));
-
-  void applyColor({
-    required int index,
-    required int brightness,
-    required int hue,
-    required int saturation,
-    required int value,
-  }){
-    if (index < 0) return;
-    if (index >= totalNodes) return;
-
-    final intensity = interpolations[brightness < 0 ? 0 : brightness];
-
-    var hueA = hue;
-    var hueB = hsvHue[index];
-    int interpolatedHue;
-
-    if ((hueA - hueB).abs() > 180){
-      if (hueA < hueB){
-        hueA += 360;
-      } else {
-        hueB += 360;
-      }
-      interpolatedHue = linearInterpolateInt(hueA, hueB, intensity) % 360;
-    } else {
-      interpolatedHue = linearInterpolateInt(hueA, hueB, intensity);
-    }
-
-    final interpolatedA = linearInterpolateInt(brightness, hsvAlphas[index], intensity);
-    final interpolatedS = linearInterpolateInt(saturation, hsvSaturation[index], intensity);
-    final interpolatedV = linearInterpolateInt(value, hsvValues[index], intensity);
-    colorStackIndex++;
-    colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = interpolatedA;
-    hsvHue[index] = interpolatedHue;
-    hsvSaturation[index] = interpolatedS;
-    hsvValues[index] = interpolatedV;
-    refreshNodeColor(index);
-  }
-
-  void setColor({
-    required int index,
-    required int alpha,
-    required int hue,
-    required int saturation,
-    required int value,
-  }){
-    colorStackIndex++;
-    colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = alpha;
-    hsvHue[index] = hue;
-    hsvSaturation[index] = saturation;
-    hsvValues[index] = value;
-    refreshNodeColor(index);
-  }
 
   bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => const [
     NodeOrientation.Solid,

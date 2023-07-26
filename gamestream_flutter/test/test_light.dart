@@ -53,6 +53,9 @@ void main() {
       }
     }
 
+
+
+
     // scene.shootLightTreeAmbient(
     //   row: lightRow,
     //   column: lightColumn,
