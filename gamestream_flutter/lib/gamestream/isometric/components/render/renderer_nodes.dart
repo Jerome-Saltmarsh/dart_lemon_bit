@@ -9,6 +9,12 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {
 
+  var ambientColor = 0;
+  var dynamicResolutionEnabled = true;
+  var totalNodes = 0;
+  var totalRows = 0;
+  var totalColumns = 0;
+  var totalZ = 0;
   var nodeSideTopSrcX = 0.0;
   var nodeSideWestSrcX = 0.0;
   var nodeSize = Node_Size;
@@ -134,6 +140,8 @@ class RendererNodes extends IsometricRenderer {
   var currentNodeWithinIsland = false;
   var atlasNodesLoaded = false;
 
+  late Uint32List nodeColors;
+
   late final ui.Image atlasNodes;
 
   RendererNodes(super.isometric) : super(){
@@ -145,27 +153,27 @@ class RendererNodes extends IsometricRenderer {
 
   double get currentNodeRenderY => IsometricRender.getRenderYOfRowColumnZ(row, column, currentNodeZ);
 
-  int get colorCurrent => isometric.nodeColors[currentNodeIndex];
+  int get colorCurrent => nodeColors[currentNodeIndex];
 
   int get colorAbove {
     final nodeAboveIndex = currentNodeIndex + isometric.area;
-    if (nodeAboveIndex > isometric.nodeColors.length)
-      return isometric.ambientColor;
-    return isometric.nodeColors[nodeAboveIndex];
+    if (nodeAboveIndex >= totalNodes)
+      return ambientColor;
+    return nodeColors[nodeAboveIndex];
   }
 
   int get colorWest {
-    if (column + 1 >= isometric.totalColumns){
-      return isometric.ambientColor;
+    if (column + 1 >= totalColumns){
+      return ambientColor;
     }
-    return isometric.nodeColors[currentNodeIndex + 1];
+    return nodeColors[currentNodeIndex + 1];
   }
 
   int get colorSouth {
-    if (row + 1 >= isometric.totalRows) {
-      return isometric.ambientColor;
+    if (row + 1 >= totalRows) {
+      return ambientColor;
     }
-    return isometric.nodeColors[currentNodeIndex + isometric.totalColumns];
+    return nodeColors[currentNodeIndex + totalColumns];
   }
   int get currentNodeOrientation => isometric.nodeOrientations[currentNodeIndex];
 
@@ -368,10 +376,14 @@ class RendererNodes extends IsometricRenderer {
   @override
   int getTotal() => atlasNodesLoaded ? isometric.totalNodes : 0;
 
-  var dynamicResolutionEnabled = true;
-
   @override
   void reset() {
+    nodeColors = isometric.nodeColors;
+    ambientColor = isometric.ambientColor;
+    totalNodes = isometric.totalNodes;
+    totalRows = isometric.totalRows;
+    totalColumns = isometric.totalColumns;
+    totalZ = isometric.totalZ;
     highResolution = !dynamicResolutionEnabled || engine.zoom >= 0.8;
     nodeScale = highResolution ? 1.0 : 1.5;
     nodeSize = Node_Size / nodeScale;

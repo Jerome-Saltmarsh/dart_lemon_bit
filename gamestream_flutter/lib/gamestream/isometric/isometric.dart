@@ -1226,6 +1226,7 @@ class Isometric extends WebsocketClientBuilder with
     nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
     onChangedNodes();
+
     editor.refreshNodeSelectedIndex();
   }
 

@@ -29,12 +29,18 @@ extension IsometricEvents on Isometric {
     }
   }
 
+  void onNodesInitialized(){
+
+  }
+
   void onChangedNodes(){
     refreshGridMetrics();
     generateHeightMap();
     generateMiniMap();
     minimap.generateSrcDst();
     refreshLightSources();
+
+    render.rendererNodes.nodeColors = nodeColors;
 
     if (raining.value) {
       rainStop();

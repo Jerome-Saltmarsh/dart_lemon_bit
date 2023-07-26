@@ -159,8 +159,10 @@ extension IsometricResponseReader on Isometric {
     projection = area2 + totalColumns + 1;
     projectionHalf =  projection ~/ 2;
     totalNodes = totalZ * totalRows * totalColumns;
-    colorStack = Uint16List(totalNodes);
-    ambientStack = Uint16List(totalNodes);
+    if (colorStack.length != totalNodes){
+      colorStack = Uint16List(totalNodes);
+      ambientStack = Uint16List(totalNodes);
+    }
     totalNodes = totalNodes;
     nodesRaycast = area +  area + totalColumns + 1;
     onChangedNodes();
