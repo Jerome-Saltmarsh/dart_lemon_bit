@@ -39,173 +39,173 @@ extension IsometricLighting on Isometric {
     required int vz,
   }){
     // assert (brightness < interpolationLength);
-    var velocity = vx.abs() + vy.abs() + vz.abs();
-    brightness -= velocity;
+    while (true) {
+      var velocity = vx.abs() + vy.abs() + vz.abs();
+      brightness -= velocity;
 
-    if (brightness < 0)
-      return;
-
-    if (vx != 0) {
-      row += vx;
-      if (row < 0 || row >= totalRows)
-        return;
-    }
-
-    if (vy != 0) {
-      column += vy;
-      if (column < 0 || column >= totalColumns)
-        return;
-    }
-
-    if (vz != 0) {
-      z += vz;
-      if (z < 0 || z >= totalZ)
-        return;
-    }
-
-    const padding = Node_Size + Node_Size_Half;
-
-    final index = (z * area) + (row * totalColumns) + column;
-
-    final renderX = getIndexRenderX(index);
-
-    if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
-      return;
-
-    if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
-      return;
-
-    final renderY = getIndexRenderY(index);
-
-    if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
-      return;
-
-    if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
-      return;
-
-    final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
-
-    if (!isNodeTypeTransparent(nodeType)) {
-      if (nodeOrientation == NodeOrientation.Solid)
+      if (brightness < 0)
         return;
 
-      if (vx < 0) {
-        if (const [
-          NodeOrientation.Half_South,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_South,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_North,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_North,
-        ].contains(nodeOrientation)) vx = 0;
-      } else if (vx > 0) {
-        if (const [
-          NodeOrientation.Half_North,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_North,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_South,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_South,
-        ].contains(nodeOrientation)) vx = 0;
-      }
-
-      if (vy < 0) {
-        if (const [
-          NodeOrientation.Half_West,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_West,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_East,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Slope_East,
-        ].contains(nodeOrientation)) vy = 0;
-      } else if (vy > 0) {
-        if (const [
-          NodeOrientation.Half_East,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Slope_East,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_West,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_West,
-        ].contains(nodeOrientation)) vy = 0;
-      }
-
-      if (vz < 0) {
-        if (const [
-          NodeOrientation.Half_Vertical_Bottom,
-        ].contains(nodeOrientation)) {
+      if (vx != 0) {
+        row += vx;
+        if (row < 0 || row >= totalRows)
           return;
-        }
-
-        if (const [
-          NodeOrientation.Half_Vertical_Bottom,
-          NodeOrientation.Half_Vertical_Center,
-        ].contains(nodeOrientation)) {
-          vz = 0;
-        }
       }
 
-      if (vz > 0) {
-        if (const [NodeOrientation.Half_Vertical_Top]
-            .contains(nodeOrientation)) {
+      if (vy != 0) {
+        column += vy;
+        if (column < 0 || column >= totalColumns)
           return;
+      }
+
+      if (vz != 0) {
+        z += vz;
+        if (z < 0 || z >= totalZ)
+          return;
+      }
+
+      const padding = Node_Size + Node_Size_Half;
+
+      final index = (z * area) + (row * totalColumns) + column;
+
+      final renderX = getIndexRenderX(index);
+
+      if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
+        return;
+
+      if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
+        return;
+
+      final renderY = getIndexRenderY(index);
+
+      if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+        return;
+
+      if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+        return;
+
+      final nodeType = nodeTypes[index];
+      final nodeOrientation = nodeOrientations[index];
+
+      if (!isNodeTypeTransparent(nodeType)) {
+        if (nodeOrientation == NodeOrientation.Solid)
+          return;
+
+        if (vx < 0) {
+          if (const [
+            NodeOrientation.Half_South,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Slope_South,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_North,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Slope_North,
+          ].contains(nodeOrientation)) vx = 0;
+        } else if (vx > 0) {
+          if (const [
+            NodeOrientation.Half_North,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Slope_North,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_South,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Slope_South,
+          ].contains(nodeOrientation)) vx = 0;
         }
 
-        if (const [
-          NodeOrientation.Half_Vertical_Top,
-          NodeOrientation.Half_Vertical_Center,
-        ].contains(nodeOrientation)) {
-          vz = 0;
+        if (vy < 0) {
+          if (const [
+            NodeOrientation.Half_West,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Slope_West,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_East,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Slope_East,
+          ].contains(nodeOrientation)) vy = 0;
+        } else if (vy > 0) {
+          if (const [
+            NodeOrientation.Half_East,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Slope_East,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_West,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Slope_West,
+          ].contains(nodeOrientation)) vy = 0;
+        }
+
+        if (vz < 0) {
+          if (const [
+            NodeOrientation.Half_Vertical_Bottom,
+          ].contains(nodeOrientation)) {
+            return;
+          }
+
+          if (const [
+            NodeOrientation.Half_Vertical_Bottom,
+            NodeOrientation.Half_Vertical_Center,
+          ].contains(nodeOrientation)) {
+            vz = 0;
+          }
+        }
+
+        if (vz > 0) {
+          if (const [NodeOrientation.Half_Vertical_Top]
+              .contains(nodeOrientation)) {
+            return;
+          }
+
+          if (const [
+            NodeOrientation.Half_Vertical_Top,
+            NodeOrientation.Half_Vertical_Center,
+          ].contains(nodeOrientation)) {
+            vz = 0;
+          }
         }
       }
-    }
 
-    final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+      final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
 
-    applyAmbient(
-      index: index,
-      alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
-    );
+      applyAmbient(
+        index: index,
+        alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
+      );
 
-    if (brightness < 0) {
-      return;
-    }
+      if (const [
+        NodeType.Grass_Long,
+        NodeType.Tree_Bottom,
+        NodeType.Tree_Top,
+      ].contains(nodeType)) {
+        brightness--;
+        if (brightness < 0)
+          return;
+      }
 
-    if (const [
-      NodeType.Grass_Long,
-      NodeType.Tree_Bottom,
-      NodeType.Tree_Top,
-    ].contains(nodeType)) {
-      brightness--;
-      if (brightness >= interpolationLength)
+      velocity = vx.abs() + vy.abs() + vz.abs();
+
+      if (velocity <= 0)
         return;
+
+      if (velocity > 1)
+        break;
     }
-
-    velocity = vx.abs() + vy.abs() + vz.abs();
-
-    if (velocity == 0)
-      return;
-
     if (vx.abs() + vy.abs() + vz.abs() == 3) {
       shootLightTreeAmbient(
         row: row,
