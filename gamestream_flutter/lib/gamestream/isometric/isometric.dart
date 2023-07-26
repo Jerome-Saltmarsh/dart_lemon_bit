@@ -1670,7 +1670,7 @@ class Isometric extends WebsocketClientBuilder with
           emitLightColored(
             index: nodeIndex,
             alpha: TorchColorEmissionAlpha,
-            hue: 209,
+            hue: (209 * torchEmissionIntensity).toInt(),
             saturation: 66,
             value: 90,
           );

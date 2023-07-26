@@ -19,7 +19,6 @@ alt + m             : go to declaration
 [ ] fix ai path following
 [ ] fix character light emission
 [ ] optimize render nodes
-[ ] implement blue torch
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
 [ ] implement sounds on item drop for treasures
@@ -34,6 +33,7 @@ alt + m             : go to declaration
 [ ] implement character persistence
 
 26.07.2023
+[x] implement blue torch
 [x] fix colored lights
 
 25.07.2023
