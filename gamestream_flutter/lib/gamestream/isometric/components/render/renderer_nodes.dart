@@ -37,11 +37,16 @@ class RendererNodes extends IsometricRenderer {
   };
 
   static const Src_X_Side_Top = 0.0;
-  static const SrcX_Side_West = 49.0;
-  static const SrcX_Side_South = 74.0;
+  static const Src_X_Side_West = 49.0;
+  static const Src_X_Side_South = 74.0;
 
   static const Src_Width_Side_Top = 48.0;
+  static const Src_Width_Side_West = 24.0;
+  static const Src_Width_Side_South = 24.0;
+
   static const Src_Height_Side_Top = 48.0;
+  static const Src_Height_Side_West = 48.0;
+  static const Src_Height_Side_South = 48.0;
 
   static const Node_Size = 48.0;
 
@@ -2488,18 +2493,32 @@ class RendererNodes extends IsometricRenderer {
     required int color,
     double dstX = 0,
     double dstY = 0,
-    double width = Node_Size_Half,
-    double height = Node_Size,
-  }) => renderCustomNode(
-    srcX: nodeSideWestSrcX,
-    srcY: srcY,
-    srcWidth: width * nodeScale,
-    srcHeight: height * nodeScale,
-    dstX: currentNodeDstX + dstX,
-    dstY: currentNodeDstY + dstY,
-    color: color,
-    scale: nodeScale,
-  );
+    double width = Src_Width_Side_West,
+    double height = Src_Height_Side_West,
+  }) {
+    // renderCustomNode(
+    //   srcX: Src_X_Side_West,
+    //   srcY: srcY,
+    //   srcWidth: width * nodeScale,
+    //   srcHeight: height * nodeScale,
+    //   dstX: currentNodeDstX + dstX,
+    //   dstY: currentNodeDstY + dstY,
+    //   color: color,
+    //   scale: nodeScale,
+    // );
+
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = color;
+    bufferSrc[f] = Src_X_Side_West;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Side_West + width;
+    bufferSrc[f + 3] = srcY + height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
+  }
 
   void renderNodeSideSouth({
     required double dstX,
@@ -2509,7 +2528,7 @@ class RendererNodes extends IsometricRenderer {
     double height = Node_Size,
   }) =>
       renderCustomNode(
-        srcX: SrcX_Side_South,
+        srcX: Src_X_Side_South,
         srcY: srcY,
         srcWidth: width,
         srcHeight: height,
