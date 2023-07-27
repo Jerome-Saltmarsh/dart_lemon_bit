@@ -29,6 +29,8 @@ class RendererNodes extends IsometricRenderer {
   var totalPlains = 0;
   var orderShiftY = 151.0;
 
+  /// see engine.incrementBufferIndex
+  /// cached to save engine lookup for each render
   late final Function incrementBufferIndex;
 
   static const MapNodeTypeToSrcY = <int, double>{
@@ -458,6 +460,18 @@ class RendererNodes extends IsometricRenderer {
     isometric.applyEmissions();
 
     // highlightCharacterNearMouse();
+  }
+
+  void increaseOrderShiftY(){
+    orderShiftY++;
+  }
+
+  void decreaseOrderShiftY(){
+    orderShiftY--;
+  }
+
+  void toggleDynamicResolutionEnabled(){
+    dynamicResolutionEnabled = !dynamicResolutionEnabled;
   }
 
   void updateTransparencyGrid() {
@@ -2453,80 +2467,6 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  void renderNodeSideTop() {
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = colorAbove;
-    bufferSrc[f] = Src_X_Side_Top;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = Src_X_Side_Top + Src_Width_Side_Top;
-    bufferSrc[f + 3] = srcY + Src_Height_Side_Top;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - Node_Size_Half;
-    bufferDst[f + 3] = currentNodeDstY - Node_Size_Half;
-    incrementBufferIndex();
-  }
-
-  void renderNodeSideWest({
-    required int color,
-    double dstX = 0,
-    double dstY = 0,
-    double width = Src_Width_Side_West,
-    double height = Src_Height_Side_West,
-  }) {
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = color;
-    bufferSrc[f] = Src_X_Side_West;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = Src_X_Side_West + width;
-    bufferSrc[f + 3] = srcY + height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX + dstX;
-    bufferDst[f + 3] = currentNodeDstY + dstY;
-    incrementBufferIndex();
-  }
-
-  void renderNodeSideSouth({
-    required double dstX,
-    required double dstY,
-    required int color,
-    double width = Src_Width_Side_South,
-    double height = Src_Height_Side_South,
-  }) {
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = color;
-    bufferSrc[f] = Src_X_Side_South;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = Src_X_Side_South + width;
-    bufferSrc[f + 3] = srcY + height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX + dstX;
-    bufferDst[f + 3] = currentNodeDstY + dstY;
-    incrementBufferIndex();
-  }
-
-  void renderNodeShadedOffset({
-    required double srcX,
-    required double srcY,
-    required double offsetX,
-    required double offsetY,
-  }){
-    onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = colorCurrent;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
-  }
-
   void renderDynamicSideNorthSouth({
     required double srcY,
     required double dstX,
@@ -2630,52 +2570,6 @@ class RendererNodes extends IsometricRenderer {
     );
   }
 
-  void renderCellTop({
-    required double dstX,
-    required double dstY,
-    required int color,
-  }) {
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = color;
-    bufferSrc[f] = Src_X_Cell_Top;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = Src_X_Cell_Top + Src_Width_Cell_Top;
-    bufferSrc[f + 3] = srcY + Src_Height_Cell_Top;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX + dstX;
-    bufferDst[f + 3] = currentNodeDstY + dstY;
-    incrementBufferIndex();
-  }
-
-  void renderCellWest({
-    required double dstX,
-    required double dstY,
-    required int color,
-  }) => renderCustomNode(
-      srcX: Src_X_Cell_West,
-      srcY: srcY + Src_Y_Cell_West,
-      srcWidth: Src_Width_Cell_West,
-      srcHeight: Src_Height_Cell_West,
-      dstX: currentNodeDstX + dstX,
-      dstY: currentNodeDstY + dstY,
-      color: color,
-    );
-
-  void renderCellSouth({
-    required double dstX,
-    required double dstY,
-    required int color,
-  }) => renderCustomNode(
-      srcX: Src_X_Cell_South,
-      srcY: srcY + Src_Y_Cell_South,
-      srcWidth: Src_Width_Cell_South,
-      srcHeight: Src_Height_Cell_South,
-      dstX: currentNodeDstX + dstX,
-      dstY: currentNodeDstY + dstY,
-      color: color,
-    );
-
   void renderCustomNode({
     required double srcX,
     required double srcY,
@@ -2723,15 +2617,141 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  void increaseOrderShiftY(){
-    orderShiftY++;
+  void renderCellTop({
+    required double dstX,
+    required double dstY,
+    required int color,
+  }) {
+    final bufferIndex = engine.bufferIndex;
+    final f = bufferIndex * 4;
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = Src_X_Cell_Top;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Cell_Top + Src_Width_Cell_Top;
+    bufferSrc[f + 3] = srcY + Src_Height_Cell_Top;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
   }
 
-  void decreaseOrderShiftY(){
-    orderShiftY--;
+  void renderCellWest({
+    required double dstX,
+    required double dstY,
+    required int color,
+  }) {
+    final _srcY = srcY + Src_Y_Cell_West;
+    final bufferIndex = engine.bufferIndex;
+    final f = bufferIndex * 4;
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = Src_X_Cell_West;
+    bufferSrc[f + 1] = _srcY;
+    bufferSrc[f + 2] = Src_X_Cell_West + Src_Width_Cell_West;
+    bufferSrc[f + 3] = _srcY + Src_Height_Cell_West;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
   }
 
-  void toggleDynamicResolutionEnabled(){
-    dynamicResolutionEnabled = !dynamicResolutionEnabled;
+  void renderCellSouth({
+    required double dstX,
+    required double dstY,
+    required int color,
+  }) {
+    final bufferIndex = engine.bufferIndex;
+    final f = bufferIndex * 4;
+    final _srcY = srcY + Src_Y_Cell_South;
+
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = Src_X_Cell_South;
+    bufferSrc[f + 1] = _srcY;
+    bufferSrc[f + 2] = Src_X_Cell_South + Src_Width_Cell_South;
+    bufferSrc[f + 3] = _srcY + Src_Height_Cell_South;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
   }
+
+  void renderNodeSideTop() {
+    final bufferIndex = engine.bufferIndex;
+    final f = bufferIndex * 4;
+    bufferClr[bufferIndex] = colorAbove;
+    bufferSrc[f] = Src_X_Side_Top;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Side_Top + Src_Width_Side_Top;
+    bufferSrc[f + 3] = srcY + Src_Height_Side_Top;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX - Node_Size_Half;
+    bufferDst[f + 3] = currentNodeDstY - Node_Size_Half;
+    incrementBufferIndex();
+  }
+
+  void renderNodeSideWest({
+    required int color,
+    double dstX = 0,
+    double dstY = 0,
+    double width = Src_Width_Side_West,
+    double height = Src_Height_Side_West,
+  }) {
+    final bufferIndex = engine.bufferIndex;
+    final f = bufferIndex * 4;
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = Src_X_Side_West;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Side_West + width;
+    bufferSrc[f + 3] = srcY + height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
+  }
+
+  void renderNodeSideSouth({
+    required double dstX,
+    required double dstY,
+    required int color,
+    double width = Src_Width_Side_South,
+    double height = Src_Height_Side_South,
+  }) {
+    final bufferIndex = engine.bufferIndex;
+    final f = bufferIndex * 4;
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = Src_X_Side_South;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Side_South + width;
+    bufferSrc[f + 3] = srcY + height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
+  }
+
+  void renderNodeShadedOffset({
+    required double srcX,
+    required double srcY,
+    required double offsetX,
+    required double offsetY,
+  }){
+    onscreenNodes++;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = colorCurrent;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
+    engine.incrementBufferIndex();
+  }
+
 }
