@@ -2496,17 +2496,6 @@ class RendererNodes extends IsometricRenderer {
     double width = Src_Width_Side_West,
     double height = Src_Height_Side_West,
   }) {
-    // renderCustomNode(
-    //   srcX: Src_X_Side_West,
-    //   srcY: srcY,
-    //   srcWidth: width * nodeScale,
-    //   srcHeight: height * nodeScale,
-    //   dstX: currentNodeDstX + dstX,
-    //   dstY: currentNodeDstY + dstY,
-    //   color: color,
-    //   scale: nodeScale,
-    // );
-
     final f = engine.bufferIndex * 4;
     bufferClr[engine.bufferIndex] = color;
     bufferSrc[f] = Src_X_Side_West;
@@ -2524,18 +2513,21 @@ class RendererNodes extends IsometricRenderer {
     required double dstX,
     required double dstY,
     required int color,
-    double width = Node_Size_Half,
-    double height = Node_Size,
-  }) =>
-      renderCustomNode(
-        srcX: Src_X_Side_South,
-        srcY: srcY,
-        srcWidth: width,
-        srcHeight: height,
-        dstX: currentNodeDstX + dstX,
-        dstY: currentNodeDstY + dstY,
-        color: color,
-      );
+    double width = Src_Width_Side_South,
+    double height = Src_Height_Side_South,
+  }) {
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = color;
+    bufferSrc[f] = Src_X_Side_South;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Side_South + width;
+    bufferSrc[f + 3] = srcY + height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
+  }
 
   void renderNodeShadedOffset({
     required double srcX,
