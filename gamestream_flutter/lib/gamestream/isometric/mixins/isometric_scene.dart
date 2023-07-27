@@ -167,7 +167,7 @@ mixin IsometricScene {
     if (ambientResetIndex >= totalNodes)
       return;
 
-    const ambientResetBatchSize = 2500;
+    const ambientResetBatchSize = 1000;
     final targetEnd = ambientResetIndex + ambientResetBatchSize;
     final end = min(targetEnd, totalNodes);
 
