@@ -2636,7 +2636,7 @@ class RendererNodes extends IsometricRenderer {
     required int color,
   }) {
     final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = colorAbove;
+    bufferClr[engine.bufferIndex] = color;
     bufferSrc[f] = Src_X_Cell_Top;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = Src_X_Cell_Top + Src_Width_Cell_Top;
