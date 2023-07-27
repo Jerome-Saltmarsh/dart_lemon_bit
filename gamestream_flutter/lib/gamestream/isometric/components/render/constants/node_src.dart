@@ -26,3 +26,6 @@ const Src_Height_Side_South = 48.0;
 const Src_Height_Cell_Top =  16.0;
 const Src_Height_Cell_West = 16.0;
 const Src_Height_Cell_South = 15.0;
+
+const Src_Y_Sprite_Oak_Top = 433.0;
+const Src_Width_Sprite_Oak = 62.0;
