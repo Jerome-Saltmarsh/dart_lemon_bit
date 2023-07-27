@@ -1821,7 +1821,7 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeBottomOak() {
 
     final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY;
+    final dstY = currentNodeDstY + 12;
 
     // west
     engine.renderSprite(
@@ -1851,7 +1851,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeBottomPine() {
     final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY;
+    final dstY = currentNodeDstY + 12;
 
     // west
     engine.renderSprite(
