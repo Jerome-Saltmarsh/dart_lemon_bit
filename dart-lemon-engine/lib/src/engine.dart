@@ -683,100 +683,115 @@ class Engine extends StatelessWidget {
 
       if (remaining < 8) {
         for (var i = 0; i < 4; i++) {
-          final j = i << 2;
+          final start = i << 2;
+          final end = start + 4;
           final f = flushIndex << 2;
           _bufferClr4[i] = bufferClr[flushIndex];
-          _bufferDst4[j] = bufferDst[f];
-          _bufferDst4[j + 1] = bufferDst[f + 1];
-          _bufferDst4[j + 2] = bufferDst[f + 2];
-          _bufferDst4[j + 3] = bufferDst[f + 3];
-          _bufferSrc4[j] = bufferSrc[f];
-          _bufferSrc4[j + 1] = bufferSrc[f + 1];
-          _bufferSrc4[j + 2] = bufferSrc[f + 2];
-          _bufferSrc4[j + 3] = bufferSrc[f + 3];
+          _bufferDst4.setRange(start, end, bufferDst, f);
+          _bufferSrc4.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, _bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst4,
+            _bufferSrc4,
+            _bufferClr4,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         batches4Rendered++;
         continue;
       }
 
       if (remaining < 16) {
         for (var i = 0; i < 8; i++) {
-          final j = i << 2;
+          final start = i << 2;
+          final end = start + 4;
           final f = flushIndex << 2;
           _bufferClr8[i] = bufferClr[flushIndex];
-          _bufferDst8[j] = bufferDst[f];
-          _bufferDst8[j + 1] = bufferDst[f + 1];
-          _bufferDst8[j + 2] = bufferDst[f + 2];
-          _bufferDst8[j + 3] = bufferDst[f + 3];
-          _bufferSrc8[j] = bufferSrc[f];
-          _bufferSrc8[j + 1] = bufferSrc[f + 1];
-          _bufferSrc8[j + 2] = bufferSrc[f + 2];
-          _bufferSrc8[j + 3] = bufferSrc[f + 3];
+          _bufferDst8.setRange(start, end, bufferDst, f);
+          _bufferSrc8.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, _bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst8,
+            _bufferSrc8,
+            _bufferClr8,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         batches8Rendered++;
         continue;
       }
 
       if (remaining < 32) {
         for (var i = 0; i < 16; i++) {
-          final j = i << 2;
+          final start = i << 2;
+          final end = start + 4;
           final f = flushIndex << 2;
           _bufferClr16[i] = bufferClr[flushIndex];
-          _bufferDst16[j] = bufferDst[f];
-          _bufferDst16[j + 1] = bufferDst[f + 1];
-          _bufferDst16[j + 2] = bufferDst[f + 2];
-          _bufferDst16[j + 3] = bufferDst[f + 3];
-          _bufferSrc16[j] = bufferSrc[f];
-          _bufferSrc16[j + 1] = bufferSrc[f + 1];
-          _bufferSrc16[j + 2] = bufferSrc[f + 2];
-          _bufferSrc16[j + 3] = bufferSrc[f + 3];
+          _bufferDst16.setRange(start, end, bufferDst, f);
+          _bufferSrc16.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, _bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst16,
+            _bufferSrc16,
+            _bufferClr16,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         batches16Rendered++;
         continue;
       }
 
       if (remaining < 64) {
         for (var i = 0; i < 32; i++) {
-          final j = i << 2;
+          final start = i << 2;
+          final end = start + 4;
           final f = flushIndex << 2;
           _bufferClr32[i] = bufferClr[flushIndex];
-          _bufferDst32[j] = bufferDst[f];
-          _bufferDst32[j + 1] = bufferDst[f + 1];
-          _bufferDst32[j + 2] = bufferDst[f + 2];
-          _bufferDst32[j + 3] = bufferDst[f + 3];
-          _bufferSrc32[j] = bufferSrc[f];
-          _bufferSrc32[j + 1] = bufferSrc[f + 1];
-          _bufferSrc32[j + 2] = bufferSrc[f + 2];
-          _bufferSrc32[j + 3] = bufferSrc[f + 3];
+          _bufferDst32.setRange(start, end, bufferDst, f);
+          _bufferSrc32.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, _bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst32,
+            _bufferSrc32,
+            _bufferClr32,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         batches32Rendered++;
         continue;
       }
 
       if (remaining < 128) {
         for (var i = 0; i < 64; i++) {
-          final j = i << 2;
+          final start = i << 2;
+          final end = start + 4;
           final f = flushIndex << 2;
           _bufferClr64[i] = bufferClr[flushIndex];
-          _bufferDst64[j] = bufferDst[f];
-          _bufferDst64[j + 1] = bufferDst[f + 1];
-          _bufferDst64[j + 2] = bufferDst[f + 2];
-          _bufferDst64[j + 3] = bufferDst[f + 3];
-          _bufferSrc64[j] = bufferSrc[f];
-          _bufferSrc64[j + 1] = bufferSrc[f + 1];
-          _bufferSrc64[j + 2] = bufferSrc[f + 2];
-          _bufferSrc64[j + 3] = bufferSrc[f + 3];
+          _bufferDst64.setRange(start, end, bufferDst, f);
+          _bufferSrc64.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, _bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst64,
+            _bufferSrc64,
+            _bufferClr64,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         batches64Rendered++;
         continue;
       }
@@ -788,7 +803,15 @@ class Engine extends StatelessWidget {
 
   void flushAll(){
     batchesRendered++;
-    canvas.drawRawAtlas(_bufferImage, bufferDst, bufferSrc, bufferClr, _bufferBlendMode, null, spritePaint);
+    canvas.drawRawAtlas(
+        _bufferImage,
+        bufferDst,
+        bufferSrc,
+        bufferClr,
+        _bufferBlendMode,
+        null,
+        spritePaint,
+    );
     bufferIndex = 0;
     batches128Rendered++;
   }
