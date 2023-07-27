@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/library.dart';
 class Images {
    late final Image shades;
    late final Image pixel;
-   late final Image projectiles;
+   late final Image atles_projectiles;
    late final Image zombie;
    late final Image zombie_shadow;
    late final Image character_dog;
@@ -164,7 +164,7 @@ class Images {
      loadImage('atlas-gameobjects.png').then((value) => atlas_gameobjects = value);
      loadImage('atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
      loadImage('atlas-particles.png').then((value) => atlas_particles = value);
-     loadImage('atlas-projectiles.png').then((value) => projectiles = value);
+     loadImage('atlas_projectiles.png').then((value) => atles_projectiles = value);
      loadImage('atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
      loadImage('atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
      loadImage('atlas_weapons.png').then((value) => atlas_weapons = value);

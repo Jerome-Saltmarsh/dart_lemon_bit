@@ -6,6 +6,7 @@ class ProjectileType {
    static const Bullet = 3;
    static const Wave = 4;
    static const Rocket = 5;
+   static const FrostBall = 6;
 
    static double getSpeed(int type) => const {
       Arrow: 5.0,
@@ -14,6 +15,7 @@ class ProjectileType {
       Bullet: 7.0,
       Wave: 6.0,
       Rocket: 4.0,
+      FrostBall: 3.0,
    }[type] ?? 0;
 
    static double getRadius(int type) => const {
@@ -32,5 +34,6 @@ class ProjectileType {
          Bullet: 'Bullet',
          Wave: 'Wave',
          Rocket: 'Rocket',
+         FrostBall: 'FrostBall',
       }[value] ?? 'projectile-name-unknown-$value';
 }

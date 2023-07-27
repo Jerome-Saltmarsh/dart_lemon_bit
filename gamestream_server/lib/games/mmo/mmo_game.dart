@@ -203,6 +203,15 @@ class MmoGame extends IsometricGame<MmoPlayer> {
           angle: character.lookRadian,
         );
         break;
+      case MMOAttackType.Frost_Ball:
+        spawnProjectile(
+          src: character,
+          damage: item.damage,
+          range: item.range,
+          projectileType: ProjectileType.FrostBall,
+          angle: character.lookRadian,
+        );
+        break;
       default:
         throw Exception(item.attackType?.name);
     }

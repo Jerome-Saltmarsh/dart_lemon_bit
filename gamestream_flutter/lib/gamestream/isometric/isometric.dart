@@ -404,7 +404,7 @@ class Isometric extends WebsocketClientBuilder with
         case EmissionType.None:
           continue;
         case EmissionType.Color:
-          applyVector3Emission(
+          emitLightColoredAtPosition(
             gameObject,
             hue: gameObject.emissionHue,
             saturation: gameObject.emissionSat,
@@ -589,13 +589,13 @@ class Isometric extends WebsocketClientBuilder with
 
   void applyEmissionsProjectiles() {
     for (var i = 0; i <  totalProjectiles; i++){
-      applyProjectileEmission( projectiles[i]);
+      applyProjectileEmission(projectiles[i]);
     }
   }
 
   void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-       applyVector3Emission(projectile,
+       emitLightColoredAtPosition(projectile,
         hue: 100,
         saturation: 1,
         value: 1,
@@ -610,7 +610,7 @@ class Isometric extends WebsocketClientBuilder with
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-       applyVector3Emission(projectile,
+       emitLightColoredAtPosition(projectile,
         hue: 167,
         alpha: 50,
         saturation: 1,
@@ -621,6 +621,17 @@ class Isometric extends WebsocketClientBuilder with
     if (projectile.type == ProjectileType.Arrow) {
        applyVector3EmissionAmbient(projectile,
         alpha: 50,
+      );
+      return;
+    }
+    if (projectile.type == ProjectileType.FrostBall) {
+       emitLightColoredAtPosition(
+         projectile,
+         hue: 203,
+         saturation: 43,
+         value: 100,
+         alpha: 80,
+
       );
       return;
     }
@@ -2201,7 +2212,7 @@ class Isometric extends WebsocketClientBuilder with
   /// @value a number between 0 and 100
   /// @alpha a number between 0 and 255
   /// @intensity a number between 0.0 and 1.0
-  void applyVector3Emission(Position v, {
+  void emitLightColoredAtPosition(Position v, {
     required int hue,
     required int saturation,
     required int value,

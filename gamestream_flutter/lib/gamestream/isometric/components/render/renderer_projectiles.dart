@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -10,18 +11,33 @@ class RendererProjectiles extends IsometricRenderer {
   
   @override
   void renderFunction() {
+    final dstX = projectile.renderX;
+    final dstY = projectile.renderY;
+    final angle = projectile.angle;
+
     switch (projectile.type) {
       case ProjectileType.Arrow:
-        renderArrow(projectile.renderX, projectile.renderY, projectile.angle);
+        renderArrow(dstX, dstY, angle);
         return;
       case ProjectileType.Orb:
         break;
       case ProjectileType.Fireball:
         break;
       case ProjectileType.Bullet:
-        renderBullet(projectile.renderX, projectile.renderY, projectile.angle);
+        renderBullet(dstX, dstY, angle);
         break;
       case ProjectileType.Wave:
+        break;
+      case ProjectileType.FrostBall:
+        engine.renderSprite(
+            image: isometric.images.atles_projectiles,
+            srcX: 36,
+            srcY: 4,
+            srcWidth: 24,
+            srcHeight: 24,
+            dstX: dstX,
+            dstY: dstY,
+        );
         break;
       case ProjectileType.Rocket:
         isometric.engine.renderSpriteRotated(

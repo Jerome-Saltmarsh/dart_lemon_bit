@@ -51,7 +51,7 @@ class MmoPlayer extends IsometricPlayer {
     hurtStateBusy = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
-    addItem(MMOItem.Old_Bow);
+    addItem(MMOItem.Staff_Of_Frozen_Lake);
     addItem(MMOItem.Holy_Bow);
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Steel_Helmet);

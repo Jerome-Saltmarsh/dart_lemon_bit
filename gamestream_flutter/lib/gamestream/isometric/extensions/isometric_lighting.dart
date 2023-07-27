@@ -10,7 +10,7 @@ extension IsometricLighting on Isometric {
       if (!character.allie) continue;
 
       if (character.weaponType == WeaponType.Staff){
-        applyVector3Emission(
+        emitLightColoredAtPosition(
           character,
           alpha: 150,
           saturation: 100,

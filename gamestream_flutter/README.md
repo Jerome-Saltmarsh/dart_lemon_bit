@@ -18,7 +18,9 @@ alt + m             : go to declaration
 [ ] fix select position when up higher
 [ ] fix ai path following
 [ ] fix character light emission
+[ ] implement node fireplace which emits smoke
 [ ] optimize render nodes
+[ ] implement boulder dynamic lighting
 [ ] implement dynamically light tree faces
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation

@@ -40,8 +40,8 @@ enum MMOItem {
       cooldown: 40,
       damage: 2,
       range: 180,
-      attackType: MMOAttackType.Freeze_Circle,
-      performFrame: 20,
+      attackType: MMOAttackType.Frost_Ball,
+      performFrame: 15,
       performDuration: 20
   ),
   Old_Bow(
@@ -235,6 +235,10 @@ enum MMOItem {
 
     if (attackType != null && performFrame < 0){
       validationError('performFrame cannot be less than 0');
+    }
+
+    if (attackType != null && performFrame >= performDuration){
+      validationError('performFrame $performFrame cannot be less than performDuration $performDuration');
     }
 
     if (attackType != null && range <= 0) {
