@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_render
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'constants/node_src.dart';
+
 class RendererNodes extends IsometricRenderer {
 
   var ambientColor = 0;
@@ -36,18 +38,6 @@ class RendererNodes extends IsometricRenderer {
     NodeType.Wood: 1904,
   };
 
-  static const Src_X_Side_Top = 0.0;
-  static const Src_X_Side_West = 49.0;
-  static const Src_X_Side_South = 74.0;
-
-  static const Src_Width_Side_Top = 48.0;
-  static const Src_Width_Side_West = 24.0;
-  static const Src_Width_Side_South = 24.0;
-
-  static const Src_Height_Side_Top = 48.0;
-  static const Src_Height_Side_West = 48.0;
-  static const Src_Height_Side_South = 48.0;
-
   static const Node_Size = 48.0;
 
   static const Node_Size_Half = 24.0;
@@ -59,26 +49,14 @@ class RendererNodes extends IsometricRenderer {
   static const Cell_Size = 16.0;
   static const Cell_Size_Half = 8.0;
 
-  static const Cell_Top_Src_X =  99.0;
-  static const Cell_Top_Src_Y =  0.0;
   static const Cell_Top_Width =  8.0;
   static const Cell_Top_Height =  8.0;
-  static const Cell_Top_Width_Src =  16.0;
-  static const Cell_Top_Height_Src =  16.0;
 
-  static const Cell_South_Src_X = 110.0;
-  static const Cell_South_Src_Y = 18.0;
   static const Cell_South_Width = 8.0;
   static const Cell_South_Height = 8.0;
-  static const Cell_South_Width_Src = 8.0;
-  static const Cell_South_Height_Src = 15.0;
 
-  static const Cell_West_Src_X =  99.0;
-  static const Cell_West_Src_Y =  18.0;
   static const Cell_West_Width = 8.0;
   static const Cell_West_Height = 8.0;
-  static const Cell_West_Width_Src = 8.0;
-  static const Cell_West_Height_Src = 16.0;
 
   static const Node_South_Height = 24.0;
 
@@ -2656,25 +2634,29 @@ class RendererNodes extends IsometricRenderer {
     required double dstX,
     required double dstY,
     required int color,
-  }) => renderCustomNode(
-      srcX: Cell_Top_Src_X,
-      srcY: srcY,
-      srcWidth: Cell_Top_Width_Src,
-      srcHeight: Cell_Top_Height_Src,
-      dstX: currentNodeDstX + dstX,
-      dstY: currentNodeDstY + dstY,
-      color: color,
-    );
+  }) {
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = colorAbove;
+    bufferSrc[f] = Src_X_Cell_Top;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Cell_Top + Src_Width_Cell_Top;
+    bufferSrc[f + 3] = srcY + Src_Height_Cell_Top;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX + dstX;
+    bufferDst[f + 3] = currentNodeDstY + dstY;
+    incrementBufferIndex();
+  }
 
   void renderCellWest({
     required double dstX,
     required double dstY,
     required int color,
   }) => renderCustomNode(
-      srcX: Cell_West_Src_X,
-      srcY: srcY + Cell_West_Src_Y,
-      srcWidth: Cell_West_Width_Src,
-      srcHeight: Cell_West_Height_Src,
+      srcX: Src_X_Cell_West,
+      srcY: srcY + Src_Y_Cell_West,
+      srcWidth: Src_Width_Cell_West,
+      srcHeight: Src_Height_Cell_West,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: color,
@@ -2685,10 +2667,10 @@ class RendererNodes extends IsometricRenderer {
     required double dstY,
     required int color,
   }) => renderCustomNode(
-      srcX: Cell_South_Src_X,
-      srcY: srcY + Cell_South_Src_Y,
-      srcWidth: Cell_South_Width_Src,
-      srcHeight: Cell_South_Height_Src,
+      srcX: Src_X_Cell_South,
+      srcY: srcY + Src_Y_Cell_South,
+      srcWidth: Src_Width_Cell_South,
+      srcHeight: Src_Height_Cell_South,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       color: color,
