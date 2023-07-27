@@ -2581,7 +2581,6 @@ class RendererNodes extends IsometricRenderer {
     required int color,
     double scale = 1.0,
   }){
-    onscreenNodes++;
     final f = engine.bufferIndex * 4;
     bufferClr[engine.bufferIndex] = color;
     bufferSrc[f] = srcX;
@@ -2593,6 +2592,13 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 2] = dstX;
     bufferDst[f + 3] = dstY;
     engine.incrementBufferIndex();
+  }
+
+  void someMethod(int i, Float32List bufferSrc){
+    bufferSrc[i] = 0;
+    bufferSrc[i + 1] = 10;
+    bufferSrc[i + 2] = 20;
+    bufferSrc[i + 3] = 20;
   }
 
   void renderNodeShadedCustom({
@@ -2611,6 +2617,26 @@ class RendererNodes extends IsometricRenderer {
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + (srcWidth ?? IsometricConstants.Sprite_Width);
     bufferSrc[f + 3] = srcY + (srcHeight ?? IsometricConstants.Sprite_Height);
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
+    engine.incrementBufferIndex();
+  }
+
+  void renderNodeShadedOffset({
+    required double srcX,
+    required double srcY,
+    required double offsetX,
+    required double offsetY,
+  }){
+    onscreenNodes++;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = colorCurrent;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
     bufferDst[f] = 1.0; // scale
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
@@ -2734,25 +2760,4 @@ class RendererNodes extends IsometricRenderer {
     bufferDst[f + 3] = currentNodeDstY + dstY;
     incrementBufferIndex();
   }
-
-  void renderNodeShadedOffset({
-    required double srcX,
-    required double srcY,
-    required double offsetX,
-    required double offsetY,
-  }){
-    onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = colorCurrent;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
-  }
-
 }

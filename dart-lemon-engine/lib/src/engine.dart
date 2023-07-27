@@ -142,7 +142,6 @@ class Engine extends StatelessWidget {
   void Function(int keyCode)? onKeyUp;
 
 
-
   // SETTERS
   set bufferImage(ui.Image image){
     if (_bufferImage == image) return;
@@ -643,15 +642,17 @@ class Engine extends StatelessWidget {
       if (remaining == 1) {
         final f = flushIndex << 2;
         _bufferClr1[0] = bufferClr[flushIndex];
-        _bufferDst1[0] = bufferDst[f];
-        _bufferDst1[1] = bufferDst[f + 1];
-        _bufferDst1[2] = bufferDst[f + 2];
-        _bufferDst1[3] = bufferDst[f + 3];
-        _bufferSrc1[0] = bufferSrc[f];
-        _bufferSrc1[1] = bufferSrc[f + 1];
-        _bufferSrc1[2] = bufferSrc[f + 2];
-        _bufferSrc1[3] = bufferSrc[f + 3];
-        canvas.drawRawAtlas(_bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, _bufferBlendMode, null, spritePaint);
+        _bufferDst1.setRange(0, 4, bufferDst, f);
+        _bufferSrc1.setRange(0, 4, bufferSrc, f);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst1,
+            _bufferSrc1,
+            _bufferClr1,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         bufferIndex = 0;
         batches1Rendered++;
         return;
@@ -659,20 +660,23 @@ class Engine extends StatelessWidget {
 
       if (remaining < 4) {
         for (var i = 0; i < 2; i++) {
-          final j = i << 2;
+          final start = i << 2;
+          final end = start + 4;
           final f = flushIndex << 2;
           _bufferClr2[i] = bufferClr[flushIndex];
-          _bufferDst2[j] = bufferDst[f];
-          _bufferDst2[j + 1] = bufferDst[f + 1];
-          _bufferDst2[j + 2] = bufferDst[f + 2];
-          _bufferDst2[j + 3] = bufferDst[f + 3];
-          _bufferSrc2[j] = bufferSrc[f];
-          _bufferSrc2[j + 1] = bufferSrc[f + 1];
-          _bufferSrc2[j + 2] = bufferSrc[f + 2];
-          _bufferSrc2[j + 3] = bufferSrc[f + 3];
+          _bufferDst2.setRange(start, end, bufferDst, f);
+          _bufferSrc2.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, _bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(
+            _bufferImage,
+            _bufferDst2,
+            _bufferSrc2,
+            _bufferClr2,
+            _bufferBlendMode,
+            null,
+            spritePaint,
+        );
         batches2Rendered++;
         continue;
       }
@@ -973,6 +977,7 @@ class Engine extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
       ));
+
 
   Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
