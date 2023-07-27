@@ -47,3 +47,9 @@ const Src_X_Sprite_Tree_Oak_Bottom_South = Src_X_Sprite_Tree_Oak_Bottom_West + S
 const Src_X_Sprite_Tree_Oak_Top_West = Src_X_Sprite_Tree_Oak_Bottom_South + Src_Width_Sprite_Tree;
 const Src_X_Sprite_Tree_Oak_Top_South = Src_X_Sprite_Tree_Oak_Top_West + Src_Width_Sprite_Tree;
 const Src_X_Sprite_Tree_Oak_Bottom = Src_Y_Sprite_Tree + Src_Width_Sprite_Tree;
+
+const Src_Width_Sprite_Boulder = 46.0;
+const Src_Height_Sprite_Boulder = 46.0;
+const Src_X_Sprite_Boulder_West = 1236.0;
+const Src_X_Sprite_Boulder_South = Src_X_Sprite_Boulder_West + Src_Width_Sprite_Boulder;
+const Src_Y_Sprite_Boulder = 178.0;

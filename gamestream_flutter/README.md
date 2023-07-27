@@ -20,7 +20,6 @@ alt + m             : go to declaration
 [ ] fix character light emission
 [ ] implement node fireplace which emits smoke
 [ ] optimize render nodes
-[ ] implement boulder dynamic lighting
 [ ] implement dynamically light tree faces
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
@@ -36,6 +35,10 @@ alt + m             : go to declaration
 [*] implement attack speed modifier
 [*] implement character persistence
 [?] implement dynamic resolution scaling
+
+27.07.2023
+[x] implement dynamic lighting trees
+[x] implement dynamic lighting boulder
 
 26.07.2023
 [x] implement blue torch

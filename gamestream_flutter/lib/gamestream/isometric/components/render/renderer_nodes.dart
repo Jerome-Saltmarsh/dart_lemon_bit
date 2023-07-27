@@ -975,10 +975,7 @@ class RendererNodes extends IsometricRenderer {
         );
         return;
       case NodeType.Boulder:
-        renderStandardNode(
-          srcX: AtlasNodeX.Boulder,
-          srcY: AtlasNodeY.Boulder,
-        );
+        renderBoulder();
         return;
       case NodeType.Oven:
         renderStandardNode(
@@ -1028,6 +1025,34 @@ class RendererNodes extends IsometricRenderer {
       default:
         throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
     }
+  }
+
+  void renderBoulder() {
+    final dstX = currentNodeDstX;
+    final dstY = currentNodeDstY + 14;
+
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: Src_X_Sprite_Boulder_West,
+      srcY: Src_Y_Sprite_Boulder,
+      srcWidth: Src_Width_Sprite_Boulder,
+      srcHeight: Src_Height_Sprite_Boulder,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorWest,
+    );
+
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: Src_X_Sprite_Boulder_South,
+      srcY: Src_Y_Sprite_Boulder,
+      srcWidth: Src_Width_Sprite_Boulder,
+      srcHeight: Src_Height_Sprite_Boulder,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorSouth,
+    );
+
   }
 
   var srcY = 0.0;
