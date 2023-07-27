@@ -27,6 +27,8 @@ class RendererNodes extends IsometricRenderer {
   var totalPlains = 0;
   var orderShiftY = 151.0;
 
+  late final Function incrementBufferIndex;
+
   static const MapNodeTypeToSrcY = <int, double>{
     NodeType.Brick: 1760,
     NodeType.Grass: 1808,
@@ -34,9 +36,12 @@ class RendererNodes extends IsometricRenderer {
     NodeType.Wood: 1904,
   };
 
-  static const SrcX_Side_Top = 0.0;
+  static const Src_X_Side_Top = 0.0;
   static const SrcX_Side_West = 49.0;
   static const SrcX_Side_South = 74.0;
+
+  static const Src_Width_Side_Top = 48.0;
+  static const Src_Height_Side_Top = 48.0;
 
   static const Node_Size = 48.0;
 
@@ -149,6 +154,7 @@ class RendererNodes extends IsometricRenderer {
     bufferClr = isometric.engine.bufferClr;
     bufferDst = isometric.engine.bufferDst;
     bufferSrc = isometric.engine.bufferSrc;
+    incrementBufferIndex = isometric.engine.incrementBufferIndex;
   }
 
   double get currentNodeRenderY => IsometricRender.getRenderYOfRowColumnZ(row, column, currentNodeZ);
@@ -389,6 +395,7 @@ class RendererNodes extends IsometricRenderer {
     nodeSize = Node_Size / nodeScale;
     nodeSideTopSrcX = highResolution ? 0.0 : 128.0;
     nodeSideWestSrcX = highResolution ? 49.0 : 161.0;
+
 
     final columns = isometric.totalColumns;
     final rows = isometric.totalRows;
@@ -2463,16 +2470,19 @@ class RendererNodes extends IsometricRenderer {
     engine.incrementBufferIndex();
   }
 
-  void renderNodeSideTop() => renderCustomNode(
-      srcX: nodeSideTopSrcX,
-      srcY: srcY,
-      srcWidth: nodeSize,
-      srcHeight: nodeSize,
-      dstX: currentNodeDstX - Node_Size_Half,
-      dstY: currentNodeDstY - Node_Size_Half,
-      color: colorAbove,
-      scale: nodeScale,
-    );
+  void renderNodeSideTop() {
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = colorAbove;
+    bufferSrc[f] = Src_X_Side_Top;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = Src_X_Side_Top + Src_Width_Side_Top;
+    bufferSrc[f + 3] = srcY + Src_Height_Side_Top;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX - Node_Size_Half;
+    bufferDst[f + 3] = currentNodeDstY - Node_Size_Half;
+    incrementBufferIndex();
+  }
 
   void renderNodeSideWest({
     required int color,

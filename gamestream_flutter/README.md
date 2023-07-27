@@ -19,19 +19,21 @@ alt + m             : go to declaration
 [ ] fix ai path following
 [ ] fix character light emission
 [ ] optimize render nodes
+[ ] implement dynamically light tree faces
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
 [ ] implement sounds on item drop for treasures
 [ ] implement character stats dialog
-[ ] implement attack speed modifier
 [ ] implement sound pick up item
 [ ] implement ui items draggable
 [ ] implement town stash (automatically opens when nearby)
 [ ] implement character type skeleton 
 [ ] implement character type float skeleton head
 [ ] implement npc store
-[ ] implement character persistence
-[ ] implement dynamic resolution scaling
+[*] 3d animator 
+[*] implement attack speed modifier
+[*] implement character persistence
+[?] implement dynamic resolution scaling
 
 26.07.2023
 [x] implement blue torch
