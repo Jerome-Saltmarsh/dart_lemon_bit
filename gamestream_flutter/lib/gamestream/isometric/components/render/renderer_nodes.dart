@@ -131,6 +131,7 @@ class RendererNodes extends IsometricRenderer {
   var atlasNodesLoaded = false;
 
   late Uint32List nodeColors;
+  late Uint8List nodeOrientations;
 
   late final ui.Image atlasNodes;
 
@@ -166,13 +167,13 @@ class RendererNodes extends IsometricRenderer {
     }
     return nodeColors[currentNodeIndex + totalColumns];
   }
-  int get currentNodeOrientation => isometric.nodeOrientations[currentNodeIndex];
+  int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
   int get windType => isometric.windTypeAmbient.value;
 
   int get currentNodeVariation => isometric.nodeVariations[currentNodeIndex];
 
-  int get renderNodeOrientation => isometric.nodeOrientations[currentNodeIndex];
+  int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
 
   int get renderNodeVariation => isometric.nodeVariations[currentNodeIndex];
 
@@ -596,13 +597,13 @@ class RendererNodes extends IsometricRenderer {
      var searchIndex = i + (isometric.area * isometric.player.indexZ);
      addVisible3D(searchIndex);
 
-     var spaceReached = isometric.nodeOrientations[searchIndex] == NodeOrientation.None;
+     var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
      var gapReached = false;
 
      while (true) {
        searchIndex += isometric.area;
         if (searchIndex >= isometric.totalNodes) break;
-        final nodeOrientation = isometric.nodeOrientations[searchIndex];
+        final nodeOrientation = nodeOrientations[searchIndex];
         if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Center) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) break;
@@ -665,7 +666,7 @@ class RendererNodes extends IsometricRenderer {
 
   bool blocksBeamHorizontal(int index, int dirRow, int dirColumn){
     assert (dirRow == 0 || dirColumn == 0);
-    final nodeOrientation = isometric.nodeOrientations[index];
+    final nodeOrientation = nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (nodeOrientation == NodeOrientation.Solid) return true;
     if (nodeOrientation == NodeOrientation.Radial) return false;
@@ -690,7 +691,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   bool blocksBeamVertical(int index){
-    final nodeOrientation = isometric.nodeOrientations[index];
+    final nodeOrientation = nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (NodeOrientation.isHalf(nodeOrientation)) return false;
     if (NodeOrientation.isRadial(nodeOrientation)) return false;
@@ -1010,7 +1011,7 @@ class RendererNodes extends IsometricRenderer {
       case NodeType.Respawning:
         return;
       default:
-        throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(isometric.nodeOrientations[currentNodeIndex])}');
+        throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
     }
   }
 

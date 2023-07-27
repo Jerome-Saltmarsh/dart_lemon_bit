@@ -41,6 +41,7 @@ extension IsometricEvents on Isometric {
     refreshLightSources();
 
     render.rendererNodes.nodeColors = nodeColors;
+    render.rendererNodes.nodeOrientations = nodeOrientations;
 
     if (raining.value) {
       rainStop();
