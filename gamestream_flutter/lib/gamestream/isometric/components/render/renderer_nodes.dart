@@ -1757,63 +1757,32 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    var shift = IsometricAnimation.treeAnimation[
-      ((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length
-    ] * windType;
+    final shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
+    final dstX = currentNodeDstX + (shift * 0.5);
+    final dstY = currentNodeDstY + 14;
 
-    // const srcX = AtlasNodeX.Tree_Top;
-    // const srcHeight = AtlasNode.Node_Tree_Top_Height;
-    // const srcWidth = AtlasNode.Node_Tree_Top_Width;
-    // const srcWidthHalf = srcWidth / 2;
-    // const srcHeightHalf = srcHeight / 2;
-    // const dstX = -12.0;
-    // const dstY = 24.0;
-
-    // north
-    // engine.renderSprite(
-    //   image: atlasNodes,
-    //   srcX: srcX,
-    //   srcY: Src_Y_Sprite_Oak_Top,
-    //   srcWidth: srcWidthHalf,
-    //   srcHeight: srcHeightHalf,
-    //   dstX: currentNodeDstX + (shift * 0.5) + dstX,
-    //   dstY: currentNodeDstY - srcHeightHalf + dstY,
-    //   color: colorNorth,
-    // );
-    //
-    // // east
-    // engine.renderSprite(
-    //   image: atlasNodes,
-    //   srcX: srcX + srcWidthHalf,
-    //   srcY: Src_Y_Sprite_Oak_Top,
-    //   srcWidth: srcWidthHalf,
-    //   srcHeight: srcHeightHalf,
-    //   dstX: currentNodeDstX + (shift * 0.5) + srcWidthHalf + dstX,
-    //   dstY: currentNodeDstY - srcHeightHalf + dstY,
-    //   color: colorEast,
-    // );
-    //
-    // // south
-    // engine.renderSprite(
-    //   image: atlasNodes,
-    //   srcX: srcX + srcWidthHalf,
-    //   srcY: Src_Y_Sprite_Oak_Top + srcHeightHalf,
-    //   srcWidth: srcWidthHalf,
-    //   srcHeight: srcHeightHalf,
-    //   dstX: currentNodeDstX + (shift * 0.5) + srcWidthHalf + dstX,
-    //   dstY: currentNodeDstY - srcHeightHalf + dstY + srcHeightHalf,
-    //   color: colorSouth,
-    // );
-
+    // west
     engine.renderSprite(
-      image: isometric.images.atlas_nodes,
-      srcX: AtlasNodeX.Tree_Top,
-      srcY: 433.0,
-      srcWidth: AtlasNode.Node_Tree_Top_Width,
-      srcHeight: AtlasNode.Node_Tree_Top_Height,
-      dstX: currentNodeDstX + (shift * 0.5),
-      dstY: currentNodeDstY,
-      color: renderNodeBelowColor,
+      image: atlasNodes,
+      srcX: Src_X_Sprite_Tree_Oak_Top_West,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorWest,
+    );
+
+    // south
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: Src_X_Sprite_Tree_Oak_Top_South,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorSouth,
     );
   }
 
@@ -1823,18 +1792,13 @@ class RendererNodes extends IsometricRenderer {
     final dstX = currentNodeDstX + (shift * 0.5);
     final dstY = currentNodeDstY + 14;
 
-    const Src_Width = 50.0;
-    const Src_Height = 73.0;
-    const Src_X = 1136.0 + Src_Width + Src_Width;
-    const Src_Y = 160.0;
-
     // west
     engine.renderSprite(
       image: atlasNodes,
-      srcX: Src_X,
-      srcY: Src_Y ,
-      srcWidth: Src_Width,
-      srcHeight: Src_Height,
+      srcX: Src_X_Sprite_Tree_Pine_Top_West,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
@@ -1843,10 +1807,10 @@ class RendererNodes extends IsometricRenderer {
     // south
     engine.renderSprite(
       image: atlasNodes,
-      srcX: Src_X + Src_Width,
-      srcY: Src_Y ,
-      srcWidth: Src_Width,
-      srcHeight: Src_Height,
+      srcX: Src_X_Sprite_Tree_Pine_Top_South,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
       color: colorSouth,
@@ -1855,68 +1819,17 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeBottomOak() {
-    // engine.renderSprite(
-    //   image: isometric.images.atlas_nodes,
-    //   srcX: AtlasNodeX.Tree_Bottom,
-    //   srcY: 433.0,
-    //   srcWidth: AtlasNode.Width_Tree_Bottom,
-    //   srcHeight: AtlasNode.Node_Tree_Bottom_Height,
-    //   dstX: currentNodeDstX,
-    //   dstY: currentNodeDstY,
-    //   color: isometric.getNodeColorAtIndex(currentNodeIndex),
-    // );
-    final shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
 
-    final dstX = currentNodeDstX + (shift * 0.5);
-    final dstXY = currentNodeDstY;
-
-    const Src_Width = 50.0;
-    const Src_Height = 73.0;
-    const Src_X = 1136.0;
-    const Src_Y = 160.0;
-
-    // west
-    engine.renderSprite(
-      image: atlasNodes,
-      srcX: Src_X,
-      srcY: Src_Y ,
-      srcWidth: Src_Width,
-      srcHeight: Src_Height,
-      dstX: dstX,
-      dstY: dstXY,
-      color: colorWest,
-    );
-
-    // south
-    engine.renderSprite(
-      image: atlasNodes,
-      srcX: Src_X + Src_Width,
-      srcY: Src_Y ,
-      srcWidth: Src_Width,
-      srcHeight: Src_Height,
-      dstX: dstX,
-      dstY: dstXY,
-      color: colorSouth,
-    );
-
-  }
-
-  void renderTreeBottomPine() {
     final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY + 12.0;
-
-    const Src_Width = 50.0;
-    const Src_Height = 73.0;
-    const Src_X = 1136.0;
-    const Src_Y = 160.0;
+    final dstY = currentNodeDstY;
 
     // west
     engine.renderSprite(
       image: atlasNodes,
-      srcX: Src_X,
-      srcY: Src_Y ,
-      srcWidth: Src_Width,
-      srcHeight: Src_Height,
+      srcX: Src_X_Sprite_Tree_Oak_Bottom_West,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
@@ -1925,10 +1838,40 @@ class RendererNodes extends IsometricRenderer {
     // south
     engine.renderSprite(
       image: atlasNodes,
-      srcX: Src_X + Src_Width,
-      srcY: Src_Y ,
-      srcWidth: Src_Width,
-      srcHeight: Src_Height,
+      srcX: Src_X_Sprite_Tree_Oak_Bottom_South,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorSouth,
+    );
+
+  }
+
+  void renderTreeBottomPine() {
+    final dstX = currentNodeDstX;
+    final dstY = currentNodeDstY;
+
+    // west
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: Src_X_Sprite_Tree_Pine_Bottom_West,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorWest,
+    );
+
+    // south
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: Src_X_Sprite_Tree_Pine_Bottom_South,
+      srcY: Src_Y_Sprite_Tree,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
       color: colorSouth,

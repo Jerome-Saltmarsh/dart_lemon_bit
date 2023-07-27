@@ -27,5 +27,23 @@ const Src_Height_Cell_Top =  16.0;
 const Src_Height_Cell_West = 16.0;
 const Src_Height_Cell_South = 15.0;
 
-const Src_Y_Sprite_Oak_Top = 433.0;
 const Src_Width_Sprite_Oak = 62.0;
+const Src_Width_Sprite_Tree = 48.0;
+
+const Src_X_Sprite_Tree = 957.0;
+
+const Src_Y_Sprite_Oak_Top = 433.0;
+const Src_Y_Sprite_Tree = 232.0;
+
+const Src_Height_Sprite_Tree = 72.0;
+
+const Src_X_Sprite_Tree_Pine_Bottom_West = Src_X_Sprite_Tree;
+const Src_X_Sprite_Tree_Pine_Bottom_South = Src_X_Sprite_Tree_Pine_Bottom_West + Src_Width_Sprite_Tree;
+const Src_X_Sprite_Tree_Pine_Top_West = Src_X_Sprite_Tree_Pine_Bottom_South + Src_Width_Sprite_Tree;
+const Src_X_Sprite_Tree_Pine_Top_South = Src_X_Sprite_Tree_Pine_Top_West + Src_Width_Sprite_Tree;
+
+const Src_X_Sprite_Tree_Oak_Bottom_West = Src_X_Sprite_Tree_Pine_Top_South + Src_Width_Sprite_Tree;
+const Src_X_Sprite_Tree_Oak_Bottom_South = Src_X_Sprite_Tree_Oak_Bottom_West + Src_Width_Sprite_Tree;
+const Src_X_Sprite_Tree_Oak_Top_West = Src_X_Sprite_Tree_Oak_Bottom_South + Src_Width_Sprite_Tree;
+const Src_X_Sprite_Tree_Oak_Top_South = Src_X_Sprite_Tree_Oak_Top_West + Src_Width_Sprite_Tree;
+const Src_X_Sprite_Tree_Oak_Bottom = Src_Y_Sprite_Tree + Src_Width_Sprite_Tree;
