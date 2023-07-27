@@ -519,48 +519,12 @@ class Isometric extends WebsocketClientBuilder with
 
   void applyEmissions(){
     totalActiveLights = 0;
-    applyEmissionsLightSources();
+    applyEmissionsColoredLightSources();
 
     if (bakeStackRecording){
       recordBakeStack();
     } else {
-
-      final alpha = interpolate(
-        ambientAlpha,
-        0,
-        torchEmissionIntensity,
-      ).toInt();
-
-      for (var i = 0; i < bakeStackTorchTotal; i++){
-        final index = bakeStackTorchIndex[i];
-
-        if (!indexOnscreen(index))
-          continue;
-
-        final start = bakeStackStartIndex[i];
-        final size = bakeStackTorchSize[i];
-        final end = start + size;
-
-        for (var j = start; j < end; j++){
-          final brightness = bakeStackBrightness[j];
-          final index = bakeStackIndex[j];
-          final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
-          applyAmbient(
-            index: index,
-            alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
-          );
-        }
-      }
-
-      // for (var i = 0; i < bakeStackTotal; i++){
-      //   final brightness = bakeStackBrightness[i];
-      //   final index = bakeStackIndex[i];
-      //   final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
-      //   applyAmbient(
-      //     index: index,
-      //     alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
-      //   );
-      // }
+      applyEmissionBakeStack();
     }
 
     applyEmissionsCharacters();
@@ -568,8 +532,36 @@ class Isometric extends WebsocketClientBuilder with
     applyEmissionsProjectiles();
     applyCharacterColors();
     applyEmissionsParticles();
-
     applyEmissionEditorSelectedNode();
+  }
+
+  void applyEmissionBakeStack() {
+        final alpha = interpolate(
+      ambientAlpha,
+      0,
+      torchEmissionIntensity,
+    ).toInt();
+
+    for (var i = 0; i < bakeStackTorchTotal; i++){
+      final index = bakeStackTorchIndex[i];
+
+      if (!indexOnscreen(index))
+        continue;
+
+      final start = bakeStackStartIndex[i];
+      final size = bakeStackTorchSize[i];
+      final end = start + size;
+
+      for (var j = start; j < end; j++){
+        final brightness = bakeStackBrightness[j];
+        final index = bakeStackIndex[j];
+        final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+        applyAmbient(
+          index: index,
+          alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
+        );
+      }
+    }
   }
 
   void applyEmissionEditorSelectedNode() {
@@ -1711,22 +1703,12 @@ class Isometric extends WebsocketClientBuilder with
     return render.rendererNodes.visible3D[index];
   }
 
-  void applyEmissionsLightSources() {
+  void applyEmissionsColoredLightSources() {
     for (var i = 0; i < nodesLightSourcesTotal; i++){
       final nodeIndex = nodesLightSources[i];
       final nodeType = nodeTypes[nodeIndex];
 
       switch (nodeType){
-        // case NodeType.Torch:
-        //   emitLightAmbient(
-        //     index: nodeIndex,
-        //     alpha: interpolate(
-        //       ambientAlpha,
-        //       0,
-        //       torchEmissionIntensity,
-        //     ).toInt(),
-        //   );
-        //   break;
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,

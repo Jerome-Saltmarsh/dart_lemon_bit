@@ -163,18 +163,20 @@ mixin IsometricScene {
   }
 
   void jobBatchResetNodeColorsToAmbient() {
-    const ambientResetBatchSize = 5000;
+
+    if (ambientResetIndex >= totalNodes)
+      return;
+
+    const ambientResetBatchSize = 2500;
     final targetEnd = ambientResetIndex + ambientResetBatchSize;
-    final amount = min(targetEnd, totalNodes);
+    final end = min(targetEnd, totalNodes);
 
-    for (ambientResetIndex; ambientResetIndex < amount; ambientResetIndex++){
-      nodeColors[ambientResetIndex] = ambientColor;
-      hsvHue[ambientResetIndex] = ambientHue;
-      hsvSaturation[ambientResetIndex] = ambientSaturation;
-      hsvValues[ambientResetIndex] = ambientValue;
-      hsvAlphas[ambientResetIndex] = _ambientAlpha;
-    }
-
+    nodeColors.fillRange(ambientResetIndex, end, ambientColor);
+    hsvHue.fillRange(ambientResetIndex, end, ambientHue);
+    hsvSaturation.fillRange(ambientResetIndex, end, ambientSaturation);
+    hsvValues.fillRange(ambientResetIndex, end, ambientValue);
+    hsvAlphas.fillRange(ambientResetIndex, end, _ambientAlpha);
+    ambientResetIndex += ambientResetBatchSize;
   }
 
   int getHeightAt(int row, int column){
