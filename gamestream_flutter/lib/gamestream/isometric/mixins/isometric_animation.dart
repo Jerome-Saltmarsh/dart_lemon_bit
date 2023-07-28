@@ -10,20 +10,18 @@ mixin IsometricAnimation {
   var animationFrame6 = 0;
   var animationFrame8 = 0;
   var animationFrame16 = 0;
-  var animationFrameGrass = 0;
-  var animationFrameGrassShort = 0;
   var animationFrameRainWater = 0;
   var animationFrameTreePosition = 0;
   var rainPosition = 0.0;
-
-  static const treeStrength = 0.5;
-  static const treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
-  final treeAnimationLength = treeAnimation.length;
-  var animationFrameJellyFish = 0;
   var _next = 0;
+  var rendersPerFrame = 3;
+
+  final treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
 
   void updateAnimationFrame() {
-    if (_next++ < 3) return;
+    if (_next++ < rendersPerFrame)
+      return;
+
     _next = 0;
     animationFrame++;
     animationFrame6++;
@@ -48,10 +46,7 @@ mixin IsometricAnimation {
     animationFrameWaterHeight = const [
       0, 1, 2, 3, 4, 5, 4, 3, 2, 1,
     ][animationFrameWater];
-    animationFrameWaterSrcX = animationFrameWater * Node_Size;
 
-    if (animationFrameGrass++ >= 6){
-      animationFrameGrass = 0;
-    }
+    animationFrameWaterSrcX = animationFrameWater * Node_Size;
   }
 }

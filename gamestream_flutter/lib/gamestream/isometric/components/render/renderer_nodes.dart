@@ -1773,7 +1773,7 @@ class RendererNodes extends IsometricRenderer {
         return;
       default:
         renderStandardNode(
-          srcX: AtlasNodeX.Grass_Long + ((((row - column) + isometric.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
+          srcX: AtlasNodeX.Grass_Long + ((((row - column) + isometric.animationFrame6) % 6) * 48), // TODO Expensive Operation
           srcY: 0,
         );
         return;
@@ -1813,7 +1813,7 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    final shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
+    final shift = isometric.treeAnimation[((row - column) + isometric.animationFrame) % isometric.treeAnimation.length] * windType;
     final dstX = currentNodeDstX + (shift * 0.5);
     final dstY = currentNodeDstY + 14;
 
@@ -1844,7 +1844,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTopPine() {
 
-    final shift = IsometricAnimation.treeAnimation[((row - column) + isometric.animationFrame) % IsometricAnimation.treeAnimation.length] * windType;
+    final shift = isometric.treeAnimation[((row - column) + isometric.animationFrame) % isometric.treeAnimation.length] * windType;
     final dstX = currentNodeDstX + (shift * 0.5);
     final dstY = currentNodeDstY + 14;
 
