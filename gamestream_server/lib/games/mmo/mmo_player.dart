@@ -1193,6 +1193,11 @@ class MmoPlayer extends IsometricPlayer {
      }
   }
 
+  @override
+  void handleRequestException(Object exception) {
+    writeMMOError(exception.toString());
+  }
+
   void writeMMOError(String error) {
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Error);

@@ -46,6 +46,7 @@ class NodeType {
   static const Scaffold = 86;
   static const Glass = 87;
   static const Torch_Blue = 88;
+  static const Torch_Red = 89;
 
   static bool isMaterialWood(int value) => const [
     Torch,
@@ -122,6 +123,7 @@ class NodeType {
         Tree_Top,
         Torch,
         Torch_Blue,
+        Torch_Red,
         Concrete,
         Brick,
         Bricks_Red,
@@ -231,7 +233,7 @@ class NodeType {
     value == Rain_Landing     ;
 
   static bool emitsLight(int value) =>
-    const [Torch, Torch_Blue, Fireplace].contains(value);
+    const [Torch, Torch_Blue, Torch_Red, Fireplace].contains(value);
 
   static bool blocksPerception(int value) =>
      supportsOrientationSolid(value);
@@ -362,5 +364,6 @@ class NodeType {
     Sandbag: 'Sandbag',
     Glass: 'Glass',
     Torch_Blue: 'Torch_Blue',
+    Torch_Red: 'Torch_Red',
   }[type] ?? 'unknown($type)';
 }

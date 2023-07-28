@@ -53,6 +53,8 @@ abstract class Player with ByteWriter {
 
   Game get game;
 
+  void handleRequestException(Object exception) {}
+
 }
 
 extension PlayerExtension on Player {

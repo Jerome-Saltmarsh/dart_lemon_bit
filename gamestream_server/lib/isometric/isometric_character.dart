@@ -4,7 +4,6 @@ import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
 import 'package:gamestream_server/lemon_math.dart';
-import 'package:gamestream_server/lemon_math/src/functions/angle_diff.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_position.dart';

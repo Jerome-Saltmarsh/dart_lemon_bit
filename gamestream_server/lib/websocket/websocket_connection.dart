@@ -77,7 +77,12 @@ class WebSocketConnection with ByteReader {
       return;
     }
     if (args is String) {
-      return onDataStringArray(args.split(" "));
+      try {
+        return onDataStringArray(args.split(" "));
+      } catch(error){
+        player?.handleRequestException(error);
+      }
+      return;
     }
     throw Exception("Invalid arg type");
   }

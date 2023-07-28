@@ -1725,6 +1725,13 @@ class Isometric extends WebsocketClientBuilder with
             intensity: torchEmissionIntensity,
           );
           break;
+        case NodeType.Torch_Red:
+          emitLightColored(
+            index: nodeIndex,
+            color: colors.red1,
+            intensity: torchEmissionIntensity,
+          );
+          break;
       }
     }
   }

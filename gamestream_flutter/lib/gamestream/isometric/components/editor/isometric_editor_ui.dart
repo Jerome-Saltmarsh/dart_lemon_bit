@@ -49,6 +49,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Tile,
     NodeType.Glass,
     NodeType.Torch_Blue,
+    NodeType.Torch_Red,
   ];
 
 
