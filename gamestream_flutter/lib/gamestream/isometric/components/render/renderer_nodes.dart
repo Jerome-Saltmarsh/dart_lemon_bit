@@ -184,7 +184,7 @@ class RendererNodes extends IsometricRenderer {
 
   int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
-  int get windType => isometric.windTypeAmbient.value;
+  int get wind => isometric.windTypeAmbient.value;
 
   int get currentNodeVariation => isometric.nodeVariations[currentNodeIndex];
 
@@ -797,7 +797,7 @@ class RendererNodes extends IsometricRenderer {
 
     engine.renderSprite(
       image: isometric.images.atlas_nodes,
-      srcX: windType == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
+      srcX: wind == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
       srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (isometric.animation.frame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
@@ -1764,7 +1764,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeGrassLong() {
     if (currentNodeOrientation == NodeOrientation.Destroyed) return;
-    switch (windType) {
+    switch (wind) {
       case WindType.Calm:
         renderStandardNode(
           srcX: AtlasNodeX.Grass_Long,
@@ -1813,12 +1813,12 @@ class RendererNodes extends IsometricRenderer {
   void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    final shift = isometric.animation.treeAnimation[((row - column) + isometric.animation.frame) % isometric.animation.treeAnimation.length] * windType;
+    final shift = isometric.animation.treeAnimation[((row - column) + isometric.animation.frame) % isometric.animation.treeAnimation.length] * wind;
     final dstX = currentNodeDstX + (shift * 0.5);
     final dstY = currentNodeDstY + 14;
 
     // west
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Oak_Top_West,
       srcY: Src_Y_Sprite_Tree,
@@ -1827,6 +1827,8 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
+      // rotation: shift * 0.01,
+      rotation: piQuarter,
     );
 
     // south
@@ -1844,12 +1846,17 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTopPine() {
 
-    final shift = isometric.animation.treeAnimation[((row - column) + isometric.animation.frame) % isometric.animation.treeAnimation.length] * windType;
+    final animation = isometric.animation;
+    final treeAnimation = animation.treeAnimation;
+    final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
     final dstX = currentNodeDstX + (shift * 0.5);
-    final dstY = currentNodeDstY + 14;
+    final dstY = currentNodeDstY + 48;
+    final rotation = shiftRotation * 0.0066;
+    const anchorY = 0.9;
 
     // west
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Top_West,
       srcY: Src_Y_Sprite_Tree,
@@ -1858,10 +1865,12 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
+      rotation: rotation,
+      anchorY: anchorY,
     );
 
     // south
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Top_South,
       srcY: Src_Y_Sprite_Tree,
@@ -1870,6 +1879,8 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorSouth,
+      rotation: rotation,
+      anchorY: anchorY,
     );
 
   }
@@ -1879,7 +1890,7 @@ class RendererNodes extends IsometricRenderer {
     final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
 
-    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * windType;
+    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * wind;
     final dstX = currentNodeDstX + (shift * 0.15);
     final dstY = currentNodeDstY + 12;
 
@@ -1914,7 +1925,7 @@ class RendererNodes extends IsometricRenderer {
     final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
 
-    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * windType;
+    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * wind;
     final dstX = currentNodeDstX + (shift * 0.15);
     final dstY = currentNodeDstY + 12;
 
