@@ -1889,13 +1889,15 @@ class RendererNodes extends IsometricRenderer {
 
     final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
-
-    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * wind;
-    final dstX = currentNodeDstX + (shift * 0.15);
-    final dstY = currentNodeDstY + 12;
+    final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
+    final dstX = currentNodeDstX + (shift * 0.5);
+    final dstY = currentNodeDstY + 48;
+    final rotation = shiftRotation * 0.0066;
+    const anchorY = 0.9;
 
     // west
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Oak_Bottom_West,
       srcY: Src_Y_Sprite_Tree,
@@ -1904,10 +1906,11 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
+      rotation: rotation,
     );
 
     // south
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Oak_Bottom_South,
       srcY: Src_Y_Sprite_Tree,
@@ -1916,21 +1919,23 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorSouth,
+      rotation: rotation,
     );
 
   }
 
   void renderTreeBottomPine() {
-
     final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
-
-    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * wind;
-    final dstX = currentNodeDstX + (shift * 0.15);
-    final dstY = currentNodeDstY + 12;
+    final frame = row - column + 4;
+    final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
+    final dstX = currentNodeDstX;
+    final dstY = currentNodeDstY + 32;
+    final rotation = shiftRotation * 0.013;
+    const anchorY = 0.72;
 
     // west
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Bottom_West,
       srcY: Src_Y_Sprite_Tree,
@@ -1939,10 +1944,12 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
+      rotation: rotation,
+      anchorY: anchorY,
     );
 
     // south
-    engine.renderSprite(
+    engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Bottom_South,
       srcY: Src_Y_Sprite_Tree,
@@ -1951,6 +1958,8 @@ class RendererNodes extends IsometricRenderer {
       dstX: dstX,
       dstY: dstY,
       color: colorSouth,
+      rotation: rotation,
+      anchorY: anchorY,
     );
   }
 
