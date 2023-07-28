@@ -13,8 +13,10 @@ mixin IsometricScene {
   var emissionAlphaCharacter = 50;
 
   var ambientColor = Color.fromRGBO(31, 1, 86, 0.5).value;
-  int get ambientAlpha => getAlpha(ambientColor);
-  int get ambientRGB => getRGB(ambientColor);
+  var _ambientAlpha = 0;
+  late var ambientRGB = getRGB(ambientColor);
+
+  int get ambientAlpha => _ambientAlpha;
 
   var nodesLightSources = Uint16List(1000);
   var nodesLightSourcesTotal = 0;
@@ -48,12 +50,13 @@ mixin IsometricScene {
   final nodesChangedNotifier = Watch(0);
 
   set ambientAlpha(int value){
-     final clampedValue = clamp(value, 0, 255);
+     final clampedValue = value.clamp(0, 255);
 
-     if (clampedValue == ambientAlpha)
+     if (clampedValue == _ambientAlpha)
        return;
 
      ambientResetIndex = 0;
+     _ambientAlpha = clampedValue;
      ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
   }
 

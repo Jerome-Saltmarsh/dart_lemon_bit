@@ -537,8 +537,11 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void applyEmissionBakeStack() {
+
+    final ambient = ambientAlpha;
+
     final alpha = interpolate(
-      ambientAlpha,
+      ambient,
       0,
       torchEmissionIntensity,
     ).toInt();
@@ -559,7 +562,7 @@ class Isometric extends WebsocketClientBuilder with
         final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
         applyAmbient(
           index: index,
-          alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
+          alpha: interpolate(ambient, alpha, intensity).toInt(),
         );
       }
     }
