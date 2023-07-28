@@ -1723,14 +1723,14 @@ class Isometric extends WebsocketClientBuilder with
           emitLightColored(
             index: nodeIndex,
             color: colors.blue1,
-            intensity: torchEmissionIntensity,
+            intensity: torchEmissionIntensity - 0.2,
           );
           break;
         case NodeType.Torch_Red:
           emitLightColored(
             index: nodeIndex,
             color: colors.red1,
-            intensity: torchEmissionIntensity,
+            intensity: torchEmissionIntensity - 0.2,
           );
           break;
       }
