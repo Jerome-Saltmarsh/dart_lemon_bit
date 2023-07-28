@@ -40,8 +40,7 @@ import 'ui/isometric_constants.dart';
 class Isometric extends WebsocketClientBuilder with
     IsometricScene,
     IsometricCharacters,
-    IsometricParticles,
-    IsometricAnimation
+    IsometricParticles
 {
 
   static const Server_FPS = 45;
@@ -110,6 +109,7 @@ class Isometric extends WebsocketClientBuilder with
   final sceneUnderground = Watch(false);
   final gameObjects = <GameObject>[];
   final projectiles = <Projectile>[];
+  final animation = IsometricAnimation();
 
   late final Map<int, ui.Image> mapGameObjectTypeToImage;
   late final messageBoxVisible = Watch(false, clamp: (bool value) {
@@ -239,7 +239,8 @@ class Isometric extends WebsocketClientBuilder with
 
     audio.update();
     updateParticles();
-    updateAnimationFrame();
+    animation.update();
+
     updateProjectiles();
     updateGameObjects();
     player.updateMessageTimer();
@@ -2582,7 +2583,7 @@ class Isometric extends WebsocketClientBuilder with
   void renderStars(double x, double y) =>
       engine.renderSprite(
         image: images.sprite_stars,
-        srcX: 125.0 * animationFrame16,
+        srcX: 125.0 * animation.frame16,
         srcY: 0,
         srcWidth: 125,
         srcHeight: 125,

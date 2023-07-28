@@ -110,7 +110,7 @@ class RendererGameObjects extends IsometricRenderer {
   }
 
   double getRenderYBouncing(Position v3) =>
-      ((v3.y + v3.x) * 0.5) - v3.z + isometric.animationFrameWaterHeight;
+      ((v3.y + v3.x) * 0.5) - v3.z + isometric.animation.frameWaterHeight;
 
   void renderBouncingGameObjectShadow(Position gameObject){
     const shadowScale = 1.5;
@@ -119,7 +119,7 @@ class RendererGameObjects extends IsometricRenderer {
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * isometric.animationFrameWaterHeight.toDouble())
+        scale: shadowScale + (shadowScaleHeight * isometric.animation.frameWaterHeight.toDouble())
     );
   }
 }
