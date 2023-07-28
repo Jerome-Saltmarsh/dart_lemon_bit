@@ -198,6 +198,8 @@ class RendererNodes extends IsometricRenderer {
 
   int get renderNodeBelowColor => isometric.getNodeColorAtIndex(currentNodeIndex - isometric.area);
 
+  int get nodeTypeBelow => isometric.getTypeBelow(currentNodeIndex);
+
   @override
   void renderFunction() {
     engine.bufferImage = atlasNodes;
@@ -791,14 +793,32 @@ class RendererNodes extends IsometricRenderer {
 
   void renderNodeTorch(){
 
-    const torchSrcY = 735;
-    const torchSrcXCalm = 1665.0;
-    const torchSrcXWindy = 1691.0;
+    final dstX = currentNodeDstX;
+    final dstY = currentNodeDstY;
+    const Src_X_Plain = 1294.0;
+    const Src_X_Grassy = 1311.0;
+
+    final srcX = nodeTypeBelow == NodeType.Grass ? Src_X_Grassy : Src_X_Plain;
+
+    renderCustomNode(
+        srcX: srcX,
+        srcY: 304,
+        srcWidth: 16,
+        srcHeight: 34,
+        dstX: dstX,
+        dstY: dstY,
+        color: colorCurrent,
+    );
+
+    final frame = (row + (isometric.animation.frame)) % 6;
+    const Flame_Src_Y = 372.0;
+    const Flame_Width = 32.0;
+    const Flame_Height = 32.0;
 
     engine.renderSprite(
       image: isometric.images.atlas_nodes,
-      srcX: wind == WindType.Calm ? torchSrcXCalm : torchSrcXWindy,
-      srcY: torchSrcY + AtlasNode.Height_Torch + (((row + (isometric.animation.frame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+      srcX: 1247.0 + (frame * Flame_Width),
+      srcY: wind == WindType.Calm ? Flame_Src_Y : Flame_Src_Y + Flame_Height,
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: currentNodeDstX,
@@ -806,7 +826,6 @@ class RendererNodes extends IsometricRenderer {
       anchorY: AtlasNodeAnchorY.Torch,
       color: colorCurrent,
     );
-    return;
   }
 
   bool assertOnScreen(){
