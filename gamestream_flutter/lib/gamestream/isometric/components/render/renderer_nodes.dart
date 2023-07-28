@@ -1851,9 +1851,9 @@ class RendererNodes extends IsometricRenderer {
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
     final dstX = currentNodeDstX + (shift * 0.5);
-    final dstY = currentNodeDstY + 48;
+    final dstY = currentNodeDstY + 40;
     final rotation = shiftRotation * 0.0066;
-    const anchorY = 0.9;
+    const anchorY = 0.82;
 
     // west
     engine.renderSpriteRotated(
