@@ -1876,7 +1876,11 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeBottomOak() {
 
-    final dstX = currentNodeDstX;
+    final animation = isometric.animation;
+    final treeAnimation = animation.treeAnimation;
+
+    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * windType;
+    final dstX = currentNodeDstX + (shift * 0.15);
     final dstY = currentNodeDstY + 12;
 
     // west
@@ -1906,7 +1910,12 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderTreeBottomPine() {
-    final dstX = currentNodeDstX;
+
+    final animation = isometric.animation;
+    final treeAnimation = animation.treeAnimation;
+
+    final shift = treeAnimation[((row - column) + (animation.frame + 2)) % treeAnimation.length] * windType;
+    final dstX = currentNodeDstX + (shift * 0.15);
     final dstY = currentNodeDstY + 12;
 
     // west
