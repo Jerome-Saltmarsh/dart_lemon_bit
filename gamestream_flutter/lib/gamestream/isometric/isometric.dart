@@ -549,7 +549,7 @@ class Isometric extends WebsocketClientBuilder with
     for (var i = 0; i < bakeStackTorchTotal; i++){
       final index = bakeStackTorchIndex[i];
 
-      if (!indexOnscreen(index))
+      if (!indexOnscreen(index, padding: (Node_Size * 6)))
         continue;
 
       final start = bakeStackStartIndex[i];
