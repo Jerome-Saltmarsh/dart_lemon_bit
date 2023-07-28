@@ -794,7 +794,7 @@ class RendererNodes extends IsometricRenderer {
   void renderNodeTorch(){
 
     final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY;
+    final dstY = currentNodeDstY - 16;
     const Src_X_Plain = 1294.0;
     const Src_X_Grassy = 1311.0;
 
@@ -805,9 +805,9 @@ class RendererNodes extends IsometricRenderer {
         srcY: 304,
         srcWidth: 16,
         srcHeight: 34,
-        dstX: dstX,
-        dstY: dstY,
-        color: colorCurrent,
+        dstX: dstX - 8,
+        dstY: dstY + 16,
+        color: 0,
     );
 
     final frame = (row + (isometric.animation.frame)) % 6;
@@ -819,12 +819,12 @@ class RendererNodes extends IsometricRenderer {
       image: isometric.images.atlas_nodes,
       srcX: 1247.0 + (frame * Flame_Width),
       srcY: wind == WindType.Calm ? Flame_Src_Y : Flame_Src_Y + Flame_Height,
-      srcWidth: AtlasNode.Width_Torch,
-      srcHeight: AtlasNode.Height_Torch,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY,
+      srcWidth: Flame_Width,
+      srcHeight: Flame_Height,
+      dstX: dstX,
+      dstY: dstY + 8,
       anchorY: AtlasNodeAnchorY.Torch,
-      color: colorCurrent,
+      color: 0,
     );
   }
 
