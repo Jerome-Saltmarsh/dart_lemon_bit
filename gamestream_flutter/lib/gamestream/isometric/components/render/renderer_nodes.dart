@@ -1763,21 +1763,50 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderNodeGrassLong() {
-    if (currentNodeOrientation == NodeOrientation.Destroyed) return;
-    switch (wind) {
-      case WindType.Calm:
-        renderStandardNode(
-          srcX: AtlasNodeX.Grass_Long,
-          srcY: 0,
-        );
-        return;
-      default:
-        renderStandardNode(
-          srcX: AtlasNodeX.Grass_Long + ((((row - column) + isometric.animation.frame6) % 6) * 48), // TODO Expensive Operation
-          srcY: 0,
-        );
-        return;
-    }
+    if (currentNodeOrientation == NodeOrientation.Destroyed)
+      return;
+
+    final frame = wind == WindType.Calm
+        ? 0
+        : (((row - column) + isometric.animation.frame6) % 6);
+    const Src_X = 957.0;
+    const Src_Y = 305.0;
+    const Src_Width = 48.0;
+    const Src_Height = 72.0;
+
+    final srcX = Src_X + (frame * Src_Width);
+    final dstX = currentNodeDstX - 24;
+    final dstY = currentNodeDstY - 24;
+
+    renderCustomNode(
+      srcX: srcX,
+      srcY: Src_Y,
+      srcWidth: Src_Width,
+      srcHeight: Src_Height,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorAbove,
+    );
+
+    renderCustomNode(
+      srcX: srcX,
+      srcY: Src_Y + Src_Height,
+      srcWidth: Src_Width,
+      srcHeight: Src_Height,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorWest,
+    );
+
+    renderCustomNode(
+      srcX: srcX,
+      srcY: Src_Y + Src_Height + Src_Height,
+      srcWidth: Src_Width,
+      srcHeight: Src_Height,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorSouth,
+    );
   }
 
   void renderNodeRainLanding() {
