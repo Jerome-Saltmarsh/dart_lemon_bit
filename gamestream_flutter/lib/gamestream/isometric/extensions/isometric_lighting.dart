@@ -350,7 +350,6 @@ extension IsometricLighting on Isometric {
     final ambientIntensity = intensity * (ambientAlpha / 255);
 
     final currentColor = nodeColors[index];
-
     final currentRed = getRed(currentColor);
     final currentGreen = getGreen(currentColor);
     final currentBlue = getBlue(currentColor);
@@ -359,49 +358,20 @@ extension IsometricLighting on Isometric {
     final colorRed = getRed(color);
     final colorGreen = getGreen(color);
     final colorBlue = getBlue(color);
-    final colorAlpha = getAlpha(color);
+    final colorAlpha = interpolateByte(0, getAlpha(color), ambientIntensity);
 
     final interpolatedRed = interpolateByte(currentRed, colorRed, ambientIntensity);
     final interpolatedGreen = interpolateByte(currentGreen, colorGreen, ambientIntensity);
     final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
-    final interpolatedOpacity = interpolateByte(currentAlpha, interpolateByte(0, colorAlpha, ambientIntensity), intensity);
-
-    // final interpolatedHue = interpolateDegrees(hsvHue[index], hue, ambientIntensity).toInt();
-    // final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , ambientIntensity).toInt();
-    // final interpolatedValue = interpolate(hsvValues[index], value, ambientIntensity).toInt();
-    // final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, ambientIntensity), intensity).toInt();
+    final interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, ambientIntensity);
 
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
     nodeColors[index] = aRGBToColor(
-        interpolatedOpacity,
+        interpolatedAlpha,
         interpolatedRed,
         interpolatedGreen,
         interpolatedBlue,
     );
-
-    // hsvAlphas[index] = interpolatedAlpha;
-    // hsvHue[index] = interpolatedHue;
-    // hsvSaturation[index] = interpolatedSaturation;
-    // hsvValues[index] = interpolatedValue;
-    // refreshNodeColor(index);
   }
-
-  // void setColor({
-  //   required int index,
-  //   required int alpha,
-  //   required int hue,
-  //   required int saturation,
-  //   required int value,
-  // }){
-  //   colorStackIndex++;
-  //   colorStack[colorStackIndex] = index;
-  //   hsvAlphas[index] = alpha;
-  //   hsvHue[index] = hue;
-  //   hsvSaturation[index] = saturation;
-  //   hsvValues[index] = value;
-  //   refreshNodeColor(index);
-  // }
-
-
 }
