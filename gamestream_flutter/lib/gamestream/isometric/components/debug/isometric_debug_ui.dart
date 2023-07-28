@@ -205,24 +205,24 @@ extension isometricDebugUI on IsometricDebug {
 
           height16,
           buildText('ambient-color'),
-          ColorPicker(
-            portraitOnly: true,
-            pickerColor: HSVColor.fromAHSV(
-              isometric.ambientAlpha / 255,
-              isometric.ambientHue.toDouble(),
-              isometric.ambientSaturation / 100,
-              isometric.ambientValue / 100,
-            ).toColor(),
-            onColorChanged: (color){
-              isometric.overrideColor.value = true;
-              final hsvColor = HSVColor.fromColor(color);
-              isometric.ambientAlpha = (hsvColor.alpha * 255).round();
-              isometric.ambientHue = hsvColor.hue.round();
-              isometric.ambientSaturation = (hsvColor.saturation * 100).round();
-              isometric.ambientValue = (hsvColor.value * 100).round();
-              isometric.resetNodeColorsToAmbient();
-            },
-          ),
+          // ColorPicker(
+          //   portraitOnly: true,
+          //   pickerColor: HSVColor.fromAHSV(
+          //     isometric.ambientAlpha / 255,
+          //     // isometric.ambientHue.toDouble(),
+          //     // isometric.ambientSaturation / 100,
+          //     // isometric.ambientValue / 100,
+          //   ).toColor(),
+          //   onColorChanged: (color){
+          //     isometric.overrideColor.value = true;
+          //     final hsvColor = HSVColor.fromColor(color);
+          //     isometric.ambientAlpha = (hsvColor.alpha * 255).round();
+          //     // isometric.ambientHue = hsvColor.hue.round();
+          //     // isometric.ambientSaturation = (hsvColor.saturation * 100).round();
+          //     // isometric.ambientValue = (hsvColor.value * 100).round();
+          //     isometric.resetNodeColorsToAmbient();
+          //   },
+          // ),
         ],
       );
 

@@ -36,7 +36,6 @@ import 'mixins/src.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
-const TorchColorEmissionAlpha = 90;
 
 class Isometric extends WebsocketClientBuilder with
     IsometricScene,
@@ -82,6 +81,7 @@ class Isometric extends WebsocketClientBuilder with
   var windLine = 0;
   var totalProjectiles = 0;
 
+  final colors = IsometricColors();
   final decoder = ZLibDecoder();
   final imagesLoadedCompleted = Completer();
   final textEditingControllerMessage = TextEditingController();
@@ -404,14 +404,15 @@ class Isometric extends WebsocketClientBuilder with
         case EmissionType.None:
           continue;
         case EmissionType.Color:
-          emitLightColoredAtPosition(
-            gameObject,
-            hue: gameObject.emissionHue,
-            saturation: gameObject.emissionSat,
-            value: gameObject.emissionVal,
-            alpha: gameObject.emissionAlp,
-            intensity: gameObject.emissionIntensity,
-          );
+          // TODO
+          // emitLightColoredAtPosition(
+          //   gameObject,
+          //   hue: gameObject.emissionHue,
+          //   saturation: gameObject.emissionSat,
+          //   value: gameObject.emissionVal,
+          //   alpha: gameObject.emissionAlp,
+          //   intensity: gameObject.emissionIntensity,
+          // );
           continue;
         case EmissionType.Ambient:
           applyVector3EmissionAmbient(gameObject,
@@ -595,12 +596,12 @@ class Isometric extends WebsocketClientBuilder with
 
   void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-       emitLightColoredAtPosition(projectile,
-        hue: 100,
-        saturation: 1,
-        value: 1,
-        alpha: 20,
-      );
+      //  emitLightColoredAtPosition(projectile,
+      //   hue: 100,
+      //   saturation: 1,
+      //   value: 1,
+      //   alpha: 20,
+      // );
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
@@ -610,12 +611,12 @@ class Isometric extends WebsocketClientBuilder with
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-       emitLightColoredAtPosition(projectile,
-        hue: 167,
-        alpha: 50,
-        saturation: 1,
-        value: 1,
-      );
+      //  emitLightColoredAtPosition(projectile,
+      //   hue: 167,
+      //   alpha: 50,
+      //   saturation: 1,
+      //   value: 1,
+      // );
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
@@ -625,14 +626,14 @@ class Isometric extends WebsocketClientBuilder with
       return;
     }
     if (projectile.type == ProjectileType.FrostBall) {
-       emitLightColoredAtPosition(
-         projectile,
-         hue: 203,
-         saturation: 43,
-         value: 100,
-         alpha: 80,
-
-      );
+      //  emitLightColoredAtPosition(
+      //    projectile,
+      //    hue: 203,
+      //    saturation: 43,
+      //    value: 100,
+      //    alpha: 80,
+      //
+      // );
       return;
     }
   }
@@ -815,16 +816,16 @@ class Isometric extends WebsocketClientBuilder with
     if (particle.type == ParticleType.Light_Emission){
       const change = 0.125;
       if (particle.flash){
-        particle.strength += change;
-        if (particle.strength >= 1){
-          particle.strength = 1.0;
+        particle.emissionIntensity += change;
+        if (particle.emissionIntensity >= 1){
+          particle.emissionIntensity = 1.0;
           particle.flash = false;
         }
         return;
       }
-      particle.strength -= change;
-      if (particle.strength <= 0){
-        particle.strength = 0;
+      particle.emissionIntensity -= change;
+      if (particle.emissionIntensity <= 0){
+        particle.emissionIntensity = 0;
         particle.duration = 0;
       }
       return;
@@ -934,12 +935,9 @@ class Isometric extends WebsocketClientBuilder with
         scale: scale,
       )
         ..emitsLight = true
-        ..lightHue = ambientHue
-        ..lightSaturation = ambientSaturation
-        ..lightValue = ambientValue
-        ..alpha = 0
+        ..emissionColor = ambientColor
         ..checkNodeCollision = false
-        ..strength = 0.5
+        ..emissionIntensity = 0.5
   ;
 
   void spawnParticleLightEmissionAmbient({
@@ -959,12 +957,9 @@ class Isometric extends WebsocketClientBuilder with
         checkCollision: false,
         animation: true,
       )
-        ..lightHue = ambientHue
-        ..lightSaturation = ambientSaturation
-        ..lightValue = ambientValue
-        ..alpha = 0
         ..flash = true
-        ..strength = 0.0
+        ..emissionColor = ambientColor
+        ..emissionIntensity = 0.0
   ;
 
   @override
@@ -1641,12 +1636,13 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void refreshGameObjectEmissionColor(GameObject gameObject){
-    gameObject.emissionColor = hsvToColor(
-      hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity).toInt(),
-      saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity).toInt(),
-      value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity).toInt(),
-      opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
-    );
+    // TODO
+    // gameObject.emissionColor = hsvToColor(
+    //   hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity).toInt(),
+    //   saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity).toInt(),
+    //   value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity).toInt(),
+    //   opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
+    // );
   }
 
   bool isOnscreen(Position position) {
@@ -1672,10 +1668,8 @@ class Isometric extends WebsocketClientBuilder with
       if (!particle.emitsLight) continue;
       emitLightColored(
         index: getIndexPosition(particle),
-        hue: particle.lightHue,
-        saturation: particle.lightSaturation,
-        value: particle.lightValue,
-        alpha: particle.alpha,
+        color: particle.emissionColor,
+        intensity: particle.emissionIntensity,
       );
     }
   }
@@ -1719,14 +1713,13 @@ class Isometric extends WebsocketClientBuilder with
       final nodeIndex = nodesLightSources[i];
       final nodeType = nodeTypes[nodeIndex];
 
-      switch (nodeType){
+
+      switch (nodeType) {
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
-            alpha: TorchColorEmissionAlpha,
-            hue: (209 * torchEmissionIntensity).toInt(),
-            saturation: 66,
-            value: 90,
+            color: colors.blue1,
+            intensity: torchEmissionIntensity,
           );
           break;
       }
@@ -1779,7 +1772,7 @@ class Isometric extends WebsocketClientBuilder with
     if (!inBoundsPosition(v)) return;
     emitLightAmbient(
       index: getIndexPosition(v),
-      alpha: interpolate(ambientHue, alpha , intensity).toInt(),
+      alpha: alpha,
     );
   }
 
@@ -1806,23 +1799,21 @@ class Isometric extends WebsocketClientBuilder with
       );
     }
 
-    spawnParticleLightEmission(
-      x: x,
-      y: y,
-      z: z,
-      hue: 259,
-      saturation: 45,
-      value: 95,
-      alpha: 0,
-    );
+    // spawnParticleLightEmission(
+    //   x: x,
+    //   y: y,
+    //   z: z,
+    //   hue: 259,
+    //   saturation: 45,
+    //   value: 95,
+    //   alpha: 0,
+    // );
   }
 
   void emitLightColored({
     required int index,
-    required int alpha,
-    required int hue,
-    required int saturation,
-    required int value,
+    required int color,
+    required double intensity,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
@@ -1893,10 +1884,8 @@ class Isometric extends WebsocketClientBuilder with
             vx: vx,
             vy: vy,
             vz: vz,
-            alpha: alpha,
-            hue: hue,
-            saturation: saturation,
-            value: value,
+            color: color,
+            intensity: intensity,
           );
         }
       }
@@ -1916,10 +1905,8 @@ class Isometric extends WebsocketClientBuilder with
     required int column,
     required int z,
     required int brightness,
-    required int alpha,
-    required int hue,
-    required int saturation,
-    required int value,
+    required int color,
+    required double intensity,
     int vx = 0,
     int vy = 0,
     int vz = 0,
@@ -2069,12 +2056,9 @@ class Isometric extends WebsocketClientBuilder with
     }
 
     applyColor(
-      alpha: alpha,
       index: index,
-      hue: hue,
-      saturation: saturation,
-      value: value,
-      intensity: brightness > 5 ? 1.0 : interpolations[brightness],
+      intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
+      color: color,
     );
 
     if (const [
@@ -2094,113 +2078,99 @@ class Isometric extends WebsocketClientBuilder with
 
     if (vx.abs() + vy.abs() + vz.abs() == 3) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: vx,
         vy: vy,
         vz: vz,
+        color: color,
+        intensity: intensity,
       );
     }
 
     if (vx.abs() + vy.abs() == 2) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: vx,
         vy: vy,
         vz: 0,
+        color: color,
+        intensity: intensity,
       );
     }
 
     if (vx.abs() + vz.abs() == 2) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: vx,
         vy: 0,
         vz: vz,
+        color: color,
+        intensity: intensity,
       );
     }
 
     if (vy.abs() + vz.abs() == 2) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: 0,
         vy: vy,
         vz: vz,
+        color: color,
+        intensity: intensity,
       );
     }
 
     if (vy != 0) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: 0,
         vy: vy,
         vz: 0,
+        color: color,
+        intensity: intensity,
       );
     }
 
     if (vx != 0) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: vx,
         vy: 0,
         vz: 0,
+        color: color,
+        intensity: intensity,
       );
     }
 
     if (vz != 0) {
       shootLightTreeColor(
-        hue: hue,
-        saturation: saturation,
-        value: value,
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
         vx: 0,
         vy: 0,
         vz: vz,
+        color: color,
+        intensity: intensity,
       );
     }
 
@@ -2213,19 +2183,14 @@ class Isometric extends WebsocketClientBuilder with
   /// @alpha a number between 0 and 255
   /// @intensity a number between 0.0 and 1.0
   void emitLightColoredAtPosition(Position v, {
-    required int hue,
-    required int saturation,
-    required int value,
-    required int alpha,
+    required int color,
     double intensity = 1.0,
   }){
     if (!inBoundsPosition(v)) return;
     emitLightColored(
       index: getIndexPosition(v),
-      hue: hue,
-      saturation: saturation,
-      value: value,
-      alpha: alpha,
+      color: color,
+      intensity: intensity,
     );
   }
 

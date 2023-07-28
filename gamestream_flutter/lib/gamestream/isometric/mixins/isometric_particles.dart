@@ -530,10 +530,8 @@ mixin IsometricParticles {
     required double x,
     required double y,
     required double z,
-    required int hue,
-    required int saturation,
-    required int value,
-    required int alpha,
+    required int color,
+    required double intensity,
   }) =>
       spawnParticle(
         type: ParticleType.Light_Emission,
@@ -547,13 +545,10 @@ mixin IsometricParticles {
         checkCollision: false,
         animation: true,
       )
-        ..lightHue = hue
-        ..lightSaturation = saturation
-        ..lightValue = value
-        ..alpha = alpha
         ..flash = true
-        ..strength = 0.0
-  ;
+        ..emissionIntensity = intensity
+        ..emissionColor = color;
+
 
   void spawnParticleBulletRing({
     required double x,

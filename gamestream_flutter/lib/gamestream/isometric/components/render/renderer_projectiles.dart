@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';

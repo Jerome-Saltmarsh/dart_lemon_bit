@@ -15,8 +15,6 @@ import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
-import '../ui/isometric_colors.dart';
-
 
 extension IsometricUI on Isometric {
   static const Icon_Scale = 1.5;
@@ -322,7 +320,7 @@ extension IsometricUI on Isometric {
       children: List.generate(5, (i) => Container(
         width: 8,
         height: 15,
-        color: i < amount ? IsometricColors.blue : IsometricColors.blue05,
+        color: i < amount ? Colors.blue : Colors.blue.withOpacity(0.5),
         margin: i < 4 ? const EdgeInsets.only(right: 5) : null,
       )
       )
@@ -334,55 +332,10 @@ extension IsometricUI on Isometric {
         return Container(
           width: 5,
           height: 20,
-          color: index < level ? IsometricColors.blue : IsometricColors.blue05,
+          color: index < level ? Colors.blue : Colors.blue.withOpacity(0.5),
           margin: const EdgeInsets.only(right: 2),
         );
       }),
-    );
-  }
-
-  Widget buildPlayerHealth() {
-    final height = 87.0;
-    final width = height * goldenRatio_0618;
-    return buildBorder(
-      width: GameStyle.Player_Weapons_Border_Size,
-      color: IsometricColors.Red_3,
-      child: Container(
-        width: width,
-        height: height,
-        alignment: Alignment.center,
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Container(
-              width: width,
-              height: height,
-              alignment: Alignment.topCenter,
-              child: buildWatch(player.maxHealth, (int maxHealth) {
-                return buildWatch(player.health, (int health){
-                  final percentage = health / max(maxHealth, 1);
-                  return Container(
-                    width: width,
-                    height: height * percentage,
-                    color: IsometricColors.Red_3,
-                  );
-                });
-              }),
-            ),
-            Container(
-                width: 40,
-                height: 40,
-                child: FittedBox(
-                  child: buildAtlasIconType(
-                    IconType.Heart,
-                    color: Colors.black87.value,
-                  ),
-                )
-            ),
-          ],
-
-        ),
-      ),
     );
   }
 
@@ -391,7 +344,7 @@ extension IsometricUI on Isometric {
     final width = height * goldenRatio_0618;
     return buildBorder(
       width: GameStyle.Player_Weapons_Border_Size,
-      color: IsometricColors.yellow,
+      color: Colors.yellow,
       child: Container(
         width: width,
         height: height,
@@ -408,7 +361,7 @@ extension IsometricUI on Isometric {
                   return Container(
                     width: width,
                     height: height * energy / max(energyMax, 1),
-                    color:  IsometricColors.yellow,
+                    color:  Colors.yellow,
                   );
                 });
               }),
@@ -437,7 +390,7 @@ extension IsometricUI on Isometric {
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',
             action: actionToggleEdit,
-            color: IsometricColors.green,
+            color: Colors.green,
             alignment: Alignment.center,
             width: 100);
       });

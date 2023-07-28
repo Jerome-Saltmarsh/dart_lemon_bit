@@ -10,13 +10,9 @@ extension IsometricLighting on Isometric {
       if (!character.allie) continue;
 
       if (character.weaponType == WeaponType.Staff){
-        emitLightColoredAtPosition(
-          character,
-          alpha: 150,
-          saturation: 100,
-          value: 100,
-          hue: 50,
-        );
+        // emitLightColoredAtPosition(
+        //   character,
+        // );
       } else {
         applyVector3EmissionAmbient(
           character,
@@ -324,14 +320,14 @@ extension IsometricLighting on Isometric {
     //   return;
     // }
 
-    final currentAlpha = hsvAlphas[index];
+    final currentColor = nodeColors[index];
+    final currentAlpha = getAlpha(currentColor);
     if (currentAlpha <= alpha) {
       return;
     }
 
-    final currentHue = hsvHue[index];
-    if (currentHue != ambientHue){
-      final currentAlpha = hsvAlphas[index];
+    final currentRGB = getRGB(currentColor);
+    if (currentRGB != ambientRGB){
       final currentIntensity = (ambientAlpha - currentAlpha) / 128;
       final alphaBlend = 1.0 - currentIntensity;
       alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
@@ -339,52 +335,73 @@ extension IsometricLighting on Isometric {
 
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
-    hsvAlphas[index] = alpha;
-    refreshNodeColor(index);
+    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
   }
 
   /// @intensity a value between 0 and 1 from least to most bright respectively
   void applyColor({
-    required int alpha,
     required int index,
-    required int hue,
-    required int saturation,
-    required int value,
     required double intensity,
+    required int color,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
 
     final ambientIntensity = intensity * (ambientAlpha / 255);
-    final interpolatedHue = interpolateDegrees(hsvHue[index], hue, ambientIntensity).toInt();
-    final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, ambientIntensity), intensity).toInt();
-    final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , ambientIntensity).toInt();
-    final interpolatedValue = interpolate(hsvValues[index], value, ambientIntensity).toInt();
+
+    final currentColor = nodeColors[index];
+
+    final currentRed = getRed(currentColor);
+    final currentGreen = getGreen(currentColor);
+    final currentBlue = getBlue(currentColor);
+    final currentAlpha = getAlpha(currentColor);
+
+    final colorRed = getRed(color);
+    final colorGreen = getGreen(color);
+    final colorBlue = getBlue(color);
+    final colorAlpha = getAlpha(color);
+
+    final interpolatedRed = interpolateByte(currentRed, colorRed, ambientIntensity);
+    final interpolatedGreen = interpolateByte(currentGreen, colorGreen, ambientIntensity);
+    final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
+    final interpolatedOpacity = interpolateByte(currentAlpha, interpolateByte(0, colorAlpha, ambientIntensity), intensity);
+
+    // final interpolatedHue = interpolateDegrees(hsvHue[index], hue, ambientIntensity).toInt();
+    // final interpolatedSaturation = interpolate(hsvSaturation[index], saturation , ambientIntensity).toInt();
+    // final interpolatedValue = interpolate(hsvValues[index], value, ambientIntensity).toInt();
+    // final interpolatedAlpha = interpolate(hsvAlphas[index], interpolate(0, alpha, ambientIntensity), intensity).toInt();
 
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = interpolatedAlpha;
-    hsvHue[index] = interpolatedHue;
-    hsvSaturation[index] = interpolatedSaturation;
-    hsvValues[index] = interpolatedValue;
-    refreshNodeColor(index);
+    nodeColors[index] = aRGBToColor(
+        interpolatedOpacity,
+        interpolatedRed,
+        interpolatedGreen,
+        interpolatedBlue,
+    );
+
+    // hsvAlphas[index] = interpolatedAlpha;
+    // hsvHue[index] = interpolatedHue;
+    // hsvSaturation[index] = interpolatedSaturation;
+    // hsvValues[index] = interpolatedValue;
+    // refreshNodeColor(index);
   }
 
-  void setColor({
-    required int index,
-    required int alpha,
-    required int hue,
-    required int saturation,
-    required int value,
-  }){
-    colorStackIndex++;
-    colorStack[colorStackIndex] = index;
-    hsvAlphas[index] = alpha;
-    hsvHue[index] = hue;
-    hsvSaturation[index] = saturation;
-    hsvValues[index] = value;
-    refreshNodeColor(index);
-  }
+  // void setColor({
+  //   required int index,
+  //   required int alpha,
+  //   required int hue,
+  //   required int saturation,
+  //   required int value,
+  // }){
+  //   colorStackIndex++;
+  //   colorStack[colorStackIndex] = index;
+  //   hsvAlphas[index] = alpha;
+  //   hsvHue[index] = hue;
+  //   hsvSaturation[index] = saturation;
+  //   hsvValues[index] = value;
+  //   refreshNodeColor(index);
+  // }
 
 
 }

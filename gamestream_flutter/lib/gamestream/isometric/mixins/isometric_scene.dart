@@ -12,16 +12,13 @@ mixin IsometricScene {
   var ambientResetIndex = 0;
   var emissionAlphaCharacter = 50;
 
-  var ambientColorRGB = Color.fromRGBO(31, 1, 86, 0.5);
-  var ambientColor = 0;
+  var ambientColor = Color.fromRGBO(31, 1, 86, 0.5).value;
+  int get ambientAlpha => getAlpha(ambientColor);
+  int get ambientRGB => getRGB(ambientColor);
 
   var nodesLightSources = Uint16List(1000);
   var nodesLightSourcesTotal = 0;
   var nodeColors = Uint32List(0);
-  var hsvHue = Uint16List(0);
-  var hsvSaturation = Uint8ClampedList(0);
-  var hsvValues = Uint8ClampedList(0);
-  var hsvAlphas = Uint8ClampedList(0);
   var nodeOrientations = Uint8List(0);
   var nodeTypes = Uint8List(0);
   var nodeVariations = Uint8List(0);
@@ -46,32 +43,18 @@ mixin IsometricScene {
   var onscreenNodes = 0;
   var torchEmissionIntensity = 1.0;
 
-  late var ambientColorHSV = HSVColor.fromColor(ambientColorRGB);
-  late var ambientHue = ((ambientColorHSV.hue)).round();
-  late var ambientSaturation = (ambientColorHSV.saturation * 100).round();
-  late var ambientValue = (ambientColorHSV.value * 100).round();
-  late var _ambientAlpha = (ambientColorHSV.alpha * 255).round();
   late var interpolationLength = 6;
 
   final nodesChangedNotifier = Watch(0);
 
-  int get ambientAlpha => _ambientAlpha;
-
   set ambientAlpha(int value){
      final clampedValue = clamp(value, 0, 255);
 
-     if (clampedValue == _ambientAlpha)
+     if (clampedValue == ambientAlpha)
        return;
 
-     _ambientAlpha = clampedValue;
      ambientResetIndex = 0;
-
-     ambientColor = hsvToColor(
-         hue: ambientHue,
-         saturation: ambientSaturation,
-         value: ambientValue,
-         opacity: ambientAlpha
-     );
+     ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
   }
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Quad, onChanged: (EaseType easeType){
@@ -139,10 +122,6 @@ mixin IsometricScene {
     print('isometric_scene.generateStacks() - EXPENSIVE CALL');
     colorStack = Uint16List(totalNodes);
     nodeColors = Uint32List(totalNodes);
-    hsvHue = Uint16List(totalNodes);
-    hsvSaturation = Uint8ClampedList(totalNodes);
-    hsvValues = Uint8ClampedList(totalNodes);
-    hsvAlphas = Uint8ClampedList(totalNodes);
   }
 
   void resetNodeColorsToAmbient() {
@@ -155,10 +134,6 @@ mixin IsometricScene {
     }
     for (var i = 0; i < totalNodes; i++) {
       nodeColors[i] = ambientColor;
-      hsvHue[i] = ambientHue;
-      hsvSaturation[i] = ambientSaturation;
-      hsvValues[i] = ambientValue;
-      hsvAlphas[i] = _ambientAlpha;
     }
   }
 
@@ -172,10 +147,6 @@ mixin IsometricScene {
     final end = min(targetEnd, totalNodes);
 
     nodeColors.fillRange(ambientResetIndex, end, ambientColor);
-    hsvHue.fillRange(ambientResetIndex, end, ambientHue);
-    hsvSaturation.fillRange(ambientResetIndex, end, ambientSaturation);
-    hsvValues.fillRange(ambientResetIndex, end, ambientValue);
-    hsvAlphas.fillRange(ambientResetIndex, end, _ambientAlpha);
     ambientResetIndex += ambientResetBatchSize;
   }
 
@@ -228,10 +199,6 @@ mixin IsometricScene {
     while (colorStackIndex >= 0) {
       final i = colorStack[colorStackIndex];
       nodeColors[i] = ambientColor;
-      hsvHue[i] = ambientHue;
-      hsvSaturation[i] = ambientSaturation;
-      hsvValues[i] = ambientValue;
-      hsvAlphas[i] = _ambientAlpha;
       colorStackIndex--;
     }
     colorStackIndex = -1;
@@ -241,19 +208,10 @@ mixin IsometricScene {
     while (ambientStackIndex >= 0) {
       final i = ambientStack[ambientStackIndex];
       nodeColors[i] = ambientColor;
-      hsvAlphas[i] = _ambientAlpha;
       ambientStackIndex--;
     }
     ambientStackIndex = -1;
   }
-
-  void refreshNodeColor(int index) =>
-      nodeColors[index] = hsvToColor(
-        hue: hsvHue[index],
-        saturation: hsvSaturation[index],
-        value: hsvValues[index],
-        opacity: hsvAlphas[index],
-      );
 
   int getTorchIndex(int nodeIndex){
     final initialSearchIndex = nodeIndex - totalColumns - 1; // shifts the selectIndex - 1 row and - 1 column

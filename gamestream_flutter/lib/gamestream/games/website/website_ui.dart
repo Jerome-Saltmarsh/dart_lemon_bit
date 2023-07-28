@@ -229,7 +229,7 @@ extension WebsiteUI on WebsiteGame {
         width: 200,
         height: 200 * goldenRatio_0618,
         color: IsometricColors.brownDark,
-        borderColor: IsometricColors.none,
+        borderColor: Colors.transparent,
         child: buildLayout(
             child: Center(
               child: buildText(message, color: IsometricColors.white),

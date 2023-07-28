@@ -339,7 +339,7 @@ extension IsometricEditorUI on IsometricEditor {
             buildRowGenerate(generateOctaves, 'Octaves'),
             buildRowGenerate(generateFrequency, 'Frequency'),
             height16,
-            buildButton(child: 'Generate', action: generateScene, color: IsometricColors.blue, alignment: Alignment.center),
+            buildButton(child: 'Generate', action: generateScene, color: Colors.blue, alignment: Alignment.center),
           ],
         ),
       ),

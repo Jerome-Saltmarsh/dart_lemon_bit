@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/utils.dart';
 
@@ -143,7 +142,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstX = Isometric.getPositionRenderX(character);
     final dstY = Isometric.getPositionRenderY(character);
 
-    const Color_Invisible = IsometricColors.White38_Value;
+    const Color_Invisible = 1660944383;
     final color = invisible ? Color_Invisible : isometric.getRenderColorPosition(character);
 
     if (invisible) {

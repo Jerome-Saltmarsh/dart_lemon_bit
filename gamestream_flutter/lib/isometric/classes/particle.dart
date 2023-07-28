@@ -24,11 +24,8 @@ class Particle extends Position {
   var nodeType = 0;
   var nodeIndex = 0;
 
-  var lightHue = 0;
-  var lightSaturation = 0;
-  var lightValue = 0;
-  var alpha = 0;
-  var strength = 0.0;
+  var emissionColor = 0;
+  var emissionIntensity = 0.0;
   var flash = true;
   var emitsLight = false;
 
