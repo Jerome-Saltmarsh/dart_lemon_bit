@@ -445,17 +445,23 @@ class RendererParticles extends IsometricRenderer {
   }
 
   void renderSmoke() {
+
+    final totalFrames = 8;
+    final frame = ((1.0 - particle.duration01) * totalFrames).round();
+    const width = 32.0;
+    const height = 32.0;
+
     isometric.engine.renderSpriteRotated(
       image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
-      srcX: particle.duration01 > 0.5 ? 539 : 559,
-      srcY: 7,
-      srcWidth: 16,
-      srcHeight: 16,
+      srcX: 560,
+      srcY: frame * height,
+      srcWidth: width,
+      srcHeight: height,
       color: isometric.scene.getRenderColorPosition(particle),
       rotation: particle.rotation,
-      scale: particle.scale,
+      scale: particle.scale * 0.5,
     );
   }
 

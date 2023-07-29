@@ -225,7 +225,7 @@ class IsometricParticles {
         zv: 0,
         angle: 0,
         rotation: 0,
-        rotationV: giveOrTake(0.05),
+        rotationV: giveOrTake(0.025),
         speed: 0,
         scaleV: scaleV,
         weight: -0.15,
