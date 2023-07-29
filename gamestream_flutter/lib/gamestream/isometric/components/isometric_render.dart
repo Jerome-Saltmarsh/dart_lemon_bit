@@ -233,7 +233,7 @@ class IsometricRender {
       x,
       y,
       isometric.scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
-      scale: 1.0 / (height * 0.5),
+      scale: 1.0 / (height * 0.125),
     );
   }
 
