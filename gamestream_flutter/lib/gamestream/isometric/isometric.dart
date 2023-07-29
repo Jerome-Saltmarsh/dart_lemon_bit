@@ -87,7 +87,6 @@ class Isometric extends WebsocketClientBuilder with
   final windowOpenMenu = WatchBool(false);
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
-  final updateFrame = Watch(0);
   final serverFPS = Watch(0);
   final images = Images();
   final options = IsometricOptions();
@@ -150,7 +149,6 @@ class Isometric extends WebsocketClientBuilder with
     mouse = IsometricMouse(this);
     player = IsometricPlayer(this);
     games = Games(this);
-    updateFrame.onChanged(onChangedUpdateFrame);
 
     games.website.errorMessageEnabled.value = true;
     error.onChanged((GameError? error) {
@@ -938,8 +936,7 @@ class Isometric extends WebsocketClientBuilder with
 
   @override
   void readResponse(int serverResponse){
-
-    updateFrame.value++;
+    rendersSinceUpdate.value = 0;
 
     switch (serverResponse) {
       case ServerResponse.Isometric_Characters:
@@ -1039,10 +1036,6 @@ class Isometric extends WebsocketClientBuilder with
   @override
   void onConnectionDone() {
     games.website.error.value = 'Lost Connection';
-  }
-
-  void onChangedUpdateFrame(int value){
-    rendersSinceUpdate.value = 0;
   }
 
   @override
@@ -1378,14 +1371,10 @@ class Isometric extends WebsocketClientBuilder with
 
   /// EVENT HANDLER (DO NOT CALL)
   void _onChangedGame(Game game) {
-    // engine.onDrawCanvas = game.drawCanvas;
-    // engine.onDrawForeground = game.renderForeground;
     engine.buildUI = game.buildUI;
     engine.onLeftClicked = game.onLeftClicked;
     engine.onRightClicked = game.onRightClicked;
     engine.onKeyPressed = game.onKeyPressed;
-    // engine.onMouseEnterCanvas = game.onMouseEnter;
-    // engine.onMouseExitCanvas = game.onMouseExit;
     game.onActivated();
   }
 
@@ -1430,7 +1419,7 @@ class Isometric extends WebsocketClientBuilder with
     if (!connected)
       return;
     renderCursor(canvas);
-    playerAimTargetNameText();
+    renderPlayerAimTargetNameText();
 
     if (io.inputModeTouch) {
       io.touchController.render(canvas);
@@ -1690,6 +1679,13 @@ class Isometric extends WebsocketClientBuilder with
       switch (nodeType) {
         case NodeType.Torch:
           break;
+        case NodeType.Fireplace:
+          emitLightColored(
+            index: nodeIndex,
+            color: colors.red1,
+            intensity: graphics.torchEmissionIntensityColored,
+          );
+          break;
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
@@ -1870,14 +1866,6 @@ class Isometric extends WebsocketClientBuilder with
         }
       }
     }
-
-    // setColor(
-    //   alpha: 250,
-    //   index: index,
-    //   hue: hue,
-    //   saturation: saturation,
-    //   value: value,
-    // );
   }
 
   void shootLightTreeColor({
@@ -2343,8 +2331,7 @@ class Isometric extends WebsocketClientBuilder with
     io.mouseRaycast(render.renderWireFrameBlue);
   }
 
-
-  void playerAimTargetNameText(){
+  void renderPlayerAimTargetNameText(){
     if (player.aimTargetCategory == TargetCategory.Nothing)
       return;
     if (player.aimTargetName.isEmpty)
@@ -2355,17 +2342,6 @@ class Isometric extends WebsocketClientBuilder with
       engine.worldToScreenX(player.aimTargetPosition.renderX),
       engine.worldToScreenY(player.aimTargetPosition.renderY),
       style: style,
-    );
-  }
-
-  void renderPlayerEnergy() {
-    if (player.dead) return;
-    if (!player.active.value) return;
-    renderBarBlue(
-      player.position.x,
-      player.position.y,
-      player.position.z,
-      player.energyPercentage,
     );
   }
 
@@ -2521,20 +2497,6 @@ class Isometric extends WebsocketClientBuilder with
     }
   }
 
-
-  void renderBarBlue(double x, double y, double z, double percentage) {
-    engine.renderSprite(
-      image: images.atlas_gameobjects,
-      dstX: getRenderX(x, y, z) - 26,
-      dstY: getRenderY(x, y, z) - 55,
-      srcX: 171,
-      srcY: 48,
-      srcWidth: 51.0 * percentage,
-      srcHeight: 8,
-      anchorX: 0.0,
-      color: 1,
-    );
-  }
 
   void renderMouseTargetName() {
     if (!player.mouseTargetAllie.value) return;

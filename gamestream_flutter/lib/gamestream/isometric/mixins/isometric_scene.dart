@@ -152,10 +152,9 @@ class IsometricScene {
     if (ambientResetIndex >= totalNodes)
       return;
 
-    const ambientResetBatchSize = 1500;
+    const ambientResetBatchSize = 5000;
     final targetEnd = ambientResetIndex + ambientResetBatchSize;
     final end = min(targetEnd, totalNodes);
-
     nodeColors.fillRange(ambientResetIndex, end, ambientColor);
     ambientResetIndex += ambientResetBatchSize;
   }
@@ -248,6 +247,7 @@ class IsometricScene {
   }
 
   void refreshNodeVariations() {
+    print('scene.refreshNodeVariations()');
     if (nodeVariations.length < totalNodes) {
       nodeVariations = Uint8List(totalNodes);
     }
@@ -256,7 +256,7 @@ class IsometricScene {
       final nodeType = nodeTypes[i];
       switch (nodeType) {
         case NodeType.Grass:
-          nodeVariations[i] = randomInt(0, 4);
+          nodeVariations[i] = randomInt(0, 2);
           break;
         case NodeType.Shopping_Shelf:
           nodeVariations[i] = randomInt(0, 2);
@@ -406,12 +406,21 @@ class IsometricScene {
   void refreshLightSources() {
     nodesLightSourcesTotal = 0;
     for (var i = 0; i < totalNodes; i++){
-      if (!NodeType.emitsLight(nodeTypes[i])) continue;
+
+      if (!const [
+        NodeType.Torch,
+        NodeType.Torch_Blue,
+        NodeType.Torch_Red,
+        NodeType.Fireplace
+      ].contains(nodeTypes[i]))
+        continue;
+
       if (nodesLightSourcesTotal >= nodesLightSources.length) {
         nodesLightSources = Uint16List(nodesLightSources.length + 100);
         refreshLightSources();
         return;
       }
+
       nodesLightSources[nodesLightSourcesTotal] = i;
       nodesLightSourcesTotal++;
     }

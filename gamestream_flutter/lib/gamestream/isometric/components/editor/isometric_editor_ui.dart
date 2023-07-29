@@ -50,6 +50,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Glass,
     NodeType.Torch_Blue,
     NodeType.Torch_Red,
+    NodeType.Fireplace,
   ];
 
 

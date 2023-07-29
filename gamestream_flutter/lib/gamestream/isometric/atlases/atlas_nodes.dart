@@ -298,8 +298,10 @@ class AtlasNode {
   static const Node_Bau_Haus_Slope_Inner_North_West_Y = Node_Bau_Haus_Slope_Inner_South_West_Y + Sprite_Height_Padded;
   static const Soil_X = 618.0;
   static const Node_Soil_Y = 584.0;
-  static const Campfire_X = 667.0;
-  static const Node_Campfire_Y = 512.0;
+  static const Src_Fireplace_X = 1753.0;
+  static const Src_Fireplace_Y = 434.0;
+  static const Src_Fireplace_Width = 48.0;
+  static const Src_Fireplace_Height = 72.0;
   static const Chimney_X = 618.0;
   static const Node_Chimney_Y = 730.0;
   static const Node_Window_West_X = 618.0;

@@ -18,8 +18,9 @@ alt + m             : go to declaration
 [ ] fix select position when up higher
 [ ] fix ai path following
 [ ] fix character light emission
+[ ] implement long grass animations
+[ ] implement color flames windy
 [ ] implement node fireplace which emits smoke
-[ ] optimize render nodes
 [ ] implement dynamically light tree faces
 [ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
@@ -35,6 +36,12 @@ alt + m             : go to declaration
 [*] implement attack speed modifier
 [*] implement character persistence
 [?] implement dynamic resolution scaling
+
+29.07.2023
+[x] fix grass variation
+
+28.07.2023
+[x] optimize render nodes
 
 27.07.2023
 [x] implement dynamic lighting trees

@@ -194,6 +194,22 @@ class IsometricRender {
     isometric.engine.writeText(text, x - charWidth * text.length, y);
   }
 
+
+  void renderBarBlue(double x, double y, double z, double percentage) {
+    isometric.engine.renderSprite(
+      image: isometric.images.atlas_gameobjects,
+      dstX: Isometric.getRenderX(x, y, z) - 26,
+      dstY: Isometric.getRenderY(x, y, z) - 55,
+      srcX: 171,
+      srcY: 48,
+      srcWidth: 51.0 * percentage,
+      srcHeight: 8,
+      anchorX: 0.0,
+      color: 1,
+    );
+  }
+
+
   static double getRenderXOfRowAndColumn(int row, int column) =>
       (row - column) * Node_Size_Half;
 

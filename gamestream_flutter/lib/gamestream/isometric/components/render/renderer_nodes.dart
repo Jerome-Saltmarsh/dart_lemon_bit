@@ -197,11 +197,9 @@ class RendererNodes extends IsometricRenderer {
 
   int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
 
-  int get renderNodeVariation => scene.nodeVariations[currentNodeIndex];
-
   int get renderNodeBelowIndex => currentNodeIndex - scene.area;
 
-  int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+  int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : currentNodeVariation;
 
   int get renderNodeBelowColor => scene.getNodeColorAtIndex(currentNodeIndex - scene.area);
 
@@ -1026,8 +1024,8 @@ class RendererNodes extends IsometricRenderer {
         return;
       case NodeType.Fireplace:
         renderStandardNode(
-          srcX: AtlasNode.Campfire_X,
-          srcY: AtlasNode.Node_Campfire_Y + ((isometric.animation.frame % 6) * 72),
+          srcX: AtlasNode.Src_Fireplace_X,
+          srcY: AtlasNode.Src_Fireplace_Y + ((isometric.animation.frame6) * AtlasNode.Src_Fireplace_Height),
         );
         return;
       case NodeType.Boulder:
@@ -1864,7 +1862,7 @@ class RendererNodes extends IsometricRenderer {
 
   void renderTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderTreeTopOak();
 
-  void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
+  void renderTreeBottom() => currentNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
     final animation = isometric.animation;
@@ -2930,12 +2928,14 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderNodeSideTop() {
+
+    final srcX = currentNodeVariation == 0 ? 0.0 : 128.0;
     final bufferIndex = engine.bufferIndex;
     final f = bufferIndex * 4;
     bufferClr[bufferIndex] = colorAbove;
-    bufferSrc[f] = Src_X_Side_Top;
+    bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = Src_X_Side_Top + Src_Width_Side_Top;
+    bufferSrc[f + 2] = srcX + Src_Width_Side_Top;
     bufferSrc[f + 3] = srcY + Src_Height_Side_Top;
     bufferDst[f] = 1.0; // scale
     bufferDst[f + 1] = 0;
