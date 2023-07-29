@@ -89,7 +89,7 @@ extension IsometricActions on Isometric {
 
     for (var i = 0; i < 7; i++) {
       const r = 5.0;
-      particles.spawnParticleSmoke(
+      particles.emitSmoke(
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),

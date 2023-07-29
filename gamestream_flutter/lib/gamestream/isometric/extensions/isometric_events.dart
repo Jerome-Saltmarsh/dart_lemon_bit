@@ -339,7 +339,7 @@ extension IsometricEvents on Isometric {
     final gunY = y - opp(angle, gun_distance);
 
     if (WeaponType.isFirearm(attackType)){
-      particles.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
+      particles.emitSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
       particles.spawnParticleShell(gunX, gunY, z);
     }
     if (WeaponType.Firearms_Automatic.contains(attackType)){

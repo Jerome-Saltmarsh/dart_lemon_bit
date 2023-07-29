@@ -209,7 +209,7 @@ class IsometricParticles {
     );
   }
 
-  Particle spawnParticleSmoke({
+  Particle emitSmoke({
     required double x,
     required double y,
     required double z,

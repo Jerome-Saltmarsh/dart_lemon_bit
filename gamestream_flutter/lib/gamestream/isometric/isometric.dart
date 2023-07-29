@@ -426,7 +426,7 @@ class Isometric extends WebsocketClientBuilder with
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        particles.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         projectShadow(projectile);
         continue;
       }
@@ -647,17 +647,18 @@ class Isometric extends WebsocketClientBuilder with
 
     for (var i = 0; i < scene.smokeSourcesTotal; i++){
       final index = scene.smokeSources[i];
-      particles.spawnParticleSmoke(
+      particles.emitSmoke(
           x: scene.getIndexPositionX(index),
           y: scene.getIndexPositionY(index),
           z: scene.getIndexPositionZ(index),
+          duration: 150,
       );
     }
 
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ObjectType.Barrel_Flaming) continue;
-      particles.spawnParticleSmoke(
+      particles.emitSmoke(
           x: gameObject.x + giveOrTake(5),
           y: gameObject.y + giveOrTake(5),
           z: gameObject.z + 35,

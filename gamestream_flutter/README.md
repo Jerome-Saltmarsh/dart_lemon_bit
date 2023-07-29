@@ -13,35 +13,37 @@ alt + m             : go to declaration
 - tier two talents cost two skills points etc
 - floating txt on acquire health and xp
 
-[TODO]
-[ ] fix node transparency
+[SERVER]
 [ ] fix select position when up higher
 [ ] fix ai path following
+[ ] implement pathfinding separate and left and right stack frames
+[ ] implement town stash (automatically opens when nearby)
+[ ] implement character type skeleton
+[ ] implement character type float skeleton head
+[ ] implement npc store
+[*] implement attack speed modifier
+[*] implement character persistence
+[*] character face type
+[*] character skin color
+
+[CLIENT]
+[ ] fix node transparency
 [ ] fix character light emission
 [ ] implement long grass animations
 [ ] implement color flames windy
-[ ] implement node fireplace which emits smoke
-[ ] implement dynamically light tree faces
-[ ] implement pathfinding separate and left and right stack frames
 [ ] implement zombie death animation
 [ ] implement sounds on item drop for treasures
 [ ] implement character stats dialog
 [ ] implement sound pick up item
 [ ] implement ui items draggable
-[ ] implement town stash (automatically opens when nearby)
-[ ] implement character type skeleton 
-[ ] implement character type float skeleton head
-[ ] implement npc store
-[*] 3d animator 
-[*] implement attack speed modifier
-[*] implement character persistence
-[?] implement dynamic resolution scaling
 
 29.07.2023
+[x] implement node fireplace which emits smoke
 [x] fix grass variation
 
 28.07.2023
 [x] optimize render nodes
+[x] implement dynamically light tree faces
 
 27.07.2023
 [x] implement dynamic lighting trees
