@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
@@ -42,7 +43,7 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
-  var framesPerSmokeEmission = 20;
+  var framesPerSmokeEmission = 10;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
   var bakeStackRecording = true;
   var bakeStackTotal = 0;
@@ -784,7 +785,7 @@ class Isometric extends WebsocketClientBuilder with
       )
         ..emitsLight = true
         ..emissionColor = scene.ambientColor
-        ..checkNodeCollision = false
+        ..deactiveOnNodeCollision = false
         ..emissionIntensity = 0.5
   ;
 
@@ -802,7 +803,6 @@ class Isometric extends WebsocketClientBuilder with
         speed: 0,
         weight: 0,
         duration: 35,
-        checkCollision: false,
         animation: true,
       )
         ..flash = true
@@ -1522,7 +1522,7 @@ class Isometric extends WebsocketClientBuilder with
         srcY: 32,
         srcWidth: 8,
         srcHeight: 8,
-        scale: scale,
+        scale: min(scale, 1),
       );
 
   bool isPerceptiblePosition(Position position) {

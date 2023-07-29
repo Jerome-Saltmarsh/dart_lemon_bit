@@ -19,7 +19,7 @@ class Particle extends Position {
   var type = 0;
   var bounciness = 0.0;
   /// Deactivates if this node hits a solid node
-  var checkNodeCollision = true;
+  var deactiveOnNodeCollision = true;
   var animation = false;
   var nodeType = 0;
   var nodeIndex = 0;
@@ -44,6 +44,7 @@ class Particle extends Position {
     duration = -1;
     durationTotal = -1;
     frame = 0;
+    delay = 0;
   }
 
   void setAngle({required double value, required double speed}){
@@ -96,7 +97,7 @@ class Particle extends Position {
 
   @override
   String toString() {
-    return '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}, active: $active}';
+    return '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}, active: $active, type: ${ParticleType.getName(type)}';
   }
 
   static int compare(Particle a, Particle b){
@@ -114,5 +115,7 @@ class Particle extends Position {
 
      return a.compareTo(b);
   }
+
+
 }
 

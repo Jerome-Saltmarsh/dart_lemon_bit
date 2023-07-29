@@ -79,13 +79,11 @@ extension IsometricActions on Isometric {
         angle: randomAngle(),
         speed: 4.5,
         zv: randomBetween(2, 3),
-        weight: 10,
         duration: 15,
         scale: 0.5,
         scaleV: 0,
         rotation: 0,
         bounciness: 0,
-        checkCollision: false,
       );
     }
 
@@ -97,7 +95,7 @@ extension IsometricActions on Isometric {
           z: z+ giveOrTake(r),
           duration: 60,
       )
-        ..checkNodeCollision = false
+        ..deactiveOnNodeCollision = false
         ..delay = i
         ..zv = 0.75
         ..setSpeed(randomAngle(), giveOrTake(3));

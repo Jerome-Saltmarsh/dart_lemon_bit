@@ -41,7 +41,6 @@ class IsometricParticles {
     required double z,
     double speed = 0,
     double angle = 0,
-    bool checkCollision = true,
     double zv = 0,
     double weight = 1,
     int duration = 100,
@@ -60,7 +59,10 @@ class IsometricParticles {
     particle.y = y;
     particle.z = z;
     particle.active = true;
-    particle.checkNodeCollision = checkCollision;
+    particle.deactiveOnNodeCollision = const [
+       ParticleType.Blood,
+       ParticleType.Water_Drop,
+    ].contains(type);
     particle.animation = animation;
     particle.emitsLight = false;
     particle.delay = delay;
@@ -105,7 +107,6 @@ class IsometricParticles {
         rotation: 0,
         rotationV: 0,
         scaleV: 0,
-        checkCollision: false
     );
   }
 
@@ -176,8 +177,8 @@ class IsometricParticles {
       zv: zv,
       angle: angle,
       speed: speed,
-      weight: 5,
-      duration: randomInt(220, 250),
+      weight: 10,
+      duration: randomInt(1220, 1250),
       rotation: 0,
       rotationV: 0,
       scale: 0.6,
@@ -306,7 +307,6 @@ class IsometricParticles {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        checkCollision: false,
       );
     }
   }
@@ -343,7 +343,6 @@ class IsometricParticles {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        checkCollision: false,
       );
     }
   }
@@ -364,7 +363,6 @@ class IsometricParticles {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        checkCollision: false,
       );
     }
   }
@@ -385,7 +383,6 @@ class IsometricParticles {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        checkCollision: false,
       );
     }
   }
@@ -548,7 +545,6 @@ class IsometricParticles {
         speed: 0,
         weight: 0,
         duration: 35,
-        checkCollision: false,
         animation: true,
       )
         ..flash = true
@@ -601,7 +597,6 @@ class IsometricParticles {
       weight: 0,
       duration: duration,
       scale: scale,
-      checkCollision: false,
       animation: true,
     );
   }
@@ -627,7 +622,6 @@ class IsometricParticles {
       weight: 0,
       duration: duration,
       scale: scale,
-      checkCollision: false,
       animation: true,
     );
   }
@@ -653,7 +647,6 @@ class IsometricParticles {
       weight: 0,
       duration: duration,
       scale: scale,
-      checkCollision: false,
       animation: true,
     );
   }
@@ -679,7 +672,6 @@ class IsometricParticles {
       weight: 0,
       duration: duration,
       scale: scale,
-      checkCollision: false,
       animation: true,
     );
   }
@@ -705,7 +697,6 @@ class IsometricParticles {
         weight: 0,
         duration: duration,
         scale: scale,
-        checkCollision: false,
         animation: true,
       );
 
@@ -767,7 +758,9 @@ class IsometricParticles {
   }
 
   void updateParticle(Particle particle) {
-    if (!particle.active) return;
+    if (!particle.active)
+      return;
+
     if (particle.delay > 0) {
       particle.delay--;
       return;
@@ -803,39 +796,39 @@ class IsometricParticles {
       return;
     }
 
-    final nodeIndex = isometric.scene.getIndexPosition(particle);
+    final index = isometric.scene.getIndexPosition(particle);
 
-    assert (nodeIndex >= 0);
-    assert (nodeIndex < isometric.scene.totalNodes);
+    assert (index >= 0);
+    assert (index < isometric.scene.totalNodes);
 
-    particle.nodeIndex = nodeIndex;
-    final nodeType = isometric.scene.nodeTypes[nodeIndex];
+    particle.nodeIndex = index;
+    final nodeType = isometric.scene.nodeTypes[index];
     particle.nodeType = nodeType;
-    final airBorn =
-        !particle.checkNodeCollision || (
-            nodeType == NodeType.Empty        ||
-                nodeType == NodeType.Rain_Landing ||
-                nodeType == NodeType.Rain_Falling ||
-                nodeType == NodeType.Grass_Long   ||
-                nodeType == NodeType.Fireplace)    ;
+    final nodeCollision =
+          !const [
+            NodeType.Empty,
+            NodeType.Rain_Landing,
+            NodeType.Rain_Falling,
+            NodeType.Grass_Long,
+            NodeType.Fireplace,
+          ].contains(nodeType);
 
 
-    if (particle.checkNodeCollision && !airBorn) {
-      particle.deactivate();
-      return;
-    }
-
-    if (!airBorn){
+    if (nodeCollision) {
+      if (particle.deactiveOnNodeCollision){
+        particle.deactivate();
+        return;
+      }
       particle.z = (particle.indexZ + 1) * Node_Height;
       particle.applyFloorFriction();
-    } else {
-      if (particle.type == ParticleType.Smoke){
-        final wind = isometric.windTypeAmbient.value * 0.01;
+
+    } else if (particle.type == ParticleType.Smoke){
+        final wind = isometric.windTypeAmbient.value * 0.005;
         particle.xv -= wind;
         particle.yv += wind;
-      }
     }
-    final bounce = particle.zv < 0 && !airBorn;
+
+    final bounce = particle.zv < 0 && !nodeCollision;
     particle.updateMotion();
 
     if (isometric.scene.outOfBoundsPosition(particle)){
@@ -852,7 +845,7 @@ class IsometricParticles {
       } else {
         particle.zv = 0;
       }
-    } else if (airBorn) {
+    } else if (!nodeCollision) {
       particle.applyAirFriction();
     }
     particle.applyLimits();

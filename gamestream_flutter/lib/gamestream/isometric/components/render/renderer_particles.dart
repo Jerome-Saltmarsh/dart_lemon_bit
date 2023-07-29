@@ -47,7 +47,8 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Blood:
-          casteShadowDownV3(particle);
+          renderShadowBelowPosition(particle);
+
           isometric.engine.renderSprite(
             image: isometric.images.atlas_gameobjects,
             dstX: dstX,
@@ -328,7 +329,7 @@ class RendererParticles extends IsometricRenderer {
           );
           return;
         case ParticleType.Zombie_Arm:
-          casteShadowDownV3(particle);
+          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -341,7 +342,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Zombie_Head:
-          casteShadowDownV3(particle);
+          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -354,7 +355,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Zombie_leg:
-          casteShadowDownV3(particle);
+          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -368,7 +369,7 @@ class RendererParticles extends IsometricRenderer {
           break;
 
         case ParticleType.Zombie_Torso:
-          casteShadowDownV3(particle);
+          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -557,17 +558,29 @@ class RendererParticles extends IsometricRenderer {
     }
   }
 
-  void casteShadowDownV3(Position vector3){
-    if (vector3.z < Node_Height) return;
-    if (vector3.z >= isometric.scene.lengthZ) return;
-    final nodeIndex = isometric.scene.getIndexPosition(vector3);
-    if (nodeIndex > isometric.scene.area) {
-      final nodeBelowIndex = nodeIndex - isometric.scene.area;
-      final nodeBelowOrientation = isometric.scene.nodeOrientations[nodeBelowIndex];
-      if (nodeBelowOrientation == NodeOrientation.Solid){
-        final topRemainder = vector3.z % Node_Height;
-        isometric.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);
+  void renderShadowBelowPosition(Position position){
+    if (position.z < Node_Height) return;
+    final scene = isometric.scene;
+    if (position.z >= scene.lengthZ) return;
+    final nodeIndex = scene.getIndexPosition(position);
+    var nodeBelowIndex = nodeIndex - scene.area;
+    var nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
+    var height = position.z % Node_Height;
+    while (nodeBelowOrientation == NodeOrientation.None) {
+      nodeBelowIndex -= scene.area;
+      if (nodeBelowIndex < scene.area){
+        return;
       }
+      height += Node_Height;
+      nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
     }
+
+    final z = isometric.scene.getIndexPositionZ(nodeBelowIndex);
+    isometric.renderShadow(
+        position.x,
+        position.y,
+        z + Node_Height_Half,
+        scale: 1.0 / (height * 0.5),
+    );
   }
 }
