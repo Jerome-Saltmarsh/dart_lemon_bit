@@ -209,6 +209,35 @@ class IsometricRender {
     );
   }
 
+  void renderShadowBelowPosition(Position position) =>
+      renderShadowBelowXYZ(position.x, position.y, position.z);
+
+  void renderShadowBelowXYZ(double x, double y, double z){
+    if (z < Node_Height) return;
+    final scene = isometric.scene;
+    if (z >= scene.lengthZ) return;
+    final nodeIndex = scene.getIndexXYZ(x, y, z);
+    var nodeBelowIndex = nodeIndex - scene.area;
+    var nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
+    var height = z % Node_Height;
+    while (nodeBelowOrientation == NodeOrientation.None) {
+      nodeBelowIndex -= scene.area;
+      if (nodeBelowIndex < scene.area){
+        return;
+      }
+      height += Node_Height;
+      nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
+    }
+
+    isometric.renderShadow(
+      x,
+      y,
+      isometric.scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
+      scale: 1.0 / (height * 0.5),
+    );
+  }
+
+
 
   static double getRenderXOfRowAndColumn(int row, int column) =>
       (row - column) * Node_Size_Half;

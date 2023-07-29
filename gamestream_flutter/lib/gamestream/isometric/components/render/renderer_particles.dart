@@ -33,6 +33,16 @@ class RendererParticles extends IsometricRenderer {
       assert (dstY > isometric.engine.Screen_Top - 50);
       assert (dstY < isometric.engine.Screen_Bottom + 50);
 
+      if (const [
+        ParticleType.Blood,
+        ParticleType.Zombie_Head,
+        ParticleType.Zombie_Torso,
+        ParticleType.Zombie_leg,
+        ParticleType.Zombie_Arm,
+      ].contains(particle.type)){
+        isometric.render.renderShadowBelowPosition(particle);
+      }
+
       switch (particle.type) {
         case ParticleType.Water_Drop:
           isometric.engine.renderSprite(
@@ -47,8 +57,6 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Blood:
-          renderShadowBelowPosition(particle);
-
           isometric.engine.renderSprite(
             image: isometric.images.atlas_gameobjects,
             dstX: dstX,
@@ -329,7 +337,6 @@ class RendererParticles extends IsometricRenderer {
           );
           return;
         case ParticleType.Zombie_Arm:
-          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -342,7 +349,6 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Zombie_Head:
-          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -355,7 +361,6 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Zombie_leg:
-          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -369,7 +374,6 @@ class RendererParticles extends IsometricRenderer {
           break;
 
         case ParticleType.Zombie_Torso:
-          renderShadowBelowPosition(particle);
           isometric.engine.renderSprite(
             image: isometric.images.atlas_particles,
             dstX: dstX,
@@ -556,31 +560,5 @@ class RendererParticles extends IsometricRenderer {
       index--;
       return;
     }
-  }
-
-  void renderShadowBelowPosition(Position position){
-    if (position.z < Node_Height) return;
-    final scene = isometric.scene;
-    if (position.z >= scene.lengthZ) return;
-    final nodeIndex = scene.getIndexPosition(position);
-    var nodeBelowIndex = nodeIndex - scene.area;
-    var nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
-    var height = position.z % Node_Height;
-    while (nodeBelowOrientation == NodeOrientation.None) {
-      nodeBelowIndex -= scene.area;
-      if (nodeBelowIndex < scene.area){
-        return;
-      }
-      height += Node_Height;
-      nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
-    }
-
-    final z = isometric.scene.getIndexPositionZ(nodeBelowIndex);
-    isometric.renderShadow(
-        position.x,
-        position.y,
-        z + Node_Height_Half,
-        scale: 1.0 / (height * 0.5),
-    );
   }
 }

@@ -115,6 +115,7 @@ class RendererGameObjects extends IsometricRenderer {
   void renderBouncingGameObjectShadow(Position gameObject){
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
+
     isometric.renderShadow(
         gameObject.x,
         gameObject.y,

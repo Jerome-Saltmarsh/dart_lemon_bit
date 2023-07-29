@@ -161,11 +161,10 @@ class IsometricParticles {
         scaleV: 0);
   }
 
-  void spawnParticleBlood({
+  void spawnBlood({
     required double x,
     required double y,
     required double z,
-    required double zv,
     required double angle,
     required double speed
   }) {
@@ -174,11 +173,11 @@ class IsometricParticles {
       x: x,
       y: y,
       z: z,
-      zv: zv,
+      zv: randomBetween(2, 3),
       angle: angle,
       speed: speed,
-      weight: 10,
-      duration: randomInt(1220, 1250),
+      weight: 5,
+      duration: 200,
       rotation: 0,
       rotationV: 0,
       scale: 0.6,
@@ -822,13 +821,17 @@ class IsometricParticles {
       particle.z = (particle.indexZ + 1) * Node_Height;
       particle.applyFloorFriction();
 
-    } else if (particle.type == ParticleType.Smoke){
+    } else {
+      particle.applyAirFriction();
+
+      if (particle.type == ParticleType.Smoke) {
         final wind = isometric.windTypeAmbient.value * 0.005;
         particle.xv -= wind;
         particle.yv += wind;
+      }
     }
 
-    final bounce = particle.zv < 0 && !nodeCollision;
+    final bounce = nodeCollision && particle.zv < 0;
     particle.updateMotion();
 
     if (isometric.scene.outOfBoundsPosition(particle)){
@@ -845,8 +848,6 @@ class IsometricParticles {
       } else {
         particle.zv = 0;
       }
-    } else if (!nodeCollision) {
-      particle.applyAirFriction();
     }
     particle.applyLimits();
     particle.duration--;

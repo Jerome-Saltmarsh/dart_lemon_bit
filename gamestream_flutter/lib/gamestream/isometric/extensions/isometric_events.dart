@@ -495,11 +495,10 @@ extension IsometricEvents on Isometric {
     playAudioXYZ(audio.heavy_punch_13, x, y, z);
 
     for (var i = 0; i < 4; i++){
-      particles.spawnParticleBlood(
+      particles.spawnBlood(
         x: x,
         y: y,
         z: z,
-        zv: randomBetween(1.5, 2),
         angle: angle + giveOrTake(piQuarter),
         speed: randomBetween(1.5, 2.5),
       );
@@ -635,11 +634,10 @@ extension IsometricEvents on Isometric {
     playAudioXYZ(audio.heavy_punch_13, x, y, z);
 
     for (var i = 0; i < 4; i++){
-      particles.spawnParticleBlood(
+      particles.spawnBlood(
         x: x,
         y: y,
         z: z,
-        zv: randomBetween(1.5, 2),
         angle: angle + giveOrTake(piQuarter),
         speed: randomBetween(1.5, 2.5),
       );
