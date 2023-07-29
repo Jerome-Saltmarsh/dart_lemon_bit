@@ -142,7 +142,6 @@ class Isometric extends WebsocketClientBuilder with
 
   Isometric(){
     print('Isometric()');
-    // render = IsometricRender(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
     debug = IsometricDebug(this);
@@ -186,25 +185,6 @@ class Isometric extends WebsocketClientBuilder with
 
   bool get lightningOn =>  lightningType.value != LightningType.Off;
 
-  void drawCanvas(Canvas canvas, Size size) {
-    if (gameType.value == GameType.Website)
-      return;
-
-    updateParticles();
-
-    totalAmbientOffscreen = 0;
-    totalAmbientOnscreen = 0;
-
-    scene.jobBatchResetNodeColorsToAmbient();
-    camera.update();
-    render.render3D();
-    renderEditMode();
-    renderMouseTargetName();
-    debug.render();
-    game.value.drawCanvas(canvas, size);
-    rendersSinceUpdate.value++;
-  }
-
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
@@ -216,6 +196,24 @@ class Isometric extends WebsocketClientBuilder with
       windLineColumn = windLine - scene.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
+  }
+
+  void drawCanvas(Canvas canvas, Size size) {
+    if (gameType.value == GameType.Website)
+      return;
+
+    totalAmbientOffscreen = 0;
+    totalAmbientOnscreen = 0;
+
+    updateParticles();
+    scene.update();
+    camera.update();
+    render.render3D();
+    renderEditMode();
+    renderMouseTargetName();
+    debug.render();
+    game.value.drawCanvas(canvas, size);
+    rendersSinceUpdate.value++;
   }
 
   void update(){
@@ -516,20 +514,22 @@ class Isometric extends WebsocketClientBuilder with
 
   void applyEmissions(){
     totalActiveLights = 0;
-    applyEmissionsColoredLightSources();
+    applyEmissionsScene();
+    applyEmissionsCharacters();
+    applyEmissionGameObjects();
+    applyEmissionsProjectiles();
+    applyEmissionsParticles();
+    applyEmissionEditorSelectedNode();
+    updateCharacterColors();
+  }
 
+  void applyEmissionsScene() {
+    applyEmissionsColoredLightSources();
     if (bakeStackRecording){
       recordBakeStack();
     } else {
       applyEmissionBakeStack();
     }
-
-    applyEmissionsCharacters();
-    applyEmissionGameObjects();
-    applyEmissionsProjectiles();
-    applyCharacterColors();
-    applyEmissionsParticles();
-    applyEmissionEditorSelectedNode();
   }
 
   void applyEmissionBakeStack() {
@@ -556,7 +556,7 @@ class Isometric extends WebsocketClientBuilder with
         final brightness = bakeStackBrightness[j];
         final index = bakeStackIndex[j];
         final intensity = brightness > 5 ? 1.0 : scene.interpolations[brightness];
-        applyAmbient(
+        scene.applyAmbient(
           index: index,
           alpha: interpolate(ambient, alpha, intensity).toInt(),
         );
@@ -569,22 +569,16 @@ class Isometric extends WebsocketClientBuilder with
     if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
        emitLightAmbient(
         index:  editor.nodeSelectedIndex.value,
-        // hue:  scene.ambientHue,
-        // saturation:  scene.ambientSaturation,
-        // value:  scene.ambientValue,
         alpha: 0,
       );
     }
   }
 
-  void applyCharacterColors(){
+  void updateCharacterColors(){
     for (var i = 0; i <  totalCharacters; i++){
-      applyCharacterColor( characters[i]);
+      final character = characters[i];
+      character.color =  scene.getRenderColorPosition(character);
     }
-  }
-
-  void applyCharacterColor(Character character){
-    character.color =  scene.getRenderColorPosition(character);
   }
 
   void applyEmissionsProjectiles() {

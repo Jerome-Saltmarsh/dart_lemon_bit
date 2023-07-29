@@ -143,6 +143,10 @@ class IsometricScene {
     }
   }
 
+  void update(){
+    jobBatchResetNodeColorsToAmbient();
+  }
+
   void jobBatchResetNodeColorsToAmbient() {
 
     if (ambientResetIndex >= totalNodes)
@@ -548,6 +552,31 @@ class IsometricScene {
     );
   }
 
+
+  void applyAmbient({
+    required int index,
+    required int alpha,
+  }){
+    assert (index >= 0);
+    assert (index < totalNodes);
+
+    final currentColor = nodeColors[index];
+    final currentAlpha = getAlpha(currentColor);
+    if (currentAlpha <= alpha) {
+      return;
+    }
+
+    final currentRGB = getRGB(currentColor);
+    if (currentRGB != ambientRGB){
+      final currentIntensity = (ambientAlpha - currentAlpha) / 128;
+      final alphaBlend = 1.0 - currentIntensity;
+      alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
+    }
+
+    ambientStackIndex++;
+    ambientStack[ambientStackIndex] = index;
+    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
+  }
 }
 
 

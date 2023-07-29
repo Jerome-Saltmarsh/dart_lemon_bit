@@ -185,7 +185,7 @@ extension IsometricLighting on Isometric {
 
       final intensity = brightness > 5 ? 1.0 : scene.interpolations[brightness];
 
-      applyAmbient(
+      scene.applyAmbient(
         index: index,
         alpha: interpolate(scene.ambientAlpha, alpha, intensity).toInt(),
       );
@@ -305,37 +305,4 @@ extension IsometricLighting on Isometric {
       );
     }
   }
-
-  void applyAmbient({
-    required int index,
-    required int alpha,
-  }){
-    assert (index >= 0);
-    assert (index < scene.totalNodes);
-
-    // if (indexOnscreen(index)){
-    //   totalAmbientOnscreen++;
-    // } else {
-    //   totalAmbientOffscreen++;
-    //   return;
-    // }
-
-    final currentColor = scene.nodeColors[index];
-    final currentAlpha = getAlpha(currentColor);
-    if (currentAlpha <= alpha) {
-      return;
-    }
-
-    final currentRGB = getRGB(currentColor);
-    if (currentRGB != scene.ambientRGB){
-      final currentIntensity = (scene.ambientAlpha - currentAlpha) / 128;
-      final alphaBlend = 1.0 - currentIntensity;
-      alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
-    }
-
-    scene.ambientStackIndex++;
-    scene.ambientStack[scene.ambientStackIndex] = index;
-    scene.nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
-  }
-
 }
