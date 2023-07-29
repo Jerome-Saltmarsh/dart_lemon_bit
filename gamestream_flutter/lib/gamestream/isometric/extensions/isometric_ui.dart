@@ -126,7 +126,7 @@ extension IsometricUI on Isometric {
   Widget buildGeneratedMiniMap({required double translate}){
     return IsometricBuilder(
       builder: (context, isometric) {
-        return buildWatch(isometric.nodesChangedNotifier, (_){
+        return buildWatch(isometric.scene.nodesChangedNotifier, (_){
           return isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
             const scale = 2.0;
             canvas.scale(scale, scale);

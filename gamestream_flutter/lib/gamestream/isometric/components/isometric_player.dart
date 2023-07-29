@@ -80,7 +80,7 @@ class IsometricPlayer {
   double get positionScreenY => isometric.engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
-  bool get inBounds => isometric.inBoundsPosition(position);
+  bool get inBounds => isometric.scene.inBoundsPosition(position);
 
 
   bool isCharacter(Character character){
@@ -96,9 +96,9 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final index = nodeIndex + isometric.area;
-    while (index < isometric.totalNodes){
-      if (NodeType.isRainOrEmpty(isometric.nodeTypes[index])) continue;
+    final index = nodeIndex + isometric.scene.area;
+    while (index < isometric.scene.totalNodes){
+      if (NodeType.isRainOrEmpty(isometric.scene.nodeTypes[index])) continue;
       return true;
     }
     return false;

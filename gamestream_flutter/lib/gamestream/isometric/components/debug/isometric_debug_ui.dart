@@ -144,7 +144,7 @@ extension isometricDebugUI on IsometricDebug {
                   'aim-target-name: ${isometric.player.aimTargetName}\n'
                   'aim-target-position: ${isometric.player.aimTargetPosition}\n'
                   'target-position: ${isometric.player.targetPosition}\n'
-                  'scene-light-sources: ${isometric.nodesLightSourcesTotal}\n'
+                  'scene-light-sources: ${isometric.scene.nodesLightSourcesTotal}\n'
                   'scene-light-active: ${isometric.totalActiveLights}\n'
                   'total-gameobjects: ${isometric.gameObjects.length}\n'
                   'total-characters: ${isometric.totalCharacters}\n'
@@ -177,11 +177,11 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                isometric.setInterpolationLength(isometric.interpolationLength - 1);
+                isometric.scene.setInterpolationLength(isometric.scene.interpolationLength - 1);
               }),
-              GSRefresh(() => buildText('light-size: ${isometric.interpolationLength}')),
+              GSRefresh(() => buildText('light-size: ${isometric.scene.interpolationLength}')),
               buildText('->', onPressed: (){
-                isometric.setInterpolationLength(isometric.interpolationLength + 1);
+                isometric.scene.setInterpolationLength(isometric.scene.interpolationLength + 1);
               }),
             ],
           ),
@@ -189,15 +189,15 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(isometric.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(isometric.scene.interpolationEaseType.value);
                 final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                isometric.interpolationEaseType.value = EaseType.values[indexNext];
+                isometric.scene.interpolationEaseType.value = EaseType.values[indexNext];
               }),
-              buildWatch(isometric.interpolationEaseType, buildText),
+              buildWatch(isometric.scene.interpolationEaseType, buildText),
               buildText('->', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(isometric.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(isometric.scene.interpolationEaseType.value);
                 final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                isometric.interpolationEaseType.value = EaseType.values[indexNext];
+                isometric.scene.interpolationEaseType.value = EaseType.values[indexNext];
               }),
             ],
           ),

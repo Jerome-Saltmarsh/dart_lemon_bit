@@ -38,7 +38,6 @@ import 'ui/isometric_constants.dart';
 
 
 class Isometric extends WebsocketClientBuilder with
-    IsometricScene,
     IsometricCharacters,
     IsometricParticles
 {
@@ -56,7 +55,6 @@ class Isometric extends WebsocketClientBuilder with
   var bakeStackTorchSize = Uint16List(10000);
   var bakeStackTorchTotal = 0;
 
-
   var totalAmbientOffscreen = 0;
   var totalAmbientOnscreen = 0;
 
@@ -72,14 +70,12 @@ class Isometric extends WebsocketClientBuilder with
   var nextLightingUpdate = 0;
   var totalActiveLights = 0;
   var interpolationPadding = 0.0;
-  var torchEmissionStart = 0.8;
-  var torchEmissionEnd = 1.0;
-  var torchEmissionVal = 0.061;
-  var torchEmissionT = 0.0;
   var nodesRaycast = 0;
   var windLine = 0;
   var totalProjectiles = 0;
 
+  final scene = IsometricScene();
+  final graphics = Lighting();
   final colors = IsometricColors();
   final decoder = ZLibDecoder();
   final imagesLoadedCompleted = Completer();
@@ -195,11 +191,11 @@ class Isometric extends WebsocketClientBuilder with
       return;
 
     updateParticles();
-    jobBatchResetNodeColorsToAmbient();
 
     totalAmbientOffscreen = 0;
     totalAmbientOnscreen = 0;
 
+    scene.jobBatchResetNodeColorsToAmbient();
     camera.update();
     render.render3D();
     renderEditMode();
@@ -212,12 +208,12 @@ class Isometric extends WebsocketClientBuilder with
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
-    if (windLine < totalRows){
+    if (windLine < scene.totalRows){
       windLineColumn = 0;
-      windLineRow =  totalRows - windLine - 1;
+      windLineRow =  scene.totalRows - windLine - 1;
     } else {
       windLineRow = 0;
-      windLineColumn = windLine - totalRows + 1;
+      windLineColumn = windLine - scene.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }
@@ -249,11 +245,10 @@ class Isometric extends WebsocketClientBuilder with
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
 
-
-    updateTorchEmissionIntensity();
+    graphics.update();
     updateParticleEmitters();
 
-    interpolationPadding = (( interpolationLength + 1) * Node_Size) / engine.zoom;
+    interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -457,7 +452,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void projectShadow(Position v3){
-    if (!inBoundsPosition(v3)) return;
+    if (!scene.inBoundsPosition(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
@@ -480,8 +475,8 @@ class Isometric extends WebsocketClientBuilder with
 
     while (true) {
       if (z < 0) return -1;
-      final nodeIndex =  getIndexXYZ(x, y, z);
-      final nodeOrientation =  nodeOrientations[nodeIndex];
+      final nodeIndex =  scene.getIndexXYZ(x, y, z);
+      final nodeOrientation =  scene.nodeOrientations[nodeIndex];
 
       if (const <int> [
         NodeOrientation.None,
@@ -503,8 +498,8 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void clean() {
-     colorStackIndex = -1;
-     ambientStackIndex = -1;
+    scene.colorStackIndex = -1;
+    scene.ambientStackIndex = -1;
   }
 
   void onChangedLightningFlashing(bool lightningFlashing){
@@ -539,12 +534,12 @@ class Isometric extends WebsocketClientBuilder with
 
   void applyEmissionBakeStack() {
 
-    final ambient = ambientAlpha;
+    final ambient = scene.ambientAlpha;
 
     final alpha = interpolate(
       ambient,
       0,
-      torchEmissionIntensity,
+      graphics.torchEmissionIntensityAmbient,
     ).toInt();
 
     for (var i = 0; i < bakeStackTorchTotal; i++){
@@ -560,7 +555,7 @@ class Isometric extends WebsocketClientBuilder with
       for (var j = start; j < end; j++){
         final brightness = bakeStackBrightness[j];
         final index = bakeStackIndex[j];
-        final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+        final intensity = brightness > 5 ? 1.0 : scene.interpolations[brightness];
         applyAmbient(
           index: index,
           alpha: interpolate(ambient, alpha, intensity).toInt(),
@@ -589,7 +584,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void applyCharacterColor(Character character){
-    character.color =  getRenderColorPosition(character);
+    character.color =  scene.getRenderColorPosition(character);
   }
 
   void applyEmissionsProjectiles() {
@@ -654,25 +649,6 @@ class Isometric extends WebsocketClientBuilder with
 
   int get bodyPartDuration =>  randomInt(120, 200);
 
-  void updateTorchEmissionIntensity(){
-    if (torchEmissionVal == 0) return;
-    torchEmissionT += torchEmissionVal;
-
-    if (
-    torchEmissionT < torchEmissionStart ||
-        torchEmissionT > torchEmissionEnd
-    ) {
-      torchEmissionT = clamp(torchEmissionT, torchEmissionStart, torchEmissionEnd);
-      torchEmissionVal = -torchEmissionVal;
-    }
-
-     torchEmissionIntensity = interpolate(
-      torchEmissionStart,
-      torchEmissionEnd,
-      torchEmissionT,
-    );
-  }
-
   void updateParticleEmitters(){
     nextEmissionSmoke--;
     if (nextEmissionSmoke > 0) return;
@@ -709,20 +685,20 @@ class Isometric extends WebsocketClientBuilder with
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = ( hours.value * Seconds_Per_Hour) + ( minutes.value * 60);
 
-    final previousAmbientAlpha = ambientAlpha;
+    final previousAmbientAlpha = scene.ambientAlpha;
 
-     ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
+     scene.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
     if ( rainType.value == RainType.Light){
-       ambientAlpha += 20;
+      scene.ambientAlpha += 10;
     }
     if ( rainType.value == RainType.Heavy){
-       ambientAlpha += 40;
+      scene.ambientAlpha += 20;
     }
 
-    if (previousAmbientAlpha == ambientAlpha)
+    if (previousAmbientAlpha == scene.ambientAlpha)
       return;
   }
 
@@ -784,8 +760,8 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void onChangedRaining(bool raining){
-    raining ?  rainStart() :  rainStop();
-     resetNodeColorsToAmbient();
+    raining ?  scene.rainStart() :  scene.rainStop();
+    scene.resetNodeColorsToAmbient();
   }
 
   void onChangedMessageStatus(String value){
@@ -812,7 +788,7 @@ class Isometric extends WebsocketClientBuilder with
       return;
     }
 
-    if (outOfBoundsPosition(particle)){
+    if (scene.outOfBoundsPosition(particle)){
       particle.deactivate();
       return;
     }
@@ -842,13 +818,13 @@ class Isometric extends WebsocketClientBuilder with
       return;
     }
 
-    final nodeIndex = getIndexPosition(particle);
+    final nodeIndex = scene.getIndexPosition(particle);
 
     assert (nodeIndex >= 0);
-    assert (nodeIndex < totalNodes);
+    assert (nodeIndex < scene.totalNodes);
 
     particle.nodeIndex = nodeIndex;
-    final nodeType = nodeTypes[nodeIndex];
+    final nodeType = scene.nodeTypes[nodeIndex];
     particle.nodeType = nodeType;
     final airBorn =
         !particle.checkNodeCollision || (
@@ -877,7 +853,7 @@ class Isometric extends WebsocketClientBuilder with
     final bounce = particle.zv < 0 && !airBorn;
     particle.updateMotion();
 
-    if (outOfBoundsPosition(particle)){
+    if (scene.outOfBoundsPosition(particle)){
       particle.deactivate();
       return;
     }
@@ -939,7 +915,7 @@ class Isometric extends WebsocketClientBuilder with
         scale: scale,
       )
         ..emitsLight = true
-        ..emissionColor = ambientColor
+        ..emissionColor = scene.ambientColor
         ..checkNodeCollision = false
         ..emissionIntensity = 0.5
   ;
@@ -962,7 +938,7 @@ class Isometric extends WebsocketClientBuilder with
         animation: true,
       )
         ..flash = true
-        ..emissionColor = ambientColor
+        ..emissionColor = scene.ambientColor
         ..emissionIntensity = 0.0
   ;
 
@@ -1279,8 +1255,8 @@ class Isometric extends WebsocketClientBuilder with
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    nodeTypes[nodeIndex] = nodeType;
-    nodeOrientations[nodeIndex] = nodeOrientation;
+    scene.nodeTypes[nodeIndex] = nodeType;
+    scene.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
     onChangedNodes();
 
@@ -1671,7 +1647,7 @@ class Isometric extends WebsocketClientBuilder with
       if (!particle.active) continue;
       if (!particle.emitsLight) continue;
       emitLightColored(
-        index: getIndexPosition(particle),
+        index: scene.getIndexPosition(particle),
         color: particle.emissionColor,
         intensity: particle.emissionIntensity,
       );
@@ -1694,17 +1670,17 @@ class Isometric extends WebsocketClientBuilder with
     if (!player.playerInsideIsland)
       return true;
 
-    if (outOfBoundsPosition(position))
+    if (scene.outOfBoundsPosition(position))
       return false;
 
-    final index = getIndexPosition(position);
-    final indexRow = getIndexRow(index);
-    final indexColumn = getIndexRow(index);
-    final i = indexRow * totalColumns + indexColumn;
+    final index = scene.getIndexPosition(position);
+    final indexRow = scene.getIndexRow(index);
+    final indexColumn = scene.getIndexRow(index);
+    final i = indexRow * scene.totalColumns + indexColumn;
     // TODO REFACTOR
     if (!render.rendererNodes.island[i])
       return true;
-    final indexZ = getIndexZ(index);
+    final indexZ = scene.getIndexZ(index);
     if (indexZ > player.indexZ + 2)
       return false;
 
@@ -1713,24 +1689,25 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void applyEmissionsColoredLightSources() {
-    for (var i = 0; i < nodesLightSourcesTotal; i++){
-      final nodeIndex = nodesLightSources[i];
-      final nodeType = nodeTypes[nodeIndex];
-
+    for (var i = 0; i < scene.nodesLightSourcesTotal; i++){
+      final nodeIndex = scene.nodesLightSources[i];
+      final nodeType = scene.nodeTypes[nodeIndex];
 
       switch (nodeType) {
+        case NodeType.Torch:
+          break;
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
             color: colors.blue1,
-            intensity: torchEmissionIntensity - 0.2,
+            intensity: graphics.torchEmissionIntensityColored,
           );
           break;
         case NodeType.Torch_Red:
           emitLightColored(
             index: nodeIndex,
             color: colors.red1,
-            intensity: torchEmissionIntensity - 0.2,
+            intensity: graphics.torchEmissionIntensityColored,
           );
           break;
       }
@@ -1740,16 +1717,14 @@ class Isometric extends WebsocketClientBuilder with
   void recordBakeStack() {
     print('recordBakeStack()');
     bakeStackRecording = true;
-    for (var i = 0; i < nodesLightSourcesTotal; i++){
-      final nodeIndex = nodesLightSources[i];
-      final nodeType = nodeTypes[nodeIndex];
+    for (var i = 0; i < scene.nodesLightSourcesTotal; i++){
+      final nodeIndex = scene.nodesLightSources[i];
+      final nodeType = scene.nodeTypes[nodeIndex];
       final alpha = interpolate(
-        ambientAlpha,
+        scene.ambientAlpha,
         0,
         1.0,
       ).toInt();
-
-
 
       final currentSize = bakeStackTotal;
 
@@ -1780,9 +1755,9 @@ class Isometric extends WebsocketClientBuilder with
     assert (intensity <= 1);
     assert (alpha >= 0);
     assert (alpha <= 255);
-    if (!inBoundsPosition(v)) return;
+    if (!scene.inBoundsPosition(v)) return;
     emitLightAmbient(
-      index: getIndexPosition(v),
+      index: scene.getIndexPosition(v),
       alpha: alpha,
     );
   }
@@ -1827,30 +1802,30 @@ class Isometric extends WebsocketClientBuilder with
     required double intensity,
   }){
     if (index < 0) return;
-    if (index >= totalNodes) return;
+    if (index >= scene.totalNodes) return;
 
     final padding = interpolationPadding;
-    final rx = getIndexRenderX(index);
+    final rx = scene.getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
-    final ry = getIndexRenderY(index);
+    final ry = scene.getIndexRenderY(index);
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
     totalActiveLights++;
 
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
-    final z = getIndexZ(index);
+    final row = scene.getIndexRow(index);
+    final column = scene.getIndexColumn(index);
+    final z = scene.getIndexZ(index);
 
-    final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
+    final nodeType = scene.nodeTypes[index];
+    final nodeOrientation = scene.nodeOrientations[index];
 
     var vxStart = -1;
     var vxEnd = 1;
     var vyStart = -1;
     var vyEnd = 1;
 
-    if (!isNodeTypeTransparent(nodeType)){
+    if (!scene.isNodeTypeTransparent(nodeType)){
       if (const [
         NodeOrientation.Half_North,
         NodeOrientation.Corner_North_East,
@@ -1933,27 +1908,27 @@ class Isometric extends WebsocketClientBuilder with
 
     if (vx != 0) {
       row += vx;
-      if (row < 0 || row >= totalRows)
+      if (row < 0 || row >= scene.totalRows)
         return;
     }
 
     if (vy != 0) {
       column += vy;
-      if (column < 0 || column >= totalColumns)
+      if (column < 0 || column >= scene.totalColumns)
         return;
     }
 
     if (vz != 0) {
       z += vz;
-      if (z < 0 || z >= totalZ)
+      if (z < 0 || z >= scene.totalZ)
         return;
     }
 
     const padding = Node_Size + Node_Size_Half;
 
-    final index = (z * area) + (row * totalColumns) + column;
+    final index = (z * scene.area) + (row * scene.totalColumns) + column;
 
-    final renderX = getIndexRenderX(index);
+    final renderX = scene.getIndexRenderX(index);
 
     if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
       return;
@@ -1961,7 +1936,7 @@ class Isometric extends WebsocketClientBuilder with
     if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
       return;
 
-    final renderY = getIndexRenderY(index);
+    final renderY = scene.getIndexRenderY(index);
 
     if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
       return;
@@ -1969,10 +1944,10 @@ class Isometric extends WebsocketClientBuilder with
     if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
       return;
 
-    final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
+    final nodeType = scene.nodeTypes[index];
+    final nodeOrientation = scene.nodeOrientations[index];
 
-    if (!isNodeTypeTransparent(nodeType)) {
+    if (!scene.isNodeTypeTransparent(nodeType)) {
       if (nodeOrientation == NodeOrientation.Solid)
         return;
 
@@ -2066,9 +2041,9 @@ class Isometric extends WebsocketClientBuilder with
       }
     }
 
-    applyColor(
+    scene.applyColor(
       index: index,
-      intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
+      intensity: (brightness > 5 ? 1.0 : scene.interpolations[brightness]) * intensity,
       color: color,
     );
 
@@ -2078,7 +2053,7 @@ class Isometric extends WebsocketClientBuilder with
       NodeType.Tree_Top,
     ].contains(nodeType)) {
       brightness--;
-      if (brightness >= interpolationLength)
+      if (brightness >= scene.interpolationLength)
         return;
     }
 
@@ -2197,9 +2172,9 @@ class Isometric extends WebsocketClientBuilder with
     required int color,
     double intensity = 1.0,
   }){
-    if (!inBoundsPosition(v)) return;
+    if (!scene.inBoundsPosition(v)) return;
     emitLightColored(
-      index: getIndexPosition(v),
+      index: scene.getIndexPosition(v),
       color: color,
       intensity: intensity,
     );
@@ -2292,33 +2267,33 @@ class Isometric extends WebsocketClientBuilder with
     required int alpha,
   }){
     if (index < 0) return;
-    if (index >= totalNodes) return;
+    if (index >= scene.totalNodes) return;
 
     if (!bakeStackRecording){
       final padding = interpolationPadding;
-      final rx = getIndexRenderX(index);
+      final rx = scene.getIndexRenderX(index);
       if (rx < engine.Screen_Left - padding) return;
       if (rx > engine.Screen_Right + padding) return;
-      final ry = getIndexRenderY(index);
+      final ry = scene.getIndexRenderY(index);
       if (ry < engine.Screen_Top - padding) return;
       if (ry > engine.Screen_Bottom + padding) return;
     }
 
     totalActiveLights++;
 
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
-    final z = getIndexZ(index);
+    final row = scene.getIndexRow(index);
+    final column = scene.getIndexColumn(index);
+    final z = scene.getIndexZ(index);
 
-    final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
+    final nodeType = scene.nodeTypes[index];
+    final nodeOrientation = scene.nodeOrientations[index];
 
     var vxStart = -1;
     var vxEnd = 1;
     var vyStart = -1;
     var vyEnd = 1;
 
-    if (!isNodeTypeTransparent(nodeType)){
+    if (!scene.isNodeTypeTransparent(nodeType)){
       if (const [
         NodeOrientation.Half_North,
         NodeOrientation.Corner_North_East,

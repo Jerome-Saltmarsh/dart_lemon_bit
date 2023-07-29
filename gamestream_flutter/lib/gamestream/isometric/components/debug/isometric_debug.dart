@@ -119,7 +119,7 @@ class IsometricDebug {
 
       final pathTargetIndexValue = pathTargetIndex.value;
       if (pathTargetIndexValue != -1) {
-        final scene = isometric;
+        final scene = isometric.scene;
         isometric.render.renderWireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
           scene.getIndexRow(pathTargetIndexValue),
@@ -136,14 +136,15 @@ class IsometricDebug {
   }){
     if (start < 0) return;
     if (end < 0) return;
+    final scene = isometric.scene;
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];
       isometric.engine.drawLine(
-        isometric.getIndexRenderX(a) + Node_Size_Half,
-        isometric.getIndexRenderY(a) + Node_Size_Half,
-        isometric.getIndexRenderX(b) + Node_Size_Half,
-        isometric.getIndexRenderY(b) + Node_Size_Half,
+        scene.getIndexRenderX(a) + Node_Size_Half,
+        scene.getIndexRenderY(a) + Node_Size_Half,
+        scene.getIndexRenderX(b) + Node_Size_Half,
+        scene.getIndexRenderY(b) + Node_Size_Half,
       );
     }
   }

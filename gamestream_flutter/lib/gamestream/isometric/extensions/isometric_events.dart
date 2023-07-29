@@ -34,30 +34,30 @@ extension IsometricEvents on Isometric {
   }
 
   void onChangedNodes(){
-    refreshGridMetrics();
-    generateHeightMap();
-    generateMiniMap();
+    scene.refreshGridMetrics();
+    scene.generateHeightMap();
+    scene.generateMiniMap();
     minimap.generateSrcDst();
-    refreshLightSources();
+    scene.refreshLightSources();
 
-    render.rendererNodes.nodeColors = nodeColors;
-    render.rendererNodes.nodeOrientations = nodeOrientations;
+    render.rendererNodes.nodeColors = scene.nodeColors;
+    render.rendererNodes.nodeOrientations = scene.nodeOrientations;
 
     if (raining.value) {
-      rainStop();
-      rainStart();
+      scene.rainStop();
+      scene.rainStart();
     }
     // resetNodeColorsToAmbient();
     updateAmbientAlphaAccordingToTime();
-    resetNodeColorsToAmbient();
+    scene.resetNodeColorsToAmbient();
     editor.refreshNodeSelectedIndex();
   }
 
   void onFootstep(double x, double y, double z) {
     if (raining.value && (
-        getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
+        scene.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
             ||
-            getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
+        scene.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
 
@@ -69,7 +69,7 @@ extension IsometricEvents on Isometric {
       }
     }
 
-    final nodeType = getTypeXYZSafe(x, y, z - 2);
+    final nodeType = scene.getTypeXYZSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
       playAudioXYZ(audio.footstep_stone, x, y, z);
       return;
@@ -261,10 +261,10 @@ extension IsometricEvents on Isometric {
   }
 
   void onNodeStruck(double x, double y, double z) {
-    if (!inBoundsXYZ(x, y, z)) return;
+    if (!scene.inBoundsXYZ(x, y, z)) return;
 
-    final nodeIndex = getIndexXYZ(x, y, z);
-    final nodeType = nodeTypes[nodeIndex];
+    final nodeIndex = scene.getIndexXYZ(x, y, z);
+    final nodeType = scene.nodeTypes[nodeIndex];
 
     if (NodeType.isMaterialWood(nodeType)){
       playAudioXYZ(audio.material_struck_wood, x, y, z);

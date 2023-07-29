@@ -44,8 +44,8 @@ class RendererGameObjects extends IsometricRenderer {
       srcHeight: src[Atlas.SrcHeight],
       scale: src[Atlas.SrcScale],
       color: switch (gameObject.colorType){
-         EmissionType.Ambient => isometric.getRenderColorPosition(gameObject),
-         EmissionType.None => isometric.getRenderColorPosition(gameObject),
+         EmissionType.Ambient => isometric.scene.getRenderColorPosition(gameObject),
+         EmissionType.None => isometric.scene.getRenderColorPosition(gameObject),
          EmissionType.Color => gameObject.emissionColor,
          _ => throw Exception()
       }

@@ -17,6 +17,6 @@ class IsometricMouse {
   double get positionZ => isometric.player.position.z;
   double get playerAngle => angleBetween(isometric.player.position.x, isometric.player.position.y, positionX, positionY);
   double get playerDistance => distanceBetween(isometric.player.position.x, isometric.player.position.y, positionX, positionY);
-  int get nodeIndex => isometric.getIndexXYZ(positionX, positionY, positionZ);
-  bool get inBounds => !isometric.outOfBoundsXYZ(positionX, positionY, positionZ);
+  int get nodeIndex => isometric.scene.getIndexXYZ(positionX, positionY, positionZ);
+  bool get inBounds => !isometric.scene.outOfBoundsXYZ(positionX, positionY, positionZ);
 }

@@ -143,7 +143,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = Isometric.getPositionRenderY(character);
 
     const Color_Invisible = 1660944383;
-    final color = invisible ? Color_Invisible : isometric.getRenderColorPosition(character);
+    final color = invisible ? Color_Invisible : isometric.scene.getRenderColorPosition(character);
 
     if (invisible) {
       isometric.engine.bufferBlendMode = BlendMode.srcIn;
@@ -158,11 +158,11 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (character.z >= IsometricConstants.Node_Height){
 
-      final lightIndex = isometric.getNearestLightSourcePosition(character, maxDistance: 5);
+      final lightIndex = isometric.scene.getNearestLightSourcePosition(character, maxDistance: 5);
 
       if (lightIndex != -1){
-         final lightRow = isometric.getIndexRow(lightIndex);
-         final lightColumn = isometric.getIndexColumn(lightIndex);
+         final lightRow = isometric.scene.getIndexRow(lightIndex);
+         final lightColumn = isometric.scene.getIndexColumn(lightIndex);
 
          final lightX = (lightRow * Node_Size) + Node_Size_Half;
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;

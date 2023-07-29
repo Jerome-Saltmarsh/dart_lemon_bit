@@ -16,7 +16,7 @@ extension IsometricLighting on Isometric {
       } else {
         applyVector3EmissionAmbient(
           character,
-          alpha: emissionAlphaCharacter,
+          alpha: graphics.emissionAlphaCharacter,
         );
       }
     }
@@ -47,28 +47,28 @@ extension IsometricLighting on Isometric {
 
       if (vx != 0) {
         row += vx;
-        if (row < 0 || row >= totalRows)
+        if (row < 0 || row >= scene.totalRows)
           return;
       }
 
       if (vy != 0) {
         column += vy;
-        if (column < 0 || column >= totalColumns)
+        if (column < 0 || column >= scene.totalColumns)
           return;
       }
 
       if (vz != 0) {
         z += vz;
-        if (z < 0 || z >= totalZ)
+        if (z < 0 || z >= scene.totalZ)
           return;
       }
 
       const padding = Node_Size + Node_Size_Half;
 
-      final index = (z * area) + (row * totalColumns) + column;
+      final index = (z * scene.area) + (row * scene.totalColumns) + column;
 
       if (!bakeStackRecording){
-        final renderX = getIndexRenderX(index);
+        final renderX = scene.getIndexRenderX(index);
 
         if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
           return;
@@ -76,7 +76,7 @@ extension IsometricLighting on Isometric {
         if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
           return;
 
-        final renderY = getIndexRenderY(index);
+        final renderY = scene.getIndexRenderY(index);
 
         if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
           return;
@@ -86,10 +86,10 @@ extension IsometricLighting on Isometric {
       }
 
 
-      final nodeType = nodeTypes[index];
-      final nodeOrientation = nodeOrientations[index];
+      final nodeType = scene.nodeTypes[index];
+      final nodeOrientation = scene.nodeOrientations[index];
 
-      if (!isNodeTypeTransparent(nodeType)) {
+      if (!scene.isNodeTypeTransparent(nodeType)) {
         if (nodeOrientation == NodeOrientation.Solid)
           return;
 
@@ -183,11 +183,11 @@ extension IsometricLighting on Isometric {
         }
       }
 
-      final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+      final intensity = brightness > 5 ? 1.0 : scene.interpolations[brightness];
 
       applyAmbient(
         index: index,
-        alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
+        alpha: interpolate(scene.ambientAlpha, alpha, intensity).toInt(),
       );
 
       if (bakeStackRecording) {
@@ -311,7 +311,7 @@ extension IsometricLighting on Isometric {
     required int alpha,
   }){
     assert (index >= 0);
-    assert (index < totalNodes);
+    assert (index < scene.totalNodes);
 
     // if (indexOnscreen(index)){
     //   totalAmbientOnscreen++;
@@ -320,58 +320,22 @@ extension IsometricLighting on Isometric {
     //   return;
     // }
 
-    final currentColor = nodeColors[index];
+    final currentColor = scene.nodeColors[index];
     final currentAlpha = getAlpha(currentColor);
     if (currentAlpha <= alpha) {
       return;
     }
 
     final currentRGB = getRGB(currentColor);
-    if (currentRGB != ambientRGB){
-      final currentIntensity = (ambientAlpha - currentAlpha) / 128;
+    if (currentRGB != scene.ambientRGB){
+      final currentIntensity = (scene.ambientAlpha - currentAlpha) / 128;
       final alphaBlend = 1.0 - currentIntensity;
       alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
     }
 
-    ambientStackIndex++;
-    ambientStack[ambientStackIndex] = index;
-    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
+    scene.ambientStackIndex++;
+    scene.ambientStack[scene.ambientStackIndex] = index;
+    scene.nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
   }
 
-  /// @intensity a value between 0 and 1 from least to most bright respectively
-  void applyColor({
-    required int index,
-    required double intensity,
-    required int color,
-  }){
-    if (index < 0) return;
-    if (index >= totalNodes) return;
-
-    final ambientIntensity = intensity * (ambientAlpha / 255);
-
-    final currentColor = nodeColors[index];
-    final currentRed = getRed(currentColor);
-    final currentGreen = getGreen(currentColor);
-    final currentBlue = getBlue(currentColor);
-    final currentAlpha = getAlpha(currentColor);
-
-    final colorRed = getRed(color);
-    final colorGreen = getGreen(color);
-    final colorBlue = getBlue(color);
-    final colorAlpha = interpolateByte(0, getAlpha(color), ambientIntensity);
-
-    final interpolatedRed = interpolateByte(currentRed, colorRed, ambientIntensity);
-    final interpolatedGreen = interpolateByte(currentGreen, colorGreen, ambientIntensity);
-    final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
-    final interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, ambientIntensity);
-
-    colorStackIndex++;
-    colorStack[colorStackIndex] = index;
-    nodeColors[index] = aRGBToColor(
-        interpolatedAlpha,
-        interpolatedRed,
-        interpolatedGreen,
-        interpolatedBlue,
-    );
-  }
 }

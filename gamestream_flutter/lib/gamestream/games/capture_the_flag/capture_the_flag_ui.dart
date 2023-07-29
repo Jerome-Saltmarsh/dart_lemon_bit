@@ -155,7 +155,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             ),
             width: mapSize,
             height: mapSize,
-            child:   buildWatch(isometric.nodesChangedNotifier, (_){
+            child:   buildWatch(isometric.scene.nodesChangedNotifier, (_){
               return isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
                 const scale = 2.0;
                 canvas.scale(scale, scale);

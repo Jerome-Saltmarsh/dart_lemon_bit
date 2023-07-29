@@ -1,22 +1,37 @@
 
 import 'dart:math';
+import 'dart:ui';
 
-import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
-mixin IsometricScene {
+class IsometricScene {
 
-  var ambientResetIndex = 0;
-  var emissionAlphaCharacter = 50;
-
-  var ambientColor = Color.fromRGBO(31, 1, 86, 0.5).value;
   var _ambientAlpha = 0;
-  late var ambientRGB = getRGB(ambientColor);
 
   int get ambientAlpha => _ambientAlpha;
+
+  set ambientAlpha(int value){
+    final clampedValue = value.clamp(0, 255);
+
+    if (clampedValue == _ambientAlpha)
+      return;
+
+    ambientResetIndex = 0;
+    _ambientAlpha = clampedValue;
+    ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
+  }
+
+  late var ambientRGB = getRGB(ambientColor);
+  var ambientColor = Color.fromRGBO(31, 1, 86, 0.5).value;
+  var ambientResetIndex = 0;
+  var ambientStack = Uint16List(0);
+  var ambientStackIndex = -1;
+
+  var colorStack = Uint16List(0);
+  var colorStackIndex = -1;
 
   var nodesLightSources = Uint16List(1000);
   var nodesLightSourcesTotal = 0;
@@ -24,12 +39,8 @@ mixin IsometricScene {
   var nodeOrientations = Uint8List(0);
   var nodeTypes = Uint8List(0);
   var nodeVariations = Uint8List(0);
-  var colorStack = Uint16List(0);
-  var ambientStack = Uint16List(0);
   var miniMap = Uint8List(0);
   var heightMap = Uint16List(0);
-  var colorStackIndex = -1;
-  var ambientStackIndex = -1;
   var totalNodes = 0;
   var area = 0;
   var area2 = 0;
@@ -43,22 +54,11 @@ mixin IsometricScene {
   var lengthZ = 0.0;
   var offscreenNodes = 0;
   var onscreenNodes = 0;
-  var torchEmissionIntensity = 1.0;
 
   late var interpolationLength = 6;
 
   final nodesChangedNotifier = Watch(0);
 
-  set ambientAlpha(int value){
-     final clampedValue = value.clamp(0, 255);
-
-     if (clampedValue == _ambientAlpha)
-       return;
-
-     ambientResetIndex = 0;
-     _ambientAlpha = clampedValue;
-     ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
-  }
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEaseType(
@@ -83,6 +83,7 @@ mixin IsometricScene {
   }
 
   // FUNCTIONS
+
 
   void rainStart(){
     final rows = totalRows;
@@ -135,8 +136,10 @@ mixin IsometricScene {
     if (nodeColors.length != totalNodes) {
       generateStacks();
     }
+
+    final cacheAmbient = ambientColor;
     for (var i = 0; i < totalNodes; i++) {
-      nodeColors[i] = ambientColor;
+      nodeColors[i] = cacheAmbient;
     }
   }
 
@@ -507,6 +510,43 @@ mixin IsometricScene {
 
   int getNodeColorAtIndex(int index )=>
       index < 0 || index >= totalNodes ? ambientColor : nodeColors[index];
+
+
+  void applyColor({
+    required int index,
+    required double intensity,
+    required int color,
+  }){
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final ambientIntensity = intensity * (ambientAlpha / 255);
+
+    final currentColor = nodeColors[index];
+    final currentRed = getRed(currentColor);
+    final currentGreen = getGreen(currentColor);
+    final currentBlue = getBlue(currentColor);
+    final currentAlpha = getAlpha(currentColor);
+
+    final colorRed = getRed(color);
+    final colorGreen = getGreen(color);
+    final colorBlue = getBlue(color);
+    final colorAlpha = interpolateByte(0, getAlpha(color), ambientIntensity);
+
+    final interpolatedRed = interpolateByte(currentRed, colorRed, ambientIntensity);
+    final interpolatedGreen = interpolateByte(currentGreen, colorGreen, ambientIntensity);
+    final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
+    final interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, ambientIntensity);
+
+    colorStackIndex++;
+    colorStack[colorStackIndex] = index;
+    nodeColors[index] = aRGBToColor(
+      interpolatedAlpha,
+      interpolatedRed,
+      interpolatedGreen,
+      interpolatedBlue,
+    );
+  }
 
 }
 

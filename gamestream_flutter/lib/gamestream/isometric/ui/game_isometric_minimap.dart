@@ -29,7 +29,7 @@ class IsometricMinimap {
 
   void generateSrcDst(){
     var index = 0;
-    final nodes = isometric;
+    final nodes = isometric.scene;
     final rows = nodes.totalRows;
     final columns = nodes.totalColumns;
     final area = nodes.area;

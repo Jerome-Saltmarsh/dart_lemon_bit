@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'dart:ui' as ui;
+import 'package:gamestream_flutter/gamestream/isometric/mixins/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
@@ -11,34 +12,6 @@ import 'constants/node_src.dart';
 
 class RendererNodes extends IsometricRenderer {
 
-  var ambientColor = 0;
-  var dynamicResolutionEnabled = true;
-  var totalNodes = 0;
-  var totalRows = 0;
-  var totalColumns = 0;
-  var totalZ = 0;
-  var nodeSideTopSrcX = 0.0;
-  var nodeSideWestSrcX = 0.0;
-  var nodeSize = Node_Size;
-  var nodeScale = 1.0;
-  var highResolution = true;
-  var plainIndex = 0;
-  var plainStartRow = 0;
-  var plainStartColumn = 0;
-  var plainStartZ = 0;
-  var totalPlains = 0;
-  var orderShiftY = 151.0;
-
-  /// see engine.incrementBufferIndex
-  /// cached to save engine lookup for each render
-  late final Function incrementBufferIndex;
-
-  static const MapNodeTypeToSrcY = <int, double>{
-    NodeType.Brick: 1760,
-    NodeType.Grass: 1808,
-    NodeType.Soil: 1856,
-    NodeType.Wood: 1904,
-  };
 
   static const Node_Size = 48.0;
 
@@ -61,6 +34,36 @@ class RendererNodes extends IsometricRenderer {
   static const Cell_West_Height = 8.0;
 
   static const Node_South_Height = 24.0;
+
+  static const MapNodeTypeToSrcY = <int, double>{
+    NodeType.Brick: 1760,
+    NodeType.Grass: 1808,
+    NodeType.Soil: 1856,
+    NodeType.Wood: 1904,
+  };
+
+
+  var dynamicResolutionEnabled = true;
+  var totalNodes = 0;
+  var totalRows = 0;
+  var totalColumns = 0;
+  var totalZ = 0;
+  var nodeSideTopSrcX = 0.0;
+  var nodeSideWestSrcX = 0.0;
+  var nodeSize = Node_Size;
+  var nodeScale = 1.0;
+  var highResolution = true;
+  var plainIndex = 0;
+  var plainStartRow = 0;
+  var plainStartColumn = 0;
+  var plainStartZ = 0;
+  var totalPlains = 0;
+  var orderShiftY = 151.0;
+
+  /// see engine.incrementBufferIndex
+  /// cached to save engine lookup for each render
+  late final Function incrementBufferIndex;
+
 
   // VARIABLES
   var previousVisibility = 0;
@@ -129,14 +132,18 @@ class RendererNodes extends IsometricRenderer {
   var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
   var atlasNodesLoaded = false;
+  var ambientColor = 0;
 
   late Uint32List nodeColors;
   late Uint8List nodeOrientations;
+
+  late IsometricScene scene;
 
   late final ui.Image atlasNodes;
 
   RendererNodes(super.isometric) : super(){
     print('RendererNodes()');
+    this.scene = isometric.scene;
     bufferClr = isometric.engine.bufferClr;
     bufferDst = isometric.engine.bufferDst;
     bufferSrc = isometric.engine.bufferSrc;
@@ -148,7 +155,7 @@ class RendererNodes extends IsometricRenderer {
   int get colorCurrent => nodeColors[currentNodeIndex];
 
   int get colorAbove {
-    final nodeAboveIndex = currentNodeIndex + isometric.area;
+    final nodeAboveIndex = currentNodeIndex + scene.area;
     if (nodeAboveIndex >= totalNodes)
       return ambientColor;
     return nodeColors[nodeAboveIndex];
@@ -186,19 +193,19 @@ class RendererNodes extends IsometricRenderer {
 
   int get wind => isometric.windTypeAmbient.value;
 
-  int get currentNodeVariation => isometric.nodeVariations[currentNodeIndex];
+  int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
 
   int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
 
-  int get renderNodeVariation => isometric.nodeVariations[currentNodeIndex];
+  int get renderNodeVariation => scene.nodeVariations[currentNodeIndex];
 
-  int get renderNodeBelowIndex => currentNodeIndex - isometric.area;
+  int get renderNodeBelowIndex => currentNodeIndex - scene.area;
 
-  int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? isometric.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+  int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
 
-  int get renderNodeBelowColor => isometric.getNodeColorAtIndex(currentNodeIndex - isometric.area);
+  int get renderNodeBelowColor => scene.getNodeColorAtIndex(currentNodeIndex - scene.area);
 
-  int get nodeTypeBelow => isometric.getTypeBelow(currentNodeIndex);
+  int get nodeTypeBelow => scene.getTypeBelow(currentNodeIndex);
 
   @override
   void renderFunction() {
@@ -242,9 +249,9 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void onPlainIndexChanged(){
-    final columns = isometric.totalColumns;
-    final rows = isometric.totalRows;
-    final height = isometric.totalZ;
+    final columns = isometric.scene.totalColumns;
+    final rows = isometric.scene.totalRows;
+    final height = isometric.scene.totalZ;
     final rowMax = rows - 1;
     final columnMax = columns - 1;
     final heightMax = height - 1;
@@ -257,10 +264,10 @@ class RendererNodes extends IsometricRenderer {
 
   void renderPlain(){
 
-    final nodeTypes = isometric.nodeTypes;
-    final height = isometric.totalZ;
-    final columns = isometric.totalColumns;
-    final rows = isometric.totalRows;
+    final nodeTypes = scene.nodeTypes;
+    final height = scene.totalZ;
+    final columns = scene.totalColumns;
+    final rows = scene.totalRows;
     final rowMax = rows - 1;
     final columnMax = columns - 1;
     final heightMax = height - 1;
@@ -286,7 +293,7 @@ class RendererNodes extends IsometricRenderer {
           break;
         }
 
-        currentNodeIndex = isometric.getIndexZRC(lineZ, lineRow, lineColumn);
+        currentNodeIndex = isometric.scene.getIndexZRC(lineZ, lineRow, lineColumn);
         currentNodeDstX = (row - column) * Node_Size_Half;
 
         while (true) {
@@ -335,64 +342,63 @@ class RendererNodes extends IsometricRenderer {
   @override
   void updateFunction() {
     updatePlain();
-    return;
 
-    currentNodeZ++;
-    if (currentNodeZ > nodesMaxZ) {
-      currentNodeZ = 0;
-      nodesShiftIndexDown();
-      if (!remaining) return;
-      nodesCalculateMinMaxZ();
-      if (!remaining) return;
-
-      assert (column >= 0);
-      assert (row >= 0);
-      assert (row < isometric.totalRows);
-      assert (column < isometric.totalColumns);
-
-      trimLeft();
-
-      while (currentNodeRenderY > screenBottom) {
-        currentNodeZ++;
-        if (currentNodeZ > nodesMaxZ) {
-          remaining = false;
-          return;
-        }
-      }
-    } else {
-      assert (nodesStartRow < isometric.totalRows);
-      assert (column < isometric.totalColumns);
-      row = nodesStartRow;
-      column = nodeStartColumn;
-    }
-
-    currentNodeIndex = (currentNodeZ * isometric.area) + (row * isometric.totalColumns) + column;
-    assert (currentNodeZ >= 0);
-    assert (row >= 0);
-    assert (column >= 0);
-    assert (currentNodeIndex >= 0);
-    assert (currentNodeZ < isometric.totalZ);
-    assert (row < isometric.totalRows);
-    assert (column < isometric.totalColumns);
-    assert (currentNodeIndex < isometric.totalNodes);
-    currentNodeDstX = (row - column) * Node_Size_Half;
-    currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeType = isometric.nodeTypes[currentNodeIndex];
-    // orderZ = currentNodeZ;
-    order = (row + column).toDouble() - 0.5;
+    // currentNodeZ++;
+    // if (currentNodeZ > nodesMaxZ) {
+    //   currentNodeZ = 0;
+    //   nodesShiftIndexDown();
+    //   if (!remaining) return;
+    //   nodesCalculateMinMaxZ();
+    //   if (!remaining) return;
+    //
+    //   assert (column >= 0);
+    //   assert (row >= 0);
+    //   assert (row < isometric.totalRows);
+    //   assert (column < isometric.totalColumns);
+    //
+    //   trimLeft();
+    //
+    //   while (currentNodeRenderY > screenBottom) {
+    //     currentNodeZ++;
+    //     if (currentNodeZ > nodesMaxZ) {
+    //       remaining = false;
+    //       return;
+    //     }
+    //   }
+    // } else {
+    //   assert (nodesStartRow < isometric.totalRows);
+    //   assert (column < isometric.totalColumns);
+    //   row = nodesStartRow;
+    //   column = nodeStartColumn;
+    // }
+    //
+    // currentNodeIndex = (currentNodeZ * isometric.area) + (row * isometric.totalColumns) + column;
+    // assert (currentNodeZ >= 0);
+    // assert (row >= 0);
+    // assert (column >= 0);
+    // assert (currentNodeIndex >= 0);
+    // assert (currentNodeZ < isometric.totalZ);
+    // assert (row < isometric.totalRows);
+    // assert (column < isometric.totalColumns);
+    // assert (currentNodeIndex < isometric.totalNodes);
+    // currentNodeDstX = (row - column) * Node_Size_Half;
+    // currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
+    // currentNodeType = isometric.nodeTypes[currentNodeIndex];
+    // // orderZ = currentNodeZ;
+    // order = (row + column).toDouble() - 0.5;
   }
 
   @override
-  int getTotal() => atlasNodesLoaded ? isometric.totalNodes : 0;
+  int getTotal() => atlasNodesLoaded ? scene.totalNodes : 0;
 
   @override
   void reset() {
-    nodeColors = isometric.nodeColors;
-    ambientColor = isometric.ambientColor;
-    totalNodes = isometric.totalNodes;
-    totalRows = isometric.totalRows;
-    totalColumns = isometric.totalColumns;
-    totalZ = isometric.totalZ;
+    ambientColor = isometric.scene.ambientColor;
+    nodeColors = scene.nodeColors;
+    totalNodes = scene.totalNodes;
+    totalRows = scene.totalRows;
+    totalColumns = scene.totalColumns;
+    totalZ = scene.totalZ;
     highResolution = !dynamicResolutionEnabled || engine.zoom >= 0.8;
     nodeScale = highResolution ? 1.0 : 1.5;
     nodeSize = Node_Size / nodeScale;
@@ -400,14 +406,14 @@ class RendererNodes extends IsometricRenderer {
     nodeSideWestSrcX = highResolution ? 49.0 : 161.0;
 
 
-    final columns = isometric.totalColumns;
-    final rows = isometric.totalRows;
-    final height = isometric.totalZ;
+    final columns = scene.totalColumns;
+    final rows = scene.totalRows;
+    final height = scene.totalZ;
     totalPlains = columns + rows + height - 2;
     plainIndex = 0;
     onPlainIndexChanged();
-    nodesRowsMax = isometric.totalRows - 1;
-    nodesGridTotalZMinusOne = isometric.totalZ - 1;
+    nodesRowsMax = scene.totalRows - 1;
+    nodesGridTotalZMinusOne = scene.totalZ - 1;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
@@ -417,23 +423,23 @@ class RendererNodes extends IsometricRenderer {
     nodesMinZ = 0;
     // orderZ = 0;
     currentNodeZ = 0;
-    nodesGridTotalColumnsMinusOne = isometric.totalColumns - 1;
+    nodesGridTotalColumnsMinusOne = scene.totalColumns - 1;
     playerZ = isometric.player.position.indexZ;
     playerRow = isometric.player.position.indexRow;
     playerColumn = isometric.player.position.indexColumn;
     nodesPlayerColumnRow = playerRow + playerColumn;
     playerRenderRow = playerRow - (isometric.player.position.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (isometric.player.position.indexZ ~/ 2);
-    playerProjection = playerIndex % isometric.projection;
-    isometric.offscreenNodes = 0;
-    isometric.onscreenNodes = 0;
+    playerProjection = playerIndex % scene.projection;
+    scene.offscreenNodes = 0;
+    scene.onscreenNodes = 0;
 
     screenRight = engine.Screen_Right + Node_Size;
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
     var screenTopLeftColumn = IsometricRender.convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(IsometricRender.convertWorldToRow(screenRight, screenBottom, 0), 0, isometric.totalRows - 1);
+    nodesScreenBottomRightRow = clamp(IsometricRender.convertWorldToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
     nodesScreenTopLeftRow = IsometricRender.convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
@@ -444,7 +450,7 @@ class RendererNodes extends IsometricRenderer {
       nodesScreenTopLeftRow += screenTopLeftColumn;
       screenTopLeftColumn = 0;
     }
-    if (screenTopLeftColumn >= isometric.totalColumns){
+    if (screenTopLeftColumn >= scene.totalColumns){
       nodesScreenTopLeftRow = screenTopLeftColumn - nodesGridTotalColumnsMinusOne;
       screenTopLeftColumn = nodesGridTotalColumnsMinusOne;
     }
@@ -463,8 +469,8 @@ class RendererNodes extends IsometricRenderer {
 
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * isometric.area) + (row * isometric.totalColumns) + column;
-    currentNodeType = isometric.nodeTypes[currentNodeIndex];
+    currentNodeIndex = (currentNodeZ * scene.area) + (row * scene.totalColumns) + column;
+    currentNodeType = scene.nodeTypes[currentNodeIndex];
     currentNodeWithinIsland = false;
 
     updateTransparencyGrid();
@@ -473,8 +479,8 @@ class RendererNodes extends IsometricRenderer {
     total = getTotal();
     index = 0;
     remaining = total > 0;
-    isometric.resetNodeColorStack();
-    isometric.resetNodeAmbientStack();
+    scene.resetNodeColorStack();
+    scene.resetNodeAmbientStack();
     isometric.applyEmissions();
 
     // highlightCharacterNearMouse();
@@ -494,9 +500,9 @@ class RendererNodes extends IsometricRenderer {
 
   void updateTransparencyGrid() {
 
-    if (transparencyGrid.length != isometric.projection) {
-      transparencyGrid = List.generate(isometric.projection, (index) => false, growable: false);
-      transparencyGridStack = Uint16List(isometric.projection);
+    if (transparencyGrid.length != scene.projection) {
+      transparencyGrid = List.generate(scene.projection, (index) => false, growable: false);
+      transparencyGridStack = Uint16List(scene.projection);
     } else {
       for (var i = 0; i < transparencyGridStackIndex; i++){
         transparencyGrid[transparencyGridStack[i]] = false;
@@ -507,17 +513,17 @@ class RendererNodes extends IsometricRenderer {
     const r = 2;
 
     for (var z = playerZ; z <= playerZ + 1; z++){
-      if (z >= isometric.totalZ) break;
-      final indexZ = z * isometric.area;
+      if (z >= scene.totalZ) break;
+      final indexZ = z * scene.area;
       for (var row = playerRow - r; row <= playerRow + r; row++){
         if (row < 0) continue;
-        if (row >= isometric.totalRows) break;
-        final rowIndex = row * isometric.totalColumns + indexZ;
+        if (row >= scene.totalRows) break;
+        final rowIndex = row * scene.totalColumns + indexZ;
         for (var column = playerColumn - r; column <= playerColumn + r; column++){
           if (column < 0) continue;
-          if (column >= isometric.totalColumns) break;
+          if (column >= scene.totalColumns) break;
           final index = rowIndex + column;
-          final projectionIndex = index % isometric.projection;
+          final projectionIndex = index % scene.projection;
           transparencyGrid[projectionIndex] = true;
           transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
           transparencyGridStackIndex++;
@@ -528,8 +534,8 @@ class RendererNodes extends IsometricRenderer {
 
   void updateHeightMapPerception() {
 
-    if (visible3D.length != isometric.totalNodes) {
-      visible3D = List.generate(isometric.totalNodes, (index) => false);
+    if (visible3D.length != scene.totalNodes) {
+      visible3D = List.generate(scene.totalNodes, (index) => false);
       visible3DIndex = 0;
     }
 
@@ -538,11 +544,11 @@ class RendererNodes extends IsometricRenderer {
     }
     visible3DIndex = 0;
 
-    if (visited2D.length != isometric.area) {
-      visited2D = List.generate(isometric.area, (index) => false, growable: false);
-      visited2DStack = Uint16List(isometric.area);
+    if (visited2D.length != scene.area) {
+      visited2D = List.generate(scene.area, (index) => false, growable: false);
+      visited2DStack = Uint16List(scene.area);
       visited2DStackIndex = 0;
-      island = List.generate(isometric.area, (index) => false, growable: false);
+      island = List.generate(scene.area, (index) => false, growable: false);
     } else {
       for (var i = 0; i < visited2DStackIndex; i++){
         final j = visited2DStack[i];
@@ -552,7 +558,7 @@ class RendererNodes extends IsometricRenderer {
     }
     visited2DStackIndex = 0;
 
-    final height = isometric.heightMap[isometric.player.areaNodeIndex];
+    final height = scene.heightMap[isometric.player.areaNodeIndex];
 
     if (isometric.player.indexZ <= 0) {
       zMin = 0;
@@ -575,20 +581,20 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void ensureIndexPerceptible(int index){
-    var projectionRow     = isometric.getIndexRow(index);
-    var projectionColumn  = isometric.getIndexColumn(index);
-    var projectionZ       = isometric.getIndexZ(index);
+    var projectionRow     = scene.getIndexRow(index);
+    var projectionColumn  = scene.getIndexColumn(index);
+    var projectionZ       = scene.getIndexZ(index);
 
     while (true) {
       projectionZ += 2;
       projectionColumn++;
       projectionRow++;
-      if (projectionZ >= isometric.totalZ) return;
-      if (projectionColumn >= isometric.totalColumns) return;
-      if (projectionRow >= isometric.totalRows) return;
+      if (projectionZ >= scene.totalZ) return;
+      if (projectionColumn >= scene.totalColumns) return;
+      if (projectionRow >= scene.totalRows) return;
       final projectionIndex =
-          (projectionRow * isometric.totalColumns) + projectionColumn;
-      final projectionHeight = isometric.heightMap[projectionIndex];
+          (projectionRow * scene.totalColumns) + projectionColumn;
+      final projectionHeight = scene.heightMap[projectionIndex];
       if (projectionZ > projectionHeight) continue;
       isometric.player.playerInsideIsland = true;
       zMin = max(isometric.player.indexZ - 1, 0);
@@ -608,18 +614,18 @@ class RendererNodes extends IsometricRenderer {
      visited2D[i] = true;
      visited2DStack[visited2DStackIndex] = i;
      visited2DStackIndex++;
-     if (isometric.heightMap[i] <= zMin) return;
+     if (scene.heightMap[i] <= zMin) return;
      island[i] = true;
 
-     var searchIndex = i + (isometric.area * isometric.player.indexZ);
+     var searchIndex = i + (scene.area * isometric.player.indexZ);
      addVisible3D(searchIndex);
 
      var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
      var gapReached = false;
 
      while (true) {
-       searchIndex += isometric.area;
-        if (searchIndex >= isometric.totalNodes) break;
+       searchIndex += scene.area;
+        if (searchIndex >= scene.totalNodes) break;
         final nodeOrientation = nodeOrientations[searchIndex];
         if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Center) break;
@@ -643,34 +649,34 @@ class RendererNodes extends IsometricRenderer {
 
         addVisible3D(searchIndex);
      }
-     searchIndex = i + (isometric.area * isometric.player.indexZ);
+     searchIndex = i + (scene.area * isometric.player.indexZ);
      while (true) {
        addVisible3D(searchIndex);
        if (blocksBeamVertical(searchIndex)) break;
-       searchIndex -= isometric.area;
+       searchIndex -= scene.area;
        if (searchIndex < 0) break;
      }
 
-     final iAbove = i - isometric.totalColumns;
+     final iAbove = i - scene.totalColumns;
      if (iAbove > 0) {
        visit2D(iAbove);
      }
-     final iBelow = i + isometric.totalColumns;
-     if (iBelow < isometric.area) {
+     final iBelow = i + scene.totalColumns;
+     if (iBelow < scene.area) {
        visit2D(iBelow);
      }
 
-     final row = i % isometric.totalRows;
+     final row = i % scene.totalRows;
      if (row - 1 >= 0) {
        visit2D(i - 1);
      }
-     if (row + 1 < isometric.totalRows){
+     if (row + 1 < scene.totalRows){
        visit2D(i + 1);
      }
   }
 
   int getProjectionIndex(int index){
-    return index % isometric.projection;
+    return index % scene.projection;
   }
 
   bool nodeTypeBlocks(int nodeType){
@@ -698,7 +704,7 @@ class RendererNodes extends IsometricRenderer {
       return nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West;
     }
 
-    final nodeType = isometric.nodeTypes[index];
+    final nodeType = scene.nodeTypes[index];
     if (nodeType == NodeType.Window) return false;
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
@@ -719,7 +725,7 @@ class RendererNodes extends IsometricRenderer {
 
   void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
-    final maxRow = isometric.totalRows - 1;
+    final maxRow = scene.totalRows - 1;
     while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
       row++;
       column--;
@@ -729,25 +735,25 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void nodesSetStart(){
-    nodesStartRow = clamp(row, 0, isometric.totalRows - 1);
-    nodeStartColumn = clamp(column, 0, isometric.totalColumns - 1);
+    nodesStartRow = clamp(row, 0, scene.totalRows - 1);
+    nodeStartColumn = clamp(column, 0, scene.totalColumns - 1);
 
     assert (nodesStartRow >= 0);
     assert (nodeStartColumn >= 0);
-    assert (nodesStartRow < isometric.totalRows);
-    assert (nodeStartColumn < isometric.totalColumns);
+    assert (nodesStartRow < scene.totalRows);
+    assert (nodeStartColumn < scene.totalColumns);
   }
 
   void nodesShiftIndexDown(){
 
     column = row + column + 1;
     row = 0;
-    if (column < isometric.totalColumns) {
+    if (column < scene.totalColumns) {
       nodesSetStart();
       return;
     }
 
-    if (column - nodesGridTotalColumnsMinusOne >= isometric.totalRows){
+    if (column - nodesGridTotalColumnsMinusOne >= scene.totalRows){
       remaining = false;
       return;
     }
@@ -773,7 +779,7 @@ class RendererNodes extends IsometricRenderer {
     while (renderY > screenBottom){
       nodesMinZ++;
       renderY -= Node_Height;
-      if (nodesMinZ >= isometric.totalZ){
+      if (nodesMinZ >= scene.totalZ){
         isometric.render.rendererNodes.remaining = false;
         return;
       }
@@ -851,7 +857,7 @@ class RendererNodes extends IsometricRenderer {
 
   bool get currentNodeTransparent {
     if (currentNodeZ <= playerZ) return false;
-    final currentNodeProjection = currentNodeIndex % isometric.projection;
+    final currentNodeProjection = currentNodeIndex % scene.projection;
     if (!transparencyGrid[currentNodeProjection]) return false;
 
     final nodeOrientation = currentNodeOrientation;
@@ -1829,7 +1835,7 @@ class RendererNodes extends IsometricRenderer {
   }
 
   void renderNodeRainLanding() {
-    if (currentNodeIndex > isometric.area && isometric.nodeTypes[currentNodeIndex - isometric.area] == NodeType.Water){
+    if (currentNodeIndex > scene.area && scene.nodeTypes[currentNodeIndex - scene.area] == NodeType.Water){
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
@@ -2507,7 +2513,7 @@ class RendererNodes extends IsometricRenderer {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: -8,
-          color: isometric.nodeColors[currentNodeIndex + isometric.area < isometric.totalNodes ? currentNodeIndex + isometric.area : currentNodeIndex],
+          color: scene.nodeColors[currentNodeIndex + scene.area < scene.totalNodes ? currentNodeIndex + scene.area : currentNodeIndex],
         );
         return;
       case NodeOrientation.Half_Vertical_Center:

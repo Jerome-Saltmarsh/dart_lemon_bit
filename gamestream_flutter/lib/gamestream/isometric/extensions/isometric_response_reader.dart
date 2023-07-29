@@ -38,7 +38,7 @@ extension IsometricResponseReader on Isometric {
         player.indexColumn = position.indexColumn;
         player.indexRow = position.indexRow;
         player.indexZ = position.indexZ;
-        player.nodeIndex = getIndexPosition(position);
+        player.nodeIndex = scene.getIndexPosition(position);
         break;
 
       case IsometricResponse.Player_Accuracy:
@@ -142,9 +142,9 @@ extension IsometricResponseReader on Isometric {
 
   void readScene() {
     final scenePart = readByte(); /// DO NOT DELETE
-    totalZ = readUInt16();
-    totalRows = readUInt16();
-    totalColumns = readUInt16();
+    scene.totalZ = readUInt16();
+    scene.totalRows = readUInt16();
+    scene.totalColumns = readUInt16();
 
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationsLength = readUInt24();
@@ -152,22 +152,22 @@ extension IsometricResponseReader on Isometric {
     final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
 
-    nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
-    nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    area = totalRows * totalColumns;
-    area2 = area * 2;
-    projection = area2 + totalColumns + 1;
-    projectionHalf =  projection ~/ 2;
-    totalNodes = totalZ * totalRows * totalColumns;
-    if (colorStack.length != totalNodes){
-      colorStack = Uint16List(totalNodes);
-      ambientStack = Uint16List(totalNodes);
+    scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
+    scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+    scene.area = scene.totalRows * scene.totalColumns;
+    scene.area2 = scene.area * 2;
+    scene.projection = scene.area2 + scene.totalColumns + 1;
+    scene.projectionHalf =  scene.projection ~/ 2;
+    scene.totalNodes = scene.totalZ * scene.totalRows * scene.totalColumns;
+    if (scene.colorStack.length != scene.totalNodes){
+      scene.colorStack = Uint16List(scene.totalNodes);
+      scene.ambientStack = Uint16List(scene.totalNodes);
     }
-    totalNodes = totalNodes;
-    nodesRaycast = area +  area + totalColumns + 1;
+    scene.totalNodes = scene.totalNodes;
+    nodesRaycast = scene.area +  scene.area + scene.totalColumns + 1;
     onChangedNodes();
-    refreshNodeVariations();
-    nodesChangedNotifier.value++;
+    scene.refreshNodeVariations();
+    scene.nodesChangedNotifier.value++;
     particles.clear();
     io.recenterCursor();
   }
@@ -179,8 +179,8 @@ extension IsometricResponseReader on Isometric {
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
-    player.nodeIndex = getIndexPosition(position);
-    player.areaNodeIndex = (position.indexRow * totalColumns) + position.indexColumn;
+    player.nodeIndex = scene.getIndexPosition(position);
+    player.areaNodeIndex = (position.indexRow * scene.totalColumns) + position.indexColumn;
   }
 
   void readPlayerAimTarget() {

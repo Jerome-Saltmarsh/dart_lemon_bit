@@ -1,6 +1,7 @@
 
 library src;
 
+export 'isometric_lighting.dart';
 export 'isometric_camera.dart';
 export 'debug/isometric_debug.dart';
 export 'isometric_mouse.dart';

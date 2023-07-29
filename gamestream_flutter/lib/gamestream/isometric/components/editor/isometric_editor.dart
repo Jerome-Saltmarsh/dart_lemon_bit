@@ -55,33 +55,33 @@ class IsometricEditor {
 
   late var nodeSelectedIndex = Watch(0, clamp: (int value){
     if (value < 0) return 0;
-    if (value >= isometric.totalNodes) return isometric.totalNodes - 1;
+    if (value >= isometric.scene.totalNodes) return isometric.scene.totalNodes - 1;
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
   IsometricEditor(this.isometric);
 
-  int get z => isometric.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
-  int get row => isometric.convertNodeIndexToIndexX(nodeSelectedIndex.value);
-  int get column => isometric.convertNodeIndexToIndexY(nodeSelectedIndex.value);
+  int get z => isometric.scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  int get row => isometric.scene.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  int get column => isometric.scene.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   set z(int value){
     if (value < 0) return;
-    if (value >= isometric.totalZ) return;
+    if (value >= isometric.scene.totalZ) return;
     final difference = value - z;
-    nodeSelectedIndex.value += difference * isometric.area;
+    nodeSelectedIndex.value += difference * isometric.scene.area;
   }
 
   set row(int value){
     if (value < 0) return;
-    if (value >= isometric.totalRows) return;
+    if (value >= isometric.scene.totalRows) return;
     final difference = value - row;
-    nodeSelectedIndex.value += difference * isometric.totalColumns;
+    nodeSelectedIndex.value += difference * isometric.scene.totalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
-    if (value >= isometric.totalColumns) return;
+    if (value >= isometric.scene.totalColumns) return;
     nodeSelectedIndex.value += value - column;
   }
 
@@ -159,8 +159,8 @@ class IsometricEditor {
 
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = isometric.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = isometric.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = isometric.scene.nodeTypes[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = isometric.scene.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
@@ -226,7 +226,7 @@ class IsometricEditor {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = isometric.getIndexZRC(z, row, column);
+    nodeSelectedIndex.value = isometric.scene.getIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){
@@ -254,12 +254,12 @@ class IsometricEditor {
 
   void raise(){
     final nodeIndex = nodeSelectedIndex.value;
-    if (nodeIndex <= isometric.area) return;
-    final nodeIndexBelow = nodeIndex - isometric.area;
+    if (nodeIndex <= isometric.scene.area) return;
+    final nodeIndexBelow = nodeIndex - isometric.scene.area;
     sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
-      type: isometric.nodeTypes[nodeIndexBelow],
-      orientation: isometric.nodeOrientations[nodeIndexBelow],
+      type: isometric.scene.nodeTypes[nodeIndexBelow],
+      orientation: isometric.scene.nodeOrientations[nodeIndexBelow],
     );
   }
 
@@ -294,7 +294,7 @@ class IsometricEditor {
 
   void cursorSetToPlayer() {
     if (!isometric.player.inBounds) return;
-    nodeSelectedIndex.value = isometric.getIndexPosition(isometric.player.position);
+    nodeSelectedIndex.value = isometric.scene.getIndexPosition(isometric.player.position);
   }
   void cursorRowIncrease() => row++;
   void cursorRowDecrease() => row--;
@@ -322,8 +322,8 @@ class IsometricEditor {
   }
 
   void onChangedSelectedNodeIndex(int index){
-    nodeSelectedOrientation.value = isometric.nodeOrientations[index];
-    nodeSelectedType.value = isometric.nodeTypes[index];
+    nodeSelectedOrientation.value = isometric.scene.nodeOrientations[index];
+    nodeSelectedType.value = isometric.scene.nodeTypes[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();
