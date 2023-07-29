@@ -10,6 +10,9 @@ class Lighting {
   var torchEmissionVal = 0.061;
   var torchEmissionT = 0.0;
 
+  var rainAmbienceLight = 10;
+  var rainAmbientHeavy = 20;
+
   void update(){
     if (torchEmissionVal == 0) return;
     torchEmissionT += torchEmissionVal;

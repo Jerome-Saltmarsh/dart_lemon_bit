@@ -114,6 +114,10 @@ class IsometricPlayer {
     );
   }
 
+  void update(){
+    updateMessageTimer();
+  }
+
   void updateMessageTimer() {
     if (messageTimer <= 0)
       return;

@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
@@ -43,7 +42,7 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
-
+  var updateAmbientAlphaAccordingToTimeEnabled = true;
   var bakeStackRecording = true;
   var bakeStackTotal = 0;
   var bakeStackIndex = Uint16List(100000);
@@ -74,7 +73,7 @@ class Isometric extends WebsocketClientBuilder with
   var totalProjectiles = 0;
 
   final scene = IsometricScene();
-  final graphics = Lighting();
+  final lighting = Lighting();
   final colors = IsometricColors();
   final decoder = ZLibDecoder();
   final imagesLoadedCompleted = Completer();
@@ -91,7 +90,6 @@ class Isometric extends WebsocketClientBuilder with
   final options = IsometricOptions();
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final imagesLoaded = Future.value(false);
-  final overrideColor = WatchBool(false);
   final playerExperiencePercentage = Watch(0.0);
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
@@ -113,7 +111,6 @@ class Isometric extends WebsocketClientBuilder with
   late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
   late final raining = Watch(false, onChanged: onChangedRaining);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
   late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
   late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
@@ -233,16 +230,16 @@ class Isometric extends WebsocketClientBuilder with
     audio.update();
     particles.update();
     animation.update();
+    player.update();
+    lighting.update();
 
     updateProjectiles();
     updateGameObjects();
-    player.updateMessageTimer();
     readPlayerInputEdit();
 
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
 
-    graphics.update();
     updateParticleEmitters();
 
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
@@ -263,8 +260,6 @@ class Isometric extends WebsocketClientBuilder with
       nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
       updateAmbientAlphaAccordingToTime();
     }
-
-    updateCredits();
   }
 
   void readPlayerInputEdit() {
@@ -538,7 +533,7 @@ class Isometric extends WebsocketClientBuilder with
     final alpha = interpolate(
       ambient,
       0,
-      graphics.torchEmissionIntensityAmbient,
+      lighting.torchEmissionIntensityAmbient,
     ).toInt();
 
     for (var i = 0; i < bakeStackTorchTotal; i++){
@@ -655,44 +650,20 @@ class Isometric extends WebsocketClientBuilder with
 
   // PROPERTIES
 
-  var _updateCredits = true;
-
-  void updateCredits() {
-    _updateCredits = !_updateCredits;
-    if (!_updateCredits) return;
-    final diff = playerCreditsAnimation.value -  player.credits.value;
-    if (diff == 0) return;
-    final diffAbs = diff.abs();
-    final speed = max(diffAbs ~/ 10, 1);
-    if (diff > 0) {
-      playerCreditsAnimation.value -= speed;
-    } else {
-      playerCreditsAnimation.value += speed;
-    }
-  }
+  int get currentTimeInSeconds => (hours.value * Duration.secondsPerHour) + ( minutes.value * 60);
 
   void updateAmbientAlphaAccordingToTime(){
-    if (overrideColor.value) return;
+    if (!updateAmbientAlphaAccordingToTimeEnabled)
+      return;
 
-    const Seconds_Per_Hour = 3600;
-    const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
-    final totalSeconds = ( hours.value * Seconds_Per_Hour) + ( minutes.value * 60);
+    scene.ambientAlpha = convertSecondsToAmbientAlpha(currentTimeInSeconds);
 
-    final previousAmbientAlpha = scene.ambientAlpha;
-
-     scene.ambientAlpha = ((totalSeconds < Seconds_Per_Hours_12
-        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
-
-    if ( rainType.value == RainType.Light){
-      scene.ambientAlpha += 10;
+    if (rainType.value == RainType.Light){
+      scene.ambientAlpha += lighting.rainAmbienceLight;
     }
     if ( rainType.value == RainType.Heavy){
-      scene.ambientAlpha += 20;
+      scene.ambientAlpha += lighting.rainAmbientHeavy;
     }
-
-    if (previousAmbientAlpha == scene.ambientAlpha)
-      return;
   }
 
   void refreshRain(){
@@ -1572,21 +1543,21 @@ class Isometric extends WebsocketClientBuilder with
           emitLightColored(
             index: nodeIndex,
             color: colors.orange,
-            intensity: graphics.torchEmissionIntensityColored,
+            intensity: lighting.torchEmissionIntensityColored,
           );
           break;
         case NodeType.Torch_Blue:
           emitLightColored(
             index: nodeIndex,
             color: colors.blue1,
-            intensity: graphics.torchEmissionIntensityColored,
+            intensity: lighting.torchEmissionIntensityColored,
           );
           break;
         case NodeType.Torch_Red:
           emitLightColored(
             index: nodeIndex,
             color: colors.red1,
-            intensity: graphics.torchEmissionIntensityColored,
+            intensity: lighting.torchEmissionIntensityColored,
           );
           break;
       }
@@ -2442,4 +2413,11 @@ class Isometric extends WebsocketClientBuilder with
               'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
           )
       );
+
+  static int convertSecondsToAmbientAlpha(int totalSeconds) {
+    const Seconds_Per_Hours_12 = Duration.secondsPerHour * 12;
+    return ((totalSeconds < Seconds_Per_Hours_12
+        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
+  }
 }

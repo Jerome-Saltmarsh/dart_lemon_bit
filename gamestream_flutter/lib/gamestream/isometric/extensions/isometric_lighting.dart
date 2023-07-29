@@ -16,7 +16,7 @@ extension IsometricLighting on Isometric {
       } else {
         applyVector3EmissionAmbient(
           character,
-          alpha: graphics.emissionAlphaCharacter,
+          alpha: lighting.emissionAlphaCharacter,
         );
       }
     }
