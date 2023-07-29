@@ -29,7 +29,7 @@ class RendererProjectiles extends IsometricRenderer {
         break;
       case ProjectileType.FrostBall:
         engine.renderSprite(
-            image: isometric.images.atles_projectiles,
+            image: isometric.images.atlas_projectiles,
             srcX: 36,
             srcY: 4,
             srcWidth: 24,

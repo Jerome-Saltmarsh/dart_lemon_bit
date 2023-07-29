@@ -651,7 +651,7 @@ class Isometric extends WebsocketClientBuilder with
           x: scene.getIndexPositionX(index),
           y: scene.getIndexPositionY(index),
           z: scene.getIndexPositionZ(index),
-          duration: 150,
+          duration: 250,
       );
     }
 

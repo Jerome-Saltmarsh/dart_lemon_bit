@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -39,6 +38,10 @@ class RendererParticles extends IsometricRenderer {
         ParticleType.Zombie_Torso,
         ParticleType.Zombie_leg,
         ParticleType.Zombie_Arm,
+        ParticleType.Block_Wood,
+        ParticleType.Block_Sand,
+        ParticleType.Block_Brick,
+        ParticleType.Block_Grass,
       ].contains(particle.type)){
         isometric.render.renderShadowBelowPosition(particle);
       }
@@ -109,7 +112,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Smoke:
-          renderParticleSmoke();
+          renderSmoke();
           break;
         case ParticleType.Gunshot_Smoke:
           if (particle.frame >= 24) {
@@ -275,7 +278,7 @@ class RendererParticles extends IsometricRenderer {
           );
           break;
         case ParticleType.Shell:
-          renderParticleShell(dstX, dstY);
+          renderShell(dstX, dstY);
           break;
         case ParticleType.Fire_Purple:
           if (particle.frame > 24 ) {
@@ -427,7 +430,7 @@ class RendererParticles extends IsometricRenderer {
       }
     }
 
-  void renderParticleShell(double dstX, double dstY) {
+  void renderShell(double dstX, double dstY) {
     isometric.engine.renderSprite(
       image: isometric.images.atlas_particles,
       dstX: dstX,
@@ -441,13 +444,12 @@ class RendererParticles extends IsometricRenderer {
     );
   }
 
-  void renderParticleSmoke() {
-    // casteShadowDownV3(particle);
+  void renderSmoke() {
     isometric.engine.renderSpriteRotated(
       image: isometric.images.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
-      srcX: 552,
+      srcX: particle.duration01 > 0.5 ? 539 : 559,
       srcY: 7,
       srcWidth: 16,
       srcHeight: 16,

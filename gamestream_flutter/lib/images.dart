@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/library.dart';
 class Images {
    late final Image shades;
    late final Image pixel;
-   late final Image atles_projectiles;
+   late final Image atlas_projectiles;
    late final Image zombie;
    late final Image zombie_shadow;
    late final Image character_dog;
@@ -23,9 +23,6 @@ class Images {
    late final Image atlas_characters;
    late final Image atlas_icons;
    late final Image atlas_items;
-   late final Image atlas_fight2d;
-   late final Image atlas_fight2d_character;
-   late final Image atlas_fight2d_nodes;
    late final Image atlas_nodes_mini;
    late final Image atlas_weapons;
    late final Image atlas_talents;
@@ -158,18 +155,18 @@ class Images {
 
      loadImage('shades.png').then((value) => shades = value);
      loadImage('atlas_nodes.png').then((value) => atlas_nodes = value);
-     loadImage('atlas-characters.png').then((value) => atlas_characters = value);
-     loadImage('atlas-zombie.png').then((value) => zombie = value);
-     loadImage('atlas-zombie-shadow.png').then((value) => zombie_shadow = value);
-     loadImage('atlas-gameobjects.png').then((value) => atlas_gameobjects = value);
-     loadImage('atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
-     loadImage('atlas-particles.png').then((value) => atlas_particles = value);
-     loadImage('atlas_projectiles.png').then((value) => atles_projectiles = value);
-     loadImage('atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
-     loadImage('atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
+     loadImage('atlas_characters.png').then((value) => atlas_characters = value);
+     loadImage('atlas_zombie.png').then((value) => zombie = value);
+     loadImage('atlas_zombie_shadow.png').then((value) => zombie_shadow = value);
+     loadImage('atlas_gameobjects.png').then((value) => atlas_gameobjects = value);
+     loadImage('atlas_gameobjects_transparent.png').then((value) => atlas_gameobjects_transparent = value);
+     loadImage('atlas_particles.png').then((value) => atlas_particles = value);
+     loadImage('atlas_projectiles.png').then((value) => atlas_projectiles = value);
+     loadImage('atlas_nodes_transparent.png').then((value) => atlas_nodes_transparent = value);
+     loadImage('atlas_nodes_mini.png').then((value) => atlas_nodes_mini = value);
      loadImage('atlas_weapons.png').then((value) => atlas_weapons = value);
      loadImage('atlas_talents.png').then((value) => atlas_talents = value);
-     loadImage('atlas-icons.png').then((value) => atlas_icons = value);
+     loadImage('atlas_icons.png').then((value) => atlas_icons = value);
      loadImage('atlas_items.png').then((value) => atlas_items = value);
      loadImage('atlas_head.png').then((value) => atlas_head = value);
      loadImage('atlas_body.png').then((value) => atlas_body = value);
@@ -224,10 +221,6 @@ class Images {
 
      loadImage('sprites/sprite-stars.png').then((value) => sprite_stars = value);
      loadImage('sprites/sprite-shield.png').then((value) => sprite_shield = value);
-
-     loadImage('atlas-fight2d.png').then((value) => atlas_fight2d = value);
-     loadImage('atlas-fight2d-nodes.png').then((value) => atlas_fight2d_nodes = value);
-     loadImage('atlas-fight2d-character.png').then((value) => atlas_fight2d_character = value);
 
      totalImagesLoaded.onChanged((totalImagesLoaded) {
        if (totalImagesLoaded < totalImages.value)

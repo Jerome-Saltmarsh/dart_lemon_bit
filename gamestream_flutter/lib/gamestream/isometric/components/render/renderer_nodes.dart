@@ -1078,9 +1078,7 @@ class RendererNodes extends IsometricRenderer {
     }
   }
 
-  void renderFireplace() {
-
-    engine.renderSprite(
+  void renderFireplace() => engine.renderSprite(
       image: atlasNodes,
       srcX: AtlasNode.Src_Fireplace_X,
       srcY: AtlasNode.Src_Fireplace_Y + (isometric.animation.frame6 * AtlasNode.Src_Fireplace_Height),
@@ -1090,16 +1088,6 @@ class RendererNodes extends IsometricRenderer {
       dstY: currentNodeDstY + 12,
       color: 0,
     );
-    // renderCustomNode(
-    //     srcX: AtlasNode.Src_Fireplace_X,
-    //     srcY: AtlasNode.Src_Fireplace_Y + (isometric.animation.frame6 * AtlasNode.Src_Fireplace_Height),
-    //     srcWidth: 48.0,
-    //     srcHeight: 72,
-    //     dstX: currentNodeDstX,
-    //     dstY: currentNodeDstY,
-    //     color: 0,
-    // );
-  }
 
   void renderBoulder() {
     final dstX = currentNodeDstX;
