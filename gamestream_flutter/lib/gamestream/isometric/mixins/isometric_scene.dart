@@ -33,8 +33,12 @@ class IsometricScene {
   var colorStack = Uint16List(0);
   var colorStackIndex = -1;
 
-  var nodesLightSources = Uint16List(1000);
-  var nodesLightSourcesTotal = 0;
+  /// contains a list of indexes of nodes which emit smoke
+  /// for example a fireplace
+  var smokeSources = Uint16List(500);
+  var smokeSourcesTotal = 0;
+  var nodeLightSources = Uint16List(1000);
+  var nodeLightSourcesTotal = 0;
   var nodeColors = Uint32List(0);
   var nodeOrientations = Uint8List(0);
   var nodeTypes = Uint8List(0);
@@ -403,10 +407,26 @@ class IsometricScene {
           ? ambientColor
           : nodeColors[getIndexPosition(position)];
 
-  void refreshLightSources() {
-    nodesLightSourcesTotal = 0;
+  void refreshSmokeSources(){
+    print('scene.refreshSmokeSources()');
+    smokeSourcesTotal = 0;
     for (var i = 0; i < totalNodes; i++){
+      if (!const [
+        NodeType.Fireplace
+      ].contains(nodeTypes[i]))
+        continue;
+      smokeSources[smokeSourcesTotal] = i;
+      smokeSourcesTotal++;
 
+      if (smokeSourcesTotal >= smokeSources.length)
+        return;
+    }
+  }
+
+  void refreshLightSources() {
+    print('scene.refreshLightSources()');
+    nodeLightSourcesTotal = 0;
+    for (var i = 0; i < totalNodes; i++){
       if (!const [
         NodeType.Torch,
         NodeType.Torch_Blue,
@@ -414,15 +434,11 @@ class IsometricScene {
         NodeType.Fireplace
       ].contains(nodeTypes[i]))
         continue;
+      nodeLightSources[nodeLightSourcesTotal] = i;
+      nodeLightSourcesTotal++;
 
-      if (nodesLightSourcesTotal >= nodesLightSources.length) {
-        nodesLightSources = Uint16List(nodesLightSources.length + 100);
-        refreshLightSources();
+      if (nodeLightSourcesTotal >= nodeLightSources.length)
         return;
-      }
-
-      nodesLightSources[nodesLightSourcesTotal] = i;
-      nodesLightSourcesTotal++;
     }
   }
 
@@ -500,8 +516,8 @@ class IsometricScene {
      var nearestLightSourceIndex = -1;
      var nearestLightSourceDistance = maxDistance;
 
-     for (var i = 0; i < nodesLightSourcesTotal; i++){
-       final lightSourceIndex = nodesLightSources[i];
+     for (var i = 0; i < nodeLightSourcesTotal; i++){
+       final lightSourceIndex = nodeLightSources[i];
        final lightSourceRow = getIndexRow(lightSourceIndex);
        final lightSourceColumn = getIndexColumn(lightSourceIndex);
        final lightSourceZ = getIndexZ(lightSourceIndex);
@@ -524,6 +540,14 @@ class IsometricScene {
   int getNodeColorAtIndex(int index )=>
       index < 0 || index >= totalNodes ? ambientColor : nodeColors[index];
 
+  double getIndexPositionX(int index) =>
+      (getIndexRow(index) * Node_Size) + Node_Size_Half;
+
+  double getIndexPositionY(int index) =>
+      (getIndexColumn(index) * Node_Size) + Node_Size_Half;
+
+  double getIndexPositionZ(int index) =>
+      (getIndexZ(index) * Node_Height) + Node_Height_Half;
 
   void applyColor({
     required int index,

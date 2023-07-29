@@ -37,8 +37,10 @@ extension IsometricEvents on Isometric {
     scene.refreshGridMetrics();
     scene.generateHeightMap();
     scene.generateMiniMap();
-    minimap.generateSrcDst();
     scene.refreshLightSources();
+    scene.refreshSmokeSources();
+    scene.refreshLightSources();
+    minimap.generateSrcDst();
 
     render.rendererNodes.nodeColors = scene.nodeColors;
     render.rendererNodes.nodeOrientations = scene.nodeOrientations;

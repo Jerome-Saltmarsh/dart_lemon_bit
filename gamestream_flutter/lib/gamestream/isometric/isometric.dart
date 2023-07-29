@@ -42,6 +42,7 @@ class Isometric extends WebsocketClientBuilder with
 
   static const Server_FPS = 45;
 
+  var framesPerSmokeEmission = 20;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
   var bakeStackRecording = true;
   var bakeStackTotal = 0;
@@ -638,13 +639,28 @@ class Isometric extends WebsocketClientBuilder with
   int get bodyPartDuration =>  randomInt(120, 200);
 
   void updateParticleEmitters(){
-    nextEmissionSmoke--;
-    if (nextEmissionSmoke > 0) return;
-    nextEmissionSmoke = 20;
+    if (nextEmissionSmoke-- > 0)
+      return;
+
+    nextEmissionSmoke = framesPerSmokeEmission;
+
+    for (var i = 0; i < scene.smokeSourcesTotal; i++){
+      final index = scene.smokeSources[i];
+      particles.spawnParticleSmoke(
+          x: scene.getIndexPositionX(index),
+          y: scene.getIndexPositionY(index),
+          z: scene.getIndexPositionZ(index),
+      );
+    }
+
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ObjectType.Barrel_Flaming) continue;
-      particles.spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
+      particles.spawnParticleSmoke(
+          x: gameObject.x + giveOrTake(5),
+          y: gameObject.y + giveOrTake(5),
+          z: gameObject.z + 35,
+      );
     }
   }
 
@@ -1532,8 +1548,8 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void applyEmissionsColoredLightSources() {
-    for (var i = 0; i < scene.nodesLightSourcesTotal; i++){
-      final nodeIndex = scene.nodesLightSources[i];
+    for (var i = 0; i < scene.nodeLightSourcesTotal; i++){
+      final nodeIndex = scene.nodeLightSources[i];
       final nodeType = scene.nodeTypes[nodeIndex];
 
       switch (nodeType) {
@@ -1567,8 +1583,8 @@ class Isometric extends WebsocketClientBuilder with
   void recordBakeStack() {
     print('recordBakeStack()');
     bakeStackRecording = true;
-    for (var i = 0; i < scene.nodesLightSourcesTotal; i++){
-      final nodeIndex = scene.nodesLightSources[i];
+    for (var i = 0; i < scene.nodeLightSourcesTotal; i++){
+      final nodeIndex = scene.nodeLightSources[i];
       final nodeType = scene.nodeTypes[nodeIndex];
       final alpha = interpolate(
         scene.ambientAlpha,
