@@ -38,8 +38,7 @@ import 'ui/isometric_constants.dart';
 
 
 class Isometric extends WebsocketClientBuilder with
-    IsometricCharacters,
-    IsometricParticles
+    IsometricCharacters
 {
 
   static const Server_FPS = 45;
@@ -130,6 +129,7 @@ class Isometric extends WebsocketClientBuilder with
   late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
   late final Engine engine;
 
+  late final IsometricParticles particles;
   late final IsometricRender render;
   late final GameAudio audio;
   late final IsometricDebug debug;
@@ -141,6 +141,7 @@ class Isometric extends WebsocketClientBuilder with
 
   Isometric(){
     print('Isometric()');
+    particles = IsometricParticles(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
     debug = IsometricDebug(this);
@@ -203,7 +204,7 @@ class Isometric extends WebsocketClientBuilder with
     totalAmbientOffscreen = 0;
     totalAmbientOnscreen = 0;
 
-    updateParticles();
+    particles.update();
     scene.update();
     camera.update();
     render.render3D();
@@ -230,7 +231,7 @@ class Isometric extends WebsocketClientBuilder with
     game.value.update();
 
     audio.update();
-    updateParticles();
+    particles.update();
     animation.update();
 
     updateProjectiles();
@@ -428,7 +429,7 @@ class Isometric extends WebsocketClientBuilder with
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-         spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        particles.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         projectShadow(projectile);
         continue;
       }
@@ -437,7 +438,7 @@ class Isometric extends WebsocketClientBuilder with
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-         spawnParticleOrbShard(
+        particles.spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,
@@ -452,7 +453,7 @@ class Isometric extends WebsocketClientBuilder with
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
-    spawnParticle(
+    particles.spawnParticle(
       type: ParticleType.Shadow,
       x: v3.x,
       y: v3.y,
@@ -635,7 +636,7 @@ class Isometric extends WebsocketClientBuilder with
      player.gameDialog.value = null;
      player.npcTalkOptions.value = [];
      totalProjectiles = 0;
-     particles.clear();
+     particles.particles.clear();
     engine.zoom = 1;
   }
 
@@ -648,7 +649,7 @@ class Isometric extends WebsocketClientBuilder with
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ObjectType.Barrel_Flaming) continue;
-       spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
+      particles.spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
     }
   }
 
@@ -724,7 +725,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void spawnConfettiPlayer() {
     for (var i = 0; i < 10; i++){
-      spawnParticleConfetti(
+      particles.spawnParticleConfetti(
         player.position.x,
         player.position.y,
          player.position.z,
@@ -773,118 +774,6 @@ class Isometric extends WebsocketClientBuilder with
     audio.coins.play();
   }
 
-  void updateParticle(Particle particle) {
-    if (!particle.active) return;
-    if (particle.delay > 0) {
-      particle.delay--;
-      return;
-    }
-
-    if (scene.outOfBoundsPosition(particle)){
-      particle.deactivate();
-      return;
-    }
-
-    if (particle.type == ParticleType.Light_Emission){
-      const change = 0.125;
-      if (particle.flash){
-        particle.emissionIntensity += change;
-        if (particle.emissionIntensity >= 1){
-          particle.emissionIntensity = 1.0;
-          particle.flash = false;
-        }
-        return;
-      }
-      particle.emissionIntensity -= change;
-      if (particle.emissionIntensity <= 0){
-        particle.emissionIntensity = 0;
-        particle.duration = 0;
-      }
-      return;
-    }
-
-    if (particle.animation) {
-      if (particle.duration-- <= 0) {
-        particle.deactivate();
-      }
-      return;
-    }
-
-    final nodeIndex = scene.getIndexPosition(particle);
-
-    assert (nodeIndex >= 0);
-    assert (nodeIndex < scene.totalNodes);
-
-    particle.nodeIndex = nodeIndex;
-    final nodeType = scene.nodeTypes[nodeIndex];
-    particle.nodeType = nodeType;
-    final airBorn =
-        !particle.checkNodeCollision || (
-            nodeType == NodeType.Empty        ||
-                nodeType == NodeType.Rain_Landing ||
-                nodeType == NodeType.Rain_Falling ||
-                nodeType == NodeType.Grass_Long   ||
-                nodeType == NodeType.Fireplace)    ;
-
-
-    if (particle.checkNodeCollision && !airBorn) {
-      particle.deactivate();
-      return;
-    }
-
-    if (!airBorn){
-      particle.z = (particle.indexZ + 1) * Node_Height;
-      particle.applyFloorFriction();
-    } else {
-      if (particle.type == ParticleType.Smoke){
-        final wind = windTypeAmbient.value * 0.01;
-        particle.xv -= wind;
-        particle.yv += wind;
-      }
-    }
-    final bounce = particle.zv < 0 && !airBorn;
-    particle.updateMotion();
-
-    if (scene.outOfBoundsPosition(particle)){
-      particle.deactivate();
-      return;
-    }
-
-    if (bounce) {
-      if (nodeType == NodeType.Water){
-        return particle.deactivate();
-      }
-      if (particle.zv < -0.1){
-        particle.zv = -particle.zv * particle.bounciness;
-      } else {
-        particle.zv = 0;
-      }
-    } else if (airBorn) {
-      particle.applyAirFriction();
-    }
-    particle.applyLimits();
-    particle.duration--;
-
-    if (particle.duration <= 0) {
-      particle.deactivate();
-    }
-  }
-
-  void updateParticles() {
-    nextParticleFrame--;
-
-    for (final particle in particles) {
-      if (!particle.active) continue;
-      updateParticle(particle);
-      if (nextParticleFrame <= 0){
-        particle.frame++;
-      }
-    }
-    if (nextParticleFrame <= 0) {
-      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
-    }
-  }
-
   Particle spawnParticleFire({
     required double x,
     required double y,
@@ -892,7 +781,7 @@ class Isometric extends WebsocketClientBuilder with
     int duration = 100,
     double scale = 1.0
   }) =>
-      spawnParticle(
+      particles.spawnParticle(
         type: ParticleType.Fire,
         x: x,
         y: y,
@@ -917,7 +806,7 @@ class Isometric extends WebsocketClientBuilder with
     required double y,
     required double z,
   }) =>
-      spawnParticle(
+      particles.spawnParticle(
         type: ParticleType.Light_Emission,
         x: x,
         y: y,
@@ -1624,9 +1513,9 @@ class Isometric extends WebsocketClientBuilder with
   set color(Color color) => engine.paint.color = color;
 
   void applyEmissionsParticles() {
-    final length = particles.length;
+    final length = particles.particles.length;
     for (var i = 0; i < length; i++) {
-      final particle = particles[i];
+      final particle = particles.particles[i];
       if (!particle.active) continue;
       if (!particle.emitsLight) continue;
       emitLightColored(
@@ -1682,7 +1571,7 @@ class Isometric extends WebsocketClientBuilder with
         case NodeType.Fireplace:
           emitLightColored(
             index: nodeIndex,
-            color: colors.red1,
+            color: colors.orange,
             intensity: graphics.torchEmissionIntensityColored,
           );
           break;
@@ -1767,7 +1656,7 @@ class Isometric extends WebsocketClientBuilder with
     playAudioXYZ(audio.magical_impact_16,x, y, z);
 
     for (var i = 0; i < amount; i++) {
-      spawnParticleFirePurple(
+      particles.spawnParticleFirePurple(
         x: x + giveOrTake(5),
         y: y + giveOrTake(5),
         z: z, speed: 1,

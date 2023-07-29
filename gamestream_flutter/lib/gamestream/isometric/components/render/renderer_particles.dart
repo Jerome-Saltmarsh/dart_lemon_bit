@@ -17,8 +17,8 @@ class RendererParticles extends IsometricRenderer {
 
   @override
   void reset() {
-    isometric.particles.sort(Particle.compare);
-    totalActiveParticles = isometric.countActiveParticles;
+    isometric.particles.particles.sort(Particle.compare);
+    totalActiveParticles = isometric.particles.countActiveParticles;
     super.reset();
   }
 
@@ -537,19 +537,20 @@ class RendererParticles extends IsometricRenderer {
 
   @override
   void updateFunction() {
-    while (index < total) {
-      particle = isometric.particles[index++];
-      if (particle.delay > 0) continue;
-      if (!particle.active) continue;
-      final dstX = particle.renderX;
-      if (dstX < isometric.engine.Screen_Left - 50) continue;
-      if (dstX > isometric.engine.Screen_Right + 50) continue;
-      final dstY = particle.renderY;
-      if (dstY < isometric.engine.Screen_Top - 50) continue;
-      if (dstY > isometric.engine.Screen_Bottom + 50) continue;
-      if (!isometric.isPerceptiblePosition(particle)) continue;
+    final minX = isometric.engine.Screen_Left - 50;
+    final maxX = isometric.engine.Screen_Right + 50;
+    final minY = isometric.engine.Screen_Top - 50;
+    final maxY = isometric.engine.Screen_Bottom + 50;
+    final particles = isometric.particles.particles;
 
-      // orderZ = particle.indexZ;
+    while (index < total) {
+      particle = particles[index++];
+      if (particle.delay > 0 || !particle.active) continue;
+      final dstX = particle.renderX;
+      if (dstX < minX || dstX > maxX) continue;
+      final dstY = particle.renderY;
+      if (dstY < minY || dstY > maxY) continue;
+      if (!isometric.isPerceptiblePosition(particle)) continue;
       order = particle.sortOrder;
       index--;
       return;

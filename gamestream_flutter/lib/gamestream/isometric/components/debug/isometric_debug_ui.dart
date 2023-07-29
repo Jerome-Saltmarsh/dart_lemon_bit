@@ -148,8 +148,8 @@ extension isometricDebugUI on IsometricDebug {
                   'scene-light-active: ${isometric.totalActiveLights}\n'
                   'total-gameobjects: ${isometric.gameObjects.length}\n'
                   'total-characters: ${isometric.totalCharacters}\n'
-                  'total-particles: ${isometric.particles.length}\n'
-                  'total-particles-active: ${isometric.countActiveParticles}\n'
+                  'total-particles: ${isometric.particles.particles.length}\n'
+                  'total-particles-active: ${isometric.particles.countActiveParticles}\n'
           )),
           buildWatch(isometric.gameType, (GameType value) => buildText('game-type: ${value.name}')),
           buildWatch(isometric.engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: isometric.engine.toggleDeviceType)),

@@ -71,7 +71,7 @@ extension IsometricActions on Isometric {
     spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
     for (var i = 0; i < 7; i++) {
-      spawnParticle(
+      particles.spawnParticle(
         type: ParticleType.Fire,
         x: x,
         y: y,
@@ -91,7 +91,7 @@ extension IsometricActions on Isometric {
 
     for (var i = 0; i < 7; i++) {
       const r = 5.0;
-      spawnParticleSmoke(
+      particles.spawnParticleSmoke(
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),

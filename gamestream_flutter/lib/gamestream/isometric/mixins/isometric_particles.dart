@@ -1,16 +1,22 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/particle.dart';
 
-mixin IsometricParticles {
+class IsometricParticles {
   var nextParticleFrame = 0;
   var nodeType = 0;
 
   final particles = <Particle>[];
   int get bodyPartDuration =>  randomInt(120, 200);
+
+  final Isometric isometric;
+
+  IsometricParticles(this.isometric);
 
   Particle getInstance() {
     for (final particle in particles) {
@@ -744,4 +750,116 @@ mixin IsometricParticles {
 
   int get countActiveParticles =>
       particles.where((element) => element.active).length;
+
+  void update() {
+    nextParticleFrame--;
+
+    for (final particle in particles) {
+      if (!particle.active) continue;
+      updateParticle(particle);
+      if (nextParticleFrame <= 0){
+        particle.frame++;
+      }
+    }
+    if (nextParticleFrame <= 0) {
+      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
+    }
+  }
+
+  void updateParticle(Particle particle) {
+    if (!particle.active) return;
+    if (particle.delay > 0) {
+      particle.delay--;
+      return;
+    }
+
+    if (isometric.scene.outOfBoundsPosition(particle)){
+      particle.deactivate();
+      return;
+    }
+
+    if (particle.type == ParticleType.Light_Emission){
+      const change = 0.125;
+      if (particle.flash){
+        particle.emissionIntensity += change;
+        if (particle.emissionIntensity >= 1){
+          particle.emissionIntensity = 1.0;
+          particle.flash = false;
+        }
+        return;
+      }
+      particle.emissionIntensity -= change;
+      if (particle.emissionIntensity <= 0){
+        particle.emissionIntensity = 0;
+        particle.duration = 0;
+      }
+      return;
+    }
+
+    if (particle.animation) {
+      if (particle.duration-- <= 0) {
+        particle.deactivate();
+      }
+      return;
+    }
+
+    final nodeIndex = isometric.scene.getIndexPosition(particle);
+
+    assert (nodeIndex >= 0);
+    assert (nodeIndex < isometric.scene.totalNodes);
+
+    particle.nodeIndex = nodeIndex;
+    final nodeType = isometric.scene.nodeTypes[nodeIndex];
+    particle.nodeType = nodeType;
+    final airBorn =
+        !particle.checkNodeCollision || (
+            nodeType == NodeType.Empty        ||
+                nodeType == NodeType.Rain_Landing ||
+                nodeType == NodeType.Rain_Falling ||
+                nodeType == NodeType.Grass_Long   ||
+                nodeType == NodeType.Fireplace)    ;
+
+
+    if (particle.checkNodeCollision && !airBorn) {
+      particle.deactivate();
+      return;
+    }
+
+    if (!airBorn){
+      particle.z = (particle.indexZ + 1) * Node_Height;
+      particle.applyFloorFriction();
+    } else {
+      if (particle.type == ParticleType.Smoke){
+        final wind = isometric.windTypeAmbient.value * 0.01;
+        particle.xv -= wind;
+        particle.yv += wind;
+      }
+    }
+    final bounce = particle.zv < 0 && !airBorn;
+    particle.updateMotion();
+
+    if (isometric.scene.outOfBoundsPosition(particle)){
+      particle.deactivate();
+      return;
+    }
+
+    if (bounce) {
+      if (nodeType == NodeType.Water){
+        return particle.deactivate();
+      }
+      if (particle.zv < -0.1){
+        particle.zv = -particle.zv * particle.bounciness;
+      } else {
+        particle.zv = 0;
+      }
+    } else if (airBorn) {
+      particle.applyAirFriction();
+    }
+    particle.applyLimits();
+    particle.duration--;
+
+    if (particle.duration <= 0) {
+      particle.deactivate();
+    }
+  }
 }

@@ -168,7 +168,7 @@ extension IsometricResponseReader on Isometric {
     onChangedNodes();
     scene.refreshNodeVariations();
     scene.nodesChangedNotifier.value++;
-    particles.clear();
+    particles.particles.clear();
     io.recenterCursor();
   }
 
