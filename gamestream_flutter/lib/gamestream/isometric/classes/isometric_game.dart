@@ -46,6 +46,7 @@ class IsometricGame extends Game {
   void onActivated() {
     isometric.particles.clearParticles();
     isometric.windowOpenMenu.setFalse();
+    isometric.cameraTargetPlayer();
 
     isometric.audio.musicStop();
     isometric.engine.onMouseMoved = isometric.io.touchController.onMouseMoved;

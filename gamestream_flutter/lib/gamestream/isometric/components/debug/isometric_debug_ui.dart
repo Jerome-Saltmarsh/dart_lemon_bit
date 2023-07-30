@@ -104,7 +104,10 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          GSRefresh(() => buildText('connection-duration: ${formattedConnectionDuration}\n')),
+          buildWatch(isometric.network.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
+          GSRefresh(() => buildText(
+              'connection-duration: ${formattedConnectionDuration}\n'
+          )),
           buildText('network-server-fps: $serverFPS'),
           buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
           buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
@@ -450,6 +453,9 @@ extension isometricDebugUI on IsometricDebug {
             action: isometric.render.rendererNodes.toggleDynamicResolutionEnabled,
             child: buildRow(text: 'dynamic-resolution-enabled', value: GSRefresh(() => buildText(isometric.render.rendererNodes.dynamicResolutionEnabled))),
         ),
+        GSRefresh(() => buildText(
+            'camera-target: ${isometric.camera.target}\n'
+        )),
         buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(isometric.render.rendererNodes.highResolution))),
         buildRow(text: 'ambient-screen-on', value: GSRefresh(() => buildText(isometric.totalAmbientOnscreen))),
         buildRow(text: 'ambient-screen-off', value: GSRefresh(() => buildText(isometric.totalAmbientOffscreen))),

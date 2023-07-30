@@ -331,6 +331,7 @@ class Isometric with ByteReader {
     updateClearErrorTimer();
     game.value.update();
 
+    camera.update();
     audio.update();
     particles.update();
     animation.update();
