@@ -68,7 +68,7 @@ class IsometricGame extends Game {
   Widget buildUI(BuildContext context) => StackFullscreen(children: [
       buildWatchBool(
           isometric.triggerAlarmNoMessageReceivedFromServer,
-          isometric.buildDialogFramesSinceUpdate,
+          isometric.ui.buildDialogFramesSinceUpdate,
       ),
       WatchBuilder(isometric.edit, (edit) =>
         edit ? isometric.editor.buildEditor() : customBuildUI(context)),
@@ -80,7 +80,7 @@ class IsometricGame extends Game {
       Positioned(
           top: 16,
           right: 16,
-          child: isometric.buildMainMenu(children: buildMenuItems()),
+          child: isometric.ui.buildMainMenu(children: buildMenuItems()),
       ),
       Positioned(
         bottom: 16,

@@ -1,7 +1,7 @@
 
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui' as ui;
+import 'dart:ui' as dartUI;
 
 import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
@@ -57,6 +57,7 @@ class Isometric with ByteReader {
     camera = IsometricCamera(this);
     mouse = IsometricMouse(this);
     player = IsometricPlayer(this);
+    ui = IsometricUI(this);
     games = Games(this);
 
     games.website.errorMessageEnabled.value = true;
@@ -96,7 +97,8 @@ class Isometric with ByteReader {
   late final IsometricCamera camera;
   late final IsometricMouse mouse;
   late final IsometricPlayer player;
-  
+  late final IsometricUI ui;
+
   final characters = <Character>[];
 
   var totalCharacters = 0;
@@ -215,11 +217,11 @@ class Isometric with ByteReader {
 
   final animation = IsometricAnimation();
 
-  late final Map<int, ui.Image> mapGameObjectTypeToImage;
+  late final Map<int, dartUI.Image> mapGameObjectTypeToImage;
 
   late final messageBoxVisible = Watch(false, clamp: (bool value) {
     return value;
-  }, onChanged: onVisibilityChangedMessageBox);
+  }, onChanged: ui.onVisibilityChangedMessageBox);
 
   late final edit = Watch(false, onChanged:  onChangedEdit);
 
@@ -2283,7 +2285,7 @@ class Isometric with ByteReader {
     );
   }
 
-  void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
+  void canvasRenderCursorCrossHair(Canvas canvas, double range){
     const srcX = 0;
     const srcY = 192;
     engine.renderExternalCanvas(
@@ -2332,7 +2334,7 @@ class Isometric with ByteReader {
     );
   }
 
-  void canvasRenderCursorCrossHairRed(ui.Canvas canvas, double range){
+  void canvasRenderCursorCrossHairRed(Canvas canvas, double range){
     const srcX = 0;
     const srcY = 384;
     const offset = 0;
@@ -2382,7 +2384,7 @@ class Isometric with ByteReader {
     );
   }
 
-  void canvasRenderCursorHand(ui.Canvas canvas){
+  void canvasRenderCursorHand(Canvas canvas){
     engine.renderExternalCanvas(
       canvas: canvas,
       image: images.atlas_icons,
@@ -2396,7 +2398,7 @@ class Isometric with ByteReader {
     );
   }
 
-  void canvasRenderCursorTalk(ui.Canvas canvas){
+  void canvasRenderCursorTalk(Canvas canvas){
     engine.renderExternalCanvas(
       canvas: canvas,
       image: images.atlas_icons,
@@ -2466,7 +2468,7 @@ class Isometric with ByteReader {
     render.rendererNodes.atlasNodesLoaded = true;
     imagesLoadedCompleted.complete(true);
 
-    mapGameObjectTypeToImage = <int, ui.Image> {
+    mapGameObjectTypeToImage = <int, dartUI.Image> {
       GameObjectType.Weapon: images.atlas_weapons,
       GameObjectType.Object: images.atlas_gameobjects,
       GameObjectType.Head: images.atlas_head,
@@ -2483,7 +2485,7 @@ class Isometric with ByteReader {
     return characters[totalCharacters];
   }
 
-  ui.Image getImageForGameObjectType(int type) =>
+  dartUI.Image getImageForGameObjectType(int type) =>
       mapGameObjectTypeToImage [type] ?? (
           throw Exception(
               'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'

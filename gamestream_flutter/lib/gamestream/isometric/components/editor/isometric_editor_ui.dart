@@ -441,7 +441,7 @@ extension IsometricEditorUI on IsometricEditor {
           padding: const EdgeInsets.all(4),
           color: GS_CONTAINER_COLOR,
           child: FittedBox(
-            child: isometric.buildImageGameObject(objectType),
+            child: isometric.ui.buildImageGameObject(objectType),
           ),
         ),
       );
@@ -497,7 +497,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
         action: () => isometric.setRain(rain),
-        icon: isometric.buildAtlasIconType(convertRainToIconType(rain)),
+        icon: isometric.ui.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
 
@@ -507,7 +507,7 @@ extension IsometricEditorUI on IsometricEditor {
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
             isometric.setLightning(lightning),
-        icon: isometric.buildAtlasIconType(
+        icon: isometric.ui.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
       ));
@@ -517,7 +517,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
         action: () => isometric.setWind(windType),
-        icon: isometric.buildAtlasIconType(convertWindToIconType(windType)),
+        icon: isometric.ui.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
 
@@ -1071,7 +1071,7 @@ extension IsometricEditorUI on IsometricEditor {
                               onPressed: sendGameObjectRequestDeselect
                           ),
                         ),
-                        Center(child: isometric.buildImageGameObject(subType)),
+                        Center(child: isometric.ui.buildImageGameObject(subType)),
                         height8,
                         buidButtonDuplicate(),
                         height8,
@@ -1254,7 +1254,7 @@ extension IsometricEditorUI on IsometricEditor {
                       height: 72,
                       width: 72,
                       alignment: Alignment.center,
-                      child: buildWatch(nodeSelectedType, isometric.buildAtlasNodeType)
+                      child: buildWatch(nodeSelectedType, isometric.ui.buildAtlasNodeType)
                   ),
                   buildPositionedIconButton(
                       top: 50 + shiftY,
@@ -1297,7 +1297,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: onPressed(
           action: action,
           child: MouseOver(builder: (bool mouseOver) =>
-              isometric.buildAtlasIconType(
+              isometric.ui.buildAtlasIconType(
                 iconType,
                 color: mouseOver ? Colors.black38.value : Colors.white.value,
               )

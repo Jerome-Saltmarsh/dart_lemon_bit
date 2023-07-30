@@ -16,8 +16,12 @@ import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
 
-extension IsometricUI on Isometric {
+class IsometricUI {
   static const Icon_Scale = 1.5;
+
+  final Isometric isometric;
+
+  IsometricUI(this.isometric);
 
   Widget buildMapCircle({required double size}) {
     return IgnorePointer(
@@ -172,9 +176,9 @@ extension IsometricUI on Isometric {
     bottom: 150,
     child: IgnorePointer(
       child: Container(
-        width: engine.screen.width,
+        width: isometric.engine.screen.width,
         alignment: Alignment.center,
-        child: buildWatch(messageStatus, buildMessageStatus),
+        child: buildWatch(isometric.messageStatus, buildMessageStatus),
       ),
     ),
   );
@@ -184,12 +188,12 @@ extension IsometricUI on Isometric {
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        messageClear();
+        isometric.messageClear();
       },
       child: Container(
           padding: const EdgeInsets.all(10),
           color: Colors.black12,
-          child: buildText(message, onPressed: messageClear)),
+          child: buildText(message, onPressed: isometric.messageClear)),
     );
   }
 
@@ -197,7 +201,7 @@ extension IsometricUI on Isometric {
       top: 8,
       left: 8,
       child: buildWatch(
-          rendersSinceUpdate,
+          isometric.rendersSinceUpdate,
               (int frames) =>
               buildText('Warning: No message received from server $frames')));
 
@@ -205,12 +209,12 @@ extension IsometricUI on Isometric {
     final controlTime = buildTime();
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
-        windowOpenMenu.value = true;
+        isometric.windowOpenMenu.value = true;
       },
       onExit: (PointerExitEvent event) {
-        windowOpenMenu.value = false;
+        isometric.windowOpenMenu.value = false;
       },
-      child: buildWatch(windowOpenMenu, (bool menuVisible){
+      child: buildWatch(isometric.windowOpenMenu, (bool menuVisible){
         return Container(
           color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
           child: Column(
@@ -238,10 +242,10 @@ extension IsometricUI on Isometric {
   Widget buildIconAudioSound() =>
       onPressed(
         hint: 'toggle sound',
-        action: audio.toggleMutedSound,
+        action: isometric.audio.toggleMutedSound,
         child: Container(
           width: 32,
-          child: buildWatch(audio.enabledSound, (bool t) =>
+          child: buildWatch(isometric.audio.enabledSound, (bool t) =>
               buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
           ),
         ),
@@ -250,8 +254,8 @@ extension IsometricUI on Isometric {
   Widget buildIconAudioMusic() =>
       onPressed(
         hint: 'toggle music',
-        action: audio.toggleMutedMusic,
-        child: buildWatch(audio.mutedMusic, (bool musicMuted) =>
+        action: isometric.audio.toggleMutedMusic,
+        child: buildWatch(isometric.audio.mutedMusic, (bool musicMuted) =>
             Container(
                 width: 32,
                 child: buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
@@ -259,19 +263,19 @@ extension IsometricUI on Isometric {
       );
 
   Widget buildIconFullscreen() => WatchBuilder(
-      engine.fullScreen,
+      isometric.engine.fullScreen,
           (bool fullscreen) => onPressed(
           hint: 'toggle fullscreen',
-          action: engine.fullscreenToggle,
+          action: isometric.engine.fullscreenToggle,
           child: Container(
               width: 32,
               child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   Widget buildIconZoom() => onPressed(
-      action: toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: isometric.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   Widget buildIconMenu() => onPressed(
-      action: windowOpenMenu.toggle,
+      action: isometric.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
@@ -279,7 +283,7 @@ extension IsometricUI on Isometric {
   );
 
   Widget buildIconCog() => onPressed(
-      action: windowOpenMenu.toggle,
+      action: isometric.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog),
@@ -287,7 +291,7 @@ extension IsometricUI on Isometric {
   );
 
   Widget buildIconCogTurned() => onPressed(
-      action: windowOpenMenu.toggle,
+      action: isometric.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog_Turned),
@@ -297,8 +301,8 @@ extension IsometricUI on Isometric {
   Widget buildAtlasIconType(IconType iconType,
       {double scale = 1, int color = 1}) =>
       FittedBox(
-        child: engine.buildAtlasImage(
-          image: images.atlas_icons,
+        child: isometric.engine.buildAtlasImage(
+          image: isometric.images.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
           srcWidth: AtlasIcons.getSrcWidth(iconType),
@@ -308,8 +312,8 @@ extension IsometricUI on Isometric {
         ),
       );
 
-  Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
-    image: images.atlas_nodes,
+  Widget buildAtlasNodeType(int nodeType) => isometric.engine.buildAtlasImage(
+    image: isometric.images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
     srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -356,8 +360,8 @@ extension IsometricUI on Isometric {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(player.energyMax, (int energyMax) {
-                return buildWatch(player.energy, (int energy){
+              child: buildWatch(isometric.player.energyMax, (int energyMax) {
+                return buildWatch(isometric.player.energy, (int energy){
                   return Container(
                     width: width,
                     height: height * energy / max(energyMax, 1),
@@ -383,13 +387,13 @@ extension IsometricUI on Isometric {
   }
 
   Widget buildButtonTogglePlayMode() {
-    return buildWatch(sceneEditable, (bool isOwner) {
+    return buildWatch(isometric.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return buildWatch(edit, (bool edit) {
+      return buildWatch(isometric.edit, (bool edit) {
         return buildButton(
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',
-            action: actionToggleEdit,
+            action: isometric.actionToggleEdit,
             color: Colors.green,
             alignment: Alignment.center,
             width: 100);
@@ -400,10 +404,10 @@ extension IsometricUI on Isometric {
   Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(hours, (int hours) =>
+      WatchBuilder(isometric.hours, (int hours) =>
           buildText(padZero(hours), size: 22)),
       buildText(':', size: 22),
-      WatchBuilder(minutes, (int minutes) =>
+      WatchBuilder(isometric.minutes, (int minutes) =>
           buildText(padZero(minutes), size: 22)),
     ],
   );
@@ -421,11 +425,11 @@ extension IsometricUI on Isometric {
 
   void onVisibilityChangedMessageBox(bool visible){
     if (visible) {
-      textFieldMessage.requestFocus();
+      isometric.textFieldMessage.requestFocus();
       return;
     }
-    textFieldMessage.unfocus();
-    textEditingControllerMessage.text = '';
+    isometric.textFieldMessage.unfocus();
+    isometric.textEditingControllerMessage.text = '';
   }
 
 
@@ -443,7 +447,7 @@ extension IsometricUI on Isometric {
 
   Widget buildImageGameObject(int objectType) =>
       buildImageFromSrc(
-        images.atlas_gameobjects,
+        isometric.images.atlas_gameobjects,
         Atlas.getSrc(GameObjectType.Object, objectType),
       );
 
