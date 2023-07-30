@@ -777,7 +777,7 @@ class RendererNodes extends RenderGroup {
       nodesMinZ++;
       renderY -= Node_Height;
       if (nodesMinZ >= scene.totalZ){
-        isometric.renderer.rendererNodes.remaining = false;
+        isometric.compositor.rendererNodes.remaining = false;
         return;
       }
     }

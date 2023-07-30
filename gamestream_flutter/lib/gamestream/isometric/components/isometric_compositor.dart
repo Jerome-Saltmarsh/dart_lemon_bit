@@ -8,7 +8,7 @@ import 'render/renderer_nodes.dart';
 import 'render/renderer_particles.dart';
 import 'render/renderer_projectiles.dart';
 
-class IsometricRenderer {
+class IsometricCompositor {
 
   final Isometric isometric;
 
@@ -22,7 +22,7 @@ class IsometricRenderer {
   late final RendererGameObjects rendererGameObjects;
   late RenderGroup next = rendererNodes;
 
-  IsometricRenderer(this.isometric){
+  IsometricCompositor(this.isometric){
     print('IsometricRender()');
     rendererNodes = RendererNodes(isometric);
     rendererProjectiles = RendererProjectiles(isometric);
