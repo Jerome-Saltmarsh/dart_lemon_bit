@@ -16,8 +16,6 @@ class WebsocketClient {
 
   final Function(Object error, StackTrace stack) onError;
   final connectionStatus = Watch(ConnectionStatus.None);
-  final bufferSize = Watch(0);
-  final bufferSizeTotal = Watch(0);
 
   WebsocketClient({
     required this.readString,

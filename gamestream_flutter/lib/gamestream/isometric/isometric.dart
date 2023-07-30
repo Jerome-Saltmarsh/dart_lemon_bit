@@ -913,7 +913,7 @@ class Isometric with ByteReader {
   ;
 
   // @override
-  void readResponse(int serverResponse){
+  void readServerResponse(int serverResponse){
     rendersSinceUpdate.value = 0;
 
     switch (serverResponse) {
@@ -1029,7 +1029,7 @@ class Isometric with ByteReader {
   // @override
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
-    network.bufferSizeTotal.value = 0;
+    bufferSize.value = 0;
 
     switch (connection) {
       case ConnectionStatus.Connected:
@@ -2518,21 +2518,19 @@ class Isometric with ByteReader {
 
   }
 
-  void readNetworkBytes(Uint8List values) {
-    assert (values.isNotEmpty);
-    index = 0;
-    this.values = values;
-    network.bufferSize.value = values.length;
-    network.bufferSizeTotal.value += values.length;
+  final bufferSize = Watch(0);
 
-    final length = values.length - 1;
+  void readNetworkBytes(Uint8List bytes) {
+    assert (bytes.isNotEmpty);
+    index = 0;
+    this.values = bytes;
+    bufferSize.value = bytes.length;
+    final length = bytes.length;
 
     while (index < length) {
-      readResponse(readByte());
+      readServerResponse(readByte());
     }
 
-
-    network.bufferSize.value = index;
     onReadRespondFinished();
     index = 0;
   }
