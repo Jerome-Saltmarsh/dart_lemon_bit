@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
@@ -99,8 +100,8 @@ class IsometricRender {
   void renderTextPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
-      x: Isometric.getPositionRenderX(v3),
-      y: Isometric.getPositionRenderY(v3) + offsetY,
+      x: v3.renderX,
+      y: v3.renderY + offsetY,
     );
   }
 
@@ -112,8 +113,8 @@ class IsometricRender {
   }) =>
       renderText(
         text: text.toString(),
-        x: Isometric.getRenderX(x, y, z),
-        y: Isometric.getRenderY(x, y, z),
+        x: getRenderX(x, y, z),
+        y: getRenderY(x, y, z),
       );
 
   void renderWireFrameBlue(
@@ -154,8 +155,8 @@ class IsometricRender {
       srcY: 48,
       srcWidth: 32,
       srcHeight: 32,
-      dstX: Isometric.getRenderX(x, y, z),
-      dstY: Isometric.getRenderY(x, y, z),
+      dstX: getRenderX(x, y, z),
+      dstY: getRenderY(x, y, z),
     );
   }
 
@@ -172,8 +173,8 @@ class IsometricRender {
     int color = 1,
   }) => isometric.engine.renderSprite(
       image: isometric.images.atlas_gameobjects,
-      dstX: Isometric.getPositionRenderX(position) - 26,
-      dstY: Isometric.getPositionRenderY(position) - 45,
+      dstX: position.renderX - 26,
+      dstY: position.renderY - 45,
       srcX: 171,
       srcY: 16,
       srcWidth: 51.0 * percentage,
@@ -198,8 +199,8 @@ class IsometricRender {
   void renderBarBlue(double x, double y, double z, double percentage) {
     isometric.engine.renderSprite(
       image: isometric.images.atlas_gameobjects,
-      dstX: Isometric.getRenderX(x, y, z) - 26,
-      dstY: Isometric.getRenderY(x, y, z) - 55,
+      dstX: getRenderX(x, y, z) - 26,
+      dstY: getRenderY(x, y, z) - 55,
       srcX: 171,
       srcY: 48,
       srcWidth: 51.0 * percentage,

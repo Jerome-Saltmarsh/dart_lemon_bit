@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.d
 
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/ui.dart';
-import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/library.dart';
 

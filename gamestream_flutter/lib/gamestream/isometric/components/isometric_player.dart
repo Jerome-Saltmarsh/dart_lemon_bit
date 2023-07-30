@@ -73,8 +73,9 @@ class IsometricPlayer {
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
-  double get renderX => Isometric.getPositionRenderX(position);
-  double get renderY => Isometric.getPositionRenderY(position);
+
+  double get renderX => position.renderX;
+  double get renderY => position.renderY;
 
   double get positionScreenX => isometric.engine.worldToScreenX(position.renderX);
   double get positionScreenY => isometric.engine.worldToScreenY(position.renderY);

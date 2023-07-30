@@ -2,10 +2,10 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/utils.dart';
 
@@ -139,8 +139,8 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     final invisible = false;
 
-    final dstX = Isometric.getPositionRenderX(character);
-    final dstY = Isometric.getPositionRenderY(character);
+    final dstX = character.renderX;
+    final dstY = character.renderY;
 
     const Color_Invisible = 1660944383;
     final color = invisible ? Color_Invisible : isometric.scene.getRenderColorPosition(character);
@@ -188,8 +188,8 @@ extension RenderCharactersTemplate on RendererCharacters {
            srcY: upperBodyDirection * 64,
            srcWidth: 64,
            srcHeight: 64,
-           dstX: Isometric.getRenderX(x, y, z),
-           dstY: Isometric.getRenderY(x, y, z),
+           dstX: getRenderX(x, y, z),
+           dstY: getRenderY(x, y, z),
            scale: Scale,
            color: color,
            anchorY: Anchor_Y,
@@ -201,8 +201,8 @@ extension RenderCharactersTemplate on RendererCharacters {
           srcY: upperBodyDirection * 64,
           srcWidth: 64,
           srcHeight: 64,
-          dstX: Isometric.getPositionRenderX(character),
-          dstY: Isometric.getPositionRenderY(character),
+          dstX: character.renderX,
+          dstY: character.renderY,
           scale: Scale,
           color: color,
           anchorY: Anchor_Y,

@@ -6,6 +6,8 @@ import 'dart:ui' as ui;
 import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/lemon_bits.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
@@ -23,7 +25,6 @@ import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.da
 import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:provider/provider.dart';
 
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas.dart';
@@ -38,12 +39,7 @@ import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
 
-
-
-
 class Isometric with ByteReader {
-
-  static const Server_FPS = 45;
 
   Isometric() {
     print('Isometric()');
@@ -88,25 +84,6 @@ class Isometric with ByteReader {
         print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
       }
     }
-  }
-
-  static double renderX(double x, double y, double z) => (x - y) * 0.5;
-
-  static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
-
-  static double getPositionRenderX(Position v3) => getRenderX(v3.x, v3.y, v3.z);
-
-  static double getPositionRenderY(Position v3) => getRenderY(v3.x, v3.y, v3.z);
-
-  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
-
-  static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
-
-  static int convertSecondsToAmbientAlpha(int totalSeconds) {
-    const Seconds_Per_Hours_12 = Duration.secondsPerHour * 12;
-    return ((totalSeconds < Seconds_Per_Hours_12
-        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
   }
 
   late final Games games;
@@ -776,7 +753,7 @@ class Isometric with ByteReader {
     if (!updateAmbientAlphaAccordingToTimeEnabled)
       return;
 
-    scene.ambientAlpha = Isometric.convertSecondsToAmbientAlpha(currentTimeInSeconds);
+    scene.ambientAlpha = convertSecondsToAmbientAlpha(currentTimeInSeconds);
 
     if (rainType.value == RainType.Light){
       scene.ambientAlpha += lighting.rainAmbienceLight;
@@ -1416,7 +1393,6 @@ class Isometric with ByteReader {
 
   var initialized = false;
 
-  @override
   Widget build(BuildContext context) {
     print('isometric.build()');
 
@@ -1485,7 +1461,6 @@ class Isometric with ByteReader {
     );
   }
 
-  @override
   void onReadRespondFinished() {
     engine.onDrawCanvas = drawCanvas;
 
@@ -2134,10 +2109,10 @@ class Isometric with ByteReader {
 
   void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
       engine.renderLine(
-        Isometric.renderX(x1, y1, z1),
-        Isometric.renderY(x1, y1, z1),
-        Isometric.renderX(x2, y2, z2),
-        Isometric.renderY(x2, y2, z2),
+        getRenderX(x1, y1, z1),
+        getRenderY(x1, y1, z1),
+        getRenderX(x2, y2, z2),
+        getRenderY(x2, y2, z2),
       );
 
   void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
@@ -2535,4 +2510,7 @@ class Isometric with ByteReader {
     onReadRespondFinished();
     index = 0;
   }
+
+
+
 }

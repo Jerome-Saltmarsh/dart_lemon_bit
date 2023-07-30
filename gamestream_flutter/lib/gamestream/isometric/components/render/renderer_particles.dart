@@ -1,6 +1,5 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererParticles extends IsometricRenderer {
@@ -25,10 +24,10 @@ class RendererParticles extends IsometricRenderer {
   void renderFunction() {
       assert (particle.active);
       assert (particle.delay <= 0);
-      final dstX = Isometric.getPositionRenderX(particle);
+      final dstX = particle.renderX;
       assert (dstX > isometric.engine.Screen_Left - 50);
       assert (dstX < isometric.engine.Screen_Right + 50);
-      final dstY = Isometric.getPositionRenderY(particle);
+      final dstY = particle.renderY;
       assert (dstY > isometric.engine.Screen_Top - 50);
       assert (dstY < isometric.engine.Screen_Bottom + 50);
 
