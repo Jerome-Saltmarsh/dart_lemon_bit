@@ -450,24 +450,24 @@ extension isometricDebugUI on IsometricDebug {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         onPressed(
-            action: isometric.render.rendererNodes.toggleDynamicResolutionEnabled,
-            child: buildRow(text: 'dynamic-resolution-enabled', value: GSRefresh(() => buildText(isometric.render.rendererNodes.dynamicResolutionEnabled))),
+            action: isometric.renderer.rendererNodes.toggleDynamicResolutionEnabled,
+            child: buildRow(text: 'dynamic-resolution-enabled', value: GSRefresh(() => buildText(isometric.renderer.rendererNodes.dynamicResolutionEnabled))),
         ),
         GSRefresh(() => buildText(
             'camera-target: ${isometric.camera.target}\n'
         )),
-        buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(isometric.render.rendererNodes.highResolution))),
+        buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(isometric.renderer.rendererNodes.highResolution))),
         buildRow(text: 'ambient-screen-on', value: GSRefresh(() => buildText(isometric.totalAmbientOnscreen))),
         buildRow(text: 'ambient-screen-off', value: GSRefresh(() => buildText(isometric.totalAmbientOffscreen))),
-        buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(isometric.render.rendererNodes.onscreenNodes))),
-        buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(isometric.render.rendererNodes.offscreenNodes))),
-        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.render.rendererNodes.orderShiftY))),
+        buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(isometric.renderer.rendererNodes.onscreenNodes))),
+        buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(isometric.renderer.rendererNodes.offscreenNodes))),
+        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.renderer.rendererNodes.orderShiftY))),
         onPressed(
-          action: isometric.render.rendererNodes.increaseOrderShiftY,
+          action: isometric.renderer.rendererNodes.increaseOrderShiftY,
           child: buildText('increase'),
         ),
         onPressed(
-          action: isometric.render.rendererNodes.decreaseOrderShiftY,
+          action: isometric.renderer.rendererNodes.decreaseOrderShiftY,
           child: buildText('decrease'),
         ),
         onPressed(

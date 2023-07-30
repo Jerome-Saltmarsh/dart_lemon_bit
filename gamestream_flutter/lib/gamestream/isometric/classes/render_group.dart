@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-abstract class IsometricRenderer {
+abstract class RenderGroup {
   var _index = 0;
   var total = 0;
   var order = 0.0;
@@ -10,7 +10,7 @@ abstract class IsometricRenderer {
   final Isometric isometric;
   late final Engine engine;
 
-  IsometricRenderer(this.isometric) {
+  RenderGroup(this.isometric) {
     engine = isometric.engine;
   }
 

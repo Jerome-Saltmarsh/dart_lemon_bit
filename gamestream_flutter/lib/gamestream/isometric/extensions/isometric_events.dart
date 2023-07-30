@@ -42,8 +42,8 @@ extension IsometricEvents on Isometric {
     scene.refreshLightSources();
     minimap.generateSrcDst();
 
-    render.rendererNodes.nodeColors = scene.nodeColors;
-    render.rendererNodes.nodeOrientations = scene.nodeOrientations;
+    renderer.rendererNodes.nodeColors = scene.nodeColors;
+    renderer.rendererNodes.nodeOrientations = scene.nodeOrientations;
 
     if (raining.value) {
       scene.rainStop();

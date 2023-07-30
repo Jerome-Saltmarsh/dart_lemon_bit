@@ -31,6 +31,7 @@ import 'atlases/atlas.dart';
 import 'atlases/atlas_nodes.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
+import 'components/isometric_render.dart';
 import 'components/render/classes/template_animation.dart';
 import 'components/src.dart';
 import 'enums/cursor_type.dart';
@@ -47,8 +48,8 @@ class Isometric with ByteReader {
       readString: readNetworkString,
       readBytes: readNetworkBytes,
       onError: onError,
+      onConnectionStatusChanged: onChangedNetworkConnectionStatus,
     );
-    network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
     particles = IsometricParticles(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
@@ -59,6 +60,7 @@ class Isometric with ByteReader {
     player = IsometricPlayer(this);
     ui = IsometricUI(this);
     games = Games(this);
+    render = IsometricRender(this);
 
     games.website.errorMessageEnabled.value = true;
     error.onChanged((GameError? error) {
@@ -257,6 +259,8 @@ class Isometric with ByteReader {
 
   late final Engine engine;
 
+  late final IsometricRenderer renderer;
+
   late final IsometricRender render;
 
   bool get playMode => !editMode;
@@ -287,7 +291,7 @@ class Isometric with ByteReader {
 
     particles.update();
     scene.update();
-    render.render3D();
+    renderer.render3D();
     renderEditMode();
     renderMouseTargetName();
     debug.render();
@@ -1434,7 +1438,7 @@ class Isometric with ByteReader {
 
   void onEngineBuilt(){
     print('isometric.onEngineBuilt()');
-    render = IsometricRender(this);
+    renderer = IsometricRenderer(this);
   }
 
   Widget buildLoadingPage() {
@@ -1609,14 +1613,14 @@ class Isometric with ByteReader {
     final indexColumn = scene.getIndexRow(index);
     final i = indexRow * scene.totalColumns + indexColumn;
     // TODO REFACTOR
-    if (!render.rendererNodes.island[i])
+    if (!renderer.rendererNodes.island[i])
       return true;
     final indexZ = scene.getIndexZ(index);
     if (indexZ > player.indexZ + 2)
       return false;
 
     // TODO REFACTOR
-    return render.rendererNodes.visible3D[index];
+    return renderer.rendererNodes.visible3D[index];
   }
 
   void applyEmissionsColoredLightSources() {
@@ -2464,8 +2468,8 @@ class Isometric with ByteReader {
 
   void notifyLoadImagesCompleted() {
     print('isometric.notifyLoadImagesCompleted()');
-    render.rendererNodes.atlasNodes = images.atlas_nodes;
-    render.rendererNodes.atlasNodesLoaded = true;
+    renderer.rendererNodes.atlasNodes = images.atlas_nodes;
+    renderer.rendererNodes.atlasNodesLoaded = true;
     imagesLoadedCompleted.complete(true);
 
     mapGameObjectTypeToImage = <int, dartUI.Image> {

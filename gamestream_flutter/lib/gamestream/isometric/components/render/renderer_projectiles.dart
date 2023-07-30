@@ -1,8 +1,8 @@
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class RendererProjectiles extends IsometricRenderer {
+class RendererProjectiles extends RenderGroup {
 
   late Projectile projectile;
 

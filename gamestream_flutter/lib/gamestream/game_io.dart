@@ -1,10 +1,10 @@
 
 import 'dart:ui';
 
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../library.dart';
-import 'isometric/components/isometric_render.dart';
 import 'isometric/isometric.dart';
 
 
@@ -151,8 +151,8 @@ class GameIO with ByteWriter {
     final mouseWorldX = isometric.engine.mouseWorldX;
     final mouseWorldY = isometric.engine.mouseWorldY;
     while (z >= 0){
-      final row = IsometricRender.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
-      final column = IsometricRender.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
+      final row = convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
+      final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
       if (row >= isometric.scene.totalRows) break;

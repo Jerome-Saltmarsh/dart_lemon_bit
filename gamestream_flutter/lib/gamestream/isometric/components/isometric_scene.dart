@@ -2,7 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
@@ -282,13 +282,13 @@ class IsometricScene {
   bool isValidIndex(int index) => index >= 0 && index < totalNodes;
 
   double getIndexRenderX(int index) =>
-      IsometricRender.getRenderXOfRowAndColumn(
+      getRenderXOfRowAndColumn(
           getIndexRow(index),
           getIndexColumn(index),
       );
 
   double getIndexRenderY(int index) =>
-      IsometricRender.getRenderYOfRowColumnZ(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
+      getRenderYOfRowColumnZ(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
 
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>

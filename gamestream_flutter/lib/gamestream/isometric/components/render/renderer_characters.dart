@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/functions/get_render.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class RendererCharacters extends IsometricRenderer {
+class RendererCharacters extends RenderGroup {
   late Character character;
 
   RendererCharacters(super.isometric);

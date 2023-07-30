@@ -21,7 +21,12 @@ class WebsocketClient {
     required this.readString,
     required this.readBytes,
     required this.onError,
-  });
+    Function(ConnectionStatus connectionStatus)? onConnectionStatusChanged
+  }) {
+    if (onConnectionStatusChanged != null){
+      connectionStatus.onChanged(onConnectionStatusChanged);
+    }
+  }
 
   bool get connected => connectionStatus.value == ConnectionStatus.Connected;
 

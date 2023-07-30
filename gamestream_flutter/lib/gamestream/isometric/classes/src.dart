@@ -6,4 +6,4 @@ export '../../../isometric/classes/gameobject.dart';
 export '../../../isometric/classes/particle.dart';
 export '../components/isometric_particles.dart';
 export '../../../isometric/classes/position.dart';
-export 'isometric_renderer.dart';
+export 'render_group.dart';

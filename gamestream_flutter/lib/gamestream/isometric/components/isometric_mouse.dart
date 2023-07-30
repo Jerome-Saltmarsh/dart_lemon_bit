@@ -1,10 +1,8 @@
 
 
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
-
-import 'isometric_render.dart';
-
 
 class IsometricMouse {
 
@@ -12,8 +10,8 @@ class IsometricMouse {
 
   IsometricMouse(this.isometric);
 
-  double get positionX => IsometricRender.convertWorldToGridX(isometric.engine.mouseWorldX, isometric.engine.mouseWorldY) + isometric.player.position.z;
-  double get positionY => IsometricRender.convertWorldToGridY(isometric.engine.mouseWorldX, isometric.engine.mouseWorldY) + isometric.player.position.z;
+  double get positionX => convertWorldToGridX(isometric.engine.mouseWorldX, isometric.engine.mouseWorldY) + isometric.player.position.z;
+  double get positionY => convertWorldToGridY(isometric.engine.mouseWorldX, isometric.engine.mouseWorldY) + isometric.player.position.z;
   double get positionZ => isometric.player.position.z;
   double get playerAngle => angleBetween(isometric.player.position.x, isometric.player.position.y, positionX, positionY);
   double get playerDistance => distanceBetween(isometric.player.position.x, isometric.player.position.y, positionX, positionY);

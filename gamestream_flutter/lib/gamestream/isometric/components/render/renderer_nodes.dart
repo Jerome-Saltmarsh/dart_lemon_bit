@@ -1,17 +1,16 @@
 import 'dart:math';
 
 import 'dart:ui' as ui;
+import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'constants/node_src.dart';
 
-class RendererNodes extends IsometricRenderer {
-
+class RendererNodes extends RenderGroup {
 
   static const Node_Size = 48.0;
 
@@ -150,7 +149,7 @@ class RendererNodes extends IsometricRenderer {
     incrementBufferIndex = isometric.engine.incrementBufferIndex;
   }
 
-  double get currentNodeRenderY => IsometricRender.getRenderYOfRowColumnZ(row, column, currentNodeZ);
+  double get currentNodeRenderY => getRenderYOfRowColumnZ(row, column, currentNodeZ);
 
   int get colorCurrent => nodeColors[currentNodeIndex];
 
@@ -436,9 +435,9 @@ class RendererNodes extends IsometricRenderer {
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
-    var screenTopLeftColumn = IsometricRender.convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(IsometricRender.convertWorldToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
-    nodesScreenTopLeftRow = IsometricRender.convertWorldToRow(screenLeft, screenTop, 0);
+    var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
+    nodesScreenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
+    nodesScreenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
       screenTopLeftColumn += nodesScreenTopLeftRow;
@@ -778,7 +777,7 @@ class RendererNodes extends IsometricRenderer {
       nodesMinZ++;
       renderY -= Node_Height;
       if (nodesMinZ >= scene.totalZ){
-        isometric.render.rendererNodes.remaining = false;
+        isometric.renderer.rendererNodes.remaining = false;
         return;
       }
     }

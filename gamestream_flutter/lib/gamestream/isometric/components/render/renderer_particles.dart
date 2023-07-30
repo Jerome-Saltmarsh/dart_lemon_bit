@@ -1,8 +1,8 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class RendererParticles extends IsometricRenderer {
+class RendererParticles extends RenderGroup {
 
   late Particle particle;
 
