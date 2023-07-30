@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'dart:ui' as ui;
-import 'package:gamestream_flutter/gamestream/isometric/mixins/isometric_scene.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';

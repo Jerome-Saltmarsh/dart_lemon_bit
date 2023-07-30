@@ -267,7 +267,7 @@ class GameIO with ByteWriter {
   void sendUpdateBuffer() {
     final bytes = compile();
     updateSize.value = bytes.length;
-    isometric.send(bytes);
+    isometric.network.send(bytes);
   }
 
   void reset() {

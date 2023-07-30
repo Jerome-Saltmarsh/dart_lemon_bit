@@ -20,9 +20,10 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
+import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_byte/byte_reader.dart';
 
-import '../../lemon_websocket_client/websocket_client_builder.dart';
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas.dart';
 import 'atlases/atlas_nodes.dart';
@@ -32,17 +33,16 @@ import 'components/render/classes/template_animation.dart';
 import 'components/src.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
-import 'mixins/src.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
 
-class Isometric extends WebsocketClientBuilder with
-    IsometricCharacters
-{
+class Isometric extends StatelessWidget with ByteReader {
 
   static const Server_FPS = 45;
 
+  final characters = <Character>[];
+  var totalCharacters = 0;
   var framesPerSmokeEmission = 10;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
   var bakeStackRecording = true;
@@ -128,6 +128,7 @@ class Isometric extends WebsocketClientBuilder with
   late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
   late final Engine engine;
 
+  late final WebsocketClient network;
   late final IsometricParticles particles;
   late final IsometricRender render;
   late final GameAudio audio;
@@ -140,6 +141,12 @@ class Isometric extends WebsocketClientBuilder with
 
   Isometric(){
     print('Isometric()');
+    network = WebsocketClient(
+        readString: readNetworkString,
+        readBytes: readNetworkBytes,
+        onError: onError,
+    );
+    network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
     particles = IsometricParticles(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
@@ -216,7 +223,7 @@ class Isometric extends WebsocketClientBuilder with
 
   void update(){
 
-    if (!connected)
+    if (!network.connected)
       return;
 
     if (!gameRunning.value) {
@@ -811,7 +818,7 @@ class Isometric extends WebsocketClientBuilder with
         ..emissionIntensity = 0.0
   ;
 
-  @override
+  // @override
   void readResponse(int serverResponse){
     rendersSinceUpdate.value = 0;
 
@@ -905,17 +912,17 @@ class Isometric extends WebsocketClientBuilder with
       default:
         print('read error; index: $index');
         print(values);
-        disconnect();
+        network.disconnect();
         return;
     }
   }
 
-  @override
-  void onConnectionDone() {
-    games.website.error.value = 'Lost Connection';
-  }
+  // @override
+  // void onConnectionDone() {
+  //   games.website.error.value = 'Lost Connection';
+  // }
 
-  @override
+  // @override
   void onError(Object error, StackTrace stack) {
     if (error.toString().contains('NotAllowedError')){
       // https://developer.chrome.com/blog/autoplay/
@@ -930,10 +937,10 @@ class Isometric extends WebsocketClientBuilder with
     games.website.error.value = error.toString();
   }
 
-  @override
+  // @override
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
-    bufferSizeTotal.value = 0;
+    network.bufferSizeTotal.value = 0;
 
     switch (connection) {
       case ConnectionStatus.Connected:
@@ -941,7 +948,7 @@ class Isometric extends WebsocketClientBuilder with
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
-        timeConnectionEstablished = DateTime.now();
+        network.timeConnectionEstablished = DateTime.now();
         audio.enabledSound.value = true;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();
@@ -956,7 +963,7 @@ class Isometric extends WebsocketClientBuilder with
         engine.cursorType.value = CursorType.Basic;
         engine.fullScreenExit();
         player.active.value = false;
-        timeConnectionEstablished = null;
+        network.timeConnectionEstablished = null;
         clear();
         clean();
         gameObjects.clear();
@@ -1265,7 +1272,7 @@ class Isometric extends WebsocketClientBuilder with
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         games.website.error.value = 'unable to join game';
-        disconnect();
+        network.disconnect();
         break;
       default:
         break;
@@ -1293,7 +1300,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void doRenderForeground(Canvas canvas, Size size){
-    if (!connected)
+    if (!network.connected)
       return;
     renderCursor(canvas);
     renderPlayerAimTargetNameText();
@@ -1425,7 +1432,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void connectToServer(String uri, String message) {
-    connect(uri: uri, message: '${ClientRequest.Join} $message');
+    network.connect(uri: uri, message: '${ClientRequest.Join} $message');
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
@@ -1437,7 +1444,7 @@ class Isometric extends WebsocketClientBuilder with
   }
 
   void sendClientRequest(int value, [dynamic message]) =>
-      message != null ? send('${value} $message') : send(value);
+      message != null ? network.send('${value} $message') : network.send(value);
 
   void detectInputMode() =>
       io.inputMode.value = engine.deviceIsComputer
@@ -2424,6 +2431,13 @@ class Isometric extends WebsocketClientBuilder with
     };
   }
 
+  Character getCharacterInstance(){
+    if (characters.length <= totalCharacters){
+      characters.add(Character());
+    }
+    return characters[totalCharacters];
+  }
+
   ui.Image getImageForGameObjectType(int type) =>
       mapGameObjectTypeToImage [type] ?? (
           throw Exception(
@@ -2436,5 +2450,27 @@ class Isometric extends WebsocketClientBuilder with
     return ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
+  }
+
+  void readNetworkString(String value){
+
+  }
+
+  void readNetworkBytes(Uint8List values) {
+    assert (values.isNotEmpty);
+    index = 0;
+    this.values = values;
+    network.bufferSize.value = values.length;
+    network.bufferSizeTotal.value += values.length;
+
+    final length = values.length - 1;
+
+    while (index < length) {
+      readResponse(readByte());
+    }
+
+    network.bufferSize.value = index;
+    onReadRespondFinished();
+    index = 0;
   }
 }

@@ -89,7 +89,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(isometric.connectionStatus, buildConnectionStatus);
+          : buildWatch(isometric.network.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {

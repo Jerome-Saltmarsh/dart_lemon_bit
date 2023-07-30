@@ -106,12 +106,12 @@ extension isometricDebugUI on IsometricDebug {
         children: [
           GSRefresh(() => buildText('connection-duration: ${formattedConnectionDuration}\n')),
           buildText('network-server-fps: $serverFPS'),
-          buildWatch(isometric.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
-          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
-          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
-          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
-          buildWatch(isometric.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+          buildWatch(isometric.network.bufferSizeTotal, (int bytes) => buildText('network-bytes-total: ${formatBytes(bytes)}')),
+          buildWatch(isometric.network.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+          buildWatch(isometric.network.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
+          buildWatch(isometric.network.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
+          buildWatch(isometric.network.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
+          buildWatch(isometric.network.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
           height8,
           buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
           buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
@@ -500,7 +500,7 @@ extension isometricDebugUI on IsometricDebug {
 
 
   String get formattedConnectionDuration {
-    final duration = isometric.connectionDuration;
+    final duration = isometric.network.connectionDuration;
     if (duration == null) return 'not connected';
     final seconds = duration.inSeconds % 60;
     final minutes = duration.inMinutes;
@@ -508,7 +508,7 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBufferSize(int bytes){
-    final duration = isometric.connectionDuration;
+    final duration = isometric.network.connectionDuration;
     if (duration == null) return 'not connected';
     final seconds = duration.inSeconds;
     final bytesPerSecond = (bytes / seconds).round();
@@ -518,21 +518,21 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBytePerSecond(int bytes){
-    final duration = isometric.connectionDuration;
+    final duration = isometric.network.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round());
   }
 
   String formatAverageBytePerMinute(int bytes){
-    final duration = isometric.connectionDuration;
+    final duration = isometric.network.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 60);
   }
 
   String formatAverageBytePerHour(int bytes){
-    final duration = isometric.connectionDuration;
+    final duration = isometric.network.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 3600);

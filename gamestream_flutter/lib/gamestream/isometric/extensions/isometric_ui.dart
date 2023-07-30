@@ -112,7 +112,7 @@ extension IsometricUI on Isometric {
                     ...children,
                   height24,
                   onPressed(
-                    action: isometric.disconnect,
+                    action: isometric.network.disconnect,
                     child: buildText('DISCONNECT', size: 25),
                   ),
                   height24,
