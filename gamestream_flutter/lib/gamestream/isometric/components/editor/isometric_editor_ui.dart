@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -479,12 +482,12 @@ extension IsometricEditorUI on IsometricEditor {
               Container(
                 width: 64,
                 height: 64,
-                decoration: IsometricUI.buildDecorationBorder(
-                  colorBorder: Colors.white,
-                  colorFill: Colors.transparent,
-                  width: 2,
-                  borderRadius: 0,
-                ),
+                // decoration: IsometricUI.buildDecorationBorder(
+                //   colorBorder: Colors.white,
+                //   colorFill: Colors.transparent,
+                //   width: 2,
+                //   borderRadius: 0,
+                // ),
               ),
           ],
         ),

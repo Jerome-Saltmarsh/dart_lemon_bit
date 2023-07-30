@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';

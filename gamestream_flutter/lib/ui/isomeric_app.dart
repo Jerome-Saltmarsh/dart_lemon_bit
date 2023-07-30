@@ -1,26 +1,22 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:provider/provider.dart';
 
-import 'isometric_provider.dart';
+class IsometricApp extends StatefulWidget  {
 
-class IsometricApp extends StatefulWidget {
+  final Isometric isometric;
+
+  const IsometricApp(this.isometric);
+
   @override
-  State<IsometricApp> createState() => _IsometricAppState();
+  State<StatefulWidget> createState() => IsometricAppState();
 }
 
-class _IsometricAppState extends State<IsometricApp> {
+class IsometricAppState extends State<IsometricApp> {
 
   @override
-  Widget build(BuildContext context) {
-    print('isometricApp.build()');
-    return IsometricProvider(Isometric());
-  }
-
-  @override
-  void initState() {
-    WidgetsFlutterBinding.ensureInitialized();
-    print('isometricApp.initState()');
-    print('isometricApp.initState(again)');
-  }
+  Widget build(BuildContext context) => Provider<Isometric>(
+    create: (context) => widget.isometric,
+    child: widget.isometric.build(context),
+  );
 }

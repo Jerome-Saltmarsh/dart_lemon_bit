@@ -23,6 +23,7 @@ import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.da
 import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
+import 'package:provider/provider.dart';
 
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas.dart';
@@ -37,114 +38,19 @@ import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
 
-class Isometric extends StatelessWidget with ByteReader {
+
+
+
+class Isometric with ByteReader {
 
   static const Server_FPS = 45;
 
-  final characters = <Character>[];
-  var totalCharacters = 0;
-  var framesPerSmokeEmission = 10;
-  var updateAmbientAlphaAccordingToTimeEnabled = true;
-  var bakeStackRecording = true;
-  var bakeStackTotal = 0;
-  var bakeStackIndex = Uint16List(100000);
-  var bakeStackBrightness = Uint8ClampedList(100000);
-
-  var bakeStackStartIndex = Uint16List(10000);
-  var bakeStackTorchIndex = Uint16List(10000);
-  var bakeStackTorchSize = Uint16List(10000);
-  var bakeStackTorchTotal = 0;
-
-  var totalAmbientOffscreen = 0;
-  var totalAmbientOnscreen = 0;
-
-  var renderResponse = true;
-  var renderCursorEnable = true;
-  var clearErrorTimer = -1;
-  var nextEmissionSmoke = 0;
-  var cursorType = IsometricCursorType.Hand;
-  var srcXRainFalling = 6640.0;
-  var srcXRainLanding = 6739.0;
-  var messageStatusDuration = 0;
-  var areaTypeVisibleDuration = 0;
-  var nextLightingUpdate = 0;
-  var totalActiveLights = 0;
-  var interpolationPadding = 0.0;
-  var nodesRaycast = 0;
-  var windLine = 0;
-  var totalProjectiles = 0;
-
-  final scene = IsometricScene();
-  final lighting = Lighting();
-  final colors = IsometricColors();
-  final decoder = ZLibDecoder();
-  final imagesLoadedCompleted = Completer();
-  final textEditingControllerMessage = TextEditingController();
-  final textFieldMessage = FocusNode();
-  final panelTypeKey = <int, GlobalKey>{};
-  final playerTextStyle = TextStyle(color: Colors.white);
-  final timeVisible = Watch(true);
-  final windowOpenMenu = WatchBool(false);
-  final operationStatus = Watch(OperationStatus.None);
-  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
-  final serverFPS = Watch(0);
-  final images = Images();
-  final options = IsometricOptions();
-  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-  final imagesLoaded = Future.value(false);
-  final playerExperiencePercentage = Watch(0.0);
-  final sceneEditable = Watch(false);
-  final sceneName = Watch<String?>(null);
-  final gameRunning = Watch(true);
-  final weatherBreeze = Watch(false);
-  final minutes = Watch(0);
-  final lightningType = Watch(LightningType.Off);
-  final watchTimePassing = Watch(false);
-  final sceneUnderground = Watch(false);
-  final gameObjects = <GameObject>[];
-  final projectiles = <Projectile>[];
-  final animation = IsometricAnimation();
-
-  late final Map<int, ui.Image> mapGameObjectTypeToImage;
-  late final messageBoxVisible = Watch(false, clamp: (bool value) {
-    return value;
-  }, onChanged: onVisibilityChangedMessageBox);
-  late final edit = Watch(false, onChanged:  onChangedEdit);
-  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
-  late final raining = Watch(false, onChanged: onChangedRaining);
-  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-  late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
-  late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
-  late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
-  late final seconds = Watch(0, onChanged:  onChangedSeconds);
-  late final hours = Watch(0, onChanged:  onChangedHour);
-  late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
-  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
-  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
-  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
-  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
-  late final Games games;
-  late final io = GameIO(this);
-  late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
-  late final Engine engine;
-
-  late final WebsocketClient network;
-  late final IsometricParticles particles;
-  late final IsometricRender render;
-  late final GameAudio audio;
-  late final IsometricDebug debug;
-  late final IsometricEditor editor;
-  late final IsometricMinimap minimap;
-  late final IsometricCamera camera;
-  late final IsometricMouse mouse;
-  late final IsometricPlayer player;
-
-  Isometric(){
+  Isometric() {
     print('Isometric()');
     network = WebsocketClient(
-        readString: readNetworkString,
-        readBytes: readNetworkBytes,
-        onError: onError,
+      readString: readNetworkString,
+      readBytes: readNetworkBytes,
+      onError: onError,
     );
     network.connectionStatus.onChanged(onChangedNetworkConnectionStatus);
     particles = IsometricParticles(this);
@@ -184,6 +90,196 @@ class Isometric extends StatelessWidget with ByteReader {
     }
   }
 
+  static double renderX(double x, double y, double z) => (x - y) * 0.5;
+
+  static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
+
+  static double getPositionRenderX(Position v3) => getRenderX(v3.x, v3.y, v3.z);
+
+  static double getPositionRenderY(Position v3) => getRenderY(v3.x, v3.y, v3.z);
+
+  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+
+  static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
+
+  static int convertSecondsToAmbientAlpha(int totalSeconds) {
+    const Seconds_Per_Hours_12 = Duration.secondsPerHour * 12;
+    return ((totalSeconds < Seconds_Per_Hours_12
+        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
+  }
+
+  late final Games games;
+  late final WebsocketClient network;
+  late final IsometricParticles particles;
+  late final GameAudio audio;
+  late final IsometricDebug debug;
+  late final IsometricEditor editor;
+  late final IsometricMinimap minimap;
+  late final IsometricCamera camera;
+  late final IsometricMouse mouse;
+  late final IsometricPlayer player;
+  
+  final characters = <Character>[];
+
+  var totalCharacters = 0;
+
+  var framesPerSmokeEmission = 10;
+
+  var updateAmbientAlphaAccordingToTimeEnabled = true;
+
+  var bakeStackRecording = true;
+
+  var bakeStackTotal = 0;
+
+  var bakeStackIndex = Uint16List(100000);
+
+  var bakeStackBrightness = Uint8ClampedList(100000);
+
+  var bakeStackStartIndex = Uint16List(10000);
+
+  var bakeStackTorchIndex = Uint16List(10000);
+
+  var bakeStackTorchSize = Uint16List(10000);
+
+  var bakeStackTorchTotal = 0;
+
+  var totalAmbientOffscreen = 0;
+
+  var totalAmbientOnscreen = 0;
+
+  var renderResponse = true;
+
+  var renderCursorEnable = true;
+
+  var clearErrorTimer = -1;
+
+  var nextEmissionSmoke = 0;
+
+  var cursorType = IsometricCursorType.Hand;
+
+  var srcXRainFalling = 6640.0;
+
+  var srcXRainLanding = 6739.0;
+
+  var messageStatusDuration = 0;
+
+  var areaTypeVisibleDuration = 0;
+
+  var nextLightingUpdate = 0;
+
+  var totalActiveLights = 0;
+
+  var interpolationPadding = 0.0;
+
+  var nodesRaycast = 0;
+
+  var windLine = 0;
+
+  var totalProjectiles = 0;
+
+  final scene = IsometricScene();
+
+  final lighting = Lighting();
+
+  final colors = IsometricColors();
+
+  final decoder = ZLibDecoder();
+
+  final imagesLoadedCompleted = Completer();
+
+  final textEditingControllerMessage = TextEditingController();
+
+  final textFieldMessage = FocusNode();
+
+  final panelTypeKey = <int, GlobalKey>{};
+
+  final playerTextStyle = TextStyle(color: Colors.white);
+
+  final timeVisible = Watch(true);
+
+  final windowOpenMenu = WatchBool(false);
+
+  final operationStatus = Watch(OperationStatus.None);
+
+  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
+
+  final serverFPS = Watch(0);
+
+  final images = Images();
+
+  final options = IsometricOptions();
+
+  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+
+  final imagesLoaded = Future.value(false);
+
+  final playerExperiencePercentage = Watch(0.0);
+
+  final sceneEditable = Watch(false);
+
+  final sceneName = Watch<String?>(null);
+
+  final gameRunning = Watch(true);
+
+  final weatherBreeze = Watch(false);
+
+  final minutes = Watch(0);
+
+  final lightningType = Watch(LightningType.Off);
+
+  final watchTimePassing = Watch(false);
+
+  final sceneUnderground = Watch(false);
+
+  final gameObjects = <GameObject>[];
+
+  final projectiles = <Projectile>[];
+
+  final animation = IsometricAnimation();
+
+  late final Map<int, ui.Image> mapGameObjectTypeToImage;
+
+  late final messageBoxVisible = Watch(false, clamp: (bool value) {
+    return value;
+  }, onChanged: onVisibilityChangedMessageBox);
+
+  late final edit = Watch(false, onChanged:  onChangedEdit);
+
+  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
+
+  late final raining = Watch(false, onChanged: onChangedRaining);
+
+  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
+
+  late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
+
+  late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
+
+  late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
+
+  late final seconds = Watch(0, onChanged:  onChangedSeconds);
+
+  late final hours = Watch(0, onChanged:  onChangedHour);
+
+  late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
+
+  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
+
+  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
+
+  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
+
+  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
+
+  late final io = GameIO(this);
+
+  late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
+
+  late final Engine engine;
+
+  late final IsometricRender render;
+
   bool get playMode => !editMode;
 
   bool get editMode => edit.value;
@@ -212,7 +308,6 @@ class Isometric extends StatelessWidget with ByteReader {
 
     particles.update();
     scene.update();
-    camera.update();
     render.render3D();
     renderEditMode();
     renderMouseTargetName();
@@ -674,14 +769,13 @@ class Isometric extends StatelessWidget with ByteReader {
   }
 
   // PROPERTIES
-
   int get currentTimeInSeconds => (hours.value * Duration.secondsPerHour) + ( minutes.value * 60);
 
   void updateAmbientAlphaAccordingToTime(){
     if (!updateAmbientAlphaAccordingToTimeEnabled)
       return;
 
-    scene.ambientAlpha = convertSecondsToAmbientAlpha(currentTimeInSeconds);
+    scene.ambientAlpha = Isometric.convertSecondsToAmbientAlpha(currentTimeInSeconds);
 
     if (rainType.value == RainType.Light){
       scene.ambientAlpha += lighting.rainAmbienceLight;
@@ -918,11 +1012,6 @@ class Isometric extends StatelessWidget with ByteReader {
   }
 
   // @override
-  // void onConnectionDone() {
-  //   games.website.error.value = 'Lost Connection';
-  // }
-
-  // @override
   void onError(Object error, StackTrace stack) {
     if (error.toString().contains('NotAllowedError')){
       // https://developer.chrome.com/blog/autoplay/
@@ -985,7 +1074,6 @@ class Isometric extends StatelessWidget with ByteReader {
     }
 
   }
-
 
   void readServerResponseInfo() {
     final info = readString();
@@ -1227,7 +1315,6 @@ class Isometric extends StatelessWidget with ByteReader {
 
   CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
 
-
   void onChangedGameType(GameType value) {
     print('onChangedGameType(${value.name})');
     io.reset();
@@ -1450,7 +1537,6 @@ class Isometric extends StatelessWidget with ByteReader {
       io.inputMode.value = engine.deviceIsComputer
           ? InputMode.Keyboard
           : InputMode.Touch;
-
 
   void playAudioSingleV3({
     required AudioSingle audioSingle,
@@ -2028,7 +2114,6 @@ class Isometric extends StatelessWidget with ByteReader {
 
   }
 
-
   /// @hue a number between 0 and 360
   /// @saturation a number between 0 and 100
   /// @value a number between 0 and 100
@@ -2046,19 +2131,13 @@ class Isometric extends StatelessWidget with ByteReader {
     );
   }
 
-
   void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
       engine.renderLine(
-        renderX(x1, y1, z1),
-        renderY(x1, y1, z1),
-        renderX(x2, y2, z2),
-        renderY(x2, y2, z2),
+        Isometric.renderX(x1, y1, z1),
+        Isometric.renderY(x1, y1, z1),
+        Isometric.renderX(x2, y2, z2),
+        Isometric.renderY(x2, y2, z2),
       );
-
-
-  static double renderX(double x, double y, double z) => (x - y) * 0.5;
-
-  static double renderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 
   void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
     if (radius <= 0) return;
@@ -2109,7 +2188,6 @@ class Isometric extends StatelessWidget with ByteReader {
     render.renderEditWireFrames();
     renderMouseWireFrame();
   }
-
 
   double getVolumeTargetWind() {
     final windLineDistance = (engine.screenCenterRenderX - windLineRenderX).abs();
@@ -2381,7 +2459,6 @@ class Isometric extends StatelessWidget with ByteReader {
     }
   }
 
-
   void renderMouseTargetName() {
     if (!player.mouseTargetAllie.value) return;
     final mouseTargetName = player.mouseTargetName.value;
@@ -2406,14 +2483,6 @@ class Isometric extends StatelessWidget with ByteReader {
         dstY: y,
         scale: 0.4,
       );
-
-  static double getPositionRenderX(Position v3) => getRenderX(v3.x, v3.y, v3.z);
-
-  static double getPositionRenderY(Position v3) => getRenderY(v3.x, v3.y, v3.z);
-
-  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
-
-  static double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 
   void notifyLoadImagesCompleted() {
     print('isometric.notifyLoadImagesCompleted()');
@@ -2445,13 +2514,6 @@ class Isometric extends StatelessWidget with ByteReader {
           )
       );
 
-  static int convertSecondsToAmbientAlpha(int totalSeconds) {
-    const Seconds_Per_Hours_12 = Duration.secondsPerHour * 12;
-    return ((totalSeconds < Seconds_Per_Hours_12
-        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
-  }
-
   void readNetworkString(String value){
 
   }
@@ -2468,6 +2530,7 @@ class Isometric extends StatelessWidget with ByteReader {
     while (index < length) {
       readResponse(readByte());
     }
+
 
     network.bufferSize.value = index;
     onReadRespondFinished();
