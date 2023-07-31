@@ -151,8 +151,8 @@ class IsometricUI {
 
             final player = isometric.player;
 
-            for (var i = 0; i < isometric.totalCharacters; i++) {
-              final character = isometric.characters[i];
+            for (var i = 0; i < isometric.scene.totalCharacters; i++) {
+              final character = isometric.scene.characters[i];
               final isPlayer = player.isCharacter(character);
               isometric.engine.renderExternalCanvas(
                   canvas: canvas,

@@ -3,6 +3,7 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -20,7 +21,11 @@ class IsometricResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final Isometric isometric;
 
-  IsometricResponseReader(this.isometric);
+  late final IsometricScene scene;
+
+  IsometricResponseReader(this.isometric) {
+    scene = isometric.scene;
+  }
 
 
   void readNetworkString(String value){
@@ -125,7 +130,7 @@ class IsometricResponseReader with ByteReader {
         isometric.engine.downloadBytes(bytes, name: '$name.scene');
         break;
       case ServerResponse.GameObject_Deleted:
-        isometric.removeGameObjectById(readUInt16());
+        isometric.scene.removeGameObjectById(readUInt16());
         break;
       case ServerResponse.Game_Error:
         final errorTypeIndex = readByte();
@@ -135,7 +140,7 @@ class IsometricResponseReader with ByteReader {
         isometric.serverFPS.value = readUInt16();
         return;
       case ServerResponse.Sort_GameObjects:
-        isometric.gameObjects.sort();
+        isometric.scene.gameObjects.sort();
         break;
       default:
         print('read error; index: $index');
@@ -189,7 +194,7 @@ class IsometricResponseReader with ByteReader {
         break;
 
       case IsometricResponse.GameObjects:
-        isometric.gameObjects.clear();
+        isometric.scene.gameObjects.clear();
         break;
 
       case IsometricResponse.Player_Initialized:
@@ -367,7 +372,7 @@ class IsometricResponseReader with ByteReader {
 
   void readGameObject() {
     final id = readUInt16();
-    final gameObject = isometric.findOrCreateGameObject(id);
+    final gameObject = isometric.scene.findOrCreateGameObject(id);
     gameObject.active = readBool();
     gameObject.type = readByte();
     gameObject.subType = readByte();
@@ -481,7 +486,7 @@ class IsometricResponseReader with ByteReader {
 
     final editor = isometric.editor;
     final id = readUInt16();
-    final gameObject = isometric.findGameObjectById(id);
+    final gameObject = isometric.scene.findGameObjectById(id);
     if (gameObject == null) throw Exception('could not find gameobject with id $id');
     editor.gameObject.value = gameObject;
     editor.gameObjectSelectedCollidable   .value = readBool();
@@ -501,13 +506,13 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readIsometricCharacters(){
-    isometric.totalCharacters = 0;
+    scene.totalCharacters = 0;
 
     while (true) {
 
       final compressionLevel = readByte();
       if (compressionLevel == CHARACTER_END) break;
-      final character = isometric.getCharacterInstance();
+      final character = scene.getCharacterInstance();
 
 
       final stateAChanged = readBitFromByte(compressionLevel, 0);
@@ -557,7 +562,7 @@ class IsometricResponseReader with ByteReader {
       if (character.characterType == CharacterType.Template){
         readCharacterTemplate(character);
       }
-      isometric.totalCharacters++;
+      scene.totalCharacters++;
     }
   }
 
@@ -627,12 +632,13 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readProjectiles(){
-    final projectiles = isometric.projectiles;
-    isometric.totalProjectiles = readUInt16();
-    while (isometric.totalProjectiles >= projectiles.length){
+    final scene = isometric.scene;
+    final projectiles = scene.projectiles;
+    scene.totalProjectiles = readUInt16();
+    while (scene.totalProjectiles >= projectiles.length){
       projectiles.add(Projectile());
     }
-    for (var i = 0; i < isometric.totalProjectiles; i++) {
+    for (var i = 0; i < scene.totalProjectiles; i++) {
       final projectile = projectiles[i];
       projectile.x = readDouble();
       projectile.y = readDouble();

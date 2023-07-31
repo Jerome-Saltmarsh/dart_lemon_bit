@@ -147,10 +147,10 @@ extension isometricDebugUI on IsometricDebug {
                   'aim-target-position: ${isometric.player.aimTargetPosition}\n'
                   'target-position: ${isometric.player.targetPosition}\n'
                   'scene-light-sources: ${isometric.scene.nodeLightSourcesTotal}\n'
-                  'scene-light-active: ${isometric.totalActiveLights}\n'
+                  'scene-light-active: ${isometric.scene.totalActiveLights}\n'
                   'scene.smoke-sources: ${isometric.scene.smokeSourcesTotal}\n'
-                  'total-gameobjects: ${isometric.gameObjects.length}\n'
-                  'total-characters: ${isometric.totalCharacters}\n'
+                  'total-gameobjects: ${isometric.scene.gameObjects.length}\n'
+                  'total-characters: ${isometric.scene.totalCharacters}\n'
                   'total-particles: ${isometric.particles.particles.length}\n'
                   'total-particles-active: ${isometric.particles.countActiveParticles}\n'
           )),
@@ -271,7 +271,7 @@ extension isometricDebugUI on IsometricDebug {
         () => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: isometric.gameObjects
+          children: isometric.scene.gameObjects
               .map((gameObject) => onPressed(
                 action: () => isometric.network.sendIsometricRequestSelectGameObject(gameObject),
                 child: buildText(

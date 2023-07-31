@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.da
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
-import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games.dart';
@@ -28,7 +27,6 @@ import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
 import 'components/src.dart';
 import 'enums/cursor_type.dart';
-import 'enums/emission_type.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
@@ -37,6 +35,7 @@ class Isometric {
 
   Isometric() {
     print('Isometric()');
+    scene = IsometricScene(this);
     network = IsometricNetwork(this);
     particles = IsometricParticles(this);
     audio = GameAudio(this);
@@ -62,6 +61,7 @@ class Isometric {
   late final Games games;
   late final IsometricNetwork network;
   late final GameAudio audio;
+  late final IsometricScene scene;
   late final IsometricParticles particles;
   late final IsometricDebug debug;
   late final IsometricEditor editor;
@@ -71,29 +71,9 @@ class Isometric {
   late final IsometricPlayer player;
   late final IsometricUI ui;
 
-  final characters = <Character>[];
-
-  var totalCharacters = 0;
-
   var framesPerSmokeEmission = 10;
 
   var updateAmbientAlphaAccordingToTimeEnabled = true;
-
-  var bakeStackRecording = true;
-
-  var bakeStackTotal = 0;
-
-  var bakeStackIndex = Uint16List(100000);
-
-  var bakeStackBrightness = Uint8ClampedList(100000);
-
-  var bakeStackStartIndex = Uint16List(10000);
-
-  var bakeStackTorchIndex = Uint16List(10000);
-
-  var bakeStackTorchSize = Uint16List(10000);
-
-  var bakeStackTorchTotal = 0;
 
   var totalAmbientOffscreen = 0;
 
@@ -119,17 +99,11 @@ class Isometric {
 
   var nextLightingUpdate = 0;
 
-  var totalActiveLights = 0;
-
   var interpolationPadding = 0.0;
 
   var nodesRaycast = 0;
 
   var windLine = 0;
-
-  var totalProjectiles = 0;
-
-  final scene = IsometricScene();
 
   final lighting = Lighting();
 
@@ -178,10 +152,6 @@ class Isometric {
   final watchTimePassing = Watch(false);
 
   final sceneUnderground = Watch(false);
-
-  final gameObjects = <GameObject>[];
-
-  final projectiles = <Projectile>[];
 
   final animation = IsometricAnimation();
 
@@ -287,8 +257,8 @@ class Isometric {
     player.update();
     lighting.update();
 
-    updateProjectiles();
-    updateGameObjects();
+    scene.updateProjectiles();
+    scene.updateGameObjects();
     readPlayerInputEdit();
 
     io.applyKeyboardInputToUpdateBuffer(this);
@@ -342,88 +312,11 @@ class Isometric {
     player.indexZ = 0;
     player.indexRow = 0;
     player.indexColumn = 0;
-    characters.clear();
-    projectiles.clear();
-    gameObjects.clear();
-    totalProjectiles = 0;
-    totalCharacters = 0;
-  }
-
-  GameObject findOrCreateGameObject(int id) {
-    var instance = findGameObjectById(id);
-    if (instance == null) {
-      instance = GameObject(id);
-      gameObjects.add(instance);
-    }
-    return instance;
-  }
-
-  GameObject? findGameObjectById(int id) {
-    for (final gameObject in gameObjects) {
-      if (gameObject.id == id) return gameObject;
-    }
-    return null;
-  }
-
-  void removeGameObjectById(int id )=>
-      gameObjects.removeWhere((element) => element.id == id);
-
-  void applyEmissionGameObjects() {
-    for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
-      switch (gameObject.colorType) {
-        case EmissionType.None:
-          continue;
-        case EmissionType.Color:
-          // TODO
-          // emitLightColoredAtPosition(
-          //   gameObject,
-          //   hue: gameObject.emissionHue,
-          //   saturation: gameObject.emissionSat,
-          //   value: gameObject.emissionVal,
-          //   alpha: gameObject.emissionAlp,
-          //   intensity: gameObject.emissionIntensity,
-          // );
-          continue;
-        case EmissionType.Ambient:
-          applyVector3EmissionAmbient(gameObject,
-            alpha: gameObject.emissionAlp,
-            intensity: gameObject.emissionIntensity,
-          );
-          continue;
-      }
-    }
-  }
-
-  /// TODO Optimize
-  void updateGameObjects() {
-    for (final gameObject in gameObjects){
-      if (!gameObject.active) continue;
-      gameObject.update();
-    }
-  }
-
-  void updateProjectiles() {
-    for (var i = 0; i < totalProjectiles; i++) {
-      final projectile = projectiles[i];
-      if (projectile.type == ProjectileType.Rocket) {
-        particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
-        projectShadow(projectile);
-        continue;
-      }
-      if (projectile.type == ProjectileType.Fireball) {
-         spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
-        continue;
-      }
-      if (projectile.type == ProjectileType.Orb) {
-        particles.spawnParticleOrbShard(
-          x: projectile.x,
-          y: projectile.y,
-          z: projectile.z,
-          angle: randomAngle(),
-        );
-      }
-    }
+    scene.characters.clear();
+    scene.projectiles.clear();
+    scene.gameObjects.clear();
+    scene.totalProjectiles = 0;
+    scene.totalCharacters = 0;
   }
 
   void projectShadow(Position v3){
@@ -489,131 +382,12 @@ class Isometric {
     timeVisible.value = value;
   }
 
-  void applyEmissions(){
-    totalActiveLights = 0;
-    applyEmissionsScene();
-    applyEmissionsCharacters();
-    applyEmissionGameObjects();
-    applyEmissionsProjectiles();
-    applyEmissionsParticles();
-    applyEmissionEditorSelectedNode();
-    updateCharacterColors();
-  }
-
-  void applyEmissionsScene() {
-    applyEmissionsColoredLightSources();
-    if (bakeStackRecording){
-      recordBakeStack();
-    } else {
-      applyEmissionBakeStack();
-    }
-  }
-
-  void applyEmissionBakeStack() {
-
-    final ambient = scene.ambientAlpha;
-
-    final alpha = interpolate(
-      ambient,
-      0,
-      lighting.torchEmissionIntensityAmbient,
-    ).toInt();
-
-    for (var i = 0; i < bakeStackTorchTotal; i++){
-      final index = bakeStackTorchIndex[i];
-
-      if (!indexOnscreen(index, padding: (Node_Size * 6)))
-        continue;
-
-      final start = bakeStackStartIndex[i];
-      final size = bakeStackTorchSize[i];
-      final end = start + size;
-
-      for (var j = start; j < end; j++){
-        final brightness = bakeStackBrightness[j];
-        final index = bakeStackIndex[j];
-        final intensity = brightness > 5 ? 1.0 : scene.interpolations[brightness];
-        scene.applyAmbient(
-          index: index,
-          alpha: interpolate(ambient, alpha, intensity).toInt(),
-        );
-      }
-    }
-  }
-
-  void applyEmissionEditorSelectedNode() {
-    if (!editMode) return;
-    if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
-       emitLightAmbient(
-        index:  editor.nodeSelectedIndex.value,
-        alpha: 0,
-      );
-    }
-  }
-
-  void updateCharacterColors(){
-    for (var i = 0; i <  totalCharacters; i++){
-      final character = characters[i];
-      character.color =  scene.getRenderColorPosition(character);
-    }
-  }
-
-  void applyEmissionsProjectiles() {
-    for (var i = 0; i <  totalProjectiles; i++){
-      applyProjectileEmission(projectiles[i]);
-    }
-  }
-
-  void applyProjectileEmission(Projectile projectile) {
-    if (projectile.type == ProjectileType.Orb) {
-      //  emitLightColoredAtPosition(projectile,
-      //   hue: 100,
-      //   saturation: 1,
-      //   value: 1,
-      //   alpha: 20,
-      // );
-      return;
-    }
-    if (projectile.type == ProjectileType.Bullet) {
-       applyVector3EmissionAmbient(projectile,
-        alpha: 50,
-      );
-      return;
-    }
-    if (projectile.type == ProjectileType.Fireball) {
-      //  emitLightColoredAtPosition(projectile,
-      //   hue: 167,
-      //   alpha: 50,
-      //   saturation: 1,
-      //   value: 1,
-      // );
-      return;
-    }
-    if (projectile.type == ProjectileType.Arrow) {
-       applyVector3EmissionAmbient(projectile,
-        alpha: 50,
-      );
-      return;
-    }
-    if (projectile.type == ProjectileType.FrostBall) {
-      //  emitLightColoredAtPosition(
-      //    projectile,
-      //    hue: 203,
-      //    saturation: 43,
-      //    value: 100,
-      //    alpha: 80,
-      //
-      // );
-      return;
-    }
-  }
-
   void clear() {
      player.position.x = -1;
      player.position.y = -1;
      player.gameDialog.value = null;
      player.npcTalkOptions.value = [];
-     totalProjectiles = 0;
+     scene.totalProjectiles = 0;
      particles.particles.clear();
     engine.zoom = 1;
   }
@@ -636,7 +410,7 @@ class Isometric {
       );
     }
 
-    for (final gameObject in gameObjects){
+    for (final gameObject in scene.gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ObjectType.Barrel_Flaming) continue;
       particles.emitSmoke(
@@ -833,7 +607,7 @@ class Isometric {
         player.active.value = false;
         clear();
         clean();
-        gameObjects.clear();
+        scene.gameObjects.clear();
         sceneEditable.value = false;
         gameType.value = GameType.Website;
         audio.enabledSound.value = false;
@@ -993,6 +767,7 @@ class Isometric {
   void onEngineBuilt(){
     print('isometric.onEngineBuilt()');
     compositor = IsometricCompositor(this);
+    scene.engine = engine;
   }
 
   void onReadRespondFinished() {
@@ -1063,20 +838,6 @@ class Isometric {
 
   set color(Color color) => engine.paint.color = color;
 
-  void applyEmissionsParticles() {
-    final length = particles.particles.length;
-    for (var i = 0; i < length; i++) {
-      final particle = particles.particles[i];
-      if (!particle.active) continue;
-      if (!particle.emitsLight) continue;
-      emitLightColored(
-        index: scene.getIndexPosition(particle),
-        color: particle.emissionColor,
-        intensity: particle.emissionIntensity,
-      );
-    }
-  }
-
   void renderShadow(double x, double y, double z, {double scale = 1}) =>
       engine.renderSprite(
         image: images.atlas_gameobjects,
@@ -1111,87 +872,6 @@ class Isometric {
     return compositor.rendererNodes.visible3D[index];
   }
 
-  void applyEmissionsColoredLightSources() {
-    for (var i = 0; i < scene.nodeLightSourcesTotal; i++){
-      final nodeIndex = scene.nodeLightSources[i];
-      final nodeType = scene.nodeTypes[nodeIndex];
-
-      switch (nodeType) {
-        case NodeType.Torch:
-          break;
-        case NodeType.Fireplace:
-          emitLightColored(
-            index: nodeIndex,
-            color: colors.orange,
-            intensity: lighting.torchEmissionIntensityColored,
-          );
-          break;
-        case NodeType.Torch_Blue:
-          emitLightColored(
-            index: nodeIndex,
-            color: colors.blue1,
-            intensity: lighting.torchEmissionIntensityColored,
-          );
-          break;
-        case NodeType.Torch_Red:
-          emitLightColored(
-            index: nodeIndex,
-            color: colors.red1,
-            intensity: lighting.torchEmissionIntensityColored,
-          );
-          break;
-      }
-    }
-  }
-
-  void recordBakeStack() {
-    print('recordBakeStack()');
-    bakeStackRecording = true;
-    for (var i = 0; i < scene.nodeLightSourcesTotal; i++){
-      final nodeIndex = scene.nodeLightSources[i];
-      final nodeType = scene.nodeTypes[nodeIndex];
-      final alpha = interpolate(
-        scene.ambientAlpha,
-        0,
-        1.0,
-      ).toInt();
-
-      final currentSize = bakeStackTotal;
-
-      switch (nodeType){
-        case NodeType.Torch:
-          emitLightAmbient(
-            index: nodeIndex,
-            alpha: alpha,
-          );
-          break;
-      }
-
-      bakeStackTorchIndex[bakeStackTorchTotal] = nodeIndex;
-      bakeStackStartIndex[bakeStackTorchTotal] = currentSize;
-      bakeStackTorchSize[bakeStackTorchTotal] = bakeStackTotal - currentSize;
-      bakeStackTorchTotal++;
-    }
-
-    bakeStackRecording = false;
-    print('recordBakeStack() finished recording total: ${bakeStackTotal}');
-  }
-
-  void applyVector3EmissionAmbient(Position v, {
-    required int alpha,
-    double intensity = 1.0,
-  }){
-    assert (intensity >= 0);
-    assert (intensity <= 1);
-    assert (alpha >= 0);
-    assert (alpha <= 255);
-    if (!scene.inBoundsPosition(v)) return;
-    emitLightAmbient(
-      index: scene.getIndexPosition(v),
-      alpha: alpha,
-    );
-  }
-
   void renderCircleAroundPlayer({required double radius}) =>
       renderCircleAtPosition(
         position: player.position,
@@ -1224,381 +904,6 @@ class Isometric {
     //   value: 95,
     //   alpha: 0,
     // );
-  }
-
-  void emitLightColored({
-    required int index,
-    required int color,
-    required double intensity,
-  }){
-    if (index < 0) return;
-    if (index >= scene.totalNodes) return;
-
-    final padding = interpolationPadding;
-    final rx = scene.getIndexRenderX(index);
-    if (rx < engine.Screen_Left - padding) return;
-    if (rx > engine.Screen_Right + padding) return;
-    final ry = scene.getIndexRenderY(index);
-    if (ry < engine.Screen_Top - padding) return;
-    if (ry > engine.Screen_Bottom + padding) return;
-    totalActiveLights++;
-
-    final row = scene.getIndexRow(index);
-    final column = scene.getIndexColumn(index);
-    final z = scene.getIndexZ(index);
-
-    final nodeType = scene.nodeTypes[index];
-    final nodeOrientation = scene.nodeOrientations[index];
-
-    var vxStart = -1;
-    var vxEnd = 1;
-    var vyStart = -1;
-    var vyEnd = 1;
-
-    if (!scene.isNodeTypeTransparent(nodeType)){
-      if (const [
-        NodeOrientation.Half_North,
-        NodeOrientation.Corner_North_East,
-        NodeOrientation.Corner_North_West
-      ].contains(nodeOrientation)) {
-        vxStart = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_South,
-        NodeOrientation.Corner_South_West,
-        NodeOrientation.Corner_South_East
-      ].contains(nodeOrientation)) {
-        vxEnd = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_East,
-        NodeOrientation.Corner_North_East,
-        NodeOrientation.Corner_South_East
-      ].contains(nodeOrientation)) {
-        vyStart = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_West,
-        NodeOrientation.Corner_South_West,
-        NodeOrientation.Corner_North_West
-      ].contains(nodeOrientation)) {
-        vyEnd = 0;
-      }
-    }
-
-    for (var vz = -1; vz <= 1; vz++){
-      for (var vx = vxStart; vx <= vxEnd; vx++){
-        for (var vy = vyStart; vy <= vyEnd; vy++){
-          shootLightTreeColor(
-            row: row,
-            column: column,
-            z: z,
-            brightness: 7,
-            vx: vx,
-            vy: vy,
-            vz: vz,
-            color: color,
-            intensity: intensity,
-          );
-        }
-      }
-    }
-  }
-
-  void shootLightTreeColor({
-    required int row,
-    required int column,
-    required int z,
-    required int brightness,
-    required int color,
-    required double intensity,
-    int vx = 0,
-    int vy = 0,
-    int vz = 0,
-
-  }){
-    // assert (brightness < interpolationLength);
-    var velocity = vx.abs() + vy.abs() + vz.abs();
-
-    brightness -= velocity;
-    if (brightness < 0) {
-      return;
-    }
-
-    if (vx != 0) {
-      row += vx;
-      if (row < 0 || row >= scene.totalRows)
-        return;
-    }
-
-    if (vy != 0) {
-      column += vy;
-      if (column < 0 || column >= scene.totalColumns)
-        return;
-    }
-
-    if (vz != 0) {
-      z += vz;
-      if (z < 0 || z >= scene.totalZ)
-        return;
-    }
-
-    const padding = Node_Size + Node_Size_Half;
-
-    final index = (z * scene.area) + (row * scene.totalColumns) + column;
-
-    final renderX = scene.getIndexRenderX(index);
-
-    if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
-      return;
-
-    if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
-      return;
-
-    final renderY = scene.getIndexRenderY(index);
-
-    if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
-      return;
-
-    if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
-      return;
-
-    final nodeType = scene.nodeTypes[index];
-    final nodeOrientation = scene.nodeOrientations[index];
-
-    if (!scene.isNodeTypeTransparent(nodeType)) {
-      if (nodeOrientation == NodeOrientation.Solid)
-        return;
-
-      if (vx < 0) {
-        if (const [
-          NodeOrientation.Half_South,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_South,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_North,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_North,
-        ].contains(nodeOrientation)) vx = 0;
-      } else if (vx > 0) {
-        if (const [
-          NodeOrientation.Half_North,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_North,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_South,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_South,
-        ].contains(nodeOrientation)) vx = 0;
-      }
-
-      if (vy < 0) {
-        if (const [
-          NodeOrientation.Half_West,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_West,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_East,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Slope_East,
-        ].contains(nodeOrientation)) vy = 0;
-      } else if (vy > 0) {
-        if (const [
-          NodeOrientation.Half_East,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Slope_East,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_West,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_West,
-        ].contains(nodeOrientation)) vy = 0;
-      }
-
-      if (vz < 0) {
-        if (const [
-          NodeOrientation.Half_Vertical_Bottom,
-        ].contains(nodeOrientation)) {
-          return;
-        }
-
-        if (const [
-          NodeOrientation.Half_Vertical_Bottom,
-          NodeOrientation.Half_Vertical_Center,
-        ].contains(nodeOrientation)) {
-          vz = 0;
-        }
-      }
-
-      if (vz > 0) {
-        if (const [NodeOrientation.Half_Vertical_Top]
-            .contains(nodeOrientation)) {
-          return;
-        }
-
-        if (const [
-          NodeOrientation.Half_Vertical_Top,
-          NodeOrientation.Half_Vertical_Center,
-        ].contains(nodeOrientation)) {
-          vz = 0;
-        }
-      }
-    }
-
-    scene.applyColor(
-      index: index,
-      intensity: (brightness > 5 ? 1.0 : scene.interpolations[brightness]) * intensity,
-      color: color,
-    );
-
-    if (const [
-      NodeType.Grass_Long,
-      NodeType.Tree_Bottom,
-      NodeType.Tree_Top,
-    ].contains(nodeType)) {
-      brightness--;
-      if (brightness >= scene.interpolationLength)
-        return;
-    }
-
-    velocity = vx.abs() + vy.abs() + vz.abs();
-
-    if (velocity == 0)
-      return;
-
-    if (vx.abs() + vy.abs() + vz.abs() == 3) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: vy,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-    if (vx.abs() + vy.abs() == 2) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: vy,
-        vz: 0,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-    if (vx.abs() + vz.abs() == 2) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: 0,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-    if (vy.abs() + vz.abs() == 2) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: 0,
-        vy: vy,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-    if (vy != 0) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: 0,
-        vy: vy,
-        vz: 0,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-    if (vx != 0) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: 0,
-        vz: 0,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-    if (vz != 0) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: 0,
-        vy: 0,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-      );
-    }
-
-  }
-
-  /// @hue a number between 0 and 360
-  /// @saturation a number between 0 and 100
-  /// @value a number between 0 and 100
-  /// @alpha a number between 0 and 255
-  /// @intensity a number between 0.0 and 1.0
-  void emitLightColoredAtPosition(Position v, {
-    required int color,
-    double intensity = 1.0,
-  }){
-    if (!scene.inBoundsPosition(v)) return;
-    emitLightColored(
-      index: scene.getIndexPosition(v),
-      color: color,
-      intensity: intensity,
-    );
   }
 
   void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
@@ -1674,89 +979,6 @@ class Isometric {
     }
     if (index <= WindType.Gentle) return target + 0.5;
     return 1.0;
-  }
-
-  void emitLightAmbient({
-    required int index,
-    required int alpha,
-  }){
-    if (index < 0) return;
-    if (index >= scene.totalNodes) return;
-
-    if (!bakeStackRecording){
-      final padding = interpolationPadding;
-      final rx = scene.getIndexRenderX(index);
-      if (rx < engine.Screen_Left - padding) return;
-      if (rx > engine.Screen_Right + padding) return;
-      final ry = scene.getIndexRenderY(index);
-      if (ry < engine.Screen_Top - padding) return;
-      if (ry > engine.Screen_Bottom + padding) return;
-    }
-
-    totalActiveLights++;
-
-    final row = scene.getIndexRow(index);
-    final column = scene.getIndexColumn(index);
-    final z = scene.getIndexZ(index);
-
-    final nodeType = scene.nodeTypes[index];
-    final nodeOrientation = scene.nodeOrientations[index];
-
-    var vxStart = -1;
-    var vxEnd = 1;
-    var vyStart = -1;
-    var vyEnd = 1;
-
-    if (!scene.isNodeTypeTransparent(nodeType)){
-      if (const [
-        NodeOrientation.Half_North,
-        NodeOrientation.Corner_North_East,
-        NodeOrientation.Corner_North_West
-      ].contains(nodeOrientation)) {
-        vxStart = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_South,
-        NodeOrientation.Corner_South_West,
-        NodeOrientation.Corner_South_East
-      ].contains(nodeOrientation)) {
-        vxEnd = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_East,
-        NodeOrientation.Corner_North_East,
-        NodeOrientation.Corner_South_East
-      ].contains(nodeOrientation)) {
-        vyStart = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_West,
-        NodeOrientation.Corner_South_West,
-        NodeOrientation.Corner_North_West
-      ].contains(nodeOrientation)) {
-        vyEnd = 0;
-      }
-    }
-
-    for (var vz = -1; vz <= 1; vz++){
-      for (var vx = vxStart; vx <= vxEnd; vx++){
-        for (var vy = vyStart; vy <= vyEnd; vy++){
-          shootLightTreeAmbient(
-            row: row,
-            column: column,
-            z: z,
-            brightness: 7,
-            alpha: alpha,
-            vx: vx,
-            vy: vy,
-            vz: vz,
-          );
-        }
-      }
-    }
   }
 
   void renderMouseWireFrame() {
@@ -1968,13 +1190,6 @@ class Isometric {
       GameObjectType.Legs: images.atlas_legs,
       GameObjectType.Item: images.atlas_items,
     };
-  }
-
-  Character getCharacterInstance(){
-    if (characters.length <= totalCharacters){
-      characters.add(Character());
-    }
-    return characters[totalCharacters];
   }
 
   dartUI.Image getImageForGameObjectType(int type) =>

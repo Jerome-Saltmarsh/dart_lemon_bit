@@ -477,7 +477,7 @@ class RendererNodes extends RenderGroup {
     remaining = total > 0;
     scene.resetNodeColorStack();
     scene.resetNodeAmbientStack();
-    isometric.applyEmissions();
+    isometric.scene.applyEmissions();
 
     // highlightCharacterNearMouse();
   }

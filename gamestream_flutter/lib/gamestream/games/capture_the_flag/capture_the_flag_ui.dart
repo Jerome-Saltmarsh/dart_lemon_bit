@@ -176,10 +176,10 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 isometric.minimap.renderCanvas(canvas);
 
                 final player = isometric.player;
-                final totalCharacters = isometric.totalCharacters;
+                final totalCharacters = isometric.scene.totalCharacters;
 
                 for (var i = 0; i < totalCharacters; i++) {
-                  final character = isometric.characters[i];
+                  final character = isometric.scene.characters[i];
                   final isPlayer = player.isCharacter(character);
                   isometric.engine.renderExternalCanvas(
                       canvas: canvas,
@@ -261,7 +261,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: isometric.gameObjects.map((e){
+              children: isometric.scene.gameObjects.map((e){
                 return onPressed(
                     action: () {
 

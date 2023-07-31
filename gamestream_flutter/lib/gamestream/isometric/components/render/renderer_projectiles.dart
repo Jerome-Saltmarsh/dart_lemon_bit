@@ -58,13 +58,13 @@ class RendererProjectiles extends RenderGroup {
 
   @override
   void updateFunction() {
-    projectile = isometric.projectiles[index];
+    projectile = isometric.scene.projectiles[index];
     order = projectile.sortOrder;
   }
 
   @override
   int getTotal() {
-    return isometric.totalProjectiles;
+    return isometric.scene.totalProjectiles;
   }
 
   void renderBullet(double x, double y, double rotation) {

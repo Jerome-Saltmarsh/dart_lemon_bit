@@ -323,12 +323,12 @@ class GameAudio {
   }
 
   void updateCharacterNoises(){
-    if (isometric.totalCharacters <= 0) return;
+    if (isometric.scene.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = randomInt(200, 300);
 
-    final index = randomInt(0, isometric.totalCharacters);
-    final character = isometric.characters[index];
+    final index = randomInt(0, isometric.scene.totalCharacters);
+    final character = isometric.scene.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:

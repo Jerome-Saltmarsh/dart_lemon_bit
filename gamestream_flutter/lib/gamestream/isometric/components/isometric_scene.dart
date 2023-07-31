@@ -3,27 +3,34 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
 class IsometricScene {
 
+  final gameObjects = <GameObject>[];
+  final projectiles = <Projectile>[];
+  final Isometric isometric;
+  late final Engine engine;
+
+  var totalProjectiles = 0;
+  var bakeStackTotal = 0;
+  var bakeStackIndex = Uint16List(100000);
+  var bakeStackBrightness = Uint8ClampedList(100000);
+  var bakeStackStartIndex = Uint16List(10000);
+  var bakeStackTorchIndex = Uint16List(10000);
+  var bakeStackTorchSize = Uint16List(10000);
+  var bakeStackTorchTotal = 0;
+  var totalCharacters = 0;
+  var bakeStackRecording = true;
+  var totalActiveLights = 0;
   var _ambientAlpha = 0;
-
-  int get ambientAlpha => _ambientAlpha;
-
-  set ambientAlpha(int value){
-    final clampedValue = value.clamp(0, 255);
-
-    if (clampedValue == _ambientAlpha)
-      return;
-
-    ambientResetIndex = 0;
-    _ambientAlpha = clampedValue;
-    ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
-  }
-
   late var ambientRGB = getRGB(ambientColor);
   var ambientColor = Color.fromRGBO(31, 1, 86, 0.5).value;
   var ambientResetIndex = 0;
@@ -62,7 +69,7 @@ class IsometricScene {
   late var interpolationLength = 6;
 
   final nodesChangedNotifier = Watch(0);
-
+  final characters = <Character>[];
 
   late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Quad, onChanged: (EaseType easeType){
     interpolations = interpolateEaseType(
@@ -76,6 +83,8 @@ class IsometricScene {
     easeType: interpolationEaseType.value,
   );
 
+  IsometricScene(this.isometric);
+
   void setInterpolationLength(int value){
     if (value < 1) return;
     if (interpolationLength == value) return;
@@ -86,8 +95,18 @@ class IsometricScene {
     );
   }
 
-  // FUNCTIONS
+  int get ambientAlpha => _ambientAlpha;
 
+  set ambientAlpha(int value){
+    final clampedValue = value.clamp(0, 255);
+
+    if (clampedValue == _ambientAlpha)
+      return;
+
+    ambientResetIndex = 0;
+    _ambientAlpha = clampedValue;
+    ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
+  }
 
   void rainStart(){
     final rows = totalRows;
@@ -609,6 +628,1083 @@ class IsometricScene {
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
     nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
+  }
+
+  void updateCharacterColors(){
+    for (var i = 0; i <  totalCharacters; i++){
+      final character = characters[i];
+      character.color =  getRenderColorPosition(character);
+    }
+  }
+
+  Character getCharacterInstance(){
+    if (characters.length <= totalCharacters){
+      characters.add(Character());
+    }
+    return characters[totalCharacters];
+  }
+
+  void applyEmissionsCharacters() {
+    for (var i = 0; i < totalCharacters; i++) {
+      final character = characters[i];
+      if (!character.allie) continue;
+
+      if (character.weaponType == WeaponType.Staff){
+        // emitLightColoredAtPosition(
+        //   character,
+        // );
+      } else {
+        applyVector3EmissionAmbient(
+          character,
+          alpha: isometric.lighting.emissionAlphaCharacter,
+        );
+      }
+    }
+  }
+
+  void applyVector3EmissionAmbient(Position v, {
+    required int alpha,
+    double intensity = 1.0,
+  }){
+    assert (intensity >= 0);
+    assert (intensity <= 1);
+    assert (alpha >= 0);
+    assert (alpha <= 255);
+    if (!inBoundsPosition(v)) return;
+    emitLightAmbient(
+      index: getIndexPosition(v),
+      alpha: alpha,
+    );
+  }
+
+  void emitLightAmbient({
+    required int index,
+    required int alpha,
+  }){
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final engine = isometric.engine;
+
+    if (!bakeStackRecording){
+
+      final padding = isometric.interpolationPadding;
+      final rx = getIndexRenderX(index);
+      if (rx < engine.Screen_Left - padding) return;
+      if (rx > engine.Screen_Right + padding) return;
+      final ry = getIndexRenderY(index);
+      if (ry < engine.Screen_Top - padding) return;
+      if (ry > engine.Screen_Bottom + padding) return;
+    }
+
+    totalActiveLights++;
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    var vxStart = -1;
+    var vxEnd = 1;
+    var vyStart = -1;
+    var vyEnd = 1;
+
+    if (!isNodeTypeTransparent(nodeType)){
+      if (const [
+        NodeOrientation.Half_North,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vxStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_South,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vxEnd = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_East,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vyStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_West,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vyEnd = 0;
+      }
+    }
+
+    for (var vz = -1; vz <= 1; vz++){
+      for (var vx = vxStart; vx <= vxEnd; vx++){
+        for (var vy = vyStart; vy <= vyEnd; vy++){
+          shootLightTreeAmbient(
+            row: row,
+            column: column,
+            z: z,
+            brightness: 7,
+            alpha: alpha,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+          );
+        }
+      }
+    }
+  }
+
+
+  void emitLightColored({
+    required int index,
+    required int color,
+    required double intensity,
+  }){
+    if (index < 0) return;
+    if (index >= totalNodes) return;
+
+    final engine = isometric.engine;
+
+    final padding = isometric.interpolationPadding;
+    final rx = getIndexRenderX(index);
+    if (rx < engine.Screen_Left - padding) return;
+    if (rx > engine.Screen_Right + padding) return;
+    final ry = getIndexRenderY(index);
+    if (ry < engine.Screen_Top - padding) return;
+    if (ry > engine.Screen_Bottom + padding) return;
+    totalActiveLights++;
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    var vxStart = -1;
+    var vxEnd = 1;
+    var vyStart = -1;
+    var vyEnd = 1;
+
+    if (!isNodeTypeTransparent(nodeType)){
+      if (const [
+        NodeOrientation.Half_North,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vxStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_South,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vxEnd = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_East,
+        NodeOrientation.Corner_North_East,
+        NodeOrientation.Corner_South_East
+      ].contains(nodeOrientation)) {
+        vyStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_West,
+        NodeOrientation.Corner_South_West,
+        NodeOrientation.Corner_North_West
+      ].contains(nodeOrientation)) {
+        vyEnd = 0;
+      }
+    }
+
+    for (var vz = -1; vz <= 1; vz++){
+      for (var vx = vxStart; vx <= vxEnd; vx++){
+        for (var vy = vyStart; vy <= vyEnd; vy++){
+          shootLightTreeColor(
+            row: row,
+            column: column,
+            z: z,
+            brightness: 7,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+            color: color,
+            intensity: intensity,
+          );
+        }
+      }
+    }
+  }
+
+  void shootLightTreeColor({
+    required int row,
+    required int column,
+    required int z,
+    required int brightness,
+    required int color,
+    required double intensity,
+    int vx = 0,
+    int vy = 0,
+    int vz = 0,
+
+  }){
+    // assert (brightness < interpolationLength);
+    var velocity = vx.abs() + vy.abs() + vz.abs();
+
+    brightness -= velocity;
+    if (brightness < 0) {
+      return;
+    }
+
+    if (vx != 0) {
+      row += vx;
+      if (row < 0 || row >= totalRows)
+        return;
+    }
+
+    if (vy != 0) {
+      column += vy;
+      if (column < 0 || column >= totalColumns)
+        return;
+    }
+
+    if (vz != 0) {
+      z += vz;
+      if (z < 0 || z >= totalZ)
+        return;
+    }
+
+    const padding = Node_Size + Node_Size_Half;
+
+    final index = (z * area) + (row * totalColumns) + column;
+
+    final renderX = getIndexRenderX(index);
+
+    if (renderX < isometric.engine.Screen_Left - padding && (vx < 0 || vy > 0))
+      return;
+
+    if (renderX > isometric.engine.Screen_Right + padding && (vx > 0 || vy < 0))
+      return;
+
+    final renderY = getIndexRenderY(index);
+
+    if (renderY < isometric.engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+      return;
+
+    if (renderY > isometric.engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+      return;
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    if (!isNodeTypeTransparent(nodeType)) {
+      if (nodeOrientation == NodeOrientation.Solid)
+        return;
+
+      if (vx < 0) {
+        if (const [
+          NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_South,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_North,
+        ].contains(nodeOrientation)) vx = 0;
+      } else if (vx > 0) {
+        if (const [
+          NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_North,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_South,
+        ].contains(nodeOrientation)) vx = 0;
+      }
+
+      if (vy < 0) {
+        if (const [
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Slope_East,
+        ].contains(nodeOrientation)) vy = 0;
+      } else if (vy > 0) {
+        if (const [
+          NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Slope_East,
+        ].contains(nodeOrientation)) return;
+
+        if (const [
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) vy = 0;
+      }
+
+      if (vz < 0) {
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+        ].contains(nodeOrientation)) {
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+          NodeOrientation.Half_Vertical_Center,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
+      }
+
+      if (vz > 0) {
+        if (const [NodeOrientation.Half_Vertical_Top]
+            .contains(nodeOrientation)) {
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_Vertical_Top,
+          NodeOrientation.Half_Vertical_Center,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
+      }
+    }
+
+    applyColor(
+      index: index,
+      intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
+      color: color,
+    );
+
+    if (const [
+      NodeType.Grass_Long,
+      NodeType.Tree_Bottom,
+      NodeType.Tree_Top,
+    ].contains(nodeType)) {
+      brightness--;
+      if (brightness >= interpolationLength)
+        return;
+    }
+
+    velocity = vx.abs() + vy.abs() + vz.abs();
+
+    if (velocity == 0)
+      return;
+
+    if (vx.abs() + vy.abs() + vz.abs() == 3) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: vx,
+        vy: vy,
+        vz: vz,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+    if (vx.abs() + vy.abs() == 2) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: vx,
+        vy: vy,
+        vz: 0,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+    if (vx.abs() + vz.abs() == 2) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: vx,
+        vy: 0,
+        vz: vz,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+    if (vy.abs() + vz.abs() == 2) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: 0,
+        vy: vy,
+        vz: vz,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+    if (vy != 0) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: 0,
+        vy: vy,
+        vz: 0,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+    if (vx != 0) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: vx,
+        vy: 0,
+        vz: 0,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+    if (vz != 0) {
+      shootLightTreeColor(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        vx: 0,
+        vy: 0,
+        vz: vz,
+        color: color,
+        intensity: intensity,
+      );
+    }
+
+  }
+
+
+  void emitLightColoredAtPosition(Position v, {
+    required int color,
+    double intensity = 1.0,
+  }){
+    if (!inBoundsPosition(v)) return;
+    emitLightColored(
+      index: getIndexPosition(v),
+      color: color,
+      intensity: intensity,
+    );
+  }
+
+  void applyEmissionBakeStack() {
+
+    final ambient = ambientAlpha;
+
+    final alpha = interpolate(
+      ambient,
+      0,
+      isometric.lighting.torchEmissionIntensityAmbient,
+    ).toInt();
+
+    for (var i = 0; i < bakeStackTorchTotal; i++){
+      final index = bakeStackTorchIndex[i];
+
+      if (!indexOnscreen(index, padding: (Node_Size * 6)))
+        continue;
+
+      final start = bakeStackStartIndex[i];
+      final size = bakeStackTorchSize[i];
+      final end = start + size;
+
+      for (var j = start; j < end; j++){
+        final brightness = bakeStackBrightness[j];
+        final index = bakeStackIndex[j];
+        final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+        applyAmbient(
+          index: index,
+          alpha: interpolate(ambient, alpha, intensity).toInt(),
+        );
+      }
+    }
+  }
+
+  void applyEmissionEditorSelectedNode() {
+    if (!isometric.editMode) return;
+    final editor = isometric.editor;
+    if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
+      emitLightAmbient(
+        index:  editor.nodeSelectedIndex.value,
+        alpha: 0,
+      );
+    }
+  }
+
+  void shootLightTreeAmbient({
+    required int row,
+    required int column,
+    required int z,
+    required int brightness,
+    required int alpha,
+    required int vx,
+    required int vy,
+    required int vz,
+  }){
+    // assert (brightness >= 0);
+    if (brightness < 0)
+      return;
+
+    while (true) {
+      var velocity = vx.abs() + vy.abs() + vz.abs();
+      brightness -= velocity;
+
+      if (brightness < 0)
+        return;
+
+      if (vx != 0) {
+        row += vx;
+        if (row < 0 || row >= totalRows)
+          return;
+      }
+
+      if (vy != 0) {
+        column += vy;
+        if (column < 0 || column >= totalColumns)
+          return;
+      }
+
+      if (vz != 0) {
+        z += vz;
+        if (z < 0 || z >= totalZ)
+          return;
+      }
+
+      const padding = Node_Size + Node_Size_Half;
+
+      final index = (z * area) + (row * totalColumns) + column;
+
+      if (!bakeStackRecording){
+        final renderX = getIndexRenderX(index);
+        final engine = isometric.engine;
+
+        if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
+          return;
+
+        if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
+          return;
+
+        final renderY = getIndexRenderY(index);
+
+        if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+          return;
+
+        if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+          return;
+      }
+
+
+      final nodeType = nodeTypes[index];
+      final nodeOrientation = nodeOrientations[index];
+
+      if (!isNodeTypeTransparent(nodeType)) {
+        if (nodeOrientation == NodeOrientation.Solid)
+          return;
+
+        if (vx < 0) {
+          if (const [
+            NodeOrientation.Half_South,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Slope_South,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_North,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Slope_North,
+          ].contains(nodeOrientation)) vx = 0;
+        } else if (vx > 0) {
+          if (const [
+            NodeOrientation.Half_North,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Slope_North,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_South,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Slope_South,
+          ].contains(nodeOrientation)) vx = 0;
+        }
+
+        if (vy < 0) {
+          if (const [
+            NodeOrientation.Half_West,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Slope_West,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_East,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Slope_East,
+          ].contains(nodeOrientation)) vy = 0;
+        } else if (vy > 0) {
+          if (const [
+            NodeOrientation.Half_East,
+            NodeOrientation.Corner_South_East,
+            NodeOrientation.Corner_North_East,
+            NodeOrientation.Slope_East,
+          ].contains(nodeOrientation)) return;
+
+          if (const [
+            NodeOrientation.Half_West,
+            NodeOrientation.Corner_South_West,
+            NodeOrientation.Corner_North_West,
+            NodeOrientation.Slope_West,
+          ].contains(nodeOrientation)) vy = 0;
+        }
+
+        if (vz < 0) {
+          if (const [
+            NodeOrientation.Half_Vertical_Bottom,
+          ].contains(nodeOrientation)) {
+            return;
+          }
+
+          if (const [
+            NodeOrientation.Half_Vertical_Bottom,
+            NodeOrientation.Half_Vertical_Center,
+          ].contains(nodeOrientation)) {
+            vz = 0;
+          }
+        }
+
+        if (vz > 0) {
+          if (const [NodeOrientation.Half_Vertical_Top]
+              .contains(nodeOrientation)) {
+            return;
+          }
+
+          if (const [
+            NodeOrientation.Half_Vertical_Top,
+            NodeOrientation.Half_Vertical_Center,
+          ].contains(nodeOrientation)) {
+            vz = 0;
+          }
+        }
+      }
+
+      final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+
+      applyAmbient(
+        index: index,
+        alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
+      );
+
+      if (bakeStackRecording) {
+        bakeStackIndex[bakeStackTotal] = index;
+        bakeStackBrightness[bakeStackTotal] = brightness;
+        bakeStackTotal++;
+      }
+
+      if (const [
+        NodeType.Grass_Long,
+        NodeType.Tree_Bottom,
+        NodeType.Tree_Top,
+      ].contains(nodeType)) {
+        brightness--;
+        if (brightness < 0)
+          return;
+      }
+
+      velocity = vx.abs() + vy.abs() + vz.abs();
+
+      if (velocity <= 0)
+        return;
+
+      if (velocity > 1)
+        break;
+    }
+    if (vx.abs() + vy.abs() + vz.abs() == 3) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: vy,
+        vz: vz,
+      );
+    }
+
+    if (vx.abs() + vy.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: vy,
+        vz: 0,
+      );
+    }
+
+    if (vx.abs() + vz.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: 0,
+        vz: vz,
+      );
+    }
+
+    if (vy.abs() + vz.abs() == 2) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: 0,
+        vy: vy,
+        vz: vz,
+      );
+    }
+
+    if (vy != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: 0,
+        vy: vy,
+        vz: 0,
+      );
+    }
+
+    if (vx != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: vx,
+        vy: 0,
+        vz: 0,
+      );
+    }
+
+    if (vz != 0) {
+      shootLightTreeAmbient(
+        row: row,
+        column: column,
+        z: z,
+        brightness: brightness,
+        alpha: alpha,
+        vx: 0,
+        vy: 0,
+        vz: vz,
+      );
+    }
+  }
+
+  bool indexOnscreen(int index, {double padding = Node_Size}){
+    final x = getIndexRenderX(index);
+    final engine = isometric.engine;
+    if (x < engine.Screen_Left - padding || x > engine.Screen_Right + padding)
+      return false;
+
+    final y = getIndexRenderY(index);
+    return y > engine.Screen_Top - padding && y < engine.Screen_Bottom + padding;
+  }
+
+  void recordBakeStack() {
+    print('recordBakeStack()');
+    bakeStackRecording = true;
+    for (var i = 0; i < nodeLightSourcesTotal; i++){
+      final nodeIndex = nodeLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+      final alpha = interpolate(
+        ambientAlpha,
+        0,
+        1.0,
+      ).toInt();
+
+      final currentSize = bakeStackTotal;
+
+      switch (nodeType){
+        case NodeType.Torch:
+          emitLightAmbient(
+            index: nodeIndex,
+            alpha: alpha,
+          );
+          break;
+      }
+
+      bakeStackTorchIndex[bakeStackTorchTotal] = nodeIndex;
+      bakeStackStartIndex[bakeStackTorchTotal] = currentSize;
+      bakeStackTorchSize[bakeStackTorchTotal] = bakeStackTotal - currentSize;
+      bakeStackTorchTotal++;
+    }
+
+    bakeStackRecording = false;
+    print('recordBakeStack() finished recording total: ${bakeStackTotal}');
+  }
+
+
+  void applyEmissions(){
+    totalActiveLights = 0;
+    applyEmissionsScene();
+    applyEmissionGameObjects();
+    applyEmissionsProjectiles();
+    applyEmissionsParticles();
+    applyEmissionEditorSelectedNode();
+    updateCharacterColors();
+  }
+
+  void applyEmissionsScene() {
+    applyEmissionsColoredLightSources();
+    if (bakeStackRecording){
+      recordBakeStack();
+    } else {
+      applyEmissionBakeStack();
+    }
+
+    applyEmissionsCharacters();
+  }
+
+  void applyEmissionsProjectiles() {
+    for (var i = 0; i < totalProjectiles; i++){
+      applyProjectileEmission(projectiles[i]);
+    }
+  }
+
+  void applyProjectileEmission(Projectile projectile) {
+    if (projectile.type == ProjectileType.Orb) {
+      //  emitLightColoredAtPosition(projectile,
+      //   hue: 100,
+      //   saturation: 1,
+      //   value: 1,
+      //   alpha: 20,
+      // );
+      return;
+    }
+    if (projectile.type == ProjectileType.Bullet) {
+      applyVector3EmissionAmbient(projectile,
+        alpha: 50,
+      );
+      return;
+    }
+    if (projectile.type == ProjectileType.Fireball) {
+      //  emitLightColoredAtPosition(projectile,
+      //   hue: 167,
+      //   alpha: 50,
+      //   saturation: 1,
+      //   value: 1,
+      // );
+      return;
+    }
+    if (projectile.type == ProjectileType.Arrow) {
+      applyVector3EmissionAmbient(projectile,
+        alpha: 50,
+      );
+      return;
+    }
+    if (projectile.type == ProjectileType.FrostBall) {
+      //  emitLightColoredAtPosition(
+      //    projectile,
+      //    hue: 203,
+      //    saturation: 43,
+      //    value: 100,
+      //    alpha: 80,
+      //
+      // );
+      return;
+    }
+  }
+
+  void applyEmissionGameObjects() {
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+      switch (gameObject.colorType) {
+        case EmissionType.None:
+          continue;
+        case EmissionType.Color:
+        // TODO
+        // emitLightColoredAtPosition(
+        //   gameObject,
+        //   hue: gameObject.emissionHue,
+        //   saturation: gameObject.emissionSat,
+        //   value: gameObject.emissionVal,
+        //   alpha: gameObject.emissionAlp,
+        //   intensity: gameObject.emissionIntensity,
+        // );
+          continue;
+        case EmissionType.Ambient:
+          applyVector3EmissionAmbient(gameObject,
+            alpha: gameObject.emissionAlp,
+            intensity: gameObject.emissionIntensity,
+          );
+          continue;
+      }
+    }
+  }
+
+  void applyEmissionsParticles() {
+    final particles = isometric.particles.particles;
+    final length = particles.length;
+    for (var i = 0; i < length; i++) {
+      final particle = particles[i];
+      if (!particle.active) continue;
+      if (!particle.emitsLight) continue;
+      emitLightColored(
+        index: getIndexPosition(particle),
+        color: particle.emissionColor,
+        intensity: particle.emissionIntensity,
+      );
+    }
+  }
+
+  void updateProjectiles() {
+    for (var i = 0; i < totalProjectiles; i++) {
+      final projectile = projectiles[i];
+      if (projectile.type == ProjectileType.Rocket) {
+        isometric.particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        isometric.projectShadow(projectile);
+        continue;
+      }
+      if (projectile.type == ProjectileType.Fireball) {
+        isometric.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        continue;
+      }
+      if (projectile.type == ProjectileType.Orb) {
+        isometric.particles.spawnParticleOrbShard(
+          x: projectile.x,
+          y: projectile.y,
+          z: projectile.z,
+          angle: randomAngle(),
+        );
+      }
+    }
+  }
+
+  void removeGameObjectById(int id )=>
+      gameObjects.removeWhere((element) => element.id == id);
+
+  /// TODO Optimize
+  void updateGameObjects() {
+    for (final gameObject in gameObjects){
+      if (!gameObject.active) continue;
+      gameObject.update();
+    }
+  }
+
+  void applyEmissionsColoredLightSources() {
+
+    final colors = isometric.colors;
+    final torchEmissionIntensityColored = isometric.lighting.torchEmissionIntensityColored;
+
+    for (var i = 0; i < nodeLightSourcesTotal; i++){
+      final nodeIndex = nodeLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+
+      switch (nodeType) {
+        case NodeType.Torch:
+          break;
+        case NodeType.Fireplace:
+          emitLightColored(
+            index: nodeIndex,
+            color: colors.orange,
+            intensity: torchEmissionIntensityColored,
+          );
+          break;
+        case NodeType.Torch_Blue:
+          emitLightColored(
+            index: nodeIndex,
+            color: colors.blue1,
+            intensity: torchEmissionIntensityColored,
+          );
+          break;
+        case NodeType.Torch_Red:
+          emitLightColored(
+            index: nodeIndex,
+            color: colors.red1,
+            intensity: torchEmissionIntensityColored,
+          );
+          break;
+      }
+    }
+  }
+
+  GameObject findOrCreateGameObject(int id) {
+    var instance = findGameObjectById(id);
+    if (instance == null) {
+      instance = GameObject(id);
+      gameObjects.add(instance);
+    }
+    return instance;
+  }
+
+  GameObject? findGameObjectById(int id) {
+    for (final gameObject in gameObjects) {
+      if (gameObject.id == id) return gameObject;
+    }
+    return null;
   }
 }
 

@@ -13,7 +13,7 @@ class RendererGameObjects extends RenderGroup {
   RendererGameObjects(super.isometric);
 
   @override
-  int getTotal() => isometric.gameObjects.length;
+  int getTotal() => isometric.scene.gameObjects.length;
 
   @override
   void renderFunction() {
@@ -98,12 +98,12 @@ class RendererGameObjects extends RenderGroup {
 
   @override
   void updateFunction() {
-    gameObject = isometric.gameObjects[index];
+    gameObject = isometric.scene.gameObjects[index];
 
     while (!gameObject.active || !isometric.isOnscreen(gameObject) || !isometric.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
-      gameObject = isometric.gameObjects[index];
+      gameObject = isometric.scene.gameObjects[index];
     }
 
     order = gameObject.sortOrder;

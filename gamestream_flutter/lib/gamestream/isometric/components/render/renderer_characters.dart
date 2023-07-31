@@ -15,8 +15,8 @@ class RendererCharacters extends RenderGroup {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    final totalCharacters = isometric.totalCharacters;
-    final characters = isometric.characters;
+    final totalCharacters = isometric.scene.totalCharacters;
+    final characters = isometric.scene.characters;
 
     while (index < totalCharacters){
       character = characters[index];
@@ -28,7 +28,7 @@ class RendererCharacters extends RenderGroup {
   }
 
   @override
-  int getTotal() => isometric.totalCharacters;
+  int getTotal() => isometric.scene.totalCharacters;
 
   void renderCurrentCharacter(){
 
