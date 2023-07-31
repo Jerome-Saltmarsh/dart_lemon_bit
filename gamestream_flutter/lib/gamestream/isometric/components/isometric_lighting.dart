@@ -2,7 +2,7 @@
 import 'package:lemon_math/src.dart';
 
 class Lighting {
-  var emissionAlphaCharacter = 50;
+  var emissionAlphaCharacter = 125;
   var torchEmissionIntensityColored = 0.0;
   var torchEmissionIntensityAmbient = 1.0;
   var torchEmissionStart = 0.8;

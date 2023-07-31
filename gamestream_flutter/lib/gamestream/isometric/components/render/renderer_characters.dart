@@ -389,6 +389,7 @@ class RendererCharacters extends RenderGroup {
 
     const size = 256.0;
     const scale = 0.32;
+    final frame = character.animationFrame;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
 
@@ -397,16 +398,19 @@ class RendererCharacters extends RenderGroup {
     Image imageShadow;
 
     if (character.running) {
-      srcX = (character.animationFrame % 8) * size;
+      srcX = (frame % 8) * size;
       image = isometric.images.kid_running;
       imageShadow = isometric.images.kid_running_shadow;
     } else {
       srcX = 0;
       image = isometric.images.kid_idle;
       imageShadow = isometric.images.kid_idle_shadow;
+      if (frame ~/ 8 % 2 == 0){
+        srcX = (frame % 8) * size;
+      } else {
+        srcX = (7 - (frame % 8)) * size;
+      }
     }
-
-    // isometric.render.circle32(character.x, character.y, character.z);
 
     engine.renderSprite(
       image: imageShadow,

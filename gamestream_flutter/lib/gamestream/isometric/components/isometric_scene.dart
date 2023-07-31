@@ -152,6 +152,8 @@ class IsometricScene {
 
   void update(){
     jobBatchResetNodeColorsToAmbient();
+    updateProjectiles();
+    updateGameObjects();
   }
 
   void jobBatchResetNodeColorsToAmbient() {
@@ -631,18 +633,15 @@ class IsometricScene {
   void applyEmissionsCharacters() {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
-      if (!character.allie) continue;
+      // if (!character.allie) continue;
 
-      if (character.weaponType == WeaponType.Staff){
-        // emitLightColoredAtPosition(
-        //   character,
-        // );
-      } else {
-        applyVector3EmissionAmbient(
-          character,
-          alpha: isometric.lighting.emissionAlphaCharacter,
-        );
-      }
+      if (character.characterType == CharacterType.Zombie)
+        continue;
+
+      applyVector3EmissionAmbient(
+        character,
+        alpha: isometric.lighting.emissionAlphaCharacter,
+      );
     }
   }
 

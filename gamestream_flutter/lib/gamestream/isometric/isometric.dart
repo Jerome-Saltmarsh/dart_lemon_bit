@@ -18,7 +18,6 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
-import 'package:golden_ratio/constants.dart';
 
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas_nodes.dart';
@@ -73,87 +72,46 @@ class Isometric {
   late final IsometricUI ui;
 
   var framesPerSmokeEmission = 10;
-
   var updateAmbientAlphaAccordingToTimeEnabled = true;
-
   var totalAmbientOffscreen = 0;
-
   var totalAmbientOnscreen = 0;
-
   var renderResponse = true;
-
   var renderCursorEnable = true;
-
   var clearErrorTimer = -1;
-
   var nextEmissionSmoke = 0;
-
   var cursorType = IsometricCursorType.Hand;
-
   var srcXRainFalling = 6640.0;
-
   var srcXRainLanding = 6739.0;
-
   var messageStatusDuration = 0;
-
   var areaTypeVisibleDuration = 0;
-
   var nextLightingUpdate = 0;
-
   var interpolationPadding = 0.0;
-
   var nodesRaycast = 0;
-
   var windLine = 0;
-
   final lighting = Lighting();
-
   final colors = IsometricColors();
-
   final imagesLoadedCompleted = Completer();
-
   final textEditingControllerMessage = TextEditingController();
-
   final textFieldMessage = FocusNode();
-
   final panelTypeKey = <int, GlobalKey>{};
-
   final playerTextStyle = TextStyle(color: Colors.white);
-
   final timeVisible = Watch(true);
-
   final windowOpenMenu = WatchBool(false);
-
   final operationStatus = Watch(OperationStatus.None);
-
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
-
   final serverFPS = Watch(0);
-
   final images = Images();
-
   final options = IsometricOptions();
-
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-
   final imagesLoaded = Future.value(false);
-
   final sceneEditable = Watch(false);
-
   final sceneName = Watch<String?>(null);
-
   final gameRunning = Watch(true);
-
   final weatherBreeze = Watch(false);
-
   final minutes = Watch(0);
-
   final lightningType = Watch(LightningType.Off);
-
   final watchTimePassing = Watch(false);
-
   final sceneUnderground = Watch(false);
-
   final animation = IsometricAnimation();
 
   late final Map<int, dartUI.Image> mapGameObjectTypeToImage;
@@ -163,41 +121,23 @@ class Isometric {
   }, onChanged: ui.onVisibilityChangedMessageBox);
 
   late final edit = Watch(false, onChanged:  onChangedEdit);
-
   late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
-
   late final raining = Watch(false, onChanged: onChangedRaining);
-
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-
   late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
-
   late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
-
   late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
-
   late final seconds = Watch(0, onChanged:  onChangedSeconds);
-
   late final hours = Watch(0, onChanged:  onChangedHour);
-
   late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
-
   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
-
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
-
   late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
-
   late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
-
   late final io = GameIO(this);
-
   late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
-
   late final Engine engine;
-
   late final IsometricCompositor compositor;
-
   late final IsometricRender render;
 
   bool get playMode => !editMode;
@@ -225,7 +165,6 @@ class Isometric {
 
     totalAmbientOffscreen = 0;
     totalAmbientOnscreen = 0;
-
     camera.update();
     particles.update();
     compositor.render3D();
@@ -234,20 +173,7 @@ class Isometric {
     debug.render();
     game.value.drawCanvas(canvas, size);
     rendersSinceUpdate.value++;
-
-    engine.renderSprite(
-        image: images.template_spinning,
-        srcX: (256.0 * animation.frame8),
-        srcY: 0,
-        srcWidth: 256,
-        srcHeight: 256,
-        dstX: spinningPosition.renderX,
-        dstY: spinningPosition.renderY,
-        scale: 0.4,
-    );
   }
-
-  final spinningPosition = Position(x: 1500, y: 1500, z: 25);
 
   void update(){
 
@@ -270,8 +196,7 @@ class Isometric {
     player.update();
     lighting.update();
 
-    scene.updateProjectiles();
-    scene.updateGameObjects();
+
     readPlayerInputEdit();
 
     io.applyKeyboardInputToUpdateBuffer(this);
@@ -692,12 +617,7 @@ class Isometric {
   }
 
   void onChangedAccount(Account? account) {
-    // if (account == null) return;
-    // final flag = 'subscription_status_${account.userId}';
-    // if (storage.contains(flag)){
-    //   final storedSubscriptionStatusString = storage.get<String>(flag);
-    //   final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
-    // }
+
   }
 
   void updateClearErrorTimer() {
