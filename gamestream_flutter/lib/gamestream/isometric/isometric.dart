@@ -886,7 +886,7 @@ class Isometric {
   }
 
   void renderCircleAroundPlayer({required double radius}) =>
-      render.renderCircleOutlineAtPosition(
+      render.circleOutlineAtPosition(
         position: player.position,
         radius: radius,
       );
@@ -919,11 +919,11 @@ class Isometric {
         y: editor.gameObject.value!.renderY,
         color: Colors.white,
       );
-      render.renderCircleOutlineAtPosition(position: editor.gameObject.value!, radius: 50);
+      render.circleOutlineAtPosition(position: editor.gameObject.value!, radius: 50);
       return;
     }
 
-    render.renderEditWireFrames();
+    render.editWireFrames();
     renderMouseWireFrame();
   }
 
@@ -945,7 +945,7 @@ class Isometric {
   }
 
   void renderMouseWireFrame() {
-    io.mouseRaycast(render.renderWireFrameBlue);
+    io.mouseRaycast(render.wireFrameBlue);
   }
 
   void renderPlayerAimTargetNameText(){
@@ -1119,7 +1119,7 @@ class Isometric {
     final mouseTargetName = player.mouseTargetName.value;
     if (mouseTargetName == null) return;
     render.renderText(
-        text: mouseTargetName,
+        value: mouseTargetName,
         x: player.aimTargetPosition.renderX,
         y: player.aimTargetPosition.renderY - 55);
   }

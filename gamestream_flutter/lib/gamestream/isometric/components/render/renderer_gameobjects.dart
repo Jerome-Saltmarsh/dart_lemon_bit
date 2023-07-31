@@ -53,11 +53,11 @@ class RendererGameObjects extends RenderGroup {
 
 
     if (gameObject.maxHealth > 0) {
-      isometric.render.renderHealthBarPosition(
+      isometric.render.healthBarPosition(
           position: gameObject,
           percentage: gameObject.healthPercentage,
         );
-      isometric.render.renderTextPosition(gameObject, formatPercentage(gameObject.healthPercentage));
+      isometric.render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     }
 
     //

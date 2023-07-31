@@ -130,7 +130,11 @@ class IsometricNetwork {
     if (regionValue == null) {
       throw Exception('region is null');
     }
-    connectToRegion(regionValue, '${gameType.index} $message');
+    try {
+      connectToRegion(regionValue, '${gameType.index} $message');
+    } catch(error) {
+      print(error);
+    }
   }
 
 

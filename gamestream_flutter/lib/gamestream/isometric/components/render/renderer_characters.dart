@@ -34,11 +34,11 @@ class RendererCharacters extends RenderGroup {
   void renderCurrentCharacter(){
 
     if (!character.allie && isometric.options.renderHealthBarEnemies) {
-      isometric.render.renderCharacterHealthBar(character);
+      isometric.render.characterHealthBar(character);
     }
 
     if (character.allie && isometric.options.renderHealthBarAllies) {
-      isometric.render.renderCharacterHealthBar(character);
+      isometric.render.characterHealthBar(character);
     }
 
     if (character.spawning) {
@@ -409,6 +409,8 @@ class RendererCharacters extends RenderGroup {
     //   srcX:
     // );
 
+    isometric.render.circle32(character.x, character.y, character.z);
+
     engine.renderSprite(
       image: image,
       srcX: srcX,
@@ -419,6 +421,7 @@ class RendererCharacters extends RenderGroup {
       dstY: character.renderY,
       scale: scale,
       color: character.color,
+      anchorY: 0.7
     );
   }
 }

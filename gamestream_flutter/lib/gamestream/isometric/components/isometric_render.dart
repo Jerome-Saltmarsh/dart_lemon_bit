@@ -1,6 +1,4 @@
 
-import 'package:gamestream_flutter/common/src/isometric/node_orientation.dart';
-import 'package:gamestream_flutter/common/src/isometric/node_size.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -15,29 +13,27 @@ class IsometricRender {
 
   IsometricRender(this.isometric);
 
-
-
-  void renderTextPosition(Position v3, dynamic text, {double offsetY = 0}){
+  void textPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(
-      text: text.toString(),
+      value: text.toString(),
       x: v3.renderX,
       y: v3.renderY + offsetY,
     );
   }
 
-  void renderTextXYZ({
+  void textXYZ({
     required double x,
     required double y,
     required double z,
     required dynamic text,
   }) =>
       renderText(
-        text: text.toString(),
+        value: text.toString(),
         x: getRenderX(x, y, z),
         y: getRenderY(x, y, z),
       );
 
-  void renderWireFrameBlue(
+  void wireFrameBlue(
       int z,
       int row,
       int column,
@@ -55,7 +51,7 @@ class IsometricRender {
     return;
   }
 
-  void renderWireFrameRed(int row, int column, int z) {
+  void wireFrameRed(int row, int column, int z) {
     isometric.engine.renderSprite(
       image: isometric.images.atlas_nodes,
       dstX: getRenderXOfRowAndColumn(row, column),
@@ -68,7 +64,7 @@ class IsometricRender {
     );
   }
 
-  void renderCircle32(double x, double y, double z){
+  void circle32(double x, double y, double z){
     isometric.engine.renderSprite(
       image: isometric.images.atlas_gameobjects,
       srcX: 16,
@@ -80,14 +76,14 @@ class IsometricRender {
     );
   }
 
-  void renderCharacterHealthBar(Character character) =>
-      renderHealthBarPosition(
+  void characterHealthBar(Character character) =>
+      healthBarPosition(
         position: character,
         percentage: character.health,
         color: character.color,
       );
 
-  void renderHealthBarPosition({
+  void healthBarPosition({
     required Position position,
     required double percentage,
     int color = 1,
@@ -103,20 +99,20 @@ class IsometricRender {
     color: color,
   );
 
-  void renderEditWireFrames() {
+  void editWireFrames() {
     for (var z = 0; z < isometric.editor.z; z++) {
-      isometric.render.renderWireFrameBlue(z, isometric.editor.row, isometric.editor.column);
+      isometric.render.wireFrameBlue(z, isometric.editor.row, isometric.editor.column);
     }
-    isometric.render.renderWireFrameRed(isometric.editor.row, isometric.editor.column, isometric.editor.z);
+    isometric.render.wireFrameRed(isometric.editor.row, isometric.editor.column, isometric.editor.z);
   }
 
-  void renderText({required String text, required double x, required double y}){
+  void renderText({required String value, required double x, required double y}){
     const charWidth = 4.5;
-    isometric.engine.writeText(text, x - charWidth * text.length, y);
+    isometric.engine.writeText(value, x - charWidth * value.length, y);
   }
 
 
-  void renderBarBlue(double x, double y, double z, double percentage) {
+  void barBlue(double x, double y, double z, double percentage) {
     isometric.engine.renderSprite(
       image: isometric.images.atlas_gameobjects,
       dstX: getRenderX(x, y, z) - 26,
@@ -130,10 +126,10 @@ class IsometricRender {
     );
   }
 
-  void renderShadowBelowPosition(Position position) =>
-      renderShadowBelowXYZ(position.x, position.y, position.z);
+  void shadowBelowPosition(Position position) =>
+      shadowBelowXYZ(position.x, position.y, position.z);
 
-  void renderShadowBelowXYZ(double x, double y, double z){
+  void shadowBelowXYZ(double x, double y, double z){
     if (z < Node_Height) return;
     final scene = isometric.scene;
     if (z >= scene.lengthZ) return;
@@ -158,7 +154,7 @@ class IsometricRender {
     );
   }
 
-  void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
+  void line(double x1, double y1, double z1, double x2, double y2, double z2) =>
       isometric.engine.renderLine(
         getRenderX(x1, y1, z1),
         getRenderY(x1, y1, z1),
@@ -166,11 +162,11 @@ class IsometricRender {
         getRenderY(x2, y2, z2),
       );
 
-  void renderCircleOutlineAtPosition({
+  void circleOutlineAtPosition({
     required Position position,
     required double radius,
     int sections = 12,
-  }) => renderCircleOutline(
+  }) => circleOutline(
     position.x,
     position.y,
     position.z,
@@ -178,7 +174,7 @@ class IsometricRender {
     sections: sections,
   );
 
-  void renderCircleOutline(
+  void circleOutline(
       double x,
       double y,
       double z,
@@ -197,7 +193,7 @@ class IsometricRender {
       final a = i * anglePerSection;
       lineX2 = adj(a, radius);
       lineY2 = opp(a, radius);
-      renderLine(
+      line(
         x + lineX1,
         y + lineY1,
         z,

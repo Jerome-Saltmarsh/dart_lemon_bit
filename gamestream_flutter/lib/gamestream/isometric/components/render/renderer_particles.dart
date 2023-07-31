@@ -42,7 +42,7 @@ class RendererParticles extends RenderGroup {
         ParticleType.Block_Brick,
         ParticleType.Block_Grass,
       ].contains(particle.type)){
-        isometric.render.renderShadowBelowPosition(particle);
+        isometric.render.shadowBelowPosition(particle);
       }
 
       switch (particle.type) {
