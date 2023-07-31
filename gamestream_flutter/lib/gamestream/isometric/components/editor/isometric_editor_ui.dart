@@ -496,7 +496,7 @@ extension IsometricEditorUI on IsometricEditor {
       isometric.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
-        action: () => isometric.setRain(rain),
+        action: () => isometric.network.setRain(rain),
         icon: isometric.ui.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
@@ -506,7 +506,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
-            isometric.setLightning(lightning),
+            isometric.network.setLightning(lightning),
         icon: isometric.ui.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
@@ -516,7 +516,7 @@ extension IsometricEditorUI on IsometricEditor {
       isometric.windTypeAmbient,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
-        action: () => isometric.setWind(windType),
+        action: () => isometric.network.setWind(windType),
         icon: isometric.ui.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
@@ -597,7 +597,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple4,
-              action: () => isometric.setHour(i),
+              action: () => isometric.network.setHour(i),
             ),
           ),
         );
@@ -609,7 +609,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple3,
-              action: () => isometric.setHour(i),
+              action: () => isometric.network.setHour(i),
             ),
           ),
         );

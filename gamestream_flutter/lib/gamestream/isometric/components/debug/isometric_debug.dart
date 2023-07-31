@@ -160,19 +160,19 @@ class IsometricDebug {
      }
   }
 
-  void onMouseLeftClicked() => isometric.debugSelect();
+  void onMouseLeftClicked() => isometric.network.debugSelect();
 
   void onMouseRightClicked() {
     if (isometric.engine.keyPressedShiftLeft){
-      isometric.debugAttack();
+      isometric.network.debugAttack();
       return;
     }
-    isometric.debugCommand();
+    isometric.network.debugCommand();
   }
 
   void onKeyPressed(int key){
     if (key == KeyCode.G) {
-      isometric.moveSelectedColliderToMouse();
+      isometric.network.moveSelectedColliderToMouse();
       return;
     }
   }

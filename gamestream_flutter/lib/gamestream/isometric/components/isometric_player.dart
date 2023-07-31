@@ -141,10 +141,10 @@ class IsometricPlayer {
   }
 
   void toggleControlsRunInDirectionEnabled() =>
-      isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
+      isometric.network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
 
   void toggleControlsCanTargetEnemies() =>
-      isometric.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
+      isometric.network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

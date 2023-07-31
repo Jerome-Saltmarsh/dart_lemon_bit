@@ -10,7 +10,7 @@ extension IsometricActions on Isometric {
   void loadSelectedSceneName(){
     final sceneName = editor.selectedSceneName.value;
     if (sceneName == null) throw Exception('loadSelectedSceneNameException: selected scene name is null');
-    editorLoadGame(sceneName);
+    network.editorLoadGame(sceneName);
     editor.actionGameDialogClose();
   }
 

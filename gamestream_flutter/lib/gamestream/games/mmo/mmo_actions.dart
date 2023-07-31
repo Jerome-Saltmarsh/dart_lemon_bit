@@ -55,7 +55,7 @@ extension MMOActions on MmoGame {
       sendMMORequest(MMORequest.Upgrade_Talent, talentType.index);
 
   void sendMMORequest(MMORequest request, [dynamic message]) =>
-      isometric.sendClientRequest(
+      isometric.network.send(
           ClientRequest.MMO,
           '${request.index} $message'
       );

@@ -490,7 +490,7 @@ class IsometricEditor {
   void saveScene()=> sendIsometricEditorRequest(IsometricEditorRequest.Save);
 
   void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
-      isometric.sendClientRequest(
+      isometric.network.send(
         ClientRequest.Isometric_Editor,
         '${request.index} $message',
       );
