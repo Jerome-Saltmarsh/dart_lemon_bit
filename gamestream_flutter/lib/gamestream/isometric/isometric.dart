@@ -228,7 +228,6 @@ class Isometric {
 
     camera.update();
     particles.update();
-    scene.update();
     compositor.render3D();
     renderEditMode();
     renderMouseTargetName();
@@ -264,7 +263,7 @@ class Isometric {
 
     updateClearErrorTimer();
     game.value.update();
-
+    scene.update();
     audio.update();
     particles.update();
     animation.update();

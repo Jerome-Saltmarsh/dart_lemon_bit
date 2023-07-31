@@ -306,7 +306,6 @@ class IsometricResponseReader with ByteReader {
     scene.projection = scene.area2 + scene.totalColumns + 1;
     scene.projectionHalf =  scene.projection ~/ 2;
     final totalNodes = scene.totalZ * scene.totalRows * scene.totalColumns;
-    // assert (totalNodes == scene.nodeTypes.length && totalNodes == scene.nodeOrientations.length);
     scene.totalNodes = totalNodes;
     if (scene.colorStack.length != totalNodes){
       scene.colorStack = Uint16List(totalNodes);
