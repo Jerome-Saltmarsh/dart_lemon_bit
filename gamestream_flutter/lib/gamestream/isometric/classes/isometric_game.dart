@@ -133,7 +133,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Digit_0) {
-      isometric.network.toggleDebugging();
+      isometric.network.sendIsometricRequestToggleDebugging();
       return;
     }
 

@@ -68,7 +68,7 @@ extension isometricDebugUI on IsometricDebug {
         value: debugCharacterType,
         onChanged: (int? newValue) {
           if (newValue == null) return;
-          isometric.network.debugCharacterSetCharacterType(newValue);
+          isometric.network.sendIsometricRequestDebugCharacterSetCharacterType(newValue);
         },
         items: CharacterType.values.map((int characterType) => DropdownMenuItem<int>(
           value: characterType,
@@ -85,7 +85,7 @@ extension isometricDebugUI on IsometricDebug {
         value: weaponType,
         onChanged: (int? newValue) {
           if (newValue == null) return;
-          isometric.network.debugCharacterSetWeaponType(newValue);
+          isometric.network.sendIsometricRequestDebugCharacterSetWeaponType(newValue);
         },
         items: WeaponType.values.map((int weaponType) => DropdownMenuItem<int>(
           value: weaponType,
@@ -273,7 +273,7 @@ extension isometricDebugUI on IsometricDebug {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: isometric.gameObjects
               .map((gameObject) => onPressed(
-                action: () => isometric.network.selectGameObject(gameObject),
+                action: () => isometric.network.sendIsometricRequestSelectGameObject(gameObject),
                 child: buildText(
                     '${GameObjectType.getName(gameObject.type)} - ${GameObjectType.getNameSubType(gameObject.type, gameObject.subType)}'),
               ))
@@ -366,7 +366,7 @@ extension isometricDebugUI on IsometricDebug {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         onPressed(
-          action: isometric.network.debugCharacterDebugUpdate,
+          action: isometric.network.sendIsometricRequestDebugCharacterDebugUpdate,
           child: buildText('DEBUG'), ),
         height8,
         onPressed(
@@ -404,15 +404,15 @@ extension isometricDebugUI on IsometricDebug {
         buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
         buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
         onPressed(
-            action: isometric.network.debugCharacterToggleAutoAttack,
+            action: isometric.network.sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,
             child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
         ),
         onPressed(
-            action: isometric.network.debugCharacterTogglePathFindingEnabled,
+            action: isometric.network.sendIsometricRequestDebugCharacterTogglePathFindingEnabled,
             child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
         ),
         onPressed(
-            action: isometric.network.debugCharacterToggleRunToDestination,
+            action: isometric.network.sendIsometricRequestDebugCharacterToggleRunToDestination,
             child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
         ),
         buildTarget(),

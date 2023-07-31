@@ -18,71 +18,70 @@ class IsometricNetwork {
     );
   }
 
-
-  void revive() =>
+  void sendIsometricRequestRevive() =>
       sendIsometricRequest(IsometricRequest.Revive);
 
-  void setRain(int value) =>
+  void sendIsometricRequestWeatherSetRain(int value) =>
       sendIsometricRequest(IsometricRequest.Weather_Set_Rain, value);
 
-  void setWind(int value) =>
+  void sendIsometricRequestWeatherSetWind(int value) =>
       sendIsometricRequest(IsometricRequest.Weather_Set_Wind, value);
 
-  void setLightning(int value) =>
+  void sendIsometricRequestWeatherSetLightning(int value) =>
       sendIsometricRequest(IsometricRequest.Weather_Set_Lightning, value);
 
-  void toggleBreeze() =>
+  void sendIsometricRequestWeatherToggleBreeze() =>
       sendIsometricRequest(IsometricRequest.Weather_Toggle_Breeze);
 
-  void setHour(int value) =>
+  void sendIsometricRequestTimeSetHour(int value) =>
       sendIsometricRequest(IsometricRequest.Time_Set_Hour, value);
 
-  void editorLoadGame(String name) =>
+  void sendIsometricRequestEditorLoadGame(String name) =>
       sendIsometricRequest(IsometricRequest.Editor_Load_Game, name);
 
-  void moveSelectedColliderToMouse() =>
+  void sendIsometricRequestMoveSelectedColliderToMouse() =>
       sendIsometricRequest(IsometricRequest.Move_Selected_Collider_To_Mouse);
 
-  void DebugCharacterWalkToMouse() =>
+  void sendIsometricRequestDebugCharacterWalkToMouse() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
 
-  void debugCharacterToggleAutoAttack() =>
+  void sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
 
-  void debugCharacterTogglePathFindingEnabled() =>
+  void sendIsometricRequestDebugCharacterTogglePathFindingEnabled() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
 
-  void debugCharacterToggleRunToDestination() =>
+  void sendIsometricRequestDebugCharacterToggleRunToDestination() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Run_To_Destination);
 
-  void debugCharacterDebugUpdate() =>
+  void sendIsometricRequestDebugCharacterDebugUpdate() =>
       sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
 
-  void selectGameObject(GameObject gameObject) =>
+  void sendIsometricRequestSelectGameObject(GameObject gameObject) =>
       sendIsometricRequest(IsometricRequest.Select_GameObject, '${gameObject.id}');
 
-  void debugCharacterSetCharacterType(int characterType) =>
+  void sendIsometricRequestDebugCharacterSetCharacterType(int characterType) =>
       sendIsometricRequest(
         IsometricRequest.Debug_Character_Set_Character_Type,
         characterType,
       );
 
-  void debugCharacterSetWeaponType(int weaponType) =>
+  void sendIsometricRequestDebugCharacterSetWeaponType(int weaponType) =>
       sendIsometricRequest(
         IsometricRequest.Debug_Character_Set_Weapon_Type,
         weaponType,
       );
 
-  void debugSelect() =>
+  void sendIsometricRequestDebugSelect() =>
       sendIsometricRequest(IsometricRequest.Debug_Select);
 
-  void debugCommand() =>
+  void sendIsometricRequestDebugCommand() =>
       sendIsometricRequest(IsometricRequest.Debug_Command);
 
-  void debugAttack() =>
+  void sendIsometricRequestDebugAttack() =>
       sendIsometricRequest(IsometricRequest.Debug_Attack);
 
-  void toggleDebugging() =>
+  void sendIsometricRequestToggleDebugging() =>
       sendIsometricRequest(IsometricRequest.Toggle_Debugging);
 
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
