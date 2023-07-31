@@ -1,13 +1,13 @@
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 
-extension CaptureTheFlagResponseReader on Isometric {
+extension CaptureTheFlagResponseReader on IsometricResponseReader {
 
 
   void readCaptureTheFlag() {
-    final captureTheFlag = games.captureTheFlag;
+    final captureTheFlag = isometric.games.captureTheFlag;
     switch (readByte()) {
       case CaptureTheFlagResponse.Score:
         captureTheFlag.scoreRed.value = readUInt16();
@@ -95,12 +95,12 @@ extension CaptureTheFlagResponseReader on Isometric {
 
       case CaptureTheFlagResponse.Player_Event_Level_Gained:
         captureTheFlag.audioOnLevelGain.play();
-        spawnConfettiPlayer();
+        isometric.spawnConfettiPlayer();
         break;
 
       case CaptureTheFlagResponse.Player_Event_Skill_Upgraded:
         captureTheFlag.audioOnLevelGain.play();
-        spawnConfettiPlayer();
+        isometric.spawnConfettiPlayer();
         break;
     }
   }

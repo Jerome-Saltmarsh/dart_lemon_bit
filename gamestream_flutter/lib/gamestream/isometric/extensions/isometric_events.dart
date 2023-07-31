@@ -112,7 +112,7 @@ extension IsometricEvents on Isometric {
         onGameEventExplosion(x, y, z);
         return;
       case GameEventType.AI_Target_Acquired:
-        final characterType = readByte();
+        final characterType = network.responseReader.readByte();
         switch (characterType){
           case CharacterType.Zombie:
             playAudioXYZ(randomItem(audio.audioSingleZombieTalking), x, y, z);
@@ -133,7 +133,7 @@ extension IsometricEvents on Isometric {
         playAudioXYZ(audio.hover_over_button_sound_30, x, y, z);
         break;
       case GameEventType.Weapon_Type_Equipped:
-        final attackType =  readByte();
+        final attackType = network.responseReader.readByte();
         return onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
@@ -188,7 +188,7 @@ extension IsometricEvents on Isometric {
       case GameEventType.EnemyTargeted:
         break;
       case GameEventType.Attack_Missed:
-        final attackType = readUInt16();
+        final attackType = network.responseReader.readUInt16();
         switch (attackType) {
           case WeaponType.Unarmed:
             playAudioXYZ(audio.arm_swing_whoosh_11, x, y, z);
@@ -226,11 +226,11 @@ extension IsometricEvents on Isometric {
         break;
 
       case GameEventType.Character_Death:
-        onCharacterDeath(readByte(), x, y, z, angle);
+        onCharacterDeath(network.responseReader.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Character_Hurt:
-        onGameEventCharacterHurt(readByte(), x, y, z, angle);
+        onGameEventCharacterHurt(network.responseReader.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Game_Object_Destroyed:
@@ -239,7 +239,7 @@ extension IsometricEvents on Isometric {
             y,
             z,
             angle,
-          readUInt16(),
+          network.responseReader.readUInt16(),
         );
         return;
 
@@ -312,7 +312,7 @@ extension IsometricEvents on Isometric {
   }
 
   void onAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = readUInt16();
+    final attackType = network.responseReader.readUInt16();
     final attackTypeAudio = audio.MapItemTypeAudioSinglesAttack[attackType];
 
     if (attackTypeAudio != null) {
@@ -350,7 +350,7 @@ extension IsometricEvents on Isometric {
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = readUInt16();
+    final attackType = network.responseReader.readUInt16();
     final attackTypeAudio = audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
@@ -590,7 +590,7 @@ extension IsometricEvents on Isometric {
   }
 
   void readPlayerEventItemAcquired() {
-    final itemType = readUInt16();
+    final itemType = network.responseReader.readUInt16();
     // todo read subtype
     if (itemType == WeaponType.Unarmed) return;
 

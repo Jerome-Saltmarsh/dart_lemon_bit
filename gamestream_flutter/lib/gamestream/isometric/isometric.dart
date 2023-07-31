@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as dartUI;
 
-import 'package:archive/archive.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
@@ -11,21 +10,16 @@ import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/lemon_bits.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games.dart';
-import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
-import 'package:lemon_byte/byte_reader.dart';
 
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas_nodes.dart';
@@ -39,7 +33,7 @@ import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
 
-class Isometric with ByteReader {
+class Isometric {
 
   Isometric() {
     print('Isometric()');
@@ -140,8 +134,6 @@ class Isometric with ByteReader {
   final lighting = Lighting();
 
   final colors = IsometricColors();
-
-  final decoder = ZLibDecoder();
 
   final imagesLoadedCompleted = Completer();
 
@@ -799,109 +791,6 @@ class Isometric with ByteReader {
         ..emissionIntensity = 0.0
   ;
 
-  void readServerResponseString(String response){
-
-  }
-
-  // @override
-  void readServerResponse(int serverResponse){
-    rendersSinceUpdate.value = 0;
-
-    switch (serverResponse) {
-      case ServerResponse.Isometric_Characters:
-        readIsometricCharacters();
-        break;
-      case ServerResponse.Api_Player:
-        readApiPlayer();
-        break;
-      case ServerResponse.Isometric:
-        readIsometricResponse();
-        break;
-      case ServerResponse.GameObject:
-        readGameObject();
-        break;
-      case ServerResponse.Projectiles:
-        readProjectiles();
-        break;
-      case ServerResponse.Game_Event:
-        readGameEvent();
-        break;
-      case ServerResponse.Player_Event:
-        readPlayerEvent();
-        break;
-      case ServerResponse.Game_Time:
-        readGameTime();
-        break;
-      case ServerResponse.Game_Type:
-        final index = readByte();
-        if (index >= GameType.values.length){
-          throw Exception('invalid game type index $index');
-        }
-        gameType.value = GameType.values[index];
-        break;
-      case ServerResponse.Environment:
-        readServerResponseEnvironment();
-        break;
-      case ServerResponse.Node:
-        readNode();
-        break;
-      case ServerResponse.Player_Target:
-        readIsometricPosition(player.target);
-        break;
-      case ServerResponse.Store_Items:
-        readStoreItems();
-        break;
-      case ServerResponse.Npc_Talk:
-        readNpcTalk();
-        break;
-      case ServerResponse.Weather:
-        readWeather();
-        break;
-      case ServerResponse.Game_Properties:
-        readGameProperties();
-        break;
-      case ServerResponse.Map_Coordinate:
-        readMapCoordinate();
-        break;
-      case ServerResponse.Editor_GameObject_Selected:
-        readEditorGameObjectSelected();
-        break;
-      case ServerResponse.Info:
-        readServerResponseInfo();
-        break;
-      case ServerResponse.Capture_The_Flag:
-        readCaptureTheFlag();
-        break;
-      case ServerResponse.MMO:
-        readMMOResponse();
-        break;
-      case ServerResponse.Download_Scene:
-        final name = readString();
-        final length = readUInt16();
-        final bytes = readBytes(length);
-        engine.downloadBytes(bytes, name: '$name.scene');
-        break;
-      case ServerResponse.GameObject_Deleted:
-        removeGameObjectById(readUInt16());
-        break;
-      case ServerResponse.Game_Error:
-        final errorTypeIndex = readByte();
-        error.value = GameError.fromIndex(errorTypeIndex);
-        return;
-      case ServerResponse.FPS:
-        serverFPS.value = readUInt16();
-        return;
-      case ServerResponse.Sort_GameObjects:
-        gameObjects.sort();
-        break;
-      default:
-        print('read error; index: $index');
-        print(values);
-        network.websocket.disconnect();
-        return;
-    }
-  }
-
   // @override
   void onError(Object error, StackTrace stack) {
     if (error.toString().contains('NotAllowedError')){
@@ -920,7 +809,7 @@ class Isometric with ByteReader {
   // @override
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
-    bufferSize.value = 0;
+    network.responseReader.bufferSize.value = 0;
 
     switch (connection) {
       case ConnectionStatus.Connected:
@@ -963,246 +852,6 @@ class Isometric with ByteReader {
     }
 
   }
-
-  void readServerResponseInfo() {
-    final info = readString();
-    print(info);
-  }
-
-  void readApiPlayerEnergy() =>
-      player.energyPercentage = readPercentage();
-
-  void readPlayerHealth() {
-    player.health.value = readUInt16();
-    player.maxHealth.value = readUInt16();
-  }
-
-  void readMapCoordinate() {
-    readByte(); // DO NOT DELETE
-  }
-
-  void readEditorGameObjectSelected() {
-    // readVector3(isometricEngine.editor.gameObject);
-
-    final id = readUInt16();
-    final gameObject = findGameObjectById(id);
-    if (gameObject == null) throw Exception('could not find gameobject with id $id');
-    editor.gameObject.value = gameObject;
-    editor.gameObjectSelectedCollidable   .value = readBool();
-    editor.gameObjectSelectedFixed        .value = readBool();
-    editor.gameObjectSelectedCollectable  .value = readBool();
-    editor.gameObjectSelectedPhysical     .value = readBool();
-    editor.gameObjectSelectedPersistable  .value = readBool();
-    editor.gameObjectSelectedGravity      .value = readBool();
-
-    editor.gameObjectSelectedType.value          = gameObject.type;
-    editor.gameObjectSelectedSubType.value       = gameObject.subType;
-    editor.gameObjectSelected.value              = true;
-    editor.cameraCenterSelectedObject();
-
-    editor.gameObjectSelectedEmission.value = gameObject.colorType;
-    editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
-  }
-
-  void readIsometricCharacters(){
-    totalCharacters = 0;
-
-    while (true) {
-
-      final compressionLevel = readByte();
-      if (compressionLevel == CHARACTER_END) break;
-      final character = getCharacterInstance();
-
-
-      final stateAChanged = readBitFromByte(compressionLevel, 0);
-      final stateBChanged = readBitFromByte(compressionLevel, 1);
-      final changeTypeX = (compressionLevel & Hex00001100) >> 2;
-      final changeTypeY =  (compressionLevel & Hex00110000) >> 4;
-      final changeTypeZ = (compressionLevel & Hex11000000) >> 6;
-
-      if (stateAChanged) {
-        character.characterType = readByte();
-        character.state = readByte();
-        character.team = readByte();
-        character.health = readPercentage();
-      }
-
-      if (stateBChanged){
-        final animationAndFrameDirection = readByte();
-        character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
-        assert (character.direction >= 0 && character.direction <= 7);
-        character.animationFrame = (animationAndFrameDirection & Hex00011111);
-      }
-
-
-
-      assert (changeTypeX >= 0 && changeTypeX <= 2);
-      assert (changeTypeY >= 0 && changeTypeY <= 2);
-      assert (changeTypeZ >= 0 && changeTypeZ <= 2);
-
-      if (changeTypeX == ChangeType.Small) {
-        character.x += readInt8();
-      } else if (changeTypeX == ChangeType.Big) {
-        character.x = readDouble();
-      }
-
-      if (changeTypeY == ChangeType.Small) {
-        character.y += readInt8();
-      } else if (changeTypeY == ChangeType.Big) {
-        character.y = readDouble();
-      }
-
-      if (changeTypeZ == ChangeType.Small) {
-        character.z += readInt8();
-      } else if (changeTypeZ == ChangeType.Big) {
-        character.z = readDouble();
-      }
-
-      if (character.characterType == CharacterType.Template){
-        readCharacterTemplate(character);
-      }
-      totalCharacters++;
-    }
-  }
-
-  void readNpcTalk() {
-    player.npcTalk.value = readString();
-    final totalOptions = readByte();
-    final options = <String>[];
-    for (var i = 0; i < totalOptions; i++) {
-      options.add(readString());
-    }
-    player.npcTalkOptions.value = options;
-  }
-
-  void readGameProperties() {
-    sceneEditable.value = readBool();
-    sceneName.value = readString();
-    gameRunning.value = readBool();
-  }
-
-  void readWeather() {
-    rainType.value = readByte();
-    weatherBreeze.value = readBool();
-    lightningType.value = readByte();
-    windTypeAmbient.value = readByte();
-  }
-
-  void readStoreItems() {
-    final length = readUInt16();
-    if (player.storeItems.value.length != length){
-      player.storeItems.value = Uint16List(length);
-    }
-    for (var i = 0; i < length; i++){
-      player.storeItems.value[i] = readUInt16();
-    }
-  }
-
-  void readNode() {
-    final nodeIndex = readUInt24();
-    final nodeType = readByte();
-    final nodeOrientation = readByte();
-    assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    scene.nodeTypes[nodeIndex] = nodeType;
-    scene.nodeOrientations[nodeIndex] = nodeOrientation;
-    /// TODO optimize
-    onChangedNodes();
-
-    editor.refreshNodeSelectedIndex();
-  }
-
-  void readPlayerTarget() {
-    readIsometricPosition(player.abilityTarget);
-  }
-
-  void readGameTime() {
-    seconds.value = readUInt24();
-  }
-
-  double readDouble() => readInt16().toDouble();
-
-  void readGameEvent(){
-    final type = readByte();
-    final x = readDouble();
-    final y = readDouble();
-    final z = readDouble();
-    final angle = readDouble() * degreesToRadians;
-    onGameEvent(type, x, y, z, angle);
-  }
-
-  void readProjectiles(){
-    totalProjectiles = readUInt16();
-    while (totalProjectiles >= projectiles.length){
-      projectiles.add(Projectile());
-    }
-    for (var i = 0; i < totalProjectiles; i++) {
-      final projectile = projectiles[i];
-      projectile.x = readDouble();
-      projectile.y = readDouble();
-      projectile.z = readDouble();
-      projectile.type = readByte();
-      projectile.angle = readDouble() * degreesToRadians;
-    }
-  }
-
-  void readCharacterTemplate(Character character){
-
-    final compression = readByte();
-
-    final readA = readBitFromByte(compression, 0);
-    final readB = readBitFromByte(compression, 1);
-    final readC = readBitFromByte(compression, 2);
-
-    if (readA){
-      character.weaponType = readByte();
-      character.bodyType = readByte();
-      character.headType = readByte();
-      character.legType = readByte();
-    }
-
-    if (readB){
-      final lookDirectionWeaponState = readByte();
-      character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
-      final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
-      character.weaponState = weaponState;
-    }
-
-    if (readC) {
-      character.weaponStateDuration = readByte();
-    } else {
-      character.weaponStateDuration = 0;
-    }
-  }
-
-  void readPlayerEvent() {
-    onPlayerEvent(readByte());
-  }
-
-  void readIsometricPosition(Position value){
-    value.x = readDouble();
-    value.y = readDouble();
-    value.z = readDouble();
-  }
-
-  double readPercentage() => readByte() / 255.0;
-
-  double readAngle() => readDouble() * degreesToRadians;
-
-  Map<int, List<int>> readMapListInt(){
-    final valueMap = <int, List<int>> {};
-    final totalEntries = readUInt16();
-    for (var i = 0; i < totalEntries; i++) {
-      final key = readUInt16();
-      final valueLength = readUInt16();
-      final values = readUint16List(valueLength);
-      valueMap[key] = values;
-    }
-    return valueMap;
-  }
-
-  CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
-
-  CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
 
   void onChangedGameType(GameType value) {
     print('onChangedGameType(${value.name})');
@@ -2334,28 +1983,4 @@ class Isometric with ByteReader {
               'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
           )
       );
-
-  void readNetworkString(String value){
-
-  }
-
-  final bufferSize = Watch(0);
-
-  void readNetworkBytes(Uint8List bytes) {
-    assert (bytes.isNotEmpty);
-    index = 0;
-    this.values = bytes;
-    bufferSize.value = bytes.length;
-    final length = bytes.length;
-
-    while (index < length) {
-      readServerResponse(readByte());
-    }
-
-    onReadRespondFinished();
-    index = 0;
-  }
-
-
-
 }
