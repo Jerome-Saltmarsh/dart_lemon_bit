@@ -18,7 +18,7 @@ extension MMORender on MmoGame {
       return;
 
     isometric.color = color;
-    isometric.renderLine(
+    isometric.render.renderLine(
       player.x,
       player.y,
       player.z,
@@ -37,7 +37,7 @@ extension MMORender on MmoGame {
   void renderPlayerItemRange(MMOItem item) {
     if (item.range <= 0) return;
     isometric.color = Colors.white;
-    isometric.renderCircle(
+    isometric.render.renderCircleOutline(
         player.x,
         player.y,
         player.z,
@@ -58,7 +58,7 @@ extension MMORender on MmoGame {
     final mode = activatedPower.attackType?.mode;
     if (mode == PowerMode.Positional) {
       isometric.color = Colors.white;
-      isometric.renderCircleAtPosition(
+      isometric.render.renderCircleOutlineAtPosition(
         position: activePowerPosition,
         radius: 15,
       );

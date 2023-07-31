@@ -7,6 +7,7 @@ class CharacterType {
    static const Wolf = 4;
    static const Triangle = 5;
    static const Dog = 6;
+   static const Kid = 7;
 
    static const values = [
      Template,
@@ -16,6 +17,7 @@ class CharacterType {
      Wolf,
      Triangle,
      Dog,
+     Kid,
    ];
    
    static String getName(int value){
@@ -27,6 +29,7 @@ class CharacterType {
        Wolf: 'Wolf',
        Triangle: 'Triangle',
        Dog: 'Dog',
+       Kid: 'Kid',
      }[value] ?? ' unknown-$value';
    }
 
@@ -38,6 +41,7 @@ class CharacterType {
           Wolf:       4.0,
           Triangle:   3.5,
           Dog:        4.0,
+          Kid:        3.0,
        }[value] ??    2.0;
    
    static double getRadius(int value) => const {
@@ -48,6 +52,7 @@ class CharacterType {
           Wolf:       10.0,
           Triangle:   10.0,
           Dog:        10.0,
+          Kid:        10.0,
        }[value] ??    10.0;
 
    static bool supportsUpperBody(int characterType) =>

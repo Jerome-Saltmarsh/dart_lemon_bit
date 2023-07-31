@@ -62,7 +62,7 @@ class IsometricDebug {
     if (!selectedCollider.value) return;
 
     isometric.engine.setPaintColor(Colors.white);
-    isometric.renderCircle(
+    isometric.render.renderCircleOutline(
       x.value,
       y.value,
       z.value,
@@ -70,7 +70,7 @@ class IsometricDebug {
     );
 
     isometric.engine.setPaintColor(Colors.green);
-    isometric.renderCircle(
+    isometric.render.renderCircleOutline(
       x.value,
       y.value,
       z.value,
@@ -80,7 +80,7 @@ class IsometricDebug {
     isometric.engine.setPaintColor(Colors.red);
     if (selectedColliderType.value == IsometricType.Character) {
       if (targetSet.value) {
-        isometric.renderLine(
+        isometric.render.renderLine(
           x.value,
           y.value,
           z.value,
@@ -106,7 +106,7 @@ class IsometricDebug {
 
       if (!arrivedAtDestination.value){
         isometric.engine.setPaintColor(Colors.deepPurpleAccent);
-        isometric.renderLine(
+        isometric.render.renderLine(
           x.value,
           y.value,
           z.value,

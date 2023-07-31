@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
@@ -86,6 +87,9 @@ class RendererCharacters extends RenderGroup {
         break;
       case CharacterType.Zombie:
         renderCharacterZombie(character);
+        break;
+      case CharacterType.Kid:
+        renderCharacterKid(character);
         break;
       case CharacterType.Slime:
         // renderCharacterSlime(character);
@@ -381,4 +385,40 @@ class RendererCharacters extends RenderGroup {
     return (character.renderDirection * framesPerDirection * size) + (frame * size);
   }
 
+  void renderCharacterKid(Character character) {
+
+    const size = 256.0;
+    const scale = 0.35;
+    final direction = IsometricDirection.toStandardDirection(character.direction);
+    final srcY = direction * size;
+
+    double srcX;
+    Image image;
+
+    if (character.running) {
+      srcX = (character.animationFrame % 8) * size;
+      image = isometric.images.kid_running;
+    } else {
+      srcX = 0;
+      image = isometric.images.kid_idle;
+    }
+
+    // isometric.ci
+    // renderCharacterShadow(
+    //    character,
+    //   srcX:
+    // );
+
+    engine.renderSprite(
+      image: image,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      scale: scale,
+      color: character.color,
+    );
+  }
 }

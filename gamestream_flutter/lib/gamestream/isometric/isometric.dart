@@ -6,7 +6,6 @@ import 'dart:ui' as dartUI;
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
-import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
@@ -19,6 +18,7 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
+import 'package:golden_ratio/constants.dart';
 
 import '../network/functions/detect_connection_region.dart';
 import 'atlases/atlas_nodes.dart';
@@ -233,7 +233,20 @@ class Isometric {
     debug.render();
     game.value.drawCanvas(canvas, size);
     rendersSinceUpdate.value++;
+
+    engine.renderSprite(
+        image: images.template_spinning,
+        srcX: (256.0 * animation.frame8),
+        srcY: 0,
+        srcWidth: 256,
+        srcHeight: 256,
+        dstX: spinningPosition.renderX,
+        dstY: spinningPosition.renderY,
+        scale: 0.4,
+    );
   }
+
+  final spinningPosition = Position(x: 1500, y: 1500, z: 25);
 
   void update(){
 
@@ -873,7 +886,7 @@ class Isometric {
   }
 
   void renderCircleAroundPlayer({required double radius}) =>
-      renderCircleAtPosition(
+      render.renderCircleOutlineAtPosition(
         position: player.position,
         radius: radius,
       );
@@ -894,57 +907,7 @@ class Isometric {
         angle: randomAngle(),
       );
     }
-
-    // spawnParticleLightEmission(
-    //   x: x,
-    //   y: y,
-    //   z: z,
-    //   hue: 259,
-    //   saturation: 45,
-    //   value: 95,
-    //   alpha: 0,
-    // );
   }
-
-  void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
-      engine.renderLine(
-        getRenderX(x1, y1, z1),
-        getRenderY(x1, y1, z1),
-        getRenderX(x2, y2, z2),
-        getRenderY(x2, y2, z2),
-      );
-
-  void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
-    if (radius <= 0) return;
-    if (sections < 3) return;
-
-    final anglePerSection = pi2 / sections;
-    var lineX1 = adj(0, radius);
-    var lineY1 = opp(0, radius);
-    var lineX2 = lineX1;
-    var lineY2 = lineY1;
-    for (var i = 1; i <= sections; i++){
-      final a = i * anglePerSection;
-      lineX2 = adj(a, radius);
-      lineY2 = opp(a, radius);
-      renderLine(
-        x + lineX1,
-        y + lineY1,
-        z,
-        x + lineX2,
-        y + lineY2,
-        z,
-      );
-      lineX1 = lineX2;
-      lineY1 = lineY2;
-    }
-  }
-
-  void renderCircleAtPosition({
-    required Position position,
-    required double radius,
-    int sections = 12,
-  })=> renderCircle(position.x, position.y, position.z, radius, sections: sections);
 
   void renderEditMode() {
     if (playMode) return;
@@ -956,7 +919,7 @@ class Isometric {
         y: editor.gameObject.value!.renderY,
         color: Colors.white,
       );
-      renderCircleAtPosition(position: editor.gameObject.value!, radius: 50);
+      render.renderCircleOutlineAtPosition(position: editor.gameObject.value!, radius: 50);
       return;
     }
 

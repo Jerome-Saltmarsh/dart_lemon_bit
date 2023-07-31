@@ -366,7 +366,7 @@ packages:
       path: "../dart-lemon-math"
       relative: true
     source: path
-    version: "1.2.25"
+    version: "1.2.28"
   lemon_watch:
     dependency: transitive
     description:

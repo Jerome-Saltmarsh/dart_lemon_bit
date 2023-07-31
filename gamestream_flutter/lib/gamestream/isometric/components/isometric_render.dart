@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
+import 'package:gamestream_flutter/library.dart';
 
 class IsometricRender {
 
@@ -155,5 +156,57 @@ class IsometricRender {
       isometric.scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
       scale: 1.0 / (height * 0.125),
     );
+  }
+
+  void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
+      isometric.engine.renderLine(
+        getRenderX(x1, y1, z1),
+        getRenderY(x1, y1, z1),
+        getRenderX(x2, y2, z2),
+        getRenderY(x2, y2, z2),
+      );
+
+  void renderCircleOutlineAtPosition({
+    required Position position,
+    required double radius,
+    int sections = 12,
+  }) => renderCircleOutline(
+    position.x,
+    position.y,
+    position.z,
+    radius,
+    sections: sections,
+  );
+
+  void renderCircleOutline(
+      double x,
+      double y,
+      double z,
+      double radius,
+      {int sections = 12}
+      ){
+    if (radius <= 0) return;
+    if (sections < 3) return;
+
+    final anglePerSection = pi2 / sections;
+    var lineX1 = adj(0, radius);
+    var lineY1 = opp(0, radius);
+    var lineX2 = lineX1;
+    var lineY2 = lineY1;
+    for (var i = 1; i <= sections; i++){
+      final a = i * anglePerSection;
+      lineX2 = adj(a, radius);
+      lineY2 = opp(a, radius);
+      renderLine(
+        x + lineX1,
+        y + lineY1,
+        z,
+        x + lineX2,
+        y + lineY2,
+        z,
+      );
+      lineX1 = lineX2;
+      lineY1 = lineY2;
+    }
   }
 }

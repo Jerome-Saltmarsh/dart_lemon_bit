@@ -27,6 +27,18 @@ class IsometricDirection {
     }[inputDirection] ?? IsometricDirection.None;
   }
 
+  static int toStandardDirection(int isometricDirection) => const {
+      IsometricDirection.North_East : InputDirection.Up,
+      IsometricDirection.East : InputDirection.Up_Right,
+      IsometricDirection.South_East : InputDirection.Right,
+      IsometricDirection.South : InputDirection.Down_Right,
+      IsometricDirection.South_West : InputDirection.Down,
+      IsometricDirection.West : InputDirection.Down_Left,
+      IsometricDirection.North_West : InputDirection.Left,
+      IsometricDirection.North : InputDirection.Up_Left,
+      IsometricDirection.None : InputDirection.None,
+    }[isometricDirection] ?? InputDirection.None;
+
   /// 7 and 1
   /// the difference is actually only 2
   ///

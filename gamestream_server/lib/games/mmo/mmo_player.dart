@@ -49,6 +49,7 @@ class MmoPlayer extends IsometricPlayer {
     controlsCanTargetEnemies = true;
     defaultAction = false;
     hurtStateBusy = false;
+    characterType = CharacterType.Kid;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Staff_Of_Frozen_Lake);
