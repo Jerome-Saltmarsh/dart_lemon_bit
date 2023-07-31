@@ -226,6 +226,7 @@ class Isometric {
     totalAmbientOffscreen = 0;
     totalAmbientOnscreen = 0;
 
+    camera.update();
     particles.update();
     scene.update();
     compositor.render3D();
@@ -264,7 +265,6 @@ class Isometric {
     updateClearErrorTimer();
     game.value.update();
 
-    camera.update();
     audio.update();
     particles.update();
     animation.update();
