@@ -8,6 +8,8 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/functions/validate_atlas.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/lemon_bits.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
@@ -19,20 +21,17 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
-import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/ui/loading_page.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 import '../network/functions/detect_connection_region.dart';
-import 'atlases/atlas.dart';
 import 'atlases/atlas_nodes.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
-import 'components/render/classes/template_animation.dart';
 import 'components/src.dart';
 import 'enums/cursor_type.dart';
 import 'enums/emission_type.dart';
@@ -44,7 +43,7 @@ class Isometric with ByteReader {
 
   Isometric() {
     print('Isometric()');
-    network = WebsocketClient(
+    network = IsometricNetwork(
       readString: readNetworkString,
       readBytes: readNetworkBytes,
       onError: onError,
@@ -68,31 +67,13 @@ class Isometric with ByteReader {
       game.value.onGameError(error);
     });
 
-    for (final entry in GameObjectType.Collection.entries){
-      final type = entry.key;
-      final values = entry.value;
-      final atlas = Atlas.SrcCollection[type];
-      for (final value in values){
-        if (!atlas.containsKey(value)){
-          // print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
-          throw Exception('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
-        }
-      }
-    }
-
-    for (final weaponType in WeaponType.values){
-      try {
-        TemplateAnimation.getWeaponPerformAnimation(weaponType);
-      } catch (e){
-        print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
-      }
-    }
+    validateAtlases();
   }
 
   late final Games games;
-  late final WebsocketClient network;
-  late final IsometricParticles particles;
+  late final IsometricNetwork network;
   late final GameAudio audio;
+  late final IsometricParticles particles;
   late final IsometricDebug debug;
   late final IsometricEditor editor;
   late final IsometricMinimap minimap;
@@ -194,8 +175,6 @@ class Isometric with ByteReader {
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
   final imagesLoaded = Future.value(false);
-
-  final playerExperiencePercentage = Watch(0.0);
 
   final sceneEditable = Watch(false);
 
@@ -1422,7 +1401,7 @@ class Isometric with ByteReader {
       backgroundColor: IsometricColors.black,
       onError: onError,
       buildUI: games.website.buildUI,
-      buildLoadingScreen: buildLoadingPage,
+      buildLoadingScreen: () => LoadingPage(),
     );
 
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
@@ -1439,32 +1418,6 @@ class Isometric with ByteReader {
   void onEngineBuilt(){
     print('isometric.onEngineBuilt()');
     compositor = IsometricCompositor(this);
-  }
-
-  Widget buildLoadingPage() {
-    final totalImages = buildWatch(images.totalImages, buildText);
-    final totalImagesLoaded = buildWatch(images.totalImagesLoaded, buildText);
-    return Container(
-      color: IsometricColors.black,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildText('Loading GameStream'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildText('Images '),
-              totalImagesLoaded,
-              buildText('/'),
-              totalImages,
-
-            ],
-          )
-        ],
-      ),
-    );
   }
 
   void onReadRespondFinished() {
@@ -1486,11 +1439,6 @@ class Isometric with ByteReader {
     }
     if (region == ConnectionRegion.Custom) {
       print('connecting to custom server');
-      // print(gamestream.games.website.customConnectionStrongController.text);
-      // connectToServer(
-      //   gamestream.games.website.customConnectionStrongController.text,
-      //   message,
-      // );
       return;
     }
     connectToServer(convertHttpToWSS(region.url), message);

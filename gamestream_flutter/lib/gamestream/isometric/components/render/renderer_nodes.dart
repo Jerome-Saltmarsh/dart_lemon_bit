@@ -41,7 +41,6 @@ class RendererNodes extends RenderGroup {
     NodeType.Wood: 1904,
   };
 
-
   var dynamicResolutionEnabled = true;
   var totalNodes = 0;
   var totalRows = 0;

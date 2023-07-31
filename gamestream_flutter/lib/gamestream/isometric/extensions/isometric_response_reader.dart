@@ -269,7 +269,6 @@ extension IsometricResponseReader on Isometric {
         readIsometricPosition(player.targetPosition);
         break;
       case ApiPlayer.Experience_Percentage:
-        playerExperiencePercentage.value = readPercentage();
         break;
       case ApiPlayer.Health:
         readPlayerHealth();
