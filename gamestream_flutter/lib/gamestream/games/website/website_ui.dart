@@ -161,7 +161,7 @@ extension WebsiteUI on WebsiteGame {
       );
 
   Widget buildButtonJoinGameType({required GameType gameType, required String gameName}) => onPressed(
-      action: () => isometric.connectToGame(gameType),
+      action: () => isometric.network.connectToGame(gameType),
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
 

@@ -1226,7 +1226,7 @@ class Isometric with ByteReader {
   }
 
   void startGameType(GameType gameType){
-    connectToGame(gameType);
+    network.connectToGame(gameType);
   }
 
   /// EVENT HANDLER (DO NOT CALL)
@@ -1352,38 +1352,6 @@ class Isometric with ByteReader {
     if (renderResponse){
       engine.redrawCanvas();
     }
-  }
-
-  // FUNCTIONS
-  void connectToRegion(ConnectionRegion region, String message) {
-    print('isometric.connectToRegion(${region.name})');
-    if (region == ConnectionRegion.LocalHost) {
-      const portLocalhost = '8080';
-      final wsLocalHost = 'ws://localhost:${portLocalhost}';
-      connectToServer(wsLocalHost, message);
-      return;
-    }
-    if (region == ConnectionRegion.Custom) {
-      print('connecting to custom server');
-      return;
-    }
-    connectToServer(convertHttpToWSS(region.url), message);
-  }
-
-  void connectLocalHost({int port = 8080, required String message}) {
-    connectToServer('ws://localhost:$port', message);
-  }
-
-  void connectToServer(String uri, String message) {
-    network.websocket.connect(uri: uri, message: '${ClientRequest.Join} $message');
-  }
-
-  void connectToGame(GameType gameType, [String message = '']) {
-    final regionValue = region.value;
-    if (regionValue == null) {
-      throw Exception('region is null');
-    }
-    connectToRegion(regionValue, '${gameType.index} $message');
   }
 
   void detectInputMode() =>

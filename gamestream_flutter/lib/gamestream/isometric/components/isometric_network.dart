@@ -1,15 +1,19 @@
 
 import 'package:gamestream_flutter/common/src/client_request.dart';
+import 'package:gamestream_flutter/common/src/game_type.dart';
 import 'package:gamestream_flutter/common/src/isometric/isometric_request.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
+import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 
 class IsometricNetwork {
 
   late final WebsocketClient websocket;
+  final Isometric isometric;
 
-  IsometricNetwork(Isometric isometric) {
+  IsometricNetwork(this.isometric) {
     websocket = WebsocketClient(
         readString: isometric.readServerResponseString,
         readBytes: isometric.readNetworkBytes,
@@ -91,5 +95,39 @@ class IsometricNetwork {
       message != null
           ? websocket.send('${clientRequest} $message')
           : websocket.send(clientRequest);
+
+
+  // FUNCTIONS
+  void connectToRegion(ConnectionRegion region, String message) {
+    print('isometric.connectToRegion(${region.name})');
+    if (region == ConnectionRegion.LocalHost) {
+      const portLocalhost = '8080';
+      final wsLocalHost = 'ws://localhost:${portLocalhost}';
+      connectToServer(wsLocalHost, message);
+      return;
+    }
+    if (region == ConnectionRegion.Custom) {
+      print('connecting to custom server');
+      return;
+    }
+    connectToServer(convertHttpToWSS(region.url), message);
+  }
+
+  void connectLocalHost({int port = 8080, required String message}) {
+    connectToServer('ws://localhost:$port', message);
+  }
+
+  void connectToServer(String uri, String message) {
+    websocket.connect(uri: uri, message: '${ClientRequest.Join} $message');
+  }
+
+  void connectToGame(GameType gameType, [String message = '']) {
+    final regionValue = isometric.region.value;
+    if (regionValue == null) {
+      throw Exception('region is null');
+    }
+    connectToRegion(regionValue, '${gameType.index} $message');
+  }
+
 
 }
