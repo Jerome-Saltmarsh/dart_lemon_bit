@@ -1,24 +1,23 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 
-class IsometricNetwork extends WebsocketClient {
+class IsometricNetwork {
 
-  // late final WebsocketClient websocket;
+  late final WebsocketClient websocket;
 
-  IsometricNetwork({
-    required super.readString,
-    required super.readBytes,
-    required super.onError,
-    super.onConnectionStatusChanged,
-  }) {
-    // websocket = WebsocketClient(
-    //     readString: readString,
-    //     readBytes: readBytes,
-    //     onError: onError,
-    // );
+  IsometricNetwork(Isometric isometric) {
+    websocket = WebsocketClient(
+        readString: isometric.readServerResponseString,
+        readBytes: isometric.readNetworkBytes,
+        onError: isometric.onError,
+        onConnectionStatusChanged: isometric.onChangedNetworkConnectionStatus,
+    );
   }
 
   void sendClientRequest(int value, [dynamic message]) =>
-      message != null ? send('${value} $message') : send(value);
+      message != null
+          ? websocket.send('${value} $message')
+          : websocket.send(value);
 
 }

@@ -43,12 +43,7 @@ class Isometric with ByteReader {
 
   Isometric() {
     print('Isometric()');
-    network = IsometricNetwork(
-      readString: readNetworkString,
-      readBytes: readNetworkBytes,
-      onError: onError,
-      onConnectionStatusChanged: onChangedNetworkConnectionStatus,
-    );
+    network = IsometricNetwork(this);
     particles = IsometricParticles(this);
     audio = GameAudio(this);
     editor = IsometricEditor(this);
@@ -280,7 +275,7 @@ class Isometric with ByteReader {
 
   void update(){
 
-    if (!network.connected)
+    if (!network.websocket.connected)
       return;
 
     if (!gameRunning.value) {
@@ -875,6 +870,10 @@ class Isometric with ByteReader {
         ..emissionIntensity = 0.0
   ;
 
+  void readServerResponseString(String response){
+
+  }
+
   // @override
   void readServerResponse(int serverResponse){
     rendersSinceUpdate.value = 0;
@@ -969,7 +968,7 @@ class Isometric with ByteReader {
       default:
         print('read error; index: $index');
         print(values);
-        network.disconnect();
+        network.websocket.disconnect();
         return;
     }
   }
@@ -1000,7 +999,6 @@ class Isometric with ByteReader {
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
-        network.timeConnectionEstablished = DateTime.now();
         audio.enabledSound.value = true;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();
@@ -1015,7 +1013,6 @@ class Isometric with ByteReader {
         engine.cursorType.value = CursorType.Basic;
         engine.fullScreenExit();
         player.active.value = false;
-        network.timeConnectionEstablished = null;
         clear();
         clean();
         gameObjects.clear();
@@ -1322,7 +1319,7 @@ class Isometric with ByteReader {
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         games.website.error.value = 'unable to join game';
-        network.disconnect();
+        network.websocket.disconnect();
         break;
       default:
         break;
@@ -1350,7 +1347,7 @@ class Isometric with ByteReader {
   }
 
   void doRenderForeground(Canvas canvas, Size size){
-    if (!network.connected)
+    if (!network.websocket.connected)
       return;
     renderCursor(canvas);
     renderPlayerAimTargetNameText();
@@ -1449,7 +1446,7 @@ class Isometric with ByteReader {
   }
 
   void connectToServer(String uri, String message) {
-    network.connect(uri: uri, message: '${ClientRequest.Join} $message');
+    network.websocket.connect(uri: uri, message: '${ClientRequest.Join} $message');
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
@@ -1461,7 +1458,9 @@ class Isometric with ByteReader {
   }
 
   void sendClientRequest(int value, [dynamic message]) =>
-      message != null ? network.send('${value} $message') : network.send(value);
+      message != null ?
+        network.websocket.send('${value} $message') :
+        network.websocket.send(value);
 
   void detectInputMode() =>
       io.inputMode.value = engine.deviceIsComputer

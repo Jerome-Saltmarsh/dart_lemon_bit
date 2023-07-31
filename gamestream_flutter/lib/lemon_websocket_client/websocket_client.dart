@@ -63,6 +63,7 @@ class WebsocketClient {
   void _onEvent(dynamic response) {
     if (!connected) {
       connectionStatus.value = ConnectionStatus.Connected;
+      timeConnectionEstablished = DateTime.now();
     }
     if (response is Uint8List) {
       readBytes(response);
@@ -80,6 +81,7 @@ class WebsocketClient {
     if (connectionEstablished != null){
       final duration = DateTime.now().difference(connectionEstablished!);
       print('websocket-connection-duration: ${duration.inSeconds} seconds');
+      timeConnectionEstablished = null;
     }
 
     if (connecting) {

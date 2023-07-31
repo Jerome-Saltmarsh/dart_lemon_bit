@@ -104,7 +104,7 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildWatch(isometric.network.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
+          buildWatch(isometric.network.websocket.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
           GSRefresh(() => buildText(
               'connection-duration: ${formattedConnectionDuration}\n'
           )),
@@ -505,7 +505,7 @@ extension isometricDebugUI on IsometricDebug {
 
 
   String get formattedConnectionDuration {
-    final duration = isometric.network.connectionDuration;
+    final duration = isometric.network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     final seconds = duration.inSeconds % 60;
     final minutes = duration.inMinutes;
@@ -513,7 +513,7 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBufferSize(int bytes){
-    final duration = isometric.network.connectionDuration;
+    final duration = isometric.network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     final seconds = duration.inSeconds;
     final bytesPerSecond = (bytes / seconds).round();
@@ -523,21 +523,21 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBytePerSecond(int bytes){
-    final duration = isometric.network.connectionDuration;
+    final duration = isometric.network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round());
   }
 
   String formatAverageBytePerMinute(int bytes){
-    final duration = isometric.network.connectionDuration;
+    final duration = isometric.network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 60);
   }
 
   String formatAverageBytePerHour(int bytes){
-    final duration = isometric.network.connectionDuration;
+    final duration = isometric.network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 3600);

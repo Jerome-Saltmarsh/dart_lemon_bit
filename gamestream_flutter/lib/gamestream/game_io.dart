@@ -255,19 +255,12 @@ class GameIO with ByteWriter {
     } else if (changeScreenBottom == ChangeType.Big){
       writeInt16(screenBottom);
     }
-
-    // writeInt16(engine.mouseWorldX.toInt());
-    // writeInt16(engine.mouseWorldY.toInt());
-    // writeInt16(engine.Screen_Left.toInt());
-    // writeInt16(engine.Screen_Top.toInt());
-    // writeInt16(engine.Screen_Right.toInt());
-    // writeInt16(engine.Screen_Bottom.toInt());
   }
 
   void sendUpdateBuffer() {
     final bytes = compile();
     updateSize.value = bytes.length;
-    isometric.network.send(bytes);
+    isometric.network.websocket.send(bytes);
   }
 
   void reset() {
