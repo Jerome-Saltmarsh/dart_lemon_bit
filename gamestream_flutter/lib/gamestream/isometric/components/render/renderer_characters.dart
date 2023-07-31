@@ -394,22 +394,32 @@ class RendererCharacters extends RenderGroup {
 
     double srcX;
     Image image;
+    Image imageShadow;
 
     if (character.running) {
       srcX = (character.animationFrame % 8) * size;
       image = isometric.images.kid_running;
+      imageShadow = isometric.images.kid_running_shadow;
     } else {
       srcX = 0;
       image = isometric.images.kid_idle;
+      imageShadow = isometric.images.kid_idle_shadow;
     }
 
-    // isometric.ci
-    // renderCharacterShadow(
-    //    character,
-    //   srcX:
-    // );
+    // isometric.render.circle32(character.x, character.y, character.z);
 
-    isometric.render.circle32(character.x, character.y, character.z);
+    engine.renderSprite(
+      image: imageShadow,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      scale: scale,
+      color: 0,
+      anchorY: 0.7
+    );
 
     engine.renderSprite(
       image: image,

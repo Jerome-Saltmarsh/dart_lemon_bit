@@ -305,17 +305,18 @@ class IsometricResponseReader with ByteReader {
     scene.area2 = scene.area * 2;
     scene.projection = scene.area2 + scene.totalColumns + 1;
     scene.projectionHalf =  scene.projection ~/ 2;
-    scene.totalNodes = scene.totalZ * scene.totalRows * scene.totalColumns;
-    if (scene.colorStack.length != scene.totalNodes){
-      scene.colorStack = Uint16List(scene.totalNodes);
-      scene.ambientStack = Uint16List(scene.totalNodes);
+    final totalNodes = scene.totalZ * scene.totalRows * scene.totalColumns;
+    // assert (totalNodes == scene.nodeTypes.length && totalNodes == scene.nodeOrientations.length);
+    scene.totalNodes = totalNodes;
+    if (scene.colorStack.length != totalNodes){
+      scene.colorStack = Uint16List(totalNodes);
+      scene.ambientStack = Uint16List(totalNodes);
+      scene.nodeColors = Uint32List(totalNodes);
     }
-    scene.totalNodes = scene.totalNodes;
     isometric.nodesRaycast = scene.area +  scene.area + scene.totalColumns + 1;
     isometric.onChangedNodes();
     scene.refreshNodeVariations();
     scene.nodesChangedNotifier.value++;
-    isometric.particles.particles.clear();
     isometric.io.recenterCursor();
   }
 

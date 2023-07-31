@@ -49,10 +49,11 @@ extension IsometricEvents on Isometric {
       scene.rainStop();
       scene.rainStart();
     }
-    // resetNodeColorsToAmbient();
     updateAmbientAlphaAccordingToTime();
     scene.resetNodeColorsToAmbient();
     editor.refreshNodeSelectedIndex();
+
+    particles.particles.clear();
   }
 
   void onFootstep(double x, double y, double z) {

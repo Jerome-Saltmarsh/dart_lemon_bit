@@ -30,7 +30,9 @@ class Images {
    late final Image sprite_shield;
    late final Image template_spinning;
    late final Image kid_idle;
+   late final Image kid_idle_shadow;
    late final Image kid_running;
+   late final Image kid_running_shadow;
 
    late final Image template_head_plain;
    late final Image template_head_rogue;
@@ -178,7 +180,9 @@ class Images {
      loadPng('atlas_legs').then((value) => atlas_legs = value);
      loadPng('template/template_spinning').then((value) => template_spinning = value);
      loadPng('kid/kid_idle').then((value) => kid_idle = value);
+     loadPng('kid/kid_idle_shadow').then((value) => kid_idle_shadow = value);
      loadPng('kid/kid_running').then((value) => kid_running = value);
+     loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
      loadPng('character-dog').then((value) => character_dog = value);
      loadPng('template/template-shadow').then((value) => template_shadow = value);
      loadPng('template/head/template-head-plain').then((value) => template_head_plain = value);

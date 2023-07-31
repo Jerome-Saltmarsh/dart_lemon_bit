@@ -145,25 +145,9 @@ class IsometricScene {
     }
   }
 
-  void generateStacks(){
-    print('isometric_scene.generateStacks() - EXPENSIVE CALL');
-    colorStack = Uint16List(totalNodes);
-    nodeColors = Uint32List(totalNodes);
-  }
-
   void resetNodeColorsToAmbient() {
-    print('isometric_scene.resetNodeColorsToAmbient() - EXPENSIVE CALL');
     ambientResetIndex = 0;
     colorStackIndex = -1;
-
-    if (nodeColors.length != totalNodes) {
-      generateStacks();
-    }
-
-    final cacheAmbient = ambientColor;
-    for (var i = 0; i < totalNodes; i++) {
-      nodeColors[i] = cacheAmbient;
-    }
   }
 
   void update(){
