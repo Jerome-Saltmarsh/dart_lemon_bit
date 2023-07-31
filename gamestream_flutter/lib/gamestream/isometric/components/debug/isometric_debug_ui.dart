@@ -258,7 +258,6 @@ extension isometricDebugUI on IsometricDebug {
       onPressed(
           action: () => isometric.engine.drawCanvasAfterUpdate = !isometric.engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${isometric.engine.drawCanvasAfterUpdate}'))
-
       ),
       onPressed(
           action: () => isometric.renderResponse = !isometric.renderResponse,

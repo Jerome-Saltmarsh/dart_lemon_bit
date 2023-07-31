@@ -45,7 +45,7 @@ class IsometricCharacter extends IsometricCollider {
   var stateDuration = 0;
   var stateDurationTotal = -1;
   var nextFootstep = 0;
-  var framesPerAnimation = 6;
+  var framesPerAnimation = 3;
   var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";

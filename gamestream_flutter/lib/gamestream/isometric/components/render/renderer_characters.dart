@@ -388,7 +388,7 @@ class RendererCharacters extends RenderGroup {
   void renderCharacterKid(Character character) {
 
     const size = 256.0;
-    const scale = 0.35;
+    const scale = 0.32;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
 

@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/src/math.dart';
 import 'package:lemon_watch/src.dart';
@@ -74,7 +75,7 @@ class Engine extends StatelessWidget {
 
   var lastRenderTime = DateTime.now();
   var lastUpdateTime = DateTime.now();
-  var minMSPerRender = 10;
+  var minMSPerRender = 5;
   var mouseOverCanvas = false;
   List<Offset> touchPoints = [];
   var touches = 0;
@@ -991,7 +992,8 @@ class Engine extends StatelessWidget {
                     _internalBuildCanvas(context),
                     WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
                     => buildUI != null ? buildUI(context) : const SizedBox()
-                    )
+                    ),
+                    CustomTicker(onTrick: onTickElapsed)
                   ],
                 );
               },
@@ -1001,6 +1003,18 @@ class Engine extends StatelessWidget {
         debugShowCheckedModeBanner: false,
       ));
 
+  // var previousMS = 0;
+
+  var skipped = false;
+
+  void onTickElapsed(Duration duration){
+    // final elapsed = duration.inMilliseconds - previousMS;
+    // previousMS = duration.inMilliseconds;
+    // skipped = !skipped;
+    // if (skipped)
+    //   return;
+    redrawCanvas();
+  }
 
   Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
@@ -1210,18 +1224,12 @@ class Engine extends StatelessWidget {
   Widget buildCanvas({
     required PaintCanvas paint,
     ValueNotifier<int>? frame,
-    ShouldRepaint? shouldRepaint,
   })=> CustomPaint(
       painter: CustomPainterPainter(
           paint,
-          shouldRepaint ?? _doNotRepaint,
           frame
       ),
     );
-
-  bool _doNotRepaint(CustomPainter oldDelegate) {
-    return false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1325,23 +1333,57 @@ class _EngineForegroundPainter extends CustomPainter {
 // TYPEDEFS
 typedef BasicWidgetBuilder = Widget Function();
 typedef PaintCanvas = void Function(Canvas canvas, Size size);
-typedef ShouldRepaint = bool Function(CustomPainter oldDelegate);
 
 class CustomPainterPainter extends CustomPainter {
 
   final PaintCanvas paintCanvas;
-  final ShouldRepaint doRepaint;
 
-  CustomPainterPainter(this.paintCanvas, this.doRepaint, ValueNotifier<int>? frame) : super(repaint: frame);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    return paintCanvas(canvas, size);
-  }
+  CustomPainterPainter(this.paintCanvas, ValueNotifier<int>? frame) : super(repaint: frame);
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return doRepaint(oldDelegate);
-  }
+  void paint(Canvas canvas, Size size) => paintCanvas(canvas, size);
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
+
+
+class CustomTicker extends StatefulWidget {
+
+  final Function(Duration elapsed) onTrick;
+
+  const CustomTicker({super.key, required this.onTrick});
+
+  @override
+  _CustomTickerState createState() => _CustomTickerState();
+}
+
+class _CustomTickerState extends State<CustomTicker> with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Create a ticker that updates at 30 frames per second (30 FPS).
+    _ticker = this.createTicker(widget.onTrick);
+
+    // Start the ticker when the widget is created.
+    _ticker.start();
+  }
+
+  @override
+  void dispose() {
+    // Stop the ticker when the widget is disposed to prevent memory leaks.
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Replace this with your custom canvas rendering widget.
+    // Return a Canvas widget or a widget that will display your custom canvas.
+    return Container();
+  }
+}

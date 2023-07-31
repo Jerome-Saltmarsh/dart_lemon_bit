@@ -55,6 +55,7 @@ class Isometric {
       game.value.onGameError(error);
     });
 
+
     validateAtlases();
   }
 
@@ -781,6 +782,8 @@ class Isometric {
     print('isometric.onEngineBuilt()');
     compositor = IsometricCompositor(this);
     scene.engine = engine;
+    engine.drawCanvasAfterUpdate = false;
+    renderResponse = true;
   }
 
   void onReadRespondFinished() {
