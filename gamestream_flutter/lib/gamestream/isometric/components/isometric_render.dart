@@ -205,4 +205,11 @@ class IsometricRender {
       lineY1 = lineY2;
     }
   }
+
+  void circleFilled(double x, double y, double z, double radius) =>
+    isometric.engine.renderCircleFilled(
+      radius: radius,
+      x: getRenderX(x, y, z),
+      y: getRenderY(x, y, z),
+    );
 }
