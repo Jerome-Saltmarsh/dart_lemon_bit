@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dar
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 class RendererCharacters extends RenderGroup {
   late Character character;
@@ -392,7 +393,7 @@ class RendererCharacters extends RenderGroup {
     double x;
     double y;
     double z;
-    double shadowRadius;
+    double radius;
 
     if (lightIndex != -1) {
       final lightRow = isometric.scene.getIndexRow(lightIndex);
@@ -416,18 +417,19 @@ class RendererCharacters extends RenderGroup {
       z = character.z;
     }
 
-    const radius = 10.0;
+    const radiusBase = 10.0;
+    const radiusDelta = goldenRatio_0618;
     const shadowRadia = [
-      radius,
-      radius + 1,
-      radius,
-      radius - 1,
+      radiusBase,
+      radiusBase + radiusDelta,
+      radiusBase,
+      radiusBase - radiusDelta,
     ];
 
     if (character.running) {
-      shadowRadius = shadowRadia[character.animationFrame % 4];
+      radius = shadowRadia[character.animationFrame % 4];
     } else {
-      shadowRadius = shadowRadia[0];
+      radius = shadowRadia[0];
     }
 
     engine.color = Colors.black26;

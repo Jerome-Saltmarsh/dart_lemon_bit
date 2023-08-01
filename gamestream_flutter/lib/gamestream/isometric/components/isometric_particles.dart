@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../../../isometric/classes/particle.dart';
 
 class IsometricParticles {
+
   var nextParticleFrame = 0;
   var nodeType = 0;
 

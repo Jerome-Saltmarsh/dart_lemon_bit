@@ -72,14 +72,13 @@ class Isometric {
   late final IsometricPlayer player;
   late final IsometricUI ui;
 
-  var framesPerSmokeEmission = 10;
+
   var updateAmbientAlphaAccordingToTimeEnabled = true;
   var totalAmbientOffscreen = 0;
   var totalAmbientOnscreen = 0;
   var renderResponse = true;
   var renderCursorEnable = true;
   var clearErrorTimer = -1;
-  var nextEmissionSmoke = 0;
   var cursorType = IsometricCursorType.Hand;
   var srcXRainFalling = 6640.0;
   var srcXRainLanding = 6739.0;
@@ -203,7 +202,7 @@ class Isometric {
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
 
-    updateParticleEmitters();
+
 
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
@@ -332,33 +331,6 @@ class Isometric {
   }
 
   int get bodyPartDuration =>  randomInt(120, 200);
-
-  void updateParticleEmitters(){
-    if (nextEmissionSmoke-- > 0)
-      return;
-
-    nextEmissionSmoke = framesPerSmokeEmission;
-
-    for (var i = 0; i < scene.smokeSourcesTotal; i++){
-      final index = scene.smokeSources[i];
-      particles.emitSmoke(
-          x: scene.getIndexPositionX(index),
-          y: scene.getIndexPositionY(index),
-          z: scene.getIndexPositionZ(index),
-          duration: 250,
-      );
-    }
-
-    for (final gameObject in scene.gameObjects){
-      if (!gameObject.active) continue;
-      if (gameObject.type != ObjectType.Barrel_Flaming) continue;
-      particles.emitSmoke(
-          x: gameObject.x + giveOrTake(5),
-          y: gameObject.y + giveOrTake(5),
-          z: gameObject.z + 35,
-      );
-    }
-  }
 
   // PROPERTIES
   int get currentTimeInSeconds => (hours.value * Duration.secondsPerHour) + ( minutes.value * 60);

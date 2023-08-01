@@ -19,6 +19,9 @@ class IsometricScene {
   final Isometric isometric;
   late final Engine engine;
 
+  var framesPerSmokeEmission = 10;
+  var nextEmissionSmoke = 0;
+
   var totalProjectiles = 0;
   var bakeStackTotal = 0;
   var bakeStackIndex = Uint16List(100000);
@@ -154,6 +157,7 @@ class IsometricScene {
     jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
     updateGameObjects();
+    updateParticleEmitters();
   }
 
   void jobBatchResetNodeColorsToAmbient() {
@@ -1689,6 +1693,36 @@ class IsometricScene {
     }
     return null;
   }
+
+  void updateParticleEmitters(){
+    if (nextEmissionSmoke-- > 0)
+      return;
+
+    nextEmissionSmoke = framesPerSmokeEmission;
+    final particles = isometric.particles;
+    final smokeDuration = isometric.options.sceneSmokeSourcesSmokeDuration;
+
+    for (var i = 0; i < smokeSourcesTotal; i++){
+      final index = smokeSources[i];
+      particles.emitSmoke(
+        x: getIndexPositionX(index),
+        y: getIndexPositionY(index),
+        z: getIndexPositionZ(index),
+        duration: smokeDuration,
+      );
+    }
+
+    for (final gameObject in gameObjects){
+      if (!gameObject.active) continue;
+      if (gameObject.type != ObjectType.Barrel_Flaming) continue;
+      particles.emitSmoke(
+        x: gameObject.x + giveOrTake(5),
+        y: gameObject.y + giveOrTake(5),
+        z: gameObject.z + 35,
+      );
+    }
+  }
+
 }
 
 
