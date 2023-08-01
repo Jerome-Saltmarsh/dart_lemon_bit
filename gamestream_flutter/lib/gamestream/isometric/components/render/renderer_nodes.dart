@@ -189,7 +189,7 @@ class RendererNodes extends RenderGroup {
 
   int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
-  int get wind => isometric.windTypeAmbient.value;
+  int get wind => isometric.environment.windTypeAmbient.value;
 
   int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
 
@@ -1854,14 +1854,14 @@ class RendererNodes extends RenderGroup {
       return;
     }
     renderStandardNode(
-      srcX: isometric.srcXRainLanding,
+      srcX: isometric.environment.srcXRainLanding,
       srcY: 72.0 * ((isometric.animation.frame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   void renderNodeRainFalling() {
     renderStandardNode(
-      srcX: isometric.srcXRainFalling,
+      srcX: isometric.environment.srcXRainFalling,
       srcY: 72.0 * ((isometric.animation.frame + row + row + column) % 6), // TODO Expensive Operation
     );
   }

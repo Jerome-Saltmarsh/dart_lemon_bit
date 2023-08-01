@@ -404,10 +404,10 @@ class IsometricUI {
   Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(isometric.hours, (int hours) =>
+      WatchBuilder(isometric.environment.hours, (int hours) =>
           buildText(padZero(hours), size: 22)),
       buildText(':', size: 22),
-      WatchBuilder(isometric.minutes, (int minutes) =>
+      WatchBuilder(isometric.environment.minutes, (int minutes) =>
           buildText(padZero(minutes), size: 22)),
     ],
   );

@@ -206,7 +206,7 @@ class GameAudio {
   ];
 
   double getVolumeTargetDayAmbience() {
-    final hours = isometric.hours.value;
+    final hours = isometric.environment.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
@@ -243,7 +243,7 @@ class GameAudio {
   }
 
   double getVolumeTargetRain() {
-    switch (isometric.rainType.value){
+    switch (isometric.environment.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -256,7 +256,7 @@ class GameAudio {
   }
 
   double getVolumeTargetCrickets() {
-    final hour = isometric.hours.value;
+    final hour = isometric.environment.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -264,7 +264,7 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (isometric.lightningOn) return 1.0;
+    if (isometric.environment.lightningOn) return 1.0;
     return 0;
   }
 
@@ -291,14 +291,14 @@ class GameAudio {
   }
 
   void playRandomMusic(){
-    final hours = isometric.hours.value;
+    final hours = isometric.environment.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
   void playRandomAmbientSound(){
-    final hour = isometric.hours.value;
+    final hour = isometric.environment.hours.value;
 
     if (hour > 22 && hour < 4){
       playRandom(soundsNight);

@@ -826,7 +826,7 @@ class IsometricParticles {
       particle.applyAirFriction();
 
       if (particle.type == ParticleType.Smoke) {
-        final wind = isometric.windTypeAmbient.value * 0.005;
+        final wind = isometric.environment.windTypeAmbient.value * 0.005;
         particle.xv -= wind;
         particle.yv += wind;
       }

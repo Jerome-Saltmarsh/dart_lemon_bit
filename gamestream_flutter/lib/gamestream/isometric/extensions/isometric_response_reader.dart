@@ -342,30 +342,27 @@ class IsometricResponseReader with ByteReader {
     }
   }
 
-
   void readServerResponseEnvironment() {
     final environmentResponse = readByte();
+    final environment = isometric.environment;
     switch (environmentResponse) {
       case EnvironmentResponse.Rain:
-        isometric.rainType.value = readByte();
+        environment.rainType.value = readByte();
         break;
       case EnvironmentResponse.Lightning:
-        isometric.lightningType.value = readByte();
+        environment.lightningType.value = readByte();
         break;
       case EnvironmentResponse.Wind:
-        isometric.windTypeAmbient.value = readByte();
+        environment.windTypeAmbient.value = readByte();
         break;
       case EnvironmentResponse.Breeze:
-        isometric.weatherBreeze.value = readBool();
-        break;
-      case EnvironmentResponse.Underground:
-        isometric.sceneUnderground.value = readBool();
+        environment.weatherBreeze.value = readBool();
         break;
       case EnvironmentResponse.Lightning_Flashing:
-        isometric.lightningFlashing.value = readBool();
+        environment.lightningFlashing.value = readBool();
         break;
       case EnvironmentResponse.Time_Enabled:
-        isometric.gameTimeEnabled.value = readBool();
+        environment.gameTimeEnabled.value = readBool();
         break;
     }
   }
@@ -583,10 +580,11 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readWeather() {
-    isometric.rainType.value = readByte();
-    isometric.weatherBreeze.value = readBool();
-    isometric.lightningType.value = readByte();
-    isometric.windTypeAmbient.value = readByte();
+    final environment = isometric.environment;
+    environment.rainType.value = readByte();
+    environment.weatherBreeze.value = readBool();
+    environment.lightningType.value = readByte();
+    environment.windTypeAmbient.value = readByte();
   }
 
   void readStoreItems() {
@@ -617,7 +615,7 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readGameTime() {
-    isometric.seconds.value = readUInt24();
+    isometric.environment.seconds.value = readUInt24();
   }
 
   double readDouble() => readInt16().toDouble();

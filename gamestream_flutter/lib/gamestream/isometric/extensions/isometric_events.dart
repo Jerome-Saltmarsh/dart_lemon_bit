@@ -45,19 +45,18 @@ extension IsometricEvents on Isometric {
     compositor.rendererNodes.nodeColors = scene.nodeColors;
     compositor.rendererNodes.nodeOrientations = scene.nodeOrientations;
 
-    if (raining.value) {
+    if (environment.raining.value) {
       scene.rainStop();
       scene.rainStart();
     }
-    updateAmbientAlphaAccordingToTime();
+    scene.updateAmbientAlphaAccordingToTime();
     scene.resetNodeColorsToAmbient();
     editor.refreshNodeSelectedIndex();
-
     particles.particles.clear();
   }
 
   void onFootstep(double x, double y, double z) {
-    if (raining.value && (
+    if (environment.raining.value && (
         scene.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
             ||
         scene.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
@@ -66,7 +65,7 @@ extension IsometricEvents on Isometric {
 
       playAudioXYZ(audio.footstep_mud_6, x, y, z);
 
-      final amount = rainType.value == RainType.Heavy ? 3 : 2;
+      final amount = environment.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
@@ -389,30 +388,6 @@ extension IsometricEvents on Isometric {
         player.message.value = 'press tab to edit';
       }
     }
-  }
-
-  void onChangedWindType(int windType) {
-    refreshRain();
-  }
-
-  void onChangedHour(int hour){
-    if (sceneUnderground.value) return;
-    updateAmbientAlphaAccordingToTime();
-    // resetNodeColorsToAmbient();
-  }
-
-  void onChangedSeconds(int seconds){
-    final minutes = seconds ~/ 60;
-    hours.value = minutes ~/ Duration.minutesPerHour;
-    this.minutes.value = minutes % Duration.minutesPerHour;
-  }
-
-  void onChangedRain(int value) {
-    raining.value = value != RainType.None;
-    refreshRain();
-    updateAmbientAlphaAccordingToTime();
-
-    // resetNodeColorsToAmbient();
   }
 
   void onPlayerEvent(int event) {

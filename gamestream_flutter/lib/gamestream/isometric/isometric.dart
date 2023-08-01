@@ -5,8 +5,8 @@ import 'dart:ui' as dartUI;
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
 import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
@@ -20,7 +20,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
 
 import '../network/functions/detect_connection_region.dart';
-import 'atlases/atlas_nodes.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
@@ -35,6 +34,7 @@ class Isometric {
 
   Isometric() {
     print('Isometric()');
+    environment = IsometricEnvironment(this);
     scene = IsometricScene(this);
     network = IsometricNetwork(this);
     particles = IsometricParticles(this);
@@ -60,6 +60,7 @@ class Isometric {
   }
 
   late final Games games;
+  late final IsometricEnvironment environment;
   late final IsometricNetwork network;
   late final GameAudio audio;
   late final IsometricScene scene;
@@ -73,15 +74,12 @@ class Isometric {
   late final IsometricUI ui;
 
 
-  var updateAmbientAlphaAccordingToTimeEnabled = true;
   var totalAmbientOffscreen = 0;
   var totalAmbientOnscreen = 0;
   var renderResponse = true;
   var renderCursorEnable = true;
   var clearErrorTimer = -1;
   var cursorType = IsometricCursorType.Hand;
-  var srcXRainFalling = 6640.0;
-  var srcXRainLanding = 6739.0;
   var messageStatusDuration = 0;
   var areaTypeVisibleDuration = 0;
   var nextLightingUpdate = 0;
@@ -95,7 +93,6 @@ class Isometric {
   final textFieldMessage = FocusNode();
   final panelTypeKey = <int, GlobalKey>{};
   final playerTextStyle = TextStyle(color: Colors.white);
-  final timeVisible = Watch(true);
   final windowOpenMenu = WatchBool(false);
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
@@ -107,11 +104,7 @@ class Isometric {
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
-  final weatherBreeze = Watch(false);
-  final minutes = Watch(0);
-  final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
-  final sceneUnderground = Watch(false);
   final animation = IsometricAnimation();
 
   late final Map<int, dartUI.Image> mapGameObjectTypeToImage;
@@ -122,14 +115,7 @@ class Isometric {
 
   late final edit = Watch(false, onChanged:  onChangedEdit);
   late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
-  late final raining = Watch(false, onChanged: onChangedRaining);
   late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-  late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
-  late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
-  late final rainType = Watch(RainType.None, onChanged:  onChangedRain);
-  late final seconds = Watch(0, onChanged:  onChangedSeconds);
-  late final hours = Watch(0, onChanged:  onChangedHour);
-  late final windTypeAmbient = Watch(WindType.Calm, onChanged:  onChangedWindType);
   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
   late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
@@ -144,7 +130,6 @@ class Isometric {
 
   bool get editMode => edit.value;
 
-  bool get lightningOn =>  lightningType.value != LightningType.Off;
 
   double get windLineRenderX {
     var windLineColumn = 0;
@@ -195,14 +180,9 @@ class Isometric {
     animation.update();
     player.update();
     lighting.update();
-
-
     readPlayerInputEdit();
-
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
-
-
 
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
@@ -220,7 +200,7 @@ class Isometric {
 
     if (nextLightingUpdate-- <= 0){
       nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
-      updateAmbientAlphaAccordingToTime();
+      scene.updateAmbientAlphaAccordingToTime();
     }
   }
 
@@ -308,18 +288,6 @@ class Isometric {
     scene.ambientStackIndex = -1;
   }
 
-  void onChangedLightningFlashing(bool lightningFlashing){
-    if (lightningFlashing) {
-      audio.thunder(1.0);
-    } else {
-      updateAmbientAlphaAccordingToTime();
-    }
-  }
-
-  void onChangedGameTimeEnabled(bool value){
-    timeVisible.value = value;
-  }
-
   void clear() {
      player.position.x = -1;
      player.position.y = -1;
@@ -333,44 +301,6 @@ class Isometric {
   int get bodyPartDuration =>  randomInt(120, 200);
 
   // PROPERTIES
-  int get currentTimeInSeconds => (hours.value * Duration.secondsPerHour) + ( minutes.value * 60);
-
-  void updateAmbientAlphaAccordingToTime(){
-    if (!updateAmbientAlphaAccordingToTimeEnabled)
-      return;
-
-    scene.ambientAlpha = convertSecondsToAmbientAlpha(currentTimeInSeconds);
-
-    if (rainType.value == RainType.Light){
-      scene.ambientAlpha += lighting.rainAmbienceLight;
-    }
-    if ( rainType.value == RainType.Heavy){
-      scene.ambientAlpha += lighting.rainAmbientHeavy;
-    }
-  }
-
-  void refreshRain(){
-    switch ( rainType.value) {
-      case RainType.None:
-        break;
-      case RainType.Light:
-        srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        if ( windTypeAmbient.value == WindType.Calm){
-          srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
-        } else {
-          srcXRainFalling = 1851;
-        }
-        break;
-      case RainType.Heavy:
-        srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
-        if ( windTypeAmbient.value == WindType.Calm){
-          srcXRainFalling = 1900;
-        } else {
-          srcXRainFalling = 1606;
-        }
-        break;
-    }
-  }
 
   void showMessage(String message){
     messageStatus.value = '';
@@ -404,11 +334,6 @@ class Isometric {
 
   void onChangedAttributesWindowVisible(bool value){
      playSoundWindow();
-  }
-
-  void onChangedRaining(bool raining){
-    raining ?  scene.rainStart() :  scene.rainStop();
-    scene.resetNodeColorsToAmbient();
   }
 
   void onChangedMessageStatus(String value){
@@ -829,10 +754,10 @@ class Isometric {
     if (windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = windTypeAmbient.value;
+    final index = environment.windTypeAmbient.value;
     if (index <= WindType.Calm) {
-      if (hours.value < 6) return target;
-      if (hours.value < 18) return target + 0.1;
+      if (environment.hours.value < 6) return target;
+      if (environment.hours.value < 18) return target + 0.1;
       return target;
     }
     if (index <= WindType.Gentle) return target + 0.5;

@@ -458,9 +458,6 @@ class IsometricEditor {
   void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendIsometricEditorRequest(IsometricEditorRequest.Modify_Canvas_Size, request.index);
 
-  void sendClientRequestEditSceneToggleUnderground() =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Scene_Toggle_Underground);
-
   void sendClientRequestEditGenerateScene({
     required int rows,
     required int columns,

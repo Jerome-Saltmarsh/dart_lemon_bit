@@ -446,6 +446,7 @@ class RendererCharacters extends RenderGroup {
 
     engine.color = Colors.black26;
     isometric.render.circleFilled(x, y, z, radius);
+    engine.color = Colors.white;
   }
 
   void renderCharacterKid(Character character) {

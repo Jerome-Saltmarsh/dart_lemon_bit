@@ -387,21 +387,6 @@ extension IsometricEditorUI on IsometricEditor {
                 buildText('Close', onPressed: toggleWindowEnabledScene),
               ],
             ),
-            height16,
-            onPressed(
-              action: sendClientRequestEditSceneToggleUnderground,
-              child: Container(
-                color: Colors.white12,
-                padding: const EdgeInsets.all(5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildText('Underground'),
-                    buildWatch(isometric.sceneUnderground, buildText),
-                  ],
-                ),
-              ),
-            ),
             height8,
             onPressed(
               action: sendClientRequestEditSceneSetFloorTypeStone,
@@ -493,7 +478,7 @@ extension IsometricEditorUI on IsometricEditor {
       );
 
   Widget buildIconRain(int rain) => buildWatch(
-      isometric.rainType,
+      isometric.environment.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
         action: () => isometric.network.sendIsometricRequestWeatherSetRain(rain),
@@ -502,7 +487,7 @@ extension IsometricEditorUI on IsometricEditor {
       ));
 
   Widget buildIconLightning(int lightning) => buildWatch(
-      isometric.lightningType,
+      isometric.environment.lightningType,
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
@@ -513,7 +498,7 @@ extension IsometricEditorUI on IsometricEditor {
       ));
 
   Widget buildIconWind(int windType) => buildWatch(
-      isometric.windTypeAmbient,
+      isometric.environment.windTypeAmbient,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
         action: () => isometric.network.sendIsometricRequestWeatherSetWind(windType),
@@ -586,7 +571,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = buildWatch(isometric.hours, (int hours) {
+    final buttons = buildWatch(isometric.environment.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -627,9 +612,9 @@ extension IsometricEditorUI on IsometricEditor {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildWatch(isometric.hours, (num hour) => buildText(padZero(hour))),
+        buildWatch(isometric.environment.hours, (num hour) => buildText(padZero(hour))),
         buildText(':'),
-        buildWatch(isometric.minutes, (num hour) => buildText(padZero(hour))),
+        buildWatch(isometric.environment.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
     return Container(
@@ -1073,7 +1058,7 @@ extension IsometricEditorUI on IsometricEditor {
                         ),
                         Center(child: isometric.ui.buildImageGameObject(subType)),
                         height8,
-                        buidButtonDuplicate(),
+                        buildButtonDuplicate(),
                         height8,
                         buildText(GameObjectType.getName(type), size: 22),
                         height8,
@@ -1335,7 +1320,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildButtonGameDialogClose() =>
       buildText('x', onPressed: actionGameDialogClose);
 
-  Widget buidButtonDuplicate() => buildText('Duplicate', onPressed: sendGameObjectRequestDuplicate);
+  Widget buildButtonDuplicate() => buildText('Duplicate', onPressed: sendGameObjectRequestDuplicate);
 
   Widget buildWatchFixed() => buildWatch(
         gameObjectSelectedFixed,

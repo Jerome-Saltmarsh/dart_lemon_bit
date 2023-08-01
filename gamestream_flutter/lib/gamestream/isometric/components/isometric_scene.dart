@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
@@ -1720,6 +1721,20 @@ class IsometricScene {
         y: gameObject.y + giveOrTake(5),
         z: gameObject.z + 35,
       );
+    }
+  }
+
+  void updateAmbientAlphaAccordingToTime(){
+    if (!isometric.options.updateAmbientAlphaAccordingToTimeEnabled)
+      return;
+
+    ambientAlpha = convertSecondsToAmbientAlpha(isometric.environment.currentTimeInSeconds);
+
+    if (isometric.environment.rainType.value == RainType.Light){
+      ambientAlpha += isometric.lighting.rainAmbienceLight;
+    }
+    if (isometric.environment.rainType.value == RainType.Heavy){
+      ambientAlpha += isometric.lighting.rainAmbientHeavy;
     }
   }
 

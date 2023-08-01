@@ -644,15 +644,11 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writeWeather() {
     final environment = game.environment;
-    final underground = false;
-
     writeByte(ServerResponse.Weather);
     writeByte(environment.rainType);
     writeBool(environment.breezy);
     writeByte(environment.lightningType);
     writeByte(environment.windType);
-
-    writeEnvironmentUnderground(underground);
     writeGameTimeEnabled();
   }
 
@@ -753,12 +749,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Breeze);
     writeBool(value);
-  }
-
-  void writeEnvironmentUnderground(bool underground){
-    writeByte(ServerResponse.Environment);
-    writeByte(EnvironmentResponse.Underground);
-    writeBool(underground);
   }
 
   void writeEnvironmentLightningFlashing(bool value){

@@ -214,8 +214,6 @@ class WebSocketConnection with ByteReader {
           case IsometricEditorRequest.Clear_Spawned:
             game.clearSpawnedAI();
             break;
-          case IsometricEditorRequest.Scene_Toggle_Underground:
-            break;
           case IsometricEditorRequest.Spawn_AI:
             game.clearSpawnedAI();
             game.scene.refreshSpawnPoints();
