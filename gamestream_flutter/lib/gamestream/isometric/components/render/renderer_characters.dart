@@ -385,14 +385,60 @@ class RendererCharacters extends RenderGroup {
     return (character.renderDirection * framesPerDirection * size) + (frame * size);
   }
 
-  void renderCharacterKid(Character character) {
+  void renderCharacterShadowCircle(Character character) {
+    final lightIndex = isometric.scene.getNearestLightSourcePosition(
+        character, maxDistance: 5);
 
+    double x;
+    double y;
+    double z;
+    double shadowRadius;
+
+    if (lightIndex != -1) {
+      final lightRow = isometric.scene.getIndexRow(lightIndex);
+      final lightColumn = isometric.scene.getIndexColumn(lightIndex);
+
+      final lightX = (lightRow * Node_Size) + Node_Size_Half;
+      final lightY = (lightColumn * Node_Size) + Node_Size_Half;
+
+      final angle = angleBetween(lightX, lightY, character.x, character.y);
+      // final diff = angleDiff(angle, 4.0);
+      // final totalDiff = 1.0 - (diff / pi);
+      // final distance = 20.0 * totalDiff;
+      final distance = 8.0;
+
+      x = character.x + adj(angle, distance);
+      y = character.y + opp(angle, distance);
+      z = character.z;
+    } else {
+      x = character.x;
+      y = character.y;
+      z = character.z;
+    }
+
+    const radius = 10.0;
     const shadowRadia = [
-      12.0,
-      13.0,
-      12.0,
-      11.0,
+      radius,
+      radius + 1,
+      radius,
+      radius - 1,
     ];
+
+    if (character.running) {
+      shadowRadius = shadowRadia[character.animationFrame % 4];
+    } else {
+      shadowRadius = shadowRadia[0];
+    }
+
+    engine.color = Colors.black26;
+    engine.renderCircleFilled(
+      radius: shadowRadius,
+      x: getRenderX(x, y, z),
+      y: getRenderY(x, y, z),
+    );
+  }
+
+  void renderCharacterKid(Character character) {
 
     const size = 256.0;
     const scale = 0.32;
@@ -400,20 +446,17 @@ class RendererCharacters extends RenderGroup {
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
 
-    double shadowRadius;
     double srcX;
     ui.Image image;
     // ui.Image imageShadow;
 
     if (character.running) {
-      shadowRadius = shadowRadia[frame % 4];
 
       srcX = (frame % 8) * size;
       image = isometric.images.kid_running;
       // imageShadow = isometric.images.kid_running_shadow;
 
     } else {
-      shadowRadius = shadowRadia[0];
       srcX = 0;
       image = isometric.images.kid_idle;
       // imageShadow = isometric.images.kid_idle_shadow;
@@ -424,18 +467,7 @@ class RendererCharacters extends RenderGroup {
       }
     }
 
-    // engine.renderSprite(
-    //   image: imageShadow,
-    //   srcX: srcX,
-    //   srcY: srcY,
-    //   srcWidth: size,
-    //   srcHeight: size,
-    //   dstX: character.renderX,
-    //   dstY: character.renderY,
-    //   scale: scale,
-    //   color: 0,
-    //   anchorY: 0.7
-    // );
+    renderCharacterShadowCircle(character);
 
     engine.renderSprite(
       image: image,
@@ -448,14 +480,6 @@ class RendererCharacters extends RenderGroup {
       scale: scale,
       color: character.color,
       anchorY: 0.7
-    );
-
-    engine.color = Colors.black26;
-
-    engine.renderCircleFilled(
-      radius: shadowRadius,
-      x: character.renderX,
-      y: character.renderY,
     );
   }
 }
