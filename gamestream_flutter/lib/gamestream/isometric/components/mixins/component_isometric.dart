@@ -53,8 +53,13 @@ mixin IsometricComponent {
   late final IsometricResponseReader responseReader;
   late final WebsiteGame website;
   late final GameIO io;
+  late final IsometricImages images;
 
   void onComponentReady() {
+
+  }
+
+  void onImagesLoaded(){
 
   }
 }

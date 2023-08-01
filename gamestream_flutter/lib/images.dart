@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class Images {
+class IsometricImages {
    late final Image shades;
    late final Image pixel;
    late final Image atlas_projectiles;
@@ -33,6 +33,8 @@ class Images {
    late final Image kid_idle_shadow;
    late final Image kid_running;
    late final Image kid_running_shadow;
+   late final Image kid_shirt_blue_idle;
+   late final Image kid_shirt_blue_running;
 
    late final Image template_head_plain;
    late final Image template_head_rogue;
@@ -183,6 +185,8 @@ class Images {
      loadPng('kid/kid_idle_shadow').then((value) => kid_idle_shadow = value);
      loadPng('kid/kid_running').then((value) => kid_running = value);
      loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
+     loadPng('kid/kid_shirt_blue_idle').then((value) => kid_shirt_blue_idle = value);
+     loadPng('kid/kid_shirt_blue_running').then((value) => kid_shirt_blue_running = value);
      loadPng('character-dog').then((value) => character_dog = value);
      loadPng('template/template-shadow').then((value) => template_shadow = value);
      loadPng('template/head/template-head-plain').then((value) => template_head_plain = value);

@@ -76,9 +76,11 @@ class Isometric {
   late final IsometricEvents events;
   late final IsometricResponseReader responseReader;
   late final IsometricAnimation animation;
+  late final IsometricImages images;
 
   Isometric() {
     print('Isometric()');
+    images = IsometricImages();
     environment = IsometricEnvironment();
     rendererNodes = RendererNodes();
     rendererCharacters = RendererCharacters();
@@ -110,6 +112,7 @@ class Isometric {
     isometricEditor = IsometricGame();
     animation = IsometricAnimation();
 
+    components.add(images);
     components.add(scene);
     components.add(environment);
     components.add(rendererNodes);
@@ -171,6 +174,7 @@ class Isometric {
       component.website = website;
       component.options = options;
       component.animation = animation;
+      component.images = images;
     }
     validateAtlases();
   }
@@ -195,7 +199,6 @@ class Isometric {
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   final serverFPS = Watch(0);
-  final images = Images();
   final imagesLoaded = Future.value(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
@@ -760,9 +763,12 @@ class Isometric {
 
   void notifyLoadImagesCompleted() {
     print('isometric.notifyLoadImagesCompleted()');
-    compositor.rendererNodes.atlasNodes = images.atlas_nodes;
-    compositor.rendererNodes.atlasNodesLoaded = true;
     imagesLoadedCompleted.complete(true);
+
+    for (final component in components){
+      if (component is IsometricComponent)
+        component.onImagesLoaded();
+    }
 
     mapGameObjectTypeToImage = <int, dartUI.Image> {
       GameObjectType.Weapon: images.atlas_weapons,

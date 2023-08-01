@@ -462,18 +462,17 @@ class RendererCharacters extends RenderGroup {
 
     double srcX;
     ui.Image image;
-    // ui.Image imageShadow;
+    ui.Image imageBody;
 
     if (character.running) {
 
       srcX = (frame % 8) * size;
-      image = isometric.images.kid_running;
-      // imageShadow = isometric.images.kid_running_shadow;
-
+      image = images.kid_running;
+      imageBody = images.kid_shirt_blue_running;
     } else {
       srcX = 0;
-      image = isometric.images.kid_idle;
-      // imageShadow = isometric.images.kid_idle_shadow;
+      image = images.kid_idle;
+      imageBody = images.kid_shirt_blue_idle;
       if (frame ~/ 8 % 2 == 0){
         srcX = (frame % 8) * size;
       } else {
@@ -485,6 +484,19 @@ class RendererCharacters extends RenderGroup {
 
     engine.renderSprite(
       image: image,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      scale: scale,
+      color: character.color,
+      anchorY: 0.7
+    );
+
+    engine.renderSprite(
+      image: imageBody,
       srcX: srcX,
       srcY: srcY,
       srcWidth: size,
