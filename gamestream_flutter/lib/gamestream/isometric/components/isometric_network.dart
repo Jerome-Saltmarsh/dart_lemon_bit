@@ -8,12 +8,12 @@ import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
 
-class IsometricNetwork with ComponentIsometric {
+class IsometricNetwork with IsometricComponent {
 
   late final WebsocketClient websocket;
 
   @override
-  void onReady() {
+  void onComponentReady() {
     websocket = WebsocketClient(
       readString: responseReader.readServerResponseString,
       readBytes: responseReader.readNetworkBytes,

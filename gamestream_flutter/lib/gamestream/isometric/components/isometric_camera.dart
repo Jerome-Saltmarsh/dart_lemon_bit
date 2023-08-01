@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
-class IsometricCamera with ComponentIsometric {
+class IsometricCamera with IsometricComponent {
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;

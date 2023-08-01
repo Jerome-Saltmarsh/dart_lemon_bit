@@ -14,7 +14,7 @@ import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
 
-class IsometricUI with ComponentIsometric {
+class IsometricUI with IsometricComponent {
   static const Icon_Scale = 1.5;
 
   Widget buildMapCircle({required double size}) {

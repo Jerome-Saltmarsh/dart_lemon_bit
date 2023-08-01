@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'mixins/component_isometric.dart';
 
-class IsometricMouse with ComponentIsometric {
+class IsometricMouse with IsometricComponent {
 
   double get positionX => convertWorldToGridX(isometric.engine.mouseWorldX, isometric.engine.mouseWorldY) + isometric.player.position.z;
   double get positionY => convertWorldToGridY(isometric.engine.mouseWorldX, isometric.engine.mouseWorldY) + isometric.player.position.z;

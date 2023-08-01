@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricEnvironment with ComponentIsometric {
+class IsometricEnvironment with IsometricComponent {
 
   var windLine = 0;
   var srcXRainFalling = 6640.0;

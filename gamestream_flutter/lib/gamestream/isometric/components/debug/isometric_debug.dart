@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricDebug with ComponentIsometric {
+class IsometricDebug with IsometricComponent {
   final tab = Watch(DebugTab.Selected);
   final health = Watch(0);
   final healthMax = Watch(0);

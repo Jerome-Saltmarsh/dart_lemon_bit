@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/common/src/game_error.dart';
 
 import 'isometric/components/src.dart';
 
-abstract class Game with ComponentIsometric
+abstract class Game with IsometricComponent
 {
   void drawCanvas(Canvas canvas, Size size);
   void renderForeground(Canvas canvas, Size size);

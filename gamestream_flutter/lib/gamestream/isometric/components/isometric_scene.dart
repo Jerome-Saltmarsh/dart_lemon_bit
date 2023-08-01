@@ -13,7 +13,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
-class IsometricScene with ComponentIsometric {
+class IsometricScene with IsometricComponent {
 
   final sceneEditable = Watch(false);
   final gameObjects = <GameObject>[];

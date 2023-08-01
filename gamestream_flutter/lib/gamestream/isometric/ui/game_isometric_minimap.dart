@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 
-class IsometricMinimap with ComponentIsometric {
+class IsometricMinimap with IsometricComponent {
   var src = Float32List(0);
   var dst = Float32List(0);
 

@@ -9,7 +9,7 @@ import '../library.dart';
 import 'isometric/isometric.dart';
 
 
-class GameIO with ByteWriter, ComponentIsometric {
+class GameIO with ByteWriter, IsometricComponent {
 
   var previousMouseX = 0;
   var previousMouseY = 0;
@@ -45,7 +45,7 @@ class GameIO with ByteWriter, ComponentIsometric {
   final inputMode = Watch(InputMode.Keyboard);
 
   @override
-  void onReady() {
+  void onComponentReady() {
     touchController = TouchController(isometric);
   }
 

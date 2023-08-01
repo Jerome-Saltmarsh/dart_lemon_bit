@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../../../isometric/classes/particle.dart';
 import 'mixins/component_isometric.dart';
 
-class IsometricParticles with ComponentIsometric {
+class IsometricParticles with IsometricComponent {
 
   var nextParticleFrame = 0;
   var nodeType = 0;

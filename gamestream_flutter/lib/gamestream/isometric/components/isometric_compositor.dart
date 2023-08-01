@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 
-class IsometricCompositor with ComponentIsometric {
+class IsometricCompositor with IsometricComponent {
 
   var totalRemaining = 0;
   var totalIndex = 0;

@@ -142,7 +142,7 @@ class Isometric {
     components.add(animation);
 
     for (final component in components) {
-      if (component is! ComponentIsometric)
+      if (component is! IsometricComponent)
         continue;
 
       component.isometric = this;
@@ -450,12 +450,12 @@ class Isometric {
     print('isometric.onEngineBuilt()');
 
     for (final component in components){
-      if (component is ComponentIsometric)
+      if (component is IsometricComponent)
         component.engine = engine;
     }
     for (final component in components) {
-      if (component is ComponentIsometric)
-        component.onReady();
+      if (component is IsometricComponent)
+        component.onComponentReady();
     }
     componentsReady = true;
   }

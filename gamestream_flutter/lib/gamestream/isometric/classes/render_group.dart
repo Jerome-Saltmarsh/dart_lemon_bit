@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 
-abstract class RenderGroup with ComponentIsometric {
+abstract class RenderGroup with IsometricComponent {
   var _index = 0;
   var total = 0;
   var order = 0.0;

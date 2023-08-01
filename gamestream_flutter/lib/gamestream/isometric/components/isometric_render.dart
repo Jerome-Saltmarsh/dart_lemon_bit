@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricRender with ComponentIsometric {
+class IsometricRender with IsometricComponent {
 
   void textPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(

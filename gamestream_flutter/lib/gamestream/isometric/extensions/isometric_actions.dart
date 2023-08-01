@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
-class IsometricActions with ComponentIsometric {
+class IsometricActions with IsometricComponent {
   static const Zoom_Far = 0.4;
   static const Zoom_Close = 1.3;
   

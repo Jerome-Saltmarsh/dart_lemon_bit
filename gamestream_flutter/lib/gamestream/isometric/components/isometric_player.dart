@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../enums/game_dialog.dart';
 import '../../../isometric/classes/position.dart';
 
-class IsometricPlayer with ComponentIsometric {
+class IsometricPlayer with IsometricComponent {
 
   var playerInsideIsland = false;
   var energyPercentage = 0.0;

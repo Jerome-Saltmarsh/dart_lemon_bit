@@ -25,7 +25,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../isometric_player.dart';
 
-mixin ComponentIsometric {
+mixin IsometricComponent {
   late final Engine engine;
   late final Isometric isometric;
   late final IsometricAnimation animation;
@@ -54,7 +54,7 @@ mixin ComponentIsometric {
   late final WebsiteGame website;
   late final GameIO io;
 
-  void onReady(){
+  void onComponentReady() {
 
   }
 }

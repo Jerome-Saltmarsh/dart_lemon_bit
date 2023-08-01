@@ -11,7 +11,7 @@ import 'audio_single.dart';
 import 'audio_tracks.dart';
 
 
-class GameAudio with ComponentIsometric {
+class GameAudio with IsometricComponent {
 
   void toggleMutedSound() => enabledSound.value = !enabledSound.value;
   void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;

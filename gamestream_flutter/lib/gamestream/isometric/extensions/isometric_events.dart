@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/mixins/compon
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricEvents with ComponentIsometric {
+class IsometricEvents with IsometricComponent {
 
   void onErrorFullscreenAuto(){
      // TODO show a dialog box asking the user to go fullscreen
@@ -695,7 +695,7 @@ class IsometricEvents with ComponentIsometric {
   }
 
   @override
-  void onReady() {
+  void onComponentReady() {
 
     network.websocket.connectionStatus.onChanged(
         onChangedNetworkConnectionStatus

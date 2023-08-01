@@ -16,7 +16,7 @@ import 'package:lemon_byte/byte_reader.dart';
 import '../components/mixins/component_isometric.dart';
 
 
-class IsometricResponseReader with ByteReader, ComponentIsometric
+class IsometricResponseReader with ByteReader, IsometricComponent
 {
   final decoder = ZLibDecoder();
   final bufferSize = Watch(0);

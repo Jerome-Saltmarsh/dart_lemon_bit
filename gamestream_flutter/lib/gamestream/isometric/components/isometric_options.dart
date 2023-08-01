@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricOptions with ComponentIsometric {
+class IsometricOptions with IsometricComponent {
   var renderHealthBarEnemies = true;
   var renderHealthBarAllies = true;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
@@ -36,7 +36,7 @@ class IsometricOptions with ComponentIsometric {
   bool get editMode => edit.value;
 
   @override
-  void onReady() {
+  void onComponentReady() {
     game = Watch<Game>(website, onChanged: _onChangedGame);
   }
 
