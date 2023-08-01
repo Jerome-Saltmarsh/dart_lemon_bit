@@ -387,24 +387,36 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterKid(Character character) {
 
+    const shadowRadia = [
+      12.0,
+      13.0,
+      12.0,
+      11.0,
+    ];
+
     const size = 256.0;
     const scale = 0.32;
     final frame = character.animationFrame;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
 
+    double shadowRadius;
     double srcX;
     ui.Image image;
-    ui.Image imageShadow;
+    // ui.Image imageShadow;
 
     if (character.running) {
+      shadowRadius = shadowRadia[frame % 4];
+
       srcX = (frame % 8) * size;
       image = isometric.images.kid_running;
-      imageShadow = isometric.images.kid_running_shadow;
+      // imageShadow = isometric.images.kid_running_shadow;
+
     } else {
+      shadowRadius = shadowRadia[0];
       srcX = 0;
       image = isometric.images.kid_idle;
-      imageShadow = isometric.images.kid_idle_shadow;
+      // imageShadow = isometric.images.kid_idle_shadow;
       if (frame ~/ 8 % 2 == 0){
         srcX = (frame % 8) * size;
       } else {
@@ -412,22 +424,18 @@ class RendererCharacters extends RenderGroup {
       }
     }
 
-    engine.color = Colors.black54;
-
-    engine.renderSprite(
-      image: imageShadow,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
-      dstX: character.renderX,
-      dstY: character.renderY,
-      scale: scale,
-      color: 0,
-      anchorY: 0.7
-    );
-
-
+    // engine.renderSprite(
+    //   image: imageShadow,
+    //   srcX: srcX,
+    //   srcY: srcY,
+    //   srcWidth: size,
+    //   srcHeight: size,
+    //   dstX: character.renderX,
+    //   dstY: character.renderY,
+    //   scale: scale,
+    //   color: 0,
+    //   anchorY: 0.7
+    // );
 
     engine.renderSprite(
       image: image,
@@ -442,10 +450,10 @@ class RendererCharacters extends RenderGroup {
       anchorY: 0.7
     );
 
-    engine.color = Colors.white70;
+    engine.color = Colors.black26;
 
     engine.renderCircleFilled(
-      radius: 50,
+      radius: shadowRadius,
       x: character.renderX,
       y: character.renderY,
     );

@@ -142,9 +142,8 @@ class Engine extends StatelessWidget {
   /// triggered upon key release
   void Function(int keyCode)? onKeyUp;
 
-  static const segments = 24;
-  final _renderCirclePositions = Float32List(segments * 6);
-  final _renderCircleColors = Int32List(segments * 3);
+  static const _renderCircleSegments = 24;
+  final _renderCirclePositions = Float32List(_renderCircleSegments * 6);
 
   // SETTERS
   set bufferImage(ui.Image image){
@@ -946,9 +945,9 @@ class Engine extends StatelessWidget {
     required double x,
     required double y,
   }){
-    final angle = (2 * 3.14159) / segments;
+    final angle = (2 * 3.14159) / _renderCircleSegments;
     var j = 0;
-    for (int i = 0; i < segments; i++) {
+    for (int i = 0; i < _renderCircleSegments; i++) {
       _renderCirclePositions[j++] = x;
       _renderCirclePositions[j++] = y;
       _renderCirclePositions[j++] = x + adj(angle * i, radius);
