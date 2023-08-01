@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'dart:ui';
-
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
@@ -394,8 +394,8 @@ class RendererCharacters extends RenderGroup {
     final srcY = direction * size;
 
     double srcX;
-    Image image;
-    Image imageShadow;
+    ui.Image image;
+    ui.Image imageShadow;
 
     if (character.running) {
       srcX = (frame % 8) * size;
@@ -412,6 +412,8 @@ class RendererCharacters extends RenderGroup {
       }
     }
 
+    engine.color = Colors.black54;
+
     engine.renderSprite(
       image: imageShadow,
       srcX: srcX,
@@ -425,6 +427,8 @@ class RendererCharacters extends RenderGroup {
       anchorY: 0.7
     );
 
+
+
     engine.renderSprite(
       image: image,
       srcX: srcX,
@@ -436,6 +440,14 @@ class RendererCharacters extends RenderGroup {
       scale: scale,
       color: character.color,
       anchorY: 0.7
+    );
+
+    engine.color = Colors.white70;
+
+    engine.renderCircleFilled(
+      radius: 50,
+      x: character.renderX,
+      y: character.renderY,
     );
   }
 }

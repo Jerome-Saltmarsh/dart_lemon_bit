@@ -142,6 +142,9 @@ class Engine extends StatelessWidget {
   /// triggered upon key release
   void Function(int keyCode)? onKeyUp;
 
+  static const segments = 24;
+  final _renderCirclePositions = Float32List(segments * 6);
+  final _renderCircleColors = Int32List(segments * 3);
 
   // SETTERS
   set bufferImage(ui.Image image){
@@ -218,6 +221,8 @@ class Engine extends StatelessWidget {
       mouseLeftDownFrames = 0;
     }
   }
+
+
 
   void _internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
@@ -405,6 +410,14 @@ class Engine extends StatelessWidget {
     if (paint.color == value) return;
     paint.color = value;
   }
+
+  set color(Color value){
+    if (color == value)
+      return;
+    paint.color = value;
+  }
+
+  Color get color => paint.color;
 
   void _internalOnPointerMove(PointerMoveEvent event) {
     previousMousePositionX = mousePositionX;
@@ -927,6 +940,55 @@ class Engine extends StatelessWidget {
     setPaintColor(color);
     canvas.drawCircle(offset, radius, paint);
   }
+
+  void renderCircleFilled({
+    required double radius,
+    required double x,
+    required double y,
+  }){
+    final angle = (2 * 3.14159) / segments;
+    var j = 0;
+    for (int i = 0; i < segments; i++) {
+      _renderCirclePositions[j++] = x;
+      _renderCirclePositions[j++] = y;
+      _renderCirclePositions[j++] = x + adj(angle * i, radius);
+      _renderCirclePositions[j++] = y + opp(angle * i, radius);
+      _renderCirclePositions[j++] = x + adj(angle * (i + 1), radius);
+      _renderCirclePositions[j++] = y + opp(angle * (i + 1), radius);
+    }
+
+    final vertices = ui.Vertices.raw(
+      ui.VertexMode.triangles,
+      _renderCirclePositions,
+      textureCoordinates: null,
+      colors: null,
+      indices: null,
+    );
+
+    canvas.drawVertices(vertices, ui.BlendMode.srcOver, paint);
+  }
+
+  // void renderCircleFilled({
+  //   required double radius,
+  //   required double x,
+  //   required double y,
+  // }){
+  //   final angle = (2 * 3.14159) / segments;
+  //   var j = 0;
+  //   for (int i = 0; i < segments; i++) {
+  //     _renderCirclePositions[j++] = y + radius * sin(angle * i);
+  //     _renderCirclePositions[j++] = x + radius * cos(angle * i);
+  //   }
+  //
+  //   final vertices = ui.Vertices.raw(
+  //     ui.VertexMode.triangleFan,
+  //     _renderCirclePositions,
+  //     textureCoordinates: null,
+  //     colors: _renderCircleColors,
+  //     indices: null,
+  //   );
+  //   canvas.drawVertices(vertices, bufferBlendMode, paint);
+  // }
 
   void renderLine(double x1, double y1, double x2, double y2){
     canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);

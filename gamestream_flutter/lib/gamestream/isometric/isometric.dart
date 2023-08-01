@@ -30,6 +30,7 @@ import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
 
+
 class Isometric {
 
   Isometric() {
