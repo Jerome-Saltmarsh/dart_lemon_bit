@@ -387,8 +387,11 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterShadowCircle(Character character) {
-    final lightIndex = isometric.scene.getNearestLightSourcePosition(
-        character, maxDistance: 5);
+    final scene = isometric.scene;
+
+    final maxNodes = 5;
+    final lightIndex = scene.getNearestLightSourcePosition(
+        character, maxDistance: maxNodes);
 
     double x;
     double y;
@@ -396,20 +399,29 @@ class RendererCharacters extends RenderGroup {
     double radius;
 
     if (lightIndex != -1) {
-      final lightRow = isometric.scene.getIndexRow(lightIndex);
-      final lightColumn = isometric.scene.getIndexColumn(lightIndex);
+      final lightRow = scene.getIndexRow(lightIndex);
+      final lightColumn = scene.getIndexColumn(lightIndex);
+      final lightZ = scene.getIndexZ(lightIndex);
 
       final lightX = (lightRow * Node_Size) + Node_Size_Half;
       final lightY = (lightColumn * Node_Size) + Node_Size_Half;
+      final lightPosZ = (lightZ * Node_Height) + Node_Height_Half;
 
       final angle = angleBetween(lightX, lightY, character.x, character.y);
-      // final diff = angleDiff(angle, 4.0);
-      // final totalDiff = 1.0 - (diff / pi);
-      // final distance = 20.0 * totalDiff;
-      final distance = 8.0;
+      final distance = getDistanceXYZ(
+          character.x,
+          character.y,
+          character.z,
+          lightX,
+          lightY,
+          lightPosZ,
+      );
 
-      x = character.x + adj(angle, distance);
-      y = character.y + opp(angle, distance);
+      final maxDistance = maxNodes * Node_Size;
+      final distanceInverse =  (distance <= 0 ? 0 : (maxDistance / distance)).clamp(0, 1);
+      final shadowDistance = distanceInverse * 8.0;
+      x = character.x + adj(angle, shadowDistance);
+      y = character.y + opp(angle, shadowDistance);
       z = character.z;
     } else {
       x = character.x;
