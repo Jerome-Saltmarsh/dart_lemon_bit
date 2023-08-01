@@ -5,13 +5,13 @@ import 'package:gamestream_flutter/gamestream/isometric/components/mixins/compon
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:just_audio/just_audio.dart';
 
-import '../../library.dart';
-import 'audio_loop.dart';
-import 'audio_single.dart';
-import 'audio_tracks.dart';
+import '../../../library.dart';
+import '../../audio/audio_loop.dart';
+import '../../audio/audio_single.dart';
+import '../../audio/audio_tracks.dart';
 
 
-class GameAudio with IsometricComponent {
+class IsometricAudio with IsometricComponent {
 
   void toggleMutedSound() => enabledSound.value = !enabledSound.value;
   void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
@@ -405,7 +405,7 @@ class GameAudio with IsometricComponent {
     // TODO calculate distance from camera
 
     final distanceFromPlayer = getDistanceXYZ(x, y, z, player.x, player.y, player.z);;
-    final distanceVolume = GameAudio.convertDistanceToVolume(
+    final distanceVolume = IsometricAudio.convertDistanceToVolume(
       distanceFromPlayer,
       maxDistance: maxDistance,
     );

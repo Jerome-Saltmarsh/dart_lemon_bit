@@ -3,6 +3,8 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_audio.dart';
+
 class IsometricEnvironment with IsometricComponent {
 
   var windLine = 0;
@@ -105,7 +107,7 @@ class IsometricEnvironment with IsometricComponent {
 
   double getVolumeTargetWind() {
     final windLineDistance = (engine.screenCenterRenderX - windLineRenderX).abs();
-    final windLineDistanceVolume = GameAudio.convertDistanceToVolume(windLineDistance, maxDistance: 300);
+    final windLineDistanceVolume = IsometricAudio.convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
     if (windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;

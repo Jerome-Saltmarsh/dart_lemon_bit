@@ -6,6 +6,7 @@ import 'dart:ui' as dartUI;
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
+import 'package:gamestream_flutter/gamestream/game_io.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
@@ -52,7 +53,7 @@ class Isometric {
   late final Engine engine;
   late final IsometricRender render;
   late final IsometricOptions options;
-  late final GameAudio audio;
+  late final IsometricAudio audio;
   late final IsometricParticles particles;
   late final IsometricCompositor compositor;
   late final IsometricNetwork network;
@@ -65,7 +66,7 @@ class Isometric {
   late final IsometricMouse mouse;
   late final IsometricPlayer player;
   late final IsometricUI ui;
-  late final GameIO io;
+  late final IsometricIO io;
   late final IsometricEnvironment environment;
   late final RendererNodes rendererNodes;
   late final RendererCharacters rendererCharacters;
@@ -99,9 +100,9 @@ class Isometric {
     camera = IsometricCamera();
     player = IsometricPlayer();
     scene = IsometricScene();
-    io = GameIO();
+    io = IsometricIO();
     network = IsometricNetwork();
-    audio = GameAudio();
+    audio = IsometricAudio();
     options = IsometricOptions();
     particles = IsometricParticles();
     compositor = IsometricCompositor();

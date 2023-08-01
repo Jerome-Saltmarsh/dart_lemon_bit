@@ -1,10 +1,13 @@
 
 library src;
 
+export 'isometric_audio.dart';
+export 'isometric_animation.dart';
 export 'isometric_lighting.dart';
 export 'isometric_camera.dart';
 export 'debug/isometric_debug.dart';
 export 'isometric_mouse.dart';
+export 'isometric_images.dart';
 export 'isometric_player.dart';
 export 'isometric_compositor.dart';
 export 'isometric_scene.dart';

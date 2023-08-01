@@ -9,7 +9,7 @@ import '../library.dart';
 import 'isometric/isometric.dart';
 
 
-class GameIO with ByteWriter, IsometricComponent {
+class IsometricIO with ByteWriter, IsometricComponent {
 
   var previousMouseX = 0;
   var previousMouseY = 0;

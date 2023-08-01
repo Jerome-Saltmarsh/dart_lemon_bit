@@ -454,25 +454,33 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterKid(Character character) {
 
+    const anchorY = 0.7;
     const size = 256.0;
     const scale = 0.32;
     final frame = character.animationFrame;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
+    final color = character.color;
+    final dstX = character.renderX;
+    final dstY = character.renderY;
 
     double srcX;
     ui.Image image;
+    ui.Image imageHead;
     ui.Image imageBody;
 
     if (character.running) {
 
       srcX = (frame % 8) * size;
       image = images.kid_running;
+      imageHead = images.kid_head_plain_running;
       imageBody = images.kid_shirt_blue_running;
     } else {
       srcX = 0;
       image = images.kid_idle;
+      imageHead = images.kid_head_plain_idle;
       imageBody = images.kid_shirt_blue_idle;
+
       if (frame ~/ 8 % 2 == 0){
         srcX = (frame % 8) * size;
       } else {
@@ -488,11 +496,11 @@ class RendererCharacters extends RenderGroup {
       srcY: srcY,
       srcWidth: size,
       srcHeight: size,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       scale: scale,
-      color: character.color,
-      anchorY: 0.7
+      color: color,
+      anchorY: anchorY,
     );
 
     engine.renderSprite(
@@ -501,11 +509,24 @@ class RendererCharacters extends RenderGroup {
       srcY: srcY,
       srcWidth: size,
       srcHeight: size,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       scale: scale,
-      color: character.color,
-      anchorY: 0.7
+      color: color,
+      anchorY: anchorY,
+    );
+
+    engine.renderSprite(
+      image: imageHead,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      scale: scale,
+      color: color,
+      anchorY: anchorY,
     );
   }
 }
