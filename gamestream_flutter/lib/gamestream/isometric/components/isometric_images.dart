@@ -37,8 +37,11 @@ class IsometricImages {
    late final Image kid_body_shirt_blue_idle;
    late final Image kid_body_shirt_blue_running;
 
-   late final Image kid_head_plain_idle;
-   late final Image kid_head_plain_running;
+   late final Image kid_head_light_idle;
+   late final Image kid_head_light_running;
+
+   late final Image kid_head_dark_idle;
+   late final Image kid_head_dark_running;
 
    late final Image kid_legs_brown_idle;
    late final Image kid_legs_brown_running;
@@ -194,8 +197,10 @@ class IsometricImages {
      loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
      loadPng('kid/body/kid_body_shirt_blue_idle').then((value) => kid_body_shirt_blue_idle = value);
      loadPng('kid/body/kid_body_shirt_blue_running').then((value) => kid_body_shirt_blue_running = value);
-     loadPng('kid/head/kid_head_plain_idle').then((value) => kid_head_plain_idle = value);
-     loadPng('kid/head/kid_head_plain_running').then((value) => kid_head_plain_running = value);
+     loadPng('kid/head/kid_head_light_idle').then((value) => kid_head_light_idle = value);
+     loadPng('kid/head/kid_head_light_running').then((value) => kid_head_light_running = value);
+     loadPng('kid/head/kid_head_dark_idle').then((value) => kid_head_dark_idle = value);
+     loadPng('kid/head/kid_head_dark_running').then((value) => kid_head_dark_running = value);
      loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
      loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
      loadPng('character-dog').then((value) => character_dog = value);

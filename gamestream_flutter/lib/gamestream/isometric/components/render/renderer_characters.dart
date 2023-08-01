@@ -473,13 +473,13 @@ class RendererCharacters extends RenderGroup {
     if (character.running) {
       srcX = (frame % 8) * size;
       image = images.kid_running;
-      imageHead = images.kid_head_plain_running;
+      imageHead = images.kid_head_dark_running;
       imageBody = images.kid_body_shirt_blue_running;
       imageLegs = images.kid_legs_brown_running;
     } else {
       srcX = 0;
       image = images.kid_idle;
-      imageHead = images.kid_head_plain_idle;
+      imageHead = images.kid_head_dark_idle;
       imageBody = images.kid_body_shirt_blue_idle;
       imageLegs = images.kid_legs_brown_idle;
 
