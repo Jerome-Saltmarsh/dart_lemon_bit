@@ -8,16 +8,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
     if (playerIsTeamRed) {
       switch (flagStatus) {
         case CaptureTheFlagFlagStatus.Carried_By_Ally:
-          isometric.audio.voiceYourTeamHasYourFlag.play();
+          audio.voiceYourTeamHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-          isometric.audio.voiceTheEnemyHasYourFlag.play();
+          audio.voiceTheEnemyHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.At_Base:
-          isometric.audio.voiceYourFlagIsAtYourBase.play();
+          audio.voiceYourFlagIsAtYourBase.play();
           break;
         case CaptureTheFlagFlagStatus.Dropped:
-          isometric.audio.voiceYourFlagHasBeenDropped.play();
+          audio.voiceYourFlagHasBeenDropped.play();
           break;
       }
       return;
@@ -27,16 +27,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
 
     switch (flagStatus) {
       case CaptureTheFlagFlagStatus.Carried_By_Ally:
-        isometric.audio.voiceTheEnemyHasTheirFlag.play();
+        audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        isometric.audio.voiceYourTeamHasTheEnemyFlag.play();
+        audio.voiceYourTeamHasTheEnemyFlag.play();
         break;
       case CaptureTheFlagFlagStatus.At_Base:
-        isometric.audio.voiceTheEnemyFlagIsAtTheirBase.play();
+        audio.voiceTheEnemyFlagIsAtTheirBase.play();
         break;
       case CaptureTheFlagFlagStatus.Dropped:
-        isometric.audio.voiceTheEnemyFlagHasBeenDropped.play();
+        audio.voiceTheEnemyFlagHasBeenDropped.play();
         break;
     }
   }
@@ -45,16 +45,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
     if (playerIsTeamBlue) {
       switch (flagStatus) {
         case CaptureTheFlagFlagStatus.Carried_By_Ally:
-          isometric.audio.voiceYourTeamHasYourFlag.play();
+          audio.voiceYourTeamHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-          isometric.audio.voiceTheEnemyHasYourFlag.play();
+          audio.voiceTheEnemyHasYourFlag.play();
           break;
         case CaptureTheFlagFlagStatus.At_Base:
-          isometric.audio.voiceYourFlagIsAtYourBase.play();
+          audio.voiceYourFlagIsAtYourBase.play();
           break;
         case CaptureTheFlagFlagStatus.Dropped:
-          isometric.audio.voiceYourFlagHasBeenDropped.play();
+          audio.voiceYourFlagHasBeenDropped.play();
           break;
       }
       return;
@@ -64,16 +64,16 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
 
     switch (flagStatus) {
       case CaptureTheFlagFlagStatus.Carried_By_Ally:
-        isometric.audio.voiceTheEnemyHasTheirFlag.play();
+        audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        isometric.audio.voiceYourTeamHasTheEnemyFlag.play();
+        audio.voiceYourTeamHasTheEnemyFlag.play();
         break;
       case CaptureTheFlagFlagStatus.At_Base:
-        isometric.audio.voiceTheEnemyFlagIsAtTheirBase.play();
+        audio.voiceTheEnemyFlagIsAtTheirBase.play();
         break;
       case CaptureTheFlagFlagStatus.Dropped:
-        isometric.audio.voiceTheEnemyFlagHasBeenDropped.play();
+        audio.voiceTheEnemyFlagHasBeenDropped.play();
         break;
     }
   }
@@ -81,18 +81,18 @@ extension CaptureTheFlagEvents on CaptureTheFlagGame {
   void onRedTeamScore(){
     print('onRedTeamScore()');
     if (playerIsTeamRed){
-      isometric.audio.voiceYourTeamHasScoredAPoint.play();
+      audio.voiceYourTeamHasScoredAPoint.play();
     } else {
-      isometric.audio.voiceTheEnemyHasScored.play();
+      audio.voiceTheEnemyHasScored.play();
     }
   }
 
   void onBlueTeamScore() {
     print('onBlueTeamScore()');
     if (playerIsTeamBlue){
-      isometric.audio.voiceYourTeamHasScoredAPoint.play();
+      audio.voiceYourTeamHasScoredAPoint.play();
     } else {
-      isometric.audio.voiceTheEnemyHasScored.play();
+      audio.voiceTheEnemyHasScored.play();
     }
   }
 }

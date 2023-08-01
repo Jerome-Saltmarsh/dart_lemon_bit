@@ -9,5 +9,5 @@ export 'isometric_player.dart';
 export 'isometric_compositor.dart';
 export 'isometric_scene.dart';
 export 'isometric_particles.dart';
-
 export 'editor/src.dart';
+export 'mixins/component_isometric.dart';

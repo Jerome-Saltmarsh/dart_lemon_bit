@@ -1,35 +1,13 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 
-import 'render/renderer_characters.dart';
-import 'render/renderer_gameobjects.dart';
-import 'render/renderer_nodes.dart';
-import 'render/renderer_particles.dart';
-import 'render/renderer_projectiles.dart';
-
-class IsometricCompositor {
-
-  final Isometric isometric;
+class IsometricCompositor with ComponentIsometric {
 
   var totalRemaining = 0;
   var totalIndex = 0;
 
-  late final RendererNodes rendererNodes;
-  late final RendererProjectiles rendererProjectiles;
-  late final RendererCharacters rendererCharacters;
-  late final RendererParticles rendererParticles;
-  late final RendererGameObjects rendererGameObjects;
   late RenderGroup next = rendererNodes;
-
-  IsometricCompositor(this.isometric){
-    print('IsometricRender()');
-    rendererNodes = RendererNodes(isometric);
-    rendererProjectiles = RendererProjectiles(isometric);
-    rendererCharacters = RendererCharacters(isometric);
-    rendererParticles = RendererParticles(isometric);
-    rendererGameObjects = RendererGameObjects(isometric);
-  }
 
   void resetRenderOrder(RenderGroup value){
     value.reset();

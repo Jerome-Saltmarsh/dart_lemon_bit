@@ -1,7 +1,8 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../library.dart';
@@ -10,11 +11,7 @@ import 'audio_single.dart';
 import 'audio_tracks.dart';
 
 
-class GameAudio {
-
-  final Isometric isometric;
-
-  GameAudio(this.isometric);
+class GameAudio with ComponentIsometric {
 
   void toggleMutedSound() => enabledSound.value = !enabledSound.value;
   void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
@@ -83,7 +80,7 @@ class GameAudio {
   ];
 
   late final audioLoops = <AudioLoop> [
-    AudioLoop(name: 'wind', getTargetVolume: isometric.getVolumeTargetWind),
+    AudioLoop(name: 'wind', getTargetVolume: environment.getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
     AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
@@ -206,7 +203,7 @@ class GameAudio {
   ];
 
   double getVolumeTargetDayAmbience() {
-    final hours = isometric.environment.hours.value;
+    final hours = environment.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
@@ -226,7 +223,7 @@ class GameAudio {
   var _nextAudioSourceUpdate = 0;
 
   void update() {
-    if (!isometric.audio.enabledSound.value) {
+    if (!audio.enabledSound.value) {
       return;
     }
 
@@ -243,7 +240,7 @@ class GameAudio {
   }
 
   double getVolumeTargetRain() {
-    switch (isometric.environment.rainType.value){
+    switch (environment.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -256,7 +253,7 @@ class GameAudio {
   }
 
   double getVolumeTargetCrickets() {
-    final hour = isometric.environment.hours.value;
+    final hour = environment.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -264,7 +261,7 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (isometric.environment.lightningOn) return 1.0;
+    if (environment.lightningOn) return 1.0;
     return 0;
   }
 
@@ -291,14 +288,14 @@ class GameAudio {
   }
 
   void playRandomMusic(){
-    final hours = isometric.environment.hours.value;
+    final hours = environment.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
   void playRandomAmbientSound(){
-    final hour = isometric.environment.hours.value;
+    final hour = environment.hours.value;
 
     if (hour > 22 && hour < 4){
       playRandom(soundsNight);
@@ -332,15 +329,15 @@ class GameAudio {
 
     switch (character.characterType) {
       case CharacterType.Zombie:
-        isometric.playAudioSingleV3(
-            audioSingle: randomItem(isometric.audio.audioSingleZombieTalking),
+        playAudioSingleV3(
+            audioSingle: randomItem(audio.audioSingleZombieTalking),
             position: character,
             maxDistance: 500,
         );
         break;
       case CharacterType.Dog:
-        isometric.playAudioSingleV3(
-            audioSingle: isometric.audio.dog_woolf_howl_4,
+        playAudioSingleV3(
+            audioSingle: audio.dog_woolf_howl_4,
             position: character,
             maxDistance: 500,
         );
@@ -396,4 +393,35 @@ class GameAudio {
     WeaponType.Minigun: dagger_woosh_9,
     WeaponType.Grenade: dagger_woosh_9,
   };
+
+  void playAudioXYZ(
+      AudioSingle audioSingle,
+      double x,
+      double y,
+      double z,{
+        double maxDistance = 600,
+      }){
+    if (!audio.enabledSound.value) return;
+    // TODO calculate distance from camera
+
+    final distanceFromPlayer = getDistanceXYZ(x, y, z, player.x, player.y, player.z);;
+    final distanceVolume = GameAudio.convertDistanceToVolume(
+      distanceFromPlayer,
+      maxDistance: maxDistance,
+    );
+    audioSingle.play(volume: distanceVolume);
+    // play(volume: distanceVolume);
+  }
+
+  void playAudioSingleV3({
+    required AudioSingle audioSingle,
+    required Position position,
+    double maxDistance = 600}) => playAudioXYZ(
+    audioSingle,
+    position.x,
+    position.y,
+    position.z,
+    maxDistance: maxDistance,
+  );
+
 }

@@ -1,18 +1,17 @@
 
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import '../../../../isometric/classes/gameobject.dart';
 import '../../enums/editor_dialog.dart';
 import '../../enums/emission_type.dart';
-import '../../../../isometric/classes/gameobject.dart';
 import 'isometric_editor_style.dart';
 import 'isometric_editor_tab.dart';
 
 
-class IsometricEditor {
+class IsometricEditor with ComponentIsometric {
 
-  final Isometric isometric;
   final style = IsometricEditorStyle();
   final windowEnabledScene = Watch(false);
   final windowEnabledCanvasSize = Watch(false);
@@ -59,10 +58,10 @@ class IsometricEditor {
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  IsometricEditor(this.isometric);
-
   int get z => isometric.scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+
   int get row => isometric.scene.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+
   int get column => isometric.scene.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   set z(int value){
@@ -487,7 +486,7 @@ class IsometricEditor {
   void saveScene()=> sendIsometricEditorRequest(IsometricEditorRequest.Save);
 
   void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
-      isometric.network.send(
+      network.send(
         ClientRequest.Isometric_Editor,
         '${request.index} $message',
       );
@@ -500,12 +499,12 @@ class IsometricEditor {
       allowedExtensions: ['scene'],
     );
     if (result == null) {
-      isometric.showMessage('result == null');
+      action.showMessage('result == null');
       return;
     }
     final sceneBytes = result.files[0].bytes;
     if (sceneBytes == null) {
-      isometric.showMessage('contents == null');
+      action.showMessage('contents == null');
       return;
     }
     loadScene(sceneBytes);

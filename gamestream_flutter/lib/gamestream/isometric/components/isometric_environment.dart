@@ -1,11 +1,11 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricEnvironment {
-  final Isometric isometric;
+class IsometricEnvironment with ComponentIsometric {
 
+  var windLine = 0;
   var srcXRainFalling = 6640.0;
   var srcXRainLanding = 6739.0;
 
@@ -20,7 +20,7 @@ class IsometricEnvironment {
   final weatherBreeze = Watch(false);
   final minutes = Watch(0);
 
-  IsometricEnvironment(this.isometric){
+  IsometricEnvironment(){
     lightningFlashing.onChanged(onChangedLightningFlashing);
     rainType.onChanged(onChangedRain);
     seconds.onChanged(onChangedSeconds);
@@ -28,6 +28,20 @@ class IsometricEnvironment {
     windTypeAmbient.onChanged(onChangedWindType);
     raining.onChanged(onChangedRaining);
   }
+
+  double get windLineRenderX {
+    var windLineColumn = 0;
+    var windLineRow = 0;
+    if (windLine < scene.totalRows){
+      windLineColumn = 0;
+      windLineRow =  scene.totalRows - windLine - 1;
+    } else {
+      windLineRow = 0;
+      windLineColumn = windLine - scene.totalRows + 1;
+    }
+    return (windLineRow - windLineColumn) * Node_Size_Half;
+  }
+
 
   bool get lightningOn =>  lightningType.value != LightningType.Off;
 
@@ -37,7 +51,7 @@ class IsometricEnvironment {
 
   void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
-      isometric.audio.thunder(1.0);
+      audio.thunder(1.0);
     }
   }
 
@@ -88,4 +102,22 @@ class IsometricEnvironment {
     raining ? isometric.scene.rainStart() :  isometric.scene.rainStop();
     isometric.scene.resetNodeColorsToAmbient();
   }
+
+  double getVolumeTargetWind() {
+    final windLineDistance = (engine.screenCenterRenderX - windLineRenderX).abs();
+    final windLineDistanceVolume = GameAudio.convertDistanceToVolume(windLineDistance, maxDistance: 300);
+    var target = 0.0;
+    if (windLineRenderX - 250 <= engine.screenCenterRenderX) {
+      target += windLineDistanceVolume;
+    }
+    final index = environment.windTypeAmbient.value;
+    if (index <= WindType.Calm) {
+      if (environment.hours.value < 6) return target;
+      if (environment.hours.value < 18) return target + 0.1;
+      return target;
+    }
+    if (index <= WindType.Gentle) return target + 0.5;
+    return 1.0;
+  }
+
 }

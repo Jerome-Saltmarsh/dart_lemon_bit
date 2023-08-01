@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_res
 extension MMOResponseReader on IsometricResponseReader {
 
   void readMMOResponse(){
-    final game = isometric.games.mmo;
+    final game = isometric.mmo;
      switch (readByte()){
        case MMOResponse.Player_Interacting:
          game.playerInteracting.value = readBool();

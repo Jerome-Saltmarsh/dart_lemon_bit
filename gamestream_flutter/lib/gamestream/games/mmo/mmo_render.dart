@@ -6,11 +6,10 @@ import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 
 extension MMORender on MmoGame {
 
-  void render(Canvas canvas, Size size) {
+  void renderMMO(Canvas canvas, Size size) {
     renderPlayerHoverItemRange();
     renderPlayerRunLine();
     renderActivatedPower();
-
   }
 
   void renderPlayerRunLine({Color color = Colors.purple}) {

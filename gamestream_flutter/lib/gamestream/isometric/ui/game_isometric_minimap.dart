@@ -3,14 +3,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 
-class IsometricMinimap {
+class IsometricMinimap with ComponentIsometric {
   var src = Float32List(0);
   var dst = Float32List(0);
-  final Isometric isometric;
-
-  IsometricMinimap(this.isometric);
 
   static double mapNodeTypeToSrcX(int nodeType) => const <int, double>{
     NodeType.Grass: 1,

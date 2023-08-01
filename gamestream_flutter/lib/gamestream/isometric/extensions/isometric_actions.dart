@@ -1,9 +1,10 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
-extension IsometricActions on Isometric {
+class IsometricActions with ComponentIsometric {
   static const Zoom_Far = 0.4;
   static const Zoom_Close = 1.3;
   
@@ -12,30 +13,6 @@ extension IsometricActions on Isometric {
     if (sceneName == null) throw Exception('loadSelectedSceneNameException: selected scene name is null');
     network.sendIsometricRequestEditorLoadGame(sceneName);
     editor.actionGameDialogClose();
-  }
-
-  void actionSetModePlay(){
-    edit.value = false;
-  }
-
-  void actionSetModeEdit(){
-    edit.value = true;
-  }
-
-  void actionToggleEdit() {
-    edit.value = !edit.value;
-  }
-
-  void messageBoxToggle(){
-    messageBoxVisible.value = !messageBoxVisible.value;
-  }
-
-  void messageBoxShow(){
-    messageBoxVisible.value = true;
-  }
-
-  void messageBoxHide(){
-    messageBoxVisible.value = false;
   }
 
   void toggleZoom(){
@@ -49,13 +26,13 @@ extension IsometricActions on Isometric {
 
   void createExplosion(double x, double y, double z){
     spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
-    playAudioXYZ(audio.explosion_grenade_04, x, y, z);
+    audio.playAudioXYZ(audio.explosion_grenade_04, x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      spawnParticleFire(
+      action.spawnParticleFire(
           x: x,
           y: y,
           z: z,
@@ -105,5 +82,124 @@ extension IsometricActions on Isometric {
   void cameraTargetPlayer(){
     camera.target = player.position;
   }
+
+
+  void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
+
+    audio.playAudioXYZ(audio.magical_impact_16,x, y, z);
+
+    for (var i = 0; i < amount; i++) {
+      particles.spawnParticleFirePurple(
+        x: x + giveOrTake(5),
+        y: y + giveOrTake(5),
+        z: z, speed: 1,
+        angle: randomAngle(),
+      );
+    }
+  }
+
+  void spawnParticleLightEmissionAmbient({
+    required double x,
+    required double y,
+    required double z,
+  }) =>
+      particles.spawnParticle(
+        type: ParticleType.Light_Emission,
+        x: x,
+        y: y,
+        z: z,
+        angle: 0,
+        speed: 0,
+        weight: 0,
+        duration: 35,
+        animation: true,
+      )
+        ..flash = true
+        ..emissionColor = scene.ambientColor
+        ..emissionIntensity = 0.0
+  ;
+
+  Particle spawnParticleFire({
+    required double x,
+    required double y,
+    required double z,
+    int duration = 100,
+    double scale = 1.0
+  }) =>
+      particles.spawnParticle(
+        type: ParticleType.Fire,
+        x: x,
+        y: y,
+        z: z,
+        zv: 1,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        scaleV: 0.01,
+        weight: -1,
+        duration: duration,
+        scale: scale,
+      )
+        ..emitsLight = true
+        ..emissionColor = scene.ambientColor
+        ..deactiveOnNodeCollision = false
+        ..emissionIntensity = 0.5
+  ;
+
+
+
+  void clean() {
+    scene.colorStackIndex = -1;
+    scene.ambientStackIndex = -1;
+  }
+
+  void clear() {
+    player.position.x = -1;
+    player.position.y = -1;
+    player.gameDialog.value = null;
+    player.npcTalkOptions.value = [];
+    scene.totalProjectiles = 0;
+    particles.children.clear();
+    engine.zoom = 1;
+  }
+
+  int get bodyPartDuration =>  randomInt(120, 200);
+
+  // PROPERTIES
+
+  void showMessage(String message){
+    options.messageStatus.value = '';
+    options.messageStatus.value = message;
+  }
+
+  void spawnConfettiPlayer() {
+    for (var i = 0; i < 10; i++){
+      particles.spawnParticleConfetti(
+        player.position.x,
+        player.position.y,
+        player.position.z,
+      );
+    }
+  }
+
+  void playSoundWindow() =>
+      audio.click_sound_8(1);
+
+  void messageClear(){
+    writeMessage('');
+  }
+
+  void writeMessage(String value){
+    options.messageStatus.value = value;
+  }
+
+  void playAudioError(){
+    audio.errorSound15();
+  }
+
+  void startGameByType(GameType gameType){
+    options.game.value = isometric.mapGameTypeToGame(gameType);
+  }
+
 }
 

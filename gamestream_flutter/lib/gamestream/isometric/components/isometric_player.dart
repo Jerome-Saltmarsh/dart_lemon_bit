@@ -1,14 +1,11 @@
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../enums/game_dialog.dart';
 import '../../../isometric/classes/position.dart';
 
-class IsometricPlayer {
-
-  final Isometric isometric;
+class IsometricPlayer with ComponentIsometric {
 
   var playerInsideIsland = false;
   var energyPercentage = 0.0;
@@ -68,8 +65,6 @@ class IsometricPlayer {
   late final alive = Watch(true);
   late final weapon = Watch(0);
 
-  IsometricPlayer(this.isometric);
-
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
@@ -89,7 +84,7 @@ class IsometricPlayer {
   }
 
   void onChangedGameDialog(GameDialog? value){
-    isometric.audio.click_sound_8();
+    audio.click_sound_8();
     if (value == GameDialog.Quests) {
       // actionHideQuestAdded();
     }
@@ -136,15 +131,15 @@ class IsometricPlayer {
 
   void onChangedDebugging(bool debugging){
     if (!debugging){
-      isometric.cameraTargetPlayer();
+      action.cameraTargetPlayer();
     }
   }
 
   void toggleControlsRunInDirectionEnabled() =>
-      isometric.network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
+      network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
 
   void toggleControlsCanTargetEnemies() =>
-      isometric.network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
+      network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

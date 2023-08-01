@@ -1,13 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricDebug {
-  final Isometric isometric;
+class IsometricDebug with ComponentIsometric {
   final tab = Watch(DebugTab.Selected);
   final health = Watch(0);
   final healthMax = Watch(0);
@@ -25,7 +23,7 @@ class IsometricDebug {
   final path = Uint16List(500);
   final pathIndex = Watch(0);
   final pathEnd = Watch(0);
-  final action = Watch(0);
+  final characterAction = Watch(0);
   final goal = Watch(0);
   final pathTargetIndex = Watch(0);
   final targetSet = Watch(false);
@@ -55,9 +53,7 @@ class IsometricDebug {
 
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
-  IsometricDebug(this.isometric);
-
-  void render() {
+  void drawCanvas() {
     if (!isometric.player.debugging.value) return;
     if (!selectedCollider.value) return;
 
@@ -160,19 +156,19 @@ class IsometricDebug {
      }
   }
 
-  void onMouseLeftClicked() => isometric.network.sendIsometricRequestDebugSelect();
+  void onMouseLeftClicked() => network.sendIsometricRequestDebugSelect();
 
   void onMouseRightClicked() {
     if (isometric.engine.keyPressedShiftLeft){
-      isometric.network.sendIsometricRequestDebugAttack();
+      network.sendIsometricRequestDebugAttack();
       return;
     }
-    isometric.network.sendIsometricRequestDebugCommand();
+    network.sendIsometricRequestDebugCommand();
   }
 
   void onKeyPressed(int key){
     if (key == KeyCode.G) {
-      isometric.network.sendIsometricRequestMoveSelectedColliderToMouse();
+      network.sendIsometricRequestMoveSelectedColliderToMouse();
       return;
     }
   }
@@ -181,7 +177,7 @@ class IsometricDebug {
       if (enabled){
         isometric.camera.target = null;
       } else {
-        isometric.cameraTargetPlayer();
+        action.cameraTargetPlayer();
       }
   }
 }

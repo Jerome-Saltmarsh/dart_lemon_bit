@@ -68,7 +68,7 @@ extension isometricDebugUI on IsometricDebug {
         value: debugCharacterType,
         onChanged: (int? newValue) {
           if (newValue == null) return;
-          isometric.network.sendIsometricRequestDebugCharacterSetCharacterType(newValue);
+          network.sendIsometricRequestDebugCharacterSetCharacterType(newValue);
         },
         items: CharacterType.values.map((int characterType) => DropdownMenuItem<int>(
           value: characterType,
@@ -85,7 +85,7 @@ extension isometricDebugUI on IsometricDebug {
         value: weaponType,
         onChanged: (int? newValue) {
           if (newValue == null) return;
-          isometric.network.sendIsometricRequestDebugCharacterSetWeaponType(newValue);
+          network.sendIsometricRequestDebugCharacterSetWeaponType(newValue);
         },
         items: WeaponType.values.map((int weaponType) => DropdownMenuItem<int>(
           value: weaponType,
@@ -104,16 +104,16 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildWatch(isometric.network.websocket.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
+          buildWatch(network.websocket.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
           GSRefresh(() => buildText(
               'connection-duration: ${formattedConnectionDuration}\n'
           )),
           buildText('network-server-fps: $serverFPS'),
-          buildWatch(isometric.network.responseReader.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-          buildWatch(isometric.network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
-          buildWatch(isometric.network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
-          buildWatch(isometric.network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
-          buildWatch(isometric.network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+          buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+          buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
+          buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
+          buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
+          buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
           height8,
           buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
           buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
@@ -151,14 +151,14 @@ extension isometricDebugUI on IsometricDebug {
                   'scene.smoke-sources: ${isometric.scene.smokeSourcesTotal}\n'
                   'total-gameobjects: ${isometric.scene.gameObjects.length}\n'
                   'total-characters: ${isometric.scene.totalCharacters}\n'
-                  'total-particles: ${isometric.particles.particles.length}\n'
-                  'total-particles-active: ${isometric.particles.countActiveParticles}\n'
+                  'total-particles: ${particles.children.length}\n'
+                  'total-particles-active: ${particles.countActiveParticles}\n'
           )),
-          buildWatch(isometric.gameType, (GameType value) => buildText('game-type: ${value.name}')),
-          buildWatch(isometric.engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: isometric.engine.toggleDeviceType)),
+          buildWatch(options.gameType, (GameType value) => buildText('game-type: ${value.name}')),
+          buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: isometric.engine.toggleDeviceType)),
           buildWatch(isometric.io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: isometric.io.actionToggleInputMode)),
-          buildWatch(isometric.engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
-          buildWatch(isometric.engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
+          buildWatch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
+          buildWatch(engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
           // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
         ],
       );
@@ -272,7 +272,7 @@ extension isometricDebugUI on IsometricDebug {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: isometric.scene.gameObjects
               .map((gameObject) => onPressed(
-                action: () => isometric.network.sendIsometricRequestSelectGameObject(gameObject),
+                action: () => network.sendIsometricRequestSelectGameObject(gameObject),
                 child: buildText(
                     '${GameObjectType.getName(gameObject.type)} - ${GameObjectType.getNameSubType(gameObject.type, gameObject.subType)}'),
               ))
@@ -365,7 +365,7 @@ extension isometricDebugUI on IsometricDebug {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         onPressed(
-          action: isometric.network.sendIsometricRequestDebugCharacterDebugUpdate,
+          action: network.sendIsometricRequestDebugCharacterDebugUpdate,
           child: buildText('DEBUG'), ),
         height8,
         onPressed(
@@ -381,8 +381,8 @@ extension isometricDebugUI on IsometricDebug {
           ),
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
-        buildRow(text: 'action', value: buildWatch(action, (t) => buildText(CharacterAction.getName(t)))),
-        buildRow(text: 'goal', value: buildWatch(action, (t) => buildText(CharacterGoal.getName(t)))),
+        buildRow(text: 'action', value: buildWatch(characterAction, (t) => buildText(CharacterAction.getName(t)))),
+        buildRow(text: 'goal', value: buildWatch(characterAction, (t) => buildText(CharacterGoal.getName(t)))),
         buildRowWatchInt(text: 'team', watch: team),
         buildRowWatchInt(text: 'radius', watch: radius),
         buildWatch(healthMax, (healthMax) => buildWatch(health, (health) =>
@@ -403,15 +403,15 @@ extension isometricDebugUI on IsometricDebug {
         buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
         buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
         onPressed(
-            action: isometric.network.sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,
+            action: network.sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,
             child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
         ),
         onPressed(
-            action: isometric.network.sendIsometricRequestDebugCharacterTogglePathFindingEnabled,
+            action: network.sendIsometricRequestDebugCharacterTogglePathFindingEnabled,
             child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
         ),
         onPressed(
-            action: isometric.network.sendIsometricRequestDebugCharacterToggleRunToDestination,
+            action: network.sendIsometricRequestDebugCharacterToggleRunToDestination,
             child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
         ),
         buildTarget(),
@@ -470,16 +470,16 @@ extension isometricDebugUI on IsometricDebug {
           child: buildText('decrease'),
         ),
         onPressed(
-          action: isometric.options.toggleRenderHealthbarAllies,
-          child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarAllies))),
+          action: options.toggleRenderHealthbarAllies,
+          child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
         ),
         onPressed(
-            action: isometric.options.toggleRenderHealthbarAllies,
-            child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarAllies))),
+            action: options.toggleRenderHealthbarAllies,
+            child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
         ),
         onPressed(
-            action: isometric.options.toggleRenderHealthBarEnemies,
-            child: buildRow(text: 'render-health-enemy', value: GSRefresh(() => buildValueText(isometric.options.renderHealthBarEnemies))),
+            action: options.toggleRenderHealthBarEnemies,
+            child: buildRow(text: 'render-health-enemy', value: GSRefresh(() => buildValueText(options.renderHealthBarEnemies))),
         ),
         onPressed(
             action: isometric.player.toggleControlsRunInDirectionEnabled,
@@ -504,7 +504,7 @@ extension isometricDebugUI on IsometricDebug {
 
 
   String get formattedConnectionDuration {
-    final duration = isometric.network.websocket.connectionDuration;
+    final duration = network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     final seconds = duration.inSeconds % 60;
     final minutes = duration.inMinutes;
@@ -512,7 +512,7 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBufferSize(int bytes){
-    final duration = isometric.network.websocket.connectionDuration;
+    final duration = network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     final seconds = duration.inSeconds;
     final bytesPerSecond = (bytes / seconds).round();
@@ -522,21 +522,21 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBytePerSecond(int bytes){
-    final duration = isometric.network.websocket.connectionDuration;
+    final duration = network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round());
   }
 
   String formatAverageBytePerMinute(int bytes){
-    final duration = isometric.network.websocket.connectionDuration;
+    final duration = network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 60);
   }
 
   String formatAverageBytePerHour(int bytes){
-    final duration = isometric.network.websocket.connectionDuration;
+    final duration = network.websocket.connectionDuration;
     if (duration == null) return 'not connected';
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 3600);

@@ -1,38 +1,34 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/particle.dart';
+import 'mixins/component_isometric.dart';
 
-class IsometricParticles {
+class IsometricParticles with ComponentIsometric {
 
   var nextParticleFrame = 0;
   var nodeType = 0;
 
-  final particles = <Particle>[];
+  final children = <Particle>[];
   int get bodyPartDuration =>  randomInt(120, 200);
 
-  final Isometric isometric;
-
-  IsometricParticles(this.isometric);
-
   Particle getInstance() {
-    for (final particle in particles) {
+    for (final particle in children) {
       if (!particle.active)
         return particle;
     }
 
     final instance = Particle();
     instance.active = true;
-    particles.add(instance);
+    children.add(instance);
     return instance;
   }
 
   void clearParticles(){
-    particles.clear();
+    children.clear();
   }
 
   Particle spawnParticle({
@@ -740,12 +736,12 @@ class IsometricParticles {
   }
 
   int get countActiveParticles =>
-      particles.where((element) => element.active).length;
+      children.where((element) => element.active).length;
 
   void update() {
     nextParticleFrame--;
 
-    for (final particle in particles) {
+    for (final particle in children) {
       if (!particle.active) continue;
       updateParticle(particle);
       if (nextParticleFrame <= 0){
@@ -826,7 +822,7 @@ class IsometricParticles {
       particle.applyAirFriction();
 
       if (particle.type == ParticleType.Smoke) {
-        final wind = isometric.environment.windTypeAmbient.value * 0.005;
+        final wind = environment.windTypeAmbient.value * 0.005;
         particle.xv -= wind;
         particle.yv += wind;
       }
@@ -856,5 +852,9 @@ class IsometricParticles {
     if (particle.duration <= 0) {
       particle.deactivate();
     }
+  }
+
+  void sort(){
+    children.sort(Particle.compare);
   }
 }

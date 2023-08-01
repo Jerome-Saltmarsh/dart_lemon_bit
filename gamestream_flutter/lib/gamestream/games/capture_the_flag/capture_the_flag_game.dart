@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'capture_the_flag_actions.dart';
@@ -19,7 +18,6 @@ class CaptureTheFlagGame extends IsometricGame {
   var characterTargetTotal = 0;
   var playerActivatedTargetSet = false;
 
-  final Isometric gamestream;
   final tab = Watch(CaptureTheFlagUITabs.Flag_Status);
   final flagPositionRed = Position();
   final flagPositionBlue = Position();
@@ -45,12 +43,12 @@ class CaptureTheFlagGame extends IsometricGame {
   final playerExperienceRequiredForNextLevel = Watch(0);
   final skillPoints = Watch(0);
 
-  late final audioOnLevelGain = gamestream.audio.collect_star_3;
+  // late final audioOnLevelGain = audio.collect_star_3;
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
 
-  CaptureTheFlagGame({required this.gamestream}) : super(isometric: gamestream);
+  // CaptureTheFlagGame({required super.isometric});
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

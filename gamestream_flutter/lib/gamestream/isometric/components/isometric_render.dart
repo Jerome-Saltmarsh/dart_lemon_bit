@@ -1,17 +1,13 @@
 
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricRender {
-
-  final Isometric isometric;
-
-  IsometricRender(this.isometric);
+class IsometricRender with ComponentIsometric {
 
   void textPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(

@@ -4,8 +4,8 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -13,11 +13,11 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
-class IsometricScene {
+class IsometricScene with ComponentIsometric {
 
+  final sceneEditable = Watch(false);
   final gameObjects = <GameObject>[];
   final projectiles = <Projectile>[];
-  final Isometric isometric;
   late final Engine engine;
 
   var framesPerSmokeEmission = 10;
@@ -86,8 +86,6 @@ class IsometricScene {
     length: interpolationLength,
     easeType: interpolationEaseType.value,
   );
-
-  IsometricScene(this.isometric);
 
   void setInterpolationLength(int value){
     if (value < 1) return;
@@ -1158,7 +1156,7 @@ class IsometricScene {
   }
 
   void applyEmissionEditorSelectedNode() {
-    if (!isometric.editMode) return;
+    if (!options.editMode) return;
     final editor = isometric.editor;
     if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
       emitLightAmbient(
@@ -1594,7 +1592,7 @@ class IsometricScene {
   }
 
   void applyEmissionsParticles() {
-    final particles = isometric.particles.particles;
+    final particles = this.particles.children;
     final length = particles.length;
     for (var i = 0; i < length; i++) {
       final particle = particles[i];
@@ -1612,16 +1610,16 @@ class IsometricScene {
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        isometric.particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         isometric.projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        isometric.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        action.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-        isometric.particles.spawnParticleOrbShard(
+        particles.spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,
@@ -1700,8 +1698,7 @@ class IsometricScene {
       return;
 
     nextEmissionSmoke = framesPerSmokeEmission;
-    final particles = isometric.particles;
-    final smokeDuration = isometric.options.sceneSmokeSourcesSmokeDuration;
+    final smokeDuration = options.sceneSmokeSourcesSmokeDuration;
 
     for (var i = 0; i < smokeSourcesTotal; i++){
       final index = smokeSources[i];
@@ -1725,15 +1722,15 @@ class IsometricScene {
   }
 
   void updateAmbientAlphaAccordingToTime(){
-    if (!isometric.options.updateAmbientAlphaAccordingToTimeEnabled)
+    if (!options.updateAmbientAlphaAccordingToTimeEnabled)
       return;
 
-    ambientAlpha = convertSecondsToAmbientAlpha(isometric.environment.currentTimeInSeconds);
+    ambientAlpha = convertSecondsToAmbientAlpha(environment.currentTimeInSeconds);
 
-    if (isometric.environment.rainType.value == RainType.Light){
+    if (environment.rainType.value == RainType.Light){
       ambientAlpha += isometric.lighting.rainAmbienceLight;
     }
-    if (isometric.environment.rainType.value == RainType.Heavy){
+    if (environment.rainType.value == RainType.Heavy){
       ambientAlpha += isometric.lighting.rainAmbientHeavy;
     }
   }

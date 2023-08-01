@@ -6,16 +6,21 @@ import 'dart:ui' as dartUI;
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
+import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
+import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
-import 'package:gamestream_flutter/gamestream/audio/audio_single.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
-import 'package:gamestream_flutter/gamestream/games.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
 
@@ -23,6 +28,8 @@ import '../network/functions/detect_connection_region.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
+import 'components/render/renderer_nodes.dart';
+import 'components/render/renderer_projectiles.dart';
 import 'components/src.dart';
 import 'enums/cursor_type.dart';
 import 'ui/game_isometric_minimap.dart';
@@ -32,39 +39,25 @@ import 'ui/isometric_constants.dart';
 
 class Isometric {
 
-  Isometric() {
-    print('Isometric()');
-    environment = IsometricEnvironment(this);
-    scene = IsometricScene(this);
-    network = IsometricNetwork(this);
-    particles = IsometricParticles(this);
-    audio = GameAudio(this);
-    editor = IsometricEditor(this);
-    debug = IsometricDebug(this);
-    minimap = IsometricMinimap(this);
-    camera = IsometricCamera(this);
-    mouse = IsometricMouse(this);
-    player = IsometricPlayer(this);
-    ui = IsometricUI(this);
-    games = Games(this);
-    render = IsometricRender(this);
+  var componentsReady = false;
 
-    games.website.errorMessageEnabled.value = true;
-    error.onChanged((GameError? error) {
-      if (error == null) return;
-      game.value.onGameError(error);
-    });
+  final components = <dynamic>[];
 
+  late final WebsiteGame website;
+  late final MmoGame mmo;
+  late final Moba moba;
+  late final CaptureTheFlagGame captureTheFlag;
+  late final IsometricGame isometricEditor;
 
-    validateAtlases();
-  }
-
-  late final Games games;
-  late final IsometricEnvironment environment;
-  late final IsometricNetwork network;
+  late final Engine engine;
+  late final IsometricRender render;
+  late final IsometricOptions options;
   late final GameAudio audio;
-  late final IsometricScene scene;
   late final IsometricParticles particles;
+  late final IsometricCompositor compositor;
+  late final IsometricNetwork network;
+
+  late final IsometricScene scene;
   late final IsometricDebug debug;
   late final IsometricEditor editor;
   late final IsometricMinimap minimap;
@@ -72,20 +65,125 @@ class Isometric {
   late final IsometricMouse mouse;
   late final IsometricPlayer player;
   late final IsometricUI ui;
+  late final GameIO io;
+  late final IsometricEnvironment environment;
+  late final RendererNodes rendererNodes;
+  late final RendererCharacters rendererCharacters;
+  late final RendererParticles rendererParticles;
+  late final RendererProjectiles rendererProjectiles;
+  late final RendererGameObjects rendererGameObjects;
+  late final IsometricActions action;
+  late final IsometricEvents events;
+  late final IsometricResponseReader responseReader;
+  late final IsometricAnimation animation;
+
+  Isometric() {
+    print('Isometric()');
+    environment = IsometricEnvironment();
+    rendererNodes = RendererNodes();
+    rendererCharacters = RendererCharacters();
+    rendererParticles = RendererParticles();
+    rendererProjectiles = RendererProjectiles();
+    rendererGameObjects = RendererGameObjects();
+    editor = IsometricEditor();
+    debug = IsometricDebug();
+    minimap = IsometricMinimap();
+    mouse = IsometricMouse();
+    ui = IsometricUI();
+    render = IsometricRender();
+    action = IsometricActions();
+    events = IsometricEvents();
+    responseReader = IsometricResponseReader();
+    camera = IsometricCamera();
+    player = IsometricPlayer();
+    scene = IsometricScene();
+    io = GameIO();
+    network = IsometricNetwork();
+    audio = GameAudio();
+    options = IsometricOptions();
+    particles = IsometricParticles();
+    compositor = IsometricCompositor();
+    website = WebsiteGame();
+    mmo = MmoGame();
+    moba = Moba();
+    captureTheFlag = CaptureTheFlagGame();
+    isometricEditor = IsometricGame();
+    animation = IsometricAnimation();
+
+    components.add(scene);
+    components.add(environment);
+    components.add(rendererNodes);
+    components.add(rendererCharacters);
+    components.add(rendererParticles);
+    components.add(rendererProjectiles);
+    components.add(rendererGameObjects);
+    components.add(network);
+    components.add(player);
+    components.add(audio);
+    components.add(particles);
+    components.add(editor);
+    components.add(debug);
+    components.add(minimap);
+    components.add(camera);
+    components.add(mouse);
+    components.add(ui);
+    components.add(io);
+    components.add(render);
+    components.add(action);
+    components.add(events);
+    components.add(responseReader);
+    components.add(options);
+    components.add(compositor);
+    components.add(website);
+    components.add(mmo);
+    components.add(moba);
+    components.add(captureTheFlag);
+    components.add(isometricEditor);
+    components.add(animation);
+
+    for (final component in components) {
+      if (component is! ComponentIsometric)
+        continue;
+
+      component.isometric = this;
+      component.scene = scene;
+      component.environment = environment;
+      component.rendererNodes = rendererNodes;
+      component.rendererParticles = rendererParticles;
+      component.rendererCharacters = rendererCharacters;
+      component.rendererProjectiles = rendererProjectiles;
+      component.rendererGameObjects = rendererGameObjects;
+      component.network = network;
+      component.player = player;
+      component.audio = audio;
+      component.particles = particles;
+      component.editor = editor;
+      component.debug = debug;
+      component.minimap = minimap;
+      component.camera = camera;
+      component.mouse = mouse;
+      component.ui = ui;
+      component.io = io;
+      component.render = render;
+      component.action = action;
+      component.events = events;
+      component.responseReader = responseReader;
+      component.website = website;
+      component.options = options;
+      component.animation = animation;
+    }
+    validateAtlases();
+  }
 
 
   var totalAmbientOffscreen = 0;
   var totalAmbientOnscreen = 0;
   var renderResponse = true;
   var renderCursorEnable = true;
-  var clearErrorTimer = -1;
   var cursorType = IsometricCursorType.Hand;
-  var messageStatusDuration = 0;
-  var areaTypeVisibleDuration = 0;
   var nextLightingUpdate = 0;
   var interpolationPadding = 0.0;
   var nodesRaycast = 0;
-  var windLine = 0;
   final lighting = Lighting();
   final colors = IsometricColors();
   final imagesLoadedCompleted = Completer();
@@ -98,54 +196,20 @@ class Isometric {
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   final serverFPS = Watch(0);
   final images = Images();
-  final options = IsometricOptions();
-  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final imagesLoaded = Future.value(false);
-  final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
   final watchTimePassing = Watch(false);
-  final animation = IsometricAnimation();
 
   late final Map<int, dartUI.Image> mapGameObjectTypeToImage;
 
-  late final messageBoxVisible = Watch(false, clamp: (bool value) {
-    return value;
-  }, onChanged: ui.onVisibilityChangedMessageBox);
-
-  late final edit = Watch(false, onChanged:  onChangedEdit);
-  late final messageStatus = Watch('', onChanged: onChangedMessageStatus);
-  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-  late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
-  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
-  late final gameType = Watch(GameType.Website, onChanged: onChangedGameType);
-  late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
-  late final io = GameIO(this);
-  late final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
-  late final Engine engine;
-  late final IsometricCompositor compositor;
-  late final IsometricRender render;
-
-  bool get playMode => !editMode;
-
-  bool get editMode => edit.value;
-
-
-  double get windLineRenderX {
-    var windLineColumn = 0;
-    var windLineRow = 0;
-    if (windLine < scene.totalRows){
-      windLineColumn = 0;
-      windLineRow =  scene.totalRows - windLine - 1;
-    } else {
-      windLineRow = 0;
-      windLineColumn = windLine - scene.totalRows + 1;
-    }
-    return (windLineRow - windLineColumn) * Node_Size_Half;
-  }
 
   void drawCanvas(Canvas canvas, Size size) {
-    if (gameType.value == GameType.Website)
+
+    if (!componentsReady)
+      return;
+
+    if (options.gameType.value == GameType.Website)
       return;
 
     totalAmbientOffscreen = 0;
@@ -155,12 +219,15 @@ class Isometric {
     compositor.render3D();
     renderEditMode();
     renderMouseTargetName();
-    debug.render();
-    game.value.drawCanvas(canvas, size);
-    rendersSinceUpdate.value++;
+    debug.drawCanvas();
+    options.game.value.drawCanvas(canvas, size);
+    options.rendersSinceUpdate.value++;
   }
 
   void update(){
+
+    if (!componentsReady)
+      return;
 
     if (!network.websocket.connected)
       return;
@@ -172,8 +239,9 @@ class Isometric {
       return;
     }
 
-    updateClearErrorTimer();
-    game.value.update();
+    options.update();
+    options.updateClearErrorTimer();
+    options.game.value.update();
     scene.update();
     audio.update();
     particles.update();
@@ -185,18 +253,8 @@ class Isometric {
     io.sendUpdateBuffer();
 
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
-    if (areaTypeVisible.value) {
-      if (areaTypeVisibleDuration-- <= 0) {
-        areaTypeVisible.value = false;
-      }
-    }
 
-    if (messageStatusDuration > 0) {
-      messageStatusDuration--;
-      if (messageStatusDuration <= 0) {
-        messageStatus.value = '';
-      }
-    }
+
 
     if (nextLightingUpdate-- <= 0){
       nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
@@ -205,7 +263,7 @@ class Isometric {
   }
 
   void readPlayerInputEdit() {
-    if (!edit.value)
+    if (!options.edit.value)
       return;
 
     if (engine.keyPressedSpace) {
@@ -215,7 +273,7 @@ class Isometric {
       editor.delete();
     }
     if (io.getInputDirectionKeyboard() != IsometricDirection.None) {
-      actionSetModePlay();
+      // actionSetModePlay();
     }
     return;
   }
@@ -283,124 +341,6 @@ class Isometric {
     }
   }
 
-  void clean() {
-    scene.colorStackIndex = -1;
-    scene.ambientStackIndex = -1;
-  }
-
-  void clear() {
-     player.position.x = -1;
-     player.position.y = -1;
-     player.gameDialog.value = null;
-     player.npcTalkOptions.value = [];
-     scene.totalProjectiles = 0;
-     particles.particles.clear();
-    engine.zoom = 1;
-  }
-
-  int get bodyPartDuration =>  randomInt(120, 200);
-
-  // PROPERTIES
-
-  void showMessage(String message){
-    messageStatus.value = '';
-    messageStatus.value = message;
-  }
-
-  void spawnConfettiPlayer() {
-    for (var i = 0; i < 10; i++){
-      particles.spawnParticleConfetti(
-        player.position.x,
-        player.position.y,
-         player.position.z,
-      );
-    }
-  }
-
-  void playSoundWindow() =>
-      audio.click_sound_8(1);
-
-  void messageClear(){
-    writeMessage('');
-  }
-
-  void writeMessage(String value){
-     messageStatus.value = value;
-  }
-
-  void playAudioError(){
-    audio.errorSound15();
-  }
-
-  void onChangedAttributesWindowVisible(bool value){
-     playSoundWindow();
-  }
-
-  void onChangedMessageStatus(String value){
-    if (value.isEmpty){
-       messageStatusDuration = 0;
-    } else {
-       messageStatusDuration = 150;
-    }
-  }
-
-  void onChangedAreaTypeVisible(bool value) =>
-       areaTypeVisibleDuration = value
-          ? 150
-          : 0;
-
-  void onChangedCredits(int value){
-    audio.coins.play();
-  }
-
-  Particle spawnParticleFire({
-    required double x,
-    required double y,
-    required double z,
-    int duration = 100,
-    double scale = 1.0
-  }) =>
-      particles.spawnParticle(
-        type: ParticleType.Fire,
-        x: x,
-        y: y,
-        z: z,
-        zv: 1,
-        angle: 0,
-        rotation: 0,
-        speed: 0,
-        scaleV: 0.01,
-        weight: -1,
-        duration: duration,
-        scale: scale,
-      )
-        ..emitsLight = true
-        ..emissionColor = scene.ambientColor
-        ..deactiveOnNodeCollision = false
-        ..emissionIntensity = 0.5
-  ;
-
-  void spawnParticleLightEmissionAmbient({
-    required double x,
-    required double y,
-    required double z,
-  }) =>
-      particles.spawnParticle(
-        type: ParticleType.Light_Emission,
-        x: x,
-        y: y,
-        z: z,
-        angle: 0,
-        speed: 0,
-        weight: 0,
-        duration: 35,
-        animation: true,
-      )
-        ..flash = true
-        ..emissionColor = scene.ambientColor
-        ..emissionIntensity = 0.0
-  ;
-
   // @override
   void onError(Object error, StackTrace stack) {
     if (error.toString().contains('NotAllowedError')){
@@ -408,69 +348,12 @@ class Isometric {
       // This error appears when the game attempts to fullscreen
       // without the user having interacted first
       // TODO dispatch event on fullscreen failed
-      onErrorFullscreenAuto();
+      // onErrorFullscreenAuto();
       return;
     }
     print(error.toString());
     print(stack);
-    games.website.error.value = error.toString();
-  }
-
-  // @override
-  void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
-    print('isometric.onChangedNetworkConnectionStatus($connection)');
-    network.responseReader.bufferSize.value = 0;
-
-    switch (connection) {
-      case ConnectionStatus.Connected:
-        engine.cursorType.value = CursorType.None;
-        engine.zoomOnScroll = true;
-        engine.zoom = 1.0;
-        engine.targetZoom = 1.0;
-        audio.enabledSound.value = true;
-        if (!engine.isLocalHost) {
-          engine.fullScreenEnter();
-        }
-        break;
-
-      case ConnectionStatus.Done:
-        engine.cameraX = 0;
-        engine.cameraY = 0;
-        engine.zoom = 1.0;
-        engine.drawCanvasAfterUpdate = true;
-        engine.cursorType.value = CursorType.Basic;
-        engine.fullScreenExit();
-        player.active.value = false;
-        clear();
-        clean();
-        scene.gameObjects.clear();
-        sceneEditable.value = false;
-        gameType.value = GameType.Website;
-        audio.enabledSound.value = false;
-        break;
-      case ConnectionStatus.Failed_To_Connect:
-        games.website.error.value = 'Failed to connect';
-        break;
-      case ConnectionStatus.Invalid_Connection:
-        games.website.error.value = 'Invalid Connection';
-        break;
-      case ConnectionStatus.Error:
-        games.website.error.value = 'Connection Error';
-        break;
-      default:
-        break;
-    }
-
-  }
-
-  void onChangedGameType(GameType value) {
-    print('onChangedGameType(${value.name})');
-    io.reset();
-    startGameByType(value);
-  }
-
-  void startGameByType(GameType gameType){
-    game.value = games.mapGameTypeToGame(gameType);
+    website.error.value = error.toString();
   }
 
   void onScreenSizeChanged(
@@ -489,44 +372,9 @@ class Isometric {
   }
 
   /// EVENT HANDLER (DO NOT CALL)
-  void _onChangedGame(Game game) {
-    engine.buildUI = game.buildUI;
-    engine.onLeftClicked = game.onLeftClicked;
-    engine.onRightClicked = game.onRightClicked;
-    engine.onKeyPressed = game.onKeyPressed;
-    game.onActivated();
-  }
-
-  void _onChangedGameError(GameError? gameError){
-    print('_onChangedGameError($gameError)');
-    if (gameError == null)
-      return;
-
-    clearErrorTimer = 300;
-    playAudioError();
-    switch (gameError) {
-      case GameError.Unable_To_Join_Game:
-        games.website.error.value = 'unable to join game';
-        network.websocket.disconnect();
-        break;
-      default:
-        break;
-    }
-  }
 
   void onChangedAccount(Account? account) {
 
-  }
-
-  void updateClearErrorTimer() {
-    if (clearErrorTimer <= 0)
-      return;
-
-    clearErrorTimer--;
-    if (clearErrorTimer > 0)
-      return;
-
-    error.value = null;
   }
 
   void doRenderForeground(Canvas canvas, Size size){
@@ -539,7 +387,7 @@ class Isometric {
       io.touchController.render(canvas);
     }
 
-    game.value.renderForeground(canvas, size);
+    options.game.value.renderForeground(canvas, size);
   }
 
   Future init(sharedPreferences) async {
@@ -580,12 +428,15 @@ class Isometric {
       themeData: ThemeData(fontFamily: 'VT323-Regular'),
       backgroundColor: IsometricColors.black,
       onError: onError,
-      buildUI: games.website.buildUI,
+      buildUI: (context){
+        return buildText('loading components');
+      },
       buildLoadingScreen: () => LoadingPage(),
     );
 
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
-    engine.drawCanvasAfterUpdate = true;
+    // engine.drawCanvasAfterUpdate = true;
+    // engine.drawCanvasAfterUpdate = false;
     engine.cursorType.value = CursorType.Basic;
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
@@ -597,10 +448,16 @@ class Isometric {
 
   void onEngineBuilt(){
     print('isometric.onEngineBuilt()');
-    compositor = IsometricCompositor(this);
-    scene.engine = engine;
-    engine.drawCanvasAfterUpdate = false;
-    renderResponse = true;
+
+    for (final component in components){
+      if (component is ComponentIsometric)
+        component.engine = engine;
+    }
+    for (final component in components) {
+      if (component is ComponentIsometric)
+        component.onReady();
+    }
+    componentsReady = true;
   }
 
   void onReadRespondFinished() {
@@ -616,35 +473,7 @@ class Isometric {
           ? InputMode.Keyboard
           : InputMode.Touch;
 
-  void playAudioSingleV3({
-    required AudioSingle audioSingle,
-    required Position position,
-    double maxDistance = 600}) => playAudioXYZ(
-        audioSingle,
-        position.x,
-        position.y,
-        position.z,
-        maxDistance: maxDistance,
-    );
 
-  void playAudioXYZ(
-    AudioSingle audioSingle,
-    double x,
-    double y,
-    double z,{
-      double maxDistance = 600,
-    }){
-    if (!audio.enabledSound.value) return;
-    // TODO calculate distance from camera
-
-    final distanceFromPlayer = getDistanceXYZ(x, y, z, player.x, player.y, player.z);;
-    final distanceVolume = GameAudio.convertDistanceToVolume(
-      distanceFromPlayer,
-      maxDistance: maxDistance,
-    );
-    audioSingle.play(volume: distanceVolume);
-    // play(volume: distanceVolume);
-  }
 
   void refreshGameObjectEmissionColor(GameObject gameObject){
     // TODO
@@ -715,22 +544,9 @@ class Isometric {
     engine.setPaintColorWhite();
   }
 
-  void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
-
-    playAudioXYZ(audio.magical_impact_16,x, y, z);
-
-    for (var i = 0; i < amount; i++) {
-      particles.spawnParticleFirePurple(
-        x: x + giveOrTake(5),
-        y: y + giveOrTake(5),
-        z: z, speed: 1,
-        angle: randomAngle(),
-      );
-    }
-  }
 
   void renderEditMode() {
-    if (playMode) return;
+    if (options.playMode) return;
     if (editor.gameObjectSelected.value){
       engine.renderCircleOutline(
         sides: 24,
@@ -745,23 +561,6 @@ class Isometric {
 
     render.editWireFrames();
     renderMouseWireFrame();
-  }
-
-  double getVolumeTargetWind() {
-    final windLineDistance = (engine.screenCenterRenderX - windLineRenderX).abs();
-    final windLineDistanceVolume = GameAudio.convertDistanceToVolume(windLineDistance, maxDistance: 300);
-    var target = 0.0;
-    if (windLineRenderX - 250 <= engine.screenCenterRenderX) {
-      target += windLineDistanceVolume;
-    }
-    final index = environment.windTypeAmbient.value;
-    if (index <= WindType.Calm) {
-      if (environment.hours.value < 6) return target;
-      if (environment.hours.value < 18) return target + 0.1;
-      return target;
-    }
-    if (index <= WindType.Gentle) return target + 0.5;
-    return 1.0;
   }
 
   void renderMouseWireFrame() {
@@ -981,4 +780,13 @@ class Isometric {
               'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
           )
       );
+
+  Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
+    GameType.Website => website,
+    GameType.Capture_The_Flag => captureTheFlag,
+    GameType.Editor => isometricEditor,
+    GameType.Moba => moba,
+    GameType.Mmo => mmo,
+    _ => throw Exception('mapGameTypeToGame($gameType)')
+  };
 }

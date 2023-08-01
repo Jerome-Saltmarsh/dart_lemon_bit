@@ -39,7 +39,7 @@ class MmoGame extends IsometricGame {
   final playerTalents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
   final playerTalentsChangedNotifier = Watch(0);
 
-  MmoGame({required super.isometric}){
+  MmoGame(){
     print('MmoGame()');
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
@@ -52,7 +52,7 @@ class MmoGame extends IsometricGame {
     if (value.isEmpty)
       return;
 
-    isometric.audio.errorSound15();
+    audio.errorSound15();
     errorTimer = 70;
   }
 
@@ -142,7 +142,7 @@ class MmoGame extends IsometricGame {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
-    render(canvas, size);
+    renderMMO(canvas, size);
   }
 
   @override
@@ -158,11 +158,11 @@ class MmoGame extends IsometricGame {
   void clearItemHover() => itemHover.value = null;
 
   void onChangedPlayerInventoryOpen(bool value) {
-    isometric.audio.click_sound_8();
+    audio.click_sound_8();
   }
 
   void onChangedPlayerTalentsDialogOpen(bool talentsDialogOpen) {
-    isometric.audio.click_sound_8();
+    audio.click_sound_8();
     if (!talentsDialogOpen){
       clearTalentHover();
     }

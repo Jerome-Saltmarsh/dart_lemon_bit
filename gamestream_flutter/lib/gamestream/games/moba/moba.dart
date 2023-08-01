@@ -5,6 +5,6 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.d
 
 class Moba extends IsometricGame {
 
-  Moba({required super.isometric});
+  // Moba({required super.isometric});
 
 }

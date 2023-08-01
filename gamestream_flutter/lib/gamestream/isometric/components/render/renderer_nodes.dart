@@ -1,11 +1,10 @@
 import 'dart:math';
-
 import 'dart:ui' as ui;
+
 import 'package:gamestream_flutter/functions/get_render.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'constants/node_src.dart';
@@ -33,6 +32,7 @@ class RendererNodes extends RenderGroup {
   static const Cell_West_Height = 8.0;
 
   static const Node_South_Height = 24.0;
+
 
   static const MapNodeTypeToSrcY = <int, double>{
     NodeType.Brick: 1760,
@@ -135,18 +135,16 @@ class RendererNodes extends RenderGroup {
   late Uint32List nodeColors;
   late Uint8List nodeOrientations;
 
-  late IsometricScene scene;
-
   late final ui.Image atlasNodes;
 
-  RendererNodes(super.isometric) : super(){
-    print('RendererNodes()');
-    this.scene = isometric.scene;
-    bufferClr = isometric.engine.bufferClr;
-    bufferDst = isometric.engine.bufferDst;
-    bufferSrc = isometric.engine.bufferSrc;
-    incrementBufferIndex = isometric.engine.incrementBufferIndex;
+  @override
+  void onReady() {
+    bufferClr = engine.bufferClr;
+    bufferDst = engine.bufferDst;
+    bufferSrc = engine.bufferSrc;
+    incrementBufferIndex = engine.incrementBufferIndex;
   }
+
 
   double get currentNodeRenderY => getRenderYOfRowColumnZ(row, column, currentNodeZ);
 
@@ -189,7 +187,7 @@ class RendererNodes extends RenderGroup {
 
   int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
-  int get wind => isometric.environment.windTypeAmbient.value;
+  int get wind => environment.windTypeAmbient.value;
 
   int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
 
@@ -245,9 +243,9 @@ class RendererNodes extends RenderGroup {
   }
 
   void onPlainIndexChanged(){
-    final columns = isometric.scene.totalColumns;
-    final rows = isometric.scene.totalRows;
-    final height = isometric.scene.totalZ;
+    final columns = scene.totalColumns;
+    final rows = scene.totalRows;
+    final height = scene.totalZ;
     final rowMax = rows - 1;
     final columnMax = columns - 1;
     final heightMax = height - 1;
@@ -389,6 +387,11 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
+    // bufferClr = isometric.engine.bufferClr;
+    // bufferDst = isometric.engine.bufferDst;
+    // bufferSrc = isometric.engine.bufferSrc;
+    // incrementBufferIndex = isometric.engine.incrementBufferIndex;
+
     ambientColor = isometric.scene.ambientColor;
     nodeColors = scene.nodeColors;
     totalNodes = scene.totalNodes;
@@ -420,12 +423,12 @@ class RendererNodes extends RenderGroup {
     // orderZ = 0;
     currentNodeZ = 0;
     nodesGridTotalColumnsMinusOne = scene.totalColumns - 1;
-    playerZ = isometric.player.position.indexZ;
-    playerRow = isometric.player.position.indexRow;
-    playerColumn = isometric.player.position.indexColumn;
+    playerZ = player.position.indexZ;
+    playerRow = player.position.indexRow;
+    playerColumn = player.position.indexColumn;
     nodesPlayerColumnRow = playerRow + playerColumn;
-    playerRenderRow = playerRow - (isometric.player.position.indexZ ~/ 2);
-    playerRenderColumn = playerColumn - (isometric.player.position.indexZ ~/ 2);
+    playerRenderRow = playerRow - (player.position.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (player.position.indexZ ~/ 2);
     playerProjection = playerIndex % scene.projection;
     scene.offscreenNodes = 0;
     scene.onscreenNodes = 0;
@@ -613,7 +616,7 @@ class RendererNodes extends RenderGroup {
      if (scene.heightMap[i] <= zMin) return;
      island[i] = true;
 
-     var searchIndex = i + (scene.area * isometric.player.indexZ);
+     var searchIndex = i + (scene.area * player.indexZ);
      addVisible3D(searchIndex);
 
      var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
@@ -645,7 +648,7 @@ class RendererNodes extends RenderGroup {
 
         addVisible3D(searchIndex);
      }
-     searchIndex = i + (scene.area * isometric.player.indexZ);
+     searchIndex = i + (scene.area * player.indexZ);
      while (true) {
        addVisible3D(searchIndex);
        if (blocksBeamVertical(searchIndex)) break;
@@ -963,7 +966,7 @@ class RendererNodes extends RenderGroup {
         );
 
         renderCustomNode(
-            srcX: 1343 + (isometric.animation.frame6 * 16),
+            srcX: 1343 + (animation.frame6 * 16),
             srcY: 306,
             srcWidth: 14,
             srcHeight: 32,
@@ -984,7 +987,7 @@ class RendererNodes extends RenderGroup {
         );
 
         renderCustomNode(
-            srcX: 1343 + (isometric.animation.frame6 * 16),
+            srcX: 1343 + (animation.frame6 * 16),
             srcY: 339,
             srcWidth: 14,
             srcHeight: 32,
@@ -1042,21 +1045,21 @@ class RendererNodes extends RenderGroup {
         renderNodeWindow();
         break;
       case NodeType.Spawn:
-        if (isometric.playMode) return;
+        if (options.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_X,
           srcY: AtlasNode.Spawn_Y,
         );
         break;
       case NodeType.Spawn_Weapon:
-        if (isometric.playMode) return;
+        if (options.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Weapon_X,
           srcY: AtlasNode.Spawn_Weapon_Y,
         );
         break;
       case NodeType.Spawn_Player:
-        if (isometric.playMode) return;
+        if (options.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Player_X,
           srcY: AtlasNode.Spawn_Player_Y,
@@ -1854,14 +1857,14 @@ class RendererNodes extends RenderGroup {
       return;
     }
     renderStandardNode(
-      srcX: isometric.environment.srcXRainLanding,
+      srcX: environment.srcXRainLanding,
       srcY: 72.0 * ((isometric.animation.frame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   void renderNodeRainFalling() {
     renderStandardNode(
-      srcX: isometric.environment.srcXRainFalling,
+      srcX: environment.srcXRainFalling,
       srcY: 72.0 * ((isometric.animation.frame + row + row + column) % 6), // TODO Expensive Operation
     );
   }

@@ -1,20 +1,17 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
-class IsometricCamera {
-  final Isometric isometric;
+class IsometricCamera with ComponentIsometric {
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;
   var mouseFollowSensitivity = 0.1;
 
   Position? target;
-
-  IsometricCamera(this.isometric);
 
   void centerOnChaseTarget() {
     if (target != null){

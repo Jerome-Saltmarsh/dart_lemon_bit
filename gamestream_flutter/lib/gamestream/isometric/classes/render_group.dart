@@ -1,18 +1,11 @@
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
-import 'package:gamestream_flutter/library.dart';
 
-abstract class RenderGroup {
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+
+abstract class RenderGroup with ComponentIsometric {
   var _index = 0;
   var total = 0;
   var order = 0.0;
   var remaining = true;
-
-  final Isometric isometric;
-  late final Engine engine;
-
-  RenderGroup(this.isometric) {
-    engine = isometric.engine;
-  }
 
   void renderFunction();
   void updateFunction();

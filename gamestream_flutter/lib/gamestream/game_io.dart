@@ -2,13 +2,14 @@
 import 'dart:ui';
 
 import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../library.dart';
 import 'isometric/isometric.dart';
 
 
-class GameIO with ByteWriter {
+class GameIO with ByteWriter, ComponentIsometric {
 
   var previousMouseX = 0;
   var previousMouseY = 0;
@@ -37,14 +38,14 @@ class GameIO with ByteWriter {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
-  final Isometric isometric;
   final updateSize = Watch(0);
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
   late final TouchController touchController;
   final inputMode = Watch(InputMode.Keyboard);
 
-  GameIO(this.isometric) {
+  @override
+  void onReady() {
     touchController = TouchController(isometric);
   }
 
@@ -260,7 +261,7 @@ class GameIO with ByteWriter {
   void sendUpdateBuffer() {
     final bytes = compile();
     updateSize.value = bytes.length;
-    isometric.network.websocket.send(bytes);
+    network.websocket.send(bytes);
   }
 
   void reset() {

@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/common/src/game_error.dart';
 
-abstract class Game {
+import 'isometric/components/src.dart';
+
+abstract class Game with ComponentIsometric
+{
   void drawCanvas(Canvas canvas, Size size);
   void renderForeground(Canvas canvas, Size size);
   void update();

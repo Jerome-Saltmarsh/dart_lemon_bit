@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -13,8 +12,6 @@ import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
 class WebsiteGame extends Game {
-
-  final Isometric isometric;
 
   final gameTypes = [
     GameType.Capture_The_Flag,
@@ -28,7 +25,7 @@ class WebsiteGame extends Game {
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
   final download = Watch(0.0);
-  final debug = true;
+  // final debug = true;
   final isVisibleDialogCustomRegion = Watch(false);
   final colorRegion = Colors.orange;
   final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
@@ -36,8 +33,11 @@ class WebsiteGame extends Game {
 
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
 
-  WebsiteGame(this.isometric);
-  
+  @override
+  void onReady() {
+    engine.buildUI = buildUI;
+  }
+
   @override
   void drawCanvas(Canvas canvas, Size size) {
 
@@ -45,7 +45,7 @@ class WebsiteGame extends Game {
 
   @override
   void onActivated() {
-    isometric.audio.musicStop();
+    // isometric.getComponent<GameAudio>().musicStop();
     isometric.engine.fullScreenExit();
   }
 
@@ -68,7 +68,7 @@ class WebsiteGame extends Game {
   }
 
   void setError(String message){
-    isometric.games.website.error.value = message;
+    isometric.website.error.value = message;
   }
 
   void renderCanvas(Canvas canvas, Size size) {
@@ -104,40 +104,40 @@ class WebsiteGame extends Game {
       launchUrl(Uri.parse('https://discord.com/channels/888728235653885962/888728235653885965'));
 
   void showDialogChangePublicName(){
-    isometric.games.website.dialog.value = WebsiteDialog.Change_Public_Name;
+    isometric.website.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
   void showDialogConfirmCancelSubscription() {
-    isometric.games.website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
+    isometric.website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
   }
 
   void showDialogAccount(){
-    isometric.games.website.dialog.value = WebsiteDialog.Account;
+    isometric.website.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogWelcome(){
-    isometric.games.website.dialog.value = WebsiteDialog.Account_Created;
+    isometric.website.dialog.value = WebsiteDialog.Account_Created;
   }
 
   void showDialogWelcome2(){
-    isometric.games.website.dialog.value = WebsiteDialog.Welcome_2;
+    isometric.website.dialog.value = WebsiteDialog.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
-    isometric.games.website.dialog.value = WebsiteDialog.Subscription_Successful;
+    isometric.website.dialog.value = WebsiteDialog.Subscription_Successful;
   }
 
   void showDialogSubscriptionStatusChanged(){
-    isometric.games.website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
+    isometric.website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
   }
 
   void showDialogSubscriptionRequired(){
-    isometric.games.website.dialog.value = WebsiteDialog.Subscription_Required;
+    isometric.website.dialog.value = WebsiteDialog.Subscription_Required;
   }
 
   void showDialogCustomMaps(){
     _log('showDialogCustomMaps');
-    isometric.games.website.dialog.value = WebsiteDialog.Custom_Maps;
+    isometric.website.dialog.value = WebsiteDialog.Custom_Maps;
   }
 
   void connectToCustomGame(String customGame){

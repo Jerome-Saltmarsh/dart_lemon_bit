@@ -14,7 +14,7 @@ import 'package:golden_ratio/constants.dart';
 extension WebsiteUI on WebsiteGame {
 
   Widget buildSelectGameType() => WatchBuilder(
-        isometric.gameType,
+        options.gameType,
             (activeGameType) => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +81,7 @@ extension WebsiteUI on WebsiteGame {
     );
 
   Widget buildWatchErrorMessage() =>
-      WatchBuilder(isometric.games.website.error, (String? message) {
+      WatchBuilder(isometric.website.error, (String? message) {
         if (message == null) return nothing;
         return buildErrorDialog(message);
       });
@@ -89,7 +89,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(isometric.network.websocket.connectionStatus, buildConnectionStatus);
+          : buildWatch(network.websocket.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {
@@ -161,7 +161,7 @@ extension WebsiteUI on WebsiteGame {
       );
 
   Widget buildButtonJoinGameType({required GameType gameType, required String gameName}) => onPressed(
-      action: () => isometric.network.connectToGame(gameType),
+      action: () => network.connectToGame(gameType),
       child: buildText(gameName, size: 26, color: Colors.white70),
     );
 
@@ -202,7 +202,7 @@ extension WebsiteUI on WebsiteGame {
                     onPressed(
                       action: () {
                         isometric.region.value = region;
-                        isometric.games.website.websitePage.value = WebsitePage.Games;
+                        isometric.website.websitePage.value = WebsitePage.Games;
                       },
                       child: MouseOver(builder: (bool mouseOver) {
                         return Container(
@@ -234,7 +234,7 @@ extension WebsiteUI on WebsiteGame {
             child: Center(
               child: buildText(message, color: IsometricColors.white),
             ),
-            bottomRight: bottomRight ?? buildText('okay', onPressed: () => isometric.games.website.error.value = null)
+            bottomRight: bottomRight ?? buildText('okay', onPressed: () => isometric.website.error.value = null)
         )
     );
 }

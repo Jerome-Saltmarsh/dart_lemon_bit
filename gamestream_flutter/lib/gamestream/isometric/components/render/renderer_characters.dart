@@ -9,9 +9,12 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
 class RendererCharacters extends RenderGroup {
-  late Character character;
 
-  RendererCharacters(super.isometric);
+  RendererCharacters(){
+    print('RendererCharacters()');
+  }
+
+  late Character character;
 
   @override
   void renderFunction() => renderCurrentCharacter();
@@ -34,11 +37,11 @@ class RendererCharacters extends RenderGroup {
 
   void renderCurrentCharacter(){
 
-    if (!character.allie && isometric.options.renderHealthBarEnemies) {
+    if (!character.allie && options.renderHealthBarEnemies) {
       isometric.render.characterHealthBar(character);
     }
 
-    if (character.allie && isometric.options.renderHealthBarAllies) {
+    if (character.allie && options.renderHealthBarAllies) {
       isometric.render.characterHealthBar(character);
     }
 

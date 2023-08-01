@@ -10,8 +10,6 @@ import '../functions/format_percentage.dart';
 class RendererGameObjects extends RenderGroup {
   static late GameObject gameObject;
 
-  RendererGameObjects(super.isometric);
-
   @override
   int getTotal() => isometric.scene.gameObjects.length;
 

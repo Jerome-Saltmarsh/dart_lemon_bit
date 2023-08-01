@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 
@@ -478,30 +477,30 @@ extension IsometricEditorUI on IsometricEditor {
       );
 
   Widget buildIconRain(int rain) => buildWatch(
-      isometric.environment.rainType,
+      environment.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
-        action: () => isometric.network.sendIsometricRequestWeatherSetRain(rain),
+        action: () => network.sendIsometricRequestWeatherSetRain(rain),
         icon: isometric.ui.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
 
   Widget buildIconLightning(int lightning) => buildWatch(
-      isometric.environment.lightningType,
+      environment.lightningType,
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
-            isometric.network.sendIsometricRequestWeatherSetLightning(lightning),
+            network.sendIsometricRequestWeatherSetLightning(lightning),
         icon: isometric.ui.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
       ));
 
   Widget buildIconWind(int windType) => buildWatch(
-      isometric.environment.windTypeAmbient,
+      environment.windTypeAmbient,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
-        action: () => isometric.network.sendIsometricRequestWeatherSetWind(windType),
+        action: () => network.sendIsometricRequestWeatherSetWind(windType),
         icon: isometric.ui.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
@@ -571,7 +570,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = buildWatch(isometric.environment.hours, (int hours) {
+    final buttons = buildWatch(environment.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -582,7 +581,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple4,
-              action: () => isometric.network.sendIsometricRequestTimeSetHour(i),
+              action: () => network.sendIsometricRequestTimeSetHour(i),
             ),
           ),
         );
@@ -594,7 +593,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: style.purple3,
-              action: () => isometric.network.sendIsometricRequestTimeSetHour(i),
+              action: () => network.sendIsometricRequestTimeSetHour(i),
             ),
           ),
         );
@@ -612,9 +611,9 @@ extension IsometricEditorUI on IsometricEditor {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildWatch(isometric.environment.hours, (num hour) => buildText(padZero(hour))),
+        buildWatch(environment.hours, (num hour) => buildText(padZero(hour))),
         buildText(':'),
-        buildWatch(isometric.environment.minutes, (num hour) => buildText(padZero(hour))),
+        buildWatch(environment.minutes, (num hour) => buildText(padZero(hour))),
       ],
     );
     return Container(
@@ -656,8 +655,8 @@ extension IsometricEditorUI on IsometricEditor {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (isometric.playMode) {
-              isometric.actionSetModePlay();
+            if (options.playMode) {
+              options.actionSetModePlay();
               return;
             }
             paint(nodeType: nodeType);

@@ -1,14 +1,12 @@
 import 'dart:math';
-
-
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_actions.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
@@ -16,12 +14,8 @@ import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
 
-class IsometricUI {
+class IsometricUI with ComponentIsometric {
   static const Icon_Scale = 1.5;
-
-  final Isometric isometric;
-
-  IsometricUI(this.isometric);
 
   Widget buildMapCircle({required double size}) {
     return IgnorePointer(
@@ -73,26 +67,26 @@ class IsometricUI {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   onPressed(
-                    action: isometric.audio.toggleMutedSound,
+                    action: audio.toggleMutedSound,
                     child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText('SOUND', size: 20, color: Colors.white70),
-                          buildWatch(isometric.audio.enabledSound, buildIconCheckbox),
+                          buildWatch(audio.enabledSound, buildIconCheckbox),
                         ],
                       ),
                     ),
                   ),
                   height6,
                   onPressed(
-                    action: isometric.audio.toggleMutedMusic,
+                    action: audio.toggleMutedMusic,
                     child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildText('MUSIC', size: 20, color: Colors.white70),
-                          buildWatch(isometric.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
+                          buildWatch(audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
                         ],
                       ),
                     ),
@@ -116,7 +110,7 @@ class IsometricUI {
                     ...children,
                   height24,
                   onPressed(
-                    action: isometric.network.websocket.disconnect,
+                    action: network.websocket.disconnect,
                     child: buildText('DISCONNECT', size: 25),
                   ),
                   height24,
@@ -178,7 +172,7 @@ class IsometricUI {
       child: Container(
         width: isometric.engine.screen.width,
         alignment: Alignment.center,
-        child: buildWatch(isometric.messageStatus, buildMessageStatus),
+        child: buildWatch(options.messageStatus, buildMessageStatus),
       ),
     ),
   );
@@ -188,12 +182,12 @@ class IsometricUI {
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        isometric.messageClear();
+        action.messageClear();
       },
       child: Container(
           padding: const EdgeInsets.all(10),
           color: Colors.black12,
-          child: buildText(message, onPressed: isometric.messageClear)),
+          child: buildText(message, onPressed: action.messageClear)),
     );
   }
 
@@ -201,7 +195,7 @@ class IsometricUI {
       top: 8,
       left: 8,
       child: buildWatch(
-          isometric.rendersSinceUpdate,
+          options.rendersSinceUpdate,
               (int frames) =>
               buildText('Warning: No message received from server $frames')));
 
@@ -242,10 +236,10 @@ class IsometricUI {
   Widget buildIconAudioSound() =>
       onPressed(
         hint: 'toggle sound',
-        action: isometric.audio.toggleMutedSound,
+        action: audio.toggleMutedSound,
         child: Container(
           width: 32,
-          child: buildWatch(isometric.audio.enabledSound, (bool t) =>
+          child: buildWatch(audio.enabledSound, (bool t) =>
               buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
           ),
         ),
@@ -254,8 +248,8 @@ class IsometricUI {
   Widget buildIconAudioMusic() =>
       onPressed(
         hint: 'toggle music',
-        action: isometric.audio.toggleMutedMusic,
-        child: buildWatch(isometric.audio.mutedMusic, (bool musicMuted) =>
+        action: audio.toggleMutedMusic,
+        child: buildWatch(audio.mutedMusic, (bool musicMuted) =>
             Container(
                 width: 32,
                 child: buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
@@ -272,7 +266,7 @@ class IsometricUI {
               child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   Widget buildIconZoom() => onPressed(
-      action: isometric.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: action.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   Widget buildIconMenu() => onPressed(
       action: isometric.windowOpenMenu.toggle,
@@ -387,13 +381,13 @@ class IsometricUI {
   }
 
   Widget buildButtonTogglePlayMode() {
-    return buildWatch(isometric.sceneEditable, (bool isOwner) {
+    return buildWatch(scene.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return buildWatch(isometric.edit, (bool edit) {
+      return buildWatch(options.edit, (bool edit) {
         return buildButton(
             toolTip: 'Tab',
             child: edit ? 'PLAY' : 'EDIT',
-            action: isometric.actionToggleEdit,
+            action: options.toggleEditMode,
             color: Colors.green,
             alignment: Alignment.center,
             width: 100);
@@ -404,10 +398,10 @@ class IsometricUI {
   Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(isometric.environment.hours, (int hours) =>
+      WatchBuilder(environment.hours, (int hours) =>
           buildText(padZero(hours), size: 22)),
       buildText(':', size: 22),
-      WatchBuilder(isometric.environment.minutes, (int minutes) =>
+      WatchBuilder(environment.minutes, (int minutes) =>
           buildText(padZero(minutes), size: 22)),
     ],
   );
@@ -422,16 +416,6 @@ class IsometricUI {
     width: 32,
     child: buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
   );
-
-  void onVisibilityChangedMessageBox(bool visible){
-    if (visible) {
-      isometric.textFieldMessage.requestFocus();
-      return;
-    }
-    isometric.textFieldMessage.unfocus();
-    isometric.textEditingControllerMessage.text = '';
-  }
-
 
   static Decoration buildDecorationBorder({
     required Color colorBorder,

@@ -2,22 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricGame extends Game {
 
-  final Isometric isometric;
-
-  IsometricGame({required this.isometric}) {
-    isometric.camera.target = isometric.player.position;
-  }
-
   bool get debugMode => isometric.player.debugging.value;
 
-  bool get editMode => isometric.edit.value;
+  bool get editMode => options.edit.value;
 
   IsometricPlayer get player => isometric.player;
 
@@ -39,16 +32,16 @@ class IsometricGame extends Game {
   }
 
   void sendIsometricClientRequest([dynamic message]) {
-    isometric.network.send(ClientRequest.Isometric, message);
+    network.send(ClientRequest.Isometric, message);
   }
 
   @override
   void onActivated() {
-    isometric.particles.clearParticles();
+    particles.clearParticles();
     isometric.windowOpenMenu.setFalse();
-    isometric.cameraTargetPlayer();
+    action.cameraTargetPlayer();
 
-    isometric.audio.musicStop();
+    audio.musicStop();
     isometric.engine.onMouseMoved = isometric.io.touchController.onMouseMoved;
 
     if (!isometric.engine.isLocalHost) {
@@ -67,10 +60,10 @@ class IsometricGame extends Game {
   @override
   Widget buildUI(BuildContext context) => StackFullscreen(children: [
       buildWatchBool(
-          isometric.triggerAlarmNoMessageReceivedFromServer,
+          options.triggerAlarmNoMessageReceivedFromServer,
           isometric.ui.buildDialogFramesSinceUpdate,
       ),
-      WatchBuilder(isometric.edit, (edit) =>
+      WatchBuilder(options.edit, (edit) =>
         edit ? isometric.editor.buildEditor() : customBuildUI(context)),
       Positioned(
           top: 16,
@@ -93,7 +86,7 @@ class IsometricGame extends Game {
     ]);
 
   Widget buildGameError(){
-    return buildWatch(isometric.error, (error){
+    return buildWatch(options.error, (error){
        if (error == null)
          return nothing;
 
@@ -128,12 +121,12 @@ class IsometricGame extends Game {
   void onKeyPressed(int key) {
 
     if (key == KeyCode.Tab) {
-      toggleEditMode();
+      options.toggleEditMode();
       return;
     }
 
     if (key == KeyCode.Digit_0) {
-      isometric.network.sendIsometricRequestToggleDebugging();
+      network.sendIsometricRequestToggleDebugging();
       return;
     }
 
@@ -142,7 +135,7 @@ class IsometricGame extends Game {
       return;
     }
 
-    if (isometric.editMode){
+    if (options.editMode){
       isometric.editor.onKeyPressedModeEdit(key);
       return;
     }
@@ -150,7 +143,7 @@ class IsometricGame extends Game {
     // play mode
 
     if (key == KeyCode.Z) {
-      isometric.toggleZoom();
+      action.toggleZoom();
       return;
     }
 
@@ -158,10 +151,6 @@ class IsometricGame extends Game {
       isometric.debug.onKeyPressed(key);
       return;
     }
-  }
-
-  void toggleEditMode() {
-    isometric.edit.value = !editMode;
   }
 
   /// override to customize cursor type

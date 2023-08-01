@@ -3,9 +3,6 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_read_response.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_events.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -16,17 +13,13 @@ import 'package:gamestream_flutter/lemon_bits/src/read_nibble_from_byte_2.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
-class IsometricResponseReader with ByteReader {
+import '../components/mixins/component_isometric.dart';
+
+
+class IsometricResponseReader with ByteReader, ComponentIsometric
+{
   final decoder = ZLibDecoder();
   final bufferSize = Watch(0);
-  final Isometric isometric;
-
-  late final IsometricScene scene;
-
-  IsometricResponseReader(this.isometric) {
-    scene = isometric.scene;
-  }
-
 
   void readNetworkString(String value){
 
@@ -53,7 +46,7 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readServerResponse(int serverResponse){
-    isometric.rendersSinceUpdate.value = 0;
+    options.rendersSinceUpdate.value = 0;
 
     switch (serverResponse) {
       case ServerResponse.Isometric_Characters:
@@ -85,7 +78,7 @@ class IsometricResponseReader with ByteReader {
         if (index >= GameType.values.length){
           throw Exception('invalid game type index $index');
         }
-        isometric.gameType.value = GameType.values[index];
+        options.gameType.value = GameType.values[index];
         break;
       case ServerResponse.Environment:
         readServerResponseEnvironment();
@@ -134,7 +127,7 @@ class IsometricResponseReader with ByteReader {
         break;
       case ServerResponse.Game_Error:
         final errorTypeIndex = readByte();
-        isometric.error.value = GameError.fromIndex(errorTypeIndex);
+        options.error.value = GameError.fromIndex(errorTypeIndex);
         return;
       case ServerResponse.FPS:
         isometric.serverFPS.value = readUInt16();
@@ -145,7 +138,7 @@ class IsometricResponseReader with ByteReader {
       default:
         print('read error; index: $index');
         print(values);
-        isometric.network.websocket.disconnect();
+        network.websocket.disconnect();
         return;
     }
   }
@@ -238,7 +231,7 @@ class IsometricResponseReader with ByteReader {
 
     if (selectedColliderType == IsometricType.Character){
       debug.runTimeType.value = readString();
-      debug.action.value = readByte();
+      debug.characterAction.value = readByte();
       debug.goal.value = readByte();
       debug.team.value = readUInt16();
       debug.radius.value = readUInt16();
@@ -313,7 +306,7 @@ class IsometricResponseReader with ByteReader {
       scene.nodeColors = Uint32List(totalNodes);
     }
     isometric.nodesRaycast = scene.area +  scene.area + scene.totalColumns + 1;
-    isometric.onChangedNodes();
+    events.onChangedNodes();
     scene.refreshNodeVariations();
     scene.nodesChangedNotifier.value++;
     isometric.io.recenterCursor();
@@ -344,7 +337,6 @@ class IsometricResponseReader with ByteReader {
 
   void readServerResponseEnvironment() {
     final environmentResponse = readByte();
-    final environment = isometric.environment;
     switch (environmentResponse) {
       case EnvironmentResponse.Rain:
         environment.rainType.value = readByte();
@@ -574,13 +566,12 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readGameProperties() {
-    isometric.sceneEditable.value = readBool();
+    scene.sceneEditable.value = readBool();
     isometric.sceneName.value = readString();
     isometric.gameRunning.value = readBool();
   }
 
   void readWeather() {
-    final environment = isometric.environment;
     environment.rainType.value = readByte();
     environment.weatherBreeze.value = readBool();
     environment.lightningType.value = readByte();
@@ -604,8 +595,7 @@ class IsometricResponseReader with ByteReader {
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     isometric.scene.nodeTypes[nodeIndex] = nodeType;
     isometric.scene.nodeOrientations[nodeIndex] = nodeOrientation;
-    /// TODO optimize
-    isometric.onChangedNodes();
+    events.onChangedNodes();
 
     isometric.editor.refreshNodeSelectedIndex();
   }
@@ -615,7 +605,7 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readGameTime() {
-    isometric.environment.seconds.value = readUInt24();
+    environment.seconds.value = readUInt24();
   }
 
   double readDouble() => readInt16().toDouble();
@@ -626,7 +616,7 @@ class IsometricResponseReader with ByteReader {
     final y = readDouble();
     final z = readDouble();
     final angle = readDouble() * degreesToRadians;
-    isometric.onGameEvent(type, x, y, z, angle);
+    events.onGameEvent(type, x, y, z, angle);
   }
 
   void readProjectiles(){
@@ -676,7 +666,7 @@ class IsometricResponseReader with ByteReader {
   }
 
   void readPlayerEvent() {
-    isometric.onPlayerEvent(readByte());
+    events.onPlayerEvent(readByte());
   }
 
   void readIsometricPosition(Position value){

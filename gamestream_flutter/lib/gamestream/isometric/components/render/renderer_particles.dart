@@ -8,15 +8,13 @@ class RendererParticles extends RenderGroup {
 
   var totalActiveParticles = 0;
 
-  RendererParticles(super.isometric);
-
   @override
   int getTotal() => totalActiveParticles;
 
   @override
   void reset() {
-    isometric.particles.particles.sort(Particle.compare);
-    totalActiveParticles = isometric.particles.countActiveParticles;
+    particles.sort();
+    totalActiveParticles = particles.countActiveParticles;
     super.reset();
   }
 
@@ -553,7 +551,7 @@ class RendererParticles extends RenderGroup {
     final maxX = isometric.engine.Screen_Right + 50;
     final minY = isometric.engine.Screen_Top - 50;
     final maxY = isometric.engine.Screen_Bottom + 50;
-    final particles = isometric.particles.particles;
+    final particles = this.particles.children;
 
     while (index < total) {
       particle = particles[index++];

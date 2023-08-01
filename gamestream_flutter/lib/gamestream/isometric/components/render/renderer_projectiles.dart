@@ -6,8 +6,6 @@ class RendererProjectiles extends RenderGroup {
 
   late Projectile projectile;
 
-  RendererProjectiles(super.scene);
-  
   @override
   void renderFunction() {
     final dstX = projectile.renderX;
