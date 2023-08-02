@@ -1,14 +1,13 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/gamestream/games/website/enums/website_page.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
+import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 
 extension WebsiteUI on WebsiteGame {
@@ -47,7 +46,7 @@ extension WebsiteUI on WebsiteGame {
             child: Container(
               color: Colors.white12,
               alignment: Alignment.center,
-              padding: GameStyle.Container_Padding,
+              padding: style.containerPadding,
               child: Row(
                 children: [
                   buildText(formatEnumName(region.name)),
@@ -104,7 +103,7 @@ extension WebsiteUI on WebsiteGame {
     final _width = 300.0;
     final _height = 50.0;
     return buildFullScreen(
-      color: IsometricColors.black,
+      color: colors.black,
       child: buildWatch(download, (double value) {
         value = 0.6182;
         return Row(
@@ -169,7 +168,7 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
-        child: buildText(message, color: IsometricColors.white80, align: TextAlign.center),
+        child: buildText(message, color: colors.white80, align: TextAlign.center),
       );
 
   Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
@@ -228,11 +227,11 @@ extension WebsiteUI on WebsiteGame {
   Widget buildErrorDialog(String message, {Widget? bottomRight}) => buildDialog(
         width: 200,
         height: 200 * goldenRatio_0618,
-        color: IsometricColors.brownDark,
+        color: colors.brownDark,
         borderColor: Colors.transparent,
         child: buildLayout(
             child: Center(
-              child: buildText(message, color: IsometricColors.white),
+              child: buildText(message, color: colors.white),
             ),
             bottomRight: bottomRight ?? buildText('okay', onPressed: () => website.error.value = null)
         )

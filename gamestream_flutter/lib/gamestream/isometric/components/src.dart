@@ -18,6 +18,7 @@ export 'isometric_actions.dart';
 export 'isometric_events.dart';
 export 'isometric_ui.dart';
 export 'isometric_response_reader.dart';
+export 'isometric_style.dart';
 
 export 'editor/src.dart';
 export 'mixins/component_isometric.dart';

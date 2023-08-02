@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
+import 'package:gamestream_flutter/ui.dart';
 
 class GSContainer extends StatelessWidget {
   final Widget? child;
@@ -12,29 +14,33 @@ class GSContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
 
-  const GSContainer({
+  GSContainer({
     super.key,
     this.child,
     this.alignment = Alignment.center,
-    this.color = GS_CONTAINER_COLOR,
-    this.padding = GS_CONTAINER_PADDING,
     this.width,
     this.height,
     this.margin,
+    this.color,
+    this.padding,
     this.rounded = false,
   });
 
   @override
-  Widget build(BuildContext context) => Container(
-      width: width,
-      height: height,
-      alignment: alignment,
-      padding: padding,
-      margin: margin,
-      child: child,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: rounded ? GS_CONTAINER_BORDER_RADIUS_ROUNDED : null
-      ),
-    );
+  Widget build(BuildContext context) => IsometricBuilder(
+    builder: (context, isometric) {
+      return Container(
+          width: width,
+          height: height,
+          alignment: alignment,
+          padding: padding ?? isometric.style.containerPadding,
+          margin: margin,
+          child: child,
+          decoration: BoxDecoration(
+            color: color ?? isometric.style.containerColor,
+            borderRadius: rounded ? isometric.style.containerBorderRadiusCircular : null
+          ),
+        );
+    }
+  );
 }

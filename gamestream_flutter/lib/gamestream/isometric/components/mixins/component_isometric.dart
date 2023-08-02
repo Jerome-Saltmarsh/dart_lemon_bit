@@ -52,6 +52,7 @@ mixin IsometricComponent {
   late final IsometricLighting lighting;
   late final IsometricColors colors;
   late final IsometricCompositor compositor;
+  late final IsometricStyle style;
 
   void onComponentReady() {
 

@@ -12,7 +12,6 @@ import 'isometric_editor_tab.dart';
 
 class IsometricEditor with IsometricComponent {
 
-  final style = IsometricEditorStyle();
   final windowEnabledScene = Watch(false);
   final windowEnabledCanvasSize = Watch(false);
   final windowEnabledGenerate = WatchBool(false);

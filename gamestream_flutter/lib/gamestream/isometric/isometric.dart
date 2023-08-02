@@ -40,7 +40,6 @@ class Isometric {
   late final Moba moba;
   late final CaptureTheFlagGame captureTheFlag;
   late final IsometricGame isometricEditor;
-
   late final Engine engine;
   late final IsometricRender render;
   late final IsometricOptions options;
@@ -71,6 +70,7 @@ class Isometric {
   late final IsometricImages images;
   late final IsometricLighting lighting;
   late final IsometricColors colors;
+  late final IsometricStyle style;
 
   Isometric() {
     print('Isometric()');
@@ -108,6 +108,7 @@ class Isometric {
     screen = IsometricScreen();
     lighting = IsometricLighting();
     colors = IsometricColors();
+    style = IsometricStyle();
 
     components.add(images);
     components.add(scene);
@@ -143,6 +144,7 @@ class Isometric {
     components.add(screen);
     components.add(lighting);
     components.add(colors);
+    components.add(style);
 
     for (final component in components) {
       if (component is Updatable) {
@@ -185,6 +187,7 @@ class Isometric {
       component.colors = colors;
       component.compositor = compositor;
       component.lighting = lighting;
+      component.style = style;
     }
     validateAtlases();
   }
@@ -199,9 +202,6 @@ class Isometric {
 
   void drawCanvas(Canvas canvas, Size size) {
 
-    if (!componentsReady)
-      return;
-
     if (options.gameType.value == GameType.Website)
       return;
 
@@ -215,10 +215,7 @@ class Isometric {
     options.rendersSinceUpdate.value++;
   }
 
-  void update(){
-
-    if (!componentsReady)
-      return;
+  void update() {
 
     if (!network.websocket.connected)
       return;
@@ -234,7 +231,6 @@ class Isometric {
       updatable.update();
     }
 
-    options.game.value.update();
     readPlayerInputEdit();
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
@@ -257,9 +253,11 @@ class Isometric {
     return;
   }
 
-  void doRenderForeground(Canvas canvas, Size size){
+  void drawForeground(Canvas canvas, Size size){
+
     if (!network.websocket.connected)
       return;
+
     render.renderCursor(canvas);
     render.renderPlayerAimTargetNameText();
 
@@ -299,12 +297,12 @@ class Isometric {
 
     engine = Engine(
       init: init,
-      update: update,
-      render: drawCanvas,
-      onDrawForeground: doRenderForeground,
+      update: () {}, // overridden when components are ready
+      render: (canvas, size) {}, // overridden when components are ready
+      onDrawForeground: (canvas, size) {}, // overridden when components are ready
       title: 'AMULET',
       themeData: ThemeData(fontFamily: 'VT323-Regular'),
-      backgroundColor: IsometricColors.black,
+      backgroundColor: colors.black,
       onError: onError,
       buildUI: (context){
         return buildText('loading components');
@@ -335,7 +333,11 @@ class Isometric {
       if (component is IsometricComponent)
         component.onComponentReady();
     }
+
     componentsReady = true;
+    engine.onUpdate = update;
+    engine.onDrawCanvas = drawCanvas;
+    engine.onDrawForeground = drawForeground;
   }
 
   void dispatchNotificationImagesLoaded() {

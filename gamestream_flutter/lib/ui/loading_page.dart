@@ -12,7 +12,7 @@ class LoadingPage extends StatelessWidget {
        final totalImages = buildWatch(images.totalImages, buildText);
        final totalImagesLoaded = buildWatch(images.totalImagesLoaded, buildText);
        return Container(
-         color: IsometricColors.black,
+         color: IsometricColors.Black,
          alignment: Alignment.center,
          child: Column(
            mainAxisAlignment: MainAxisAlignment.center,

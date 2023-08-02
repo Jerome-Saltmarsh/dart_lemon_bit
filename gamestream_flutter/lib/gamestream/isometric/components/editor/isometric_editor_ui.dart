@@ -200,7 +200,7 @@ extension IsometricEditorUI on IsometricEditor {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
-        color: IsometricColors.brownLight,
+        color: colors.brownLight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -325,7 +325,7 @@ extension IsometricEditorUI on IsometricEditor {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
-        color: IsometricColors.brownLight,
+        color: colors.brownLight,
         child: Column(
           children: [
             Row(
@@ -375,7 +375,7 @@ extension IsometricEditorUI on IsometricEditor {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 300,
-        color: IsometricColors.brownLight,
+        color: colors.brownLight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -423,7 +423,7 @@ extension IsometricEditorUI on IsometricEditor {
           width: 70,
           height: 70,
           padding: const EdgeInsets.all(4),
-          color: GS_CONTAINER_COLOR,
+          color: style.containerColor,
           child: FittedBox(
             child: amulet.ui.buildImageGameObject(objectType),
           ),
@@ -580,7 +580,7 @@ extension IsometricEditorUI on IsometricEditor {
             message: '$i - ${convertHourToString(i)}',
             child: buildButton(
               width: buttonWidth,
-              color: style.purple4,
+              color: colors.orange,
               action: () => network.sendIsometricRequestTimeSetHour(i),
             ),
           ),
@@ -592,7 +592,7 @@ extension IsometricEditorUI on IsometricEditor {
             message: '$i - ${convertHourToString(i)}',
             child: buildButton(
               width: buttonWidth,
-              color: style.purple3,
+              color: colors.white10,
               action: () => network.sendIsometricRequestTimeSetHour(i),
             ),
           ),
@@ -620,7 +620,7 @@ extension IsometricEditorUI on IsometricEditor {
       child: Row(
         children: [
           Container(
-              color: style.brownLight,
+              color: colors.brownLight,
               alignment: Alignment.center,
               padding: const EdgeInsets.all(8),
               height: 50,
@@ -661,7 +661,7 @@ extension IsometricEditorUI on IsometricEditor {
             }
             paint(nodeType: nodeType);
           },
-          color: selectedNodeType == nodeType ? style.greyDark : style.grey);
+          color: selectedNodeType == nodeType ? colors.white : colors.white60);
     });
   }
 
@@ -691,7 +691,7 @@ extension IsometricEditorUI on IsometricEditor {
       right: 70,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: IsometricColors.brown02,
+        color: colors.brown02,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -736,7 +736,7 @@ extension IsometricEditorUI on IsometricEditor {
                 width: 72,
                 height: 72,
                 alignment: Alignment.center,
-                color: selectedNodeOrientation == orientation ? style.purple3 : style.brownDark,
+                color: selectedNodeOrientation == orientation ? colors.white : colors.brownDark,
                 child: canvas);
           }),
     );
@@ -1016,7 +1016,7 @@ extension IsometricEditorUI on IsometricEditor {
           child: Container(
             width: 200,
             height: 200,
-            color: IsometricColors.brownDark,
+            color: colors.brownDark,
             child: amulet.engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
@@ -1108,8 +1108,8 @@ extension IsometricEditorUI on IsometricEditor {
         child: editTab.name,
         width: 150,
         color: activeEditTab == editTab
-            ? IsometricColors.brownDark
-            : IsometricColors.brownLight,
+            ? colors.brownDark
+            : colors.brownLight,
         action: () => this.editTab.value = editTab,
       ))
           .toList(),
@@ -1118,7 +1118,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildMenu(
       {required String text, required List<Widget> children}) {
-    final child = buildButton(child: text, color: style.brownLight);
+    final child = buildButton(child: text, color: colors.brownLight);
     return MouseOver(builder: (over) {
       if (over) {
         return Column(
@@ -1168,7 +1168,7 @@ extension IsometricEditorUI on IsometricEditor {
         width: 130,
         height: 220,
         padding: const EdgeInsets.all(6),
-        color: style.brownDark,
+        color: colors.brownDark,
         child: Column(
           children: [
             Row(
@@ -1300,7 +1300,7 @@ extension IsometricEditorUI on IsometricEditor {
       child: Container(
           width: 350,
           height: 400,
-          color: style.brownLight,
+          color: colors.brownLight,
           padding: const EdgeInsets.all(6),
           child: Column(
             children: [

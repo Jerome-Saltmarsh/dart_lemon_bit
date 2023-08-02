@@ -383,7 +383,7 @@ extension MMOUI on MmoGame {
                  Container(
                    width: width,
                    height: height,
-                   color: GS_CONTAINER_COLOR,
+                   color: style.containerColor,
                  ),
                  Container(
                    width: width * (health / maxHealth),

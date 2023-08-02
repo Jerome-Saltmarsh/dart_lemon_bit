@@ -294,8 +294,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
   }) =>
       Container(
         alignment: alignment,
-        padding: GameStyle.Container_Padding,
-        color: GameStyle.Container_Color,
+        padding: style.containerPadding,
+        color: style.containerColor,
         child: child,
         width: width,
         height: height,
@@ -347,8 +347,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
           GSButton(
             action: () => upgradePower(power),
             child: Container(
-              // color: GameStyle.Container_Color,
-              color: GS_CONTAINER_COLOR,
+              color: style.containerColor,
               width: 40,
               height: 40,
               alignment: Alignment.center,
@@ -369,7 +368,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                                 maxHeight: size,
                               ),
                               decoration: BoxDecoration(
-                                color: GameStyle.Container_Color,
+                                color: style.containerColor,
                                 shape: BoxShape.circle,
                               ),
                                width: size,

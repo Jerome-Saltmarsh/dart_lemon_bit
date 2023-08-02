@@ -58,8 +58,8 @@ class IsometricUI with IsometricComponent {
         child: Container(
           width: width,
           alignment: Alignment.center,
-          color: GameStyle.Container_Color,
-          padding: GameStyle.Container_Padding,
+          color: style.containerColor,
+          padding: style.containerPadding,
           child: IsometricBuilder(
             builder: (context, isometric) {
               return Column(
@@ -210,7 +210,7 @@ class IsometricUI with IsometricComponent {
       },
       child: buildWatch(options.windowOpenMenu, (bool menuVisible){
         return Container(
-          color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
+          color: menuVisible ? style.containerColor : Colors.transparent,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -334,49 +334,6 @@ class IsometricUI with IsometricComponent {
           margin: const EdgeInsets.only(right: 2),
         );
       }),
-    );
-  }
-
-  Widget buildPlayerEnergy() {
-    final height = 87.0;
-    final width = height * goldenRatio_0618;
-    return buildBorder(
-      width: GameStyle.Player_Weapons_Border_Size,
-      color: Colors.yellow,
-      child: Container(
-        width: width,
-        height: height,
-        alignment: Alignment.center,
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Container(
-              width: width,
-              height: height,
-              alignment: Alignment.topCenter,
-              child: buildWatch(player.energyMax, (int energyMax) {
-                return buildWatch(player.energy, (int energy){
-                  return Container(
-                    width: width,
-                    height: height * energy / max(energyMax, 1),
-                    color:  Colors.yellow,
-                  );
-                });
-              }),
-            ),
-            Container(
-                width: 40,
-                height: 40,
-                child: FittedBox(
-                  child: buildAtlasIconType(
-                    IconType.Energy,
-                    color: Colors.black87.value,
-                  ),
-                )
-            ),
-          ],
-        ),
-      ),
     );
   }
 

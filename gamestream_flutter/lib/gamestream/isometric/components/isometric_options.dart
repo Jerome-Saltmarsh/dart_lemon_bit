@@ -142,6 +142,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void update() {
 
+    game.value.update();
+
     if (messageStatusDuration > 0) {
       messageStatusDuration--;
       if (messageStatusDuration <= 0) {
