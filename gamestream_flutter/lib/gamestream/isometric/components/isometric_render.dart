@@ -1,7 +1,10 @@
 
+import 'dart:ui';
+
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
@@ -233,4 +236,159 @@ class IsometricRender with IsometricComponent {
         dstY: y,
         scale: 0.4,
       );
+
+  void renderCursor(Canvas canvas) {
+
+    if (!options.renderCursorEnable)
+      return;
+
+    final cooldown = player.weaponCooldown.value;
+    final accuracy = player.accuracy.value;
+    final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
+
+    switch (options.cursorType) {
+      case IsometricCursorType.CrossHair_White:
+        canvasRenderCursorCrossHair(canvas, distance);
+        break;
+      case IsometricCursorType.Hand:
+        canvasRenderCursorHand(canvas);
+        return;
+      case IsometricCursorType.Talk:
+        canvasRenderCursorTalk(canvas);
+        return;
+      case IsometricCursorType.CrossHair_Red:
+        canvasRenderCursorCrossHairRed(canvas, distance);
+        break;
+    }
+  }
+
+  void canvasRenderCursorCrossHair(Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 192;
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() - range,
+        anchorY: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() + range,
+        anchorY: 0.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() - range,
+        dstY: io.getCursorScreenY(),
+        anchorX: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() + range,
+        dstY: io.getCursorScreenY(),
+        anchorX: 0.0
+    );
+  }
+
+
+  void canvasRenderCursorHand(Canvas canvas){
+    engine.renderExternalCanvas(
+      canvas: canvas,
+      image: images.atlas_icons,
+      srcX: 0,
+      srcY: 256,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: io.getCursorScreenX(),
+      dstY: io.getCursorScreenY(),
+      scale: 0.5,
+    );
+  }
+
+  void canvasRenderCursorTalk(Canvas canvas){
+    engine.renderExternalCanvas(
+      canvas: canvas,
+      image: images.atlas_icons,
+      srcX: 0,
+      srcY: 320,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: io.getCursorScreenX(),
+      dstY: io.getCursorScreenY(),
+      scale: 0.5,
+    );
+  }
+
+  void canvasRenderCursorCrossHairRed(Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 384;
+    const offset = 0;
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() - range - offset,
+        anchorY: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: io.getCursorScreenX(),
+        dstY: io.getCursorScreenY() + range - offset,
+        anchorY: 0.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() - range,
+        dstY: io.getCursorScreenY() - offset,
+        anchorX: 1.0
+    );
+    engine.renderExternalCanvas(
+        canvas: canvas,
+        image: images.atlas_icons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: io.getCursorScreenX() + range,
+        dstY: io.getCursorScreenY() - offset,
+        anchorX: 0.0
+    );
+  }
+
+
 }

@@ -30,14 +30,13 @@ import 'components/isometric_render.dart';
 import 'components/render/renderer_nodes.dart';
 import 'components/render/renderer_projectiles.dart';
 import 'components/src.dart';
-import 'enums/cursor_type.dart';
 import 'ui/game_isometric_minimap.dart';
 import 'ui/isometric_constants.dart';
 
 
-
 class Isometric {
 
+  var initialized = false;
   var componentsReady = false;
 
   final components = <dynamic>[];
@@ -184,8 +183,6 @@ class Isometric {
   var totalAmbientOffscreen = 0;
   var totalAmbientOnscreen = 0;
   var renderResponse = true;
-  var renderCursorEnable = true;
-  var cursorType = IsometricCursorType.Hand;
   var nextLightingUpdate = 0;
   var interpolationPadding = 0.0;
   var nodesRaycast = 0;
@@ -389,7 +386,7 @@ class Isometric {
   void doRenderForeground(Canvas canvas, Size size){
     if (!network.websocket.connected)
       return;
-    renderCursor(canvas);
+    render.renderCursor(canvas);
     renderPlayerAimTargetNameText();
 
     if (io.inputModeTouch) {
@@ -406,20 +403,18 @@ class Isometric {
   }
 
   void onMouseEnterCanvas(){
-    renderCursorEnable = true;
+    options.renderCursorEnable = true;
   }
 
   void onMouseExitCanvas(){
-    renderCursorEnable = false;
+    options.renderCursorEnable = false;
   }
-
-  var initialized = false;
 
   Widget build(BuildContext context) {
     print('isometric.build()');
 
     if (initialized){
-      print('isometric.build already initialized - skipping');
+      print('isometric.build() - skipped as already initialized');
       return engine;
     }
 
@@ -444,8 +439,6 @@ class Isometric {
     );
 
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
-    // engine.drawCanvasAfterUpdate = true;
-    // engine.drawCanvasAfterUpdate = false;
     engine.cursorType.value = CursorType.Basic;
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
@@ -588,158 +581,6 @@ class Isometric {
       engine.worldToScreenY(player.aimTargetPosition.renderY),
       style: style,
     );
-  }
-
-  void canvasRenderCursorCrossHair(Canvas canvas, double range){
-    const srcX = 0;
-    const srcY = 192;
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: io.getCursorScreenX(),
-        dstY: io.getCursorScreenY() - range,
-        anchorY: 1.0
-    );
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: io.getCursorScreenX(),
-        dstY: io.getCursorScreenY() + range,
-        anchorY: 0.0
-    );
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: io.getCursorScreenX() - range,
-        dstY: io.getCursorScreenY(),
-        anchorX: 1.0
-    );
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: io.getCursorScreenX() + range,
-        dstY: io.getCursorScreenY(),
-        anchorX: 0.0
-    );
-  }
-
-  void canvasRenderCursorCrossHairRed(Canvas canvas, double range){
-    const srcX = 0;
-    const srcY = 384;
-    const offset = 0;
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: io.getCursorScreenX(),
-        dstY: io.getCursorScreenY() - range - offset,
-        anchorY: 1.0
-    );
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 29,
-        srcY: srcY + 0,
-        srcWidth: 6,
-        srcHeight: 22,
-        dstX: io.getCursorScreenX(),
-        dstY: io.getCursorScreenY() + range - offset,
-        anchorY: 0.0
-    );
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: io.getCursorScreenX() - range,
-        dstY: io.getCursorScreenY() - offset,
-        anchorX: 1.0
-    );
-    engine.renderExternalCanvas(
-        canvas: canvas,
-        image: images.atlas_icons,
-        srcX: srcX + 0,
-        srcY: srcY + 29,
-        srcWidth: 22,
-        srcHeight: 6,
-        dstX: io.getCursorScreenX() + range,
-        dstY: io.getCursorScreenY() - offset,
-        anchorX: 0.0
-    );
-  }
-
-  void canvasRenderCursorHand(Canvas canvas){
-    engine.renderExternalCanvas(
-      canvas: canvas,
-      image: images.atlas_icons,
-      srcX: 0,
-      srcY: 256,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: io.getCursorScreenX(),
-      dstY: io.getCursorScreenY(),
-      scale: 0.5,
-    );
-  }
-
-  void canvasRenderCursorTalk(Canvas canvas){
-    engine.renderExternalCanvas(
-      canvas: canvas,
-      image: images.atlas_icons,
-      srcX: 0,
-      srcY: 320,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: io.getCursorScreenX(),
-      dstY: io.getCursorScreenY(),
-      scale: 0.5,
-    );
-  }
-
-  void renderCursor(Canvas canvas) {
-
-    if (!renderCursorEnable)
-      return;
-
-    final cooldown = player.weaponCooldown.value;
-    final accuracy = player.accuracy.value;
-    final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
-
-    switch (cursorType) {
-      case IsometricCursorType.CrossHair_White:
-        canvasRenderCursorCrossHair(canvas, distance);
-        break;
-      case IsometricCursorType.Hand:
-        canvasRenderCursorHand(canvas);
-        return;
-      case IsometricCursorType.Talk:
-        canvasRenderCursorTalk(canvas);
-        return;
-      case IsometricCursorType.CrossHair_Red:
-        canvasRenderCursorCrossHairRed(canvas, distance);
-        break;
-    }
   }
 
   void notifyLoadImagesCompleted() {

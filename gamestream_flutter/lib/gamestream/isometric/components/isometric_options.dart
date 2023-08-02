@@ -3,9 +3,12 @@ import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricOptions with IsometricComponent {
+  var cursorType = IsometricCursorType.Hand;
+  var renderCursorEnable = true;
   var renderHealthBarEnemies = true;
   var renderHealthBarAllies = true;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
