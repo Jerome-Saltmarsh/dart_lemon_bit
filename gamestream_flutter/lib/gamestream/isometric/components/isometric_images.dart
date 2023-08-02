@@ -9,8 +9,8 @@ class IsometricImages {
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
-
   final _loadCompleter = Completer();
+
 
    late final Image shades;
    late final Image pixel;

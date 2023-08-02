@@ -12,8 +12,6 @@ class IsometricGame extends Game {
 
   bool get editMode => options.edit.value;
 
-  IsometricPlayer get player => player;
-
   @override
   void drawCanvas(Canvas canvas, Size size) {
     // drawCanvas(canvas, size);
@@ -42,7 +40,7 @@ class IsometricGame extends Game {
     action.cameraTargetPlayer();
 
     audio.musicStop();
-    engine.onMouseMoved = io.touchController.onMouseMoved;
+    // engine.onMouseMoved = io.touchController.onMouseMoved;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();

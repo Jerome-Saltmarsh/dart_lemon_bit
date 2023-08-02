@@ -16,16 +16,10 @@ import '../../../isometric/classes/position.dart';
 
 class IsometricScene with IsometricComponent implements Updatable {
 
-  final sceneEditable = Watch(false);
-  final gameObjects = <GameObject>[];
-  final projectiles = <Projectile>[];
-  late final Engine engine;
-
   var interpolationPadding = 0.0;
   var nextLightingUpdate = 0;
   var framesPerSmokeEmission = 10;
   var nextEmissionSmoke = 0;
-
   var totalProjectiles = 0;
   var bakeStackTotal = 0;
   var bakeStackIndex = Uint16List(100000);
@@ -38,17 +32,12 @@ class IsometricScene with IsometricComponent implements Updatable {
   var bakeStackRecording = true;
   var totalActiveLights = 0;
   var _ambientAlpha = 0;
-  late var ambientRGB = getRGB(ambientColor);
-  var ambientColor = Color.fromRGBO(31, 1, 86, 0.5).value;
+  var ambientColor = const Color.fromRGBO(31, 1, 86, 0.5).value;
   var ambientResetIndex = 0;
   var ambientStack = Uint16List(0);
   var ambientStackIndex = -1;
-
   var colorStack = Uint16List(0);
   var colorStackIndex = -1;
-
-  /// contains a list of indexes of nodes which emit smoke
-  /// for example a fireplace
   var smokeSources = Uint16List(500);
   var smokeSourcesTotal = 0;
   var nodeLightSources = Uint16List(1000);
@@ -72,27 +61,37 @@ class IsometricScene with IsometricComponent implements Updatable {
   var lengthZ = 0.0;
   var offscreenNodes = 0;
   var onscreenNodes = 0;
+  var ambientRGB = 0;
+  var interpolationLength = 6;
+  var interpolations = <double>[];
 
-  late var interpolationLength = 6;
-
+  final interpolationEaseType = Watch(EaseType.In_Quad);
+  final sceneEditable = Watch(false);
   final nodesChangedNotifier = Watch(0);
   final characters = <Character>[];
+  final gameObjects = <GameObject>[];
+  final projectiles = <Projectile>[];
 
-  late final Watch<EaseType> interpolationEaseType = Watch(EaseType.In_Quad, onChanged: (EaseType easeType){
+  IsometricScene(){
+    interpolationEaseType.onChanged(onChangedInterpolationEaseType);
+    ambientRGB = getRGB(ambientColor);
+    interpolations = interpolateEaseType(
+      length: interpolationLength,
+      easeType: interpolationEaseType.value,
+    );
+  }
+
+  void onChangedInterpolationEaseType(EaseType easeType){
     interpolations = interpolateEaseType(
       length: interpolationLength,
       easeType: EaseType.In_Out_Quad,
     );
-  });
-
-  late var interpolations = interpolateEaseType(
-    length: interpolationLength,
-    easeType: interpolationEaseType.value,
-  );
+  }
 
   void setInterpolationLength(int value){
-    if (value < 1) return;
-    if (interpolationLength == value) return;
+    if (value < 1 || interpolationLength == value)
+      return;
+
     interpolationLength = value;
     interpolations = interpolateEaseType(
       length: interpolationLength,

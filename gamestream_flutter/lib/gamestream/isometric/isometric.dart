@@ -184,6 +184,7 @@ class Isometric {
       component.screen = screen;
       component.colors = colors;
       component.compositor = compositor;
+      component.lighting = lighting;
     }
     validateAtlases();
   }
