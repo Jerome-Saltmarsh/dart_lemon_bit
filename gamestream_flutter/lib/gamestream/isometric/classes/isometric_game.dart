@@ -38,7 +38,7 @@ class IsometricGame extends Game {
   @override
   void onActivated() {
     particles.clearParticles();
-    isometric.windowOpenMenu.setFalse();
+    options.windowOpenMenu.setFalse();
     action.cameraTargetPlayer();
 
     audio.musicStop();
@@ -131,7 +131,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Escape) {
-      isometric.windowOpenMenu.toggle();
+      options.windowOpenMenu.toggle();
       return;
     }
 

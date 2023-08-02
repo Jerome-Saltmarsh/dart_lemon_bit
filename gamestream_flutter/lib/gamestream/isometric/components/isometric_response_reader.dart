@@ -135,7 +135,7 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         options.error.value = GameError.fromIndex(errorTypeIndex);
         return;
       case ServerResponse.FPS:
-        isometric.serverFPS.value = readUInt16();
+        options.serverFPS.value = readUInt16();
         return;
       case ServerResponse.Sort_GameObjects:
         isometric.scene.gameObjects.sort();
@@ -571,8 +571,8 @@ class IsometricResponseReader with ByteReader, IsometricComponent
 
   void readGameProperties() {
     scene.sceneEditable.value = readBool();
-    isometric.sceneName.value = readString();
-    isometric.gameRunning.value = readBool();
+    options.sceneName.value = readString();
+    options.gameRunning.value = readBool();
   }
 
   void readWeather() {

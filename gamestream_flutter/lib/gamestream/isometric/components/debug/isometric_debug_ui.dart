@@ -100,7 +100,7 @@ extension isometricDebugUI on IsometricDebug {
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      buildWatch(isometric.serverFPS, (serverFPS) => Column(
+      buildWatch(options.serverFPS, (serverFPS) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

@@ -39,7 +39,7 @@ extension WebsiteUI on WebsiteGame {
         if (websitePage == WebsitePage.Region){
           return buildSelectRegionColumn();
         }
-        return WatchBuilder(isometric.region, (ConnectionRegion? region) {
+        return WatchBuilder(options.region, (ConnectionRegion? region) {
           if (region == null) return buildSelectRegionColumn();
 
           final regionButton = onPressed(
@@ -185,7 +185,7 @@ extension WebsiteUI on WebsiteGame {
         children: [
           buildText('Select Your Region', size: FontSize.large),
           height16,
-          WatchBuilder(isometric.region, (activeRegion) {
+          WatchBuilder(options.region, (activeRegion) {
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -201,7 +201,7 @@ extension WebsiteUI on WebsiteGame {
                     .map((ConnectionRegion region) =>
                     onPressed(
                       action: () {
-                        isometric.region.value = region;
+                        options.region.value = region;
                         isometric.website.websitePage.value = WebsitePage.Games;
                       },
                       child: MouseOver(builder: (bool mouseOver) {

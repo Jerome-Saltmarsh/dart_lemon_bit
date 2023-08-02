@@ -122,7 +122,7 @@ class IsometricNetwork with IsometricComponent {
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
-    final regionValue = isometric.region.value;
+    final regionValue = options.region.value;
     if (regionValue == null) {
       throw Exception('region is null');
     }

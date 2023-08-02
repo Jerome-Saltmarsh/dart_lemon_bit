@@ -78,7 +78,7 @@ class WebsiteGame extends Game {
   @override
   Widget buildUI(BuildContext context) => Stack(
       children: [
-        buildWatch(isometric.operationStatus, buildOperationStatus),
+        buildWatch(options.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ]);
 
@@ -170,7 +170,7 @@ class WebsiteGame extends Game {
 
   void checkForLatestVersion() async {
     // await saveVisitDateTime();
-    isometric.operationStatus.value = OperationStatus.Checking_For_Updates;
+    options.operationStatus.value = OperationStatus.Checking_For_Updates;
     isometric.engine.refreshPage();
   }
 

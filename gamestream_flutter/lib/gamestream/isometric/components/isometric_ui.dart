@@ -203,12 +203,12 @@ class IsometricUI with IsometricComponent {
     final controlTime = buildTime();
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
-        isometric.windowOpenMenu.value = true;
+        options.windowOpenMenu.value = true;
       },
       onExit: (PointerExitEvent event) {
-        isometric.windowOpenMenu.value = false;
+        options.windowOpenMenu.value = false;
       },
-      child: buildWatch(isometric.windowOpenMenu, (bool menuVisible){
+      child: buildWatch(options.windowOpenMenu, (bool menuVisible){
         return Container(
           color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
           child: Column(
@@ -269,7 +269,7 @@ class IsometricUI with IsometricComponent {
       action: action.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   Widget buildIconMenu() => onPressed(
-      action: isometric.windowOpenMenu.toggle,
+      action: options.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
@@ -277,7 +277,7 @@ class IsometricUI with IsometricComponent {
   );
 
   Widget buildIconCog() => onPressed(
-      action: isometric.windowOpenMenu.toggle,
+      action: options.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog),
@@ -285,7 +285,7 @@ class IsometricUI with IsometricComponent {
   );
 
   Widget buildIconCogTurned() => onPressed(
-      action: isometric.windowOpenMenu.toggle,
+      action: options.windowOpenMenu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog_Turned),

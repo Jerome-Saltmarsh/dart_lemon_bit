@@ -73,6 +73,7 @@ class Isometric {
   late final IsometricAnimation animation;
   late final IsometricImages images;
   late final IsometricLighting lighting;
+  late final IsometricColors colors;
 
   Isometric() {
     print('Isometric()');
@@ -109,6 +110,7 @@ class Isometric {
     animation = IsometricAnimation();
     screen = IsometricScreen();
     lighting = IsometricLighting();
+    colors = IsometricColors();
 
     components.add(images);
     components.add(scene);
@@ -143,6 +145,7 @@ class Isometric {
     components.add(animation);
     components.add(screen);
     components.add(lighting);
+    components.add(colors);
 
     for (final component in components) {
       if (component is Updatable) {
@@ -182,22 +185,10 @@ class Isometric {
       component.animation = animation;
       component.images = images;
       component.screen = screen;
+      component.colors = colors;
     }
     validateAtlases();
   }
-
-  final colors = IsometricColors();
-  final textEditingControllerMessage = TextEditingController();
-  final textFieldMessage = FocusNode();
-  final panelTypeKey = <int, GlobalKey>{};
-  final playerTextStyle = TextStyle(color: Colors.white);
-  final windowOpenMenu = WatchBool(false);
-  final operationStatus = Watch(OperationStatus.None);
-  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
-  final serverFPS = Watch(0);
-  final sceneName = Watch<String?>(null);
-  final gameRunning = Watch(true);
-  final watchTimePassing = Watch(false);
 
   T findComponent<T>() {
     for (final component in components){
@@ -233,7 +224,7 @@ class Isometric {
     if (!network.websocket.connected)
       return;
 
-    if (!gameRunning.value) {
+    if (!options.gameRunning.value) {
       io.writeByte(ClientRequest.Update);
       io.applyKeyboardInputToUpdateBuffer(this);
       io.sendUpdateBuffer();

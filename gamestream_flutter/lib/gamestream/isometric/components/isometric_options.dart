@@ -5,6 +5,8 @@ import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
+import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
@@ -20,11 +22,16 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
+  final windowOpenMenu = WatchBool(false);
+  final operationStatus = Watch(OperationStatus.None);
+  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
+  final serverFPS = Watch(0);
+  final sceneName = Watch<String?>(null);
+  final gameRunning = Watch(true);
+  final watchTimePassing = Watch(false);
   final rendersSinceUpdate = Watch(0);
-  final messageBoxVisible = Watch(false);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final gameType = Watch(GameType.Website);
-
   final edit = Watch(false);
   final messageStatus = Watch('');
   final error = Watch<GameError?>(null);
@@ -36,7 +43,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
     edit.onChanged(_onChangedEdit);
     messageStatus.onChanged(_onChangedMessageStatus);
     error.onChanged(_onChangedGameError);
-    messageBoxVisible.onChanged(onVisibilityChangedMessageBox);
     rendersSinceUpdate.onChanged(_onChangedRendersSinceUpdate);
   }
 
@@ -123,27 +129,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void actionSetModeEdit(){
     edit.value = true;
-  }
-
-  void messageBoxToggle(){
-    messageBoxVisible.value = !messageBoxVisible.value;
-  }
-
-  void messageBoxShow(){
-    messageBoxVisible.value = true;
-  }
-
-  void messageBoxHide(){
-    messageBoxVisible.value = false;
-  }
-
-  void onVisibilityChangedMessageBox(bool visible){
-    if (visible) {
-      isometric.textFieldMessage.requestFocus();
-      return;
-    }
-    isometric.textFieldMessage.unfocus();
-    isometric.textEditingControllerMessage.text = '';
   }
 
   void onChangedError(String error) {

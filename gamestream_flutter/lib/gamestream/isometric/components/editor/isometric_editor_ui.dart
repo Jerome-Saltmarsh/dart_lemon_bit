@@ -695,7 +695,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(isometric.gameRunning, (gameRunning) {
+            buildWatch(options.gameRunning, (gameRunning) {
               return buildText('Game Running: $gameRunning', onPressed: () => toggleGameRunning);
             }),
             buildText ('Reset', onPressed: editSceneReset),
