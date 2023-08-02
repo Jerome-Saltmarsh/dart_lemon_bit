@@ -260,8 +260,8 @@ extension isometricDebugUI on IsometricDebug {
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${isometric.engine.drawCanvasAfterUpdate}'))
       ),
       onPressed(
-          action: () => isometric.renderResponse = !isometric.renderResponse,
-          child: GSRefresh(() => buildText(' isometric.renderResponse = ${isometric.renderResponse}'))
+          action: () => options.renderResponse = !options.renderResponse,
+          child: GSRefresh(() => buildText(' isometric.renderResponse = ${options.renderResponse}'))
       ),
     ],
   );
@@ -456,8 +456,6 @@ extension isometricDebugUI on IsometricDebug {
             'camera-target: ${isometric.camera.target}\n'
         )),
         buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.highResolution))),
-        buildRow(text: 'ambient-screen-on', value: GSRefresh(() => buildText(isometric.totalAmbientOnscreen))),
-        buildRow(text: 'ambient-screen-off', value: GSRefresh(() => buildText(isometric.totalAmbientOffscreen))),
         buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.onscreenNodes))),
         buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.offscreenNodes))),
         buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.compositor.rendererNodes.orderShiftY))),

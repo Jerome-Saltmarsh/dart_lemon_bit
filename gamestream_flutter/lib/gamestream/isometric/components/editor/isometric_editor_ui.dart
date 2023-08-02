@@ -1463,12 +1463,24 @@ extension IsometricEditorUI on IsometricEditor {
                     gameObject.emissionVal =
                         (hsv.value * 100).round();
 
-                    isometric.refreshGameObjectEmissionColor(gameObject);
+                    refreshGameObjectEmissionColor(gameObject);
                   },
                 )
             ],
           ),
         ));
+
+
+  void refreshGameObjectEmissionColor(GameObject gameObject){
+    // TODO
+    // gameObject.emissionColor = hsvToColor(
+    //   hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity).toInt(),
+    //   saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity).toInt(),
+    //   value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity).toInt(),
+    //   opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
+    // );
+  }
+
 }
 
 

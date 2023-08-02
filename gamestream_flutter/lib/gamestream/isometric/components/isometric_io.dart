@@ -5,8 +5,8 @@ import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
-import '../library.dart';
-import 'isometric/isometric.dart';
+import '../../../library.dart';
+import '../isometric.dart';
 
 
 class IsometricIO with ByteWriter, IsometricComponent {
@@ -272,6 +272,11 @@ class IsometricIO with ByteWriter, IsometricComponent {
     previousScreenRight = 0;
     previousScreenBottom = 0;
   }
+
+  void detectInputMode() =>
+      inputMode.value = engine.deviceIsComputer
+          ? InputMode.Keyboard
+          : InputMode.Touch;
 }
 
 class TouchController {

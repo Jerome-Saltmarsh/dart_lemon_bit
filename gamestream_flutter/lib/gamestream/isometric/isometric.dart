@@ -4,18 +4,15 @@ import 'dart:async';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
-import 'package:gamestream_flutter/gamestream/game_io.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_screen.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
@@ -187,10 +184,6 @@ class Isometric {
     validateAtlases();
   }
 
-
-  var totalAmbientOffscreen = 0;
-  var totalAmbientOnscreen = 0;
-  var renderResponse = true;
   var nextLightingUpdate = 0;
   var interpolationPadding = 0.0;
   var nodesRaycast = 0;
@@ -226,8 +219,6 @@ class Isometric {
     if (options.gameType.value == GameType.Website)
       return;
 
-    totalAmbientOffscreen = 0;
-    totalAmbientOnscreen = 0;
     camera.update();
     particles.update();
     compositor.render3D();
@@ -369,10 +360,10 @@ class Isometric {
       double previousHeight,
       double newWidth,
       double newHeight,
-      ) => detectInputMode();
+      ) => io.detectInputMode();
 
   void onDeviceTypeChanged(int deviceType){
-    detectInputMode();
+    io.detectInputMode();
   }
 
   void startGameType(GameType gameType){
@@ -464,35 +455,6 @@ class Isometric {
     componentsReady = true;
   }
 
-  void onReadRespondFinished() {
-    engine.onDrawCanvas = drawCanvas;
-
-    if (renderResponse){
-      engine.redrawCanvas();
-    }
-  }
-
-  void detectInputMode() =>
-      io.inputMode.value = engine.deviceIsComputer
-          ? InputMode.Keyboard
-          : InputMode.Touch;
-
-
-
-  void refreshGameObjectEmissionColor(GameObject gameObject){
-    // TODO
-    // gameObject.emissionColor = hsvToColor(
-    //   hue: interpolate(ambientHue, gameObject.emissionHue, gameObject.emissionIntensity).toInt(),
-    //   saturation: interpolate(ambientSaturation, gameObject.emissionSat, gameObject.emissionIntensity).toInt(),
-    //   value: interpolate(ambientValue, gameObject.emissionVal, gameObject.emissionIntensity).toInt(),
-    //   opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
-    // );
-  }
-
-  Color get color => engine.paint.color;
-
-  set color(Color color) => engine.paint.color = color;
-
   void notifyLoadImagesCompleted() {
     print('isometric.notifyLoadImagesCompleted()');
     imagesLoadedCompleted.complete(true);
@@ -503,3 +465,4 @@ class Isometric {
     }
   }
 }
+

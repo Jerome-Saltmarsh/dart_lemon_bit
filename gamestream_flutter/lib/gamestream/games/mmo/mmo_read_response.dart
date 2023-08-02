@@ -1,6 +1,6 @@
 
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/extensions/isometric_response_reader.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_response_reader.dart';
 
 extension MMOResponseReader on IsometricResponseReader {
 

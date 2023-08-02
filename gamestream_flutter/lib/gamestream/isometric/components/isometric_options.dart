@@ -16,6 +16,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var sceneSmokeSourcesSmokeDuration = 250;
   var clearErrorTimer = -1;
   var messageStatusDuration = 0;
+  var renderResponse = true;
 
   final rendersSinceUpdate = Watch(0);
   final messageBoxVisible = Watch(false);

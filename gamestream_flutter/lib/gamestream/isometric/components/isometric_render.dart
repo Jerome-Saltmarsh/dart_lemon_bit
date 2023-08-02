@@ -439,4 +439,7 @@ class IsometricRender with IsometricComponent {
     );
   }
 
+  Color get color => engine.paint.color;
+
+  set color(Color color) => engine.paint.color = color;
 }
