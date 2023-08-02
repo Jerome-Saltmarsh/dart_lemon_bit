@@ -325,18 +325,25 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeCharacters() {
+    const padding = 100.0;
     cacheIndex = 0;
     writeByte(ServerResponse.Isometric_Characters);
     final characters = game.characters;
-    for (final character in characters) {
-      if (
-        character.deadOrInactive ||
-        character.renderY < screenTop ||
-        character.renderX < screenLeft ||
-        character.renderX > screenRight ||
-        character.renderY > screenBottom
-      ) continue;
 
+    for (final character in characters) {
+
+      if (character.deadOrInactive)
+        continue;
+
+      final renderX = character.renderX;
+
+      if (renderX < screenLeft - padding || renderX > screenRight + padding)
+        continue;
+
+      final renderY = character.renderY;
+
+      if (renderY < screenTop - padding || renderY > screenBottom + padding)
+        continue;
 
       final characterX = character.x.toInt();
       final characterY = character.y.toInt();

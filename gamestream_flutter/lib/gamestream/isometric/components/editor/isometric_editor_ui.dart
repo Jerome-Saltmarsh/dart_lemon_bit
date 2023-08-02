@@ -637,7 +637,8 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = engine.buildAtlasImage(
+
+    final image = engine.buildAtlasImage(
       image: images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -645,13 +646,12 @@ extension IsometricEditorUI on IsometricEditor {
       srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
     );
 
-    return WatchBuilder(nodeSelectedType, (int selectedNodeType) {
-      return buildButton(
+    return WatchBuilder(nodeSelectedType, (int selectedNodeType) => buildButton(
           height: 78,
           width: 78,
           alignment: Alignment.center,
           child: Tooltip(
-            child: canvas,
+            child: image,
             message: NodeType.getName(nodeType),
           ),
           action: () {
@@ -661,8 +661,7 @@ extension IsometricEditorUI on IsometricEditor {
             }
             paint(nodeType: nodeType);
           },
-          color: selectedNodeType == nodeType ? colors.white : colors.white60);
-    });
+          color: selectedNodeType == nodeType ? colors.white : colors.white60));
   }
 
   Widget buildColumnEditNodeOrientation(int nodeOrientation) =>
