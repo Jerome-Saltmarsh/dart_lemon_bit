@@ -1619,7 +1619,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
         particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
-        isometric.projectShadow(projectile);
+        render.projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {

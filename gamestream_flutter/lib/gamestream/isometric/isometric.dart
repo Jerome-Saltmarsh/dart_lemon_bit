@@ -13,8 +13,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
-import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
@@ -27,7 +25,6 @@ import 'components/render/renderer_nodes.dart';
 import 'components/render/renderer_projectiles.dart';
 import 'components/src.dart';
 import 'ui/game_isometric_minimap.dart';
-import 'ui/isometric_constants.dart';
 
 
 class Isometric {
@@ -256,52 +253,6 @@ class Isometric {
       // actionSetModePlay();
     }
     return;
-  }
-
-  void projectShadow(Position v3){
-    if (!scene.inBoundsPosition(v3)) return;
-
-    final z = getProjectionZ(v3);
-    if (z < 0) return;
-    particles.spawnParticle(
-      type: ParticleType.Shadow,
-      x: v3.x,
-      y: v3.y,
-      z: z,
-      angle: 0,
-      speed: 0,
-      duration: 2,
-    );
-  }
-
-  double getProjectionZ(Position vector3){
-
-    final x = vector3.x;
-    final y = vector3.y;
-    var z = vector3.z;
-
-    while (true) {
-      if (z < 0) return -1;
-      final nodeIndex =  scene.getIndexXYZ(x, y, z);
-      final nodeOrientation =  scene.nodeOrientations[nodeIndex];
-
-      if (const <int> [
-        NodeOrientation.None,
-        NodeOrientation.Radial,
-        NodeOrientation.Half_South,
-        NodeOrientation.Half_North,
-        NodeOrientation.Half_East,
-        NodeOrientation.Half_West,
-      ].contains(nodeOrientation)) {
-        z -= IsometricConstants.Node_Height;
-        continue;
-      }
-      if (z > Node_Height){
-        return z + (z % Node_Height);
-      } else {
-        return Node_Height;
-      }
-    }
   }
 
   // @override
