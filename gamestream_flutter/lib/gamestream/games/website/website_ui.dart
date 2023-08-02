@@ -19,7 +19,7 @@ extension WebsiteUI on WebsiteGame {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: gameTypes.map((gameType) => onPressed(
-              action: () => isometric.startGameType(gameType),
+              action: () => action.startGameType(gameType),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 child: Column(

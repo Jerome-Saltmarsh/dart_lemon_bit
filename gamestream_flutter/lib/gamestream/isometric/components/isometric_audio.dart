@@ -425,4 +425,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
     maxDistance: maxDistance,
   );
 
+  void playAudioError(){
+    errorSound15();
+  }
 }

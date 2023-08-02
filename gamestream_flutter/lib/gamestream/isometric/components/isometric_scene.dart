@@ -21,6 +21,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   final projectiles = <Projectile>[];
   late final Engine engine;
 
+  var interpolationPadding = 0.0;
+  var nextLightingUpdate = 0;
   var framesPerSmokeEmission = 10;
   var nextEmissionSmoke = 0;
 
@@ -154,10 +156,17 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void update(){
+    interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
+
     jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
     updateGameObjects();
     updateParticleEmitters();
+
+    if (nextLightingUpdate-- <= 0) {
+      nextLightingUpdate = options.framesPerLightingUpdate;
+      scene.updateAmbientAlphaAccordingToTime();
+    }
   }
 
   void jobBatchResetNodeColorsToAmbient() {
@@ -675,7 +684,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     if (!bakeStackRecording){
 
-      final padding = isometric.interpolationPadding;
+      final padding = interpolationPadding;
       final rx = getIndexRenderX(index);
       if (rx < engine.Screen_Left - padding) return;
       if (rx > engine.Screen_Right + padding) return;
@@ -759,9 +768,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (index < 0) return;
     if (index >= totalNodes) return;
 
-    final engine = isometric.engine;
-
-    final padding = isometric.interpolationPadding;
+    final padding = interpolationPadding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;

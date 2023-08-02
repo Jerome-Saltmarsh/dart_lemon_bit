@@ -8,6 +8,8 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
+
+  var framesPerLightingUpdate = 60;
   var cursorType = IsometricCursorType.Hand;
   var renderCursorEnable = true;
   var renderHealthBarEnemies = true;
@@ -69,7 +71,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     game.value.onGameError(gameError);
 
     clearErrorTimer = 300;
-    action.playAudioError();
+    audio.playAudioError();
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         website.error.value = 'unable to join game';

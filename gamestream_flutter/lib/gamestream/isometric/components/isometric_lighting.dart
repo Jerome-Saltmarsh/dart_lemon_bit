@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:lemon_math/src.dart';
 
-class Lighting implements Updatable {
+class IsometricLighting implements Updatable {
   var emissionAlphaCharacter = 125;
   var torchEmissionIntensityColored = 0.0;
   var torchEmissionIntensityAmbient = 1.0;
@@ -34,8 +34,4 @@ class Lighting implements Updatable {
 
     torchEmissionIntensityColored = torchEmissionIntensityAmbient - 0.2;
   }
-
-
-
-
 }

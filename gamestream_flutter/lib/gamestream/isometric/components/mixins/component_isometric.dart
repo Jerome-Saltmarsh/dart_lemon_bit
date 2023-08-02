@@ -12,10 +12,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_actions.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_events.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_response_reader.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -52,6 +48,7 @@ mixin IsometricComponent {
   late final IsometricIO io;
   late final IsometricImages images;
   late final IsometricScreen screen;
+  late final IsometricLighting lighting;
 
   void onComponentReady() {
 

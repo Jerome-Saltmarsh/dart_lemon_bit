@@ -1,13 +1,11 @@
 
-import 'dart:ui';
-
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../../../library.dart';
 import '../isometric.dart';
-
+import 'classes/touch_controller.dart';
 
 class IsometricIO with ByteWriter, IsometricComponent {
 
@@ -47,28 +45,31 @@ class IsometricIO with ByteWriter, IsometricComponent {
   @override
   void onComponentReady() {
     touchController = TouchController(isometric);
+    engine.deviceType.onChanged(onDeviceTypeChanged);
+    engine.onScreenSizeChanged = onScreenSizeChanged;
   }
 
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
 
   bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
 
+  double get touchMouseWorldZ => player.position.z;
+
   void recenterCursor(){
-    touchCursorWorldX = isometric.player.renderX;
-    touchCursorWorldY = isometric.player.renderY;
+    touchCursorWorldX = player.renderX;
+    touchCursorWorldY = player.renderY;
   }
 
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
-  double get touchMouseWorldZ => isometric.player.position.z;
 
   /// compresses keyboard and mouse inputs into a single byte to send to the server
   int getInputAsByte(){
 
     var hex = getDirection();
 
-    if (isometric.engine.watchMouseLeftDown.value) {
+    if (engine.watchMouseLeftDown.value) {
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -79,15 +80,15 @@ class IsometricIO with ByteWriter, IsometricComponent {
 
     if (inputModeKeyboard) {
 
-      if (isometric.engine.mouseRightDown.value) {
+      if (engine.mouseRightDown.value) {
         hex = hex | ByteHex.Hex_32;
       }
 
-      if (isometric.engine.keyPressedShiftLeft){
+      if (engine.keyPressedShiftLeft){
         hex = hex | ByteHex.Hex_64;
       }
 
-      if (isometric.engine.keyPressedSpace){
+      if (engine.keyPressedSpace){
         hex = hex | ByteHex.Hex_128;
       }
     }
@@ -97,17 +98,25 @@ class IsometricIO with ByteWriter, IsometricComponent {
 
   double getCursorScreenX() {
      if (inputModeTouch){
-       return isometric.engine.worldToScreenX(touchCursorWorldX);
+       return engine.worldToScreenX(touchCursorWorldX);
      } else {
-       return isometric.engine.mousePositionX;
+       return engine.mousePositionX;
      }
   }
 
+  void onScreenSizeChanged(
+      double previousWidth,
+      double previousHeight,
+      double newWidth,
+      double newHeight,
+      ) => detectInputMode();
+
+
   double getCursorScreenY() {
     if (inputModeTouch) {
-      return isometric.engine.worldToScreenY(touchCursorWorldY);
+      return engine.worldToScreenY(touchCursorWorldY);
     } else {
-      return isometric.engine.mousePositionY;
+      return engine.mousePositionY;
     }
   }
 
@@ -119,38 +128,38 @@ class IsometricIO with ByteWriter, IsometricComponent {
 
   int getInputDirectionKeyboard() {
 
-    if (isometric.engine.keyPressed(KeyCode.W)) {
-      if (isometric.engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(KeyCode.W)) {
+      if (engine.keyPressed(KeyCode.D)) {
         return InputDirection.Up_Right;
       }
-      if (isometric.engine.keyPressed(KeyCode.A)) {
+      if (engine.keyPressed(KeyCode.A)) {
         return InputDirection.Up_Left;
       }
       return InputDirection.Up;
     }
 
-    if (isometric.engine.keyPressed(KeyCode.S)) {
-      if (isometric.engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(KeyCode.S)) {
+      if (engine.keyPressed(KeyCode.D)) {
         return InputDirection.Down_Right;
       }
-      if (isometric.engine.keyPressed(KeyCode.A)) {
+      if (engine.keyPressed(KeyCode.A)) {
         return InputDirection.Down_Left;
       }
       return InputDirection.Down;
     }
-    if (isometric.engine.keyPressed(KeyCode.A)) {
+    if (engine.keyPressed(KeyCode.A)) {
       return InputDirection.Left;
     }
-    if (isometric.engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(KeyCode.D)) {
       return InputDirection.Right;
     }
     return InputDirection.None;
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    var z = isometric.scene.totalZ - 1;
-    final mouseWorldX = isometric.engine.mouseWorldX;
-    final mouseWorldY = isometric.engine.mouseWorldY;
+    var z = scene.totalZ - 1;
+    final mouseWorldX = engine.mouseWorldX;
+    final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
       final row = convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
       final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
@@ -271,55 +280,17 @@ class IsometricIO with ByteWriter, IsometricComponent {
     previousScreenTop = 0;
     previousScreenRight = 0;
     previousScreenBottom = 0;
+  }  
+  
+  void onDeviceTypeChanged(int deviceType){
+    detectInputMode();
   }
-
+  
   void detectInputMode() =>
       inputMode.value = engine.deviceIsComputer
           ? InputMode.Keyboard
           : InputMode.Touch;
+
+
 }
 
-class TouchController {
-
-  final Isometric isometric;
-
-  var joystickCenterX = 0.0;
-  var joystickCenterY = 0.0;
-  var joystickX = 0.0;
-  var joystickY = 0.0;
-  var attack = false;
-
-  static const maxDistance = 15.0;
-
-  TouchController(this.isometric);
-
-  double get angle => angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
-  double get dis => distanceBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
-
-  void onClick() {
-    joystickCenterX = isometric.engine.mousePositionX;
-    joystickCenterY = isometric.engine.mousePositionY;
-    joystickX = joystickCenterX;
-    joystickY = joystickCenterY;
-  }
-
-  int getDirection() =>
-      isometric.engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
-
-  void onMouseMoved(double x, double y){
-    joystickX = isometric.engine.mousePositionX;
-    joystickY = isometric.engine.mousePositionY;
-  }
-
-  void render(Canvas canvas){
-    if (isometric.engine.touches == 0) return;
-
-    if (isometric.engine.watchMouseLeftDown.value) {
-      if (dis > maxDistance) {
-        final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
-        joystickCenterX = joystickX - adj(radian, maxDistance);
-        joystickCenterY = joystickY - opp(radian, maxDistance);
-      }
-    }
-  }
-}

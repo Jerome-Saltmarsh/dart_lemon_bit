@@ -184,24 +184,24 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         break;
 
       case IsometricResponse.Player_Accuracy:
-        isometric.player.accuracy.value = readPercentage();
+        player.accuracy.value = readPercentage();
         break;
 
       case IsometricResponse.Player_Weapon_Duration_Percentage:
-        isometric.player.weaponCooldown.value = readPercentage();
+        player.weaponCooldown.value = readPercentage();
         break;
 
       case IsometricResponse.GameObjects:
-        isometric.scene.gameObjects.clear();
+        scene.gameObjects.clear();
         break;
 
       case IsometricResponse.Player_Initialized:
-        isometric.onPlayerInitialized();
+        player.onPlayerInitialized();
         break;
 
       case IsometricResponse.Player_Controls:
-        isometric.player.controlsCanTargetEnemies.value = readBool();
-        isometric.player.controlsRunInDirectionEnabled.value = readBool();
+        player.controlsCanTargetEnemies.value = readBool();
+        player.controlsRunInDirectionEnabled.value = readBool();
         break;
     }
   }
@@ -310,7 +310,6 @@ class IsometricResponseReader with ByteReader, IsometricComponent
       scene.ambientStack = Uint16List(totalNodes);
       scene.nodeColors = Uint32List(totalNodes);
     }
-    isometric.nodesRaycast = scene.area +  scene.area + scene.totalColumns + 1;
     events.onChangedNodes();
     scene.refreshNodeVariations();
     scene.nodesChangedNotifier.value++;

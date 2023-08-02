@@ -141,6 +141,23 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   void toggleControlsCanTargetEnemies() =>
       network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
+
+  void onPlayerInitialized(){
+    position.x = 0;
+    position.y = 0;
+    position.z = 0;
+    previousPosition.x = 0;
+    previousPosition.y = 0;
+    previousPosition.z = 0;
+    indexZ = 0;
+    indexRow = 0;
+    indexColumn = 0;
+    scene.characters.clear();
+    scene.projectiles.clear();
+    scene.gameObjects.clear();
+    scene.totalProjectiles = 0;
+    scene.totalCharacters = 0;
+  }
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

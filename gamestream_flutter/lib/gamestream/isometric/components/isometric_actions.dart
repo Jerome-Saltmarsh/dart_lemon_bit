@@ -193,12 +193,12 @@ class IsometricActions with IsometricComponent {
     options.messageStatus.value = value;
   }
 
-  void playAudioError(){
-    audio.errorSound15();
+  void startGameByType(GameType gameType){
+    options.game.value = options.mapGameTypeToGame(gameType);
   }
 
-  void startGameByType(GameType gameType){
-    options.game.value = isometric.options.mapGameTypeToGame(gameType);
+  void startGameType(GameType gameType){
+    network.connectToGame(gameType);
   }
 
 }

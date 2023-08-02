@@ -1,7 +1,6 @@
 
 import 'dart:async';
 
-import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/validate_atlas.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
@@ -73,6 +72,7 @@ class Isometric {
   late final IsometricResponseReader responseReader;
   late final IsometricAnimation animation;
   late final IsometricImages images;
+  late final IsometricLighting lighting;
 
   Isometric() {
     print('Isometric()');
@@ -108,6 +108,7 @@ class Isometric {
     isometricEditor = IsometricGame();
     animation = IsometricAnimation();
     screen = IsometricScreen();
+    lighting = IsometricLighting();
 
     components.add(images);
     components.add(scene);
@@ -141,6 +142,7 @@ class Isometric {
     components.add(isometricEditor);
     components.add(animation);
     components.add(screen);
+    components.add(lighting);
 
     for (final component in components) {
       if (component is Updatable) {
@@ -184,10 +186,6 @@ class Isometric {
     validateAtlases();
   }
 
-  var nextLightingUpdate = 0;
-  var interpolationPadding = 0.0;
-  var nodesRaycast = 0;
-  final lighting = Lighting();
   final colors = IsometricColors();
   final imagesLoadedCompleted = Completer();
   final textEditingControllerMessage = TextEditingController();
@@ -253,12 +251,6 @@ class Isometric {
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
 
-    interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
-
-    if (nextLightingUpdate-- <= 0){
-      nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
-      scene.updateAmbientAlphaAccordingToTime();
-    }
   }
 
   void readPlayerInputEdit() {
@@ -275,23 +267,6 @@ class Isometric {
       // actionSetModePlay();
     }
     return;
-  }
-
-  void onPlayerInitialized(){
-    player.position.x = 0;
-    player.position.y = 0;
-    player.position.z = 0;
-    player.previousPosition.x = 0;
-    player.previousPosition.y = 0;
-    player.previousPosition.z = 0;
-    player.indexZ = 0;
-    player.indexRow = 0;
-    player.indexColumn = 0;
-    scene.characters.clear();
-    scene.projectiles.clear();
-    scene.gameObjects.clear();
-    scene.totalProjectiles = 0;
-    scene.totalCharacters = 0;
   }
 
   void projectShadow(Position v3){
@@ -355,27 +330,6 @@ class Isometric {
     website.error.value = error.toString();
   }
 
-  void onScreenSizeChanged(
-      double previousWidth,
-      double previousHeight,
-      double newWidth,
-      double newHeight,
-      ) => io.detectInputMode();
-
-  void onDeviceTypeChanged(int deviceType){
-    io.detectInputMode();
-  }
-
-  void startGameType(GameType gameType){
-    network.connectToGame(gameType);
-  }
-
-  /// EVENT HANDLER (DO NOT CALL)
-
-  void onChangedAccount(Account? account) {
-
-  }
-
   void doRenderForeground(Canvas canvas, Size size){
     if (!network.websocket.connected)
       return;
@@ -433,8 +387,6 @@ class Isometric {
 
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
-    engine.deviceType.onChanged(onDeviceTypeChanged);
-    engine.onScreenSizeChanged = onScreenSizeChanged;
     engine.onMouseEnterCanvas = onMouseEnterCanvas;
     engine.onMouseExitCanvas = onMouseExitCanvas;
     onEngineBuilt();
