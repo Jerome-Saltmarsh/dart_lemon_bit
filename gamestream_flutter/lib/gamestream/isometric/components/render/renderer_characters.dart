@@ -469,7 +469,11 @@ class RendererCharacters extends RenderGroup {
     ui.Image imageHead;
     ui.Image imageBody;
     ui.Image imageLegs;
-    ui.Image imageArmLeft;
+    ui.Image imageHandsLeft;
+    ui.Image imageHandsRight;
+
+    ui.Image imageHandFront;
+    ui.Image imageHandBehind;
 
     final leftInFront = const [
       IsometricDirection.North,
@@ -480,23 +484,33 @@ class RendererCharacters extends RenderGroup {
     if (character.running) {
       srcX = (frame % 8) * size;
       image = images.kid_running;
-      imageHead = images.kid_head_dark_running;
+      imageHead = images.kid_head_light_running;
       imageBody = images.kid_body_shirt_blue_running;
       imageLegs = images.kid_legs_brown_running;
-      imageArmLeft = images.kid_arm_left_running_metal_gauntlet;
+      imageHandsLeft = images.kid_hands_gauntlet_left_running;
+      imageHandsRight = images.kid_hands_gauntlet_right_running;
     } else {
       srcX = 0;
       image = images.kid_idle;
-      imageHead = images.kid_head_dark_idle;
+      imageHead = images.kid_head_light_idle;
       imageBody = images.kid_body_shirt_blue_idle;
       imageLegs = images.kid_legs_brown_idle;
-      imageArmLeft = images.kid_arm_left_idle_metal_gauntlet;
+      imageHandsLeft = images.kid_hands_gauntlet_left_idle;
+      imageHandsRight = images.kid_hands_gauntlet_right_idle;
 
       if (frame ~/ 8 % 2 == 0){
         srcX = (frame % 8) * size;
       } else {
         srcX = (7 - (frame % 8)) * size;
       }
+    }
+
+    if (leftInFront){
+      imageHandFront = imageHandsLeft;
+      imageHandBehind = imageHandsRight;
+    } else {
+      imageHandFront = imageHandsRight;
+      imageHandBehind = imageHandsLeft;
     }
 
     renderCharacterShadowCircle(character);
@@ -527,20 +541,18 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (!leftInFront){
-      engine.renderSprite(
-        image: imageArmLeft,
-        srcX: srcX,
-        srcY: srcY,
-        srcWidth: size,
-        srcHeight: size,
-        dstX: dstX,
-        dstY: dstY,
-        scale: scale,
-        color: color,
-        anchorY: anchorY,
-      );
-    }
+    engine.renderSprite(
+      image: imageHandBehind,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      scale: scale,
+      color: color,
+      anchorY: anchorY,
+    );
 
     engine.renderSprite(
       image: imageBody,
@@ -555,21 +567,18 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (leftInFront){
-      engine.renderSprite(
-        image: imageArmLeft,
-        srcX: srcX,
-        srcY: srcY,
-        srcWidth: size,
-        srcHeight: size,
-        dstX: dstX,
-        dstY: dstY,
-        scale: scale,
-        color: color,
-        anchorY: anchorY,
-      );
-    }
-
+    engine.renderSprite(
+      image: imageHandFront,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      scale: scale,
+      color: color,
+      anchorY: anchorY,
+    );
 
     engine.renderSprite(
       image: imageHead,

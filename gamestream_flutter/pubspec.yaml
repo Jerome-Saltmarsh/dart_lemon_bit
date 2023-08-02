@@ -58,6 +58,10 @@ flutter:
     - images/template/
     - images/kid/
     - images/kid/arms/
+    - images/kid/hands/
+    - images/kid/hands/gauntlet/
+    - images/kid/hands/gauntlet/left/
+    - images/kid/hands/gauntlet/right/
     - images/kid/body/
     - images/kid/head/
     - images/kid/legs/

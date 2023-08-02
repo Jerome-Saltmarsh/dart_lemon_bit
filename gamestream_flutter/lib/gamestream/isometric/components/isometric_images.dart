@@ -54,8 +54,11 @@ class IsometricImages {
    late final Image kid_legs_brown_idle;
    late final Image kid_legs_brown_running;
 
-   late final Image kid_arm_left_idle_metal_gauntlet;
-   late final Image kid_arm_left_running_metal_gauntlet;
+   late final Image kid_hands_gauntlet_left_idle;
+   late final Image kid_hands_gauntlet_left_running;
+
+   late final Image kid_hands_gauntlet_right_idle;
+   late final Image kid_hands_gauntlet_right_running;
 
    late final Image kid_arm_left_idle;
    late final Image kid_arm_left_running;
@@ -214,8 +217,11 @@ class IsometricImages {
      loadPng('kid/arms/kid_arm_left_idle').then((value) => kid_arm_left_idle = value);
      loadPng('kid/arms/kid_arm_left_running').then((value) => kid_arm_left_running = value);
 
-     loadPng('kid/arms/kid_arm_left_idle_metal_gauntlet').then((value) => kid_arm_left_idle_metal_gauntlet = value);
-     loadPng('kid/arms/kid_arm_left_running_metal_gauntlet').then((value) => kid_arm_left_running_metal_gauntlet = value);
+     loadPng('kid/hands/gauntlet/left/idle').then((value) => kid_hands_gauntlet_left_idle = value);
+     loadPng('kid/hands/gauntlet/left/running').then((value) => kid_hands_gauntlet_left_running = value);
+
+     loadPng('kid/hands/gauntlet/right/idle').then((value) => kid_hands_gauntlet_right_idle = value);
+     loadPng('kid/hands/gauntlet/right/running').then((value) => kid_hands_gauntlet_right_running = value);
 
      loadPng('kid/arms/kid_arm_right_idle').then((value) => kid_arm_right_idle = value);
      loadPng('kid/arms/kid_arm_right_running').then((value) => kid_arm_right_running = value);
