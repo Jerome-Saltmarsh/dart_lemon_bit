@@ -4,7 +4,7 @@ import 'package:gamestream_server/isometric.dart';
 
 class MMONpc extends IsometricCharacter {
 
-  Function(MmoPlayer player)? interact;
+  Function(AmuletPlayer player)? interact;
 
   MMONpc({
     required super.characterType,

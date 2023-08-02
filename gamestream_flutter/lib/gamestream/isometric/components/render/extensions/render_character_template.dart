@@ -100,7 +100,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       case CharacterState.Stunned:
         frameLegs = 0;
         frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
-        isometric.renderStarsV3(character);
+        render.starsPosition(character);
         break;
     }
 

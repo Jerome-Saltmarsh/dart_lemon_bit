@@ -272,7 +272,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (mouseRightClicked){
-      if (player is MmoPlayer){
+      if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
           setCharacterStateIdle(player);
           characterAttack(player);
@@ -296,7 +296,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (mouseLeftClicked &&
-        player is MmoPlayer &&
+        player is AmuletPlayer &&
         player.activatedPowerIndex != -1
     ) {
       player.useActivatedPower();

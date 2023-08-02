@@ -175,7 +175,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
       GameType.Capture_The_Flag: 'images/website/game-isometric.png',
       GameType.Moba: 'images/website/game-isometric.png',
-      GameType.Mmo: 'images/website/game-isometric.png',
+      GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
   Widget buildSelectRegionColumn() => SizedBox(

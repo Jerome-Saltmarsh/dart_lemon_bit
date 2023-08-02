@@ -198,7 +198,7 @@ class IsometricActions with IsometricComponent {
   }
 
   void startGameByType(GameType gameType){
-    options.game.value = isometric.mapGameTypeToGame(gameType);
+    options.game.value = isometric.options.mapGameTypeToGame(gameType);
   }
 
 }

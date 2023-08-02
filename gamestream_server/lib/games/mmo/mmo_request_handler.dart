@@ -8,7 +8,7 @@ extension MMORequestHandler on WebSocketConnection {
   void handleClientRequestMMORequest(List<String> arguments){
 
     final player = this.player;
-    if (player is! MmoPlayer) {
+    if (player is! AmuletPlayer) {
       errorInvalidPlayerType();
       return;
     }

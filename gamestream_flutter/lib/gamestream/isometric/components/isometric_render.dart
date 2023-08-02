@@ -208,4 +208,29 @@ class IsometricRender with IsometricComponent {
       x: getRenderX(x, y, z),
       y: getRenderY(x, y, z),
     );
+
+  void renderMouseTargetName() {
+    if (!player.mouseTargetAllie.value) return;
+    final mouseTargetName = player.mouseTargetName.value;
+    if (mouseTargetName == null) return;
+    render.renderText(
+        value: mouseTargetName,
+        x: player.aimTargetPosition.renderX,
+        y: player.aimTargetPosition.renderY - 55);
+  }
+
+  void starsPosition(Position v3) =>
+      stars(v3.renderX, v3.renderY - 40);
+
+  void stars(double x, double y) =>
+      engine.renderSprite(
+        image: images.sprite_stars,
+        srcX: 125.0 * animation.frame16,
+        srcY: 0,
+        srcWidth: 125,
+        srcHeight: 125,
+        dstX: x,
+        dstY: y,
+        scale: 0.4,
+      );
 }

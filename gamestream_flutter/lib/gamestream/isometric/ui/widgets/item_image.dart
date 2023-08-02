@@ -36,7 +36,7 @@ class ItemImage extends StatelessWidget {
             height: size,
             color: Colors.transparent,
             child: isometric.engine.buildAtlasImage(
-              image: isometric.getImageForGameObjectType(type),
+              image: isometric.rendererGameObjects.getImageForGameObjectType(type),
               srcX: src[Atlas.SrcX],
               srcY: src[Atlas.SrcY],
               srcWidth: src[Atlas.SrcWidth],

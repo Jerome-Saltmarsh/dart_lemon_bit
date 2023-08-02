@@ -16,7 +16,7 @@ class WebsiteGame extends Game {
   final gameTypes = [
     GameType.Capture_The_Flag,
     GameType.Moba,
-    GameType.Mmo,
+    GameType.Amulet,
   ];
 
   final error = Watch<String?>(null);

@@ -1,5 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/game_io.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
@@ -47,6 +49,8 @@ mixin IsometricComponent {
   late final IsometricOptions options;
   late final IsometricResponseReader responseReader;
   late final WebsiteGame website;
+  late final MmoGame amulet;
+  late final CaptureTheFlagGame gameCaptureTheFlag;
   late final IsometricIO io;
   late final IsometricImages images;
 
@@ -57,4 +61,6 @@ mixin IsometricComponent {
   void onImagesLoaded(){
 
   }
+
+  late final T Function<T>() findComponent;
 }

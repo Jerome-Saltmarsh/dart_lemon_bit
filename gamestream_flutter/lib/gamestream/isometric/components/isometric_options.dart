@@ -1,5 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/game.dart';
+import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -169,4 +171,12 @@ class IsometricOptions with IsometricComponent {
   void _onChangedRendersSinceUpdate(int value){
     triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
+
+  Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
+    GameType.Website => website,
+    GameType.Capture_The_Flag => findComponent<CaptureTheFlagGame>(),
+    GameType.Moba => findComponent<Moba>(),
+    GameType.Amulet => amulet,
+    _ => throw Exception('mapGameTypeToGame($gameType)')
+  };
 }

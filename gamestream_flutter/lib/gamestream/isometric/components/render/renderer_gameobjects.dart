@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
@@ -8,7 +10,29 @@ import 'package:gamestream_flutter/library.dart';
 import '../functions/format_percentage.dart';
 
 class RendererGameObjects extends RenderGroup {
-  static late GameObject gameObject;
+
+  late final Map<int, Image> mapGameObjectTypeToImage;
+
+  @override
+  void onImagesLoaded() {
+    mapGameObjectTypeToImage = {
+      GameObjectType.Weapon: images.atlas_weapons,
+      GameObjectType.Object: images.atlas_gameobjects,
+      GameObjectType.Head: images.atlas_head,
+      GameObjectType.Body: images.atlas_body,
+      GameObjectType.Legs: images.atlas_legs,
+      GameObjectType.Item: images.atlas_items,
+    };
+  }
+
+  Image getImageForGameObjectType(int type) =>
+      mapGameObjectTypeToImage [type] ?? (
+          throw Exception(
+              'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
+          )
+      );
+
+  late GameObject gameObject;
 
   @override
   int getTotal() => isometric.scene.gameObjects.length;
@@ -16,7 +40,7 @@ class RendererGameObjects extends RenderGroup {
   @override
   void renderFunction() {
     final type = gameObject.type;
-    final image = isometric.getImageForGameObjectType(type);
+    final image = getImageForGameObjectType(type);
     final src = Atlas.getSrc(type, gameObject.subType);
 
     final isCollectable = const [
@@ -49,7 +73,6 @@ class RendererGameObjects extends RenderGroup {
       }
     );
 
-
     if (gameObject.maxHealth > 0) {
       isometric.render.healthBarPosition(
           position: gameObject,
@@ -57,41 +80,6 @@ class RendererGameObjects extends RenderGroup {
         );
       isometric.render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     }
-
-    //
-    // switch (type) {
-    //
-    //   case GameObjectType.Object:
-    //     engine.renderSprite(
-    //       image: GameImages.atlas_gameobjects,
-    //       dstX: gameObject.renderX,
-    //       dstY: gameObject.renderY,
-    //       srcX: AtlasItems.getSrcX(type, subType),
-    //       srcY: AtlasItems.getSrcY(type, subType),
-    //       anchorY: AtlasItems.getAnchorY(type, subType),
-    //       srcWidth: AtlasItems.getSrcWidth(type, subType),
-    //       srcHeight: AtlasItems.getSrcHeight(type, subType),
-    //       scale: AtlasItems.getSrcScale(type, subType),
-    //       color: gameObject.emission_type != IsometricEmissionType.Color
-    //           ? nodes.getV3RenderColor(gameObject)
-    //           : gameObject.emission_col,
-    //     );
-    //
-    //   default:
-    //     renderBouncingGameObjectShadow(gameObject);
-    //     engine.renderSprite(
-    //       image: GameImages.atlas_items,
-    //       dstX: gameObject.renderX,
-    //       dstY: getRenderYBouncing(gameObject),
-    //       srcX: AtlasItems.getSrcX(type, subType),
-    //       srcY: AtlasItems.getSrcY(type, subType),
-    //       srcWidth: AtlasItems.getSrcWidth(type, subType),
-    //       srcHeight: AtlasItems.getSrcHeight(type, subType),
-    //       scale: AtlasItems.getSrcScale(type, subType),
-    //       color: nodes.getV3RenderColor(gameObject),
-    //     );
-    //     break;
-    // }
   }
 
   @override

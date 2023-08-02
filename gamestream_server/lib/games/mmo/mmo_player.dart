@@ -5,9 +5,9 @@ import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
 import 'package:gamestream_server/utils/is_valid_index.dart';
 
-class MmoPlayer extends IsometricPlayer {
+class AmuletPlayer extends IsometricPlayer {
 
-  final MmoGame game;
+  final Amulet game;
 
   var equipmentDirty = true;
   var activePowerX = 0.0;
@@ -38,7 +38,7 @@ class MmoPlayer extends IsometricPlayer {
   var _activatedPowerIndex = -1;
   var _skillPoints = 1;
 
-  MmoPlayer({
+  AmuletPlayer({
     required this.game,
     required int itemLength,
     required super.x,

@@ -1,7 +1,6 @@
 
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui' as dartUI;
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
-import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
@@ -150,6 +148,7 @@ class Isometric {
         continue;
 
       component.isometric = this;
+      component.findComponent = findComponent;
       component.scene = scene;
       component.environment = environment;
       component.rendererNodes = rendererNodes;
@@ -173,6 +172,7 @@ class Isometric {
       component.events = events;
       component.responseReader = responseReader;
       component.website = website;
+      component.amulet = mmo;
       component.options = options;
       component.animation = animation;
       component.images = images;
@@ -205,8 +205,13 @@ class Isometric {
   final gameRunning = Watch(true);
   final watchTimePassing = Watch(false);
 
-  late final Map<int, dartUI.Image> mapGameObjectTypeToImage;
-
+  T findComponent<T>() {
+    for (final component in components){
+      if (component is T)
+        return component;
+    }
+    throw Exception('{method: "isometric.findComponent(component: $T)", reason: "could not be found"}');
+  }
 
   void drawCanvas(Canvas canvas, Size size) {
 
@@ -222,7 +227,7 @@ class Isometric {
     particles.update();
     compositor.render3D();
     renderEditMode();
-    renderMouseTargetName();
+    render.renderMouseTargetName();
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
@@ -737,31 +742,6 @@ class Isometric {
     }
   }
 
-  void renderMouseTargetName() {
-    if (!player.mouseTargetAllie.value) return;
-    final mouseTargetName = player.mouseTargetName.value;
-    if (mouseTargetName == null) return;
-    render.renderText(
-        value: mouseTargetName,
-        x: player.aimTargetPosition.renderX,
-        y: player.aimTargetPosition.renderY - 55);
-  }
-
-  void renderStarsV3(Position v3) =>
-      renderStars(v3.renderX, v3.renderY - 40);
-
-  void renderStars(double x, double y) =>
-      engine.renderSprite(
-        image: images.sprite_stars,
-        srcX: 125.0 * animation.frame16,
-        srcY: 0,
-        srcWidth: 125,
-        srcHeight: 125,
-        dstX: x,
-        dstY: y,
-        scale: 0.4,
-      );
-
   void notifyLoadImagesCompleted() {
     print('isometric.notifyLoadImagesCompleted()');
     imagesLoadedCompleted.complete(true);
@@ -770,30 +750,5 @@ class Isometric {
       if (component is IsometricComponent)
         component.onImagesLoaded();
     }
-
-    mapGameObjectTypeToImage = <int, dartUI.Image> {
-      GameObjectType.Weapon: images.atlas_weapons,
-      GameObjectType.Object: images.atlas_gameobjects,
-      GameObjectType.Head: images.atlas_head,
-      GameObjectType.Body: images.atlas_body,
-      GameObjectType.Legs: images.atlas_legs,
-      GameObjectType.Item: images.atlas_items,
-    };
   }
-
-  dartUI.Image getImageForGameObjectType(int type) =>
-      mapGameObjectTypeToImage [type] ?? (
-          throw Exception(
-              'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
-          )
-      );
-
-  Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
-    GameType.Website => website,
-    GameType.Capture_The_Flag => captureTheFlag,
-    GameType.Editor => isometricEditor,
-    GameType.Moba => moba,
-    GameType.Mmo => mmo,
-    _ => throw Exception('mapGameTypeToGame($gameType)')
-  };
 }

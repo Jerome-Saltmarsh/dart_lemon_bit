@@ -6,7 +6,7 @@ import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
-class MmoGame extends IsometricGame<MmoPlayer> {
+class Amulet extends IsometricGame<AmuletPlayer> {
 
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
@@ -20,11 +20,11 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   late MMONpc npcGuard;
 
-  MmoGame({
+  Amulet({
     required super.scene,
     required super.time,
     required super.environment,
-  }) : super(gameType: GameType.Mmo) {
+  }) : super(gameType: GameType.Amulet) {
 
     spawnMonstersAtSpawnNodes();
 
@@ -127,7 +127,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
-  void customOnPlayerDead(MmoPlayer player) {
+  void customOnPlayerDead(AmuletPlayer player) {
     addJob(seconds: 3, action: () {
       setCharacterStateSpawning(player);
     });
@@ -136,7 +136,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   void characterUseWeaponCustom(IsometricCharacter character) {
-    if (character is! MmoPlayer)
+    if (character is! AmuletPlayer)
       return;
 
     final weapon = character.equippedWeapon;
@@ -156,7 +156,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
 
   @override
   void performCharacterActionCustom(IsometricCharacter character) {
-    if (character is! MmoPlayer)
+    if (character is! AmuletPlayer)
       return;
 
     if (character.performingActivePower){
@@ -262,12 +262,12 @@ class MmoGame extends IsometricGame<MmoPlayer> {
        });
     }
 
-    if (src is MmoPlayer) {
+    if (src is AmuletPlayer) {
       playerGainExperience(src, getCharacterExperienceValue(target));
     }
   }
 
-  void playerGainExperience(MmoPlayer player, int experience){
+  void playerGainExperience(AmuletPlayer player, int experience){
     player.experience += getCharacterExperienceValue(player);
 
     while (player.experience > player.experienceRequired) {
@@ -334,7 +334,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
-  MmoPlayer buildPlayer() => MmoPlayer(
+  AmuletPlayer buildPlayer() => AmuletPlayer(
       game: this,
       itemLength: 6,
       x: playerSpawnX,
@@ -349,7 +349,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
       IsometricCharacter character,
       IsometricGameObject gameObject,
       ) {
-    if (character is! MmoPlayer)
+    if (character is! AmuletPlayer)
       return;
     if (gameObject is MMOGameObject) {
       if (character.addItem(gameObject.item)){
@@ -370,7 +370,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   }
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(MmoPlayer player, IsometricGameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(AmuletPlayer player, IsometricGameObject gameObject) {
     if (gameObject is! MMOGameObject || gameObject.item.collectable)
       return;
 
@@ -387,7 +387,7 @@ class MmoGame extends IsometricGame<MmoPlayer> {
   void customOnInteraction(IsometricCharacter character, IsometricCharacter target) {
     super.customOnInteraction(character, target);
 
-    if (character is MmoPlayer && target is MMONpc){
+    if (character is AmuletPlayer && target is MMONpc){
        character.interacting = true;
        target.interact?.call(character);
     }

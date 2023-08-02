@@ -200,7 +200,7 @@ class RendererCharacters extends RenderGroup {
     }
 
     if (character.state == CharacterState.Stunned){
-      isometric.renderStarsV3(character);
+      render.starsPosition(character);
       isometric.engine.renderSprite(
         image: isometric.images.character_dog,
         dstX: character.renderX,
@@ -304,7 +304,7 @@ class RendererCharacters extends RenderGroup {
           framesPerDirection: framesPerDirection,
         );
       case CharacterState.Stunned:
-        isometric.renderStarsV3(character);
+        render.starsPosition(character);
 
         return single(
             frame: 1,

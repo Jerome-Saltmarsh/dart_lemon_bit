@@ -26,7 +26,7 @@ class Gamestream {
     print('gamestream-version: $version');
     print('dart-version: ${Platform.version}');
 
-    MmoGame.validate();
+    Amulet.validate();
 
     final sceneDirectoryExists = await isometricScenes.sceneDirectory.exists();
 
@@ -85,14 +85,14 @@ class Gamestream {
   }
 
   Game createNewGameByType(GameType gameType) => switch (gameType){
-      GameType.Mmo => buildGameMMO(),
+      GameType.Amulet => buildGameMMO(),
       GameType.Capture_The_Flag => buildGameCaptureTheFlag(),
       GameType.Moba => buildGameMoba(),
       GameType.Editor => IsometricEditor(),
       _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
   };
 
-  Game buildGameMMO() => MmoGame(
+  Game buildGameMMO() => Amulet(
       scene: isometricScenes.mmoTown,
       time: IsometricTime(enabled: true, hour: 14),
       environment: IsometricEnvironment(),
