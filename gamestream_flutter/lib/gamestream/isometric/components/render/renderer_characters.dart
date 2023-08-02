@@ -469,6 +469,13 @@ class RendererCharacters extends RenderGroup {
     ui.Image imageHead;
     ui.Image imageBody;
     ui.Image imageLegs;
+    ui.Image imageArmLeft;
+
+    final leftInFront = const [
+      IsometricDirection.North,
+      IsometricDirection.North_West,
+      IsometricDirection.West,
+    ].contains(character.direction);
 
     if (character.running) {
       srcX = (frame % 8) * size;
@@ -476,12 +483,14 @@ class RendererCharacters extends RenderGroup {
       imageHead = images.kid_head_dark_running;
       imageBody = images.kid_body_shirt_blue_running;
       imageLegs = images.kid_legs_brown_running;
+      imageArmLeft = images.kid_arm_left_running_metal_gauntlet;
     } else {
       srcX = 0;
       image = images.kid_idle;
       imageHead = images.kid_head_dark_idle;
       imageBody = images.kid_body_shirt_blue_idle;
       imageLegs = images.kid_legs_brown_idle;
+      imageArmLeft = images.kid_arm_left_idle_metal_gauntlet;
 
       if (frame ~/ 8 % 2 == 0){
         srcX = (frame % 8) * size;
@@ -518,6 +527,21 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
+    if (!leftInFront){
+      engine.renderSprite(
+        image: imageArmLeft,
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: size,
+        srcHeight: size,
+        dstX: dstX,
+        dstY: dstY,
+        scale: scale,
+        color: color,
+        anchorY: anchorY,
+      );
+    }
+
     engine.renderSprite(
       image: imageBody,
       srcX: srcX,
@@ -530,6 +554,22 @@ class RendererCharacters extends RenderGroup {
       color: color,
       anchorY: anchorY,
     );
+
+    if (leftInFront){
+      engine.renderSprite(
+        image: imageArmLeft,
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: size,
+        srcHeight: size,
+        dstX: dstX,
+        dstY: dstY,
+        scale: scale,
+        color: color,
+        anchorY: anchorY,
+      );
+    }
+
 
     engine.renderSprite(
       image: imageHead,

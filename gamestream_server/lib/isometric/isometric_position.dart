@@ -21,8 +21,8 @@ class IsometricPosition implements Comparable<IsometricPosition> {
   int get indexZ => z ~/ Node_Size_Half;
 
   double get renderX => (x - y) * 0.5;
-  double get renderY => ((y + x) * 0.5) - z;
-  double get order => (x + y + z);
+  double get renderY => ((x + y) * 0.5) - z;
+  double get order => x + y + z;
 
   double getDistance(IsometricPosition value) =>
       getDistanceXYZ(value.x, value.y, value.z);

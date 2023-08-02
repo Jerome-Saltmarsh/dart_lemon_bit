@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:gamestream_flutter/utils.dart';
-import 'package:golden_ratio/constants.dart';
 
 
 class IsometricUI with IsometricComponent {

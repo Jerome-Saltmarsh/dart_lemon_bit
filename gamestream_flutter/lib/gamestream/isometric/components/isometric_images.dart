@@ -11,7 +11,6 @@ class IsometricImages {
   final totalImagesLoaded = Watch(0);
   final _loadCompleter = Completer();
 
-
    late final Image shades;
    late final Image pixel;
    late final Image atlas_projectiles;
@@ -41,6 +40,8 @@ class IsometricImages {
    late final Image kid_running;
    late final Image kid_running_shadow;
 
+
+
    late final Image kid_body_shirt_blue_idle;
    late final Image kid_body_shirt_blue_running;
 
@@ -52,6 +53,15 @@ class IsometricImages {
 
    late final Image kid_legs_brown_idle;
    late final Image kid_legs_brown_running;
+
+   late final Image kid_arm_left_idle_metal_gauntlet;
+   late final Image kid_arm_left_running_metal_gauntlet;
+
+   late final Image kid_arm_left_idle;
+   late final Image kid_arm_left_running;
+
+   late final Image kid_arm_right_idle;
+   late final Image kid_arm_right_running;
 
    late final Image template_head_plain;
    late final Image template_head_rogue;
@@ -194,20 +204,37 @@ class IsometricImages {
      loadPng('atlas_body').then((value) => atlas_body = value);
      loadPng('atlas_legs').then((value) => atlas_legs = value);
      loadPng('template/template_spinning').then((value) => template_spinning = value);
+
      loadPng('kid/kid_idle').then((value) => kid_idle = value);
      loadPng('kid/kid_idle_shadow').then((value) => kid_idle_shadow = value);
+
      loadPng('kid/kid_running').then((value) => kid_running = value);
      loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
+
+     loadPng('kid/arms/kid_arm_left_idle').then((value) => kid_arm_left_idle = value);
+     loadPng('kid/arms/kid_arm_left_running').then((value) => kid_arm_left_running = value);
+
+     loadPng('kid/arms/kid_arm_left_idle_metal_gauntlet').then((value) => kid_arm_left_idle_metal_gauntlet = value);
+     loadPng('kid/arms/kid_arm_left_running_metal_gauntlet').then((value) => kid_arm_left_running_metal_gauntlet = value);
+
+     loadPng('kid/arms/kid_arm_right_idle').then((value) => kid_arm_right_idle = value);
+     loadPng('kid/arms/kid_arm_right_running').then((value) => kid_arm_right_running = value);
+
      loadPng('kid/body/kid_body_shirt_blue_idle').then((value) => kid_body_shirt_blue_idle = value);
      loadPng('kid/body/kid_body_shirt_blue_running').then((value) => kid_body_shirt_blue_running = value);
+
      loadPng('kid/head/kid_head_light_idle').then((value) => kid_head_light_idle = value);
      loadPng('kid/head/kid_head_light_running').then((value) => kid_head_light_running = value);
+
      loadPng('kid/head/kid_head_dark_idle').then((value) => kid_head_dark_idle = value);
      loadPng('kid/head/kid_head_dark_running').then((value) => kid_head_dark_running = value);
+
      loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
      loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
+
      loadPng('character-dog').then((value) => character_dog = value);
      loadPng('template/template-shadow').then((value) => template_shadow = value);
+
      loadPng('template/head/template-head-plain').then((value) => template_head_plain = value);
      loadPng('template/head/template-head-rogue').then((value) => template_head_rogue = value);
      loadPng('template/head/template-head-steel').then((value) => template_head_steel = value);

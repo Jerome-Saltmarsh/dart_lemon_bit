@@ -258,9 +258,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.deadOrBusy || !player.active || player.debugging)
       return;
 
-    if (player.target == null){
-      player.lookAtMouse();
-    }
+    // if (player.target == null){
+    //   player.lookAtMouse();
+    // }
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;

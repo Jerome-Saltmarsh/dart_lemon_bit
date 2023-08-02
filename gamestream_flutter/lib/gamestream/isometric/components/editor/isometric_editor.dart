@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/library.dart';
 import '../../../../isometric/classes/gameobject.dart';
 import '../../enums/editor_dialog.dart';
 import '../../enums/emission_type.dart';
-import 'isometric_editor_style.dart';
 import 'isometric_editor_tab.dart';
 
 

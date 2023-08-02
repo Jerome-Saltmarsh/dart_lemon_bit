@@ -325,10 +325,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeCharacters() {
-    const padding = 100.0;
-    cacheIndex = 0;
     writeByte(ServerResponse.Isometric_Characters);
+
+    const padding = 100.0;
     final characters = game.characters;
+
+    cacheIndex = 0;
 
     for (final character in characters) {
 
