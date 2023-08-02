@@ -187,7 +187,6 @@ class Isometric {
   }
 
   final colors = IsometricColors();
-  final imagesLoadedCompleted = Completer();
   final textEditingControllerMessage = TextEditingController();
   final textFieldMessage = FocusNode();
   final panelTypeKey = <int, GlobalKey>{};
@@ -196,7 +195,6 @@ class Isometric {
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   final serverFPS = Watch(0);
-  final imagesLoaded = Future.value(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
   final watchTimePassing = Watch(false);
@@ -345,8 +343,8 @@ class Isometric {
 
   Future init(sharedPreferences) async {
     print('isometric.init()');
-    images.load(this);
-    await imagesLoadedCompleted.future;
+    await images.load(this);
+    dispatchNotificationImagesLoaded();
   }
 
   void onMouseEnterCanvas(){
@@ -407,10 +405,8 @@ class Isometric {
     componentsReady = true;
   }
 
-  void notifyLoadImagesCompleted() {
-    print('isometric.notifyLoadImagesCompleted()');
-    imagesLoadedCompleted.complete(true);
-
+  void dispatchNotificationImagesLoaded() {
+    print('isometric.dispatchNotificationImagesLoaded()');
     for (final component in components){
       if (component is IsometricComponent)
         component.onImagesLoaded();

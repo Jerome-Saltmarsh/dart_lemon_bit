@@ -1,10 +1,17 @@
 
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricImages {
+
+  final totalImages = Watch(0);
+  final totalImagesLoaded = Watch(0);
+
+  final _loadCompleter = Completer();
+
    late final Image shades;
    late final Image pixel;
    late final Image atlas_projectiles;
@@ -155,21 +162,17 @@ class IsometricImages {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
-   final totalImages = Watch(0);
-   final totalImagesLoaded = Watch(0);
-
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
 
    Future<Image> loadImage(String fileName) async {
      totalImages.value++;
      final image = await loadImageAsset('images/$fileName');
      totalImagesLoaded.value++;
-
      return image;
    }
 
 
-   void load(Isometric isometric){
+   Future load(Isometric isometric) async {
      print('isometric.images.load()');
 
      loadPng('shades').then((value) => shades = value);
@@ -258,8 +261,10 @@ class IsometricImages {
        if (totalImagesLoaded < totalImages.value)
          return;
 
-       isometric.notifyLoadImagesCompleted();
+       _loadCompleter.complete(true);
      });
+
+     await _loadCompleter.future;
    }
 }
 
