@@ -63,8 +63,8 @@ extension IsometricEditorUI on IsometricEditor {
       IsometricBuilder(
         builder: (context, isometric) {
           return Container(
-              width: amulet.engine.screen.width,
-              height: amulet.engine.screen.height,
+              width: engine.screen.width,
+              height: engine.screen.height,
               child: Stack(children: children)
           );
         }
@@ -87,7 +87,7 @@ extension IsometricEditorUI on IsometricEditor {
           left: 0,
           top: 50,
           child: Container(
-              height: amulet.engine.screen.height - 100,
+              height: engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
       if (activeEditTab == IsometricEditorTab.Grid)
@@ -188,7 +188,7 @@ extension IsometricEditorUI on IsometricEditor {
         buildButton(child: 'EDIT', action: toggleWindowEnabledScene),
         buildButton(child: 'MAP SIZE', action: toggleWindowEnabledCanvasSize),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
-        if (amulet.engine.isLocalHost)
+        if (engine.isLocalHost)
           buildButton(child: 'SAVE', action: saveScene),
       ],
     );
@@ -216,7 +216,7 @@ extension IsometricEditorUI on IsometricEditor {
               child: Center(
                 child: Stack(
                   children: [
-                    amulet.engine.buildAtlasImage(
+                    engine.buildAtlasImage(
                       image: amulet.images.atlas_icons,
                       srcX: 193,
                       srcY: 32,
@@ -637,8 +637,8 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = amulet.engine.buildAtlasImage(
-      image: amulet.images.atlas_nodes,
+    final canvas = engine.buildAtlasImage(
+      image: images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -711,8 +711,8 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildOrientationIcon(int orientation) {
 
-    final canvas = amulet.engine.buildAtlasImage(
-      image: amulet.images.atlas_nodes,
+    final canvas = engine.buildAtlasImage(
+      image: images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: IsometricConstants.Sprite_Width,
@@ -840,9 +840,9 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      amulet.engine.renderExternalCanvas(
+      engine.renderExternalCanvas(
         canvas: canvas,
-        image: amulet.images.atlas_icons,
+        image: images.atlas_icons,
         srcX: 304,
         srcY: 32,
         srcWidth: 48,
@@ -856,7 +856,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      amulet.engine.renderExternalCanvas(
+      engine.renderExternalCanvas(
         canvas: canvas,
         image: amulet.images.atlas_icons,
         srcX: 352,
@@ -1017,7 +1017,7 @@ extension IsometricEditorUI on IsometricEditor {
             width: 200,
             height: 200,
             color: colors.brownDark,
-            child: amulet.engine.buildCanvas(paint: (Canvas canvas, Size size){
+            child: engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
                   renderIconSquareEmpty(
@@ -1125,7 +1125,7 @@ extension IsometricEditorUI on IsometricEditor {
           children: [
             child,
             Container(
-              height: amulet.engine.screen.height - 100,
+              height: engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   children: children,
@@ -1141,7 +1141,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildColumnSelectNodeType() =>
       Container(
-        height: amulet.engine.screen.height - 70,
+        height: engine.screen.height - 70,
         child: SingleChildScrollView(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1183,7 +1183,7 @@ extension IsometricEditorUI on IsometricEditor {
                     height: 16,
                     child: onPressed(
                       action: delete,
-                      child: amulet.engine.buildAtlasImage(
+                      child: engine.buildAtlasImage(
                         image: amulet.images.atlas_icons,
                         srcX: 80,
                         srcY: 96,
@@ -1294,8 +1294,8 @@ extension IsometricEditorUI on IsometricEditor {
     if (activeEditorDialog == null) return nothing;
 
     return Container(
-      width: amulet.engine.screen.width,
-      height: amulet.engine.screen.height,
+      width: engine.screen.width,
+      height: engine.screen.height,
       alignment: Alignment.center,
       child: Container(
           width: 350,
