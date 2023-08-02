@@ -465,7 +465,7 @@ class RendererCharacters extends RenderGroup {
     final dstY = character.renderY;
 
     double srcX;
-    ui.Image image;
+    // ui.Image image;
     ui.Image imageHead;
     ui.Image imageBody;
     ui.Image imageLegs;
@@ -483,7 +483,7 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       srcX = (frame % 8) * size;
-      image = images.kid_running;
+      // image = images.kid_running;
       imageHead = images.kid_head_light_running;
       imageBody = images.kid_body_shirt_blue_running;
       imageLegs = images.kid_legs_brown_running;
@@ -491,7 +491,7 @@ class RendererCharacters extends RenderGroup {
       imageHandsRight = images.kid_hands_gauntlet_right_running;
     } else {
       srcX = 0;
-      image = images.kid_idle;
+      // image = images.kid_idle;
       imageHead = images.kid_head_light_idle;
       imageBody = images.kid_body_shirt_blue_idle;
       imageLegs = images.kid_legs_brown_idle;
@@ -515,18 +515,18 @@ class RendererCharacters extends RenderGroup {
 
     renderCharacterShadowCircle(character);
 
-    engine.renderSprite(
-      image: image,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
-      dstX: dstX,
-      dstY: dstY,
-      scale: scale,
-      color: color,
-      anchorY: anchorY,
-    );
+    // engine.renderSprite(
+    //   image: image,
+    //   srcX: srcX,
+    //   srcY: srcY,
+    //   srcWidth: size,
+    //   srcHeight: size,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   scale: scale,
+    //   color: color,
+    //   anchorY: anchorY,
+    // );
 
     engine.renderSprite(
       image: imageLegs,
