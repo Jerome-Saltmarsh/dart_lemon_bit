@@ -5,86 +5,85 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_res
 extension MMOResponseReader on IsometricResponseReader {
 
   void readMMOResponse(){
-    final game = isometric.mmo;
      switch (readByte()){
        case MMOResponse.Player_Interacting:
-         game.playerInteracting.value = readBool();
+         amulet.playerInteracting.value = readBool();
          break;
        case MMOResponse.Npc_Talk:
-         game.npcText.value = readString();
+         amulet.npcText.value = readString();
          final length = readByte();
-         final options = game.npcOptions;
+         final options = amulet.npcOptions;
          options.clear();
          for (var i = 0; i < length; i++){
            options.add(readString());
          }
-         game.npcOptionsReads.value++;
+         amulet.npcOptionsReads.value++;
          break;
        case MMOResponse.Player_Item_Length:
-         game.setItemLength(readUInt16());
+         amulet.setItemLength(readUInt16());
          break;
        case MMOResponse.Player_Item:
          final index = readUInt16();
          final type = readInt16();
          final item = type != -1 ? MMOItem.values[type] : null;
-         game.setItem(index: index, item: item);
+         amulet.setItem(index: index, item: item);
          break;
        case MMOResponse.Player_Weapon:
          final index = readUInt16();
          final type = readInt16();
          final cooldown = type != -1 ? readUInt16() : 0;
          final item = type != -1 ? MMOItem.values[type] : null;
-         game.setWeapon(index: index, item: item, cooldown: cooldown);
+         amulet.setWeapon(index: index, item: item, cooldown: cooldown);
          break;
        case MMOResponse.Player_Treasure:
          final index = readUInt16();
          final type = readInt16();
          final item = type != -1 ? MMOItem.values[type] : null;
-         game.setTreasure(index: index, item: item);
+         amulet.setTreasure(index: index, item: item);
          break;
        case MMOResponse.Player_Equipped_Weapon_Index:
-         game.equippedWeaponIndex.value = readInt16();
+         amulet.equippedWeaponIndex.value = readInt16();
          break;
        case MMOResponse.Player_Equipped:
-         game.equippedHead.value = readMMOItem();
-         game.equippedBody.value = readMMOItem();
-         game.equippedLegs.value = readMMOItem();
+         amulet.equippedHead.value = readMMOItem();
+         amulet.equippedBody.value = readMMOItem();
+         amulet.equippedLegs.value = readMMOItem();
          break;
        case MMOResponse.Player_Experience:
-         game.playerExperience.value = readUInt24();
+         amulet.playerExperience.value = readUInt24();
          break;
        case MMOResponse.Player_Experience_Required:
-         game.playerExperienceRequired.value = readUInt24();
+         amulet.playerExperienceRequired.value = readUInt24();
          break;
        case MMOResponse.Player_Level:
-         game.playerLevel.value = readByte();
+         amulet.playerLevel.value = readByte();
          break;
        case MMOResponse.Player_Talent_Points:
-         game.playerTalentPoints.value = readByte();
-         game.playerTalentsChangedNotifier.value++;
+         amulet.playerTalentPoints.value = readByte();
+         amulet.playerTalentsChangedNotifier.value++;
          break;
        case MMOResponse.Player_Talent_Dialog_Open:
-         game.playerTalentDialogOpen.value = readBool();
+         amulet.playerTalentDialogOpen.value = readBool();
          break;
        case MMOResponse.Player_Inventory_Open:
-         game.playerInventoryOpen.value = readBool();
+         amulet.playerInventoryOpen.value = readBool();
          break;
        case MMOResponse.Player_Talents:
-         final playerTalents = game.playerTalents;
+         final playerTalents = amulet.playerTalents;
          for (var i = 0; i < playerTalents.length; i++){
           playerTalents[i] = readByte();
          }
-         game.playerTalentsChangedNotifier.value++;
+         amulet.playerTalentsChangedNotifier.value++;
          break;
        case MMOResponse.Activated_Power_Index:
-         game.activatedPowerIndex.value = readInt8();
+         amulet.activatedPowerIndex.value = readInt8();
          break;
        case MMOResponse.Active_Power_Position:
-         readIsometricPosition(game.activePowerPosition);
+         readIsometricPosition(amulet.activePowerPosition);
          break;
        case MMOResponse.Error:
-         game.clearError();
-         game.error.value = readString();
+         amulet.clearError();
+         amulet.error.value = readString();
          break;
      }
   }

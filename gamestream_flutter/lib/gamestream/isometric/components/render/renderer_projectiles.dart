@@ -27,7 +27,7 @@ class RendererProjectiles extends RenderGroup {
         break;
       case ProjectileType.FrostBall:
         engine.renderSprite(
-            image: isometric.images.atlas_projectiles,
+            image: images.atlas_projectiles,
             srcX: 36,
             srcY: 4,
             srcWidth: 24,
@@ -37,8 +37,8 @@ class RendererProjectiles extends RenderGroup {
         );
         break;
       case ProjectileType.Rocket:
-        isometric.engine.renderSpriteRotated(
-          image: isometric.images.atlas_items,
+        engine.renderSpriteRotated(
+          image: images.atlas_items,
           srcX: 201,
           srcY: 109,
           srcWidth: 16,
@@ -56,18 +56,18 @@ class RendererProjectiles extends RenderGroup {
 
   @override
   void updateFunction() {
-    projectile = isometric.scene.projectiles[index];
+    projectile = scene.projectiles[index];
     order = projectile.sortOrder;
   }
 
   @override
   int getTotal() {
-    return isometric.scene.totalProjectiles;
+    return scene.totalProjectiles;
   }
 
   void renderBullet(double x, double y, double rotation) {
-    isometric.engine.renderSpriteRotated(
-      image: isometric.images.atlas_gameobjects,
+    engine.renderSpriteRotated(
+      image: images.atlas_gameobjects,
       srcX: 87,
       srcY: 48,
       srcWidth: 2,
@@ -82,8 +82,8 @@ class RendererProjectiles extends RenderGroup {
   }
 
   void renderArrow(double x, double y, double rotation) {
-    isometric.engine.renderSpriteRotated(
-      image: isometric.images.atlas_gameobjects,
+    engine.renderSpriteRotated(
+      image: images.atlas_gameobjects,
       srcX: 49,
       srcY: 48,
       srcWidth: 9,
@@ -94,8 +94,8 @@ class RendererProjectiles extends RenderGroup {
       scale: 0.7,
     );
 
-    isometric.engine.renderSpriteRotated(
-      image: isometric.images.atlas_gameobjects,
+    engine.renderSpriteRotated(
+      image: images.atlas_gameobjects,
       srcX: 59,
       srcY: 48,
       srcWidth: 9,

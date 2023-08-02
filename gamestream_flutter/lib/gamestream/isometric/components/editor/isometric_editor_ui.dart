@@ -63,8 +63,8 @@ extension IsometricEditorUI on IsometricEditor {
       IsometricBuilder(
         builder: (context, isometric) {
           return Container(
-              width: isometric.engine.screen.width,
-              height: isometric.engine.screen.height,
+              width: amulet.engine.screen.width,
+              height: amulet.engine.screen.height,
               child: Stack(children: children)
           );
         }
@@ -77,7 +77,7 @@ extension IsometricEditorUI on IsometricEditor {
           bottom: 10,
           child: Container(
               alignment: Alignment.center,
-              width: isometric.engine.screen.width,
+              width: engine.screen.width,
               child: buildRowWeatherControls()
           )
       ),
@@ -87,7 +87,7 @@ extension IsometricEditorUI on IsometricEditor {
           left: 0,
           top: 50,
           child: Container(
-              height: isometric.engine.screen.height - 100,
+              height: amulet.engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
       if (activeEditTab == IsometricEditorTab.Grid)
@@ -188,7 +188,7 @@ extension IsometricEditorUI on IsometricEditor {
         buildButton(child: 'EDIT', action: toggleWindowEnabledScene),
         buildButton(child: 'MAP SIZE', action: toggleWindowEnabledCanvasSize),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
-        if (isometric.engine.isLocalHost)
+        if (amulet.engine.isLocalHost)
           buildButton(child: 'SAVE', action: saveScene),
       ],
     );
@@ -216,8 +216,8 @@ extension IsometricEditorUI on IsometricEditor {
               child: Center(
                 child: Stack(
                   children: [
-                    isometric.engine.buildAtlasImage(
-                      image: isometric.images.atlas_icons,
+                    amulet.engine.buildAtlasImage(
+                      image: amulet.images.atlas_icons,
                       srcX: 193,
                       srcY: 32,
                       srcWidth: 96,
@@ -425,7 +425,7 @@ extension IsometricEditorUI on IsometricEditor {
           padding: const EdgeInsets.all(4),
           color: GS_CONTAINER_COLOR,
           child: FittedBox(
-            child: isometric.ui.buildImageGameObject(objectType),
+            child: amulet.ui.buildImageGameObject(objectType),
           ),
         ),
       );
@@ -481,7 +481,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
         action: () => network.sendIsometricRequestWeatherSetRain(rain),
-        icon: isometric.ui.buildAtlasIconType(convertRainToIconType(rain)),
+        icon: amulet.ui.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
 
@@ -491,7 +491,7 @@ extension IsometricEditorUI on IsometricEditor {
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
             network.sendIsometricRequestWeatherSetLightning(lightning),
-        icon: isometric.ui.buildAtlasIconType(
+        icon: amulet.ui.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
       ));
@@ -501,7 +501,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
         action: () => network.sendIsometricRequestWeatherSetWind(windType),
-        icon: isometric.ui.buildAtlasIconType(convertWindToIconType(windType)),
+        icon: amulet.ui.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
 
@@ -637,8 +637,8 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = isometric.engine.buildAtlasImage(
-      image: isometric.images.atlas_nodes,
+    final canvas = amulet.engine.buildAtlasImage(
+      image: amulet.images.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -711,8 +711,8 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildOrientationIcon(int orientation) {
 
-    final canvas = isometric.engine.buildAtlasImage(
-      image: isometric.images.atlas_nodes,
+    final canvas = amulet.engine.buildAtlasImage(
+      image: amulet.images.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: IsometricConstants.Sprite_Width,
@@ -840,9 +840,9 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      isometric.engine.renderExternalCanvas(
+      amulet.engine.renderExternalCanvas(
         canvas: canvas,
-        image: isometric.images.atlas_icons,
+        image: amulet.images.atlas_icons,
         srcX: 304,
         srcY: 32,
         srcWidth: 48,
@@ -856,9 +856,9 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      isometric.engine.renderExternalCanvas(
+      amulet.engine.renderExternalCanvas(
         canvas: canvas,
-        image: isometric.images.atlas_icons,
+        image: amulet.images.atlas_icons,
         srcX: 352,
         srcY: 32,
         srcWidth: 48,
@@ -1017,7 +1017,7 @@ extension IsometricEditorUI on IsometricEditor {
             width: 200,
             height: 200,
             color: IsometricColors.brownDark,
-            child: isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
+            child: amulet.engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
                   renderIconSquareEmpty(
@@ -1055,7 +1055,7 @@ extension IsometricEditorUI on IsometricEditor {
                               onPressed: sendGameObjectRequestDeselect
                           ),
                         ),
-                        Center(child: isometric.ui.buildImageGameObject(subType)),
+                        Center(child: amulet.ui.buildImageGameObject(subType)),
                         height8,
                         buildButtonDuplicate(),
                         height8,
@@ -1125,7 +1125,7 @@ extension IsometricEditorUI on IsometricEditor {
           children: [
             child,
             Container(
-              height: isometric.engine.screen.height - 100,
+              height: amulet.engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   children: children,
@@ -1141,7 +1141,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildColumnSelectNodeType() =>
       Container(
-        height: isometric.engine.screen.height - 70,
+        height: amulet.engine.screen.height - 70,
         child: SingleChildScrollView(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1183,8 +1183,8 @@ extension IsometricEditorUI on IsometricEditor {
                     height: 16,
                     child: onPressed(
                       action: delete,
-                      child: isometric.engine.buildAtlasImage(
-                        image: isometric.images.atlas_icons,
+                      child: amulet.engine.buildAtlasImage(
+                        image: amulet.images.atlas_icons,
                         srcX: 80,
                         srcY: 96,
                         srcWidth: 16,
@@ -1238,7 +1238,7 @@ extension IsometricEditorUI on IsometricEditor {
                       height: 72,
                       width: 72,
                       alignment: Alignment.center,
-                      child: buildWatch(nodeSelectedType, isometric.ui.buildAtlasNodeType)
+                      child: buildWatch(nodeSelectedType, amulet.ui.buildAtlasNodeType)
                   ),
                   buildPositionedIconButton(
                       top: 50 + shiftY,
@@ -1281,7 +1281,7 @@ extension IsometricEditorUI on IsometricEditor {
         child: onPressed(
           action: action,
           child: MouseOver(builder: (bool mouseOver) =>
-              isometric.ui.buildAtlasIconType(
+              amulet.ui.buildAtlasIconType(
                 iconType,
                 color: mouseOver ? Colors.black38.value : Colors.white.value,
               )
@@ -1294,8 +1294,8 @@ extension IsometricEditorUI on IsometricEditor {
     if (activeEditorDialog == null) return nothing;
 
     return Container(
-      width: isometric.engine.screen.width,
-      height: isometric.engine.screen.height,
+      width: amulet.engine.screen.width,
+      height: amulet.engine.screen.height,
       alignment: Alignment.center,
       child: Container(
           width: 350,

@@ -54,33 +54,33 @@ class IsometricEditor with IsometricComponent {
 
   late var nodeSelectedIndex = Watch(0, clamp: (int value){
     if (value < 0) return 0;
-    if (value >= isometric.scene.totalNodes) return isometric.scene.totalNodes - 1;
+    if (value >= scene.totalNodes) return scene.totalNodes - 1;
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  int get z => isometric.scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  int get z => scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
 
-  int get row => isometric.scene.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  int get row => scene.convertNodeIndexToIndexX(nodeSelectedIndex.value);
 
-  int get column => isometric.scene.convertNodeIndexToIndexY(nodeSelectedIndex.value);
+  int get column => scene.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   set z(int value){
     if (value < 0) return;
-    if (value >= isometric.scene.totalZ) return;
+    if (value >= scene.totalZ) return;
     final difference = value - z;
-    nodeSelectedIndex.value += difference * isometric.scene.area;
+    nodeSelectedIndex.value += difference * scene.area;
   }
 
   set row(int value){
     if (value < 0) return;
-    if (value >= isometric.scene.totalRows) return;
+    if (value >= scene.totalRows) return;
     final difference = value - row;
-    nodeSelectedIndex.value += difference * isometric.scene.totalColumns;
+    nodeSelectedIndex.value += difference * scene.totalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
-    if (value >= isometric.scene.totalColumns) return;
+    if (value >= scene.totalColumns) return;
     nodeSelectedIndex.value += value - column;
   }
 
@@ -107,14 +107,14 @@ class IsometricEditor with IsometricComponent {
         if (gameObjectSelected.value) {
           sendGameObjectRequestMoveToMouse();
         } else {
-          isometric.camera.cameraSetPositionGrid(row, column, z);
+          camera.cameraSetPositionGrid(row, column, z);
         }
         break;
       case KeyCode.R:
         selectPaintType();
         break;
       case KeyCode.Arrow_Up:
-        if (isometric.engine.keyPressedShiftLeft) {
+        if (engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value){
             translate(x: 0, y: 0, z: 1);
             return;
@@ -135,7 +135,7 @@ class IsometricEditor with IsometricComponent {
         cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
-        if (isometric.engine.keyPressedShiftLeft) {
+        if (engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value){
             return translate(x: 0, y: 0, z: -1);
           }
@@ -158,8 +158,8 @@ class IsometricEditor with IsometricComponent {
 
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = isometric.scene.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = isometric.scene.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = scene.nodeTypes[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = scene.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
@@ -193,7 +193,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void selectMouseBlock(){
-    isometric.io.mouseRaycast(selectBlock);
+    io.mouseRaycast(selectBlock);
   }
 
   void selectMouseGameObject(){
@@ -225,7 +225,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = isometric.scene.getIndexZRC(z, row, column);
+    nodeSelectedIndex.value = scene.getIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){
@@ -233,7 +233,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void cameraCenterSelectedObject() =>
-      isometric.engine.cameraCenter(
+      engine.cameraCenter(
         gameObject.value!.renderX,
         gameObject.value!.renderY,
       );
@@ -253,12 +253,12 @@ class IsometricEditor with IsometricComponent {
 
   void raise(){
     final nodeIndex = nodeSelectedIndex.value;
-    if (nodeIndex <= isometric.scene.area) return;
-    final nodeIndexBelow = nodeIndex - isometric.scene.area;
+    if (nodeIndex <= scene.area) return;
+    final nodeIndexBelow = nodeIndex - scene.area;
     sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
-      type: isometric.scene.nodeTypes[nodeIndexBelow],
-      orientation: isometric.scene.nodeOrientations[nodeIndexBelow],
+      type: scene.nodeTypes[nodeIndexBelow],
+      orientation: scene.nodeOrientations[nodeIndexBelow],
     );
   }
 
@@ -292,8 +292,8 @@ class IsometricEditor with IsometricComponent {
   }
 
   void cursorSetToPlayer() {
-    if (!isometric.player.inBounds) return;
-    nodeSelectedIndex.value = isometric.scene.getIndexPosition(isometric.player.position);
+    if (!player.inBounds) return;
+    nodeSelectedIndex.value = scene.getIndexPosition(player.position);
   }
   void cursorRowIncrease() => row++;
   void cursorRowDecrease() => row--;
@@ -307,7 +307,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void actionRecenterCamera() =>
-      isometric.camera.cameraSetPositionGrid(
+      camera.cameraSetPositionGrid(
         row,
         column,
         z,
@@ -321,8 +321,8 @@ class IsometricEditor with IsometricComponent {
   }
 
   void onChangedSelectedNodeIndex(int index){
-    nodeSelectedOrientation.value = isometric.scene.nodeOrientations[index];
-    nodeSelectedType.value = isometric.scene.nodeTypes[index];
+    nodeSelectedOrientation.value = scene.nodeOrientations[index];
+    nodeSelectedType.value = scene.nodeTypes[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();

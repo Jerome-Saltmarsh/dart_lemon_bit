@@ -28,14 +28,14 @@ class RendererGameObjects extends RenderGroup {
   Image getImageForGameObjectType(int type) =>
       mapGameObjectTypeToImage [type] ?? (
           throw Exception(
-              'isometric.getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
+              'getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
           )
       );
 
   late GameObject gameObject;
 
   @override
-  int getTotal() => isometric.scene.gameObjects.length;
+  int getTotal() => scene.gameObjects.length;
 
   @override
   void renderFunction() {
@@ -55,7 +55,7 @@ class RendererGameObjects extends RenderGroup {
       renderBouncingGameObjectShadow(gameObject);
     }
 
-    isometric.engine.renderSprite(
+    engine.renderSprite(
       image: image,
       dstX: gameObject.renderX,
       dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,
@@ -66,37 +66,37 @@ class RendererGameObjects extends RenderGroup {
       srcHeight: src[Atlas.SrcHeight],
       scale: src[Atlas.SrcScale],
       color: switch (gameObject.colorType){
-         EmissionType.Ambient => isometric.scene.getRenderColorPosition(gameObject),
-         EmissionType.None => isometric.scene.getRenderColorPosition(gameObject),
+         EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
+         EmissionType.None => scene.getRenderColorPosition(gameObject),
          EmissionType.Color => gameObject.emissionColor,
          _ => throw Exception()
       }
     );
 
     if (gameObject.maxHealth > 0) {
-      isometric.render.healthBarPosition(
+      render.healthBarPosition(
           position: gameObject,
           percentage: gameObject.healthPercentage,
         );
-      isometric.render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
+      render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     }
   }
 
   @override
   void updateFunction() {
-    gameObject = isometric.scene.gameObjects[index];
+    gameObject = scene.gameObjects[index];
 
     while (!gameObject.active || !screen.contains(gameObject) || !scene.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
-      gameObject = isometric.scene.gameObjects[index];
+      gameObject = scene.gameObjects[index];
     }
 
     order = gameObject.sortOrder;
   }
 
   double getRenderYBouncing(Position v3) =>
-      ((v3.y + v3.x) * 0.5) - v3.z + isometric.animation.frameWaterHeight;
+      ((v3.y + v3.x) * 0.5) - v3.z + animation.frameWaterHeight;
 
   void renderBouncingGameObjectShadow(Position gameObject){
     const shadowScale = 1.5;
@@ -106,7 +106,7 @@ class RendererGameObjects extends RenderGroup {
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * isometric.animation.frameWaterHeight.toDouble())
+        scale: shadowScale + (shadowScaleHeight * animation.frameWaterHeight.toDouble())
     );
   }
 }

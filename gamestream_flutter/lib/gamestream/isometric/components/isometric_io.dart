@@ -44,7 +44,7 @@ class IsometricIO with ByteWriter, IsometricComponent {
 
   @override
   void onComponentReady() {
-    touchController = TouchController(isometric);
+    touchController = TouchController();
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
   }
@@ -165,11 +165,11 @@ class IsometricIO with ByteWriter, IsometricComponent {
       final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
-      if (row >= isometric.scene.totalRows) break;
-      if (column >= isometric.scene.totalColumns) break;
-      if (z >= isometric.scene.totalZ) break;
-      final index = isometric.scene.getIndexZRC(z, row, column);
-      if (NodeType.isRainOrEmpty(isometric.scene.nodeTypes[index])) {
+      if (row >= scene.totalRows) break;
+      if (column >= scene.totalColumns) break;
+      if (z >= scene.totalZ) break;
+      final index = scene.getIndexZRC(z, row, column);
+      if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) {
         z--;
         continue;
       }
@@ -188,12 +188,12 @@ class IsometricIO with ByteWriter, IsometricComponent {
   /// [7] Space
   void applyKeyboardInputToUpdateBuffer(Isometric isometric) {
 
-    final mouseX = isometric.engine.mouseWorldX.toInt();
-    final mouseY = isometric.engine.mouseWorldY.toInt();
-    final screenLeft = isometric.engine.Screen_Left.toInt();
-    final screenTop = isometric.engine.Screen_Top.toInt();
-    final screenRight = isometric.engine.Screen_Right.toInt();
-    final screenBottom = isometric.engine.Screen_Bottom.toInt();
+    final mouseX = engine.mouseWorldX.toInt();
+    final mouseY = engine.mouseWorldY.toInt();
+    final screenLeft = engine.Screen_Left.toInt();
+    final screenTop = engine.Screen_Top.toInt();
+    final screenRight = engine.Screen_Right.toInt();
+    final screenBottom = engine.Screen_Bottom.toInt();
 
     final diffMouseWorldX = mouseX - previousMouseX;
     final diffMouseWorldY = mouseY - previousMouseY;
@@ -226,7 +226,7 @@ class IsometricIO with ByteWriter, IsometricComponent {
       | changeScreenRight << 4
       | changeScreenBottom << 6;
 
-    writeByte(isometric.io.getInputAsByte());
+    writeByte(io.getInputAsByte());
     writeByte(compress1);
     writeByte(compress2);
 

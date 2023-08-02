@@ -170,7 +170,7 @@ class IsometricUI with IsometricComponent {
     bottom: 150,
     child: IgnorePointer(
       child: Container(
-        width: isometric.engine.screen.width,
+        width: engine.screen.width,
         alignment: Alignment.center,
         child: buildWatch(options.messageStatus, buildMessageStatus),
       ),
@@ -257,10 +257,10 @@ class IsometricUI with IsometricComponent {
       );
 
   Widget buildIconFullscreen() => WatchBuilder(
-      isometric.engine.fullScreen,
+      engine.fullScreen,
           (bool fullscreen) => onPressed(
           hint: 'toggle fullscreen',
-          action: isometric.engine.fullscreenToggle,
+          action: engine.fullscreenToggle,
           child: Container(
               width: 32,
               child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
@@ -295,8 +295,8 @@ class IsometricUI with IsometricComponent {
   Widget buildAtlasIconType(IconType iconType,
       {double scale = 1, int color = 1}) =>
       FittedBox(
-        child: isometric.engine.buildAtlasImage(
-          image: isometric.images.atlas_icons,
+        child: engine.buildAtlasImage(
+          image: images.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
           srcWidth: AtlasIcons.getSrcWidth(iconType),
@@ -306,8 +306,8 @@ class IsometricUI with IsometricComponent {
         ),
       );
 
-  Widget buildAtlasNodeType(int nodeType) => isometric.engine.buildAtlasImage(
-    image: isometric.images.atlas_nodes,
+  Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
+    image: images.atlas_nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
     srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -354,8 +354,8 @@ class IsometricUI with IsometricComponent {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: buildWatch(isometric.player.energyMax, (int energyMax) {
-                return buildWatch(isometric.player.energy, (int energy){
+              child: buildWatch(player.energyMax, (int energyMax) {
+                return buildWatch(player.energy, (int energy){
                   return Container(
                     width: width,
                     height: height * energy / max(energyMax, 1),
@@ -431,7 +431,7 @@ class IsometricUI with IsometricComponent {
 
   Widget buildImageGameObject(int objectType) =>
       buildImageFromSrc(
-        isometric.images.atlas_gameobjects,
+        images.atlas_gameobjects,
         Atlas.getSrc(GameObjectType.Object, objectType),
       );
 

@@ -45,8 +45,8 @@ class WebsiteGame extends Game {
 
   @override
   void onActivated() {
-    // isometric.getComponent<GameAudio>().musicStop();
-    isometric.engine.fullScreenExit();
+    // getComponent<GameAudio>().musicStop();
+    engine.fullScreenExit();
   }
 
   @override
@@ -56,7 +56,7 @@ class WebsiteGame extends Game {
 
   @override
   void update() {
-    isometric.animation.update();
+    animation.update();
   }
 
   onChangedVisitCount(int value){
@@ -68,7 +68,7 @@ class WebsiteGame extends Game {
   }
 
   void setError(String message){
-    isometric.website.error.value = message;
+    website.error.value = message;
   }
 
   void renderCanvas(Canvas canvas, Size size) {
@@ -104,40 +104,40 @@ class WebsiteGame extends Game {
       launchUrl(Uri.parse('https://discord.com/channels/888728235653885962/888728235653885965'));
 
   void showDialogChangePublicName(){
-    isometric.website.dialog.value = WebsiteDialog.Change_Public_Name;
+    website.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
   void showDialogConfirmCancelSubscription() {
-    isometric.website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
+    website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
   }
 
   void showDialogAccount(){
-    isometric.website.dialog.value = WebsiteDialog.Account;
+    website.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogWelcome(){
-    isometric.website.dialog.value = WebsiteDialog.Account_Created;
+    website.dialog.value = WebsiteDialog.Account_Created;
   }
 
   void showDialogWelcome2(){
-    isometric.website.dialog.value = WebsiteDialog.Welcome_2;
+    website.dialog.value = WebsiteDialog.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
-    isometric.website.dialog.value = WebsiteDialog.Subscription_Successful;
+    website.dialog.value = WebsiteDialog.Subscription_Successful;
   }
 
   void showDialogSubscriptionStatusChanged(){
-    isometric.website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
+    website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
   }
 
   void showDialogSubscriptionRequired(){
-    isometric.website.dialog.value = WebsiteDialog.Subscription_Required;
+    website.dialog.value = WebsiteDialog.Subscription_Required;
   }
 
   void showDialogCustomMaps(){
     _log('showDialogCustomMaps');
-    isometric.website.dialog.value = WebsiteDialog.Custom_Maps;
+    website.dialog.value = WebsiteDialog.Custom_Maps;
   }
 
   void connectToCustomGame(String customGame){
@@ -171,7 +171,7 @@ class WebsiteGame extends Game {
   void checkForLatestVersion() async {
     // await saveVisitDateTime();
     options.operationStatus.value = OperationStatus.Checking_For_Updates;
-    isometric.engine.refreshPage();
+    engine.refreshPage();
   }
 
   // Future saveVisitDateTime() async =>

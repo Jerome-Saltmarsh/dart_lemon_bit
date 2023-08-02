@@ -19,7 +19,7 @@ class IsometricCamera with IsometricComponent {
     }
   }
 
-  void centerOnV3(Position v3) => isometric.engine.cameraCenter(v3.renderX, v3.renderY);
+  void centerOnV3(Position v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
     final target = this.target;
@@ -30,7 +30,7 @@ class IsometricCamera with IsometricComponent {
     final translateDistance = mouseDistance * mouseFollowSensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
-    isometric.engine.cameraFollow(
+    engine.cameraFollow(
         target.renderX + translateX,
         target.renderY + translateY,
         chaseStrength,
@@ -44,18 +44,18 @@ class IsometricCamera with IsometricComponent {
   void cameraSetPosition(double x, double y, double z){
     final renderX = (x - y) * 0.5;
     final renderY = ((y + x) * 0.5) - z;
-    isometric.engine.cameraCenter(renderX, renderY);
+    engine.cameraCenter(renderX, renderY);
   }
 
   double getMousePlayerRenderDistance(){
-    final adjacent = isometric.player.renderX - isometric.engine.mouseWorldX;
-    final opposite = isometric.player.renderY - isometric.engine.mouseWorldY;
+    final adjacent = player.renderX - engine.mouseWorldX;
+    final opposite = player.renderY - engine.mouseWorldY;
     return hyp2(adjacent, opposite);
   }
 
   double getMousePlayerAngle(){
-    final adjacent = isometric.player.renderX - isometric.engine.mouseWorldX;
-    final opposite = isometric.player.renderY - isometric.engine.mouseWorldY;
+    final adjacent = player.renderX - engine.mouseWorldX;
+    final opposite = player.renderY - engine.mouseWorldY;
     return rad(adjacent, opposite);
   }
 

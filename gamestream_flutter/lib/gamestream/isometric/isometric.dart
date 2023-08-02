@@ -152,7 +152,6 @@ class Isometric {
         continue;
       }
 
-      component.isometric = this;
       component.findComponent = findComponent;
       component.scene = scene;
       component.environment = environment;
@@ -178,11 +177,13 @@ class Isometric {
       component.responseReader = responseReader;
       component.website = website;
       component.amulet = mmo;
+      component.captureTheFlag = captureTheFlag;
       component.options = options;
       component.animation = animation;
       component.images = images;
       component.screen = screen;
       component.colors = colors;
+      component.compositor = compositor;
     }
     validateAtlases();
   }
@@ -255,21 +256,6 @@ class Isometric {
     return;
   }
 
-  // @override
-  void onError(Object error, StackTrace stack) {
-    if (error.toString().contains('NotAllowedError')){
-      // https://developer.chrome.com/blog/autoplay/
-      // This error appears when the game attempts to fullscreen
-      // without the user having interacted first
-      // TODO dispatch event on fullscreen failed
-      // onErrorFullscreenAuto();
-      return;
-    }
-    print(error.toString());
-    print(stack);
-    website.error.value = error.toString();
-  }
-
   void doRenderForeground(Canvas canvas, Size size){
     if (!network.websocket.connected)
       return;
@@ -277,7 +263,7 @@ class Isometric {
     render.renderPlayerAimTargetNameText();
 
     if (io.inputModeTouch) {
-      io.touchController.render(canvas);
+      io.touchController.drawCanvas(canvas);
     }
 
     options.game.value.renderForeground(canvas, size);
@@ -331,6 +317,10 @@ class Isometric {
     engine.onMouseExitCanvas = onMouseExitCanvas;
     onEngineBuilt();
     return engine;
+  }
+
+  void onError(Object error, StackTrace stack){
+    print('isometric.onError()');
   }
 
   void onEngineBuilt(){

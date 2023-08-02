@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
 import 'package:gamestream_flutter/ui.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -10,7 +10,7 @@ import 'debug_tab.dart';
 extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
-      buildWatchBool(isometric.player.debugging, () =>
+      buildWatchBool(player.debugging, () =>
           GSContainer(
             child: WatchBuilder(tab, (DebugTab activeTab) => Column(
               children: [
@@ -21,7 +21,7 @@ extension isometricDebugUI on IsometricDebug {
                       minWidth: 300,
                       maxWidth: 400,
                       minHeight: 300,
-                      maxHeight: isometric.engine.screen.height - 150),
+                      maxHeight: engine.screen.height - 150),
                   child: SingleChildScrollView(
                     child: switch (activeTab) {
                       DebugTab.Selected => buildTabSelected(),
@@ -115,8 +115,8 @@ extension isometricDebugUI on IsometricDebug {
           buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
           buildWatch(network.responseReader.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
           height8,
-          buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
-          buildWatch(isometric.io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+          buildWatch(io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
+          buildWatch(io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
         ],
       )),
       height16,
@@ -129,34 +129,34 @@ extension isometricDebugUI on IsometricDebug {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GSRefresh(() =>  buildText(
-              'mouse-scene: x: ${isometric.mouse.positionX.toInt()}, y: ${isometric.mouse.positionY.toInt()}\n'
-                  'mouse-world: x: ${isometric.engine.mouseWorldX.toInt()}, y: ${isometric.engine.mouseWorldY.toInt()}\n'
-                  'mouse-screen: x: ${isometric.engine.mousePositionX.toInt()}, y: ${isometric.engine.mousePositionY.toInt()}\n'
-                  'player-alive: ${isometric.player.alive.value}\n'
-                  'player-position: ${isometric.player.position}\n'
-                  'player-render: x: ${isometric.player.position.renderX}, y: ${isometric.player.position.renderY}\n'
-                  'player-screen: x: ${isometric.player.positionScreenX.toInt()}, y: ${isometric.player.positionScreenY.toInt()}\n'
-                  'player-index: z: ${isometric.player.position.indexZ}, row: ${isometric.player.position.indexRow}, column: ${isometric.player.position.indexColumn}\n'
-                  'player-legs: ${LegType.getName(isometric.player.legs.value)}\n'
-                  'player-body: ${BodyType.getName(isometric.player.body.value)}\n'
-                  'player-head: ${HeadType.getName(isometric.player.head.value)}\n'
-                  'player-weapon: ${WeaponType.getName(isometric.player.weapon.value)}\n'
-                  'aim-target-category: ${TargetCategory.getName(isometric.player.aimTargetCategory)}\n'
-                  'aim-target-type: ${isometric.player.aimTargetType}\n'
-                  'aim-target-name: ${isometric.player.aimTargetName}\n'
-                  'aim-target-position: ${isometric.player.aimTargetPosition}\n'
-                  'target-position: ${isometric.player.targetPosition}\n'
-                  'scene-light-sources: ${isometric.scene.nodeLightSourcesTotal}\n'
-                  'scene-light-active: ${isometric.scene.totalActiveLights}\n'
-                  'scene.smoke-sources: ${isometric.scene.smokeSourcesTotal}\n'
-                  'total-gameobjects: ${isometric.scene.gameObjects.length}\n'
-                  'total-characters: ${isometric.scene.totalCharacters}\n'
+              'mouse-scene: x: ${mouse.positionX.toInt()}, y: ${mouse.positionY.toInt()}\n'
+                  'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
+                  'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
+                  'player-alive: ${player.alive.value}\n'
+                  'player-position: ${player.position}\n'
+                  'player-render: x: ${player.position.renderX}, y: ${player.position.renderY}\n'
+                  'player-screen: x: ${player.positionScreenX.toInt()}, y: ${player.positionScreenY.toInt()}\n'
+                  'player-index: z: ${player.position.indexZ}, row: ${player.position.indexRow}, column: ${player.position.indexColumn}\n'
+                  'player-legs: ${LegType.getName(player.legs.value)}\n'
+                  'player-body: ${BodyType.getName(player.body.value)}\n'
+                  'player-head: ${HeadType.getName(player.head.value)}\n'
+                  'player-weapon: ${WeaponType.getName(player.weapon.value)}\n'
+                  'aim-target-category: ${TargetCategory.getName(player.aimTargetCategory)}\n'
+                  'aim-target-type: ${player.aimTargetType}\n'
+                  'aim-target-name: ${player.aimTargetName}\n'
+                  'aim-target-position: ${player.aimTargetPosition}\n'
+                  'target-position: ${player.targetPosition}\n'
+                  'scene-light-sources: ${scene.nodeLightSourcesTotal}\n'
+                  'scene-light-active: ${scene.totalActiveLights}\n'
+                  'scene.smoke-sources: ${scene.smokeSourcesTotal}\n'
+                  'total-gameobjects: ${scene.gameObjects.length}\n'
+                  'total-characters: ${scene.totalCharacters}\n'
                   'total-particles: ${particles.children.length}\n'
                   'total-particles-active: ${particles.countActiveParticles}\n'
           )),
           buildWatch(options.gameType, (GameType value) => buildText('game-type: ${value.name}')),
-          buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: isometric.engine.toggleDeviceType)),
-          buildWatch(isometric.io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: isometric.io.actionToggleInputMode)),
+          buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
+          buildWatch(io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: io.actionToggleInputMode)),
           buildWatch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
           buildWatch(engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
           // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
@@ -167,11 +167,11 @@ extension isometricDebugUI on IsometricDebug {
       Column(
         children: [
           onPressed(
-              child: GSRefresh(() => buildText('blend-mode: ${isometric.engine.bufferBlendMode.name}')),
+              child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
               action: (){
-                final currentIndex = BlendMode.values.indexOf(isometric.engine.bufferBlendMode);
+                final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
                 final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
-                isometric.engine.bufferBlendMode = BlendMode.values[nextIndex];
+                engine.bufferBlendMode = BlendMode.values[nextIndex];
               }
           ),
           height8,
@@ -179,11 +179,11 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                isometric.scene.setInterpolationLength(isometric.scene.interpolationLength - 1);
+                scene.setInterpolationLength(scene.interpolationLength - 1);
               }),
-              GSRefresh(() => buildText('light-size: ${isometric.scene.interpolationLength}')),
+              GSRefresh(() => buildText('light-size: ${scene.interpolationLength}')),
               buildText('->', onPressed: (){
-                isometric.scene.setInterpolationLength(isometric.scene.interpolationLength + 1);
+                scene.setInterpolationLength(scene.interpolationLength + 1);
               }),
             ],
           ),
@@ -191,15 +191,15 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildText('<-', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(isometric.scene.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
                 final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                isometric.scene.interpolationEaseType.value = EaseType.values[indexNext];
+                scene.interpolationEaseType.value = EaseType.values[indexNext];
               }),
-              buildWatch(isometric.scene.interpolationEaseType, buildText),
+              buildWatch(scene.interpolationEaseType, buildText),
               buildText('->', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(isometric.scene.interpolationEaseType.value);
+                final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
                 final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                isometric.scene.interpolationEaseType.value = EaseType.values[indexNext];
+                scene.interpolationEaseType.value = EaseType.values[indexNext];
               }),
             ],
           ),
@@ -209,19 +209,19 @@ extension isometricDebugUI on IsometricDebug {
           // ColorPicker(
           //   portraitOnly: true,
           //   pickerColor: HSVColor.fromAHSV(
-          //     isometric.ambientAlpha / 255,
-          //     // isometric.ambientHue.toDouble(),
-          //     // isometric.ambientSaturation / 100,
-          //     // isometric.ambientValue / 100,
+          //     ambientAlpha / 255,
+          //     // ambientHue.toDouble(),
+          //     // ambientSaturation / 100,
+          //     // ambientValue / 100,
           //   ).toColor(),
           //   onColorChanged: (color){
-          //     isometric.overrideColor.value = true;
+          //     overrideColor.value = true;
           //     final hsvColor = HSVColor.fromColor(color);
-          //     isometric.ambientAlpha = (hsvColor.alpha * 255).round();
-          //     // isometric.ambientHue = hsvColor.hue.round();
-          //     // isometric.ambientSaturation = (hsvColor.saturation * 100).round();
-          //     // isometric.ambientValue = (hsvColor.value * 100).round();
-          //     isometric.resetNodeColorsToAmbient();
+          //     ambientAlpha = (hsvColor.alpha * 255).round();
+          //     // ambientHue = hsvColor.hue.round();
+          //     // ambientSaturation = (hsvColor.saturation * 100).round();
+          //     // ambientValue = (hsvColor.value * 100).round();
+          //     resetNodeColorsToAmbient();
           //   },
           // ),
         ],
@@ -230,38 +230,38 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabEngine() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      GSRefresh(() => buildText('engine-zoom: ${isometric.engine.zoom.toStringAsFixed(3)}')),
-      GSRefresh(() => buildText('engine-touch-world: x: ${isometric.io.touchCursorWorldX.toInt()}, y: ${isometric.io.touchCursorWorldY.toInt()}')),
-      GSRefresh(() => buildText('engine-render-batches: ${isometric.engine.batchesRendered}')),
-      GSRefresh(() => buildText('engine-render-batch-1: ${isometric.engine.batches1Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-2: ${isometric.engine.batches2Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-4: ${isometric.engine.batches4Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-8: ${isometric.engine.batches8Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-16: ${isometric.engine.batches16Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-32: ${isometric.engine.batches32Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-64: ${isometric.engine.batches64Rendered}')),
-      GSRefresh(() => buildText('engine-render-batch-128: ${isometric.engine.batches128Rendered}')),
-      GSRefresh(() => buildText('engine-camera-zoom: ${isometric.engine.targetZoom.toStringAsFixed(3)}')),
-      GSRefresh(() => buildText('engine-render-frame: ${isometric.engine.paintFrame}')),
-      GSRefresh(() => buildText('engine-update-frame: ${isometric.engine.updateFrame}')),
-      buildRowWatchInt(text: 'engine.ms-render', watch: isometric.engine.msRender),
-      buildRowWatchInt(text: 'engine.ms-update', watch: isometric.engine.msUpdate),
-      buildWatch(isometric.engine.msRender, (t) {
+      GSRefresh(() => buildText('engine-zoom: ${engine.zoom.toStringAsFixed(3)}')),
+      GSRefresh(() => buildText('engine-touch-world: x: ${io.touchCursorWorldX.toInt()}, y: ${io.touchCursorWorldY.toInt()}')),
+      GSRefresh(() => buildText('engine-render-batches: ${engine.batchesRendered}')),
+      GSRefresh(() => buildText('engine-render-batch-1: ${engine.batches1Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-2: ${engine.batches2Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-4: ${engine.batches4Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-8: ${engine.batches8Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-16: ${engine.batches16Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-32: ${engine.batches32Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-64: ${engine.batches64Rendered}')),
+      GSRefresh(() => buildText('engine-render-batch-128: ${engine.batches128Rendered}')),
+      GSRefresh(() => buildText('engine-camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
+      GSRefresh(() => buildText('engine-render-frame: ${engine.paintFrame}')),
+      GSRefresh(() => buildText('engine-update-frame: ${engine.updateFrame}')),
+      buildRowWatchInt(text: 'engine.ms-render', watch: engine.msRender),
+      buildRowWatchInt(text: 'engine.ms-update', watch: engine.msUpdate),
+      buildWatch(engine.msRender, (t) {
         return buildRowText(text: 'engine.fps-render', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
-      buildWatch(isometric.engine.msUpdate, (t) {
+      buildWatch(engine.msUpdate, (t) {
         return buildRowText(text: 'engine.fps-update', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
-      buildWatch(isometric.engine.renderFramesSkipped, (t) {
+      buildWatch(engine.renderFramesSkipped, (t) {
         return buildRowText(text: 'render.frames-skipped', value:t);
       }),
       onPressed(
-          action: () => isometric.engine.drawCanvasAfterUpdate = !isometric.engine.drawCanvasAfterUpdate,
-          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${isometric.engine.drawCanvasAfterUpdate}'))
+          action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
+          child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
       ),
       onPressed(
           action: () => options.renderResponse = !options.renderResponse,
-          child: GSRefresh(() => buildText(' isometric.renderResponse = ${options.renderResponse}'))
+          child: GSRefresh(() => buildText(' renderResponse = ${options.renderResponse}'))
       ),
     ],
   );
@@ -270,7 +270,7 @@ extension isometricDebugUI on IsometricDebug {
         () => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: isometric.scene.gameObjects
+          children: scene.gameObjects
               .map((gameObject) => onPressed(
                 action: () => network.sendIsometricRequestSelectGameObject(gameObject),
                 child: buildText(
@@ -372,7 +372,7 @@ extension isometricDebugUI on IsometricDebug {
           child: buildRow(
             text: 'camera-target',
             value: GSRefresh((){
-              final target = isometric.camera.target;
+              final target = camera.target;
               if (target == null) {
                 return buildValueText('-');
               }
@@ -449,22 +449,22 @@ extension isometricDebugUI on IsometricDebug {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         onPressed(
-            action: isometric.compositor.rendererNodes.toggleDynamicResolutionEnabled,
-            child: buildRow(text: 'dynamic-resolution-enabled', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.dynamicResolutionEnabled))),
+            action: compositor.rendererNodes.toggleDynamicResolutionEnabled,
+            child: buildRow(text: 'dynamic-resolution-enabled', value: GSRefresh(() => buildText(compositor.rendererNodes.dynamicResolutionEnabled))),
         ),
         GSRefresh(() => buildText(
-            'camera-target: ${isometric.camera.target}\n'
+            'camera-target: ${camera.target}\n'
         )),
-        buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.highResolution))),
-        buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.onscreenNodes))),
-        buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(isometric.compositor.rendererNodes.offscreenNodes))),
-        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(isometric.compositor.rendererNodes.orderShiftY))),
+        buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(compositor.rendererNodes.highResolution))),
+        buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(compositor.rendererNodes.onscreenNodes))),
+        buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(compositor.rendererNodes.offscreenNodes))),
+        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(compositor.rendererNodes.orderShiftY))),
         onPressed(
-          action: isometric.compositor.rendererNodes.increaseOrderShiftY,
+          action: compositor.rendererNodes.increaseOrderShiftY,
           child: buildText('increase'),
         ),
         onPressed(
-          action: isometric.compositor.rendererNodes.decreaseOrderShiftY,
+          action: compositor.rendererNodes.decreaseOrderShiftY,
           child: buildText('decrease'),
         ),
         onPressed(
@@ -480,17 +480,17 @@ extension isometricDebugUI on IsometricDebug {
             child: buildRow(text: 'render-health-enemy', value: GSRefresh(() => buildValueText(options.renderHealthBarEnemies))),
         ),
         onPressed(
-            action: isometric.player.toggleControlsRunInDirectionEnabled,
+            action: player.toggleControlsRunInDirectionEnabled,
             child: buildRowWatchBool(
-                watch: isometric.player.controlsRunInDirectionEnabled,
+                watch: player.controlsRunInDirectionEnabled,
                 text: 'controlsRunInDirectionEnabled',
             ),
         ),
 
         onPressed(
-            action: isometric.player.toggleControlsCanTargetEnemies,
+            action: player.toggleControlsCanTargetEnemies,
             child: buildRowWatchBool(
-                watch: isometric.player.controlsCanTargetEnemies,
+                watch: player.controlsCanTargetEnemies,
                 text: 'controlsCanTargetEnemies',
             ),
         ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'mmo_actions.dart';
@@ -45,8 +44,6 @@ class MmoGame extends IsometricGame {
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     error.onChanged(onChangedError);
   }
-
-  IsometricPlayer get player => isometric.player;
 
   void onChangedError(String value){
     if (value.isEmpty)

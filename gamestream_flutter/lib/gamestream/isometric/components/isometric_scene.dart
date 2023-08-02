@@ -653,7 +653,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       applyVector3EmissionAmbient(
         character,
-        alpha: isometric.lighting.emissionAlphaCharacter,
+        alpha: lighting.emissionAlphaCharacter,
       );
     }
   }
@@ -679,8 +679,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
-
-    final engine = isometric.engine;
 
     if (!bakeStackRecording){
 
@@ -886,18 +884,18 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     final renderX = getIndexRenderX(index);
 
-    if (renderX < isometric.engine.Screen_Left - padding && (vx < 0 || vy > 0))
+    if (renderX < amulet.engine.Screen_Left - padding && (vx < 0 || vy > 0))
       return;
 
-    if (renderX > isometric.engine.Screen_Right + padding && (vx > 0 || vy < 0))
+    if (renderX > amulet.engine.Screen_Right + padding && (vx > 0 || vy < 0))
       return;
 
     final renderY = getIndexRenderY(index);
 
-    if (renderY < isometric.engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+    if (renderY < amulet.engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
       return;
 
-    if (renderY > isometric.engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+    if (renderY > amulet.engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
       return;
 
     final nodeType = nodeTypes[index];
@@ -1138,7 +1136,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final alpha = interpolate(
       ambient,
       0,
-      isometric.lighting.torchEmissionIntensityAmbient,
+      amulet.lighting.torchEmissionIntensityAmbient,
     ).toInt();
 
     for (var i = 0; i < bakeStackTorchTotal; i++){
@@ -1165,7 +1163,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void applyEmissionEditorSelectedNode() {
     if (!options.editMode) return;
-    final editor = isometric.editor;
+    final editor = amulet.editor;
     if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
       emitLightAmbient(
         index:  editor.nodeSelectedIndex.value,
@@ -1219,7 +1217,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       if (!bakeStackRecording){
         final renderX = getIndexRenderX(index);
-        final engine = isometric.engine;
+        final engine = amulet.engine;
 
         if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
           return;
@@ -1459,7 +1457,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   bool indexOnscreen(int index, {double padding = Node_Size}){
     final x = getIndexRenderX(index);
-    final engine = isometric.engine;
+    final engine = amulet.engine;
     if (x < engine.Screen_Left - padding || x > engine.Screen_Right + padding)
       return false;
 
@@ -1650,8 +1648,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void applyEmissionsColoredLightSources() {
 
-    final colors = isometric.colors;
-    final torchEmissionIntensityColored = isometric.lighting.torchEmissionIntensityColored;
+    final colors = amulet.colors;
+    final torchEmissionIntensityColored = amulet.lighting.torchEmissionIntensityColored;
 
     for (var i = 0; i < nodeLightSourcesTotal; i++){
       final nodeIndex = nodeLightSources[i];
@@ -1736,10 +1734,10 @@ class IsometricScene with IsometricComponent implements Updatable {
     ambientAlpha = convertSecondsToAmbientAlpha(environment.currentTimeInSeconds);
 
     if (environment.rainType.value == RainType.Light){
-      ambientAlpha += isometric.lighting.rainAmbienceLight;
+      ambientAlpha += lighting.rainAmbienceLight;
     }
     if (environment.rainType.value == RainType.Heavy){
-      ambientAlpha += isometric.lighting.rainAmbientHeavy;
+      ambientAlpha += lighting.rainAmbientHeavy;
     }
   }
 

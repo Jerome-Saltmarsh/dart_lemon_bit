@@ -17,7 +17,7 @@ extension MMORender on MmoGame {
       return;
 
     engine.color = color;
-    isometric.render.line(
+    render.line(
       player.x,
       player.y,
       player.z,
@@ -36,7 +36,7 @@ extension MMORender on MmoGame {
   void renderPlayerItemRange(MMOItem item) {
     if (item.range <= 0) return;
     engine.color = Colors.white;
-    isometric.render.circleOutline(
+    render.circleOutline(
         player.x,
         player.y,
         player.z,

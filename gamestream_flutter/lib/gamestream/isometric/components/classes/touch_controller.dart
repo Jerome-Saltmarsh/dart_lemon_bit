@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class TouchController {
-
-  final Isometric isometric;
+class TouchController with IsometricComponent {
 
   var joystickCenterX = 0.0;
   var joystickCenterY = 0.0;
@@ -15,30 +13,28 @@ class TouchController {
 
   static const maxDistance = 15.0;
 
-  TouchController(this.isometric);
-
   double get angle => angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
   double get dis => distanceBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
 
   void onClick() {
-    joystickCenterX = isometric.engine.mousePositionX;
-    joystickCenterY = isometric.engine.mousePositionY;
+    joystickCenterX = engine.mousePositionX;
+    joystickCenterY = engine.mousePositionY;
     joystickX = joystickCenterX;
     joystickY = joystickCenterY;
   }
 
   int getDirection() =>
-      isometric.engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
+      engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
 
   void onMouseMoved(double x, double y){
-    joystickX = isometric.engine.mousePositionX;
-    joystickY = isometric.engine.mousePositionY;
+    joystickX = engine.mousePositionX;
+    joystickY = engine.mousePositionY;
   }
 
-  void render(Canvas canvas){
-    if (isometric.engine.touches == 0) return;
+  void drawCanvas(Canvas canvas){
+    if (engine.touches == 0) return;
 
-    if (isometric.engine.watchMouseLeftDown.value) {
+    if (engine.watchMouseLeftDown.value) {
       if (dis > maxDistance) {
         final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
         joystickCenterX = joystickX - adj(radian, maxDistance);

@@ -763,7 +763,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       return;
     }
 
-    if (isometric.scene.outOfBoundsPosition(particle)){
+    if (scene.outOfBoundsPosition(particle)){
       particle.deactivate();
       return;
     }
@@ -793,13 +793,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
       return;
     }
 
-    final index = isometric.scene.getIndexPosition(particle);
+    final index = scene.getIndexPosition(particle);
 
     assert (index >= 0);
-    assert (index < isometric.scene.totalNodes);
+    assert (index < scene.totalNodes);
 
     particle.nodeIndex = index;
-    final nodeType = isometric.scene.nodeTypes[index];
+    final nodeType = scene.nodeTypes[index];
     particle.nodeType = nodeType;
     final nodeCollision =
           !const [
@@ -832,7 +832,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final bounce = nodeCollision && particle.zv < 0;
     particle.updateMotion();
 
-    if (isometric.scene.outOfBoundsPosition(particle)){
+    if (scene.outOfBoundsPosition(particle)){
       particle.deactivate();
       return;
     }

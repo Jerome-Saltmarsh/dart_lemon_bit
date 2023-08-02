@@ -81,7 +81,7 @@ extension WebsiteUI on WebsiteGame {
     );
 
   Widget buildWatchErrorMessage() =>
-      WatchBuilder(isometric.website.error, (String? message) {
+      WatchBuilder(website.error, (String? message) {
         if (message == null) return nothing;
         return buildErrorDialog(message);
       });
@@ -137,7 +137,7 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
-  Widget buildNotConnected()  => buildWatch(isometric.engine.deviceType, buildPageWebsite);
+  Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
 
   Widget buildPageWebsite(int deviceType) =>
       deviceType == DeviceType.Computer
@@ -146,7 +146,7 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteMobile() =>
       Container(
-        width: isometric.engine.screen.width,
+        width: engine.screen.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -173,9 +173,9 @@ extension WebsiteUI on WebsiteGame {
       );
 
   Widget buildGameTypeImage(GameType gameType) => Image.asset((const {
-      GameType.Capture_The_Flag: 'images/website/game-isometric.png',
-      GameType.Moba: 'images/website/game-isometric.png',
-      GameType.Amulet: 'images/website/game-isometric.png',
+      GameType.Capture_The_Flag: 'images/website/game-png',
+      GameType.Moba: 'images/website/game-png',
+      GameType.Amulet: 'images/website/game-png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
   Widget buildSelectRegionColumn() => SizedBox(
@@ -190,7 +190,7 @@ extension WebsiteUI on WebsiteGame {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: (isometric.engine.isLocalHost ? ConnectionRegion.values : const [
+                children: (engine.isLocalHost ? ConnectionRegion.values : const [
                   ConnectionRegion.America_North,
                   ConnectionRegion.America_South,
                   ConnectionRegion.Asia_North,
@@ -202,7 +202,7 @@ extension WebsiteUI on WebsiteGame {
                     onPressed(
                       action: () {
                         options.region.value = region;
-                        isometric.website.websitePage.value = WebsitePage.Games;
+                        website.websitePage.value = WebsitePage.Games;
                       },
                       child: MouseOver(builder: (bool mouseOver) {
                         return Container(
@@ -234,7 +234,7 @@ extension WebsiteUI on WebsiteGame {
             child: Center(
               child: buildText(message, color: IsometricColors.white),
             ),
-            bottomRight: bottomRight ?? buildText('okay', onPressed: () => isometric.website.error.value = null)
+            bottomRight: bottomRight ?? buildText('okay', onPressed: () => website.error.value = null)
         )
     );
 }

@@ -79,7 +79,7 @@ extension MMOUIDialogs on MmoGame {
                 ],
               ),
               GSContainer(
-                  height: isometric.engine.screen.height - 270,
+                  height: engine.screen.height - 270,
                   alignment: Alignment.topLeft,
                   child: GridView.count(
                       crossAxisCount: 4,

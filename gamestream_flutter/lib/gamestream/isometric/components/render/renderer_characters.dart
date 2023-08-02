@@ -20,8 +20,8 @@ class RendererCharacters extends RenderGroup {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    final totalCharacters = isometric.scene.totalCharacters;
-    final characters = isometric.scene.characters;
+    final totalCharacters = amulet.scene.totalCharacters;
+    final characters = amulet.scene.characters;
 
     while (index < totalCharacters){
       character = characters[index];
@@ -33,22 +33,22 @@ class RendererCharacters extends RenderGroup {
   }
 
   @override
-  int getTotal() => isometric.scene.totalCharacters;
+  int getTotal() => amulet.scene.totalCharacters;
 
   void renderCurrentCharacter(){
 
     if (!character.allie && options.renderHealthBarEnemies) {
-      isometric.render.characterHealthBar(character);
+      amulet.render.characterHealthBar(character);
     }
 
     if (character.allie && options.renderHealthBarAllies) {
-      isometric.render.characterHealthBar(character);
+      amulet.render.characterHealthBar(character);
     }
 
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
-        isometric.engine.renderSprite(
-          image: isometric.images.atlas_gameobjects,
+        amulet.engine.renderSprite(
+          image: amulet.images.atlas_gameobjects,
           srcX: 1920,
           srcY: (character.animationFrame % 8) * 43.0,
           dstX: character.renderX,
@@ -59,8 +59,8 @@ class RendererCharacters extends RenderGroup {
         );
       }
       if (character.characterType == CharacterType.Slime) {
-        isometric.engine.renderSprite(
-          image: isometric.images.atlas_gameobjects,
+        amulet.engine.renderSprite(
+          image: amulet.images.atlas_gameobjects,
           srcX: 3040,
           srcY: (character.animationFrame % 6) * 48.0,
           dstX: character.renderX,
@@ -71,8 +71,8 @@ class RendererCharacters extends RenderGroup {
         );
         return;
       }
-      isometric.engine.renderSprite(
-        image: isometric.images.atlas_characters,
+      amulet.engine.renderSprite(
+        image: amulet.images.atlas_characters,
         srcX: 513,
         srcY: (character.animationFrame % 8) * 73.0,
         dstX: character.renderX,
@@ -102,8 +102,8 @@ class RendererCharacters extends RenderGroup {
         renderCharacterRat(character);
         break;
       case CharacterType.Triangle:
-        isometric.engine.renderSpriteRotated(
-          image: isometric.images.atlas_characters,
+        amulet.engine.renderSpriteRotated(
+          image: amulet.images.atlas_characters,
           srcX: 0,
           srcY: 512,
           srcWidth: 32,
@@ -127,8 +127,8 @@ class RendererCharacters extends RenderGroup {
     const Anchor_Y = 0.66;
 
     if (character.state == CharacterState.Idle){
-      isometric.engine.renderSprite(
-        image: isometric.images.character_dog,
+      amulet.engine.renderSprite(
+        image: amulet.images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -145,8 +145,8 @@ class RendererCharacters extends RenderGroup {
     if (character.state == CharacterState.Running) {
       const frames = const [4, 5];
       final frame = frames[(character.animationFrame % 2)];
-      isometric.engine.renderSprite(
-        image: isometric.images.character_dog,
+      amulet.engine.renderSprite(
+        image: amulet.images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: frame * Src_Size,
@@ -168,8 +168,8 @@ class RendererCharacters extends RenderGroup {
       } else {
         frame = frames[frame];
       }
-      isometric.engine.renderSprite(
-        image: isometric.images.character_dog,
+      amulet.engine.renderSprite(
+        image: amulet.images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: frame * Src_Size,
@@ -184,8 +184,8 @@ class RendererCharacters extends RenderGroup {
     }
 
     if (character.state == CharacterState.Hurt) {
-      isometric.engine.renderSprite(
-        image: isometric.images.character_dog,
+      amulet.engine.renderSprite(
+        image: amulet.images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: Src_Size,
@@ -201,8 +201,8 @@ class RendererCharacters extends RenderGroup {
 
     if (character.state == CharacterState.Stunned){
       render.starsPosition(character);
-      isometric.engine.renderSprite(
-        image: isometric.images.character_dog,
+      amulet.engine.renderSprite(
+        image: amulet.images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -223,7 +223,7 @@ class RendererCharacters extends RenderGroup {
 
     var angle = 0.0;
     var dist = 0.0;
-    // final nodes = gamestream.isometric.scene;
+    // final nodes = gamestream.amulet.scene;
 
     // if (!nodes.outOfBoundsV3(character)){
     //   var torchIndex = nodes.getTorchIndex(nodes.getNodeIndexV3(character));
@@ -249,8 +249,8 @@ class RendererCharacters extends RenderGroup {
     final shadowY = character.y + opp(angle, dist);
     final shadowZ = character.z;
 
-    isometric.engine.renderSprite(
-      image: isometric.images.zombie_shadow,
+    amulet.engine.renderSprite(
+      image: amulet.images.zombie_shadow,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
@@ -262,8 +262,8 @@ class RendererCharacters extends RenderGroup {
       color: character.color,
     );
 
-    isometric.engine.renderSprite(
-      image: isometric.images.zombie,
+    amulet.engine.renderSprite(
+      image: amulet.images.zombie,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
@@ -318,8 +318,8 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterRat(Character character){
     if (character.state == CharacterState.Running){
-      isometric.engine.renderSprite(
-        image: isometric.images.atlas_gameobjects,
+      amulet.engine.renderSprite(
+        image: amulet.images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -328,13 +328,13 @@ class RendererCharacters extends RenderGroup {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: isometric.scene.getRenderColorPosition(character),
+        color: amulet.scene.getRenderColorPosition(character),
       );
     }
 
     if (character.state == CharacterState.Performing){
-      isometric.engine.renderSprite(
-        image: isometric.images.atlas_gameobjects,
+      amulet.engine.renderSprite(
+        image: amulet.images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 2680,
@@ -343,12 +343,12 @@ class RendererCharacters extends RenderGroup {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: isometric.scene.getRenderColorPosition(character),
+        color: amulet.scene.getRenderColorPosition(character),
       );
     }
 
-    isometric.engine.renderSprite(
-      image: isometric.images.atlas_gameobjects,
+    amulet.engine.renderSprite(
+      image: amulet.images.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,
@@ -357,7 +357,7 @@ class RendererCharacters extends RenderGroup {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: isometric.scene.getRenderColorPosition(character),
+      color: amulet.scene.getRenderColorPosition(character),
     );
   }
 
@@ -390,7 +390,7 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterShadowCircle(Character character) {
-    final scene = isometric.scene;
+    final scene = amulet.scene;
 
     final maxNodes = 5;
     final lightIndex = scene.getNearestLightSourcePosition(
@@ -448,7 +448,7 @@ class RendererCharacters extends RenderGroup {
     }
 
     engine.color = Colors.black26;
-    isometric.render.circleFilled(x, y, z, radius);
+    amulet.render.circleFilled(x, y, z, radius);
     engine.color = Colors.white;
   }
 

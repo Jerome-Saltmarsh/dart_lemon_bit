@@ -26,7 +26,7 @@ class IsometricMinimap with IsometricComponent {
 
   void generateSrcDst(){
     var index = 0;
-    final nodes = isometric.scene;
+    final nodes = scene;
     final rows = nodes.totalRows;
     final columns = nodes.totalColumns;
     final area = nodes.area;
@@ -89,6 +89,6 @@ class IsometricMinimap with IsometricComponent {
     ..strokeWidth = 1;
 
   void renderCanvas(Canvas canvas){
-    canvas.drawRawAtlas(isometric.images.atlas_nodes_mini, dst, src, null, null, null, paint);
+    canvas.drawRawAtlas(images.atlas_nodes_mini, dst, src, null, null, null, paint);
   }
 }

@@ -7,7 +7,6 @@ extension CaptureTheFlagResponseReader on IsometricResponseReader {
 
 
   void readCaptureTheFlag() {
-    final captureTheFlag = isometric.captureTheFlag;
     switch (readByte()) {
       case CaptureTheFlagResponse.Score:
         captureTheFlag.scoreRed.value = readUInt16();

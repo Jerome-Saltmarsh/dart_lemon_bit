@@ -54,29 +54,29 @@ class IsometricDebug with IsometricComponent {
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
   void drawCanvas() {
-    if (!isometric.player.debugging.value) return;
+    if (!player.debugging.value) return;
     if (!selectedCollider.value) return;
 
-    isometric.engine.setPaintColor(Colors.white);
-    isometric.render.circleOutline(
+    engine.setPaintColor(Colors.white);
+    render.circleOutline(
       x.value,
       y.value,
       z.value,
       radius.value.toDouble(),
     );
 
-    isometric.engine.setPaintColor(Colors.green);
-    isometric.render.circleOutline(
+    engine.setPaintColor(Colors.green);
+    render.circleOutline(
       x.value,
       y.value,
       z.value,
       weaponRange.value.toDouble(),
     );
 
-    isometric.engine.setPaintColor(Colors.red);
+    engine.setPaintColor(Colors.red);
     if (selectedColliderType.value == IsometricType.Character) {
       if (targetSet.value) {
-        isometric.render.line(
+        render.line(
           x.value,
           y.value,
           z.value,
@@ -86,14 +86,14 @@ class IsometricDebug with IsometricComponent {
         );
       }
 
-      isometric.engine.setPaintColor(Colors.blue);
+      engine.setPaintColor(Colors.blue);
       renderPath(
         path: path,
         start: 0,
         end: pathIndex.value,
       );
 
-      isometric.engine.setPaintColor(Colors.yellow);
+      engine.setPaintColor(Colors.yellow);
       renderPath(
         path: path,
         start: pathIndex.value,
@@ -101,8 +101,8 @@ class IsometricDebug with IsometricComponent {
       );
 
       if (!arrivedAtDestination.value){
-        isometric.engine.setPaintColor(Colors.deepPurpleAccent);
-        isometric.render.line(
+        engine.setPaintColor(Colors.deepPurpleAccent);
+        render.line(
           x.value,
           y.value,
           z.value,
@@ -115,8 +115,7 @@ class IsometricDebug with IsometricComponent {
 
       final pathTargetIndexValue = pathTargetIndex.value;
       if (pathTargetIndexValue != -1) {
-        final scene = isometric.scene;
-        isometric.render.wireFrameBlue(
+        render.wireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
           scene.getIndexRow(pathTargetIndexValue),
           scene.getIndexColumn(pathTargetIndexValue),
@@ -132,11 +131,10 @@ class IsometricDebug with IsometricComponent {
   }){
     if (start < 0) return;
     if (end < 0) return;
-    final scene = isometric.scene;
     for (var i = start; i < end - 1; i++){
       final a = path[i];
       final b = path[i + 1];
-      isometric.engine.drawLine(
+      engine.drawLine(
         scene.getIndexRenderX(a) + Node_Size_Half,
         scene.getIndexRenderY(a) + Node_Size_Half,
         scene.getIndexRenderX(b) + Node_Size_Half,
@@ -146,20 +144,20 @@ class IsometricDebug with IsometricComponent {
   }
 
   void onChangedCharacterSelected(bool characterSelected){
-    if (!isometric.player.debugging.value)
+    if (!player.debugging.value)
       return;
 
      if (characterSelected){
-       isometric.camera.target = position;
+       camera.target = position;
      } else {
-       isometric.camera.target = null;
+       camera.target = null;
      }
   }
 
   void onMouseLeftClicked() => network.sendIsometricRequestDebugSelect();
 
   void onMouseRightClicked() {
-    if (isometric.engine.keyPressedShiftLeft){
+    if (engine.keyPressedShiftLeft){
       network.sendIsometricRequestDebugAttack();
       return;
     }
@@ -175,7 +173,7 @@ class IsometricDebug with IsometricComponent {
 
   void onChangedEnabled(bool enabled){
       if (enabled){
-        isometric.camera.target = null;
+        camera.target = null;
       } else {
         action.cameraTargetPlayer();
       }

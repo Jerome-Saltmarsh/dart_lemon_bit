@@ -73,11 +73,11 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   double get renderX => position.renderX;
   double get renderY => position.renderY;
 
-  double get positionScreenX => isometric.engine.worldToScreenX(position.renderX);
-  double get positionScreenY => isometric.engine.worldToScreenY(position.renderY);
+  double get positionScreenX => engine.worldToScreenX(position.renderX);
+  double get positionScreenY => engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
-  bool get inBounds => isometric.scene.inBoundsPosition(position);
+  bool get inBounds => scene.inBoundsPosition(position);
 
 
   bool isCharacter(Character character){
@@ -93,9 +93,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final index = nodeIndex + isometric.scene.area;
-    while (index < isometric.scene.totalNodes){
-      if (NodeType.isRainOrEmpty(isometric.scene.nodeTypes[index])) continue;
+    final index = nodeIndex + scene.area;
+    while (index < scene.totalNodes){
+      if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;
       return true;
     }
     return false;

@@ -38,8 +38,8 @@ class IsometricRender with IsometricComponent {
       int row,
       int column,
       ) {
-    isometric.engine.renderSprite(
-      image: isometric.images.atlas_nodes,
+    engine.renderSprite(
+      image: images.atlas_nodes,
       dstX: getRenderXOfRowAndColumn(row, column),
       dstY: getRenderYOfRowColumnZ(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
@@ -52,8 +52,8 @@ class IsometricRender with IsometricComponent {
   }
 
   void wireFrameRed(int row, int column, int z) {
-    isometric.engine.renderSprite(
-      image: isometric.images.atlas_nodes,
+    engine.renderSprite(
+      image: images.atlas_nodes,
       dstX: getRenderXOfRowAndColumn(row, column),
       dstY: getRenderYOfRowColumnZ(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
@@ -65,8 +65,8 @@ class IsometricRender with IsometricComponent {
   }
 
   void circle32(double x, double y, double z){
-    isometric.engine.renderSprite(
-      image: isometric.images.atlas_gameobjects,
+    engine.renderSprite(
+      image: images.atlas_gameobjects,
       srcX: 16,
       srcY: 48,
       srcWidth: 32,
@@ -87,8 +87,8 @@ class IsometricRender with IsometricComponent {
     required Position position,
     required double percentage,
     int color = 1,
-  }) => isometric.engine.renderSprite(
-    image: isometric.images.atlas_gameobjects,
+  }) => engine.renderSprite(
+    image: images.atlas_gameobjects,
     dstX: position.renderX - 26,
     dstY: position.renderY - 45,
     srcX: 171,
@@ -100,21 +100,21 @@ class IsometricRender with IsometricComponent {
   );
 
   void editWireFrames() {
-    for (var z = 0; z < isometric.editor.z; z++) {
-      isometric.render.wireFrameBlue(z, isometric.editor.row, isometric.editor.column);
+    for (var z = 0; z < editor.z; z++) {
+      render.wireFrameBlue(z, editor.row, editor.column);
     }
-    isometric.render.wireFrameRed(isometric.editor.row, isometric.editor.column, isometric.editor.z);
+    render.wireFrameRed(editor.row, editor.column, editor.z);
   }
 
   void renderText({required String value, required double x, required double y}){
     const charWidth = 4.5;
-    isometric.engine.writeText(value, x - charWidth * value.length, y);
+    engine.writeText(value, x - charWidth * value.length, y);
   }
 
 
   void barBlue(double x, double y, double z, double percentage) {
-    isometric.engine.renderSprite(
-      image: isometric.images.atlas_gameobjects,
+    engine.renderSprite(
+      image: images.atlas_gameobjects,
       dstX: getRenderX(x, y, z) - 26,
       dstY: getRenderY(x, y, z) - 55,
       srcX: 171,
@@ -130,9 +130,11 @@ class IsometricRender with IsometricComponent {
       shadowBelowXYZ(position.x, position.y, position.z);
 
   void shadowBelowXYZ(double x, double y, double z){
-    if (z < Node_Height) return;
-    final scene = isometric.scene;
-    if (z >= scene.lengthZ) return;
+    if (z < Node_Height)
+      return;
+    if (z >= scene.lengthZ)
+      return;
+
     final nodeIndex = scene.getIndexXYZ(x, y, z);
     var nodeBelowIndex = nodeIndex - scene.area;
     var nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
@@ -149,7 +151,7 @@ class IsometricRender with IsometricComponent {
     renderShadow(
       x,
       y,
-      isometric.scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
+      scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
       scale: 1.0 / (height * 0.125),
     );
   }
@@ -167,7 +169,7 @@ class IsometricRender with IsometricComponent {
       );
 
   void line(double x1, double y1, double z1, double x2, double y2, double z2) =>
-      isometric.engine.renderLine(
+      engine.renderLine(
         getRenderX(x1, y1, z1),
         getRenderY(x1, y1, z1),
         getRenderX(x2, y2, z2),
@@ -219,7 +221,7 @@ class IsometricRender with IsometricComponent {
   }
 
   void circleFilled(double x, double y, double z, double radius) =>
-    isometric.engine.renderCircleFilled(
+    engine.renderCircleFilled(
       radius: radius,
       x: getRenderX(x, y, z),
       y: getRenderY(x, y, z),

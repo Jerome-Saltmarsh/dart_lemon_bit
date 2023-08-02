@@ -92,7 +92,7 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         readNode();
         break;
       case ServerResponse.Player_Target:
-        readIsometricPosition(isometric.player.target);
+        readIsometricPosition(player.target);
         break;
       case ServerResponse.Store_Items:
         readStoreItems();
@@ -125,10 +125,10 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         final name = readString();
         final length = readUInt16();
         final bytes = readBytes(length);
-        isometric.engine.downloadBytes(bytes, name: '$name.scene');
+        engine.downloadBytes(bytes, name: '$name.scene');
         break;
       case ServerResponse.GameObject_Deleted:
-        isometric.scene.removeGameObjectById(readUInt16());
+        scene.removeGameObjectById(readUInt16());
         break;
       case ServerResponse.Game_Error:
         final errorTypeIndex = readByte();
@@ -138,7 +138,7 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         options.serverFPS.value = readUInt16();
         return;
       case ServerResponse.Sort_GameObjects:
-        isometric.scene.gameObjects.sort();
+        scene.gameObjects.sort();
         break;
       default:
         print('read error; index: $index');
@@ -169,18 +169,18 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         break;
 
       case IsometricResponse.Player_Position_Change:
-        final position = isometric.player.position;
-        isometric.player.savePositionPrevious();
+        final position = player.position;
+        player.savePositionPrevious();
         final changeX = readInt8().toDouble();
         final changeY = readInt8().toDouble();
         final changeZ = readInt8().toDouble();
         position.x += changeX;
         position.y += changeY;
         position.z += changeZ;
-        isometric.player.indexColumn = position.indexColumn;
-        isometric.player.indexRow = position.indexRow;
-        isometric.player.indexZ = position.indexZ;
-        isometric.player.nodeIndex = isometric.scene.getIndexPosition(position);
+        player.indexColumn = position.indexColumn;
+        player.indexRow = position.indexRow;
+        player.indexZ = position.indexZ;
+        player.nodeIndex = scene.getIndexPosition(position);
         break;
 
       case IsometricResponse.Player_Accuracy:
@@ -208,7 +208,6 @@ class IsometricResponseReader with ByteReader, IsometricComponent
 
 
   void readSelectedCollider() {
-    final debug = isometric.debug;
     debug.selectedCollider.value = readBool();
 
     if (!debug.selectedCollider.value)
@@ -286,7 +285,6 @@ class IsometricResponseReader with ByteReader, IsometricComponent
   void readScene() {
     final scenePart = readByte(); /// DO NOT DELETE
     ///
-    final scene = isometric.scene;
     scene.totalZ = readUInt16();
     scene.totalRows = readUInt16();
     scene.totalColumns = readUInt16();
@@ -313,23 +311,21 @@ class IsometricResponseReader with ByteReader, IsometricComponent
     events.onChangedNodes();
     scene.refreshNodeVariations();
     scene.nodesChangedNotifier.value++;
-    isometric.io.recenterCursor();
+    io.recenterCursor();
   }
 
   void readIsometricPlayerPosition() {
-    final player = isometric.player;
     final position = player.position;
     player.savePositionPrevious();
     readIsometricPosition(position);
     player.indexColumn = position.indexColumn;
     player.indexRow = position.indexRow;
     player.indexZ = position.indexZ;
-    player.nodeIndex = isometric.scene.getIndexPosition(position);
-    player.areaNodeIndex = (position.indexRow * isometric.scene.totalColumns) + position.indexColumn;
+    player.nodeIndex = scene.getIndexPosition(position);
+    player.areaNodeIndex = (position.indexRow * scene.totalColumns) + position.indexColumn;
   }
 
   void readPlayerAimTarget() {
-    final player = isometric.player;
     final aimTargetSet = readBool();
     player.playerAimTargetSet.value = aimTargetSet;
     if (aimTargetSet) {
@@ -365,7 +361,7 @@ class IsometricResponseReader with ByteReader, IsometricComponent
 
   void readGameObject() {
     final id = readUInt16();
-    final gameObject = isometric.scene.findOrCreateGameObject(id);
+    final gameObject = scene.findOrCreateGameObject(id);
     gameObject.active = readBool();
     gameObject.type = readByte();
     gameObject.subType = readByte();
@@ -378,37 +374,37 @@ class IsometricResponseReader with ByteReader, IsometricComponent
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Aim_Target_Category:
-        isometric.player.aimTargetCategory = readByte();
+        player.aimTargetCategory = readByte();
         break;
       case ApiPlayer.Aim_Target_Position:
-        readIsometricPosition(isometric.player.aimTargetPosition);
+        readIsometricPosition(player.aimTargetPosition);
         break;
       case ApiPlayer.Aim_Target_Type:
-        isometric.player.aimTargetType = readUInt16();
+        player.aimTargetType = readUInt16();
         break;
       case ApiPlayer.Aim_Target_Quantity:
-        isometric.player.aimTargetQuantity = readUInt16();
+        player.aimTargetQuantity = readUInt16();
         break;
       case ApiPlayer.Aim_Target_Name:
-        isometric.player.aimTargetName = readString();
+        player.aimTargetName = readString();
         break;
       case ApiPlayer.Arrived_At_Destination:
-        isometric.player.arrivedAtDestination.value = readBool();
+        player.arrivedAtDestination.value = readBool();
         break;
       case ApiPlayer.Run_To_Destination_Enabled:
-        isometric.player.runToDestinationEnabled.value = readBool();
+        player.runToDestinationEnabled.value = readBool();
         break;
       case ApiPlayer.Debugging:
-        isometric.player.debugging.value = readBool();
+        player.debugging.value = readBool();
         break;
       case ApiPlayer.Destination:
-        isometric.player.runX = readDouble();
-        isometric.player.runY = readDouble();
-        isometric.player.runZ = readDouble();
+        player.runX = readDouble();
+        player.runY = readDouble();
+        player.runZ = readDouble();
         break;
       case ApiPlayer.Target_Position:
-        isometric.player.runningToTarget = true;
-        readIsometricPosition(isometric.player.targetPosition);
+        player.runningToTarget = true;
+        readIsometricPosition(player.targetPosition);
         break;
       case ApiPlayer.Experience_Percentage:
         break;
@@ -416,30 +412,30 @@ class IsometricResponseReader with ByteReader, IsometricComponent
         readPlayerHealth();
         break;
       case ApiPlayer.Aim_Angle:
-        isometric.player.mouseAngle = readAngle();
+        player.mouseAngle = readAngle();
         break;
       case ApiPlayer.Message:
-        isometric.player.message.value = readString();
+        player.message.value = readString();
         break;
       case ApiPlayer.Alive:
-        isometric.player.alive.value = readBool();
-        // isometric.ui.mouseOverDialog.setFalse();
+        player.alive.value = readBool();
+        // ui.mouseOverDialog.setFalse();
         break;
       case ApiPlayer.Spawned:
-        isometric.camera.centerOnChaseTarget();
-        isometric.io.recenterCursor();
+        camera.centerOnChaseTarget();
+        io.recenterCursor();
         break;
       case ApiPlayer.Damage:
-        isometric.player.weaponDamage.value = readUInt16();
+        player.weaponDamage.value = readUInt16();
         break;
       case ApiPlayer.Id:
-        isometric.player.id.value = readUInt24();
+        player.id.value = readUInt24();
         break;
       case ApiPlayer.Active:
-        isometric.player.active.value = readBool();
+        player.active.value = readBool();
         break;
       case ApiPlayer.Team:
-        isometric.player.team.value = readByte();
+        player.team.value = readByte();
         break;
       default:
         throw Exception('Cannot parse apiPlayer $apiPlayer');
@@ -463,11 +459,11 @@ class IsometricResponseReader with ByteReader, IsometricComponent
   }
 
   void readApiPlayerEnergy() =>
-      isometric.player.energyPercentage = readPercentage();
+      player.energyPercentage = readPercentage();
 
   void readPlayerHealth() {
-    isometric.player.health.value = readUInt16();
-    isometric.player.maxHealth.value = readUInt16();
+    player.health.value = readUInt16();
+    player.maxHealth.value = readUInt16();
   }
 
   void readMapCoordinate() {
@@ -477,9 +473,8 @@ class IsometricResponseReader with ByteReader, IsometricComponent
   void readEditorGameObjectSelected() {
     // readVector3(isometricEngine.editor.gameObject);
 
-    final editor = isometric.editor;
     final id = readUInt16();
-    final gameObject = isometric.scene.findGameObjectById(id);
+    final gameObject = scene.findGameObjectById(id);
     if (gameObject == null) throw Exception('could not find gameobject with id $id');
     editor.gameObject.value = gameObject;
     editor.gameObjectSelectedCollidable   .value = readBool();
@@ -560,13 +555,13 @@ class IsometricResponseReader with ByteReader, IsometricComponent
   }
 
   void readNpcTalk() {
-    isometric.player.npcTalk.value = readString();
+    player.npcTalk.value = readString();
     final totalOptions = readByte();
     final options = <String>[];
     for (var i = 0; i < totalOptions; i++) {
       options.add(readString());
     }
-    isometric.player.npcTalkOptions.value = options;
+    player.npcTalkOptions.value = options;
   }
 
   void readGameProperties() {
@@ -584,11 +579,11 @@ class IsometricResponseReader with ByteReader, IsometricComponent
 
   void readStoreItems() {
     final length = readUInt16();
-    if (isometric.player.storeItems.value.length != length){
-      isometric.player.storeItems.value = Uint16List(length);
+    if (player.storeItems.value.length != length){
+      player.storeItems.value = Uint16List(length);
     }
     for (var i = 0; i < length; i++){
-      isometric.player.storeItems.value[i] = readUInt16();
+      player.storeItems.value[i] = readUInt16();
     }
   }
 
@@ -597,15 +592,15 @@ class IsometricResponseReader with ByteReader, IsometricComponent
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    isometric.scene.nodeTypes[nodeIndex] = nodeType;
-    isometric.scene.nodeOrientations[nodeIndex] = nodeOrientation;
+    scene.nodeTypes[nodeIndex] = nodeType;
+    scene.nodeOrientations[nodeIndex] = nodeOrientation;
     events.onChangedNodes();
 
-    isometric.editor.refreshNodeSelectedIndex();
+    editor.refreshNodeSelectedIndex();
   }
 
   void readPlayerTarget() {
-    readIsometricPosition(isometric.player.abilityTarget);
+    readIsometricPosition(player.abilityTarget);
   }
 
   void readGameTime() {
@@ -624,7 +619,6 @@ class IsometricResponseReader with ByteReader, IsometricComponent
   }
 
   void readProjectiles(){
-    final scene = isometric.scene;
     final projectiles = scene.projectiles;
     scene.totalProjectiles = readUInt16();
     while (scene.totalProjectiles >= projectiles.length){

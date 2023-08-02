@@ -215,7 +215,7 @@ class RendererNodes extends RenderGroup {
     return;
 
 
-    // final playerInsideIsland = gamestream.isometric.player.playerInsideIsland;
+    // final playerInsideIsland = gamestream.player.playerInsideIsland;
     // final nodeTypes = scene.nodeTypes;
     //
     // while (
@@ -293,7 +293,7 @@ class RendererNodes extends RenderGroup {
           break;
         }
 
-        currentNodeIndex = isometric.scene.getIndexZRC(lineZ, lineRow, lineColumn);
+        currentNodeIndex = scene.getIndexZRC(lineZ, lineRow, lineColumn);
         currentNodeDstX = (row - column) * Node_Size_Half;
 
         while (true) {
@@ -353,8 +353,8 @@ class RendererNodes extends RenderGroup {
     //
     //   assert (column >= 0);
     //   assert (row >= 0);
-    //   assert (row < isometric.totalRows);
-    //   assert (column < isometric.totalColumns);
+    //   assert (row < totalRows);
+    //   assert (column < totalColumns);
     //
     //   trimLeft();
     //
@@ -366,24 +366,24 @@ class RendererNodes extends RenderGroup {
     //     }
     //   }
     // } else {
-    //   assert (nodesStartRow < isometric.totalRows);
-    //   assert (column < isometric.totalColumns);
+    //   assert (nodesStartRow < totalRows);
+    //   assert (column < totalColumns);
     //   row = nodesStartRow;
     //   column = nodeStartColumn;
     // }
     //
-    // currentNodeIndex = (currentNodeZ * isometric.area) + (row * isometric.totalColumns) + column;
+    // currentNodeIndex = (currentNodeZ * area) + (row * totalColumns) + column;
     // assert (currentNodeZ >= 0);
     // assert (row >= 0);
     // assert (column >= 0);
     // assert (currentNodeIndex >= 0);
-    // assert (currentNodeZ < isometric.totalZ);
-    // assert (row < isometric.totalRows);
-    // assert (column < isometric.totalColumns);
-    // assert (currentNodeIndex < isometric.totalNodes);
+    // assert (currentNodeZ < totalZ);
+    // assert (row < totalRows);
+    // assert (column < totalColumns);
+    // assert (currentNodeIndex < totalNodes);
     // currentNodeDstX = (row - column) * Node_Size_Half;
     // currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    // currentNodeType = isometric.nodeTypes[currentNodeIndex];
+    // currentNodeType = nodeTypes[currentNodeIndex];
     // // orderZ = currentNodeZ;
     // order = (row + column).toDouble() - 0.5;
   }
@@ -393,12 +393,12 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
-    // bufferClr = isometric.engine.bufferClr;
-    // bufferDst = isometric.engine.bufferDst;
-    // bufferSrc = isometric.engine.bufferSrc;
-    // incrementBufferIndex = isometric.engine.incrementBufferIndex;
+    // bufferClr = engine.bufferClr;
+    // bufferDst = engine.bufferDst;
+    // bufferSrc = engine.bufferSrc;
+    // incrementBufferIndex = engine.incrementBufferIndex;
 
-    ambientColor = isometric.scene.ambientColor;
+    ambientColor = scene.ambientColor;
     nodeColors = scene.nodeColors;
     totalNodes = scene.totalNodes;
     totalRows = scene.totalRows;
@@ -486,7 +486,7 @@ class RendererNodes extends RenderGroup {
     remaining = total > 0;
     scene.resetNodeColorStack();
     scene.resetNodeAmbientStack();
-    isometric.scene.applyEmissions();
+    scene.applyEmissions();
 
     // highlightCharacterNearMouse();
   }
@@ -563,26 +563,26 @@ class RendererNodes extends RenderGroup {
     }
     visited2DStackIndex = 0;
 
-    final height = scene.heightMap[isometric.player.areaNodeIndex];
+    final height = scene.heightMap[player.areaNodeIndex];
 
-    if (isometric.player.indexZ <= 0) {
+    if (player.indexZ <= 0) {
       zMin = 0;
-      isometric.player.playerInsideIsland = false;
+      player.playerInsideIsland = false;
       return;
     }
 
-    isometric.player.playerInsideIsland = isometric.player.indexZ < height;
+    player.playerInsideIsland = player.indexZ < height;
 
-    if (!isometric.player.playerInsideIsland) {
-      ensureIndexPerceptible(isometric.player.nodeIndex);
+    if (!player.playerInsideIsland) {
+      ensureIndexPerceptible(player.nodeIndex);
     }
 
-    if (isometric.mouse.inBounds){
-      ensureIndexPerceptible(isometric.mouse.nodeIndex);
+    if (mouse.inBounds){
+      ensureIndexPerceptible(mouse.nodeIndex);
     }
 
-    zMin = max(isometric.player.indexZ - 1, 0);
-    visit2D(isometric.player.areaNodeIndex);
+    zMin = max(player.indexZ - 1, 0);
+    visit2D(player.areaNodeIndex);
   }
 
   void ensureIndexPerceptible(int index){
@@ -601,8 +601,8 @@ class RendererNodes extends RenderGroup {
           (projectionRow * scene.totalColumns) + projectionColumn;
       final projectionHeight = scene.heightMap[projectionIndex];
       if (projectionZ > projectionHeight) continue;
-      isometric.player.playerInsideIsland = true;
-      zMin = max(isometric.player.indexZ - 1, 0);
+      player.playerInsideIsland = true;
+      zMin = max(player.indexZ - 1, 0);
       visit2D(projectionIndex);
       return;
     }
@@ -785,7 +785,7 @@ class RendererNodes extends RenderGroup {
       nodesMinZ++;
       renderY -= Node_Height;
       if (nodesMinZ >= scene.totalZ){
-        isometric.compositor.rendererNodes.remaining = false;
+        compositor.rendererNodes.remaining = false;
         return;
       }
     }
@@ -821,13 +821,13 @@ class RendererNodes extends RenderGroup {
         color: 0,
     );
 
-    final frame = (row + (isometric.animation.frame)) % 6;
+    final frame = (row + (animation.frame)) % 6;
     const Flame_Src_Y = 372.0;
     const Flame_Width = 32.0;
     const Flame_Height = 32.0;
 
     engine.renderSprite(
-      image: isometric.images.atlas_nodes,
+      image: images.atlas_nodes,
       srcX: 1247.0 + (frame * Flame_Width),
       srcY: wind == WindType.Calm ? Flame_Src_Y : Flame_Src_Y + Flame_Height,
       srcWidth: Flame_Width,
@@ -883,9 +883,9 @@ class RendererNodes extends RenderGroup {
 
   void renderCurrentNode() {
 
-    // assert (isometric.indexOnscreen(currentNodeIndex));
+    // assert (indexOnscreen(currentNodeIndex));
     // assert((){}())
-    // if (isometric.indexOnscreen(currentNodeIndex)) {
+    // if (indexOnscreen(currentNodeIndex)) {
     //   onscreenNodes++;
     // } else {
     //   offscreenNodes++;
@@ -896,7 +896,7 @@ class RendererNodes extends RenderGroup {
     final transparent = currentNodeTransparent;
     if (previousNodeTransparent != transparent) {
       previousNodeTransparent = transparent;
-      engine.bufferImage = transparent ? isometric.images.atlas_nodes_transparent : isometric.images.atlas_nodes;
+      engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
     }
 
     final nodeType = currentNodeType;
@@ -1088,7 +1088,7 @@ class RendererNodes extends RenderGroup {
   void renderFireplace() => engine.renderSprite(
       image: atlasNodes,
       srcX: AtlasNode.Src_Fireplace_X,
-      srcY: AtlasNode.Src_Fireplace_Y + (isometric.animation.frame6 * AtlasNode.Src_Fireplace_Height),
+      srcY: AtlasNode.Src_Fireplace_Y + (animation.frame6 * AtlasNode.Src_Fireplace_Height),
       srcWidth: 48,
       srcHeight: 72,
       dstX: currentNodeDstX,
@@ -1806,7 +1806,7 @@ class RendererNodes extends RenderGroup {
 
     final frame = wind == WindType.Calm
         ? 0
-        : (((row - column) + isometric.animation.frame6) % 6);
+        : (((row - column) + animation.frame6) % 6);
     const Src_X = 957.0;
     const Src_Y = 305.0;
     const Src_Width = 48.0;
@@ -1852,11 +1852,11 @@ class RendererNodes extends RenderGroup {
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((isometric.animation.frame + row + column) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((animation.frame + row + column) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
-        dstY: currentNodeDstY + isometric.animation.frameWaterHeight + 14,
+        dstY: currentNodeDstY + animation.frameWaterHeight + 14,
         anchorY: 0.3,
         color: colorCurrent,
       );
@@ -1864,14 +1864,14 @@ class RendererNodes extends RenderGroup {
     }
     renderStandardNode(
       srcX: environment.srcXRainLanding,
-      srcY: 72.0 * ((isometric.animation.frame + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((animation.frame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   void renderNodeRainFalling() {
     renderStandardNode(
       srcX: environment.srcXRainFalling,
-      srcY: 72.0 * ((isometric.animation.frame + row + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((animation.frame + row + row + column) % 6), // TODO Expensive Operation
     );
   }
 
@@ -1880,7 +1880,6 @@ class RendererNodes extends RenderGroup {
   void renderTreeBottom() => currentNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
@@ -1920,7 +1919,6 @@ class RendererNodes extends RenderGroup {
 
   void renderTreeTopPine() {
 
-    final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
@@ -1961,7 +1959,6 @@ class RendererNodes extends RenderGroup {
 
   void renderTreeBottomOak() {
 
-    final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
     final frame = row - column + 4;
     final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
@@ -2000,7 +1997,6 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderTreeBottomPine() {
-    final animation = isometric.animation;
     final treeAnimation = animation.treeAnimation;
     final frame = row - column + 4;
     final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
@@ -2666,7 +2662,7 @@ class RendererNodes extends RenderGroup {
       engine.renderSprite(
         image: atlasNodes,
         srcX: 1552,
-        srcY: 432 + (isometric.animation.frame6 * 72.0), // TODO Optimize
+        srcY: 432 + (animation.frame6 * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
@@ -2679,11 +2675,11 @@ class RendererNodes extends RenderGroup {
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNodeX.Water,
-        srcY: AtlasNodeY.Water + (((isometric.animation.frameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
+        srcY: AtlasNodeY.Water + (((animation.frameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
-        dstY: currentNodeDstY + isometric.animation.frameWaterHeight + 14,
+        dstY: currentNodeDstY + animation.frameWaterHeight + 14,
         anchorY: 0.3334,
         color: colorCurrent,
       );

@@ -60,7 +60,7 @@ class IsometricEnvironment with IsometricComponent {
   void onChangedRain(int value) {
     raining.value = value != RainType.None;
     refreshRain();
-    isometric.scene.updateAmbientAlphaAccordingToTime();
+    scene.updateAmbientAlphaAccordingToTime();
   }
 
   void onChangedSeconds(int seconds){
@@ -70,7 +70,7 @@ class IsometricEnvironment with IsometricComponent {
   }
 
   void onChangedHour(int hour){
-    isometric.scene.updateAmbientAlphaAccordingToTime();
+    scene.updateAmbientAlphaAccordingToTime();
   }
 
   void onChangedWindType(int windType) {
@@ -101,8 +101,8 @@ class IsometricEnvironment with IsometricComponent {
   }
 
   void onChangedRaining(bool raining){
-    raining ? isometric.scene.rainStart() :  isometric.scene.rainStop();
-    isometric.scene.resetNodeColorsToAmbient();
+    raining ? scene.rainStart() :  scene.rainStop();
+    scene.resetNodeColorsToAmbient();
   }
 
   double getVolumeTargetWind() {

@@ -17,10 +17,24 @@ class IsometricNetwork with IsometricComponent {
     websocket = WebsocketClient(
       readString: responseReader.readServerResponseString,
       readBytes: responseReader.readNetworkBytes,
-      onError: isometric.onError,
+      onError: onError,
     );
   }
 
+  // @override
+  void onError(Object error, StackTrace stack) {
+    if (error.toString().contains('NotAllowedError')){
+      // https://developer.chrome.com/blog/autoplay/
+      // This error appears when the game attempts to fullscreen
+      // without the user having interacted first
+      // TODO dispatch event on fullscreen failed
+      // onErrorFullscreenAuto();
+      return;
+    }
+    print(error.toString());
+    print(stack);
+    website.error.value = error.toString();
+  }
 
   void sendIsometricRequestRevive() =>
       sendIsometricRequest(IsometricRequest.Revive);

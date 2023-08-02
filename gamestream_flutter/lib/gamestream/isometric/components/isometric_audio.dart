@@ -267,14 +267,14 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   double getVolumeHeartBeat(){
-    if (isometric.player.maxHealth.value <= 0) return 0.0;
-    return 1.0 - isometric.player.health.value / isometric.player.maxHealth.value;
+    if (player.maxHealth.value <= 0) return 0.0;
+    return 1.0 - player.health.value / player.maxHealth.value;
   }
 
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
     if (!enabledSound.value) return;
-    final distanceX = isometric.engine.screenCenterWorldX - x;
-    final distanceY = isometric.engine.screenCenterWorldY - y;
+    final distanceX = engine.screenCenterWorldX - x;
+    final distanceY = engine.screenCenterWorldY - y;
     final distance = hyp2(distanceX, distanceY);
     final distanceSqrt = sqrt(distance);
     final distanceSrtClamped = max(distanceSqrt * 0.5, 1);
@@ -321,12 +321,12 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   void updateCharacterNoises(){
-    if (isometric.scene.totalCharacters <= 0) return;
+    if (scene.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = randomInt(200, 300);
 
-    final index = randomInt(0, isometric.scene.totalCharacters);
-    final character = isometric.scene.characters[index];
+    final index = randomInt(0, scene.totalCharacters);
+    final character = scene.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:

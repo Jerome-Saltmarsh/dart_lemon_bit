@@ -19,7 +19,7 @@ import 'package:gamestream_flutter/library.dart';
 
 mixin IsometricComponent {
   late final Engine engine;
-  late final Isometric isometric;
+  // late final Isometric isometric;
   late final IsometricAnimation animation;
   late final IsometricNetwork network;
   late final IsometricParticles particles;
@@ -45,12 +45,13 @@ mixin IsometricComponent {
   late final IsometricResponseReader responseReader;
   late final WebsiteGame website;
   late final MmoGame amulet;
-  late final CaptureTheFlagGame gameCaptureTheFlag;
+  late final CaptureTheFlagGame captureTheFlag;
   late final IsometricIO io;
   late final IsometricImages images;
   late final IsometricScreen screen;
   late final IsometricLighting lighting;
   late final IsometricColors colors;
+  late final IsometricCompositor compositor;
 
   void onComponentReady() {
 

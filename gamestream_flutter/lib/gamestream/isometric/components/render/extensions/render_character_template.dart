@@ -24,8 +24,8 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (weaponType == WeaponType.Unarmed) return;
     const Sprite_Size = 125.0;
-    isometric.engine.renderSprite(
-        image: isometric.images.getImageForWeaponType(weaponType),
+    engine.renderSprite(
+        image: images.getImageForWeaponType(weaponType),
         srcX: frame * Sprite_Size,
         srcY: direction * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -143,10 +143,10 @@ extension RenderCharactersTemplate on RendererCharacters {
     final dstY = character.renderY;
 
     const Color_Invisible = 1660944383;
-    final color = invisible ? Color_Invisible : isometric.scene.getRenderColorPosition(character);
+    final color = invisible ? Color_Invisible : scene.getRenderColorPosition(character);
 
     if (invisible) {
-      isometric.engine.bufferBlendMode = BlendMode.srcIn;
+      engine.bufferBlendMode = BlendMode.srcIn;
     }
 
     if (!weaponInFront) {
@@ -158,11 +158,11 @@ extension RenderCharactersTemplate on RendererCharacters {
 
     if (character.z >= IsometricConstants.Node_Height){
 
-      final lightIndex = isometric.scene.getNearestLightSourcePosition(character, maxDistance: 5);
+      final lightIndex = scene.getNearestLightSourcePosition(character, maxDistance: 5);
 
       if (lightIndex != -1){
-         final lightRow = isometric.scene.getIndexRow(lightIndex);
-         final lightColumn = isometric.scene.getIndexColumn(lightIndex);
+         final lightRow = scene.getIndexRow(lightIndex);
+         final lightColumn = scene.getIndexColumn(lightIndex);
 
          final lightX = (lightRow * Node_Size) + Node_Size_Half;
          final lightY = (lightColumn * Node_Size) + Node_Size_Half;
@@ -172,7 +172,7 @@ extension RenderCharactersTemplate on RendererCharacters {
          final totalDiff = 1.0 - (diff / pi);
          final distance = 20.0 * totalDiff;
 
-         // isometric.render.renderTextPosition(
+         // render.renderTextPosition(
          //   character,
          //   totalDiff,
          //   offsetY: -50,
@@ -182,8 +182,8 @@ extension RenderCharactersTemplate on RendererCharacters {
          final y = character.y + opp(angle, distance);
          final z = character.z;
 
-         isometric.engine.renderSprite(
-           image: isometric.images.template_shadow,
+         engine.renderSprite(
+           image: images.template_shadow,
            srcX: frameLegs * 64,
            srcY: upperBodyDirection * 64,
            srcWidth: 64,
@@ -195,8 +195,8 @@ extension RenderCharactersTemplate on RendererCharacters {
            anchorY: Anchor_Y,
          );
       } else {
-        isometric.engine.renderSprite(
-          image: isometric.images.template_shadow,
+        engine.renderSprite(
+          image: images.template_shadow,
           srcX: frameLegs * 64,
           srcY: upperBodyDirection * 64,
           srcWidth: 64,
@@ -210,8 +210,8 @@ extension RenderCharactersTemplate on RendererCharacters {
       }
     }
 
-    isometric.engine.renderSprite(
-        image: isometric.images.getImageForLegType(character.legType),
+    engine.renderSprite(
+        image: images.getImageForLegType(character.legType),
         srcX: frameLegs * Sprite_Size,
         srcY: directionLegs * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -222,8 +222,8 @@ extension RenderCharactersTemplate on RendererCharacters {
         color: color,
         anchorY: Anchor_Y
     );
-    isometric.engine.renderSprite(
-        image: isometric.images.getImageForBodyType(character.bodyType),
+    engine.renderSprite(
+        image: images.getImageForBodyType(character.bodyType),
         srcX: frameBody * Sprite_Size,
         srcY: directionBody * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -238,8 +238,8 @@ extension RenderCharactersTemplate on RendererCharacters {
     // final height = gamestream.isometricEngine.nodes.heightMap[(character.indexRow * gamestream.isometricEngine.nodes.totalColumns) + character.indexColumn];
     // GameRender.renderTextV3(character, gamestream.isometricEngine.nodes.nodeAlps[character.nodeIndex - gamestream.isometricEngine.nodes.area], offsetY: -80);
 
-    isometric.engine.renderSprite(
-        image: isometric.images.getImageForHeadType(character.headType),
+    engine.renderSprite(
+        image: images.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
         srcY: directionHead * Sprite_Size,
         srcWidth: Sprite_Size,
@@ -256,7 +256,7 @@ extension RenderCharactersTemplate on RendererCharacters {
     }
 
     if (invisible) {
-      isometric.engine.bufferBlendMode = BlendMode.dstATop;
+      engine.bufferBlendMode = BlendMode.dstATop;
     }
   }
 
@@ -265,12 +265,12 @@ extension RenderCharactersTemplate on RendererCharacters {
     required double srcY,
     required double scale,
   }) {
-    final lightIndex = isometric.scene.getNearestLightSourcePosition(
+    final lightIndex = scene.getNearestLightSourcePosition(
         character, maxDistance: 5);
 
     if (lightIndex != -1) {
-      final lightRow = isometric.scene.getIndexRow(lightIndex);
-      final lightColumn = isometric.scene.getIndexColumn(lightIndex);
+      final lightRow = scene.getIndexRow(lightIndex);
+      final lightColumn = scene.getIndexColumn(lightIndex);
 
       final lightX = (lightRow * Node_Size) + Node_Size_Half;
       final lightY = (lightColumn * Node_Size) + Node_Size_Half;
@@ -280,7 +280,7 @@ extension RenderCharactersTemplate on RendererCharacters {
       final totalDiff = 1.0 - (diff / pi);
       final distance = 20.0 * totalDiff;
 
-      // isometric.render.renderTextPosition(
+      // render.renderTextPosition(
       //   character,
       //   totalDiff,
       //   offsetY: -50,
@@ -290,8 +290,8 @@ extension RenderCharactersTemplate on RendererCharacters {
       final y = character.y + opp(angle, distance);
       final z = character.z;
 
-      isometric.engine.renderSprite(
-        image: isometric.images.template_shadow,
+      engine.renderSprite(
+        image: images.template_shadow,
         srcX: srcX,
         srcY: srcY,
         srcWidth: 64,
