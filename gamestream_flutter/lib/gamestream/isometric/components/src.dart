@@ -14,3 +14,4 @@ export 'isometric_scene.dart';
 export 'isometric_particles.dart';
 export 'editor/src.dart';
 export 'mixins/component_isometric.dart';
+export 'mixins/updatable.dart';

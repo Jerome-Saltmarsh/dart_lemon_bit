@@ -1,11 +1,12 @@
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../enums/game_dialog.dart';
 import '../../../isometric/classes/position.dart';
 
-class IsometricPlayer with IsometricComponent {
+class IsometricPlayer with IsometricComponent implements Updatable {
 
   var playerInsideIsland = false;
   var energyPercentage = 0.0;

@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
@@ -13,7 +14,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/position.dart';
 
-class IsometricScene with IsometricComponent {
+class IsometricScene with IsometricComponent implements Updatable {
 
   final sceneEditable = Watch(false);
   final gameObjects = <GameObject>[];
@@ -1733,6 +1734,30 @@ class IsometricScene with IsometricComponent {
     if (environment.rainType.value == RainType.Heavy){
       ambientAlpha += isometric.lighting.rainAmbientHeavy;
     }
+  }
+
+
+
+  bool isPerceptiblePosition(Position position) {
+    if (!player.playerInsideIsland)
+      return true;
+
+    if (outOfBoundsPosition(position))
+      return false;
+
+    final index = getIndexPosition(position);
+    final indexRow = getIndexRow(index);
+    final indexColumn = getIndexRow(index);
+    final i = indexRow * totalColumns + indexColumn;
+
+    if (!rendererNodes.island[i])
+      return true;
+
+    final indexZ = getIndexZ(index);
+    if (indexZ > player.indexZ + 2)
+      return false;
+
+    return rendererNodes.visible3D[index];
   }
 
 }

@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_env
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_screen.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
@@ -53,6 +54,7 @@ mixin IsometricComponent {
   late final CaptureTheFlagGame gameCaptureTheFlag;
   late final IsometricIO io;
   late final IsometricImages images;
+  late final IsometricScreen screen;
 
   void onComponentReady() {
 

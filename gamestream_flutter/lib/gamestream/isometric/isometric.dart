@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:math';
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_screen.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
@@ -40,6 +40,7 @@ class Isometric {
   var componentsReady = false;
 
   final components = <dynamic>[];
+  final updatable = <Updatable>[];
 
   late final WebsiteGame website;
   late final MmoGame mmo;
@@ -54,7 +55,7 @@ class Isometric {
   late final IsometricParticles particles;
   late final IsometricCompositor compositor;
   late final IsometricNetwork network;
-
+  late final IsometricScreen screen;
   late final IsometricScene scene;
   late final IsometricDebug debug;
   late final IsometricEditor editor;
@@ -109,6 +110,7 @@ class Isometric {
     captureTheFlag = CaptureTheFlagGame();
     isometricEditor = IsometricGame();
     animation = IsometricAnimation();
+    screen = IsometricScreen();
 
     components.add(images);
     components.add(scene);
@@ -141,10 +143,15 @@ class Isometric {
     components.add(captureTheFlag);
     components.add(isometricEditor);
     components.add(animation);
+    components.add(screen);
 
     for (final component in components) {
-      if (component is! IsometricComponent)
+      if (component is Updatable) {
+        updatable.add(component);
+      }
+      if (component is! IsometricComponent) {
         continue;
+      }
 
       component.isometric = this;
       component.findComponent = findComponent;
@@ -175,6 +182,7 @@ class Isometric {
       component.options = options;
       component.animation = animation;
       component.images = images;
+      component.screen = screen;
     }
     validateAtlases();
   }
@@ -223,7 +231,7 @@ class Isometric {
     camera.update();
     particles.update();
     compositor.render3D();
-    renderEditMode();
+    render.renderEditMode();
     render.renderMouseTargetName();
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
@@ -245,22 +253,16 @@ class Isometric {
       return;
     }
 
-    options.update();
-    options.updateClearErrorTimer();
+    for (final updatable in updatable) {
+      updatable.update();
+    }
+
     options.game.value.update();
-    scene.update();
-    audio.update();
-    particles.update();
-    animation.update();
-    player.update();
-    lighting.update();
     readPlayerInputEdit();
     io.applyKeyboardInputToUpdateBuffer(this);
     io.sendUpdateBuffer();
 
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
-
-
 
     if (nextLightingUpdate-- <= 0){
       nextLightingUpdate = IsometricConstants.Frames_Per_Lighting_Update;
@@ -387,7 +389,7 @@ class Isometric {
     if (!network.websocket.connected)
       return;
     render.renderCursor(canvas);
-    renderPlayerAimTargetNameText();
+    render.renderPlayerAimTargetNameText();
 
     if (io.inputModeTouch) {
       io.touchController.render(canvas);
@@ -487,101 +489,9 @@ class Isometric {
     // );
   }
 
-  bool isOnscreen(Position position) {
-    const Pad_Distance = 75.0;
-    final rx = position.renderX;
-
-    if (rx < engine.Screen_Left - Pad_Distance || rx > engine.Screen_Right + Pad_Distance)
-      return false;
-
-    final ry = position.renderY;
-    return ry > engine.Screen_Top - Pad_Distance && ry < engine.Screen_Bottom + Pad_Distance;
-  }
-
   Color get color => engine.paint.color;
 
   set color(Color color) => engine.paint.color = color;
-
-  void renderShadow(double x, double y, double z, {double scale = 1}) =>
-      engine.renderSprite(
-        image: images.atlas_gameobjects,
-        dstX: (x - y) * 0.5,
-        dstY: ((y + x) * 0.5) - z,
-        srcX: 0,
-        srcY: 32,
-        srcWidth: 8,
-        srcHeight: 8,
-        scale: min(scale, 1),
-      );
-
-  bool isPerceptiblePosition(Position position) {
-    if (!player.playerInsideIsland)
-      return true;
-
-    if (scene.outOfBoundsPosition(position))
-      return false;
-
-    final index = scene.getIndexPosition(position);
-    final indexRow = scene.getIndexRow(index);
-    final indexColumn = scene.getIndexRow(index);
-    final i = indexRow * scene.totalColumns + indexColumn;
-    // TODO REFACTOR
-    if (!compositor.rendererNodes.island[i])
-      return true;
-    final indexZ = scene.getIndexZ(index);
-    if (indexZ > player.indexZ + 2)
-      return false;
-
-    // TODO REFACTOR
-    return compositor.rendererNodes.visible3D[index];
-  }
-
-  void renderCircleAroundPlayer({required double radius}) =>
-      render.circleOutlineAtPosition(
-        position: player.position,
-        radius: radius,
-      );
-
-  void setColorWhite(){
-    engine.setPaintColorWhite();
-  }
-
-
-  void renderEditMode() {
-    if (options.playMode) return;
-    if (editor.gameObjectSelected.value){
-      engine.renderCircleOutline(
-        sides: 24,
-        radius: 30,
-        x: editor.gameObject.value!.renderX,
-        y: editor.gameObject.value!.renderY,
-        color: Colors.white,
-      );
-      render.circleOutlineAtPosition(position: editor.gameObject.value!, radius: 50);
-      return;
-    }
-
-    render.editWireFrames();
-    renderMouseWireFrame();
-  }
-
-  void renderMouseWireFrame() {
-    io.mouseRaycast(render.wireFrameBlue);
-  }
-
-  void renderPlayerAimTargetNameText(){
-    if (player.aimTargetCategory == TargetCategory.Nothing)
-      return;
-    if (player.aimTargetName.isEmpty)
-      return;
-    const style = TextStyle(color: Colors.white, fontSize: 18);
-    engine.renderText(
-      player.aimTargetName,
-      engine.worldToScreenX(player.aimTargetPosition.renderX),
-      engine.worldToScreenY(player.aimTargetPosition.renderY),
-      style: style,
-    );
-  }
 
   void notifyLoadImagesCompleted() {
     print('isometric.notifyLoadImagesCompleted()');

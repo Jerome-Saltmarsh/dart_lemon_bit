@@ -560,7 +560,7 @@ class RendererParticles extends RenderGroup {
       if (dstX < minX || dstX > maxX) continue;
       final dstY = particle.renderY;
       if (dstY < minY || dstY > maxY) continue;
-      if (!isometric.isPerceptiblePosition(particle)) continue;
+      if (!scene.isPerceptiblePosition(particle)) continue;
       order = particle.sortOrder;
       index--;
       return;

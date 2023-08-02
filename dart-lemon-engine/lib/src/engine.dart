@@ -1244,6 +1244,14 @@ class Engine extends StatelessWidget {
     }
   }
 
+  bool isOnscreen(double x, double y, {required double padding}) {
+
+    if (x < Screen_Left - padding || x > Screen_Right + padding)
+      return false;
+
+    return y > Screen_Top - padding && y < Screen_Bottom + padding;
+  }
+
   Future<ui.Image> _generateEmptyImage() async {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);

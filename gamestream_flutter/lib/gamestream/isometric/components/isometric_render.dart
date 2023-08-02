@@ -1,6 +1,7 @@
 
-import 'dart:ui';
+import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
@@ -145,13 +146,25 @@ class IsometricRender with IsometricComponent {
       nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
     }
 
-    isometric.renderShadow(
+    renderShadow(
       x,
       y,
       isometric.scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
       scale: 1.0 / (height * 0.125),
     );
   }
+
+  void renderShadow(double x, double y, double z, {double scale = 1}) =>
+      engine.renderSprite(
+        image: images.atlas_gameobjects,
+        dstX: (x - y) * 0.5,
+        dstY: ((y + x) * 0.5) - z,
+        srcX: 0,
+        srcY: 32,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: min(scale, 1),
+      );
 
   void line(double x1, double y1, double z1, double x2, double y2, double z2) =>
       isometric.engine.renderLine(
@@ -390,5 +403,40 @@ class IsometricRender with IsometricComponent {
     );
   }
 
+  void renderEditMode() {
+    if (options.playMode) return;
+    if (editor.gameObjectSelected.value){
+      engine.renderCircleOutline(
+        sides: 24,
+        radius: 30,
+        x: editor.gameObject.value!.renderX,
+        y: editor.gameObject.value!.renderY,
+        color: Colors.white,
+      );
+      render.circleOutlineAtPosition(position: editor.gameObject.value!, radius: 50);
+      return;
+    }
+
+    render.editWireFrames();
+    renderMouseWireFrame();
+  }
+
+  void renderMouseWireFrame() {
+    io.mouseRaycast(render.wireFrameBlue);
+  }
+
+  void renderPlayerAimTargetNameText(){
+    if (player.aimTargetCategory == TargetCategory.Nothing)
+      return;
+    if (player.aimTargetName.isEmpty)
+      return;
+    const style = TextStyle(color: Colors.white, fontSize: 18);
+    engine.renderText(
+      player.aimTargetName,
+      engine.worldToScreenX(player.aimTargetPosition.renderX),
+      engine.worldToScreenY(player.aimTargetPosition.renderY),
+      style: style,
+    );
+  }
 
 }

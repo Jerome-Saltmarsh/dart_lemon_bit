@@ -1,7 +1,9 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
+
 import '../../../library.dart';
 
-class IsometricAnimation {
+class IsometricAnimation implements Updatable {
   var frame = 0;
   var frameWater = 0;
   var frameWaterHeight = 0;

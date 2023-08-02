@@ -3,10 +3,11 @@ import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class IsometricOptions with IsometricComponent {
+class IsometricOptions with IsometricComponent implements Updatable {
   var cursorType = IsometricCursorType.Hand;
   var renderCursorEnable = true;
   var renderHealthBarEnemies = true;
@@ -113,17 +114,6 @@ class IsometricOptions with IsometricComponent {
     }
   }
 
-  void updateClearErrorTimer() {
-    if (clearErrorTimer <= 0)
-      return;
-
-    clearErrorTimer--;
-    if (clearErrorTimer > 0)
-      return;
-
-    error.value = null;
-  }
-
   void actionSetModePlay(){
     edit.value = false;
   }
@@ -163,13 +153,22 @@ class IsometricOptions with IsometricComponent {
   }
 
   void update() {
+
     if (messageStatusDuration > 0) {
       messageStatusDuration--;
       if (messageStatusDuration <= 0) {
         messageStatus.value = '';
       }
     }
+
+    if (clearErrorTimer > 0) {
+      clearErrorTimer--;
+      if (clearErrorTimer <= 0)
+        error.value = null;
+    }
   }
+
+
 
   void _onChangedRendersSinceUpdate(int value){
     triggerAlarmNoMessageReceivedFromServer.value = value > 200;

@@ -86,7 +86,7 @@ class RendererGameObjects extends RenderGroup {
   void updateFunction() {
     gameObject = isometric.scene.gameObjects[index];
 
-    while (!gameObject.active || !isometric.isOnscreen(gameObject) || !isometric.isPerceptiblePosition(gameObject)) {
+    while (!gameObject.active || !screen.contains(gameObject) || !scene.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = isometric.scene.gameObjects[index];
@@ -102,7 +102,7 @@ class RendererGameObjects extends RenderGroup {
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
 
-    isometric.renderShadow(
+    render.renderShadow(
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,

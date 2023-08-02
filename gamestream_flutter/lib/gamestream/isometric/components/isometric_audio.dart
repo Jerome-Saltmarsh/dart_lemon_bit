@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -11,7 +12,7 @@ import '../../audio/audio_single.dart';
 import '../../audio/audio_tracks.dart';
 
 
-class IsometricAudio with IsometricComponent {
+class IsometricAudio with IsometricComponent implements Updatable {
 
   void toggleMutedSound() => enabledSound.value = !enabledSound.value;
   void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;

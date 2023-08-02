@@ -1,13 +1,14 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/particle.dart';
 import 'mixins/component_isometric.dart';
 
-class IsometricParticles with IsometricComponent {
+class IsometricParticles with IsometricComponent implements Updatable {
 
   var nextParticleFrame = 0;
   var nodeType = 0;

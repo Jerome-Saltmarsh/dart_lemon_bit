@@ -64,7 +64,13 @@ extension MMORender on MmoGame {
     }
 
     isometric.color = rangeColor;
-    isometric.renderCircleAroundPlayer(radius: activatedPower.range);
+    renderCircleAroundPlayer(radius: activatedPower.range);
   }
+
+  void renderCircleAroundPlayer({required double radius}) =>
+      render.circleOutlineAtPosition(
+        position: player.position,
+        radius: radius,
+      );
 }
 

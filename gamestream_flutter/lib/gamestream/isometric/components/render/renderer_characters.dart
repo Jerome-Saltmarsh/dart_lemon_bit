@@ -26,7 +26,7 @@ class RendererCharacters extends RenderGroup {
     while (index < totalCharacters){
       character = characters[index];
       order = character.sortOrder;
-      if (isometric.isPerceptiblePosition(character))
+      if (scene.isPerceptiblePosition(character))
         break;
       index++;
     }
