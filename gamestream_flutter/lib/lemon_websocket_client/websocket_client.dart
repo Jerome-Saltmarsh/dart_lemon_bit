@@ -54,8 +54,8 @@ class WebsocketClient {
   }
 
   void disconnect() {
-    print('websocketClientBuilder.disconnect()');
     if (connected){
+      print('websocketClient.disconnect()');
       sink.close();
     }
   }

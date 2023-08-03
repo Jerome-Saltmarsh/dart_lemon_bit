@@ -1272,18 +1272,22 @@ class Engine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("engine.build()");
+
+    final loading = MaterialApp(
+      title: title,
+      theme: themeData.value,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: loadingScreenBuilder(context),
+      ),
+    );
+
+    final loaded = _internalBuildApp();
+
     return FutureBuilder(
         future: _internalInit(),
         builder: (context, snapshot) =>
-          (snapshot.connectionState != ConnectionState.done) ?
-            MaterialApp(
-                title: title,
-                theme: themeData.value,
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
-                  body: loadingScreenBuilder(context),
-                ),
-            ) : _internalBuildApp()
+          snapshot.connectionState != ConnectionState.done ? loading : loaded
     );
   }
 
