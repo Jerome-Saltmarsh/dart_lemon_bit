@@ -1,7 +1,6 @@
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
@@ -12,9 +11,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui/loading_page.dart';
 
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
@@ -24,10 +21,8 @@ import 'components/render/renderer_projectiles.dart';
 import 'components/src.dart';
 import 'ui/game_isometric_minimap.dart';
 
-
-class Isometric {
-
-  var initialized = false;
+/// Inversion of control container
+class IsometricComponents {
 
   final components = <dynamic>[];
   final updatable = <Updatable>[];
@@ -69,8 +64,8 @@ class Isometric {
   late final IsometricColors colors;
   late final IsometricStyle style;
 
-  Isometric() {
-    print('Isometric()');
+  IsometricComponents() {
+    print('IsometricComponents()');
     images = IsometricImages();
     environment = IsometricEnvironment();
     rendererNodes = RendererNodes();
@@ -150,7 +145,7 @@ class Isometric {
     }
   }
 
-  void connectComponents() {
+  void connect() {
     for (final component in components) {
       if (component is Updatable) {
         updatable.add(component);

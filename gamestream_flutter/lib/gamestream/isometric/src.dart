@@ -1,6 +1,6 @@
 library src;
 
-export 'isometric.dart';
+export 'isometric_components.dart';
 export 'atlases/src.dart';
 export 'classes/src.dart';
 export 'components/src.dart';
