@@ -37,4 +37,11 @@ class ComponentContainer {
         component.onComponentError(error, stack);
     }
   }
+
+  void onDispose(){
+    for (final component in components) {
+      if (component is Component)
+        component.onComponentDispose();
+    }
+  }
 }

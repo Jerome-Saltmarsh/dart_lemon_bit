@@ -62,4 +62,9 @@ mixin IsometricComponent implements Component {
 
   /// (save to override)
   void onComponentError(Object error, StackTrace stack) {}
+
+  /// (save to override)
+  void onComponentDispose() {
+
+  }
 }

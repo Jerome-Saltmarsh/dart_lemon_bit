@@ -146,5 +146,8 @@ class IsometricNetwork with IsometricComponent {
     }
   }
 
-
+  @override
+  void onComponentDispose() {
+    print('isometricNetwork.onComponentDispose()');
+  }
 }

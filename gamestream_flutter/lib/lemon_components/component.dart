@@ -10,4 +10,6 @@ abstract class Component {
   /// called once all components have finished initializing.
   /// It is safe to call other components from onComponentsInitialized
   void onComponentReady();
+
+  void onComponentDispose();
 }

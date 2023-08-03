@@ -1,4 +1,5 @@
 library lemon_engine;
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -143,6 +144,8 @@ class Engine extends StatelessWidget {
   /// triggered upon key release
   void Function(int keyCode)? onKeyUp;
 
+  Function? dispose;
+
   static const _renderCircleSegments = 24;
   final _renderCirclePositions = Float32List(_renderCircleSegments * 6);
 
@@ -280,6 +283,7 @@ class Engine extends StatelessWidget {
     Function? onLeftClicked,
     Function? onRightClicked,
     Function? onRightClickReleased,
+    this.dispose,
     Function(int keyCode)? onKeyPressed,
     Function(int keyCode)? onKeyDown,
     Function(int keyCode)? onKeyUp,
@@ -967,28 +971,6 @@ class Engine extends StatelessWidget {
     canvas.drawVertices(vertices, ui.BlendMode.srcOver, paint);
   }
 
-  // void renderCircleFilled({
-  //   required double radius,
-  //   required double x,
-  //   required double y,
-  // }){
-  //   final angle = (2 * 3.14159) / segments;
-  //   var j = 0;
-  //   for (int i = 0; i < segments; i++) {
-  //     _renderCirclePositions[j++] = y + radius * sin(angle * i);
-  //     _renderCirclePositions[j++] = x + radius * cos(angle * i);
-  //   }
-  //
-  //   final vertices = ui.Vertices.raw(
-  //     ui.VertexMode.triangleFan,
-  //     _renderCirclePositions,
-  //     textureCoordinates: null,
-  //     colors: _renderCircleColors,
-  //     indices: null,
-  //   );
-  //   canvas.drawVertices(vertices, bufferBlendMode, paint);
-  // }
-
   void renderLine(double x1, double y1, double x2, double y2){
     canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
   }
@@ -1038,6 +1020,7 @@ class Engine extends StatelessWidget {
   Widget _internalBuildApp() => WatchBuilder(themeData, (ThemeData? themeData) =>
       CustomTicker(
         onTrick: onTickElapsed,
+        onDispose: dispose,
         child: MaterialApp(
           title: title,
           theme: themeData,
@@ -1403,14 +1386,13 @@ class CustomPainterPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-
-
 class CustomTicker extends StatefulWidget {
 
   final Widget? child;
   final Function(Duration elapsed) onTrick;
+  final Function? onDispose;
 
-  const CustomTicker({super.key, required this.onTrick, this.child});
+  const CustomTicker({super.key, required this.onTrick, this.child, this.onDispose});
 
   @override
   _CustomTickerState createState() => _CustomTickerState();
@@ -1422,19 +1404,16 @@ class _CustomTickerState extends State<CustomTicker> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-
-    // Create a ticker that updates at 30 frames per second (30 FPS).
     _ticker = this.createTicker(widget.onTrick);
-
-    // Start the ticker when the widget is created.
     _ticker.start();
   }
 
   @override
   void dispose() {
-    // Stop the ticker when the widget is disposed to prevent memory leaks.
+    print("engine.dispose()");
     _ticker.dispose();
     super.dispose();
+    widget.onDispose?.call();
   }
 
   @override

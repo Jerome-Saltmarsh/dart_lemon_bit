@@ -101,6 +101,7 @@ class IsometricComponents extends ComponentContainer {
     engine.onInit = init;
     engine.onUpdate = update;
     engine.onError = onError;
+    engine.dispose = onDispose;
 
     components.add(images);
     components.add(scene);
