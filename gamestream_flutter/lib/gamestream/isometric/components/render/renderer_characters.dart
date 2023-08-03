@@ -468,6 +468,7 @@ class RendererCharacters extends RenderGroup {
     // ui.Image image;
     ui.Image imageHead;
     ui.Image imageBody;
+    ui.Image imageBodyArms;
     ui.Image imageLegs;
     ui.Image imageHandsLeft;
     ui.Image imageHandsRight;
@@ -490,6 +491,7 @@ class RendererCharacters extends RenderGroup {
       // image = images.kid_running;
       imageHead = images.kid_head_light_running;
       imageBody = images.kid_body_shirt_blue_running;
+      imageBodyArms = images.kid_body_arms_shirt_blue_running;
       imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = images.kid_hands_gauntlet_left_running;
       imageHandsRight = images.kid_hands_gauntlet_right_running;
@@ -500,6 +502,7 @@ class RendererCharacters extends RenderGroup {
       // image = images.kid_idle;
       imageHead = images.kid_head_light_idle;
       imageBody = images.kid_body_shirt_blue_idle;
+      imageBodyArms = images.kid_body_arms_shirt_blue_idle;
       imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = images.kid_hands_gauntlet_left_idle;
       imageHandsRight = images.kid_hands_gauntlet_right_idle;
@@ -607,6 +610,19 @@ class RendererCharacters extends RenderGroup {
 
     engine.renderSprite(
       image: imageHandFront,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      scale: scale,
+      color: color,
+      anchorY: anchorY,
+    );
+
+    engine.renderSprite(
+      image: imageBodyArms,
       srcX: srcX,
       srcY: srcY,
       srcWidth: size,
