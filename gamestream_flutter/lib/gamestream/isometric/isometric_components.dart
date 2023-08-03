@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:gamestream_flutter/lemon_ioc/src.dart';
+import 'package:gamestream_flutter/lemon_components/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'classes/src.dart';

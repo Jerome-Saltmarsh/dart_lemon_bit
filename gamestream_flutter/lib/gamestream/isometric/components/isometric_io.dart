@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
+import 'package:gamestream_flutter/lemon_components/src.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../../../library.dart';

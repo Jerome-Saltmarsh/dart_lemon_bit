@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
+import 'package:gamestream_flutter/lemon_components/src.dart';
 
 import '../../../library.dart';
 

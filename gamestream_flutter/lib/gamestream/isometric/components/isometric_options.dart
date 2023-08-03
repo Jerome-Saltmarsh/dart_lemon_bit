@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/network/enums/connection_region.da
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
+import 'package:gamestream_flutter/lemon_components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 

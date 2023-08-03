@@ -1,6 +1,5 @@
 
-import 'package:gamestream_flutter/lemon_ioc/component.dart';
-
+import 'component.dart';
 import 'updatable.dart';
 
 class IOCContainer {

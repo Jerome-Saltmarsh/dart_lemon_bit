@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
+import 'package:gamestream_flutter/lemon_components/src.dart';
 
 import '../../../isometric/classes/position.dart';
 

@@ -14,7 +14,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:gamestream_flutter/lemon_ioc/component.dart';
+import 'package:gamestream_flutter/lemon_components/src.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
