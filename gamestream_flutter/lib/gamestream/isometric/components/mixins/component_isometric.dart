@@ -61,6 +61,4 @@ mixin IsometricComponent {
   void onImagesLoaded(){
 
   }
-
-  late final T Function<T>() findComponent;
 }

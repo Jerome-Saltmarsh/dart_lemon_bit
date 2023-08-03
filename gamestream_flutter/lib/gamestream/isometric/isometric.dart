@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/functions/validate_atlas.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
@@ -30,7 +29,6 @@ import 'ui/game_isometric_minimap.dart';
 class Isometric {
 
   var initialized = false;
-  var componentsReady = false;
 
   final components = <dynamic>[];
   final updatable = <Updatable>[];
@@ -154,7 +152,6 @@ class Isometric {
         continue;
       }
 
-      component.findComponent = findComponent;
       component.scene = scene;
       component.environment = environment;
       component.rendererNodes = rendererNodes;
@@ -189,30 +186,6 @@ class Isometric {
       component.lighting = lighting;
       component.style = style;
     }
-    validateAtlases();
-  }
-
-  T findComponent<T>() {
-    for (final component in components){
-      if (component is T)
-        return component;
-    }
-    throw Exception('{method: "isometric.findComponent(component: $T)", reason: "could not be found"}');
-  }
-
-  void drawCanvas(Canvas canvas, Size size) {
-
-    if (options.gameType.value == GameType.Website)
-      return;
-
-    camera.update();
-    particles.update();
-    compositor.render3D();
-    render.renderEditMode();
-    render.renderMouseTargetName();
-    debug.drawCanvas();
-    options.game.value.drawCanvas(canvas, size);
-    options.rendersSinceUpdate.value++;
   }
 
   void update() {
@@ -253,33 +226,10 @@ class Isometric {
     return;
   }
 
-  void drawForeground(Canvas canvas, Size size){
-
-    if (!network.websocket.connected)
-      return;
-
-    render.renderCursor(canvas);
-    render.renderPlayerAimTargetNameText();
-
-    if (io.inputModeTouch) {
-      io.touchController.drawCanvas(canvas);
-    }
-
-    options.game.value.renderForeground(canvas, size);
-  }
-
   Future init(sharedPreferences) async {
     print('isometric.init()');
     await images.load(this);
     dispatchNotificationImagesLoaded();
-  }
-
-  void onMouseEnterCanvas(){
-    options.renderCursorEnable = true;
-  }
-
-  void onMouseExitCanvas(){
-    options.renderCursorEnable = false;
   }
 
   Widget build(BuildContext context) {
@@ -291,10 +241,6 @@ class Isometric {
     }
 
     initialized = true;
-
-    print('uri-base-host: ${Uri.base.host}');
-    print('region-detected: ${detectConnectionRegion()}');
-
     engine = Engine(
       init: init,
       update: () {}, // overridden when components are ready
@@ -310,11 +256,12 @@ class Isometric {
       buildLoadingScreen: () => LoadingPage(),
     );
 
-    engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
-    engine.cursorType.value = CursorType.Basic;
-    engine.onMouseEnterCanvas = onMouseEnterCanvas;
-    engine.onMouseExitCanvas = onMouseExitCanvas;
-    onEngineBuilt();
+    for (final component in components){
+      if (component is IsometricComponent)
+        component.engine = engine;
+    }
+    engine.onUpdate = update;
+    dispatchNotificationComponentsReady();
     return engine;
   }
 
@@ -322,22 +269,12 @@ class Isometric {
     print('isometric.onError()');
   }
 
-  void onEngineBuilt(){
-    print('isometric.onEngineBuilt()');
-
-    for (final component in components){
-      if (component is IsometricComponent)
-        component.engine = engine;
-    }
+  void dispatchNotificationComponentsReady(){
+    print('isometric.dispatchNotificationComponentsReady()');
     for (final component in components) {
       if (component is IsometricComponent)
         component.onComponentReady();
     }
-
-    componentsReady = true;
-    engine.onUpdate = update;
-    engine.onDrawCanvas = drawCanvas;
-    engine.onDrawForeground = drawForeground;
   }
 
   void dispatchNotificationImagesLoaded() {

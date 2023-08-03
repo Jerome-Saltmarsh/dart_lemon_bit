@@ -1,11 +1,10 @@
 
 import 'package:gamestream_flutter/gamestream/game.dart';
-import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -52,7 +51,21 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   @override
   void onComponentReady() {
+    print('uri-base-host: ${Uri.base.host}');
+    print('region-detected: ${detectConnectionRegion()}');
     game = Watch<Game>(website, onChanged: _onChangedGame);
+    engine.onMouseEnterCanvas = onMouseEnterCanvas;
+    engine.onMouseExitCanvas = onMouseExitCanvas;
+    engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
+    engine.cursorType.value = CursorType.Basic;
+  }
+
+  void onMouseEnterCanvas(){
+    renderCursorEnable = true;
+  }
+
+  void onMouseExitCanvas(){
+    renderCursorEnable = false;
   }
 
   void toggleRenderHealthBarEnemies() {
@@ -166,8 +179,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
     GameType.Website => website,
-    GameType.Capture_The_Flag => findComponent<CaptureTheFlagGame>(),
-    GameType.Moba => findComponent<Moba>(),
+    GameType.Capture_The_Flag => captureTheFlag,
+    // GameType.Moba => findComponent<Moba>(),
     GameType.Amulet => amulet,
     _ => throw Exception('mapGameTypeToGame($gameType)')
   };

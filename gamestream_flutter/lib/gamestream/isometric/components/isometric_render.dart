@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/functions/validate_atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
@@ -12,6 +13,44 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricRender with IsometricComponent {
+
+  @override
+  void onComponentReady() {
+    validateAtlases();
+    engine.onDrawCanvas = drawCanvas;
+    engine.onDrawForeground = drawForeground;
+  }
+
+  void drawCanvas(Canvas canvas, Size size) {
+
+    if (options.gameType.value == GameType.Website)
+      return;
+
+    camera.update();
+    particles.update();
+    compositor.render3D();
+    renderEditMode();
+    renderMouseTargetName();
+    debug.drawCanvas();
+    options.game.value.drawCanvas(canvas, size);
+    options.rendersSinceUpdate.value++;
+  }
+
+  void drawForeground(Canvas canvas, Size size){
+
+    if (!network.websocket.connected)
+      return;
+
+    renderCursor(canvas);
+    renderPlayerAimTargetNameText();
+
+    if (io.inputModeTouch) {
+      io.touchController.drawCanvas(canvas);
+    }
+
+    options.game.value.renderForeground(canvas, size);
+  }
+
 
   void textPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(
