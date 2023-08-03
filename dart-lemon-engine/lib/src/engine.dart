@@ -64,7 +64,8 @@ class Engine extends StatelessWidget {
   Function? onMouseExitCanvas;
 
   /// override safe
-  BasicWidgetBuilder? onBuildLoadingScreen;
+  WidgetBuilder loadingScreenBuilder = (context) => Text("LOADING");
+
   /// override safe
   Function(Object error, StackTrace stack)? onError;
 
@@ -175,13 +176,11 @@ class Engine extends StatelessWidget {
   bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
   bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
   int get paintFrame => notifierPaintFrame.value;
-  bool get initialized => watchInitialized.value;
 
   // WATCHES
   final watchBackgroundColor = Watch(Default_Background_Color);
   final watchBuildUI = Watch<WidgetBuilder?>(null);
   final watchTitle = Watch(Default_Title);
-  final watchInitialized = Watch(false);
 
   late final durationPerUpdate = Watch(
       Default_Duration_Per_Update,
@@ -268,7 +267,7 @@ class Engine extends StatelessWidget {
     WidgetBuilder? buildUI,
     String title = Default_Title,
     Function(SharedPreferences sharedPreferences)? init,
-    BasicWidgetBuilder? buildLoadingScreen,
+    WidgetBuilder? buildLoadingScreen,
     ThemeData? themeData,
     GestureTapDownCallback? onTapDown,
     GestureLongPressCallback? onLongPress,
@@ -296,7 +295,6 @@ class Engine extends StatelessWidget {
     this.onInit = init;
     this.onUpdate = update;
     this.watchBuildUI.value = buildUI;
-    this.onBuildLoadingScreen = buildLoadingScreen;
     this.onDrawCanvas = render;
     this.onTapDown = onTapDown;
     this.onLongPress = onLongPress;
@@ -315,6 +313,10 @@ class Engine extends StatelessWidget {
     this.themeData.value = themeData;
     this.backgroundColor = backgroundColor;
     this.onError = onError;
+
+    if (buildLoadingScreen != null){
+      this.loadingScreenBuilder = buildLoadingScreen;
+    }
 
     // if (setPathUrlStrategy){
     //   us.setPathUrlStrategy();
@@ -505,7 +507,6 @@ class Engine extends StatelessWidget {
     this.canvas = canvas;
     canvas.scale(zoom, zoom);
     canvas.translate(-cameraX, -cameraY);
-    if (!initialized) return;
     if (onDrawCanvas == null) return;
     batchesRendered = 0;
     batches1Rendered = 0;
@@ -556,7 +557,6 @@ class Engine extends StatelessWidget {
       await onInit!(sharedPreferences);
     }
     durationPerUpdate.value = Default_Duration_Per_Update;
-    watchInitialized.value = true;
   }
 
   void _internalOnFullScreenChanged(event){
@@ -1036,27 +1036,29 @@ class Engine extends StatelessWidget {
   }
 
   Widget _internalBuildApp() => WatchBuilder(themeData, (ThemeData? themeData) =>
-      MaterialApp(
-        title: title,
-        theme: themeData,
-        home: Scaffold(
-          body: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
-              buildContext = context;
-              return Stack(
-                children: [
-                  _internalBuildCanvas(context),
-                  WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
-                  => buildUI != null ? buildUI(context) : const SizedBox()
-                  ),
-                  CustomTicker(onTrick: onTickElapsed)
-                ],
-              );
-            },
+      CustomTicker(
+        onTrick: onTickElapsed,
+        child: MaterialApp(
+          title: title,
+          theme: themeData,
+          home: Scaffold(
+            body: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+                buildContext = context;
+                return Stack(
+                  children: [
+                    _internalBuildCanvas(context),
+                    WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
+                    => buildUI != null ? buildUI(context) : const SizedBox()
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
+          debugShowCheckedModeBanner: false,
         ),
-        debugShowCheckedModeBanner: false,
       ));
 
   void onTickElapsed(Duration duration) => redrawCanvas();
@@ -1287,27 +1289,19 @@ class Engine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("engine.build()");
-
     return FutureBuilder(
         future: _internalInit(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done){
-            return MaterialApp(
+        builder: (context, snapshot) =>
+          (snapshot.connectionState != ConnectionState.done) ?
+            MaterialApp(
                 title: title,
                 theme: themeData.value,
+                debugShowCheckedModeBanner: false,
                 home: Scaffold(
-                  body: onBuildLoadingScreen?.call() ?? buildDefaultLoadingScreen(buildContext),
+                  body: loadingScreenBuilder(context),
                 ),
-            );
-          }
-
-          return _internalBuildApp();
-        }
+            ) : _internalBuildApp()
     );
-  }
-
-  static Widget buildDefaultLoadingScreen(BuildContext buildContext){
-    return Text("LOADING");
   }
 
   void onChangedDurationPerUpdate(Duration duration){
@@ -1413,9 +1407,10 @@ class CustomPainterPainter extends CustomPainter {
 
 class CustomTicker extends StatefulWidget {
 
+  final Widget? child;
   final Function(Duration elapsed) onTrick;
 
-  const CustomTicker({super.key, required this.onTrick});
+  const CustomTicker({super.key, required this.onTrick, this.child});
 
   @override
   _CustomTickerState createState() => _CustomTickerState();
@@ -1443,9 +1438,5 @@ class _CustomTickerState extends State<CustomTicker> with SingleTickerProviderSt
   }
 
   @override
-  Widget build(BuildContext context) {
-    // Replace this with your custom canvas rendering widget.
-    // Return a Canvas widget or a widget that will display your custom canvas.
-    return Container();
-  }
+  Widget build(BuildContext context) => widget.child ?? Container();
 }

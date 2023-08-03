@@ -233,10 +233,8 @@ class Isometric {
       themeData: ThemeData(fontFamily: 'VT323-Regular'),
       backgroundColor: colors.black,
       onError: onError,
-      buildUI: (context){
-        return buildText('loading components');
-      },
-      buildLoadingScreen: () => LoadingPage(),
+      buildUI: (context)=> LoadingPage(),
+      buildLoadingScreen: (context) => LoadingPage(),
     );
 
     engine.onUpdate = update;
