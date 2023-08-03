@@ -432,7 +432,7 @@ class RendererCharacters extends RenderGroup {
       z = character.z;
     }
 
-    const radiusBase = 10.0;
+    const radiusBase = 6.0;
     const radiusDelta = goldenRatio_0618;
     const shadowRadia = [
       radiusBase,
@@ -447,7 +447,7 @@ class RendererCharacters extends RenderGroup {
       radius = shadowRadia[0];
     }
 
-    engine.color = Colors.black26;
+    engine.color = options.characterShadowColor;
     amulet.render.circleFilled(x, y, z, radius);
     engine.color = Colors.white;
   }
@@ -465,7 +465,7 @@ class RendererCharacters extends RenderGroup {
     final dstY = character.renderY;
 
     double srcX;
-    // ui.Image image;
+    ui.Image imageTorso;
     ui.Image imageHead;
     ui.Image imageBody;
     ui.Image imageBodyArms;
@@ -488,7 +488,7 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       srcX = (frame % 8) * size;
-      // image = images.kid_running;
+      imageTorso = images.kid_torso_light_running;
       imageHead = images.kid_head_light_running;
       imageBody = images.kid_body_shirt_blue_running;
       imageBodyArms = images.kid_body_arms_shirt_blue_running;
@@ -499,7 +499,7 @@ class RendererCharacters extends RenderGroup {
       imageArmRight = images.kid_arm_right_running;
     } else {
       srcX = 0;
-      // image = images.kid_idle;
+      imageTorso = images.kid_torso_light_idle;
       imageHead = images.kid_head_light_idle;
       imageBody = images.kid_body_shirt_blue_idle;
       imageBodyArms = images.kid_body_arms_shirt_blue_idle;
@@ -530,18 +530,18 @@ class RendererCharacters extends RenderGroup {
 
     renderCharacterShadowCircle(character);
 
-    // engine.renderSprite(
-    //   image: image,
-    //   srcX: srcX,
-    //   srcY: srcY,
-    //   srcWidth: size,
-    //   srcHeight: size,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   scale: scale,
-    //   color: color,
-    //   anchorY: anchorY,
-    // );
+    engine.renderSprite(
+      image: imageTorso,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      scale: scale,
+      color: color,
+      anchorY: anchorY,
+    );
 
     engine.renderSprite(
       image: imageLegs,

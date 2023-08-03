@@ -1,4 +1,7 @@
 
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
@@ -10,6 +13,7 @@ import 'package:gamestream_flutter/lemon_components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
+  var characterShadowColor = Colors.black38;
   var framesPerLightingUpdate = 60;
   var cursorType = IsometricCursorType.Hand;
   var renderCursorEnable = true;

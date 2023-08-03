@@ -71,6 +71,9 @@ class IsometricImages with IsometricComponent {
    late final Image kid_arm_right_idle;
    late final Image kid_arm_right_running;
 
+   late final Image kid_torso_light_idle;
+   late final Image kid_torso_light_running;
+
    late final Image template_head_plain;
    late final Image template_head_rogue;
    late final Image template_head_steel;
@@ -231,6 +234,9 @@ class IsometricImages with IsometricComponent {
 
     loadPng('kid/arms/kid_arm_right_idle').then((value) => kid_arm_right_idle = value);
     loadPng('kid/arms/kid_arm_right_running').then((value) => kid_arm_right_running = value);
+
+    loadPng('kid/torso/torso_light_idle').then((value) => kid_torso_light_idle = value);
+    loadPng('kid/torso/torso_light_running').then((value) => kid_torso_light_running = value);
 
     loadPng('kid/body/idle/shirt_blue').then((value) => kid_body_shirt_blue_idle = value);
     loadPng('kid/body/running/shirt_blue').then((value) => kid_body_shirt_blue_running = value);
