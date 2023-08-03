@@ -2,7 +2,7 @@
 import 'component.dart';
 import 'updatable.dart';
 
-class IOCContainer {
+class ComponentContainer {
   final components = <dynamic>[];
   final updatable = <Updatable>[];
 

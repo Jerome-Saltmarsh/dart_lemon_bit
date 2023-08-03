@@ -21,7 +21,7 @@ import 'components/src.dart';
 import 'ui/game_isometric_minimap.dart';
 
 
-class IsometricComponents extends IOCContainer {
+class IsometricComponents extends ComponentContainer {
   final Engine engine;
   final WebsiteGame website;
   final MmoGame mmo;
