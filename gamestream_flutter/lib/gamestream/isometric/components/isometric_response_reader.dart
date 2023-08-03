@@ -13,7 +13,7 @@ import 'package:gamestream_flutter/lemon_bits/src/read_nibble_from_byte_2.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
-import 'mixins/component_isometric.dart';
+import 'mixins/isometric_component.dart';
 
 
 class IsometricResponseReader with ByteReader, IsometricComponent

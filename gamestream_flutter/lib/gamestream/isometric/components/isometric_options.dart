@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
@@ -50,7 +50,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   bool get editMode => edit.value;
 
   @override
-  void onComponentReady() {
+  void onComponentsConnected() {
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
     game = Watch<Game>(website, onChanged: _onChangedGame);

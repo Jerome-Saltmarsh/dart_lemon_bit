@@ -1,8 +1,8 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/updatable.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:just_audio/just_audio.dart';
 

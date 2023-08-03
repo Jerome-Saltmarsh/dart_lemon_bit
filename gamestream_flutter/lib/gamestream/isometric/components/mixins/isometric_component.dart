@@ -19,7 +19,6 @@ import 'package:gamestream_flutter/library.dart';
 
 mixin IsometricComponent {
   late final Engine engine;
-  // late final Isometric isometric;
   late final IsometricAnimation animation;
   late final IsometricNetwork network;
   late final IsometricParticles particles;
@@ -54,11 +53,11 @@ mixin IsometricComponent {
   late final IsometricCompositor compositor;
   late final IsometricStyle style;
 
-  void onComponentReady() {
+  void onComponentsConnected() {
 
   }
 
-  void onImagesLoaded(){
+  void onComponentsInitialized(){
 
   }
 }

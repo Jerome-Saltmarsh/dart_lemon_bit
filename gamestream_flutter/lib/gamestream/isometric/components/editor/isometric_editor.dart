@@ -1,6 +1,6 @@
 
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../../isometric/classes/gameobject.dart';

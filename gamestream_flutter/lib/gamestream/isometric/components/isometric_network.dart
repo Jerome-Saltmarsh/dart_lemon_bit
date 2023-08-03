@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/common/src/client_request.dart';
 import 'package:gamestream_flutter/common/src/game_type.dart';
 import 'package:gamestream_flutter/common/src/isometric/isometric_request.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
@@ -13,7 +13,7 @@ class IsometricNetwork with IsometricComponent {
   late final WebsocketClient websocket;
 
   @override
-  void onComponentReady() {
+  void onComponentsConnected() {
     websocket = WebsocketClient(
       readString: responseReader.readServerResponseString,
       readBytes: responseReader.readNetworkBytes,

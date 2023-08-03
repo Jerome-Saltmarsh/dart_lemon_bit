@@ -138,13 +138,13 @@ class RendererNodes extends RenderGroup {
   late final ui.Image atlasNodes;
 
   @override
-  void onImagesLoaded() {
+  void onComponentsInitialized() {
     atlasNodes = images.atlas_nodes;
     atlasNodesLoaded = true;
   }
 
   @override
-  void onComponentReady() {
+  void onComponentsConnected() {
     bufferClr = engine.bufferClr;
     bufferDst = engine.bufferDst;
     bufferSrc = engine.bufferSrc;

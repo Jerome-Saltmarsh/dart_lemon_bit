@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 
 class IsometricStyle with IsometricComponent {
   late final Color containerColor;
@@ -10,7 +10,7 @@ class IsometricStyle with IsometricComponent {
   final containerBorderRadiusCircular = BorderRadius.all(Radius.circular(4));
 
   @override
-  void onComponentReady() {
+  void onComponentsConnected() {
     containerColor = colors.brownDark;
     containerColorDark = colors.brownDarkX;
   }

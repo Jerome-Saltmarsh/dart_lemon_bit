@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -695,7 +695,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   @override
-  void onComponentReady() {
+  void onComponentsConnected() {
 
     network.websocket.connectionStatus.onChanged(
         onChangedNetworkConnectionStatus

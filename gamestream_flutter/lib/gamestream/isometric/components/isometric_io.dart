@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/functions/get_render.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/updatable.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../../../library.dart';
@@ -43,7 +43,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   late final TouchController touchController;
 
   @override
-  void onComponentReady() {
+  void onComponentsConnected() {
     touchController = TouchController();
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;

@@ -2,10 +2,11 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/initializable.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class IsometricImages {
+class IsometricImages implements Initializable {
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
@@ -184,121 +185,121 @@ class IsometricImages {
      return image;
    }
 
+  @override
+  Future onComponentInitialize(SharedPreferences sharedPreferences) async {
+    print('isometric.images.onComponentInitialize()');
 
-   Future load(Isometric isometric) async {
-     print('isometric.images.load()');
+    loadPng('shades').then((value) => shades = value);
+    loadPng('atlas_nodes').then((value) => atlas_nodes = value);
+    loadPng('atlas_characters').then((value) => atlas_characters = value);
+    loadPng('atlas_zombie').then((value) => zombie = value);
+    loadPng('atlas_zombie_shadow').then((value) => zombie_shadow = value);
+    loadPng('atlas_gameobjects').then((value) => atlas_gameobjects = value);
+    loadPng('atlas_gameobjects_transparent').then((value) => atlas_gameobjects_transparent = value);
+    loadPng('atlas_particles').then((value) => atlas_particles = value);
+    loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
+    loadPng('atlas_nodes_transparent').then((value) => atlas_nodes_transparent = value);
+    loadPng('atlas_nodes_mini').then((value) => atlas_nodes_mini = value);
+    loadPng('atlas_weapons').then((value) => atlas_weapons = value);
+    loadPng('atlas_talents').then((value) => atlas_talents = value);
+    loadPng('atlas_icons').then((value) => atlas_icons = value);
+    loadPng('atlas_items').then((value) => atlas_items = value);
+    loadPng('atlas_head').then((value) => atlas_head = value);
+    loadPng('atlas_body').then((value) => atlas_body = value);
+    loadPng('atlas_legs').then((value) => atlas_legs = value);
+    loadPng('template/template_spinning').then((value) => template_spinning = value);
 
-     loadPng('shades').then((value) => shades = value);
-     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
-     loadPng('atlas_characters').then((value) => atlas_characters = value);
-     loadPng('atlas_zombie').then((value) => zombie = value);
-     loadPng('atlas_zombie_shadow').then((value) => zombie_shadow = value);
-     loadPng('atlas_gameobjects').then((value) => atlas_gameobjects = value);
-     loadPng('atlas_gameobjects_transparent').then((value) => atlas_gameobjects_transparent = value);
-     loadPng('atlas_particles').then((value) => atlas_particles = value);
-     loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
-     loadPng('atlas_nodes_transparent').then((value) => atlas_nodes_transparent = value);
-     loadPng('atlas_nodes_mini').then((value) => atlas_nodes_mini = value);
-     loadPng('atlas_weapons').then((value) => atlas_weapons = value);
-     loadPng('atlas_talents').then((value) => atlas_talents = value);
-     loadPng('atlas_icons').then((value) => atlas_icons = value);
-     loadPng('atlas_items').then((value) => atlas_items = value);
-     loadPng('atlas_head').then((value) => atlas_head = value);
-     loadPng('atlas_body').then((value) => atlas_body = value);
-     loadPng('atlas_legs').then((value) => atlas_legs = value);
-     loadPng('template/template_spinning').then((value) => template_spinning = value);
+    loadPng('kid/kid_idle').then((value) => kid_idle = value);
+    loadPng('kid/kid_idle_shadow').then((value) => kid_idle_shadow = value);
 
-     loadPng('kid/kid_idle').then((value) => kid_idle = value);
-     loadPng('kid/kid_idle_shadow').then((value) => kid_idle_shadow = value);
+    loadPng('kid/kid_running').then((value) => kid_running = value);
+    loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
 
-     loadPng('kid/kid_running').then((value) => kid_running = value);
-     loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
+    loadPng('kid/arms/kid_arm_left_idle').then((value) => kid_arm_left_idle = value);
+    loadPng('kid/arms/kid_arm_left_running').then((value) => kid_arm_left_running = value);
 
-     loadPng('kid/arms/kid_arm_left_idle').then((value) => kid_arm_left_idle = value);
-     loadPng('kid/arms/kid_arm_left_running').then((value) => kid_arm_left_running = value);
+    loadPng('kid/hands/gauntlet/left/idle').then((value) => kid_hands_gauntlet_left_idle = value);
+    loadPng('kid/hands/gauntlet/left/running').then((value) => kid_hands_gauntlet_left_running = value);
 
-     loadPng('kid/hands/gauntlet/left/idle').then((value) => kid_hands_gauntlet_left_idle = value);
-     loadPng('kid/hands/gauntlet/left/running').then((value) => kid_hands_gauntlet_left_running = value);
+    loadPng('kid/hands/gauntlet/right/idle').then((value) => kid_hands_gauntlet_right_idle = value);
+    loadPng('kid/hands/gauntlet/right/running').then((value) => kid_hands_gauntlet_right_running = value);
 
-     loadPng('kid/hands/gauntlet/right/idle').then((value) => kid_hands_gauntlet_right_idle = value);
-     loadPng('kid/hands/gauntlet/right/running').then((value) => kid_hands_gauntlet_right_running = value);
+    loadPng('kid/arms/kid_arm_right_idle').then((value) => kid_arm_right_idle = value);
+    loadPng('kid/arms/kid_arm_right_running').then((value) => kid_arm_right_running = value);
 
-     loadPng('kid/arms/kid_arm_right_idle').then((value) => kid_arm_right_idle = value);
-     loadPng('kid/arms/kid_arm_right_running').then((value) => kid_arm_right_running = value);
+    loadPng('kid/body/kid_body_shirt_blue_idle').then((value) => kid_body_shirt_blue_idle = value);
+    loadPng('kid/body/kid_body_shirt_blue_running').then((value) => kid_body_shirt_blue_running = value);
 
-     loadPng('kid/body/kid_body_shirt_blue_idle').then((value) => kid_body_shirt_blue_idle = value);
-     loadPng('kid/body/kid_body_shirt_blue_running').then((value) => kid_body_shirt_blue_running = value);
+    loadPng('kid/head/kid_head_light_idle').then((value) => kid_head_light_idle = value);
+    loadPng('kid/head/kid_head_light_running').then((value) => kid_head_light_running = value);
 
-     loadPng('kid/head/kid_head_light_idle').then((value) => kid_head_light_idle = value);
-     loadPng('kid/head/kid_head_light_running').then((value) => kid_head_light_running = value);
+    loadPng('kid/head/kid_head_dark_idle').then((value) => kid_head_dark_idle = value);
+    loadPng('kid/head/kid_head_dark_running').then((value) => kid_head_dark_running = value);
 
-     loadPng('kid/head/kid_head_dark_idle').then((value) => kid_head_dark_idle = value);
-     loadPng('kid/head/kid_head_dark_running').then((value) => kid_head_dark_running = value);
+    loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
+    loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
 
-     loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
-     loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
+    loadPng('character-dog').then((value) => character_dog = value);
+    loadPng('template/template-shadow').then((value) => template_shadow = value);
 
-     loadPng('character-dog').then((value) => character_dog = value);
-     loadPng('template/template-shadow').then((value) => template_shadow = value);
+    loadPng('template/head/template-head-plain').then((value) => template_head_plain = value);
+    loadPng('template/head/template-head-rogue').then((value) => template_head_rogue = value);
+    loadPng('template/head/template-head-steel').then((value) => template_head_steel = value);
+    loadPng('template/head/template-head-swat').then((value) => template_head_swat = value);
+    loadPng('template/head/template-head-wizard').then((value) => template_head_wizard = value);
+    loadPng('template/head/template-head-blonde').then((value) => template_head_blonde = value);
+    loadPng('template/body/template-body-blue').then((value) => template_body_blue = value);
+    loadPng('template/body/template-body-red').then((value) => template_body_red = value);
+    loadPng('template/body/template-body-cyan').then((value) => template_body_cyan = value);
+    loadPng('template/body/template-body-swat').then((value) => template_body_swat = value);
+    loadPng('template/body/template-body-tunic').then((value) => template_body_tunic = value);
+    loadPng('template/body/template-body-empty').then((value) => template_body_empty = value);
+    loadPng('template/legs/template-legs-none').then((value) => template_legs_none = value);
+    loadPng('template/legs/template-legs-blue').then((value) => template_legs_blue = value);
+    loadPng('template/legs/template-legs-white').then((value) => template_legs_white = value);
+    loadPng('template/legs/template-legs-green').then((value) => template_legs_green = value);
+    loadPng('template/legs/template-legs-brown').then((value) => template_legs_brown = value);
+    loadPng('template/legs/template-legs-red').then((value) => template_legs_red = value);
+    loadPng('template/legs/template-legs-swat').then((value) => template_legs_swat = value);
+    loadPng('template/weapons/template-weapons-bow').then((value) => template_weapon_bow = value);
+    loadPng('template/weapons/template-weapons-grenade').then((value) => template_weapon_grenade = value);
+    loadPng('template/weapons/template-weapons-desert-eagle').then((value) => template_weapon_desert_eagle = value);
+    loadPng('template/weapons/template-weapons-plasma-pistol').then((value) => template_weapon_plasma_pistol = value);
+    loadPng('template/weapons/template-weapons-plasma-rifle').then((value) => template_weapon_plasma_rifle = value);
+    loadPng('template/weapons/template-weapons-handgun-black').then((value) => template_weapon_handgun_black = value);
+    loadPng('template/weapons/template-weapons-pistol-flintlock').then((value) => template_weapon_handgun_flintlock = value);
+    loadPng('template/weapons/template-weapons-sniper-rifle').then((value) => template_weapon_sniper_rifle = value);
+    loadPng('template/weapons/template-weapons-ak47').then((value) => template_weapon_ak47 = value);
+    loadPng('template/weapons/template-weapons-shotgun').then((value) => template_weapon_shotgun = value);
+    loadPng('template/weapons/template-weapons-staff-wooden').then((value) => template_weapon_staff = value);
+    loadPng('template/weapons/template-weapons-sword-steel').then((value) => template_weapon_sword_steel = value);
+    loadPng('template/weapons/template-weapons-axe').then((value) => template_weapon_axe = value);
+    loadPng('template/weapons/template-weapons-pickaxe').then((value) => template_weapon_pickaxe = value);
+    loadPng('template/weapons/template-weapons-hammer').then((value) => template_weapon_hammer = value);
+    loadPng('template/weapons/template-weapons-knife').then((value) => template_weapon_knife = value);
+    loadPng('template/weapons/template-weapons-flamethrower').then((value) => template_weapon_flamethrower = value);
+    loadPng('template/weapons/template-weapons-bazooka').then((value) => template_weapon_bazooka = value);
+    loadPng('template/weapons/template-weapons-mp5').then((value) => template_weapon_mp5 = value);
+    loadPng('template/weapons/template-weapons-minigun').then((value) => template_weapon_minigun = value);
+    loadPng('template/weapons/template-weapons-m4').then((value) => template_weapon_m4 = value);
+    loadPng('template/weapons/template-weapons-revolver').then((value) => template_weapon_revolver = value);
+    loadPng('template/weapons/template-weapons-winchester').then((value) => template_weapon_winchester = value);
+    loadPng('template/weapons/template-weapons-blunderbuss').then((value) => template_weapon_musket = value);
+    loadPng('template/weapons/template-weapons-crowbar').then((value) => template_weapon_crowbar = value);
+    loadPng('template/weapons/template-weapons-portal-gun').then((value) => template_weapon_portal_gun = value);
 
-     loadPng('template/head/template-head-plain').then((value) => template_head_plain = value);
-     loadPng('template/head/template-head-rogue').then((value) => template_head_rogue = value);
-     loadPng('template/head/template-head-steel').then((value) => template_head_steel = value);
-     loadPng('template/head/template-head-swat').then((value) => template_head_swat = value);
-     loadPng('template/head/template-head-wizard').then((value) => template_head_wizard = value);
-     loadPng('template/head/template-head-blonde').then((value) => template_head_blonde = value);
-     loadPng('template/body/template-body-blue').then((value) => template_body_blue = value);
-     loadPng('template/body/template-body-red').then((value) => template_body_red = value);
-     loadPng('template/body/template-body-cyan').then((value) => template_body_cyan = value);
-     loadPng('template/body/template-body-swat').then((value) => template_body_swat = value);
-     loadPng('template/body/template-body-tunic').then((value) => template_body_tunic = value);
-     loadPng('template/body/template-body-empty').then((value) => template_body_empty = value);
-     loadPng('template/legs/template-legs-none').then((value) => template_legs_none = value);
-     loadPng('template/legs/template-legs-blue').then((value) => template_legs_blue = value);
-     loadPng('template/legs/template-legs-white').then((value) => template_legs_white = value);
-     loadPng('template/legs/template-legs-green').then((value) => template_legs_green = value);
-     loadPng('template/legs/template-legs-brown').then((value) => template_legs_brown = value);
-     loadPng('template/legs/template-legs-red').then((value) => template_legs_red = value);
-     loadPng('template/legs/template-legs-swat').then((value) => template_legs_swat = value);
-     loadPng('template/weapons/template-weapons-bow').then((value) => template_weapon_bow = value);
-     loadPng('template/weapons/template-weapons-grenade').then((value) => template_weapon_grenade = value);
-     loadPng('template/weapons/template-weapons-desert-eagle').then((value) => template_weapon_desert_eagle = value);
-     loadPng('template/weapons/template-weapons-plasma-pistol').then((value) => template_weapon_plasma_pistol = value);
-     loadPng('template/weapons/template-weapons-plasma-rifle').then((value) => template_weapon_plasma_rifle = value);
-     loadPng('template/weapons/template-weapons-handgun-black').then((value) => template_weapon_handgun_black = value);
-     loadPng('template/weapons/template-weapons-pistol-flintlock').then((value) => template_weapon_handgun_flintlock = value);
-     loadPng('template/weapons/template-weapons-sniper-rifle').then((value) => template_weapon_sniper_rifle = value);
-     loadPng('template/weapons/template-weapons-ak47').then((value) => template_weapon_ak47 = value);
-     loadPng('template/weapons/template-weapons-shotgun').then((value) => template_weapon_shotgun = value);
-     loadPng('template/weapons/template-weapons-staff-wooden').then((value) => template_weapon_staff = value);
-     loadPng('template/weapons/template-weapons-sword-steel').then((value) => template_weapon_sword_steel = value);
-     loadPng('template/weapons/template-weapons-axe').then((value) => template_weapon_axe = value);
-     loadPng('template/weapons/template-weapons-pickaxe').then((value) => template_weapon_pickaxe = value);
-     loadPng('template/weapons/template-weapons-hammer').then((value) => template_weapon_hammer = value);
-     loadPng('template/weapons/template-weapons-knife').then((value) => template_weapon_knife = value);
-     loadPng('template/weapons/template-weapons-flamethrower').then((value) => template_weapon_flamethrower = value);
-     loadPng('template/weapons/template-weapons-bazooka').then((value) => template_weapon_bazooka = value);
-     loadPng('template/weapons/template-weapons-mp5').then((value) => template_weapon_mp5 = value);
-     loadPng('template/weapons/template-weapons-minigun').then((value) => template_weapon_minigun = value);
-     loadPng('template/weapons/template-weapons-m4').then((value) => template_weapon_m4 = value);
-     loadPng('template/weapons/template-weapons-revolver').then((value) => template_weapon_revolver = value);
-     loadPng('template/weapons/template-weapons-winchester').then((value) => template_weapon_winchester = value);
-     loadPng('template/weapons/template-weapons-blunderbuss').then((value) => template_weapon_musket = value);
-     loadPng('template/weapons/template-weapons-crowbar').then((value) => template_weapon_crowbar = value);
-     loadPng('template/weapons/template-weapons-portal-gun').then((value) => template_weapon_portal_gun = value);
+    loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
+    loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);
 
-     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
-     loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);
+    totalImagesLoaded.onChanged((totalImagesLoaded) {
+      if (totalImagesLoaded < totalImages.value)
+        return;
 
-     totalImagesLoaded.onChanged((totalImagesLoaded) {
-       if (totalImagesLoaded < totalImages.value)
-         return;
+      _loadCompleter.complete(true);
+    });
 
-       _loadCompleter.complete(true);
-     });
-
-     await _loadCompleter.future;
-   }
+    await _loadCompleter.future;
+  }
 }
 
 

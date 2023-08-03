@@ -1,6 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 
 class IsometricCompositor with IsometricComponent {
 

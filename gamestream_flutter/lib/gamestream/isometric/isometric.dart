@@ -17,6 +17,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
 
 import 'classes/src.dart';
+import 'components/interfaces/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
 import 'components/render/renderer_nodes.dart';
@@ -142,7 +143,15 @@ class Isometric {
     components.add(lighting);
     components.add(colors);
     components.add(style);
+  }
 
+  void update() {
+    for (final updatable in updatable) {
+      updatable.onComponentUpdate();
+    }
+  }
+
+  void connectComponents() {
     for (final component in components) {
       if (component is Updatable) {
         updatable.add(component);
@@ -184,19 +193,27 @@ class Isometric {
       component.compositor = compositor;
       component.lighting = lighting;
       component.style = style;
+      component.engine = engine;
     }
-  }
 
-  void update() {
-    for (final updatable in updatable) {
-      updatable.onComponentUpdate();
+    for (final component in components) {
+      if (component is IsometricComponent)
+        component.onComponentsConnected();
     }
   }
 
   Future init(sharedPreferences) async {
     print('isometric.init()');
-    await images.load(this);
-    dispatchNotificationImagesLoaded();
+
+    for (final component in components){
+      if (component is Initializable)
+        await component.onComponentInitialize(sharedPreferences);
+    }
+
+    for (final component in components){
+      if (component is IsometricComponent)
+        component.onComponentsInitialized();
+    }
   }
 
   Widget build(BuildContext context) {
@@ -223,33 +240,13 @@ class Isometric {
       buildLoadingScreen: () => LoadingPage(),
     );
 
-    for (final component in components){
-      if (component is IsometricComponent)
-        component.engine = engine;
-    }
     engine.onUpdate = update;
-    dispatchNotificationComponentsReady();
+    connectComponents();
     return engine;
   }
 
   void onError(Object error, StackTrace stack){
     print('isometric.onError()');
-  }
-
-  void dispatchNotificationComponentsReady(){
-    print('isometric.dispatchNotificationComponentsReady()');
-    for (final component in components) {
-      if (component is IsometricComponent)
-        component.onComponentReady();
-    }
-  }
-
-  void dispatchNotificationImagesLoaded() {
-    print('isometric.dispatchNotificationImagesLoaded()');
-    for (final component in components){
-      if (component is IsometricComponent)
-        component.onImagesLoaded();
-    }
   }
 }
 

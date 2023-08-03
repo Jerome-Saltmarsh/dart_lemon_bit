@@ -21,5 +21,5 @@ export 'isometric_response_reader.dart';
 export 'isometric_style.dart';
 
 export 'editor/src.dart';
-export 'mixins/component_isometric.dart';
-export 'mixins/updatable.dart';
+export 'mixins/isometric_component.dart';
+export 'interfaces/updatable.dart';
