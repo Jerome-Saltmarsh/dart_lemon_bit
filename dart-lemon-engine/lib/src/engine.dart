@@ -1040,42 +1040,26 @@ class Engine extends StatelessWidget {
         title: title,
         theme: themeData,
         home: Scaffold(
-          body: WatchBuilder(watchInitialized, (bool value) {
-            if (!value) {
-              return onBuildLoadingScreen?.call() ?? buildDefaultLoadingScreen(buildContext);
-            }
-            return LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
-                buildContext = context;
-                return Stack(
-                  children: [
-                    _internalBuildCanvas(context),
-                    WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
-                    => buildUI != null ? buildUI(context) : const SizedBox()
-                    ),
-                    CustomTicker(onTrick: onTickElapsed)
-                  ],
-                );
-              },
-            );
-          }),
+          body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+              buildContext = context;
+              return Stack(
+                children: [
+                  _internalBuildCanvas(context),
+                  WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
+                  => buildUI != null ? buildUI(context) : const SizedBox()
+                  ),
+                  CustomTicker(onTrick: onTickElapsed)
+                ],
+              );
+            },
+          ),
         ),
         debugShowCheckedModeBanner: false,
       ));
 
-  // var previousMS = 0;
-
-  var skipped = false;
-
-  void onTickElapsed(Duration duration){
-    // final elapsed = duration.inMilliseconds - previousMS;
-    // previousMS = duration.inMilliseconds;
-    // skipped = !skipped;
-    // if (skipped)
-    //   return;
-    redrawCanvas();
-  }
+  void onTickElapsed(Duration duration) => redrawCanvas();
 
   Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
@@ -1302,13 +1286,22 @@ class Engine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (setPathUrlStrategy){
-    //   us.setPathUrlStrategy();
-    // }
+    print("engine.build()");
+
     return FutureBuilder(
         future: _internalInit(),
         builder: (context, snapshot) {
-            return _internalBuildApp();
+          if (snapshot.connectionState != ConnectionState.done){
+            return MaterialApp(
+                title: title,
+                theme: themeData.value,
+                home: Scaffold(
+                  body: onBuildLoadingScreen?.call() ?? buildDefaultLoadingScreen(buildContext),
+                ),
+            );
+          }
+
+          return _internalBuildApp();
         }
     );
   }
