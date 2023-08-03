@@ -142,15 +142,7 @@ class IsometricComponents {
     components.add(lighting);
     components.add(colors);
     components.add(style);
-  }
 
-  void update() {
-    for (final updatable in updatable) {
-      updatable.onComponentUpdate();
-    }
-  }
-
-  void connect() {
     for (final component in components) {
       if (component is Updatable) {
         updatable.add(component);
@@ -193,6 +185,12 @@ class IsometricComponents {
       component.lighting = lighting;
       component.style = style;
       component.engine = engine;
+    }
+  }
+
+  void update() {
+    for (final updatable in updatable) {
+      updatable.onComponentUpdate();
     }
   }
 

@@ -76,8 +76,6 @@ Widget buildApp(){
       engine: engine,
   );
 
-  components.connect();
-
   return Provider<IsometricComponents>(
     create: (context) => components,
     child: engine,
