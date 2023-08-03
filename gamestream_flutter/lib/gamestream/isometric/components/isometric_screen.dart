@@ -18,7 +18,7 @@ class IsometricScreen with IsometricComponent implements Updatable  {
   }
 
   @override
-  void update() {
+  void onComponentUpdate() {
     // TODO: implement update
   }
 }

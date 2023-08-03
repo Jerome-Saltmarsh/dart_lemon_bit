@@ -739,7 +739,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   int get countActiveParticles =>
       children.where((element) => element.active).length;
 
-  void update() {
+  void onComponentUpdate() {
     nextParticleFrame--;
 
     for (final particle in children) {

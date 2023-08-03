@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
 
-import '../network/functions/detect_connection_region.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
@@ -189,41 +188,9 @@ class Isometric {
   }
 
   void update() {
-
-    if (!network.websocket.connected)
-      return;
-
-    if (!options.gameRunning.value) {
-      io.writeByte(ClientRequest.Update);
-      io.applyKeyboardInputToUpdateBuffer(this);
-      io.sendUpdateBuffer();
-      return;
-    }
-
     for (final updatable in updatable) {
-      updatable.update();
+      updatable.onComponentUpdate();
     }
-
-    readPlayerInputEdit();
-    io.applyKeyboardInputToUpdateBuffer(this);
-    io.sendUpdateBuffer();
-
-  }
-
-  void readPlayerInputEdit() {
-    if (!options.edit.value)
-      return;
-
-    if (engine.keyPressedSpace) {
-      engine.panCamera();
-    }
-    if (engine.keyPressed(KeyCode.Delete)) {
-      editor.delete();
-    }
-    if (io.getInputDirectionKeyboard() != IsometricDirection.None) {
-      // actionSetModePlay();
-    }
-    return;
   }
 
   Future init(sharedPreferences) async {

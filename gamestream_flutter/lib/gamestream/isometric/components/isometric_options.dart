@@ -153,7 +153,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     }
   }
 
-  void update() {
+  void onComponentUpdate() {
 
     game.value.update();
 

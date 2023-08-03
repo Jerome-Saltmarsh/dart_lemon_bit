@@ -27,7 +27,7 @@ class IsometricRender with IsometricComponent {
       return;
 
     camera.update();
-    particles.update();
+    particles.onComponentUpdate();
     compositor.render3D();
     renderEditMode();
     renderMouseTargetName();

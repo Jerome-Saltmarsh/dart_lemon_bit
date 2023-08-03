@@ -111,7 +111,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     );
   }
 
-  void update(){
+  void onComponentUpdate(){
     updateMessageTimer();
   }
 

@@ -14,7 +14,7 @@ class IsometricLighting implements Updatable {
   var rainAmbienceLight = 10;
   var rainAmbientHeavy = 20;
 
-  void update(){
+  void onComponentUpdate(){
     if (torchEmissionVal == 0) return;
     torchEmissionT += torchEmissionVal;
 

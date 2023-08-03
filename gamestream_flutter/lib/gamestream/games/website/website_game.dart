@@ -56,7 +56,7 @@ class WebsiteGame extends Game {
 
   @override
   void update() {
-    animation.update();
+    animation.onComponentUpdate();
   }
 
   onChangedVisitCount(int value){

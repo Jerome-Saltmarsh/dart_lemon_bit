@@ -1,4 +1,4 @@
 
 abstract class Updatable {
-  void update();
+  void onComponentUpdate();
 }

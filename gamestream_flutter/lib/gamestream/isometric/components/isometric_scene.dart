@@ -154,7 +154,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     colorStackIndex = -1;
   }
 
-  void update(){
+  void onComponentUpdate(){
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
 
     jobBatchResetNodeColorsToAmbient();

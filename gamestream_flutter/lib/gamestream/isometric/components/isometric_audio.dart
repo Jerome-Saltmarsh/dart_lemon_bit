@@ -223,7 +223,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   var _nextAudioSourceUpdate = 0;
 
-  void update() {
+  void onComponentUpdate() {
     if (!audio.enabledSound.value) {
       return;
     }

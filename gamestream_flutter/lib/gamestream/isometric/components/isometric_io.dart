@@ -1,13 +1,13 @@
 
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/component_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/updatable.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import '../../../library.dart';
-import '../isometric.dart';
 import 'classes/touch_controller.dart';
 
-class IsometricIO with ByteWriter, IsometricComponent {
+class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
   var previousMouseX = 0;
   var previousMouseY = 0;
@@ -39,14 +39,32 @@ class IsometricIO with ByteWriter, IsometricComponent {
   final updateSize = Watch(0);
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
-  late final TouchController touchController;
   final inputMode = Watch(InputMode.Keyboard);
+  late final TouchController touchController;
 
   @override
   void onComponentReady() {
     touchController = TouchController();
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;
+  }
+
+  @override
+  void onComponentUpdate() {
+
+    if (!network.websocket.connected)
+      return;
+
+    if (!options.gameRunning.value) {
+      writeByte(ClientRequest.Update);
+      applyKeyboardInputToUpdateBuffer();
+      sendUpdateBuffer();
+      return;
+    }
+
+    readPlayerInputEdit();
+    applyKeyboardInputToUpdateBuffer();
+    sendUpdateBuffer();
   }
 
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
@@ -186,7 +204,7 @@ class IsometricIO with ByteWriter, IsometricComponent {
   /// [5] Mouse_Right
   /// [6] Shift
   /// [7] Space
-  void applyKeyboardInputToUpdateBuffer(Isometric isometric) {
+  void applyKeyboardInputToUpdateBuffer() {
 
     final mouseX = engine.mouseWorldX.toInt();
     final mouseY = engine.mouseWorldY.toInt();
@@ -291,6 +309,22 @@ class IsometricIO with ByteWriter, IsometricComponent {
           ? InputMode.Keyboard
           : InputMode.Touch;
 
+
+  void readPlayerInputEdit() {
+    if (!options.edit.value)
+      return;
+
+    if (engine.keyPressedSpace) {
+      engine.panCamera();
+    }
+    if (engine.keyPressed(KeyCode.Delete)) {
+      editor.delete();
+    }
+    if (getInputDirectionKeyboard() != IsometricDirection.None) {
+      // actionSetModePlay();
+    }
+    return;
+  }
 
 }
 
