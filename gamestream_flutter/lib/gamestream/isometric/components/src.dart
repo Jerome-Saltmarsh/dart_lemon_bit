@@ -21,4 +21,4 @@ export 'isometric_response_reader.dart';
 export 'isometric_style.dart';
 
 export 'editor/src.dart';
-export 'mixins/isometric_component.dart';
+export 'isometric_component.dart';

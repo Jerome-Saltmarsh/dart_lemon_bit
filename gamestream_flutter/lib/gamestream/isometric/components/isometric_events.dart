@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 

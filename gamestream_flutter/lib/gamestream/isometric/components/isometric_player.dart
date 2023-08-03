@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
 import 'package:gamestream_flutter/library.dart';

@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.d
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/classes/particle.dart';
-import 'mixins/isometric_component.dart';
+import 'isometric_component.dart';
 
 class IsometricParticles with IsometricComponent implements Updatable {
 

@@ -3,7 +3,7 @@
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'mixins/isometric_component.dart';
+import 'isometric_component.dart';
 
 class IsometricMouse with IsometricComponent {
 
