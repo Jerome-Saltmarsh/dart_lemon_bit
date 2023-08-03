@@ -3,14 +3,18 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IsometricImages with IsometricComponent {
 
+  var imagesCached = false;
+
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
   final _loadCompleter = Completer();
+  final values = <Image>[];
 
    late final Image shades;
    late final Image pixel;
@@ -181,6 +185,7 @@ class IsometricImages with IsometricComponent {
    Future<Image> loadImage(String fileName) async {
      totalImages.value++;
      final image = await loadImageAsset('images/$fileName');
+     values.add(image);
      totalImagesLoaded.value++;
      return image;
    }
@@ -300,6 +305,29 @@ class IsometricImages with IsometricComponent {
 
     await _loadCompleter.future;
   }
+
+  void cacheImages() {
+
+    if (imagesCached)
+      return;
+
+    print('images.cacheImages()');
+    imagesCached = true;
+    options.operationStatus.value = OperationStatus.Caching_Images;
+    for (final image in images.values) {
+      engine.renderSprite(
+        image: image,
+        srcX: 0,
+        srcY: 0,
+        srcWidth: 1,
+        srcHeight: 1,
+        dstX: 0,
+        dstY: 0,
+      );
+    }
+    options.operationStatus.value = OperationStatus.None;
+  }
+
 }
 
 

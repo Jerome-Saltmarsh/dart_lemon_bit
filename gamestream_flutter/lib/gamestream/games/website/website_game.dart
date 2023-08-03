@@ -19,6 +19,7 @@ class WebsiteGame extends Game {
     GameType.Amulet,
   ];
 
+  var imagesCached = false;
   final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);
@@ -37,12 +38,6 @@ class WebsiteGame extends Game {
   void onComponentsInitialized() {
     print('isometric.website.onComponentsInitialized()');
     engine.buildUI = buildUI;
-  }
-
-
-  @override
-  void drawCanvas(Canvas canvas, Size size) {
-
   }
 
   @override
@@ -73,16 +68,15 @@ class WebsiteGame extends Game {
     website.error.value = message;
   }
 
-  void renderCanvas(Canvas canvas, Size size) {
-
-  }
-
   @override
-  Widget buildUI(BuildContext context) => Stack(
+  Widget buildUI(BuildContext context) {
+
+    return Stack(
       children: [
         buildWatch(options.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ]);
+  }
 
 
   void toggleWebsitePage() =>
@@ -174,6 +168,11 @@ class WebsiteGame extends Game {
     // await saveVisitDateTime();
     options.operationStatus.value = OperationStatus.Checking_For_Updates;
     engine.refreshPage();
+  }
+
+  @override
+  void drawCanvas(Canvas canvas, Size size) {
+    // TODO: implement drawCanvas
   }
 
   // Future saveVisitDateTime() async =>
