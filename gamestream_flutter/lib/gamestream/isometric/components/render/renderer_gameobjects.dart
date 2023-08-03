@@ -14,7 +14,7 @@ class RendererGameObjects extends RenderGroup {
   late final Map<int, Image> mapGameObjectTypeToImage;
 
   @override
-  void onComponentsInitialized() {
+  void onComponentReady() {
     mapGameObjectTypeToImage = {
       GameObjectType.Weapon: images.atlas_weapons,
       GameObjectType.Object: images.atlas_gameobjects,

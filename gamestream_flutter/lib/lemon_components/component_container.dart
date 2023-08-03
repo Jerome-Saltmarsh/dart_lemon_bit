@@ -7,7 +7,6 @@ class ComponentContainer {
   final updatable = <Updatable>[];
 
   Future init(sharedPreferences) async {
-    print('iocContainer.init()');
 
     for (final component in components){
       if (component is Updatable) {
@@ -17,12 +16,12 @@ class ComponentContainer {
 
     for (final component in components){
       if (component is Component)
-        await component.initializeComponent(sharedPreferences);
+        await component.onComponentInit(sharedPreferences);
     }
 
     for (final component in components){
       if (component is Component)
-        component.onComponentsInitialized();
+        component.onComponentReady();
     }
   }
 
@@ -35,7 +34,7 @@ class ComponentContainer {
   void onError(Object error, StackTrace stack){
     for (final component in components){
       if (component is Component)
-        component.onError(error, stack);
+        component.onComponentError(error, stack);
     }
   }
 }

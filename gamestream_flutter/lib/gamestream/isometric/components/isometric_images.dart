@@ -190,7 +190,7 @@ class IsometricImages with IsometricComponent {
    }
 
   @override
-  Future initializeComponent(SharedPreferences sharedPreferences) async {
+  Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
 
     loadPng('shades').then((value) => shades = value);

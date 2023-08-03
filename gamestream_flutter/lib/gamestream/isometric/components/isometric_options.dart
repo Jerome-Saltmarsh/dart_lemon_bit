@@ -50,7 +50,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   bool get editMode => edit.value;
 
   @override
-  Future initializeComponent(sharedPreferences) async {
+  Future onComponentInit(sharedPreferences) async {
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
     game = Watch<Game>(website, onChanged: _onChangedGame);

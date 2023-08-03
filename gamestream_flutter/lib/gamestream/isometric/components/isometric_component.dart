@@ -55,11 +55,11 @@ mixin IsometricComponent implements Component {
   late final IsometricStyle style;
 
   /// (save to override)
-  Future initializeComponent(SharedPreferences sharedPreferences) async {  }
+  Future onComponentInit(SharedPreferences sharedPreferences) async {  }
 
   /// (save to override)
-  void onComponentsInitialized(){  }
+  void onComponentReady(){  }
 
   /// (save to override)
-  void onError(Object error, StackTrace stack) {}
+  void onComponentError(Object error, StackTrace stack) {}
 }

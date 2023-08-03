@@ -35,7 +35,7 @@ class WebsiteGame extends Game {
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
 
   @override
-  void onComponentsInitialized() {
+  void onComponentReady() {
     print('isometric.website.onComponentsInitialized()');
     engine.buildUI = buildUI;
   }
