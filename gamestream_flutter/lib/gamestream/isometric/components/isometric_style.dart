@@ -10,7 +10,7 @@ class IsometricStyle with IsometricComponent {
   final containerBorderRadiusCircular = BorderRadius.all(Radius.circular(4));
 
   @override
-  void onComponentsConnected() {
+  Future initializeComponent(sharedPreferences) async {
     containerColor = colors.brownDark;
     containerColorDark = colors.brownDarkX;
   }

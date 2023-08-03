@@ -17,7 +17,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/loading_page.dart';
 
 import 'classes/src.dart';
-import 'components/interfaces/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
 import 'components/render/renderer_nodes.dart';
@@ -196,18 +195,18 @@ class Isometric {
       component.engine = engine;
     }
 
-    for (final component in components) {
-      if (component is IsometricComponent)
-        component.onComponentsConnected();
-    }
+    // for (final component in components) {
+    //   if (component is IsometricComponent)
+    //     component.onComponentsConnected();
+    // }
   }
 
   Future init(sharedPreferences) async {
     print('isometric.init()');
 
     for (final component in components){
-      if (component is Initializable)
-        await component.onComponentInitialize(sharedPreferences);
+      if (component is IsometricComponent)
+        await component.initializeComponent(sharedPreferences);
     }
 
     for (final component in components){

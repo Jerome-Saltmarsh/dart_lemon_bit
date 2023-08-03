@@ -15,6 +15,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 mixin IsometricComponent {
@@ -53,11 +54,9 @@ mixin IsometricComponent {
   late final IsometricCompositor compositor;
   late final IsometricStyle style;
 
-  void onComponentsConnected() {
+  /// (save to override)
+  Future initializeComponent(SharedPreferences sharedPreferences) async {  }
 
-  }
-
-  void onComponentsInitialized(){
-
-  }
+  /// (save to override)
+  void onComponentsInitialized(){  }
 }

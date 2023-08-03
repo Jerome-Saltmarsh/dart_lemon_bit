@@ -43,7 +43,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   late final TouchController touchController;
 
   @override
-  void onComponentsConnected() {
+  Future initializeComponent(sharedPreferences) async {
     touchController = TouchController();
     engine.deviceType.onChanged(onDeviceTypeChanged);
     engine.onScreenSizeChanged = onScreenSizeChanged;

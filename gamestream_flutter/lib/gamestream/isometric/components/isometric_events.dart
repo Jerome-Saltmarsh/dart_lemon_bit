@@ -695,8 +695,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   @override
-  void onComponentsConnected() {
-
+  Future initializeComponent(sharedPreferences) async {
     network.websocket.connectionStatus.onChanged(
         onChangedNetworkConnectionStatus
     );

@@ -13,7 +13,7 @@ class IsometricNetwork with IsometricComponent {
   late final WebsocketClient websocket;
 
   @override
-  void onComponentsConnected() {
+  Future initializeComponent(sharedPreferences) async {
     websocket = WebsocketClient(
       readString: responseReader.readServerResponseString,
       readBytes: responseReader.readNetworkBytes,

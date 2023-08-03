@@ -15,7 +15,7 @@ import 'package:gamestream_flutter/library.dart';
 class IsometricRender with IsometricComponent {
 
   @override
-  void onComponentsConnected() {
+  Future initializeComponent(sharedPreferences) async {
     validateAtlases();
     engine.onDrawCanvas = drawCanvas;
     engine.onDrawForeground = drawForeground;

@@ -144,7 +144,7 @@ class RendererNodes extends RenderGroup {
   }
 
   @override
-  void onComponentsConnected() {
+  Future initializeComponent(sharedPreferences) async {
     bufferClr = engine.bufferClr;
     bufferDst = engine.bufferDst;
     bufferSrc = engine.bufferSrc;

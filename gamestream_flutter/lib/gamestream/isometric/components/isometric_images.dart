@@ -2,11 +2,11 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/initializable.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class IsometricImages implements Initializable {
+class IsometricImages with IsometricComponent {
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
@@ -186,7 +186,7 @@ class IsometricImages implements Initializable {
    }
 
   @override
-  Future onComponentInitialize(SharedPreferences sharedPreferences) async {
+  Future initializeComponent(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
 
     loadPng('shades').then((value) => shades = value);

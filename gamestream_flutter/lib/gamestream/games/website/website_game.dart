@@ -34,7 +34,7 @@ class WebsiteGame extends Game {
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
 
   @override
-  void onComponentsConnected() {
+  Future initializeComponent(sharedPreferences) async {
     engine.buildUI = buildUI;
   }
 
