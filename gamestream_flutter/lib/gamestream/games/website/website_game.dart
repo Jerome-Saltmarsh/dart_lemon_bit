@@ -34,9 +34,11 @@ class WebsiteGame extends Game {
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
 
   @override
-  Future initializeComponent(sharedPreferences) async {
+  void onComponentsInitialized() {
+    print('isometric.website.onComponentsInitialized()');
     engine.buildUI = buildUI;
   }
+
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

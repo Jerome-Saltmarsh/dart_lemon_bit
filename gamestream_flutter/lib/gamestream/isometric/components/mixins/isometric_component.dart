@@ -59,4 +59,7 @@ mixin IsometricComponent {
 
   /// (save to override)
   void onComponentsInitialized(){  }
+
+  /// (save to override)
+  void onError(Object error, StackTrace stack) {}
 }

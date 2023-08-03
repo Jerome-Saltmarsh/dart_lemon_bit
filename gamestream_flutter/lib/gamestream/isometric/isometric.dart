@@ -32,12 +32,12 @@ class Isometric {
   final components = <dynamic>[];
   final updatable = <Updatable>[];
 
+  late final Engine engine;
   late final WebsiteGame website;
   late final MmoGame mmo;
   late final Moba moba;
   late final CaptureTheFlagGame captureTheFlag;
   late final IsometricGame isometricEditor;
-  late final Engine engine;
   late final IsometricRender render;
   late final IsometricOptions options;
   late final IsometricAudio audio;
@@ -194,11 +194,6 @@ class Isometric {
       component.style = style;
       component.engine = engine;
     }
-
-    // for (final component in components) {
-    //   if (component is IsometricComponent)
-    //     component.onComponentsConnected();
-    // }
   }
 
   Future init(sharedPreferences) async {
@@ -215,35 +210,11 @@ class Isometric {
     }
   }
 
-  Widget build(BuildContext context) {
-    print('isometric.build()');
-
-    if (initialized){
-      print('isometric.build() - skipped as already initialized');
-      return engine;
-    }
-
-    initialized = true;
-    engine = Engine(
-      init: init,
-      update: () {}, // overridden when components are ready
-      render: (canvas, size) {}, // overridden when components are ready
-      onDrawForeground: (canvas, size) {}, // overridden when components are ready
-      title: 'AMULET',
-      themeData: ThemeData(fontFamily: 'VT323-Regular'),
-      backgroundColor: colors.black,
-      onError: onError,
-      buildUI: (context)=> LoadingPage(),
-      buildLoadingScreen: (context) => LoadingPage(),
-    );
-
-    engine.onUpdate = update;
-    connectComponents();
-    return engine;
-  }
-
   void onError(Object error, StackTrace stack){
-    print('isometric.onError()');
+    for (final component in components){
+      if (component is IsometricComponent)
+        component.onError(error, stack);
+    }
   }
 }
 

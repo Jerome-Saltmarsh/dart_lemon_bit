@@ -17,12 +17,11 @@ class IsometricNetwork with IsometricComponent {
     websocket = WebsocketClient(
       readString: responseReader.readServerResponseString,
       readBytes: responseReader.readNetworkBytes,
-      onError: onError,
+      onError: onNetworkError,
     );
   }
 
-  // @override
-  void onError(Object error, StackTrace stack) {
+  void onNetworkError(Object error, StackTrace stack) {
     if (error.toString().contains('NotAllowedError')){
       // https://developer.chrome.com/blog/autoplay/
       // This error appears when the game attempts to fullscreen
