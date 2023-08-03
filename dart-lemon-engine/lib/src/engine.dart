@@ -1283,9 +1283,10 @@ class Engine extends StatelessWidget {
     );
 
     final loaded = _internalBuildApp();
+    final future =  _internalInit();
 
     return FutureBuilder(
-        future: _internalInit(),
+        future: future,
         builder: (context, snapshot) =>
           snapshot.connectionState != ConnectionState.done ? loading : loaded
     );
