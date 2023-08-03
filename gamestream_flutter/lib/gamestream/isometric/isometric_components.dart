@@ -27,80 +27,85 @@ class IsometricComponents {
   final components = <dynamic>[];
   final updatable = <Updatable>[];
 
-  late final Engine engine;
-  late final WebsiteGame website;
-  late final MmoGame mmo;
-  late final Moba moba;
-  late final CaptureTheFlagGame captureTheFlag;
-  late final IsometricGame isometricEditor;
-  late final IsometricRender render;
-  late final IsometricOptions options;
-  late final IsometricAudio audio;
-  late final IsometricParticles particles;
-  late final IsometricCompositor compositor;
-  late final IsometricNetwork network;
-  late final IsometricScreen screen;
-  late final IsometricScene scene;
-  late final IsometricDebug debug;
-  late final IsometricEditor editor;
-  late final IsometricMinimap minimap;
-  late final IsometricCamera camera;
-  late final IsometricMouse mouse;
-  late final IsometricPlayer player;
-  late final IsometricUI ui;
-  late final IsometricIO io;
-  late final IsometricEnvironment environment;
-  late final RendererNodes rendererNodes;
-  late final RendererCharacters rendererCharacters;
-  late final RendererParticles rendererParticles;
-  late final RendererProjectiles rendererProjectiles;
-  late final RendererGameObjects rendererGameObjects;
-  late final IsometricActions action;
-  late final IsometricEvents events;
-  late final IsometricResponseReader responseReader;
-  late final IsometricAnimation animation;
-  late final IsometricImages images;
-  late final IsometricLighting lighting;
-  late final IsometricColors colors;
-  late final IsometricStyle style;
+  final Engine engine;
+  final WebsiteGame website;
+  final MmoGame mmo;
+  final Moba moba;
+  final CaptureTheFlagGame captureTheFlag;
+  final IsometricRender render;
+  final IsometricOptions options;
+  final IsometricAudio audio;
+  final IsometricParticles particles;
+  final IsometricCompositor compositor;
+  final IsometricNetwork network;
+  final IsometricScreen screen;
+  final IsometricScene scene;
+  final IsometricDebug debug;
+  final IsometricEditor editor;
+  final IsometricMinimap minimap;
+  final IsometricCamera camera;
+  final IsometricMouse mouse;
+  final IsometricPlayer player;
+  final IsometricUI ui;
+  final IsometricIO io;
+  final IsometricEnvironment environment;
+  final RendererNodes rendererNodes;
+  final RendererCharacters rendererCharacters;
+  final RendererParticles rendererParticles;
+  final RendererProjectiles rendererProjectiles;
+  final RendererGameObjects rendererGameObjects;
+  final IsometricActions action;
+  final IsometricEvents events;
+  final IsometricResponseReader responseReader;
+  final IsometricAnimation animation;
+  final IsometricImages images;
+  final IsometricLighting lighting;
+  final IsometricColors colors;
+  final IsometricStyle style;
 
-  IsometricComponents() {
+  final IsometricGame isometricEditor = IsometricGame();
+
+  IsometricComponents({
+    required this.images,
+    required this.environment,
+    required this.rendererNodes,
+    required this.rendererCharacters,
+    required this.rendererParticles,
+    required this.rendererProjectiles,
+    required this.rendererGameObjects,
+    required this.editor,
+    required this.debug,
+    required this.minimap,
+    required this.mouse,
+    required this.ui,
+    required this.render,
+    required this.action,
+    required this.events,
+    required this.responseReader,
+    required this.camera,
+    required this.player,
+    required this.scene,
+    required this.io,
+    required this.network,
+    required this.audio,
+    required this.options,
+    required this.particles,
+    required this.compositor,
+    required this.website,
+    required this.mmo,
+    required this.moba,
+    required this.captureTheFlag,
+    required this.animation,
+    required this.screen,
+    required this.lighting,
+    required this.colors,
+    required this.style,
+    required this.engine,
+  }) {
     print('IsometricComponents()');
-    images = IsometricImages();
-    environment = IsometricEnvironment();
-    rendererNodes = RendererNodes();
-    rendererCharacters = RendererCharacters();
-    rendererParticles = RendererParticles();
-    rendererProjectiles = RendererProjectiles();
-    rendererGameObjects = RendererGameObjects();
-    editor = IsometricEditor();
-    debug = IsometricDebug();
-    minimap = IsometricMinimap();
-    mouse = IsometricMouse();
-    ui = IsometricUI();
-    render = IsometricRender();
-    action = IsometricActions();
-    events = IsometricEvents();
-    responseReader = IsometricResponseReader();
-    camera = IsometricCamera();
-    player = IsometricPlayer();
-    scene = IsometricScene();
-    io = IsometricIO();
-    network = IsometricNetwork();
-    audio = IsometricAudio();
-    options = IsometricOptions();
-    particles = IsometricParticles();
-    compositor = IsometricCompositor();
-    website = WebsiteGame();
-    mmo = MmoGame();
-    moba = Moba();
-    captureTheFlag = CaptureTheFlagGame();
-    isometricEditor = IsometricGame();
-    animation = IsometricAnimation();
-    screen = IsometricScreen();
-    lighting = IsometricLighting();
-    colors = IsometricColors();
-    style = IsometricStyle();
+    engine.onInit = init;
+    engine.onUpdate = update;
+    engine.onError = onError;
 
     components.add(images);
     components.add(scene);
