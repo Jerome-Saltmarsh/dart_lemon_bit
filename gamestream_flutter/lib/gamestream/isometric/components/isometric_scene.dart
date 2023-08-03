@@ -5,12 +5,12 @@ import 'dart:ui';
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
 
 import '../../../isometric/classes/position.dart';
 

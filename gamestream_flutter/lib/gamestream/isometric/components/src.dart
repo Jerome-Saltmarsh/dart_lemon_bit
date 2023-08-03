@@ -22,4 +22,3 @@ export 'isometric_style.dart';
 
 export 'editor/src.dart';
 export 'mixins/isometric_component.dart';
-export 'interfaces/updatable.dart';

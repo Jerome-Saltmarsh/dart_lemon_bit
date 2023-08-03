@@ -1,7 +1,6 @@
 
 import 'dart:math';
-
-import 'package:gamestream_flutter/gamestream/isometric/components/interfaces/updatable.dart';
+import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 

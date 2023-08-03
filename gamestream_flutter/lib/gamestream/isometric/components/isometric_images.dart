@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
-import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -313,7 +312,6 @@ class IsometricImages with IsometricComponent {
 
     print('images.cacheImages()');
     imagesCached = true;
-    options.operationStatus.value = OperationStatus.Caching_Images;
     for (final image in images.values) {
       engine.renderSprite(
         image: image,
@@ -325,9 +323,7 @@ class IsometricImages with IsometricComponent {
         dstY: 0,
       );
     }
-    options.operationStatus.value = OperationStatus.None;
   }
-
 }
 
 

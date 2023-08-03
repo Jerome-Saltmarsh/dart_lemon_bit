@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
+import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'classes/src.dart';
@@ -21,12 +22,45 @@ import 'components/render/renderer_projectiles.dart';
 import 'components/src.dart';
 import 'ui/game_isometric_minimap.dart';
 
-/// Inversion of control container
-class IsometricComponents {
-
+class IOCContainer {
   final components = <dynamic>[];
   final updatable = <Updatable>[];
 
+  void update() {
+    for (final updatable in updatable) {
+      updatable.onComponentUpdate();
+    }
+  }
+
+  Future init(sharedPreferences) async {
+    print('iocContainer.init()');
+
+    for (final component in components){
+      if (component is Updatable) {
+        updatable.add(component);
+      }
+    }
+
+    for (final component in components){
+      if (component is IsometricComponent)
+        await component.initializeComponent(sharedPreferences);
+    }
+
+    for (final component in components){
+      if (component is IsometricComponent)
+        component.onComponentsInitialized();
+    }
+  }
+
+  void onError(Object error, StackTrace stack){
+    for (final component in components){
+      if (component is IsometricComponent)
+        component.onError(error, stack);
+    }
+  }
+}
+
+class IsometricComponents extends IOCContainer {
   final Engine engine;
   final WebsiteGame website;
   final MmoGame mmo;
@@ -144,13 +178,9 @@ class IsometricComponents {
     components.add(style);
 
     for (final component in components) {
-      if (component is Updatable) {
-        updatable.add(component);
-      }
       if (component is! IsometricComponent) {
         continue;
       }
-
       component.scene = scene;
       component.environment = environment;
       component.rendererNodes = rendererNodes;
@@ -185,33 +215,6 @@ class IsometricComponents {
       component.lighting = lighting;
       component.style = style;
       component.engine = engine;
-    }
-  }
-
-  void update() {
-    for (final updatable in updatable) {
-      updatable.onComponentUpdate();
-    }
-  }
-
-  Future init(sharedPreferences) async {
-    print('isometric.init()');
-
-    for (final component in components){
-      if (component is IsometricComponent)
-        await component.initializeComponent(sharedPreferences);
-    }
-
-    for (final component in components){
-      if (component is IsometricComponent)
-        component.onComponentsInitialized();
-    }
-  }
-
-  void onError(Object error, StackTrace stack){
-    for (final component in components){
-      if (component is IsometricComponent)
-        component.onError(error, stack);
     }
   }
 }

@@ -1,8 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/mixins/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-
-import 'interfaces/updatable.dart';
+import 'package:gamestream_flutter/lemon_ioc/updatable.dart';
 
 class IsometricScreen with IsometricComponent implements Updatable  {
 
