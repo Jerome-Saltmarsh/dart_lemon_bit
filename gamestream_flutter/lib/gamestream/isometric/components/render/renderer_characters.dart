@@ -464,6 +464,11 @@ class RendererCharacters extends RenderGroup {
     final dstX = character.renderX;
     final dstY = character.renderY;
 
+    final imageGroupBody = images.imageGroupsBody[character.bodyType] ??
+        (throw Exception(
+            'images.imageGroupsBody[${BodyType.getName(character.bodyType)}] - missing'
+        ));
+
     double srcX;
     ui.Image imageTorso;
     ui.Image imageHead;
@@ -490,8 +495,8 @@ class RendererCharacters extends RenderGroup {
       srcX = (frame % 8) * size;
       imageTorso = images.kid_torso_light_running;
       imageHead = images.kid_head_light_running;
-      imageBody = images.kid_body_shirt_blue_running;
-      imageBodyArms = images.kid_body_arms_shirt_blue_running;
+      imageBody = imageGroupBody.running;
+      imageBodyArms = imageGroupBody.armsRunning;
       imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = images.kid_hands_gauntlet_left_running;
       imageHandsRight = images.kid_hands_gauntlet_right_running;
@@ -501,8 +506,8 @@ class RendererCharacters extends RenderGroup {
       srcX = 0;
       imageTorso = images.kid_torso_light_idle;
       imageHead = images.kid_head_light_idle;
-      imageBody = images.kid_body_shirt_blue_idle;
-      imageBodyArms = images.kid_body_arms_shirt_blue_idle;
+      imageBody = imageGroupBody.idle;
+      imageBodyArms = imageGroupBody.armsIdle;
       imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = images.kid_hands_gauntlet_left_idle;
       imageHandsRight = images.kid_hands_gauntlet_right_idle;

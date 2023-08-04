@@ -6,125 +6,143 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+class ImageGroupBody {
+  final Image idle;
+  final Image running;
+  final Image armsIdle;
+  final Image armsRunning;
+
+  ImageGroupBody({
+    required this.idle,
+    required this.running,
+    required this.armsIdle,
+    required this.armsRunning,
+  });
+}
+
 class IsometricImages with IsometricComponent {
 
   var imagesCached = false;
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
-  final _loadCompleter = Completer();
   final values = <Image>[];
+  final _completer = Completer();
 
-   late final Image shades;
-   late final Image pixel;
-   late final Image atlas_projectiles;
-   late final Image zombie;
-   late final Image zombie_shadow;
-   late final Image character_dog;
-   late final Image atlas_particles;
-   late final Image template_shadow;
-   late final Image atlas_head;
-   late final Image atlas_body;
-   late final Image atlas_legs;
-   late final Image atlas_gameobjects;
-   late final Image atlas_gameobjects_transparent;
-   late final Image atlas_nodes;
-   late final Image atlas_nodes_transparent;
-   late final Image atlas_characters;
-   late final Image atlas_icons;
-   late final Image atlas_items;
-   late final Image atlas_nodes_mini;
-   late final Image atlas_weapons;
-   late final Image atlas_talents;
-   late final Image sprite_stars;
-   late final Image sprite_shield;
-   late final Image template_spinning;
-   late final Image kid_idle;
-   late final Image kid_idle_shadow;
-   late final Image kid_running;
-   late final Image kid_running_shadow;
+  final imageGroupsBody = <int, ImageGroupBody> {};
 
-   late final Image kid_body_shirt_blue_idle;
-   late final Image kid_body_shirt_blue_running;
+  late final Image empty;
+  late final Image shades;
+  late final Image pixel;
+  late final Image atlas_projectiles;
+  late final Image zombie;
+  late final Image zombie_shadow;
+  late final Image character_dog;
+  late final Image atlas_particles;
+  late final Image template_shadow;
+  late final Image atlas_head;
+  late final Image atlas_body;
+  late final Image atlas_legs;
+  late final Image atlas_gameobjects;
+  late final Image atlas_gameobjects_transparent;
+  late final Image atlas_nodes;
+  late final Image atlas_nodes_transparent;
+  late final Image atlas_characters;
+  late final Image atlas_icons;
+  late final Image atlas_items;
+  late final Image atlas_nodes_mini;
+  late final Image atlas_weapons;
+  late final Image atlas_talents;
+  late final Image sprite_stars;
+  late final Image sprite_shield;
+  late final Image template_spinning;
+  late final Image kid_idle;
+  late final Image kid_idle_shadow;
+  late final Image kid_running;
+  late final Image kid_running_shadow;
 
-   late final Image kid_body_arms_shirt_blue_idle;
-   late final Image kid_body_arms_shirt_blue_running;
+  late final Image kid_body_shirt_blue_idle;
+  late final Image kid_body_shirt_blue_running;
 
-   late final Image kid_head_light_idle;
-   late final Image kid_head_light_running;
+  late final Image kid_body_arms_shirt_blue_idle;
+  late final Image kid_body_arms_shirt_blue_running;
 
-   late final Image kid_head_dark_idle;
-   late final Image kid_head_dark_running;
+  late final Image kid_head_light_idle;
+  late final Image kid_head_light_running;
 
-   late final Image kid_legs_brown_idle;
-   late final Image kid_legs_brown_running;
+  late final Image kid_head_dark_idle;
+  late final Image kid_head_dark_running;
 
-   late final Image kid_hands_gauntlet_left_idle;
-   late final Image kid_hands_gauntlet_left_running;
+  late final Image kid_legs_brown_idle;
+  late final Image kid_legs_brown_running;
 
-   late final Image kid_hands_gauntlet_right_idle;
-   late final Image kid_hands_gauntlet_right_running;
+  late final Image kid_hands_gauntlet_left_idle;
+  late final Image kid_hands_gauntlet_left_running;
 
-   late final Image kid_arm_left_idle;
-   late final Image kid_arm_left_running;
+  late final Image kid_hands_gauntlet_right_idle;
+  late final Image kid_hands_gauntlet_right_running;
 
-   late final Image kid_arm_right_idle;
-   late final Image kid_arm_right_running;
+  late final Image kid_arm_left_idle;
+  late final Image kid_arm_left_running;
 
-   late final Image kid_torso_light_idle;
-   late final Image kid_torso_light_running;
+  late final Image kid_arm_right_idle;
+  late final Image kid_arm_right_running;
 
-   late final Image template_head_plain;
-   late final Image template_head_rogue;
-   late final Image template_head_steel;
-   late final Image template_head_swat;
-   late final Image template_head_wizard;
-   late final Image template_head_blonde;
+  late final Image kid_torso_light_idle;
+  late final Image kid_torso_light_running;
 
-   late final Image template_body_empty;
-   late final Image template_body_blue;
-   late final Image template_body_red;
-   late final Image template_body_cyan;
-   late final Image template_body_swat;
-   late final Image template_body_tunic;
+  late final Image template_head_plain;
+  late final Image template_head_rogue;
+  late final Image template_head_steel;
+  late final Image template_head_swat;
+  late final Image template_head_wizard;
+  late final Image template_head_blonde;
 
-   late final Image template_legs_none;
-   late final Image template_legs_blue;
-   late final Image template_legs_white;
-   late final Image template_legs_green;
-   late final Image template_legs_brown;
-   late final Image template_legs_red;
-   late final Image template_legs_swat;
+  late final Image template_body_empty;
+  late final Image template_body_blue;
+  late final Image template_body_red;
+  late final Image template_body_cyan;
+  late final Image template_body_swat;
+  late final Image template_body_tunic;
 
-   late final Image template_weapon_bow;
-   late final Image template_weapon_grenade;
-   late final Image template_weapon_shotgun;
-   late final Image template_weapon_desert_eagle;
-   late final Image template_weapon_plasma_pistol;
-   late final Image template_weapon_plasma_rifle;
-   late final Image template_weapon_handgun_black;
-   late final Image template_weapon_handgun_flintlock;
-   late final Image template_weapon_sniper_rifle;
-   late final Image template_weapon_ak47;
-   late final Image template_weapon_mp5;
-   late final Image template_weapon_staff;
-   late final Image template_weapon_sword_steel;
-   late final Image template_weapon_sword_wooden;
-   late final Image template_weapon_pickaxe;
-   late final Image template_weapon_axe;
-   late final Image template_weapon_hammer;
-   late final Image template_weapon_knife;
-   late final Image template_weapon_flamethrower;
-   late final Image template_weapon_bazooka;
-   late final Image template_weapon_minigun;
-   late final Image template_weapon_m4;
-   late final Image template_weapon_revolver;
-   late final Image template_weapon_winchester;
-   late final Image template_weapon_musket;
-   late final Image template_weapon_crowbar;
-   late final Image template_weapon_portal_gun;
+  late final Image template_legs_none;
+  late final Image template_legs_blue;
+  late final Image template_legs_white;
+  late final Image template_legs_green;
+  late final Image template_legs_brown;
+  late final Image template_legs_red;
+  late final Image template_legs_swat;
 
-   Image getImageForHeadType(int headType) => switch (headType) {
+  late final Image template_weapon_bow;
+  late final Image template_weapon_grenade;
+  late final Image template_weapon_shotgun;
+  late final Image template_weapon_desert_eagle;
+  late final Image template_weapon_plasma_pistol;
+  late final Image template_weapon_plasma_rifle;
+  late final Image template_weapon_handgun_black;
+  late final Image template_weapon_handgun_flintlock;
+  late final Image template_weapon_sniper_rifle;
+  late final Image template_weapon_ak47;
+  late final Image template_weapon_mp5;
+  late final Image template_weapon_staff;
+  late final Image template_weapon_sword_steel;
+  late final Image template_weapon_sword_wooden;
+  late final Image template_weapon_pickaxe;
+  late final Image template_weapon_axe;
+  late final Image template_weapon_hammer;
+  late final Image template_weapon_knife;
+  late final Image template_weapon_flamethrower;
+  late final Image template_weapon_bazooka;
+  late final Image template_weapon_minigun;
+  late final Image template_weapon_m4;
+  late final Image template_weapon_revolver;
+  late final Image template_weapon_winchester;
+  late final Image template_weapon_musket;
+  late final Image template_weapon_crowbar;
+  late final Image template_weapon_portal_gun;
+
+  Image getImageForHeadType(int headType) => switch (headType) {
          HeadType.Plain => template_head_plain,
          HeadType.Rogue_Hood => template_head_rogue,
          HeadType.Steel_Helm => template_head_steel,
@@ -183,20 +201,11 @@ class IsometricImages with IsometricComponent {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
-   Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
-
-   Future<Image> loadImage(String fileName) async {
-     totalImages.value++;
-     final image = await loadImageAsset('images/$fileName');
-     values.add(image);
-     totalImagesLoaded.value++;
-     return image;
-   }
-
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
 
+    loadPng('empty').then((value) => empty = value);
     loadPng('shades').then((value) => shades = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
     loadPng('atlas_characters').then((value) => atlas_characters = value);
@@ -309,11 +318,35 @@ class IsometricImages with IsometricComponent {
       if (totalImagesLoaded < totalImages.value)
         return;
 
-      _loadCompleter.complete(true);
+      _completer.complete(true);
     });
 
-    await _loadCompleter.future;
+    await _completer.future;
+
+    imageGroupsBody[BodyType.Nothing] = ImageGroupBody(
+      idle: empty,
+      running: empty,
+      armsIdle: empty,
+      armsRunning: empty,
+    );
+
+    imageGroupsBody[BodyType.Shirt_Blue] = ImageGroupBody(
+      idle: kid_body_shirt_blue_idle,
+      running: kid_body_shirt_blue_running,
+      armsIdle: kid_body_arms_shirt_blue_idle,
+      armsRunning: kid_body_arms_shirt_blue_running,
+    );
   }
+
+   Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
+
+   Future<Image> loadImage(String fileName) async {
+     totalImages.value++;
+     final image = await loadImageAsset('images/$fileName');
+     values.add(image);
+     totalImagesLoaded.value++;
+     return image;
+   }
 
   void cacheImages() {
 

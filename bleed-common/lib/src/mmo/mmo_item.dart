@@ -110,7 +110,13 @@ enum MMOItem {
       quality: MMOItemQuality.Common,
       type: GameObjectType.Body,
       subType: BodyType.Shirt_Red,
-      health: 2,
+      health: 1,
+  ),
+  Worn_Shirt_Blue (
+      quality: MMOItemQuality.Common,
+      type: GameObjectType.Body,
+      subType: BodyType.Shirt_Blue,
+      health: 1,
   ),
   Basic_Padded_Armour (
       quality: MMOItemQuality.Common,
