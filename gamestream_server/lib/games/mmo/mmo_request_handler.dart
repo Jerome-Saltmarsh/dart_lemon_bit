@@ -69,6 +69,12 @@ extension MMORequestHandler on WebSocketConnection {
       case MMORequest.Drop_Equipped_Legs:
         player.dropEquippedLegs();
         break;
+      case MMORequest.Drop_Equipped_Hand_Left:
+        player.dropEquippedHandLeft();
+        break;
+      case MMORequest.Drop_Equipped_Hand_Right:
+        player.dropEquippedHandRight();
+        break;
       case MMORequest.Toggle_Skills_Dialog:
         player.toggleSkillsDialog();
         break;
@@ -93,6 +99,12 @@ extension MMORequestHandler on WebSocketConnection {
         break;
       case MMORequest.Unequip_Legs:
         player.unequipLegs();
+        break;
+      case MMORequest.Unequip_Hand_Left:
+        player.unequipHandLeft();
+        break;
+      case MMORequest.Unequip_Hand_Right:
+        player.unequipHandRight();
         break;
     }
   }

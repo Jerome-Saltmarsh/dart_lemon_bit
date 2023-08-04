@@ -33,6 +33,12 @@ extension MMOActions on MmoGame {
   void dropEquippedLegs() =>
       sendMMORequest(MMORequest.Drop_Equipped_Legs);
 
+  void dropEquippedHandLeft() =>
+      sendMMORequest(MMORequest.Drop_Equipped_Hand_Left);
+
+  void dropEquippedHandRight() =>
+      sendMMORequest(MMORequest.Drop_Equipped_Hand_Right);
+
   void unequipHead() =>
       sendMMORequest(MMORequest.Unequip_Head);
 
@@ -41,6 +47,12 @@ extension MMOActions on MmoGame {
 
   void unequipLegs() =>
       sendMMORequest(MMORequest.Unequip_Legs);
+
+  void unequipHandLeft() =>
+      sendMMORequest(MMORequest.Unequip_Hand_Left);
+
+  void unequipHandRight() =>
+      sendMMORequest(MMORequest.Unequip_Hand_Right);
 
   void selectTalkOption(int index) =>
       sendMMORequest(MMORequest.Select_Talk_Option, index);

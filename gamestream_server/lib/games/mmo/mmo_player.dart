@@ -1,6 +1,5 @@
 
 import 'package:gamestream_server/common.dart';
-import 'package:gamestream_server/common/src/isometric/hand_type.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
@@ -441,6 +440,22 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     spawnItem(item);
     equipLegs(null);
+  }
+
+  void dropEquippedHandLeft(){
+    final item = equippedHandLeft.item;
+    if (item == null)
+      return;
+    spawnItem(item);
+    equipHandLeft(null);
+  }
+
+  void dropEquippedHandRight(){
+    final item = equippedHandRight.item;
+    if (item == null)
+      return;
+    spawnItem(item);
+    equipHandRight(null);
   }
 
   void dropItem(int index){
@@ -1131,6 +1146,10 @@ class AmuletPlayer extends IsometricPlayer {
   void unequipBody() => swapWithAvailableItemSlot(equippedBody);
 
   void unequipLegs() => swapWithAvailableItemSlot(equippedLegs);
+
+  void unequipHandLeft() => swapWithAvailableItemSlot(equippedHandLeft);
+
+  void unequipHandRight() => swapWithAvailableItemSlot(equippedHandRight);
 
   void reportInventoryFull() =>
       writeMMOError('Inventory is full');
