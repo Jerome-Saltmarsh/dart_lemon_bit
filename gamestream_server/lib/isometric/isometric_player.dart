@@ -1118,4 +1118,46 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void handleRequestException(Object exception) {
     // TODO: implement writeError
   }
+
+  @override
+  set headType(int value) {
+    if (headType == value)
+      return;
+
+    super.headType = value;
+    writeHeadType();
+  }
+
+  @override
+  set bodyType(int value) {
+    if (bodyType == value)
+      return;
+
+    super.bodyType = value;
+    writeBodyType();
+  }
+
+  @override
+  set legsType(int value) {
+    if (legsType == value)
+      return;
+
+    super.legsType = value;
+    writeLegsType();
+  }
+
+  void writeHeadType() {
+    writeByte(PlayerResponse.HeadType);
+    writeByte(headType);
+  }
+
+  void writeBodyType() {
+    writeByte(PlayerResponse.BodyType);
+    writeByte(bodyType);
+  }
+
+  void writeLegsType() {
+    writeByte(PlayerResponse.LegsType);
+    writeByte(legsType);
+  }
 }

@@ -26,6 +26,7 @@ class ServerResponse {
   static const Isometric_Characters       = 34;
   static const FPS                        = 35;
   static const Sort_GameObjects           = 36;
+  static const Player = 37;
 
   static String getName(int value) {
     return <int, String>{
