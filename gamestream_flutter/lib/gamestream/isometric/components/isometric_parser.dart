@@ -700,15 +700,12 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readPlayerResponse() {
      switch (readByte()){
        case PlayerResponse.HeadType:
-         print('parser.readPlayerResponse.headType()');
          player.headType.value = readByte();
          break;
        case PlayerResponse.BodyType:
-         print('parser.readPlayerResponse.bodyType()');
          player.bodyType.value = readByte();
          break;
        case PlayerResponse.LegsType:
-         print('parser.readPlayerResponse.legsType()');
          player.legsType.value = readByte();
          break;
      }

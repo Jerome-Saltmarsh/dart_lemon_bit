@@ -652,6 +652,6 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.textPosition(character, BodyType.getName(character.bodyType), offsetY: -50);
+    // render.textPosition(character, BodyType.getName(character.bodyType), offsetY: -50);
   }
 }

@@ -45,7 +45,6 @@ extension MMOResponseReader on IsometricParser {
          amulet.equippedWeaponIndex.value = readInt16();
          break;
        case MMOResponse.Player_Equipped:
-         print('MMOResponse.Player_Equipped');
          amulet.equippedHead.value = readMMOItem();
          amulet.equippedBody.value = readMMOItem();
          amulet.equippedLegs.value = readMMOItem();
