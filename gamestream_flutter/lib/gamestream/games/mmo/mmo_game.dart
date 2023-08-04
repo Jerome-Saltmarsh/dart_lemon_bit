@@ -29,6 +29,8 @@ class MmoGame extends IsometricGame {
   final equippedHead = Watch<MMOItem?>(null);
   final equippedBody = Watch<MMOItem?>(null);
   final equippedLegs = Watch<MMOItem?>(null);
+  final equippedHandLeft = Watch<MMOItem?>(null);
+  final equippedHandRight = Watch<MMOItem?>(null);
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);

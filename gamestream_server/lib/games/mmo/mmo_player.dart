@@ -803,9 +803,6 @@ class AmuletPlayer extends IsometricPlayer {
     legsType = equippedLegs.item?.subType ?? LegType.None;
 
     writeEquipped();
-    writeHeadType();
-    writeBodyType();
-    writeLegsType();
     writePlayerHealth();
     writeWeapons();
     writeItems();
@@ -824,6 +821,8 @@ class AmuletPlayer extends IsometricPlayer {
     writeMMOItem(equippedHead.item);
     writeMMOItem(equippedBody.item);
     writeMMOItem(equippedLegs.item);
+    writeMMOItem(equippedHandLeft.item);
+    writeMMOItem(equippedHandRight.item);
   }
 
   void writeMMOItem(MMOItem? value){
