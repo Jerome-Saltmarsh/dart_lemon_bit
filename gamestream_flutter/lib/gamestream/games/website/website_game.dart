@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -26,7 +28,6 @@ class WebsiteGame extends Game {
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
   final download = Watch(0.0);
-  // final debug = true;
   final isVisibleDialogCustomRegion = Watch(false);
   final colorRegion = Colors.orange;
   final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
@@ -38,7 +39,35 @@ class WebsiteGame extends Game {
   void onComponentReady() {
     print('isometric.website.onComponentsInitialized()');
     engine.buildUI = buildUI;
+    validateAtlases();
   }
+
+  void validateAtlases(){
+    for (final entry in GameObjectType.Collection.entries){
+      final type = entry.key;
+      final values = entry.value;
+      final atlas = Atlas.SrcCollection[type];
+      if (atlas == null) {
+        print('missing atlas $entry');
+        continue;
+      }
+      for (final value in values){
+        if (!atlas.containsKey(value)){
+          error.value = 'missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}';
+          print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+        }
+      }
+    }
+
+    for (final weaponType in WeaponType.values){
+      try {
+        TemplateAnimation.getWeaponPerformAnimation(weaponType);
+      } catch (e){
+        print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
+      }
+    }
+  }
+
 
   @override
   void onActivated() {

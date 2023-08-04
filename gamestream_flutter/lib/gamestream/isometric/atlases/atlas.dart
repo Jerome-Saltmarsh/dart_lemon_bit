@@ -113,19 +113,18 @@ class Atlas {
     ObjectType.Grenade: AtlasSrcObjects.Grenade,
   };
 
-  static const SrcCollection = <Map<int, List<double>>>[
-    Collection_Nothing,
-    Collection_Weapons,
-    Collection_Legs,
-    Collection_Body,
-    Collection_Head,
-    Collection_Objects,
-    Collection_Hands,
-    SrcItems.collection,
-  ];
+  static const SrcCollection = <int, Map<int, List<double>>>{
+    GameObjectType.Weapon: Collection_Weapons,
+    GameObjectType.Legs: Collection_Legs,
+    GameObjectType.Body: Collection_Body,
+    GameObjectType.Head: Collection_Head,
+    GameObjectType.Object: Collection_Objects,
+    GameObjectType.Hands: Collection_Hands,
+    GameObjectType.Item: SrcItems.collection,
+  };
 
   static List<double> getSrc(int type, int subType) =>
-      SrcCollection[type][subType] ??
+      SrcCollection[type]?[subType] ??
       (throw Exception(
           'Atlas.getSrc(type: ${GameObjectType.getName(type)}, subType: ${GameObjectType.getNameSubType(type, subType)})'
       ));
