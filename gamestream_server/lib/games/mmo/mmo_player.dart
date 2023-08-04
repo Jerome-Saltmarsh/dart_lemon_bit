@@ -823,6 +823,8 @@ class AmuletPlayer extends IsometricPlayer {
     headType = equippedHead.item?.subType ?? HeadType.None;
     bodyType = equippedBody.item?.subType ?? BodyType.None;
     legsType = equippedLegs.item?.subType ?? LegType.None;
+    handTypeLeft = equippedHandLeft.item?.subType ?? HandType.None;
+    handTypeRight = equippedHandRight.item?.subType ?? HandType.None;
 
     writeEquipped();
     writePlayerHealth();

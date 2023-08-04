@@ -655,6 +655,6 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.textPosition(character, HandType.getName(character.handTypeLeft), offsetY: -50);
+    // render.textPosition(character, HandType.getName(character.handTypeLeft), offsetY: -50);
   }
 }
