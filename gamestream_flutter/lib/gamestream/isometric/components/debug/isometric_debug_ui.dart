@@ -11,46 +11,56 @@ extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
       buildWatchBool(player.debugging, () =>
-          GSContainer(
-            child: WatchBuilder(tab, (DebugTab activeTab) => Column(
-              children: [
-                buildRowDebugTabs(activeTab),
-                height16,
-                Container(
-                  constraints: BoxConstraints(
-                      minWidth: 300,
-                      maxWidth: 400,
-                      minHeight: 300,
-                      maxHeight: engine.screen.height - 150),
-                  child: SingleChildScrollView(
-                    child: switch (activeTab) {
-                      DebugTab.Selected => buildTabSelected(),
-                      DebugTab.Network => buildTabNetwork(),
-                      DebugTab.Stats => buildTabStats(),
-                      DebugTab.Lighting => buildTabLighting(),
-                      DebugTab.Engine => buildTabEngine(),
-                      DebugTab.Objects => buildTabObjects(),
-                      DebugTab.Isometric => buildTabIsometric(),
-                      DebugTab.Player => buildTabPlayer(),
-                    },
-                  ),
-                ),
-              ],
-            )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildDebugTabs(),
+              buildActiveTabContent(),
+            ],
           )
       );
 
-  Row buildRowDebugTabs(DebugTab activeTab) => Row(children: DebugTab.values.map((e) => onPressed(
-      action: () => tab.value = e,
-      child: Container(
-          margin: const EdgeInsets.only(right: 16),
-          child: buildText(
-            e.name,
-            bold: activeTab == e,
-            underline: activeTab == e,
-          )
-      ))
-  ).toList(growable: false));
+  Widget buildActiveTabContent() => buildWatch(
+      tab,
+      (activeTab) => GSContainer(
+        child: Container(
+              constraints: BoxConstraints(
+                  minWidth: 300,
+                  maxWidth: 400,
+                  minHeight: 300,
+                  maxHeight: engine.screen.height - 150),
+              child: SingleChildScrollView(
+                child: switch (activeTab) {
+                  DebugTab.Selected => buildTabSelected(),
+                  DebugTab.Network => buildTabNetwork(),
+                  DebugTab.Stats => buildTabStats(),
+                  DebugTab.Lighting => buildTabLighting(),
+                  DebugTab.Engine => buildTabEngine(),
+                  DebugTab.Objects => buildTabObjects(),
+                  DebugTab.Isometric => buildTabIsometric(),
+                  DebugTab.Player => buildTabPlayer(),
+                },
+              ),
+            ),
+      ));
+
+  Widget buildDebugTabs() => GSContainer(
+    child: buildWatch(
+        tab,
+        (activeTab) => Row(
+            children: DebugTab.values
+                .map((e) => onPressed(
+                    action: () => tab.value = e,
+                    child: Container(
+                        margin: const EdgeInsets.only(right: 16),
+                        child: buildText(
+                          e.name,
+                          bold: activeTab == e,
+                          underline: activeTab == e,
+                        ))))
+                .toList(growable: false))),
+  );
 
   Widget buildTabSelected() => WatchBuilder(
       selectedCollider,
