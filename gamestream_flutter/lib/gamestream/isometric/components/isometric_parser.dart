@@ -16,16 +16,16 @@ import 'package:lemon_byte/byte_reader.dart';
 import 'isometric_component.dart';
 
 
-class IsometricResponseReader with ByteReader, IsometricComponent
+class IsometricParser with ByteReader, IsometricComponent
 {
   final decoder = ZLibDecoder();
   final bufferSize = Watch(0);
 
-  void readNetworkString(String value){
+  void parseString(String value){
 
   }
 
-  void readNetworkBytes(Uint8List bytes) {
+  void parseBytes(Uint8List bytes) {
     assert (bytes.isNotEmpty);
     index = 0;
     this.values = bytes;

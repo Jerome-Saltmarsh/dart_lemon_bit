@@ -42,7 +42,7 @@ mixin IsometricComponent implements Component {
   late final IsometricActions action;
   late final IsometricEvents events;
   late final IsometricOptions options;
-  late final IsometricResponseReader responseReader;
+  late final IsometricParser parser;
   late final WebsiteGame website;
   late final MmoGame amulet;
   late final CaptureTheFlagGame captureTheFlag;

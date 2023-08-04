@@ -15,8 +15,8 @@ class IsometricNetwork with IsometricComponent {
   @override
   Future onComponentInit(sharedPreferences) async {
     websocket = WebsocketClient(
-      readString: responseReader.readServerResponseString,
-      readBytes: responseReader.readNetworkBytes,
+      readString: parser.readServerResponseString,
+      readBytes: parser.parseBytes,
       onError: onNetworkError,
     );
   }

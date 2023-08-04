@@ -1,8 +1,8 @@
 
 import 'package:gamestream_flutter/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_response_reader.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 
-extension MMOResponseReader on IsometricResponseReader {
+extension MMOResponseReader on IsometricParser {
 
   void readMMOResponse(){
      switch (readByte()){

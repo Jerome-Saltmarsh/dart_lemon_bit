@@ -1,9 +1,9 @@
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_power.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_response_reader.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:gamestream_flutter/library.dart';
 
-extension CaptureTheFlagResponseReader on IsometricResponseReader {
+extension CaptureTheFlagResponseReader on IsometricParser {
 
 
   void readCaptureTheFlag() {

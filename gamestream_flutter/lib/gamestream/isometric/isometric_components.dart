@@ -51,7 +51,7 @@ class IsometricComponents extends ComponentContainer {
   final RendererGameObjects rendererGameObjects;
   final IsometricActions action;
   final IsometricEvents events;
-  final IsometricResponseReader responseReader;
+  final IsometricParser responseReader;
   final IsometricAnimation animation;
   final IsometricImages images;
   final IsometricLighting lighting;
@@ -164,7 +164,7 @@ class IsometricComponents extends ComponentContainer {
       component.render = render;
       component.action = action;
       component.events = events;
-      component.responseReader = responseReader;
+      component.parser = responseReader;
       component.website = website;
       component.amulet = mmo;
       component.captureTheFlag = captureTheFlag;

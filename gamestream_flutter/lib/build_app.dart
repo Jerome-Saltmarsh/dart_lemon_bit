@@ -54,7 +54,7 @@ Widget buildApp(){
       ui: IsometricUI(),
       action: IsometricActions(),
       events: IsometricEvents(),
-      responseReader: IsometricResponseReader(),
+      responseReader: IsometricParser(),
       camera: IsometricCamera(),
       particles: IsometricParticles(),
       player: IsometricPlayer(),
