@@ -58,7 +58,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         readApiPlayer();
         break;
       case ServerResponse.Player:
-        readPlayerResponse();
+        player.parsePlayerResponse();
         break;
       case ServerResponse.Isometric:
         readIsometricResponse();
@@ -696,18 +696,23 @@ class IsometricParser with ByteReader, IsometricComponent {
   CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
 
   CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
-
-  void readPlayerResponse() {
-     switch (readByte()){
-       case PlayerResponse.HeadType:
-         player.headType.value = readByte();
-         break;
-       case PlayerResponse.BodyType:
-         player.bodyType.value = readByte();
-         break;
-       case PlayerResponse.LegsType:
-         player.legsType.value = readByte();
-         break;
-     }
-  }
+  // void readPlayerResponse() {
+  //    switch (readByte()){
+  //      case PlayerResponse.HeadType:
+  //        player.headType.value = readByte();
+  //        break;
+  //      case PlayerResponse.BodyType:
+  //        player.bodyType.value = readByte();
+  //        break;
+  //      case PlayerResponse.LegsType:
+  //        player.legsType.value = readByte();
+  //        break;
+  //      case PlayerResponse.HandTypeLeft:
+  //        player.handTypeLeft.value = readByte();
+  //        break;
+  //      case PlayerResponse.HandTypeRight:
+  //        player.handTypeRight.value = readByte();
+  //        break;
+  //    }
+  // }
 }

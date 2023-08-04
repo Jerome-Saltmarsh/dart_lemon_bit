@@ -1146,6 +1146,24 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeLegsType();
   }
 
+  @override
+  set handTypeLeft(int value){
+    if (handTypeLeft == value)
+      return;
+
+    super.handTypeLeft = value;
+    writeHandTypeLeft();
+  }
+
+  @override
+  set handTypeRight(int value){
+    if (handTypeRight == value)
+      return;
+
+    super.handTypeRight = value;
+    writeHandTypeRight();
+  }
+
   void writeHeadType() {
     writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.HeadType);
@@ -1162,5 +1180,17 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.LegsType);
     writeByte(legsType);
+  }
+
+  void writeHandTypeLeft() {
+    writeByte(ServerResponse.Player);
+    writeByte(PlayerResponse.LegsType);
+    writeByte(handTypeLeft);
+  }
+
+  void writeHandTypeRight() {
+    writeByte(ServerResponse.Player);
+    writeByte(PlayerResponse.LegsType);
+    writeByte(handTypeRight);
   }
 }

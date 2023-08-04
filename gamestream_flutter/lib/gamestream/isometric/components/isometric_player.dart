@@ -42,6 +42,8 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final bodyType = Watch(0);
   final headType = Watch(0);
   final legsType = Watch(0);
+  final handTypeLeft = Watch(0);
+  final handTypeRight = Watch(0);
   final previousPosition = Position();
   final accuracy = Watch(1.0);
   final storeItems = Watch(<int>[]);
@@ -164,6 +166,24 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     scene.totalProjectiles = 0;
     scene.totalCharacters = 0;
   }
-}
 
-typedef ItemTypeEntry = MapEntry<int, int>;
+  void parsePlayerResponse() {
+    switch (parser.readByte()) {
+      case PlayerResponse.HeadType:
+        headType.value = parser.readByte();
+        break;
+      case PlayerResponse.BodyType:
+        bodyType.value = parser.readByte();
+        break;
+      case PlayerResponse.LegsType:
+        legsType.value = parser.readByte();
+        break;
+      case PlayerResponse.HandTypeLeft:
+        handTypeLeft.value = parser.readByte();
+        break;
+      case PlayerResponse.HandTypeRight:
+        handTypeRight.value = parser.readByte();
+        break;
+    }
+  }
+}
