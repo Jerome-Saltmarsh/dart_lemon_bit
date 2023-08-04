@@ -63,7 +63,6 @@ class AmuletPlayer extends IsometricPlayer {
     equipLegs(MMOItem.Travellers_Pants);
     health = maxHealth;
     equippedWeaponIndex = 0;
-
     writeActivatedPowerIndex();
     writeWeapons();
     writeTreasures();
@@ -650,6 +649,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedHead);
+      headType = HeadType.Plain;
       return;
     }
 
@@ -661,6 +661,8 @@ class AmuletPlayer extends IsometricPlayer {
       item: item,
       cooldown: item.cooldown,
     );
+
+    headType = item.subType;
   }
 
   void equipBody(MMOItem? item){
@@ -672,6 +674,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedBody);
+      bodyType = BodyType.Nothing;
       return;
     }
 
@@ -684,6 +687,8 @@ class AmuletPlayer extends IsometricPlayer {
       item: item,
       cooldown: item.cooldown,
     );
+
+    bodyType = item.subType;
   }
 
   void equipLegs(MMOItem? item){
@@ -695,6 +700,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedLegs);
+      legsType = LegType.Nothing;
       return;
     }
 
@@ -706,6 +712,7 @@ class AmuletPlayer extends IsometricPlayer {
         item: item,
         cooldown: item.cooldown,
     );
+    legsType = item.subType;
   }
 
   void pickupItem(MMOItem item) {
@@ -731,9 +738,6 @@ class AmuletPlayer extends IsometricPlayer {
     assert (equippedWeapon?.item?.isWeapon ?? true);
 
     health = clamp(health, 0, maxHealth);
-    headType = equippedHead.item?.subType ?? HeadType.Plain;
-    bodyType = equippedBody.item?.subType ?? BodyType.Nothing;
-    legsType = equippedLegs.item?.subType ?? LegType.Nothing;
     weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
 

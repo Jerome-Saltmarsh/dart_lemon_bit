@@ -138,9 +138,9 @@ extension isometricDebugUI on IsometricDebug {
                   'player-render: x: ${player.position.renderX}, y: ${player.position.renderY}\n'
                   'player-screen: x: ${player.positionScreenX.toInt()}, y: ${player.positionScreenY.toInt()}\n'
                   'player-index: z: ${player.position.indexZ}, row: ${player.position.indexRow}, column: ${player.position.indexColumn}\n'
-                  'player-legs: ${LegType.getName(player.legs.value)}\n'
-                  'player-body: ${BodyType.getName(player.body.value)}\n'
-                  'player-head: ${HeadType.getName(player.head.value)}\n'
+                  'player-legs: ${LegType.getName(player.legsType.value)}\n'
+                  'player-body: ${BodyType.getName(player.bodyType.value)}\n'
+                  'player-head: ${HeadType.getName(player.headType.value)}\n'
                   'player-weapon: ${WeaponType.getName(player.weapon.value)}\n'
                   'aim-target-category: ${TargetCategory.getName(player.aimTargetCategory)}\n'
                   'aim-target-type: ${player.aimTargetType}\n'
@@ -544,9 +544,9 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabPlayer() =>
       buildTab(
         children: [
-          buildRowMapped('legs-type', player.legs, LegType.getName),
-          buildRowMapped('body-type', player.body, BodyType.getName),
-          buildRowMapped('head-type', player.head, HeadType.getName),
+          buildRowMapped('legs-type', player.legsType, LegType.getName),
+          buildRowMapped('body-type', player.bodyType, BodyType.getName),
+          buildRowMapped('head-type', player.headType, HeadType.getName),
         ],
       );
 

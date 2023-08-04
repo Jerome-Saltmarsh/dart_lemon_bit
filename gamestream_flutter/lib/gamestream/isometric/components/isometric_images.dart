@@ -23,7 +23,7 @@ class ImageGroupBody {
 
 class IsometricImages with IsometricComponent {
 
-  var imagesCached = false;
+  var imagesCached = true;
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);

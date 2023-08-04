@@ -1147,16 +1147,19 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeHeadType() {
+    writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.HeadType);
     writeByte(headType);
   }
 
   void writeBodyType() {
+    writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.BodyType);
     writeByte(bodyType);
   }
 
   void writeLegsType() {
+    writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.LegsType);
     writeByte(legsType);
   }
