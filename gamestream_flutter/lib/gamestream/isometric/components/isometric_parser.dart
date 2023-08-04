@@ -16,9 +16,7 @@ import 'package:lemon_byte/byte_reader.dart';
 import 'isometric_component.dart';
 
 
-class IsometricParser with ByteReader, IsometricComponent
-{
-  final decoder = ZLibDecoder();
+class IsometricParser with ByteReader, IsometricComponent {
   final bufferSize = Watch(0);
 
   void parseString(String value){
@@ -26,9 +24,8 @@ class IsometricParser with ByteReader, IsometricComponent
   }
 
   void parseBytes(Uint8List bytes) {
-    assert (bytes.isNotEmpty);
     index = 0;
-    this.values = bytes;
+    values = bytes;
     bufferSize.value = bytes.length;
     final length = bytes.length;
 
@@ -295,6 +292,7 @@ class IsometricParser with ByteReader, IsometricComponent
     final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
 
+    final decoder = ZLibDecoder();
     scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
     scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
     scene.area = scene.totalRows * scene.totalColumns;

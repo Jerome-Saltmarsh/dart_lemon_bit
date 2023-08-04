@@ -31,6 +31,7 @@ extension isometricDebugUI on IsometricDebug {
                       DebugTab.Engine => buildTabEngine(),
                       DebugTab.Objects => buildTabObjects(),
                       DebugTab.Isometric => buildTabIsometric(),
+                      DebugTab.Player => buildTabPlayer(),
                     },
                   ),
                 ),
@@ -285,24 +286,24 @@ extension isometricDebugUI on IsometricDebug {
     required Watch<double> watch,
     required String text,
   }) => buildRow(
-    text: text,
-    value: WatchBuilder(watch, (x) => buildText(x.toInt())),
+    text,
+    WatchBuilder(watch, (x) => buildText(x.toInt())),
   );
 
   static Widget buildRowWatchInt({
     required Watch<int> watch,
     required String text,
-  }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
+  }) => buildRow(text, WatchBuilder(watch, buildText));
 
   static Widget buildRowWatchBool({
     required Watch<bool> watch,
     required String text,
-  }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
+  }) => buildRow(text, WatchBuilder(watch, buildText));
 
   static Widget buildRowWatchString({
     required String text,
     required Watch<String> watch,
-  }) => buildRow(text: text, value: WatchBuilder(watch, buildText));
+  }) => buildRow(text, WatchBuilder(watch, buildText));
 
   static Widget buildRowText({required String text, required dynamic value}) => Container(
     margin: const EdgeInsets.only(bottom: 2),
@@ -315,7 +316,7 @@ extension isometricDebugUI on IsometricDebug {
     ),
   );
 
-  static Widget buildRow({required String text, required Widget value}) => Container(
+  static Widget buildRow(String text, Widget value) => Container(
     margin: const EdgeInsets.only(bottom: 2),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,10 +351,10 @@ extension isometricDebugUI on IsometricDebug {
 
     final notSet = Column(
       children: [
-        buildRow(text: 'target-type', value: buildText('-')),
-        buildRow(text: 'target-x', value: buildText('-')),
-        buildRow(text: 'target-y', value: buildText('-')),
-        buildRow(text: 'target-z', value: buildText('-')),
+        buildRow('target-type', buildText('-')),
+        buildRow('target-x', buildText('-')),
+        buildRow('target-y', buildText('-')),
+        buildRow('target-z', buildText('-')),
       ],
     );
 
@@ -370,8 +371,8 @@ extension isometricDebugUI on IsometricDebug {
         height8,
         onPressed(
           child: buildRow(
-            text: 'camera-target',
-            value: GSRefresh((){
+            'camera-target',
+            GSRefresh((){
               final target = camera.target;
               if (target == null) {
                 return buildValueText('-');
@@ -381,8 +382,8 @@ extension isometricDebugUI on IsometricDebug {
           ),
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
-        buildRow(text: 'action', value: buildWatch(characterAction, (t) => buildText(CharacterAction.getName(t)))),
-        buildRow(text: 'goal', value: buildWatch(characterAction, (t) => buildText(CharacterGoal.getName(t)))),
+        buildRow('action', buildWatch(characterAction, (t) => buildText(CharacterAction.getName(t)))),
+        buildRow('goal', buildWatch(characterAction, (t) => buildText(CharacterGoal.getName(t)))),
         buildRowWatchInt(text: 'team', watch: team),
         buildRowWatchInt(text: 'radius', watch: radius),
         buildWatch(healthMax, (healthMax) => buildWatch(health, (health) =>
@@ -393,14 +394,14 @@ extension isometricDebugUI on IsometricDebug {
         buildRowWatchInt(text: 'path-index', watch: pathIndex),
         buildRowWatchInt(text: 'path-end', watch: pathEnd),
         buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
-        buildRow(text: 'character-type', value: buildDropDownCharacterType()),
-        buildRow(text: 'character-state', value: buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
+        buildRow('character-type', buildDropDownCharacterType()),
+        buildRow('character-state', buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
         buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
         buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
-        buildRow(text: 'weapon-type', value: buildDropDownWeaponType()),
+        buildRow('weapon-type', buildDropDownWeaponType()),
         buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
         buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
-        buildRow(text: 'weapon-state', value: buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
+        buildRow('weapon-state', buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
         buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
         onPressed(
             action: network.sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,
@@ -435,8 +436,8 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildRow(text: 'type', value: buildText(GameObjectType.getName(type))),
-              buildRow(text: 'sub-type', value: WatchBuilder(selectedGameObjectSubType, (subType) => buildText(GameObjectType.getNameSubType(type, subType))))
+              buildRow('type', buildText(GameObjectType.getName(type))),
+              buildRow('sub-type', WatchBuilder(selectedGameObjectSubType, (subType) => buildText(GameObjectType.getNameSubType(type, subType))))
             ],
           ))
 
@@ -450,15 +451,15 @@ extension isometricDebugUI on IsometricDebug {
       children: [
         onPressed(
             action: compositor.rendererNodes.toggleDynamicResolutionEnabled,
-            child: buildRow(text: 'dynamic-resolution-enabled', value: GSRefresh(() => buildText(compositor.rendererNodes.dynamicResolutionEnabled))),
+            child: buildRow('dynamic-resolution-enabled', GSRefresh(() => buildText(compositor.rendererNodes.dynamicResolutionEnabled))),
         ),
         GSRefresh(() => buildText(
             'camera-target: ${camera.target}\n'
         )),
-        buildRow(text: 'high-resolution', value: GSRefresh(() => buildText(compositor.rendererNodes.highResolution))),
-        buildRow(text: 'nodes-screen-on', value: GSRefresh(() => buildText(compositor.rendererNodes.onscreenNodes))),
-        buildRow(text: 'nodes-screen-off', value: GSRefresh(() => buildText(compositor.rendererNodes.offscreenNodes))),
-        buildRow(text: 'order-shift-y', value: GSRefresh(() => buildValueText(compositor.rendererNodes.orderShiftY))),
+        buildRow('high-resolution', GSRefresh(() => buildText(compositor.rendererNodes.highResolution))),
+        buildRow('nodes-screen-on', GSRefresh(() => buildText(compositor.rendererNodes.onscreenNodes))),
+        buildRow('nodes-screen-off', GSRefresh(() => buildText(compositor.rendererNodes.offscreenNodes))),
+        buildRow('order-shift-y', GSRefresh(() => buildValueText(compositor.rendererNodes.orderShiftY))),
         onPressed(
           action: compositor.rendererNodes.increaseOrderShiftY,
           child: buildText('increase'),
@@ -469,15 +470,15 @@ extension isometricDebugUI on IsometricDebug {
         ),
         onPressed(
           action: options.toggleRenderHealthbarAllies,
-          child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
+          child: buildRow('render-health-ally', GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
         ),
         onPressed(
             action: options.toggleRenderHealthbarAllies,
-            child: buildRow(text: 'render-health-ally', value: GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
+            child: buildRow('render-health-ally', GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
         ),
         onPressed(
             action: options.toggleRenderHealthBarEnemies,
-            child: buildRow(text: 'render-health-enemy', value: GSRefresh(() => buildValueText(options.renderHealthBarEnemies))),
+            child: buildRow('render-health-enemy', GSRefresh(() => buildValueText(options.renderHealthBarEnemies))),
         ),
         onPressed(
             action: player.toggleControlsRunInDirectionEnabled,
@@ -539,5 +540,26 @@ extension isometricDebugUI on IsometricDebug {
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
+
+  Widget buildTabPlayer() =>
+      buildTab(
+        children: [
+          buildRowMapped('legs-type', player.legs, LegType.getName),
+          buildRowMapped('body-type', player.body, BodyType.getName),
+          buildRowMapped('head-type', player.head, HeadType.getName),
+        ],
+      );
+
+  Widget buildRowMapped<T>(String text, Watch<T> watch, dynamic mapper(T t)) =>
+      buildRow(text, buildWatchMapText(watch, mapper));
+
+  Widget buildTab({required List<Widget> children}) => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+    );
 }
+
+Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))
+  => buildWatch(watch, (t) => buildText(mapper(t)));
 
