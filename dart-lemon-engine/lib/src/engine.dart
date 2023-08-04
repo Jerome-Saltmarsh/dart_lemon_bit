@@ -1311,24 +1311,11 @@ class Engine extends StatelessWidget {
       });
     } else {
       print('engine.build() already initialized');
-      if (internalBuildCreated){
-        app.value = internalBuild;
-      } else {
-        if (!internalBuildCreated){
-          internalBuild = _internalBuildApp();
-          internalBuildCreated = true;
-        }
-        app.value = internalBuild;
-        // app.value = MaterialApp(
-        //   title: title,
-        //   theme: themeData.value,
-        //   debugShowCheckedModeBanner: false,
-        //   home: Scaffold(
-        //     backgroundColor: Colors.black,
-        //     body: Center(child: Text('waiting for internal build', style: TextStyle(color: Colors.white))),
-        //   ),
-        // );
+      if (!internalBuildCreated) {
+        internalBuild = _internalBuildApp();
+        internalBuildCreated = true;
       }
+      app.value = internalBuild;
     }
     return appBuilder;
   }
