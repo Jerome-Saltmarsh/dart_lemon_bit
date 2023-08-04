@@ -486,10 +486,10 @@ class RendererCharacters extends RenderGroup {
     ui.Image imageArmBehind;
 
     final leftInFront = const [
-      IsometricDirection.North,
-      IsometricDirection.North_West,
-      IsometricDirection.West,
-    ].contains(character.direction);
+      InputDirection.Up_Left,
+      InputDirection.Left,
+      InputDirection.Down_Left,
+    ].contains(direction);
 
     if (character.running) {
       srcX = (frame % 8) * size;
