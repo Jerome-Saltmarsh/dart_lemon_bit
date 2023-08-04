@@ -1133,6 +1133,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     if (bodyType == value)
       return;
 
+    print('player.bodyType(${BodyType.getName(value)})');
     super.bodyType = value;
     writeBodyType();
   }

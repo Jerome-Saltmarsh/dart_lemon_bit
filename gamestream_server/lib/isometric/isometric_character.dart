@@ -180,7 +180,9 @@ class IsometricCharacter extends IsometricCollider {
   // TODO REMOVE
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
 
-  bool get characterTypeTemplate => characterType == CharacterType.Template;
+  bool get characterTypeTemplate =>
+      characterType == CharacterType.Template ||
+      characterType == CharacterType.Kid;
 
   bool get dead => state == CharacterState.Dead;
 

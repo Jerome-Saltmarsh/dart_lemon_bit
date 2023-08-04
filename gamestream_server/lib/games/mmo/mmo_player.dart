@@ -732,6 +732,8 @@ class AmuletPlayer extends IsometricPlayer {
     if (!equipmentDirty)
       return;
 
+    print("cleanEquipment()");
+
     assert (equippedHead.item?.isHead ?? true);
     assert (equippedBody.item?.isBody ?? true);
     assert (equippedLegs.item?.isLegs ?? true);
@@ -740,8 +742,14 @@ class AmuletPlayer extends IsometricPlayer {
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
+    headType = equippedHead.item?.subType ?? HeadType.Plain;
+    bodyType = equippedBody.item?.subType ?? BodyType.Nothing;
+    legsType = equippedLegs.item?.subType ?? LegType.Nothing;
 
     writeEquipped();
+    writeHeadType();
+    writeBodyType();
+    writeLegsType();
     writePlayerHealth();
     writeWeapons();
     writeItems();
