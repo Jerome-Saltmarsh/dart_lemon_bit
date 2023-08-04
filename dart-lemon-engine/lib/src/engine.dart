@@ -1020,7 +1020,7 @@ class Engine extends StatelessWidget {
     return const {'handled': true};
   }
 
-  Widget _internalBuildApp() => WatchBuilder(themeData, (ThemeData? themeData) =>
+  Widget _internalBuild() => WatchBuilder(themeData, (ThemeData? themeData) =>
       CustomTicker(
         onTrick: _onTickElapsed,
         onDispose: _internalDispose,
@@ -1280,7 +1280,7 @@ class Engine extends StatelessWidget {
       ),
     );
 
-    final loaded = _internalBuildApp();
+    final loaded = _internalBuild();
     final future =  _internalInit();
 
     return FutureBuilder(
@@ -1332,13 +1332,6 @@ class DeviceType {
   }
 }
 
-enum CursorType {
-  None,
-  Basic,
-  Forbidden,
-  Precise,
-  Click,
-}
 
 class _EnginePainter extends CustomPainter {
 
