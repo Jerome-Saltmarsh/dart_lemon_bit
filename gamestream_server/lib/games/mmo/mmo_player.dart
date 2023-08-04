@@ -642,6 +642,13 @@ class AmuletPlayer extends IsometricPlayer {
       case GameObjectType.Legs:
         swap(equippedLegs, selected);
         break;
+      case GameObjectType.Hand:
+        if (equippedHandLeft.item == null){
+          swap(equippedHandLeft, selected);
+        } else {
+          swap(equippedHandRight, selected);
+        }
+        break;
     }
   }
 
