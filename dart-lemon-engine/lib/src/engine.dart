@@ -90,12 +90,6 @@ class Engine extends StatelessWidget {
     ..isAntiAlias = false
     ..strokeWidth = 1;
 
-  // final spritePaint = Paint()
-  //   ..color = Colors.white
-  //   ..strokeCap = StrokeCap.round
-  //   ..style = PaintingStyle.fill
-  //   ..isAntiAlias = false
-  //   ..strokeWidth = 1;
   Timer? updateTimer;
 
   final keyboardState = <LogicalKeyboardKey, int>{};
@@ -564,6 +558,14 @@ class Engine extends StatelessWidget {
       await onInit!(sharedPreferences);
     }
     durationPerUpdate.value = Default_Duration_Per_Update;
+
+    if (!internalBuildCreated){
+      internalBuild = _internalBuildApp();
+      internalBuildCreated = true;
+    }
+    app.value = internalBuild;
+
+
   }
 
   void _internalOnFullScreenChanged(event){
@@ -1020,7 +1022,7 @@ class Engine extends StatelessWidget {
     return const {'handled': true};
   }
 
-  Widget _internalBuild() => WatchBuilder(themeData, (ThemeData? themeData) =>
+  Widget _internalBuildApp() => WatchBuilder(themeData, (ThemeData? themeData) =>
       CustomTicker(
         onTrick: _onTickElapsed,
         onDispose: _internalDispose,
@@ -1267,27 +1269,68 @@ class Engine extends StatelessWidget {
       ),
     );
 
+
+  late final Watch<Widget> app;
+  late WatchBuilder<Widget> appBuilder;
+  var appInitialized = false;
+
+  late Widget internalBuild;
+  var internalBuildCreated = false;
+  var buildingInternal = false;
+
   @override
   Widget build(BuildContext context) {
     print("engine.build()");
 
-    final loading = MaterialApp(
-      title: title,
-      theme: themeData.value,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: loadingScreenBuilder(context),
-      ),
-    );
 
-    final loaded = _internalBuild();
-    final future =  _internalInit();
+    if (!appInitialized){
+      print('engine.initializing()');
+      appInitialized = true;
 
-    return FutureBuilder(
-        future: future,
-        builder: (context, snapshot) =>
-          snapshot.connectionState != ConnectionState.done ? loading : loaded
-    );
+      app = Watch<Widget>(MaterialApp(
+        title: title,
+        theme: themeData.value,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: loadingScreenBuilder(context),
+        ),
+      ));
+
+      appBuilder = WatchBuilder(app, (t) => t);
+
+      _internalInit().catchError((error){
+        app.value = MaterialApp(
+          title: title,
+          theme: themeData.value,
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(child: Text(error.toString(), style: TextStyle(color: Colors.white))),
+          ),
+        );
+      });
+    } else {
+      print('engine.build() already initialized');
+      if (internalBuildCreated){
+        app.value = internalBuild;
+      } else {
+        if (!internalBuildCreated){
+          internalBuild = _internalBuildApp();
+          internalBuildCreated = true;
+        }
+        app.value = internalBuild;
+        // app.value = MaterialApp(
+        //   title: title,
+        //   theme: themeData.value,
+        //   debugShowCheckedModeBanner: false,
+        //   home: Scaffold(
+        //     backgroundColor: Colors.black,
+        //     body: Center(child: Text('waiting for internal build', style: TextStyle(color: Colors.white))),
+        //   ),
+        // );
+      }
+    }
+    return appBuilder;
   }
 
   void onChangedDurationPerUpdate(Duration duration){

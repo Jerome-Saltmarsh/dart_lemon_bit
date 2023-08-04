@@ -1,5 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/common/src/isometric/hand_type.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/lemon_math.dart';
@@ -26,6 +27,8 @@ class AmuletPlayer extends IsometricPlayer {
   final equippedHead = MMOItemObject();
   final equippedBody = MMOItemObject();
   final equippedLegs = MMOItemObject();
+  final equippedHandLeft = MMOItemObject();
+  final equippedHandRight = MMOItemObject();
 
   late List<MMOItemObject> items;
 
@@ -61,6 +64,8 @@ class AmuletPlayer extends IsometricPlayer {
     equipHead(MMOItem.Steel_Helmet);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
+    equipHandLeft(MMOItem.Gauntlet);
+    equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
     equippedWeaponIndex = 0;
     writeActivatedPowerIndex();
@@ -714,6 +719,57 @@ class AmuletPlayer extends IsometricPlayer {
     );
     legsType = item.subType;
   }
+
+  void equipHandLeft(MMOItem? item){
+    if (deadBusyOrWeaponStateBusy)
+      return;
+
+    if (equippedHandLeft.item == item)
+      return;
+
+    if (item == null){
+      clearSlot(equippedHandLeft);
+      handTypeLeft = HandType.None;
+      return;
+    }
+
+    if (!item.isHand)
+      throw Exception();
+
+    setSlot(
+      slot: equippedHandLeft,
+      item: item,
+      cooldown: item.cooldown,
+    );
+
+    handTypeLeft = item.subType;
+  }
+
+  void equipHandRight(MMOItem? item){
+    if (deadBusyOrWeaponStateBusy)
+      return;
+
+    if (equippedHandRight.item == item)
+      return;
+
+    if (item == null){
+      clearSlot(equippedHandRight);
+      handTypeRight = HandType.None;
+      return;
+    }
+
+    if (!item.isHand)
+      throw Exception();
+
+    setSlot(
+      slot: equippedHandRight,
+      item: item,
+      cooldown: item.cooldown,
+    );
+
+    handTypeRight = item.subType;
+  }
+
 
   void pickupItem(MMOItem item) {
 

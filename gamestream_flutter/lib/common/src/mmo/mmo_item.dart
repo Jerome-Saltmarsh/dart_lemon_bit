@@ -92,12 +92,17 @@ enum MMOItem {
       health: 2,
       movement: 0.1,
   ),
+  Gauntlet(
+      quality: MMOItemQuality.Common,
+      type: GameObjectType.Hand,
+      subType: HandType.Gauntlet,
+      health: 2,
+  ),
   Squires_Pants(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Legs,
       subType: LegType.Green,
       health: 3,
-
   ),
   Knights_Pants(
       quality: MMOItemQuality.Unique,
@@ -191,6 +196,8 @@ enum MMOItem {
   bool get isWeapon => type == GameObjectType.Weapon;
 
   bool get isHead => type == GameObjectType.Head;
+
+  bool get isHand => type == GameObjectType.Hand;
 
   bool get isBody => type == GameObjectType.Body;
 

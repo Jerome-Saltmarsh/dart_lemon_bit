@@ -5,6 +5,11 @@ class HandType {
 
   static String getName(int value) => const {
       None: 'None',
-      Gauntlet: "Gauntlet",
+      Gauntlet: 'Gauntlet',
     }[value] ?? 'hand-type-unknown-$value';
+
+  static const values = [
+    None,
+    Gauntlet,
+  ];
 }

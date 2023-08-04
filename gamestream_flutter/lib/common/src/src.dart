@@ -23,3 +23,4 @@ export 'request_modify_canvas_size.dart';
 export 'scene_json.dart';
 export 'server_response.dart';
 export 'version.dart';
+export 'isometric/hand_type.dart';

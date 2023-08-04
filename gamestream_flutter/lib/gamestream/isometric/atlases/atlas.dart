@@ -1,6 +1,8 @@
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/src.dart';
 
+import 'atlas_src_hands.dart';
+
 class Atlas {
 
   static const SrcX = 0;
@@ -68,6 +70,11 @@ class Atlas {
     HeadType.Wizards_Hat: AtlasSrcHead.Wizards_Hat,
   };
 
+  static const Collection_Hands = <int, List<double>>{
+    HandType.None: AtlasSrcHands.None,
+    HandType.Gauntlet: AtlasSrcHands.Gauntlet,
+  };
+
   static const Collection_Objects = <int, List<double>>{
     ObjectType.Barrel: AtlasSrcObjects.Barrel,
     ObjectType.Barrel_Explosive: AtlasSrcObjects.Barrel_Explosive,
@@ -113,6 +120,7 @@ class Atlas {
     Collection_Body,
     Collection_Head,
     Collection_Objects,
+    Collection_Hands,
     SrcItems.collection,
   ];
 
@@ -121,16 +129,4 @@ class Atlas {
       (throw Exception(
           'Atlas.getSrc(type: ${GameObjectType.getName(type)}, subType: ${GameObjectType.getNameSubType(type, subType)})'
       ));
-
-//   Image getImage(int type) =>
-//       switch (type) {
-//           GameObjectType.Weapon => Images.atlas_weapons,
-//           GameObjectType.Object => Images.atlas_gameobjects,
-//           GameObjectType.Head => Images.atlas_head,
-//           GameObjectType.Body => Images.atlas_body,
-//           GameObjectType.Legs => Images.atlas_legs,
-//           GameObjectType.Item => Images.atlas_items,
-//           _ => (throw Exception('Atlas.getImage(type: ${GameObjectType.getName(type)}})'))
-//       }
-// ;
 }

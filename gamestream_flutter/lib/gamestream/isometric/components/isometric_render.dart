@@ -16,7 +16,7 @@ class IsometricRender with IsometricComponent {
 
   @override
   Future onComponentInit(sharedPreferences) async {
-    validateAtlases();
+    // validateAtlases();
     engine.onDrawCanvas = drawCanvas;
     engine.onDrawForeground = drawForeground;
   }

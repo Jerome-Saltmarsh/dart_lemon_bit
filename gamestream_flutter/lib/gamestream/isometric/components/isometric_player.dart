@@ -170,20 +170,40 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   void parsePlayerResponse() {
     switch (parser.readByte()) {
       case PlayerResponse.HeadType:
-        headType.value = parser.readByte();
+        readHeadType();
         break;
       case PlayerResponse.BodyType:
-        bodyType.value = parser.readByte();
+        readBodyType();
         break;
       case PlayerResponse.LegsType:
-        legsType.value = parser.readByte();
+        readLegsType();
         break;
       case PlayerResponse.HandTypeLeft:
-        handTypeLeft.value = parser.readByte();
+        readHandTypeLeft();
         break;
       case PlayerResponse.HandTypeRight:
-        handTypeRight.value = parser.readByte();
+        readHandTypeRight();
         break;
     }
+  }
+
+  void readHandTypeRight() {
+    handTypeRight.value = parser.readByte();
+  }
+
+  void readHandTypeLeft() {
+    handTypeLeft.value = parser.readByte();
+  }
+
+  void readLegsType() {
+    legsType.value = parser.readByte();
+  }
+
+  void readBodyType() {
+    bodyType.value = parser.readByte();
+  }
+
+  void readHeadType() {
+    headType.value = parser.readByte();
   }
 }
