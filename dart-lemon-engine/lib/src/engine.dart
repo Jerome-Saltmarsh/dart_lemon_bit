@@ -1,5 +1,3 @@
-library lemon_engine;
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -8,7 +6,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/src/math.dart';
 import 'package:lemon_watch/src.dart';
@@ -95,12 +92,12 @@ class Engine extends StatelessWidget {
     ..isAntiAlias = false
     ..strokeWidth = 1;
 
-  final spritePaint = Paint()
-    ..color = Colors.white
-    ..strokeCap = StrokeCap.round
-    ..style = PaintingStyle.fill
-    ..isAntiAlias = false
-    ..strokeWidth = 1;
+  // final spritePaint = Paint()
+  //   ..color = Colors.white
+  //   ..strokeCap = StrokeCap.round
+  //   ..style = PaintingStyle.fill
+  //   ..isAntiAlias = false
+  //   ..strokeWidth = 1;
   Timer? updateTimer;
 
   final keyboardState = <LogicalKeyboardKey, int>{};
@@ -676,7 +673,7 @@ class Engine extends StatelessWidget {
             _bufferClr1,
             _bufferBlendMode,
             null,
-            spritePaint,
+            paint,
         );
         bufferIndex = 0;
         batches1Rendered++;
@@ -700,7 +697,7 @@ class Engine extends StatelessWidget {
             _bufferClr2,
             _bufferBlendMode,
             null,
-            spritePaint,
+            paint,
         );
         batches2Rendered++;
         continue;
@@ -717,13 +714,13 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst4,
-            _bufferSrc4,
-            _bufferClr4,
-            _bufferBlendMode,
-            null,
-            spritePaint,
+          _bufferImage,
+          _bufferDst4,
+          _bufferSrc4,
+          _bufferClr4,
+          _bufferBlendMode,
+          null,
+          paint,
         );
         batches4Rendered++;
         continue;
@@ -740,13 +737,13 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst8,
-            _bufferSrc8,
-            _bufferClr8,
-            _bufferBlendMode,
-            null,
-            spritePaint,
+          _bufferImage,
+          _bufferDst8,
+          _bufferSrc8,
+          _bufferClr8,
+          _bufferBlendMode,
+          null,
+          paint,
         );
         batches8Rendered++;
         continue;
@@ -763,13 +760,13 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst16,
-            _bufferSrc16,
-            _bufferClr16,
-            _bufferBlendMode,
-            null,
-            spritePaint,
+          _bufferImage,
+          _bufferDst16,
+          _bufferSrc16,
+          _bufferClr16,
+          _bufferBlendMode,
+          null,
+          paint,
         );
         batches16Rendered++;
         continue;
@@ -786,13 +783,13 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst32,
-            _bufferSrc32,
-            _bufferClr32,
-            _bufferBlendMode,
-            null,
-            spritePaint,
+          _bufferImage,
+          _bufferDst32,
+          _bufferSrc32,
+          _bufferClr32,
+          _bufferBlendMode,
+          null,
+          paint,
         );
         batches32Rendered++;
         continue;
@@ -809,13 +806,13 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst64,
-            _bufferSrc64,
-            _bufferClr64,
-            _bufferBlendMode,
-            null,
-            spritePaint,
+          _bufferImage,
+          _bufferDst64,
+          _bufferSrc64,
+          _bufferClr64,
+          _bufferBlendMode,
+          null,
+          paint,
         );
         batches64Rendered++;
         continue;
@@ -829,13 +826,13 @@ class Engine extends StatelessWidget {
   void flushAll(){
     batchesRendered++;
     canvas.drawRawAtlas(
-        _bufferImage,
-        bufferDst,
-        bufferSrc,
-        bufferClr,
-        _bufferBlendMode,
-        null,
-        spritePaint,
+      _bufferImage,
+      bufferDst,
+      bufferSrc,
+      bufferClr,
+      _bufferBlendMode,
+      null,
+      paint,
     );
     bufferIndex = 0;
     batches128Rendered++;
@@ -1056,6 +1053,7 @@ class Engine extends StatelessWidget {
 
   void _internalDispose(){
     print("engine.dispose()");
+    // updateTimer?.cancel();
     dispose?.call();
   }
 
