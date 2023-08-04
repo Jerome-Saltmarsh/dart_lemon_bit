@@ -48,7 +48,7 @@ class WebsiteGame extends Game {
       final values = entry.value;
       final atlas = Atlas.SrcCollection[type];
       if (atlas == null) {
-        print('missing atlas $entry');
+        print('missing atlas ${GameObjectType.getName(type)}');
         continue;
       }
       for (final value in values){

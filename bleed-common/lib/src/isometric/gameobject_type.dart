@@ -11,13 +11,12 @@ class GameObjectType {
   static const Head = 2;
   static const Body = 3;
   static const Legs = 4;
-  static const Hand = 5;
-  static const Object = 6;
-  static const Item = 7;
-  static const Hands = 8;
+  static const Object = 5;
+  static const Item = 6;
+  static const Hand = 7;
 
   static const items = [
-     Weapon, Head, Body, Legs, Hand, Object, Item
+     Weapon, Head, Body, Legs, Object, Item, Hand,
   ];
 
   static const Collection = {
@@ -35,7 +34,7 @@ class GameObjectType {
       Legs: 'Legs',
       Body: 'Body',
       Head: 'Head',
-      Hand: 'Hand',
+      Hand: 'Hands',
       Object: 'Object',
       Item: 'Consumable',
     }[value] ?? 'gameobject-type-unknown-$value';

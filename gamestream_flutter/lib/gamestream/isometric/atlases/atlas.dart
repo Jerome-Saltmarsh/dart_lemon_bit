@@ -119,7 +119,7 @@ class Atlas {
     GameObjectType.Body: Collection_Body,
     GameObjectType.Head: Collection_Head,
     GameObjectType.Object: Collection_Objects,
-    GameObjectType.Hands: Collection_Hands,
+    GameObjectType.Hand: Collection_Hands,
     GameObjectType.Item: SrcItems.collection,
   };
 
