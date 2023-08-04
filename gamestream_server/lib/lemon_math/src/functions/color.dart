@@ -7,8 +7,7 @@ int aRGBToColor(int alpha, int red, int green, int blue) =>
     (blue & 0xff);
 
 int setAlpha({required int color, required int alpha}) {
-    assert (alpha >= 0);
-    assert (alpha <= 255);
+    assert (alpha >= 0 && alpha <= 255);
     return (color & 0x00FFFFFF) | (alpha << 24);
 }
 

@@ -15,6 +15,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
 
+import 'custom_ticker.dart';
 import 'keycode.dart';
 
 class Engine extends StatelessWidget {
@@ -59,14 +60,20 @@ class Engine extends StatelessWidget {
   /// override safe
   /// gets called when update timer is changed
   Function? onUpdateDurationChanged;
-
+  /// override safe
   Function? onMouseEnterCanvas;
-
+  /// override safe
   Function? onMouseExitCanvas;
-
+  /// triggered if the state of the key is down
+  void Function(int keyCode)? onKeyDown;
+  /// triggered the first moment the key is pressed down
+  void Function(int keyCode)? onKeyPressed;
+  /// triggered upon key release
+  void Function(int keyCode)? onKeyUp;
+  /// override safe
+  Function? dispose;
   /// override safe
   WidgetBuilder loadingScreenBuilder = (context) => Text("LOADING");
-
   /// override safe
   Function(Object error, StackTrace stack)? onError;
 
@@ -74,28 +81,12 @@ class Engine extends StatelessWidget {
   final msRender = Watch(0);
   /// milliseconds elapsed since last update frame
   final msUpdate = Watch(0);
-
-  var lastRenderTime = DateTime.now();
-  var lastUpdateTime = DateTime.now();
-  var minMSPerRender = 5;
-  var mouseOverCanvas = false;
   List<Offset> touchPoints = [];
-  var touches = 0;
-  var touchDownId = 0;
-  var touchHeldId = 0;
-  late ui.Image _bufferImage;
-  var _bufferBlendMode = BlendMode.dstATop;
   final keyState = <int, bool>{ };
   final renderFramesSkipped = Watch(0);
   final keyStateDuration = <int, int>{ };
-  static final random = Random();
-  var textPainter = TextPainter(
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr
-  );
   final Map<String, TextSpan> textSpans = {
   };
-  late Canvas canvas;
 
   final paint = Paint()
     ..color = Colors.white
@@ -111,6 +102,35 @@ class Engine extends StatelessWidget {
     ..isAntiAlias = false
     ..strokeWidth = 1;
   Timer? updateTimer;
+
+  final keyboardState = <LogicalKeyboardKey, int>{};
+  final themeData = Watch<ThemeData?>(null);
+  final fullScreen = Watch(false);
+  final deviceType = Watch(DeviceType.Computer);
+  final cursorType = Watch(CursorType.Precise);
+  final notifierPaintFrame = ValueNotifier<int>(0);
+  final notifierPaintForeground = ValueNotifier<int>(0);
+  final screen = Screen();
+
+  late BuildContext buildContext;
+  late Canvas canvas;
+  late ui.Image _bufferImage;
+
+  late final sharedPreferences;
+
+  var _bufferBlendMode = BlendMode.dstATop;
+
+  var textPainter = TextPainter(
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr
+  );
+  var lastRenderTime = DateTime.now();
+  var lastUpdateTime = DateTime.now();
+  var minMSPerRender = 5;
+  var mouseOverCanvas = false;
+  var touches = 0;
+  var touchDownId = 0;
+  var touchHeldId = 0;
   var scrollSensitivity = 0.0005;
   var cameraSmoothFollow = true;
   var zoomSensitivity = 0.175;
@@ -123,64 +143,16 @@ class Engine extends StatelessWidget {
   var mouseLeftDownFrames = 0;
   var zoom = 1.0;
   var drawCanvasAfterUpdate = true;
-  late BuildContext buildContext;
-  late final sharedPreferences;
-  final keyboardState = <LogicalKeyboardKey, int>{};
-  final themeData = Watch<ThemeData?>(null);
-  final fullScreen = Watch(false);
-  final deviceType = Watch(DeviceType.Computer);
-  final cursorType = Watch(CursorType.Precise);
-  final notifierPaintFrame = ValueNotifier<int>(0);
-  final notifierPaintForeground = ValueNotifier<int>(0);
-  final screen = Screen();
   var cameraX = 0.0;
   var cameraY = 0.0;
   var updateFrame = 0;
+  var Screen_Top = 0.0;
+  var Screen_Right = 0.0;
+  var Screen_Bottom = 0.0;
+  var Screen_Left = 0.0;
 
-  /// triggered if the state of the key is down
-  void Function(int keyCode)? onKeyDown;
-  /// triggered the first moment the key is pressed down
-  void Function(int keyCode)? onKeyPressed;
-  /// triggered upon key release
-  void Function(int keyCode)? onKeyUp;
-
-  Function? dispose;
-
-  static const _renderCircleSegments = 24;
   final _renderCirclePositions = Float32List(_renderCircleSegments * 6);
 
-  // SETTERS
-  set bufferImage(ui.Image image){
-    if (_bufferImage == image) return;
-    flushBuffer();
-    _bufferImage = image;
-  }
-  
-  set bufferBlendMode(BlendMode value){
-    if (_bufferBlendMode == value) return;
-    flushBuffer();
-    _bufferBlendMode = value;
-  }
-
-  set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
-  set title(String value) => watchTitle.value = value;
-  set backgroundColor(Color value) => watchBackgroundColor.value = value;
-
-  // GETTERS
-  BlendMode get bufferBlendMode => _bufferBlendMode;
-  double get screenCenterRenderX => (Screen_Left + Screen_Right) * 0.5;
-  double get screenCenterRenderY => (Screen_Top + Screen_Bottom) * 0.5;
-  double get screenDiagonalLength => hyp(screen.width, screen.height);
-  double get screenArea => screen.width * screen.height;
-  WidgetBuilder? get buildUI => watchBuildUI.value;
-  String get title => watchTitle.value;
-  Color get backgroundColor => watchBackgroundColor.value;
-  bool get isLocalHost => Uri.base.host == 'localhost';
-  bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
-  bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
-  int get paintFrame => notifierPaintFrame.value;
-
-  // WATCHES
   final watchBackgroundColor = Watch(Default_Background_Color);
   final watchBuildUI = Watch<WidgetBuilder?>(null);
   final watchTitle = Watch(Default_Title);
@@ -194,14 +166,60 @@ class Engine extends StatelessWidget {
   final mouseRightDown = Watch(false);
 
   // DEFAULTS
+  static const _renderCircleSegments = 24;
   static const Default_Background_Color = Colors.black;
   static const Default_Duration_Per_Update = Duration(milliseconds: 40);
   static const Default_Title = "DEMO";
 
-  var Screen_Top = 0.0;
-  var Screen_Right = 0.0;
-  var Screen_Bottom = 0.0;
-  var Screen_Left = 0.0;
+  set bufferImage(ui.Image image){
+    if (_bufferImage == image) return;
+    flushBuffer();
+    _bufferImage = image;
+  }
+
+  set bufferBlendMode(BlendMode value){
+    if (_bufferBlendMode == value) return;
+    flushBuffer();
+    _bufferBlendMode = value;
+  }
+
+  set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
+
+  set title(String value) => watchTitle.value = value;
+
+  set backgroundColor(Color value) => watchBackgroundColor.value = value;
+
+  set color(Color value){
+    if (color == value)
+      return;
+    paint.color = value;
+  }
+
+  Color get color => paint.color;
+
+  BlendMode get bufferBlendMode => _bufferBlendMode;
+
+  double get screenCenterRenderX => (Screen_Left + Screen_Right) * 0.5;
+
+  double get screenCenterRenderY => (Screen_Top + Screen_Bottom) * 0.5;
+
+  double get screenDiagonalLength => hyp(screen.width, screen.height);
+
+  double get screenArea => screen.width * screen.height;
+
+  WidgetBuilder? get buildUI => watchBuildUI.value;
+
+  String get title => watchTitle.value;
+
+  Color get backgroundColor => watchBackgroundColor.value;
+
+  bool get isLocalHost => Uri.base.host == 'localhost';
+
+  bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
+
+  bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
+
+  int get paintFrame => notifierPaintFrame.value;
 
   bool get keyPressedShiftLeft =>
       keyPressed(KeyCode.Shift_Left);
@@ -222,8 +240,6 @@ class Engine extends StatelessWidget {
       mouseLeftDownFrames = 0;
     }
   }
-
-
 
   void _internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
@@ -415,14 +431,6 @@ class Engine extends StatelessWidget {
     if (paint.color == value) return;
     paint.color = value;
   }
-
-  set color(Color value){
-    if (color == value)
-      return;
-    paint.color = value;
-  }
-
-  Color get color => paint.color;
 
   void _internalOnPointerMove(PointerMoveEvent event) {
     previousMousePositionX = mousePositionX;
@@ -1019,8 +1027,8 @@ class Engine extends StatelessWidget {
 
   Widget _internalBuildApp() => WatchBuilder(themeData, (ThemeData? themeData) =>
       CustomTicker(
-        onTrick: onTickElapsed,
-        onDispose: dispose,
+        onTrick: _onTickElapsed,
+        onDispose: _internalDispose,
         child: MaterialApp(
           title: title,
           theme: themeData,
@@ -1044,7 +1052,12 @@ class Engine extends StatelessWidget {
         ),
       ));
 
-  void onTickElapsed(Duration duration) => redrawCanvas();
+  void _onTickElapsed(Duration duration) => redrawCanvas();
+
+  void _internalDispose(){
+    print("engine.dispose()");
+    dispose?.call();
+  }
 
   Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
@@ -1096,17 +1109,6 @@ class Engine extends StatelessWidget {
         )
     );
   }
-
-  // double calculateRadianDifference(double a, double b){
-  //   final diff = b - a;
-  //   if (diff > pi) {
-  //     return -(PI_2 - diff);
-  //   }
-  //   if (diff < -pi){
-  //     return PI_2 + diff;
-  //   }
-  //   return diff;
-  // }
 
   SystemMouseCursor _internalMapCursorTypeToSystemMouseCursor(CursorType value){
     switch (value) {
@@ -1391,36 +1393,3 @@ class CustomPainterPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-class CustomTicker extends StatefulWidget {
-
-  final Widget? child;
-  final Function(Duration elapsed) onTrick;
-  final Function? onDispose;
-
-  const CustomTicker({super.key, required this.onTrick, this.child, this.onDispose});
-
-  @override
-  _CustomTickerState createState() => _CustomTickerState();
-}
-
-class _CustomTickerState extends State<CustomTicker> with SingleTickerProviderStateMixin {
-  late Ticker _ticker;
-
-  @override
-  void initState() {
-    super.initState();
-    _ticker = this.createTicker(widget.onTrick);
-    _ticker.start();
-  }
-
-  @override
-  void dispose() {
-    print("engine.dispose()");
-    _ticker.dispose();
-    super.dispose();
-    widget.onDispose?.call();
-  }
-
-  @override
-  Widget build(BuildContext context) => widget.child ?? Container();
-}
