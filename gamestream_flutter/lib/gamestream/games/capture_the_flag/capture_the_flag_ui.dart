@@ -180,7 +180,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 for (var i = 0; i < totalCharacters; i++) {
                   final character = scene.characters[i];
                   final isPlayer = player.isCharacter(character);
-                  engine.renderExternalCanvas(
+                  renderCanvas(
                       canvas: canvas,
                       image: images.atlas_gameobjects,
                       srcX: 0,
@@ -195,7 +195,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
 
                 if (flagRedStatus.value != CaptureTheFlagFlagStatus.Respawning) {
 
-                  engine.renderExternalCanvas(
+                  renderCanvas(
                       canvas: canvas,
                       image: images.atlas_gameobjects,
                       srcX: AtlasSrcObjects.Flag_Red[Atlas.SrcX],
@@ -209,7 +209,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                 }
 
                 if (flagBlueStatus.value != CaptureTheFlagFlagStatus.Respawning) {
-                  engine.renderExternalCanvas(
+                  renderCanvas(
                       canvas: canvas,
                       image: images.atlas_gameobjects,
                       srcX: AtlasSrcObjects.Flag_Blue[Atlas.SrcX],
@@ -222,7 +222,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                   );
                 }
 
-                engine.renderExternalCanvas(
+                renderCanvas(
                     canvas: canvas,
                     image: images.atlas_gameobjects,
                     srcX: AtlasSrcObjects.Base_Red[Atlas.SrcX],
@@ -234,7 +234,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                     scale: 0.1
                 );
 
-                engine.renderExternalCanvas(
+                renderCanvas(
                     canvas: canvas,
                     image: images.atlas_gameobjects,
                     srcX: AtlasSrcObjects.Base_Blue[Atlas.SrcX],

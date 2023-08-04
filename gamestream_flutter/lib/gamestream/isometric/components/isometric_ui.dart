@@ -119,18 +119,16 @@ class IsometricUI with IsometricComponent {
         ),
     );
 
-  Widget buildGeneratedMiniMap({required double translate}){
-    return IsometricBuilder(
-      builder: (context, isometric) {
-        return buildWatch(isometric.scene.nodesChangedNotifier, (_){
-          return isometric.engine.buildCanvas(paint: (Canvas canvas, Size size){
+  Widget buildGeneratedMiniMap({required double translate}) =>
+      buildWatch(scene.nodesChangedNotifier, (_) =>
+          engine.buildCanvas(paint: (Canvas canvas, Size size){
             const scale = 2.0;
             canvas.scale(scale, scale);
             final screenCenterX = size.width * 0.5;
             final screenCenterY = size.height * 0.5;
             const ratio = 2 / 48.0;
 
-            final chaseTarget = isometric.camera.target;
+            final chaseTarget = camera.target;
             if (chaseTarget != null){
               final targetX = chaseTarget.renderX * ratio;
               final targetY = chaseTarget.renderY * ratio;
@@ -139,16 +137,14 @@ class IsometricUI with IsometricComponent {
               canvas.translate(-cameraX, -cameraY);
             }
 
-            isometric.minimap.renderCanvas(canvas);
+            minimap.renderCanvas(canvas);
 
-            final player = isometric.player;
-
-            for (var i = 0; i < isometric.scene.totalCharacters; i++) {
-              final character = isometric.scene.characters[i];
+            for (var i = 0; i < scene.totalCharacters; i++) {
+              final character = scene.characters[i];
               final isPlayer = player.isCharacter(character);
-              isometric.engine.renderExternalCanvas(
+              renderCanvas(
                   canvas: canvas,
-                  image: isometric.images.atlas_gameobjects,
+                  image: images.atlas_gameobjects,
                   srcX: 0,
                   srcY: isPlayer ? 96 : character.allie ? 81 : 72,
                   srcWidth: 8,
@@ -158,11 +154,7 @@ class IsometricUI with IsometricComponent {
                   scale: 0.25
               );
             }
-          });
-        });
-      }
-    );
-  }
+      }));
 
   Positioned buildPositionedMessageStatus() => Positioned(
     bottom: 150,

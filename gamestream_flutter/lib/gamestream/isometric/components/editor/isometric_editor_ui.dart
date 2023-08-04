@@ -838,7 +838,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      engine.renderExternalCanvas(
+      renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: 304,
@@ -854,7 +854,7 @@ extension IsometricEditorUI on IsometricEditor {
     required double x,
     required double y,
   }) =>
-      engine.renderExternalCanvas(
+      renderCanvas(
         canvas: canvas,
         image: amulet.images.atlas_icons,
         srcX: 352,

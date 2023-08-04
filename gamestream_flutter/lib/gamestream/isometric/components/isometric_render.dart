@@ -321,7 +321,7 @@ class IsometricRender with IsometricComponent {
   void canvasRenderCursorCrossHair(Canvas canvas, double range){
     const srcX = 0;
     const srcY = 192;
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 29,
@@ -332,7 +332,7 @@ class IsometricRender with IsometricComponent {
         dstY: io.getCursorScreenY() - range,
         anchorY: 1.0
     );
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 29,
@@ -343,7 +343,7 @@ class IsometricRender with IsometricComponent {
         dstY: io.getCursorScreenY() + range,
         anchorY: 0.0
     );
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 0,
@@ -354,7 +354,7 @@ class IsometricRender with IsometricComponent {
         dstY: io.getCursorScreenY(),
         anchorX: 1.0
     );
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 0,
@@ -369,7 +369,7 @@ class IsometricRender with IsometricComponent {
 
 
   void canvasRenderCursorHand(Canvas canvas){
-    engine.renderExternalCanvas(
+    renderCanvas(
       canvas: canvas,
       image: images.atlas_icons,
       srcX: 0,
@@ -383,7 +383,7 @@ class IsometricRender with IsometricComponent {
   }
 
   void canvasRenderCursorTalk(Canvas canvas){
-    engine.renderExternalCanvas(
+    renderCanvas(
       canvas: canvas,
       image: images.atlas_icons,
       srcX: 0,
@@ -400,7 +400,7 @@ class IsometricRender with IsometricComponent {
     const srcX = 0;
     const srcY = 384;
     const offset = 0;
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 29,
@@ -411,7 +411,7 @@ class IsometricRender with IsometricComponent {
         dstY: io.getCursorScreenY() - range - offset,
         anchorY: 1.0
     );
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 29,
@@ -422,7 +422,7 @@ class IsometricRender with IsometricComponent {
         dstY: io.getCursorScreenY() + range - offset,
         anchorY: 0.0
     );
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 0,
@@ -433,7 +433,7 @@ class IsometricRender with IsometricComponent {
         dstY: io.getCursorScreenY() - offset,
         anchorX: 1.0
     );
-    engine.renderExternalCanvas(
+    renderCanvas(
         canvas: canvas,
         image: images.atlas_icons,
         srcX: srcX + 0,

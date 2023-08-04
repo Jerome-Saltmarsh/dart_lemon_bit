@@ -7,13 +7,11 @@ import 'dart:ui' as ui;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_engine/src/math.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
-
-import 'custom_ticker.dart';
-import 'keycode.dart';
 
 class Engine extends StatelessWidget {
 
@@ -914,31 +912,31 @@ class Engine extends StatelessWidget {
     incrementBufferIndex();
   }
 
-  void renderExternalCanvas({
-    required Canvas canvas,
-    required ui.Image image,
-    required double srcX,
-    required double srcY,
-    required double srcWidth,
-    required double srcHeight,
-    required double dstX,
-    required double dstY,
-    double anchorX = 0.5,
-    double anchorY = 0.5,
-    double scale = 1.0,
-    int color = 1,
-  }){
-    _bufferClr1[0] = color;
-    _bufferSrc1[0] = srcX;
-    _bufferSrc1[1] = srcY;
-    _bufferSrc1[2] = srcX + srcWidth;
-    _bufferSrc1[3] = srcY + srcHeight;
-    _bufferDst1[0] = scale;
-    _bufferDst1[1] = 0;
-    _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
-    _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
-    canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferClr1, _bufferBlendMode, null, paint);
-  }
+  // void renderExternalCanvas({
+  //   required Canvas canvas,
+  //   required ui.Image image,
+  //   required double srcX,
+  //   required double srcY,
+  //   required double srcWidth,
+  //   required double srcHeight,
+  //   required double dstX,
+  //   required double dstY,
+  //   double anchorX = 0.5,
+  //   double anchorY = 0.5,
+  //   double scale = 1.0,
+  //   int color = 1,
+  // }){
+  //   _bufferClr1[0] = color;
+  //   _bufferSrc1[0] = srcX;
+  //   _bufferSrc1[1] = srcY;
+  //   _bufferSrc1[2] = srcX + srcWidth;
+  //   _bufferSrc1[3] = srcY + srcHeight;
+  //   _bufferDst1[0] = scale;
+  //   _bufferDst1[1] = 0;
+  //   _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
+  //   _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
+  //   canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferClr1, _bufferBlendMode, null, paint);
+  // }
 
   void renderCircle(double x, double y, double radius, Color color) {
     renderCircleOffset(Offset(x, y), radius, color);
@@ -1244,7 +1242,7 @@ class Engine extends StatelessWidget {
         height: srcHeight * scale,
         child: buildCanvas(
             paint: (Canvas canvas, Size size) =>
-                this.renderExternalCanvas(
+                renderCanvas(
                   canvas: canvas,
                   image: image,
                   srcX: srcX,
