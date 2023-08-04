@@ -10,6 +10,8 @@ class Character extends Position {
   var bodyType = 0;
   var headType = 0;
   var legType = 0;
+  var handTypeLeft = 0;
+  var handTypeRight = 0;
   var state = 0;
   var team = 0;
   var direction = 0;

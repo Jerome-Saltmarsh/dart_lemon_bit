@@ -464,6 +464,9 @@ class RendererCharacters extends RenderGroup {
     final dstX = character.renderX;
     final dstY = character.renderY;
 
+    final imageGroupHandLeft = images.imageGroupsHands[character.handTypeLeft] ?? (throw Exception());
+    final imageGroupHandRight = images.imageGroupsHands[character.handTypeRight] ?? (throw Exception());
+
     final imageGroupBody = images.imageGroupsBody[character.bodyType] ??
         (throw Exception(
             'images.imageGroupsBody[${BodyType.getName(character.bodyType)}] - missing'
@@ -498,8 +501,8 @@ class RendererCharacters extends RenderGroup {
       imageBody = imageGroupBody.running;
       imageBodyArms = imageGroupBody.armsRunning;
       imageLegs = images.kid_legs_brown_running;
-      imageHandsLeft = images.kid_hands_gauntlet_left_running;
-      imageHandsRight = images.kid_hands_gauntlet_right_running;
+      imageHandsLeft = imageGroupHandLeft.leftRunning;
+      imageHandsRight = imageGroupHandRight.rightRunning;
       imageArmLeft = images.kid_arm_left_running;
       imageArmRight = images.kid_arm_right_running;
     } else {
@@ -509,8 +512,8 @@ class RendererCharacters extends RenderGroup {
       imageBody = imageGroupBody.idle;
       imageBodyArms = imageGroupBody.armsIdle;
       imageLegs = images.kid_legs_brown_idle;
-      imageHandsLeft = images.kid_hands_gauntlet_left_idle;
-      imageHandsRight = images.kid_hands_gauntlet_right_idle;
+      imageHandsLeft = imageGroupHandLeft.leftIdle;
+      imageHandsRight = imageGroupHandRight.rightIdle;
       imageArmLeft = images.kid_arm_left_idle;
       imageArmRight = images.kid_arm_right_idle;
 
@@ -652,6 +655,6 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    // render.textPosition(character, BodyType.getName(character.bodyType), offsetY: -50);
+    render.textPosition(character, HandType.getName(character.handTypeLeft), offsetY: -50);
   }
 }

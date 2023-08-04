@@ -557,6 +557,8 @@ extension isometricDebugUI on IsometricDebug {
           buildRowMapped('legs-type', player.legsType, LegType.getName),
           buildRowMapped('body-type', player.bodyType, BodyType.getName),
           buildRowMapped('head-type', player.headType, HeadType.getName),
+          buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
+          buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),
         ],
       );
 

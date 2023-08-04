@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/classes/image_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +32,7 @@ class IsometricImages with IsometricComponent {
   final _completer = Completer();
 
   final imageGroupsBody = <int, ImageGroupBody> {};
+  final imageGroupsHands = <int, ImageGroupHands> {};
 
   late final Image empty;
   late final Image shades;
@@ -337,6 +339,20 @@ class IsometricImages with IsometricComponent {
       running: kid_body_shirt_blue_running,
       armsIdle: kid_body_arms_shirt_blue_idle,
       armsRunning: kid_body_arms_shirt_blue_running,
+    );
+
+    imageGroupsHands[HandType.None] = ImageGroupHands(
+       leftIdle: empty,
+       leftRunning: empty,
+       rightIdle: empty,
+       rightRunning: empty,
+    );
+
+    imageGroupsHands[HandType.Gauntlet] = ImageGroupHands(
+       leftIdle: kid_hands_gauntlet_left_idle,
+       leftRunning: kid_hands_gauntlet_left_running,
+       rightIdle: kid_hands_gauntlet_right_idle,
+       rightRunning: kid_hands_gauntlet_right_running,
     );
   }
 

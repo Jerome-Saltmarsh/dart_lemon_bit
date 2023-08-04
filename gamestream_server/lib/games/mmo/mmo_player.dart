@@ -63,7 +63,7 @@ class AmuletPlayer extends IsometricPlayer {
     equipHead(MMOItem.Steel_Helmet);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
-    equipHandLeft(MMOItem.Gauntlet);
+    // equipHandLeft(MMOItem.Gauntlet);
     equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
     equippedWeaponIndex = 0;

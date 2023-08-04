@@ -70,7 +70,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   final cachePositionX = Int16List(Cache_Length);
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
-  final cacheTemplateA = Uint32List(Cache_Length);
+  final cacheTemplateA = Uint64List(Cache_Length);
   final cacheTemplateB = Uint8List(Cache_Length);
 
   IsometricGameObject? editorSelectedGameObject;
@@ -616,11 +616,15 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writeCharacterTemplate(IsometricCharacter character) {
 
-    final compressedA = compressBytesToUInt32(
+    final compressedA = compressBytesToUInt64(
       character.weaponType,
       character.bodyType,
       character.headType,
       character.legsType,
+      character.handTypeLeft,
+      character.handTypeRight,
+      0,
+      0,
     );
 
     final compressedB = character.compressedLookAndWeaponState;
@@ -639,6 +643,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeByte(character.bodyType);
       writeByte(character.headType);
       writeByte(character.legsType);
+      writeByte(character.handTypeLeft);
+      writeByte(character.handTypeRight);
     }
 
     if (writeB){

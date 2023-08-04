@@ -651,6 +651,8 @@ class IsometricParser with ByteReader, IsometricComponent {
       character.bodyType = readByte();
       character.headType = readByte();
       character.legType = readByte();
+      character.handTypeLeft = readByte();
+      character.handTypeRight = readByte();
     }
 
     if (readB){
