@@ -1,6 +1,6 @@
 
 class AtlasSrcBody {
-  static const Plain = <double>[
+  static const None = <double>[
     102,  // x
     4,    // y
     22,   // width

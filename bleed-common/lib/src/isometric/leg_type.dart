@@ -1,5 +1,5 @@
 class LegType {
-  static const Nothing = 0;
+  static const None = 0;
   static const Red = 1;
   static const Blue = 2;
   static const White = 3;
@@ -7,9 +7,8 @@ class LegType {
   static const Brown = 5;
   static const Swat = 6;
 
-  static String getName(int value) {
-    return const {
-      Nothing: 'Nothing',
+  static String getName(int value) => const {
+      None: 'None',
       Red: 'Red',
       Blue: 'Blue',
       White: 'White',
@@ -17,7 +16,6 @@ class LegType {
       Brown: 'Brown',
       Swat: 'Swat',
     }[value] ?? 'leg-type-unknown';
-  }
 
   static const values = [
     Red,

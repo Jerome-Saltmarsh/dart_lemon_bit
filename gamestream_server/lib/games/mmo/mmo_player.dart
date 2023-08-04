@@ -112,7 +112,7 @@ class AmuletPlayer extends IsometricPlayer {
   double get weaponRange => equippedWeapon?.item?.range ?? 30;
 
   @override
-  int get headType => equippedHead.item?.subType ?? HeadType.Plain;
+  int get headType => equippedHead.item?.subType ?? HeadType.None;
 
   int get activatedPowerIndex => _activatedPowerIndex;
 
@@ -649,7 +649,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedHead);
-      headType = HeadType.Plain;
+      headType = HeadType.None;
       return;
     }
 
@@ -674,7 +674,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedBody);
-      bodyType = BodyType.Nothing;
+      bodyType = BodyType.None;
       return;
     }
 
@@ -700,7 +700,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedLegs);
-      legsType = LegType.Nothing;
+      legsType = LegType.None;
       return;
     }
 
@@ -742,9 +742,9 @@ class AmuletPlayer extends IsometricPlayer {
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
-    headType = equippedHead.item?.subType ?? HeadType.Plain;
-    bodyType = equippedBody.item?.subType ?? BodyType.Nothing;
-    legsType = equippedLegs.item?.subType ?? LegType.Nothing;
+    headType = equippedHead.item?.subType ?? HeadType.None;
+    bodyType = equippedBody.item?.subType ?? BodyType.None;
+    legsType = equippedLegs.item?.subType ?? LegType.None;
 
     writeEquipped();
     writeHeadType();

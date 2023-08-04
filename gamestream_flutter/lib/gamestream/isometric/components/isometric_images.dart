@@ -92,14 +92,14 @@ class IsometricImages with IsometricComponent {
   late final Image kid_torso_light_idle;
   late final Image kid_torso_light_running;
 
-  late final Image template_head_plain;
+  late final Image template_head_none;
   late final Image template_head_rogue;
   late final Image template_head_steel;
   late final Image template_head_swat;
   late final Image template_head_wizard;
   late final Image template_head_blonde;
 
-  late final Image template_body_empty;
+  late final Image template_body_none;
   late final Image template_body_blue;
   late final Image template_body_red;
   late final Image template_body_cyan;
@@ -143,7 +143,7 @@ class IsometricImages with IsometricComponent {
   late final Image template_weapon_portal_gun;
 
   Image getImageForHeadType(int headType) => switch (headType) {
-         HeadType.Plain => template_head_plain,
+         HeadType.None => template_head_none,
          HeadType.Rogue_Hood => template_head_rogue,
          HeadType.Steel_Helm => template_head_steel,
          HeadType.Wizards_Hat => template_head_wizard,
@@ -153,7 +153,7 @@ class IsometricImages with IsometricComponent {
       };
 
    Image getImageForBodyType(int bodyType) => switch (bodyType) {
-        BodyType.Nothing => template_body_empty,
+        BodyType.None => template_body_none,
         BodyType.Shirt_Blue => template_body_blue,
         BodyType.Shirt_Red => template_body_red,
         BodyType.Shirt_Cyan => template_body_cyan,
@@ -163,7 +163,7 @@ class IsometricImages with IsometricComponent {
       };
 
   Image getImageForLegType(int legType) => switch (legType) {
-    LegType.Nothing => template_legs_none,
+    LegType.None => template_legs_none,
     LegType.White => template_legs_white,
     LegType.Blue => template_legs_blue,
     LegType.Green => template_legs_green,
@@ -265,7 +265,7 @@ class IsometricImages with IsometricComponent {
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('template/template-shadow').then((value) => template_shadow = value);
 
-    loadPng('template/head/template-head-plain').then((value) => template_head_plain = value);
+    loadPng('template/head/template-head-plain').then((value) => template_head_none = value);
     loadPng('template/head/template-head-rogue').then((value) => template_head_rogue = value);
     loadPng('template/head/template-head-steel').then((value) => template_head_steel = value);
     loadPng('template/head/template-head-swat').then((value) => template_head_swat = value);
@@ -276,7 +276,7 @@ class IsometricImages with IsometricComponent {
     loadPng('template/body/template-body-cyan').then((value) => template_body_cyan = value);
     loadPng('template/body/template-body-swat').then((value) => template_body_swat = value);
     loadPng('template/body/template-body-tunic').then((value) => template_body_tunic = value);
-    loadPng('template/body/template-body-empty').then((value) => template_body_empty = value);
+    loadPng('template/body/template-body-empty').then((value) => template_body_none = value);
     loadPng('template/legs/template-legs-none').then((value) => template_legs_none = value);
     loadPng('template/legs/template-legs-blue').then((value) => template_legs_blue = value);
     loadPng('template/legs/template-legs-white').then((value) => template_legs_white = value);
@@ -323,7 +323,7 @@ class IsometricImages with IsometricComponent {
 
     await _completer.future;
 
-    imageGroupsBody[BodyType.Nothing] = ImageGroupBody(
+    imageGroupsBody[BodyType.None] = ImageGroupBody(
       idle: empty,
       running: empty,
       armsIdle: empty,

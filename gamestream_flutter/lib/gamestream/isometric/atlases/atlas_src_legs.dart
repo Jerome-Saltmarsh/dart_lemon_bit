@@ -1,6 +1,6 @@
 
 class AtlasSrcLegs {
-  static const Nothing = <double>[
+  static const None = <double>[
     106, // x
     8, // y
     13, // width

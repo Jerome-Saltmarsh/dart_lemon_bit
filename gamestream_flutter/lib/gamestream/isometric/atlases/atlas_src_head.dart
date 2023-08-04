@@ -1,5 +1,5 @@
 class AtlasSrcHead {
-  static const Plain = <double>[
+  static const None = <double>[
     10,  // x
     9,    // y
     13,   // width
