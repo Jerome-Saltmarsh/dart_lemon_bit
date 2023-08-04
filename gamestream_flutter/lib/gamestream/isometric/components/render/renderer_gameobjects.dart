@@ -22,6 +22,7 @@ class RendererGameObjects extends RenderGroup {
       GameObjectType.Body: images.atlas_body,
       GameObjectType.Legs: images.atlas_legs,
       GameObjectType.Item: images.atlas_items,
+      GameObjectType.Hand: images.atlas_hands,
     };
   }
 

@@ -355,6 +355,14 @@ extension MMOUI on MmoGame {
             onRightClick: equipped == null ? null : dropEquippedLegs,
             action: equipped == null ? null : unequipLegs,
             child: buildInventoryItem(equipped))),
+        buildWatch(equippedHandLeft, (equipped) => onPressed(
+            onRightClick: equipped == null ? null : dropEquippedLegs,
+            action: equipped == null ? null : unequipLegs,
+            child: buildInventoryItem(equipped))),
+        buildWatch(equippedHandRight, (equipped) => onPressed(
+            onRightClick: equipped == null ? null : dropEquippedLegs,
+            action: equipped == null ? null : unequipLegs,
+            child: buildInventoryItem(equipped))),
       ],),
   );
 

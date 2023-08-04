@@ -42,6 +42,7 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_particles;
   late final Image template_shadow;
   late final Image atlas_head;
+  late final Image atlas_hands;
   late final Image atlas_body;
   late final Image atlas_legs;
   late final Image atlas_gameobjects;
@@ -222,6 +223,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_icons').then((value) => atlas_icons = value);
     loadPng('atlas_items').then((value) => atlas_items = value);
     loadPng('atlas_head').then((value) => atlas_head = value);
+    loadPng('atlas_hands').then((value) => atlas_hands = value);
     loadPng('atlas_body').then((value) => atlas_body = value);
     loadPng('atlas_legs').then((value) => atlas_legs = value);
     loadPng('template/template_spinning').then((value) => template_spinning = value);
