@@ -44,7 +44,12 @@ class SpriteApp extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                buildImage(),
+                Stack(
+                  children: [
+                    Positioned(child: buildImage()),
+                    Positioned(child: buildImageGrid()),
+                  ],
+                ),
                 const SizedBox(height: 50),
                 buildPackedImage(),
               ],
@@ -107,6 +112,16 @@ class SpriteApp extends StatelessWidget {
   Widget buildImage() => SizedBox(
     width: 500,
     child: WatchBuilder(sprite.image, (image) {
+      if (image == null) {
+        return buildText('load image', color: Colors.black38);
+      }
+      return ui.Image.memory(encodePng(image));
+    }),
+  );
+
+  Widget buildImageGrid() => SizedBox(
+    width: 500,
+    child: WatchBuilder(sprite.grid, (image) {
       if (image == null) {
         return buildText('load image', color: Colors.black38);
       }

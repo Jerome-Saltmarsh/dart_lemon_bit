@@ -29,7 +29,7 @@ int findBoundsRight({
 }){
   final endX = srcX + width;
   final endY = srcY + height;
-  for (var x = endX; x > srcX; x--) {
+  for (var x = endX - 1; x >= srcX; x--) {
     for (var y = srcY; y < endY; y++) {
       if (image.getPixel(x, y).a > 0) {
         return x;
@@ -67,7 +67,7 @@ int findBoundsBottom({
 }){
   final endX = srcX + width;
   final endY = srcY + height;
-  for (var y = endY; y > srcY; y--){
+  for (var y = endY -1; y >= srcY; y--){
     for (var x = srcX; x < endX; x++){
       if (image.getPixel(x, y).a > 0) {
         return y;
