@@ -110,7 +110,7 @@ class SpriteApp extends StatelessWidget {
   );
 
   Widget buildImage() => SizedBox(
-    width: 500,
+    width: style.imageWidth,
     child: WatchBuilder(sprite.image, (image) {
       if (image == null) {
         return buildText('load image', color: Colors.black38);
@@ -120,7 +120,7 @@ class SpriteApp extends StatelessWidget {
   );
 
   Widget buildImageGrid() => SizedBox(
-    width: 500,
+    width: style.imageWidth,
     child: WatchBuilder(sprite.grid, (image) {
       if (image == null) {
         return buildText('load image', color: Colors.black38);
@@ -133,7 +133,9 @@ class SpriteApp extends StatelessWidget {
     if (image == null) {
       return nothing;
     }
-    return ui.Image.memory(encodePng(image));
+    return SizedBox(
+        width: style.imageWidth,
+        child: ui.Image.memory(encodePng(image)));
   });
 
   Future onLoadButtonPressed() async {
