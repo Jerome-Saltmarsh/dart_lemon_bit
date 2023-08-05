@@ -39,7 +39,15 @@ class SpriteApp extends StatelessWidget {
           ],
         ),
         body: Center(
-          child: buildImage(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildImage(),
+                const SizedBox(height: 50),
+                buildPackedImage(),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -73,7 +81,22 @@ class SpriteApp extends StatelessWidget {
       ),
   );
 
-  Widget buildImage() => WatchBuilder(sprite.image, (image) {
+  Widget buildImage() => SizedBox(
+    width: 500,
+    child: FittedBox(
+      fit: BoxFit.fitWidth,
+      child: WatchBuilder(sprite.image, (image) {
+        if (image == null) {
+          return buildText('load image', color: Colors.black38);
+        }
+        return Container(
+            constraints: BoxConstraints(minWidth: 50),
+            child: ui.Image.memory(encodePng(image)));
+      }),
+    ),
+  );
+
+  Widget buildPackedImage() => WatchBuilder(sprite.packedImage, (image) {
     if (image == null) {
       return nothing;
     }
