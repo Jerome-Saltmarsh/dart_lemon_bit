@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as ui;
+import 'package:image/image.dart';
 import 'package:lemon_sprites/sprites/sprite.dart';
 import 'package:lemon_sprites/sprites/style.dart';
 import 'package:lemon_watch/src.dart';
@@ -70,11 +73,18 @@ class SpriteApp extends StatelessWidget {
       ),
   );
 
-  Widget buildImage() => WatchBuilder(sprite.image, (image) =>
-    image == null ? nothing : Image.memory(image));
-
+  Widget buildImage() => WatchBuilder(sprite.image, (image) {
+    if (image == null) {
+      return nothing;
+    }
+    return ui.Image.memory(encodePng(image));
+  });
 
   Future onLoadButtonPressed() async {
-    sprite.image.value = await loadBytesFromFile();
+    final image = await loadImageFromFile();
+    if (image == null) {
+      return;
+    }
+    sprite.image.value = image;
   }
 }
