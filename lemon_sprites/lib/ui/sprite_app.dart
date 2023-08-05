@@ -5,10 +5,12 @@ import 'package:image/image.dart';
 import 'package:image/image.dart' as img;
 import 'package:lemon_sprites/sprites/sprite.dart';
 import 'package:lemon_sprites/sprites/style.dart';
+import 'package:lemon_sprites/ui/functions/load_files_from_disk.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'functions/load_bytes_from_file.dart';
+import 'functions/load_image_from_file.dart';
 
 class SpriteApp extends StatelessWidget {
 
@@ -40,6 +42,7 @@ class SpriteApp extends StatelessWidget {
             buildButtonLoad(),
             buildButtonBind(),
             buildButtonPack(),
+            buildButtonSave(),
           ],
         ),
         body: Center(
@@ -101,9 +104,18 @@ class SpriteApp extends StatelessWidget {
 
   Widget buildButtonLoad() =>
       buildButton(
-        action: onLoadButtonPressed,
+        action: onButtonLoadPressed,
         child: buildButtonText('LOAD'),
       );
+
+  void onButtonLoadPressed() async {
+    final files = await loadFilesFromDisk();
+    if (files == null) {
+      return;
+    }
+    final file = files[0];
+    sprite.setImageFile(file);
+  }
 
   Widget buildButtonText(String value) =>
       buildText(value, color: style.buttonTextColor);
@@ -120,6 +132,14 @@ class SpriteApp extends StatelessWidget {
         child: child,
       ),
   );
+
+  Future loadImage() async {
+    final image = await loadImageFromFile();
+    if (image == null) {
+      return;
+    }
+    sprite.image.value = image;
+  }
 
   Widget buildImage() => buildWatchImage(sprite.image);
 
@@ -139,12 +159,18 @@ class SpriteApp extends StatelessWidget {
     }),
   );
 
-  Future onLoadButtonPressed() async {
-    final image = await loadImageFromFile();
-    print("decoding finished");
-    if (image == null) {
-      return;
-    }
-    sprite.image.value = image;
-  }
+  // Future onLoadButtonPressed() async {
+  //   final image = await loadImageFromFile();
+  //   if (image == null) {
+  //     return;
+  //   }
+  //   sprite.image.value = image;
+  // }
+
+  Widget buildButtonSave() => WatchBuilder(sprite.packed, (image) => buildButton(
+      action: image == null ? null : sprite.save,
+      child: buildText('SAVE',
+        color: image == null ? Colors.black54 : Colors.black87,
+      ),
+    ));
 }

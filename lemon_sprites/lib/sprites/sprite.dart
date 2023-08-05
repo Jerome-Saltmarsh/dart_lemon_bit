@@ -2,28 +2,40 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:image/image.dart';
 import 'package:lemon_sprites/sprites/copy_paste.dart';
 import 'package:lemon_sprites/sprites/draw_rec.dart';
 import 'package:lemon_watch/src.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'sprite_bounds.dart';
 
 
 class Sprite {
 
-  final rows = WatchInt(9);
+  final rows = WatchInt(8);
   final columns = WatchInt(8);
   final image = Watch<Image?>(null);
   final bound = Watch<Image?>(null);
   final packed = Watch<Image?>(null);
   final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
+  var fileName = '';
 
   Sprite(){
     image.onChanged(onChangedImage);
     rows.onChanged(onChangedRows);
     columns.onChanged(onChangedColumn);
+  }
+
+  void setImageFile(PlatformFile file) async {
+    final bytes = file.bytes;
+    if (bytes == null){
+      throw Exception();
+    }
+    image.value = decodePng(bytes);
+    fileName = file.name;
   }
 
   void onChangedRows(int rows){
@@ -166,7 +178,15 @@ class Sprite {
 
     final previousArea = img.width * img.height;
     final newArea = packedImage.width * packedImage.height;
-    print('image size reduced by ${100 - ((newArea / previousArea) * 100).toInt()}%');
+    // print('image size reduced by ${100 - ((newArea / previousArea) * 100).toInt()}%');
+  }
+
+  void save() {
+    final img = packed.value;
+    if (img == null){
+      throw Exception();
+    }
+    download(bytes: encodePng(img), name: fileName.replaceAll('.png', '_packed.png'));
   }
 }
 
