@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 
 extension MMOUIDialogs on MmoGame {
 

@@ -218,7 +218,9 @@ extension WebsiteUI on WebsiteGame {
             child: Center(
               child: buildText(message, color: colors.white),
             ),
-            bottomRight: bottomRight ?? buildText('okay', onPressed: () => website.error.value = null)
+            bottomRight: onPressed(
+                action: () => website.error.value = null,
+                child: bottomRight ?? buildText('okay'))
         )
     );
 }

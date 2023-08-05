@@ -167,17 +167,20 @@ class IsometricUI with IsometricComponent {
     ),
   );
 
-
   Widget buildMessageStatus(String message){
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
         action.messageClear();
       },
-      child: Container(
-          padding: const EdgeInsets.all(10),
-          color: Colors.black12,
-          child: buildText(message, onPressed: action.messageClear)),
+      child: onPressed(
+        action: action.messageClear,
+        child: Container(
+            padding: const EdgeInsets.all(10),
+            color: Colors.black12,
+            child: buildText(message),
+        ),
+      ),
     );
   }
 

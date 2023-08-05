@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/nothing.dart';
 import 'package:gamestream_flutter/library.dart';
 
 Widget buildWatchBool(

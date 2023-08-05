@@ -26,6 +26,8 @@ dependencies:
   device_info_plus: ^6.0.0
   url_launcher: ^6.1.10
 
+  lemon_widgets:
+    path: ..\lemon_widgets
   lemon_math:
     path: ..\dart-lemon-math
   lemon_byte:

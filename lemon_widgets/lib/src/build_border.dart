@@ -1,11 +1,11 @@
+
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/ui/constants/border_radius.dart';
 
 Widget buildBorder({
   required Widget child,
   Color color = Colors.white,
   double width = 1,
-  BorderRadius radius = borderRadius4,
+  BorderRadius radius = const BorderRadius.all(Radius.circular(4)),
   Color fillColor = Colors.transparent,
 }) {
   return Container(

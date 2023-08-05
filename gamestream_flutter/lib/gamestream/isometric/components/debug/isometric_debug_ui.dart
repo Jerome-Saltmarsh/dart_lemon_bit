@@ -166,8 +166,8 @@ extension isometricDebugUI on IsometricDebug {
                   'total-particles-active: ${particles.countActiveParticles}\n'
           )),
           buildWatch(options.gameType, (GameType value) => buildText('game-type: ${value.name}')),
-          buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
-          buildWatch(io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: io.actionToggleInputMode)),
+          // buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
+          // buildWatch(io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: io.actionToggleInputMode)),
           buildWatch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
           buildWatch(engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
           // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
@@ -188,32 +188,32 @@ extension isometricDebugUI on IsometricDebug {
           height8,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildText('<-', onPressed: (){
-                scene.setInterpolationLength(scene.interpolationLength - 1);
-              }),
-              GSRefresh(() => buildText('light-size: ${scene.interpolationLength}')),
-              buildText('->', onPressed: (){
-                scene.setInterpolationLength(scene.interpolationLength + 1);
-              }),
-            ],
+            // children: [
+            //   buildText('<-', onPressed: (){
+            //     scene.setInterpolationLength(scene.interpolationLength - 1);
+            //   }),
+            //   GSRefresh(() => buildText('light-size: ${scene.interpolationLength}')),
+            //   buildText('->', onPressed: (){
+            //     scene.setInterpolationLength(scene.interpolationLength + 1);
+            //   }),
+            // ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildText('<-', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
-                final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                scene.interpolationEaseType.value = EaseType.values[indexNext];
-              }),
-              buildWatch(scene.interpolationEaseType, buildText),
-              buildText('->', onPressed: (){
-                final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
-                final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                scene.interpolationEaseType.value = EaseType.values[indexNext];
-              }),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     buildText('<-', onPressed: (){
+          //       final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
+          //       final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
+          //       scene.interpolationEaseType.value = EaseType.values[indexNext];
+          //     }),
+          //     buildWatch(scene.interpolationEaseType, buildText),
+          //     buildText('->', onPressed: (){
+          //       final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
+          //       final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
+          //       scene.interpolationEaseType.value = EaseType.values[indexNext];
+          //     }),
+          //   ],
+          // ),
 
           height16,
           buildText('ambient-color'),

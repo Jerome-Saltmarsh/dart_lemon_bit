@@ -207,7 +207,10 @@ extension IsometricEditorUI on IsometricEditor {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildText('CANVAS SIZE'),
-                buildText('Close', onPressed: toggleWindowEnabledCanvasSize),
+                onPressed(
+                    action: toggleWindowEnabledCanvasSize,
+                    child: buildText('Close'),
+                ),
               ],
             ),
             // watch(GameNodes.totalRows)
@@ -331,8 +334,11 @@ extension IsometricEditorUI on IsometricEditor {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildText('Generate'),
-                buildText('Close', onPressed: windowEnabledGenerate.toggle),
-              ],
+                    onPressed(
+                      action: windowEnabledGenerate.toggle,
+                      child: buildText('Close'),
+                    ),
+                  ],
             ),
             height32,
             buildRowGenerate(generateRows, 'Rows'),
@@ -382,7 +388,9 @@ extension IsometricEditorUI on IsometricEditor {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildText('Edit Scene'),
-                buildText('Close', onPressed: toggleWindowEnabledScene),
+                onPressed(
+                  action: toggleWindowEnabledScene,
+                  child: buildText('Close')),
               ],
             ),
             height8,
@@ -693,13 +701,22 @@ extension IsometricEditorUI on IsometricEditor {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(options.gameRunning, (gameRunning) {
-              return buildText('Game Running: $gameRunning', onPressed: () => toggleGameRunning);
-            }),
-            buildText ('Reset', onPressed: editSceneReset),
-            buildText('Spawn AI', onPressed: editSceneSpawnAI),
-            buildText('Clear Spawned AI',
-                onPressed: editSceneClearSpawnedAI),
+            buildWatch(options.gameRunning, (gameRunning) => onPressed(
+                  action: toggleGameRunning,
+                  child: buildText('Game Running: $gameRunning'),
+              )),
+            onPressed(
+              action: editSceneReset,
+              child: buildText ('Reset'),
+            ),
+            onPressed(
+              action: editSceneSpawnAI,
+              child: buildText('Spawn AI'),
+            ),
+            onPressed(
+              action: editSceneClearSpawnedAI,
+              child: buildText('Clear Spawned AI'),
+            ),
           ],
         ),
       ),
@@ -1049,8 +1066,9 @@ extension IsometricEditorUI on IsometricEditor {
                       children: [
                         Container(
                           alignment: Alignment.centerRight,
-                          child: buildText('X',
-                              onPressed: sendGameObjectRequestDeselect
+                          child: onPressed(
+                            action: sendGameObjectRequestDeselect,
+                            child: buildText('X'),
                           ),
                         ),
                         Center(child: amulet.ui.buildImageGameObject(subType)),
@@ -1315,9 +1333,15 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonGameDialogClose() =>
-      buildText('x', onPressed: actionGameDialogClose);
+      onPressed(
+          action: actionGameDialogClose,
+          child: buildText('x'),
+      );
 
-  Widget buildButtonDuplicate() => buildText('Duplicate', onPressed: sendGameObjectRequestDuplicate);
+  Widget buildButtonDuplicate() => onPressed(
+    action: sendGameObjectRequestDuplicate,
+    child: buildText('Duplicate'),
+  );
 
   Widget buildWatchFixed() => buildWatch(
         gameObjectSelectedFixed,
