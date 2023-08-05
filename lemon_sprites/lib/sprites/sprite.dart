@@ -148,8 +148,8 @@ class Sprite {
 
     final transparent = ColorRgba8(0, 0, 0, 0);
     final packedImage = Image(
-        width: totalWidth + 100,
-        height: maxHeight + 100,
+        width: totalWidth,
+        height: maxHeight,
         backgroundColor: transparent,
         numChannels: 4,
     );
