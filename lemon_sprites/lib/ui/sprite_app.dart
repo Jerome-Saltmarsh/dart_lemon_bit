@@ -141,6 +141,7 @@ class SpriteApp extends StatelessWidget {
 
   Future onLoadButtonPressed() async {
     final image = await loadImageFromFile();
+    print("decoding finished");
     if (image == null) {
       return;
     }

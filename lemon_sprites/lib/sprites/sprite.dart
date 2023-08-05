@@ -20,7 +20,6 @@ class Sprite {
   final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
 
-
   Sprite(){
     image.onChanged(onChangedImage);
     rows.onChanged(onChangedRows);
@@ -74,6 +73,7 @@ class Sprite {
   }
 
   void buildGrid() {
+    return;
     final src = image.value;
     if (src == null){
       grid.value = null;

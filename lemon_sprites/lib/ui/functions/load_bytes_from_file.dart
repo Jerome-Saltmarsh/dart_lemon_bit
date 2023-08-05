@@ -21,6 +21,6 @@ Future<Image?> loadImageFromFile() async {
   if (bytes == null) {
     throw Exception('bytes == null');
   }
-
+  print('decodingPng');
   return decodePng(bytes);
 }
