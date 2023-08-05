@@ -1,4 +1,6 @@
 
+
+
 int rgba({
   int r = 0,
   int g = 0,
@@ -8,3 +10,9 @@ int rgba({
 
 int int32(int a, int b, int c, int d) =>
     (a << 24) | (b << 16) | (c << 8) | d;
+
+// int aRGBToColor(int alpha, int red, int green, int blue) =>
+//     (alpha & 0xff) << 24 |
+//     (red & 0xff) << 16 |
+//     (green & 0xff) << 8 |
+//     (blue & 0xff);

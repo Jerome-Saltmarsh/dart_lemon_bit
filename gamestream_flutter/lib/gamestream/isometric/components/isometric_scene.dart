@@ -594,7 +594,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    nodeColors[index] = aRGBToColor(
+    nodeColors[index] = int32(
       interpolatedAlpha,
       interpolatedRed,
       interpolatedGreen,

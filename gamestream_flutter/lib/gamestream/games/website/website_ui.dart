@@ -89,7 +89,8 @@ extension WebsiteUI on WebsiteGame {
     final colors = Uint32List(width * height);
 
     for (var i = 0; i < colors.length; i++){
-       colors[i] = aRGBToColor(255, 255, 0, 0);
+       // colors[i] = aRGBToColor(255, 255, 0, 0);
+       colors[i] = rgba(r: 255, a: 255);
     }
 
     final png = writeToPng(
