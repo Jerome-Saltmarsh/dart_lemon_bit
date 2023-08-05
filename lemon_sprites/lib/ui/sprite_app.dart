@@ -30,6 +30,7 @@ class SpriteApp extends StatelessWidget {
           title: const Text('LEMON-SPRITES'),
           actions: [
             buildButtonLoad(),
+            buildButtonPack(),
           ],
         ),
         body: Center(
@@ -39,14 +40,33 @@ class SpriteApp extends StatelessWidget {
     );
   }
 
-  Widget buildButtonLoad() =>
-      onPressed(
-        action: sprite.loadImage,
-        child: Container(
-          padding: style.buttonPadding,
-          child: buildText('LOAD', color: style.buttonTextColor),
+  Widget buildButtonPack() =>
+      WatchBuilder(sprite.image, (image) => buildButton(
+        action: image == null ? null : sprite.pack,
+        child: buildText('PACK',
+          color: image == null ? Colors.black54 : Colors.black87,
         ),
+      ));
+
+  Widget buildButtonLoad() =>
+      buildButton(
+        action: sprite.loadImage,
+        child: buildButtonText('LOAD'),
       );
+
+  Widget buildButtonText(String value) =>
+      buildText(value, color: style.buttonTextColor);
+
+  Widget buildButton({
+    required Widget child,
+    Function? action,
+  }) => onPressed(
+    action: action,
+    child: Container(
+        padding: style.buttonPadding,
+        child: child,
+      ),
+  );
 
   Widget buildImage() => WatchBuilder(sprite.image, (image) =>
     image == null ? nothing : Image.memory(image));

@@ -1,6 +1,5 @@
 
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:lemon_watch/src.dart';
@@ -8,9 +7,15 @@ import 'package:lemon_watch/src.dart';
 class Sprite {
 
   final image = Watch<Uint8List?>(null);
+  final packedImage = Watch<Uint8List?>(null);
 
   Future loadImage() async {
     image.value = await loadBytesFromFile();
+    clearPackedImage();
+  }
+
+  void clearPackedImage() {
+    packedImage.value = null;
   }
 
   Future<Uint8List?> loadBytesFromFile() async {
@@ -26,5 +31,12 @@ class Sprite {
       allowedExtensions: ['png'],
     );
     return result?.files;
+  }
+
+  void pack() {
+     final bytes = image.value;
+     if (bytes == null){
+       throw Exception('image.value is null');
+     }
   }
 }
