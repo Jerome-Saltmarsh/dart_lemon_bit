@@ -4,6 +4,8 @@ import 'package:lemon_sprites/sprites/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'functions/load_bytes_from_file.dart';
+
 class SpriteApp extends StatelessWidget {
 
   final Sprite sprite;
@@ -50,7 +52,7 @@ class SpriteApp extends StatelessWidget {
 
   Widget buildButtonLoad() =>
       buildButton(
-        action: sprite.loadImage,
+        action: onLoadButtonPressed,
         child: buildButtonText('LOAD'),
       );
 
@@ -70,4 +72,9 @@ class SpriteApp extends StatelessWidget {
 
   Widget buildImage() => WatchBuilder(sprite.image, (image) =>
     image == null ? nothing : Image.memory(image));
+
+
+  Future onLoadButtonPressed() async {
+    sprite.image.value = await loadBytesFromFile();
+  }
 }

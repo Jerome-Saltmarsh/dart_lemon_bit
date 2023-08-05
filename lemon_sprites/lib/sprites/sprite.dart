@@ -1,36 +1,26 @@
 
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:lemon_watch/src.dart';
 
 class Sprite {
 
+  final spritesX = Watch(4);
+  final spritesY = Watch(4);
+
   final image = Watch<Uint8List?>(null);
   final packedImage = Watch<Uint8List?>(null);
 
-  Future loadImage() async {
-    image.value = await loadBytesFromFile();
+  Sprite(){
+    image.onChanged(onChangedImage);
+  }
+
+  void onChangedImage(Uint8List? bytes){
     clearPackedImage();
   }
 
   void clearPackedImage() {
     packedImage.value = null;
-  }
-
-  Future<Uint8List?> loadBytesFromFile() async {
-    final files = await loadFilesFromDisk();
-    return files?[0].bytes;
-  }
-
-  Future<List<PlatformFile>?> loadFilesFromDisk() async {
-    final result = await FilePicker.platform.pickFiles(
-      withData: true,
-      dialogTitle: 'Load Image',
-      type: FileType.custom,
-      allowedExtensions: ['png'],
-    );
-    return result?.files;
   }
 
   void pack() {
