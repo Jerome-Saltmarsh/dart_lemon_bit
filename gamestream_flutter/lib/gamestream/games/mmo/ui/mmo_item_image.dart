@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/item_image.dart';
-import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 
 class MMOItemImage extends StatelessWidget {
   final double size;
