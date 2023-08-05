@@ -1,7 +1,9 @@
 
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:image/image.dart';
+import 'package:lemon_sprites/sprites/copy_paste.dart';
 import 'package:lemon_sprites/sprites/draw_rec.dart';
 import 'package:lemon_watch/src.dart';
 
@@ -13,9 +15,11 @@ class Sprite {
   final rows = WatchInt(9);
   final columns = WatchInt(8);
   final image = Watch<Image?>(null);
-  final packedImage = Watch<Image?>(null);
+  final bound = Watch<Image?>(null);
+  final packed = Watch<Image?>(null);
   final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
+
 
   Sprite(){
     image.onChanged(onChangedImage);
@@ -41,10 +45,10 @@ class Sprite {
   }
 
   void clearPackedImage() {
-    packedImage.value = null;
+    bound.value = null;
   }
 
-  void pack(){
+  void bind(){
     final source = image.value;
 
     if (source == null){
@@ -65,7 +69,7 @@ class Sprite {
       );
     }
 
-    packedImage.value = copy;
+    bound.value = copy;
 
   }
 
@@ -106,6 +110,63 @@ class Sprite {
       }
     }
     grid.value = gridImage;
+  }
+
+  void pack(){
+
+    final img = image.value;
+
+    if (img == null){
+      throw Exception();
+    }
+
+    if (bounds.boundStackIndex <= 0){
+      throw Exception();
+    }
+
+    var maxHeight = 0;
+    var totalWidth = 0;
+
+    for (var i = 0; i < bounds.boundStackIndex; i++){
+      final height = bounds.boundStackBottom[i] - bounds.boundStackTop[i];
+      final width = bounds.boundStackRight[i] - bounds.boundStackLeft[i];
+      totalWidth += width;
+      maxHeight = max(height, maxHeight);
+    }
+
+    final transparent = ColorRgba8(0, 0, 0, 0);
+    final packedImage = Image(
+        width: totalWidth + 100,
+        height: maxHeight + 100,
+        backgroundColor: transparent,
+        numChannels: 4,
+    );
+
+    var x = 0;
+    for (var i = 0; i < bounds.boundStackIndex; i++){
+      final left = bounds.boundStackLeft[i];
+      final right = bounds.boundStackRight[i];
+      final top = bounds.boundStackTop[i];
+      final bottom = bounds.boundStackBottom[i];
+      final width = right - left;
+      final height = bottom - top;
+      copyPaste(
+          srcImage: img,
+          dstImage: packedImage,
+          width: width,
+          height: height,
+          srcX: left,
+          srcY: top,
+          dstX: x,
+          dstY: 0,
+      );
+      x += width;
+    }
+    packed.value = packedImage;
+
+    final previousArea = img.width * img.height;
+    final newArea = packedImage.width * packedImage.height;
+    print('image size reduced by ${100 - ((newArea / previousArea) * 100).toInt()}%');
   }
 }
 

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as ui;
 import 'package:image/image.dart';
+import 'package:image/image.dart' as img;
 import 'package:lemon_sprites/sprites/sprite.dart';
 import 'package:lemon_sprites/sprites/style.dart';
 import 'package:lemon_watch/src.dart';
@@ -37,6 +38,7 @@ class SpriteApp extends StatelessWidget {
             buildControlRows(),
             buildControlColumns(),
             buildButtonLoad(),
+            buildButtonBind(),
             buildButtonPack(),
           ],
         ),
@@ -51,7 +53,9 @@ class SpriteApp extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 50),
-                buildPackedImage(),
+                buildBound(),
+                const SizedBox(height: 50),
+                buildPacked(),
               ],
             ),
           ),
@@ -79,8 +83,16 @@ class SpriteApp extends StatelessWidget {
             ],
           );
 
-  Widget buildButtonPack() =>
+  Widget buildButtonBind() =>
       WatchBuilder(sprite.image, (image) => buildButton(
+        action: image == null ? null : sprite.bind,
+        child: buildText('BIND',
+          color: image == null ? Colors.black54 : Colors.black87,
+        ),
+      ));
+
+  Widget buildButtonPack() =>
+      WatchBuilder(sprite.bound, (image) => buildButton(
         action: image == null ? null : sprite.pack,
         child: buildText('PACK',
           color: image == null ? Colors.black54 : Colors.black87,
@@ -109,34 +121,23 @@ class SpriteApp extends StatelessWidget {
       ),
   );
 
-  Widget buildImage() => SizedBox(
+  Widget buildImage() => buildWatchImage(sprite.image);
+
+  Widget buildImageGrid() => buildWatchImage(sprite.grid);
+
+  Widget buildBound() => buildWatchImage(sprite.bound);
+
+  Widget buildPacked() => buildWatchImage(sprite.packed);
+
+  Widget buildWatchImage(Watch<img.Image?> watch) => SizedBox(
     width: style.imageWidth,
-    child: WatchBuilder(sprite.image, (image) {
+    child: WatchBuilder(watch, (image) {
       if (image == null) {
-        return buildText('load image', color: Colors.black38);
+        return buildText('-', color: Colors.black38);
       }
       return ui.Image.memory(encodePng(image));
     }),
   );
-
-  Widget buildImageGrid() => SizedBox(
-    width: style.imageWidth,
-    child: WatchBuilder(sprite.grid, (image) {
-      if (image == null) {
-        return buildText('load image', color: Colors.black38);
-      }
-      return ui.Image.memory(encodePng(image));
-    }),
-  );
-
-  Widget buildPackedImage() => WatchBuilder(sprite.packedImage, (image) {
-    if (image == null) {
-      return nothing;
-    }
-    return SizedBox(
-        width: style.imageWidth,
-        child: ui.Image.memory(encodePng(image)));
-  });
 
   Future onLoadButtonPressed() async {
     final image = await loadImageFromFile();

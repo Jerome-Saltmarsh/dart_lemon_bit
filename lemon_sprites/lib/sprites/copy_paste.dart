@@ -10,11 +10,9 @@ void copyPaste({
   required int dstX,
   required int dstY,
 }) {
-  final endX = srcX + width;
-  final endY = srcY + height;
-  for (var x = srcX; x < endX; x++){
-    for (var y = srcY; y < endY; y++){
-      final color = srcImage.getPixel(x, y);
+  for (var x = 0; x < width; x++){
+    for (var y = 0; y < height; y++){
+      final color = srcImage.getPixel(srcX + x, srcY + y);
       dstImage.setPixel(dstX + x, dstY + y, color);
     }
   }
