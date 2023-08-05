@@ -9,7 +9,6 @@ import 'package:lemon_sprites/ui/functions/load_files_from_disk.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'functions/load_bytes_from_file.dart';
 import 'functions/load_image_from_file.dart';
 
 class SpriteApp extends StatelessWidget {

@@ -66,7 +66,7 @@ class Sprite {
       throw Exception('source image is null');
     }
     final copy = source.clone();
-    bounds.capture(copy, rows.value, columns.value);
+    bounds.bind(copy, rows.value, columns.value);
     final total = bounds.boundStackIndex;
     final color = ColorRgb8(255, 0, 0);
     for (var i = 0; i < total; i++){
@@ -124,6 +124,8 @@ class Sprite {
     grid.value = gridImage;
   }
 
+  var packStack = Uint16List(0);
+
   void pack(){
 
     final img = image.value;
@@ -137,7 +139,7 @@ class Sprite {
     }
 
     var maxHeight = 0;
-    var totalWidth = 0;
+    var totalWidth = bounds.boundStackIndex; // padding left
 
     for (var i = 0; i < bounds.boundStackIndex; i++){
       final height = bounds.boundStackBottom[i] - bounds.boundStackTop[i];
@@ -154,14 +156,23 @@ class Sprite {
         numChannels: 4,
     );
 
+    final spriteWidth = bounds.spriteWidth;
+    final spriteHeight = bounds.spriteHeight;
+
     var x = 0;
-    for (var i = 0; i < bounds.boundStackIndex; i++){
+    var y = 0;
+    final totalBounds = bounds.boundStackIndex;
+    packStack = Uint16List(totalBounds * 6);
+    var packStackIndex = 0;
+
+    for (var i = 0; i < totalBounds; i++){
       final left = bounds.boundStackLeft[i];
       final right = bounds.boundStackRight[i];
       final top = bounds.boundStackTop[i];
       final bottom = bounds.boundStackBottom[i];
       final width = right - left;
       final height = bottom - top;
+
       copyPaste(
           srcImage: img,
           dstImage: packedImage,
@@ -172,21 +183,36 @@ class Sprite {
           dstX: x,
           dstY: 0,
       );
+
+      final dstX = left % spriteWidth;
+      final dstY = top % spriteHeight;
+
+      packStack[packStackIndex++] = x;
+      packStack[packStackIndex++] = y;
+      packStack[packStackIndex++] = x + width;
+      packStack[packStackIndex++] = y + height;
+      packStack[packStackIndex++] = dstX;
+      packStack[packStackIndex++] = dstY;
+
       x += width;
+      x++;
     }
     packed.value = packedImage;
-
-    final previousArea = img.width * img.height;
-    final newArea = packedImage.width * packedImage.height;
-    // print('image size reduced by ${100 - ((newArea / previousArea) * 100).toInt()}%');
   }
 
   void save() {
-    final img = packed.value;
-    if (img == null){
+    final imgPacked = packed.value;
+    if (imgPacked == null){
       throw Exception();
     }
-    download(bytes: encodePng(img), name: fileName.replaceAll('.png', '_packed.png'));
+    downloadBytes(bytes: encodePng(imgPacked), name: fileName.replaceAll('.png', '_packed.png'));
+
+    downloadBytes(
+        bytes: packStack.buffer.asUint8List(),
+        name: fileName.replaceAll('.png', '_packed.sprite'),
+    );
   }
+
+
 }
 

@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:image/image.dart';
-
 import 'load_files_from_disk.dart';
 
 Future<Uint8List?> loadBytesFromFile() async {

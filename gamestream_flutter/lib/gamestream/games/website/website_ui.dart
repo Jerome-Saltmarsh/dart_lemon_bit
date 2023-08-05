@@ -98,7 +98,7 @@ extension WebsiteUI on WebsiteGame {
       height: height,
       colors: colors,
     );
-    download(bytes: png, name: 'test.png');
+    downloadBytes(bytes: png, name: 'test.png');
   }
 
   Widget buildWatchErrorMessage() =>

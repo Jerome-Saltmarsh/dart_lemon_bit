@@ -8,6 +8,17 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+class Sprite {
+  final Image image;
+  final Uint16List bytes;
+
+  Sprite({
+    required this.image,
+    required this.bytes,
+  }) {
+  }
+}
+
 class ImageGroupBody {
   final Image idle;
   final Image running;
@@ -22,6 +33,7 @@ class ImageGroupBody {
   });
 }
 
+
 class IsometricImages with IsometricComponent {
 
   var imagesCached = true;
@@ -33,6 +45,10 @@ class IsometricImages with IsometricComponent {
 
   final imageGroupsBody = <int, ImageGroupBody> {};
   final imageGroupsHands = <int, ImageGroupHands> {};
+
+
+  late final Sprite spriteKidIdle;
+  late final Sprite spriteShirtBlueRunning;
 
   late final Image empty;
   late final Image shades;
@@ -204,9 +220,26 @@ class IsometricImages with IsometricComponent {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
+   Future<Sprite> loadSprite(String fileName) async {
+     totalImages.value++;
+     final image = await loadImageAsset('sprites/$fileName.png');
+     final bytes = await loadAssetBytes('sprites/$fileName.sprite');
+     values.add(image);
+     totalImagesLoaded.value++;
+     return Sprite(image: image, bytes: bytes.buffer.asUint16List());
+   }
+
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
+
+    loadSprite('kid_idle_packed').then((value){
+      spriteKidIdle = value;
+    });
+
+    loadSprite('shirt_blue_packed').then((value){
+      spriteShirtBlueRunning = value;
+    });
 
     loadPng('empty').then((value) => empty = value);
     loadPng('shades').then((value) => shades = value);

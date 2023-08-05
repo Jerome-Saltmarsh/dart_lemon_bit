@@ -55,6 +55,7 @@ flutter:
       fonts:
         - asset: fonts/VT323-Regular.ttf
   assets:
+    - sprites/
     - images/
     - images/website/
     - images/template/

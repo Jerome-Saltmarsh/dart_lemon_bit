@@ -10,20 +10,22 @@ class SpriteBounds {
   static const boundStackSize = 10000;
 
   var boundStackIndex = 0;
+  var spriteWidth = 0;
+  var spriteHeight = 0;
 
   final boundStackLeft = Uint16List(boundStackSize);
   final boundStackRight = Uint16List(boundStackSize);
   final boundStackTop = Uint16List(boundStackSize);
   final boundStackBottom = Uint16List(boundStackSize);
 
-  void capture(Image srcImage, int rows, int columns) {
+  void bind(Image srcImage, int rows, int columns) {
     boundStackIndex = 0;
 
     final width = srcImage.width;
     final height = srcImage.height;
 
-    final spriteWidth = width  ~/ columns;
-    final spriteHeight = height ~/ rows;
+    spriteWidth = width ~/ columns;
+    spriteHeight = height ~/ rows;
 
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {

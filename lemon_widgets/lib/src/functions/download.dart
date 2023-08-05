@@ -5,12 +5,12 @@ void downloadString({
   required String contents,
   required String filename,
 }) =>
-    download(
+    downloadBytes(
       bytes: utf8.encode(contents),
       name: filename,
     );
 
-void download({
+void downloadBytes({
   required List<int> bytes,
   required String name,
 }) {

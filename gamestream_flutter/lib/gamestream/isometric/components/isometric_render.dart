@@ -11,12 +11,54 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_images.dart';
+
 class IsometricRender with IsometricComponent {
+
+  late final Float32List bufferSrc;
+  late final Float32List bufferDst;
+  late final Int32List bufferClr;
 
   @override
   Future onComponentInit(sharedPreferences) async {
     engine.onDrawCanvas = drawCanvas;
     engine.onDrawForeground = drawForeground;
+  }
+
+  @override
+  void onComponentReady() {
+    bufferClr = engine.bufferClr;
+    bufferDst = engine.bufferDst;
+    bufferSrc = engine.bufferSrc;
+  }
+
+  void renderSprite({
+    required Sprite sprite,
+    required int frame,
+    required int color,
+    required double scale,
+    required double dstX,
+    required double dstY,
+  }){
+    engine.bufferImage = sprite.image;
+    final bufferIndex = engine.bufferIndex;
+    final bytes = sprite.bytes;
+    final fStart = bufferIndex << 2;;
+    var f = fStart;
+    var j = frame * 6; // each frame consumes for indexes
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f++] = bytes[j++].toDouble();
+    bufferSrc[f++] = bytes[j++].toDouble();;
+    bufferSrc[f++] = bytes[j++].toDouble();;
+    bufferSrc[f++] = bytes[j++].toDouble();;
+    f = fStart;
+    bufferDst[f++] = scale;
+    bufferDst[f++] = 0;
+    // bufferDst[f++] = dstX - (srcWidth * anchorX * scale);
+    // bufferDst[f++] = dstY - (srcHeight * anchorY * scale);
+    bufferDst[f++] = bytes[j] + dstX;
+    bufferDst[f++] = bytes[j] + dstY;
+    engine.incrementBufferIndex();
   }
 
   void drawCanvas(Canvas canvas, Size size) {
@@ -34,6 +76,19 @@ class IsometricRender with IsometricComponent {
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
+
+    final posX = 1000.0;
+    final posY = 1000.0;
+    final posZ = 25.0;
+
+    renderSprite(
+        sprite: images.spriteShirtBlueRunning,
+        frame: animation.frame % 64,
+        color: 0,
+        scale: 1,
+        dstX: getRenderX(posX, posY, posZ),
+        dstY: getRenderY(posX, posY, posZ),
+    );
   }
 
   void drawForeground(Canvas canvas, Size size){

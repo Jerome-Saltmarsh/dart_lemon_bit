@@ -125,7 +125,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         final name = readString();
         final length = readUInt16();
         final bytes = readBytes(length);
-        download(bytes: bytes, name: '$name.scene');
+        downloadBytes(bytes: bytes, name: '$name.scene');
         break;
       case ServerResponse.GameObject_Deleted:
         scene.removeGameObjectById(readUInt16());
