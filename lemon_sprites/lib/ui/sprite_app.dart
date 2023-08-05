@@ -34,6 +34,8 @@ class SpriteApp extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('LEMON-SPRITES'),
           actions: [
+            buildControlRows(),
+            buildControlColumns(),
             buildButtonLoad(),
             buildButtonPack(),
           ],
@@ -53,6 +55,25 @@ class SpriteApp extends StatelessWidget {
     );
   }
 
+  Widget buildControlColumns() => buildControlWatchInt(sprite.columns, 'Columns');
+
+  Widget buildControlRows() => buildControlWatchInt(sprite.rows, 'Rows');
+
+  Widget buildControlWatchInt(WatchInt watchInt, String title) => Row(
+            children: [
+              text(title),
+              WatchBuilder(watchInt, text),
+              buildButton(
+                  action: watchInt.decrement,
+                  child: text('-'),
+              ),
+              buildButton(
+                  action: watchInt.increment,
+                  child: text('+'),
+              ),
+            ],
+          );
+
   Widget buildButtonPack() =>
       WatchBuilder(sprite.image, (image) => buildButton(
         action: image == null ? null : sprite.pack,
@@ -69,6 +90,8 @@ class SpriteApp extends StatelessWidget {
 
   Widget buildButtonText(String value) =>
       buildText(value, color: style.buttonTextColor);
+
+  Widget text(dynamic value) => buildText(value, color: style.textColor);
 
   Widget buildButton({
     required Widget child,

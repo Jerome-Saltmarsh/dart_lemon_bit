@@ -10,8 +10,8 @@ import 'sprite_bounds.dart';
 
 class Sprite {
 
-  final rows = Watch(9);
-  final columns = Watch(8);
+  final rows = WatchInt(9);
+  final columns = WatchInt(8);
   final image = Watch<Image?>(null);
   final packedImage = Watch<Image?>(null);
   final bounds = SpriteBounds();
@@ -56,6 +56,5 @@ class Sprite {
     packedImage.value = copy;
 
   }
-
 }
 
