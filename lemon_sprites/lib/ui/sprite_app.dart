@@ -83,17 +83,12 @@ class SpriteApp extends StatelessWidget {
 
   Widget buildImage() => SizedBox(
     width: 500,
-    child: FittedBox(
-      fit: BoxFit.fitWidth,
-      child: WatchBuilder(sprite.image, (image) {
-        if (image == null) {
-          return buildText('load image', color: Colors.black38);
-        }
-        return Container(
-            constraints: BoxConstraints(minWidth: 50),
-            child: ui.Image.memory(encodePng(image)));
-      }),
-    ),
+    child: WatchBuilder(sprite.image, (image) {
+      if (image == null) {
+        return buildText('load image', color: Colors.black38);
+      }
+      return ui.Image.memory(encodePng(image));
+    }),
   );
 
   Widget buildPackedImage() => WatchBuilder(sprite.packedImage, (image) {

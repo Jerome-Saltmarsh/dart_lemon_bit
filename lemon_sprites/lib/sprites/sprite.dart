@@ -30,6 +30,26 @@ class Sprite {
     packedImage.value = null;
   }
 
+  void copyPaste({
+    required Image srcImage,
+    required Image dstImage,
+    required int width,
+    required int height,
+    required int srcX,
+    required int srcY,
+    required int dstX,
+    required int dstY,
+    }) {
+    final endX = srcX + width;
+    final endY = srcY + height;
+    for (var x = srcX; x < endX; x++){
+      for (var y = srcY; y < endY; y++){
+        final color = srcImage.getPixel(x, y);
+        dstImage.setPixel(dstX + x, dstY + y, color);
+      }
+    }
+  }
+
   void pack() {
     final img = image.value;
 
@@ -37,16 +57,21 @@ class Sprite {
       return;
     }
 
-    final width = 50;
-    final height = 50;
+    final width = img.width;
+    final height = img.height;
     final packed = Image(width: width, height: height);
 
-    for (var x = 0; x < width; x++){
-      for (var y = 0; y < height; y++){
-        final color = img.getPixel(x, y);
-        packed.setPixel(x, y, color);
-      }
-    }
+    copyPaste(
+        srcImage: img,
+        dstImage: packed,
+        width: 50,
+        height: 100,
+        srcX: 100,
+        srcY: 100,
+        dstX: 100,
+        dstY: 100,
+    );
+
     packedImage.value = packed;
   }
 }
