@@ -10,9 +10,8 @@ class Sprite {
 
   final rows = Watch(4);
   final columns = Watch(4);
-
   final image = Watch<Image?>(null);
-  final packedImage = Watch<Uint8List?>(null);
+  final packedImage = Watch<Image?>(null);
 
   Sprite(){
     image.onChanged(onChangedImage);
@@ -50,10 +49,12 @@ class Sprite {
       throw Exception('image.colors == null');
     }
 
-     packedImage.value = writeToPng(
+     final packedBytes = writeToPng(
          width: img.width,
          height: img.height,
          colors: colors,
      );
+
+     packedImage.value = decodePng(packedBytes);
   }
 }

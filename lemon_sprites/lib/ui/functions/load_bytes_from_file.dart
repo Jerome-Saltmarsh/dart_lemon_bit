@@ -22,9 +22,5 @@ Future<Image?> loadImageFromFile() async {
     throw Exception('bytes == null');
   }
 
-  final decoder = findDecoderForData(bytes);
-  final decoded = decoder?.decode(bytes);
-  return decoded;
-
-  // return decodeImage(bytes);
+  return decodePng(bytes);
 }
