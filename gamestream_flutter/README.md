@@ -8,6 +8,12 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
+shift + alt + n     : enter
+shift + alt + J     : backspace
+
+
+
+
 [IDEAS]
 - sell items for xp
 - tier two talents cost two skills points etc

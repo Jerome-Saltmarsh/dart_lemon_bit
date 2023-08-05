@@ -1185,27 +1185,6 @@ class Engine extends StatelessWidget {
     body.style.cursor = name;
   }
 
-  void downloadString({
-    required String contents,
-    required String filename,
-  }) =>
-      downloadBytes(utf8.encode(contents), name: filename);
-
-  void downloadBytes(
-      List<int> bytes, {
-        required String name,
-      }) {
-    final _base64 = base64Encode(bytes);
-    final anchor =
-    html.AnchorElement(href: 'data:application/octet-stream;base64,$_base64')
-      ..target = 'blank';
-    anchor.download = name;
-    html.document.body?.append(anchor);
-    anchor.click();
-    anchor.remove();
-    return;
-  }
-
   void incrementBufferIndex(){
     this.bufferIndex++;
     if (this.bufferIndex == 128) {

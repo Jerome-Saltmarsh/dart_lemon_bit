@@ -12,26 +12,24 @@ import 'package:golden_ratio/constants.dart';
 
 extension WebsiteUI on WebsiteGame {
 
-  Widget buildSelectGameType() => WatchBuilder(
-        options.gameType,
-            (activeGameType) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: gameTypes.map((gameType) => onPressed(
-              action: () => action.startGameType(gameType),
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                child: Column(
-                  children: [
-                    SizedBox(
-                        width: 256,
-                        child: buildGameTypeImage(gameType)),
-                    buildText(gameType.name, size: 25),
-                  ],
-                ),
-              ),
-            ))
-                .toList()));
+  Widget buildRowSelectGame() => Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: gameTypes.map((gameType) => onPressed(
+        action: () => action.startGameType(gameType),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          child: Column(
+            children: [
+              SizedBox(
+                  width: 256,
+                  child: buildGameTypeImage(gameType)),
+              buildText(gameType.name, size: 25),
+            ],
+          ),
+        ),
+      ))
+          .toList());
 
   Widget buildPageWebsiteDesktop() => Center(
       child: WatchBuilder(websitePage, (websitePage){
@@ -71,13 +69,36 @@ extension WebsiteUI on WebsiteGame {
                 ),
               ),
               height32,
-              buildSelectGameType(),
+              buildRowSelectGame(),
+              buttonDownloadImageTest(),
             ],
           );
         }
         );
       }),
     );
+
+  Widget buttonDownloadImageTest() => onPressed(
+    action: downloadImageTest,
+    child: buildText('DOWNLOAD IMAGE'),
+  );
+
+  void downloadImageTest(){
+    final width = 100;
+    final height = 150;
+    final colors = Uint32List(width * height);
+
+    for (var i = 0; i < colors.length; i++){
+       colors[i] = aRGBToColor(255, 255, 0, 0);
+    }
+
+    final png = writeToPng(
+      width: width,
+      height: height,
+      colors: colors,
+    );
+    download(bytes: png, name: 'test.png');
+  }
 
   Widget buildWatchErrorMessage() =>
       WatchBuilder(website.error, (String? message) {
@@ -98,43 +119,6 @@ extension WebsiteUI on WebsiteGame {
             buildPageConnectionStatus(connectionStatus.name),
         _ => buildNotConnected()
       };
-
-  Widget buildPageLoading(BuildContext context) {
-    final _width = 300.0;
-    final _height = 50.0;
-    return buildFullScreen(
-      color: colors.black,
-      child: buildWatch(download, (double value) {
-        value = 0.6182;
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildText('GAMESTREAM ${(value * 100).toInt()}%', color: Colors.white),
-                height8,
-                Container(
-                  width: _width,
-                  height: _height,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    color: Colors.white,
-                    width: _width * value,
-                    height: _height,
-                  ),
-                )
-              ],
-            ),
-          ],
-        );
-      }),
-    );
-  }
 
   Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
 

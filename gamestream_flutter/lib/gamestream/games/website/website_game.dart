@@ -27,7 +27,6 @@ class WebsiteGame extends Game {
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
-  final download = Watch(0.0);
   final isVisibleDialogCustomRegion = Watch(false);
   final colorRegion = Colors.orange;
   final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
@@ -203,14 +202,4 @@ class WebsiteGame extends Game {
   void drawCanvas(Canvas canvas, Size size) {
     // TODO: implement drawCanvas
   }
-
-  // Future saveVisitDateTime() async =>
-  //     save('visit-datetime', DateTime.now().toIso8601String());
-  //
-  // Future saveVersion() async =>
-  //     await save('version', version);
-
-  // Future save(String key, dynamic value) async =>
-  //     (await SharedPreferences.getInstance()).putAny(key, value);
-
 }

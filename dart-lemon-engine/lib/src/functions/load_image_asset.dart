@@ -1,11 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
+import 'package:lemon_engine/src/functions/load_image_from_bytes.dart';
 
 Future<Image> loadImageAsset(String url) async {
   final byteData = await rootBundle.load(url);
   final bytes = Uint8List.view(byteData.buffer);
-  final codec = await instantiateImageCodec(bytes);
-  final frameInfo = await codec.getNextFrame();
-  return frameInfo.image;
+  return await loadImageFromBytes(bytes);
 }
