@@ -7,3 +7,4 @@ export '../../../isometric/classes/particle.dart';
 export '../components/isometric_particles.dart';
 export '../../../isometric/classes/position.dart';
 export 'render_group.dart';
+export 'sprite.dart';

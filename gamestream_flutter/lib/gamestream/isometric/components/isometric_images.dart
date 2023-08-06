@@ -7,17 +7,10 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../classes/src.dart';
 
-class Sprite {
-  final Image image;
-  final Uint16List bytes;
 
-  Sprite({
-    required this.image,
-    required this.bytes,
-  }) {
-  }
-}
+
 
 class ImageGroupBody {
   final Image idle;
@@ -47,7 +40,7 @@ class IsometricImages with IsometricComponent {
   final imageGroupsHands = <int, ImageGroupHands> {};
 
 
-  late final Sprite spriteKidIdle;
+  late final Sprite spriteShirtBlueIdle;
   late final Sprite spriteShirtBlueRunning;
 
   late final Image empty;
@@ -226,18 +219,17 @@ class IsometricImages with IsometricComponent {
      final bytes = await loadAssetBytes('sprites/$fileName.sprite');
      values.add(image);
      totalImagesLoaded.value++;
-     return Sprite(image: image, bytes: bytes.buffer.asUint16List());
+     return Sprite.fromBytes(bytes, image: image);
    }
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
 
-    loadSprite('kid_idle_packed').then((value){
-      spriteKidIdle = value;
+    loadSprite('shirt_blue_idle_packed').then((value){
+      spriteShirtBlueIdle = value;
     });
-
-    loadSprite('shirt_blue_packed').then((value){
+    loadSprite('shirt_blue_running_packed').then((value){
       spriteShirtBlueRunning = value;
     });
 

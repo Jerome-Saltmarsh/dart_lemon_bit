@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import '../classes/src.dart';
 import 'isometric_images.dart';
 
 class IsometricRender with IsometricComponent {
@@ -39,25 +40,25 @@ class IsometricRender with IsometricComponent {
     required double scale,
     required double dstX,
     required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
   }){
     engine.bufferImage = sprite.image;
     final bufferIndex = engine.bufferIndex;
-    final bytes = sprite.bytes;
-    final fStart = bufferIndex << 2;;
+    final values = sprite.values;
+    final fStart = bufferIndex << 2;
     var f = fStart;
     var j = frame * 6; // each frame consumes for indexes
     bufferClr[bufferIndex] = color;
-    bufferSrc[f++] = bytes[j++].toDouble();
-    bufferSrc[f++] = bytes[j++].toDouble();;
-    bufferSrc[f++] = bytes[j++].toDouble();;
-    bufferSrc[f++] = bytes[j++].toDouble();;
+    bufferSrc[f++] = values[j++];
+    bufferSrc[f++] = values[j++];
+    bufferSrc[f++] = values[j++];
+    bufferSrc[f++] = values[j++];
     f = fStart;
     bufferDst[f++] = scale;
-    bufferDst[f++] = 0;
-    // bufferDst[f++] = dstX - (srcWidth * anchorX * scale);
-    // bufferDst[f++] = dstY - (srcHeight * anchorY * scale);
-    bufferDst[f++] = bytes[j] + dstX;
-    bufferDst[f++] = bytes[j] + dstY;
+    bufferDst[f++] = 0; // rotation
+    bufferDst[f++] = values[j++] + dstX - (sprite.width * anchorX);
+    bufferDst[f++] = values[j++] + dstY - (sprite.height * anchorY);
     engine.incrementBufferIndex();
   }
 

@@ -14,49 +14,47 @@ import 'sprite_bounds.dart';
 
 class Sprite {
 
+  var fileName = '';
+  var packStack = Uint16List(0);
+
   final rows = WatchInt(8);
   final columns = WatchInt(8);
+  final file = Watch<PlatformFile?>(null);
   final image = Watch<Image?>(null);
   final bound = Watch<Image?>(null);
   final packed = Watch<Image?>(null);
   final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
-  var fileName = '';
 
   Sprite(){
+    file.onChanged(onChangedFile);
     image.onChanged(onChangedImage);
-    rows.onChanged(onChangedRows);
-    columns.onChanged(onChangedColumn);
   }
 
-  void setImageFile(PlatformFile file) async {
+  void onChangedFile(PlatformFile? file){
+    if (file == null){
+      clearPackedImage();
+      return;
+    }
+
     final bytes = file.bytes;
     if (bytes == null){
       throw Exception();
     }
+    final now = DateTime.now();
     image.value = decodePng(bytes);
+    final ms = DateTime.now().difference(now).inMilliseconds;
+    print('decodePng took $ms milliseconds');
     fileName = file.name;
-  }
-
-  void onChangedRows(int rows){
-    buildGrid();
-  }
-
-  void onChangedColumn(int rows){
-    buildGrid();
-  }
-
-  void setImageFromBytes(Uint8List bytes) {
-    image.value = decodePng(bytes);
   }
 
   void onChangedImage(Image? image){
     clearPackedImage();
-    buildGrid();
   }
 
   void clearPackedImage() {
     bound.value = null;
+    packed.value = null;
   }
 
   void bind(){
@@ -84,47 +82,7 @@ class Sprite {
 
   }
 
-  void buildGrid() {
-    return;
-    final src = image.value;
-    if (src == null){
-      grid.value = null;
-      return;
-    }
-
-    final transparent = ColorRgba8(0, 0, 0, 0);
-    final width = src.width;
-    final height = src.height;
-    final gridImage = Image(
-        width: width,
-        height: height,
-        backgroundColor: transparent,
-        numChannels: 4,
-    );
-
-    final rows = this.rows.value;
-    final columns = this.columns.value;
-
-    final cellWidth = width ~/ columns;
-    final cellHeight = height ~/ rows;
-    final black = ColorRgba8(0, 0, 0, 255);
-
-    for (var row = 0; row < rows; row++) {
-      for (var x = 0; x < width; x++){
-        final y = row * cellHeight;
-        gridImage.setPixel(x, y, black);
-      }
-    }
-    for (var column = 0; column < columns; column++) {
-      for (var y = 0; y < height; y++){
-        final x = column * cellWidth;
-        gridImage.setPixel(x, y, black);
-      }
-    }
-    grid.value = gridImage;
-  }
-
-  var packStack = Uint16List(0);
+  var packStackIndex = 0;
 
   void pack(){
 
@@ -162,8 +120,12 @@ class Sprite {
     var x = 0;
     var y = 0;
     final totalBounds = bounds.boundStackIndex;
-    packStack = Uint16List(totalBounds * 6);
-    var packStackIndex = 0;
+    packStack = Uint16List(4 + (totalBounds * 6));
+    packStackIndex = 0;
+    writeToPackStack(spriteWidth);
+    writeToPackStack(spriteHeight);
+    writeToPackStack(rows.value);
+    writeToPackStack(columns.value);
 
     for (var i = 0; i < totalBounds; i++){
       final left = bounds.boundStackLeft[i];
@@ -198,6 +160,10 @@ class Sprite {
       x++;
     }
     packed.value = packedImage;
+  }
+
+  void writeToPackStack(int value){
+    packStack[packStackIndex++] = value;
   }
 
   void save() {

@@ -3,10 +3,13 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
+
+import '../../classes/sprite.dart';
 
 class RendererCharacters extends RenderGroup {
 
@@ -453,11 +456,21 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterKid(Character character) {
-
     const anchorY = 0.7;
     const size = 256.0;
     const scale = 0.35;
-    final frame = character.animationFrame;
+
+    // render.renderSprite(
+    //   sprite: images.spriteShirtBlueRunning,
+    //   frame: animation.frame % 64,
+    //   color: 0,
+    //   scale: 1,
+    //   dstX: character.renderX,
+    //   dstY: character.renderY,
+    //   anchorY: anchorY,
+    // );
+
+    var frame = character.animationFrame;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
     final color = character.color;
@@ -471,6 +484,8 @@ class RendererCharacters extends RenderGroup {
         (throw Exception(
             'images.imageGroupsBody[${BodyType.getName(character.bodyType)}] - missing'
         ));
+
+    final Sprite bodySprite;
 
     double srcX;
     ui.Image imageTorso;
@@ -495,7 +510,7 @@ class RendererCharacters extends RenderGroup {
     ].contains(direction);
 
     if (character.running) {
-      srcX = (frame % 8) * size;
+      frame = frame % 8;
       imageTorso = images.kid_torso_light_running;
       imageHead = images.kid_head_light_running;
       imageBody = imageGroupBody.running;
@@ -505,8 +520,15 @@ class RendererCharacters extends RenderGroup {
       imageHandsRight = imageGroupHandRight.rightRunning;
       imageArmLeft = images.kid_arm_left_running;
       imageArmRight = images.kid_arm_right_running;
+      bodySprite = images.spriteShirtBlueRunning;
     } else {
-      srcX = 0;
+
+      if (frame ~/ 8 % 2 == 0){
+        frame = frame % 8;
+      } else {
+        frame = (7 - (frame % 8));
+      }
+
       imageTorso = images.kid_torso_light_idle;
       imageHead = images.kid_head_light_idle;
       imageBody = imageGroupBody.idle;
@@ -516,13 +538,10 @@ class RendererCharacters extends RenderGroup {
       imageHandsRight = imageGroupHandRight.rightIdle;
       imageArmLeft = images.kid_arm_left_idle;
       imageArmRight = images.kid_arm_right_idle;
-
-      if (frame ~/ 8 % 2 == 0){
-        srcX = (frame % 8) * size;
-      } else {
-        srcX = (7 - (frame % 8)) * size;
-      }
+      bodySprite = images.spriteShirtBlueIdle;
     }
+
+    srcX = frame * size;
 
     if (leftInFront) {
       imageHandFront = imageHandsLeft;
@@ -590,17 +609,27 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageBody,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
-      dstX: dstX,
-      dstY: dstY,
-      scale: scale,
-      color: color,
-      anchorY: anchorY,
+    // engine.renderSprite(
+    //   image: imageBody,
+    //   srcX: srcX,
+    //   srcY: srcY,
+    //   srcWidth: size,
+    //   srcHeight: size,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   scale: scale,
+    //   color: color,
+    //   anchorY: anchorY,
+    // );
+
+    render.renderSprite(
+        sprite: bodySprite,
+        frame: frame,
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
     );
 
     engine.renderSprite(

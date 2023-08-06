@@ -112,8 +112,7 @@ class SpriteApp extends StatelessWidget {
     if (files == null) {
       return;
     }
-    final file = files[0];
-    sprite.setImageFile(file);
+    sprite.file.value = files[0];
   }
 
   Widget buildButtonText(String value) =>
