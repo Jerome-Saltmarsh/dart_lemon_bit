@@ -50,6 +50,8 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidArmLeftRunning;
   late final Sprite spriteKidArmRightIdle;
   late final Sprite spriteKidArmRightRunning;
+  late final Sprite spriteKidTorsoIdle;
+  late final Sprite spriteKidTorsoRunning;
 
   late final Image empty;
   late final Image shades;
@@ -96,9 +98,6 @@ class IsometricImages with IsometricComponent {
 
   late final Image kid_hands_gauntlet_right_idle;
   late final Image kid_hands_gauntlet_right_running;
-
-  late final Image kid_torso_light_idle;
-  late final Image kid_torso_light_running;
 
   late final Image template_head_none;
   late final Image template_head_rogue;
@@ -263,9 +262,6 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/hands/gauntlet/right/idle').then((value) => kid_hands_gauntlet_right_idle = value);
     loadPng('kid/hands/gauntlet/right/running').then((value) => kid_hands_gauntlet_right_running = value);
 
-    loadPng('kid/torso/torso_light_idle').then((value) => kid_torso_light_idle = value);
-    loadPng('kid/torso/torso_light_running').then((value) => kid_torso_light_running = value);
-
     loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
 
@@ -359,6 +355,12 @@ class IsometricImages with IsometricComponent {
     });
     loadSprite('kid_arm_right_running', kid_skin, 190).then((value){
       spriteKidArmRightRunning = value;
+    });
+    loadSprite('kid_torso_idle', kid_skin, 236).then((value){
+      spriteKidTorsoIdle = value;
+    });
+    loadSprite('kid_torso_running', kid_skin, 441).then((value){
+      spriteKidTorsoRunning = value;
     });
 
     totalSpritesLoaded.onChanged((total) {

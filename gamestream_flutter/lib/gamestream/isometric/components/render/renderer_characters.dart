@@ -478,9 +478,9 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteHead;
     final Sprite spriteArmLeft;
     final Sprite spriteArmRight;
+    final Sprite spriteTorso;
 
     double srcX;
-    ui.Image imageTorso;
     ui.Image imageBodyArms;
     ui.Image imageLegs;
     ui.Image imageHandsLeft;
@@ -500,7 +500,6 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       frame = frame % 8;
-      imageTorso = images.kid_torso_light_running;
       imageBodyArms = imageGroupBody.armsRunning;
       imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = imageGroupHandLeft.leftRunning;
@@ -509,6 +508,7 @@ class RendererCharacters extends RenderGroup {
       spriteArmRight = images.spriteKidArmRightRunning;
       spriteBody = images.spriteShirtBlueRunning;
       spriteHead = images.spriteHeadRunning;
+      spriteTorso = images.spriteKidTorsoRunning;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -517,7 +517,6 @@ class RendererCharacters extends RenderGroup {
         frame = (7 - (frame % 8));
       }
 
-      imageTorso = images.kid_torso_light_idle;
       imageBodyArms = imageGroupBody.armsIdle;
       imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = imageGroupHandLeft.leftIdle;
@@ -526,6 +525,7 @@ class RendererCharacters extends RenderGroup {
       spriteArmRight = images.spriteKidArmRightIdle;
       spriteBody = images.spriteShirtBlueIdle;
       spriteHead = images.spriteHeadIdle;
+      spriteTorso = images.spriteKidTorsoIdle;
     }
 
     srcX = frame * size;
@@ -546,16 +546,13 @@ class RendererCharacters extends RenderGroup {
 
     renderCharacterShadowCircle(character);
 
-    engine.renderSprite(
-      image: imageTorso,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    render.sprite(
+      sprite: spriteTorso,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
 
