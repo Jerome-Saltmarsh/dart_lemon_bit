@@ -460,16 +460,6 @@ class RendererCharacters extends RenderGroup {
     const size = 256.0;
     const scale = 0.35;
 
-    // render.renderSprite(
-    //   sprite: images.spriteShirtBlueRunning,
-    //   frame: animation.frame % 64,
-    //   color: 0,
-    //   scale: 1,
-    //   dstX: character.renderX,
-    //   dstY: character.renderY,
-    //   anchorY: anchorY,
-    // );
-
     var frame = character.animationFrame;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final srcY = direction * size;
@@ -608,19 +598,6 @@ class RendererCharacters extends RenderGroup {
       color: color,
       anchorY: anchorY,
     );
-
-    // engine.renderSprite(
-    //   image: imageBody,
-    //   srcX: srcX,
-    //   srcY: srcY,
-    //   srcWidth: size,
-    //   srcHeight: size,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   scale: scale,
-    //   color: color,
-    //   anchorY: anchorY,
-    // );
 
     render.sprite(
         sprite: bodySprite,
