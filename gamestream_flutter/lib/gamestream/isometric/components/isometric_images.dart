@@ -42,11 +42,14 @@ class IsometricImages with IsometricComponent {
   final imageGroupsBody = <int, ImageGroupBody> {};
   final imageGroupsHands = <int, ImageGroupHands> {};
 
-
   late final Sprite spriteShirtBlueIdle;
   late final Sprite spriteShirtBlueRunning;
   late final Sprite spriteHeadIdle;
   late final Sprite spriteHeadRunning;
+  late final Sprite spriteKidArmLeftIdle;
+  late final Sprite spriteKidArmLeftRunning;
+  late final Sprite spriteKidArmRightIdle;
+  late final Sprite spriteKidArmRightRunning;
 
   late final Image empty;
   late final Image shades;
@@ -85,12 +88,6 @@ class IsometricImages with IsometricComponent {
   late final Image kid_body_arms_shirt_blue_idle;
   late final Image kid_body_arms_shirt_blue_running;
 
-  late final Image kid_head_light_idle;
-  late final Image kid_head_light_running;
-
-  late final Image kid_head_dark_idle;
-  late final Image kid_head_dark_running;
-
   late final Image kid_legs_brown_idle;
   late final Image kid_legs_brown_running;
 
@@ -99,12 +96,6 @@ class IsometricImages with IsometricComponent {
 
   late final Image kid_hands_gauntlet_right_idle;
   late final Image kid_hands_gauntlet_right_running;
-
-  late final Image kid_arm_left_idle;
-  late final Image kid_arm_left_running;
-
-  late final Image kid_arm_right_idle;
-  late final Image kid_arm_right_running;
 
   late final Image kid_torso_light_idle;
   late final Image kid_torso_light_running;
@@ -266,17 +257,11 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/kid_running').then((value) => kid_running = value);
     loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
 
-    loadPng('kid/arms/kid_arm_left_idle').then((value) => kid_arm_left_idle = value);
-    loadPng('kid/arms/kid_arm_left_running').then((value) => kid_arm_left_running = value);
-
     loadPng('kid/hands/gauntlet/left/idle').then((value) => kid_hands_gauntlet_left_idle = value);
     loadPng('kid/hands/gauntlet/left/running').then((value) => kid_hands_gauntlet_left_running = value);
 
     loadPng('kid/hands/gauntlet/right/idle').then((value) => kid_hands_gauntlet_right_idle = value);
     loadPng('kid/hands/gauntlet/right/running').then((value) => kid_hands_gauntlet_right_running = value);
-
-    loadPng('kid/arms/kid_arm_right_idle').then((value) => kid_arm_right_idle = value);
-    loadPng('kid/arms/kid_arm_right_running').then((value) => kid_arm_right_running = value);
 
     loadPng('kid/torso/torso_light_idle').then((value) => kid_torso_light_idle = value);
     loadPng('kid/torso/torso_light_running').then((value) => kid_torso_light_running = value);
@@ -286,12 +271,6 @@ class IsometricImages with IsometricComponent {
 
     loadPng('kid/body_arms/idle/shirt_blue').then((value) => kid_body_arms_shirt_blue_idle = value);
     loadPng('kid/body_arms/running/shirt_blue').then((value) => kid_body_arms_shirt_blue_running = value);
-
-    loadPng('kid/head/kid_head_light_idle').then((value) => kid_head_light_idle = value);
-    loadPng('kid/head/kid_head_light_running').then((value) => kid_head_light_running = value);
-
-    loadPng('kid/head/kid_head_dark_idle').then((value) => kid_head_dark_idle = value);
-    loadPng('kid/head/kid_head_dark_running').then((value) => kid_head_dark_running = value);
 
     loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
     loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
@@ -368,6 +347,18 @@ class IsometricImages with IsometricComponent {
     });
     loadSprite('kid_head_running', kid_skin, 28).then((value){
       spriteHeadRunning = value;
+    });
+    loadSprite('kid_arm_left_idle', kid_skin, 57).then((value){
+      spriteKidArmLeftIdle = value;
+    });
+    loadSprite('kid_arm_left_running', kid_skin, 101).then((value){
+      spriteKidArmLeftRunning = value;
+    });
+    loadSprite('kid_arm_right_idle', kid_skin, 101).then((value){
+      spriteKidArmRightIdle = value;
+    });
+    loadSprite('kid_arm_right_running', kid_skin, 101).then((value){
+      spriteKidArmRightRunning = value;
     });
 
     totalSpritesLoaded.onChanged((total) {

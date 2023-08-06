@@ -476,21 +476,21 @@ class RendererCharacters extends RenderGroup {
 
     final Sprite spriteBody;
     final Sprite spriteHead;
+    final Sprite spriteArmLeft;
+    final Sprite spriteArmRight;
 
     double srcX;
     ui.Image imageTorso;
-    // ui.Image imageHead;
     ui.Image imageBodyArms;
     ui.Image imageLegs;
     ui.Image imageHandsLeft;
     ui.Image imageHandsRight;
-    ui.Image imageArmLeft;
-    ui.Image imageArmRight;
 
     ui.Image imageHandFront;
     ui.Image imageHandBehind;
-    ui.Image imageArmFront;
-    ui.Image imageArmBehind;
+
+    Sprite spriteArmFront;
+    Sprite spriteArmBehind;
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -501,13 +501,12 @@ class RendererCharacters extends RenderGroup {
     if (character.running) {
       frame = frame % 8;
       imageTorso = images.kid_torso_light_running;
-      // imageHead = images.kid_head_light_running;
       imageBodyArms = imageGroupBody.armsRunning;
       imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = imageGroupHandLeft.leftRunning;
       imageHandsRight = imageGroupHandRight.rightRunning;
-      imageArmLeft = images.kid_arm_left_running;
-      imageArmRight = images.kid_arm_right_running;
+      spriteArmLeft = images.spriteKidArmLeftRunning;
+      spriteArmRight = images.spriteKidArmRightRunning;
       spriteBody = images.spriteShirtBlueRunning;
       spriteHead = images.spriteHeadRunning;
     } else {
@@ -519,13 +518,12 @@ class RendererCharacters extends RenderGroup {
       }
 
       imageTorso = images.kid_torso_light_idle;
-      // imageHead = images.kid_head_light_idle;
       imageBodyArms = imageGroupBody.armsIdle;
       imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = imageGroupHandLeft.leftIdle;
       imageHandsRight = imageGroupHandRight.rightIdle;
-      imageArmLeft = images.kid_arm_left_idle;
-      imageArmRight = images.kid_arm_right_idle;
+      spriteArmLeft = images.spriteKidArmLeftIdle;
+      spriteArmRight = images.spriteKidArmRightIdle;
       spriteBody = images.spriteShirtBlueIdle;
       spriteHead = images.spriteHeadIdle;
     }
@@ -535,13 +533,13 @@ class RendererCharacters extends RenderGroup {
     if (leftInFront) {
       imageHandFront = imageHandsLeft;
       imageHandBehind = imageHandsRight;
-      imageArmFront = imageArmLeft;
-      imageArmBehind = imageArmRight;
+      spriteArmFront = spriteArmLeft;
+      spriteArmBehind = spriteArmRight;
     } else {
       imageHandFront = imageHandsRight;
       imageHandBehind = imageHandsLeft;
-      imageArmFront = imageArmRight;
-      imageArmBehind = imageArmLeft;
+      spriteArmFront = spriteArmRight; // spriteArmRight
+      spriteArmBehind = spriteArmLeft;
     }
 
     final spriteFrame = (character.renderDirection * 8) + frame;
@@ -574,16 +572,13 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageArmBehind,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    render.sprite(
+      sprite: spriteArmBehind,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
 
@@ -610,16 +605,13 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageArmFront,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    render.sprite(
+      sprite: spriteArmFront,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
 
