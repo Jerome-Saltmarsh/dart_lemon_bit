@@ -7,12 +7,9 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
-import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../classes/src.dart';
-import 'isometric_images.dart';
 
 class IsometricRender with IsometricComponent {
 
@@ -49,12 +46,13 @@ class IsometricRender with IsometricComponent {
     final fStart = bufferIndex << 2;
     var f = fStart;
     var j = frame * 6; // each frame consumes for indexes
+    final y = sprite.y;
 
     bufferClr[bufferIndex] = color;
-    bufferSrc[f++] = values[j++];
-    bufferSrc[f++] = values[j++];
-    bufferSrc[f++] = values[j++];
-    bufferSrc[f++] = values[j++];
+    bufferSrc[f++] = values[j++]; // left
+    bufferSrc[f++] = values[j++] + y; // top
+    bufferSrc[f++] = values[j++]; // right
+    bufferSrc[f++] = values[j++] + y; // bottom
     f = fStart;
     bufferDst[f++] = scale;
     bufferDst[f++] = 0; // rotation

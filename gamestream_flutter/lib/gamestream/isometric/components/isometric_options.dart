@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/lemon_components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
+  var characterRenderScale = 0.35;
   var characterShadowColor = Colors.black38;
   var framesPerLightingUpdate = 60;
   var cursorType = IsometricCursorType.Hand;

@@ -33,8 +33,11 @@ class IsometricImages with IsometricComponent {
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
+  final totalSprites = Watch(0);
+  final totalSpritesLoaded = Watch(0);
   final values = <Image>[];
-  final _completer = Completer();
+  final _completerImages = Completer();
+  final _completerSprites = Completer();
 
   final imageGroupsBody = <int, ImageGroupBody> {};
   final imageGroupsHands = <int, ImageGroupHands> {};
@@ -74,6 +77,7 @@ class IsometricImages with IsometricComponent {
   late final Image kid_running;
   late final Image kid_running_shadow;
 
+  late final Image kid_body_shirt_blue;
   late final Image kid_body_shirt_blue_idle;
   late final Image kid_body_shirt_blue_running;
 
@@ -213,25 +217,25 @@ class IsometricImages with IsometricComponent {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
-   Future<Sprite> loadSprite(String fileName) async {
-     totalImages.value++;
-     final image = await loadImageAsset('sprites/$fileName.png');
+   // Future<Sprite> loadSprite(String fileName) async {
+   //   totalImages.value++;
+   //   final image = await loadImageAsset('sprites/$fileName.png');
+   //   final bytes = await loadAssetBytes('sprites/$fileName.sprite');
+   //   values.add(image);
+   //   totalImagesLoaded.value++;
+   //   return Sprite.fromBytes(bytes, image: image, y: 0);
+   // }
+
+   Future<Sprite> loadSprite(String fileName, Image image, double y) async {
+     totalSprites.value++;
      final bytes = await loadAssetBytes('sprites/$fileName.sprite');
-     values.add(image);
-     totalImagesLoaded.value++;
-     return Sprite.fromBytes(bytes, image: image);
+     totalSpritesLoaded.value++;
+     return Sprite.fromBytes(bytes, image: image, y: y);
    }
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
-
-    loadSprite('shirt_blue_idle_packed').then((value){
-      spriteShirtBlueIdle = value;
-    });
-    loadSprite('shirt_blue_running_packed').then((value){
-      spriteShirtBlueRunning = value;
-    });
 
     loadPng('empty').then((value) => empty = value);
     loadPng('shades').then((value) => shades = value);
@@ -275,6 +279,8 @@ class IsometricImages with IsometricComponent {
 
     loadPng('kid/torso/torso_light_idle').then((value) => kid_torso_light_idle = value);
     loadPng('kid/torso/torso_light_running').then((value) => kid_torso_light_running = value);
+
+    loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
 
     loadPng('kid/body/idle/shirt_blue').then((value) => kid_body_shirt_blue_idle = value);
     loadPng('kid/body/running/shirt_blue').then((value) => kid_body_shirt_blue_running = value);
@@ -347,10 +353,26 @@ class IsometricImages with IsometricComponent {
       if (totalImagesLoaded < totalImages.value)
         return;
 
-      _completer.complete(true);
+      _completerImages.complete(true);
     });
 
-    await _completer.future;
+    await _completerImages.future;
+
+    loadSprite('shirt_blue_idle', kid_body_shirt_blue, 0).then((value){
+      spriteShirtBlueIdle = value;
+    });
+    loadSprite('shirt_blue_running', kid_body_shirt_blue, 51).then((value){
+      spriteShirtBlueRunning = value;
+    });
+
+    totalSpritesLoaded.onChanged((total) {
+      if (total < totalSprites.value)
+        return;
+
+      _completerSprites.complete(true);
+    });
+
+    await _completerSprites.future;
 
     imageGroupsBody[BodyType.None] = ImageGroupBody(
       idle: empty,
