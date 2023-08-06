@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -475,12 +474,12 @@ class RendererCharacters extends RenderGroup {
             'images.imageGroupsBody[${BodyType.getName(character.bodyType)}] - missing'
         ));
 
-    final Sprite bodySprite;
+    final Sprite spriteBody;
+    final Sprite spriteHead;
 
     double srcX;
     ui.Image imageTorso;
-    ui.Image imageHead;
-    ui.Image imageBody;
+    // ui.Image imageHead;
     ui.Image imageBodyArms;
     ui.Image imageLegs;
     ui.Image imageHandsLeft;
@@ -502,15 +501,15 @@ class RendererCharacters extends RenderGroup {
     if (character.running) {
       frame = frame % 8;
       imageTorso = images.kid_torso_light_running;
-      imageHead = images.kid_head_light_running;
-      imageBody = imageGroupBody.running;
+      // imageHead = images.kid_head_light_running;
       imageBodyArms = imageGroupBody.armsRunning;
       imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = imageGroupHandLeft.leftRunning;
       imageHandsRight = imageGroupHandRight.rightRunning;
       imageArmLeft = images.kid_arm_left_running;
       imageArmRight = images.kid_arm_right_running;
-      bodySprite = images.spriteShirtBlueRunning;
+      spriteBody = images.spriteShirtBlueRunning;
+      spriteHead = images.spriteHeadRunning;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -520,15 +519,15 @@ class RendererCharacters extends RenderGroup {
       }
 
       imageTorso = images.kid_torso_light_idle;
-      imageHead = images.kid_head_light_idle;
-      imageBody = imageGroupBody.idle;
+      // imageHead = images.kid_head_light_idle;
       imageBodyArms = imageGroupBody.armsIdle;
       imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = imageGroupHandLeft.leftIdle;
       imageHandsRight = imageGroupHandRight.rightIdle;
       imageArmLeft = images.kid_arm_left_idle;
       imageArmRight = images.kid_arm_right_idle;
-      bodySprite = images.spriteShirtBlueIdle;
+      spriteBody = images.spriteShirtBlueIdle;
+      spriteHead = images.spriteHeadIdle;
     }
 
     srcX = frame * size;
@@ -544,6 +543,8 @@ class RendererCharacters extends RenderGroup {
       imageArmFront = imageArmRight;
       imageArmBehind = imageArmLeft;
     }
+
+    final spriteFrame = (character.renderDirection * 8) + frame;
 
     renderCharacterShadowCircle(character);
 
@@ -600,8 +601,8 @@ class RendererCharacters extends RenderGroup {
     );
 
     render.sprite(
-        sprite: bodySprite,
-        frame: (character.renderDirection * 8) + frame,
+        sprite: spriteBody,
+        frame: spriteFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -648,16 +649,26 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageHead,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    // engine.renderSprite(
+    //   image: imageHead,
+    //   srcX: srcX,
+    //   srcY: srcY,
+    //   srcWidth: size,
+    //   srcHeight: size,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   scale: scale,
+    //   color: color,
+    //   anchorY: anchorY,
+    // );
+
+    render.sprite(
+      sprite: spriteHead,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
 
