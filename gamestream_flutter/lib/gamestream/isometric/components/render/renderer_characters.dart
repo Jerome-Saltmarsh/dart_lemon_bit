@@ -622,9 +622,9 @@ class RendererCharacters extends RenderGroup {
     //   anchorY: anchorY,
     // );
 
-    render.renderSprite(
+    render.sprite(
         sprite: bodySprite,
-        frame: frame,
+        frame: (character.renderDirection * 8) + frame,
         color: color,
         scale: scale,
         dstX: dstX,

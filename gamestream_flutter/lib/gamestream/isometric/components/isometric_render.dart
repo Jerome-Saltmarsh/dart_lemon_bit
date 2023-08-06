@@ -33,7 +33,7 @@ class IsometricRender with IsometricComponent {
     bufferSrc = engine.bufferSrc;
   }
 
-  void renderSprite({
+  void sprite({
     required Sprite sprite,
     required int frame,
     required int color,
@@ -49,6 +49,9 @@ class IsometricRender with IsometricComponent {
     final fStart = bufferIndex << 2;
     var f = fStart;
     var j = frame * 6; // each frame consumes for indexes
+
+
+
     bufferClr[bufferIndex] = color;
     bufferSrc[f++] = values[j++];
     bufferSrc[f++] = values[j++];
@@ -57,8 +60,19 @@ class IsometricRender with IsometricComponent {
     f = fStart;
     bufferDst[f++] = scale;
     bufferDst[f++] = 0; // rotation
-    bufferDst[f++] = values[j++] + dstX - (sprite.width * anchorX);
-    bufferDst[f++] = values[j++] + dstY - (sprite.height * anchorY);
+
+
+    final spriteDstX = values[j++];
+    final spriteDstY = values[j++];
+
+    final a = -(sprite.width * anchorX * scale) + (spriteDstX * 0.5);
+    final b = -(sprite.height * 0.25 * scale) + (spriteDstY * 0.75);
+
+    // final x = spriteDstX * anchorX * scale;
+    // final y = spriteDstY * anchorY * scale;
+
+    bufferDst[f++] = dstX - a;
+    bufferDst[f++] = dstY - b;
     engine.incrementBufferIndex();
   }
 
@@ -82,7 +96,7 @@ class IsometricRender with IsometricComponent {
     final posY = 1000.0;
     final posZ = 25.0;
 
-    renderSprite(
+    sprite(
         sprite: images.spriteShirtBlueRunning,
         frame: animation.frame % 64,
         color: 0,
