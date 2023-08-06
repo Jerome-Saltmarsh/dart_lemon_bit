@@ -475,13 +475,14 @@ class RendererCharacters extends RenderGroup {
         ));
 
     final Sprite spriteBody;
+    final Sprite spriteBodyArm;
     final Sprite spriteHead;
     final Sprite spriteArmLeft;
     final Sprite spriteArmRight;
     final Sprite spriteTorso;
 
     double srcX;
-    ui.Image imageBodyArms;
+    // ui.Image imageBodyArms;
     ui.Image imageLegs;
     ui.Image imageHandsLeft;
     ui.Image imageHandsRight;
@@ -500,10 +501,11 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       frame = frame % 8;
-      imageBodyArms = imageGroupBody.armsRunning;
+      // imageBodyArms = imageGroupBody.armsRunning;
       imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = imageGroupHandLeft.leftRunning;
       imageHandsRight = imageGroupHandRight.rightRunning;
+      spriteBodyArm = images.spriteKidBodyArmShirtBlueRunning;
       spriteArmLeft = images.spriteKidArmLeftRunning;
       spriteArmRight = images.spriteKidArmRightRunning;
       spriteBody = images.spriteShirtBlueRunning;
@@ -517,10 +519,11 @@ class RendererCharacters extends RenderGroup {
         frame = (7 - (frame % 8));
       }
 
-      imageBodyArms = imageGroupBody.armsIdle;
+      // imageBodyArms = imageGroupBody.armsIdle;
       imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = imageGroupHandLeft.leftIdle;
       imageHandsRight = imageGroupHandRight.rightIdle;
+      spriteBodyArm = images.spriteKidBodyArmShirtBlueIdle;
       spriteArmLeft = images.spriteKidArmLeftIdle;
       spriteArmRight = images.spriteKidArmRightIdle;
       spriteBody = images.spriteShirtBlueIdle;
@@ -625,31 +628,15 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageBodyArms,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    render.sprite(
+      sprite: spriteBodyArm,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
-
-    // engine.renderSprite(
-    //   image: imageHead,
-    //   srcX: srcX,
-    //   srcY: srcY,
-    //   srcWidth: size,
-    //   srcHeight: size,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   scale: scale,
-    //   color: color,
-    //   anchorY: anchorY,
-    // );
 
     render.sprite(
       sprite: spriteHead,

@@ -52,6 +52,8 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidArmRightRunning;
   late final Sprite spriteKidTorsoIdle;
   late final Sprite spriteKidTorsoRunning;
+  late final Sprite spriteKidBodyArmShirtBlueIdle;
+  late final Sprite spriteKidBodyArmShirtBlueRunning;
 
   late final Image empty;
   late final Image shades;
@@ -208,15 +210,6 @@ class IsometricImages with IsometricComponent {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
-   // Future<Sprite> loadSprite(String fileName) async {
-   //   totalImages.value++;
-   //   final image = await loadImageAsset('sprites/$fileName.png');
-   //   final bytes = await loadAssetBytes('sprites/$fileName.sprite');
-   //   values.add(image);
-   //   totalImagesLoaded.value++;
-   //   return Sprite.fromBytes(bytes, image: image, y: 0);
-   // }
-
    Future<Sprite> loadSprite(String fileName, Image image, double y) async {
      totalSprites.value++;
      final bytes = await loadAssetBytes('sprites/$fileName.sprite');
@@ -338,6 +331,13 @@ class IsometricImages with IsometricComponent {
     loadSprite('shirt_blue_running', kid_body_shirt_blue, 51).then((value){
       spriteShirtBlueRunning = value;
     });
+    loadSprite('kid_body_arm_shirt_blue_idle', kid_body_shirt_blue, 153).then((value){
+      spriteKidBodyArmShirtBlueIdle = value;
+    });
+    loadSprite('kid_body_arm_shirt_blue_running', kid_body_shirt_blue, 194).then((value){
+      spriteKidBodyArmShirtBlueRunning = value;
+    });
+
     loadSprite('kid_head_idle', kid_skin, 0).then((value){
       spriteHeadIdle = value;
     });
