@@ -89,9 +89,6 @@ class IsometricImages with IsometricComponent {
   late final Image kid_body_shirt_blue;
   late final Image kid_skin;
 
-  late final Image kid_body_arms_shirt_blue_idle;
-  late final Image kid_body_arms_shirt_blue_running;
-
   late final Image kid_legs_brown_idle;
   late final Image kid_legs_brown_running;
 
@@ -258,9 +255,6 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
 
-    loadPng('kid/body_arms/idle/shirt_blue').then((value) => kid_body_arms_shirt_blue_idle = value);
-    loadPng('kid/body_arms/running/shirt_blue').then((value) => kid_body_arms_shirt_blue_running = value);
-
     loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
     loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
 
@@ -382,8 +376,8 @@ class IsometricImages with IsometricComponent {
     imageGroupsBody[BodyType.Shirt_Blue] = ImageGroupBody(
       idle: kid_body_shirt_blue,
       running: kid_body_shirt_blue,
-      armsIdle: kid_body_arms_shirt_blue_idle,
-      armsRunning: kid_body_arms_shirt_blue_running,
+      armsIdle: kid_body_shirt_blue,
+      armsRunning: kid_body_shirt_blue,
     );
 
     imageGroupsHands[HandType.None] = ImageGroupHands(
