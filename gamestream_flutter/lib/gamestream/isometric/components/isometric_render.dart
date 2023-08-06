@@ -61,18 +61,17 @@ class IsometricRender with IsometricComponent {
     bufferDst[f++] = scale;
     bufferDst[f++] = 0; // rotation
 
-
     final spriteDstX = values[j++];
     final spriteDstY = values[j++];
 
-    final a = -(sprite.width * anchorX * scale) + (spriteDstX * 0.5);
-    final b = -(sprite.height * 0.25 * scale) + (spriteDstY * 0.75);
+    final srcWidth = sprite.width;
+    final srcHeight = sprite.height;
 
-    // final x = spriteDstX * anchorX * scale;
-    // final y = spriteDstY * anchorY * scale;
+    // bufferDst[f + 2] = dstX - (srcWidth * anchorX * scale);
+    // bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
 
-    bufferDst[f++] = dstX - a;
-    bufferDst[f++] = dstY - b;
+    bufferDst[f++] = dstX - (srcWidth * anchorX * scale) + (spriteDstX * scale);
+    bufferDst[f++] = dstY - (srcHeight * anchorY * scale) + (spriteDstY * scale);
     engine.incrementBufferIndex();
   }
 
