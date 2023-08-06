@@ -151,8 +151,6 @@ class Sprite {
 
     final transparent = ColorRgba8(0, 0, 0, 0);
 
-    canvasHeight += 200;
-
     final packedImage = Image(
       width: canvasWidth,
       height: canvasHeight,
@@ -160,7 +158,7 @@ class Sprite {
       numChannels: 4,
     );
 
-    var j = 4;
+    var j = 4; // the first four indexes are used to store width, height, columns and rows
     for (var i = 0; i < totalBounds; i++){
       final srcLeft = stackLeft[i];
       final srcTop = stackTop[i];
@@ -168,19 +166,11 @@ class Sprite {
       final pasteTop = packStack[j++];
       final pasteRight = packStack[j++];
       final pasteBottom = packStack[j++];
-      final pasteDstX = packStack[j++];
-      final pasteDstY = packStack[j++];
+      packStack[j++];
+      packStack[j++];
 
       final width = pasteRight - pasteLeft;
       final height = pasteBottom - pasteTop;
-
-      if (pasteDstX + width >= canvasWidth){
-        throw Exception();
-      }
-
-      if (pasteDstY + height >= canvasHeight){
-        throw Exception();
-      }
 
       copyPaste(
         srcImage: img,
