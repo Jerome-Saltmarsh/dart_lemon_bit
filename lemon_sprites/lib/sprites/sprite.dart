@@ -14,6 +14,8 @@ import 'sprite_bounds.dart';
 
 class Sprite {
 
+  static const maxSize = 2048;
+
   var fileName = '';
   var packStack = Uint16List(0);
 
@@ -96,29 +98,20 @@ class Sprite {
       throw Exception();
     }
 
-    var maxHeight = 0;
-    var totalWidth = bounds.boundStackIndex; // padding left
-
-    for (var i = 0; i < bounds.boundStackIndex; i++){
-      final height = bounds.boundStackBottom[i] - bounds.boundStackTop[i];
-      final width = bounds.boundStackRight[i] - bounds.boundStackLeft[i];
-      totalWidth += width;
-      maxHeight = max(height, maxHeight);
-    }
-
-    final transparent = ColorRgba8(0, 0, 0, 0);
-    final packedImage = Image(
-        width: totalWidth,
-        height: maxHeight,
-        backgroundColor: transparent,
-        numChannels: 4,
-    );
-
     final spriteWidth = bounds.spriteWidth;
     final spriteHeight = bounds.spriteHeight;
 
-    var x = 0;
-    var y = 0;
+    final stackLeft = bounds.boundStackLeft;
+    final stackTop = bounds.boundStackTop;
+    final stackRight = bounds.boundStackRight;
+    final stackBottom = bounds.boundStackBottom;
+
+    var canvasWidth = 0;
+    var canvasHeight = 0;
+    var rowHeight = 0;
+
+    var pasteX = 0;
+    var pasteY = 0;
     final totalBounds = bounds.boundStackIndex;
     packStack = Uint16List(4 + (totalBounds * 6));
     packStackIndex = 0;
@@ -127,38 +120,80 @@ class Sprite {
     writeToPackStack(rows.value);
     writeToPackStack(columns.value);
 
+    for (var i = 0; i < totalBounds; i++) {
+      final srcLeft = stackLeft[i];
+      final srcRight = stackRight[i];
+      final scrTop = stackTop[i];
+      final srcBottom = stackBottom[i];
+      final width = srcRight - srcLeft;
+      final height = srcBottom - scrTop;
+
+      rowHeight = max(height, rowHeight);
+
+      if (pasteX + width > maxSize){
+        pasteX = 0;
+        pasteY += rowHeight + 1;
+        rowHeight = height;
+      }
+
+      canvasHeight = max(canvasHeight, pasteY + rowHeight);
+
+      packStack[packStackIndex++] = pasteX;
+      packStack[packStackIndex++] = pasteY;
+      packStack[packStackIndex++] = pasteX + width;
+      packStack[packStackIndex++] = pasteY + height;
+      packStack[packStackIndex++] = srcLeft % spriteWidth;
+      packStack[packStackIndex++] = scrTop % spriteHeight;
+      pasteX += width;
+      pasteX++;
+      canvasWidth = max(canvasWidth, pasteX);
+    }
+
+    final transparent = ColorRgba8(0, 0, 0, 0);
+
+    canvasHeight += 200;
+
+    final packedImage = Image(
+      width: canvasWidth,
+      height: canvasHeight,
+      backgroundColor: transparent,
+      numChannels: 4,
+    );
+
+    var j = 4;
     for (var i = 0; i < totalBounds; i++){
-      final left = bounds.boundStackLeft[i];
-      final right = bounds.boundStackRight[i];
-      final top = bounds.boundStackTop[i];
-      final bottom = bounds.boundStackBottom[i];
-      final width = right - left;
-      final height = bottom - top;
+      final srcLeft = stackLeft[i];
+      final srcTop = stackTop[i];
+      final pasteLeft = packStack[j++];
+      final pasteTop = packStack[j++];
+      final pasteRight = packStack[j++];
+      final pasteBottom = packStack[j++];
+      final pasteDstX = packStack[j++];
+      final pasteDstY = packStack[j++];
+
+      final width = pasteRight - pasteLeft;
+      final height = pasteBottom - pasteTop;
+
+      if (pasteDstX + width >= canvasWidth){
+        throw Exception();
+      }
+
+      if (pasteDstY + height >= canvasHeight){
+        throw Exception();
+      }
 
       copyPaste(
-          srcImage: img,
-          dstImage: packedImage,
-          width: width,
-          height: height,
-          srcX: left,
-          srcY: top,
-          dstX: x,
-          dstY: 0,
+        srcImage: img,
+        dstImage: packedImage,
+        width: width,
+        height: height,
+        srcX: srcLeft,
+        srcY: srcTop,
+        dstX: pasteLeft,
+        dstY: pasteTop,
       );
-
-      final dstX = left % spriteWidth;
-      final dstY = top % spriteHeight;
-
-      packStack[packStackIndex++] = x;
-      packStack[packStackIndex++] = y;
-      packStack[packStackIndex++] = x + width;
-      packStack[packStackIndex++] = y + height;
-      packStack[packStackIndex++] = dstX;
-      packStack[packStackIndex++] = dstY;
-
-      x += width;
-      x++;
     }
+
     packed.value = packedImage;
   }
 
