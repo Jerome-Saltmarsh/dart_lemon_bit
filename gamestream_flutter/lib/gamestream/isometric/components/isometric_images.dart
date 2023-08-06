@@ -354,10 +354,10 @@ class IsometricImages with IsometricComponent {
     loadSprite('kid_arm_left_running', kid_skin, 101).then((value){
       spriteKidArmLeftRunning = value;
     });
-    loadSprite('kid_arm_right_idle', kid_skin, 101).then((value){
+    loadSprite('kid_arm_right_idle', kid_skin, 148).then((value){
       spriteKidArmRightIdle = value;
     });
-    loadSprite('kid_arm_right_running', kid_skin, 101).then((value){
+    loadSprite('kid_arm_right_running', kid_skin, 190).then((value){
       spriteKidArmRightRunning = value;
     });
 
