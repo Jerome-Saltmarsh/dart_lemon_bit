@@ -55,6 +55,8 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidGauntletRightRunning;
   late final Sprite spriteHelmSteelIdle;
   late final Sprite spriteHelmSteelRunning;
+  late final Sprite spriteWeaponStaffWoodenIdle;
+  late final Sprite spriteWeaponStaffWoodenRunning;
 
   late final Image empty;
   late final Image shades;
@@ -306,6 +308,12 @@ class IsometricImages with IsometricComponent {
     loadSprite('sword_idle', kid_weapons, 51).then((value){
       spriteKidSwordIdle = value;
     });
+    loadSprite('weapon_staff_wooden_idle', kid_weapons, 114).then((value){
+      spriteWeaponStaffWoodenIdle = value;
+    });
+    loadSprite('weapon_staff_wooden_running', kid_weapons, 195).then((value){
+      spriteWeaponStaffWoodenRunning = value;
+    });
     loadSprite('shirt_blue_idle', kid_body, 0).then((value){
       spriteKidBodyShirtBlueIdle = value;
     });
@@ -438,6 +446,11 @@ class IsometricImages with IsometricComponent {
     spriteGroupWeapons[WeaponType.Sword] = SpriteGroup(
       idle: spriteKidSwordIdle,
       running: spriteKidSwordRunning,
+    );
+
+    spriteGroupWeapons[WeaponType.Staff] = SpriteGroup(
+      idle: spriteWeaponStaffWoodenIdle,
+      running: spriteWeaponStaffWoodenRunning,
     );
   }
 

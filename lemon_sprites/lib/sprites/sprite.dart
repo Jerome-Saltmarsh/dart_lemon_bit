@@ -219,11 +219,11 @@ class Sprite {
     if (imgPacked == null){
       throw Exception();
     }
-    downloadBytes(bytes: encodePng(imgPacked), name: fileName.replaceAll('.png', '_packed.png'));
+    downloadBytes(bytes: encodePng(imgPacked), name: fileName);
 
     downloadBytes(
         bytes: packStack.buffer.asUint8List(),
-        name: fileName.replaceAll('.png', '_packed.sprite'),
+        name: fileName.replaceAll('.png', '.sprite'),
     );
   }
 
