@@ -29,6 +29,7 @@ class RendererCharacters extends RenderGroup {
     super.reset();
   }
 
+
   void updateFunction() {
     final characters = scene.characters;
     final characterTop = characters[renderQueueTop];
@@ -36,10 +37,11 @@ class RendererCharacters extends RenderGroup {
 
     if (renderQueueBottom < scene.totalCharacters){
       final characterBottom = characters[renderQueueBottom];
-      final characterBottomOrder = characterBottom.sortOrder - 50;
+      final characterBottomNodeIndex = scene.getIndexPosition(characterBottom);
+      final characterBottomNodeType = scene.nodeTypes[characterBottomNodeIndex];
+      final characterBottomOrder = characterBottom.sortOrder + (characterBottomNodeType == NodeType.Grass_Long ? -48 : 0);
 
-
-      if (characterTopOrder > characterBottomOrder){
+      if (characterTopOrder >= characterBottomOrder){
         character = characterBottom;
         order = characterBottomOrder;
         renderBottom = true;
