@@ -471,19 +471,16 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
-    // const size = 256.0;
-    final scale = options.characterRenderScale;
 
     var frame = character.animationFrame;
+
+    final scale = options.characterRenderScale;
     final direction = IsometricDirection.toStandardDirection(character.direction);
-    // final srcY = direction * size;
     final color = character.color;
     final dstX = character.renderX;
     final dstY = character.renderY;
 
-    // final imageGroupHandLeft = images.imageGroupsHands[character.handTypeLeft] ?? (throw Exception());
-    // final imageGroupHandRight = images.imageGroupsHands[character.handTypeRight] ?? (throw Exception());
-
+    final Sprite spriteEmpty;
     final Sprite spriteBody;
     final Sprite spriteBodyArm;
     final Sprite spriteHead;
@@ -498,7 +495,8 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    // double srcX;
+    final gloveGroupLeft = images.spriteGroupsGloves[character.handTypeLeft] ?? (throw Exception());
+    final gloveGroupRight = images.spriteGroupsGloves[character.handTypeRight] ?? (throw Exception());
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -508,10 +506,8 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       frame = frame % 8;
-      // imageHandsLeft = imageGroupHandLeft.leftRunning;
-      // imageHandsRight = imageGroupHandRight.rightRunning;
-      spriteGloveLeft = images.spriteKidGauntletLeftRunning;
-      spriteGloveRight = images.spriteKidGauntletRightRunning;
+      spriteGloveLeft = gloveGroupLeft.left.running;
+      spriteGloveRight = gloveGroupRight.right.running;
       spriteBodyArm = images.spriteKidBodyArmShirtBlueRunning;
       spriteArmLeft = images.spriteKidArmLeftRunning;
       spriteArmRight = images.spriteKidArmRightRunning;
@@ -527,8 +523,8 @@ class RendererCharacters extends RenderGroup {
         frame = (7 - (frame % 8));
       }
 
-      spriteGloveLeft = images.spriteKidGauntletLeftIdle;
-      spriteGloveRight = images.spriteKidGauntletRightIdle;
+      spriteGloveLeft = gloveGroupLeft.left.idle;
+      spriteGloveRight = gloveGroupRight.right.idle;
       spriteBodyArm = images.spriteKidBodyArmShirtBlueIdle;
       spriteArmLeft = images.spriteKidArmLeftIdle;
       spriteArmRight = images.spriteKidArmRightIdle;
@@ -538,18 +534,12 @@ class RendererCharacters extends RenderGroup {
       spriteLegs = images.spriteKidLegsBrownIdle;
     }
 
-    // srcX = frame * size;
-
     if (leftInFront) {
-      // imageHandFront = imageHandsLeft;
-      // imageHandBehind = imageHandsRight;
       spriteGloveFront = spriteGloveLeft;
       spriteGloveBehind = spriteGloveRight;
       spriteArmFront = spriteArmLeft;
       spriteArmBehind = spriteArmRight;
     } else {
-      // imageHandFront = imageHandsRight;
-      // imageHandBehind = imageHandsLeft;
       spriteGloveFront = spriteGloveRight;
       spriteGloveBehind = spriteGloveLeft;
       spriteArmFront = spriteArmRight; // spriteArmRight
@@ -560,7 +550,6 @@ class RendererCharacters extends RenderGroup {
 
     if (renderBottom) {
       renderCharacterShadowCircle(character);
-
       render.sprite(
         sprite: spriteTorso,
         frame: spriteFrame,
@@ -580,7 +569,6 @@ class RendererCharacters extends RenderGroup {
         dstY: dstY,
         anchorY: anchorY,
       );
-
       return;
     }
 
@@ -653,7 +641,5 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
-
-    // render.textPosition(character, HandType.getName(character.handTypeLeft), offsetY: -50);
   }
 }

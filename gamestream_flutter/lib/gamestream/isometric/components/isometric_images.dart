@@ -8,6 +8,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/src.dart';
 
+class SpriteGroup {
+  final Sprite idle;
+  final Sprite running;
+
+  SpriteGroup({
+    required this.idle,
+    required this.running,
+  });
+}
+
+class SpriteGroupSided {
+  final SpriteGroup left;
+  final SpriteGroup right;
+
+  SpriteGroupSided({
+    required this.left,
+    required this.right,
+  });
+}
 
 class ImageGroupBody {
   final Image idle;
@@ -37,7 +56,12 @@ class IsometricImages with IsometricComponent {
   final _completerSprites = Completer();
 
   final imageGroupsBody = <int, ImageGroupBody> {};
+  final spriteGroupsGloves = <int, SpriteGroupSided> {};
 
+  late final SpriteGroup spriteGroupEmpty;
+  late final SpriteGroupSided spriteGroupSidedEmpty;
+
+  late final Sprite spriteEmpty;
   late final Sprite spriteShirtBlueIdle;
   late final Sprite spriteShirtBlueRunning;
   late final Sprite spriteHeadIdle;
@@ -56,6 +80,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidGauntletLeftRunning;
   late final Sprite spriteKidGauntletRightIdle;
   late final Sprite spriteKidGauntletRightRunning;
+
 
   late final Image empty;
   late final Image shades;
@@ -353,6 +378,16 @@ class IsometricImages with IsometricComponent {
       spriteKidTorsoRunning = value;
     });
 
+    spriteEmpty = Sprite(
+        image: empty,
+        values: Float32List(0),
+        width: 0,
+        height: 0,
+        rows: 0,
+        columns: 0,
+        y: 0,
+    );
+
     totalSpritesLoaded.onChanged((total) {
       if (total < totalSprites.value)
         return;
@@ -374,6 +409,30 @@ class IsometricImages with IsometricComponent {
       running: kid_body,
       armsIdle: kid_body,
       armsRunning: kid_body,
+    );
+
+
+    spriteGroupEmpty = SpriteGroup(
+        idle: spriteEmpty,
+        running: spriteEmpty,
+    );
+
+    spriteGroupSidedEmpty = SpriteGroupSided(
+        left: spriteGroupEmpty,
+        right: spriteGroupEmpty,
+    );
+
+    spriteGroupsGloves[HandType.None] = spriteGroupSidedEmpty;
+
+    spriteGroupsGloves[HandType.Gauntlet] = SpriteGroupSided(
+        left: SpriteGroup(
+          idle: spriteKidGauntletLeftIdle,
+          running: spriteKidGauntletLeftRunning,
+        ),
+        right: SpriteGroup(
+          idle: spriteKidGauntletRightIdle,
+          running: spriteKidGauntletRightRunning,
+        ),
     );
   }
 
