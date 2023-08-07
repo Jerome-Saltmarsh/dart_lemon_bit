@@ -37,8 +37,7 @@ class RendererCharacters extends RenderGroup {
 
     if (renderQueueBottom < scene.totalCharacters){
       final characterBottom = characters[renderQueueBottom];
-      final characterBottomNodeIndex = scene.getIndexPosition(characterBottom);
-      final characterBottomNodeType = scene.nodeTypes[characterBottomNodeIndex];
+      final characterBottomNodeType = scene.getNodeTypeAtPosition(characterBottom);
       final characterBottomOrder = characterBottom.sortOrder + (characterBottomNodeType == NodeType.Grass_Long ? -48 : 0);
 
       if (characterTopOrder >= characterBottomOrder){

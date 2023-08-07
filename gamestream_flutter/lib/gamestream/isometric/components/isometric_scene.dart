@@ -1764,6 +1764,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     return rendererNodes.visible3D[index];
   }
 
+  int getNodeTypeAtPosition(Position position) =>
+      outOfBoundsPosition(position)
+          ? NodeType.Boundary
+          : nodeTypes[getIndexPosition(position)];
+
 }
 
 
