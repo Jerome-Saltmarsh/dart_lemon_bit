@@ -38,7 +38,6 @@ class IsometricImages with IsometricComponent {
   final _completerSprites = Completer();
 
   final imageGroupsBody = <int, ImageGroupBody> {};
-  final imageGroupsHands = <int, ImageGroupHands> {};
 
   late final Sprite spriteShirtBlueIdle;
   late final Sprite spriteShirtBlueRunning;
@@ -94,12 +93,6 @@ class IsometricImages with IsometricComponent {
   late final Image kid_skin;
   late final Image kid_legs;
   late final Image kid_gloves;
-
-  late final Image kid_hands_gauntlet_left_idle;
-  late final Image kid_hands_gauntlet_left_running;
-
-  late final Image kid_hands_gauntlet_right_idle;
-  late final Image kid_hands_gauntlet_right_running;
 
   late final Image template_head_none;
   late final Image template_head_rogue;
@@ -249,12 +242,6 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/kid_running').then((value) => kid_running = value);
     loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
 
-    loadPng('kid/hands/gauntlet/left/idle').then((value) => kid_hands_gauntlet_left_idle = value);
-    loadPng('kid/hands/gauntlet/left/running').then((value) => kid_hands_gauntlet_left_running = value);
-
-    loadPng('kid/hands/gauntlet/right/idle').then((value) => kid_hands_gauntlet_right_idle = value);
-    loadPng('kid/hands/gauntlet/right/running').then((value) => kid_hands_gauntlet_right_running = value);
-
     loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
     loadPng('kid/kid_legs').then((value) => kid_legs = value);
@@ -398,20 +385,6 @@ class IsometricImages with IsometricComponent {
       running: kid_body_shirt_blue,
       armsIdle: kid_body_shirt_blue,
       armsRunning: kid_body_shirt_blue,
-    );
-
-    imageGroupsHands[HandType.None] = ImageGroupHands(
-       leftIdle: empty,
-       leftRunning: empty,
-       rightIdle: empty,
-       rightRunning: empty,
-    );
-
-    imageGroupsHands[HandType.Gauntlet] = ImageGroupHands(
-       leftIdle: kid_hands_gauntlet_left_idle,
-       leftRunning: kid_hands_gauntlet_left_running,
-       rightIdle: kid_hands_gauntlet_right_idle,
-       rightRunning: kid_hands_gauntlet_right_running,
     );
   }
 
