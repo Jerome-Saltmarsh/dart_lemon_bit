@@ -480,7 +480,6 @@ class RendererCharacters extends RenderGroup {
     final dstX = character.renderX;
     final dstY = character.renderY;
 
-    final Sprite spriteEmpty;
     final Sprite spriteBody;
     final Sprite spriteBodyArm;
     final Sprite spriteHead;
@@ -495,8 +494,9 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    final gloveGroupLeft = images.spriteGroupsGloves[character.handTypeLeft] ?? (throw Exception());
-    final gloveGroupRight = images.spriteGroupsGloves[character.handTypeRight] ?? (throw Exception());
+    final spriteGroupGloves = images.spriteGroupsGloves;
+    final gloveGroupLeft = spriteGroupGloves[character.handTypeLeft] ?? (throw Exception());
+    final gloveGroupRight = spriteGroupGloves[character.handTypeRight] ?? (throw Exception());
 
     final leftInFront = const [
       InputDirection.Up_Left,
