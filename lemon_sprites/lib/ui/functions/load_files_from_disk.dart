@@ -6,6 +6,7 @@ Future<List<PlatformFile>?> loadFilesFromDisk() async {
     dialogTitle: 'Load Image',
     type: FileType.custom,
     allowedExtensions: ['png'],
+    allowMultiple: true,
   );
   return result?.files;
 }

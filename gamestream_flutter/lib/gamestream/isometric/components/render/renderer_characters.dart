@@ -471,18 +471,18 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
-    const size = 256.0;
+    // const size = 256.0;
     final scale = options.characterRenderScale;
 
     var frame = character.animationFrame;
     final direction = IsometricDirection.toStandardDirection(character.direction);
-    final srcY = direction * size;
+    // final srcY = direction * size;
     final color = character.color;
     final dstX = character.renderX;
     final dstY = character.renderY;
 
-    final imageGroupHandLeft = images.imageGroupsHands[character.handTypeLeft] ?? (throw Exception());
-    final imageGroupHandRight = images.imageGroupsHands[character.handTypeRight] ?? (throw Exception());
+    // final imageGroupHandLeft = images.imageGroupsHands[character.handTypeLeft] ?? (throw Exception());
+    // final imageGroupHandRight = images.imageGroupsHands[character.handTypeRight] ?? (throw Exception());
 
     final Sprite spriteBody;
     final Sprite spriteBodyArm;
@@ -491,16 +491,14 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmRight;
     final Sprite spriteTorso;
     final Sprite spriteLegs;
+    final Sprite spriteGloveLeft;
+    final Sprite spriteGloveRight;
+    final Sprite spriteGloveFront;
+    final Sprite spriteGloveBehind;
+    final Sprite spriteArmFront;
+    final Sprite spriteArmBehind;
 
-    double srcX;
-    ui.Image imageHandsLeft;
-    ui.Image imageHandsRight;
-
-    ui.Image imageHandFront;
-    ui.Image imageHandBehind;
-
-    Sprite spriteArmFront;
-    Sprite spriteArmBehind;
+    // double srcX;
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -510,8 +508,10 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       frame = frame % 8;
-      imageHandsLeft = imageGroupHandLeft.leftRunning;
-      imageHandsRight = imageGroupHandRight.rightRunning;
+      // imageHandsLeft = imageGroupHandLeft.leftRunning;
+      // imageHandsRight = imageGroupHandRight.rightRunning;
+      spriteGloveLeft = images.spriteKidGauntletLeftRunning;
+      spriteGloveRight = images.spriteKidGauntletRightRunning;
       spriteBodyArm = images.spriteKidBodyArmShirtBlueRunning;
       spriteArmLeft = images.spriteKidArmLeftRunning;
       spriteArmRight = images.spriteKidArmRightRunning;
@@ -527,8 +527,8 @@ class RendererCharacters extends RenderGroup {
         frame = (7 - (frame % 8));
       }
 
-      imageHandsLeft = imageGroupHandLeft.leftIdle;
-      imageHandsRight = imageGroupHandRight.rightIdle;
+      spriteGloveLeft = images.spriteKidGauntletLeftIdle;
+      spriteGloveRight = images.spriteKidGauntletRightIdle;
       spriteBodyArm = images.spriteKidBodyArmShirtBlueIdle;
       spriteArmLeft = images.spriteKidArmLeftIdle;
       spriteArmRight = images.spriteKidArmRightIdle;
@@ -538,16 +538,20 @@ class RendererCharacters extends RenderGroup {
       spriteLegs = images.spriteKidLegsBrownIdle;
     }
 
-    srcX = frame * size;
+    // srcX = frame * size;
 
     if (leftInFront) {
-      imageHandFront = imageHandsLeft;
-      imageHandBehind = imageHandsRight;
+      // imageHandFront = imageHandsLeft;
+      // imageHandBehind = imageHandsRight;
+      spriteGloveFront = spriteGloveLeft;
+      spriteGloveBehind = spriteGloveRight;
       spriteArmFront = spriteArmLeft;
       spriteArmBehind = spriteArmRight;
     } else {
-      imageHandFront = imageHandsRight;
-      imageHandBehind = imageHandsLeft;
+      // imageHandFront = imageHandsRight;
+      // imageHandBehind = imageHandsLeft;
+      spriteGloveFront = spriteGloveRight;
+      spriteGloveBehind = spriteGloveLeft;
       spriteArmFront = spriteArmRight; // spriteArmRight
       spriteArmBehind = spriteArmLeft;
     }
@@ -590,16 +594,13 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageHandBehind,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    render.sprite(
+      sprite: spriteGloveBehind,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
 
@@ -623,16 +624,13 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: imageHandFront,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
+    render.sprite(
+      sprite: spriteGloveFront,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
       dstX: dstX,
       dstY: dstY,
-      scale: scale,
-      color: color,
       anchorY: anchorY,
     );
 

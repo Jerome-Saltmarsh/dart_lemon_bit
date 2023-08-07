@@ -86,10 +86,10 @@ class SpriteApp extends StatelessWidget {
           );
 
   Widget buildButtonBind() =>
-      WatchBuilder(sprite.image, (image) => buildButton(
-        action: image == null ? null : sprite.bind,
+      WatchBuilder(sprite.imageSet, (imageSet) => buildButton(
+        action: imageSet ? sprite.bind : null,
         child: buildText('BIND',
-          color: image == null ? Colors.black54 : Colors.black87,
+          color: imageSet ? Colors.black87 : Colors.black54,
         ),
       ));
 
@@ -112,7 +112,12 @@ class SpriteApp extends StatelessWidget {
     if (files == null) {
       return;
     }
-    sprite.file.value = files[0];
+    if (files.length == 1){
+      sprite.file = files[0];
+    } else {
+      sprite.loadFiles(files);
+    }
+
   }
 
   Widget buildButtonText(String value) =>
@@ -136,10 +141,10 @@ class SpriteApp extends StatelessWidget {
     if (image == null) {
       return;
     }
-    sprite.image.value = image;
+    sprite.image = image;
   }
 
-  Widget buildImage() => buildWatchImage(sprite.image);
+  Widget buildImage() => buildWatchImage(sprite.imageWatch);
 
   Widget buildImageGrid() => buildWatchImage(sprite.grid);
 

@@ -21,37 +21,48 @@ class Sprite {
 
   final rows = WatchInt(8);
   final columns = WatchInt(8);
-  final file = Watch<PlatformFile?>(null);
-  final image = Watch<Image?>(null);
   final bound = Watch<Image?>(null);
   final packed = Watch<Image?>(null);
   final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
 
-  Sprite(){
-    file.onChanged(onChangedFile);
-    image.onChanged(onChangedImage);
-  }
+  PlatformFile? _file;
+  Image? _image;
 
-  void onChangedFile(PlatformFile? file){
-    if (file == null){
+  final imageSet = Watch(false);
+  final imageWatch = Watch<Image?>(null);
+
+  set file(PlatformFile? value){
+    _file = value;
+
+    if (value == null){
       clearPackedImage();
       return;
     }
 
-    final bytes = file.bytes;
+    final bytes = value.bytes;
     if (bytes == null){
       throw Exception();
     }
     final now = DateTime.now();
-    image.value = decodePng(bytes);
+    image = decodePng(bytes);
     final ms = DateTime.now().difference(now).inMilliseconds;
     print('decodePng took $ms milliseconds');
-    fileName = file.name;
+    fileName = value.name;
+
   }
 
-  void onChangedImage(Image? image){
+  Image? get image => _image;
+
+  set image(Image? value){
+    _image = value;
+    imageSet.value = value != null;
+    imageWatch.value = value;
     clearPackedImage();
+  }
+
+  Sprite(){
+    // file.onChanged(onChangedFile);
   }
 
   void clearPackedImage() {
@@ -60,7 +71,7 @@ class Sprite {
   }
 
   void bind(){
-    final source = image.value;
+    final source = image;
 
     if (source == null){
       throw Exception('source image is null');
@@ -88,7 +99,7 @@ class Sprite {
 
   void pack(){
 
-    final img = image.value;
+    final img = image;
 
     if (img == null){
       throw Exception();
@@ -216,6 +227,15 @@ class Sprite {
     );
   }
 
+  void loadFiles(List<PlatformFile> files) async {
+    files.forEach(process);
+  }
 
+  void process(PlatformFile file) async {
+    this.file = file;
+    bind();
+    pack();
+    save();
+  }
 }
 
