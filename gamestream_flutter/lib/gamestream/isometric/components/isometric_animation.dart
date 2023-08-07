@@ -1,9 +1,7 @@
 
-import 'package:gamestream_flutter/lemon_components/src.dart';
-
 import '../../../library.dart';
 
-class IsometricAnimation implements Updatable {
+class IsometricAnimation {
   var frame = 0;
   var frameWater = 0;
   var frameWaterHeight = 0;
@@ -20,7 +18,7 @@ class IsometricAnimation implements Updatable {
 
   final treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
 
-  void onComponentUpdate() {
+  void update() {
     if (_next++ < rendersPerFrame)
       return;
 

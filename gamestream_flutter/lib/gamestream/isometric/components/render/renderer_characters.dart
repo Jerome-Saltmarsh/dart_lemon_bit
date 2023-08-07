@@ -28,7 +28,6 @@ class RendererCharacters extends RenderGroup {
     super.reset();
   }
 
-
   void updateFunction() {
     final characters = scene.characters;
     final characterTop = characters[renderQueueTop];
@@ -493,11 +492,12 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    final spriteGroupGloves = images.spriteGroupsGloves;
-    final gloveGroupLeft = spriteGroupGloves[character.handTypeLeft] ?? (throw Exception());
-    final gloveGroupRight = spriteGroupGloves[character.handTypeRight] ?? (throw Exception());
+    final spriteGroupGloves = images.spriteGroupGloves;
+    final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
     final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
     final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
+    final gloveGroupLeft = spriteGroupGloves[character.handTypeLeft] ?? (throw Exception());
+    final gloveGroupRight = spriteGroupGloves[character.handTypeRight] ?? (throw Exception());
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -515,7 +515,7 @@ class RendererCharacters extends RenderGroup {
       spriteBody =  bodyGroup.running;
       spriteHead = images.spriteHeadRunning;
       spriteTorso = images.spriteKidTorsoRunning;
-      spriteLegs = images.spriteKidLegsBrownRunning;
+      spriteLegs = legsGroup.running;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -532,7 +532,7 @@ class RendererCharacters extends RenderGroup {
       spriteBody =  bodyGroup.idle;
       spriteHead = images.spriteHeadIdle;
       spriteTorso = images.spriteKidTorsoIdle;
-      spriteLegs = images.spriteKidLegsBrownIdle;
+      spriteLegs = legsGroup.idle;
     }
 
     if (leftInFront) {

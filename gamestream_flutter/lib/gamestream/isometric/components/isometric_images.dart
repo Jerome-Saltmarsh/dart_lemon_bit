@@ -22,7 +22,8 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
   final _completerSprites = Completer();
 
-  final spriteGroupsGloves = <int, SpriteGroupSided> {};
+  final spriteGroupGloves = <int, SpriteGroupSided> {};
+  final spriteGroupLegs = <int, SpriteGroup> {};
   final spriteGroupBody = <int, SpriteGroup> {};
   final spriteGroupBodyArms = <int, SpriteGroup> {};
 
@@ -375,10 +376,16 @@ class IsometricImages with IsometricComponent {
         right: spriteGroupEmpty,
     );
 
-    spriteGroupsGloves[HandType.None] = spriteGroupSidedEmpty;
+    spriteGroupGloves[HandType.None] = spriteGroupSidedEmpty;
 
     spriteGroupBody[BodyType.None] = spriteGroupEmpty;
+    spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
+
+    spriteGroupLegs[LegType.Brown] = SpriteGroup(
+        idle: spriteKidLegsBrownIdle,
+        running: spriteKidLegsBrownRunning,
+    );
 
     spriteGroupBody[BodyType.Shirt_Blue] = SpriteGroup(
         idle: spriteKidBodyShirtBlueIdle,
@@ -390,7 +397,7 @@ class IsometricImages with IsometricComponent {
         running: spriteKidBodyArmShirtBlueRunning,
     );
 
-    spriteGroupsGloves[HandType.Gauntlet] = SpriteGroupSided(
+    spriteGroupGloves[HandType.Gauntlet] = SpriteGroupSided(
         left: SpriteGroup(
           idle: spriteKidGauntletLeftIdle,
           running: spriteKidGauntletLeftRunning,

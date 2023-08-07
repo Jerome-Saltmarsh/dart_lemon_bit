@@ -79,11 +79,6 @@ class WebsiteGame extends Game {
 
   }
 
-  @override
-  void update() {
-    animation.onComponentUpdate();
-  }
-
   onChangedVisitCount(int value){
     print('visit-count: $value');
   }
@@ -201,5 +196,10 @@ class WebsiteGame extends Game {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     // TODO: implement drawCanvas
+  }
+
+  @override
+  void update() {
+    // TODO: implement update
   }
 }

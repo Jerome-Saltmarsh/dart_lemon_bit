@@ -79,6 +79,7 @@ class IsometricRender with IsometricComponent {
     }
 
     camera.update();
+    animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
     renderEditMode();
