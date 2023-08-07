@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_math/src.dart';
 
 class Character extends Position {
+  // var bottomRendered = false;
   var characterType = CharacterType.Template;
   var weaponType = WeaponType.Unarmed;
   var weaponState = 0;

@@ -12,45 +12,70 @@ import '../../classes/sprite.dart';
 
 class RendererCharacters extends RenderGroup {
 
+  var renderBottom = true;
+  var renderQueueTop = 0;
+  var renderQueueBottom = 0;
+  late Character character;
+
   RendererCharacters(){
     print('RendererCharacters()');
   }
 
-  late Character character;
+  @override
+  void reset() {
+    renderQueueBottom = 0;
+    renderQueueTop = 0;
+    renderBottom = true;
+    super.reset();
+  }
+
+  void updateFunction() {
+    final characters = scene.characters;
+    final characterTop = characters[renderQueueTop];
+    final characterTopOrder = characterTop.sortOrder;
+
+    if (renderQueueBottom < scene.totalCharacters){
+      final characterBottom = characters[renderQueueBottom];
+      final characterBottomOrder = characterBottom.sortOrder - 62;
+
+
+      if (characterTopOrder > characterBottomOrder){
+        character = characterBottom;
+        order = characterBottomOrder;
+        renderBottom = true;
+        renderQueueBottom++;
+        return;
+      }
+    }
+
+    character = characterTop;
+    order = characterTopOrder;
+    renderBottom = false;
+    renderQueueTop++;
+  }
 
   @override
   void renderFunction() => renderCurrentCharacter();
 
-  void updateFunction() {
-    final totalCharacters = amulet.scene.totalCharacters;
-    final characters = amulet.scene.characters;
-
-    while (index < totalCharacters){
-      character = characters[index];
-      order = character.sortOrder;
-      if (scene.isPerceptiblePosition(character))
-        break;
-      index++;
-    }
-  }
-
   @override
-  int getTotal() => amulet.scene.totalCharacters;
+  int getTotal() => scene.totalCharacters * 2;
 
   void renderCurrentCharacter(){
 
-    if (!character.allie && options.renderHealthBarEnemies) {
-      amulet.render.characterHealthBar(character);
-    }
+    if (!renderBottom){
+      if (!character.allie && options.renderHealthBarEnemies) {
+        render.characterHealthBar(character);
+      }
 
-    if (character.allie && options.renderHealthBarAllies) {
-      amulet.render.characterHealthBar(character);
+      if (character.allie && options.renderHealthBarAllies) {
+        render.characterHealthBar(character);
+      }
     }
 
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
-        amulet.engine.renderSprite(
-          image: amulet.images.atlas_gameobjects,
+        engine.renderSprite(
+          image: images.atlas_gameobjects,
           srcX: 1920,
           srcY: (character.animationFrame % 8) * 43.0,
           dstX: character.renderX,
@@ -61,8 +86,8 @@ class RendererCharacters extends RenderGroup {
         );
       }
       if (character.characterType == CharacterType.Slime) {
-        amulet.engine.renderSprite(
-          image: amulet.images.atlas_gameobjects,
+        engine.renderSprite(
+          image: images.atlas_gameobjects,
           srcX: 3040,
           srcY: (character.animationFrame % 6) * 48.0,
           dstX: character.renderX,
@@ -71,10 +96,9 @@ class RendererCharacters extends RenderGroup {
           srcHeight: 48,
           scale: 0.75,
         );
-        return;
       }
-      amulet.engine.renderSprite(
-        image: amulet.images.atlas_characters,
+      engine.renderSprite(
+        image: images.atlas_characters,
         srcX: 513,
         srcY: (character.animationFrame % 8) * 73.0,
         dstX: character.renderX,
@@ -98,39 +122,31 @@ class RendererCharacters extends RenderGroup {
         renderCharacterKid(character);
         break;
       case CharacterType.Slime:
-        // renderCharacterSlime(character);
         break;
       case CharacterType.Rat:
         renderCharacterRat(character);
         break;
-      case CharacterType.Triangle:
-        amulet.engine.renderSpriteRotated(
-          image: amulet.images.atlas_characters,
-          srcX: 0,
-          srcY: 512,
-          srcWidth: 32,
-          srcHeight: 32,
-          dstX: character.renderX,
-          dstY: character.renderY,
-          rotation: character.angle,
-        );
-        return;
       case CharacterType.Dog:
         renderCharacterDog(character);
         break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
-  }
 
+    // if (renderBottom) {
+    //   renderQueueBottom++;
+    // } else {
+    //   renderQueueTop++;
+    // }
+  }
 
   void renderCharacterDog(Character character){
     const Src_Size = 80.0;
     const Anchor_Y = 0.66;
 
     if (character.state == CharacterState.Idle){
-      amulet.engine.renderSprite(
-        image: amulet.images.character_dog,
+      engine.renderSprite(
+        image: images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -147,8 +163,8 @@ class RendererCharacters extends RenderGroup {
     if (character.state == CharacterState.Running) {
       const frames = const [4, 5];
       final frame = frames[(character.animationFrame % 2)];
-      amulet.engine.renderSprite(
-        image: amulet.images.character_dog,
+      engine.renderSprite(
+        image: images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: frame * Src_Size,
@@ -170,8 +186,8 @@ class RendererCharacters extends RenderGroup {
       } else {
         frame = frames[frame];
       }
-      amulet.engine.renderSprite(
-        image: amulet.images.character_dog,
+      engine.renderSprite(
+        image: images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: frame * Src_Size,
@@ -186,8 +202,8 @@ class RendererCharacters extends RenderGroup {
     }
 
     if (character.state == CharacterState.Hurt) {
-      amulet.engine.renderSprite(
-        image: amulet.images.character_dog,
+      engine.renderSprite(
+        image: images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: Src_Size,
@@ -203,8 +219,8 @@ class RendererCharacters extends RenderGroup {
 
     if (character.state == CharacterState.Stunned){
       render.starsPosition(character);
-      amulet.engine.renderSprite(
-        image: amulet.images.character_dog,
+      engine.renderSprite(
+        image: images.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -225,7 +241,7 @@ class RendererCharacters extends RenderGroup {
 
     var angle = 0.0;
     var dist = 0.0;
-    // final nodes = gamestream.amulet.scene;
+    // final nodes = gamestream.scene;
 
     // if (!nodes.outOfBoundsV3(character)){
     //   var torchIndex = nodes.getTorchIndex(nodes.getNodeIndexV3(character));
@@ -251,8 +267,8 @@ class RendererCharacters extends RenderGroup {
     final shadowY = character.y + opp(angle, dist);
     final shadowZ = character.z;
 
-    amulet.engine.renderSprite(
-      image: amulet.images.zombie_shadow,
+    engine.renderSprite(
+      image: images.zombie_shadow,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
@@ -264,8 +280,8 @@ class RendererCharacters extends RenderGroup {
       color: character.color,
     );
 
-    amulet.engine.renderSprite(
-      image: amulet.images.zombie,
+    engine.renderSprite(
+      image: images.zombie,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
@@ -320,8 +336,8 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterRat(Character character){
     if (character.state == CharacterState.Running){
-      amulet.engine.renderSprite(
-        image: amulet.images.atlas_gameobjects,
+      engine.renderSprite(
+        image: images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -330,13 +346,13 @@ class RendererCharacters extends RenderGroup {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: amulet.scene.getRenderColorPosition(character),
+        color: scene.getRenderColorPosition(character),
       );
     }
 
     if (character.state == CharacterState.Performing){
-      amulet.engine.renderSprite(
-        image: amulet.images.atlas_gameobjects,
+      engine.renderSprite(
+        image: images.atlas_gameobjects,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 2680,
@@ -345,12 +361,12 @@ class RendererCharacters extends RenderGroup {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: amulet.scene.getRenderColorPosition(character),
+        color: scene.getRenderColorPosition(character),
       );
     }
 
-    amulet.engine.renderSprite(
-      image: amulet.images.atlas_gameobjects,
+    engine.renderSprite(
+      image: images.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,
@@ -359,7 +375,7 @@ class RendererCharacters extends RenderGroup {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: amulet.scene.getRenderColorPosition(character),
+      color: scene.getRenderColorPosition(character),
     );
   }
 
@@ -392,8 +408,6 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterShadowCircle(Character character) {
-    final scene = amulet.scene;
-
     final maxNodes = 5;
     final lightIndex = scene.getNearestLightSourcePosition(
         character, maxDistance: maxNodes);
@@ -450,7 +464,7 @@ class RendererCharacters extends RenderGroup {
     }
 
     engine.color = options.characterShadowColor;
-    amulet.render.circleFilled(x, y, z, radius);
+    render.circleFilled(x, y, z, radius);
     engine.color = Colors.white;
   }
 
@@ -468,11 +482,6 @@ class RendererCharacters extends RenderGroup {
 
     final imageGroupHandLeft = images.imageGroupsHands[character.handTypeLeft] ?? (throw Exception());
     final imageGroupHandRight = images.imageGroupsHands[character.handTypeRight] ?? (throw Exception());
-
-    final imageGroupBody = images.imageGroupsBody[character.bodyType] ??
-        (throw Exception(
-            'images.imageGroupsBody[${BodyType.getName(character.bodyType)}] - missing'
-        ));
 
     final Sprite spriteBody;
     final Sprite spriteBodyArm;
@@ -547,30 +556,34 @@ class RendererCharacters extends RenderGroup {
 
     final spriteFrame = (character.renderDirection * 8) + frame;
 
-    renderCharacterShadowCircle(character);
+    if (renderBottom) {
+      renderCharacterShadowCircle(character);
 
-    render.sprite(
-      sprite: spriteTorso,
-      frame: spriteFrame,
-      color: color,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+      render.sprite(
+        sprite: spriteTorso,
+        frame: spriteFrame,
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
 
-    engine.renderSprite(
-      image: imageLegs,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: size,
-      srcHeight: size,
-      dstX: dstX,
-      dstY: dstY,
-      scale: scale,
-      color: color,
-      anchorY: anchorY,
-    );
+      engine.renderSprite(
+        image: imageLegs,
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: size,
+        srcHeight: size,
+        dstX: dstX,
+        dstY: dstY,
+        scale: scale,
+        color: color,
+        anchorY: anchorY,
+      );
+      
+      return;
+    }
 
     render.sprite(
       sprite: spriteArmBehind,

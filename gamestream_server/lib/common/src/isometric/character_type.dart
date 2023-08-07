@@ -5,7 +5,6 @@ class CharacterType {
    static const Rat = 2;
    static const Slime = 3;
    static const Wolf = 4;
-   static const Triangle = 5;
    static const Dog = 6;
    static const Kid = 7;
 
@@ -15,7 +14,6 @@ class CharacterType {
      Rat,
      Slime,
      Wolf,
-     Triangle,
      Dog,
      Kid,
    ];
@@ -27,7 +25,6 @@ class CharacterType {
        Rat: 'Rat',
        Slime: 'Slime',
        Wolf: 'Wolf',
-       Triangle: 'Triangle',
        Dog: 'Dog',
        Kid: 'Kid',
      }[value] ?? ' unknown-$value';
@@ -39,7 +36,6 @@ class CharacterType {
           Rat:        1.5,
           Slime:      1.5,
           Wolf:       4.0,
-          Triangle:   3.5,
           Dog:        4.0,
           Kid:        3.0,
        }[value] ??    2.0;
@@ -50,7 +46,6 @@ class CharacterType {
           Rat:        10.0,
           Slime:      10.0,
           Wolf:       10.0,
-          Triangle:   10.0,
           Dog:        10.0,
           Kid:        10.0,
        }[value] ??    10.0;
