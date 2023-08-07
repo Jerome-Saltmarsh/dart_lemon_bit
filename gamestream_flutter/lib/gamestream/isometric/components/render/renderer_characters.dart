@@ -36,7 +36,7 @@ class RendererCharacters extends RenderGroup {
 
     if (renderQueueBottom < scene.totalCharacters){
       final characterBottom = characters[renderQueueBottom];
-      final characterBottomOrder = characterBottom.sortOrder - 62;
+      final characterBottomOrder = characterBottom.sortOrder - 50;
 
 
       if (characterTopOrder > characterBottomOrder){
