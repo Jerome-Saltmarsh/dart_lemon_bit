@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
@@ -497,6 +496,8 @@ class RendererCharacters extends RenderGroup {
     final spriteGroupGloves = images.spriteGroupsGloves;
     final gloveGroupLeft = spriteGroupGloves[character.handTypeLeft] ?? (throw Exception());
     final gloveGroupRight = spriteGroupGloves[character.handTypeRight] ?? (throw Exception());
+    final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
+    final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -508,10 +509,10 @@ class RendererCharacters extends RenderGroup {
       frame = frame % 8;
       spriteGloveLeft = gloveGroupLeft.left.running;
       spriteGloveRight = gloveGroupRight.right.running;
-      spriteBodyArm = images.spriteKidBodyArmShirtBlueRunning;
       spriteArmLeft = images.spriteKidArmLeftRunning;
       spriteArmRight = images.spriteKidArmRightRunning;
-      spriteBody = images.spriteShirtBlueRunning;
+      spriteBodyArm = bodyArmGroup.running;
+      spriteBody =  bodyGroup.running;
       spriteHead = images.spriteHeadRunning;
       spriteTorso = images.spriteKidTorsoRunning;
       spriteLegs = images.spriteKidLegsBrownRunning;
@@ -525,10 +526,10 @@ class RendererCharacters extends RenderGroup {
 
       spriteGloveLeft = gloveGroupLeft.left.idle;
       spriteGloveRight = gloveGroupRight.right.idle;
-      spriteBodyArm = images.spriteKidBodyArmShirtBlueIdle;
       spriteArmLeft = images.spriteKidArmLeftIdle;
       spriteArmRight = images.spriteKidArmRightIdle;
-      spriteBody = images.spriteShirtBlueIdle;
+      spriteBodyArm = bodyArmGroup.idle;
+      spriteBody =  bodyGroup.idle;
       spriteHead = images.spriteHeadIdle;
       spriteTorso = images.spriteKidTorsoIdle;
       spriteLegs = images.spriteKidLegsBrownIdle;

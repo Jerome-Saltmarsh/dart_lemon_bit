@@ -92,7 +92,7 @@ class IsometricRender with IsometricComponent {
     final posZ = 25.0;
 
     sprite(
-        sprite: images.spriteShirtBlueRunning,
+        sprite: images.spriteKidBodyShirtBlueRunning,
         frame: animation.frame % 64,
         color: 0,
         scale: 1,
