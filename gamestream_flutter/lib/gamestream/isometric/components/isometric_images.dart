@@ -10,8 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../classes/src.dart';
 
 
-
-
 class ImageGroupBody {
   final Image idle;
   final Image running;
@@ -54,6 +52,8 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidTorsoRunning;
   late final Sprite spriteKidBodyArmShirtBlueIdle;
   late final Sprite spriteKidBodyArmShirtBlueRunning;
+  late final Sprite spriteKidLegsBrownIdle;
+  late final Sprite spriteKidLegsBrownRunning;
 
   late final Image empty;
   late final Image shades;
@@ -88,9 +88,7 @@ class IsometricImages with IsometricComponent {
 
   late final Image kid_body_shirt_blue;
   late final Image kid_skin;
-
-  late final Image kid_legs_brown_idle;
-  late final Image kid_legs_brown_running;
+  late final Image kid_legs;
 
   late final Image kid_hands_gauntlet_left_idle;
   late final Image kid_hands_gauntlet_left_running;
@@ -254,9 +252,7 @@ class IsometricImages with IsometricComponent {
 
     loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
-
-    loadPng('kid/legs/kid_legs_brown_idle').then((value) => kid_legs_brown_idle = value);
-    loadPng('kid/legs/kid_legs_brown_running').then((value) => kid_legs_brown_running = value);
+    loadPng('kid/kid_legs').then((value) => kid_legs = value);
 
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('template/template-shadow').then((value) => template_shadow = value);
@@ -330,6 +326,12 @@ class IsometricImages with IsometricComponent {
     });
     loadSprite('kid_body_arm_shirt_blue_running', kid_body_shirt_blue, 194).then((value){
       spriteKidBodyArmShirtBlueRunning = value;
+    });
+    loadSprite('kid_legs_brown_idle', kid_legs, 0).then((value){
+      spriteKidLegsBrownIdle = value;
+    });
+    loadSprite('kid_legs_brown_running', kid_legs, 71).then((value){
+      spriteKidLegsBrownRunning = value;
     });
 
     loadSprite('kid_head_idle', kid_skin, 0).then((value){

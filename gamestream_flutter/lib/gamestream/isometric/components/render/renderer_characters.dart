@@ -491,10 +491,9 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmLeft;
     final Sprite spriteArmRight;
     final Sprite spriteTorso;
+    final Sprite spriteLegs;
 
     double srcX;
-    // ui.Image imageBodyArms;
-    ui.Image imageLegs;
     ui.Image imageHandsLeft;
     ui.Image imageHandsRight;
 
@@ -512,8 +511,6 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       frame = frame % 8;
-      // imageBodyArms = imageGroupBody.armsRunning;
-      imageLegs = images.kid_legs_brown_running;
       imageHandsLeft = imageGroupHandLeft.leftRunning;
       imageHandsRight = imageGroupHandRight.rightRunning;
       spriteBodyArm = images.spriteKidBodyArmShirtBlueRunning;
@@ -522,6 +519,7 @@ class RendererCharacters extends RenderGroup {
       spriteBody = images.spriteShirtBlueRunning;
       spriteHead = images.spriteHeadRunning;
       spriteTorso = images.spriteKidTorsoRunning;
+      spriteLegs = images.spriteKidLegsBrownRunning;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -530,8 +528,6 @@ class RendererCharacters extends RenderGroup {
         frame = (7 - (frame % 8));
       }
 
-      // imageBodyArms = imageGroupBody.armsIdle;
-      imageLegs = images.kid_legs_brown_idle;
       imageHandsLeft = imageGroupHandLeft.leftIdle;
       imageHandsRight = imageGroupHandRight.rightIdle;
       spriteBodyArm = images.spriteKidBodyArmShirtBlueIdle;
@@ -540,6 +536,7 @@ class RendererCharacters extends RenderGroup {
       spriteBody = images.spriteShirtBlueIdle;
       spriteHead = images.spriteHeadIdle;
       spriteTorso = images.spriteKidTorsoIdle;
+      spriteLegs = images.spriteKidLegsBrownIdle;
     }
 
     srcX = frame * size;
@@ -571,19 +568,16 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      engine.renderSprite(
-        image: imageLegs,
-        srcX: srcX,
-        srcY: srcY,
-        srcWidth: size,
-        srcHeight: size,
+      render.sprite(
+        sprite: spriteLegs,
+        frame: spriteFrame,
+        color: color,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
-        scale: scale,
-        color: color,
         anchorY: anchorY,
       );
-      
+
       return;
     }
 
