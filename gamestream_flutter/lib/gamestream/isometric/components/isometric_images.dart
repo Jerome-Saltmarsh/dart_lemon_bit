@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/classes/image_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,12 +83,8 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_stars;
   late final Image sprite_shield;
   late final Image template_spinning;
-  late final Image kid_idle;
-  late final Image kid_idle_shadow;
-  late final Image kid_running;
-  late final Image kid_running_shadow;
 
-  late final Image kid_body_shirt_blue;
+  late final Image kid_body;
   late final Image kid_skin;
   late final Image kid_legs;
   late final Image kid_gloves;
@@ -236,13 +231,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_legs').then((value) => atlas_legs = value);
     loadPng('template/template_spinning').then((value) => template_spinning = value);
 
-    loadPng('kid/kid_idle').then((value) => kid_idle = value);
-    loadPng('kid/kid_idle_shadow').then((value) => kid_idle_shadow = value);
-
-    loadPng('kid/kid_running').then((value) => kid_running = value);
-    loadPng('kid/kid_running_shadow').then((value) => kid_running_shadow = value);
-
-    loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
+    loadPng('kid/kid_body').then((value) => kid_body = value);
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
     loadPng('kid/kid_legs').then((value) => kid_legs = value);
     loadPng('kid/kid_gloves').then((value) => kid_gloves = value);
@@ -308,16 +297,16 @@ class IsometricImages with IsometricComponent {
 
     await _completerImages.future;
 
-    loadSprite('shirt_blue_idle', kid_body_shirt_blue, 0).then((value){
+    loadSprite('shirt_blue_idle', kid_body, 0).then((value){
       spriteShirtBlueIdle = value;
     });
-    loadSprite('shirt_blue_running', kid_body_shirt_blue, 51).then((value){
+    loadSprite('shirt_blue_running', kid_body, 51).then((value){
       spriteShirtBlueRunning = value;
     });
-    loadSprite('kid_body_arm_shirt_blue_idle', kid_body_shirt_blue, 153).then((value){
+    loadSprite('kid_body_arm_shirt_blue_idle', kid_body, 153).then((value){
       spriteKidBodyArmShirtBlueIdle = value;
     });
-    loadSprite('kid_body_arm_shirt_blue_running', kid_body_shirt_blue, 194).then((value){
+    loadSprite('kid_body_arm_shirt_blue_running', kid_body, 194).then((value){
       spriteKidBodyArmShirtBlueRunning = value;
     });
     loadSprite('kid_legs_brown_idle', kid_legs, 0).then((value){
@@ -381,10 +370,10 @@ class IsometricImages with IsometricComponent {
     );
 
     imageGroupsBody[BodyType.Shirt_Blue] = ImageGroupBody(
-      idle: kid_body_shirt_blue,
-      running: kid_body_shirt_blue,
-      armsIdle: kid_body_shirt_blue,
-      armsRunning: kid_body_shirt_blue,
+      idle: kid_body,
+      running: kid_body,
+      armsIdle: kid_body,
+      armsRunning: kid_body,
     );
   }
 
