@@ -478,6 +478,7 @@ class RendererCharacters extends RenderGroup {
     final dstX = character.renderX;
     final dstY = character.renderY;
 
+    final Sprite spriteHelm;
     final Sprite spriteBody;
     final Sprite spriteBodyArm;
     final Sprite spriteHead;
@@ -492,6 +493,7 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
+    final spriteGroupHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
     final spriteGroupGloves = images.spriteGroupGloves;
     final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
     final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
@@ -516,6 +518,7 @@ class RendererCharacters extends RenderGroup {
       spriteHead = images.spriteHeadRunning;
       spriteTorso = images.spriteKidTorsoRunning;
       spriteLegs = legsGroup.running;
+      spriteHelm = spriteGroupHelm.running;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -533,6 +536,7 @@ class RendererCharacters extends RenderGroup {
       spriteHead = images.spriteHeadIdle;
       spriteTorso = images.spriteKidTorsoIdle;
       spriteLegs = legsGroup.idle;
+      spriteHelm = spriteGroupHelm.idle;
     }
 
     if (leftInFront) {
@@ -635,6 +639,16 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteHead,
+      frame: spriteFrame,
+      color: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteHelm,
       frame: spriteFrame,
       color: color,
       scale: scale,

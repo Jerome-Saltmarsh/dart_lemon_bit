@@ -1871,7 +1871,7 @@ class RendererNodes extends RenderGroup {
   void renderNodeRainFalling() {
     renderStandardNode(
       srcX: environment.srcXRainFalling,
-      srcY: 72.0 * ((animation.frame + row + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((animation.frame + row + column) % 6), // TODO Expensive Operation
     );
   }
 

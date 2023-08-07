@@ -26,6 +26,7 @@ class IsometricImages with IsometricComponent {
   final spriteGroupLegs = <int, SpriteGroup> {};
   final spriteGroupBody = <int, SpriteGroup> {};
   final spriteGroupBodyArms = <int, SpriteGroup> {};
+  final spriteGroupHelms = <int, SpriteGroup> {};
 
   late final SpriteGroup spriteGroupEmpty;
   late final SpriteGroupSided spriteGroupSidedEmpty;
@@ -49,6 +50,8 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidGauntletLeftRunning;
   late final Sprite spriteKidGauntletRightIdle;
   late final Sprite spriteKidGauntletRightRunning;
+  late final Sprite spriteHelmSteelIdle;
+  late final Sprite spriteHelmSteelRunning;
 
   late final Image empty;
   late final Image shades;
@@ -81,6 +84,7 @@ class IsometricImages with IsometricComponent {
   late final Image kid_skin;
   late final Image kid_legs;
   late final Image kid_gloves;
+  late final Image kid_helms;
 
   late final Image template_head_none;
   late final Image template_head_rogue;
@@ -228,6 +232,7 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
     loadPng('kid/kid_legs').then((value) => kid_legs = value);
     loadPng('kid/kid_gloves').then((value) => kid_gloves = value);
+    loadPng('kid/kid_helms').then((value) => kid_helms = value);
 
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('template/template-shadow').then((value) => template_shadow = value);
@@ -320,7 +325,12 @@ class IsometricImages with IsometricComponent {
     loadSprite('gauntlet_left_idle', kid_gloves, 87).then((value){
       spriteKidGauntletLeftIdle = value;
     });
-
+    loadSprite('helm_steel_running', kid_helms, 0).then((value){
+      spriteHelmSteelRunning = value;
+    });
+    loadSprite('helm_steel_idle', kid_helms, 27).then((value){
+      spriteHelmSteelIdle = value;
+    });
     loadSprite('kid_head_idle', kid_skin, 0).then((value){
       spriteHeadIdle = value;
     });
@@ -378,9 +388,15 @@ class IsometricImages with IsometricComponent {
 
     spriteGroupGloves[HandType.None] = spriteGroupSidedEmpty;
 
+    spriteGroupHelms[HelmType.None] = spriteGroupEmpty;
     spriteGroupBody[BodyType.None] = spriteGroupEmpty;
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
+
+    spriteGroupHelms[HeadType.Steel_Helm] = SpriteGroup(
+      idle: spriteHelmSteelIdle,
+      running: spriteHelmSteelRunning,
+    );
 
     spriteGroupLegs[LegType.Brown] = SpriteGroup(
         idle: spriteKidLegsBrownIdle,
