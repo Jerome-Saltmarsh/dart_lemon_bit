@@ -478,6 +478,7 @@ class RendererCharacters extends RenderGroup {
     final dstX = character.renderX;
     final dstY = character.renderY;
 
+    final Sprite spriteWeapon;
     final Sprite spriteHelm;
     final Sprite spriteBody;
     final Sprite spriteBodyArm;
@@ -493,13 +494,14 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    final spriteGroupHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
     final spriteGroupGloves = images.spriteGroupGloves;
-    final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
-    final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
-    final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
     final gloveGroupLeft = spriteGroupGloves[character.handTypeLeft] ?? (throw Exception());
     final gloveGroupRight = spriteGroupGloves[character.handTypeRight] ?? (throw Exception());
+    final spriteGroupHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
+    final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
+    final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
+    final weaponGroup = images.spriteGroupWeapons[character.weaponType] ?? (throw Exception());
+    final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -519,6 +521,7 @@ class RendererCharacters extends RenderGroup {
       spriteTorso = images.spriteKidTorsoRunning;
       spriteLegs = legsGroup.running;
       spriteHelm = spriteGroupHelm.running;
+      spriteWeapon = weaponGroup.running;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -537,6 +540,7 @@ class RendererCharacters extends RenderGroup {
       spriteTorso = images.spriteKidTorsoIdle;
       spriteLegs = legsGroup.idle;
       spriteHelm = spriteGroupHelm.idle;
+      spriteWeapon = weaponGroup.idle;
     }
 
     if (leftInFront) {
@@ -597,6 +601,18 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
+    if (spriteGloveRight != spriteGloveFront){
+      render.sprite(
+        sprite: spriteWeapon,
+        frame: spriteFrame,
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+    }
+
     render.sprite(
         sprite: spriteBody,
         frame: spriteFrame,
@@ -616,6 +632,18 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
+
+    if (spriteGloveRight == spriteGloveFront){
+      render.sprite(
+        sprite: spriteWeapon,
+        frame: spriteFrame,
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+    }
 
     render.sprite(
       sprite: spriteGloveFront,

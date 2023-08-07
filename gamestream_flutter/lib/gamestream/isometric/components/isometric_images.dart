@@ -22,6 +22,7 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
   final _completerSprites = Completer();
 
+  final spriteGroupWeapons = <int, SpriteGroup> {};
   final spriteGroupGloves = <int, SpriteGroupSided> {};
   final spriteGroupLegs = <int, SpriteGroup> {};
   final spriteGroupBody = <int, SpriteGroup> {};
@@ -32,6 +33,8 @@ class IsometricImages with IsometricComponent {
   late final SpriteGroupSided spriteGroupSidedEmpty;
 
   late final Sprite spriteEmpty;
+  late final Sprite spriteKidSwordIdle;
+  late final Sprite spriteKidSwordRunning;
   late final Sprite spriteKidBodyShirtBlueIdle;
   late final Sprite spriteKidBodyShirtBlueRunning;
   late final Sprite spriteHeadIdle;
@@ -80,6 +83,7 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_shield;
   late final Image template_spinning;
 
+  late final Image kid_weapons;
   late final Image kid_body;
   late final Image kid_skin;
   late final Image kid_legs;
@@ -228,6 +232,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_legs').then((value) => atlas_legs = value);
     loadPng('template/template_spinning').then((value) => template_spinning = value);
 
+    loadPng('kid/kid_weapons').then((value) => kid_weapons = value);
     loadPng('kid/kid_body').then((value) => kid_body = value);
     loadPng('kid/kid_skin').then((value) => kid_skin = value);
     loadPng('kid/kid_legs').then((value) => kid_legs = value);
@@ -295,6 +300,12 @@ class IsometricImages with IsometricComponent {
 
     await _completerImages.future;
 
+    loadSprite('sword_running', kid_weapons, 0).then((value){
+      spriteKidSwordRunning = value;
+    });
+    loadSprite('sword_idle', kid_weapons, 51).then((value){
+      spriteKidSwordIdle = value;
+    });
     loadSprite('shirt_blue_idle', kid_body, 0).then((value){
       spriteKidBodyShirtBlueIdle = value;
     });
@@ -387,7 +398,7 @@ class IsometricImages with IsometricComponent {
     );
 
     spriteGroupGloves[HandType.None] = spriteGroupSidedEmpty;
-
+    spriteGroupWeapons[WeaponType.Unarmed] = spriteGroupEmpty;
     spriteGroupHelms[HelmType.None] = spriteGroupEmpty;
     spriteGroupBody[BodyType.None] = spriteGroupEmpty;
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
@@ -422,6 +433,11 @@ class IsometricImages with IsometricComponent {
           idle: spriteKidGauntletRightIdle,
           running: spriteKidGauntletRightRunning,
         ),
+    );
+
+    spriteGroupWeapons[WeaponType.Sword] = SpriteGroup(
+      idle: spriteKidSwordIdle,
+      running: spriteKidSwordRunning,
     );
   }
 
