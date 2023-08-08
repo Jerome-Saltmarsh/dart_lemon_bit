@@ -525,6 +525,9 @@ class RendererCharacters extends RenderGroup {
       spriteLegs = legsGroup.strike;
       spriteHelm = spriteGroupHelm.strike;
       spriteWeapon = weaponGroup.strike;
+
+
+      render.textPosition(character, frame, offsetY: -100);
     }
     else if (character.running) {
       frame = frame % 8;
