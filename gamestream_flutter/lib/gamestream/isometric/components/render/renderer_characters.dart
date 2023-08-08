@@ -512,7 +512,21 @@ class RendererCharacters extends RenderGroup {
       InputDirection.Down_Left,
     ].contains(direction);
 
-    if (character.running) {
+    if (character.striking){
+      frame = min(frame, 8);
+      spriteGloveLeft = spriteGroupHandsLeft.strike;
+      spriteGloveRight = spriteGroupHandsRight.strike;
+      spriteArmLeft = spriteGroupHandsLeft.strike;
+      spriteArmRight = spriteGroupArmsRight.strike;
+      spriteBodyArm = bodyArmGroup.strike;
+      spriteBody =  bodyGroup.strike;
+      spriteHead = groupHead.strike;
+      spriteTorso = groupTorso.strike;
+      spriteLegs = legsGroup.strike;
+      spriteHelm = spriteGroupHelm.strike;
+      spriteWeapon = weaponGroup.strike;
+    }
+    else if (character.running) {
       frame = frame % 8;
       spriteGloveLeft = spriteGroupHandsLeft.running;
       spriteGloveRight = spriteGroupHandsRight.running;

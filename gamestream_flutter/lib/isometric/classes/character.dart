@@ -41,6 +41,7 @@ class Character extends Position {
   bool get dead => state == CharacterState.Dead;
   bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
+  bool get striking => weaponState == WeaponState.Performing;
   bool get performing => state == CharacterState.Performing;
   bool get hurt => state == CharacterState.Hurt;
   bool get alive => !dead;
