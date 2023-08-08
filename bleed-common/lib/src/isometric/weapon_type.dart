@@ -61,8 +61,8 @@ class WeaponType {
 
   static String getName(int value) {
     return const {
-      Unarmed: 'Unarmed',
-      Handgun: 'Handgun',
+      Unarmed: 'unarmed',
+      Handgun: 'handgun',
       Smg: 'SMG',
       Machine_Gun: 'Machine Gun',
       Sniper_Rifle: 'Sniper Rifle',
@@ -76,7 +76,7 @@ class WeaponType {
       Bazooka: 'Bazooka',
       Minigun: 'Minigun',
       Crossbow: 'Crossbow',
-      Staff: 'Staff',
+      Staff: 'staff',
       Musket: 'Musket',
       Revolver: 'Revolver',
       Pistol: 'Pistol',

@@ -67,6 +67,8 @@ flutter:
     - images/template/weapons/
     - sprites/hands/left/
     - sprites/hands/right/
+    - sprites/weapons/idle/
+    - sprites/weapons/running/
     - audio/
     - audio/music/
     - audio/sounds/

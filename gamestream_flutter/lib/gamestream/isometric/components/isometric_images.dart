@@ -33,8 +33,6 @@ class IsometricImages with IsometricComponent {
   late final SpriteGroupSided spriteGroupSidedEmpty;
 
   late final Sprite spriteEmpty;
-  late final Sprite spriteKidSwordIdle;
-  late final Sprite spriteKidSwordRunning;
   late final Sprite spriteKidBodyShirtBlueIdle;
   late final Sprite spriteKidBodyShirtBlueRunning;
   late final Sprite spriteHeadIdle;
@@ -49,14 +47,8 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidBodyArmShirtBlueRunning;
   late final Sprite spriteKidLegsBrownIdle;
   late final Sprite spriteKidLegsBrownRunning;
-  // late final Sprite spriteKidGauntletLeftIdle;
-  // late final Sprite spriteKidGauntletLeftRunning;
-  // late final Sprite spriteKidGauntletRightIdle;
-  // late final Sprite spriteKidGauntletRightRunning;
   late final Sprite spriteHelmSteelIdle;
   late final Sprite spriteHelmSteelRunning;
-  late final Sprite spriteWeaponStaffWoodenIdle;
-  late final Sprite spriteWeaponStaffWoodenRunning;
 
   late final Image empty;
   late final Image shades;
@@ -208,15 +200,21 @@ class IsometricImages with IsometricComponent {
      return Sprite.fromBytes(bytes, image: image, y: y);
    }
 
-   Future<Sprite> loadSprite2(String fileName, Image image, double y) async {
+   Future loadSpriteWeapon({
+     required int type,
+     required double yIdle,
+     required double yRunning,
+    }) async {
      totalSprites.value++;
-     final bytes = await loadAssetBytes('sprites/$fileName.sprite');
+     final name = WeaponType.getName(type).toLowerCase();
+     final idle = await loadAssetBytes('sprites/weapons/idle/${name}.sprite');
+     final running = await loadAssetBytes('sprites/weapons/running/${name}.sprite');
+     spriteGroupWeapons[type] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: kid_weapons, y: yIdle),
+         running: Sprite.fromBytes(running, image: kid_weapons, y: yIdle),
+     );
      totalSpritesLoaded.value++;
-     return Sprite.fromBytes(bytes, image: image, y: y);
    }
-
-   final imagesHands = <int, Image> {};
-   final spritesY = <int, double> {};
 
    Future loadSpriteHands({
      required int type,
@@ -226,7 +224,7 @@ class IsometricImages with IsometricComponent {
      required double yRightRunning,
    }) async {
      totalSprites.value++;
-     final name = HandType.getName(type);
+     final name = HandType.getName(type).toLowerCase();
      final leftIdle = await loadAssetBytes('sprites/hands/left/${name}_idle.sprite');
      final leftRunning = await loadAssetBytes('sprites/hands/left/${name}_running.sprite');
      final rightIdle = await loadAssetBytes('sprites/hands/right/${name}_idle.sprite');
@@ -346,18 +344,18 @@ class IsometricImages with IsometricComponent {
       yRightRunning: 0,
     );
 
-    loadSprite('sword_running', kid_weapons, 0).then((value){
-      spriteKidSwordRunning = value;
-    });
-    loadSprite('sword_idle', kid_weapons, 51).then((value){
-      spriteKidSwordIdle = value;
-    });
-    loadSprite('weapon_staff_wooden_idle', kid_weapons, 114).then((value){
-      spriteWeaponStaffWoodenIdle = value;
-    });
-    loadSprite('weapon_staff_wooden_running', kid_weapons, 195).then((value){
-      spriteWeaponStaffWoodenRunning = value;
-    });
+    loadSpriteWeapon(
+      type: WeaponType.Sword,
+      yIdle: 51,
+      yRunning: 0,
+    );
+
+    loadSpriteWeapon(
+      type: WeaponType.Staff,
+      yIdle: 114,
+      yRunning: 195,
+    );
+
     loadSprite('shirt_blue_idle', kid_body, 0).then((value){
       spriteKidBodyShirtBlueIdle = value;
     });
@@ -474,27 +472,6 @@ class IsometricImages with IsometricComponent {
     spriteGroupBodyArms[BodyType.Shirt_Blue] = SpriteGroup(
         idle: spriteKidBodyArmShirtBlueIdle,
         running: spriteKidBodyArmShirtBlueRunning,
-    );
-
-    // spriteGroupGloves[HandType.Gauntlet] = SpriteGroupSided(
-    //     left: SpriteGroup(
-    //       idle: spriteKidGauntletLeftIdle,
-    //       running: spriteKidGauntletLeftRunning,
-    //     ),
-    //     right: SpriteGroup(
-    //       idle: spriteKidGauntletRightIdle,
-    //       running: spriteKidGauntletRightRunning,
-    //     ),
-    // );
-
-    spriteGroupWeapons[WeaponType.Sword] = SpriteGroup(
-      idle: spriteKidSwordIdle,
-      running: spriteKidSwordRunning,
-    );
-
-    spriteGroupWeapons[WeaponType.Staff] = SpriteGroup(
-      idle: spriteWeaponStaffWoodenIdle,
-      running: spriteWeaponStaffWoodenRunning,
     );
   }
 
