@@ -9,7 +9,7 @@ class BodyType {
    static String getName(int value) => const {
          None: 'None',
          Shirt_Red: 'Red Shirt',
-         Shirt_Blue: 'Blue Shirt',
+         Shirt_Blue: 'shirt_blue',
          Shirt_Cyan: 'Cyan Shirt',
          Swat: 'Swat',
          Tunic_Padded: 'Padded Tunic',

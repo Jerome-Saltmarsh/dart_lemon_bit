@@ -87,19 +87,6 @@ class IsometricRender with IsometricComponent {
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
-
-    final posX = 1000.0;
-    final posY = 1000.0;
-    final posZ = 25.0;
-
-    sprite(
-        sprite: images.spriteKidBodyShirtBlueRunning,
-        frame: animation.frame % 64,
-        color: 0,
-        scale: 1,
-        dstX: getRenderX(posX, posY, posZ),
-        dstY: getRenderY(posX, posY, posZ),
-    );
   }
 
   void drawForeground(Canvas canvas, Size size){
