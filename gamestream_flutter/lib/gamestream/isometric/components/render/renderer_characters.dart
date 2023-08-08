@@ -513,7 +513,7 @@ class RendererCharacters extends RenderGroup {
     ].contains(direction);
 
     if (character.striking){
-      frame = min(frame, 8);
+      frame = min(character.weaponStateDuration, 8);
       spriteGloveLeft = spriteGroupHandsLeft.strike;
       spriteGloveRight = spriteGroupHandsRight.strike;
       spriteArmLeft = spriteGroupHandsLeft.strike;

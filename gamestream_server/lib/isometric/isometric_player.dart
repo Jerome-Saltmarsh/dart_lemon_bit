@@ -653,7 +653,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
 
     if (writeC){
-      writeByte(character.weaponStateDuration);
+      writeByte(character.weaponStateDuration ~/ framesPerAnimation);
     }
   }
 
