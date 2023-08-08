@@ -61,28 +61,32 @@ flutter:
     - images/website/
     - images/template/
     - images/kid/
+    - images/kid/arms/fair/
+    - images/kid/body/
+    - images/kid/body_arms/
+    - images/kid/hands/left/
+    - images/kid/hands/right/
+    - images/kid/head/
+    - images/kid/helms/
+    - images/kid/legs/
+    - images/kid/torso/
+    - images/kid/weapons/
     - images/template/body/
     - images/template/head/
     - images/template/legs/
     - images/template/weapons/
-    - sprites/hands/left/
-    - sprites/hands/right/
-    - sprites/weapons/idle/
-    - sprites/weapons/running/
-    - sprites/helms/idle/
-    - sprites/helms/running/
-    - sprites/legs/idle/
-    - sprites/legs/running/
-    - sprites/heads/idle/
-    - sprites/heads/running/
-    - sprites/arm/left/
-    - sprites/arm/right/
-    - sprites/body/idle/
-    - sprites/body/running/
-    - sprites/body_arms/idle/
-    - sprites/body_arms/running/
-    - sprites/torso/idle/
-    - sprites/torso/running/
+    - sprites/arm/left/fair/
+    - sprites/arm/right/fair/
+    - sprites/body/shirt_blue/
+    - sprites/body_arms/shirt_blue/
+    - sprites/hands/left/gauntlet/
+    - sprites/hands/right/gauntlet/
+    - sprites/heads/fair/
+    - sprites/helms/steel/
+    - sprites/legs/brown/
+    - sprites/torso/fair/
+    - sprites/weapons/staff/
+    - sprites/weapons/sword/
     - audio/
     - audio/music/
     - audio/sounds/

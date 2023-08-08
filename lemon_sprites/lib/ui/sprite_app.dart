@@ -112,11 +112,12 @@ class SpriteApp extends StatelessWidget {
     if (files == null) {
       return;
     }
-    if (files.length == 1){
-      sprite.file = files[0];
-    } else {
-      sprite.loadFiles(files);
-    }
+    sprite.loadFiles(files);
+    // if (files.length == 1){
+    //   sprite.file = files[0];
+    // } else {
+    //   sprite.loadFiles(files);
+    // }
 
   }
 

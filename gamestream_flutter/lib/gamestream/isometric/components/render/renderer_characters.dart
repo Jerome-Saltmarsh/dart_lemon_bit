@@ -494,15 +494,15 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    final spriteGroupGloves = images.spriteGroupGloves;
-    final gloveGroupLeft = spriteGroupGloves[character.handTypeLeft] ?? (throw Exception());
-    final gloveGroupRight = spriteGroupGloves[character.handTypeRight] ?? (throw Exception());
+    final spriteGroupHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
+    final spriteGroupHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
     final spriteGroupHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
     final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
     final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
     final weaponGroup = images.spriteGroupWeapons[character.weaponType] ?? (throw Exception());
     final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
-    final armGroup = images.spriteGroupArms[character.complexionType] ?? (throw Exception());
+    final spriteGroupArmsLeft = images.spriteGroupArmsLeft[character.complexionType] ?? (throw Exception());
+    final spriteGroupArmsRight = images.spriteGroupArmsRight[character.complexionType] ?? (throw Exception());
     final groupHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
     final groupTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
 
@@ -514,10 +514,10 @@ class RendererCharacters extends RenderGroup {
 
     if (character.running) {
       frame = frame % 8;
-      spriteGloveLeft = gloveGroupLeft.left.running;
-      spriteGloveRight = gloveGroupRight.right.running;
-      spriteArmLeft = armGroup.left.running;
-      spriteArmRight = armGroup.right.running;
+      spriteGloveLeft = spriteGroupHandsLeft.running;
+      spriteGloveRight = spriteGroupHandsRight.running;
+      spriteArmLeft = spriteGroupHandsLeft.running;
+      spriteArmRight = spriteGroupArmsRight.running;
       spriteBodyArm = bodyArmGroup.running;
       spriteBody =  bodyGroup.running;
       spriteHead = groupHead.running;
@@ -533,10 +533,10 @@ class RendererCharacters extends RenderGroup {
         frame = (7 - (frame % 8));
       }
 
-      spriteGloveLeft = gloveGroupLeft.left.idle;
-      spriteGloveRight = gloveGroupRight.right.idle;
-      spriteArmLeft = armGroup.left.idle;
-      spriteArmRight = armGroup.right.idle;
+      spriteGloveLeft = spriteGroupHandsLeft.idle;
+      spriteGloveRight = spriteGroupHandsRight.idle;
+      spriteArmLeft = spriteGroupArmsLeft.idle;
+      spriteArmRight = spriteGroupArmsRight.idle;
       spriteBodyArm = bodyArmGroup.idle;
       spriteBody =  bodyGroup.idle;
       spriteHead = groupHead.idle;

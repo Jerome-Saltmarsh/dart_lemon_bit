@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/src.dart';
 import 'classes/sprite_group.dart';
-import 'classes/sprite_group_sided.dart';
 
 class IsometricImages with IsometricComponent {
 
@@ -22,18 +21,20 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
   final _completerSprites = Completer();
 
-  final spriteGroupWeapons = <int, SpriteGroup> {};
-  final spriteGroupGloves = <int, SpriteGroupSided> {};
-  final spriteGroupArms = <int, SpriteGroupSided> {};
-  final spriteGroupLegs = <int, SpriteGroup> {};
+
+  final spriteGroupArmsLeft = <int, SpriteGroup> {};
+  final spriteGroupArmsRight = <int, SpriteGroup> {};
   final spriteGroupBody = <int, SpriteGroup> {};
   final spriteGroupBodyArms = <int, SpriteGroup> {};
-  final spriteGroupHelms = <int, SpriteGroup> {};
+  final spriteGroupHandsLeft = <int, SpriteGroup> {};
+  final spriteGroupHandsRight = <int, SpriteGroup> {};
   final spriteGroupHeads = <int, SpriteGroup> {};
+  final spriteGroupHelms = <int, SpriteGroup> {};
+  final spriteGroupLegs = <int, SpriteGroup> {};
   final spriteGroupTorso = <int, SpriteGroup> {};
+  final spriteGroupWeapons = <int, SpriteGroup> {};
 
   late final SpriteGroup spriteGroupEmpty;
-  late final SpriteGroupSided spriteGroupSidedEmpty;
 
   late final Sprite spriteEmpty;
 
@@ -64,12 +65,18 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_shield;
   late final Image template_spinning;
 
-  late final Image kid_weapons;
-  late final Image kid_body;
-  late final Image kid_skin;
-  late final Image kid_legs;
-  late final Image kid_gloves;
-  late final Image kid_helms;
+  late final Image kid_arms_fair_left;
+  late final Image kid_arms_fair_right;
+  late final Image kid_body_shirt_blue;
+  late final Image kid_body_arms_shirt_blue;
+  late final Image kid_hands_left_gauntlets;
+  late final Image kid_hands_right_gauntlets;
+  late final Image kid_head_fair;
+  late final Image kid_helms_steel;
+  late final Image kid_legs_brown;
+  late final Image kid_torso_fair;
+  late final Image kid_weapons_staff;
+  late final Image kid_weapons_sword;
 
   late final Image template_head_none;
   late final Image template_head_rogue;
@@ -180,176 +187,231 @@ class IsometricImages with IsometricComponent {
          _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
       };
 
-   Future<Sprite> loadSprite(String fileName, Image image, double y) async {
-     totalSprites.value++;
-     final bytes = await loadAssetBytes('sprites/$fileName.sprite');
-     totalSpritesLoaded.value++;
-     return Sprite.fromBytes(bytes, image: image, y: y);
-   }
-
-   Future loadSpriteWeapon({
-     required int type,
+   Future loadSpriteGroupArmsLeft({
+     required int complexion,
      required double yIdle,
      required double yRunning,
+     required double yStrike,
+     required Image image,
     }) async {
      totalSprites.value++;
-     final name = WeaponType.getName(type).toLowerCase();
-     final idle = await loadAssetBytes('sprites/weapons/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/weapons/running/${name}.sprite');
-     spriteGroupWeapons[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_weapons, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_weapons, y: yRunning),
+     final name = ComplexionType.getName(complexion).toLowerCase();
+     final idle = await loadAssetBytes('sprites/arm/left/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/arm/left/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/arm/left/$name/strike.sprite');
+     spriteGroupArmsLeft[complexion] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
      );
      totalSpritesLoaded.value++;
    }
 
-   Future loadSpriteHelm({
+   Future loadSpriteGroupArmsRight({
+     required int complexion,
+     required double yIdle,
+     required double yRunning,
+     required double yStrike,
+     required Image image,
+    }) async {
+     totalSprites.value++;
+     final name = ComplexionType.getName(complexion).toLowerCase();
+     final idle = await loadAssetBytes('sprites/arm/right/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/arm/right/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/arm/right/$name/strike.sprite');
+     spriteGroupArmsRight[complexion] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteGroupBody({
+     required int bodyType,
+     required double yIdle,
+     required double yRunning,
+     required double yStrike,
+     required Image image,
+    }) async {
+     totalSprites.value++;
+     final name = BodyType.getName(bodyType).toLowerCase();
+     final idle = await loadAssetBytes('sprites/body/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/body/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/body/$name/strike.sprite');
+     spriteGroupBody[bodyType] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteGroupBodyArms({
+     required int bodyType,
+     required double yIdle,
+     required double yRunning,
+     required double yStrike,
+     required Image image,
+    }) async {
+     totalSprites.value++;
+     final name = BodyType.getName(bodyType).toLowerCase();
+     final idle = await loadAssetBytes('sprites/body_arms/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/body_arms/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/body_arms/$name/strike.sprite');
+     spriteGroupBodyArms[bodyType] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteGroupHandsLeft({
+     required int handType,
+     required double yIdle,
+     required double yRunning,
+     required double yStrike,
+     required Image image,
+    }) async {
+     totalSprites.value++;
+     final name = HandType.getName(handType).toLowerCase();
+     final idle = await loadAssetBytes('sprites/hands/left/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/hands/left/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/hands/left/$name/strike.sprite');
+     spriteGroupHandsLeft[handType] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteGroupHandsRight({
+     required int handType,
+     required double yIdle,
+     required double yRunning,
+     required double yStrike,
+     required Image image,
+    }) async {
+     totalSprites.value++;
+     final name = HandType.getName(handType).toLowerCase();
+     final idle = await loadAssetBytes('sprites/hands/right/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/hands/right/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/hands/right/$name/strike.sprite');
+     spriteGroupHandsRight[handType] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteGroupHead({
+     required int complexion,
+     required double yIdle,
+     required double yRunning,
+     required double yStrike,
+     required Image image,
+    }) async {
+     totalSprites.value++;
+     final name = ComplexionType.getName(complexion).toLowerCase();
+     final idle = await loadAssetBytes('sprites/heads/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/heads/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/heads/$name/strike.sprite');
+     spriteGroupHeads[complexion] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteGroupHelm({
      required int type,
      required double yIdle,
      required double yRunning,
+     required double yStrike,
+     required Image image,
     }) async {
      totalSprites.value++;
      final name = HelmType.getName(type).toLowerCase();
-     final idle = await loadAssetBytes('sprites/helms/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/helms/running/${name}.sprite');
+     final idle = await loadAssetBytes('sprites/helms/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/helms/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/helms/$name/strike.sprite');
      spriteGroupHelms[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_helms, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_helms, y: yRunning),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
      );
      totalSpritesLoaded.value++;
    }
 
-   Future loadSpriteHead({
-     required int complexion,
+   Future loadSpriteGroupLegs({
+     required int legType,
      required double yIdle,
      required double yRunning,
+     required double yStrike,
+     required Image image,
     }) async {
      totalSprites.value++;
-     final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadAssetBytes('sprites/heads/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/heads/running/${name}.sprite');
-     spriteGroupHeads[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_skin, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_skin, y: yRunning),
+     final name = LegType.getName(legType).toLowerCase();
+     final idle = await loadAssetBytes('sprites/legs/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/legs/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/legs/$name/strike.sprite');
+     spriteGroupLegs[legType] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
      );
      totalSpritesLoaded.value++;
    }
 
-   Future loadSpriteTorso({
+   Future loadSpriteGroupTorso({
      required int complexion,
      required double yIdle,
      required double yRunning,
+     required double yStrike,
+     required Image image,
     }) async {
      totalSprites.value++;
      final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadAssetBytes('sprites/torso/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/torso/running/${name}.sprite');
+     final idle = await loadAssetBytes('sprites/torso/$name/idle.sprite');
+     final running = await loadAssetBytes('sprites/torso/$name/running.sprite');
+     final strike = await loadAssetBytes('sprites/torso/$name/strike.sprite');
      spriteGroupTorso[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_skin, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_skin, y: yRunning),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+         running: Sprite.fromBytes(running, image: image, y: yRunning),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
      );
      totalSpritesLoaded.value++;
    }
 
-   Future loadSpriteBody({
-     required int type,
-     required double yIdle,
-     required double yRunning,
-    }) async {
-     totalSprites.value++;
-     final name = BodyType.getName(type).toLowerCase();
-     final idle = await loadAssetBytes('sprites/body/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/body/running/${name}.sprite');
-     spriteGroupBody[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_body, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_body, y: yRunning),
-     );
-     totalSpritesLoaded.value++;
-   }
+  Future loadSpriteGroupWeapon({
+    required int type,
+    required double yIdle,
+    required double yRunning,
+    required double yStrike,
+    required Image image,
+  }) async {
+    totalSprites.value++;
+    final name = WeaponType.getName(type).toLowerCase();
+    final idle = await loadAssetBytes('sprites/weapons/$name/idle.sprite');
+    final running = await loadAssetBytes('sprites/weapons/$name/running.sprite');
+    final strike = await loadAssetBytes('sprites/weapons/$name/strike.sprite');
+    spriteGroupWeapons[type] = SpriteGroup(
+      idle: Sprite.fromBytes(idle, image: image, y: yIdle),
+      running: Sprite.fromBytes(running, image: image, y: yRunning),
+      strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+    );
+    totalSpritesLoaded.value++;
+  }
 
-   Future loadSpriteLegs({
-     required int type,
-     required double yIdle,
-     required double yRunning,
-    }) async {
-     totalSprites.value++;
-     final name = LegType.getName(type).toLowerCase();
-     final idle = await loadAssetBytes('sprites/legs/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/legs/running/${name}.sprite');
-     spriteGroupLegs[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_legs, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_legs, y: yRunning),
-     );
-     totalSpritesLoaded.value++;
-   }
 
-   Future loadSpriteBodyArms({
-     required int type,
-     required double yIdle,
-     required double yRunning,
-    }) async {
-     totalSprites.value++;
-     final name = BodyType.getName(type).toLowerCase();
-     final idle = await loadAssetBytes('sprites/body_arms/idle/${name}.sprite');
-     final running = await loadAssetBytes('sprites/body_arms/running/${name}.sprite');
-     spriteGroupBodyArms[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: kid_body, y: yIdle),
-         running: Sprite.fromBytes(running, image: kid_body, y: yRunning),
-     );
-     totalSpritesLoaded.value++;
-   }
 
-   Future loadSpriteHands({
-     required int type,
-     required double yLeftIdle,
-     required double yLeftRunning,
-     required double yRightIdle,
-     required double yRightRunning,
-   }) async {
-     totalSprites.value++;
-     final name = HandType.getName(type).toLowerCase();
-     final leftIdle = await loadAssetBytes('sprites/hands/left/${name}_idle.sprite');
-     final leftRunning = await loadAssetBytes('sprites/hands/left/${name}_running.sprite');
-     final rightIdle = await loadAssetBytes('sprites/hands/right/${name}_idle.sprite');
-     final rightRunning = await loadAssetBytes('sprites/hands/right/${name}_running.sprite');
-     spriteGroupGloves[type] = SpriteGroupSided(
-         left: SpriteGroup(
-           idle: Sprite.fromBytes(leftIdle, image: kid_gloves, y: yLeftIdle),
-           running: Sprite.fromBytes(leftRunning, image: kid_gloves, y: yLeftRunning),
-         ),
-         right: SpriteGroup(
-           idle: Sprite.fromBytes(rightIdle, image: kid_gloves, y: yRightIdle),
-           running: Sprite.fromBytes(rightRunning, image: kid_gloves, y: yRightRunning),
-         ),
-     );
-     totalSpritesLoaded.value++;
-   }
 
-   Future loadSpriteArms({
-     required int complexion,
-     required double yLeftIdle,
-     required double yLeftRunning,
-     required double yRightIdle,
-     required double yRightRunning,
-   }) async {
-     totalSprites.value++;
-     final name = ComplexionType.getName(complexion).toLowerCase();
-     final leftIdle = await loadAssetBytes('sprites/arm/left/${name}_idle.sprite');
-     final leftRunning = await loadAssetBytes('sprites/arm/left/${name}_running.sprite');
-     final rightIdle = await loadAssetBytes('sprites/arm/right/${name}_idle.sprite');
-     final rightRunning = await loadAssetBytes('sprites/arm/right/${name}_running.sprite');
-     spriteGroupArms[complexion] = SpriteGroupSided(
-         left: SpriteGroup(
-           idle: Sprite.fromBytes(leftIdle, image: kid_skin, y: yLeftIdle),
-           running: Sprite.fromBytes(leftRunning, image: kid_skin, y: yLeftRunning),
-         ),
-         right: SpriteGroup(
-           idle: Sprite.fromBytes(rightIdle, image: kid_skin, y: yRightIdle),
-           running: Sprite.fromBytes(rightRunning, image: kid_skin, y: yRightRunning),
-         ),
-     );
-     totalSpritesLoaded.value++;
-   }
+
+
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
@@ -377,12 +439,18 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_legs').then((value) => atlas_legs = value);
     loadPng('template/template_spinning').then((value) => template_spinning = value);
 
-    loadPng('kid/kid_weapons').then((value) => kid_weapons = value);
-    loadPng('kid/kid_body').then((value) => kid_body = value);
-    loadPng('kid/kid_skin').then((value) => kid_skin = value);
-    loadPng('kid/kid_legs').then((value) => kid_legs = value);
-    loadPng('kid/kid_gloves').then((value) => kid_gloves = value);
-    loadPng('kid/kid_helms').then((value) => kid_helms = value);
+    loadPng('kid/arms/fair/left').then((value) => kid_arms_fair_left = value);
+    loadPng('kid/arms/fair/right').then((value) => kid_arms_fair_right = value);
+    loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
+    loadPng('kid/body_arms/shirt_blue').then((value) => kid_body_arms_shirt_blue = value);
+    loadPng('kid/hands/left/gauntlets').then((value) => kid_hands_left_gauntlets = value);
+    loadPng('kid/hands/right/gauntlets').then((value) => kid_hands_right_gauntlets = value);
+    loadPng('kid/head/fair').then((value) => kid_head_fair = value);
+    loadPng('kid/helms/steel').then((value) => kid_helms_steel = value);
+    loadPng('kid/legs/brown').then((value) => kid_legs_brown = value);
+    loadPng('kid/torso/fair').then((value) => kid_torso_fair = value);
+    loadPng('kid/weapons/staff').then((value) => kid_weapons_staff = value);
+    loadPng('kid/weapons/sword').then((value) => kid_weapons_sword = value);
 
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('template/template-shadow').then((value) => template_shadow = value);
@@ -443,71 +511,9 @@ class IsometricImages with IsometricComponent {
       _completerImages.complete(true);
     });
 
+    print('awaiting images completer');
     await _completerImages.future;
 
-    loadSpriteHands(
-      type: HandType.Gauntlet,
-      yLeftIdle: 87,
-      yLeftRunning: 58,
-      yRightIdle: 31,
-      yRightRunning: 0,
-    );
-
-    loadSpriteWeapon(
-      type: WeaponType.Sword,
-      yIdle: 51,
-      yRunning: 0,
-    );
-
-    loadSpriteWeapon(
-      type: WeaponType.Staff,
-      yIdle: 114,
-      yRunning: 195,
-    );
-
-    loadSpriteHelm(
-      type: HelmType.Steel,
-      yIdle: 27,
-      yRunning: 0,
-    );
-
-    loadSpriteHead(
-      complexion: ComplexionType.Fair,
-      yIdle: 0,
-      yRunning: 28,
-    );
-
-    loadSpriteTorso(
-      complexion: ComplexionType.Fair,
-      yIdle: 236,
-      yRunning: 441,
-    );
-
-    loadSpriteBody(
-      type: BodyType.Shirt_Blue,
-      yIdle: 0,
-      yRunning: 51,
-    );
-
-    loadSpriteLegs(
-      type: LegType.Brown,
-      yIdle: 0,
-      yRunning: 71,
-    );
-
-    loadSpriteBodyArms(
-      type: BodyType.Shirt_Blue,
-      yIdle: 153,
-      yRunning: 193,
-    );
-
-    loadSpriteArms(
-      complexion: ComplexionType.Fair,
-      yLeftIdle: 57,
-      yLeftRunning: 101,
-      yRightIdle: 148,
-      yRightRunning: 190,
-    );
 
     spriteEmpty = Sprite(
         image: empty,
@@ -526,25 +532,120 @@ class IsometricImages with IsometricComponent {
       _completerSprites.complete(true);
     });
 
-    await _completerSprites.future;
-
-
     spriteGroupEmpty = SpriteGroup(
         idle: spriteEmpty,
         running: spriteEmpty,
+        strike: spriteEmpty,
     );
 
-    spriteGroupSidedEmpty = SpriteGroupSided(
-        left: spriteGroupEmpty,
-        right: spriteGroupEmpty,
-    );
 
-    spriteGroupGloves[HandType.None] = spriteGroupSidedEmpty;
+    spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
+    spriteGroupHandsRight[HandType.None] = spriteGroupEmpty;
     spriteGroupWeapons[WeaponType.Unarmed] = spriteGroupEmpty;
     spriteGroupHelms[HelmType.None] = spriteGroupEmpty;
     spriteGroupBody[BodyType.None] = spriteGroupEmpty;
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
+
+    loadSpriteGroupArmsLeft(
+        complexion: ComplexionType.Fair,
+        yIdle: 0,
+        yRunning: 44,
+        yStrike: 91,
+        image: kid_arms_fair_left,
+    );
+
+    loadSpriteGroupArmsRight(
+        complexion: ComplexionType.Fair,
+        yIdle: 0,
+        yRunning: 44,
+        yStrike: 91,
+        image: kid_arms_fair_right,
+    );
+
+    loadSpriteGroupBody(
+        bodyType: BodyType.Shirt_Blue,
+        yIdle: 0,
+        yRunning: 51,
+        yStrike: 153,
+        image: kid_body_shirt_blue,
+    );
+
+    loadSpriteGroupBodyArms(
+        bodyType: BodyType.Shirt_Blue,
+        yIdle: 0,
+        yRunning: 41,
+        yStrike: 83,
+        image: kid_body_arms_shirt_blue,
+    );
+
+    loadSpriteGroupHandsLeft(
+        handType: HandType.Gauntlet,
+        yIdle: 0,
+        yRunning: 31,
+        yStrike: 60,
+        image: kid_hands_left_gauntlets,
+    );
+
+    loadSpriteGroupHandsRight(
+        handType: HandType.Gauntlet,
+        yIdle: 0,
+        yRunning: 27,
+        yStrike: 58,
+        image: kid_hands_right_gauntlets,
+    );
+
+    loadSpriteGroupHead(
+        complexion: ComplexionType.Fair,
+        yIdle: 0,
+        yRunning: 28,
+        yStrike: 57,
+        image: kid_head_fair,
+    );
+
+    loadSpriteGroupHelm(
+        type: HelmType.Steel,
+        yIdle: 0,
+        yRunning: 26,
+        yStrike: 53,
+        image: kid_helms_steel,
+    );
+
+    loadSpriteGroupLegs(
+        legType: LegType.Brown,
+        yIdle: 0,
+        yRunning: 71,
+        yStrike: 233,
+        image: kid_legs_brown,
+    );
+
+    loadSpriteGroupTorso(
+        complexion: ComplexionType.Fair,
+        yIdle: 0,
+        yRunning: 205,
+        yStrike: 436,
+        image: kid_torso_fair,
+    );
+
+    loadSpriteGroupWeapon(
+        type: WeaponType.Staff,
+        yIdle: 0,
+        yRunning: 81,
+        yStrike: 187,
+        image: kid_torso_fair,
+    );
+
+    loadSpriteGroupWeapon(
+        type: WeaponType.Sword,
+        yIdle: 0,
+        yRunning: 63,
+        yStrike: 114,
+        image: kid_torso_fair,
+    );
+
+    print('awaiting sprites completer');
+    await _completerSprites.future;
+
   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
