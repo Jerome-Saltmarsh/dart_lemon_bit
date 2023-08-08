@@ -394,24 +394,26 @@ class IsometricImages with IsometricComponent {
     required double yStrike,
     required Image image,
   }) async {
-    totalSprites.value++;
     final name = WeaponType.getName(type).toLowerCase();
-    final idle = await loadAssetBytes('sprites/weapons/$name/idle.sprite');
-    final running = await loadAssetBytes('sprites/weapons/$name/running.sprite');
-    final strike = await loadAssetBytes('sprites/weapons/$name/strike.sprite');
+    final idle = await loadSprite('weapons/$name/idle');
+    final running = await loadAssetBytes('weapons/$name/running');
+    final strike = await loadAssetBytes('weapons/$name/strike');
     spriteGroupWeapons[type] = SpriteGroup(
       idle: Sprite.fromBytes(idle, image: image, y: yIdle),
       running: Sprite.fromBytes(running, image: image, y: yRunning),
       strike: Sprite.fromBytes(strike, image: image, y: yStrike),
     );
-    totalSpritesLoaded.value++;
   }
 
-
-
-
-
-
+  Future<Uint8List> loadSprite(String fileName) async {
+    totalSprites.value++;
+    final bytes = loadAssetBytes('sprites/$fileName.sprite');
+    bytes.then((value) {
+      totalSpritesLoaded.value++;
+      return value;
+    });
+    return bytes;
+  }
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
