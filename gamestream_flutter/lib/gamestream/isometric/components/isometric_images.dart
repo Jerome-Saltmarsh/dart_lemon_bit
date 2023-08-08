@@ -191,9 +191,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadAssetBytes('sprites/arm/left/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/arm/left/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/arm/left/$name/strike.sprite');
+     final idle = await loadSprite('arm/left/$name/idle');
+     final running = await loadSprite('arm/left/$name/running');
+     final strike = await loadSprite('arm/left/$name/strike');
      spriteGroupArmsLeft[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -209,9 +209,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadAssetBytes('sprites/arm/right/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/arm/right/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/arm/right/$name/strike.sprite');
+     final idle = await loadSprite('arm/right/$name/idle');
+     final running = await loadSprite('arm/right/$name/running');
+     final strike = await loadSprite('arm/right/$name/strike');
      spriteGroupArmsRight[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -227,9 +227,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = BodyType.getName(bodyType).toLowerCase();
-     final idle = await loadAssetBytes('sprites/body/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/body/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/body/$name/strike.sprite');
+     final idle = await loadSprite('body/$name/idle');
+     final running = await loadSprite('body/$name/running');
+     final strike = await loadSprite('body/$name/strike');
      spriteGroupBody[bodyType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -245,9 +245,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = BodyType.getName(bodyType).toLowerCase();
-     final idle = await loadAssetBytes('sprites/body_arms/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/body_arms/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/body_arms/$name/strike.sprite');
+     final idle = await loadSprite('body_arms/$name/idle');
+     final running = await loadSprite('body_arms/$name/running');
+     final strike = await loadSprite('body_arms/$name/strike');
      spriteGroupBodyArms[bodyType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -263,9 +263,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = HandType.getName(handType).toLowerCase();
-     final idle = await loadAssetBytes('sprites/hands/left/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/hands/left/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/hands/left/$name/strike.sprite');
+     final idle = await loadSprite('hands/left/$name/idle');
+     final running = await loadSprite('hands/left/$name/running');
+     final strike = await loadSprite('hands/left/$name/strike');
      spriteGroupHandsLeft[handType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -281,9 +281,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = HandType.getName(handType).toLowerCase();
-     final idle = await loadAssetBytes('sprites/hands/right/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/hands/right/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/hands/right/$name/strike.sprite');
+     final idle = await loadSprite('hands/right/$name/idle');
+     final running = await loadSprite('hands/right/$name/running');
+     final strike = await loadSprite('hands/right/$name/strike');
      spriteGroupHandsRight[handType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -299,9 +299,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadAssetBytes('sprites/heads/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/heads/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/heads/$name/strike.sprite');
+     final idle = await loadSprite('heads/$name/idle');
+     final running = await loadSprite('heads/$name/running');
+     final strike = await loadSprite('heads/$name/strike');
      spriteGroupHeads[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -317,9 +317,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = HelmType.getName(type).toLowerCase();
-     final idle = await loadAssetBytes('sprites/helms/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/helms/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/helms/$name/strike.sprite');
+     final idle = await loadSprite('helms/$name/idle');
+     final running = await loadSprite('helms/$name/running');
+     final strike = await loadSprite('helms/$name/strike');
      spriteGroupHelms[type] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
@@ -335,9 +335,9 @@ class IsometricImages with IsometricComponent {
      required Image image,
     }) async {
      final name = LegType.getName(legType).toLowerCase();
-     final idle = await loadAssetBytes('sprites/legs/$name/idle.sprite');
-     final running = await loadAssetBytes('sprites/legs/$name/running.sprite');
-     final strike = await loadAssetBytes('sprites/legs/$name/strike.sprite');
+     final idle = await loadSprite('legs/$name/idle');
+     final running = await loadSprite('legs/$name/running');
+     final strike = await loadSprite('legs/$name/strike');
      spriteGroupLegs[legType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle),
          running: Sprite.fromBytes(running, image: image, y: yRunning),
