@@ -57,6 +57,7 @@ flutter:
   assets:
     - sprites/
     - images/
+    - images/sprites/
     - images/website/
     - images/template/
     - images/kid/
@@ -64,7 +65,8 @@ flutter:
     - images/template/head/
     - images/template/legs/
     - images/template/weapons/
-    - images/sprites/
+    - sprites/hands/left/
+    - sprites/hands/right/
     - audio/
     - audio/music/
     - audio/sounds/

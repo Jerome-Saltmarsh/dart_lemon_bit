@@ -13,6 +13,7 @@ dependencies:
   file_picker: ^5.3.3
   lemon_watch: ^1.1.1
   image: ^4.0.17
+  firebase_core: ^2.15.0
 
   lemon_widgets:
     path: ..\lemon_widgets

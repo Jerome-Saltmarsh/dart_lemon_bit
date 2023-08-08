@@ -49,10 +49,10 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidBodyArmShirtBlueRunning;
   late final Sprite spriteKidLegsBrownIdle;
   late final Sprite spriteKidLegsBrownRunning;
-  late final Sprite spriteKidGauntletLeftIdle;
-  late final Sprite spriteKidGauntletLeftRunning;
-  late final Sprite spriteKidGauntletRightIdle;
-  late final Sprite spriteKidGauntletRightRunning;
+  // late final Sprite spriteKidGauntletLeftIdle;
+  // late final Sprite spriteKidGauntletLeftRunning;
+  // late final Sprite spriteKidGauntletRightIdle;
+  // late final Sprite spriteKidGauntletRightRunning;
   late final Sprite spriteHelmSteelIdle;
   late final Sprite spriteHelmSteelRunning;
   late final Sprite spriteWeaponStaffWoodenIdle;
@@ -208,6 +208,42 @@ class IsometricImages with IsometricComponent {
      return Sprite.fromBytes(bytes, image: image, y: y);
    }
 
+   Future<Sprite> loadSprite2(String fileName, Image image, double y) async {
+     totalSprites.value++;
+     final bytes = await loadAssetBytes('sprites/$fileName.sprite');
+     totalSpritesLoaded.value++;
+     return Sprite.fromBytes(bytes, image: image, y: y);
+   }
+
+   final imagesHands = <int, Image> {};
+   final spritesY = <int, double> {};
+
+   Future loadSpriteHands({
+     required int type,
+     required double yLeftIdle,
+     required double yLeftRunning,
+     required double yRightIdle,
+     required double yRightRunning,
+   }) async {
+     totalSprites.value++;
+     final name = HandType.getName(type);
+     final leftIdle = await loadAssetBytes('sprites/hands/left/${name}_idle.sprite');
+     final leftRunning = await loadAssetBytes('sprites/hands/left/${name}_running.sprite');
+     final rightIdle = await loadAssetBytes('sprites/hands/right/${name}_idle.sprite');
+     final rightRunning = await loadAssetBytes('sprites/hands/right/${name}_running.sprite');
+     spriteGroupGloves[type] = SpriteGroupSided(
+         left: SpriteGroup(
+           idle: Sprite.fromBytes(leftIdle, image: kid_gloves, y: yLeftIdle),
+           running: Sprite.fromBytes(leftRunning, image: kid_gloves, y: yLeftRunning),
+         ),
+         right: SpriteGroup(
+           idle: Sprite.fromBytes(rightIdle, image: kid_gloves, y: yRightIdle),
+           running: Sprite.fromBytes(rightRunning, image: kid_gloves, y: yRightRunning),
+         ),
+     );
+     totalSpritesLoaded.value++;
+   }
+
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
@@ -302,6 +338,14 @@ class IsometricImages with IsometricComponent {
 
     await _completerImages.future;
 
+    loadSpriteHands(
+      type: HandType.Gauntlet,
+      yLeftIdle: 87,
+      yLeftRunning: 58,
+      yRightIdle: 31,
+      yRightRunning: 0,
+    );
+
     loadSprite('sword_running', kid_weapons, 0).then((value){
       spriteKidSwordRunning = value;
     });
@@ -332,18 +376,18 @@ class IsometricImages with IsometricComponent {
     loadSprite('kid_legs_brown_running', kid_legs, 71).then((value){
       spriteKidLegsBrownRunning = value;
     });
-    loadSprite('gauntlet_right_running', kid_gloves, 0).then((value){
-      spriteKidGauntletRightRunning = value;
-    });
-    loadSprite('gauntlet_right_idle', kid_gloves, 31).then((value){
-      spriteKidGauntletRightIdle = value;
-    });
-    loadSprite('gauntlet_left_running', kid_gloves, 58).then((value){
-      spriteKidGauntletLeftRunning = value;
-    });
-    loadSprite('gauntlet_left_idle', kid_gloves, 87).then((value){
-      spriteKidGauntletLeftIdle = value;
-    });
+    // loadSprite('gauntlet_right_running', kid_gloves, 0).then((value){
+    //   spriteKidGauntletRightRunning = value;
+    // });
+    // loadSprite('gauntlet_right_idle', kid_gloves, 31).then((value){
+    //   spriteKidGauntletRightIdle = value;
+    // });
+    // loadSprite('gauntlet_left_running', kid_gloves, 58).then((value){
+    //   spriteKidGauntletLeftRunning = value;
+    // });
+    // loadSprite('gauntlet_left_idle', kid_gloves, 87).then((value){
+    //   spriteKidGauntletLeftIdle = value;
+    // });
     loadSprite('helm_steel_running', kid_helms, 0).then((value){
       spriteHelmSteelRunning = value;
     });
@@ -432,16 +476,16 @@ class IsometricImages with IsometricComponent {
         running: spriteKidBodyArmShirtBlueRunning,
     );
 
-    spriteGroupGloves[HandType.Gauntlet] = SpriteGroupSided(
-        left: SpriteGroup(
-          idle: spriteKidGauntletLeftIdle,
-          running: spriteKidGauntletLeftRunning,
-        ),
-        right: SpriteGroup(
-          idle: spriteKidGauntletRightIdle,
-          running: spriteKidGauntletRightRunning,
-        ),
-    );
+    // spriteGroupGloves[HandType.Gauntlet] = SpriteGroupSided(
+    //     left: SpriteGroup(
+    //       idle: spriteKidGauntletLeftIdle,
+    //       running: spriteKidGauntletLeftRunning,
+    //     ),
+    //     right: SpriteGroup(
+    //       idle: spriteKidGauntletRightIdle,
+    //       running: spriteKidGauntletRightRunning,
+    //     ),
+    // );
 
     spriteGroupWeapons[WeaponType.Sword] = SpriteGroup(
       idle: spriteKidSwordIdle,
