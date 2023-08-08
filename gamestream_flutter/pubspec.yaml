@@ -69,6 +69,10 @@ flutter:
     - sprites/hands/right/
     - sprites/weapons/idle/
     - sprites/weapons/running/
+    - sprites/helms/idle/
+    - sprites/helms/running/
+    - sprites/arm/left/
+    - sprites/arm/right/
     - audio/
     - audio/music/
     - audio/sounds/

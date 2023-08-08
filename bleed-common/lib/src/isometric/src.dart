@@ -1,6 +1,7 @@
 library src;
 
 export 'helm_type.dart';
+export 'complexion_type.dart';
 export 'ai_mode.dart';
 export 'character_state.dart';
 export 'character_type.dart';

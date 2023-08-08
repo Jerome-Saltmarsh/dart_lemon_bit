@@ -4,10 +4,10 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_math/src.dart';
 
 class Character extends Position {
-  // var bottomRendered = false;
   var characterType = CharacterType.Template;
   var weaponType = WeaponType.Unarmed;
   var weaponState = 0;
+  var complexionType = ComplexionType.Fair;
   var bodyType = 0;
   var headType = 0;
   var legType = 0;

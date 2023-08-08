@@ -24,6 +24,7 @@ class IsometricImages with IsometricComponent {
 
   final spriteGroupWeapons = <int, SpriteGroup> {};
   final spriteGroupGloves = <int, SpriteGroupSided> {};
+  final spriteGroupArms = <int, SpriteGroupSided> {};
   final spriteGroupLegs = <int, SpriteGroup> {};
   final spriteGroupBody = <int, SpriteGroup> {};
   final spriteGroupBodyArms = <int, SpriteGroup> {};
@@ -37,18 +38,16 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteKidBodyShirtBlueRunning;
   late final Sprite spriteHeadIdle;
   late final Sprite spriteHeadRunning;
-  late final Sprite spriteKidArmLeftIdle;
-  late final Sprite spriteKidArmLeftRunning;
-  late final Sprite spriteKidArmRightIdle;
-  late final Sprite spriteKidArmRightRunning;
+  // late final Sprite spriteKidArmLeftIdle;
+  // late final Sprite spriteKidArmLeftRunning;
+  // late final Sprite spriteKidArmRightIdle;
+  // late final Sprite spriteKidArmRightRunning;
   late final Sprite spriteKidTorsoIdle;
   late final Sprite spriteKidTorsoRunning;
   late final Sprite spriteKidBodyArmShirtBlueIdle;
   late final Sprite spriteKidBodyArmShirtBlueRunning;
   late final Sprite spriteKidLegsBrownIdle;
   late final Sprite spriteKidLegsBrownRunning;
-  late final Sprite spriteHelmSteelIdle;
-  late final Sprite spriteHelmSteelRunning;
 
   late final Image empty;
   late final Image shades;
@@ -216,6 +215,22 @@ class IsometricImages with IsometricComponent {
      totalSpritesLoaded.value++;
    }
 
+   Future loadSpriteHelm({
+     required int type,
+     required double yIdle,
+     required double yRunning,
+    }) async {
+     totalSprites.value++;
+     final name = HelmType.getName(type).toLowerCase();
+     final idle = await loadAssetBytes('sprites/helms/idle/${name}.sprite');
+     final running = await loadAssetBytes('sprites/helms/running/${name}.sprite');
+     spriteGroupHelms[type] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: kid_helms, y: yIdle),
+         running: Sprite.fromBytes(running, image: kid_helms, y: yIdle),
+     );
+     totalSpritesLoaded.value++;
+   }
+
    Future loadSpriteHands({
      required int type,
      required double yLeftIdle,
@@ -237,6 +252,32 @@ class IsometricImages with IsometricComponent {
          right: SpriteGroup(
            idle: Sprite.fromBytes(rightIdle, image: kid_gloves, y: yRightIdle),
            running: Sprite.fromBytes(rightRunning, image: kid_gloves, y: yRightRunning),
+         ),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteArms({
+     required int complexion,
+     required double yLeftIdle,
+     required double yLeftRunning,
+     required double yRightIdle,
+     required double yRightRunning,
+   }) async {
+     totalSprites.value++;
+     final name = ComplexionType.getName(complexion).toLowerCase();
+     final leftIdle = await loadAssetBytes('sprites/arm/left/${name}_idle.sprite');
+     final leftRunning = await loadAssetBytes('sprites/arm/left/${name}_running.sprite');
+     final rightIdle = await loadAssetBytes('sprites/arm/right/${name}_idle.sprite');
+     final rightRunning = await loadAssetBytes('sprites/arm/right/${name}_running.sprite');
+     spriteGroupArms[complexion] = SpriteGroupSided(
+         left: SpriteGroup(
+           idle: Sprite.fromBytes(leftIdle, image: kid_skin, y: yLeftIdle),
+           running: Sprite.fromBytes(leftRunning, image: kid_skin, y: yLeftRunning),
+         ),
+         right: SpriteGroup(
+           idle: Sprite.fromBytes(rightIdle, image: kid_skin, y: yRightIdle),
+           running: Sprite.fromBytes(rightRunning, image: kid_skin, y: yRightRunning),
          ),
      );
      totalSpritesLoaded.value++;
@@ -356,6 +397,20 @@ class IsometricImages with IsometricComponent {
       yRunning: 195,
     );
 
+    loadSpriteHelm(
+      type: HelmType.Steel,
+      yIdle: 27,
+      yRunning: 0,
+    );
+
+    loadSpriteArms(
+      complexion: ComplexionType.Fair,
+      yLeftIdle: 57,
+      yLeftRunning: 101,
+      yRightIdle: 148,
+      yRightRunning: 190,
+    );
+
     loadSprite('shirt_blue_idle', kid_body, 0).then((value){
       spriteKidBodyShirtBlueIdle = value;
     });
@@ -374,41 +429,11 @@ class IsometricImages with IsometricComponent {
     loadSprite('kid_legs_brown_running', kid_legs, 71).then((value){
       spriteKidLegsBrownRunning = value;
     });
-    // loadSprite('gauntlet_right_running', kid_gloves, 0).then((value){
-    //   spriteKidGauntletRightRunning = value;
-    // });
-    // loadSprite('gauntlet_right_idle', kid_gloves, 31).then((value){
-    //   spriteKidGauntletRightIdle = value;
-    // });
-    // loadSprite('gauntlet_left_running', kid_gloves, 58).then((value){
-    //   spriteKidGauntletLeftRunning = value;
-    // });
-    // loadSprite('gauntlet_left_idle', kid_gloves, 87).then((value){
-    //   spriteKidGauntletLeftIdle = value;
-    // });
-    loadSprite('helm_steel_running', kid_helms, 0).then((value){
-      spriteHelmSteelRunning = value;
-    });
-    loadSprite('helm_steel_idle', kid_helms, 27).then((value){
-      spriteHelmSteelIdle = value;
-    });
     loadSprite('kid_head_idle', kid_skin, 0).then((value){
       spriteHeadIdle = value;
     });
     loadSprite('kid_head_running', kid_skin, 28).then((value){
       spriteHeadRunning = value;
-    });
-    loadSprite('kid_arm_left_idle', kid_skin, 57).then((value){
-      spriteKidArmLeftIdle = value;
-    });
-    loadSprite('kid_arm_left_running', kid_skin, 101).then((value){
-      spriteKidArmLeftRunning = value;
-    });
-    loadSprite('kid_arm_right_idle', kid_skin, 148).then((value){
-      spriteKidArmRightIdle = value;
-    });
-    loadSprite('kid_arm_right_running', kid_skin, 190).then((value){
-      spriteKidArmRightRunning = value;
     });
     loadSprite('kid_torso_idle', kid_skin, 236).then((value){
       spriteKidTorsoIdle = value;
@@ -453,11 +478,6 @@ class IsometricImages with IsometricComponent {
     spriteGroupBody[BodyType.None] = spriteGroupEmpty;
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
-
-    spriteGroupHelms[HeadType.Steel_Helm] = SpriteGroup(
-      idle: spriteHelmSteelIdle,
-      running: spriteHelmSteelRunning,
-    );
 
     spriteGroupLegs[LegType.Brown] = SpriteGroup(
         idle: spriteKidLegsBrownIdle,
