@@ -632,7 +632,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 81,
         yStrike: 187,
-        image: kid_torso_fair,
+        image: kid_weapons_staff,
     );
 
     loadSpriteGroupWeapon(
@@ -640,7 +640,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 63,
         yStrike: 114,
-        image: kid_torso_fair,
+        image: kid_weapons_sword,
     );
 
     print('awaiting sprites completer');
