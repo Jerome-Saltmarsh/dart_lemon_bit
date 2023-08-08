@@ -71,10 +71,14 @@ flutter:
     - sprites/weapons/running/
     - sprites/helms/idle/
     - sprites/helms/running/
+    - sprites/heads/idle/
+    - sprites/heads/running/
     - sprites/arm/left/
     - sprites/arm/right/
     - sprites/body/idle/
     - sprites/body/running/
+    - sprites/body_arms/idle/
+    - sprites/body_arms/running/
     - audio/
     - audio/music/
     - audio/sounds/
