@@ -30,15 +30,12 @@ class IsometricImages with IsometricComponent {
   final spriteGroupBodyArms = <int, SpriteGroup> {};
   final spriteGroupHelms = <int, SpriteGroup> {};
   final spriteGroupHeads = <int, SpriteGroup> {};
+  final spriteGroupTorso = <int, SpriteGroup> {};
 
   late final SpriteGroup spriteGroupEmpty;
   late final SpriteGroupSided spriteGroupSidedEmpty;
 
   late final Sprite spriteEmpty;
-  late final Sprite spriteKidTorsoIdle;
-  late final Sprite spriteKidTorsoRunning;
-  late final Sprite spriteKidLegsBrownIdle;
-  late final Sprite spriteKidLegsBrownRunning;
 
   late final Image empty;
   late final Image shades;
@@ -238,6 +235,22 @@ class IsometricImages with IsometricComponent {
      totalSpritesLoaded.value++;
    }
 
+   Future loadSpriteTorso({
+     required int complexion,
+     required double yIdle,
+     required double yRunning,
+    }) async {
+     totalSprites.value++;
+     final name = ComplexionType.getName(complexion).toLowerCase();
+     final idle = await loadAssetBytes('sprites/torso/idle/${name}.sprite');
+     final running = await loadAssetBytes('sprites/torso/running/${name}.sprite');
+     spriteGroupTorso[complexion] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: kid_skin, y: yIdle),
+         running: Sprite.fromBytes(running, image: kid_skin, y: yRunning),
+     );
+     totalSpritesLoaded.value++;
+   }
+
    Future loadSpriteBody({
      required int type,
      required double yIdle,
@@ -250,6 +263,22 @@ class IsometricImages with IsometricComponent {
      spriteGroupBody[type] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: kid_body, y: yIdle),
          running: Sprite.fromBytes(running, image: kid_body, y: yRunning),
+     );
+     totalSpritesLoaded.value++;
+   }
+
+   Future loadSpriteLegs({
+     required int type,
+     required double yIdle,
+     required double yRunning,
+    }) async {
+     totalSprites.value++;
+     final name = LegType.getName(type).toLowerCase();
+     final idle = await loadAssetBytes('sprites/legs/idle/${name}.sprite');
+     final running = await loadAssetBytes('sprites/legs/running/${name}.sprite');
+     spriteGroupLegs[type] = SpriteGroup(
+         idle: Sprite.fromBytes(idle, image: kid_legs, y: yIdle),
+         running: Sprite.fromBytes(running, image: kid_legs, y: yRunning),
      );
      totalSpritesLoaded.value++;
    }
@@ -448,10 +477,22 @@ class IsometricImages with IsometricComponent {
       yRunning: 28,
     );
 
+    loadSpriteTorso(
+      complexion: ComplexionType.Fair,
+      yIdle: 236,
+      yRunning: 441,
+    );
+
     loadSpriteBody(
       type: BodyType.Shirt_Blue,
       yIdle: 0,
       yRunning: 51,
+    );
+
+    loadSpriteLegs(
+      type: LegType.Brown,
+      yIdle: 0,
+      yRunning: 71,
     );
 
     loadSpriteBodyArms(
@@ -467,19 +508,6 @@ class IsometricImages with IsometricComponent {
       yRightIdle: 148,
       yRightRunning: 190,
     );
-
-    loadSprite('kid_legs_brown_idle', kid_legs, 0).then((value){
-      spriteKidLegsBrownIdle = value;
-    });
-    loadSprite('kid_legs_brown_running', kid_legs, 71).then((value){
-      spriteKidLegsBrownRunning = value;
-    });
-    loadSprite('kid_torso_idle', kid_skin, 236).then((value){
-      spriteKidTorsoIdle = value;
-    });
-    loadSprite('kid_torso_running', kid_skin, 441).then((value){
-      spriteKidTorsoRunning = value;
-    });
 
     spriteEmpty = Sprite(
         image: empty,
@@ -517,11 +545,6 @@ class IsometricImages with IsometricComponent {
     spriteGroupBody[BodyType.None] = spriteGroupEmpty;
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
-
-    spriteGroupLegs[LegType.Brown] = SpriteGroup(
-        idle: spriteKidLegsBrownIdle,
-        running: spriteKidLegsBrownRunning,
-    );
   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');

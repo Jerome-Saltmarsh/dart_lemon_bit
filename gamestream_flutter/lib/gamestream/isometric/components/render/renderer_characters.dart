@@ -504,6 +504,7 @@ class RendererCharacters extends RenderGroup {
     final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
     final armGroup = images.spriteGroupArms[character.complexionType] ?? (throw Exception());
     final groupHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
+    final groupTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -520,7 +521,7 @@ class RendererCharacters extends RenderGroup {
       spriteBodyArm = bodyArmGroup.running;
       spriteBody =  bodyGroup.running;
       spriteHead = groupHead.running;
-      spriteTorso = images.spriteKidTorsoRunning;
+      spriteTorso = groupTorso.running;
       spriteLegs = legsGroup.running;
       spriteHelm = spriteGroupHelm.running;
       spriteWeapon = weaponGroup.running;
@@ -539,7 +540,7 @@ class RendererCharacters extends RenderGroup {
       spriteBodyArm = bodyArmGroup.idle;
       spriteBody =  bodyGroup.idle;
       spriteHead = groupHead.idle;
-      spriteTorso = images.spriteKidTorsoIdle;
+      spriteTorso = groupTorso.idle;
       spriteLegs = legsGroup.idle;
       spriteHelm = spriteGroupHelm.idle;
       spriteWeapon = weaponGroup.idle;
