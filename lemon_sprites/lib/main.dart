@@ -4,12 +4,11 @@ import 'package:lemon_sprites/sprites/sprite.dart';
 import 'package:lemon_sprites/sprites/style.dart';
 import 'package:lemon_sprites/ui/sprite_app.dart';
 
-import 'firebase_options.dart';
 
 void main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(
       SpriteApp(
       sprite: Sprite(),

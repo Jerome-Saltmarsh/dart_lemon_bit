@@ -11,7 +11,7 @@ import 'classes/sprite_group.dart';
 
 class IsometricImages with IsometricComponent {
 
-  var imagesCached = true;
+  var imagesCached = false;
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
@@ -501,7 +501,6 @@ class IsometricImages with IsometricComponent {
         running: spriteEmpty,
         strike: spriteEmpty,
     );
-
 
     spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
     spriteGroupHandsRight[HandType.None] = spriteGroupEmpty;
