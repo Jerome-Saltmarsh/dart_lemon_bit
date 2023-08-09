@@ -374,6 +374,7 @@ class IsometricCharacter extends IsometricCollider {
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
     angle = getAngleXY(x, y);
+    lookRadian = angle;
   }
 
   void lookAtXY(double x, double y) {

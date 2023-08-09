@@ -309,6 +309,7 @@ class IsometricParser with ByteReader, IsometricComponent {
       scene.ambientStack = Uint16List(totalNodes);
       scene.nodeColors = Uint32List(totalNodes);
     }
+    scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
     events.onChangedNodes();
     scene.refreshNodeVariations();
     scene.nodesChangedNotifier.value++;
