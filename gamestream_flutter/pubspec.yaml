@@ -59,7 +59,7 @@ flutter:
     - images/
     - images/sprites/
     - images/website/
-    - images/template/
+#    - images/template/
     - images/kid/
     - images/kid/arms/fair/
     - images/kid/body/
@@ -71,10 +71,10 @@ flutter:
     - images/kid/legs/
     - images/kid/torso/
     - images/kid/weapons/
-    - images/template/body/
-    - images/template/head/
-    - images/template/legs/
-    - images/template/weapons/
+#    - images/template/body/
+#    - images/template/head/
+#    - images/template/legs/
+#    - images/template/weapons/
     - sprites/arm/left/fair/
     - sprites/arm/right/fair/
     - sprites/body/shirt_blue/

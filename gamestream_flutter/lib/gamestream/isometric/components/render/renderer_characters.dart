@@ -72,42 +72,43 @@ class RendererCharacters extends RenderGroup {
     }
 
     if (character.spawning) {
-      if (character.characterType == CharacterType.Rat){
-        engine.renderSprite(
-          image: images.atlas_gameobjects,
-          srcX: 1920,
-          srcY: (character.animationFrame % 8) * 43.0,
-          dstX: character.renderX,
-          dstY: character.renderY,
-          srcWidth: 64,
-          srcHeight: 43,
-          scale: 0.75,
-        );
-      }
-      if (character.characterType == CharacterType.Slime) {
-        engine.renderSprite(
-          image: images.atlas_gameobjects,
-          srcX: 3040,
-          srcY: (character.animationFrame % 6) * 48.0,
-          dstX: character.renderX,
-          dstY: character.renderY,
-          srcWidth: 48,
-          srcHeight: 48,
-          scale: 0.75,
-        );
-      }
-      engine.renderSprite(
-        image: images.atlas_characters,
-        srcX: 513,
-        srcY: (character.animationFrame % 8) * 73.0,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorY: 0.61,
-        scale: 0.75,
-      );
-      return; // character spawning
+      return;
+      // if (character.characterType == CharacterType.Rat){
+      //   engine.renderSprite(
+      //     image: images.atlas_gameobjects,
+      //     srcX: 1920,
+      //     srcY: (character.animationFrame % 8) * 43.0,
+      //     dstX: character.renderX,
+      //     dstY: character.renderY,
+      //     srcWidth: 64,
+      //     srcHeight: 43,
+      //     scale: 0.75,
+      //   );
+      // }
+      // if (character.characterType == CharacterType.Slime) {
+      //   engine.renderSprite(
+      //     image: images.atlas_gameobjects,
+      //     srcX: 3040,
+      //     srcY: (character.animationFrame % 6) * 48.0,
+      //     dstX: character.renderX,
+      //     dstY: character.renderY,
+      //     srcWidth: 48,
+      //     srcHeight: 48,
+      //     scale: 0.75,
+      //   );
+      // }
+      // engine.renderSprite(
+      //   image: images.atlas_characters,
+      //   srcX: 513,
+      //   srcY: (character.animationFrame % 8) * 73.0,
+      //   dstX: character.renderX,
+      //   dstY: character.renderY,
+      //   srcWidth: 48,
+      //   srcHeight: 72,
+      //   anchorY: 0.61,
+      //   scale: 0.75,
+      // );
+      // return; // character spawning
     }
 
     switch (character.characterType) {

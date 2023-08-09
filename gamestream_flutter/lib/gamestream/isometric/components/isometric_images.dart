@@ -42,7 +42,7 @@ class IsometricImages with IsometricComponent {
   late final Image zombie_shadow;
   late final Image character_dog;
   late final Image atlas_particles;
-  late final Image template_shadow;
+  // late final Image template_shadow;
   late final Image atlas_head;
   late final Image atlas_hands;
   late final Image atlas_body;
@@ -74,114 +74,114 @@ class IsometricImages with IsometricComponent {
   late final Image kid_weapons_staff;
   late final Image kid_weapons_sword;
 
-  late final Image template_head_none;
-  late final Image template_head_rogue;
-  late final Image template_head_steel;
-  late final Image template_head_swat;
-  late final Image template_head_wizard;
-  late final Image template_head_blonde;
+  // late final Image template_head_none;
+  // late final Image template_head_rogue;
+  // late final Image template_head_steel;
+  // late final Image template_head_swat;
+  // late final Image template_head_wizard;
+  // late final Image template_head_blonde;
+  //
+  // late final Image template_body_none;
+  // late final Image template_body_blue;
+  // late final Image template_body_red;
+  // late final Image template_body_cyan;
+  // late final Image template_body_swat;
+  // late final Image template_body_tunic;
+  //
+  // late final Image template_legs_none;
+  // late final Image template_legs_blue;
+  // late final Image template_legs_white;
+  // late final Image template_legs_green;
+  // late final Image template_legs_brown;
+  // late final Image template_legs_red;
+  // late final Image template_legs_swat;
+  //
+  // late final Image template_weapon_bow;
+  // late final Image template_weapon_grenade;
+  // late final Image template_weapon_shotgun;
+  // late final Image template_weapon_desert_eagle;
+  // late final Image template_weapon_plasma_pistol;
+  // late final Image template_weapon_plasma_rifle;
+  // late final Image template_weapon_handgun_black;
+  // late final Image template_weapon_handgun_flintlock;
+  // late final Image template_weapon_sniper_rifle;
+  // late final Image template_weapon_ak47;
+  // late final Image template_weapon_mp5;
+  // late final Image template_weapon_staff;
+  // late final Image template_weapon_sword_steel;
+  // late final Image template_weapon_sword_wooden;
+  // late final Image template_weapon_pickaxe;
+  // late final Image template_weapon_axe;
+  // late final Image template_weapon_hammer;
+  // late final Image template_weapon_knife;
+  // late final Image template_weapon_flamethrower;
+  // late final Image template_weapon_bazooka;
+  // late final Image template_weapon_minigun;
+  // late final Image template_weapon_m4;
+  // late final Image template_weapon_revolver;
+  // late final Image template_weapon_winchester;
+  // late final Image template_weapon_musket;
+  // late final Image template_weapon_crowbar;
+  // late final Image template_weapon_portal_gun;
 
-  late final Image template_body_none;
-  late final Image template_body_blue;
-  late final Image template_body_red;
-  late final Image template_body_cyan;
-  late final Image template_body_swat;
-  late final Image template_body_tunic;
+  // Image getImageForHeadType(int headType) => switch (headType) {
+  //        HeadType.None => template_head_none,
+  //        HeadType.Rogue_Hood => template_head_rogue,
+  //        HeadType.Steel_Helm => template_head_steel,
+  //        HeadType.Wizards_Hat => template_head_wizard,
+  //        HeadType.Blonde => template_head_blonde,
+  //        HeadType.Swat => template_head_swat,
+  //        _ => throw Exception('GameImages.getImageForHeadType($headType)')
+  //     };
 
-  late final Image template_legs_none;
-  late final Image template_legs_blue;
-  late final Image template_legs_white;
-  late final Image template_legs_green;
-  late final Image template_legs_brown;
-  late final Image template_legs_red;
-  late final Image template_legs_swat;
+   // Image getImageForBodyType(int bodyType) => switch (bodyType) {
+   //      BodyType.None => template_body_none,
+   //      BodyType.Shirt_Blue => template_body_blue,
+   //      BodyType.Shirt_Red => template_body_red,
+   //      BodyType.Shirt_Cyan => template_body_cyan,
+   //      BodyType.Swat => template_body_swat,
+   //      BodyType.Tunic_Padded => template_body_tunic,
+   //      _ => throw Exception('GameImages.getImageForBodyType($bodyType)')
+   //    };
 
-  late final Image template_weapon_bow;
-  late final Image template_weapon_grenade;
-  late final Image template_weapon_shotgun;
-  late final Image template_weapon_desert_eagle;
-  late final Image template_weapon_plasma_pistol;
-  late final Image template_weapon_plasma_rifle;
-  late final Image template_weapon_handgun_black;
-  late final Image template_weapon_handgun_flintlock;
-  late final Image template_weapon_sniper_rifle;
-  late final Image template_weapon_ak47;
-  late final Image template_weapon_mp5;
-  late final Image template_weapon_staff;
-  late final Image template_weapon_sword_steel;
-  late final Image template_weapon_sword_wooden;
-  late final Image template_weapon_pickaxe;
-  late final Image template_weapon_axe;
-  late final Image template_weapon_hammer;
-  late final Image template_weapon_knife;
-  late final Image template_weapon_flamethrower;
-  late final Image template_weapon_bazooka;
-  late final Image template_weapon_minigun;
-  late final Image template_weapon_m4;
-  late final Image template_weapon_revolver;
-  late final Image template_weapon_winchester;
-  late final Image template_weapon_musket;
-  late final Image template_weapon_crowbar;
-  late final Image template_weapon_portal_gun;
+  // Image getImageForLegType(int legType) => switch (legType) {
+  //   LegType.None => template_legs_none,
+  //   LegType.White => template_legs_white,
+  //   LegType.Blue => template_legs_blue,
+  //   LegType.Green => template_legs_green,
+  //   LegType.Brown => template_legs_brown,
+  //   LegType.Red => template_legs_red,
+  //   LegType.Swat => template_legs_swat,
+  //        _ => throw Exception('GameImages.getImageForLegType(${legType})')
+  //     };
 
-  Image getImageForHeadType(int headType) => switch (headType) {
-         HeadType.None => template_head_none,
-         HeadType.Rogue_Hood => template_head_rogue,
-         HeadType.Steel_Helm => template_head_steel,
-         HeadType.Wizards_Hat => template_head_wizard,
-         HeadType.Blonde => template_head_blonde,
-         HeadType.Swat => template_head_swat,
-         _ => throw Exception('GameImages.getImageForHeadType($headType)')
-      };
-
-   Image getImageForBodyType(int bodyType) => switch (bodyType) {
-        BodyType.None => template_body_none,
-        BodyType.Shirt_Blue => template_body_blue,
-        BodyType.Shirt_Red => template_body_red,
-        BodyType.Shirt_Cyan => template_body_cyan,
-        BodyType.Swat => template_body_swat,
-        BodyType.Tunic_Padded => template_body_tunic,
-        _ => throw Exception('GameImages.getImageForBodyType($bodyType)')
-      };
-
-  Image getImageForLegType(int legType) => switch (legType) {
-    LegType.None => template_legs_none,
-    LegType.White => template_legs_white,
-    LegType.Blue => template_legs_blue,
-    LegType.Green => template_legs_green,
-    LegType.Brown => template_legs_brown,
-    LegType.Red => template_legs_red,
-    LegType.Swat => template_legs_swat,
-         _ => throw Exception('GameImages.getImageForLegType(${legType})')
-      };
-
-   Image getImageForWeaponType(int weaponType) => switch (weaponType) {
-         WeaponType.Machine_Gun => template_weapon_ak47,
-         WeaponType.Plasma_Rifle => template_weapon_plasma_rifle,
-         WeaponType.Knife => template_weapon_knife,
-         WeaponType.Sniper_Rifle => template_weapon_sniper_rifle,
-         WeaponType.Minigun => template_weapon_minigun,
-         WeaponType.Musket => template_weapon_musket,
-         WeaponType.Rifle => template_weapon_winchester,
-         WeaponType.Smg => template_weapon_mp5,
-         WeaponType.Plasma_Pistol => template_weapon_plasma_pistol,
-         WeaponType.Handgun => template_weapon_handgun_black,
-         WeaponType.Pistol => template_weapon_handgun_flintlock,
-         WeaponType.Revolver => template_weapon_revolver,
-         WeaponType.Shotgun => template_weapon_shotgun,
-         WeaponType.Bow => template_weapon_bow,
-         WeaponType.Staff => template_weapon_staff,
-         WeaponType.Sword => template_weapon_sword_steel,
-         WeaponType.Pickaxe => template_weapon_pickaxe,
-         WeaponType.Axe => template_weapon_axe,
-         WeaponType.Hammer => template_weapon_hammer,
-         WeaponType.Crowbar => template_weapon_crowbar,
-         WeaponType.Flame_Thrower => template_weapon_flamethrower,
-         WeaponType.Bazooka => template_weapon_bazooka,
-         WeaponType.Grenade => template_weapon_grenade,
-
-         _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
-      };
+   // Image getImageForWeaponType(int weaponType) => switch (weaponType) {
+   //       WeaponType.Machine_Gun => template_weapon_ak47,
+   //       WeaponType.Plasma_Rifle => template_weapon_plasma_rifle,
+   //       WeaponType.Knife => template_weapon_knife,
+   //       WeaponType.Sniper_Rifle => template_weapon_sniper_rifle,
+   //       WeaponType.Minigun => template_weapon_minigun,
+   //       WeaponType.Musket => template_weapon_musket,
+   //       WeaponType.Rifle => template_weapon_winchester,
+   //       WeaponType.Smg => template_weapon_mp5,
+   //       WeaponType.Plasma_Pistol => template_weapon_plasma_pistol,
+   //       WeaponType.Handgun => template_weapon_handgun_black,
+   //       WeaponType.Pistol => template_weapon_handgun_flintlock,
+   //       WeaponType.Revolver => template_weapon_revolver,
+   //       WeaponType.Shotgun => template_weapon_shotgun,
+   //       WeaponType.Bow => template_weapon_bow,
+   //       WeaponType.Staff => template_weapon_staff,
+   //       WeaponType.Sword => template_weapon_sword_steel,
+   //       WeaponType.Pickaxe => template_weapon_pickaxe,
+   //       WeaponType.Axe => template_weapon_axe,
+   //       WeaponType.Hammer => template_weapon_hammer,
+   //       WeaponType.Crowbar => template_weapon_crowbar,
+   //       WeaponType.Flame_Thrower => template_weapon_flamethrower,
+   //       WeaponType.Bazooka => template_weapon_bazooka,
+   //       WeaponType.Grenade => template_weapon_grenade,
+   //
+   //       _ => throw Exception('GameImages.getImageForWeaponType($weaponType)')
+   //    };
 
    Future loadSpriteGroupArmsLeft({
      required int complexion,
@@ -408,7 +408,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_hands').then((value) => atlas_hands = value);
     loadPng('atlas_body').then((value) => atlas_body = value);
     loadPng('atlas_legs').then((value) => atlas_legs = value);
-    loadPng('template/template_spinning').then((value) => template_spinning = value);
+    // loadPng('template/template_spinning').then((value) => template_spinning = value);
 
     loadPng('kid/arms/fair/left').then((value) => kid_arms_fair_left = value);
     loadPng('kid/arms/fair/right').then((value) => kid_arms_fair_right = value);
@@ -424,53 +424,53 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/weapons/sword').then((value) => kid_weapons_sword = value);
 
     loadPng('character-dog').then((value) => character_dog = value);
-    loadPng('template/template-shadow').then((value) => template_shadow = value);
+    // loadPng('template/template-shadow').then((value) => template_shadow = value);
 
-    loadPng('template/head/template-head-plain').then((value) => template_head_none = value);
-    loadPng('template/head/template-head-rogue').then((value) => template_head_rogue = value);
-    loadPng('template/head/template-head-steel').then((value) => template_head_steel = value);
-    loadPng('template/head/template-head-swat').then((value) => template_head_swat = value);
-    loadPng('template/head/template-head-wizard').then((value) => template_head_wizard = value);
-    loadPng('template/head/template-head-blonde').then((value) => template_head_blonde = value);
-    loadPng('template/body/template-body-blue').then((value) => template_body_blue = value);
-    loadPng('template/body/template-body-red').then((value) => template_body_red = value);
-    loadPng('template/body/template-body-cyan').then((value) => template_body_cyan = value);
-    loadPng('template/body/template-body-swat').then((value) => template_body_swat = value);
-    loadPng('template/body/template-body-tunic').then((value) => template_body_tunic = value);
-    loadPng('template/body/template-body-empty').then((value) => template_body_none = value);
-    loadPng('template/legs/template-legs-none').then((value) => template_legs_none = value);
-    loadPng('template/legs/template-legs-blue').then((value) => template_legs_blue = value);
-    loadPng('template/legs/template-legs-white').then((value) => template_legs_white = value);
-    loadPng('template/legs/template-legs-green').then((value) => template_legs_green = value);
-    loadPng('template/legs/template-legs-brown').then((value) => template_legs_brown = value);
-    loadPng('template/legs/template-legs-red').then((value) => template_legs_red = value);
-    loadPng('template/legs/template-legs-swat').then((value) => template_legs_swat = value);
-    loadPng('template/weapons/template-weapons-bow').then((value) => template_weapon_bow = value);
-    loadPng('template/weapons/template-weapons-grenade').then((value) => template_weapon_grenade = value);
-    loadPng('template/weapons/template-weapons-desert-eagle').then((value) => template_weapon_desert_eagle = value);
-    loadPng('template/weapons/template-weapons-plasma-pistol').then((value) => template_weapon_plasma_pistol = value);
-    loadPng('template/weapons/template-weapons-plasma-rifle').then((value) => template_weapon_plasma_rifle = value);
-    loadPng('template/weapons/template-weapons-handgun-black').then((value) => template_weapon_handgun_black = value);
-    loadPng('template/weapons/template-weapons-pistol-flintlock').then((value) => template_weapon_handgun_flintlock = value);
-    loadPng('template/weapons/template-weapons-sniper-rifle').then((value) => template_weapon_sniper_rifle = value);
-    loadPng('template/weapons/template-weapons-ak47').then((value) => template_weapon_ak47 = value);
-    loadPng('template/weapons/template-weapons-shotgun').then((value) => template_weapon_shotgun = value);
-    loadPng('template/weapons/template-weapons-staff-wooden').then((value) => template_weapon_staff = value);
-    loadPng('template/weapons/template-weapons-sword-steel').then((value) => template_weapon_sword_steel = value);
-    loadPng('template/weapons/template-weapons-axe').then((value) => template_weapon_axe = value);
-    loadPng('template/weapons/template-weapons-pickaxe').then((value) => template_weapon_pickaxe = value);
-    loadPng('template/weapons/template-weapons-hammer').then((value) => template_weapon_hammer = value);
-    loadPng('template/weapons/template-weapons-knife').then((value) => template_weapon_knife = value);
-    loadPng('template/weapons/template-weapons-flamethrower').then((value) => template_weapon_flamethrower = value);
-    loadPng('template/weapons/template-weapons-bazooka').then((value) => template_weapon_bazooka = value);
-    loadPng('template/weapons/template-weapons-mp5').then((value) => template_weapon_mp5 = value);
-    loadPng('template/weapons/template-weapons-minigun').then((value) => template_weapon_minigun = value);
-    loadPng('template/weapons/template-weapons-m4').then((value) => template_weapon_m4 = value);
-    loadPng('template/weapons/template-weapons-revolver').then((value) => template_weapon_revolver = value);
-    loadPng('template/weapons/template-weapons-winchester').then((value) => template_weapon_winchester = value);
-    loadPng('template/weapons/template-weapons-blunderbuss').then((value) => template_weapon_musket = value);
-    loadPng('template/weapons/template-weapons-crowbar').then((value) => template_weapon_crowbar = value);
-    loadPng('template/weapons/template-weapons-portal-gun').then((value) => template_weapon_portal_gun = value);
+    // loadPng('template/head/template-head-plain').then((value) => template_head_none = value);
+    // loadPng('template/head/template-head-rogue').then((value) => template_head_rogue = value);
+    // loadPng('template/head/template-head-steel').then((value) => template_head_steel = value);
+    // loadPng('template/head/template-head-swat').then((value) => template_head_swat = value);
+    // loadPng('template/head/template-head-wizard').then((value) => template_head_wizard = value);
+    // loadPng('template/head/template-head-blonde').then((value) => template_head_blonde = value);
+    // loadPng('template/body/template-body-blue').then((value) => template_body_blue = value);
+    // loadPng('template/body/template-body-red').then((value) => template_body_red = value);
+    // loadPng('template/body/template-body-cyan').then((value) => template_body_cyan = value);
+    // loadPng('template/body/template-body-swat').then((value) => template_body_swat = value);
+    // loadPng('template/body/template-body-tunic').then((value) => template_body_tunic = value);
+    // loadPng('template/body/template-body-empty').then((value) => template_body_none = value);
+    // loadPng('template/legs/template-legs-none').then((value) => template_legs_none = value);
+    // loadPng('template/legs/template-legs-blue').then((value) => template_legs_blue = value);
+    // loadPng('template/legs/template-legs-white').then((value) => template_legs_white = value);
+    // loadPng('template/legs/template-legs-green').then((value) => template_legs_green = value);
+    // loadPng('template/legs/template-legs-brown').then((value) => template_legs_brown = value);
+    // loadPng('template/legs/template-legs-red').then((value) => template_legs_red = value);
+    // loadPng('template/legs/template-legs-swat').then((value) => template_legs_swat = value);
+    // loadPng('template/weapons/template-weapons-bow').then((value) => template_weapon_bow = value);
+    // loadPng('template/weapons/template-weapons-grenade').then((value) => template_weapon_grenade = value);
+    // loadPng('template/weapons/template-weapons-desert-eagle').then((value) => template_weapon_desert_eagle = value);
+    // loadPng('template/weapons/template-weapons-plasma-pistol').then((value) => template_weapon_plasma_pistol = value);
+    // loadPng('template/weapons/template-weapons-plasma-rifle').then((value) => template_weapon_plasma_rifle = value);
+    // loadPng('template/weapons/template-weapons-handgun-black').then((value) => template_weapon_handgun_black = value);
+    // loadPng('template/weapons/template-weapons-pistol-flintlock').then((value) => template_weapon_handgun_flintlock = value);
+    // loadPng('template/weapons/template-weapons-sniper-rifle').then((value) => template_weapon_sniper_rifle = value);
+    // loadPng('template/weapons/template-weapons-ak47').then((value) => template_weapon_ak47 = value);
+    // loadPng('template/weapons/template-weapons-shotgun').then((value) => template_weapon_shotgun = value);
+    // loadPng('template/weapons/template-weapons-staff-wooden').then((value) => template_weapon_staff = value);
+    // loadPng('template/weapons/template-weapons-sword-steel').then((value) => template_weapon_sword_steel = value);
+    // loadPng('template/weapons/template-weapons-axe').then((value) => template_weapon_axe = value);
+    // loadPng('template/weapons/template-weapons-pickaxe').then((value) => template_weapon_pickaxe = value);
+    // loadPng('template/weapons/template-weapons-hammer').then((value) => template_weapon_hammer = value);
+    // loadPng('template/weapons/template-weapons-knife').then((value) => template_weapon_knife = value);
+    // loadPng('template/weapons/template-weapons-flamethrower').then((value) => template_weapon_flamethrower = value);
+    // loadPng('template/weapons/template-weapons-bazooka').then((value) => template_weapon_bazooka = value);
+    // loadPng('template/weapons/template-weapons-mp5').then((value) => template_weapon_mp5 = value);
+    // loadPng('template/weapons/template-weapons-minigun').then((value) => template_weapon_minigun = value);
+    // loadPng('template/weapons/template-weapons-m4').then((value) => template_weapon_m4 = value);
+    // loadPng('template/weapons/template-weapons-revolver').then((value) => template_weapon_revolver = value);
+    // loadPng('template/weapons/template-weapons-winchester').then((value) => template_weapon_winchester = value);
+    // loadPng('template/weapons/template-weapons-blunderbuss').then((value) => template_weapon_musket = value);
+    // loadPng('template/weapons/template-weapons-crowbar').then((value) => template_weapon_crowbar = value);
+    // loadPng('template/weapons/template-weapons-portal-gun').then((value) => template_weapon_portal_gun = value);
 
     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
     loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);

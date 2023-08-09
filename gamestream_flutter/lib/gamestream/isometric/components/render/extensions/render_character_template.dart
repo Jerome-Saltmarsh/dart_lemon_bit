@@ -8,30 +8,30 @@ import '../../../../../library.dart';
 
 extension RenderCharactersTemplate on RendererCharacters {
 
-  void renderTemplateWeapon(
-      int weaponType,
-      int direction,
-      int frame,
-      int color,
-      double dstX,
-      double dstY,
-      ) {
-
-    if (weaponType == WeaponType.Unarmed) return;
-    const Sprite_Size = 125.0;
-    engine.renderSprite(
-        image: images.getImageForWeaponType(weaponType),
-        srcX: frame * Sprite_Size,
-        srcY: direction * Sprite_Size,
-        srcWidth: Sprite_Size,
-        srcHeight: Sprite_Size,
-        dstX: dstX,
-        dstY: dstY,
-        scale: 0.75,
-        color: color,
-        anchorY:  0.625
-    );
-  }
+  // void renderTemplateWeapon(
+  //     int weaponType,
+  //     int direction,
+  //     int frame,
+  //     int color,
+  //     double dstX,
+  //     double dstY,
+  //     ) {
+  //
+  //   if (weaponType == WeaponType.Unarmed) return;
+  //   const Sprite_Size = 125.0;
+  //   engine.renderSprite(
+  //       image: images.getImageForWeaponType(weaponType),
+  //       srcX: frame * Sprite_Size,
+  //       srcY: direction * Sprite_Size,
+  //       srcWidth: Sprite_Size,
+  //       srcHeight: Sprite_Size,
+  //       dstX: dstX,
+  //       dstY: dstY,
+  //       scale: 0.75,
+  //       color: color,
+  //       anchorY:  0.625
+  //   );
+  // }
 
   // void renderCharacterTemplate(Character character, {
   //   bool renderHealthBar = true,
