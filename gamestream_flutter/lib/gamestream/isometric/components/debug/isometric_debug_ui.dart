@@ -411,7 +411,7 @@ extension isometricDebugUI on IsometricDebug {
         buildRow('weapon-type', buildDropDownWeaponType()),
         buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
         buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
-        buildRow('weapon-state', buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
+        // buildRow('weapon-state', buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
         buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
         onPressed(
             action: network.sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,

@@ -180,7 +180,7 @@ extension IsometricRequestReader on WebSocketConnection {
         break;
 
       case IsometricRequest.Debug_Attack:
-        player.game.characterAttack(player);
+        game.characterStrike(player);
         break;
 
       case IsometricRequest.Toggle_Debugging:

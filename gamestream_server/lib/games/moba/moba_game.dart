@@ -118,16 +118,16 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   void updateCharacter(IsometricCharacter character) {
     super.updateCharacter(character);
 
-    if (character.weaponStatePerforming && character.weaponStateDuration == 2){
-       final target = character.target;
-       if (target is IsometricCollider){
-         applyHit(
-             srcCharacter: character,
-             target: target,
-             damage: character.weaponDamage,
-         );
-       }
-    }
+    // if (character.weaponStatePerforming && character.weaponStateDuration == 2){
+    //    final target = character.target;
+    //    if (target is IsometricCollider){
+    //      applyHit(
+    //          srcCharacter: character,
+    //          target: target,
+    //          damage: character.weaponDamage,
+    //      );
+    //    }
+    // }
   }
 
   @override

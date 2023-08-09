@@ -18,7 +18,8 @@ class IsometricCharacter extends IsometricCollider {
   var _health = 1;
   var _maxHealth = 1;
 
-  var _weaponState = WeaponState.Idle;
+  var strikeDuration = 0;
+  var strikeActionFrame = 0;
 
   var weaponHitForce = 10.0;
   var hurtStateBusy = true;
@@ -35,16 +36,16 @@ class IsometricCharacter extends IsometricCollider {
   var autoTargetTimerDuration = 100;
 
   var actionFrame = -1;
-  var defaultAction = true;
+  var actionDefault = true;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
-  var weaponStateDuration = 0;
+  // var weaponStateDuration = 0;
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
-  var stateDuration = 0;
-  var stateDurationTotal = -1;
+  var frame = 0;
+  var frameDuration = -1;
   var nextFootstep = 0;
   var framesPerAnimation = 3;
   // var lookRadian = 0.0;
@@ -117,12 +118,13 @@ class IsometricCharacter extends IsometricCollider {
     }
   }
 
-  int get compressedLookAndWeaponState => (direction << 4) | weaponState;
+  // int get compressedLookAndWeaponState => (direction << 4) | weaponState;
+  int get compressedLookAndWeaponState => (direction << 4) | 0; // TODO remove 0
 
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
 
-  int get animationFrame => (stateDuration ~/ framesPerAnimation) % 32;
+  int get animationFrame => (frame ~/ framesPerAnimation) % 32;
 
   int get compressedState => compressBytesToUInt32(
     characterType,
@@ -131,11 +133,9 @@ class IsometricCharacter extends IsometricCollider {
     (healthPercentage * 255).toInt(),
   );
 
-  bool get shouldPerformAction =>
-      (weaponStatePerforming && weaponStateDuration == actionFrame) ||
-      (performing && stateDuration == actionFrame);
+  bool get shouldPerformAction => actionFrame > 0 && frame == actionFrame;
 
-  int get weaponState => _weaponState;
+  // int get weaponState => _weaponState;
 
   bool get pathSet => pathTargetIndex >= 0 && pathCurrent >= 0;
 
@@ -147,13 +147,13 @@ class IsometricCharacter extends IsometricCollider {
     return withinRadiusPosition(target, IsometricSettings.Collect_Radius);
   }
 
-  set weaponState(int value){
-    if (_weaponState == value)
-      return;
-
-    _weaponState = value;
-    weaponStateDuration = 0;
-  }
+  // set weaponState(int value){
+  //   if (_weaponState == value)
+  //     return;
+  //
+  //   _weaponState = value;
+  //   weaponStateDuration = 0;
+  // }
 
   bool get shouldUpdatePath =>
       (pathTargetIndex != pathTargetIndexPrevious) || (pathCurrent == 0);
@@ -197,11 +197,11 @@ class IsometricCharacter extends IsometricCollider {
 
   bool get targetIsAlly => target == null ? false : isAlly(target);
 
-  bool get weaponStateBusy => weaponState != WeaponState.Aiming && weaponStateDurationTotal > 0;
+  // bool get weaponStateBusy => weaponState != WeaponState.Aiming && weaponStateDurationTotal > 0;
 
   bool get running => state == CharacterState.Running;
 
-  bool get performing => state == CharacterState.Performing;
+  bool get striking => state == CharacterState.Strike;
 
   bool get idling => state == CharacterState.Idle;
 
@@ -209,39 +209,37 @@ class IsometricCharacter extends IsometricCollider {
 
   bool get characterStateHurt => state == CharacterState.Hurt;
 
-  bool get characterStatePerforming => state == CharacterState.Performing;
-
-  bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
+  bool get characterStateChanging => state == CharacterState.Changing;
 
   bool get busy =>
-      stateDurationTotal > 0 &&
-      stateDuration < stateDurationTotal &&
+      frameDuration > 0 &&
+      frame < frameDuration &&
       (!characterStateHurt || hurtStateBusy);
 
   bool get deadOrBusy => dead || busy;
 
-  bool get deadBusyOrWeaponStateBusy => dead || weaponStateBusy;
+  bool get deadBusyOrWeaponStateBusy => dead;
 
-  bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging || weaponStateAiming;
+  bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging;
 
   bool get targetSet => target != null;
 
-  bool get weaponStateIdle => weaponState == WeaponState.Idle;
-
-  bool get weaponStateReloading => weaponState == WeaponState.Reloading;
-
-  bool get weaponStatePerforming => weaponState == WeaponState.Performing;
-
-  bool get weaponStateAiming => weaponState == WeaponState.Aiming;
+  // bool get weaponStateIdle => weaponState == WeaponState.Idle;
+  //
+  // bool get weaponStateReloading => weaponState == WeaponState.Reloading;
+  //
+  // bool get weaponStatePerforming => weaponState == WeaponState.Performing;
+  //
+  // bool get weaponStateAiming => weaponState == WeaponState.Aiming;
 
   double get healthPercentage => health / maxHealth;
 
   double get angle => _angle;
 
-  double get weaponDurationPercentage =>
-      weaponStateDurationTotal == 0 || weaponStateAiming
-          ? 1
-          : weaponStateDuration / weaponStateDurationTotal;
+  // double get weaponDurationPercentage =>
+  //     weaponStateDurationTotal == 0 || weaponStateAiming
+  //         ? 1
+  //         : weaponStateDuration / weaponStateDurationTotal;
 
   int get direction => IsometricDirection.fromRadian(_angle);
 
@@ -271,28 +269,28 @@ class IsometricCharacter extends IsometricCollider {
   void set angle(double value) =>
       _angle = value % pi2;
 
-  int getWeaponStateDurationTotal(int weaponState) =>
-      switch (weaponState) {
-        WeaponState.Idle => 0,
-        WeaponState.Aiming => 10,
-        WeaponState.Reloading => 10,
-        WeaponState.Performing => 10, // TODO
-        _ => (throw Exception(''))
-      };
+  // int getWeaponStateDurationTotal(int weaponState) =>
+  //     switch (weaponState) {
+  //       WeaponState.Idle => 0,
+  //       WeaponState.Aiming => 10,
+  //       WeaponState.Reloading => 10,
+  //       WeaponState.Performing => 10, // TODO
+  //       _ => (throw Exception(''))
+  //     };
 
   void assignWeaponStateReloading({int duration = 30}){
-    weaponState = WeaponState.Reloading;
+    // weaponState = WeaponState.Reloading;
     weaponStateDurationTotal = duration;
   }
 
-  void setCharacterStatePerforming({
+  void setCharacterStateStriking({
     required int duration,
     required int actionFrame,
   }){
     assert (active);
     assert (alive);
     this.actionFrame = actionFrame;
-    setCharacterState(value: CharacterState.Performing, duration: duration);
+    setCharacterState(value: CharacterState.Strike, duration: duration);
   }
 
   void setCharacterStateSpawning({int duration = 40}){
@@ -300,8 +298,8 @@ class IsometricCharacter extends IsometricCollider {
       return;
 
     state = CharacterState.Spawning;
-    stateDuration = 0;
-    stateDurationTotal = duration;
+    frame = 0;
+    frameDuration = duration;
   }
 
   void setCharacterStateChanging({int duration = 15}) {
@@ -309,8 +307,8 @@ class IsometricCharacter extends IsometricCollider {
       return;
 
     state = CharacterState.Changing;
-    stateDuration = 0;
-    stateDurationTotal = duration;
+    frame = 0;
+    frameDuration = duration;
   }
 
   void setCharacterStateHurt({int duration = 10}){
@@ -318,8 +316,8 @@ class IsometricCharacter extends IsometricCollider {
       return;
 
     state = CharacterState.Hurt;
-    stateDuration = 0;
-    stateDurationTotal = duration;
+    frame = 0;
+    frameDuration = duration;
   }
 
   void setCharacterStateIdle({int duration = 0}){
@@ -337,8 +335,8 @@ class IsometricCharacter extends IsometricCollider {
       return;
 
     state = value;
-    stateDuration = 0;
-    stateDurationTotal = duration;
+    frame = 0;
+    frameDuration = duration;
   }
 
   bool withinInteractRange(IsometricPosition target){
@@ -403,19 +401,19 @@ class IsometricCharacter extends IsometricCollider {
        setDestinationToCurrentPosition();
     }
 
-    if (weaponStateDuration < weaponStateDurationTotal) {
-      weaponStateDuration++;
-      if (weaponStateDuration >= weaponStateDurationTotal) {
-
-        if (weaponStatePerforming && WeaponType.isFirearm(weaponType)){
-          weaponState = WeaponState.Aiming;
-          weaponStateDurationTotal = 10;
-        } else {
-          weaponState = WeaponState.Idle;
-          weaponStateDurationTotal = 0;
-        }
-      }
-    }
+    // if (weaponStateDuration < weaponStateDurationTotal) {
+    //   weaponStateDuration++;
+    //   if (weaponStateDuration >= weaponStateDurationTotal) {
+    //
+    //     if (weaponStatePerforming && WeaponType.isFirearm(weaponType)){
+    //       weaponState = WeaponState.Aiming;
+    //       weaponStateDurationTotal = 10;
+    //     } else {
+    //       weaponState = WeaponState.Idle;
+    //       weaponStateDurationTotal = 0;
+    //     }
+    //   }
+    // }
   }
 
   void runStraightToTarget(){
@@ -474,15 +472,7 @@ class IsometricCharacter extends IsometricCollider {
     clearPath();
     idle();
     faceTarget();
-
-    if (characterTypeTemplate){
-      game.characterUseWeapon(this);
-    } else {
-      setCharacterStatePerforming(
-          actionFrame: actionFrame,
-          duration: weaponCooldown,
-      );
-    }
+    game.characterStrike(this);
   }
 
   void idle() {

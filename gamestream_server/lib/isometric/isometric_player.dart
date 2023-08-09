@@ -206,13 +206,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeIsometricPlayer(){
-    final weaponDurationPercentage = this.weaponDurationPercentage;
-    if (weaponDurationPercentagePrevious != weaponDurationPercentage){
-      weaponDurationPercentagePrevious = weaponDurationPercentage;
-      writeByte(ServerResponse.Isometric);
-      writeByte(IsometricResponse.Player_Weapon_Duration_Percentage);
-      writePercentage(weaponDurationPercentage);
-    }
+    // final weaponDurationPercentage = this.weaponDurationPercentage;
+    // if (weaponDurationPercentagePrevious != weaponDurationPercentage){
+    //   weaponDurationPercentagePrevious = weaponDurationPercentage;
+    //   writeByte(ServerResponse.Isometric);
+    //   writeByte(IsometricResponse.Player_Weapon_Duration_Percentage);
+    //   writePercentage(weaponDurationPercentage);
+    // }
 
     if (weaponAccuracy != accuracyPrevious){
       accuracyPrevious = weaponAccuracy;
@@ -629,7 +629,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
     final writeA = cacheTemplateA[cacheIndex] != compressedA;
     final writeB = cacheTemplateB[cacheIndex] != compressedB;
-    final writeC = !character.weaponStateIdle;
+    final writeC = true;
 
     writeByte(
       writeBitsToByte(writeA, writeB, writeC, false, false, false, false, false)
@@ -651,7 +651,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
 
     if (writeC){
-      writeByte(character.weaponStateDuration ~/ framesPerAnimation);
+      writeByte(character.animationFrame);
     }
   }
 
@@ -906,13 +906,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
       writeByte(character.characterType);
       writeByte(character.state);
-      writeInt16(min(character.stateDurationTotal, 1000));
-      writeUInt16(character.stateDuration);
+      writeInt16(min(character.frameDuration, 1000));
+      writeUInt16(character.frame);
       writeUInt16(character.weaponType);
       writeUInt16(character.weaponDamage);
       writeUInt16(character.weaponRange.toInt());
-      writeByte(character.weaponState);
-      writeUInt16(min(character.weaponStateDuration, 1000));
+      writeByte(0); // TODO
+      writeUInt16(0); // TODO
       writeBool(character.autoTarget);
       writeBool(character.pathFindingEnabled);
       writeBool(character.runToDestinationEnabled);

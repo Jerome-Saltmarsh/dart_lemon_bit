@@ -258,10 +258,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.deadOrBusy || !player.active || player.debugging)
       return;
 
-    // if (player.target == null){
-    //   player.lookAtMouse();
-    // }
-
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
@@ -274,9 +270,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (mouseRightClicked){
       if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
-          setCharacterStateIdle(player);
           player.lookAtMouse();
-          characterAttack(player);
+          characterStrike(player);
         } else {
           player.deselectActivatedPower();
         }
@@ -310,8 +305,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
-          // setCharacterStateIdle(player);
-          characterAttack(player);
+          characterStrike(player);
           return;
         } else {
           player.setDestinationToMouse();
@@ -411,31 +405,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.direction = direction;
     setCharacterStateRunning(character);
     clearCharacterTarget(character);
-  }
-
-  void characterUseWeapon(IsometricCharacter character) {
-    if (character.deadBusyOrWeaponStateBusy)
-      return;
-
-    character.weaponState = WeaponState.Performing;
-
-    if (character.defaultAction){
-      characterUseWeaponDefault(character);
-    } else {
-      characterUseWeaponCustom(character);
-    }
-  }
-
-  void characterUseWeaponDefault(IsometricCharacter character){
-    character.weaponState = WeaponState.Performing;
-    character.actionFrame = getDefaultWeaponActionFrame(character);
-    character.weaponStateDurationTotal = getDefaultWeaponPerformDuration(
-        character
-    );
-
-    if (character.actionFrame > character.weaponStateDurationTotal){
-      throw Exception();
-    }
   }
 
   int getDefaultWeaponPerformDuration(IsometricCharacter character) => const {
@@ -540,7 +509,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.angle,
     );
 
-    player.weaponState = WeaponState.Performing;
+    // player.weaponState = WeaponState.Performing;
 
     final mouseDistance = player.getDistanceXY(player.mouseSceneX, player.mouseSceneY);
     final throwDistance = min(mouseDistance, IsometricPhysics.Max_Throw_Distance);
@@ -584,7 +553,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterUseFlamethrower(IsometricCharacter character) {
     dispatchAttackPerformedCharacter(character);
-    character.weaponState = WeaponState.Performing;
+    // character.weaponState = WeaponState.Performing;
 
     spawnProjectileFireball(
       src: character,
@@ -596,7 +565,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterUseBazooka(IsometricCharacter character) {
     dispatchAttackPerformedCharacter(character);
-    character.weaponState = WeaponState.Performing;
+    // character.weaponState = WeaponState.Performing;
     spawnProjectileRocket(character, damage: 3, range: character.weaponRange);
   }
 
@@ -666,7 +635,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
 
-    character.weaponState = WeaponState.Performing;
+    // character.weaponState = WeaponState.Performing;
+    character.setCharacterStateStriking(
+        duration: character.strikeDuration,
+        actionFrame: character.strikeActionFrame,
+    );
+
     character.setDestinationToCurrentPosition();
 
     dispatchMeleeAttackPerformed(
@@ -869,7 +843,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    character.weaponState = WeaponState.Performing;
+    // character.weaponState = WeaponState.Performing;
     character.applyForce(
       force: 1.0,
       angle: angle + pi,
@@ -1416,7 +1390,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void setCharacterStateChanging(IsometricCharacter character) {
     if (!character.canChangeEquipment) return;
-    character.weaponState = WeaponState.Changing;
+    character.state = CharacterState.Changing;
     dispatchGameEventPosition(GameEventType.Character_Changing, character);
   }
 
@@ -1431,8 +1405,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
     character.state = CharacterState.Dead;
-    character.stateDurationTotal = 0;
-    character.stateDuration = 0;
+    character.frameDuration = 0;
+    character.frame = 0;
     deactivate(character);
     character.clearPath();
     clearCharacterTarget(character);
@@ -1732,11 +1706,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateCharacterState(IsometricCharacter character) {
 
     if (character.shouldPerformAction) {
-      if (character.defaultAction) {
+      if (character.actionDefault) {
         performCharacterActionDefault(character);
       } else {
         performCharacterActionCustom(character);
       }
+      character.actionFrame = -1;
 
       if (character.clearTargetOnPerformAction) {
         character.clearTarget();
@@ -1744,8 +1719,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (
-      character.stateDurationTotal > 0 &&
-      character.stateDuration >= character.stateDurationTotal
+      character.frameDuration > 0 &&
+      character.frame >= character.frameDuration
     ) {
       onCharacterStateDurationFinished(character);
     }
@@ -1767,7 +1742,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    character.stateDuration++;
+    character.frame++;
   }
 
   void onCharacterStateDurationFinished(IsometricCharacter character) {
@@ -1776,7 +1751,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void performCharacterActionDefault(IsometricCharacter character) {
 
-    if (character.performing){
+    if (character.striking){
       final target = character.target;
       if (target is IsometricCollider) {
         applyHit(
@@ -1788,7 +1763,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (character.weaponStatePerforming){
+    if (character.striking){
 
       final weaponType = character.weaponType;
 
@@ -1819,7 +1794,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (character.weaponStatePerforming){
+    if (character.striking){
       if (character.attackAlwaysHitsTarget) {
         final target = character.target;
         if (target is IsometricCollider) {
@@ -1938,7 +1913,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       );
     }
 
-    src.weaponState = WeaponState.Performing;
+    // src.weaponState = WeaponState.Performing;
     dispatchAttackPerformed(
       src.weaponType,
       src.x + adj(angle, 60),
@@ -2659,7 +2634,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (character.weaponStateBusy){
+    if (character.striking){
       character.action = CharacterAction.Attacking;
       return;
     }
@@ -2745,26 +2720,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void onCharacterCollectedGameObject(IsometricCharacter character, IsometricGameObject gameObject){
     remove(gameObject);
-  }
-
-  void customOnCharacterAttack(){
-
-  }
-
-  void characterAttack(IsometricCharacter character){
-
-    if (character.deadBusyOrWeaponStateBusy)
-      return;
-
-    if (character.characterTypeTemplate){
-      characterUseWeapon(character);
-    } else {
-      character.setCharacterStatePerforming(
-        actionFrame: character.actionFrame,
-        duration: character.weaponCooldown,
-      );
-    }
-
   }
 
   bool characterConditionKillTarget(IsometricCharacter character) =>
@@ -3003,5 +2958,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.setDestinationToCurrentPosition();
     character.clearPath();
     character.clearTarget();
+  }
+
+  void characterStrike(IsometricCharacter character) {
+      character.setCharacterStateStriking(
+          duration: character.strikeDuration,
+          actionFrame: character.strikeActionFrame,
+      );
   }
 }

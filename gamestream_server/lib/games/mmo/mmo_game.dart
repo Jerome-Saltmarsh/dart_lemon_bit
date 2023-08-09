@@ -27,42 +27,41 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }) : super(gameType: GameType.Amulet) {
 
     spawnMonstersAtSpawnNodes();
-
-    characters.add(MMONpc(
-      characterType: CharacterType.Template,
-      x: playerSpawnX + giveOrTake(50),
-      y: playerSpawnY + giveOrTake(50),
-      z: 25,
-      health: 50,
-      team: MmoTeam.Human,
-      weaponType: WeaponType.Handgun,
-      weaponDamage: 1,
-      weaponRange: 200,
-      weaponCooldown: 20,
-      name: "Gus",
-      interact: (player) {
-        player.talk("Hello there", options: [
-          TalkOption("Goodbye", player.endInteraction),
-          TalkOption("Buy", player.endInteraction),
-        ]);
-      }
-    )
-    );
-
-    npcGuard = MMONpc(
-      characterType: CharacterType.Template,
-      x: playerSpawnX + giveOrTake(50),
-      y: playerSpawnY + giveOrTake(50),
-      z: 25,
-      health: 200,
-      weaponType: WeaponType.Machine_Gun,
-      weaponRange: 200,
-      weaponDamage: 1,
-      weaponCooldown: 5,
-      team: MmoTeam.Human,
-      name: "Sam",
-    );
-    characters.add(npcGuard);
+    // characters.add(MMONpc(
+    //   characterType: CharacterType.Template,
+    //   x: playerSpawnX + giveOrTake(50),
+    //   y: playerSpawnY + giveOrTake(50),
+    //   z: 25,
+    //   health: 50,
+    //   team: MmoTeam.Human,
+    //   weaponType: WeaponType.Handgun,
+    //   weaponDamage: 1,
+    //   weaponRange: 200,
+    //   weaponCooldown: 20,
+    //   name: "Gus",
+    //   interact: (player) {
+    //     player.talk("Hello there", options: [
+    //       TalkOption("Goodbye", player.endInteraction),
+    //       TalkOption("Buy", player.endInteraction),
+    //     ]);
+    //   }
+    // )
+    // );
+    //
+    // npcGuard = MMONpc(
+    //   characterType: CharacterType.Template,
+    //   x: playerSpawnX + giveOrTake(50),
+    //   y: playerSpawnY + giveOrTake(50),
+    //   z: 25,
+    //   health: 200,
+    //   weaponType: WeaponType.Machine_Gun,
+    //   weaponRange: 200,
+    //   weaponDamage: 1,
+    //   weaponCooldown: 5,
+    //   team: MmoTeam.Human,
+    //   name: "Sam",
+    // );
+    // characters.add(npcGuard);
   }
 
   @override
@@ -123,7 +122,11 @@ class Amulet extends IsometricGame<AmuletPlayer> {
       doesWander: true,
       name: 'Zombie',
       runSpeed: 0.75,
-    )..weaponHitForce = 2);
+    )
+      ..weaponHitForce = 2
+      ..strikeDuration = 20
+      ..strikeActionFrame = 12
+    );
   }
 
   @override
@@ -132,7 +135,6 @@ class Amulet extends IsometricGame<AmuletPlayer> {
       setCharacterStateSpawning(player);
     });
   }
-
 
   @override
   void characterUseWeaponCustom(IsometricCharacter character) {
@@ -149,9 +151,10 @@ class Amulet extends IsometricGame<AmuletPlayer> {
     if (item == null)
       return;
 
-    character.weaponStateDuration = 0;
-    character.weaponStateDurationTotal = item.performDuration;
-    character.actionFrame = item.performFrame;
+    character.setCharacterStateStriking(
+        duration: item.performDuration,
+        actionFrame: item.actionFrame,
+    );
   }
 
   @override

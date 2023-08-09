@@ -8,7 +8,7 @@ enum MMOItem {
     cooldown: 40,
     range: 180,
     attackType: MMOAttackType.Blink,
-    performFrame: 15,
+    actionFrame: 15,
     performDuration: 20,
   ),
   Rusty_Old_Sword(
@@ -19,7 +19,7 @@ enum MMOItem {
       damage: 2,
       range: 80,
       attackType: MMOAttackType.Melee,
-      performFrame: 20,
+      actionFrame: 20,
       performDuration: 25,
   ),
   Staff_Of_Flames(
@@ -30,7 +30,7 @@ enum MMOItem {
       damage: 2,
       range: 180,
       attackType: MMOAttackType.Fire_Ball,
-      performFrame: 20,
+      actionFrame: 20,
       performDuration: 25,
   ),
   Staff_Of_Frozen_Lake(
@@ -41,7 +41,7 @@ enum MMOItem {
       damage: 2,
       range: 180,
       attackType: MMOAttackType.Frost_Ball,
-      performFrame: 15,
+      actionFrame: 15,
       performDuration: 20
   ),
   Old_Bow(
@@ -52,7 +52,7 @@ enum MMOItem {
       damage: 1,
       range: 200,
       attackType: MMOAttackType.Arrow,
-      performFrame: 20,
+      actionFrame: 20,
       performDuration: 30,
   ),
   Holy_Bow(
@@ -63,7 +63,7 @@ enum MMOItem {
       damage: 100,
       range: 300,
       attackType: MMOAttackType.Arrow,
-      performFrame: 20,
+      actionFrame: 20,
       performDuration: 25,
   ),
   Steel_Helmet(
@@ -190,7 +190,7 @@ enum MMOItem {
   final double movement;
   final MMOAttackType? attackType;
   final MMOItemQuality quality;
-  final int performFrame;
+  final int actionFrame;
   final int performDuration;
 
   bool get isWeapon => type == GameObjectType.Weapon;
@@ -216,7 +216,7 @@ enum MMOItem {
     this.isTreasure = false,
     this.consumable = false,
     this.experience = 0,
-    this.performFrame = -1,
+    this.actionFrame = -1,
     this.performDuration = -1,
     this.attackType
   });
@@ -238,7 +238,7 @@ enum MMOItem {
         };
 
   void validate(){
-    if (performFrame > performDuration){
+    if (actionFrame > performDuration){
       validationError('performFrame cannot be greater than performDuration');
     }
 
@@ -246,12 +246,12 @@ enum MMOItem {
       validationError('performDuration cannot be less than 0');
     }
 
-    if (attackType != null && performFrame < 0){
+    if (attackType != null && actionFrame < 0){
       validationError('performFrame cannot be less than 0');
     }
 
-    if (attackType != null && performFrame >= performDuration){
-      validationError('performFrame $performFrame cannot be less than performDuration $performDuration');
+    if (attackType != null && actionFrame >= performDuration){
+      validationError('performFrame $actionFrame cannot be less than performDuration $performDuration');
     }
 
     if (attackType != null && range <= 0) {

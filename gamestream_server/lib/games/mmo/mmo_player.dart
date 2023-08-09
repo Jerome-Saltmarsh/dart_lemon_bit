@@ -49,7 +49,7 @@ class AmuletPlayer extends IsometricPlayer {
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     controlsRunInDirectionEnabled = false;
     controlsCanTargetEnemies = true;
-    defaultAction = false;
+    actionDefault = false;
     // hurtStateBusy = false;
     characterType = CharacterType.Kid;
     hurtable = true;
@@ -234,7 +234,9 @@ class AmuletPlayer extends IsometricPlayer {
 
     _equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
-    actionFrame = item.performFrame;
+    actionDefault = false;
+    strikeActionFrame = item.actionFrame;
+    strikeDuration = item.performDuration;
     writeEquippedWeaponIndex(value);
   }
 
@@ -1068,8 +1070,8 @@ class AmuletPlayer extends IsometricPlayer {
       case PowerMode.Equip:
         throw Exception();
       case PowerMode.Self:
-        setCharacterStatePerforming(
-            actionFrame: item.performFrame,
+        setCharacterStateStriking(
+            actionFrame: item.actionFrame,
             duration: item.performDuration,
         );
         break;
@@ -1078,9 +1080,9 @@ class AmuletPlayer extends IsometricPlayer {
           deselectActivatedPower();
           return;
         }
-        actionFrame = item.performFrame;
-        setCharacterStatePerforming(
-            actionFrame: item.performFrame,
+        actionFrame = item.actionFrame;
+        setCharacterStateStriking(
+            actionFrame: item.actionFrame,
             duration: item.performDuration,
         );
         break;
@@ -1089,18 +1091,22 @@ class AmuletPlayer extends IsometricPlayer {
           deselectActivatedPower();
           return;
         }
-        setCharacterStatePerforming(
-          actionFrame: item.performFrame,
+        setCharacterStateStriking(
+          actionFrame: item.actionFrame,
           duration: item.performDuration,
         );
         break;
       case PowerMode.Positional:
-        weaponState = WeaponState.Performing;
-        actionFrame = item.performFrame;
+        // weaponState = WeaponState.Performing;
+        setCharacterStateStriking(
+            duration: item.performDuration,
+            actionFrame: item.actionFrame,
+        );
+        // actionFrame = item.actionFrame;
         weaponType = item.subType;
         performingActivePower = true;
-        weaponStateDuration = 0;
-        weaponStateDurationTotal = item.performDuration;
+        // weaponStateDuration = 0;
+        // weaponStateDurationTotal = item.performDuration;
         break;
     }
   }

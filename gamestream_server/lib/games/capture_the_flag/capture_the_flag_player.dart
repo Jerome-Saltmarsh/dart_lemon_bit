@@ -55,14 +55,14 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   bool get canDeselectActivatedPower => powerActivated.value != null;
 
   @override
-  bool get hurtable => !performing && !weaponStateBusy;
+  bool get hurtable => !striking;
 
-  bool get canUpdatePowerPosition => powerActivated.value != null && !performing;
+  bool get canUpdatePowerPosition => powerActivated.value != null && !striking;
 
   bool get canUpdatePowerTarget {
     final power = powerActivated.value;
     if (power == null) return false;
-    if (performing) return false;
+    if (striking) return false;
     return power.isTargeted;
   }
 
@@ -76,9 +76,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   bool get shouldUsePowerPerforming {
-    if (!performing)
+    if (!striking)
       return false;
-    if (stateDurationTotal != 20)
+    if (frameDuration != 20)
       return false;
     if (powerPerforming == null)
       return false;
@@ -259,7 +259,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     powerPerformingTarget = powerActivatedTarget;
     powerPerforming = powerActivated.value;
     deselectActivatedPower();
-    setCharacterStatePerforming(
+    setCharacterStateStriking(
         actionFrame: 20,
         duration: 30,
     );

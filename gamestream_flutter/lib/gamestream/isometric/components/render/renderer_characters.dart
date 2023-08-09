@@ -2,12 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/extensions/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../../classes/sprite.dart';
+
 
 class RendererCharacters extends RenderGroup {
 
@@ -112,7 +112,7 @@ class RendererCharacters extends RenderGroup {
 
     switch (character.characterType) {
       case CharacterType.Template:
-        renderCharacterTemplate(character);
+        // renderCharacterTemplate(character);
         break;
       case CharacterType.Zombie:
         renderCharacterZombie(character);
@@ -177,28 +177,28 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    if (character.state == CharacterState.Performing) {
-      const frames = const [1, 2];
-      var frame = character.animationFrame;
-      if (character.animationFrame >= frames.length){
-        frame = frames.last;
-      } else {
-        frame = frames[frame];
-      }
-      engine.renderSprite(
-        image: images.character_dog,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: frame * Src_Size,
-        srcY: Src_Size * character.direction,
-        srcWidth: Src_Size,
-        srcHeight: Src_Size,
-        anchorY: Anchor_Y,
-        scale: 1,
-        color: character.color,
-      );
-      return;
-    }
+    // if (character.state == CharacterState.Performing) {
+    //   const frames = const [1, 2];
+    //   var frame = character.animationFrame;
+    //   if (character.animationFrame >= frames.length){
+    //     frame = frames.last;
+    //   } else {
+    //     frame = frames[frame];
+    //   }
+    //   engine.renderSprite(
+    //     image: images.character_dog,
+    //     dstX: character.renderX,
+    //     dstY: character.renderY,
+    //     srcX: frame * Src_Size,
+    //     srcY: Src_Size * character.direction,
+    //     srcWidth: Src_Size,
+    //     srcHeight: Src_Size,
+    //     anchorY: Anchor_Y,
+    //     scale: 1,
+    //     color: character.color,
+    //   );
+    //   return;
+    // }
 
     if (character.state == CharacterState.Hurt) {
       engine.renderSprite(
@@ -314,7 +314,7 @@ class RendererCharacters extends RenderGroup {
           direction: character.direction,
           framesPerDirection: framesPerDirection,
         );
-      case CharacterState.Performing:
+      case CharacterState.Strike:
         return animate(
           animation: const [7, 7, 8, 8],
           character: character,
@@ -349,20 +349,20 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    if (character.state == CharacterState.Performing){
-      engine.renderSprite(
-        image: images.atlas_gameobjects,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: 2680,
-        srcY: character.direction * 64,
-        srcWidth: 64,
-        srcHeight: 64,
-        anchorY: 0.66,
-        scale: 1,
-        color: scene.getRenderColorPosition(character),
-      );
-    }
+    // if (character.state == CharacterState.Performing){
+    //   engine.renderSprite(
+    //     image: images.atlas_gameobjects,
+    //     dstX: character.renderX,
+    //     dstY: character.renderY,
+    //     srcX: 2680,
+    //     srcY: character.direction * 64,
+    //     srcWidth: 64,
+    //     srcHeight: 64,
+    //     anchorY: 0.66,
+    //     scale: 1,
+    //     color: scene.getRenderColorPosition(character),
+    //   );
+    // }
 
     engine.renderSprite(
       image: images.atlas_gameobjects,

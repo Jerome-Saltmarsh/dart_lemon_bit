@@ -32,17 +32,17 @@ class Character extends Position {
 
   double get radius => CharacterType.getRadius(characterType);
 
-  bool get weaponStateIdle => weaponState == WeaponState.Idle;
-  bool get weaponStatePerforming => weaponState == WeaponState.Performing;
-  bool get weaponStateReloading => weaponState == WeaponState.Reloading;
-  bool get weaponStateChanging => weaponState == WeaponState.Changing;
-  bool get weaponStateAiming => weaponState == WeaponState.Aiming;
-  bool get weaponEngaged => weaponStateAiming || weaponStatePerforming;
+  // bool get weaponStateIdle => weaponState == WeaponState.Idle;
+  // bool get weaponStatePerforming => weaponState == WeaponState.Performing;
+  // bool get weaponStateReloading => weaponState == WeaponState.Reloading;
+  // bool get weaponStateChanging => weaponState == WeaponState.Changing;
+  // bool get weaponStateAiming => weaponState == WeaponState.Aiming;
+  // bool get weaponEngaged => weaponStateAiming || weaponStatePerforming;
   bool get dead => state == CharacterState.Dead;
   bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
-  bool get striking => weaponState == WeaponState.Performing;
-  bool get performing => state == CharacterState.Performing;
+  bool get striking => state == CharacterState.Strike;
+  bool get performing => state == CharacterState.Strike;
   bool get hurt => state == CharacterState.Hurt;
   bool get alive => !dead;
   bool get unarmed => weaponType == WeaponType.Unarmed;
