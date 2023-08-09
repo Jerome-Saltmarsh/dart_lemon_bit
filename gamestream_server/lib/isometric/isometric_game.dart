@@ -534,10 +534,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     dispatchAttackPerformed(
       WeaponType.Grenade,
-      player.x + adj(player.lookRadian, 60),
-      player.y + opp(player.lookRadian, 60),
+      player.x + adj(player.angle, 60),
+      player.y + opp(player.angle, 60),
       player.z + Character_Gun_Height,
-      player.lookRadian,
+      player.angle,
     );
 
     player.weaponState = WeaponState.Performing;
@@ -556,7 +556,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       subType: WeaponType.Grenade,
       team: player.team,
     )
-      ..setVelocity(player.lookRadian, velocity)
+      ..setVelocity(player.angle, velocity)
       ..quantity = 1
       ..friction = 0.985
       ..bounce = true
@@ -588,7 +588,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     spawnProjectileFireball(
       src: character,
-      angle: character.lookRadian,
+      angle: character.angle,
       damage: character.weaponDamage,
       range: character.weaponRange,
     );
@@ -654,7 +654,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.deadBusyOrWeaponStateBusy) return;
 
-    final angle = character.lookRadian;
+    final angle = character.angle;
     final attackRadius = character.weaponRange;
 
     if (attackRadius <= 0) {
@@ -680,7 +680,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterApplyMeleeHits(IsometricCharacter character){
 
-    final angle = character.lookRadian;
+    final angle = character.angle;
     final attackRadius = character.weaponRange;
     var attackHit = false;
 
@@ -817,7 +817,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.deadBusyOrWeaponStateBusy) return false;
 
-    final angle = character.lookRadian;
+    final angle = character.angle;
     final attackRadius = getMeleeAttackRadius(character.weaponType) *
         0.75;
 
@@ -862,9 +862,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.weaponAccuracy += character.weaponRecoil;
     character.setDestinationToCurrentPosition();
 
-    final angle = character.isTemplate
-        ? character.lookRadian
-        : character.angle;
+    final angle = character.angle;
 
     if (character.weaponType == WeaponType.Shotgun) {
       characterFireShotgun(character, angle);
@@ -1659,19 +1657,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required IsometricCharacter srcCharacter,
     required IsometricCollider target,
     required int damage,
-    double force = 20,
     double? angle,
     bool friendlyFire = false,
   }) {
     if (!target.hitable) return;
     if (!target.active) return;
 
+
     if (angle == null){
       angle = srcCharacter.getAngle(target);
     }
-
     target.applyForce(
-      force: force,
+      force: srcCharacter.weaponHitForce,
       angle: angle,
     );
 
@@ -1800,13 +1797,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           src: character,
           damage: character.weaponDamage,
           range: character.weaponRange,
-          angle: character.lookRadian,
+          angle: character.angle,
         );
         return;
       }
 
       if (weaponType == WeaponType.Shotgun){
-        characterFireShotgun(character, character.lookRadian);
+        characterFireShotgun(character, character.angle);
         return;
       }
 
@@ -1815,7 +1812,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           src: character,
           damage: character.weaponDamage,
           range: character.weaponRange,
-          angle: character.lookRadian,
+          angle: character.angle,
         );
         return;
       }
@@ -1851,7 +1848,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       target: src.target,
       projectileType: ProjectileType.Orb,
       angle: src.target != null ? null : (src is IsometricPlayer ? src
-          .lookRadian : src.angle),
+          .angle : src.angle),
       damage: damage,
     );
   }
@@ -1968,7 +1965,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (target != null && target is IsometricCollider) {
         finalAngle = target.getAngle(src);
       } else {
-        finalAngle = src is IsometricPlayer ? src.lookRadian : src.angle;
+        finalAngle = src.angle;
       }
     }
     if (accuracy != 0) {
@@ -2103,7 +2100,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.x,
         character.y,
         character.z,
-        character.lookRadian,
+        character.angle,
       );
 
   void dispatchAttackPerformed(

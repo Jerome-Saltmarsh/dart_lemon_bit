@@ -8,7 +8,7 @@ int lerpColors(int colorA, int colorB, double t) {
   final blueA = colorA & 0xFF;
 
   // Extract the individual components of colorB
-  final alphaB = (colorB >> 24) & 0xFF;
+  // final alphaB = (colorB >> 24) & 0xFF;
   final redB = (colorB >> 16) & 0xFF;
   final greenB = (colorB >> 8) & 0xFF;
   final blueB = colorB & 0xFF;

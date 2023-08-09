@@ -123,7 +123,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
       doesWander: true,
       name: 'Zombie',
       runSpeed: 0.75,
-    ));
+    )..weaponHitForce = 2);
   }
 
   @override
@@ -180,7 +180,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
           src: character,
           damage: item.damage,
           range: item.range,
-          angle: character.lookRadian,
+          angle: character.angle,
         );
         break;
       case MMOAttackType.Melee:
@@ -191,7 +191,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
           src: character,
           damage: item.damage,
           range: item.range,
-          angle: character.lookRadian,
+          angle: character.angle,
         );
         break;
       case MMOAttackType.Bullet:
@@ -200,7 +200,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
           damage: item.damage,
           range: item.range,
           projectileType: ProjectileType.Bullet,
-          angle: character.lookRadian,
+          angle: character.angle,
         );
         break;
       case MMOAttackType.Frost_Ball:
@@ -209,7 +209,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
           damage: item.damage,
           range: item.range,
           projectileType: ProjectileType.FrostBall,
-          angle: character.lookRadian,
+          angle: character.angle,
         );
         break;
       default:

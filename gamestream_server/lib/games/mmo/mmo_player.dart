@@ -50,8 +50,10 @@ class AmuletPlayer extends IsometricPlayer {
     controlsRunInDirectionEnabled = false;
     controlsCanTargetEnemies = true;
     defaultAction = false;
-    hurtStateBusy = false;
+    // hurtStateBusy = false;
     characterType = CharacterType.Kid;
+    hurtable = true;
+    hurtStateBusy = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
     addItem(MMOItem.Staff_Of_Frozen_Lake);

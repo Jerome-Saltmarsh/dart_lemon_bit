@@ -20,6 +20,7 @@ class IsometricCharacter extends IsometricCollider {
 
   var _weaponState = WeaponState.Idle;
 
+  var weaponHitForce = 10.0;
   var hurtStateBusy = true;
   var interacting = false;
   var targetPerceptible = false;
@@ -46,7 +47,7 @@ class IsometricCharacter extends IsometricCollider {
   var stateDurationTotal = -1;
   var nextFootstep = 0;
   var framesPerAnimation = 3;
-  var lookRadian = 0.0;
+  // var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
   var pathCurrent = -1;
@@ -116,7 +117,7 @@ class IsometricCharacter extends IsometricCollider {
     }
   }
 
-  int get compressedLookAndWeaponState => (lookDirection << 4) | weaponState;
+  int get compressedLookAndWeaponState => (direction << 4) | weaponState;
 
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
@@ -161,7 +162,7 @@ class IsometricCharacter extends IsometricCollider {
 
   int get pathCurrentIndex => path[pathCurrent];
 
-  int get lookDirection => IsometricDirection.fromRadian(lookRadian);
+  // int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
   bool get targetWithinAttackRange {
     final target = this.target;
@@ -354,7 +355,7 @@ class IsometricCharacter extends IsometricCollider {
       return false;
     }
     final angle = this.getAngle(collider);
-    final angleD = angleDiff(angle, lookRadian);
+    final angleD = angleDiff(angle, angle);
     return angleD < piQuarter; // TODO Replace constant with weaponAngleRange
   }
 
@@ -374,12 +375,11 @@ class IsometricCharacter extends IsometricCollider {
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
     angle = getAngleXY(x, y);
-    lookRadian = angle;
   }
 
   void lookAtXY(double x, double y) {
     if (deadOrBusy) return;
-    lookRadian = getAngleXY(x, y);
+    angle = getAngleXY(x, y);
   }
 
   double getAngleXY(double x, double y) =>

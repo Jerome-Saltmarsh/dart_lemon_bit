@@ -165,8 +165,6 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       ? getDistance(aimTarget!) < IsometricSettings.Interact_Radius
       : false;
 
-  int get lookDirection => IsometricDirection.fromRadian(lookRadian);
-
   double get mouseSceneX => game.clampX((mouseX + mouseY) + z);
 
   double get mouseSceneY => game.clampY((mouseY - mouseX) + z);
@@ -985,7 +983,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void lookAtMouse(){
     if (deadOrBusy) return;
-    lookRadian = mouseAngle;
+    angle = mouseAngle;
   }
 
   void onChangedAimTarget(){
@@ -1105,15 +1103,15 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
     game.updatePlayerAimTarget(this);
 
-    if (idling && !weaponStateBusy) {
-      final diff = IsometricDirection.getDifference(
-          lookDirection, direction);
-      if (diff >= 2) {
-        angle += piQuarter;
-      } else if (diff <= -3) {
-        angle -= piQuarter;
-      }
-    }
+    // if (idling && !weaponStateBusy) {
+    //   final diff = IsometricDirection.getDifference(
+    //       lookDirection, direction);
+    //   if (diff >= 2) {
+    //     angle += piQuarter;
+    //   } else if (diff <= -3) {
+    //     angle -= piQuarter;
+    //   }
+    // }
   }
 
   double getMouseDistance() => this.getDistanceXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
