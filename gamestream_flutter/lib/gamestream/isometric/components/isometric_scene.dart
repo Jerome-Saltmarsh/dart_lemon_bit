@@ -621,6 +621,10 @@ class IsometricScene with IsometricComponent implements Updatable {
       final currentIntensity = (ambientAlpha - currentAlpha) / 128;
       final alphaBlend = 1.0 - currentIntensity;
       alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
+
+      if (alpha < 0 || alpha > 255){
+        throw Exception();
+      }
     }
 
     ambientStackIndex++;

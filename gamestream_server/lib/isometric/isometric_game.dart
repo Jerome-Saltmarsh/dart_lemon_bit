@@ -275,6 +275,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
           setCharacterStateIdle(player);
+          player.faceMouse();
           characterAttack(player);
         } else {
           player.deselectActivatedPower();
