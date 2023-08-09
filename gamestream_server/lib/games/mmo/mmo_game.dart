@@ -157,10 +157,13 @@ class Amulet extends IsometricGame<AmuletPlayer> {
     );
   }
 
+
   @override
-  void performCharacterActionCustom(IsometricCharacter character) {
-    if (character is! AmuletPlayer)
+  void performCharacterAction(IsometricCharacter character) {
+    if (character is! AmuletPlayer) {
+      super.performCharacterAction(character);
       return;
+    }
 
     if (character.performingActivePower){
       character.applyPerformingActivePower();

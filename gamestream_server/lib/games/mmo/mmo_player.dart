@@ -49,7 +49,6 @@ class AmuletPlayer extends IsometricPlayer {
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     controlsRunInDirectionEnabled = false;
     controlsCanTargetEnemies = true;
-    actionDefault = false;
     // hurtStateBusy = false;
     characterType = CharacterType.Kid;
     hurtable = true;
@@ -234,7 +233,6 @@ class AmuletPlayer extends IsometricPlayer {
 
     _equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
-    actionDefault = false;
     strikeActionFrame = item.actionFrame;
     strikeDuration = item.performDuration;
     writeEquippedWeaponIndex(value);

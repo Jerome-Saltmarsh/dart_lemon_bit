@@ -1695,61 +1695,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.update();
   }
 
-  void performCharacterActionCustom(IsometricCharacter character){
-
-  }
-
   void onApplyCustomCharacterPerform(IsometricCharacter character){
 
   }
 
-  void updateCharacterState(IsometricCharacter character) {
-
-    if (character.shouldPerformAction) {
-      if (character.actionDefault) {
-        performCharacterActionDefault(character);
-      } else {
-        performCharacterActionCustom(character);
-      }
-      character.actionFrame = -1;
-
-      if (character.clearTargetOnPerformAction) {
-        character.clearTarget();
-      }
-    }
-
-    if (
-      character.frameDuration > 0 &&
-      character.frame >= character.frameDuration
-    ) {
-      onCharacterStateDurationFinished(character);
-    }
-
-    if (character.running) {
-      character.applyForce(
-        force: character.runSpeed,
-        angle: character.angle,
-      );
-      if (character.nextFootstep++ >= 10) {
-        dispatchGameEvent(
-          GameEventType.Footstep,
-          character.x,
-          character.y,
-          character.z,
-        );
-        character.nextFootstep = 0;
-        character.velocityZ += 1;
-      }
-    }
-
-    character.frame++;
-  }
-
-  void onCharacterStateDurationFinished(IsometricCharacter character) {
-    character.setCharacterStateIdle();
-  }
-
-  void performCharacterActionDefault(IsometricCharacter character) {
+  void performCharacterAction(IsometricCharacter character){
+    character.actionFrame = -1;
 
     if (character.striking){
       final target = character.target;
@@ -1808,6 +1759,47 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
       characterApplyMeleeHits(character);
     }
+
+  }
+
+  void updateCharacterState(IsometricCharacter character) {
+
+    if (character.shouldPerformAction) {
+      performCharacterAction(character);
+      if (character.clearTargetOnPerformAction) {
+        character.clearTarget();
+      }
+    }
+
+    if (
+      character.frameDuration > 0 &&
+      character.frame >= character.frameDuration
+    ) {
+      onCharacterStateDurationFinished(character);
+    }
+
+    if (character.running) {
+      character.applyForce(
+        force: character.runSpeed,
+        angle: character.angle,
+      );
+      if (character.nextFootstep++ >= 10) {
+        dispatchGameEvent(
+          GameEventType.Footstep,
+          character.x,
+          character.y,
+          character.z,
+        );
+        character.nextFootstep = 0;
+        character.velocityZ += 1;
+      }
+    }
+
+    character.frame++;
+  }
+
+  void onCharacterStateDurationFinished(IsometricCharacter character) {
+    character.setCharacterStateIdle();
   }
 
   IsometricProjectile spawnProjectileOrb({
