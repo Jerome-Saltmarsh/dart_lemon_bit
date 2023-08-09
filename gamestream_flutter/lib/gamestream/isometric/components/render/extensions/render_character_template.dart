@@ -255,50 +255,50 @@ extension RenderCharactersTemplate on RendererCharacters {
   //   }
   // }
 
-  void renderCharacterShadow(Character character, {
-    required double srcX,
-    required double srcY,
-    required double scale,
-  }) {
-    final lightIndex = scene.getNearestLightSourcePosition(
-        character, maxDistance: 5);
-
-    if (lightIndex != -1) {
-      final lightRow = scene.getIndexRow(lightIndex);
-      final lightColumn = scene.getIndexColumn(lightIndex);
-
-      final lightX = (lightRow * Node_Size) + Node_Size_Half;
-      final lightY = (lightColumn * Node_Size) + Node_Size_Half;
-
-      final angle = angleBetween(lightX, lightY, character.x, character.y);
-      final diff = angleDiff(angle, 4.0);
-      final totalDiff = 1.0 - (diff / pi);
-      final distance = 20.0 * totalDiff;
-
-      // render.renderTextPosition(
-      //   character,
-      //   totalDiff,
-      //   offsetY: -50,
-      // );
-
-      final x = character.x + adj(angle, distance);
-      final y = character.y + opp(angle, distance);
-      final z = character.z;
-
-      engine.renderSprite(
-        image: images.template_shadow,
-        srcX: srcX,
-        srcY: srcY,
-        srcWidth: 64,
-        srcHeight: 64,
-        dstX: getRenderX(x, y, z),
-        dstY: getRenderY(x, y, z),
-        scale: scale,
-        color: 0,
-        anchorY: 0.8,
-      );
-    }
-  }
+  // void renderCharacterShadow(Character character, {
+  //   required double srcX,
+  //   required double srcY,
+  //   required double scale,
+  // }) {
+  //   final lightIndex = scene.getNearestLightSourcePosition(
+  //       character, maxDistance: 5);
+  //
+  //   if (lightIndex != -1) {
+  //     final lightRow = scene.getIndexRow(lightIndex);
+  //     final lightColumn = scene.getIndexColumn(lightIndex);
+  //
+  //     final lightX = (lightRow * Node_Size) + Node_Size_Half;
+  //     final lightY = (lightColumn * Node_Size) + Node_Size_Half;
+  //
+  //     final angle = angleBetween(lightX, lightY, character.x, character.y);
+  //     final diff = angleDiff(angle, 4.0);
+  //     final totalDiff = 1.0 - (diff / pi);
+  //     final distance = 20.0 * totalDiff;
+  //
+  //     // render.renderTextPosition(
+  //     //   character,
+  //     //   totalDiff,
+  //     //   offsetY: -50,
+  //     // );
+  //
+  //     // final x = character.x + adj(angle, distance);
+  //     // final y = character.y + opp(angle, distance);
+  //     // final z = character.z;
+  //
+  //     // engine.renderSprite(
+  //     //   image: images.template_shadow,
+  //     //   srcX: srcX,
+  //     //   srcY: srcY,
+  //     //   srcWidth: 64,
+  //     //   srcHeight: 64,
+  //     //   dstX: getRenderX(x, y, z),
+  //     //   dstY: getRenderY(x, y, z),
+  //     //   scale: scale,
+  //     //   color: 0,
+  //     //   anchorY: 0.8,
+  //     // );
+  //   }
+  // }
 }
 
 
