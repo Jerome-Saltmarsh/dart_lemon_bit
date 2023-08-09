@@ -516,7 +516,7 @@ class RendererCharacters extends RenderGroup {
       frame = min(character.weaponStateDuration, 7);
       spriteGloveLeft = spriteGroupHandsLeft.strike;
       spriteGloveRight = spriteGroupHandsRight.strike;
-      spriteArmLeft = spriteGroupHandsLeft.strike;
+      spriteArmLeft = spriteGroupArmsLeft.strike;
       spriteArmRight = spriteGroupArmsRight.strike;
       spriteBodyArm = bodyArmGroup.strike;
       spriteBody =  bodyGroup.strike;
@@ -533,7 +533,7 @@ class RendererCharacters extends RenderGroup {
       frame = frame % 8;
       spriteGloveLeft = spriteGroupHandsLeft.running;
       spriteGloveRight = spriteGroupHandsRight.running;
-      spriteArmLeft = spriteGroupHandsLeft.running;
+      spriteArmLeft = spriteGroupArmsLeft.running;
       spriteArmRight = spriteGroupArmsRight.running;
       spriteBodyArm = bodyArmGroup.running;
       spriteBody =  bodyGroup.running;
