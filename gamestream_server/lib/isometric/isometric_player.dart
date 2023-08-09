@@ -1199,8 +1199,4 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(PlayerResponse.LegsType);
     writeByte(handTypeRight);
   }
-
-  void faceMouse(){
-    faceXY(mouseX, mouseY);
-  }
 }
