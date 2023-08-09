@@ -1695,57 +1695,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.update();
   }
 
-  void onApplyCustomCharacterPerform(IsometricCharacter character){
-
-  }
-
   void performCharacterAction(IsometricCharacter character){
     character.actionFrame = -1;
 
-    if (character.striking){
-      final target = character.target;
-      if (target is IsometricCollider) {
-        applyHit(
-          srcCharacter: character,
-          target: target,
-          damage: character.weaponDamage,
-        );
-      }
-      return;
-    }
+    if (!character.striking) return;
 
-    if (character.striking){
+    final weaponType = character.weaponType;
 
-      final weaponType = character.weaponType;
-
-      if (weaponType == WeaponType.Bow) {
-        spawnProjectileArrow(
-          src: character,
-          damage: character.weaponDamage,
-          range: character.weaponRange,
-          angle: character.angle,
-        );
-        return;
-      }
-
-      if (weaponType == WeaponType.Shotgun){
-        characterFireShotgun(character, character.angle);
-        return;
-      }
-
-      if (WeaponType.isFirearm(weaponType)) {
-        spawnProjectileBullet(
-          src: character,
-          damage: character.weaponDamage,
-          range: character.weaponRange,
-          angle: character.angle,
-        );
-        return;
-      }
-      return;
-    }
-
-    if (character.striking){
+    if (WeaponType.isMelee(weaponType)) {
       if (character.attackAlwaysHitsTarget) {
         final target = character.target;
         if (target is IsometricCollider) {
@@ -1758,8 +1715,33 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         return;
       }
       characterApplyMeleeHits(character);
+      return;
     }
 
+    if (weaponType == WeaponType.Bow) {
+      spawnProjectileArrow(
+        src: character,
+        damage: character.weaponDamage,
+        range: character.weaponRange,
+        angle: character.angle,
+      );
+      return;
+    }
+
+    if (weaponType == WeaponType.Shotgun) {
+      characterFireShotgun(character, character.angle);
+      return;
+    }
+
+    if (WeaponType.isFirearm(weaponType)) {
+      spawnProjectileBullet(
+        src: character,
+        damage: character.weaponDamage,
+        range: character.weaponRange,
+        angle: character.angle,
+      );
+      return;
+    }
   }
 
   void updateCharacterState(IsometricCharacter character) {

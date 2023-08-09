@@ -289,6 +289,7 @@ class IsometricCharacter extends IsometricCollider {
     assert (active);
     assert (alive);
     this.actionFrame = actionFrame;
+    setDestinationToCurrentPosition();
     setCharacterState(value: CharacterState.Strike, duration: duration);
   }
 
