@@ -553,8 +553,8 @@ class IsometricImages with IsometricComponent {
     await loadSpriteGroupHandsRight(
         handType: HandType.Gauntlet,
         yIdle: 0,
-        yRunning: 27,
-        yStrike: 58,
+        yRunning: 29,
+        yStrike: 57,
         image: kid_hands_right_gauntlets,
     );
 
