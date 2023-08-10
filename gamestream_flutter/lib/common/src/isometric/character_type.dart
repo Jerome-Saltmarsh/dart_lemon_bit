@@ -7,6 +7,7 @@ class CharacterType {
    static const Wolf = 4;
    static const Dog = 6;
    static const Kid = 7;
+   static const Fallen = 8;
 
    static const values = [
      Template,
@@ -16,6 +17,7 @@ class CharacterType {
      Wolf,
      Dog,
      Kid,
+     Fallen,
    ];
    
    static String getName(int value){
@@ -27,6 +29,7 @@ class CharacterType {
        Wolf: 'Wolf',
        Dog: 'Dog',
        Kid: 'Kid',
+       Fallen: 'Fallen',
      }[value] ?? ' unknown-$value';
    }
 
@@ -38,6 +41,7 @@ class CharacterType {
           Wolf:       4.0,
           Dog:        4.0,
           Kid:        3.0,
+          Fallen:        2.0,
        }[value] ??    2.0;
    
    static double getRadius(int value) => const {

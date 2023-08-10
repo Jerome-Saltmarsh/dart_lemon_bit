@@ -1518,7 +1518,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.actionDuration > 0 &&
       character.frame >= character.actionDuration
     ) {
-      onCharacterActionFinished(character);
+      endCharacterAction(character);
     }
 
     if (character.running) {
@@ -1540,7 +1540,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.frame++;
   }
 
-  void onCharacterActionFinished(Character character) {
+  void endCharacterAction(Character character) {
     if (character.dead)
       return;
 

@@ -128,6 +128,8 @@ class RendererCharacters extends RenderGroup {
         break;
       case CharacterType.Dog:
         renderCharacterDog(character);
+      case CharacterType.Fallen:
+        renderCharacterFallen(character);
         break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
@@ -705,5 +707,43 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
+  }
+
+  void renderCharacterFallen(Character character) {
+    const scale = 0.3;
+    const anchorY = 0.7;
+
+    switch (character.state) {
+      case CharacterState.Idle:
+        render.sprite(
+            sprite: images.spriteFallen.idle,
+            frame: (character.renderDirection * 8) + (character.animationFrame % 8),
+            color: character.color,
+            scale: scale,
+            dstX: character.renderX,
+            dstY: character.renderY,
+            anchorY: anchorY,
+        );
+      case CharacterState.Running:
+        render.sprite(
+            sprite: images.spriteFallen.running,
+            frame: (character.renderDirection * 6) + (character.animationFrame % 6),
+            color: character.color,
+            scale: scale,
+            dstX: character.renderX,
+            dstY: character.renderY,
+            anchorY: anchorY,
+        );
+      case CharacterState.Strike:
+        render.sprite(
+            sprite: images.spriteFallen.running,
+          frame: (character.renderDirection * 8) + (character.animationFrame % 8),
+            color: character.color,
+            scale: scale,
+            dstX: character.renderX,
+            dstY: character.renderY,
+            anchorY: anchorY,
+        );
+    }
   }
 }

@@ -84,13 +84,13 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void onCharacterActionFinished(Character character) {
+  void endCharacterAction(Character character) {
     if (character.characterTypeZombie){
       setCharacterStateIdle(character, duration: randomInt(50, 250));
       return;
     }
 
-    super.onCharacterActionFinished(character);
+    super.endCharacterAction(character);
   }
 
   static void validate() => MMOItem.values.forEach((item) => item.validate());
@@ -114,13 +114,13 @@ class Amulet extends IsometricGame<AmuletPlayer> {
       z: scene.getIndexZ(index),
       health: 3,
       weaponDamage: 1,
-      characterType: CharacterType.Zombie,
+      characterType: CharacterType.Fallen,
       weaponType: WeaponType.Unarmed,
       weaponRange: 20,
       weaponCooldown: 30,
       actionFrame: 15,
       doesWander: true,
-      name: 'Zombie',
+      name: 'Fallen',
       runSpeed: 0.75,
     )
       ..weaponHitForce = 2

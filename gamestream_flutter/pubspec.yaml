@@ -56,10 +56,11 @@ flutter:
         - asset: fonts/VT323-Regular.ttf
   assets:
     - sprites/
+    - sprites/fallen/
     - images/
     - images/sprites/
     - images/website/
-#    - images/template/
+    - images/characters/
     - images/kid/
     - images/kid/arms/fair/
     - images/kid/body/
@@ -71,10 +72,6 @@ flutter:
     - images/kid/legs/
     - images/kid/torso/
     - images/kid/weapons/
-#    - images/template/body/
-#    - images/template/head/
-#    - images/template/legs/
-#    - images/template/weapons/
     - sprites/arm/left/fair/
     - sprites/arm/right/fair/
     - sprites/body/shirt_blue/
