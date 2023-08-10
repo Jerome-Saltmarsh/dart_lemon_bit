@@ -4,10 +4,12 @@ class SpriteGroup {
   final Sprite idle;
   final Sprite running;
   final Sprite strike;
+  final Sprite hurt;
 
   SpriteGroup({
     required this.idle,
     required this.running,
     required this.strike,
+    required this.hurt,
   });
 }
