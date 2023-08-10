@@ -2,7 +2,7 @@
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/isometric.dart';
 
-class MMOGameObject extends IsometricGameObject {
+class MMOGameObject extends GameObject {
 
   final int frameSpawned;
   final MMOItem item;

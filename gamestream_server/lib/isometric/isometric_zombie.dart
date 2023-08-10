@@ -2,7 +2,7 @@
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric.dart';
 
-class IsometricZombie extends IsometricCharacter {
+class IsometricZombie extends Character {
 
   IsometricZombie({
     required super.health,

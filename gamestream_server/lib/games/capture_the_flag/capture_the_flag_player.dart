@@ -10,9 +10,9 @@ import 'capture_the_flag_ai.dart';
 
 
 class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
-  IsometricPosition? powerActivatedTarget;
-  IsometricPosition? powerPerformingTarget;
-  IsometricPower? powerPerforming;
+  Position? powerActivatedTarget;
+  Position? powerPerformingTarget;
+  Power? powerPerforming;
 
   var ignoreMouseLeftClick = false;
   var activatedPowerX = 0.0;
@@ -24,9 +24,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   @override
   final CaptureTheFlagGame game;
-  final IsometricPower power1;
-  final IsometricPower power2;
-  final IsometricPower power3;
+  final Power power1;
+  final Power power2;
+  final Power power3;
 
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
@@ -225,7 +225,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void activatePower3() => activatePower(power3);
 
-  void activatePower(IsometricPower value) {
+  void activatePower(Power value) {
     if (!value.ready) {
       writeGameError(GameError.Power_Not_Ready);
       return;
@@ -317,7 +317,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
      writePlayerEventSkillUpgraded();
   }
 
-  IsometricPower? getPowerByType(PowerType powerType) {
+  Power? getPowerByType(PowerType powerType) {
      if (power1.type == powerType)
        return power1;
      if (power2.type == powerType)

@@ -13,7 +13,7 @@ void main() {
     final height = 3;
     final volume = rows * columns * height;
 
-    final scene = IsometricScene(
+    final scene = Scene(
         name: ' ',
         types: Uint8List(volume),
         shapes: Uint8List(volume),

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/games/src.dart';
-import 'package:gamestream_server/isometric/isometric_scene_reader.dart';
+import 'package:gamestream_server/isometric/scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/core/src.dart';
@@ -175,7 +175,7 @@ class WebSocketConnection with ByteReader {
             final frequency = parseArg6(arguments);
             if (frequency == null) return;
             final sceneName = game.scene.name;
-            final scene = IsometricSceneGenerator.generate(
+            final scene = SceneGenerator.generate(
               height: height,
               rows: rows,
               columns: columns,
@@ -191,7 +191,7 @@ class WebSocketConnection with ByteReader {
 
           case IsometricEditorRequest.Download:
             if (player is! IsometricPlayer) return;
-            final compiled = IsometricSceneWriter.compileScene(player.scene, gameObjects: true);
+            final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
             player.writeByte(ServerResponse.Download_Scene);
 
             if (player.scene.name.isEmpty){
@@ -551,7 +551,7 @@ class WebSocketConnection with ByteReader {
     );
   }
 
-  Future joinGameEditorScene(IsometricScene scene) async {
+  Future joinGameEditorScene(Scene scene) async {
     joinGame(IsometricEditor(scene: scene));
   }
 

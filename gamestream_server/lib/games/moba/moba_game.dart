@@ -9,11 +9,11 @@ class MobaGame extends IsometricGame<MobaPlayer> {
 
   static const Creeps_Per_Spawn = 3;
 
-  late final IsometricGameObject redSpawn;
-  late final IsometricGameObject blueSpawn;
+  late final GameObject redSpawn;
+  late final GameObject blueSpawn;
 
-  late final IsometricGameObject redBase;
-  late final IsometricGameObject blueBase;
+  late final GameObject redBase;
+  late final GameObject blueBase;
 
   static const redTeam = 10;
   static const blueTeam = 20;
@@ -29,7 +29,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     required super.environment,
   }) : super(gameType: GameType.Moba) {
 
-    redBase = IsometricGameObject(
+    redBase = GameObject(
       x: scene.rowLength - 300,
       y: 100,
       z: 24,
@@ -45,7 +45,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       ..hitable = true
       ..collidable = true;
 
-    blueBase = IsometricGameObject(
+    blueBase = GameObject(
       x: 300,
       y: scene.columnLength - 100,
       z: 24,
@@ -61,7 +61,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       ..hitable = true
       ..collidable = true;
 
-    redSpawn = IsometricGameObject(
+    redSpawn = GameObject(
         x: scene.rowLength - 100,
         y: 100,
         z: 24,
@@ -74,7 +74,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
       ..physical = false
       ..collidable = false;
 
-    blueSpawn = IsometricGameObject(
+    blueSpawn = GameObject(
         x: 100,
         y: scene.columnLength - 100,
         z: 24,
@@ -92,7 +92,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
     gameObjects.add(blueSpawn);
 
 
-    gameObjects.add(IsometricGameObject(
+    gameObjects.add(GameObject(
       x: scene.rowLength - 200,
       y: 400,
       z: 24,
@@ -115,7 +115,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   int get maxPlayers => 10;
 
   @override
-  void updateCharacter(IsometricCharacter character) {
+  void updateCharacter(Character character) {
     super.updateCharacter(character);
 
     // if (character.weaponStatePerforming && character.weaponStateDuration == 2){
@@ -131,7 +131,7 @@ class MobaGame extends IsometricGame<MobaPlayer> {
   }
 
   @override
-  void customOnGameObjectDestroyed(IsometricGameObject gameObject) {
+  void customOnGameObjectDestroyed(GameObject gameObject) {
     if (gameObject == redBase){
        return;
        // throw Exception('Blue Team Wins');

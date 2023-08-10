@@ -84,7 +84,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void onCharacterStateDurationFinished(IsometricCharacter character) {
+  void onCharacterStateDurationFinished(Character character) {
     if (character.characterTypeZombie){
       setCharacterStateIdle(character, duration: randomInt(50, 250));
       return;
@@ -107,7 +107,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   void spawnZombieAtIndex(int index) {
-    characters.add(IsometricCharacter(
+    characters.add(Character(
       team: MmoTeam.Monsters,
       x: scene.getIndexX(index),
       y: scene.getIndexY(index),
@@ -137,7 +137,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void characterUseWeaponCustom(IsometricCharacter character) {
+  void characterUseWeaponCustom(Character character) {
     if (character is! AmuletPlayer)
       return;
 
@@ -159,7 +159,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
 
 
   @override
-  void performCharacterAction(IsometricCharacter character) {
+  void performCharacterAction(Character character) {
     if (character is! AmuletPlayer) {
       super.performCharacterAction(character);
       return;
@@ -256,7 +256,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
 
 
   @override
-  void customOnCharacterKilled(IsometricCharacter target, src) {
+  void customOnCharacterKilled(Character target, src) {
     if (target.characterType == CharacterType.Zombie) {
 
       final itemQuality = getRandomItemQuality();
@@ -286,11 +286,11 @@ class Amulet extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  int getCharacterExperienceValue(IsometricCharacter character){
+  int getCharacterExperienceValue(Character character){
     return 1;
   }
 
-  void spawnRandomLootAtPosition(IsometricPosition position, MMOItemQuality quality )=>
+  void spawnRandomLootAtPosition(Position position, MMOItemQuality quality )=>
       spawnRandomLoot(
         x: position.x,
         y: position.y,
@@ -354,8 +354,8 @@ class Amulet extends IsometricGame<AmuletPlayer> {
 
   @override
   void onCharacterCollectedGameObject(
-      IsometricCharacter character,
-      IsometricGameObject gameObject,
+      Character character,
+      GameObject gameObject,
       ) {
     if (character is! AmuletPlayer)
       return;
@@ -378,7 +378,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(AmuletPlayer player, IsometricGameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(AmuletPlayer player, GameObject gameObject) {
     if (gameObject is! MMOGameObject || gameObject.item.collectable)
       return;
 
@@ -392,7 +392,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void customOnInteraction(IsometricCharacter character, IsometricCharacter target) {
+  void customOnInteraction(Character character, Character target) {
     super.customOnInteraction(character, target);
 
     if (character is AmuletPlayer && target is MMONpc){

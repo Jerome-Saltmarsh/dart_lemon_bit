@@ -29,11 +29,11 @@ class MobaCreep extends IsometricZombie {
 
   bool get isTeamRed => team == MobaGame.redTeam;
 
-  IsometricGameObject get baseEnemy => isTeamBlue ? game.redBase : game.blueBase;
+  GameObject get baseEnemy => isTeamBlue ? game.redBase : game.blueBase;
 
-  IsometricGameObject get baseOwn => isTeamBlue ? game.blueBase : game.redBase;
+  GameObject get baseOwn => isTeamBlue ? game.blueBase : game.redBase;
 
-  IsometricGameObject get spawnOwn => isTeamBlue ? game.blueSpawn : game.redSpawn;
+  GameObject get spawnOwn => isTeamBlue ? game.blueSpawn : game.redSpawn;
 
   @override
   void update() {

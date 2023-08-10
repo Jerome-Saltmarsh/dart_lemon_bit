@@ -180,7 +180,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   @override
-  set target(IsometricPosition? value){
+  set target(Position? value){
     if (super.target == value)
       return;
 
@@ -349,9 +349,9 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   @override
-  int getTargetCategory(IsometricPosition? value){
+  int getTargetCategory(Position? value){
     if (value == null) return TargetCategory.Nothing;
-    if (value is IsometricGameObject) {
+    if (value is GameObject) {
       if (value.interactable) {
         return TargetCategory.Talk;
       }

@@ -1,4 +1,0 @@
-enum IsometricSide {
-  Left,
-  Right,
-}

@@ -14,24 +14,24 @@ import 'package:lemon_byte/byte_writer.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
-import 'isometric_collider.dart';
+import 'collider.dart';
 import 'isometric_game.dart';
-import 'isometric_character.dart';
-import 'isometric_gameobject.dart';
-import 'isometric_position.dart';
-import 'isometric_power.dart';
-import 'isometric_projectile.dart';
-import 'isometric_scene.dart';
-import 'isometric_scene_writer.dart';
+import 'character.dart';
+import 'gameobject.dart';
+import 'position.dart';
+import 'power.dart';
+import 'projectile.dart';
+import 'scene.dart';
+import 'scene_writer.dart';
 import 'isometric_settings.dart';
 
 
-class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
+class IsometricPlayer extends Character with ByteWriter implements Player {
 
   static const Cache_Length = 100;
 
   /// The power the user has selected but must still caste
-  late final powerActivated = ChangeNotifier<IsometricPower?>(null, onActivatedPowerChanged);
+  late final powerActivated = ChangeNotifier<Power?>(null, onActivatedPowerChanged);
 
   var _debugging = false;
   var mouseLeftDownDuration = 0;
@@ -40,7 +40,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   var mouseRightDownIgnore = false;
   var _mouseLeftDown = false;
   var _aimTargetCategory = TargetCategory.Run;
-  IsometricCollider? _aimTarget;
+  Collider? _aimTarget;
 
   var weaponDurationPercentagePrevious = 0.0;
   var accuracyPrevious = 0.0;
@@ -73,9 +73,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   final cacheTemplateA = Uint64List(Cache_Length);
   final cacheTemplateB = Uint8List(Cache_Length);
 
-  IsometricGameObject? editorSelectedGameObject;
+  GameObject? editorSelectedGameObject;
   IsometricGame game;
-  IsometricCollider? selectedCollider;
+  Collider? selectedCollider;
 
   var controlsRunInDirectionEnabled = true;
   var controlsCanTargetEnemies = false;
@@ -140,7 +140,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerHealth();
   }
 
-  IsometricCollider? get aimTarget => _aimTarget;
+  Collider? get aimTarget => _aimTarget;
 
   int get aimTargetCategory => _aimTargetCategory;
 
@@ -153,7 +153,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writePlayerAimTargetCategory();
   }
 
-  set aimTarget(IsometricCollider? value){
+  set aimTarget(Collider? value){
     if (value == _aimTarget) return;
     _aimTarget = value;
     onChangedAimTarget();
@@ -177,7 +177,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       mouseSceneY + Character_Gun_Height,
   );
 
-  IsometricScene get scene => game.scene;
+  Scene get scene => game.scene;
 
   double get mouseDistance => this.getDistanceXY(mouseSceneX, mouseSceneY);
 
@@ -474,32 +474,32 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writePlayerAimTargetType() {
     if (aimTarget == null) return;
-    if (aimTarget is IsometricGameObject){
+    if (aimTarget is GameObject){
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as IsometricGameObject).type);
+      writeUInt16((aimTarget as GameObject).type);
     }
-    if (aimTarget is IsometricCharacter) {
+    if (aimTarget is Character) {
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as IsometricCharacter).characterType);
+      writeUInt16((aimTarget as Character).characterType);
     }
   }
 
   void writePlayerAimTargetQuantity() {
-    if (aimTarget is IsometricGameObject) {
+    if (aimTarget is GameObject) {
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Quantity);
-      writeUInt16((aimTarget as IsometricGameObject).quantity);
+      writeUInt16((aimTarget as GameObject).quantity);
     }
   }
 
-  int getTargetCategory(IsometricPosition? value){
+  int getTargetCategory(Position? value){
 
     if (value == null)
       return TargetCategory.Run;
 
-    if (value is IsometricGameObject) {
+    if (value is GameObject) {
       if (value.interactable) {
         return TargetCategory.Talk;
       }
@@ -605,14 +605,14 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt24(game.time.time);
   }
 
-  void writeProjectile(IsometricProjectile projectile){
+  void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     writePosition(projectile);
     writeByte(projectile.type);
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeCharacterTemplate(IsometricCharacter character) {
+  void writeCharacterTemplate(Character character) {
 
     final compressedA = compressBytesToUInt64(
       character.weaponType,
@@ -674,19 +674,19 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte((value * 255).toInt());
   }
 
-  void writePosition(IsometricPosition value){
+  void writePosition(Position value){
     writeDouble(value.x);
     writeDouble(value.y);
     writeDouble(value.z);
   }
 
-  void writeIsometricPosition(IsometricPosition value){
+  void writeIsometricPosition(Position value){
     writeDouble(value.x);
     writeDouble(value.y);
     writeDouble(value.z);
   }
 
-  void writeVector3(IsometricPosition value){
+  void writeVector3(Position value){
     writeDouble(value.x);
     writeDouble(value.y);
     writeDouble(value.z);
@@ -697,7 +697,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(IsometricResponse.Scene);
     var compiled = scene.compiled;
     if (compiled == null){
-      compiled = IsometricSceneWriter.compileScene(scene, gameObjects: false);
+      compiled = SceneWriter.compileScene(scene, gameObjects: false);
       scene.compiled = compiled;
     }
     writeBytes(compiled);
@@ -783,7 +783,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeInt16(value.toInt());
   }
 
-  void writeGameObject(IsometricGameObject gameObject){
+  void writeGameObject(GameObject gameObject){
     writeByte(ServerResponse.GameObject);
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
@@ -819,7 +819,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt24(id);
   }
 
-  void writeGameEventGameObjectDestroyed(IsometricGameObject gameObject){
+  void writeGameEventGameObjectDestroyed(GameObject gameObject){
     writeGameEvent(
       type: GameEventType.Game_Object_Destroyed,
       x: gameObject.x,
@@ -875,7 +875,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(IsometricResponse.Selected_Collider);
     writeBool(true);
 
-    if (selectedCollider is IsometricGameObject) {
+    if (selectedCollider is GameObject) {
       final gameObject = selectedCollider;
       writeByte(IsometricType.GameObject);
       writeString(gameObject.runtimeType.toString());
@@ -889,7 +889,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       return;
     }
 
-    if (selectedCollider is IsometricCharacter) {
+    if (selectedCollider is Character) {
       final character = selectedCollider;
       writeByte(IsometricType.Character);
       writeString(character.runtimeType.toString());
@@ -929,7 +929,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     }
   }
 
-  void writeCharacterPath(IsometricCharacter character){
+  void writeCharacterPath(Character character){
     writeInt16(character.pathCurrent);
     writeInt16(character.pathStart);
     writeInt16(character.pathTargetIndex);
@@ -941,7 +941,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void selectNearestColliderToMouse({double maxRadius = 75}) =>
       selectedCollider = getNearestColliderToMouse(maxRadius: maxRadius);
 
-  IsometricCollider? getNearestColliderToMouse({
+  Collider? getNearestColliderToMouse({
     required double maxRadius
   }) => game.getNearestCollider(
       x: mouseSceneX,
@@ -952,7 +952,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void debugCommand() {
     final selectedCollider = this.selectedCollider;
-    if (selectedCollider is! IsometricCharacter)
+    if (selectedCollider is! Character)
       return;
 
     final nearestMouseCollider = getNearestColliderToMouse(maxRadius: 75);
@@ -1009,7 +1009,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writePlayerAimTargetName() {
     final aimTarget = this.aimTarget;
-    if (aimTarget is! IsometricCharacter) return;
+    if (aimTarget is! Character) return;
     writeApiPlayerAimTargetName(aimTarget.name);
   }
 
@@ -1055,7 +1055,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     debugging = !debugging;
   }
 
-  void writePower(IsometricPower power) {
+  void writePower(Power power) {
     writeByte(power.type.index);
     writeUInt16(power.cooldown);
     writeUInt16(power.cooldownRemaining);
@@ -1063,7 +1063,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(power.level);
   }
 
-  void onActivatedPowerChanged(IsometricPower? value){
+  void onActivatedPowerChanged(Power? value){
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Activated_Power);
     if (value == null) {

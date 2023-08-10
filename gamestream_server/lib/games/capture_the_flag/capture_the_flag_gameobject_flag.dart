@@ -4,11 +4,11 @@ import 'package:gamestream_server/common.dart';
 import 'mixins/i_capture_the_flag_team.dart';
 import 'package:gamestream_server/isometric/src.dart';
 
-class CaptureTheFlagGameObjectFlag extends IsometricGameObject with ICaptureTheFlagTeam {
+class CaptureTheFlagGameObjectFlag extends GameObject with ICaptureTheFlagTeam {
 
   var status = 0;
   var respawnDuration = 0;
-  IsometricCollider? heldBy;
+  Collider? heldBy;
 
 
   CaptureTheFlagGameObjectFlag({

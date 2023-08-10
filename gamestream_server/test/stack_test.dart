@@ -7,17 +7,17 @@ import 'package:test/test.dart';
 void main() {
   test('stack test', () {
       final positions = [
-         IsometricPosition(
+         Position(
              x: 0,
              y: 0,
              z: 0,
          ),
-         IsometricPosition(
+         Position(
              x: 2000,
              y: 100,
              z: 0,
          ),
-         IsometricPosition(
+         Position(
              x: 0,
              y: 100,
              z: 0,

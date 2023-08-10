@@ -7,7 +7,7 @@ import 'capture_the_flag_game.dart';
 import 'capture_the_flag_gameobject_flag.dart';
 
 
-class CaptureTheFlagAI extends IsometricCharacter {
+class CaptureTheFlagAI extends Character {
 
   var slowed = false;
   var slowedDuration = 0;
@@ -15,7 +15,7 @@ class CaptureTheFlagAI extends IsometricCharacter {
   var decision = CaptureTheFlagAIDecision.Idle;
   var viewRange = 500.0;
   CaptureTheFlagAIRole role;
-  IsometricPosition? targetPrevious;
+  Position? targetPrevious;
   late int id;
   late final CaptureTheFlagGame game;
 
@@ -44,21 +44,21 @@ class CaptureTheFlagAI extends IsometricCharacter {
     }
   }
 
-  bool get targetIsAlliedCharacter => target is IsometricCharacter && targetIsAlly;
+  bool get targetIsAlliedCharacter => target is Character && targetIsAlly;
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
 
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
 
-  IsometricPosition get baseOwn => isTeamRed ? game.baseRed : game.baseBlue;
+  Position get baseOwn => isTeamRed ? game.baseRed : game.baseBlue;
 
-  IsometricPosition get baseEnemy => isTeamRed ? game.baseBlue : game.baseRed;
+  Position get baseEnemy => isTeamRed ? game.baseBlue : game.baseRed;
 
   CaptureTheFlagGameObjectFlag get flagOwn => isTeamRed ? game.flagRed : game.flagBlue;
 
   CaptureTheFlagGameObjectFlag get flagEnemy => isTeamRed ? game.flagBlue : game.flagRed;
 
-  IsometricPosition get flagSpawnOwn => game.getFlagSpawn(flagOwn);
+  Position get flagSpawnOwn => game.getFlagSpawn(flagOwn);
 
   double get baseOwnDistance => getDistance(baseOwn);
 
@@ -157,7 +157,7 @@ class CaptureTheFlagAI extends IsometricCharacter {
 
   }
 
-  IsometricPosition? getTarget() {
+  Position? getTarget() {
     switch (decision) {
       case CaptureTheFlagAIDecision.Idle:
         return null;

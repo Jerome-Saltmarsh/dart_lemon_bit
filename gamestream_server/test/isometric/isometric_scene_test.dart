@@ -7,11 +7,11 @@ import 'package:test/test.dart';
 
 void main() {
 
-  IsometricScene createScene({
+  Scene createScene({
     required int height,
     required int rows,
     required int columns,
-  }) => IsometricScene(
+  }) => Scene(
       name: ' ',
       types: Uint8List(height * rows * columns),
       shapes: Uint8List(height * rows * columns),
@@ -25,7 +25,7 @@ void main() {
     );
 
   void testFindPath({
-    required IsometricScene scene,
+    required Scene scene,
     required int start,
     required int end,
   }){
@@ -37,7 +37,7 @@ void main() {
 
     while (index != start){
       expect(length++, isNot(10000), reason: 'limit exceeded');
-      expect(scene.path[index], isNot(IsometricScene.Not_Visited));
+      expect(scene.path[index], isNot(Scene.Not_Visited));
       expect(scene.path[index], isNot(index));
       index = scene.path[index];
     }
@@ -122,7 +122,7 @@ void main() {
   });
 }
 
-void assignGrassFloor(IsometricScene scene) {
+void assignGrassFloor(Scene scene) {
   for (var row = 0; row < scene.rows; row++){
     for (var column = 0; column < scene.columns; column++){
       scene.setNode(0, row, column, NodeType.Grass, NodeOrientation.Solid);

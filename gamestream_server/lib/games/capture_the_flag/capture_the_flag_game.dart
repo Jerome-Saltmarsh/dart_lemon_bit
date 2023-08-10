@@ -20,11 +20,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final CaptureTheFlagGameObjectFlag flagRed;
   late final CaptureTheFlagGameObjectFlag flagBlue;
 
-  late final IsometricGameObject baseRed;
-  late final IsometricGameObject baseBlue;
+  late final GameObject baseRed;
+  late final GameObject baseBlue;
 
-  late final IsometricGameObject redFlagSpawn;
-  late final IsometricGameObject blueFlagSpawn;
+  late final GameObject redFlagSpawn;
+  late final GameObject blueFlagSpawn;
 
   late final gameStatus = ChangeNotifier(CaptureTheFlagGameStatus.In_Progress, onChangedGameStatus);
   late final scoreRed = ChangeNotifier(0, onChangedScoreRed);
@@ -173,7 +173,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   int countPlayersOnTeam(int team) =>
       players.where((player) => player.team == team).length;
 
-  void playerUsePower(CaptureTheFlagPlayer player, IsometricPower power) {
+  void playerUsePower(CaptureTheFlagPlayer player, Power power) {
 
     switch (power.type) {
 
@@ -198,7 +198,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       case PowerType.Heal:
         final target = player.powerPerformingTarget;
         assert (target != null);
-        if (target is! IsometricCharacter) return;
+        if (target is! Character) return;
         target.health = target.maxHealth;
         break;
     }
@@ -206,7 +206,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     power.activated();
   }
 
-  int getExperience(IsometricCharacter target){
+  int getExperience(Character target){
     return 1;
   }
 
@@ -234,7 +234,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   @override
-  void customOnCharacterKilled(IsometricCharacter target, src) {
+  void customOnCharacterKilled(Character target, src) {
     if (target == flagRed.heldBy) {
       clearFlagHeldBy(flagRed);
       flagRed.setStatusDropped();
@@ -252,7 +252,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }));
   }
 
-  void reviveCharacter(IsometricCharacter character) {
+  void reviveCharacter(Character character) {
     final base = getBaseOwn(character);
     activateCollider(character);
     character.clearPath();
@@ -265,7 +265,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     character.setDestinationToCurrentPosition();
   }
 
-  IsometricGameObject getBaseOwn(IsometricCollider collider) {
+  GameObject getBaseOwn(Collider collider) {
     if (collider.team == CaptureTheFlagTeam.Blue) {
       return baseBlue;
     }
@@ -277,7 +277,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   void customOnCollisionBetweenColliders(
-      IsometricCollider a, IsometricCollider b) {
+      Collider a, Collider b) {
     if (a == flagRed || a == flagBlue) {
       onCollisionBetweenFlagAndCollider(a as CaptureTheFlagGameObjectFlag, b);
       return;
@@ -290,7 +290,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   void onCollisionBetweenFlagAndIsometricCharacter(
     CaptureTheFlagGameObjectFlag flag,
-    IsometricCharacter character,
+    Character character,
   ) {
     if (flag.heldBy != null) return;
     if (getOtherFlag(flag).heldBy == character) return;
@@ -319,7 +319,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   void onCollisionBetweenFlagAndBase(
     CaptureTheFlagGameObjectFlag flag,
-    IsometricGameObject base,
+    GameObject base,
   ) {
     final flagHeldBy = flag.heldBy;
     if (flagHeldBy == null) return;
@@ -335,14 +335,14 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   void onCollisionBetweenFlagAndCollider(
-      CaptureTheFlagGameObjectFlag flag, IsometricCollider collider) {
-    if (collider is IsometricCharacter) {
+      CaptureTheFlagGameObjectFlag flag, Collider collider) {
+    if (collider is Character) {
       onCollisionBetweenFlagAndIsometricCharacter(flag, collider);
       return;
     }
 
     if (collider == baseBlue || collider == baseRed) {
-      onCollisionBetweenFlagAndBase(flag, collider as IsometricGameObject);
+      onCollisionBetweenFlagAndBase(flag, collider as GameObject);
       return;
     }
   }
@@ -393,10 +393,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flag.moveTo(getFlagSpawn(flag));
   }
 
-  IsometricGameObject getFlagBase(CaptureTheFlagGameObjectFlag flag) =>
+  GameObject getFlagBase(CaptureTheFlagGameObjectFlag flag) =>
       (flag == flagRed) ? baseRed : baseBlue;
 
-  IsometricGameObject getFlagSpawn(CaptureTheFlagGameObjectFlag flag) =>
+  GameObject getFlagSpawn(CaptureTheFlagGameObjectFlag flag) =>
       (flag == flagRed) ? redFlagSpawn : blueFlagSpawn;
 
   CaptureTheFlagGameObjectFlag getOtherFlag(
@@ -614,18 +614,18 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       x: baseOwn.x,
       y: baseOwn.y,
       z: baseOwn.z,
-      power1: IsometricPower(
+      power1: Power(
         type: PowerType.Blink,
         range: 300,
         cooldown: 400,
       ),
-      power2: IsometricPower(
+      power2: Power(
         type: PowerType.Heal,
         range: 300,
         cooldown: 300,
         duration: 120,
       ),
-      power3: IsometricPower(
+      power3: Power(
         type: PowerType.Slow,
         range: 300,
         cooldown: 300,

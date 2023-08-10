@@ -15,7 +15,7 @@ class Gamestream {
   static const Fixed_Time = 50 / Frames_Per_Second;
 
   final games = <Game>[];
-  final isometricScenes = IsometricScenes();
+  final isometricScenes = Scenes();
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
   late final server = WebSocketServer(this);
 
@@ -95,19 +95,19 @@ class Gamestream {
   Game buildGameMMO() => Amulet(
       scene: isometricScenes.mmoTown,
       time: IsometricTime(enabled: true, hour: 14),
-      environment: IsometricEnvironment(),
+      environment: Environment(),
     );
 
   Game buildGameCaptureTheFlag() => CaptureTheFlagGame(
       scene: isometricScenes.captureTheFlag,
       time: IsometricTime(enabled: false, hour: 14),
-      environment: IsometricEnvironment(),
+      environment: Environment(),
     );
 
   Game buildGameMoba() => MobaGame(
       scene: isometricScenes.moba,
       time: IsometricTime(enabled: false, hour: 14),
-      environment: IsometricEnvironment(),
+      environment: Environment(),
     );
 
   Player joinGame(Game game) {

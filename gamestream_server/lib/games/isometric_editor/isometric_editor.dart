@@ -3,9 +3,9 @@ import 'package:gamestream_server/isometric/src.dart';
 
 class IsometricEditor extends IsometricGame {
 
-  IsometricEditor({IsometricScene? scene}) : super(
-      scene: scene ?? IsometricSceneGenerator.generateEmptyScene(),
-      environment: IsometricEnvironment(),
+  IsometricEditor({Scene? scene}) : super(
+      scene: scene ?? SceneGenerator.generateEmptyScene(),
+      environment: Environment(),
       time: IsometricTime(),
       gameType: GameType.Editor,
   );
