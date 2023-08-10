@@ -457,6 +457,8 @@ class IsometricEvents with IsometricComponent {
     switch (characterType) {
       case CharacterType.Zombie:
         return onCharacterDeathZombie(characterType, x, y, z, angle);
+      case CharacterType.Fallen:
+        return onCharacterDeathZombie(characterType, x, y, z, angle);
       case CharacterType.Dog:
         audio.playAudioXYZ(audio.dog_woolf_howl_4, x, y, z);
         break;
@@ -464,28 +466,6 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
-    // final zPos = z + Node_Size_Half;
-    // isometric.particles.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
-    // isometric.particles.spawnParticleArm(
-    //     x: x,
-    //     y: y,
-    //     z: zPos,
-    //     angle: angle + Engine.randomGiveOrTake(0.5),
-    //     speed: 4.0 + Engine.randomGiveOrTake(0.5));
-    // isometric.particles.spawnParticleLegZombie(
-    //     x: x,
-    //     y: y,
-    //     z: zPos,
-    //     angle: angle + Engine.randomGiveOrTake(0.5),
-    //     speed: 4.0 + Engine.randomGiveOrTake(0.5));
-    // isometric.particles.spawnParticleOrgan(
-    //     x: x,
-    //     y: y,
-    //     z: zPos,
-    //     angle: angle + Engine.randomGiveOrTake(0.5),
-    //     speed: 4.0 + Engine.randomGiveOrTake(0.5),
-    //     zv: 0.1);
-
     audio.playAudioXYZ(randomItem(audio.zombie_deaths), x, y, z);
   }
 
@@ -592,6 +572,13 @@ class IsometricEvents with IsometricComponent {
 
     switch (type) {
       case CharacterType.Zombie:
+        if (randomBool()){
+          audio.playAudioXYZ(audio.zombie_hurt_1, x, y, z);
+        } else {
+          audio.playAudioXYZ(audio.zombie_hurt_4, x, y, z);
+        }
+        break;
+      case CharacterType.Fallen:
         if (randomBool()){
           audio.playAudioXYZ(audio.zombie_hurt_1, x, y, z);
         } else {

@@ -159,9 +159,9 @@ class Sprite {
       pasteX++;
       canvasWidth = max(canvasWidth, pasteX);
 
-      if (canvasWidth > maxSize){
-        throw Exception();
-      }
+      // if (canvasWidth > maxSize){
+      //   throw Exception();
+      // }
     }
 
     final transparent = ColorRgba8(0, 0, 0, 0);
@@ -177,9 +177,9 @@ class Sprite {
       throw Exception('canvas height exceeds max height');
     }
 
-    if (canvasWidth > maxSize){
-      throw Exception('canvas width exceeds max height');
-    }
+    // if (canvasWidth > maxSize){
+    //   throw Exception('canvas width exceeds max height');
+    // }
 
     var j = 4; // the first four indexes are used to store width, height, columns and rows
     for (var i = 0; i < totalBounds; i++){

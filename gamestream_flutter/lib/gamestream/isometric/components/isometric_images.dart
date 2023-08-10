@@ -392,10 +392,10 @@ class IsometricImages with IsometricComponent {
 
     spriteFallen = SpriteGroup(
       idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0, loop: true),
-      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 153, loop: true),
-      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 239, loop: false),
-      hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 421, loop: false),
-      death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 596, loop: false),
+      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 157, loop: true),
+      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, loop: false),
+      hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, loop: false),
+      death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, loop: false),
     );
 
     await loadSpriteGroupArmsLeft(
