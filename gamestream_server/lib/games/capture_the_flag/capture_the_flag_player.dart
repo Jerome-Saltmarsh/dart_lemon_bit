@@ -75,16 +75,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
     return true;
   }
 
-  bool get shouldUsePowerPerforming {
-    if (!striking)
-      return false;
-    if (frameDuration != 20)
-      return false;
-    if (powerPerforming == null)
-      return false;
-    return true;
-  }
-
   void onChangedLevel(int value){
     skillPoints++;
     writePlayerLevel();

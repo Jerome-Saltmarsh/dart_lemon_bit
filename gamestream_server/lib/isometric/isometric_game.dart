@@ -494,7 +494,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     assert (character.weaponDamage >= 0);
     assert (character.weaponRange >= 0);
 
-    if (character.deadBusyOrWeaponStateBusy) return;
+    if (character.deadOrBusy)
+        return;
 
     final angle = character.angle;
     final attackRadius = character.weaponRange;
@@ -1165,7 +1166,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
     character.state = CharacterState.Dead;
-    character.frameDuration = 0;
+    character.actionDuration = 0;
     character.frame = 0;
     deactivate(character);
     character.clearPath();
@@ -1514,10 +1515,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (
-      character.frameDuration > 0 &&
-      character.frame >= character.frameDuration
+      character.actionDuration > 0 &&
+      character.frame >= character.actionDuration
     ) {
-      onCharacterStateDurationFinished(character);
+      onCharacterActionFinished(character);
     }
 
     if (character.running) {
@@ -1539,8 +1540,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.frame++;
   }
 
-  void onCharacterStateDurationFinished(Character character) {
-    character.setCharacterStateIdle();
+  void onCharacterActionFinished(Character character) {
+    if (character.dead)
+      return;
+
+    character.clearAction();
   }
 
   Projectile spawnProjectileOrb({

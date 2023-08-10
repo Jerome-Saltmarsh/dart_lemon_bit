@@ -84,13 +84,13 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void onCharacterStateDurationFinished(Character character) {
+  void onCharacterActionFinished(Character character) {
     if (character.characterTypeZombie){
       setCharacterStateIdle(character, duration: randomInt(50, 250));
       return;
     }
 
-    super.onCharacterStateDurationFinished(character);
+    super.onCharacterActionFinished(character);
   }
 
   static void validate() => MMOItem.values.forEach((item) => item.validate());

@@ -107,8 +107,6 @@ class CaptureTheFlagAI extends Character {
   @override
   double get runSpeed => slowed ? super.runSpeed * 0.5 : super.runSpeed;
 
-  bool get shouldUpdateCharacterAction => !deadBusyOrWeaponStateBusy;
-
   CaptureTheFlagAIDecision getDecision(){
 
     if (holdingFlagAny)

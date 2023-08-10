@@ -251,7 +251,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   bool addItem(MMOItem item){
 
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return false;
 
     if (item.isWeapon) {
@@ -317,7 +317,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void setTreasure({required int index, required MMOItem? item}){
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (!isValidIndexTreasure(index)) {
@@ -505,7 +505,7 @@ class AmuletPlayer extends IsometricPlayer {
   bool isValidIndexTreasure(int index) => index >= 0 && index < treasures.length;
 
   void selectWeapon(int index) {
-     if (deadBusyOrWeaponStateBusy)
+     if (deadOrBusy)
        return;
 
     if (!isValidWeaponIndex(index)) {
@@ -574,7 +574,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void selectItem(int index) {
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (!isValidItemIndex(index)) {
@@ -670,7 +670,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void equipHead(MMOItem? item){
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (equippedHead.item == item)
@@ -695,7 +695,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void equipBody(MMOItem? item){
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (equippedBody == item)
@@ -721,7 +721,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void equipLegs(MMOItem? item){
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (equippedLegs.item == item)
@@ -745,7 +745,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void equipHandLeft(MMOItem? item){
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (equippedHandLeft.item == item)
@@ -770,7 +770,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void equipHandRight(MMOItem? item){
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     if (equippedHandRight.item == item)

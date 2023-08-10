@@ -17,10 +17,6 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
-  var strikeDuration = 0;
-  var strikeActionFrame = 0;
-
-  var weaponHitForce = 10.0;
   var hurtStateBusy = true;
   var interacting = false;
   var targetPerceptible = false;
@@ -32,7 +28,11 @@ class Character extends Collider {
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
 
+  var actionDuration = -1;
   var actionFrame = -1;
+  var strikeDuration = 0;
+  var strikeActionFrame = 0;
+  var weaponHitForce = 10.0;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
@@ -40,7 +40,6 @@ class Character extends Collider {
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
   var frame = 0;
-  var frameDuration = -1;
   var framesPerAnimation = 3;
   var runSpeed = 1.0;
   var name = "";
@@ -191,15 +190,12 @@ class Character extends Collider {
   bool get characterStateChanging => state == CharacterState.Changing;
 
   bool get busy =>
-      frameDuration > 0 &&
-      frame < frameDuration &&
+      actionDuration > 0 &&
       (!characterStateHurt || hurtStateBusy);
 
   bool get deadOrBusy => dead || busy;
 
-  bool get deadBusyOrWeaponStateBusy => dead;
-
-  bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging;
+  bool get canChangeEquipment => !dead || characterStateChanging;
 
   bool get targetSet => target != null;
 
@@ -252,16 +248,16 @@ class Character extends Collider {
 
     state = CharacterState.Spawning;
     frame = 0;
-    frameDuration = duration;
+    actionDuration = duration;
   }
 
   void setCharacterStateChanging({int duration = 15}) {
-    if (deadBusyOrWeaponStateBusy)
+    if (deadOrBusy)
       return;
 
     state = CharacterState.Changing;
     frame = 0;
-    frameDuration = duration;
+    actionDuration = duration;
   }
 
   void setCharacterStateHurt({int duration = 10}){
@@ -270,7 +266,7 @@ class Character extends Collider {
 
     state = CharacterState.Hurt;
     frame = 0;
-    frameDuration = duration;
+    actionDuration = duration;
   }
 
   void setCharacterStateIdle({int duration = 0}){
@@ -289,7 +285,7 @@ class Character extends Collider {
 
     state = value;
     frame = 0;
-    frameDuration = duration;
+    actionDuration = duration;
   }
 
   bool withinInteractRange(Position target){
@@ -451,11 +447,20 @@ class Character extends Collider {
 
 
   void setRunDestination(double x, double y, double z) {
-    if (!runToDestinationEnabled || deadBusyOrWeaponStateBusy)
+    if (!runToDestinationEnabled || deadOrBusy)
       return;
     runX = x;
     runY = y;
     runZ = z;
     arrivedAtDestination = false;
+  }
+
+  void clearAction(){
+    if (dead)
+      return;
+
+    state = CharacterState.Idle;
+    frame = 0;
+    actionDuration = -1;
   }
 }

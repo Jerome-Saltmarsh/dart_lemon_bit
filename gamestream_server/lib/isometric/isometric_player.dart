@@ -906,7 +906,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
       writeByte(character.characterType);
       writeByte(character.state);
-      writeInt16(min(character.frameDuration, 1000));
+      writeInt16(min(character.actionDuration, 1000));
       writeUInt16(character.frame);
       writeUInt16(character.weaponType);
       writeUInt16(character.weaponDamage);
@@ -1020,7 +1020,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void performPrimaryAction() {
-    if (deadBusyOrWeaponStateBusy) return;
+    if (deadOrBusy)
+      return;
 
     if (aimTarget == null) {
       setDestinationToMouse();
