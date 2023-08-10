@@ -1444,8 +1444,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacter(Character character) {
 
-    if (character.dead) return;
-    if (!character.active) return;
+    if (!character.active)
+      return;
+    if (character.dead) {
+      if (character.animationFrame < Character.maxAnimationDeathFrames){
+        character.frame++;
+      }
+      return;
+    }
 
     updateCharacterTarget(character);
     updateCharacterTargetPerceptible(character);

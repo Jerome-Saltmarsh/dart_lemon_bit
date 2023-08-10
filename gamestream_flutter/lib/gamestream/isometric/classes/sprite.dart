@@ -62,6 +62,6 @@ class Sprite {
     assert (row >= 0 && row <= rows);
     return (row * columns) + (loop
         ? (column % columns)
-        : (min(column, columns)));
+        : (min(column, columns - 1)));
   }
 }

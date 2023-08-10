@@ -11,6 +11,9 @@ import 'isometric_settings.dart';
 
 class Character extends Collider {
 
+  static const maxAnimationFrames = 32;
+  static const maxAnimationDeathFrames = maxAnimationFrames - 2;
+
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _weaponAccuracy = 0.0;
   var _angle = 0.0;
@@ -116,7 +119,7 @@ class Character extends Collider {
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
 
-  int get animationFrame => (frame ~/ framesPerAnimation) % 32;
+  int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
 
   int get compressedState => compressBytesToUInt32(
     characterType,
