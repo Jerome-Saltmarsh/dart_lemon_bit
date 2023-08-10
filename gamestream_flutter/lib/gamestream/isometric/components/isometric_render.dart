@@ -42,7 +42,7 @@ class IsometricRender with IsometricComponent {
     double anchorX = 0.5,
     double anchorY = 0.5,
   }){
-    if (sprite.values.isEmpty)
+    if (sprite.isEmpty)
       return;
 
     engine.bufferImage = sprite.image;

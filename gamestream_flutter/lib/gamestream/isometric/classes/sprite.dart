@@ -59,9 +59,9 @@ class Sprite {
   }
 
   int getFrame({required int row, required int column}){
-    assert (row >= 0 && row <= 7);
-    return loop
-      ? row * columns + (column % columns)
-      : row * columns + (min(column, columns));
+    assert (row >= 0 && row <= rows);
+    return (row * columns) + (loop
+        ? (column % columns)
+        : (min(column, columns)));
   }
 }

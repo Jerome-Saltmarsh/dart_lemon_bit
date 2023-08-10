@@ -728,11 +728,14 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
+    final spriteGroup = images.spriteFallen;
+
+    render.textPosition(character, column, offsetY: -100);
 
     switch (character.state) {
       case CharacterState.Idle:
         render.sprite(
-            sprite: images.spriteFallen.idle,
+            sprite: spriteGroup.idle,
             row: row,
             column: column,
             color: character.color,
@@ -743,7 +746,7 @@ class RendererCharacters extends RenderGroup {
         );
       case CharacterState.Running:
         render.sprite(
-            sprite: images.spriteFallen.running,
+            sprite: spriteGroup.running,
             row: row,
             column: column,
             color: character.color,
@@ -754,7 +757,7 @@ class RendererCharacters extends RenderGroup {
         );
       case CharacterState.Strike:
         render.sprite(
-            sprite: images.spriteFallen.running,
+            sprite: spriteGroup.strike,
             row: row,
             column: column,
             color: character.color,
