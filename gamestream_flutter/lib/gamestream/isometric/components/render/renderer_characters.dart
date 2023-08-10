@@ -724,13 +724,14 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterFallen(Character character) {
     const scale = 0.61;
-    const anchorY = 0.7;
+    const anchorY = 0.6;
 
     final row = character.renderDirection;
     final column = character.animationFrame;
     final spriteGroup = images.spriteFallen;
 
-    render.textPosition(character, column, offsetY: -100);
+    // render.textPosition(character, column, offsetY: -100);
+    // render.circleOutlineAtPosition(position: character, radius: 10);
 
     switch (character.state) {
       case CharacterState.Idle:
