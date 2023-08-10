@@ -723,7 +723,7 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterFallen(Character character) {
-    const scale = 0.3;
+    const scale = 0.61;
     const anchorY = 0.7;
 
     final row = character.renderDirection;
