@@ -19,23 +19,15 @@ import 'isometric_settings.dart';
 import 'isometric_time.dart';
 
 
-enum MouseAction {
-  Attack,
-  Target,
-  Target_Only_Allies,
-}
-
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   Scene scene;
   Environment environment;
   IsometricTime time;
-
-  var _running = true;
-
   var timerUpdateAITargets = 0;
   var frame = 0;
   var gameObjectId = 0;
+  var _running = true;
 
   final characters = <Character>[];
   final projectiles = <Projectile>[];
@@ -47,7 +39,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required super.gameType,
   }) {
     gameObjects.sort();
-
     gameObjectId = scene.gameObjects.length;
     customInit();
 
@@ -62,6 +53,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   bool get running => _running;
 
+  set running(bool value) {
+    if (_running == value) return;
+    _running = value;
+    for (final player in players) {
+      player.writeGameProperties();
+    }
+  }
+
+
   void add(Collider value){
     if (value is Character){
        characters.add(value);
@@ -74,14 +74,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (value is Projectile){
       projectiles.add(value);
       return;
-    }
-  }
-
-  set running(bool value) {
-    if (_running == value) return;
-    _running = value;
-    for (final player in players) {
-      player.writeGameProperties();
     }
   }
 
@@ -421,12 +413,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     WeaponType.Machine_Gun: 2,
   }[character.weaponType] ?? 1;
 
-  void characterUseWeaponCustom(Character character){
-
-  }
-
-
-
   void characterTeleport({
     required Character character,
     required double x,
@@ -498,119 +484,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void playerThrowGrenade(IsometricPlayer player, {int damage = 10}) {
-    if (player.deadBusyOrWeaponStateBusy) return;
-
-    dispatchAttackPerformed(
-      WeaponType.Grenade,
-      player.x + adj(player.angle, 60),
-      player.y + opp(player.angle, 60),
-      player.z + Character_Gun_Height,
-      player.angle,
-    );
-
-    // player.weaponState = WeaponState.Performing;
-
-    final mouseDistance = player.getDistanceXY(player.mouseSceneX, player.mouseSceneY);
-    final throwDistance = min(mouseDistance, Physics.Max_Throw_Distance);
-    final throwRatio = throwDistance / Physics.Max_Throw_Distance;
-    final velocity = Physics.Max_Throw_Velocity * throwRatio;
-    final velocityZ = Physics.Max_Throw_Velocity_Z * throwRatio;
-
-    final instance = spawnGameObject(
-      x: player.x,
-      y: player.y,
-      z: player.z + Character_Height,
-      type: GameObjectType.Weapon,
-      subType: WeaponType.Grenade,
-      team: player.team,
-    )
-      ..setVelocity(player.angle, velocity)
-      ..quantity = 1
-      ..friction = 0.985
-      ..bounce = true
-      ..physical = true
-      ..gravity = true
-      ..hitable = true
-      ..persistable = false
-      ..collectable = false
-      ..interactable = false
-      ..velocityZ = velocityZ
-      ..owner = player;
-
-    addJob(seconds: IsometricSettings.Grenade_Cook_Duration, action: () {
-      deactivate(instance);
-      final owner = instance.owner;
-      if (owner == null) return;
-      createExplosion(
-        x: instance.x,
-        y: instance.y,
-        z: instance.z,
-        srcCharacter: owner,
-      );
-    });
-  }
-
-  void characterUseFlamethrower(Character character) {
-    dispatchAttackPerformedCharacter(character);
-    // character.weaponState = WeaponState.Performing;
-
-    spawnProjectileFireball(
-      src: character,
-      angle: character.angle,
-      damage: character.weaponDamage,
-      range: character.weaponRange,
-    );
-  }
-
-  void characterUseBazooka(Character character) {
-    dispatchAttackPerformedCharacter(character);
-    // character.weaponState = WeaponState.Performing;
-    spawnProjectileRocket(character, damage: 3, range: character.weaponRange);
-  }
-
-  void characterUseMinigun(Character player) {
-    characterFireWeapon(player);
-  }
-
-  void playerAutoAim(IsometricPlayer player) {
-    if (player.deadOrBusy) return;
-    var closestTargetDistance = player.weaponRange * 1.5;
-    Collider? closestTarget = null;
-    for (final character in characters) {
-      if (character.dead) continue;
-      if (Collider.onSameTeam(player, character)) continue;
-      final distance = player.getDistance(character);
-      if (distance > closestTargetDistance) continue;
-      closestTarget = character;
-      closestTargetDistance = distance;
-    }
-    if (closestTarget != null) {
-      player.lookAt(closestTarget);
-      player.face(closestTarget);
-      return;
-    }
-
-    for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
-      if (!gameObject.hitable) continue;
-      final distance = player.getDistance(gameObject);
-      if (distance > closestTargetDistance) continue;
-      closestTarget = gameObject;
-      closestTargetDistance = distance;
-    }
-    if (closestTarget != null) {
-      player.lookAt(closestTarget);
-      player.face(closestTarget);
-
-      return;
-    }
-  }
-
-  int getMeleeAttackRadius(int weaponType){
-    return 20;
-  }
-
   bool isMeleeAOE(int weaponType){
     return false;
   }
@@ -652,7 +525,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  void characterApplyMeleeHits(Character character){
+  void applyAttackTypeMelee(Character character){
 
     final angle = character.angle;
     final attackRadius = character.weaponRange;
@@ -782,90 +655,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       nodeOrientation: NodeOrientation.Destroyed,
     );
     customOnNodeDestroyed(nodeType, nodeIndex, nodeOrientation);
-  }
-
-  bool characterMeleeAttackTargetInRange(Character character) {
-    assert (character.active);
-    assert (character.alive);
-    assert (character.weaponDamage >= 0);
-
-    if (character.deadBusyOrWeaponStateBusy) return false;
-
-    final angle = character.angle;
-    final attackRadius = getMeleeAttackRadius(character.weaponType) *
-        0.75;
-
-    if (attackRadius <= 0) {
-      return false;
-    }
-
-    final attackRadiusHalf = attackRadius * 0.5;
-    final performX = character.x + adj(angle, attackRadiusHalf);
-    final performY = character.y + opp(angle, attackRadiusHalf);
-    final performZ = character.z;
-
-    for (final other in characters) {
-      if (!other.active) continue;
-      if (!other.hitable) continue;
-      if (Collider.onSameTeam(character, other)) continue;
-      if (other.withinRadiusXYZ(
-        performX,
-        performY,
-        performZ,
-        attackRadiusHalf,
-      )) return true;
-    }
-
-    for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
-      if (!gameObject.hitable) continue;
-      if (gameObject.withinRadiusXYZ(
-        performX,
-        performY,
-        performZ,
-        attackRadiusHalf,
-      )) return true;
-    }
-    return false;
-  }
-
-  void characterFireWeapon(Character character) {
-    if (character.deadBusyOrWeaponStateBusy)
-      return;
-
-    character.weaponAccuracy += character.weaponRecoil;
-    character.setDestinationToCurrentPosition();
-
-    final angle = character.angle;
-
-    if (character.weaponType == WeaponType.Shotgun) {
-      characterFireShotgun(character, angle);
-      return;
-    }
-
-    // character.weaponState = WeaponState.Performing;
-    character.applyForce(
-      force: 1.0,
-      angle: angle + pi,
-    );
-    character.clampVelocity(Physics.Max_Velocity);
-
-    spawnProjectile(
-      src: character,
-      accuracy: character.weaponAccuracy,
-      angle: angle,
-      range: character.weaponRange,
-      projectileType: ProjectileType.Bullet,
-      damage: character.weaponDamage,
-    );
-
-    dispatchAttackPerformed(
-      character.weaponType,
-      character.x + adj(angle, 70),
-      character.y + opp(angle, 70),
-      character.z + Character_Gun_Height,
-      angle,
-    );
   }
 
   void activateCollider(Collider collider) {
@@ -1154,13 +943,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     sortColliders();
   }
 
-  bool containsPlayerWithName(String name) {
-    for (final character in players) {
-      if (character.name == name) return true;
-    }
-    return false;
-  }
-
   void revive(T player) {
     if (player.aliveAndActive) return;
 
@@ -1179,34 +961,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.health = player.maxHealth;
   }
 
-  int countAlive(List<Character> characters) {
-    var total = 0;
-    for (final character in characters) {
-      if (character.alive) total++;
-    }
-    return total;
-  }
-
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();
       player.writeGameTime();
       player.writeEnvironmentLightningFlashing(environment.lightningFlashing);
     }
-  }
-
-  Character? getClosestEnemy({
-    required double x,
-    required double y,
-    required Character character,
-  }) {
-    return Physics.findClosestVector3(
-        positions: characters,
-        x: x,
-        y: y,
-        z: character.z,
-        where: (other) =>
-        other.alive && !Collider.onSameTeam(other, character));
   }
 
   void applyDamageToCharacter({
@@ -1714,7 +1474,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         }
         return;
       }
-      characterApplyMeleeHits(character);
+      applyAttackTypeMelee(character);
       return;
     }
 

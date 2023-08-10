@@ -87,6 +87,7 @@ class WebSocketConnection with ByteReader {
     throw Exception("Invalid arg type");
   }
 
+
   void onDataStringArray(List<String> arguments) {
     if (arguments.isEmpty) {
       sendGameError(GameError.ClientRequestArgumentsEmpty);
@@ -556,9 +557,6 @@ class WebSocketConnection with ByteReader {
   }
 
   void joinGame(Game game){
-    if (!engine.games.contains(game)){
-       engine.games.add(game);
-    }
     final player = game.createPlayer();
     game.players.add(player);
     _player = _player = player;

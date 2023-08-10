@@ -14,13 +14,6 @@ class WebSocketServer implements ServerBase {
 
   WebSocketServer(this.engine);
 
-  @override
-  void sendResponseToClients(){
-    for (final connection in connections) {
-      connection.sendBufferToClient();
-    }
-  }
-
   void start(){
     print("startWebsocketServer()");
     var handler = webSocketHandler(
@@ -48,5 +41,12 @@ class WebSocketServer implements ServerBase {
   void onConnectionDone(WebSocketConnection connection){
     connections.remove(connection);
     print("Connection Done. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
+  }
+
+  @override
+  void sendResponseToClients(){
+    for (final connection in connections) {
+      connection.sendBufferToClient();
+    }
   }
 }

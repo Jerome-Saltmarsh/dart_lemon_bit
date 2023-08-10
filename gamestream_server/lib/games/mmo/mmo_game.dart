@@ -137,28 +137,6 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void characterUseWeaponCustom(Character character) {
-    if (character is! AmuletPlayer)
-      return;
-
-    final weapon = character.equippedWeapon;
-
-    if (weapon == null)
-      return;
-
-    final item = weapon.item;
-
-    if (item == null)
-      return;
-
-    character.setCharacterStateStriking(
-        duration: item.performDuration,
-        actionFrame: item.actionFrame,
-    );
-  }
-
-
-  @override
   void performCharacterAction(Character character) {
     if (character is! AmuletPlayer) {
       super.performCharacterAction(character);
@@ -192,7 +170,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
         );
         break;
       case MMOAttackType.Melee:
-        characterApplyMeleeHits(character);
+        applyAttackTypeMelee(character);
         break;
       case MMOAttackType.Arrow:
         spawnProjectileArrow(

@@ -115,8 +115,6 @@ class Gamestream {
     if (!game.players.contains(player)){
       game.players.add(player);
     }
-    // player.writeGameType();
-    // player.writeFPS();
     return player;
   }
 }
