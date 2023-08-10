@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -9,16 +10,25 @@ class Sprite {
   final int rows;
   final int columns;
   final double y;
+  final bool loop;
+  late final bool isEmpty;
 
   factory Sprite.fromBytes(Uint8List bytes, {
     required Image image,
     required double y,
+    required bool loop,
   }) =>
-      Sprite.fromUint16List(bytes.buffer.asUint16List(), image: image, y: y);
+      Sprite.fromUint16List(
+          bytes.buffer.asUint16List(),
+          image: image,
+          y: y,
+          loop: loop,
+      );
 
   factory Sprite.fromUint16List(Uint16List uint16List, {
     required Image image,
     required double y,
+    required bool loop,
   }) =>
       Sprite(
           image: image,
@@ -32,6 +42,7 @@ class Sprite {
                   .toList(growable: false)
           ),
           y: y,
+          loop: loop,
       );
 
   Sprite({
@@ -42,5 +53,15 @@ class Sprite {
     required this.rows,
     required this.columns,
     required this.y,
-  });
+    required this.loop,
+  }) {
+    isEmpty = values.isEmpty;
+  }
+
+  int getFrame({required int row, required int column}){
+    assert (row >= 0 && row <= 7);
+    return loop
+      ? row * columns + (column % columns)
+      : row * columns + (min(column, columns));
+  }
 }

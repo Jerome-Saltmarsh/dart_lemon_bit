@@ -88,9 +88,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('arm/left/$name/running');
      final strike = await loadSprite('arm/left/$name/strike');
      spriteGroupArmsLeft[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -106,9 +106,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('arm/right/$name/running');
      final strike = await loadSprite('arm/right/$name/strike');
      spriteGroupArmsRight[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -124,9 +124,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('body/$name/running');
      final strike = await loadSprite('body/$name/strike');
      spriteGroupBody[bodyType] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -142,9 +142,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('body_arms/$name/running');
      final strike = await loadSprite('body_arms/$name/strike');
      spriteGroupBodyArms[bodyType] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -160,9 +160,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('hands/left/$name/running');
      final strike = await loadSprite('hands/left/$name/strike');
      spriteGroupHandsLeft[handType] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -178,9 +178,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('hands/right/$name/running');
      final strike = await loadSprite('hands/right/$name/strike');
      spriteGroupHandsRight[handType] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -196,9 +196,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('heads/$name/running');
      final strike = await loadSprite('heads/$name/strike');
      spriteGroupHeads[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -214,9 +214,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('helms/$name/running');
      final strike = await loadSprite('helms/$name/strike');
      spriteGroupHelms[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -232,9 +232,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('legs/$name/running');
      final strike = await loadSprite('legs/$name/strike');
      spriteGroupLegs[legType] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -250,9 +250,9 @@ class IsometricImages with IsometricComponent {
      final running = await loadSprite('torso/$name/running');
      final strike = await loadSprite('torso/$name/strike');
      spriteGroupTorso[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-         running: Sprite.fromBytes(running, image: image, y: yRunning),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
      );
    }
 
@@ -268,9 +268,9 @@ class IsometricImages with IsometricComponent {
     final running = await loadSprite('weapons/$name/running');
     final strike = await loadSprite('weapons/$name/strike');
     spriteGroupWeapons[type] = SpriteGroup(
-      idle: Sprite.fromBytes(idle, image: image, y: yIdle),
-      running: Sprite.fromBytes(running, image: image, y: yRunning),
-      strike: Sprite.fromBytes(strike, image: image, y: yStrike),
+      idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
+      running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
+      strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
     );
   }
 
@@ -340,6 +340,7 @@ class IsometricImages with IsometricComponent {
         rows: 0,
         columns: 0,
         y: 0,
+        loop: true,
     );
 
     spriteGroupEmpty = SpriteGroup(
@@ -363,9 +364,9 @@ class IsometricImages with IsometricComponent {
     final fallenStrike = await loadSprite('fallen/strike');
 
     spriteFallen = SpriteGroup(
-      idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0),
-      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 457),
-      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 939),
+      idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0, loop: true),
+      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 457, loop: true),
+      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 939, loop: false),
     );
 
     await loadSpriteGroupArmsLeft(

@@ -509,6 +509,9 @@ class RendererCharacters extends RenderGroup {
     final groupHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
     final groupTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
 
+    final row = character.renderDirection;
+    final column = character.animationFrame;
+
     final leftInFront = const [
       InputDirection.Up_Left,
       InputDirection.Left,
@@ -578,13 +581,12 @@ class RendererCharacters extends RenderGroup {
       spriteArmBehind = spriteArmLeft;
     }
 
-    final spriteFrame = (character.renderDirection * 8) + frame;
-
     if (renderBottom) {
       renderCharacterShadowCircle(character);
       render.sprite(
         sprite: spriteTorso,
-        frame: spriteFrame,
+        row: row,
+        column: column,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -594,7 +596,8 @@ class RendererCharacters extends RenderGroup {
 
       render.sprite(
         sprite: spriteLegs,
-        frame: spriteFrame,
+        row: row,
+        column: column,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -606,7 +609,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteArmBehind,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -616,7 +620,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteGloveBehind,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -627,7 +632,8 @@ class RendererCharacters extends RenderGroup {
     if (spriteGloveRight != spriteGloveFront){
       render.sprite(
         sprite: spriteWeapon,
-        frame: spriteFrame,
+        row: row,
+        column: column,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -638,7 +644,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
         sprite: spriteBody,
-        frame: spriteFrame,
+        row: row,
+        column: column,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -648,7 +655,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteArmFront,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -659,7 +667,8 @@ class RendererCharacters extends RenderGroup {
     if (spriteGloveRight == spriteGloveFront){
       render.sprite(
         sprite: spriteWeapon,
-        frame: spriteFrame,
+        row: row,
+        column: column,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -670,7 +679,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteGloveFront,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -680,7 +690,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteBodyArm,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -690,7 +701,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteHead,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -700,7 +712,8 @@ class RendererCharacters extends RenderGroup {
 
     render.sprite(
       sprite: spriteHelm,
-      frame: spriteFrame,
+      row: row,
+      column: column,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -713,11 +726,15 @@ class RendererCharacters extends RenderGroup {
     const scale = 0.3;
     const anchorY = 0.7;
 
+    final row = character.renderDirection;
+    final column = character.animationFrame;
+
     switch (character.state) {
       case CharacterState.Idle:
         render.sprite(
             sprite: images.spriteFallen.idle,
-            frame: (character.renderDirection * 8) + (character.animationFrame % 8),
+            row: row,
+            column: column,
             color: character.color,
             scale: scale,
             dstX: character.renderX,
@@ -727,7 +744,8 @@ class RendererCharacters extends RenderGroup {
       case CharacterState.Running:
         render.sprite(
             sprite: images.spriteFallen.running,
-            frame: (character.renderDirection * 6) + (character.animationFrame % 6),
+            row: row,
+            column: column,
             color: character.color,
             scale: scale,
             dstX: character.renderX,
@@ -737,7 +755,8 @@ class RendererCharacters extends RenderGroup {
       case CharacterState.Strike:
         render.sprite(
             sprite: images.spriteFallen.running,
-          frame: (character.renderDirection * 8) + (character.animationFrame % 8),
+            row: row,
+            column: column,
             color: character.color,
             scale: scale,
             dstX: character.renderX,
