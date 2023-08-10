@@ -11,7 +11,6 @@ import 'isometric_settings.dart';
 
 class Character extends Collider {
 
-
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _weaponAccuracy = 0.0;
   var _angle = 0.0;
@@ -25,11 +24,9 @@ class Character extends Collider {
   var hurtStateBusy = true;
   var interacting = false;
   var targetPerceptible = false;
-  /// can have a characterState of type hurt
   var hurtable = true;
   var clearTargetOnPerformAction = true;
   var characterType = 0;
-  var weaponStateDurationTotal = 0;
   var autoTarget = true;
   var autoTargetRange = 300.0;
   var autoTargetTimer = 0;
@@ -40,14 +37,11 @@ class Character extends Collider {
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
-  // var weaponStateDuration = 0;
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
   var frame = 0;
   var frameDuration = -1;
-  var nextFootstep = 0;
   var framesPerAnimation = 3;
-  // var lookRadian = 0.0;
   var runSpeed = 1.0;
   var name = "";
   var pathCurrent = -1;
@@ -134,8 +128,6 @@ class Character extends Collider {
 
   bool get shouldPerformAction => actionFrame > 0 && frame == actionFrame;
 
-  // int get weaponState => _weaponState;
-
   bool get pathSet => pathTargetIndex >= 0 && pathCurrent >= 0;
 
   bool get targetWithinCollectRange {
@@ -146,22 +138,12 @@ class Character extends Collider {
     return withinRadiusPosition(target, IsometricSettings.Collect_Radius);
   }
 
-  // set weaponState(int value){
-  //   if (_weaponState == value)
-  //     return;
-  //
-  //   _weaponState = value;
-  //   weaponStateDuration = 0;
-  // }
-
   bool get shouldUpdatePath =>
       (pathTargetIndex != pathTargetIndexPrevious) || (pathCurrent == 0);
 
   double get weaponRangeSquared => weaponRange * weaponRange;
 
   int get pathCurrentIndex => path[pathCurrent];
-
-  // int get lookDirection => IsometricDirection.fromRadian(lookRadian);
 
   bool get targetWithinAttackRange {
     final target = this.target;
@@ -196,8 +178,6 @@ class Character extends Collider {
 
   bool get targetIsAlly => target == null ? false : isAlly(target);
 
-  // bool get weaponStateBusy => weaponState != WeaponState.Aiming && weaponStateDurationTotal > 0;
-
   bool get running => state == CharacterState.Running;
 
   bool get striking => state == CharacterState.Strike;
@@ -223,22 +203,9 @@ class Character extends Collider {
 
   bool get targetSet => target != null;
 
-  // bool get weaponStateIdle => weaponState == WeaponState.Idle;
-  //
-  // bool get weaponStateReloading => weaponState == WeaponState.Reloading;
-  //
-  // bool get weaponStatePerforming => weaponState == WeaponState.Performing;
-  //
-  // bool get weaponStateAiming => weaponState == WeaponState.Aiming;
-
   double get healthPercentage => health / maxHealth;
 
   double get angle => _angle;
-
-  // double get weaponDurationPercentage =>
-  //     weaponStateDurationTotal == 0 || weaponStateAiming
-  //         ? 1
-  //         : weaponStateDuration / weaponStateDurationTotal;
 
   int get direction => IsometricDirection.fromRadian(_angle);
 
@@ -267,20 +234,6 @@ class Character extends Collider {
 
   void set angle(double value) =>
       _angle = value % pi2;
-
-  // int getWeaponStateDurationTotal(int weaponState) =>
-  //     switch (weaponState) {
-  //       WeaponState.Idle => 0,
-  //       WeaponState.Aiming => 10,
-  //       WeaponState.Reloading => 10,
-  //       WeaponState.Performing => 10, // TODO
-  //       _ => (throw Exception(''))
-  //     };
-
-  void assignWeaponStateReloading({int duration = 30}){
-    // weaponState = WeaponState.Reloading;
-    weaponStateDurationTotal = duration;
-  }
 
   void setCharacterStateStriking({
     required int duration,

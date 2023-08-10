@@ -1525,14 +1525,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         force: character.runSpeed,
         angle: character.angle,
       );
-      if (character.nextFootstep++ >= 10) {
+      if (character.frame % 10 == 0) {
         dispatchGameEvent(
           GameEventType.Footstep,
           character.x,
           character.y,
           character.z,
         );
-        character.nextFootstep = 0;
         character.velocityZ += 1;
       }
     }
