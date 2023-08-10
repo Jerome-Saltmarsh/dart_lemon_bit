@@ -92,6 +92,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+         death: spriteEmpty,
      );
    }
 
@@ -111,6 +112,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -130,6 +132,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -149,6 +152,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -168,6 +172,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -187,6 +192,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -206,6 +212,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -225,6 +232,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -244,6 +252,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -263,6 +272,7 @@ class IsometricImages with IsometricComponent {
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
          hurt: spriteEmpty,
+       death: spriteEmpty,
      );
    }
 
@@ -282,6 +292,8 @@ class IsometricImages with IsometricComponent {
       running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
       strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
       hurt: spriteEmpty,
+      death: spriteEmpty,
+
     );
   }
 
@@ -359,6 +371,7 @@ class IsometricImages with IsometricComponent {
         running: spriteEmpty,
         strike: spriteEmpty,
         hurt: spriteEmpty,
+        death: spriteEmpty,
     );
 
     spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
@@ -375,12 +388,14 @@ class IsometricImages with IsometricComponent {
     final fallenRunning = await loadSprite('fallen/run');
     final fallenStrike = await loadSprite('fallen/strike');
     final fallenHurt = await loadSprite('fallen/hurt');
+    final fallenDeath = await loadSprite('fallen/death');
 
     spriteFallen = SpriteGroup(
       idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0, loop: true),
       running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 153, loop: true),
       strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 239, loop: false),
       hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 421, loop: false),
+      death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 596, loop: false),
     );
 
     await loadSpriteGroupArmsLeft(

@@ -1168,7 +1168,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.state = CharacterState.Dead;
     character.actionDuration = 0;
     character.frame = 0;
-    deactivate(character);
+    // deactivate(character);
     character.clearPath();
     clearCharacterTarget(character);
     customOnCharacterDead(character);

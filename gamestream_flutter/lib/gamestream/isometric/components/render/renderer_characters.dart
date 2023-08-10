@@ -777,6 +777,17 @@ class RendererCharacters extends RenderGroup {
             dstY: character.renderY,
             anchorY: anchorY,
         );
+      case CharacterState.Dead:
+        render.sprite(
+            sprite: spriteGroup.death,
+            row: row,
+            column: column,
+            color: character.color,
+            scale: scale,
+            dstX: character.renderX,
+            dstY: character.renderY,
+            anchorY: anchorY,
+        );
     }
   }
 }

@@ -332,7 +332,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
     for (final character in characters) {
 
-      if (character.deadOrInactive)
+      if (character.inactive)
         continue;
 
       final renderX = character.renderX;
