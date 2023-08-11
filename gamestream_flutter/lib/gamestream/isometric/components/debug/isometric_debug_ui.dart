@@ -40,6 +40,7 @@ extension isometricDebugUI on IsometricDebug {
                   DebugTab.Objects => buildTabObjects(),
                   DebugTab.Isometric => buildTabIsometric(),
                   DebugTab.Player => buildTabPlayer(),
+                  DebugTab.Options => buildTabOptions(),
                 },
               ),
             ),
@@ -562,6 +563,23 @@ extension isometricDebugUI on IsometricDebug {
         ],
       );
 
+  Widget buildTabOptions() =>
+      buildTab(
+        children: [
+          // onPressed(
+          //   action: options.toggleRenderCharacterAnimationFrame,
+          //   child: buildRow('render character animation frame',
+          //       GSRefresh(() => buildValueText(options.renderCharacterAnimationFrame)),
+          //   ),
+          // ),
+          buildRowToggle(
+             text: 'render character animation frame',
+             action: options.toggleRenderCharacterAnimationFrame,
+             value: () => options.renderCharacterAnimationFrame,
+          ),
+        ],
+      );
+
   Widget buildRowMapped<T>(String text, Watch<T> watch, dynamic mapper(T t)) =>
       buildRow(text, buildWatchMapText(watch, mapper));
 
@@ -570,6 +588,18 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,
     );
+
+  Widget buildRowToggle({
+    required String text,
+    required Function action,
+    required Function value,
+  }) =>
+      onPressed(
+        action: action,
+        child: buildRow(text,
+          GSRefresh(() => buildValueText(value())),
+        ),
+      );
 }
 
 Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))

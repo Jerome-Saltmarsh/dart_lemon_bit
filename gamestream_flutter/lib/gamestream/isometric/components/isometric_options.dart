@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/lemon_components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
+  var renderCharacterAnimationFrame = false;
   var characterRenderScale = 0.35;
   var characterShadowColor = Colors.black38;
   var framesPerLightingUpdate = 60;
@@ -39,6 +40,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final error = Watch<GameError?>(null);
 
   late final Watch<Game> game;
+
 
   IsometricOptions(){
     gameType.onChanged(_onChangedGameType);
@@ -187,4 +189,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     GameType.Amulet => amulet,
     _ => throw Exception('mapGameTypeToGame($gameType)')
   };
+
+  void toggleRenderCharacterAnimationFrame() =>
+      renderCharacterAnimationFrame = !renderCharacterAnimationFrame;
 }
