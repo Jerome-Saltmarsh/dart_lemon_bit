@@ -511,7 +511,7 @@ class RendererCharacters extends RenderGroup {
     final groupTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
 
     final row = character.renderDirection;
-    final column = character.animationFrame;
+    var column = character.animationFrame;
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -552,9 +552,9 @@ class RendererCharacters extends RenderGroup {
     } else {
 
       if (frame ~/ 8 % 2 == 0){
-        frame = frame % 8;
+        column = frame % 8;
       } else {
-        frame = (7 - (frame % 8));
+        column = (7 - (frame % 8));
       }
 
       spriteGloveLeft = spriteGroupHandsLeft.idle;
