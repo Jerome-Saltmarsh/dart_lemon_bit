@@ -584,7 +584,7 @@ class RendererCharacters extends RenderGroup {
     }
 
     if (renderBottom) {
-      // renderCharacterShadowCircle(character);
+
       render.sprite(
         sprite: spriteShadow,
         row: row,
@@ -736,6 +736,10 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterFallen(Character character) {
+
+    if (renderBottom)
+      return;
+
     const scale = 0.61;
     const anchorY = 0.6;
 
