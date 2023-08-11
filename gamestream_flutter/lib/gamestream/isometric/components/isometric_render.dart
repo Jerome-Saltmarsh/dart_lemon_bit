@@ -581,4 +581,21 @@ class IsometricRender with IsometricComponent {
       }
     }
   }
+
+  void flame({
+    required double dstX,
+    required double dstY,
+    double scale = 0.5,
+    int seed = 0,
+  }){
+    render.sprite(
+      sprite: images.spriteFlame,
+      row: environment.windTypeAmbient.value,
+      column: seed + animation.frame,
+      color: 0,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+    );
+  }
 }
