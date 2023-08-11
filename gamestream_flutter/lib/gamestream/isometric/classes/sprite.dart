@@ -70,4 +70,5 @@ class Sprite {
         ? (column % columns)
         : (min(column, columns - 1)));
   }
+
 }

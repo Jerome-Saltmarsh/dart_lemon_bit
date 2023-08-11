@@ -25,7 +25,7 @@ class Character extends Position {
   /// percentage between 0 and 1
   var magic = 1.0;
   var lookDirection = 0;
-  var weaponStateDuration = 0;
+  // var weaponStateDuration = 0;
   var color = 0;
 
   static const piSixteenth = pi / 16.0;

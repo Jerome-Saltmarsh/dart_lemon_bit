@@ -473,7 +473,7 @@ class RendererCharacters extends RenderGroup {
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
 
-    var frame = character.animationFrame;
+    var animationFrame = character.animationFrame;
 
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toStandardDirection(character.direction);
@@ -520,7 +520,7 @@ class RendererCharacters extends RenderGroup {
     ].contains(direction);
 
     if (character.striking){
-      frame = min(character.weaponStateDuration, 7);
+      animationFrame = min(animationFrame, 7);
       spriteGloveLeft = spriteGroupHandsLeft.strike;
       spriteGloveRight = spriteGroupHandsRight.strike;
       spriteArmLeft = spriteGroupArmsLeft.strike;
@@ -533,10 +533,10 @@ class RendererCharacters extends RenderGroup {
       spriteHelm = spriteGroupHelm.strike;
       spriteWeapon = weaponGroup.strike;
       spriteShadow = images.spriteGroupKidShadow.strike;
-      render.textPosition(character, frame, offsetY: -100);
+      render.textPosition(character, animationFrame, offsetY: -100);
     }
     else if (character.running) {
-      frame = frame % 8;
+      animationFrame = animationFrame % 8;
       spriteGloveLeft = spriteGroupHandsLeft.running;
       spriteGloveRight = spriteGroupHandsRight.running;
       spriteArmLeft = spriteGroupArmsLeft.running;
@@ -551,10 +551,10 @@ class RendererCharacters extends RenderGroup {
       spriteShadow = images.spriteGroupKidShadow.running;
     } else {
 
-      if (frame ~/ 8 % 2 == 0){
-        column = frame % 8;
+      if (animationFrame ~/ 8 % 2 == 0){
+        column = animationFrame % 8;
       } else {
-        column = (7 - (frame % 8));
+        column = (7 - (animationFrame % 8));
       }
 
       spriteGloveLeft = spriteGroupHandsLeft.idle;

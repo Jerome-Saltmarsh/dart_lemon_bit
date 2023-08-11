@@ -645,7 +645,6 @@ class IsometricParser with ByteReader, IsometricComponent {
 
     final readA = readBitFromByte(compression, 0);
     final readB = readBitFromByte(compression, 1);
-    final readC = readBitFromByte(compression, 2);
 
     if (readA){
       character.weaponType = readByte();
@@ -661,12 +660,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
       final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
       character.weaponState = weaponState;
-    }
-
-    if (readC) {
-      character.weaponStateDuration = readByte();
-    } else {
-      character.weaponStateDuration = 0;
     }
   }
 
