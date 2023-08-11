@@ -25,6 +25,7 @@ class Sprite {
   final packed = Watch<Image?>(null);
   final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
+  final reduction = Watch(0);
 
   PlatformFile? _file;
   Image? _image;
@@ -47,7 +48,6 @@ class Sprite {
     final now = DateTime.now();
     image = decodePng(bytes);
     final ms = DateTime.now().difference(now).inMilliseconds;
-    print('decodePng took $ms milliseconds');
     fileName = value.name;
 
   }
@@ -61,13 +61,10 @@ class Sprite {
     clearPackedImage();
   }
 
-  Sprite(){
-    // file.onChanged(onChangedFile);
-  }
-
   void clearPackedImage() {
     bound.value = null;
     packed.value = null;
+    reduction.value = 0;
   }
 
   void bind(){
@@ -93,6 +90,9 @@ class Sprite {
 
     bound.value = copy;
 
+    final previousArea = (source.width * source.height).toInt();
+    final boundArea = bounds.totalArea;
+    reduction.value = ((1 - (boundArea / previousArea)) * 100).toInt();
   }
 
   var packStackIndex = 0;
@@ -158,10 +158,6 @@ class Sprite {
       pasteX += width;
       pasteX++;
       canvasWidth = max(canvasWidth, pasteX);
-
-      // if (canvasWidth > maxSize){
-      //   throw Exception();
-      // }
     }
 
     final transparent = ColorRgba8(0, 0, 0, 0);

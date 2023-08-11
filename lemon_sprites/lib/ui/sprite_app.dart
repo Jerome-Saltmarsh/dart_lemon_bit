@@ -36,6 +36,7 @@ class SpriteApp extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('LEMON-SPRITES'),
           actions: [
+            buildControlReduction(),
             buildControlRows(),
             buildControlColumns(),
             buildButtonLoad(),
@@ -177,4 +178,16 @@ class SpriteApp extends StatelessWidget {
         color: image == null ? Colors.black54 : Colors.black87,
       ),
     ));
+
+  Widget buildControlReduction() {
+    return Container(
+      margin: const EdgeInsets.only(right: 16),
+      child: WatchBuilder(sprite.reduction, (reduction) {
+         if (reduction <= 0){
+           return nothing;
+         }
+         return text('Reduction: $reduction%');
+      }),
+    );
+  }
 }

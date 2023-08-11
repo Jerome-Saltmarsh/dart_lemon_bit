@@ -18,6 +18,20 @@ class SpriteBounds {
   final boundStackTop = Uint16List(boundStackSize);
   final boundStackBottom = Uint16List(boundStackSize);
 
+  int get totalArea {
+    var area = 0;
+    for (var i = 0; i < boundStackIndex; i++){
+      area += getAreaOfBind(i);
+    }
+    return area;
+  }
+
+  int getAreaOfBind(int index){
+    final width = boundStackRight[index] - boundStackLeft[index];
+    final height = boundStackBottom[index] - boundStackTop[index];
+    return width * height;
+  }
+
   void bind(Image srcImage, int rows, int columns) {
     boundStackIndex = 0;
 

@@ -36,6 +36,7 @@ class IsometricImages with IsometricComponent {
 
   late final Sprite spriteEmpty;
   late final Sprite spriteFlame;
+  late final Sprite spriteRainFalling;
 
   late final Image empty;
   late final Image shades;
@@ -422,6 +423,14 @@ class IsometricImages with IsometricComponent {
         loop: true,
     );
 
+    final spriteRainFallingBytes = await loadSpriteBytes('particles/rain_falling');
+    spriteRainFalling = Sprite.fromBytes(
+      spriteRainFallingBytes,
+        image: atlas_nodes,
+        x: 664,
+        y: 1874,
+        loop: true,
+    );
 
     await loadSpriteGroupArmsLeft(
         complexion: ComplexionType.Fair,

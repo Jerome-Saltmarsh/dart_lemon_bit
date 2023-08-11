@@ -819,7 +819,7 @@ class RendererNodes extends RenderGroup {
         color: 0,
     );
 
-    render.flame(dstX: dstX, dstY: dstY + 10, scale: 0.4);
+    render.flame(dstX: dstX, dstY: dstY + 8, scale: 0.4);
   }
 
   bool assertOnScreen(){
@@ -1852,9 +1852,20 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderNodeRainFalling() {
-    renderStandardNode(
-      srcX: environment.srcXRainFalling,
-      srcY: 72.0 * ((animation.frame + row + column) % 6), // TODO Expensive Operation
+    // renderStandardNode(
+    //   srcX: environment.srcXRainFalling,
+    //   srcY: 72.0 * ((animation.frame + row + column) % 6), // TODO Expensive Operation
+    // );
+    // var row =
+
+    render.sprite(
+        sprite: images.spriteRainFalling,
+        row: (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.windTypeAmbient.value,
+        column: animation.frame,
+        color: colorCurrent,
+        scale: 1.0,
+        dstX: currentNodeDstX,
+        dstY: currentNodeDstY,
     );
   }
 
