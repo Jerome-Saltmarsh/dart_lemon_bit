@@ -9,24 +9,28 @@ class Sprite {
   final int height;
   final int rows;
   final int columns;
+  final double x;
   final double y;
   final bool loop;
   late final bool isEmpty;
 
   factory Sprite.fromBytes(Uint8List bytes, {
     required Image image,
+    double x = 0,
     required double y,
     required bool loop,
   }) =>
       Sprite.fromUint16List(
           bytes.buffer.asUint16List(),
           image: image,
+          x: x,
           y: y,
           loop: loop,
       );
 
   factory Sprite.fromUint16List(Uint16List uint16List, {
     required Image image,
+    double x = 0,
     required double y,
     required bool loop,
   }) =>
@@ -41,6 +45,7 @@ class Sprite {
                   .map((e) => e.toDouble())
                   .toList(growable: false)
           ),
+          x: x,
           y: y,
           loop: loop,
       );
@@ -54,6 +59,7 @@ class Sprite {
     required this.columns,
     required this.y,
     required this.loop,
+    this.x = 0,
   }) {
     isEmpty = values.isEmpty;
   }

@@ -821,22 +821,33 @@ class RendererNodes extends RenderGroup {
         color: 0,
     );
 
-    final frame = (row + (animation.frame)) % 10;
-    const Flame_Width = 30.0;
-    const Flame_Height = 83.0;
+    // final frame = (row + (animation.frame)) % 10;
+    // const Flame_Width = 30.0;
+    // const Flame_Height = 83.0;
+    //
 
-    engine.renderSprite(
-      image: images.atlas_nodes,
-      srcX: 957.0 + (frame * Flame_Width),
-      srcY: 522,
-      srcWidth: Flame_Width,
-      srcHeight: Flame_Height,
+    render.sprite(
+      sprite: images.spriteFlame,
+      row: environment.windTypeAmbient.value,
+      column: row + animation.frame,
+      color: 0,
+      scale: 0.5,
       dstX: dstX,
       dstY: dstY + 8,
-      anchorY: 0.4,
-      color: 0,
-      scale: 0.35,
     );
+
+    // engine.renderSprite(
+    //   image: images.atlas_nodes,
+    //   srcX: 957.0 + (frame * Flame_Width),
+    //   srcY: 522,
+    //   srcWidth: Flame_Width,
+    //   srcHeight: Flame_Height,
+    //   dstX: dstX,
+    //   dstY: dstY + 8,
+    //   anchorY: 0.4,
+    //   color: 0,
+    //   scale: 0.35,
+    // );
     // engine.renderSprite(
     //   image: images.atlas_nodes,
     //   srcX: 1247.0 + (frame * Flame_Width),

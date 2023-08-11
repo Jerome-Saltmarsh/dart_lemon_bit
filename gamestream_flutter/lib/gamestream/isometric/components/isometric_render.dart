@@ -38,7 +38,6 @@ class IsometricRender with IsometricComponent {
     required double scale,
     required double dstX,
     required double dstY,
-    bool loop = false,
     double anchorX = 0.5,
     double anchorY = 0.5,
   }){
@@ -52,12 +51,13 @@ class IsometricRender with IsometricComponent {
     final frame = sprite.getFrame(row: row, column: column);
     var f = fStart;
     var j = frame * 6; // each frame consumes for indexes
+    final x = sprite.x;
     final y = sprite.y;
 
     bufferClr[bufferIndex] = color;
-    bufferSrc[f++] = values[j++]; // left
+    bufferSrc[f++] = values[j++] + x; // left
     bufferSrc[f++] = values[j++] + y; // top
-    bufferSrc[f++] = values[j++]; // right
+    bufferSrc[f++] = values[j++] + x; // right
     bufferSrc[f++] = values[j++] + y; // bottom
     f = fStart;
     bufferDst[f++] = scale;
