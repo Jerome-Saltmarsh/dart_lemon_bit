@@ -496,6 +496,7 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteGloveBehind;
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
+    final Sprite spriteShadow;
 
     final spriteGroupHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
     final spriteGroupHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
@@ -531,8 +532,7 @@ class RendererCharacters extends RenderGroup {
       spriteLegs = legsGroup.strike;
       spriteHelm = spriteGroupHelm.strike;
       spriteWeapon = weaponGroup.strike;
-
-
+      spriteShadow = images.spriteGroupKidShadow.strike;
       render.textPosition(character, frame, offsetY: -100);
     }
     else if (character.running) {
@@ -548,6 +548,7 @@ class RendererCharacters extends RenderGroup {
       spriteLegs = legsGroup.running;
       spriteHelm = spriteGroupHelm.running;
       spriteWeapon = weaponGroup.running;
+      spriteShadow = images.spriteGroupKidShadow.running;
     } else {
 
       if (frame ~/ 8 % 2 == 0){
@@ -567,6 +568,7 @@ class RendererCharacters extends RenderGroup {
       spriteLegs = legsGroup.idle;
       spriteHelm = spriteGroupHelm.idle;
       spriteWeapon = weaponGroup.idle;
+      spriteShadow = images.spriteGroupKidShadow.idle;
     }
 
     if (leftInFront) {
@@ -582,7 +584,18 @@ class RendererCharacters extends RenderGroup {
     }
 
     if (renderBottom) {
-      renderCharacterShadowCircle(character);
+      // renderCharacterShadowCircle(character);
+      render.sprite(
+        sprite: spriteShadow,
+        row: row,
+        column: column,
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
       render.sprite(
         sprite: spriteTorso,
         row: row,

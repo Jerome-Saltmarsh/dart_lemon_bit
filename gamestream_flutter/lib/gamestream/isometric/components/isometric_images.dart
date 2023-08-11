@@ -18,7 +18,6 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
-
   final spriteGroupArmsLeft = <int, SpriteGroup> {};
   final spriteGroupArmsRight = <int, SpriteGroup> {};
   final spriteGroupBody = <int, SpriteGroup> {};
@@ -33,6 +32,7 @@ class IsometricImages with IsometricComponent {
 
   late final SpriteGroup spriteGroupEmpty;
   late final SpriteGroup spriteFallen;
+  late final SpriteGroup spriteGroupKidShadow;
 
   late final Sprite spriteEmpty;
 
@@ -44,6 +44,7 @@ class IsometricImages with IsometricComponent {
   late final Image zombie_shadow;
   late final Image character_dog;
   late final Image character_fallen;
+  late final Image kid_shadow;
   late final Image atlas_particles;
   late final Image atlas_head;
   late final Image atlas_hands;
@@ -326,6 +327,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_legs').then((value) => atlas_legs = value);
 
     loadPng('characters/fallen').then((value) => character_fallen = value);
+    loadPng('characters/kid_shadow').then((value) => kid_shadow = value);
 
     loadPng('kid/arms/fair/left').then((value) => kid_arms_fair_left = value);
     loadPng('kid/arms/fair/right').then((value) => kid_arms_fair_right = value);
@@ -396,6 +398,18 @@ class IsometricImages with IsometricComponent {
       strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, loop: false),
       hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, loop: false),
       death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, loop: false),
+    );
+
+    final kidShadowIdle = await loadSprite('shadow/idle');
+    final kidShadowRun = await loadSprite('shadow/run');
+    final kidShadowStrike = await loadSprite('shadow/strike');
+
+    spriteGroupKidShadow = SpriteGroup(
+        idle: Sprite.fromBytes(kidShadowIdle, image: kid_shadow, y: 0, loop: true),
+        running: Sprite.fromBytes(kidShadowRun, image: kid_shadow, y: 57, loop: true),
+        strike: Sprite.fromBytes(kidShadowStrike, image: kid_shadow, y: 297, loop: false),
+        hurt: spriteEmpty,
+        death: spriteEmpty,
     );
 
     await loadSpriteGroupArmsLeft(

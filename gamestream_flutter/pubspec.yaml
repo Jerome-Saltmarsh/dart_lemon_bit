@@ -84,6 +84,7 @@ flutter:
     - sprites/torso/fair/
     - sprites/weapons/staff/
     - sprites/weapons/sword/
+    - sprites/shadow/
     - audio/
     - audio/music/
     - audio/sounds/
