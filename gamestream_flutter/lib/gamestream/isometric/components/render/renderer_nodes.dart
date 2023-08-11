@@ -821,22 +821,33 @@ class RendererNodes extends RenderGroup {
         color: 0,
     );
 
-    final frame = (row + (animation.frame)) % 6;
-    const Flame_Src_Y = 372.0;
-    const Flame_Width = 32.0;
-    const Flame_Height = 32.0;
+    final frame = (row + (animation.frame)) % 10;
+    const Flame_Width = 30.0;
+    const Flame_Height = 83.0;
 
     engine.renderSprite(
       image: images.atlas_nodes,
-      srcX: 1247.0 + (frame * Flame_Width),
-      srcY: wind == WindType.Calm ? Flame_Src_Y : Flame_Src_Y + Flame_Height,
+      srcX: 957.0 + (frame * Flame_Width),
+      srcY: 522,
       srcWidth: Flame_Width,
       srcHeight: Flame_Height,
       dstX: dstX,
       dstY: dstY + 8,
-      anchorY: AtlasNodeAnchorY.Torch,
+      anchorY: 0.4,
       color: 0,
+      scale: 0.35,
     );
+    // engine.renderSprite(
+    //   image: images.atlas_nodes,
+    //   srcX: 1247.0 + (frame * Flame_Width),
+    //   srcY: wind == WindType.Calm ? Flame_Src_Y : Flame_Src_Y + Flame_Height,
+    //   srcWidth: Flame_Width,
+    //   srcHeight: Flame_Height,
+    //   dstX: dstX,
+    //   dstY: dstY + 8,
+    //   anchorY: AtlasNodeAnchorY.Torch,
+    //   color: 0,
+    // );
   }
 
   bool assertOnScreen(){

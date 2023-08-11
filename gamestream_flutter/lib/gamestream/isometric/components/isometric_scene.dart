@@ -650,9 +650,12 @@ class IsometricScene with IsometricComponent implements Updatable {
   void applyEmissionsCharacters() {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
-      // if (!character.allie) continue;
 
-      if (character.characterType == CharacterType.Zombie)
+      if (const [
+        CharacterType.Zombie,
+        CharacterType.Fallen,
+        CharacterType.Dog,
+      ].contains(character.characterType))
         continue;
 
       applyVector3EmissionAmbient(
