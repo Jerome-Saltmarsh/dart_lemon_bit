@@ -393,11 +393,6 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
-    // bufferClr = engine.bufferClr;
-    // bufferDst = engine.bufferDst;
-    // bufferSrc = engine.bufferSrc;
-    // incrementBufferIndex = engine.incrementBufferIndex;
-
     ambientColor = scene.ambientColor;
     nodeColors = scene.nodeColors;
     totalNodes = scene.totalNodes;
@@ -1856,7 +1851,7 @@ class RendererNodes extends RenderGroup {
     render.sprite(
         sprite: images.spriteRainFalling,
         row: (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.windTypeAmbient.value,
-        column: animation.frame + column + row,
+        column: animation.frame + row + column,
         color: colorCurrent,
         scale: 1.0,
         dstX: currentNodeDstX,
