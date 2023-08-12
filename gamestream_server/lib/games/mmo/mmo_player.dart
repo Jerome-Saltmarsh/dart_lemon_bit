@@ -233,8 +233,8 @@ class AmuletPlayer extends IsometricPlayer {
 
     _equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
-    strikeActionFrame = item.actionFrame;
-    strikeDuration = item.performDuration;
+    attackActionFrame = item.actionFrame;
+    attackDuration = item.performDuration;
     writeEquippedWeaponIndex(value);
   }
 

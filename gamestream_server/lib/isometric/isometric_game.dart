@@ -263,7 +263,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
           player.lookAtMouse();
-          characterStrike(player);
+          characterAttack(player);
         } else {
           player.deselectActivatedPower();
         }
@@ -297,7 +297,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
-          characterStrike(player);
+          characterAttack(player);
           return;
         } else {
           player.setDestinationToMouse();
@@ -511,8 +511,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     // character.weaponState = WeaponState.Performing;
     character.setCharacterStateStriking(
-        duration: character.strikeDuration,
-        actionFrame: character.strikeActionFrame,
+        duration: character.attackDuration,
+        actionFrame: character.attackActionFrame,
     );
 
     character.setDestinationToCurrentPosition();
@@ -2704,10 +2704,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.clearTarget();
   }
 
-  void characterStrike(Character character) {
-      character.setCharacterStateStriking(
-          duration: character.strikeDuration,
-          actionFrame: character.strikeActionFrame,
+  void characterAttack(Character character) {
+    if (character.weaponType == WeaponType.Bow) {
+      character.setCharacterStateFire(
+        duration: character.attackDuration,
+        actionFrame: character.attackActionFrame,
       );
+    } else {
+      character.setCharacterStateStriking(
+        duration: character.attackDuration,
+        actionFrame: character.attackActionFrame,
+      );
+    }
+
   }
 }

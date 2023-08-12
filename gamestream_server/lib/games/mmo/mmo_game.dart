@@ -124,8 +124,8 @@ class Amulet extends IsometricGame<AmuletPlayer> {
       runSpeed: 0.75,
     )
       ..weaponHitForce = 2
-      ..strikeDuration = 20
-      ..strikeActionFrame = 12
+      ..attackDuration = 20
+      ..attackActionFrame = 12
     );
   }
 

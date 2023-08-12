@@ -25,29 +25,35 @@ class Character extends Position {
   /// percentage between 0 and 1
   var magic = 1.0;
   var lookDirection = 0;
-  // var weaponStateDuration = 0;
   var color = 0;
 
   static const piSixteenth = pi / 16.0;
 
   double get radius => CharacterType.getRadius(characterType);
 
-  // bool get weaponStateIdle => weaponState == WeaponState.Idle;
-  // bool get weaponStatePerforming => weaponState == WeaponState.Performing;
-  // bool get weaponStateReloading => weaponState == WeaponState.Reloading;
-  // bool get weaponStateChanging => weaponState == WeaponState.Changing;
-  // bool get weaponStateAiming => weaponState == WeaponState.Aiming;
-  // bool get weaponEngaged => weaponStateAiming || weaponStatePerforming;
   bool get dead => state == CharacterState.Dead;
+
   bool get spawning => state == CharacterState.Spawning;
+
   bool get running => state == CharacterState.Running;
+
   bool get striking => state == CharacterState.Strike;
+
+  bool get firing => state == CharacterState.Fire;
+
   bool get performing => state == CharacterState.Strike;
+
   bool get hurt => state == CharacterState.Hurt;
+
   bool get alive => !dead;
+
   bool get unarmed => weaponType == WeaponType.Unarmed;
+
   bool get weaponTypeIsShotgun => weaponType == WeaponType.Shotgun;
+
   int get renderDirection => (direction - 1) % 8;
+
   int get renderLookDirection => (lookDirection - 1) % 8;
+
   double get angle => direction * piQuarter;
 }

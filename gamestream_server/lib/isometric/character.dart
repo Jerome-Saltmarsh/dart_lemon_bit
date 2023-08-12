@@ -33,8 +33,8 @@ class Character extends Collider {
 
   var actionDuration = -1;
   var actionFrame = -1;
-  var strikeDuration = 0;
-  var strikeActionFrame = 0;
+  var attackDuration = 0;
+  var attackActionFrame = 0;
   var weaponHitForce = 10.0;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
@@ -245,6 +245,17 @@ class Character extends Collider {
     setCharacterState(value: CharacterState.Strike, duration: duration);
   }
 
+  void setCharacterStateFire({
+    required int duration,
+    required int actionFrame,
+  }){
+    assert (active);
+    assert (alive);
+    this.actionFrame = actionFrame;
+    setDestinationToCurrentPosition();
+    setCharacterState(value: CharacterState.Fire, duration: duration);
+  }
+
   void setCharacterStateSpawning({int duration = 40}){
     if (state == CharacterState.Spawning)
       return;
@@ -424,7 +435,7 @@ class Character extends Collider {
     clearPath();
     idle();
     faceTarget();
-    game.characterStrike(this);
+    game.characterAttack(this);
   }
 
   void idle() {
