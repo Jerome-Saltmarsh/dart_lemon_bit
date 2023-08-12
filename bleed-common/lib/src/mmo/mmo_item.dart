@@ -63,7 +63,7 @@ enum MMOItem {
       damage: 100,
       range: 300,
       attackType: MMOAttackType.Arrow,
-      actionFrame: 20,
+      actionFrame: 12,
       performDuration: 25,
   ),
   Steel_Helmet(
