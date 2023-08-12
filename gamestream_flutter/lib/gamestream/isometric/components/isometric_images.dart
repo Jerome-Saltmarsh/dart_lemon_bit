@@ -510,7 +510,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 51,
         yStrike: 153,
-        yFire: 227,
+        yFire: 277,
         image: kid_body_shirt_blue,
     );
 
