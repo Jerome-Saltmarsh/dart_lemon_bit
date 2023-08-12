@@ -299,14 +299,13 @@ class RendererParticles extends RenderGroup {
           final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);
           final perc = ((nodeAlpha / 255) * 7).toInt() * 8;
-          render.textPosition(particle, nodeAlpha, offsetY: -25);
-
+          // render.textPosition(particle, nodeAlpha, offsetY: -25);
           engine.renderSprite(
             image: images.atlas_nodes,
             dstX: dstX,
             dstY: dstY,
-            srcX: 72,
-            srcY: 2040.0 - perc,
+            srcX: 736,
+            srcY: 1864.0 - perc,
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,

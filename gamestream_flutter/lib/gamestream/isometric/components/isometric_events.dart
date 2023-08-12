@@ -42,11 +42,15 @@ class IsometricEvents with IsometricComponent {
     scene.updateAmbientAlphaAccordingToTime();
     scene.resetNodeColorsToAmbient();
     particles.clearParticles();
-    particles.spawnDust(
-      x: 1500,
-      y: 1500,
-      z: 35,
-    );
+
+    for (var i = 0; i < 3; i++){
+      particles.spawnDust(
+        x: 1500,
+        y: 1500,
+        z: 35,
+      );
+    }
+
     editor.refreshNodeSelectedIndex();
   }
 

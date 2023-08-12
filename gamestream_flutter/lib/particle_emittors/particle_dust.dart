@@ -16,12 +16,15 @@ class ParticleDust extends Particle {
   var movementAngle = 0.0;
   var rotationSpeed = 0.01;
 
+  static const maxScale = 0.5;
+  static const minScale = 0.25;
+  static const scaleDelta = 0.004;
+
   ParticleDust({
     required super.x,
     required super.y,
     required super.z,
   }) {
-    print('ParticleDust()');
     startX = x;
     startY = y;
     startZ = z;
@@ -35,7 +38,7 @@ class ParticleDust extends Particle {
     scale = 0.25;
     nodeCollidable = false;
     changeDestination();
-    scaleVelocity = 0.01;
+    scaleVelocity = scaleDelta;
   }
 
   bool get shouldChangeDestination => withinRadius(x: destinationX, y: destinationY, z: destinationZ, radius: roamRadius);
@@ -54,10 +57,12 @@ class ParticleDust extends Particle {
     }  else {
       movementAngle += rotationSpeed;
     }
-    if (scaleVelocity < 0 && scale < 0.5){
+    if (scale < minScale){
       scaleVelocity = -scaleVelocity;
-    } else if (scaleVelocity > 0 && scale > 1.0){
+      scale = minScale;
+    } else if (scale > maxScale){
       scaleVelocity = -scaleVelocity;
+      scale = maxScale;
     }
     setSpeed(movementAngle, movementSpeed);
   }
