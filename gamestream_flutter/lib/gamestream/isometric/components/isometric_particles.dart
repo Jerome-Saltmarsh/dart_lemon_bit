@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:gamestream_flutter/lemon_components/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/particle_emittors/particle_dust.dart';
 
 import '../../../isometric/classes/particle.dart';
 import 'isometric_component.dart';
@@ -28,6 +29,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   void clearParticles(){
+    print('particles.clearParticles()');
     children.clear();
   }
 
@@ -829,7 +831,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
 
     final bounce = nodeCollision && particle.zv < 0;
-    particle.updateMotion();
+    particle.applyMotion();
 
     if (scene.outOfBoundsPosition(particle)){
       particle.deactivate();
@@ -846,15 +848,19 @@ class IsometricParticles with IsometricComponent implements Updatable {
         particle.zv = 0;
       }
     }
+    particle.update();
     particle.applyLimits();
-    particle.duration--;
-
-    if (particle.duration <= 0) {
-      particle.deactivate();
-    }
   }
 
   void sort(){
     children.sort(Particle.compare);
+  }
+
+  void spawnDust({
+    required double x,
+    required double y,
+    required double z,
+  }) {
+    children.add(ParticleDust(x: x, y: y, z: z));
   }
 }

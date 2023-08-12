@@ -40,11 +40,15 @@ class ParticleType {
   static const Confetti_Cyan      = 38;
   static const Confetti_White      = 39;
   static const Lightning_Bolt     = 40;
+  static const Dust = 41;
 
   static String getName(int particleType) => const {
       Smoke: 'Smoke',
+      Shadow: 'Shadow',
       Zombie_Head: 'Zombie_Head',
       Shell: 'Shell',
       Blood: 'Blood',
-    }[particleType] ?? 'name-unknown-$particleType';
+      Dust: 'Dust',
+      Water_Drop: 'Water_Drop',
+    }[particleType] ?? 'unknown-$particleType';
 }

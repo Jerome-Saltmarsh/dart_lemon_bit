@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gamestream_flutter/library.dart';
 
 class Position implements Comparable<Position>{
@@ -50,5 +52,13 @@ class Position implements Comparable<Position>{
   }
 
   double getAngle(double x, double y) => angleBetween(this.x, this.y, x, y);
+
+  bool withinRadius({
+    required double x,
+    required double y,
+    required double z,
+    required double radius,
+  }) =>
+      getDistanceXYZSquared(this.x, this.y, this.z, x, y, z) <= pow(radius, 2);
 }
 

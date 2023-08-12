@@ -35,7 +35,6 @@ class IsometricGame extends Game {
 
   @override
   void onActivated() {
-    particles.clearParticles();
     options.windowOpenMenu.setFalse();
     action.cameraTargetPlayer();
 

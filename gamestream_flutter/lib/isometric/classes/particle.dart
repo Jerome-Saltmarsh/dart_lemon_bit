@@ -52,7 +52,7 @@ class Particle extends Position {
     yv = opp(value, speed);
   }
 
-  void updateMotion(){
+  void applyMotion(){
     x += xv;
     y += yv;
     z += zv;
@@ -89,9 +89,11 @@ class Particle extends Position {
   void applyLimits(){
     if (scale < 0) {
       scale = 0;
+      deactivate();
     }
     if (z <= 0) {
       z = 0;
+      deactivate();
     }
   }
 
@@ -116,6 +118,11 @@ class Particle extends Position {
      return a.compareTo(b);
   }
 
-
+  void update(){
+    duration--;
+    if (duration <= 0) {
+      deactivate();
+    }
+  }
 }
 

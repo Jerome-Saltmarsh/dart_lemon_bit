@@ -294,20 +294,23 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Myst:
-          // const size = 48.0;
-          // final shade = GameState.getV3RenderShade(particle);
-          // if (shade >= 5) return;
-          // engine.renderSprite(
-          //   image: GameImages.particles,
-          //   dstX: particle.renderX,
-          //   dstY: particle.renderY,
-          //   srcX: 480 ,
-          //   srcY: shade * size,
-          //   srcWidth: size,
-          //   srcHeight: size,
-          //   scale: particle.scale,
-          //   color: 1,
-          // );
+          break;
+        case ParticleType.Dust:
+          final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
+          final nodeAlpha = getAlpha(nodeColor);
+          final perc = ((nodeAlpha / 255) * 7).toInt() * 8;
+          render.textPosition(particle, nodeAlpha, offsetY: -25);
+
+          engine.renderSprite(
+            image: images.atlas_nodes,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 72,
+            srcY: 2040.0 - perc,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+          );
           break;
         case ParticleType.Orb_Shard:
           const size = 16.0;

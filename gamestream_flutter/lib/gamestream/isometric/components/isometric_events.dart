@@ -41,8 +41,13 @@ class IsometricEvents with IsometricComponent {
     }
     scene.updateAmbientAlphaAccordingToTime();
     scene.resetNodeColorsToAmbient();
+    particles.clearParticles();
+    particles.spawnDust(
+      x: 1500,
+      y: 1500,
+      z: 50,
+    );
     editor.refreshNodeSelectedIndex();
-    particles.children.clear();
   }
 
   void onFootstep(double x, double y, double z) {
