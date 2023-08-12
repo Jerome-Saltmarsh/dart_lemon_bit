@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/lemon_components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
+  var renderRainFallingTwice = true;
   var renderCharacterAnimationFrame = false;
   var characterRenderScale = 0.35;
   var characterShadowColor = Colors.black38;
@@ -192,4 +193,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleRenderCharacterAnimationFrame() =>
       renderCharacterAnimationFrame = !renderCharacterAnimationFrame;
+
+  void toggleRenderRainTwice() =>
+      renderRainFallingTwice = !renderRainFallingTwice;
 }

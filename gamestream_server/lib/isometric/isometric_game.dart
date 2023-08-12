@@ -2502,8 +2502,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.pathFindingEnabled && character.pathCurrent >= 0 ;
 
   void characterActionFollowPath(Character character) {
-    character.goal = CharacterGoal.Follow_Path;
-
     if (!character.pathSet)
       return;
 

@@ -1801,6 +1801,9 @@ class RendererNodes extends RenderGroup {
       srcX: environment.srcXRainLanding,
       srcY: 72.0 * ((animation.frame + currentNodeVariation) % 6), // TODO Expensive Operation
     );
+    if (options.renderRainFallingTwice){
+      renderNodeRainFalling();
+    }
   }
 
   void renderNodeRainFalling() =>
