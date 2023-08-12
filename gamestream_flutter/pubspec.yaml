@@ -82,6 +82,7 @@ flutter:
     - sprites/helms/steel/
     - sprites/legs/brown/
     - sprites/torso/fair/
+    - sprites/weapons/bow/
     - sprites/weapons/staff/
     - sprites/weapons/sword/
     - sprites/shadow/

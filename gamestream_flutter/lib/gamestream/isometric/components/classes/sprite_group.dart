@@ -6,6 +6,7 @@ class SpriteGroup {
   final Sprite strike;
   final Sprite hurt;
   final Sprite death;
+  final Sprite fire;
 
   SpriteGroup({
     required this.idle,
@@ -13,5 +14,6 @@ class SpriteGroup {
     required this.strike,
     required this.hurt,
     required this.death,
+    required this.fire,
   });
 }

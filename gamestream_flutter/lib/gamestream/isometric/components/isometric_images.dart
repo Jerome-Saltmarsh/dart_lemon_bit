@@ -78,22 +78,26 @@ class IsometricImages with IsometricComponent {
   late final Image kid_torso_fair;
   late final Image kid_weapons_staff;
   late final Image kid_weapons_sword;
+  late final Image kid_weapons_bow;
 
    Future loadSpriteGroupArmsLeft({
      required int complexion,
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
      final idle = await loadSpriteBytes('arm/left/$name/idle');
      final running = await loadSpriteBytes('arm/left/$name/running');
      final strike = await loadSpriteBytes('arm/left/$name/strike');
+     final fire = await loadSpriteBytes('arm/left/$name/fire');
      spriteGroupArmsLeft[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
          death: spriteEmpty,
      );
@@ -104,16 +108,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
      final idle = await loadSpriteBytes('arm/right/$name/idle');
      final running = await loadSpriteBytes('arm/right/$name/running');
      final strike = await loadSpriteBytes('arm/right/$name/strike');
+     final fire = await loadSpriteBytes('arm/right/$name/fire');
      spriteGroupArmsRight[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -124,16 +131,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = BodyType.getName(bodyType).toLowerCase();
      final idle = await loadSpriteBytes('body/$name/idle');
      final running = await loadSpriteBytes('body/$name/running');
      final strike = await loadSpriteBytes('body/$name/strike');
+     final fire = await loadSpriteBytes('body/$name/fire');
      spriteGroupBody[bodyType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -144,16 +154,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = BodyType.getName(bodyType).toLowerCase();
      final idle = await loadSpriteBytes('body_arms/$name/idle');
      final running = await loadSpriteBytes('body_arms/$name/running');
      final strike = await loadSpriteBytes('body_arms/$name/strike');
+     final fire = await loadSpriteBytes('body_arms/$name/fire');
      spriteGroupBodyArms[bodyType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -164,16 +177,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = HandType.getName(handType).toLowerCase();
      final idle = await loadSpriteBytes('hands/left/$name/idle');
      final running = await loadSpriteBytes('hands/left/$name/running');
      final strike = await loadSpriteBytes('hands/left/$name/strike');
+     final fire = await loadSpriteBytes('hands/left/$name/fire');
      spriteGroupHandsLeft[handType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -184,16 +200,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = HandType.getName(handType).toLowerCase();
      final idle = await loadSpriteBytes('hands/right/$name/idle');
      final running = await loadSpriteBytes('hands/right/$name/running');
      final strike = await loadSpriteBytes('hands/right/$name/strike');
+     final fire = await loadSpriteBytes('hands/right/$name/fire');
      spriteGroupHandsRight[handType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -204,16 +223,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
      final idle = await loadSpriteBytes('heads/$name/idle');
      final running = await loadSpriteBytes('heads/$name/running');
      final strike = await loadSpriteBytes('heads/$name/strike');
+     final fire = await loadSpriteBytes('heads/$name/fire');
      spriteGroupHeads[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -224,16 +246,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = HelmType.getName(type).toLowerCase();
      final idle = await loadSpriteBytes('helms/$name/idle');
      final running = await loadSpriteBytes('helms/$name/running');
      final strike = await loadSpriteBytes('helms/$name/strike');
+     final fire = await loadSpriteBytes('helms/$name/fire');
      spriteGroupHelms[type] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -244,16 +269,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = LegType.getName(legType).toLowerCase();
      final idle = await loadSpriteBytes('legs/$name/idle');
      final running = await loadSpriteBytes('legs/$name/running');
      final strike = await loadSpriteBytes('legs/$name/strike');
+     final fire = await loadSpriteBytes('legs/$name/fire');
      spriteGroupLegs[legType] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -264,16 +292,19 @@ class IsometricImages with IsometricComponent {
      required double yIdle,
      required double yRunning,
      required double yStrike,
+     required double yFire,
      required Image image,
     }) async {
      final name = ComplexionType.getName(complexion).toLowerCase();
      final idle = await loadSpriteBytes('torso/$name/idle');
      final running = await loadSpriteBytes('torso/$name/running');
      final strike = await loadSpriteBytes('torso/$name/strike');
+     final fire = await loadSpriteBytes('torso/$name/fire');
      spriteGroupTorso[complexion] = SpriteGroup(
          idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
          running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
          strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
          hurt: spriteEmpty,
        death: spriteEmpty,
      );
@@ -283,17 +314,36 @@ class IsometricImages with IsometricComponent {
     required int type,
     required double yIdle,
     required double yRunning,
-    required double yStrike,
     required Image image,
+    double? yStrike,
+    double? yFire,
   }) async {
     final name = WeaponType.getName(type).toLowerCase();
     final idle = await loadSpriteBytes('weapons/$name/idle');
     final running = await loadSpriteBytes('weapons/$name/running');
-    final strike = await loadSpriteBytes('weapons/$name/strike');
+
+    Sprite spriteFire;
+    Sprite spriteStrike;
+
+    if (yFire != null){
+      final fire = await loadSpriteBytes('weapons/$name/fire');
+      spriteFire = Sprite.fromBytes(fire, image: image, y: yFire, loop: false);
+    } else {
+      spriteFire = spriteEmpty;
+    }
+
+    if (yStrike != null){
+      final strike = await loadSpriteBytes('weapons/$name/strike');
+      spriteStrike = Sprite.fromBytes(strike, image: image, y: yStrike, loop: false);
+    } else {
+      spriteStrike = spriteEmpty;
+    }
+
     spriteGroupWeapons[type] = SpriteGroup(
       idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
       running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
-      strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
+      strike: spriteStrike,
+      fire: spriteFire,
       hurt: spriteEmpty,
       death: spriteEmpty,
 
@@ -343,6 +393,7 @@ class IsometricImages with IsometricComponent {
     loadPng('kid/torso/fair').then((value) => kid_torso_fair = value);
     loadPng('kid/weapons/staff').then((value) => kid_weapons_staff = value);
     loadPng('kid/weapons/sword').then((value) => kid_weapons_sword = value);
+    loadPng('kid/weapons/bow').then((value) => kid_weapons_bow = value);
 
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
@@ -376,6 +427,7 @@ class IsometricImages with IsometricComponent {
         strike: spriteEmpty,
         hurt: spriteEmpty,
         death: spriteEmpty,
+        fire: spriteEmpty,
     );
 
     spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
@@ -400,16 +452,19 @@ class IsometricImages with IsometricComponent {
       strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, loop: false),
       hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, loop: false),
       death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, loop: false),
+      fire: spriteEmpty,
     );
 
     final kidShadowIdle = await loadSpriteBytes('shadow/idle');
     final kidShadowRun = await loadSpriteBytes('shadow/run');
     final kidShadowStrike = await loadSpriteBytes('shadow/strike');
+    final kidShadowFire = await loadSpriteBytes('shadow/fire');
 
     spriteGroupKidShadow = SpriteGroup(
         idle: Sprite.fromBytes(kidShadowIdle, image: kid_shadow, y: 0, loop: true),
         running: Sprite.fromBytes(kidShadowRun, image: kid_shadow, y: 57, loop: true),
         strike: Sprite.fromBytes(kidShadowStrike, image: kid_shadow, y: 297, loop: false),
+        fire: Sprite.fromBytes(kidShadowFire, image: kid_shadow, y: 439, loop: false),
         hurt: spriteEmpty,
         death: spriteEmpty,
     );
@@ -437,6 +492,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 44,
         yStrike: 91,
+        yFire: 141,
         image: kid_arms_fair_left,
     );
 
@@ -445,6 +501,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 44,
         yStrike: 91,
+        yFire: 139,
         image: kid_arms_fair_right,
     );
 
@@ -453,6 +510,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 51,
         yStrike: 153,
+        yFire: 227,
         image: kid_body_shirt_blue,
     );
 
@@ -461,6 +519,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 41,
         yStrike: 83,
+        yFire: 179,
         image: kid_body_arms_shirt_blue,
     );
 
@@ -469,6 +528,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 31,
         yStrike: 60,
+        yFire: 93,
         image: kid_hands_left_gauntlets,
     );
 
@@ -477,6 +537,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 29,
         yStrike: 57,
+        yFire: 86,
         image: kid_hands_right_gauntlets,
     );
 
@@ -485,6 +546,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 28,
         yStrike: 57,
+        yFire: 87,
         image: kid_head_fair,
     );
 
@@ -493,6 +555,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 26,
         yStrike: 53,
+        yFire: 80,
         image: kid_helms_steel,
     );
 
@@ -501,6 +564,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 71,
         yStrike: 233,
+        yFire: 373,
         image: kid_legs_brown,
     );
 
@@ -509,6 +573,7 @@ class IsometricImages with IsometricComponent {
         yIdle: 0,
         yRunning: 205,
         yStrike: 436,
+        yFire: 664,
         image: kid_torso_fair,
     );
 
@@ -526,6 +591,14 @@ class IsometricImages with IsometricComponent {
         yRunning: 63,
         yStrike: 114,
         image: kid_weapons_sword,
+    );
+
+    await loadSpriteGroupWeapon(
+        type: WeaponType.Bow,
+        yIdle: 0,
+        yRunning: 116,
+        yFire: 255,
+        image: kid_weapons_bow,
     );
   }
 
