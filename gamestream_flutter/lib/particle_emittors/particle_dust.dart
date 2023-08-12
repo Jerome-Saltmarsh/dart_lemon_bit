@@ -35,6 +35,7 @@ class ParticleDust extends Particle {
     scale = 0.25;
     nodeCollidable = false;
     changeDestination();
+    scaleVelocity = 0.01;
   }
 
   bool get shouldChangeDestination => withinRadius(x: destinationX, y: destinationY, z: destinationZ, radius: roamRadius);
@@ -52,6 +53,11 @@ class ParticleDust extends Particle {
       movementAngle -= rotationSpeed;
     }  else {
       movementAngle += rotationSpeed;
+    }
+    if (scaleVelocity < 0 && scale < 0.5){
+      scaleVelocity = -scaleVelocity;
+    } else if (scaleVelocity > 0 && scale > 1.0){
+      scaleVelocity = -scaleVelocity;
     }
     setSpeed(movementAngle, movementSpeed);
   }
