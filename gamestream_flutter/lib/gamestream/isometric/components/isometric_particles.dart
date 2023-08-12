@@ -802,7 +802,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     particle.nodeIndex = index;
     final nodeType = scene.nodeTypes[index];
     particle.nodeType = nodeType;
-    final nodeCollision =
+    final nodeCollision = particle.nodeCollidable &&
           !const [
             NodeType.Empty,
             NodeType.Rain_Landing,
@@ -810,8 +810,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
             NodeType.Grass_Long,
             NodeType.Fireplace,
           ].contains(nodeType);
-
-
     if (nodeCollision) {
       if (particle.deactiveOnNodeCollision){
         particle.deactivate();
@@ -822,7 +820,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     } else {
       particle.applyAirFriction();
-
       if (particle.type == ParticleType.Smoke) {
         final wind = environment.windTypeAmbient.value * 0.005;
         particle.xv -= wind;

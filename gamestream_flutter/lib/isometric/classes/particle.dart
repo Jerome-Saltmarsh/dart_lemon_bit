@@ -20,6 +20,7 @@ class Particle extends Position {
   var bounciness = 0.0;
   /// Deactivates if this node hits a solid node
   var deactiveOnNodeCollision = true;
+  var nodeCollidable = true;
   var animation = false;
   var nodeType = 0;
   var nodeIndex = 0;

@@ -45,7 +45,7 @@ class IsometricEvents with IsometricComponent {
     particles.spawnDust(
       x: 1500,
       y: 1500,
-      z: 50,
+      z: 35,
     );
     editor.refreshNodeSelectedIndex();
   }

@@ -32,8 +32,8 @@ class ParticleDust extends Particle {
     yv = 0;
     zv = 0;
     type = ParticleType.Dust;
-    scale = 1.0;
-    deactiveOnNodeCollision = false;
+    scale = 0.25;
+    nodeCollidable = false;
     changeDestination();
   }
 
