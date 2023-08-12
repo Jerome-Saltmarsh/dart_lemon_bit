@@ -861,14 +861,6 @@ class RendererNodes extends RenderGroup {
 
   void renderCurrentNode() {
 
-    // assert (indexOnscreen(currentNodeIndex));
-    // assert((){}())
-    // if (indexOnscreen(currentNodeIndex)) {
-    //   onscreenNodes++;
-    // } else {
-    //   offscreenNodes++;
-    // }
-
     if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
 
     final transparent = currentNodeTransparent;
@@ -1743,41 +1735,6 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderNodeGrass() {
-    if (currentNodeOrientation == NodeOrientation.Solid){
-      final variation = currentNodeVariation;
-      if (variation == 0) {
-        renderStandardNode(
-          srcX: 147,
-          srcY: 0,
-        );
-        return;
-      }
-      if (variation == 1) {
-        renderStandardNode(
-          srcX: 1168,
-          srcY: 0,
-        );
-        return;
-      }
-      if (variation == 2) {
-        renderStandardNode(
-          srcX: 1119,
-          srcY: 0,
-        );
-        return;
-      }
-      if (variation == 3) {
-        renderStandardNode(
-          srcX: 1070,
-          srcY: 0,
-        );
-        return;
-      }
-    }
-    renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_3);
-  }
-
   void renderNodeGrassLong() {
     if (currentNodeOrientation == NodeOrientation.Destroyed)
       return;
@@ -1830,7 +1787,7 @@ class RendererNodes extends RenderGroup {
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((animation.frame + row + column) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((animation.frame + currentNodeVariation) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: currentNodeDstX,
@@ -1842,22 +1799,20 @@ class RendererNodes extends RenderGroup {
     }
     renderStandardNode(
       srcX: environment.srcXRainLanding,
-      srcY: 72.0 * ((animation.frame + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((animation.frame + currentNodeVariation) % 6), // TODO Expensive Operation
     );
   }
 
-  void renderNodeRainFalling() {
-
-    render.sprite(
+  void renderNodeRainFalling() =>
+      render.sprite(
         sprite: images.spriteRainFalling,
         row: (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.windTypeAmbient.value,
-        column: animation.frame + row + column,
+        column: animation.frame + currentNodeVariation,
         color: colorCurrent,
         scale: 1.0,
         dstX: currentNodeDstX,
         dstY: currentNodeDstY,
     );
-  }
 
   void renderTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderTreeTopOak();
 
@@ -2923,8 +2878,7 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderNodeSideTop() {
-
-    final srcX = currentNodeVariation == 0 ? 0.0 : 128.0;
+    final srcX = currentNodeVariation < 126 ? 0.0 : 128.0;
     final bufferIndex = engine.bufferIndex;
     final f = bufferIndex * 4;
     bufferClr[bufferIndex] = colorAbove;

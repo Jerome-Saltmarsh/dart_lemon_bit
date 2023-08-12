@@ -274,18 +274,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
     assert (nodeTypes.length == totalNodes);
     for (var i = 0; i < totalNodes; i++){
-      final nodeType = nodeTypes[i];
-      switch (nodeType) {
-        case NodeType.Grass:
-          nodeVariations[i] = randomInt(0, 2);
-          break;
-        case NodeType.Shopping_Shelf:
-          nodeVariations[i] = randomInt(0, 2);
-          break;
-        case NodeType.Tree_Bottom:
-          nodeVariations[i] = randomInt(0, 2);
-          break;
-      }
+      nodeVariations[i] = randomInt(0, 255);
     }
   }
 
