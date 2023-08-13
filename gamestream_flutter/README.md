@@ -22,7 +22,9 @@ shift + alt + J     : backspace
 - fix ai
 
 13.08.2023
+- fixed flame position wind 0
 - particle dust
+
 
 12.08.2023
 - kid state fire

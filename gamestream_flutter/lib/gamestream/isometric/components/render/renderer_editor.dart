@@ -7,7 +7,7 @@ class RendererEditor extends RenderGroup {
   var mark = -1;
 
   @override
-  int getTotal() => scene.marks.length;
+  int getTotal() => options.editMode ? scene.marks.length : 0;
 
   @override
   void updateFunction() {
@@ -20,10 +20,10 @@ class RendererEditor extends RenderGroup {
 
   @override
   void renderFunction() {
-    // render.circle32(
-    //     scene.getIndexPositionX(mark),
-    //     scene.getIndexPositionY(mark),
-    //     scene.getIndexPositionZ(mark),
-    // );
+    render.circle32(
+        scene.getIndexPositionX(mark),
+        scene.getIndexPositionY(mark),
+        scene.getIndexPositionZ(mark),
+    );
   }
 }
