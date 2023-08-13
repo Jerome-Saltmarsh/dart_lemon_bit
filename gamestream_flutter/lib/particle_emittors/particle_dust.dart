@@ -41,7 +41,12 @@ class ParticleDust extends Particle {
     scaleVelocity = scaleDelta;
   }
 
-  bool get shouldChangeDestination => withinRadius(x: destinationX, y: destinationY, z: destinationZ, radius: roamRadius);
+  bool get shouldChangeDestination => withinRadius(
+      x: destinationX,
+      y: destinationY,
+      z: destinationZ,
+      radius: 5,
+  );
 
   @override
   void update() {
