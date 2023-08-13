@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_opt
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_screen.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_editor.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
@@ -47,6 +48,7 @@ Widget buildApp(){
       rendererNodes: RendererNodes(),
       rendererParticles: RendererParticles(),
       rendererProjectiles: RendererProjectiles(),
+      rendererEditor: RendererEditor(),
       editor: IsometricEditor(),
       debug: IsometricDebug(),
       minimap: IsometricMinimap(),

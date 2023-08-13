@@ -140,6 +140,10 @@ class IsometricParser with ByteReader, IsometricComponent {
       case ServerResponse.Sort_GameObjects:
         scene.gameObjects.sort();
         break;
+      case ServerResponse.Scene:
+        parseServerResponseScene();
+        break;
+
       default:
         print('read error; index: $index');
         print(values);
@@ -691,23 +695,17 @@ class IsometricParser with ByteReader, IsometricComponent {
   CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
 
   CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
-  // void readPlayerResponse() {
-  //    switch (readByte()){
-  //      case PlayerResponse.HeadType:
-  //        player.headType.value = readByte();
-  //        break;
-  //      case PlayerResponse.BodyType:
-  //        player.bodyType.value = readByte();
-  //        break;
-  //      case PlayerResponse.LegsType:
-  //        player.legsType.value = readByte();
-  //        break;
-  //      case PlayerResponse.HandTypeLeft:
-  //        player.handTypeLeft.value = readByte();
-  //        break;
-  //      case PlayerResponse.HandTypeRight:
-  //        player.handTypeRight.value = readByte();
-  //        break;
-  //    }
-  // }
+
+  void parseServerResponseScene() {
+    switch (readByte()){
+      case SceneResponse.Marks:
+        final length = readUInt16();
+        scene.marks = Uint32List(length);
+        for (var i = 0; i < length; i++) {
+          scene.marks[i] = readUInt32();
+        }
+        scene.marksChangedNotifier.value++;
+        break;
+    }
+  }
 }

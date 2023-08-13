@@ -11,6 +11,9 @@ class Scene {
 
   static const Not_Visited = -1;
 
+  /// The first 2 bytes are use for the index, the other 6 store its information
+  final marks = <int>[];
+
   Uint8List types;
   Uint8List shapes;
   Uint8List? compiled;
@@ -20,7 +23,6 @@ class Scene {
 
   static final visitHistory = Uint32List(10000);
   static final visitStack = Uint32List(10000);
-
   static final compiledPath = Uint32List(10000);
 
   static var visitHistoryIndex = 0;

@@ -109,6 +109,9 @@ class IsometricNetwork with IsometricComponent {
           ? websocket.send('${clientRequest} $message')
           : websocket.send(clientRequest);
 
+  void sendArgs2(int clientRequest, dynamic a, dynamic b) =>
+      websocket.send('$clientRequest $a $b');
+
 
   // FUNCTIONS
   void connectToRegion(ConnectionRegion region, String message) {

@@ -81,7 +81,6 @@ class SceneWriter extends ByteWriter {
 
   void writeSpawnPoints(Scene scene){
     scene.detectSpawnPoints();
-
     writeByte(ScenePart.Spawn_Points);
     writeUInt16(scene.spawnPoints.length);
     writeUint16List(scene.spawnPoints);

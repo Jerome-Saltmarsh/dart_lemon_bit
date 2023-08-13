@@ -11,11 +11,15 @@ import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/lemon_components/src.dart';
+import 'package:gamestream_flutter/particle_emittors/particle_dust.dart';
 
 import '../../../isometric/classes/position.dart';
 
 class IsometricScene with IsometricComponent implements Updatable {
 
+  var _ambientAlpha = 0;
+
+  var marks = Uint32List(0);
   var interpolationPadding = 0.0;
   var nextLightingUpdate = 0;
   var framesPerSmokeEmission = 10;
@@ -31,7 +35,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   var totalCharacters = 0;
   var bakeStackRecording = true;
   var totalActiveLights = 0;
-  var _ambientAlpha = 0;
   var ambientColor = const Color.fromRGBO(31, 1, 86, 0.5).value;
   var ambientResetIndex = 0;
   var ambientStack = Uint16List(0);
@@ -65,6 +68,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var interpolationLength = 6;
   var interpolations = <double>[];
 
+  final marksChangedNotifier = Watch(0);
   final interpolationEaseType = Watch(EaseType.In_Quad);
   final sceneEditable = Watch(false);
   final nodesChangedNotifier = Watch(0);
@@ -79,6 +83,18 @@ class IsometricScene with IsometricComponent implements Updatable {
       length: interpolationLength,
       easeType: interpolationEaseType.value,
     );
+    marksChangedNotifier.onChanged(onChangedMarks);
+  }
+
+  void onChangedMarks(int count){
+    particles.children.removeWhere((element) => element is ParticleDust);
+    for (final marker in marks) {
+      particles.spawnDust(
+          x: getIndexPositionX(marker),
+          y: getIndexPositionY(marker),
+          z: getIndexPositionZ(marker),
+      );
+    }
   }
 
   void onChangedInterpolationEaseType(EaseType easeType){
@@ -1766,6 +1782,8 @@ class IsometricScene with IsometricComponent implements Updatable {
           ? NodeType.Boundary
           : nodeTypes[getIndexPosition(position)];
 
+  void addMark(int value) =>
+      network.sendArgs2(ClientRequest.Scene, SceneRequest.Add_Mark.index, value);
 }
 
 

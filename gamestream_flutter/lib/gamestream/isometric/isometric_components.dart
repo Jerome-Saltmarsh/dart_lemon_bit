@@ -15,6 +15,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
+import 'components/render/renderer_editor.dart';
 import 'components/render/renderer_nodes.dart';
 import 'components/render/renderer_projectiles.dart';
 import 'components/src.dart';
@@ -49,6 +50,7 @@ class IsometricComponents extends ComponentContainer {
   final RendererParticles rendererParticles;
   final RendererProjectiles rendererProjectiles;
   final RendererGameObjects rendererGameObjects;
+  final RendererEditor rendererEditor;
   final IsometricActions action;
   final IsometricEvents events;
   final IsometricParser responseReader;
@@ -68,6 +70,7 @@ class IsometricComponents extends ComponentContainer {
     required this.rendererParticles,
     required this.rendererProjectiles,
     required this.rendererGameObjects,
+    required this.rendererEditor,
     required this.editor,
     required this.debug,
     required this.minimap,
@@ -111,6 +114,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(rendererParticles);
     components.add(rendererProjectiles);
     components.add(rendererGameObjects);
+    components.add(rendererEditor);
     components.add(network);
     components.add(player);
     components.add(audio);
@@ -150,6 +154,7 @@ class IsometricComponents extends ComponentContainer {
       component.rendererCharacters = rendererCharacters;
       component.rendererProjectiles = rendererProjectiles;
       component.rendererGameObjects = rendererGameObjects;
+      component.rendererEditor = rendererEditor;
       component.network = network;
       component.player = player;
       component.audio = audio;

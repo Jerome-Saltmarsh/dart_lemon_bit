@@ -372,6 +372,8 @@ class IsometricEditor with IsometricComponent {
       case IsometricEditorTab.Objects:
         selectMouseGameObject();
         break;
+      case IsometricEditorTab.Marks:
+        break;
     }
   }
 

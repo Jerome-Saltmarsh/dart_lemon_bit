@@ -691,7 +691,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(ServerResponse.Isometric);
     writeByte(IsometricResponse.Scene);
     var compiled = scene.compiled;
-    if (compiled == null){
+    if (compiled == null) {
       compiled = SceneWriter.compileScene(scene, gameObjects: false);
       scene.compiled = compiled;
     }
@@ -1192,5 +1192,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.LegsType);
     writeByte(handTypeRight);
+  }
+
+  void downloadSceneMarks(){
+    writeByte(ServerResponse.Scene);
+    writeByte(SceneResponse.Marks);
+    writeUInt16(scene.marks.length);
+    for (final mark in scene.marks){
+      writeUInt32(mark);
+    }
   }
 }

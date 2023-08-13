@@ -248,6 +248,10 @@ class WebSocketConnection with ByteReader {
         readIsometricRequest(arguments);
         break;
 
+      case ClientRequest.Scene:
+        readSceneRequest(arguments);
+        break;
+
       case ClientRequest.Capture_The_Flag:
         handleClientRequestCaptureTheFlag(arguments);
         break;
@@ -630,17 +634,36 @@ class WebSocketConnection with ByteReader {
   void errorInvalidPlayerType(){
    sendGameError(GameError.Invalid_Player_Type);
   }
+
+  void readSceneRequest(List<String> arguments) {
+    final player = this.player;
+
+    if (player is! IsometricPlayer) {
+      errorInvalidPlayerType();
+      return;
+    }
+    final game = player.game;
+    final sceneRequestIndex = parseArg1(arguments);
+    if (sceneRequestIndex == null)
+      return;
+
+    if (!isValidIndex(sceneRequestIndex, SceneRequest.values)){
+      errorInvalidClientRequest();
+      return;
+    }
+
+    switch (SceneRequest.values[sceneRequestIndex]){
+      case SceneRequest.Add_Mark:
+        final value = parseArg2(arguments);
+        if (value == null)
+          return;
+
+        game.scene.marks.add(value);
+        game.dispatchSceneMarks();
+        break;
+      case SceneRequest.Delete_Mark:
+        break;
+    }
+
+  }
 }
-
-// control_type
-// - click
-// - wasd
-
-// character_behavior
-
-// idle
-// stand-ground
-// defend-position
-// aggressive
-// wander
-// wander-freely

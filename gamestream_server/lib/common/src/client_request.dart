@@ -8,6 +8,7 @@ class ClientRequest {
   static const MMO                      = 40;
   static const Debugging                = 41;
   static const Set_FPS                  = 42;
+  static const Scene                    = 43;
 }
 
 

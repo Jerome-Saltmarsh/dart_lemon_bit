@@ -84,7 +84,7 @@ extension IsometricEditorUI on IsometricEditor {
       if (activeEditTab == IsometricEditorTab.Objects)
         Positioned(
           left: 0,
-          top: 50,
+          top: 80,
           child: Container(
               height: engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
@@ -92,13 +92,19 @@ extension IsometricEditorUI on IsometricEditor {
       if (activeEditTab == IsometricEditorTab.Grid)
         Positioned(
           left: 0,
-          top: 50,
+          top: 80,
           child: buildColumnSelectNodeType(),
+        ),
+      if (activeEditTab == IsometricEditorTab.Marks)
+        Positioned(
+          left: 0,
+          top: 80,
+          child: buildEditorTabMarks(),
         ),
       if (activeEditTab == IsometricEditorTab.Grid)
         Positioned(
           left: 160,
-          top: 50,
+          top: 80,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -1153,6 +1159,42 @@ extension IsometricEditorUI on IsometricEditor {
       }
       return child;
     });
+  }
+
+  Widget buildEditorTabMarks() => GSContainer(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              onPressed(
+                  action: onButtonPressedAddMark,
+                  child: buildText('ADD')),
+              buildText('REMOVE'),
+            ],
+          ),
+          Container(
+            height: 200,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  buildWatch(scene.marksChangedNotifier, (t) => Column(
+                    children: scene.marks.map((mark) {
+                       return buildText(mark);
+                    }).toList(growable: false),
+                  )),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+
+  void onButtonPressedAddMark(){
+    var markIndex = nodeSelectedIndex.value;
+    scene.addMark(markIndex);
   }
 
   Widget buildColumnSelectNodeType() =>

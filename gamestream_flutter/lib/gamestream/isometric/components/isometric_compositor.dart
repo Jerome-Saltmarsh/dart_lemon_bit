@@ -31,8 +31,10 @@ class IsometricCompositor with IsometricComponent {
     resetRenderOrder(rendererGameObjects);
     resetRenderOrder(rendererParticles);
     resetRenderOrder(rendererProjectiles);
+    resetRenderOrder(rendererEditor);
 
-    if (totalRemaining == 0) return;
+    if (totalRemaining == 0)
+      return;
 
     while (true) {
       next = rendererNodes;
@@ -40,15 +42,21 @@ class IsometricCompositor with IsometricComponent {
       checkNext(rendererProjectiles);
       checkNext(rendererGameObjects);
       checkNext(rendererParticles);
+      checkNext(rendererEditor);
       if (next.remaining) {
         next.renderNext();
         continue;
       }
+
       totalRemaining--;
-      if (totalRemaining == 0) return;
+      if (totalRemaining == 0)
+        return;
 
       if (totalRemaining == 1) {
         while (rendererNodes.remaining) {
+          rendererNodes.renderNext();
+        }
+        while (rendererEditor.remaining) {
           rendererNodes.renderNext();
         }
         while (rendererCharacters.remaining) {

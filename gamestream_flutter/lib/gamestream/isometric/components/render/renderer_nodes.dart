@@ -244,10 +244,6 @@ class RendererNodes extends RenderGroup {
     // }
   }
 
-  void updatePlain(){
-
-  }
-
   void onPlainIndexChanged(){
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
@@ -259,7 +255,6 @@ class RendererNodes extends RenderGroup {
     plainStartColumn = clamp(plainIndex - height + 1, 0, columnMax);
     plainStartZ = clamp(plainIndex, 0, heightMax);
     order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height) + orderShiftY;
-
   }
 
   void renderPlain(){
@@ -341,7 +336,6 @@ class RendererNodes extends RenderGroup {
 
   @override
   void updateFunction() {
-    updatePlain();
 
     // currentNodeZ++;
     // if (currentNodeZ > nodesMaxZ) {
