@@ -12,40 +12,24 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 
+[TODO]
+- kid state change
+- kid state death
+- kid state caste
+- kid complexion dark
+- kid hair type
+- inventory item draggable
+- fix ai
 
+13.08.2023
+- particle dust
 
-[IDEAS]
-- sell items for xp
-- tier two talents cost two skills points etc
-- floating txt on acquire health and xp
-
-[SERVER]
-[ ] fix select position when up higher
-[ ] fix ai path following
-[ ] implement pathfinding separate and left and right stack frames
-[ ] implement town stash (automatically opens when nearby)
-[ ] implement character type skeleton
-[ ] implement character type float skeleton head
-[ ] implement npc store
-[*] implement attack speed modifier
-[*] implement character persistence
-[*] character face type
-[*] character skin color
-
-[CLIENT]
-[ ] fix node transparency
-[ ] fix character light emission
-[ ] implement long grass animations
-[ ] implement color flames windy
-[ ] implement zombie death animation
-[ ] implement sounds on item drop for treasures
-[ ] implement character stats dialog
-[ ] implement sound pick up item
-[ ] implement ui items draggable
+12.08.2023
+- kid state fire
 
 29.07.2023
-[x] implement node fireplace which emits smoke
-[x] fix grass variation
+- implement node fireplace which emits smoke
+- fix grass variation
 
 28.07.2023
 [x] optimize render nodes

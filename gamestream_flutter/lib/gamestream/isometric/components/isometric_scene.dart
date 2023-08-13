@@ -87,6 +87,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void onChangedMarks(int count){
+    print('scene.onChangedMarks()');
     particles.children.removeWhere((element) => element is ParticleDust);
     for (final marker in marks) {
       particles.spawnDust(
