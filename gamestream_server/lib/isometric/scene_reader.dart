@@ -47,9 +47,6 @@ class SceneReader extends ByteReader {
       rows: totalRows,
       columns: totalColumns,
       gameObjects: gameObjects,
-      spawnPoints: spawnPoints,
-      spawnPointTypes: Uint16List(0),
-      spawnPointsPlayers: playerSpawnPoints,
       marks: marks,
     );
   }
@@ -63,12 +60,6 @@ class SceneReader extends ByteReader {
           break;
         case ScenePart.GameObjects:
           readGameObjects();
-          break;
-        case ScenePart.Player_SpawnPoints:
-          readPlayerSpawnPoints();
-          break;
-        case ScenePart.Spawn_Points:
-          readSpawnPoints();
           break;
         case ScenePart.Marks:
           readMarks();
@@ -124,16 +115,6 @@ class SceneReader extends ByteReader {
             ..persistable = true
       );
     }
-  }
-
-  void readPlayerSpawnPoints() {
-    final playerSpawnPointLength = readUInt16();
-    playerSpawnPoints = readUint16List(playerSpawnPointLength);
-  }
-
-  void readSpawnPoints(){
-    final length = readUInt16();
-    spawnPoints = readUint16List(length);
   }
 
   void readMarks(){

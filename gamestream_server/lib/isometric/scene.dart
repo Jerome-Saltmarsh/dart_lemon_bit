@@ -35,10 +35,6 @@ class Scene {
   var area = 0;
   var name = "";
 
-  Uint16List spawnPoints;
-  Uint16List spawnPointsPlayers;
-  Uint16List spawnPointTypes;
-
   late double rowLength;
   late double columnLength;
   late double heightLength;
@@ -53,9 +49,6 @@ class Scene {
     required this.rows,
     required this.columns,
     required this.gameObjects,
-    required this.spawnPoints,
-    required this.spawnPointTypes,
-    required this.spawnPointsPlayers,
     required this.marks,
   }) {
     refreshMetrics();
@@ -141,12 +134,6 @@ class Scene {
       if (types[i] != NodeType.Spawn) continue;
       newSpawnPoints.add(i);
     }
-    if (spawnPoints.length != newSpawnPoints) {
-      spawnPoints = Uint16List(newSpawnPoints.length);
-    }
-    for (var i = 0; i < spawnPoints.length; i++) {
-      spawnPoints[i] = newSpawnPoints[i];
-    }
   }
 
   /// WARNING - EXPENSIVE
@@ -158,9 +145,6 @@ class Scene {
     }
     return values;
   }
-
-  void detectSpawnPoints() =>
-      spawnPoints = Uint16List.fromList(findNodesOfType(NodeType.Spawn));
 
   double getIndexX(int index) =>
       (getRow(index) * Node_Size) + Node_Size_Half;

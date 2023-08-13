@@ -2127,11 +2127,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void moveToRandomPlayerSpawnPoint(Position value) {
-    if (scene.spawnPointsPlayers.isEmpty) return;
-    moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
-  }
-
   void playersWriteByte(int byte) {
     for (final player in players) {
       player.writeByte(byte);

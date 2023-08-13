@@ -19,9 +19,6 @@ void main() {
       rows: rows,
       columns: columns,
       gameObjects: [],
-      spawnPoints: Uint16List(0),
-      spawnPointTypes: Uint16List(0),
-      spawnPointsPlayers: Uint16List(0),
       marks: [],
     );
 

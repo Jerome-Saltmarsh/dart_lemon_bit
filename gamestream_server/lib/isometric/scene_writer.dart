@@ -68,24 +68,6 @@ class SceneWriter extends ByteWriter {
     }
   }
 
-  void writePlayerSpawnPoints(Scene scene) {
-    writeByte(ScenePart.Player_SpawnPoints);
-    List<int> values = [];
-     for (var i = 0; i < scene.volume; i++){
-        if (scene.types[i] != NodeType.Spawn_Player) continue;
-        values.add(i);
-     }
-     writeUInt16(values.length);
-     writeUint16List(values);
-  }
-
-  void writeSpawnPoints(Scene scene){
-    scene.detectSpawnPoints();
-    writeByte(ScenePart.Spawn_Points);
-    writeUInt16(scene.spawnPoints.length);
-    writeUint32List(scene.spawnPoints);
-  }
-
   void writeMarks(Scene scene){
     writeByte(ScenePart.Marks);
     writeUInt16(scene.marks.length);

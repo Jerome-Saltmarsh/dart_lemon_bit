@@ -89,9 +89,6 @@ class SceneGenerator {
         rows: rows,
         columns: columns,
         gameObjects: [],
-        spawnPointsPlayers: Uint16List(0),
-        spawnPointTypes: Uint16List(0),
-        spawnPoints: Uint16List(0),
         marks: [],
      );
   }
@@ -119,9 +116,6 @@ class SceneGenerator {
       rows: rows,
       types: nodeTypes,
       shapes: nodeOrientations,
-      spawnPoints: Uint16List(0),
-      spawnPointTypes: Uint16List(0),
-      spawnPointsPlayers:Uint16List(0),
       marks: [],
     );
   }
