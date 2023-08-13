@@ -11,7 +11,7 @@ class ParticleDust extends Particle {
   var destinationX = 0.0;
   var destinationY = 0.0;
   var destinationZ = 0.0;
-  var roamRadius = 250.0;
+  var roamRadius = 150.0;
   var movementSpeed = 0.2;
   var movementAngle = 0.0;
   var rotationSpeed = 0.01;

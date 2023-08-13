@@ -571,22 +571,18 @@ extension isometricDebugUI on IsometricDebug {
         ),
         child: SingleChildScrollView(
           child: Column(
-            children: particles.children.map((particle) {
-              return Row(
-                children: [
-                  onPressed(
-                      action: () => selectParticle(particle),
-                      child: buildText(
-                          ParticleType.getName(particle.type),
-                          color: particle.active ? colors.white : colors.white70
-                      )),
-                ],
-              );
-            }).toList(growable: false)
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: particles.children.map((particle) => onPressed(
+                  action: () => selectParticle(particle),
+                  child: buildText(
+                      ParticleType.getName(particle.type),
+                      color: particle.active ? colors.white : colors.white70
+                  ))).toList(growable: false)
           ),
         ),
       ),
-    seconds: 10,
+    seconds: 1,
   );
 
   Widget buildTabOptions() =>
