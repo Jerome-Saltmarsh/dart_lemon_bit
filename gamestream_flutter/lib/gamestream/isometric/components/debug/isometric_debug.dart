@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class IsometricDebug with IsometricComponent {
+  Particle? particleSelected;
+
   final tab = Watch(DebugTab.Selected);
   final health = Watch(0);
   final healthMax = Watch(0);
@@ -55,7 +58,25 @@ class IsometricDebug with IsometricComponent {
 
   void drawCanvas() {
     if (!player.debugging.value) return;
-    if (!selectedCollider.value) return;
+
+    renderSelectedParticle();
+    renderSelectedCollider();
+
+
+
+
+  }
+
+  void renderSelectedParticle() {
+    final particle = particleSelected;
+    if (particle == null) return;
+    engine.setPaintColor(Colors.white);
+    render.circleOutlineAtPosition(position: particle, radius: 10);
+  }
+
+  void renderSelectedCollider() {
+    if (!selectedCollider.value)
+      return;
 
     engine.setPaintColor(Colors.white);
     render.circleOutline(
@@ -177,5 +198,10 @@ class IsometricDebug with IsometricComponent {
       } else {
         action.cameraTargetPlayer();
       }
+  }
+
+  void selectParticle(Particle particle){
+    camera.target = particle;
+    particleSelected = particle;
   }
 }

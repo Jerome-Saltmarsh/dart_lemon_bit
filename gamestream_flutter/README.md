@@ -13,15 +13,19 @@ shift + alt + J     : backspace
 
 
 [TODO]
+- inventory item draggable
 - kid state change
 - kid state death
 - kid state caste
+- kid state hurt
 - kid complexion dark
 - kid hair type
-- inventory item draggable
+- kid shoe type
 - fix ai
+- fix render nodes corner and bottom
 
 13.08.2023
+- debug tab particles
 - fixed flame position wind 0
 - particle dust
 

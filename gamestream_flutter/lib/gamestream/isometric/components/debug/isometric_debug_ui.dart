@@ -41,6 +41,7 @@ extension isometricDebugUI on IsometricDebug {
                   DebugTab.Isometric => buildTabIsometric(),
                   DebugTab.Player => buildTabPlayer(),
                   DebugTab.Options => buildTabOptions(),
+                  DebugTab.Particles => buildTabParticles(),
                 },
               ),
             ),
@@ -563,15 +564,34 @@ extension isometricDebugUI on IsometricDebug {
         ],
       );
 
+  Widget buildTabParticles() => GSRefresh(
+      () => Container(
+        constraints: BoxConstraints(
+          maxHeight: engine.screen.height - 300,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: particles.children.map((particle) {
+              return Row(
+                children: [
+                  onPressed(
+                      action: () => selectParticle(particle),
+                      child: buildText(
+                          ParticleType.getName(particle.type),
+                          color: particle.active ? colors.white : colors.white70
+                      )),
+                ],
+              );
+            }).toList(growable: false)
+          ),
+        ),
+      ),
+    seconds: 10,
+  );
+
   Widget buildTabOptions() =>
       buildTab(
         children: [
-          // onPressed(
-          //   action: options.toggleRenderCharacterAnimationFrame,
-          //   child: buildRow('render character animation frame',
-          //       GSRefresh(() => buildValueText(options.renderCharacterAnimationFrame)),
-          //   ),
-          // ),
           buildRowToggle(
              text: 'render character animation frame',
              action: options.toggleRenderCharacterAnimationFrame,
