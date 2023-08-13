@@ -14,7 +14,7 @@ class ParticleDust extends Particle {
   var roamRadius = 150.0;
   var movementSpeed = 0.2;
   var movementAngle = 0.0;
-  var rotationSpeed = 0.01;
+  var rotationSpeed = 0.0085;
 
   static const maxScale = 0.4;
   static const minScale = 0.15;
@@ -48,6 +48,8 @@ class ParticleDust extends Particle {
       radius: 5,
   );
 
+
+
   @override
   void update() {
     if (shouldChangeDestination){
@@ -55,9 +57,9 @@ class ParticleDust extends Particle {
     }
 
     final angle = getAngle(destinationX, destinationY);
-    final diff = angleDiff(angle, movementAngle);
+    final diff = radianDiff(angle, movementAngle);
 
-    if (diff > 0){
+    if (diff < 0){
       movementAngle -= rotationSpeed;
     }  else {
       movementAngle += rotationSpeed;

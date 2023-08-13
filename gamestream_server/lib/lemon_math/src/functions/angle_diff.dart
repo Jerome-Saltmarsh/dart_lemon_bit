@@ -9,3 +9,6 @@ num angleDiff(double angleA, double angleB) {
   }
   return pi2 - diff;
 }
+
+num radianDiff(double angleA, double angleB) =>
+    ((angleA - angleB) + pi) % (pi2) - pi;
