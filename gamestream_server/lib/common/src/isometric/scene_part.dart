@@ -5,4 +5,5 @@ class ScenePart {
  static const Player_SpawnPoints = 2;
  static const Spawn_Points = 3;
  static const End = 4;
+ static const Marks = 5;
 }

@@ -83,16 +83,23 @@ class SceneWriter extends ByteWriter {
     scene.detectSpawnPoints();
     writeByte(ScenePart.Spawn_Points);
     writeUInt16(scene.spawnPoints.length);
-    writeUint16List(scene.spawnPoints);
+    writeUint32List(scene.spawnPoints);
+  }
+
+  void writeMarks(Scene scene){
+    writeByte(ScenePart.Marks);
+    writeUInt16(scene.marks.length);
+    writeUint32List(scene.marks);
   }
 
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
     clear();
     writeNodes(scene);
+    writeMarks(scene);
     if (gameObjects) {
-      writePlayerSpawnPoints(scene);
+      // writePlayerSpawnPoints(scene);
       writeGameObjects(scene.gameObjects);
-      writeSpawnPoints(scene);
+      // writeSpawnPoints(scene);
       writeByte(ScenePart.End);
     }
     return compile();

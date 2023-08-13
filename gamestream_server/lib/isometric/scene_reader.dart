@@ -20,6 +20,7 @@ class SceneReader extends ByteReader {
   var nodeOrientations = Uint8List(0);
   var playerSpawnPoints = Uint16List(0);
   var spawnPoints = Uint16List(0);
+  var marks = <int>[];
   var gameObjects = <GameObject>[];
 
   static Scene readScene(Uint8List bytes, {int startIndex = 0}) =>
@@ -49,6 +50,7 @@ class SceneReader extends ByteReader {
       spawnPoints: spawnPoints,
       spawnPointTypes: Uint16List(0),
       spawnPointsPlayers: playerSpawnPoints,
+      marks: marks,
     );
   }
 
@@ -67,6 +69,9 @@ class SceneReader extends ByteReader {
           break;
         case ScenePart.Spawn_Points:
           readSpawnPoints();
+          break;
+        case ScenePart.Marks:
+          readMarks();
           break;
         case ScenePart.End:
           return;
@@ -129,6 +134,11 @@ class SceneReader extends ByteReader {
   void readSpawnPoints(){
     final length = readUInt16();
     spawnPoints = readUint16List(length);
+  }
+
+  void readMarks(){
+    final length = readUInt16();
+    marks = readUint32List(length).toList(growable: true);
   }
 
   void readNodes() {

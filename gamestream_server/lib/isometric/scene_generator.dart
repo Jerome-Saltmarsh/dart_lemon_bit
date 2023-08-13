@@ -92,6 +92,7 @@ class SceneGenerator {
         spawnPointsPlayers: Uint16List(0),
         spawnPointTypes: Uint16List(0),
         spawnPoints: Uint16List(0),
+        marks: [],
      );
   }
 
@@ -121,6 +122,7 @@ class SceneGenerator {
       spawnPoints: Uint16List(0),
       spawnPointTypes: Uint16List(0),
       spawnPointsPlayers:Uint16List(0),
+      marks: [],
     );
   }
 

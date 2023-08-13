@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "61.0.0"
-  algorithmic:
-    dependency: "direct main"
-    description:
-      name: algorithmic
-      sha256: "306e203894ad5a1b03b45483f2c912bb20d8aaa312907f1381db922eedbc331d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.11"
   analyzer:
     dependency: transitive
     description:
@@ -197,10 +189,10 @@ packages:
     dependency: "direct main"
     description:
       name: lemon_byte
-      sha256: "083bae6db3655329dc2a8bf6e6561eb96166e8594d69de38dca239254c84d208"
+      sha256: "0634568284359d73b014a80ce008c924c82c23d327cb978501956237d6a764a1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.42"
+    version: "1.0.44"
   logging:
     dependency: transitive
     description:

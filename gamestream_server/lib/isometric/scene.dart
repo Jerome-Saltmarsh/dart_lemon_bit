@@ -12,7 +12,7 @@ class Scene {
   static const Not_Visited = -1;
 
   /// The first 2 bytes are use for the index, the other 6 store its information
-  final marks = <int>[];
+  var marks = <int>[];
 
   Uint8List types;
   Uint8List shapes;
@@ -56,6 +56,7 @@ class Scene {
     required this.spawnPoints,
     required this.spawnPointTypes,
     required this.spawnPointsPlayers,
+    required this.marks,
   }) {
     refreshMetrics();
   }

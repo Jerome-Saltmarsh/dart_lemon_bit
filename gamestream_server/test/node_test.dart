@@ -24,6 +24,7 @@ void main() {
         spawnPoints: Uint16List(0),
         spawnPointTypes: Uint16List(0),
         spawnPointsPlayers: Uint16List(0),
+        marks: [],
     );
 
     final indexA = scene.getIndex(0, 2, 5);
