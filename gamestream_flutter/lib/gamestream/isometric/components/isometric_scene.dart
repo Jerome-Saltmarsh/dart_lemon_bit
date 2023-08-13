@@ -446,17 +446,15 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
+
   void refreshLightSources() {
-    print('scene.refreshLightSources()');
+    print('scene.refreshLightSources() - (EXPENSIVE)');
     nodeLightSourcesTotal = 0;
-    for (var i = 0; i < totalNodes; i++){
-      if (!const [
-        NodeType.Torch,
-        NodeType.Torch_Blue,
-        NodeType.Torch_Red,
-        NodeType.Fireplace
-      ].contains(nodeTypes[i]))
+    for (var i = 0; i < totalNodes; i++) {
+
+      if (!NodeType.isLightSource(nodeTypes[i]))
         continue;
+
       nodeLightSources[nodeLightSourcesTotal] = i;
       nodeLightSourcesTotal++;
 
@@ -1479,8 +1477,9 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void recordBakeStack() {
-    print('recordBakeStack()');
+    print('scene.recordBakeStack()');
     bakeStackRecording = true;
+    bakeStackTorchTotal = 0;
     for (var i = 0; i < nodeLightSourcesTotal; i++){
       final nodeIndex = nodeLightSources[i];
       final nodeType = nodeTypes[nodeIndex];
@@ -1508,7 +1507,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     bakeStackRecording = false;
-    print('recordBakeStack() finished recording total: ${bakeStackTotal}');
   }
 
 
@@ -1785,6 +1783,24 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void addMark(int value) =>
       network.sendArgs2(ClientRequest.Scene, SceneRequest.Add_Mark.index, value);
+
+  void setNode({
+    required int index,
+    required int nodeType,
+    required int nodeOrientation,
+  }) {
+    assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
+    final previousNodeType = nodeTypes[index];
+
+    if (NodeType.isLightSource(nodeType) != NodeType.isLightSource(previousNodeType)){
+      refreshLightSources();
+      resetNodeColorsToAmbient();
+    }
+    nodeTypes[index] = nodeType;
+    nodeOrientations[index] = nodeOrientation;
+    // events.onChangedNodes();
+    editor.refreshNodeSelectedIndex();
+  }
 }
 
 

@@ -24,14 +24,15 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onChangedNodes(){
+    print('events.onChangedNodes()');
     scene.refreshGridMetrics();
     scene.generateHeightMap();
     scene.generateMiniMap();
-    scene.refreshLightSources();
     scene.refreshSmokeSources();
     scene.refreshLightSources();
     scene.refreshNodeVariations();
     minimap.generateSrcDst();
+
 
     rendererNodes.nodeColors = scene.nodeColors;
     rendererNodes.nodeOrientations = scene.nodeOrientations;
@@ -43,15 +44,6 @@ class IsometricEvents with IsometricComponent {
     scene.updateAmbientAlphaAccordingToTime();
     scene.resetNodeColorsToAmbient();
     particles.clearParticles();
-
-    for (var i = 0; i < 3; i++){
-      particles.spawnDust(
-        x: 1500,
-        y: 1500,
-        z: 35,
-      );
-    }
-
     editor.refreshNodeSelectedIndex();
   }
 

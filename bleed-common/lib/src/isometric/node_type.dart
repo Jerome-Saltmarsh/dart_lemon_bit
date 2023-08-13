@@ -363,4 +363,11 @@ class NodeType {
     Torch_Blue: 'Torch_Blue',
     Torch_Red: 'Torch_Red',
   }[type] ?? 'unknown($type)';
+
+  static bool isLightSource(int type) => const [
+      NodeType.Torch,
+      NodeType.Torch_Blue,
+      NodeType.Torch_Red,
+      NodeType.Fireplace,
+    ].contains(type);
 }

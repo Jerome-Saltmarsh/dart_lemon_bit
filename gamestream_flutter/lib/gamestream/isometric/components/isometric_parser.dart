@@ -602,15 +602,15 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readNode() {
+    print('parser.readNode()');
     final nodeIndex = readUInt24();
     final nodeType = readByte();
     final nodeOrientation = readByte();
-    assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    scene.nodeTypes[nodeIndex] = nodeType;
-    scene.nodeOrientations[nodeIndex] = nodeOrientation;
-    events.onChangedNodes();
-
-    editor.refreshNodeSelectedIndex();
+    scene.setNode(
+        index: nodeIndex,
+        nodeType: nodeType,
+        nodeOrientation: nodeOrientation,
+    );
   }
 
   void readPlayerTarget() {
