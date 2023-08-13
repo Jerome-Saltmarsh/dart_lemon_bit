@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/particle_emittors/particle_dust.dart';
+import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';
 
 class IsometricDebug with IsometricComponent {
   Particle? particleSelected;
@@ -75,7 +75,7 @@ class IsometricDebug with IsometricComponent {
     render.circleOutlineAtPosition(position: particle, radius: 10);
 
     engine.setPaintColor(colors.white60);
-    if (particle is ParticleDust){
+    if (particle is ParticleWhisp){
       render.circleOutline(particle.startX, particle.startY, particle.startZ, particle.roamRadius);
       render.line(
           particle.x,

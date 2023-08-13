@@ -510,7 +510,7 @@ extension IsometricEditorUI on IsometricEditor {
       ));
 
   Widget buildIconWind(int windType) => buildWatch(
-      environment.windTypeAmbient,
+      environment.wind,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
         action: () => network.sendIsometricRequestWeatherSetWind(windType),

@@ -295,7 +295,7 @@ class RendererParticles extends RenderGroup {
           break;
         case ParticleType.Myst:
           break;
-        case ParticleType.Dust:
+        case ParticleType.Whisp:
           final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);
           final perc = ((nodeAlpha / 255) * 4).toInt() * 8;

@@ -15,7 +15,7 @@ class IsometricEnvironment with IsometricComponent {
   final rainType = Watch(RainType.None);
   final seconds = Watch(0);
   final hours = Watch(0);
-  final windTypeAmbient = Watch(WindType.Calm);
+  final wind = Watch(WindType.Calm);
   final raining = Watch(false);
   final gameTimeEnabled = Watch(false);
   final lightningType = Watch(LightningType.Off);
@@ -27,7 +27,7 @@ class IsometricEnvironment with IsometricComponent {
     rainType.onChanged(onChangedRain);
     seconds.onChanged(onChangedSeconds);
     hours.onChanged(onChangedHour);
-    windTypeAmbient.onChanged(onChangedWindType);
+    wind.onChanged(onChangedWindType);
     raining.onChanged(onChangedRaining);
   }
 
@@ -75,6 +75,10 @@ class IsometricEnvironment with IsometricComponent {
 
   void onChangedWindType(int windType) {
     refreshRain();
+
+    for (final particle in particles.children) {
+      particle.wind = windType;
+    }
   }
 
   void refreshRain(){
@@ -83,7 +87,7 @@ class IsometricEnvironment with IsometricComponent {
         break;
       case RainType.Light:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        if ( windTypeAmbient.value == WindType.Calm){
+        if ( wind.value == WindType.Calm){
           srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
         } else {
           srcXRainFalling = 1851;
@@ -91,7 +95,7 @@ class IsometricEnvironment with IsometricComponent {
         break;
       case RainType.Heavy:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
-        if ( windTypeAmbient.value == WindType.Calm){
+        if ( wind.value == WindType.Calm){
           srcXRainFalling = 1900;
         } else {
           srcXRainFalling = 1606;
@@ -112,7 +116,7 @@ class IsometricEnvironment with IsometricComponent {
     if (windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = environment.windTypeAmbient.value;
+    final index = environment.wind.value;
     if (index <= WindType.Calm) {
       if (environment.hours.value < 6) return target;
       if (environment.hours.value < 18) return target + 0.1;

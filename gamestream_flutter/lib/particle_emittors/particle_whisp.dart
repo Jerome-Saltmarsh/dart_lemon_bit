@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class ParticleDust extends Particle {
+class ParticleWhisp extends Particle {
 
   var startX = 0.0;
   var startY = 0.0;
@@ -20,7 +20,7 @@ class ParticleDust extends Particle {
   static const minScale = 0.15;
   static const scaleDelta = 0.004;
 
-  ParticleDust({
+  ParticleWhisp({
     required super.x,
     required super.y,
     required super.z,
@@ -34,7 +34,7 @@ class ParticleDust extends Particle {
     xv = 0;
     yv = 0;
     zv = 0;
-    type = ParticleType.Dust;
+    type = ParticleType.Whisp;
     scale = randomBetween(minScale, maxScale);
     nodeCollidable = false;
     changeDestination();
@@ -52,6 +52,29 @@ class ParticleDust extends Particle {
 
   @override
   void update() {
+
+    if (scale < minScale){
+
+      if (wind > 0) {
+        if (y > startY + roamRadius){
+          y = startY - roamRadius;
+          x = startX + giveOrTake(roamRadius);
+          xv *= 0.5;
+          yv *= 0.5;
+        }
+      }
+
+
+      scaleVelocity = -scaleVelocity;
+      scale = minScale;
+    } else if (scale > maxScale){
+      scaleVelocity = -scaleVelocity;
+      scale = maxScale;
+    }
+
+    if (wind > 0)
+      return;
+
     if (shouldChangeDestination){
       changeDestination();
     }
@@ -64,13 +87,7 @@ class ParticleDust extends Particle {
     }  else {
       movementAngle += rotationSpeed;
     }
-    if (scale < minScale){
-      scaleVelocity = -scaleVelocity;
-      scale = minScale;
-    } else if (scale > maxScale){
-      scaleVelocity = -scaleVelocity;
-      scale = maxScale;
-    }
+
     setSpeed(movementAngle, movementSpeed);
   }
 

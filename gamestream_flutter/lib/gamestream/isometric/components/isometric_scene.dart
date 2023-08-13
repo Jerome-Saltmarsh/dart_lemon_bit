@@ -11,7 +11,7 @@ import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/lemon_components/src.dart';
-import 'package:gamestream_flutter/particle_emittors/particle_dust.dart';
+import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';
 
 import '../../../isometric/classes/position.dart';
 
@@ -88,7 +88,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void onChangedMarks(int count){
     print('scene.onChangedMarks()');
-    particles.children.removeWhere((element) => element is ParticleDust);
+    particles.children.removeWhere((element) => element is ParticleWhisp);
     for (final marker in marks) {
       particles.spawnDust(
           x: getIndexPositionX(marker),

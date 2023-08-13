@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class Particle extends Position {
 
+  var wind = 0;
   var active = false;
   var delay = 0;
   var xv = 0.0;

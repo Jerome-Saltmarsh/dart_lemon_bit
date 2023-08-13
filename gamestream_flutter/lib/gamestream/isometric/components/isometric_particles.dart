@@ -3,15 +3,19 @@ import 'dart:math';
 import 'package:gamestream_flutter/lemon_components/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/particle_emittors/particle_dust.dart';
+import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';
 
 import '../../../isometric/classes/particle.dart';
 import 'isometric_component.dart';
 
 class IsometricParticles with IsometricComponent implements Updatable {
 
+  static const windStrengthMultiplier = 0.003;
+  var windy = false;
+  var windStrength = 0.0;
   var nextParticleFrame = 0;
   var nodeType = 0;
+
 
   final children = <Particle>[];
   int get bodyPartDuration =>  randomInt(120, 200);
@@ -742,6 +746,8 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
     nextParticleFrame--;
+    windStrength = environment.wind.value * windStrengthMultiplier;
+    windy = windStrength != 0;
 
     for (final particle in children) {
       if (!particle.active) continue;
@@ -820,10 +826,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     } else {
       particle.applyAirFriction();
-      if (particle.type == ParticleType.Smoke) {
-        final wind = environment.windTypeAmbient.value * 0.005;
-        particle.xv -= wind;
-        particle.yv += wind;
+      if (windy && const [
+        ParticleType.Smoke,
+        ParticleType.Whisp,
+      ].contains(particle.type)) {
+        const maxVelocity = 1.25;
+        particle.xv = clamp(particle.xv - windStrength, -maxVelocity, maxVelocity);
+        particle.yv = clamp(particle.yv + windStrength, -maxVelocity, maxVelocity);
       }
     }
 
@@ -858,6 +867,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double y,
     required double z,
   }) {
-    children.add(ParticleDust(x: x, y: y, z: z));
+    children.add(ParticleWhisp(x: x, y: y, z: z));
   }
 }

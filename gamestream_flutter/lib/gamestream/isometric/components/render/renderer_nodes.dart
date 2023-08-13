@@ -193,7 +193,7 @@ class RendererNodes extends RenderGroup {
 
   int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
-  int get wind => environment.windTypeAmbient.value;
+  int get wind => environment.wind.value;
 
   int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
 
@@ -1803,7 +1803,7 @@ class RendererNodes extends RenderGroup {
   void renderNodeRainFalling() =>
       render.sprite(
         sprite: images.spriteRainFalling,
-        row: (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.windTypeAmbient.value,
+        row: (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value,
         column: animation.frame + currentNodeVariation,
         color: colorCurrent,
         scale: 1.0,

@@ -590,7 +590,7 @@ class IsometricRender with IsometricComponent {
   }){
     render.sprite(
       sprite: images.spriteFlame,
-      row: environment.windTypeAmbient.value,
+      row: environment.wind.value,
       column: seed + animation.frame,
       color: 0,
       scale: scale,

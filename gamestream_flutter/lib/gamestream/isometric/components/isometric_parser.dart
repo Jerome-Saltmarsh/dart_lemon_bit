@@ -356,7 +356,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         environment.lightningType.value = readByte();
         break;
       case EnvironmentResponse.Wind:
-        environment.windTypeAmbient.value = readByte();
+        environment.wind.value = readByte();
         break;
       case EnvironmentResponse.Breeze:
         environment.weatherBreeze.value = readBool();
@@ -588,7 +588,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     environment.rainType.value = readByte();
     environment.weatherBreeze.value = readBool();
     environment.lightningType.value = readByte();
-    environment.windTypeAmbient.value = readByte();
+    environment.wind.value = readByte();
   }
 
   void readStoreItems() {
