@@ -477,4 +477,7 @@ class Character extends Collider {
     frame = 0;
     actionDuration = -1;
   }
+
+  @override
+  double get order => dead ? super.order - 25 : super.order;
 }

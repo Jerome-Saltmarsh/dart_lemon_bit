@@ -56,4 +56,12 @@ class Character extends Position {
   int get renderLookDirection => (lookDirection - 1) % 8;
 
   double get angle => direction * piQuarter;
+
+  // @override
+  // double get sortOrder {
+  //   if (dead) {
+  //     return super.sortOrder - 20.0;
+  //   }
+  //   return super.sortOrder;
+  // }
 }

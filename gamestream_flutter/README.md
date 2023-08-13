@@ -23,12 +23,14 @@ shift + alt + J     : backspace
 - kid shoe type
 - fix ai
 - fix render nodes corner and bottom
+- fix set node light source refresh
 
 13.08.2023
+- fix character dead render order
+- optimized client node changed
 - debug tab particles
 - fixed flame position wind 0
 - particle dust
-
 
 12.08.2023
 - kid state fire

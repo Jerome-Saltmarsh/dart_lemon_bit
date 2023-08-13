@@ -713,7 +713,10 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterFallen(Character character) {
 
-    if (renderBottom)
+
+    if (
+      (renderBottom && !character.dead) ||
+      (!renderBottom && character.dead))
       return;
 
     const scale = 0.61;
