@@ -298,14 +298,14 @@ class RendererParticles extends RenderGroup {
         case ParticleType.Dust:
           final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);
-          final perc = ((nodeAlpha / 255) * 7).toInt() * 8;
+          final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
           // render.textPosition(particle, nodeAlpha, offsetY: -25);
           engine.renderSprite(
             image: images.atlas_nodes,
             dstX: dstX,
             dstY: dstY,
             srcX: 736,
-            srcY: 1864.0 - perc,
+            srcY: 1848.0 - perc,
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,

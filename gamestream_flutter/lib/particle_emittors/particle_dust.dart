@@ -16,8 +16,8 @@ class ParticleDust extends Particle {
   var movementAngle = 0.0;
   var rotationSpeed = 0.01;
 
-  static const maxScale = 0.5;
-  static const minScale = 0.25;
+  static const maxScale = 0.4;
+  static const minScale = 0.15;
   static const scaleDelta = 0.004;
 
   ParticleDust({
@@ -35,7 +35,7 @@ class ParticleDust extends Particle {
     yv = 0;
     zv = 0;
     type = ParticleType.Dust;
-    scale = 0.25;
+    scale = randomBetween(minScale, maxScale);
     nodeCollidable = false;
     changeDestination();
     scaleVelocity = scaleDelta;
