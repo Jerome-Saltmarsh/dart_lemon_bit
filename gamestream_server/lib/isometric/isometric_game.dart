@@ -528,12 +528,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void applyAttackTypeMelee(Character character){
 
+    final target = character.target;
+
+    if (target is Collider){
+      if (character.withinAttackRangeAndAngle(target)){
+        applyHit(
+          target: target,
+          damage: character.weaponDamage,
+          srcCharacter: character,
+        );
+        return;
+      }
+    }
+
     final angle = character.angle;
     final attackRadius = character.weaponRange;
     var attackHit = false;
-
-    Collider? nearest;
     var nearestDistance = attackRadius;
+    Collider? nearest;
     final areaOfEffect = isMeleeAOE(character.weaponType);
 
     for (final other in characters) {
