@@ -451,10 +451,10 @@ class RendererParticles extends RenderGroup {
     const height = 32.0;
 
     engine.renderSpriteRotated(
-      image: images.atlas_particles,
+      image: images.atlas_nodes,
       dstX: particle.renderX,
       dstY: particle.renderY,
-      srcX: 560,
+      srcX: 1584,
       srcY: frame * height,
       srcWidth: width,
       srcHeight: height,
