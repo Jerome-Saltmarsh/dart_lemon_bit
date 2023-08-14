@@ -384,6 +384,11 @@ class Scene {
     var angle = a.getAngle(b);
 
     final distance = a.getDistance(b);
+
+    if (distance < Node_Size) {
+      return true;
+    }
+
     final jumpSize = Node_Size_Quarter;
     final jumps = distance ~/ jumpSize;
     final velX = adj(angle, jumpSize);
