@@ -26,6 +26,7 @@ shift + alt + J     : backspace
 - player attributes dialog
 
 14.08.2023
+- fix player not hittable after death
 - fix ai
 
 13.08.2023
