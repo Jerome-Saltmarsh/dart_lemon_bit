@@ -309,9 +309,9 @@ class NodeType {
       return supportsOrientationColumn(type);
     }
 
-    if (orientation == NodeOrientation.Destroyed){
-      return supportsOrientationDestroyed(type);
-    }
+    // if (orientation == NodeOrientation.Destroyed){
+    //   return supportsOrientationDestroyed(type);
+    // }
 
     return false;
   }

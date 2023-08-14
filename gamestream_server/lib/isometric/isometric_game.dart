@@ -646,16 +646,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void destroyNode(int nodeIndex) {
-    final nodeOrientation = scene.shapes[nodeIndex];
-    if (nodeOrientation == NodeOrientation.Destroyed) return;
+    final orientation = scene.shapes[nodeIndex];
     final nodeType = scene.types[nodeIndex];
     if (nodeType == NodeType.Empty) return;
     setNode(
       nodeIndex: nodeIndex,
-      nodeType: nodeType,
-      nodeOrientation: NodeOrientation.Destroyed,
+      nodeType: NodeType.Empty,
+      nodeOrientation: NodeOrientation.None,
     );
-    customOnNodeDestroyed(nodeType, nodeIndex, nodeOrientation);
+    customOnNodeDestroyed(nodeType, nodeIndex, orientation);
   }
 
   void activateCollider(Collider collider) {
