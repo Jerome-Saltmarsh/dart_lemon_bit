@@ -134,13 +134,30 @@ extension MMOUI on MmoGame {
         ),
       );
 
-  buildPlayerAimTarget() {
+  Widget buildPlayerAimTarget() {
+    const width = 120.0;
+    const height = width * goldenRatio_0381;
     final name = Container(
-      alignment: Alignment.center,
-      width: 120,
-      child: FittedBox(
-        child: GSContainer(
-            child: buildWatch(player.playerAimTargetName, buildText)),
+      alignment: Alignment.centerLeft,
+      height: height,
+      color: colors.brownDark,
+      width: width,
+      child: Stack(
+        children: [
+          buildWatch(player.aimTargetHealthPercentage, (healthPercentage) => Container(
+              width: width * healthPercentage,
+              height: height,
+              color: colors.red1,
+            )),
+          Container(
+            width: width,
+            height: height,
+            alignment: Alignment.center,
+            child: FittedBox(
+              child: buildWatch(player.aimTargetName, buildText),
+            ),
+          ),
+        ],
       ),
     );
     return Positioned(
@@ -149,7 +166,7 @@ extension MMOUI on MmoGame {
         child: Container(
           width: engine.screen.width,
           alignment: Alignment.center,
-          child: buildWatch(player.playerAimTargetSet, (t) {
+          child: buildWatch(player.aimTargetSet, (t) {
             if (!t) return nothing;
             return name;
           }),

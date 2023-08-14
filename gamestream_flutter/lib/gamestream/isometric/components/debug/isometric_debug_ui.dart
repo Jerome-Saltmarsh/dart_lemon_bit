@@ -148,7 +148,6 @@ extension isometricDebugUI on IsometricDebug {
                   'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                   'aim-target-category: ${TargetCategory.getName(player.aimTargetCategory)}\n'
                   'aim-target-type: ${player.aimTargetType}\n'
-                  'aim-target-name: ${player.aimTargetName}\n'
                   'aim-target-position: ${player.aimTargetPosition}\n'
                   'target-position: ${player.targetPosition}\n'
                   'scene-light-sources: ${scene.nodeLightSourcesTotal}\n'

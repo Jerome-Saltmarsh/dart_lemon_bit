@@ -13,9 +13,9 @@ class IsometricParticles with IsometricComponent implements Updatable {
   static const windStrengthMultiplier = 0.003;
   var windy = false;
   var windStrength = 0.0;
+  var maxVelocity = 1.25;
   var nextParticleFrame = 0;
   var nodeType = 0;
-
 
   final children = <Particle>[];
   int get bodyPartDuration =>  randomInt(120, 200);
@@ -746,8 +746,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
     nextParticleFrame--;
-    windStrength = environment.wind.value * windStrengthMultiplier;
-    windy = windStrength != 0;
+    final wind = environment.wind.value;
+    windStrength = wind * windStrengthMultiplier;
+    windy = wind != 0;
+    maxVelocity = 0.3 * wind;
 
     for (final particle in children) {
       if (!particle.active) continue;
@@ -830,7 +832,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ParticleType.Smoke,
         ParticleType.Whisp,
       ].contains(particle.type)) {
-        const maxVelocity = 1.25;
         particle.xv = clamp(particle.xv - windStrength, -maxVelocity, maxVelocity);
         particle.yv = clamp(particle.yv + windStrength, -maxVelocity, maxVelocity);
       }

@@ -338,11 +338,11 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readPlayerAimTarget() {
     final aimTargetSet = readBool();
-    player.playerAimTargetSet.value = aimTargetSet;
+    player.aimTargetSet.value = aimTargetSet;
     if (aimTargetSet) {
-      player.playerAimTargetName.value = readString();
+      player.aimTargetName.value = readString();
     } else {
-      player.playerAimTargetName.value = '';
+      player.aimTargetName.value = '';
     }
   }
 
@@ -395,9 +395,6 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case ApiPlayer.Aim_Target_Quantity:
         player.aimTargetQuantity = readUInt16();
-        break;
-      case ApiPlayer.Aim_Target_Name:
-        player.aimTargetName = readString();
         break;
       case ApiPlayer.Arrived_At_Destination:
         player.arrivedAtDestination.value = readBool();

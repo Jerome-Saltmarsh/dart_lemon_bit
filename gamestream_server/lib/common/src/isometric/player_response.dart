@@ -5,4 +5,5 @@ class PlayerResponse {
   static const LegsType = 2;
   static const HandTypeLeft = 3;
   static const HandTypeRight = 4;
+  static const Aim_Target_Health = 5;
 }

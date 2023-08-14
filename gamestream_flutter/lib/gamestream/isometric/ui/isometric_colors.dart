@@ -38,6 +38,8 @@ class IsometricColors {
   final blue1 = Color.fromARGB(255, 77, 155, 230);
   final red0 = Color.fromARGB(255, 245, 125, 74);
   final red1 = Color.fromARGB(255, 234, 79, 54);
+  final red2 = Color.fromARGB(255, 179, 56, 49);
+  final red3 = Color.fromARGB(255, 110, 39, 39);
   final orange = Color.fromARGB(255, 249, 194, 43);
   final blue1_05 = Color.fromARGB(126, 77, 155, 230);
 }

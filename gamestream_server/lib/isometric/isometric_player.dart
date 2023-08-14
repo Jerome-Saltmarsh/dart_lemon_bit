@@ -33,6 +33,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   /// The power the user has selected but must still caste
   late final powerActivated = ChangeNotifier<Power?>(null, onActivatedPowerChanged);
 
+  var _cacheAimTargetHealthPercentage = 0.0;
   var _debugging = false;
   var mouseLeftDownDuration = 0;
   var mouseLeftDownIgnore = false;
@@ -311,6 +312,17 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeCharacters();
     writeEditorGameObjectSelected();
     writeGameTime();
+    writeAimTargetHealthPercentage();
+  }
+
+  void writeAimTargetHealthPercentage() {
+    final aimTarget = this.aimTarget;
+    if (aimTarget is Character && _cacheAimTargetHealthPercentage != aimTarget.healthPercentage) {
+      _cacheAimTargetHealthPercentage = aimTarget.healthPercentage;
+      writeByte(ServerResponse.Player);
+      writeByte(PlayerResponse.Aim_Target_Health);
+      writePercentage(_cacheAimTargetHealthPercentage);
+    }
   }
 
   void writeGameObjects(){
@@ -1000,18 +1012,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writePlayerInitialized() {
     writeByte(ServerResponse.Isometric);
     writeByte(IsometricResponse.Player_Initialized);
-  }
-
-  void writePlayerAimTargetName() {
-    final aimTarget = this.aimTarget;
-    if (aimTarget is! Character) return;
-    writeApiPlayerAimTargetName(aimTarget.name);
-  }
-
-  void writeApiPlayerAimTargetName(String value) {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Aim_Target_Name);
-    writeString(value);
   }
 
   void performPrimaryAction() {

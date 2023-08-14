@@ -49,9 +49,8 @@ class AmuletPlayer extends IsometricPlayer {
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
     controlsRunInDirectionEnabled = false;
     controlsCanTargetEnemies = true;
-    // hurtStateBusy = false;
     characterType = CharacterType.Kid;
-    hurtable = true;
+    hurtable = false;
     hurtStateBusy = false;
     setItemsLength(itemLength);
     addItem(MMOItem.Rusty_Old_Sword);
