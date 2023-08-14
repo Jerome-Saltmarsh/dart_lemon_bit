@@ -13,7 +13,6 @@ shift + alt + J     : backspace
 
 
 [TODO]
-- fix ai
 - inventory item draggable
 - kid state change
 - kid state death
@@ -25,6 +24,9 @@ shift + alt + J     : backspace
 - fix render nodes corner and bottom
 - fix set node light source refresh
 - player attributes dialog
+
+14.08.2023
+- fix ai
 
 13.08.2023
 - fix character dead render order

@@ -987,7 +987,6 @@ class RendererNodes extends RenderGroup {
         renderNodeTemplateShaded(srcX);
         break;
       case NodeType.Sunflower:
-        if (currentNodeOrientation == NodeOrientation.Destroyed) return;
         renderStandardNode(
           srcX: 1753.0,
           srcY: 867.0,
@@ -1730,9 +1729,6 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderNodeGrassLong() {
-    if (currentNodeOrientation == NodeOrientation.Destroyed)
-      return;
-
     final frame = wind == WindType.Calm
         ? 0
         : (((row - column) + animation.frame6) % 6);

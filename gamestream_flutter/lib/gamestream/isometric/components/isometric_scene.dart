@@ -1142,13 +1142,12 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void applyEmissionBakeStack() {
 
-    final ambient = ambientAlpha;
-
+    final ambient = ambientAlpha.clamp(0, 255);
     final alpha = interpolate(
       ambient,
       0,
       amulet.lighting.torchEmissionIntensityAmbient,
-    ).toInt();
+    ).toInt().clamp(0, 255);
 
     for (var i = 0; i < bakeStackTorchTotal; i++){
       final index = bakeStackTorchIndex[i];
