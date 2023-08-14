@@ -476,8 +476,7 @@ class RendererNodes extends RenderGroup {
     scene.resetNodeColorStack();
     scene.resetNodeAmbientStack();
     scene.applyEmissions();
-
-    // highlightCharacterNearMouse();
+    render.highlightAimTargetEnemy();
   }
 
   void increaseOrderShiftY(){

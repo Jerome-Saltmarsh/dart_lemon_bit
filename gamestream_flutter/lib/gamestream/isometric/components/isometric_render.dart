@@ -83,6 +83,9 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
+
+    highlightAimTargetEnemy();
+
     camera.update();
     animation.update();
     particles.onComponentUpdate();
@@ -92,6 +95,27 @@ class IsometricRender with IsometricComponent {
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
+  }
+
+  void highlightAimTargetEnemy() {
+    if (player.aimTargetAction.value == TargetAction.Attack){
+      // player.aimTargetPosition
+      final position = player.aimTargetPosition;
+      final x = position.x;
+      final y = position.y;
+      final z = position.z;
+      for (final character in scene.characters){
+        if (character.x != x)
+          continue;
+        if (character.y != y)
+          continue;
+        if (character.z != z)
+          continue;
+
+        character.color = 0;
+        break;
+      }
+    }
   }
 
   void drawForeground(Canvas canvas, Size size){
