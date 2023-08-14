@@ -101,18 +101,18 @@ class Amulet extends IsometricGame<AmuletPlayer> {
     for (var i = 0; i < length; i++){
        if (types[i] != NodeType.Spawn) continue;
        for (var j = 0; j < 3; j++){
-         spawnZombieAtIndex(i);
+         spawnFallenAtIndex(i);
        }
     }
   }
 
-  void spawnZombieAtIndex(int index) {
+  void spawnFallenAtIndex(int index) {
     characters.add(Character(
       team: MmoTeam.Monsters,
       x: scene.getIndexX(index),
       y: scene.getIndexY(index),
       z: scene.getIndexZ(index),
-      health: 3,
+      health: 7,
       weaponDamage: 1,
       characterType: CharacterType.Fallen,
       weaponType: WeaponType.Unarmed,
@@ -235,7 +235,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnCharacterKilled(Character target, src) {
-    if (target.characterType == CharacterType.Zombie) {
+    if (target.characterType == CharacterType.Fallen) {
 
       final itemQuality = getRandomItemQuality();
 

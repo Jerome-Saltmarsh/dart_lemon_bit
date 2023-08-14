@@ -272,6 +272,13 @@ class Character extends Collider {
     if (state == CharacterState.Spawning)
       return;
 
+    x = startX;
+    y = startY;
+    z = startZ;
+    active = true;
+    health = maxHealth;
+    physical = true;
+    hitable = true;
     state = CharacterState.Spawning;
     frame = 0;
     actionDuration = duration;

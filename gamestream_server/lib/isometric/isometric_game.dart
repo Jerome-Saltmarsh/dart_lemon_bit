@@ -939,7 +939,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.setCharacterStateSpawning();
     activateCollider(player);
     player.physical = true;
-    player.hitable = false;
+    player.hitable = true;
     player.health = player.maxHealth;
     clearCharacterTarget(player);
 
@@ -1288,31 +1288,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     throw Exception();
   }
 
-  // void updatePlayer(T player) {
-  //   player.framesSinceClientRequest++;
-  //
-  //   if (player.dead) return;
-  //   if (!player.active) return;
-  //
-  //   updatePlayerAimTarget(player);
-  //
-  //   if (player.idling && !player.weaponStateBusy) {
-  //     final diff = IsometricDirection.getDifference(
-  //         player.lookDirection, player.direction);
-  //     if (diff >= 2) {
-  //       player.angle += piQuarter;
-  //     } else if (diff <= -3) {
-  //       player.angle -= piQuarter;
-  //     }
-  //   }
-  // }
-
   void setCharacterStateSpawning(Character character) {
-    character.active = true;
-    character.x = character.startX;
-    character.y = character.startY;
-    character.z = character.startZ;
-    character.health = character.maxHealth;
     character.setCharacterStateSpawning();
   }
 

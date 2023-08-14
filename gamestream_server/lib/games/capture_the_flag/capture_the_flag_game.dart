@@ -259,6 +259,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     character.target = null;
     character.health = character.maxHealth;
     character.state = CharacterState.Idle;
+    character.physical = true;
+    character.hitable = true;
     character.x = base.x + giveOrTake(50);
     character.y = base.y + giveOrTake(50);
     character.z = base.z + 25;
