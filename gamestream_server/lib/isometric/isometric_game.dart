@@ -297,6 +297,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
+          player.lookAtMouse();
           characterAttack(player);
           return;
         } else {
