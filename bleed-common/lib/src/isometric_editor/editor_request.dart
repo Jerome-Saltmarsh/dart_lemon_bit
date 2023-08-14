@@ -1,5 +1,5 @@
 
-enum IsometricEditorRequest {
+enum EditorRequest {
    GameObject,
    Set_Node,
    Load_Scene,
@@ -12,4 +12,5 @@ enum IsometricEditorRequest {
    Generate_Scene,
    Toggle_Game_Running,
    Scene_Reset,
+   Select_Mark_Index,
 }

@@ -1179,11 +1179,20 @@ extension IsometricEditorUI on IsometricEditor {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  buildWatch(scene.marksChangedNotifier, (t) => Column(
-                    children: scene.marks.map((mark) {
-                       return buildText(mark);
-                    }).toList(growable: false),
-                  )),
+                  buildWatch(scene.marksChangedNotifier, (t) =>
+                  buildWatch(editor.selectedMarkIndex, (selectedMarkIndex){
+                    return Column(
+                      children: List.generate(scene.marks.length, (index) {
+                        return onPressed(
+                            action: (){
+                              selectMarkIndex(index);
+                            },
+                            child: Container(
+                                color: index == selectedMarkIndex ? colors.white10 : null,
+                                child: buildText(scene.marks[index])));
+                      }),
+                    );
+                  }))
                 ],
               ),
             ),

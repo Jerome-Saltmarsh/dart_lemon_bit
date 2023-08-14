@@ -124,22 +124,22 @@ class WebSocketConnection with ByteReader {
 
         if (isometricEditorRequestIndex == null) return;
 
-        if (!isValidIndex(isometricEditorRequestIndex, IsometricEditorRequest.values)) {
+        if (!isValidIndex(isometricEditorRequestIndex, EditorRequest.values)) {
           return errorInvalidClientRequest();
         }
 
-        final isometricEditorRequest = IsometricEditorRequest.values[
+        final isometricEditorRequest = EditorRequest.values[
           isometricEditorRequestIndex
         ];
 
         switch (isometricEditorRequest){
-          case IsometricEditorRequest.GameObject:
+          case EditorRequest.GameObject:
             handleIsometricEditorRequestGameObject(arguments);
             break;
-          case IsometricEditorRequest.Set_Node:
+          case EditorRequest.Set_Node:
             handleIsometricEditorRequestSetNode(arguments);
             break;
-          case IsometricEditorRequest.Load_Scene:
+          case EditorRequest.Load_Scene:
             try {
               final args = arguments.map(int.parse).toList(growable: false);
               final scene = SceneReader.readScene(
@@ -150,17 +150,31 @@ class WebSocketConnection with ByteReader {
               sendGameError(GameError.Load_Scene_Failed);
             }
             return;
-          case IsometricEditorRequest.Toggle_Game_Running:
+          case EditorRequest.Toggle_Game_Running:
             if (!isLocalMachine && game is! IsometricEditor) return;
             game.running = !game.running;
             break;
 
-          case IsometricEditorRequest.Scene_Reset:
+          case EditorRequest.Scene_Reset:
             if (!isLocalMachine && game is! IsometricEditor) return;
             game.reset();
             break;
 
-          case IsometricEditorRequest.Generate_Scene:
+          case EditorRequest.Select_Mark_Index:
+            if (!isLocalMachine && game is! IsometricEditor)
+              return;
+
+            final index = parseArg2(arguments);
+            if (player is! IsometricPlayer){
+              return;
+            }
+            if (index == null)
+              return;
+
+            player.editor.selectedMarkIndex = index;
+            break;
+
+          case EditorRequest.Generate_Scene:
             const min = 5;
             final rows = parseArg2(arguments);
             if (rows == null) return;
@@ -190,7 +204,7 @@ class WebSocketConnection with ByteReader {
             player.z = Node_Height * altitude + 24;
             break;
 
-          case IsometricEditorRequest.Download:
+          case EditorRequest.Download:
             if (player is! IsometricPlayer) return;
             final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
             player.writeByte(ServerResponse.Download_Scene);
@@ -204,7 +218,7 @@ class WebSocketConnection with ByteReader {
             player.writeBytes(compiled);
             break;
 
-          case IsometricEditorRequest.Scene_Set_Floor_Type:
+          case EditorRequest.Scene_Set_Floor_Type:
             final nodeType = parseArg2(arguments);
             if (nodeType == null) return;
             for (var i = 0; i < game.scene.area; i++){
@@ -212,15 +226,15 @@ class WebSocketConnection with ByteReader {
             }
             game.playersDownloadScene();
             break;
-          case IsometricEditorRequest.Clear_Spawned:
+          case EditorRequest.Clear_Spawned:
             game.clearSpawnedAI();
             break;
-          case IsometricEditorRequest.Spawn_AI:
+          case EditorRequest.Spawn_AI:
             game.clearSpawnedAI();
             game.scene.refreshSpawnPoints();
             break;
 
-          case IsometricEditorRequest.Save:
+          case EditorRequest.Save:
             if (game.scene.name.isEmpty){
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
@@ -228,7 +242,7 @@ class WebSocketConnection with ByteReader {
             engine.isometricScenes.saveSceneToFile(game.scene);
             break;
 
-          case IsometricEditorRequest.Modify_Canvas_Size:
+          case EditorRequest.Modify_Canvas_Size:
             if (arguments.length < 3) {
               return errorInvalidClientRequest();
             }

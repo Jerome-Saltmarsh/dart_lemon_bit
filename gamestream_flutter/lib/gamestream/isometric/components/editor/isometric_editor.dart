@@ -21,6 +21,7 @@ class IsometricEditor with IsometricComponent {
   final generateOctaves = WatchInt(8, min: 0, max: 100);
   final generateFrequency = WatchInt(1, min: 0, max: 100);
 
+  final selectedMarkIndex = Watch(0);
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<GameObject?>(null);
   final gameObjectSelected = Watch(false);
@@ -419,8 +420,8 @@ class IsometricEditor with IsometricComponent {
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Add, '${nodeSelectedIndex.value} $type');
 
   void sendGameObjectRequest(IsometricEditorGameObjectRequest gameObjectRequest, [dynamic message]) =>
-      sendIsometricEditorRequest(
-        IsometricEditorRequest.GameObject,
+      sendEditorRequest(
+        EditorRequest.GameObject,
         '${gameObjectRequest.index} $message',
       );
 
@@ -432,8 +433,8 @@ class IsometricEditor with IsometricComponent {
     //   package[i + 1] = bytes[i];
     // }
     // gamestream.network.sink.add(package);
-    sendIsometricEditorRequest(
-      IsometricEditorRequest.Load_Scene,
+    sendEditorRequest(
+      EditorRequest.Load_Scene,
       bytes.join(' '),
     );
   }
@@ -443,19 +444,19 @@ class IsometricEditor with IsometricComponent {
     required int type,
     required int orientation,
   }) =>
-      sendIsometricEditorRequest(
-        IsometricEditorRequest.Set_Node,
+      sendEditorRequest(
+        EditorRequest.Set_Node,
         '$index $type $orientation',
       );
 
   void downloadScene() =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Download);
+      sendEditorRequest(EditorRequest.Download);
 
   void toggleGameRunning() =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Toggle_Game_Running);
+      sendEditorRequest(EditorRequest.Toggle_Game_Running);
 
   void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Modify_Canvas_Size, request.index);
+      sendEditorRequest(EditorRequest.Modify_Canvas_Size, request.index);
 
   void sendClientRequestEditGenerateScene({
     required int rows,
@@ -463,29 +464,29 @@ class IsometricEditor with IsometricComponent {
     required int height,
     required int octaves,
     required int frequency,
-  }) => sendIsometricEditorRequest(
-      IsometricEditorRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
+  }) => sendEditorRequest(
+      EditorRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
   );
 
   void sendClientRequestEditSceneSetFloorTypeStone() =>
       sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
 
   void sendClientRequestEditSceneSetFloorType(int nodeType) =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Scene_Set_Floor_Type, nodeType);
+      sendEditorRequest(EditorRequest.Scene_Set_Floor_Type, nodeType);
 
   void editSceneReset() =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Scene_Reset);
+      sendEditorRequest(EditorRequest.Scene_Reset);
 
   void editSceneClearSpawnedAI(){
-    sendIsometricEditorRequest(IsometricEditorRequest.Clear_Spawned);
+    sendEditorRequest(EditorRequest.Clear_Spawned);
   }
 
   void editSceneSpawnAI() =>
-      sendIsometricEditorRequest(IsometricEditorRequest.Spawn_AI);
+      sendEditorRequest(EditorRequest.Spawn_AI);
 
-  void saveScene()=> sendIsometricEditorRequest(IsometricEditorRequest.Save);
+  void saveScene()=> sendEditorRequest(EditorRequest.Save);
 
-  void sendIsometricEditorRequest(IsometricEditorRequest request, [dynamic message]) =>
+  void sendEditorRequest(EditorRequest request, [dynamic message]) =>
       network.send(
         ClientRequest.Isometric_Editor,
         '${request.index} $message',
@@ -531,4 +532,10 @@ class IsometricEditor with IsometricComponent {
         octaves: generateOctaves.value,
         frequency: generateFrequency.value,
       );
+
+  void selectMarkIndex(int index) => network.sendArgs2(
+        ClientRequest.Isometric_Editor,
+        EditorRequest.Select_Mark_Index.index,
+        index,
+    );
 }

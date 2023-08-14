@@ -28,6 +28,7 @@ class ServerResponse {
   static const Sort_GameObjects = 36;
   static const Player = 37;
   static const Scene = 38;
+  static const Editor_Response = 39;
 
   static String getName(int value) => const <int, String> {
       Api_Player: 'Api_Player',
@@ -58,5 +59,6 @@ class ServerResponse {
       Isometric: 'Isometric',
       FPS: 'FPS',
       Scene: 'Scene',
+      Editor_Response: 'EditorResponse',
     }[value] ?? 'server-response-missing-name-$value';
 }

@@ -15,6 +15,7 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
 import 'collider.dart';
+import 'editor_state.dart';
 import 'isometric_game.dart';
 import 'character.dart';
 import 'gameobject.dart';
@@ -66,6 +67,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var positionCacheZ = 0;
   var cacheIndex = 0;
 
+  late final EditorState editor;
   final cacheStateB = Uint8List(Cache_Length);
   final cacheStateA = Uint32List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);
@@ -96,6 +98,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     weaponType: WeaponType.Unarmed,
     weaponDamage: 1,
   ){
+    editor  = EditorState(this);
     this.autoTarget = autoTargetNearbyEnemies;
     id = game.playerId++;
   }
