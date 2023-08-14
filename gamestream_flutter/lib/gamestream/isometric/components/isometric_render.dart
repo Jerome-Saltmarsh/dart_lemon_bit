@@ -523,8 +523,10 @@ class IsometricRender with IsometricComponent {
   }
 
   void renderPlayerAimTargetNameText(){
-    if (player.aimTargetCategory == TargetCategory.Nothing)
+
+    if (player.aimTargetAction.value != TargetAction.Talk)
       return;
+
     if (player.aimTargetName.value.isEmpty)
       return;
     const style = TextStyle(color: Colors.white, fontSize: 18);

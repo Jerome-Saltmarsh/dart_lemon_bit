@@ -7,7 +7,6 @@ class ApiPlayer {
   static const Aim_Angle              = 06;
   static const Message                = 07;
   static const Spawned                = 10;
-  static const Aim_Target_Category    = 12;
   static const Aim_Target_Position    = 13;
   static const Aim_Target_Type        = 14;
   static const Aim_Target_Quantity    = 15;

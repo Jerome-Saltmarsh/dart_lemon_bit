@@ -6,4 +6,6 @@ class PlayerResponse {
   static const HandTypeLeft = 3;
   static const HandTypeRight = 4;
   static const Aim_Target_Health = 5;
+  static const Aim_Target_Action = 6;
+
 }

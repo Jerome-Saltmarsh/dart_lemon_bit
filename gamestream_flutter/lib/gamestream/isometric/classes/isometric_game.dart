@@ -19,7 +19,7 @@ class IsometricGame extends Game {
   }
 
   void updateCursorType() {
-    options.cursorType = mapTargetCategoryToCursorType(player.aimTargetCategory);
+    options.cursorType = mapTargetActionToCursorType(player.aimTargetAction.value);
   }
 
   void renderForeground(Canvas canvas, Size size) {
@@ -151,12 +151,11 @@ class IsometricGame extends Game {
   }
 
   /// override to customize cursor type
-  int mapTargetCategoryToCursorType(int targetCategory) => switch(targetCategory) {
-    TargetCategory.Attack => IsometricCursorType.CrossHair_Red,
-    TargetCategory.Talk => IsometricCursorType.Talk,
-    TargetCategory.Nothing => IsometricCursorType.CrossHair_White,
-    TargetCategory.Collect => IsometricCursorType.Hand,
-    TargetCategory.Run => IsometricCursorType.CrossHair_White,
+  int mapTargetActionToCursorType(int targetCategory) => switch(targetCategory) {
+    TargetAction.Attack => IsometricCursorType.CrossHair_Red,
+    TargetAction.Talk => IsometricCursorType.Talk,
+    TargetAction.Collect => IsometricCursorType.Hand,
+    TargetAction.Run => IsometricCursorType.CrossHair_White,
     _ => IsometricCursorType.CrossHair_White,
   };
 }

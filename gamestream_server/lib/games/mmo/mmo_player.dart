@@ -348,25 +348,27 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   @override
-  int getTargetCategory(Position? value){
-    if (value == null) return TargetCategory.Nothing;
+  int getTargetAction(Position? value){
+    if (value == null)
+      return TargetAction.Run;
     if (value is GameObject) {
       if (value.interactable) {
-        return TargetCategory.Talk;
+        return TargetAction.Talk;
       }
       if (value.collectable) {
-        return TargetCategory.Collect;
+        return TargetAction.Collect;
       }
-      return TargetCategory.Nothing;
+      return TargetAction.Run;
     }
 
     if (isAlly(value)) {
       if (value is MMONpc && value.interact != null) {
-        return TargetCategory.Talk;
+        return TargetAction.Talk;
       }
     }
-    if (isEnemy(value)) return TargetCategory.Attack;
-    return TargetCategory.Run;
+    if (isEnemy(value))
+      return TargetAction.Attack;
+    return TargetAction.Run;
   }
 
   void talk(String text, {List<TalkOption>? options}) {

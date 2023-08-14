@@ -40,7 +40,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var mouseRightDownDuration = 0;
   var mouseRightDownIgnore = false;
   var _mouseLeftDown = false;
-  var _aimTargetCategory = TargetCategory.Run;
+  var _aimTargetAction = TargetAction.Run;
   Collider? _aimTarget;
 
   var weaponDurationPercentagePrevious = 0.0;
@@ -143,15 +143,15 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   Collider? get aimTarget => _aimTarget;
 
-  int get aimTargetCategory => _aimTargetCategory;
+  int get aimTargetCategory => _aimTargetAction;
 
   @override
   bool get isPlayer => true;
 
   set aimTargetCategory(int value){
-    if (_aimTargetCategory == value) return;
-    _aimTargetCategory = value;
-    writePlayerAimTargetCategory();
+    if (_aimTargetAction == value) return;
+    _aimTargetAction = value;
+    writePlayerAimTargetAction();
   }
 
   set aimTarget(Collider? value){
@@ -303,7 +303,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeIsometricPlayer();
     writePlayerTargetPosition();
     writePlayerAimTargetPosition();
-    writePlayerAimTargetCategory();
+    writePlayerAimTargetAction();
     writePlayerDestination();
 
     writeSelectedCollider();
@@ -478,10 +478,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeIsometricPosition(aimTarget!);
   }
 
-  void writePlayerAimTargetCategory() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Aim_Target_Category);
-    writeByte(_aimTargetCategory);
+  void writePlayerAimTargetAction() {
+    writeByte(ServerResponse.Player);
+    writeByte(PlayerResponse.Aim_Target_Action);
+    writeByte(_aimTargetAction);
   }
 
   void writePlayerAimTargetType() {
@@ -506,28 +506,28 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
-  int getTargetCategory(Position? value){
+  int getTargetAction(Position? value){
 
     if (value == null)
-      return TargetCategory.Run;
+      return TargetAction.Run;
 
     if (value is GameObject) {
       if (value.interactable) {
-        return TargetCategory.Talk;
+        return TargetAction.Talk;
       }
       if (value.collectable){
-        return TargetCategory.Collect;
+        return TargetAction.Collect;
       }
       if (value.physical && value.hitable){
-        return TargetCategory.Attack;
+        return TargetAction.Attack;
       }
-      return TargetCategory.Run;
+      return TargetAction.Run;
     }
 
     if (isEnemy(value))
-      return TargetCategory.Attack;
+      return TargetAction.Attack;
 
-    return TargetCategory.Run;
+    return TargetAction.Run;
   }
 
   bool onScreen(double x, double y){
@@ -994,7 +994,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void onChangedAimTarget(){
-     aimTargetCategory = getTargetCategory(aimTarget);
+     aimTargetCategory = getTargetAction(aimTarget);
      writePlayerAimTarget();
   }
 

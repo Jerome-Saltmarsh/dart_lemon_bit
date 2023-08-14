@@ -19,7 +19,7 @@ export 'node_type.dart';
 export 'projectile_type.dart';
 export 'rain_type.dart';
 export 'scene_part.dart';
-export 'target_category.dart';
+export 'target_action.dart';
 export 'team_type.dart';
 export 'weapon_state.dart';
 export 'wind_type.dart';

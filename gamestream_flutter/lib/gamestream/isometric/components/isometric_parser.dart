@@ -384,9 +384,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
-      case ApiPlayer.Aim_Target_Category:
-        player.aimTargetCategory = readByte();
-        break;
       case ApiPlayer.Aim_Target_Position:
         readIsometricPosition(player.aimTargetPosition);
         break;

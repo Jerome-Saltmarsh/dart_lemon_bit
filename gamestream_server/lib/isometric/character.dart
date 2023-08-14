@@ -59,9 +59,6 @@ class Character extends Collider {
     if (_goal == value)
       return;
 
-    if (value == CharacterGoal.Collect_Target){
-      print("catch");
-    }
     _goal = value;
   }
 

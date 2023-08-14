@@ -11,7 +11,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   var playerInsideIsland = false;
   var energyPercentage = 0.0;
   var runningToTarget = false;
-  var aimTargetCategory = TargetCategory.Nothing;
   var aimTargetType = 0;
   var aimTargetQuantity = 0;
   var messageTimer = 0;
@@ -31,6 +30,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final aimTargetSet = Watch(false);
   final aimTargetName = Watch('');
   final aimTargetHealthPercentage = Watch(0.0);
+  final aimTargetAction = Watch(TargetAction.Run);
   final npcTalk = Watch('');
   final aimTargetPosition = Position();
   final targetPosition = Position();
@@ -186,6 +186,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         break;
       case PlayerResponse.Aim_Target_Health:
         aimTargetHealthPercentage.value = parser.readPercentage();
+        break;
+      case PlayerResponse.Aim_Target_Action:
+        aimTargetAction.value = parser.readByte();
         break;
     }
   }
