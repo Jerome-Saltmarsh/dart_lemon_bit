@@ -835,16 +835,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.autoTargetTimer = character.autoTargetTimerDuration;
       character.target = findNearestEnemy(character, radius: character.autoTargetRange);
     }
-
-    final target = character.target;
-
-    if (target != null){
-      if (scene.outOfBoundsPosition(target)) {
-        character.clearTarget();
-        character.clearPath();
-        character.setDestinationToCurrentPosition();
-      }
-    }
   }
 
   void updateColliderPhysics(Collider collider) {
@@ -949,6 +939,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     player.setCharacterStateSpawning();
     activateCollider(player);
+    player.physical = true;
+    player.hitable = false;
     player.health = player.maxHealth;
     clearCharacterTarget(player);
 

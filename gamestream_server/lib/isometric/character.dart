@@ -51,7 +51,19 @@ class Character extends Collider {
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
-  var goal = CharacterGoal.Idle;
+  var _goal = CharacterGoal.Idle;
+
+  int get goal => _goal;
+
+  set goal(int value){
+    if (_goal == value)
+      return;
+
+    if (value == CharacterGoal.Collect_Target){
+      print("catch");
+    }
+    _goal = value;
+  }
 
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;

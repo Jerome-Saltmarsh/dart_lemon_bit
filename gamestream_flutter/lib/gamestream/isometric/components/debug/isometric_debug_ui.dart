@@ -146,15 +146,6 @@ extension isometricDebugUI on IsometricDebug {
               'mouse-scene: x: ${mouse.positionX.toInt()}, y: ${mouse.positionY.toInt()}\n'
                   'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
                   'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
-                  'player-alive: ${player.alive.value}\n'
-                  'player-position: ${player.position}\n'
-                  'player-render: x: ${player.position.renderX}, y: ${player.position.renderY}\n'
-                  'player-screen: x: ${player.positionScreenX.toInt()}, y: ${player.positionScreenY.toInt()}\n'
-                  'player-index: z: ${player.position.indexZ}, row: ${player.position.indexRow}, column: ${player.position.indexColumn}\n'
-                  'player-legs: ${LegType.getName(player.legsType.value)}\n'
-                  'player-body: ${BodyType.getName(player.bodyType.value)}\n'
-                  'player-head: ${HeadType.getName(player.headType.value)}\n'
-                  'player-weapon: ${WeaponType.getName(player.weapon.value)}\n'
                   'aim-target-category: ${TargetCategory.getName(player.aimTargetCategory)}\n'
                   'aim-target-type: ${player.aimTargetType}\n'
                   'aim-target-name: ${player.aimTargetName}\n'
@@ -403,7 +394,7 @@ extension isometricDebugUI on IsometricDebug {
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
         buildRow('action', buildWatch(characterAction, (t) => buildText(CharacterAction.getName(t)))),
-        buildRow('goal', buildWatch(characterAction, (t) => buildText(CharacterGoal.getName(t)))),
+        buildRow('goal', buildWatch(goal, (t) => buildText(CharacterGoal.getName(t)))),
         buildRowWatchInt(text: 'team', watch: team),
         buildRowWatchInt(text: 'radius', watch: radius),
         buildWatch(healthMax, (healthMax) => buildWatch(health, (health) =>

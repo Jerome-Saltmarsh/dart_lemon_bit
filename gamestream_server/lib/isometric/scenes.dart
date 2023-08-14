@@ -17,8 +17,6 @@ class Scenes {
   late Scene mmoTown;
 
   Future load() async {
-      // captureTheFlag = await readSceneFromFile('capture_the_flag');
-      // moba = await readSceneFromFile('moba');
       mmoTown = await readSceneFromFile('mmo');
   }
 

@@ -17,5 +17,5 @@ class CharacterGoal {
   Follow_Path: 'Follow Path',
   Run_To_Destination: 'Run to Destination',
   Wander: 'Wander'
- }[value] ?? 'unknown-goal-value';
+ }[value] ?? 'unknown-$value';
 }
