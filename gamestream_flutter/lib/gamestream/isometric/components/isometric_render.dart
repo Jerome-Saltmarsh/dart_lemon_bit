@@ -13,6 +13,8 @@ import '../classes/src.dart';
 
 class IsometricRender with IsometricComponent {
 
+  var renderAimTargetName = false;
+
   late final Float32List bufferSrc;
   late final Float32List bufferDst;
   late final Int32List bufferClr;
@@ -524,8 +526,9 @@ class IsometricRender with IsometricComponent {
 
   void renderPlayerAimTargetNameText(){
 
-    if (player.aimTargetAction.value != TargetAction.Talk)
+    if (!renderAimTargetName)
       return;
+
 
     if (player.aimTargetName.value.isEmpty)
       return;

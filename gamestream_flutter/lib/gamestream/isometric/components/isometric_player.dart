@@ -62,17 +62,19 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final controlsCanTargetEnemies = Watch(false);
   final controlsRunInDirectionEnabled = Watch(false);
 
-  IsometricPlayer(){
-    bodyType.onChanged((t) {
-      print('player.onChangedBodyType(${BodyType.getName(t)}');
-    });
-  }
-
   late final message = Watch('');
   late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   late final active = Watch(false);
   late final alive = Watch(true);
   late final weapon = Watch(0);
+
+  IsometricPlayer(){
+    bodyType.onChanged((t) {
+      print('player.onChangedBodyType(${BodyType.getName(t)}');
+    });
+
+    // aimTargetAction.onChanged(onChangedAimTargetAction);
+  }
 
   double get x => position.x;
   double get y => position.y;
@@ -212,4 +214,11 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   void readHeadType() {
     headType.value = parser.readByte();
   }
+
+  // void onChangedAimTargetAction(int targetAction) {
+  //   render.renderAimTargetName = const [
+  //     TargetAction.Talk,
+  //     TargetAction.Collect,
+  //   ].contains(targetAction);
+  // }
 }

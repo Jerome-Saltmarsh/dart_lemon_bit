@@ -19,7 +19,8 @@ extension MMOUI on MmoGame {
   static const margin3 = 315.0;
   static const margin4 = 560.0;
 
-  Widget buildMMOUI()=> Stack(
+  Widget buildMMOUI() {
+    return Stack(
     alignment: Alignment.center,
     children: [
       buildNpcText(),
@@ -64,6 +65,7 @@ extension MMOUI on MmoGame {
       ),
     ],
   );
+  }
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
@@ -135,8 +137,16 @@ extension MMOUI on MmoGame {
       );
 
   Widget buildPlayerAimTarget() {
+
     const width = 120.0;
     const height = width * goldenRatio_0381;
+
+    final healthPercentageBox = buildWatch(player.aimTargetHealthPercentage, (healthPercentage) => Container(
+      width: width * healthPercentage,
+      height: height,
+      color: colors.red1,
+    ));
+
     final name = Container(
       alignment: Alignment.centerLeft,
       height: height,
@@ -144,17 +154,18 @@ extension MMOUI on MmoGame {
       width: width,
       child: Stack(
         children: [
-          buildWatch(player.aimTargetHealthPercentage, (healthPercentage) => Container(
-              width: width * healthPercentage,
-              height: height,
-              color: colors.red1,
-            )),
+          buildWatch(player.aimTargetAction, (targetAction) {
+             if (targetAction != TargetAction.Attack)
+               return nothing;
+
+             return healthPercentageBox;
+          }),
           Container(
             width: width,
             height: height,
             alignment: Alignment.center,
             child: FittedBox(
-              child: buildWatch(player.aimTargetName, buildText),
+              child: buildWatch(player.aimTargetName, (name) => buildText(name.replaceAll('_', ' '))),
             ),
           ),
         ],
