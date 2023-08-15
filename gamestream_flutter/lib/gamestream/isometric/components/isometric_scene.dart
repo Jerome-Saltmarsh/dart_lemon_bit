@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/common/src/mark_type.dart';
 import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -89,12 +90,15 @@ class IsometricScene with IsometricComponent implements Updatable {
   void onChangedMarks(int count){
     print('scene.onChangedMarks()');
     particles.children.removeWhere((element) => element is ParticleWhisp);
-    for (final marker in marks) {
-      particles.spawnDust(
-          x: getIndexPositionX(marker),
-          y: getIndexPositionY(marker),
-          z: getIndexPositionZ(marker),
-      );
+    for (final markType in marks) {
+      if (MarkType.getType(markType) == MarkType.Spawn_Whisp){
+        final markIndex = MarkType.getIndex(markType);
+        particles.spawnWhisp(
+          x: getIndexPositionX(markIndex),
+          y: getIndexPositionY(markIndex),
+          z: getIndexPositionZ(markIndex),
+        );
+      }
     }
   }
 

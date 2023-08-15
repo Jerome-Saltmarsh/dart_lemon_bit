@@ -863,7 +863,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     children.sort(Particle.compare);
   }
 
-  void spawnDust({
+  void spawnWhisp({
     required double x,
     required double y,
     required double z,
