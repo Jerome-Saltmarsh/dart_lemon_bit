@@ -23,7 +23,7 @@ class AmuletPlayer extends IsometricPlayer {
   final treasures = List<MMOItemObject>.generate(4, (index) => MMOItemObject());
   final talents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
 
-  final equippedHead = MMOItemObject();
+  final equippedHelm = MMOItemObject();
   final equippedBody = MMOItemObject();
   final equippedLegs = MMOItemObject();
   final equippedHandLeft = MMOItemObject();
@@ -60,7 +60,7 @@ class AmuletPlayer extends IsometricPlayer {
     addItem(MMOItem.Steel_Helmet);
     addItem(MMOItem.Blink_Dagger);
     addItem(MMOItem.Sapphire_Pendant);
-    equipHead(MMOItem.Steel_Helmet);
+    equipHelm(MMOItem.Steel_Helmet);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
     // equipHandLeft(MMOItem.Gauntlet);
@@ -116,14 +116,14 @@ class AmuletPlayer extends IsometricPlayer {
   double get weaponRange => equippedWeapon?.item?.range ?? 30;
 
   @override
-  int get headType => equippedHead.item?.subType ?? HeadType.None;
+  int get helmType => equippedHelm.item?.subType ?? HelmType.None;
 
   int get activatedPowerIndex => _activatedPowerIndex;
 
   @override
   int get maxHealth {
     var health = healthBase;
-    health += equippedHead.health;
+    health += equippedHelm.health;
     health += equippedBody.health;
     health += equippedLegs.health;
 
@@ -140,7 +140,7 @@ class AmuletPlayer extends IsometricPlayer {
   double get runSpeed {
     var base = 1.0;
 
-    base += equippedHead.movement;
+    base += equippedHelm.movement;
     base += equippedBody.movement;
     base += equippedLegs.movement;
     return base;
@@ -265,8 +265,8 @@ class AmuletPlayer extends IsometricPlayer {
       }
     }
 
-    if (item.isHead && equippedHead.item == null){
-      equipHead(item);
+    if (item.isHelm && equippedHelm.item == null){
+      equipHelm(item);
       return true;
     }
 
@@ -417,13 +417,13 @@ class AmuletPlayer extends IsometricPlayer {
 
   void dropEquippedHead(){
 
-    final equippedHeadItem = equippedHead.item;
+    final equippedHeadItem = equippedHelm.item;
 
     if (equippedHeadItem == null)
       return;
 
     spawnItem(equippedHeadItem);
-    equipHead(null);
+    equipHelm(null);
   }
 
   void dropEquippedBody(){
@@ -636,8 +636,8 @@ class AmuletPlayer extends IsometricPlayer {
           setCharacterStateChanging();
         }
         break;
-      case GameObjectType.Head:
-        swap(equippedHead, selected);
+      case GameObjectType.Helm:
+        swap(equippedHelm, selected);
         break;
       case GameObjectType.Body:
         swap(equippedBody, selected);
@@ -670,29 +670,29 @@ class AmuletPlayer extends IsometricPlayer {
      npcOptions[index].action();
   }
 
-  void equipHead(MMOItem? item){
+  void equipHelm(MMOItem? item){
     if (deadOrBusy)
       return;
 
-    if (equippedHead.item == item)
+    if (equippedHelm.item == item)
       return;
 
     if (item == null){
-      clearSlot(equippedHead);
-      headType = HeadType.None;
+      clearSlot(equippedHelm);
+      helmType = HelmType.None;
       return;
     }
 
-    if (!item.isHead)
+    if (!item.isHelm)
       throw Exception();
 
     setSlot(
-      slot: equippedHead,
+      slot: equippedHelm,
       item: item,
       cooldown: item.cooldown,
     );
 
-    headType = item.subType;
+    helmType = item.subType;
   }
 
   void equipBody(MMOItem? item){
@@ -815,7 +815,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     print("cleanEquipment()");
 
-    assert (equippedHead.item?.isHead ?? true);
+    assert (equippedHelm.item?.isHelm ?? true);
     assert (equippedBody.item?.isBody ?? true);
     assert (equippedLegs.item?.isLegs ?? true);
     assert (equippedWeapon?.item?.isWeapon ?? true);
@@ -823,7 +823,7 @@ class AmuletPlayer extends IsometricPlayer {
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
-    headType = equippedHead.item?.subType ?? HeadType.None;
+    helmType = equippedHelm.item?.subType ?? HelmType.None;
     bodyType = equippedBody.item?.subType ?? BodyType.None;
     legsType = equippedLegs.item?.subType ?? LegType.None;
     handTypeLeft = equippedHandLeft.item?.subType ?? HandType.None;
@@ -845,7 +845,7 @@ class AmuletPlayer extends IsometricPlayer {
   void writeEquipped(){
     writeByte(ServerResponse.MMO);
     writeByte(MMOResponse.Player_Equipped);
-    writeMMOItem(equippedHead.item);
+    writeMMOItem(equippedHelm.item);
     writeMMOItem(equippedBody.item);
     writeMMOItem(equippedLegs.item);
     writeMMOItem(equippedHandLeft.item);
@@ -1157,7 +1157,7 @@ class AmuletPlayer extends IsometricPlayer {
       weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
 
   void unequipHead() =>
-      swapWithAvailableItemSlot(equippedHead);
+      swapWithAvailableItemSlot(equippedHelm);
 
   void unequipBody() => swapWithAvailableItemSlot(equippedBody);
 

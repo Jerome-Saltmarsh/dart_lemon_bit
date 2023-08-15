@@ -68,23 +68,23 @@ enum MMOItem {
   ),
   Steel_Helmet(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Head,
-      subType: HeadType.Steel_Helm,
+      type: GameObjectType.Helm,
+      subType: HelmType.Steel,
       health: 10,
   ),
   Rogues_Hood(
       quality: MMOItemQuality.Unique,
-      type: GameObjectType.Head,
-      subType: HeadType.Rogue_Hood,
+      type: GameObjectType.Helm,
+      subType: HelmType.Rogues_Hood,
       health: 5,
       movement: 0.1,
   ),
-  Ancients_Hat(
-      quality: MMOItemQuality.Common,
-      type: GameObjectType.Head,
-      subType: HeadType.Wizards_Hat,
-      health: 2,
-  ),
+  // Ancients_Hat(
+  //     quality: MMOItemQuality.Common,
+  //     type: GameObjectType.Head,
+  //     subType: HelmType.,
+  //     health: 2,
+  // ),
   Travellers_Pants(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Legs,
@@ -195,7 +195,7 @@ enum MMOItem {
 
   bool get isWeapon => type == GameObjectType.Weapon;
 
-  bool get isHead => type == GameObjectType.Head;
+  bool get isHelm => type == GameObjectType.Helm;
 
   bool get isHand => type == GameObjectType.Hand;
 

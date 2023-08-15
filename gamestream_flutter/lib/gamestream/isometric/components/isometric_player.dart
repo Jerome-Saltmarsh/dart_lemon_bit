@@ -39,8 +39,8 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final aimTargetChanged = Watch(0);
   final id = Watch(0);
   final team = Watch(0);
+  final helmType = Watch(0);
   final bodyType = Watch(0);
-  final headType = Watch(0);
   final legsType = Watch(0);
   final handTypeLeft = Watch(0);
   final handTypeRight = Watch(0);
@@ -212,7 +212,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   }
 
   void readHeadType() {
-    headType.value = parser.readByte();
+    helmType.value = parser.readByte();
   }
 
   // void onChangedAimTargetAction(int targetAction) {

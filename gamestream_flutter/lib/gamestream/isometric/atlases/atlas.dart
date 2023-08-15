@@ -61,13 +61,11 @@ class Atlas {
     BodyType.Tunic_Padded: AtlasSrcBody.Tunic,
   };
 
-  static const Collection_Head = <int, List<double>>{
-    HeadType.None: AtlasSrcHead.None,
-    HeadType.Blonde: AtlasSrcHead.Blond,
-    HeadType.Rogue_Hood: AtlasSrcHead.Rogue_Hood,
-    HeadType.Steel_Helm: AtlasSrcHead.Steel_Helm,
-    HeadType.Swat: AtlasSrcHead.Swat,
-    HeadType.Wizards_Hat: AtlasSrcHead.Wizards_Hat,
+  static const Collection_Helm = <int, List<double>>{
+    HelmType.None: AtlasSrcHelm.None,
+    HelmType.Steel: AtlasSrcHelm.Steel,
+    HelmType.Rogues_Hood: AtlasSrcHelm.Rogue_Hood,
+    HelmType.Wizards_Hat: AtlasSrcHelm.Wizards_Hat,
   };
 
   static const Collection_Hands = <int, List<double>>{
@@ -117,7 +115,7 @@ class Atlas {
     GameObjectType.Weapon: Collection_Weapons,
     GameObjectType.Legs: Collection_Legs,
     GameObjectType.Body: Collection_Body,
-    GameObjectType.Head: Collection_Head,
+    GameObjectType.Helm: Collection_Helm,
     GameObjectType.Object: Collection_Objects,
     GameObjectType.Hand: Collection_Hands,
     GameObjectType.Item: SrcItems.collection,

@@ -18,7 +18,7 @@ class RendererGameObjects extends RenderGroup {
     mapGameObjectTypeToImage = {
       GameObjectType.Weapon: images.atlas_weapons,
       GameObjectType.Object: images.atlas_gameobjects,
-      GameObjectType.Head: images.atlas_head,
+      GameObjectType.Helm: images.atlas_helms,
       GameObjectType.Body: images.atlas_body,
       GameObjectType.Legs: images.atlas_legs,
       GameObjectType.Item: images.atlas_items,
@@ -46,7 +46,7 @@ class RendererGameObjects extends RenderGroup {
 
     final isCollectable = const [
       GameObjectType.Weapon,
-      GameObjectType.Head,
+      GameObjectType.Helm,
       GameObjectType.Body,
       GameObjectType.Legs,
       GameObjectType.Item,

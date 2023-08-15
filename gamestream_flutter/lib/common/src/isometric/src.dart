@@ -28,7 +28,6 @@ export 'body_type.dart';
 export 'leg_type.dart';
 export 'player_response.dart';
 export 'object_type.dart';
-export 'head_type.dart';
 export 'isometric_type.dart';
 export 'character_action.dart';
 export 'compress_type.dart';

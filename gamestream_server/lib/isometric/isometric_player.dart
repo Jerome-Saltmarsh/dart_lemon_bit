@@ -632,7 +632,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     final compressedA = compressBytesToUInt64(
       character.weaponType,
       character.bodyType,
-      character.headType,
+      character.helmType,
       character.legsType,
       character.handTypeLeft,
       character.handTypeRight,
@@ -653,7 +653,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       cacheTemplateA[cacheIndex] = compressedA;
       writeByte(character.weaponType);
       writeByte(character.bodyType);
-      writeByte(character.headType);
+      writeByte(character.helmType);
       writeByte(character.legsType);
       writeByte(character.handTypeLeft);
       writeByte(character.handTypeRight);
@@ -1123,11 +1123,11 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   @override
-  set headType(int value) {
-    if (headType == value)
+  set helmType(int value) {
+    if (helmType == value)
       return;
 
-    super.headType = value;
+    super.helmType = value;
     writeHeadType();
   }
 
@@ -1170,7 +1170,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writeHeadType() {
     writeByte(ServerResponse.Player);
     writeByte(PlayerResponse.HeadType);
-    writeByte(headType);
+    writeByte(helmType);
   }
 
   void writeBodyType() {

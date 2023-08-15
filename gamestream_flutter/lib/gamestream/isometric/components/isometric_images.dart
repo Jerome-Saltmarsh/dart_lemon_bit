@@ -49,7 +49,7 @@ class IsometricImages with IsometricComponent {
   late final Image character_fallen;
   late final Image kid_shadow;
   late final Image atlas_particles;
-  late final Image atlas_head;
+  late final Image atlas_helms;
   late final Image atlas_hands;
   late final Image atlas_body;
   late final Image atlas_legs;
@@ -361,7 +361,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_talents').then((value) => atlas_talents = value);
     loadPng('atlas_icons').then((value) => atlas_icons = value);
     loadPng('atlas_items').then((value) => atlas_items = value);
-    loadPng('atlas_head').then((value) => atlas_head = value);
+    loadPng('atlas_helms').then((value) => atlas_helms = value);
     loadPng('atlas_hands').then((value) => atlas_hands = value);
     loadPng('atlas_body').then((value) => atlas_body = value);
     loadPng('atlas_legs').then((value) => atlas_legs = value);
@@ -536,7 +536,7 @@ class IsometricImages with IsometricComponent {
       type: 'heads',
       name: 'fair',
     ).then((value) {
-      spriteGroupHeads[HeadType.None] = value;
+      spriteGroupHeads[ComplexionType.Fair] = value;
     });
 
     loadSpriteGroup(

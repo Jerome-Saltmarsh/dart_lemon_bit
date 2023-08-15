@@ -69,7 +69,7 @@ class Character extends Collider {
   var runY = 0.0;
   var runZ = 0.0;
 
-  var headType = HeadType.None;
+  var helmType = HelmType.None;
   var bodyType = BodyType.None;
   var legsType = LegType.None;
   var handTypeLeft = HandType.None;
