@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:gamestream_server/common/src/types/myst_type.dart';
 import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/games/src.dart';
@@ -302,10 +303,14 @@ class WebSocketConnection with ByteReader {
       case ClientRequest.Set_FPS:
         final value = parseArg1(arguments);
         if (value == null) return;
+        break;
 
+      case ClientRequest.Environment_Request:
+        readEnvironmentRequest(arguments);
         break;
 
       default:
+        player.writeGameError(GameError.Invalid_Client_Request);
         break;
     }
   }
@@ -689,19 +694,29 @@ class WebSocketConnection with ByteReader {
       errorInvalidClientRequest();
       return;
     }
+  }
 
-    // switch (SceneRequest.values[sceneRequestIndex]){
-    //   case SceneRequest.Add_Mark:
-    //     final value = parseArg2(arguments);
-    //     if (value == null)
-    //       return;
-    //
-    //     game.scene.marks.add(value);
-    //     game.dispatchSceneMarks();
-    //     break;
-    //   case SceneRequest.Delete_Mark:
-    //     break;
-    // }
+  void readEnvironmentRequest(List<String> arguments) {
+    final player = this.player;
+    if (player is! IsometricPlayer) {
+      errorInvalidPlayerType();
+      return;
+    }
+    if (!isLocalMachine && player.game is! IsometricEditor) return;
 
+    final environmentRequest = parseArg1(arguments);
+
+    switch (environmentRequest) {
+      case EnvironmentRequest.Set_Myst:
+        final mystType = parseArg2(arguments);
+        if (mystType == null)
+          return;
+
+        if (!isValidIndex(mystType, MystType.values)){
+          return;
+        }
+
+        player.game.environment.mystType = mystType;
+    }
   }
 }

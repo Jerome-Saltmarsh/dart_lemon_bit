@@ -1,36 +1,58 @@
 import 'package:gamestream_server/common/src/isometric/lightning_type.dart';
 import 'package:gamestream_server/common/src/isometric/rain_type.dart';
 import 'package:gamestream_server/common/src/isometric/wind_type.dart';
+import 'package:gamestream_server/common/src/types/myst_type.dart';
 
 import 'package:gamestream_server/lemon_math.dart';
 
 class Environment {
+
+  static const Lightning_Flash_Duration_Total = 7;
+
+  var _rainType = RainType.None;
+  var _breezy = false;
+  var _lightningType = LightningType.Off;
+  var _windType = WindType.Calm;
+  var _mystType = MystType.None;
+
+  var durationMyst = 0;
+  var mystEnabled = true;
+
   var durationRain = randomInt(1000, 3000);
   var nextLightningChanged = 300;
   var durationBreeze = 500;
   var durationWind = randomInt(500, 1000);
   var durationThunder = 0;
-  var _rainType = RainType.None;
-  var _breezy = false;
-  var _lightningType = LightningType.Off;
-  var _windType = WindType.Calm;
   var nextLightningFlash = 0;
   var lightningFlashDuration = 0;
   var onChanged = false;
 
-  static const Lightning_Flash_Duration_Total = 7;
+  int get mystType => _mystType;
 
   int get lightningType => _lightningType;
+
   int get rainType => _rainType;
+
   bool get breezy => _breezy;
+
   bool get lightningFlashing => lightningFlashDuration > 0;
+
   int get windType => _windType;
+
+  set mystType(int value){
+    if (_mystType == value)
+      return;
+
+    _mystType = value.clamp(MystType.None, MystType.Heavy);
+    onChanged = true;
+  }
 
   set windType(int value) {
     if (_windType == value) return;
     if (value < WindType.Calm) return;
     if (value > WindType.Strong) return;
     _windType = value;
+    onChanged = true;
     onChangedWeather();
   }
 
@@ -61,6 +83,7 @@ class Environment {
     updateLightning();
     updateBreeze();
     updateWind();
+    updateMyst();
   }
 
   void updateRain(){
@@ -140,6 +163,18 @@ class Environment {
   }
 
   void onChangedWeather(){
+    onChanged = true;
+  }
+
+  void updateMyst() {
+    if (!mystEnabled)
+      return;
+
+    if (durationMyst-- > 0)
+      return;
+
+    durationMyst = randomInt(1000, 2000);
+    mystType = randomInt(0, 2);
     onChanged = true;
   }
 }

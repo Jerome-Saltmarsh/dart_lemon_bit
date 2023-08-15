@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/common/src/types/myst_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -43,6 +44,7 @@ extension isometricDebugUI on IsometricDebug {
                   DebugTab.Player => buildTabPlayer(),
                   DebugTab.Options => buildTabOptions(),
                   DebugTab.Particles => buildTabParticles(),
+                  DebugTab.Environment => buildTabEnvironment(),
                 },
               ),
             ),
@@ -619,6 +621,26 @@ extension isometricDebugUI on IsometricDebug {
           GSRefresh(() => buildValueText(value())),
         ),
       );
+
+  Widget buildTabEnvironment() => Column(
+        children: [
+          buildRowWatch('myst', environment.myst, (activeMyst) =>
+                Row(
+                    children: MystType.values
+                        .map((mystType) => onPressed(
+                          action: () => environment.setMystType(mystType),
+                          child: GSContainer(
+                              color: activeMyst == mystType ? colors.aqua_2 : colors.brownLight,
+                              child: buildText(mystType)))
+                          )
+                        .toList(growable: false)
+                )
+            )
+        ],
+      );
+
+  Widget buildRowWatch<T>(String text, Watch<T> watch, Widget build(T t)) =>
+      buildRow(text, buildWatch(watch, build));
 }
 
 Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))

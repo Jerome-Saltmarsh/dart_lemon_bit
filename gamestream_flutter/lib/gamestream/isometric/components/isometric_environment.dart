@@ -16,6 +16,7 @@ class IsometricEnvironment with IsometricComponent {
   final seconds = Watch(0);
   final hours = Watch(0);
   final wind = Watch(WindType.Calm);
+  final myst = Watch(0);
   final raining = Watch(false);
   final gameTimeEnabled = Watch(false);
   final lightningType = Watch(LightningType.Off);
@@ -125,5 +126,12 @@ class IsometricEnvironment with IsometricComponent {
     if (index <= WindType.Gentle) return target + 0.5;
     return 1.0;
   }
+
+  void setMystType(int mystType) =>
+      network.sendArgs2(
+          ClientRequest.Environment_Request,
+          EnvironmentRequest.Set_Myst,
+          mystType,
+      );
 
 }

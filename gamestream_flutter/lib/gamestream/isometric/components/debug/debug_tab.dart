@@ -10,4 +10,5 @@ enum DebugTab {
   Player,
   Options,
   Particles,
+  Environment,
 }

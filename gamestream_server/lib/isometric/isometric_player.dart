@@ -671,6 +671,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeBool(environment.breezy);
     writeByte(environment.lightningType);
     writeByte(environment.windType);
+    writeByte(environment.mystType);
     writeGameTimeEnabled();
   }
 

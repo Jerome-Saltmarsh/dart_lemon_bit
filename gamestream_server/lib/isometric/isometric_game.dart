@@ -2189,7 +2189,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   @override
   void customWriteGame() {
-    if (!environment.onChanged) return;
+    if (!environment.onChanged)
+      return;
+
     environment.onChanged = false;
     playersWriteWeather();
   }

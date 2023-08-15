@@ -4,6 +4,12 @@ import 'package:golden_ratio/constants.dart';
 class IsometricColors {
   static const Black = Color.fromRGBO(38, 34, 47, 1.0);
 
+  final aqua_1 = Color.fromRGBO(143, 248, 226, 1);
+  final aqua_2 = Color.fromRGBO(48, 225, 185, 1);
+  final aqua_3 = Color.fromRGBO(14, 175, 155, 1);
+  final aqua_4 = Color.fromRGBO(11, 138, 143, 1);
+  final aqua_5 = Color.fromRGBO(11, 94, 101, 1);
+
   final brown00 = Color.fromRGBO(46, 34, 47, 1);
   final brown01 = Color.fromRGBO(62, 53, 70, 1);
   final brown02 = Color.fromRGBO(98, 85, 101, 1);

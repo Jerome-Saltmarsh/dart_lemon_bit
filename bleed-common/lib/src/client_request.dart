@@ -9,6 +9,7 @@ class ClientRequest {
   static const Debugging                = 41;
   static const Set_FPS                  = 42;
   static const Scene                    = 43;
+  static const Environment_Request = 44;
 }
 
 
