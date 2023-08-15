@@ -1797,8 +1797,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     // events.onChangedNodes();
     editor.refreshNodeSelectedIndex();
   }
-
-  int getMarkValueIndex(int markValue) => markValue & 0xFFFF;
 }
 
 

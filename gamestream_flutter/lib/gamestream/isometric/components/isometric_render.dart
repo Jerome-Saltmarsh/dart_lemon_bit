@@ -133,6 +133,21 @@ class IsometricRender with IsometricComponent {
     options.game.value.renderForeground(canvas, size);
   }
 
+  void textIndex(dynamic text, int index) =>
+      textZRC(
+        text,
+        scene.getIndexZ(index),
+        scene.getIndexRow(index),
+        scene.getIndexColumn(index),
+      );
+
+  void textZRC(dynamic text, int z, int row, int column) =>
+      textXYZ(
+        x: (row * Node_Size) + Node_Size_Half,
+        y: (column * Node_Size) + Node_Size_Half,
+        z: (z * Node_Height) + Node_Height_Half,
+        text: text,
+      );
 
   void textPosition(Position v3, dynamic text, {double offsetY = 0}){
     renderText(
@@ -231,7 +246,6 @@ class IsometricRender with IsometricComponent {
     const charWidth = 4.5;
     engine.writeText(value, x - charWidth * value.length, y);
   }
-
 
   void barBlue(double x, double y, double z, double percentage) {
     engine.renderSprite(
