@@ -157,7 +157,7 @@ class Scene {
   int findPath(var indexStart, var indexEnd, {int max = 100}) {
     if (indexEnd <= 0 ||
         indexEnd >= shapes.length ||
-        shapes[indexEnd] != NodeOrientation.None
+        shapes[indexEnd] == NodeOrientation.Solid
     ) return indexStart;
 
     for (var i = 0; i <= visitHistoryIndex; i++) {
