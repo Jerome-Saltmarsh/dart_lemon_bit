@@ -1,7 +1,6 @@
 
 
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/common/src/responses/editor_response.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_parser.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';

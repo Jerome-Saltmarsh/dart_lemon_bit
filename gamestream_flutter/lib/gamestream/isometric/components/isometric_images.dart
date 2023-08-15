@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/src.dart';
 import 'classes/sprite_group.dart';
+import 'types/sprite_group_type.dart';
 
 class IsometricImages with IsometricComponent {
 
@@ -106,8 +107,8 @@ class IsometricImages with IsometricComponent {
 
    Future<SpriteGroup> loadSpriteGroup({
      required Image image,
-     required String type,
-     required String name,
+     required int type,
+     required int subType,
      required double yIdle,
      required double yRunning,
      double? yStrike,
@@ -116,46 +117,49 @@ class IsometricImages with IsometricComponent {
      double? yDead,
     }) async {
 
+     final typeName = SpriteGroupType.getName(type);
+     final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
+
      if (yHurt == null){
-       print('isometric_images_sprite_missing: "kid/$type/$name/hurt.sprite"');
+       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/hurt.sprite"');
      }
      if (yDead == null){
-       print('isometric_images_sprite_missing: "kid/$type/$name/dead.sprite"');
+       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/dead.sprite"');
      }
 
      return SpriteGroup(
          idle: Sprite.fromBytes(
-             await loadSpriteBytes('kid/$type/$name/idle'),
+             await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
              image: image,
              y: yIdle,
              loop: true,
          ),
          running: Sprite.fromBytes(
-             await loadSpriteBytes('kid/$type/$name/running'),
+             await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
              image: image,
              y: yRunning,
              loop: true,
          ),
          strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
-           await loadSpriteBytes('kid/$type/$name/strike'),
+           await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
            image: image,
            y: yStrike,
            loop: false,
          ),
          fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
-           await loadSpriteBytes('kid/$type/$name/fire'),
+           await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
            image: image,
            y: yFire,
            loop: false,
          ),
          hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$type/$name/hurt'),
+             await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
              image: image,
              y: yHurt,
              loop: false,
          ),
          death: yDead == null ? spriteEmpty : Sprite.fromBytes(
-           await loadSpriteBytes('kid/$type/$name/dead'),
+           await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
            image: image,
            y: yDead,
            loop: false,
@@ -341,8 +345,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 91,
       yFire: 141,
       image: kid_arms_fair_left,
-      type: 'arms_left',
-      name: 'fair',
+      type: SpriteGroupType.Arms_Left,
+      subType: ComplexionType.Fair,
     ).then((value) {
       spriteGroupArmsLeft[ComplexionType.Fair] = value;
     });
@@ -353,8 +357,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 91,
       yFire: 139,
       image: kid_arms_fair_right,
-      type: 'arms_right',
-      name: 'fair',
+      type: SpriteGroupType.Arms_Right,
+      subType: ComplexionType.Fair,
     ).then((value) {
       spriteGroupArmsRight[ComplexionType.Fair] = value;
     });
@@ -365,8 +369,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 153,
       yFire: 277,
       image: kid_body_shirt_blue,
-      type: 'body',
-      name: 'shirt_blue',
+      type: SpriteGroupType.Body,
+      subType: BodyType.Shirt_Blue,
     ).then((value) {
       spriteGroupBody[BodyType.Shirt_Blue] = value;
     });
@@ -377,8 +381,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 83,
       yFire: 179,
       image: kid_body_arms_shirt_blue,
-      type: 'body_arms',
-      name: 'shirt_blue',
+      type: SpriteGroupType.Body_Arms,
+      subType: BodyType.Shirt_Blue,
     ).then((value) {
       spriteGroupBodyArms[BodyType.Shirt_Blue] = value;
     });
@@ -389,8 +393,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 60,
       yFire: 93,
       image: kid_hands_left_gauntlets,
-      type: 'hands_left',
-      name: 'gauntlet',
+      type: SpriteGroupType.Hands_Left,
+      subType: HandType.Gauntlet,
     ).then((value) {
       spriteGroupHandsLeft[HandType.Gauntlet] = value;
     });
@@ -401,8 +405,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 57,
       yFire: 86,
       image: kid_hands_right_gauntlets,
-      type: 'hands_right',
-      name: 'gauntlet',
+      type: SpriteGroupType.Hands_Right,
+      subType: HandType.Gauntlet,
     ).then((value) {
       spriteGroupHandsRight[HandType.Gauntlet] = value;
     });
@@ -413,8 +417,8 @@ class IsometricImages with IsometricComponent {
       yStrike: 57,
       yFire: 87,
       image: kid_head_fair,
-      type: 'heads',
-      name: 'fair',
+      type: SpriteGroupType.Heads,
+      subType: ComplexionType.Fair,
     ).then((value) {
       spriteGroupHeads[ComplexionType.Fair] = value;
     });
@@ -425,24 +429,23 @@ class IsometricImages with IsometricComponent {
       yStrike: 53,
       yFire: 80,
       image: kid_helms_steel,
-      type: 'helms',
-      name: 'steel',
+      type: SpriteGroupType.Helms,
+      subType: HelmType.Steel,
     ).then((value) {
       spriteGroupHelms[HelmType.Steel] = value;
     });
 
     loadSpriteGroup(
-        yIdle: 0,
-        yRunning: 71,
-        yStrike: 233,
-        yFire: 373,
-        image: kid_legs_brown,
-        type: 'legs',
-        name: 'brown',
+      yIdle: 0,
+      yRunning: 71,
+      yStrike: 233,
+      yFire: 373,
+      image: kid_legs_brown,
+      type: SpriteGroupType.Legs,
+      subType: LegType.Brown,
     ).then((value) {
       spriteGroupLegs[LegType.Brown] = value;
     });
-
 
     await loadSpriteGroupTorso(
         complexion: ComplexionType.Fair,

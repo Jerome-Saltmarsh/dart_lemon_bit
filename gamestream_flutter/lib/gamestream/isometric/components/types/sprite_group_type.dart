@@ -1,3 +1,5 @@
+import 'package:gamestream_flutter/common.dart';
+
 class SpriteGroupType {
   static const Arms_Left = 1;
   static const Arms_Right = 2;
@@ -26,6 +28,23 @@ class SpriteGroupType {
     Torso: 'torso',
     Weapons: 'weapons',
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
+
+  static String getSubTypeName(int type, int subType) => switch (type) {
+      Arms_Left => ComplexionType.getName(subType),
+      Arms_Right => ComplexionType.getName(subType),
+      Body => BodyType.getName(subType),
+      Body_Arms => BodyType.getName(subType),
+      Hands_Left => HandType.getName(subType),
+      Hands_Right => HandType.getName(subType),
+      Heads => ComplexionType.getName(subType),
+      Helms => HelmType.getName(subType),
+      Legs => LegType.getName(subType),
+      Torso => ComplexionType.getName(subType),
+      Weapons => WeaponType.getName(subType),
+      _ => throw Exception(
+          'SpriteGroupType.getName(type: $type, subType: $subType)'
+      )
+    };
 
   static const values = [
     Arms_Left,
