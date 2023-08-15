@@ -37,10 +37,10 @@ extension MMORender on MmoGame {
     if (item.range <= 0) return;
     engine.color = Colors.white;
     render.circleOutline(
-        player.x,
-        player.y,
-        player.z,
-        item.range,
+        x: player.x,
+        y: player.y,
+        z: player.z,
+        radius: item.range,
         sections: 20
     );
   }

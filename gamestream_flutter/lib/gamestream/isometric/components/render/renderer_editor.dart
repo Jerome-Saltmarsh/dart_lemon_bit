@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/common/src/isometric/node_size.dart';
 import 'package:gamestream_flutter/common/src/mark_type.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 
 class RendererEditor extends RenderGroup {
@@ -30,26 +29,29 @@ class RendererEditor extends RenderGroup {
     switch (markType){
       case MarkType.Spawn_Whisp:
         engine.color = colors.white;
-        render.circle32(
-          scene.getIndexPositionX(markIndex),
-          scene.getIndexPositionY(markIndex),
-          scene.getIndexPositionZ(markIndex),
+        render.circleOutline(
+          x: scene.getIndexPositionX(markIndex),
+          y: scene.getIndexPositionY(markIndex),
+          z: scene.getIndexPositionZ(markIndex),
+          radius: 15.0,
         );
         break;
       case MarkType.Spawn_Player:
         engine.color = colors.blue0;
-        render.circle32(
-          scene.getIndexPositionX(markIndex),
-          scene.getIndexPositionY(markIndex),
-          scene.getIndexPositionZ(markIndex),
+        render.circleOutline(
+          x: scene.getIndexPositionX(markIndex),
+          y: scene.getIndexPositionY(markIndex),
+          z: scene.getIndexPositionZ(markIndex),
+          radius: 15.0,
         );
         break;
       case MarkType.Spawn_Fallen:
         engine.color = colors.red2;
-        render.circle32(
-          scene.getIndexPositionX(markIndex),
-          scene.getIndexPositionY(markIndex),
-          scene.getIndexPositionZ(markIndex),
+        render.circleOutline(
+          x: scene.getIndexPositionX(markIndex),
+          y: scene.getIndexPositionY(markIndex),
+          z: scene.getIndexPositionZ(markIndex),
+          radius: 15.0,
         );
         break;
 

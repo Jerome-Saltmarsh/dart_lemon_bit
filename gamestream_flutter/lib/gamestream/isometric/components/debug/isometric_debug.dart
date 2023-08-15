@@ -76,7 +76,12 @@ class IsometricDebug with IsometricComponent {
 
     engine.setPaintColor(colors.white60);
     if (particle is ParticleWhisp){
-      render.circleOutline(particle.startX, particle.startY, particle.startZ, particle.roamRadius);
+      render.circleOutline(
+          x: particle.startX,
+          y: particle.startY,
+          z: particle.startZ,
+          radius: particle.roamRadius,
+      );
       render.line(
           particle.x,
           particle.y,
@@ -106,18 +111,18 @@ class IsometricDebug with IsometricComponent {
 
     engine.setPaintColor(Colors.white);
     render.circleOutline(
-      x.value,
-      y.value,
-      z.value,
-      radius.value.toDouble(),
+      x: x.value,
+      y: y.value,
+      z: z.value,
+      radius: radius.value.toDouble(),
     );
 
     engine.setPaintColor(Colors.green);
     render.circleOutline(
-      x.value,
-      y.value,
-      z.value,
-      weaponRange.value.toDouble(),
+      x: x.value,
+      y: y.value,
+      z: z.value,
+      radius: weaponRange.value.toDouble(),
     );
 
     engine.setPaintColor(Colors.red);

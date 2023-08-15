@@ -316,19 +316,19 @@ class IsometricRender with IsometricComponent {
     required double radius,
     int sections = 12,
   }) => circleOutline(
-    position.x,
-    position.y,
-    position.z,
-    radius,
+    x: position.x,
+    y: position.y,
+    z: position.z,
+    radius: radius,
     sections: sections,
   );
 
-  void circleOutline(
-      double x,
-      double y,
-      double z,
-      double radius,
-      {int sections = 12}
+  void circleOutline({
+      required double x,
+      required double y,
+      required double z,
+      required double radius,
+      int sections = 12}
       ){
     if (radius <= 0) return;
     if (sections < 3) return;

@@ -87,10 +87,10 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
 
     if (playerActivatedPowerRange.value > 0) {
       render.circleOutline(
-        player.x,
-        player.y,
-        player.z,
-        playerActivatedPowerRange.value,
+        x: player.x,
+        y: player.y,
+        z: player.z,
+        radius: playerActivatedPowerRange.value,
         sections: 24,
       );
     }
@@ -120,10 +120,10 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
         break;
       case PowerMode.Positional:
         render.circleOutline(
-          playerActivatedPowerX.value,
-          playerActivatedPowerY.value,
-          player.z,
-          40,
+          x: playerActivatedPowerX.value,
+          y: playerActivatedPowerY.value,
+          z: player.z,
+          radius: 40,
         );
         break;
     }
