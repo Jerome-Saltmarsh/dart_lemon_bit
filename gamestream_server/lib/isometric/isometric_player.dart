@@ -1197,7 +1197,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(handTypeRight);
   }
 
-  void downloadSceneMarks(){
+  void downloadSceneMarks() {
     writeByte(ServerResponse.Scene);
     writeByte(SceneResponse.Marks);
     writeUInt16(scene.marks.length);

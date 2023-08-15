@@ -95,9 +95,15 @@ class IsometricEditor with IsometricComponent {
   final paintOrientation = Watch(NodeOrientation.None);
   final controlsVisibleWeather = Watch(true);
 
-  IsometricEditor(){
+
+  @override
+  void onComponentReady() {
+    scene.marksChangedNotifier.onChanged((t) {
+      refreshSelectedMarkListValue();
+    });
+
     selectedMarkListIndex.onChanged((index) {
-      selectedMarkListValue.value = scene.marks[index];
+      refreshSelectedMarkListValue();
     });
 
     selectedMarkListValue.onChanged((value) {
@@ -109,6 +115,10 @@ class IsometricEditor with IsometricComponent {
       camera.clearTarget();
       camera.setPositionIndex(index);
     });
+  }
+
+  void refreshSelectedMarkListValue() {
+    selectedMarkListValue.value = scene.marks[selectedMarkListIndex.value];
   }
 
   double get posX => row * Node_Size + Node_Size_Half;
