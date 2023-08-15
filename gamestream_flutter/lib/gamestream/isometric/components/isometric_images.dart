@@ -219,29 +219,6 @@ class IsometricImages with IsometricComponent {
      );
    }
 
-   Future loadSpriteGroupHead({
-     required int complexion,
-     required double yIdle,
-     required double yRunning,
-     required double yStrike,
-     required double yFire,
-     required Image image,
-    }) async {
-     final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadSpriteBytes('kid/heads/$name/idle');
-     final running = await loadSpriteBytes('kid/heads/$name/running');
-     final strike = await loadSpriteBytes('kid/heads/$name/strike');
-     final fire = await loadSpriteBytes('kid/heads/$name/fire');
-     spriteGroupHeads[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
-         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
-         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
-         hurt: spriteEmpty,
-       death: spriteEmpty,
-     );
-   }
-
    Future loadSpriteGroupTorso({
      required int complexion,
      required double yIdle,
@@ -550,14 +527,17 @@ class IsometricImages with IsometricComponent {
         image: kid_hands_right_gauntlets,
     );
 
-    await loadSpriteGroupHead(
-        complexion: ComplexionType.Fair,
-        yIdle: 0,
-        yRunning: 28,
-        yStrike: 57,
-        yFire: 87,
-        image: kid_head_fair,
-    );
+    loadSpriteGroup(
+      yIdle: 0,
+      yRunning: 28,
+      yStrike: 57,
+      yFire: 87,
+      image: kid_head_fair,
+      type: 'heads',
+      name: 'fair',
+    ).then((value) {
+      spriteGroupHeads[HeadType.None] = value;
+    });
 
     loadSpriteGroup(
       yIdle: 0,
