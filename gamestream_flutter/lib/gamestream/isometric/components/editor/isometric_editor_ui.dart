@@ -1188,7 +1188,8 @@ extension IsometricEditorUI on IsometricEditor {
                               selectMarkIndex(index);
                             },
                             child: Container(
-                                color: index == selectedMarkIndex ? colors.white10 : null,
+                                padding: const EdgeInsets.all(6),
+                                color: index == selectedMarkIndex ? Colors.white24 : null,
                                 child: buildText(scene.marks[index])));
                       }),
                     );

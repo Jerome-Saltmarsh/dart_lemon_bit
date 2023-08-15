@@ -174,6 +174,17 @@ class WebSocketConnection with ByteReader {
             player.editor.selectedMarkIndex = index;
             break;
 
+          case EditorRequest.Select_Mark_Type:
+            final index = parseArg2(arguments);
+            if (player is! IsometricPlayer){
+              return;
+            }
+            if (index == null)
+              return;
+
+            player.editor.selectedMarkType = index;
+            break;
+
           case EditorRequest.Generate_Scene:
             const min = 5;
             final rows = parseArg2(arguments);

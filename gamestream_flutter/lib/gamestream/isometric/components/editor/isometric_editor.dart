@@ -22,6 +22,7 @@ class IsometricEditor with IsometricComponent {
   final generateFrequency = WatchInt(1, min: 0, max: 100);
 
   final selectedMarkIndex = Watch(0);
+  final selectedMarkType = Watch(0);
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<GameObject?>(null);
   final gameObjectSelected = Watch(false);

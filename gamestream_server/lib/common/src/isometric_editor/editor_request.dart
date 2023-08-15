@@ -13,4 +13,5 @@ enum EditorRequest {
    Toggle_Game_Running,
    Scene_Reset,
    Select_Mark_Index,
+   Select_Mark_Type,
 }

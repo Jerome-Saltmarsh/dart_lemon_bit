@@ -1,15 +1,24 @@
 
-import 'package:gamestream_server/core.dart';
+import 'package:gamestream_server/lemon_bits/src/binary_hex.dart';
 
 import '../common.dart';
+import 'isometric_player.dart';
 
 class EditorState {
-  final Player player;
+  final IsometricPlayer player;
   var _selectedMarkIndex = 0;
 
   EditorState(this.player);
 
   int get selectedMarkIndex => _selectedMarkIndex;
+
+  set selectedMarkType(int selectedMarkType) {
+    final marks = player.game.scene.marks;
+    final value = marks[selectedMarkIndex];
+    final index = value & 0xFFFF;
+    marks[selectedMarkIndex] = index | selectedMarkIndex << 8;
+  }
+
 
   set selectedMarkIndex(int value){
     if (_selectedMarkIndex == value)
