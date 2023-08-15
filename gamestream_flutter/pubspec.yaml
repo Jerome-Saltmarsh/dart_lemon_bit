@@ -62,12 +62,13 @@ flutter:
     - images/website/
     - images/characters/
     - images/kid/
-    - images/kid/arms/fair/
+    - images/kid/arms_left/
+    - images/kid/arms_right/
     - images/kid/body/
     - images/kid/body_arms/
-    - images/kid/hands/left/
-    - images/kid/hands/right/
-    - images/kid/head/
+    - images/kid/hands_left/
+    - images/kid/hands_right/
+    - images/kid/heads/
     - images/kid/helms/
     - images/kid/legs/
     - images/kid/torso/
@@ -76,8 +77,8 @@ flutter:
     - sprites/kid/arms_right/fair/
     - sprites/kid/body/shirt_blue/
     - sprites/kid/body_arms/shirt_blue/
-    - sprites/kid/hands_left/gauntlet/
-    - sprites/kid/hands_right/gauntlet/
+    - sprites/kid/hands_left/gauntlets/
+    - sprites/kid/hands_right/gauntlets/
     - sprites/kid/heads/fair/
     - sprites/kid/helms/steel/
     - sprites/kid/legs/brown/

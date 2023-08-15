@@ -81,22 +81,21 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_shield;
   late final Image template_spinning;
 
-  late final Image kid_arms_fair_left;
-  late final Image kid_arms_fair_right;
-  late final Image kid_body_shirt_blue;
-  late final Image kid_body_arms_shirt_blue;
-  late final Image kid_hands_left_gauntlets;
-  late final Image kid_hands_right_gauntlets;
-  late final Image kid_head_fair;
-  late final Image kid_helms_steel;
-  late final Image kid_legs_brown;
-  late final Image kid_torso_fair;
-  late final Image kid_weapons_staff;
-  late final Image kid_weapons_sword;
-  late final Image kid_weapons_bow;
+  // late final Image kid_arms_fair_left;
+  // late final Image kid_arms_fair_right;
+  // late final Image kid_body_shirt_blue;
+  // late final Image kid_body_arms_shirt_blue;
+  // late final Image kid_hands_left_gauntlets;
+  // late final Image kid_hands_right_gauntlets;
+  // late final Image kid_head_fair;
+  // late final Image kid_helms_steel;
+  // late final Image kid_legs_brown;
+  // late final Image kid_torso_fair;
+  // late final Image kid_weapons_staff;
+  // late final Image kid_weapons_sword;
+  // late final Image kid_weapons_bow;
 
    Future loadSpriteGroup({
-     required Image image,
      required int type,
      required int subType,
      required double yIdle,
@@ -106,9 +105,9 @@ class IsometricImages with IsometricComponent {
      double? yHurt,
      double? yDead,
     }) async {
-
      final typeName = SpriteGroupType.getName(type);
      final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
+     final image = await loadImageAsset('images/kid/$typeName/$subTypeName.png');
 
      if (yHurt == null){
        print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/hurt.sprite"');
@@ -186,19 +185,19 @@ class IsometricImages with IsometricComponent {
     loadPng('characters/fallen').then((value) => character_fallen = value);
     loadPng('characters/kid_shadow').then((value) => kid_shadow = value);
 
-    loadPng('kid/arms/fair/left').then((value) => kid_arms_fair_left = value);
-    loadPng('kid/arms/fair/right').then((value) => kid_arms_fair_right = value);
-    loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
-    loadPng('kid/body_arms/shirt_blue').then((value) => kid_body_arms_shirt_blue = value);
-    loadPng('kid/hands/left/gauntlets').then((value) => kid_hands_left_gauntlets = value);
-    loadPng('kid/hands/right/gauntlets').then((value) => kid_hands_right_gauntlets = value);
-    loadPng('kid/head/fair').then((value) => kid_head_fair = value);
-    loadPng('kid/helms/steel').then((value) => kid_helms_steel = value);
-    loadPng('kid/legs/brown').then((value) => kid_legs_brown = value);
-    loadPng('kid/torso/fair').then((value) => kid_torso_fair = value);
-    loadPng('kid/weapons/staff').then((value) => kid_weapons_staff = value);
-    loadPng('kid/weapons/sword').then((value) => kid_weapons_sword = value);
-    loadPng('kid/weapons/bow').then((value) => kid_weapons_bow = value);
+    // loadPng('kid/arms/fair/left').then((value) => kid_arms_fair_left = value);
+    // loadPng('kid/arms/fair/right').then((value) => kid_arms_fair_right = value);
+    // loadPng('kid/body/shirt_blue').then((value) => kid_body_shirt_blue = value);
+    // loadPng('kid/body_arms/shirt_blue').then((value) => kid_body_arms_shirt_blue = value);
+    // loadPng('kid/hands/left/gauntlets').then((value) => kid_hands_left_gauntlets = value);
+    // loadPng('kid/hands/right/gauntlets').then((value) => kid_hands_right_gauntlets = value);
+    // loadPng('kid/head/fair').then((value) => kid_head_fair = value);
+    // loadPng('kid/helms/steel').then((value) => kid_helms_steel = value);
+    // loadPng('kid/legs/brown').then((value) => kid_legs_brown = value);
+    // loadPng('kid/torso/fair').then((value) => kid_torso_fair = value);
+    // loadPng('kid/weapons/staff').then((value) => kid_weapons_staff = value);
+    // loadPng('kid/weapons/sword').then((value) => kid_weapons_sword = value);
+    // loadPng('kid/weapons/bow').then((value) => kid_weapons_bow = value);
 
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
@@ -295,7 +294,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 44,
       yStrike: 91,
       yFire: 141,
-      image: kid_arms_fair_left,
       type: SpriteGroupType.Arms_Left,
       subType: ComplexionType.Fair,
     );
@@ -305,7 +303,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 44,
       yStrike: 91,
       yFire: 139,
-      image: kid_arms_fair_right,
       type: SpriteGroupType.Arms_Right,
       subType: ComplexionType.Fair,
     );
@@ -315,7 +312,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 51,
       yStrike: 153,
       yFire: 277,
-      image: kid_body_shirt_blue,
       type: SpriteGroupType.Body,
       subType: BodyType.Shirt_Blue,
     );
@@ -325,7 +321,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 41,
       yStrike: 83,
       yFire: 179,
-      image: kid_body_arms_shirt_blue,
       type: SpriteGroupType.Body_Arms,
       subType: BodyType.Shirt_Blue,
     );
@@ -335,9 +330,8 @@ class IsometricImages with IsometricComponent {
       yRunning: 31,
       yStrike: 60,
       yFire: 93,
-      image: kid_hands_left_gauntlets,
       type: SpriteGroupType.Hands_Left,
-      subType: HandType.Gauntlet,
+      subType: HandType.Gauntlets,
     );
 
     loadSpriteGroup(
@@ -345,9 +339,8 @@ class IsometricImages with IsometricComponent {
       yRunning: 29,
       yStrike: 57,
       yFire: 86,
-      image: kid_hands_right_gauntlets,
       type: SpriteGroupType.Hands_Right,
-      subType: HandType.Gauntlet,
+      subType: HandType.Gauntlets,
     );
 
     loadSpriteGroup(
@@ -355,7 +348,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 28,
       yStrike: 57,
       yFire: 87,
-      image: kid_head_fair,
       type: SpriteGroupType.Heads,
       subType: ComplexionType.Fair,
     );
@@ -365,7 +357,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 26,
       yStrike: 53,
       yFire: 80,
-      image: kid_helms_steel,
       type: SpriteGroupType.Helms,
       subType: HelmType.Steel,
     );
@@ -375,7 +366,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 71,
       yStrike: 233,
       yFire: 373,
-      image: kid_legs_brown,
       type: SpriteGroupType.Legs,
       subType: LegType.Brown,
     );
@@ -385,7 +375,6 @@ class IsometricImages with IsometricComponent {
       yRunning: 205,
       yStrike: 436,
       yFire: 664,
-      image: kid_torso_fair,
       type: SpriteGroupType.Torso,
       subType: ComplexionType.Fair,
     );
@@ -394,7 +383,6 @@ class IsometricImages with IsometricComponent {
       yIdle: 0,
       yRunning: 81,
       yStrike: 187,
-      image: kid_weapons_staff,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Staff,
     );
@@ -403,7 +391,6 @@ class IsometricImages with IsometricComponent {
       yIdle: 0,
       yRunning: 63,
       yStrike: 114,
-      image: kid_weapons_sword,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Sword,
     );
@@ -412,7 +399,6 @@ class IsometricImages with IsometricComponent {
       yIdle: 0,
       yRunning: 116,
       yFire: 255,
-      image: kid_weapons_bow,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Bow,
     );

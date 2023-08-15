@@ -95,7 +95,7 @@ enum MMOItem {
   Gauntlet(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Hand,
-      subType: HandType.Gauntlet,
+      subType: HandType.Gauntlets,
       health: 2,
   ),
   Squires_Pants(

@@ -70,7 +70,7 @@ class Atlas {
 
   static const Collection_Hands = <int, List<double>>{
     HandType.None: AtlasSrcHands.None,
-    HandType.Gauntlet: AtlasSrcHands.Gauntlet,
+    HandType.Gauntlets: AtlasSrcHands.Gauntlet,
   };
 
   static const Collection_Objects = <int, List<double>>{
