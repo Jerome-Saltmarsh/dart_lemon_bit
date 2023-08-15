@@ -5,7 +5,7 @@ Future<Uint8List?> tryLoadAssetBytes(String url) async {
   try {
     final byteData = await rootBundle.load(url);
     return Uint8List.view(byteData.buffer);
-  } catch(error) {
+  } catch(_) {
     return null;
   }
 }
