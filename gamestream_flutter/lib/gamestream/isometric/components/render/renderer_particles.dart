@@ -294,7 +294,9 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Myst:
+          renderSmoke();
           break;
+
         case ParticleType.Whisp:
           final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);

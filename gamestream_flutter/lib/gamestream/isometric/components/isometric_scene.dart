@@ -89,14 +89,23 @@ class IsometricScene with IsometricComponent implements Updatable {
   void onChangedMarks(int count){
     print('scene.onChangedMarks()');
     particles.children.removeWhere((element) => element is ParticleWhisp);
-    for (final markType in marks) {
-      if (MarkType.getType(markType) == MarkType.Spawn_Whisp){
-        final markIndex = MarkType.getIndex(markType);
-        particles.spawnWhisp(
-          x: getIndexPositionX(markIndex),
-          y: getIndexPositionY(markIndex),
-          z: getIndexPositionZ(markIndex),
-        );
+    particles.mystIndexes.clear();
+    for (final markValue in marks) {
+      final markType = MarkType.getType(markValue);
+      switch (markType){
+        case MarkType.Spawn_Whisp:
+          final markIndex = MarkType.getIndex(markValue);
+          particles.spawnWhisp(
+            x: getIndexPositionX(markIndex),
+            y: getIndexPositionY(markIndex),
+            z: getIndexPositionZ(markIndex),
+          );
+          break;
+        case MarkType.Spawn_Myst:
+          particles.mystIndexes.add(
+            MarkType.getIndex(markValue)
+          );
+          break;
       }
     }
   }

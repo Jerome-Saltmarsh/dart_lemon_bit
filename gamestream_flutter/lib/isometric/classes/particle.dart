@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class Particle extends Position {
 
+  var frictionAir = 0.98;
   var wind = 0;
   var active = false;
   var delay = 0;
@@ -74,10 +75,9 @@ class Particle extends Position {
 
   void applyAirFriction(){
     const gravity = 0.04;
-    const airFriction = 0.98;
     zv -= gravity * weight;
-    xv *= airFriction;
-    yv *= airFriction;
+    xv *= frictionAir;
+    yv *= frictionAir;
   }
 
   void applyFloorFriction(){
