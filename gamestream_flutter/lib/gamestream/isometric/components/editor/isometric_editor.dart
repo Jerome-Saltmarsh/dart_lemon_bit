@@ -56,7 +56,6 @@ class IsometricEditor with IsometricComponent {
       0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
-  final nodeTypeSpawnSelected = Watch(false);
   final isActiveEditTriggers = Watch(true);
 
   late var nodeSelectedIndex = Watch(0, clamp: (int value) {
@@ -370,7 +369,6 @@ class IsometricEditor with IsometricComponent {
 
   void onChangedSelectedNodeType(int nodeType) {
     nodeOrientationVisible.value = true;
-    nodeTypeSpawnSelected.value = nodeType == NodeType.Spawn;
   }
 
   void onChangedEditorDialog(EditorDialog? value) {

@@ -23,10 +23,13 @@ class SceneWriter extends ByteWriter {
   }
 
   void writeNodes(Scene scene){
+    scene.removeUnusedNodes();
+
     final compressedNodeTypes = encoder.convert(scene.types);
     final compressedNodeOrientations = encoder.convert(scene.shapes);
     assert (!compressedNodeTypes.any((element) => element > 256));
     assert (!compressedNodeTypes.any((element) => element < 0));
+
     writeByte(ScenePart.Nodes);
     writeUInt16(scene.height);
     writeUInt16(scene.rows);
@@ -79,9 +82,7 @@ class SceneWriter extends ByteWriter {
     writeNodes(scene);
     writeMarks(scene);
     if (gameObjects) {
-      // writePlayerSpawnPoints(scene);
       writeGameObjects(scene.gameObjects);
-      // writeSpawnPoints(scene);
       writeByte(ScenePart.End);
     }
     return compile();

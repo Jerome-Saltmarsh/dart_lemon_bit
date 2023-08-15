@@ -29,10 +29,7 @@ class NodeType {
   static const Wooden_Plank = 68;
   static const Bau_Haus = 69;
   static const Boulder = 70;
-  static const Spawn = 71;
   static const Respawning = 72;
-  static const Spawn_Weapon = 73;
-  static const Spawn_Player = 74;
   static const Road = 75;
   static const Road_2 = 76;
   static const Metal = 77;
@@ -105,9 +102,6 @@ class NodeType {
   static bool supportsOrientationEmpty(int type) => const [
         Empty,
         Water,
-        Spawn,
-        Spawn_Weapon,
-        Spawn_Player,
         Respawning,
         Rain_Landing,
         Tree_Top,
@@ -345,10 +339,7 @@ class NodeType {
     Window: 'Window',
     Wooden_Plank: 'Wooden Plank',
     Boulder: 'Boulder',
-    Spawn: 'Spawn',
     Respawning: 'Respawning',
-    Spawn_Weapon: 'Spawn Weapon',
-    Spawn_Player: 'Spawn Player',
     Road: 'Road',
     Road_2: 'Road Paint',
     Shopping_Shelf: 'Shopping Shelf',

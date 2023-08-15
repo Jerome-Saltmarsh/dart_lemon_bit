@@ -1012,28 +1012,6 @@ class RendererNodes extends RenderGroup {
       case NodeType.Window:
         renderNodeWindow();
         break;
-      case NodeType.Spawn:
-        if (options.playMode) return;
-        renderStandardNode(
-          srcX: AtlasNode.Spawn_X,
-          srcY: AtlasNode.Spawn_Y,
-        );
-        break;
-      case NodeType.Spawn_Weapon:
-        if (options.playMode) return;
-        renderStandardNode(
-          srcX: AtlasNode.Spawn_Weapon_X,
-          srcY: AtlasNode.Spawn_Weapon_Y,
-        );
-        break;
-      case NodeType.Spawn_Player:
-        if (options.playMode) return;
-        renderStandardNode(
-          srcX: AtlasNode.Spawn_Player_X,
-          srcY: AtlasNode.Spawn_Player_Y,
-        );
-        break;
-
       case NodeType.Table:
         renderStandardNode(
           srcX: AtlasNode.Table_X,

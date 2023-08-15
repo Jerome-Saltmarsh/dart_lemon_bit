@@ -54,6 +54,24 @@ class Scene {
     refreshMetrics();
   }
 
+  void removeUnusedNodes(){
+    var totalDeleted = 0;
+    final total = types.length;
+     for (var i = 0; i < total; i++) {
+        if (const [
+          // NodeType.Spawn_Player,
+          // NodeType.Spawn,
+          // NodeType.Spawn_Weapon,
+        ].contains(types[i])) {
+          types[i] = NodeType.Empty;
+          totalDeleted++;
+        }
+     }
+     if (totalDeleted > 0){
+       print("total old node types removed: $totalDeleted");
+     }
+  }
+
   void refreshMetrics() {
     if (path.length != types.length) {
       path = Int32List(types.length);
@@ -125,25 +143,6 @@ class Scene {
     return ((z ~/ Node_Height) * Node_Height)
         + (NodeOrientation.getGradient(orientation, percX, percY) * Node_Height)
         >= z;
-  }
-
-  /// Warning Expensive, (Do not call during runtime)
-  void refreshSpawnPoints() {
-    final newSpawnPoints = <int>[];
-    for (var i = 0; i < types.length; i++) {
-      if (types[i] != NodeType.Spawn) continue;
-      newSpawnPoints.add(i);
-    }
-  }
-
-  /// WARNING - EXPENSIVE
-  List<int> findNodesOfType(int type) {
-    final values = <int>[];
-    for (var i = 0; i < volume; i++) {
-      if (types[i] != type) continue;
-      values.add(i);
-    }
-    return values;
   }
 
   double getIndexX(int index) =>
@@ -490,9 +489,4 @@ class Scene {
     }
     return -1;
   }
-
-  var indexRenderOrder = Uint16List(0);
-  var nodePlains = Uint16List(0);
-  var nodePlainIndex = Uint16List(0);
-  var nodePlainLength = Uint16List(0);
 }

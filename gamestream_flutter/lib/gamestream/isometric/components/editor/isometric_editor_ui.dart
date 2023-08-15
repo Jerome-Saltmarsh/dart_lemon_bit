@@ -36,8 +36,6 @@ extension IsometricEditorUI on IsometricEditor {
   ];
 
   static const editorGridTypesColumn2 = [
-    NodeType.Spawn,
-    NodeType.Spawn_Player,
     NodeType.Grass,
     NodeType.Grass_Long,
     NodeType.Metal,

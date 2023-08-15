@@ -134,9 +134,4 @@ class SceneReader extends ByteReader {
     nodeTypes = Uint8List.fromList(decoder.convert(compressedNodeTypes));
     nodeOrientations = Uint8List.fromList(decoder.convert(compressedNodeOrientations));
   }
-
-// void writeUDouble16(double value) {
-//     writeUInt16(value.toInt());
-//   }
-
 }

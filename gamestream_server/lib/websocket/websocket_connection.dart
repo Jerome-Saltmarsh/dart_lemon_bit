@@ -258,7 +258,6 @@ class WebSocketConnection with ByteReader {
             break;
           case EditorRequest.Spawn_AI:
             game.clearSpawnedAI();
-            game.scene.refreshSpawnPoints();
             break;
 
           case EditorRequest.Save:

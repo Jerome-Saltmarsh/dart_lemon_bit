@@ -1,5 +1,6 @@
 
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/common/src/types/mark_type.dart';
 import 'package:gamestream_server/games.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/isometric.dart';
@@ -96,12 +97,17 @@ class Amulet extends IsometricGame<AmuletPlayer> {
   static void validate() => MMOItem.values.forEach((item) => item.validate());
 
   void spawnMonstersAtSpawnNodes() {
-    final types = scene.types;
-    final length = scene.types.length;
+    final marks = scene.marks;
+    final length = marks.length;
     for (var i = 0; i < length; i++){
-       if (types[i] != NodeType.Spawn) continue;
+      final markValue = marks[i];
+      final markType = MarkType.getType(markValue);
+      if (markType != MarkType.Spawn_Fallen)
+         continue;
+
+      final markIndex = MarkType.getIndex(markValue);
        for (var j = 0; j < 3; j++){
-         spawnFallenAtIndex(i);
+         spawnFallenAtIndex(markIndex);
        }
     }
   }
