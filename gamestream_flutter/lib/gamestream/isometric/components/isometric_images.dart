@@ -150,7 +150,6 @@ class IsometricImages with IsometricComponent {
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
 
-
     empty = await loadPng('empty');
     loadPng('shades').then((value) => shades = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);

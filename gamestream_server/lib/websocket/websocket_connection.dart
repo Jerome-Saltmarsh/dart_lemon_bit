@@ -116,7 +116,12 @@ class WebSocketConnection with ByteReader {
 
     switch (clientRequest) {
 
-      case ClientRequest.Isometric_Editor:
+      case ClientRequest.Editor_Request:
+
+        if (player is! IsometricPlayer){
+          return;
+        }
+
         if (game is! IsometricGame)
           return errorInvalidPlayerType();
 
@@ -131,6 +136,9 @@ class WebSocketConnection with ByteReader {
         final isometricEditorRequest = EditorRequest.values[
           isometricEditorRequestIndex
         ];
+
+
+        final editor = player.editor;
 
         switch (isometricEditorRequest){
           case EditorRequest.GameObject:
@@ -160,29 +168,39 @@ class WebSocketConnection with ByteReader {
             game.reset();
             break;
 
-          case EditorRequest.Select_Mark_Index:
+          case EditorRequest.Mark_Select:
             if (!isLocalMachine && game is! IsometricEditor)
               return;
 
             final index = parseArg2(arguments);
-            if (player is! IsometricPlayer){
-              return;
-            }
             if (index == null)
               return;
 
-            player.editor.selectedMarkIndex = index;
+            editor.selectedMarkListIndex = index;
             break;
 
-          case EditorRequest.Select_Mark_Type:
-            final index = parseArg2(arguments);
-            if (player is! IsometricPlayer){
+          case EditorRequest.Mark_Add:
+            final nodeIndex = parseArg2(arguments);
+            if (nodeIndex == null)
               return;
-            }
+
+            editor.addMark(nodeIndex);
+            break;
+
+          case EditorRequest.Mark_Delete:
+            final index = parseArg2(arguments);
             if (index == null)
               return;
 
-            player.editor.selectedMarkType = index;
+            editor.deleteMark(index);
+            break;
+
+          case EditorRequest.Mark_Set_Type:
+            final markType = parseArg2(arguments);
+            if (markType == null)
+              return;
+
+            player.editor.setMarkType(markType);
             break;
 
           case EditorRequest.Generate_Scene:
@@ -211,12 +229,10 @@ class WebSocketConnection with ByteReader {
             scene.name = sceneName;
             game.scene = scene;
             game.playersDownloadScene();
-            if (player is! IsometricPlayer) return;
             player.z = Node_Height * altitude + 24;
             break;
 
           case EditorRequest.Download:
-            if (player is! IsometricPlayer) return;
             final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
             player.writeByte(ServerResponse.Download_Scene);
 
@@ -263,7 +279,6 @@ class WebSocketConnection with ByteReader {
               return errorInvalidClientRequest();
             }
             final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
-            if (player is! IsometricPlayer) return;
             handleRequestModifyCanvasSize(request, player);
             return;
         }
@@ -667,7 +682,6 @@ class WebSocketConnection with ByteReader {
       errorInvalidPlayerType();
       return;
     }
-    final game = player.game;
     final sceneRequestIndex = parseArg1(arguments);
     if (sceneRequestIndex == null)
       return;
@@ -677,18 +691,18 @@ class WebSocketConnection with ByteReader {
       return;
     }
 
-    switch (SceneRequest.values[sceneRequestIndex]){
-      case SceneRequest.Add_Mark:
-        final value = parseArg2(arguments);
-        if (value == null)
-          return;
-
-        game.scene.marks.add(value);
-        game.dispatchSceneMarks();
-        break;
-      case SceneRequest.Delete_Mark:
-        break;
-    }
+    // switch (SceneRequest.values[sceneRequestIndex]){
+    //   case SceneRequest.Add_Mark:
+    //     final value = parseArg2(arguments);
+    //     if (value == null)
+    //       return;
+    //
+    //     game.scene.marks.add(value);
+    //     game.dispatchSceneMarks();
+    //     break;
+    //   case SceneRequest.Delete_Mark:
+    //     break;
+    // }
 
   }
 }

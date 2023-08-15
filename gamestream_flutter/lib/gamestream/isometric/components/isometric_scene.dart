@@ -1780,9 +1780,6 @@ class IsometricScene with IsometricComponent implements Updatable {
           ? NodeType.Boundary
           : nodeTypes[getIndexPosition(position)];
 
-  void addMark(int value) =>
-      network.sendArgs2(ClientRequest.Scene, SceneRequest.Add_Mark.index, value);
-
   void setNode({
     required int index,
     required int nodeType,

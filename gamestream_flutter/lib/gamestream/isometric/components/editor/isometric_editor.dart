@@ -21,8 +21,11 @@ class IsometricEditor with IsometricComponent {
   final generateOctaves = WatchInt(8, min: 0, max: 100);
   final generateFrequency = WatchInt(1, min: 0, max: 100);
 
-  final selectedMarkIndex = Watch(0);
+  final selectedMarkListValue = Watch(0);
+  final selectedMarkNodeIndex = Watch(0);
+  final selectedMarkListIndex = Watch(0);
   final selectedMarkType = Watch(0);
+
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<GameObject?>(null);
   final gameObjectSelected = Watch(false);
@@ -40,19 +43,23 @@ class IsometricEditor with IsometricComponent {
   final gameObjectSelectedSpawnType = Watch(0);
   final gameObjectSelectedEmission = Watch(EmissionType.None);
 
-  late final gameObjectSelectedEmissionIntensity = Watch(1.0, onChanged: (double value){
+  late final gameObjectSelectedEmissionIntensity = Watch(
+      1.0, onChanged: (double value) {
     gameObject.value?.emissionIntensity = value;
   });
 
-  late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
-  late final editTab = Watch(IsometricEditorTab.Grid, onChanged: onChangedEditTab);
-  late final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
+  late final editorDialog = Watch<EditorDialog?>(
+      null, onChanged: onChangedEditorDialog);
+  late final editTab = Watch(
+      IsometricEditorTab.Grid, onChanged: onChangedEditTab);
+  late final nodeSelectedType = Watch<int>(
+      0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
   final nodeTypeSpawnSelected = Watch(false);
   final isActiveEditTriggers = Watch(true);
 
-  late var nodeSelectedIndex = Watch(0, clamp: (int value){
+  late var nodeSelectedIndex = Watch(0, clamp: (int value) {
     if (value < 0) return 0;
     if (value >= scene.totalNodes) return scene.totalNodes - 1;
     return value;
@@ -64,21 +71,21 @@ class IsometricEditor with IsometricComponent {
 
   int get column => scene.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
-  set z(int value){
+  set z(int value) {
     if (value < 0) return;
     if (value >= scene.totalZ) return;
     final difference = value - z;
     nodeSelectedIndex.value += difference * scene.area;
   }
 
-  set row(int value){
+  set row(int value) {
     if (value < 0) return;
     if (value >= scene.totalRows) return;
     final difference = value - row;
     nodeSelectedIndex.value += difference * scene.totalColumns;
   }
 
-  set column(int value){
+  set column(int value) {
     if (value < 0) return;
     if (value >= scene.totalColumns) return;
     nodeSelectedIndex.value += value - column;
@@ -88,14 +95,31 @@ class IsometricEditor with IsometricComponent {
   final paintOrientation = Watch(NodeOrientation.None);
   final controlsVisibleWeather = Watch(true);
 
+  IsometricEditor(){
+    selectedMarkListIndex.onChanged((index) {
+      selectedMarkListValue.value = scene.marks[index];
+    });
+
+    selectedMarkListValue.onChanged((value) {
+      selectedMarkNodeIndex.value = value & 0xFFFF;
+      selectedMarkType.value = (value >> 16) & 0xFF;
+    });
+
+    selectedMarkNodeIndex.onChanged((index) {
+      camera.clearTarget();
+      camera.setPositionIndex(index);
+    });
+  }
+
   double get posX => row * Node_Size + Node_Size_Half;
+
   double get posY => column * Node_Size + Node_Size_Half;
+
   double get posZ => z * Node_Height;
 
 
-  void onKeyPressedModeEdit(int key){
-
-    switch (key){
+  void onKeyPressedModeEdit(int key) {
+    switch (key) {
       case KeyCode.V:
         sendGameObjectRequestDuplicate();
         break;
@@ -103,7 +127,6 @@ class IsometricEditor with IsometricComponent {
         paint();
         break;
       case KeyCode.G:
-
         if (gameObjectSelected.value) {
           sendGameObjectRequestMoveToMouse();
         } else {
@@ -115,7 +138,7 @@ class IsometricEditor with IsometricComponent {
         break;
       case KeyCode.Arrow_Up:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value){
+          if (gameObjectSelected.value) {
             translate(x: 0, y: 0, z: 1);
             return;
           }
@@ -129,26 +152,26 @@ class IsometricEditor with IsometricComponent {
         cursorRowDecrease();
         return;
       case KeyCode.Arrow_Right:
-        if (gameObjectSelected.value){
+        if (gameObjectSelected.value) {
           return translate(x: 1, y: -1, z: 0);
         }
         cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value){
+          if (gameObjectSelected.value) {
             return translate(x: 0, y: 0, z: -1);
           }
           cursorZDecrease();
         } else {
-          if (gameObjectSelected.value){
+          if (gameObjectSelected.value) {
             return translate(x: 1, y: 1, z: 0);
           }
           cursorRowIncrease();
         }
         break;
       case KeyCode.Arrow_Left:
-        if (gameObjectSelected.value){
+        if (gameObjectSelected.value) {
           return translate(x: -1, y: 1, z: 0);
         }
         cursorColumnIncrease();
@@ -157,16 +180,17 @@ class IsometricEditor with IsometricComponent {
   }
 
 
-  void refreshNodeSelectedIndex(){
+  void refreshNodeSelectedIndex() {
     nodeSelectedType.value = scene.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = scene.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value =
+    scene.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
     sendGameObjectRequestDeselect();
   }
 
-  void translate({ double x = 0, double y = 0, double z = 0}){
+  void translate({ double x = 0, double y = 0, double z = 0}) {
     assert (gameObjectSelected.value);
     return sendClientRequestGameObjectTranslate(
       tx: x,
@@ -175,60 +199,60 @@ class IsometricEditor with IsometricComponent {
     );
   }
 
-  void actionToggleControlsVisibleWeather(){
+  void actionToggleControlsVisibleWeather() {
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
   }
 
-  void setPaintOrientationNone(){
+  void setPaintOrientationNone() {
     paintOrientation.value = NodeOrientation.None;
   }
 
-  void assignDefaultNodeOrientation(int nodeType){
+  void assignDefaultNodeOrientation(int nodeType) {
     paintOrientation.value = NodeType.getDefaultOrientation(nodeType);
   }
 
-  void paintMouse(){
+  void paintMouse() {
     selectMouseBlock();
     paint(selectPlayerIfPlay: false);
   }
 
-  void selectMouseBlock(){
+  void selectMouseBlock() {
     io.mouseRaycast(selectBlock);
   }
 
-  void selectMouseGameObject(){
+  void selectMouseGameObject() {
     sendGameObjectRequestSelect();
   }
 
-  void paintTorch(){
+  void paintTorch() {
     paint(nodeType: NodeType.Torch);
   }
 
-  void paintTree(){
+  void paintTree() {
     paint(nodeType: NodeType.Tree_Bottom);
   }
 
-  void paintLongGrass(){
+  void paintLongGrass() {
     paint(nodeType: NodeType.Grass_Long);
   }
 
-  void paintBricks(){
+  void paintBricks() {
     paint(nodeType: NodeType.Brick);
   }
 
-  void paintGrass(){
+  void paintGrass() {
     paint(nodeType: NodeType.Grass);
   }
 
-  void paintWater(){
+  void paintWater() {
     paint(nodeType: NodeType.Water);
   }
 
-  void selectBlock(int z, int row, int column){
+  void selectBlock(int z, int row, int column) {
     nodeSelectedIndex.value = scene.getIndexZRC(z, row, column);
   }
 
-  void deleteGameObjectSelected(){
+  void deleteGameObjectSelected() {
     sendGameObjectRequestDelete();
   }
 
@@ -238,7 +262,7 @@ class IsometricEditor with IsometricComponent {
         gameObject.value!.renderY,
       );
 
-  void delete(){
+  void delete() {
     if (gameObjectSelected.value)
       return deleteGameObjectSelected();
     setNodeType(NodeType.Empty, NodeOrientation.None);
@@ -251,7 +275,7 @@ class IsometricEditor with IsometricComponent {
         orientation: orientation,
       );
 
-  void raise(){
+  void raise() {
     final nodeIndex = nodeSelectedIndex.value;
     if (nodeIndex <= scene.area) return;
     final nodeIndexBelow = nodeIndex - scene.area;
@@ -262,17 +286,17 @@ class IsometricEditor with IsometricComponent {
     );
   }
 
-  void selectPaintType(){
+  void selectPaintType() {
     paintType.value = nodeSelectedType.value;
     paintOrientation.value = nodeSelectedOrientation.value;
   }
 
   void paint({int? nodeType, bool selectPlayerIfPlay = true}) {
-    if (nodeType == NodeType.Empty){
+    if (nodeType == NodeType.Empty) {
       return delete();
     }
 
-    if (nodeType == null){
+    if (nodeType == null) {
       nodeType = paintType.value;
     } else {
       paintType.value = nodeType;
@@ -295,14 +319,20 @@ class IsometricEditor with IsometricComponent {
     if (!player.inBounds) return;
     nodeSelectedIndex.value = scene.getIndexPosition(player.position);
   }
+
   void cursorRowIncrease() => row++;
+
   void cursorRowDecrease() => row--;
+
   void cursorColumnIncrease() => column++;
+
   void cursorColumnDecrease() => column--;
+
   void cursorZIncrease() => z++;
+
   void cursorZDecrease() => z--;
 
-  void selectSceneName(String value){
+  void selectSceneName(String value) {
     selectedSceneName.value = value;
   }
 
@@ -320,7 +350,7 @@ class IsometricEditor with IsometricComponent {
     assignDefaultNodeOrientation(type);
   }
 
-  void onChangedSelectedNodeIndex(int index){
+  void onChangedSelectedNodeIndex(int index) {
     nodeSelectedOrientation.value = scene.nodeOrientations[index];
     nodeSelectedType.value = scene.nodeTypes[index];
     gameObjectSelected.value = false;
@@ -328,36 +358,36 @@ class IsometricEditor with IsometricComponent {
     deselectGameObject();
   }
 
-  void onChangedSelectedNodeType(int nodeType){
+  void onChangedSelectedNodeType(int nodeType) {
     nodeOrientationVisible.value = true;
     nodeTypeSpawnSelected.value = nodeType == NodeType.Spawn;
   }
 
-  void onChangedEditorDialog(EditorDialog? value){
-    if (value == EditorDialog.Scene_Load){
+  void onChangedEditorDialog(EditorDialog? value) {
+    if (value == EditorDialog.Scene_Load) {
 
     }
   }
 
-  void actionGameDialogShowSceneSave(){
+  void actionGameDialogShowSceneSave() {
     editorDialog.value = EditorDialog.Scene_Save;
   }
 
-  void actionGameDialogClose(){
+  void actionGameDialogClose() {
     editorDialog.value = null;
   }
 
-  void setTabGrid(){
+  void setTabGrid() {
     editTab.value = IsometricEditorTab.Grid;
   }
 
   // EVENTS
 
-  void onChangedEditTab(IsometricEditorTab editTab){
+  void onChangedEditTab(IsometricEditorTab editTab) {
     deselectGameObject();
   }
 
-  void setSelectedObjectedIntensity(double value){
+  void setSelectedObjectedIntensity(double value) {
     gameObject.value?.emissionIntensity = value;
   }
 
@@ -383,9 +413,11 @@ class IsometricEditor with IsometricComponent {
     required double tx,
     required double ty,
     required double tz,
-  }) => sendGameObjectRequest(IsometricEditorGameObjectRequest.Translate, '$tx $ty $tz');
+  }) => sendGameObjectRequest(
+      IsometricEditorGameObjectRequest.Translate, '$tx $ty $tz');
 
-  void sendGameObjectRequestDuplicate() => sendGameObjectRequest(IsometricEditorGameObjectRequest.Duplicate);
+  void sendGameObjectRequestDuplicate() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Duplicate);
 
   void sendGameObjectRequestSelect() =>
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Select);
@@ -409,18 +441,22 @@ class IsometricEditor with IsometricComponent {
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Fixed);
 
   void sendGameObjectRequestToggleCollectable() =>
-      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Collectable);
+      sendGameObjectRequest(
+          IsometricEditorGameObjectRequest.Toggle_Collectable);
 
   void selectedGameObjectTogglePhysical() =>
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Physical);
 
   void selectedGameObjectTogglePersistable() =>
-      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Persistable);
+      sendGameObjectRequest(
+          IsometricEditorGameObjectRequest.Toggle_Persistable);
 
   void actionAddGameObject(int type) =>
-      sendGameObjectRequest(IsometricEditorGameObjectRequest.Add, '${nodeSelectedIndex.value} $type');
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Add,
+          '${nodeSelectedIndex.value} $type');
 
-  void sendGameObjectRequest(IsometricEditorGameObjectRequest gameObjectRequest, [dynamic message]) =>
+  void sendGameObjectRequest(IsometricEditorGameObjectRequest gameObjectRequest,
+      [dynamic message]) =>
       sendEditorRequest(
         EditorRequest.GameObject,
         '${gameObjectRequest.index} $message',
@@ -465,9 +501,11 @@ class IsometricEditor with IsometricComponent {
     required int height,
     required int octaves,
     required int frequency,
-  }) => sendEditorRequest(
-      EditorRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
-  );
+  }) =>
+      sendEditorRequest(
+          EditorRequest.Generate_Scene,
+          '$rows $columns $height $octaves $frequency'
+      );
 
   void sendClientRequestEditSceneSetFloorTypeStone() =>
       sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
@@ -478,18 +516,18 @@ class IsometricEditor with IsometricComponent {
   void editSceneReset() =>
       sendEditorRequest(EditorRequest.Scene_Reset);
 
-  void editSceneClearSpawnedAI(){
+  void editSceneClearSpawnedAI() {
     sendEditorRequest(EditorRequest.Clear_Spawned);
   }
 
   void editSceneSpawnAI() =>
       sendEditorRequest(EditorRequest.Spawn_AI);
 
-  void saveScene()=> sendEditorRequest(EditorRequest.Save);
+  void saveScene() => sendEditorRequest(EditorRequest.Save);
 
   void sendEditorRequest(EditorRequest request, [dynamic message]) =>
       network.send(
-        ClientRequest.Isometric_Editor,
+        ClientRequest.Editor_Request,
         '${request.index} $message',
       );
 
@@ -512,16 +550,15 @@ class IsometricEditor with IsometricComponent {
     loadScene(sceneBytes);
   }
 
-  void toggleWindowEnabledScene(){
+  void toggleWindowEnabledScene() {
     windowEnabledScene.value = !windowEnabledScene.value;
   }
 
-  void toggleWindowEnabledCanvasSize(){
+  void toggleWindowEnabledCanvasSize() {
     windowEnabledCanvasSize.value = !windowEnabledCanvasSize.value;
   }
 
-
-  void exportSceneToJson(){
+  void exportSceneToJson() {
 
   }
 
@@ -534,9 +571,30 @@ class IsometricEditor with IsometricComponent {
         frequency: generateFrequency.value,
       );
 
-  void selectMarkIndex(int index) => network.sendArgs2(
-        ClientRequest.Isometric_Editor,
-        EditorRequest.Select_Mark_Index.index,
+  void markAdd(int value) =>
+      network.sendArgs2(
+        ClientRequest.Editor_Request,
+        EditorRequest.Mark_Add.index,
+        value,
+      );
+
+  void markDelete() =>
+      network.send(
+        ClientRequest.Editor_Request,
+        EditorRequest.Mark_Delete.index,
+      );
+
+  void markSelect(int index) =>
+      network.sendArgs2(
+        ClientRequest.Editor_Request,
+        EditorRequest.Mark_Select.index,
         index,
-    );
+      );
+
+  void markSetType(int markType) =>
+      network.sendArgs2(
+        ClientRequest.Editor_Request,
+        EditorRequest.Mark_Set_Type.index,
+        markType,
+      );
 }

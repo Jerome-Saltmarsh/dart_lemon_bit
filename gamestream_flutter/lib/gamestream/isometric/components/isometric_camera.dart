@@ -41,6 +41,13 @@ class IsometricCamera with IsometricComponent {
     cameraSetPosition(row * Node_Size, column * Node_Size, z * Node_Height);
   }
 
+  void setPositionIndex(int index) =>
+    cameraSetPosition(
+      scene.getIndexPositionX(index),
+      scene.getIndexPositionY(index),
+      scene.getIndexPositionZ(index),
+    );
+
   void cameraSetPosition(double x, double y, double z){
     final renderX = (x - y) * 0.5;
     final renderY = ((y + x) * 0.5) - z;
@@ -57,6 +64,10 @@ class IsometricCamera with IsometricComponent {
     final adjacent = player.renderX - engine.mouseWorldX;
     final opposite = player.renderY - engine.mouseWorldY;
     return rad(adjacent, opposite);
+  }
+
+  void clearTarget(){
+    target = null;
   }
 
 }

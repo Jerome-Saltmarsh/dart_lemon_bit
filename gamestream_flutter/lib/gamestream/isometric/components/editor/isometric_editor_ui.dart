@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/common/src/mark_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 
 import 'package:gamestream_flutter/isometric.dart';
@@ -1174,22 +1175,32 @@ extension IsometricEditorUI on IsometricEditor {
               buildText('REMOVE'),
             ],
           ),
+          WatchBuilder(selectedMarkType, (int selectedMarkType) => Row(
+              children: MarkType.values
+                  .map((markType) => onPressed(
+                    action: () => markSetType(markType),
+                    child: GSContainer(
+                        color: selectedMarkType == markType ? colors.brownLight : colors.brownDark,
+                        child: buildText(MarkType.getName(markType))))
+                  )
+                  .toList(growable: false),
+            )),
           Container(
             height: 200,
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   buildWatch(scene.marksChangedNotifier, (t) =>
-                  buildWatch(editor.selectedMarkIndex, (selectedMarkIndex){
+                  buildWatch(selectedMarkListIndex, (selectedMarkListIndex){
                     return Column(
                       children: List.generate(scene.marks.length, (index) {
                         return onPressed(
                             action: (){
-                              selectMarkIndex(index);
+                              markSelect(index);
                             },
                             child: Container(
                                 padding: const EdgeInsets.all(6),
-                                color: index == selectedMarkIndex ? Colors.white24 : null,
+                                color: index == selectedMarkListIndex ? Colors.white24 : null,
                                 child: buildText(scene.marks[index])));
                       }),
                     );
@@ -1204,7 +1215,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   void onButtonPressedAddMark(){
     var markIndex = nodeSelectedIndex.value;
-    scene.addMark(markIndex);
+    markAdd(markIndex);
   }
 
   Widget buildColumnSelectNodeType() =>
@@ -1554,7 +1565,6 @@ extension IsometricEditorUI on IsometricEditor {
     //   opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
     // );
   }
-
 }
 
 

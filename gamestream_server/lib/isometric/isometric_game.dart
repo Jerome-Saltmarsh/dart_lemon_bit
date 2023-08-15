@@ -2691,7 +2691,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void dispatchSceneMarks() {
+  void notifySceneMarksChanged() {
     for (final player in players) {
       player.downloadSceneMarks();
     }

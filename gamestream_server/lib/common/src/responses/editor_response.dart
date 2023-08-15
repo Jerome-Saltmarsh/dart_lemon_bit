@@ -1,4 +1,4 @@
 
 class EditorResponse {
-  static const Selected_Mark_Index = 0;
+  static const Selected_Mark_List_Index = 0;
 }

@@ -3,7 +3,7 @@ class ClientRequest {
   static const Join                     = 01;
   static const Version                  = 03;
   static const Isometric                = 35;
-  static const Isometric_Editor         = 36;
+  static const Editor_Request           = 36;
   static const Capture_The_Flag         = 37;
   static const MMO                      = 40;
   static const Debugging                = 41;

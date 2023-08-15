@@ -715,8 +715,8 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void parseEditorResponse() {
     switch (readByte()){
-      case EditorResponse.Selected_Mark_Index:
-        editor.selectedMarkIndex.value = readUInt16();
+      case EditorResponse.Selected_Mark_List_Index:
+        editor.selectedMarkListIndex.value = readUInt16();
         break;
     }
   }

@@ -79,12 +79,6 @@ enum MMOItem {
       health: 5,
       movement: 0.1,
   ),
-  // Ancients_Hat(
-  //     quality: MMOItemQuality.Common,
-  //     type: GameObjectType.Head,
-  //     subType: HelmType.,
-  //     health: 2,
-  // ),
   Travellers_Pants(
       quality: MMOItemQuality.Common,
       type: GameObjectType.Legs,

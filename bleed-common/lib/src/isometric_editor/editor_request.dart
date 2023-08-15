@@ -12,6 +12,8 @@ enum EditorRequest {
    Generate_Scene,
    Toggle_Game_Running,
    Scene_Reset,
-   Select_Mark_Index,
-   Select_Mark_Type,
+   Mark_Add,
+   Mark_Delete,
+   Mark_Select,
+   Mark_Set_Type,
 }
