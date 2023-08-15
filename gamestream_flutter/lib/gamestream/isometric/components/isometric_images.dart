@@ -31,6 +31,19 @@ class IsometricImages with IsometricComponent {
   final spriteGroupTorso = <int, SpriteGroup> {};
   final spriteGroupWeapons = <int, SpriteGroup> {};
 
+  late final spriteGroups = {
+    SpriteGroupType.Arms_Left: spriteGroupArmsLeft,
+    SpriteGroupType.Arms_Right: spriteGroupArmsRight,
+    SpriteGroupType.Body: spriteGroupBody,
+    SpriteGroupType.Body_Arms: spriteGroupBodyArms,
+    SpriteGroupType.Hands_Left: spriteGroupHandsLeft,
+    SpriteGroupType.Hands_Right: spriteGroupHandsRight,
+    SpriteGroupType.Heads: spriteGroupHeads,
+    SpriteGroupType.Helms: spriteGroupHelms,
+    SpriteGroupType.Legs: spriteGroupLegs,
+    SpriteGroupType.Torso: spriteGroupTorso,
+    SpriteGroupType.Weapons: spriteGroupWeapons,
+  };
 
   late final SpriteGroup spriteGroupEmpty;
   late final SpriteGroup spriteFallen;
@@ -82,7 +95,7 @@ class IsometricImages with IsometricComponent {
   late final Image kid_weapons_sword;
   late final Image kid_weapons_bow;
 
-   Future<SpriteGroup> loadSpriteGroup({
+   Future loadSpriteGroup({
      required Image image,
      required int type,
      required int subType,
@@ -103,45 +116,46 @@ class IsometricImages with IsometricComponent {
      if (yDead == null){
        print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/dead.sprite"');
      }
-
-     return SpriteGroup(
-         idle: Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
+     final spriteGroup = spriteGroups[type] ?? (throw Exception('isometric_Images.loadSpriteGroup(type: $type, subType: $subType)'));
+     spriteGroup[subType] =
+       SpriteGroup(
+           idle: Sprite.fromBytes(
+               await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
+               image: image,
+               y: yIdle,
+               loop: true,
+           ),
+           running: Sprite.fromBytes(
+               await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
+               image: image,
+               y: yRunning,
+               loop: true,
+           ),
+           strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
+             await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
              image: image,
-             y: yIdle,
-             loop: true,
-         ),
-         running: Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
-             image: image,
-             y: yRunning,
-             loop: true,
-         ),
-         strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
-           await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
-           image: image,
-           y: yStrike,
-           loop: false,
-         ),
-         fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
-           await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
-           image: image,
-           y: yFire,
-           loop: false,
-         ),
-         hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
-             image: image,
-             y: yHurt,
+             y: yStrike,
              loop: false,
-         ),
-         death: yDead == null ? spriteEmpty : Sprite.fromBytes(
-           await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
-           image: image,
-           y: yDead,
-           loop: false,
-         ),
-     );
+           ),
+           fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
+             await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
+             image: image,
+             y: yFire,
+             loop: false,
+           ),
+           hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
+               await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
+               image: image,
+               y: yHurt,
+               loop: false,
+           ),
+           death: yDead == null ? spriteEmpty : Sprite.fromBytes(
+             await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
+             image: image,
+             y: yDead,
+             loop: false,
+           ),
+       );
    }
 
   @override
@@ -284,9 +298,7 @@ class IsometricImages with IsometricComponent {
       image: kid_arms_fair_left,
       type: SpriteGroupType.Arms_Left,
       subType: ComplexionType.Fair,
-    ).then((value) {
-      spriteGroupArmsLeft[ComplexionType.Fair] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -296,9 +308,7 @@ class IsometricImages with IsometricComponent {
       image: kid_arms_fair_right,
       type: SpriteGroupType.Arms_Right,
       subType: ComplexionType.Fair,
-    ).then((value) {
-      spriteGroupArmsRight[ComplexionType.Fair] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -308,9 +318,7 @@ class IsometricImages with IsometricComponent {
       image: kid_body_shirt_blue,
       type: SpriteGroupType.Body,
       subType: BodyType.Shirt_Blue,
-    ).then((value) {
-      spriteGroupBody[BodyType.Shirt_Blue] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -320,9 +328,7 @@ class IsometricImages with IsometricComponent {
       image: kid_body_arms_shirt_blue,
       type: SpriteGroupType.Body_Arms,
       subType: BodyType.Shirt_Blue,
-    ).then((value) {
-      spriteGroupBodyArms[BodyType.Shirt_Blue] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -332,9 +338,7 @@ class IsometricImages with IsometricComponent {
       image: kid_hands_left_gauntlets,
       type: SpriteGroupType.Hands_Left,
       subType: HandType.Gauntlet,
-    ).then((value) {
-      spriteGroupHandsLeft[HandType.Gauntlet] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -344,9 +348,7 @@ class IsometricImages with IsometricComponent {
       image: kid_hands_right_gauntlets,
       type: SpriteGroupType.Hands_Right,
       subType: HandType.Gauntlet,
-    ).then((value) {
-      spriteGroupHandsRight[HandType.Gauntlet] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -356,9 +358,7 @@ class IsometricImages with IsometricComponent {
       image: kid_head_fair,
       type: SpriteGroupType.Heads,
       subType: ComplexionType.Fair,
-    ).then((value) {
-      spriteGroupHeads[ComplexionType.Fair] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -368,9 +368,7 @@ class IsometricImages with IsometricComponent {
       image: kid_helms_steel,
       type: SpriteGroupType.Helms,
       subType: HelmType.Steel,
-    ).then((value) {
-      spriteGroupHelms[HelmType.Steel] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -380,9 +378,7 @@ class IsometricImages with IsometricComponent {
       image: kid_legs_brown,
       type: SpriteGroupType.Legs,
       subType: LegType.Brown,
-    ).then((value) {
-      spriteGroupLegs[LegType.Brown] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -392,9 +388,7 @@ class IsometricImages with IsometricComponent {
       image: kid_torso_fair,
       type: SpriteGroupType.Torso,
       subType: ComplexionType.Fair,
-    ).then((value) {
-      spriteGroupTorso[ComplexionType.Fair] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -403,9 +397,7 @@ class IsometricImages with IsometricComponent {
       image: kid_weapons_staff,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Staff,
-    ).then((value) {
-      spriteGroupWeapons[WeaponType.Staff] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -414,9 +406,7 @@ class IsometricImages with IsometricComponent {
       image: kid_weapons_sword,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Sword,
-    ).then((value) {
-      spriteGroupWeapons[WeaponType.Sword] = value;
-    });
+    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -425,9 +415,7 @@ class IsometricImages with IsometricComponent {
       image: kid_weapons_bow,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Bow,
-    ).then((value) {
-      spriteGroupWeapons[WeaponType.Bow] = value;
-    });
+    );
   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
