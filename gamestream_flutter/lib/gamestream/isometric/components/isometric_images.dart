@@ -242,52 +242,6 @@ class IsometricImages with IsometricComponent {
      );
    }
 
-   Future loadSpriteGroupHelm({
-     required int type,
-     required double yIdle,
-     required double yRunning,
-     required double yStrike,
-     required double yFire,
-     required Image image,
-    }) async {
-     final name = HelmType.getName(type).toLowerCase();
-     final idle = await loadSpriteBytes('kid/helms/$name/idle');
-     final running = await loadSpriteBytes('kid/helms/$name/running');
-     final strike = await loadSpriteBytes('kid/helms/$name/strike');
-     final fire = await loadSpriteBytes('kid/helms/$name/fire');
-     spriteGroupHelms[type] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
-         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
-         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
-         hurt: spriteEmpty,
-       death: spriteEmpty,
-     );
-   }
-
-   // Future loadSpriteGroupLegs({
-   //   required int legType,
-   //   required double yIdle,
-   //   required double yRunning,
-   //   required double yStrike,
-   //   required double yFire,
-   //   required Image image,
-   //  }) async {
-   //   final name = LegType.getName(legType).toLowerCase();
-   //   final idle = await loadSpriteBytes('kid/legs/$name/idle');
-   //   final running = await loadSpriteBytes('kid/legs/$name/running');
-   //   final strike = await loadSpriteBytes('kid/legs/$name/strike');
-   //   final fire = await loadSpriteBytes('kid/legs/$name/fire');
-   //   spriteGroupLegs[legType] = SpriteGroup(
-   //       idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
-   //       running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
-   //       strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
-   //       fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
-   //       hurt: spriteEmpty,
-   //     death: spriteEmpty,
-   //   );
-   // }
-
    Future loadSpriteGroupTorso({
      required int complexion,
      required double yIdle,
@@ -322,6 +276,13 @@ class IsometricImages with IsometricComponent {
      double? yHurt,
      double? yDead,
     }) async {
+
+     if (yHurt == null){
+       print('isometric_images_sprite_missing: "kid/$type/$name/hurt.sprite"');
+     }
+     if (yDead == null){
+       print('isometric_images_sprite_missing: "kid/$type/$name/dead.sprite"');
+     }
 
      return SpriteGroup(
          idle: Sprite.fromBytes(
@@ -598,14 +559,17 @@ class IsometricImages with IsometricComponent {
         image: kid_head_fair,
     );
 
-    await loadSpriteGroupHelm(
-        type: HelmType.Steel,
-        yIdle: 0,
-        yRunning: 26,
-        yStrike: 53,
-        yFire: 80,
-        image: kid_helms_steel,
-    );
+    loadSpriteGroup(
+      yIdle: 0,
+      yRunning: 26,
+      yStrike: 53,
+      yFire: 80,
+      image: kid_helms_steel,
+      type: 'helms',
+      name: 'steel',
+    ).then((value) {
+      spriteGroupHelms[HelmType.Steel] = value;
+    });
 
     loadSpriteGroup(
         yIdle: 0,
@@ -618,6 +582,7 @@ class IsometricImages with IsometricComponent {
     ).then((value) {
       spriteGroupLegs[LegType.Brown] = value;
     });
+
 
     await loadSpriteGroupTorso(
         complexion: ComplexionType.Fair,
