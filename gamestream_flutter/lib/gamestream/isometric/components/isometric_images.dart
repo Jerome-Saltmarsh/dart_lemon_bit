@@ -82,29 +82,6 @@ class IsometricImages with IsometricComponent {
   late final Image kid_weapons_sword;
   late final Image kid_weapons_bow;
 
-   Future loadSpriteGroupTorso({
-     required int complexion,
-     required double yIdle,
-     required double yRunning,
-     required double yStrike,
-     required double yFire,
-     required Image image,
-    }) async {
-     final name = ComplexionType.getName(complexion).toLowerCase();
-     final idle = await loadSpriteBytes('kid/torso/$name/idle');
-     final running = await loadSpriteBytes('kid/torso/$name/running');
-     final strike = await loadSpriteBytes('kid/torso/$name/strike');
-     final fire = await loadSpriteBytes('kid/torso/$name/fire');
-     spriteGroupTorso[complexion] = SpriteGroup(
-         idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
-         running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
-         strike: Sprite.fromBytes(strike, image: image, y: yStrike, loop: false),
-         fire: Sprite.fromBytes(fire, image: image, y: yFire, loop: false),
-         hurt: spriteEmpty,
-       death: spriteEmpty,
-     );
-   }
-
    Future<SpriteGroup> loadSpriteGroup({
      required Image image,
      required int type,
@@ -166,46 +143,6 @@ class IsometricImages with IsometricComponent {
          ),
      );
    }
-
-  Future loadSpriteGroupWeapon({
-    required int type,
-    required double yIdle,
-    required double yRunning,
-    required Image image,
-    double? yStrike,
-    double? yFire,
-  }) async {
-    final name = WeaponType.getName(type).toLowerCase();
-    final idle = await loadSpriteBytes('kid/weapons/$name/idle');
-    final running = await loadSpriteBytes('kid/weapons/$name/running');
-
-    Sprite spriteFire;
-    Sprite spriteStrike;
-
-    if (yFire != null){
-      final fire = await loadSpriteBytes('kid/weapons/$name/fire');
-      spriteFire = Sprite.fromBytes(fire, image: image, y: yFire, loop: false);
-    } else {
-      spriteFire = spriteEmpty;
-    }
-
-    if (yStrike != null){
-      final strike = await loadSpriteBytes('kid/weapons/$name/strike');
-      spriteStrike = Sprite.fromBytes(strike, image: image, y: yStrike, loop: false);
-    } else {
-      spriteStrike = spriteEmpty;
-    }
-
-    spriteGroupWeapons[type] = SpriteGroup(
-      idle: Sprite.fromBytes(idle, image: image, y: yIdle, loop: true),
-      running: Sprite.fromBytes(running, image: image, y: yRunning, loop: true),
-      strike: spriteStrike,
-      fire: spriteFire,
-      hurt: spriteEmpty,
-      death: spriteEmpty,
-
-    );
-  }
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
@@ -447,38 +384,50 @@ class IsometricImages with IsometricComponent {
       spriteGroupLegs[LegType.Brown] = value;
     });
 
-    await loadSpriteGroupTorso(
-        complexion: ComplexionType.Fair,
-        yIdle: 0,
-        yRunning: 205,
-        yStrike: 436,
-        yFire: 664,
-        image: kid_torso_fair,
-    );
+    loadSpriteGroup(
+      yIdle: 0,
+      yRunning: 205,
+      yStrike: 436,
+      yFire: 664,
+      image: kid_torso_fair,
+      type: SpriteGroupType.Torso,
+      subType: ComplexionType.Fair,
+    ).then((value) {
+      spriteGroupTorso[ComplexionType.Fair] = value;
+    });
 
-    await loadSpriteGroupWeapon(
-        type: WeaponType.Staff,
-        yIdle: 0,
-        yRunning: 81,
-        yStrike: 187,
-        image: kid_weapons_staff,
-    );
+    loadSpriteGroup(
+      yIdle: 0,
+      yRunning: 81,
+      yStrike: 187,
+      image: kid_weapons_staff,
+      type: SpriteGroupType.Weapons,
+      subType: WeaponType.Staff,
+    ).then((value) {
+      spriteGroupWeapons[WeaponType.Staff] = value;
+    });
 
-    await loadSpriteGroupWeapon(
-        type: WeaponType.Sword,
-        yIdle: 0,
-        yRunning: 63,
-        yStrike: 114,
-        image: kid_weapons_sword,
-    );
+    loadSpriteGroup(
+      yIdle: 0,
+      yRunning: 63,
+      yStrike: 114,
+      image: kid_weapons_sword,
+      type: SpriteGroupType.Weapons,
+      subType: WeaponType.Sword,
+    ).then((value) {
+      spriteGroupWeapons[WeaponType.Sword] = value;
+    });
 
-    await loadSpriteGroupWeapon(
-        type: WeaponType.Bow,
-        yIdle: 0,
-        yRunning: 116,
-        yFire: 255,
-        image: kid_weapons_bow,
-    );
+    loadSpriteGroup(
+      yIdle: 0,
+      yRunning: 116,
+      yFire: 255,
+      image: kid_weapons_bow,
+      type: SpriteGroupType.Weapons,
+      subType: WeaponType.Bow,
+    ).then((value) {
+      spriteGroupWeapons[WeaponType.Bow] = value;
+    });
   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
