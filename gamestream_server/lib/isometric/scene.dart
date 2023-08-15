@@ -489,4 +489,25 @@ class Scene {
     }
     return -1;
   }
+
+  void sortMarks() => marks.sort(compareMarks);
+
+  int compareMarks(int markValueA, int markValueB) =>
+      compareIndexes(
+        MarkType.getIndex(markValueA),
+        MarkType.getIndex(markValueA),
+      );
+
+  int compareIndexes(int indexA, int indexB){
+     final indexATotal = getIndexTotal(indexA);
+     final indexBTotal = getIndexTotal(indexB);
+     if (indexATotal > indexBTotal)
+       return -1;
+     if (indexATotal < indexBTotal)
+       return 1;
+     return 0;
+  }
+
+  int getIndexTotal(int index) =>
+      getRow(index) +getColumn(index) + getZ(index);
 }

@@ -16,7 +16,6 @@ class MarkType {
     Spawn_Whisp: 'Spawn Whisp',
   }[markType] ?? (throw Exception('MarkType.getName($markType)'));
 
-
   static int getIndex(int markValue) => markValue & 0xFFFF;
 
   static int getType(int markValue) => (markValue >> 16) & 0xFF;

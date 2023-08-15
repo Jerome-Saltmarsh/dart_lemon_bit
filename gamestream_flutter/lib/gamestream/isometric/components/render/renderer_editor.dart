@@ -1,7 +1,8 @@
 
 import 'package:gamestream_flutter/common/src/isometric/node_size.dart';
-import 'package:gamestream_flutter/common/src/mark_type.dart';
+import 'package:gamestream_flutter/common/src/types/mark_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+
 
 class RendererEditor extends RenderGroup {
 
@@ -19,7 +20,7 @@ class RendererEditor extends RenderGroup {
     final indexZ = scene.getIndexZ(markIndex);
     final indexRow = scene.getIndexRow(markIndex);
     final indexColumn = scene.getIndexColumn(markIndex);
-    order =  (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height);
+    order =  (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height) + Node_Size_Half;
   }
 
   @override

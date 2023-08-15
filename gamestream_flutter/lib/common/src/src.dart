@@ -26,3 +26,4 @@ export 'version.dart';
 export 'isometric/hand_type.dart';
 export 'requests/src.dart';
 export 'responses/src.dart';
+export 'types/mark_type.dart';
