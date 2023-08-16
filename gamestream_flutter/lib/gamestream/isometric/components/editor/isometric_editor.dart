@@ -140,6 +140,9 @@ class IsometricEditor with IsometricComponent {
 
   void onKeyPressedModeEdit(int key) {
     switch (key) {
+      case KeyCode.Delete:
+        delete();
+        break;
       case KeyCode.V:
         sendGameObjectRequestDuplicate();
         break;
@@ -283,8 +286,15 @@ class IsometricEditor with IsometricComponent {
       );
 
   void delete() {
-    if (gameObjectSelected.value)
-      return deleteGameObjectSelected();
+    if (gameObjectSelected.value) {
+      deleteGameObjectSelected();
+      return;
+    }
+
+    if (editTab.value == EditorTab.Marks){
+      markDelete();
+      return;
+    }
     setNodeType(NodeType.Empty, NodeOrientation.None);
   }
 

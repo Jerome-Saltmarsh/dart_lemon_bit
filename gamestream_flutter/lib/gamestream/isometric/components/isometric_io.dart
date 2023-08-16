@@ -318,9 +318,6 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
     if (engine.keyPressedSpace) {
       engine.panCamera();
     }
-    if (engine.keyPressed(KeyCode.Delete)) {
-      editor.delete();
-    }
     if (getInputDirectionKeyboard() != IsometricDirection.None) {
       // actionSetModePlay();
     }
