@@ -16,6 +16,8 @@ class MarkType {
     Spawn_Myst,
   ];
 
+  static String getTypeName(int markValue) => getName(getType(markValue));
+
   static getName(int markType) => const {
     Spawn_Player: 'Spawn Player',
     Spawn_Fallen: 'Spawn Fallen',
@@ -26,4 +28,5 @@ class MarkType {
   static int getIndex(int markValue) => markValue & 0xFFFF;
 
   static int getType(int markValue) => (markValue >> 16) & 0xFF;
+
 }

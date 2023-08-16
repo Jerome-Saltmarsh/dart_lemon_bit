@@ -1192,20 +1192,19 @@ extension IsometricEditorUI on IsometricEditor {
               child: Column(
                 children: [
                   buildWatch(scene.marksChangedNotifier, (t) =>
-                  buildWatch(selectedMarkListIndex, (selectedMarkListIndex){
-                    return Column(
-                      children: List.generate(scene.marks.length, (index) {
-                        return onPressed(
+                  buildWatch(selectedMarkListIndex, (selectedMarkListIndex) => Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(scene.marks.length, (index) => onPressed(
                             action: (){
                               markSelect(index);
                             },
                             child: Container(
                                 padding: const EdgeInsets.all(6),
                                 color: index == selectedMarkListIndex ? Colors.white24 : null,
-                                child: buildText(scene.marks[index])));
-                      }),
-                    );
-                  }))
+                                child: buildText(MarkType.getTypeName(scene.marks[index]))),
+                        )),
+                    )))
                 ],
               ),
             ),

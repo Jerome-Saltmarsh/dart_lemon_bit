@@ -189,7 +189,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
     updateGameObjects();
-    updateParticleEmitters();
+    updateParticleSmokeEmitters();
 
     if (nextLightingUpdate-- <= 0) {
       nextLightingUpdate = options.framesPerLightingUpdate;
@@ -1721,7 +1721,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     return null;
   }
 
-  void updateParticleEmitters(){
+  void updateParticleSmokeEmitters(){
     if (nextEmissionSmoke-- > 0)
       return;
 
@@ -1735,16 +1735,6 @@ class IsometricScene with IsometricComponent implements Updatable {
         y: getIndexPositionY(index),
         z: getIndexPositionZ(index),
         duration: smokeDuration,
-      );
-    }
-
-    for (final gameObject in gameObjects){
-      if (!gameObject.active) continue;
-      if (gameObject.type != ObjectType.Barrel_Flaming) continue;
-      particles.emitSmoke(
-        x: gameObject.x + giveOrTake(5),
-        y: gameObject.y + giveOrTake(5),
-        z: gameObject.z + 35,
       );
     }
   }

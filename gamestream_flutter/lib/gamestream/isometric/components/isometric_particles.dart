@@ -786,19 +786,19 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
 
-    if (nextMystEmission-- <= 0){
-      nextMystEmission = 30;
-      for (final index in mystIndexes){
-        spawnMystAtIndex(index);
-      }
-    }
-
-
-    nextParticleFrame--;
     final wind = environment.wind.value;
     windStrength = wind * windStrengthMultiplier;
     windy = wind != 0;
     maxVelocity = 0.3 * wind;
+
+    if (!windy && nextMystEmission-- <= 0) {
+      nextMystEmission = 30;
+      for (final index in mystIndexes) {
+        spawnMystAtIndex(index);
+      }
+    }
+
+    nextParticleFrame--;
 
     for (final particle in children) {
       if (!particle.active) continue;
@@ -880,6 +880,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       if (windy && const [
         ParticleType.Smoke,
         ParticleType.Whisp,
+        ParticleType.Myst,
       ].contains(particle.type)) {
         particle.xv = clamp(particle.xv - windStrength, -maxVelocity, maxVelocity);
         particle.yv = clamp(particle.yv + windStrength, -maxVelocity, maxVelocity);
