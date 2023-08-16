@@ -17,7 +17,7 @@ class Sprite {
   factory Sprite.fromBytes(Uint8List bytes, {
     required Image image,
     double x = 0,
-    required double y,
+    required num y,
     required bool loop,
   }) =>
       Sprite.fromUint16List(
@@ -31,7 +31,7 @@ class Sprite {
   factory Sprite.fromUint16List(Uint16List uint16List, {
     required Image image,
     double x = 0,
-    required double y,
+    required num y,
     required bool loop,
   }) =>
       Sprite(
@@ -46,7 +46,7 @@ class Sprite {
                   .toList(growable: false)
           ),
           x: x,
-          y: y,
+          y: y.toDouble(),
           loop: loop,
       );
 

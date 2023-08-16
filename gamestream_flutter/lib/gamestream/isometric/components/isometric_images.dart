@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/functions/load_asset_json.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,71 +82,6 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_shield;
   late final Image template_spinning;
 
-   Future loadSpriteGroup({
-     required int type,
-     required int subType,
-     required double yIdle,
-     required double yRunning,
-     double? yStrike,
-     double? yFire,
-     double? yHurt,
-     double? yDead,
-    }) async {
-     totalImages.value++;
-     final typeName = SpriteGroupType.getName(type);
-     final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
-     final image = await loadImageAsset('images/kid/$typeName/$subTypeName.png');
-     values.add(image);
-
-     if (yHurt == null){
-       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/hurt.sprite"');
-     }
-     if (yDead == null){
-       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/dead.sprite"');
-     }
-     final spriteGroup = spriteGroups[type] ?? (throw Exception('isometric_Images.loadSpriteGroup(type: $type, subType: $subType)'));
-     spriteGroup[subType] =
-       SpriteGroup(
-           idle: Sprite.fromBytes(
-               await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
-               image: image,
-               y: yIdle,
-               loop: true,
-           ),
-           running: Sprite.fromBytes(
-               await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
-               image: image,
-               y: yRunning,
-               loop: true,
-           ),
-           strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
-             image: image,
-             y: yStrike,
-             loop: false,
-           ),
-           fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
-             image: image,
-             y: yFire,
-             loop: false,
-           ),
-           hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
-               await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
-               image: image,
-               y: yHurt,
-               loop: false,
-           ),
-           death: yDead == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
-             image: image,
-             y: yDead,
-             loop: false,
-           ),
-       );
-     totalImagesLoaded.value++;
-   }
-
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
@@ -204,6 +140,12 @@ class IsometricImages with IsometricComponent {
         fire: spriteEmpty,
     );
 
+    final armsLeftJson = await loadAssetJson('sprites/kid/arms_left/fair.json');
+    final armsLeftImage = await loadPng('kid/arms_left/fair');
+    final spritesArmsLeftLeft = await loadSpriteGroupFromJson(armsLeftImage, armsLeftJson);
+
+    spriteGroupArmsLeft[ComplexionType.Fair] = spritesArmsLeftLeft;
+
     spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
     spriteGroupHandsRight[HandType.None] = spriteGroupEmpty;
     spriteGroupWeapons[WeaponType.Unarmed] = spriteGroupEmpty;
@@ -212,14 +154,14 @@ class IsometricImages with IsometricComponent {
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
 
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 44,
-      yStrike: 91,
-      yFire: 141,
-      type: SpriteGroupType.Arms_Left,
-      subType: ComplexionType.Fair,
-    );
+    // loadSpriteGroup(
+    //   yIdle: 0,
+    //   yRunning: 44,
+    //   yStrike: 91,
+    //   yFire: 141,
+    //   type: SpriteGroupType.Arms_Left,
+    //   subType: ComplexionType.Fair,
+    // );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -375,6 +317,97 @@ class IsometricImages with IsometricComponent {
       loop: true,
     );
   }
+
+  SpriteGroup loadSpriteGroupFromJson(Image image, Map<String, dynamic> json) => SpriteGroup(
+        idle: loadSpriteFromJson(json: json, name: 'idle', image: image, loop: true),
+        running: loadSpriteFromJson(json: json, name: 'running', image: image, loop: true),
+        hurt: loadSpriteFromJson(json: json, name: 'hurt', image: image, loop: false),
+        strike: loadSpriteFromJson(json: json, name: 'death', image: image, loop: false),
+        death: loadSpriteFromJson(json: json, name: 'death', image: image, loop: false),
+        fire: loadSpriteFromJson(json: json, name: 'running', image: image, loop: false),
+    );
+
+  Sprite loadSpriteFromJson({
+    required Map<String, dynamic> json,
+    required String name,
+    required Image image,
+    required bool loop,
+  }){
+    if (!json.containsKey(name)){
+      print('images missing sprite $name');
+      return spriteEmpty;
+    }
+
+    final jsonBody = json[name];
+    final y = jsonBody['y'] as int;
+    final bytes = Uint8List.fromList((jsonBody['bytes'] as List<dynamic>).cast<int>());
+    return Sprite.fromBytes(bytes, image: image, y: y, loop: loop);
+  }
+
+   Future loadSpriteGroup({
+     required int type,
+     required int subType,
+     required double yIdle,
+     required double yRunning,
+     double? yStrike,
+     double? yFire,
+     double? yHurt,
+     double? yDead,
+    }) async {
+     totalImages.value++;
+     final typeName = SpriteGroupType.getName(type);
+     final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
+     final image = await loadImageAsset('images/kid/$typeName/$subTypeName.png');
+     values.add(image);
+
+     if (yHurt == null){
+       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/hurt.sprite"');
+     }
+     if (yDead == null){
+       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/dead.sprite"');
+     }
+     final spriteGroup = spriteGroups[type] ?? (throw Exception('isometric_Images.loadSpriteGroup(type: $type, subType: $subType)'));
+     spriteGroup[subType] =
+       SpriteGroup(
+           idle: Sprite.fromBytes(
+               await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
+               image: image,
+               y: yIdle,
+               loop: true,
+           ),
+           running: Sprite.fromBytes(
+               await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
+               image: image,
+               y: yRunning,
+               loop: true,
+           ),
+           strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
+             await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
+             image: image,
+             y: yStrike,
+             loop: false,
+           ),
+           fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
+             await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
+             image: image,
+             y: yFire,
+             loop: false,
+           ),
+           hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
+               await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
+               image: image,
+               y: yHurt,
+               loop: false,
+           ),
+           death: yDead == null ? spriteEmpty : Sprite.fromBytes(
+             await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
+             image: image,
+             y: yDead,
+             loop: false,
+           ),
+       );
+     totalImagesLoaded.value++;
+   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
 
