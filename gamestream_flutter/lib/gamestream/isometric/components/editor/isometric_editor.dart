@@ -58,7 +58,7 @@ class IsometricEditor with IsometricComponent {
   final nodeOrientationVisible = Watch(true);
   final isActiveEditTriggers = Watch(true);
 
-  late var nodeSelectedIndex = Watch(0, clamp: (int value) {
+  late final nodeSelectedIndex = Watch(0, clamp: (int value) {
     if (value < 0) return 0;
     if (value >= scene.totalNodes) return scene.totalNodes - 1;
     return value;
@@ -118,6 +118,7 @@ class IsometricEditor with IsometricComponent {
       if (index != -1){
         camera.clearTarget();
         camera.setPositionIndex(index);
+        nodeSelectedIndex.value = index;
       }
     });
   }
