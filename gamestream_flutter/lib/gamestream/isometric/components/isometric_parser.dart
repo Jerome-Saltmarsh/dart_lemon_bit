@@ -367,6 +367,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case EnvironmentResponse.Lightning_Flashing:
         environment.lightningFlashing.value = readBool();
+        environment.lightningFlashing01.value = readPercentage();
         break;
       case EnvironmentResponse.Time_Enabled:
         environment.gameTimeEnabled.value = readBool();

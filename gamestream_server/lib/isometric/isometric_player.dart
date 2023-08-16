@@ -774,10 +774,11 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeBool(value);
   }
 
-  void writeEnvironmentLightningFlashing(bool value){
+  void writeEnvironmentLightningFlashing(){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Lightning_Flashing);
-    writeBool(value);
+    writeBool(game.environment.lightningFlashing);
+    writePercentage(game.environment.lightningFlash01);
   }
 
   void writeNode(int index){

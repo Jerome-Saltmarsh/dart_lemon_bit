@@ -970,7 +970,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final player in players) {
       player.writeWeather();
       player.writeGameTime();
-      player.writeEnvironmentLightningFlashing(environment.lightningFlashing);
+      player.writeEnvironmentLightningFlashing();
+    }
+  }
+
+  void writeLightningFlashing(){
+    if (!environment.lightningFlashing)
+      return;
+
+    for (final player in players) {
+      player.writeEnvironmentLightningFlashing();
     }
   }
 
@@ -2189,6 +2198,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   @override
   void customWriteGame() {
+    notifyPlayersEnvironmentChanged();
+    writeLightningFlashing();
+  }
+
+  void notifyPlayersEnvironmentChanged(){
     if (!environment.onChanged)
       return;
 

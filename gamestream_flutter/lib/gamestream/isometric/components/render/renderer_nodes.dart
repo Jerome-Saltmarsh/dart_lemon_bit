@@ -399,7 +399,7 @@ class RendererNodes extends RenderGroup {
     lightningFlashing = environment.lightningFlashing.value;
 
     if (lightningFlashing) {
-      lightningColor = lerpColors(ambientColor, 0, goldenRatio_0381);
+      lightningColor = lerpColors(ambientColor, 0, environment.lightningFlashing01.value);
     }
 
     ambientColor = scene.ambientColor;

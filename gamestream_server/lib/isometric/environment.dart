@@ -37,6 +37,8 @@ class Environment {
 
   bool get lightningFlashing => lightningFlashDuration > 0;
 
+  double get lightningFlash01 => lightningFlashDuration / Lightning_Flash_Duration_Total;
+
   int get windType => _windType;
 
   set mystType(int value){

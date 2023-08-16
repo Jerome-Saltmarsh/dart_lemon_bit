@@ -12,6 +12,7 @@ class IsometricEnvironment with IsometricComponent {
   var srcXRainLanding = 6739.0;
 
   final lightningFlashing = Watch(false);
+  final lightningFlashing01 = Watch(0.0);
   final rainType = Watch(RainType.None);
   final seconds = Watch(0);
   final hours = Watch(0);
