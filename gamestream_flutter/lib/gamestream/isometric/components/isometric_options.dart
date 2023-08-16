@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/editor/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
@@ -117,17 +118,17 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleEditMode() => edit.value = !edit.value;
 
-
   void _onChangedEdit(bool value) {
     if (value) {
+      io.enabledMouseClick = editor.editTab.value != EditorTab.Marks;
       camera.target = null;
       editor.cursorSetToPlayer();
       player.message.value = '-press arrow keys to move\n\n-press tab to play';
       player.messageTimer = 300;
     } else {
+      io.enabledMouseClick = true;
       action.cameraTargetPlayer();
       editor.deselectGameObject();
-      // isometric.ui.mouseOverDialog.setFalse();
       if (scene.sceneEditable.value){
         player.message.value = 'press tab to edit';
       }

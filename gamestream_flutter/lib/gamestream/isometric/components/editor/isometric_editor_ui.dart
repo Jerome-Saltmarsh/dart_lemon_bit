@@ -67,7 +67,7 @@ extension IsometricEditorUI on IsometricEditor {
         }
       );
 
-  Widget buildUI(IsometricEditorTab activeEditTab) => buildPage(
+  Widget buildUI(EditorTab activeEditTab) => buildPage(
     children: [
       buildWatch(editorDialog, buildWatchEditorDialog),
       Positioned(
@@ -79,7 +79,7 @@ extension IsometricEditorUI on IsometricEditor {
           )
       ),
       buildWindowAIControls(),
-      if (activeEditTab == IsometricEditorTab.Objects)
+      if (activeEditTab == EditorTab.Objects)
         Positioned(
           left: 0,
           top: 80,
@@ -87,19 +87,19 @@ extension IsometricEditorUI on IsometricEditor {
               height: engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
-      if (activeEditTab == IsometricEditorTab.Grid)
+      if (activeEditTab == EditorTab.Grid)
         Positioned(
           left: 0,
           top: 80,
           child: buildColumnSelectNodeType(),
         ),
-      if (activeEditTab == IsometricEditorTab.Marks)
+      if (activeEditTab == EditorTab.Marks)
         Positioned(
           left: 0,
           top: 80,
           child: buildEditorTabMarks(),
         ),
-      if (activeEditTab == IsometricEditorTab.Grid)
+      if (activeEditTab == EditorTab.Grid)
         Positioned(
           left: 160,
           top: 80,
@@ -162,7 +162,7 @@ extension IsometricEditorUI on IsometricEditor {
             ],
           ),
         ),
-      if (activeEditTab == IsometricEditorTab.File)
+      if (activeEditTab == EditorTab.File)
         Positioned(
             top: 50,
             left: 0,
@@ -1119,11 +1119,11 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildPaintType(int type) =>
       buildButton(child: NodeType.getName(type));
 
-  Widget buildEditorMenu(IsometricEditorTab activeEditTab) => GSContainer(
+  Widget buildEditorMenu(EditorTab activeEditTab) => GSContainer(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: IsometricEditorTab.values
+      children: EditorTab.values
           .map((editTab) => buildButton(
         child: editTab.name,
         width: 150,

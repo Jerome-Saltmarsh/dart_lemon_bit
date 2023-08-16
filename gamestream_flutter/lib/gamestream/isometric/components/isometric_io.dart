@@ -9,6 +9,8 @@ import 'classes/touch_controller.dart';
 
 class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
+  var enabledMouseClick = true;
+
   var previousMouseX = 0;
   var previousMouseY = 0;
   var previousScreenLeft = 0;
@@ -57,13 +59,13 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
     if (!options.gameRunning.value) {
       writeByte(ClientRequest.Update);
-      applyKeyboardInputToUpdateBuffer();
+      applyComputerInputToUpdateBuffer();
       sendUpdateBuffer();
       return;
     }
 
     readPlayerInputEdit();
-    applyKeyboardInputToUpdateBuffer();
+    applyComputerInputToUpdateBuffer();
     sendUpdateBuffer();
   }
 
@@ -81,13 +83,12 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   void actionToggleInputMode() =>
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
-
   /// compresses keyboard and mouse inputs into a single byte to send to the server
-  int getInputAsByte(){
+  int getComputerInputAsByte(){
 
     var hex = getDirection();
 
-    if (engine.watchMouseLeftDown.value) {
+    if (enabledMouseClick && engine.watchMouseLeftDown.value) {
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -204,7 +205,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   /// [5] Mouse_Right
   /// [6] Shift
   /// [7] Space
-  void applyKeyboardInputToUpdateBuffer() {
+  void applyComputerInputToUpdateBuffer() {
 
     final mouseX = engine.mouseWorldX.toInt();
     final mouseY = engine.mouseWorldY.toInt();
@@ -244,7 +245,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       | changeScreenRight << 4
       | changeScreenBottom << 6;
 
-    writeByte(io.getInputAsByte());
+    writeByte(io.getComputerInputAsByte());
     writeByte(compress1);
     writeByte(compress2);
 

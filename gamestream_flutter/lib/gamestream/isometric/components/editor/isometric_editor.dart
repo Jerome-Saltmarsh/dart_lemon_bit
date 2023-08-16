@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -8,7 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../../../../isometric/classes/gameobject.dart';
 import '../../enums/editor_dialog.dart';
 import '../../enums/emission_type.dart';
-import 'isometric_editor_tab.dart';
+import 'editor_tab.dart';
 
 
 class IsometricEditor with IsometricComponent {
@@ -53,7 +51,7 @@ class IsometricEditor with IsometricComponent {
   late final editorDialog = Watch<EditorDialog?>(
       null, onChanged: onChangedEditorDialog);
   late final editTab = Watch(
-      IsometricEditorTab.Grid, onChanged: onChangedEditTab);
+      EditorTab.Grid, onChanged: onChangedEditTab);
   late final nodeSelectedType = Watch<int>(
       0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
@@ -108,18 +106,28 @@ class IsometricEditor with IsometricComponent {
     });
 
     selectedMarkListValue.onChanged((value) {
-      selectedMarkNodeIndex.value = value & 0xFFFF;
-      selectedMarkType.value = (value >> 16) & 0xFF;
+      if (value != -1){
+        selectedMarkNodeIndex.value = value & 0xFFFF;
+        selectedMarkType.value = (value >> 16) & 0xFF;
+      } else {
+        selectedMarkNodeIndex.value = -1;
+      }
     });
 
     selectedMarkNodeIndex.onChanged((index) {
-      camera.clearTarget();
-      camera.setPositionIndex(index);
+      if (index != -1){
+        camera.clearTarget();
+        camera.setPositionIndex(index);
+      }
     });
   }
 
   void refreshSelectedMarkListValue() {
-    selectedMarkListValue.value = scene.marks[selectedMarkListIndex.value];
+    if (selectedMarkListIndex.value >= 0){
+      selectedMarkListValue.value = scene.marks[selectedMarkListIndex.value];
+    } else {
+      selectedMarkListValue.value = -1;
+    }
   }
 
   double get posX => row * Node_Size + Node_Size_Half;
@@ -388,13 +396,14 @@ class IsometricEditor with IsometricComponent {
   }
 
   void setTabGrid() {
-    editTab.value = IsometricEditorTab.Grid;
+    editTab.value = EditorTab.Grid;
   }
 
   // EVENTS
 
-  void onChangedEditTab(IsometricEditorTab editTab) {
+  void onChangedEditTab(EditorTab editTab) {
     deselectGameObject();
+    io.enabledMouseClick = editTab != EditorTab.Marks;
   }
 
   void setSelectedObjectedIntensity(double value) {
@@ -403,18 +412,18 @@ class IsometricEditor with IsometricComponent {
 
   void onMouseLeftClicked() {
     switch (editTab.value) {
-      case IsometricEditorTab.File:
+      case EditorTab.File:
         setTabGrid();
         selectMouseBlock();
         break;
-      case IsometricEditorTab.Grid:
+      case EditorTab.Grid:
         selectMouseBlock();
         actionRecenterCamera();
         break;
-      case IsometricEditorTab.Objects:
+      case EditorTab.Objects:
         selectMouseGameObject();
         break;
-      case IsometricEditorTab.Marks:
+      case EditorTab.Marks:
         selectMouseMark();
         break;
     }
@@ -614,7 +623,7 @@ class IsometricEditor with IsometricComponent {
       x: mouse.positionX,
       y: mouse.positionY,
       z: mouse.positionZ,
-      minRadius: 50.0,
+      minRadius: 100.0,
     );
     if (nearestIndex != -1) {
       markSelect(nearestIndex);
