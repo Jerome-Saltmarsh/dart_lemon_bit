@@ -189,11 +189,7 @@ class WebSocketConnection with ByteReader {
             break;
 
           case EditorRequest.Mark_Delete:
-            final index = parseArg2(arguments);
-            if (index == null)
-              return;
-
-            editor.deleteMark(index);
+            editor.deleteMark();
             break;
 
           case EditorRequest.Mark_Set_Type:

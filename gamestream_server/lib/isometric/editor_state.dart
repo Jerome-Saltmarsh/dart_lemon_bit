@@ -51,13 +51,15 @@ class EditorState {
     selectedMarkListIndex = scene.marks.indexOf(markValue);
   }
 
-  void deleteMark(int index) {
+  void deleteMark() {
     final game = player.game;
 
-    if (index >= scene.marks.length)
+    final listIndex = player.editor.selectedMarkListIndex;
+
+    if (listIndex < 0 || listIndex >= scene.marks.length)
       return;
 
-    scene.marks.removeAt(index);
+    scene.marks.removeAt(listIndex);
     deselectMarkListIndex();
     game.notifySceneMarksChanged();
   }
