@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -215,8 +216,6 @@ class Sprite {
 
     final spriteSheets = <SpriteSheet>[];
 
-    print('building spritesheets');
-
     for (final file in files) {
       final bytes = file.bytes;
       if (bytes == null){
@@ -231,12 +230,11 @@ class Sprite {
         SpriteSheet(
             image: imagePacked,
             bounds: packStack.buffer.asUint8List(),
-            name: file.name,
+            name: file.name.replaceAll('.png', ''),
         )
       );
     }
 
-    print('compiling spritesheets');
     var width = 0;
     var height = 0;
 
@@ -256,10 +254,14 @@ class Sprite {
 
     var row = 0;
 
+    final spriteMaps = <SpriteMap>[];
+
     for (final spriteSheet in spriteSheets){
       final image = spriteSheet.image;
       final imageHeight = image.height;
       final imageWidth = image.width;
+
+      spriteMaps.add(SpriteMap(spriteSheet.name, row, spriteSheet.bounds));
 
       for (var y = 0; y < imageHeight; y++){
          for (var x = 0; x < imageWidth; x++){
@@ -277,6 +279,19 @@ class Sprite {
       }
     }
     downloadBytes(bytes: encodePng(atlas), name: 'atlas.png');
+
+    final json = <String, dynamic>{};
+
+    for (final spriteMap in spriteMaps){
+      final data = <String, dynamic> {
+        'y': spriteMap.y,
+        'bytes': spriteMap.bytes,
+      };
+      json[spriteMap.name] = data;
+    }
+
+    final jsonString = jsonEncode(json);
+    downloadString(contents: jsonString, filename: 'atlas.json');
   }
 
   void loadFiles(List<PlatformFile> files) async {
@@ -307,4 +322,12 @@ class SpriteSheet {
     required this.bounds,
     required this.name,
   });
+}
+
+class SpriteMap {
+  final String name;
+  final int y;
+  final Uint8List bytes;
+
+  SpriteMap(this.name, this.y, this.bytes);
 }
