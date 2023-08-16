@@ -88,7 +88,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     particle.zv = zv;
     particle.weight = weight;
-    particle.duration = duration;
+    particle.duration = 0;
     particle.durationTotal = duration;
     particle.scale = scale;
     particle.scaleVelocity = scaleV;
@@ -781,6 +781,9 @@ class IsometricParticles with IsometricComponent implements Updatable {
   int get countActiveParticles =>
       children.where((element) => element.active).length;
 
+  int get countDeactiveParticles =>
+      children.where((element) => !element.active).length;
+
   void onComponentUpdate() {
 
     if (nextMystEmission-- <= 0){
@@ -918,16 +921,18 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   void spawnMystAtIndex(int index) {
+    const radius = 100.0;
     spawnParticle(
         type: ParticleType.Myst,
-        x: scene.getIndexPositionX(index),
-        y: scene.getIndexPositionY(index),
+        x: scene.getIndexPositionX(index) + giveOrTake(radius),
+        y: scene.getIndexPositionY(index) + giveOrTake(radius),
         z: scene.getIndexPositionZ(index),
         angle: randomAngle(),
         speed: 0.05,
         weight: 0,
-        duration: 300,
+        duration: 1000,
         frictionAir: 1.00,
-    );
+        rotationV: giveOrTake(0.005),
+    )..nodeCollidable = false;
   }
 }

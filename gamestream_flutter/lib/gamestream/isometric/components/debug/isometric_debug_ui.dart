@@ -565,22 +565,41 @@ extension isometricDebugUI on IsometricDebug {
       );
 
   Widget buildTabParticles() => GSRefresh(
-      () => Container(
-        constraints: BoxConstraints(
-          maxHeight: engine.screen.height - 300,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: particles.children.map((particle) => onPressed(
-                  action: () => selectParticle(particle),
-                  child: buildText(
-                      ParticleType.getName(particle.type),
-                      color: particle.active ? colors.white : colors.white70
-                  ))).toList(growable: false)
+      () => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GSContainer(
+            color: colors.brownLight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildText('total: ${particles.children.length}'),
+                buildText('total-active: ${particles.countActiveParticles}'),
+                buildText('total-deactive: ${particles.countDeactiveParticles}'),
+              ],
+            ),
           ),
-        ),
+          height16,
+          Container(
+            constraints: BoxConstraints(
+              maxHeight: engine.screen.height - 300,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: particles.children.map((particle) => onPressed(
+                      action: () => selectParticle(particle),
+                      child: buildText(
+                          ParticleType.getName(particle.type),
+                          color: particle.active ? colors.white : colors.white70
+                      ))).toList(growable: false)
+              ),
+            ),
+          ),
+        ],
       ),
     seconds: 1,
   );

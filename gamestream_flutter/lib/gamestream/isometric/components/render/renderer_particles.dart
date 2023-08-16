@@ -293,15 +293,15 @@ class RendererParticles extends RenderGroup {
             scale: particle.scale,
           );
           break;
+
         case ParticleType.Myst:
-          renderSmoke();
+          renderMyst();
           break;
 
         case ParticleType.Whisp:
           final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);
           final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
-          // render.textPosition(particle, nodeAlpha, offsetY: -25);
           engine.renderSprite(
             image: images.atlas_nodes,
             dstX: dstX,
@@ -463,6 +463,31 @@ class RendererParticles extends RenderGroup {
       color: scene.getRenderColorPosition(particle),
       rotation: particle.rotation,
       scale: particle.scale * 0.5,
+    );
+  }
+
+  void renderMyst() {
+    const width = 32.0;
+    const height = 32.0;
+
+    final duration = particle.duration01;
+    final opacity = 1.0 - (duration < 0.5 ? duration / 0.5 : (1.0 - ((duration - 0.5) / 0.5)));
+    final totalFrames = 8;
+    final frame = (opacity * totalFrames).round();
+
+    // render.textPosition(particle, '${duration.toStringAsFixed(1)}/${opacity.toStringAsFixed(1)}');
+
+    engine.renderSpriteRotated(
+      image: images.atlas_nodes,
+      dstX: particle.renderX,
+      dstY: particle.renderY,
+      srcX: 1584,
+      srcY: frame * height,
+      srcWidth: width,
+      srcHeight: height,
+      color: scene.getRenderColorPosition(particle),
+      rotation: particle.rotation,
+      scale: particle.scale,
     );
   }
 

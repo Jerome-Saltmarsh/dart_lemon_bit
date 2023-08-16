@@ -28,8 +28,8 @@ class ParticleWhisp extends Particle {
     startX = x;
     startY = y;
     startZ = z;
-    duration = 1;
-    durationTotal = 2;
+    duration = 0;
+    durationTotal = -1;
     active = true;
     xv = 0;
     yv = 0;

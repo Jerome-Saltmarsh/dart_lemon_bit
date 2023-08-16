@@ -50,5 +50,6 @@ class ParticleType {
       Blood: 'Blood',
       Whisp: 'Whisp',
       Water_Drop: 'Water_Drop',
+      Myst: 'myst',
     }[particleType] ?? 'unknown-$particleType';
 }
