@@ -1,4 +1,8 @@
 
+/// a mark value is 32 bit integer comprised of two parts
+/// the first two bytes are used to store the node index
+/// the third byte is used to store the mark type
+/// the fourth byte is used to store meta data associated with its mark type
 class MarkType {
   static const Spawn_Player = 0;
   static const Spawn_Fallen = 1;

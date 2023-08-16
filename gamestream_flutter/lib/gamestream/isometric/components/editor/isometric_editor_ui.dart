@@ -1168,8 +1168,12 @@ extension IsometricEditorUI on IsometricEditor {
             children: [
               onPressed(
                   action: onButtonPressedAddMark,
-                  child: buildText('ADD')),
-              buildText('REMOVE'),
+                  child: GSContainer(child: buildText('ADD')),
+              ),
+              onPressed(
+                  action: markDelete,
+                  child: GSContainer(child: buildText('DELETE')),
+              ),
             ],
           ),
           WatchBuilder(selectedMarkType, (int selectedMarkType) => Row(
@@ -1210,10 +1214,7 @@ extension IsometricEditorUI on IsometricEditor {
       ),
     );
 
-  void onButtonPressedAddMark(){
-    var markIndex = nodeSelectedIndex.value;
-    markAdd(markIndex);
-  }
+  void onButtonPressedAddMark() => markAdd(nodeSelectedIndex.value);
 
   Widget buildColumnSelectNodeType() =>
       Container(

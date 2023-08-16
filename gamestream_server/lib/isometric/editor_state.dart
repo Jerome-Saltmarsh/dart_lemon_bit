@@ -37,7 +37,7 @@ class EditorState {
     _selectedMarkListIndex = value;
     player.writeByte(ServerResponse.Editor_Response);
     player.writeByte(EditorResponse.Selected_Mark_List_Index);
-    player.writeUInt16(value);
+    player.writeInt16(value);
   }
 
   void setMarkType(int markType) {
@@ -53,10 +53,10 @@ class EditorState {
     game.notifySceneMarksChanged();
   }
 
-  void addMark(int nodeIndex) {
-    scene.marks.add(nodeIndex);
-    selectedMarkListIndex = scene.marks.length - 1;
+  void addMark(int markValue) {
+    scene.marks.add(markValue);
     game.notifySceneMarksChanged();
+    selectedMarkListIndex = scene.marks.indexOf(markValue);
   }
 
   void deleteMark(int index) {
@@ -71,6 +71,6 @@ class EditorState {
   }
 
   void deselectMarkListIndex() {
-    // selectedMarkListIndex = -1;
+    selectedMarkListIndex = -1;
   }
 }
