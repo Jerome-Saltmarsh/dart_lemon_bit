@@ -1,8 +1,8 @@
 
-import 'package:lemon_math/src.dart';
+import 'color.dart';
+import 'interpolate.dart';
 
 int lerpColors(int colorA, int colorB, double t) {
-  // Extract the individual components of colorA
   final alphaA = (colorA >> 24) & 0xFF;
   final redA = (colorA >> 16) & 0xFF;
   final greenA = (colorA >> 8) & 0xFF;

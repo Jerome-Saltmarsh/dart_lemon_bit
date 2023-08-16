@@ -642,7 +642,13 @@ extension isometricDebugUI on IsometricDebug {
       );
 
   Widget buildTabEnvironment() => Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          onPressed(
+            action: environment.requestLightningFlash,
+            child: buildText('LIGHTNING FLASH'),
+          ),
           buildRowWatch('myst', environment.myst, (activeMyst) =>
                 Row(
                     children: MystType.values

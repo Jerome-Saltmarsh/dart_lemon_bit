@@ -713,6 +713,11 @@ class WebSocketConnection with ByteReader {
         }
 
         player.game.environment.mystType = mystType;
+        break;
+
+      case EnvironmentRequest.Lightning_Flash:
+        player.game.environment.lightningFlash();
+        break;
     }
   }
 }

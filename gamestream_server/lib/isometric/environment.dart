@@ -177,4 +177,9 @@ class Environment {
     mystType = randomInt(0, 2);
     onChanged = true;
   }
+
+  void lightningFlash(){
+    lightningType = LightningType.On;
+    nextLightningFlash = 0;
+  }
 }
