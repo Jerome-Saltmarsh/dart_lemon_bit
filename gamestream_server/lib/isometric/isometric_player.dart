@@ -1200,8 +1200,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void downloadSceneMarks() {
     writeByte(ServerResponse.Scene);
     writeByte(SceneResponse.Marks);
-    writeUInt16(scene.marks.length);
-    for (final mark in scene.marks){
+    final marks = scene.marks;
+    writeUInt16(marks.length);
+    for (final mark in marks){
       writeUInt32(mark);
     }
   }

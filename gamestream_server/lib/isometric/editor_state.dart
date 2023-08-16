@@ -40,16 +40,8 @@ class EditorState {
     player.writeInt16(value);
   }
 
-  void setMarkType(int markType) {
-    if (_selectedMarkListIndex < 0){
-      player.writeGameError(GameError.Selected_Mark_Index_Not_Set);
-      return;
-    }
-    if (_selectedMarkListIndex >= scene.marks.length){
-      player.writeGameError(GameError.Invalid_Mark_Stack_Index);
-      return;
-    }
-    scene.marks[_selectedMarkListIndex] = selectedMarkNodeIndex | (markType << 16);
+  void setSelectedMarkType(int markType) {
+    scene.setMarkType(listIndex: _selectedMarkListIndex, markType: markType);
     game.notifySceneMarksChanged();
   }
 

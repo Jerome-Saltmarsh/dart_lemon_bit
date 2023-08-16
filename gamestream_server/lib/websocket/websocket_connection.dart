@@ -201,7 +201,7 @@ class WebSocketConnection with ByteReader {
             if (markType == null)
               return;
 
-            player.editor.setMarkType(markType);
+            player.editor.setSelectedMarkType(markType);
             break;
 
           case EditorRequest.Generate_Scene:

@@ -510,4 +510,21 @@ class Scene {
 
   int getIndexTotal(int index) =>
       getRow(index) +getColumn(index) + getZ(index);
+
+
+  void setMarkType({
+    required int listIndex,
+    required int markType,
+  }) {
+    if (listIndex < 0){
+      throw Exception('invalid index');
+    }
+    if (listIndex >= marks.length){
+      throw Exception('invalid index');
+    }
+
+    final markValue = marks[listIndex];
+    final markIndex = MarkType.getIndex(markValue);
+    marks[listIndex] = markIndex | (markType << 16);
+  }
 }
