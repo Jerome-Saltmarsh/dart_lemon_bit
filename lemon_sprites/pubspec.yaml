@@ -1,7 +1,7 @@
 name: lemon_sprites
 description: Packs atlases into sprites
 
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -12,14 +12,11 @@ dependencies:
 
   file_picker: ^5.3.3
   lemon_watch: ^1.1.1
-  image: ^4.0.17
   firebase_core: ^2.15.0
+  image: ^4.0.17
 
   lemon_widgets:
     path: ..\lemon_widgets
-
-
-  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:

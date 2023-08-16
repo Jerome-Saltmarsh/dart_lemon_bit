@@ -9,7 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  image: ^4.0.17
   universal_html: ^2.0.8
+  file_picker: ^5.3.3
 
 

@@ -27,6 +27,7 @@ class Environment {
 
   var durationRain = randomInt(1000, 3000);
   var nextLightningChanged = 300;
+  var enabledLightning = true;
   var durationBreeze = 500;
   var durationWind = randomInt(500, 1000);
   var durationThunder = 0;
@@ -129,7 +130,7 @@ class Environment {
       lightningFlashDuration = Lightning_Flash_Duration_Total;
     }
 
-    if (nextLightningChanged-- > 0)
+    if (!enabledLightning || nextLightningChanged-- > 0)
       return;
 
     switch (lightningType) {

@@ -1,15 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as ui;
-import 'package:image/image.dart';
 import 'package:image/image.dart' as img;
 import 'package:lemon_sprites/sprites/sprite.dart';
 import 'package:lemon_sprites/sprites/style.dart';
-import 'package:lemon_sprites/ui/functions/load_files_from_disk.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'functions/load_image_from_file.dart';
 
 class SpriteApp extends StatelessWidget {
 
@@ -37,6 +34,7 @@ class SpriteApp extends StatelessWidget {
           title: const Text('LEMON-SPRITES'),
           actions: [
             buildControlReduction(),
+            buildButtonAtlas(),
             buildControlRows(),
             buildControlColumns(),
             buildButtonLoad(),
@@ -95,7 +93,7 @@ class SpriteApp extends StatelessWidget {
       ));
 
   Widget buildButtonPack() =>
-      WatchBuilder(sprite.bound, (image) => buildButton(
+      WatchBuilder(sprite.previewBound, (image) => buildButton(
         action: image == null ? null : sprite.pack,
         child: buildText('PACK',
           color: image == null ? Colors.black54 : Colors.black87,
@@ -108,18 +106,18 @@ class SpriteApp extends StatelessWidget {
         child: buildButtonText('LOAD'),
       );
 
+  Widget buildButtonAtlas() =>
+      buildButton(
+        action: sprite.buildAtlas,
+        child: buildButtonText('Atlas'),
+      );
+
   void onButtonLoadPressed() async {
     final files = await loadFilesFromDisk();
     if (files == null) {
       return;
     }
     sprite.loadFiles(files);
-    // if (files.length == 1){
-    //   sprite.file = files[0];
-    // } else {
-    //   sprite.loadFiles(files);
-    // }
-
   }
 
   Widget buildButtonText(String value) =>
@@ -148,11 +146,11 @@ class SpriteApp extends StatelessWidget {
 
   Widget buildImage() => buildWatchImage(sprite.imageWatch);
 
-  Widget buildImageGrid() => buildWatchImage(sprite.grid);
+  Widget buildImageGrid() => buildWatchImage(sprite.previewGrid);
 
-  Widget buildBound() => buildWatchImage(sprite.bound);
+  Widget buildBound() => buildWatchImage(sprite.previewBound);
 
-  Widget buildPacked() => buildWatchImage(sprite.packed);
+  Widget buildPacked() => buildWatchImage(sprite.previewPacked);
 
   Widget buildWatchImage(Watch<img.Image?> watch) => SizedBox(
     width: style.imageWidth,
@@ -160,19 +158,11 @@ class SpriteApp extends StatelessWidget {
       if (image == null) {
         return buildText('-', color: Colors.black38);
       }
-      return ui.Image.memory(encodePng(image));
+      return ui.Image.memory(img.encodePng(image));
     }),
   );
 
-  // Future onLoadButtonPressed() async {
-  //   final image = await loadImageFromFile();
-  //   if (image == null) {
-  //     return;
-  //   }
-  //   sprite.image.value = image;
-  // }
-
-  Widget buildButtonSave() => WatchBuilder(sprite.packed, (image) => buildButton(
+  Widget buildButtonSave() => WatchBuilder(sprite.previewPacked, (image) => buildButton(
       action: image == null ? null : sprite.save,
       child: buildText('SAVE',
         color: image == null ? Colors.black54 : Colors.black87,

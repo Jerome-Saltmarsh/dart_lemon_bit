@@ -16,25 +16,26 @@ class Sprite {
 
   static const maxSize = 2048;
 
+  var packStackIndex = 0;
   var fileName = '';
   var packStack = Uint16List(0);
 
   final rows = WatchInt(8);
   final columns = WatchInt(8);
-  final bound = Watch<Image?>(null);
-  final packed = Watch<Image?>(null);
-  final grid = Watch<Image?>(null);
   final bounds = SpriteBounds();
   final reduction = Watch(0);
 
-  PlatformFile? _file;
+  final transparent = ColorRgba8(0, 0, 0, 0);
+  final previewBound = Watch<Image?>(null);
+  final previewPacked = Watch<Image?>(null);
+  final previewGrid = Watch<Image?>(null);
+
   Image? _image;
 
   final imageSet = Watch(false);
   final imageWatch = Watch<Image?>(null);
 
   set file(PlatformFile? value){
-    _file = value;
 
     if (value == null){
       clearPackedImage();
@@ -45,9 +46,7 @@ class Sprite {
     if (bytes == null){
       throw Exception();
     }
-    final now = DateTime.now();
     image = decodePng(bytes);
-    final ms = DateTime.now().difference(now).inMilliseconds;
     fileName = value.name;
 
   }
@@ -62,48 +61,39 @@ class Sprite {
   }
 
   void clearPackedImage() {
-    bound.value = null;
-    packed.value = null;
+    previewBound.value = null;
+    previewPacked.value = null;
     reduction.value = 0;
   }
 
-  void bind(){
-    final source = image;
-
-    if (source == null){
-      throw Exception('source image is null');
-    }
-    final copy = source.clone();
+  void bind(Image image, {required bool drawPreview}){
+    final copy = drawPreview ? image.clone() : image;
     bounds.bind(copy, rows.value, columns.value);
     final total = bounds.boundStackIndex;
-    final color = ColorRgb8(255, 0, 0);
-    for (var i = 0; i < total; i++){
-      drawRec(
+
+    if (drawPreview){
+      final color = ColorRgb8(255, 0, 0);
+      for (var i = 0; i < total; i++){
+        drawRec(
           image: copy,
           left: bounds.boundStackLeft[i],
           top: bounds.boundStackTop[i],
           right: bounds.boundStackRight[i],
           bottom: bounds.boundStackBottom[i],
           color: color,
-      );
+        );
+      }
+      previewBound.value = copy;
     }
 
-    bound.value = copy;
-
-    final previousArea = (source.width * source.height).toInt();
-    final boundArea = bounds.totalArea;
-    reduction.value = ((1 - (boundArea / previousArea)) * 100).toInt();
+    if (drawPreview){
+      final previousArea = (image.width * image.height).toInt();
+      final boundArea = bounds.totalArea;
+      reduction.value = ((1 - (boundArea / previousArea)) * 100).toInt();
+    }
   }
 
-  var packStackIndex = 0;
-
-  void pack(){
-
-    final img = image;
-
-    if (img == null){
-      throw Exception();
-    }
+  Image pack(Image img){
 
     if (bounds.boundStackIndex <= 0){
       throw Exception();
@@ -160,8 +150,6 @@ class Sprite {
       canvasWidth = max(canvasWidth, pasteX);
     }
 
-    final transparent = ColorRgba8(0, 0, 0, 0);
-
     final packedImage = Image(
       width: canvasWidth,
       height: canvasHeight,
@@ -172,10 +160,6 @@ class Sprite {
     if (canvasHeight > maxSize){
       throw Exception('canvas height exceeds max height');
     }
-
-    // if (canvasWidth > maxSize){
-    //   throw Exception('canvas width exceeds max height');
-    // }
 
     var j = 4; // the first four indexes are used to store width, height, columns and rows
     for (var i = 0; i < totalBounds; i++){
@@ -203,7 +187,7 @@ class Sprite {
       );
     }
 
-    packed.value = packedImage;
+    return packedImage;
   }
 
   void writeToPackStack(int value){
@@ -211,7 +195,7 @@ class Sprite {
   }
 
   void save() {
-    final imgPacked = packed.value;
+    final imgPacked = previewPacked.value;
     if (imgPacked == null){
       throw Exception();
     }
@@ -223,15 +207,104 @@ class Sprite {
     );
   }
 
+  Future buildAtlas() async {
+    final files = await loadFilesFromDisk();
+    if (files == null) {
+      return;
+    }
+
+    final spriteSheets = <SpriteSheet>[];
+
+    print('building spritesheets');
+
+    for (final file in files) {
+      final bytes = file.bytes;
+      if (bytes == null){
+        throw Exception();
+      }
+
+      final imageDecoded = decodePng(bytes) ?? (throw Exception());
+      bind(imageDecoded, drawPreview: false);
+      final imagePacked = pack(imageDecoded);
+
+      spriteSheets.add(
+        SpriteSheet(
+            image: imagePacked,
+            bounds: packStack.buffer.asUint8List(),
+            name: file.name,
+        )
+      );
+    }
+
+    print('compiling spritesheets');
+    var width = 0;
+    var height = 0;
+
+    for (final spriteSheet in spriteSheets){
+      height += spriteSheet.image.height + 1;
+      width = max(width, spriteSheet.image.width);
+    }
+
+    height--;
+
+    final atlas = Image(
+        width: width,
+        height: height,
+        backgroundColor: transparent,
+        numChannels: 4,
+    );
+
+    var row = 0;
+
+    for (final spriteSheet in spriteSheets){
+      final image = spriteSheet.image;
+      final imageHeight = image.height;
+      final imageWidth = image.width;
+
+      for (var y = 0; y < imageHeight; y++){
+         for (var x = 0; x < imageWidth; x++){
+
+           if (x >= atlas.width){
+             throw Exception();
+           }
+           if (row >= atlas.height){
+             throw Exception();
+           }
+
+           atlas.setPixel(x, row, image.getPixel(x, y));
+         }
+         row++;
+      }
+    }
+    downloadBytes(bytes: encodePng(atlas), name: 'atlas.png');
+  }
+
   void loadFiles(List<PlatformFile> files) async {
     files.forEach(process);
   }
 
   void process(PlatformFile file) async {
     this.file = file;
-    bind();
-    pack();
+    fileName = file.name;
+    final bytes = file.bytes;
+    if (bytes == null){
+      throw Exception();
+    }
+    final decodedImage = decodePng(bytes) ?? (throw Exception());
+    bind(decodedImage, drawPreview: true);
+    previewPacked.value = pack(decodedImage);
     save();
   }
 }
 
+class SpriteSheet {
+   final Image image;
+   final Uint8List bounds;
+   final String name;
+
+  SpriteSheet({
+    required this.image,
+    required this.bounds,
+    required this.name,
+  });
+}
