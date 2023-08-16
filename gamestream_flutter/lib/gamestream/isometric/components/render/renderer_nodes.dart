@@ -432,9 +432,9 @@ class RendererNodes extends RenderGroup {
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
-    var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
-    nodesScreenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
+    var screenTopLeftColumn = convertRenderToColumn(screenLeft, screenTop, 0);
+    nodesScreenBottomRightRow = clamp(convertRenderToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
+    nodesScreenTopLeftRow = convertRenderToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
       screenTopLeftColumn += nodesScreenTopLeftRow;

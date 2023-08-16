@@ -1809,6 +1809,48 @@ class IsometricScene with IsometricComponent implements Updatable {
     // events.onChangedNodes();
     editor.refreshNodeSelectedIndex();
   }
+
+  int findNearestMark({
+    required double x,
+    required double y,
+    required double z,
+    required double minRadius,
+  }) {
+    final marks = scene.marks;
+    final totalMarks = marks.length;
+
+    if (totalMarks <= 0)
+      return -1;
+
+    var nearestIndex = -1;
+    var nearestDistanceSquared = pow(minRadius, 2);
+
+    for (var i = 0; i < totalMarks; i++){
+      final mark = marks[i];
+      final markIndex = MarkType.getIndex(mark);
+      final markPosX = scene.getIndexPositionX(markIndex);
+      final markPosY = scene.getIndexPositionY(markIndex);
+      final markPosZ = scene.getIndexPositionZ(markIndex);
+
+      final distanceSquared = getDistanceXYZSquared(
+        x,
+        y,
+        z,
+        markPosX,
+        markPosY,
+        markPosZ,
+      );
+
+      if (distanceSquared >= nearestDistanceSquared)
+        continue;
+
+      nearestDistanceSquared = distanceSquared;
+      nearestIndex = i;
+    }
+
+    return nearestIndex;
+  }
+
 }
 
 

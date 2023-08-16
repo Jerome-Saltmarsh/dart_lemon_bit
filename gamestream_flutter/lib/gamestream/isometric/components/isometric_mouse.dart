@@ -7,8 +7,8 @@ import 'isometric_component.dart';
 
 class IsometricMouse with IsometricComponent {
 
-  double get positionX => convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + player.position.z;
-  double get positionY => convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + player.position.z;
+  double get positionX => convertRenderToSceneX(engine.mouseWorldX, engine.mouseWorldY) + player.position.z;
+  double get positionY => convertRenderToSceneY(engine.mouseWorldX, engine.mouseWorldY) + player.position.z;
   double get positionZ => player.position.z;
   double get playerAngle => angleBetween(player.position.x, player.position.y, positionX, positionY);
   double get playerDistance => distanceBetween(player.position.x, player.position.y, positionX, positionY);

@@ -179,8 +179,8 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
-      final row = convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
-      final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
+      final row = convertRenderToRow(mouseWorldX, mouseWorldY, z * Node_Height);
+      final column = convertRenderToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
       if (row >= scene.totalRows) break;

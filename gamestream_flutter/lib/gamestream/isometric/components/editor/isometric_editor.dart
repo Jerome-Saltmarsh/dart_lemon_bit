@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -413,6 +415,7 @@ class IsometricEditor with IsometricComponent {
         selectMouseGameObject();
         break;
       case IsometricEditorTab.Marks:
+        selectMouseMark();
         break;
     }
   }
@@ -605,4 +608,16 @@ class IsometricEditor with IsometricComponent {
         EditorRequest.Mark_Set_Type.index,
         markType,
       );
+
+  void selectMouseMark() {
+    final nearestIndex = scene.findNearestMark(
+      x: mouse.positionX,
+      y: mouse.positionY,
+      z: mouse.positionZ,
+      minRadius: 50.0,
+    );
+    if (nearestIndex != -1) {
+      markSelect(nearestIndex);
+    }
+  }
 }
