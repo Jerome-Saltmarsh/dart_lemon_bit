@@ -711,8 +711,18 @@ class WebSocketConnection with ByteReader {
         if (!isValidIndex(mystType, MystType.values)){
           return;
         }
-
         player.game.environment.mystType = mystType;
+        break;
+
+      case EnvironmentRequest.Set_Lightning:
+        final type = parseArg2(arguments);
+        if (type == null)
+          return;
+
+        if (!isValidIndex(type, LightningType.values)){
+          return;
+        }
+        player.game.environment.lightningType = type;
         break;
 
       case EnvironmentRequest.Lightning_Flash:

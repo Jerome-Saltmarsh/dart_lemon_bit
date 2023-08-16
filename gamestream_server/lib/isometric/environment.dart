@@ -7,8 +7,15 @@ import 'package:gamestream_server/lemon_math.dart';
 
 class Environment {
 
-  static const Lightning_Flash_Duration_Total = 7;
+  static const Lightning_Flash_Duration_Total = 9;
 
+  static const Next_Lightning_Flash_Min = 500;
+  static const Next_Lightning_Flash_Max = 1000;
+
+  static const Next_Lightning_Change_Min = 1000;
+  static const Next_Lightning_Change_Max = 3000;
+
+  var _lightningNearbySwitchOn = false;
   var _rainType = RainType.None;
   var _breezy = false;
   var _lightningType = LightningType.Off;
@@ -71,8 +78,14 @@ class Environment {
   }
 
   set lightningType(int value) {
-    if(_lightningType == value) return;
+    if(_lightningType == value)
+      return;
+
     _lightningType = value;
+    nextLightningChanged = randomInt(
+      Next_Lightning_Change_Min,
+      Next_Lightning_Change_Max,
+    );
     onChangedWeather();
   }
 
@@ -108,27 +121,24 @@ class Environment {
 
     if (lightningFlashDuration > 0){
       lightningFlashDuration--;
-      if (lightningFlashDuration <= 0){
-        onChangedWeather();
-      }
+      onChangedWeather();
     }
 
-    if (lightningType == LightningType.On) {
-      if (nextLightningFlash-- <= 0) {
-        nextLightningFlash = randomInt(500, 1000);
-        lightningFlashDuration = Lightning_Flash_Duration_Total;
-        onChanged = true;
-      }
+    if (lightningType == LightningType.On && nextLightningFlash-- <= 0) {
+      nextLightningFlash = randomInt(Next_Lightning_Flash_Min, Next_Lightning_Flash_Max);
+      lightningFlashDuration = Lightning_Flash_Duration_Total;
     }
 
-    if (nextLightningChanged-- > 0) return;
-    nextLightningChanged = randomInt(1000, 3000);
+    if (nextLightningChanged-- > 0)
+      return;
+
     switch (lightningType) {
       case LightningType.Off:
         lightningType = LightningType.Nearby;
         break;
       case LightningType.Nearby:
-        lightningType = randomBool() ? LightningType.Off : LightningType.Nearby;
+        lightningType = _lightningNearbySwitchOn ? LightningType.On : LightningType.Off;
+        _lightningNearbySwitchOn = !_lightningNearbySwitchOn;
         break;
       case LightningType.On:
         lightningType = LightningType.Nearby;

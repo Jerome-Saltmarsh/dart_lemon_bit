@@ -142,4 +142,11 @@ class IsometricEnvironment with IsometricComponent {
     );
   }
 
+  void setLightningType(int lightningType) =>
+    network.sendArgs2(
+      ClientRequest.Environment_Request,
+      EnvironmentRequest.Set_Lightning,
+      lightningType,
+    );
+
 }

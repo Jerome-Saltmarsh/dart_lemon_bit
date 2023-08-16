@@ -661,6 +661,18 @@ extension isometricDebugUI on IsometricDebug {
                           )
                         .toList(growable: false)
                 )
+            ),
+          buildRowWatch('lightning', environment.lightningType, (lightning) =>
+                Row(
+                    children: MystType.values
+                        .map((lightningType) => onPressed(
+                          action: () => environment.setLightningType(lightningType),
+                          child: GSContainer(
+                              color: lightning == lightningType ? colors.aqua_2 : colors.brownLight,
+                              child: buildText(lightningType)))
+                          )
+                        .toList(growable: false)
+                )
             )
         ],
       );
