@@ -41,8 +41,12 @@ class EditorState {
   }
 
   void setSelectedMarkType(int markType) {
-    scene.setMarkType(listIndex: _selectedMarkListIndex, markType: markType);
+    if (_selectedMarkListIndex == -1) {
+      throw Exception('nothing selected');
+    }
+    final markValue = scene.setMarkType(listIndex: _selectedMarkListIndex, markType: markType);
     game.notifySceneMarksChanged();
+    selectedMarkListIndex = scene.marks.indexOf(markValue);
   }
 
   void addMark(int markValue) {

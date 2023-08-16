@@ -512,7 +512,7 @@ class Scene {
       getRow(index) +getColumn(index) + getZ(index);
 
 
-  void setMarkType({
+  int setMarkType({
     required int listIndex,
     required int markType,
   }) {
@@ -525,6 +525,8 @@ class Scene {
 
     final markValue = marks[listIndex];
     final markIndex = MarkType.getIndex(markValue);
-    marks[listIndex] = markIndex | (markType << 16);
+    final newMarkValue = markIndex | (markType << 16);
+    marks[listIndex] = newMarkValue;
+    return newMarkValue;
   }
 }
