@@ -33,7 +33,7 @@ class RendererEditor extends RenderGroup {
         render.circleOutlineAtIndex(index: markIndex, radius: 15.0);
         break;
       case MarkType.Spawn_Player:
-        engine.color = colors.blue0;
+        engine.color = colors.blue_0;
         render.circleOutlineAtIndex(index: markIndex, radius: 15.0);
         break;
       case MarkType.Spawn_Fallen:

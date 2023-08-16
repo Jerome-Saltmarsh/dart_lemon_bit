@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 import 'constants/node_src.dart';
 
@@ -41,6 +43,9 @@ class RendererNodes extends RenderGroup {
     NodeType.Wood: 1904,
   };
 
+  var lightningColor = 0;
+
+  var lightningFlashing = false;
   var dynamicResolutionEnabled = true;
   var totalNodes = 0;
   var totalRows = 0;
@@ -157,6 +162,11 @@ class RendererNodes extends RenderGroup {
   int get colorCurrent => nodeColors[currentNodeIndex];
 
   int get colorAbove {
+
+    if (lightningFlashing) {
+      return lightningColor;
+    }
+
     final nodeAboveIndex = currentNodeIndex + scene.area;
     if (nodeAboveIndex >= totalNodes)
       return ambientColor;
@@ -387,6 +397,12 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
+    lightningFlashing = environment.lightningFlashing.value;
+
+    if (lightningFlashing) {
+      lightningColor = lerpColors(ambientColor, 0, goldenRatio_0381);
+    }
+
     ambientColor = scene.ambientColor;
     nodeColors = scene.nodeColors;
     totalNodes = scene.totalNodes;

@@ -23,3 +23,5 @@ export 'is_left.dart';
 export 'normalize.dart';
 export 'opp.dart';
 export 'rad.dart';
+export 'parabola.dart';
+export 'lerp_colors.dart';

@@ -91,7 +91,7 @@ class IsometricDebug with IsometricComponent {
           particle.destinationZ,
       );
 
-      engine.setPaintColor(colors.blue0);
+      engine.setPaintColor(colors.blue_0);
       render.line(
           particle.x,
           particle.y,

@@ -10,6 +10,13 @@ class IsometricColors {
   final aqua_4 = Color.fromRGBO(11, 138, 143, 1);
   final aqua_5 = Color.fromRGBO(11, 94, 101, 1);
 
+  final blue_0 = Color.fromARGB(255, 143, 211, 255);
+  final blue_1 = Color.fromARGB(255, 77, 155, 230);
+  final blue_2 = Color.fromARGB(255, 77, 101, 180);
+  final blue_3 = Color.fromARGB(255, 72, 74, 119);
+  final blue_4 = Color.fromARGB(255, 50, 51, 83);
+
+
   final brown00 = Color.fromRGBO(46, 34, 47, 1);
   final brown01 = Color.fromRGBO(62, 53, 70, 1);
   final brown02 = Color.fromRGBO(98, 85, 101, 1);
@@ -40,8 +47,6 @@ class IsometricColors {
   final white90 = Colors.white.withOpacity(0.90);
   final white95 = Colors.white.withOpacity(0.95);
 
-  final blue0 = Color.fromARGB(255, 143, 211, 255);
-  final blue1 = Color.fromARGB(255, 77, 155, 230);
   final red0 = Color.fromARGB(255, 245, 125, 74);
   final red1 = Color.fromARGB(255, 234, 79, 54);
   final red2 = Color.fromARGB(255, 179, 56, 49);
