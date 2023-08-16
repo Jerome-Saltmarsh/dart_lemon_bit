@@ -323,12 +323,24 @@ class IsometricRender with IsometricComponent {
     sections: sections,
   );
 
+  void circleOutlineAtIndex({
+    required int index,
+    required double radius,
+    int sections = 12,
+  }) => circleOutline(
+      x: scene.getIndexPositionX(index) + Node_Size_Quarter,
+      y: scene.getIndexPositionY(index) + Node_Size_Quarter,
+      z: scene.getIndexPositionZ(index),
+      radius: radius,
+    );
+
   void circleOutline({
       required double x,
       required double y,
       required double z,
       required double radius,
-      int sections = 12}
+      int sections = 12,
+  }
       ){
     if (radius <= 0) return;
     if (sections < 3) return;

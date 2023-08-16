@@ -30,34 +30,16 @@ class RendererEditor extends RenderGroup {
     switch (markType){
       case MarkType.Spawn_Whisp:
         engine.color = colors.white;
-        render.circleOutline(
-          x: scene.getIndexPositionX(markIndex),
-          y: scene.getIndexPositionY(markIndex),
-          z: scene.getIndexPositionZ(markIndex),
-          radius: 15.0,
-        );
+        render.circleOutlineAtIndex(index: markIndex, radius: 15.0);
         break;
       case MarkType.Spawn_Player:
         engine.color = colors.blue0;
-        render.circleOutline(
-          x: scene.getIndexPositionX(markIndex),
-          y: scene.getIndexPositionY(markIndex),
-          z: scene.getIndexPositionZ(markIndex),
-          radius: 15.0,
-        );
+        render.circleOutlineAtIndex(index: markIndex, radius: 15.0);
         break;
       case MarkType.Spawn_Fallen:
         engine.color = colors.red2;
-        render.circleOutline(
-          x: scene.getIndexPositionX(markIndex),
-          y: scene.getIndexPositionY(markIndex),
-          z: scene.getIndexPositionZ(markIndex),
-          radius: 15.0,
-        );
+        render.circleOutlineAtIndex(index: markIndex, radius: 100.0);
         break;
-
-
     }
-
   }
 }
