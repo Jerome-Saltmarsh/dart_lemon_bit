@@ -9,8 +9,8 @@ class Environment {
 
   static const Lightning_Flash_Duration_Total = 9;
 
-  static const Next_Lightning_Flash_Min = 500;
-  static const Next_Lightning_Flash_Max = 1000;
+  static const Next_Lightning_Flash_Min = 250;
+  static const Next_Lightning_Flash_Max = 800;
 
   static const Next_Lightning_Change_Min = 1000;
   static const Next_Lightning_Change_Max = 3000;

@@ -402,7 +402,7 @@ class RendererNodes extends RenderGroup {
     if (lightningFlashing) {
       final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
       final ambientBrightness = lerpColors(ambientColor, 0, environment.brightness);
-      lightningColor = lerpColors(ambientBrightness, lightningColorMax, environment.lightningFlashing01.value);
+      lightningColor = lerpColors(ambientBrightness, lightningColorMax, environment.lightningFlashing01.value * goldenRatio_0618);
     }
 
     ambientColor = scene.ambientColor;
