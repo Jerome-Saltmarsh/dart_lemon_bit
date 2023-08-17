@@ -43,7 +43,6 @@ class Character extends Collider {
   var weaponCooldown = 0;
   var state = CharacterState.Idle;
   var frame = 0;
-  // var framesPerAnimation = 3;
   var runSpeed = 1.0;
   var name = "";
   var pathCurrent = -1;
@@ -122,14 +121,17 @@ class Character extends Collider {
     }
   }
 
-  // int get compressedLookAndWeaponState => direction << 4;
-
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
 
   int get framesPerAnimation => characterStateChanging ? 1 : 3;
 
-  int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
+  int get animationFrame {
+    return (frame ~/ framesPerAnimation) % maxAnimationFrames;
+  }
+
+  double get actionCompletionPercentage =>
+      actionDuration <= 0 ? 0 : frame / actionDuration;
 
   int get compressedState => compressBytesToUInt32(
     characterType,

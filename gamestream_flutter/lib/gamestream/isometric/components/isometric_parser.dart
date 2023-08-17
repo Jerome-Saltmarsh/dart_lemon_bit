@@ -563,6 +563,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       ].contains(character.characterType)){
         readCharacterTemplate(character);
       }
+
+      character.actionComplete = readPercentage();
+
       scene.totalCharacters++;
     }
   }

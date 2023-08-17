@@ -464,6 +464,12 @@ class RendererCharacters extends RenderGroup {
     final characterState = character.state;
     final row = character.renderDirection;
     final animationFrame = character.animationFrame;
+    final actionComplete = character.actionComplete;
+    final completingAction = actionComplete > 0;
+
+    if (completingAction){
+      render.textPosition(character, actionComplete.toStringAsFixed(2), offsetY: -20);
+    }
 
     final atlasHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
     final atlasHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
@@ -516,10 +522,11 @@ class RendererCharacters extends RenderGroup {
 
     if (renderBottom) {
 
-      render.sprite(
+      render.spriteFrame(
         sprite: spriteShadow,
-        row: row,
-        column: animationFrame,
+        frame: completingAction
+            ? spriteShadow.getFramePercentage(row, actionComplete)
+            : spriteShadow.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
@@ -527,10 +534,11 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
+      render.spriteFrame(
         sprite: spriteTorso,
-        row: row,
-        column: animationFrame,
+        frame: completingAction
+            ? spriteTorso.getFramePercentage(row, actionComplete)
+            : spriteTorso.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
@@ -538,10 +546,11 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
+      render.spriteFrame(
         sprite: spriteLegs,
-        row: row,
-        column: animationFrame,
+        frame: completingAction
+            ? spriteLegs.getFramePercentage(row, actionComplete)
+            : spriteLegs.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
@@ -551,10 +560,11 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteArmBehind,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteArmBehind.getFramePercentage(row, actionComplete)
+          : spriteArmBehind.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -562,10 +572,11 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteHandBehind,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteHandBehind.getFramePercentage(row, actionComplete)
+          : spriteHandBehind.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -574,10 +585,11 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (spriteGloveRight != spriteHandFront){
-      render.sprite(
+      render.spriteFrame(
         sprite: spriteWeapon,
-        row: row,
-        column: animationFrame,
+        frame: completingAction
+            ? spriteWeapon.getFramePercentage(row, actionComplete)
+            : spriteWeapon.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
@@ -586,21 +598,23 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.sprite(
-        sprite: spriteBody,
-        row: row,
-        column: animationFrame,
-        color: color,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
+    render.spriteFrame(
+      sprite: spriteBody,
+      frame: completingAction
+          ? spriteBody.getFramePercentage(row, actionComplete)
+          : spriteBody.getFrame(row: row, column: animationFrame),
+      color: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
     );
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteArmFront,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteArmFront.getFramePercentage(row, actionComplete)
+          : spriteArmFront.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -609,10 +623,11 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (spriteGloveRight == spriteHandFront){
-      render.sprite(
+      render.spriteFrame(
         sprite: spriteWeapon,
-        row: row,
-        column: animationFrame,
+        frame: completingAction
+            ? spriteWeapon.getFramePercentage(row, actionComplete)
+            : spriteWeapon.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
@@ -621,10 +636,11 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteHandFront,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteHandFront.getFramePercentage(row, actionComplete)
+          : spriteHandFront.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -632,10 +648,11 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteBodyArm,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteBodyArm.getFramePercentage(row, actionComplete)
+          : spriteBodyArm.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -643,10 +660,11 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteHead,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteHead.getFramePercentage(row, actionComplete)
+          : spriteHead.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -654,10 +672,11 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    render.spriteFrame(
       sprite: spriteHelm,
-      row: row,
-      column: animationFrame,
+      frame: completingAction
+          ? spriteHelm.getFramePercentage(row, actionComplete)
+          : spriteHelm.getFrame(row: row, column: animationFrame),
       color: color,
       scale: scale,
       dstX: dstX,
@@ -667,7 +686,6 @@ class RendererCharacters extends RenderGroup {
   }
 
   void renderCharacterFallen(Character character) {
-
 
     if (
       (renderBottom && !character.dead) ||

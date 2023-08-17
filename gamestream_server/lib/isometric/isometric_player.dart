@@ -73,7 +73,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
   final cacheTemplateA = Uint64List(Cache_Length);
-  // final cacheTemplateB = Uint8List(Cache_Length);
 
   GameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -424,6 +423,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (character.characterTypeTemplate) {
         writeCharacterTemplate(character);
       }
+
+      writePercentage(character.actionCompletionPercentage);
 
       cacheIndex++;
     }

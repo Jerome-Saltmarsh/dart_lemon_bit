@@ -26,8 +26,7 @@ class Character extends Position {
   var magic = 1.0;
   var lookDirection = 0;
   var color = 0;
-
-  static const piSixteenth = pi / 16.0;
+  var actionComplete = 0.0;
 
   double get radius => CharacterType.getRadius(characterType);
 
