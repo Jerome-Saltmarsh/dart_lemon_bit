@@ -731,7 +731,7 @@ class RendererCharacters extends RenderGroup {
         );
       case CharacterState.Dead:
         render.sprite(
-            sprite: spriteGroup.death,
+            sprite: spriteGroup.dead,
             row: row,
             column: column,
             color: character.color,

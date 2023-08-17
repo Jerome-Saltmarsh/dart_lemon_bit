@@ -134,7 +134,7 @@ class IsometricImages with IsometricComponent {
         running: spriteEmpty,
         strike: spriteEmpty,
         hurt: spriteEmpty,
-        death: spriteEmpty,
+        dead: spriteEmpty,
         fire: spriteEmpty,
     );
 
@@ -180,7 +180,7 @@ class IsometricImages with IsometricComponent {
       running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 157, mode: AnimationMode.Loop),
       strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, mode: AnimationMode.Single),
       hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, mode: AnimationMode.Single),
-      death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, mode: AnimationMode.Single),
+      dead: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, mode: AnimationMode.Single),
       fire: spriteEmpty,
     );
 
@@ -225,7 +225,7 @@ class IsometricImages with IsometricComponent {
         running: loadSpriteFromJson(json: json, name: 'running', image: image, mode: AnimationMode.Loop),
         hurt: loadSpriteFromJson(json: json, name: 'hurt', image: image, mode: AnimationMode.Single),
         strike: loadSpriteFromJson(json: json, name: 'strike', image: image, mode: AnimationMode.Single),
-        death: loadSpriteFromJson(json: json, name: 'death', image: image, mode: AnimationMode.Single),
+        dead: loadSpriteFromJson(json: json, name: 'dead', image: image, mode: AnimationMode.Single),
         fire: loadSpriteFromJson(json: json, name: 'fire', image: image, mode: AnimationMode.Single),
     );
 
@@ -301,7 +301,7 @@ class IsometricImages with IsometricComponent {
                y: yHurt,
                mode: AnimationMode.Single
            ),
-           death: yDead == null ? spriteEmpty : Sprite.fromBytes(
+           dead: yDead == null ? spriteEmpty : Sprite.fromBytes(
              await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
              image: image,
              y: yDead,

@@ -6,7 +6,7 @@ class SpriteGroup {
   final Sprite running;
   final Sprite strike;
   final Sprite hurt;
-  final Sprite death;
+  final Sprite dead;
   final Sprite fire;
 
   SpriteGroup({
@@ -14,17 +14,17 @@ class SpriteGroup {
     required this.running,
     required this.strike,
     required this.hurt,
-    required this.death,
+    required this.dead,
     required this.fire,
   });
 
   Sprite fromCharacterState(int characterState) =>
-    switch(characterState) {
+    switch (characterState) {
       CharacterState.Idle => idle,
       CharacterState.Running => running,
       CharacterState.Strike => strike,
       CharacterState.Hurt => hurt,
-      CharacterState.Dead => death,
+      CharacterState.Dead => dead,
       CharacterState.Fire => fire,
       _ => throw Exception(),
     };
