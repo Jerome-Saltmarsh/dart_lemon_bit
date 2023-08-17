@@ -73,7 +73,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
   final cacheTemplateA = Uint64List(Cache_Length);
-  final cacheTemplateB = Uint8List(Cache_Length);
+  // final cacheTemplateB = Uint8List(Cache_Length);
 
   GameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -639,13 +639,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       0,
     );
 
-    final compressedB = character.compressedLookAndWeaponState;
+    // final compressedB = character.compressedLookAndWeaponState;
 
     final writeA = cacheTemplateA[cacheIndex] != compressedA;
-    final writeB = cacheTemplateB[cacheIndex] != compressedB;
+    // final writeB = cacheTemplateB[cacheIndex] != compressedB;
 
     writeByte(
-      writeBitsToByte(writeA, writeB, false, false, false, false, false, false)
+      writeBitsToByte(writeA, false, false, false, false, false, false, false)
     );
 
     if (writeA){
@@ -658,10 +658,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(character.handTypeRight);
     }
 
-    if (writeB){
-      cacheTemplateB[cacheIndex] = compressedB;
-      writeByte(compressedB);
-    }
+    // if (writeB){
+    //   cacheTemplateB[cacheIndex] = compressedB;
+    //   writeByte(compressedB);
+    // }
   }
 
   void writeWeather() {

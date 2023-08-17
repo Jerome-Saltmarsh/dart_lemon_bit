@@ -122,8 +122,7 @@ class Character extends Collider {
     }
   }
 
-  // int get compressedLookAndWeaponState => (direction << 4) | weaponState;
-  int get compressedLookAndWeaponState => (direction << 4) | 0; // TODO remove 0
+  // int get compressedLookAndWeaponState => direction << 4;
 
   int get compressedAnimationFrameAndDirection =>
       animationFrame | direction << 5;
