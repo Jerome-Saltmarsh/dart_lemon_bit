@@ -467,9 +467,9 @@ class RendererCharacters extends RenderGroup {
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
 
-    if (completingAction){
-      render.textPosition(character, actionComplete.toStringAsFixed(2), offsetY: -20);
-    }
+    // if (completingAction){
+    //   render.textPosition(character, actionComplete.toStringAsFixed(2), offsetY: -20);
+    // }
 
     final atlasHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
     final atlasHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
