@@ -72,7 +72,7 @@ flutter:
     - images/kid/weapons/
     - sprites/kid/arms_left/
     - sprites/kid/arms_right/
-    - sprites/kid/body/shirt_blue/
+    - sprites/kid/body/
     - sprites/kid/body_arms/shirt_blue/
     - sprites/kid/hands_left/gauntlets/
     - sprites/kid/hands_right/gauntlets/

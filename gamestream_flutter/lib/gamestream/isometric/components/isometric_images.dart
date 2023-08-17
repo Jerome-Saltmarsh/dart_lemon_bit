@@ -150,24 +150,16 @@ class IsometricImages with IsometricComponent {
 
     loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
     loadAtlas(type: SpriteGroupType.Arms_Right, subType: ComplexionType.Fair);
+    loadAtlas(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue);
 
     // loadSpriteGroup(
     //   yIdle: 0,
-    //   yRunning: 44,
-    //   yStrike: 91,
-    //   yFire: 139,
-    //   type: SpriteGroupType.Arms_Right,
-    //   subType: ComplexionType.Fair,
+    //   yRunning: 51,
+    //   yStrike: 153,
+    //   yFire: 277,
+    //   type: SpriteGroupType.Body,
+    //   subType: BodyType.Shirt_Blue,
     // );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 51,
-      yStrike: 153,
-      yFire: 277,
-      type: SpriteGroupType.Body,
-      subType: BodyType.Shirt_Blue,
-    );
 
     loadSpriteGroup(
       yIdle: 0,
