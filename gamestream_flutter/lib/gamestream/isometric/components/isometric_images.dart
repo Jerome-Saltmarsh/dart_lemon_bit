@@ -141,7 +141,7 @@ class IsometricImages with IsometricComponent {
     );
 
     final armsLeftJson = await loadAssetJson('sprites/kid/arms_left/fair.json');
-    final armsLeftImage = await loadPng('kid/arms_left/fair');
+    final armsLeftImage = await loadPng('kid/arms_left/atlas');
     final spritesArmsLeftLeft = await loadSpriteGroupFromJson(armsLeftImage, armsLeftJson);
 
     spriteGroupArmsLeft[ComplexionType.Fair] = spritesArmsLeftLeft;
