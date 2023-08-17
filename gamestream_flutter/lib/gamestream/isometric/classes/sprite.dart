@@ -89,10 +89,13 @@ class Sprite {
       case AnimationMode.Single:
         return (row * columns) + min((columns * actionComplete).round(), columns - 1);
       case AnimationMode.Bounce:
-        final p = actionComplete < 0.5
-            ? actionComplete / 0.5
-            : (actionComplete - 0.5) / 0.5;
+        if (actionComplete < 0.5){
+          final p = actionComplete / 0.5;
+          return (row * columns) + min((columns * p).round(), columns - 1);
+        }
+        final p = 1.0 - ((actionComplete - 0.5) / 0.5);
         return (row * columns) + min((columns * p).round(), columns - 1);
+
       case AnimationMode.Loop:
         return (row * columns) + min((columns * actionComplete).round(), columns - 1);
       default:
