@@ -475,8 +475,6 @@ class RendererParticles extends RenderGroup {
     final totalFrames = 8;
     final frame = (opacity * totalFrames).round();
 
-    // render.textPosition(particle, '${duration.toStringAsFixed(1)}/${opacity.toStringAsFixed(1)}');
-
     engine.renderSpriteRotated(
       image: images.atlas_nodes,
       dstX: particle.renderX,
@@ -487,7 +485,7 @@ class RendererParticles extends RenderGroup {
       srcHeight: height,
       color: scene.getRenderColorPosition(particle),
       rotation: particle.rotation,
-      scale: particle.scale,
+      scale: particle.scale * 1.5,
     );
   }
 

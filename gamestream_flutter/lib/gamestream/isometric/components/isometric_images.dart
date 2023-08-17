@@ -130,12 +130,13 @@ class IsometricImages with IsometricComponent {
     );
 
     spriteGroupEmpty = SpriteGroup(
-        idle: spriteEmpty,
-        running: spriteEmpty,
-        strike: spriteEmpty,
-        hurt: spriteEmpty,
-        dead: spriteEmpty,
-        fire: spriteEmpty,
+      idle: spriteEmpty,
+      running: spriteEmpty,
+      strike: spriteEmpty,
+      hurt: spriteEmpty,
+      dead: spriteEmpty,
+      fire: spriteEmpty,
+      change: spriteEmpty,
     );
 
 
@@ -181,6 +182,7 @@ class IsometricImages with IsometricComponent {
       strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, mode: AnimationMode.Single),
       hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, mode: AnimationMode.Single),
       dead: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, mode: AnimationMode.Single),
+      change: spriteEmpty,
       fire: spriteEmpty,
     );
 
@@ -227,6 +229,7 @@ class IsometricImages with IsometricComponent {
         strike: loadSpriteFromJson(json: json, name: 'strike', image: image, mode: AnimationMode.Single),
         dead: loadSpriteFromJson(json: json, name: 'dead', image: image, mode: AnimationMode.Single),
         fire: loadSpriteFromJson(json: json, name: 'fire', image: image, mode: AnimationMode.Single),
+        change: loadSpriteFromJson(json: json, name: 'change', image: image, mode: AnimationMode.Bounce),
     );
 
   Sprite loadSpriteFromJson({
@@ -245,71 +248,6 @@ class IsometricImages with IsometricComponent {
     final bytes = Uint8List.fromList((jsonBody['bytes'] as List<dynamic>).cast<int>());
     return Sprite.fromBytes(bytes, image: image, y: y, mode: mode);
   }
-
-   Future loadSpriteGroup({
-     required int type,
-     required int subType,
-     required double yIdle,
-     required double yRunning,
-     double? yStrike,
-     double? yFire,
-     double? yHurt,
-     double? yDead,
-    }) async {
-     totalImages.value++;
-     final typeName = SpriteGroupType.getName(type);
-     final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
-     final image = await loadImageAsset('images/kid/$typeName/$subTypeName.png');
-     values.add(image);
-
-     if (yHurt == null){
-       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/hurt.sprite"');
-     }
-     if (yDead == null){
-       print('isometric_images_sprite_missing: "kid/$typeName/$subTypeName/dead.sprite"');
-     }
-     final spriteGroup = spriteGroupTypes[type] ?? (throw Exception('isometric_Images.loadSpriteGroup(type: $type, subType: $subType)'));
-     spriteGroup[subType] =
-       SpriteGroup(
-           idle: Sprite.fromBytes(
-               await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
-               image: image,
-               y: yIdle,
-               mode: AnimationMode.Bounce,
-           ),
-           running: Sprite.fromBytes(
-               await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
-               image: image,
-               y: yRunning,
-               mode: AnimationMode.Loop,
-           ),
-           strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
-             image: image,
-             y: yStrike,
-             mode: AnimationMode.Single,
-           ),
-           fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
-             image: image,
-             y: yFire,
-             mode: AnimationMode.Single,
-           ),
-           hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
-               await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
-               image: image,
-               y: yHurt,
-               mode: AnimationMode.Single
-           ),
-           dead: yDead == null ? spriteEmpty : Sprite.fromBytes(
-             await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
-             image: image,
-             y: yDead,
-             mode: AnimationMode.Single,
-           ),
-       );
-     totalImagesLoaded.value++;
-   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
 

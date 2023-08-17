@@ -8,6 +8,7 @@ class SpriteGroup {
   final Sprite hurt;
   final Sprite dead;
   final Sprite fire;
+  final Sprite change;
 
   SpriteGroup({
     required this.idle,
@@ -16,6 +17,7 @@ class SpriteGroup {
     required this.hurt,
     required this.dead,
     required this.fire,
+    required this.change,
   });
 
   Sprite fromCharacterState(int characterState) =>
@@ -26,6 +28,7 @@ class SpriteGroup {
       CharacterState.Hurt => hurt,
       CharacterState.Dead => dead,
       CharacterState.Fire => fire,
+      CharacterState.Changing => change,
       _ => throw Exception(),
     };
 }
