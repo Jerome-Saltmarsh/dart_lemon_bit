@@ -75,9 +75,9 @@ class Sprite {
         return (row * columns) + (column % columns);
       case AnimationMode.Bounce:
         if (column ~/ columns % 2 == 0){
-          return column % columns;
+          return (row * columns) + column % columns;
         }
-        return ((columns - 1) - (column % columns));
+        return (row * columns) + ((columns - 1) - (column % columns));
       default:
         throw Exception();
     }

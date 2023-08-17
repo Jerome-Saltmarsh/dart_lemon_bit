@@ -461,6 +461,9 @@ class RendererCharacters extends RenderGroup {
     final color = character.color;
     final dstX = character.renderX;
     final dstY = character.renderY;
+    final characterState = character.state;
+    final row = character.renderDirection;
+    final animationFrame = character.animationFrame;
 
     final atlasHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
     final atlasHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
@@ -474,8 +477,6 @@ class RendererCharacters extends RenderGroup {
     final atlasArmRight = images.spriteGroupArmsRight[character.complexionType] ?? (throw Exception());
     final atlasHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
     final atlasTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
-
-    final characterState = character.state;
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -494,9 +495,6 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteHandBehind;
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
-
-    final row = character.renderDirection;
-    var animationFrame = character.animationFrame;
 
     final leftInFront = const [
       InputDirection.Up_Left,
