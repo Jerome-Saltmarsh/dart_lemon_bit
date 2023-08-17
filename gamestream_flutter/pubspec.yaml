@@ -60,6 +60,7 @@ flutter:
     - images/sprites/
     - images/website/
     - images/characters/
+    - sprites/kid/
     - sprites/kid/arms_left/
     - sprites/kid/arms_right/
     - sprites/kid/body/

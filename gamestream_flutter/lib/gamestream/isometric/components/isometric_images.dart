@@ -61,7 +61,6 @@ class IsometricImages with IsometricComponent {
   late final Image zombie_shadow;
   late final Image character_dog;
   late final Image character_fallen;
-  late final Image kid_shadow;
   late final Image atlas_particles;
   late final Image atlas_helms;
   late final Image atlas_hands;
@@ -107,7 +106,6 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_legs').then((value) => atlas_legs = value);
 
     loadPng('characters/fallen').then((value) => character_fallen = value);
-    loadPng('characters/kid_shadow').then((value) => kid_shadow = value);
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
     loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);
@@ -162,6 +160,12 @@ class IsometricImages with IsometricComponent {
     loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
     loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
 
+    spriteGroupKidShadow = loadSpriteGroupFromJson(
+      await loadImageAsset('sprites/kid/shadow.png'),
+      await loadAssetJson('sprites/kid/shadow.json'),
+    );
+
+
     await _completerImages.future;
 
     final fallenIdle = await loadSpriteBytes('fallen/idle');
@@ -177,20 +181,6 @@ class IsometricImages with IsometricComponent {
       hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, loop: false),
       death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, loop: false),
       fire: spriteEmpty,
-    );
-
-    final kidShadowIdle = await loadSpriteBytes('kid/shadow/idle');
-    final kidShadowRun = await loadSpriteBytes('kid/shadow/run');
-    final kidShadowStrike = await loadSpriteBytes('kid/shadow/strike');
-    final kidShadowFire = await loadSpriteBytes('kid/shadow/fire');
-
-    spriteGroupKidShadow = SpriteGroup(
-      idle: Sprite.fromBytes(kidShadowIdle, image: kid_shadow, y: 0, loop: true),
-      running: Sprite.fromBytes(kidShadowRun, image: kid_shadow, y: 57, loop: true),
-      strike: Sprite.fromBytes(kidShadowStrike, image: kid_shadow, y: 297, loop: false),
-      fire: Sprite.fromBytes(kidShadowFire, image: kid_shadow, y: 439, loop: false),
-      hurt: spriteEmpty,
-      death: spriteEmpty,
     );
 
     final spriteBytesFlame = await loadSpriteBytes('particles/flame');

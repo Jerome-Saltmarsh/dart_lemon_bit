@@ -467,11 +467,12 @@ class RendererCharacters extends RenderGroup {
     final spriteLegs = atlasLegs.fromCharacterState(characterState);
     final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
     final spriteGloveRight = atlasHandsRight.fromCharacterState(characterState);
+    final spriteShadow = images.spriteGroupKidShadow.fromCharacterState(characterState);
+
     final Sprite spriteHandFront;
     final Sprite spriteHandBehind;
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
-    final Sprite spriteShadow;
 
     final row = character.renderDirection;
     var column = character.animationFrame;
@@ -485,22 +486,18 @@ class RendererCharacters extends RenderGroup {
 
     if (character.firing){
       animationFrame = min(animationFrame, 7);
-      spriteShadow = images.spriteGroupKidShadow.fire;
     } else
     if (character.striking){
       animationFrame = min(animationFrame, 7);
-      spriteShadow = images.spriteGroupKidShadow.strike;
     }
     else if (character.running) {
       animationFrame = animationFrame % 8;
-      spriteShadow = images.spriteGroupKidShadow.running;
     } else {
       if (animationFrame ~/ 8 % 2 == 0){
         column = animationFrame % 8;
       } else {
         column = (7 - (animationFrame % 8));
       }
-      spriteShadow = images.spriteGroupKidShadow.idle;
     }
     if (leftInFront) {
       spriteHandFront = spriteHandsLeft;
