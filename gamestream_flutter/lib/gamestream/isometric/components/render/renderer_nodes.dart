@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:golden_ratio/constants.dart';
 
 import 'constants/node_src.dart';
 
