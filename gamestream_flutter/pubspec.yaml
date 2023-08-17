@@ -61,8 +61,6 @@ flutter:
     - images/website/
     - images/characters/
     - images/kid/
-    - images/kid/arms_left/
-    - images/kid/arms_right/
     - images/kid/body/
     - images/kid/body_arms/
     - images/kid/hands_left/
@@ -73,8 +71,7 @@ flutter:
     - images/kid/torso/
     - images/kid/weapons/
     - sprites/kid/arms_left/
-    - sprites/kid/arms_left/fair/
-    - sprites/kid/arms_right/fair/
+    - sprites/kid/arms_right/
     - sprites/kid/body/shirt_blue/
     - sprites/kid/body_arms/shirt_blue/
     - sprites/kid/hands_left/gauntlets/

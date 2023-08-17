@@ -139,11 +139,6 @@ class IsometricImages with IsometricComponent {
         fire: spriteEmpty,
     );
 
-    // final armsLeftJson = await loadAssetJson('sprites/kid/arms_left/fair.json');
-    // final armsLeftImage = await loadPng('kid/arms_left/fair');
-    // final spritesArmsLeftFair = await loadSpriteGroupFromJson(armsLeftImage, armsLeftJson);
-    // spriteGroupArmsLeft[ComplexionType.Fair] = spritesArmsLeftFair;
-    loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
 
     spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
     spriteGroupHandsRight[HandType.None] = spriteGroupEmpty;
@@ -153,23 +148,17 @@ class IsometricImages with IsometricComponent {
     spriteGroupLegs[LegType.None] = spriteGroupEmpty;
     spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
 
+    loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
+    loadAtlas(type: SpriteGroupType.Arms_Right, subType: ComplexionType.Fair);
+
     // loadSpriteGroup(
     //   yIdle: 0,
     //   yRunning: 44,
     //   yStrike: 91,
-    //   yFire: 141,
-    //   type: SpriteGroupType.Arms_Left,
+    //   yFire: 139,
+    //   type: SpriteGroupType.Arms_Right,
     //   subType: ComplexionType.Fair,
     // );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 44,
-      yStrike: 91,
-      yFire: 139,
-      type: SpriteGroupType.Arms_Right,
-      subType: ComplexionType.Fair,
-    );
 
     loadSpriteGroup(
       yIdle: 0,
@@ -325,7 +314,7 @@ class IsometricImages with IsometricComponent {
     final typeName = SpriteGroupType.getName(type);
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
     final json = await loadAssetJson('sprites/kid/$typeName/$subTypeName.json');
-    final image = await loadPng('kid/$typeName/$subTypeName');
+    final image = await loadImageAsset('sprites/kid/$typeName/$subTypeName.png');
     final spriteGroupType = spriteGroupTypes[type] ?? (throw Exception());
     spriteGroupType[subType] = loadSpriteGroupFromJson(
         image,
