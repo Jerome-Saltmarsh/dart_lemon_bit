@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+
 class Sprite {
   final Image image;
   final Float32List values;
@@ -11,28 +13,28 @@ class Sprite {
   final int columns;
   final double x;
   final double y;
-  final bool loop;
+  final int mode;
   late final bool isEmpty;
 
   factory Sprite.fromBytes(Uint8List bytes, {
     required Image image,
     double x = 0,
     required num y,
-    required bool loop,
+    required int mode,
   }) =>
       Sprite.fromUint16List(
           bytes.buffer.asUint16List(),
           image: image,
           x: x,
           y: y,
-          loop: loop,
+          mode: mode,
       );
 
   factory Sprite.fromUint16List(Uint16List uint16List, {
     required Image image,
     double x = 0,
     required num y,
-    required bool loop,
+    required int mode,
   }) =>
       Sprite(
           image: image,
@@ -47,7 +49,7 @@ class Sprite {
           ),
           x: x,
           y: y.toDouble(),
-          loop: loop,
+          mode: mode,
       );
 
   Sprite({
@@ -58,17 +60,26 @@ class Sprite {
     required this.rows,
     required this.columns,
     required this.y,
-    required this.loop,
+    required this.mode,
     this.x = 0,
   }) {
     isEmpty = values.isEmpty;
   }
 
   int getFrame({required int row, required int column}){
-    assert (row >= 0 && row <= rows);
-    return (row * columns) + (loop
-        ? (column % columns)
-        : (min(column, columns - 1)));
+    final columns = this.columns; // cache on cpu
+    switch (mode){
+      case AnimationMode.Single:
+        return (row * columns) + (min(column, columns - 1));
+      case AnimationMode.Loop:
+        return (row * columns) + (column % columns);
+      case AnimationMode.Bounce:
+        if (column ~/ columns % 2 == 0){
+          return column % columns;
+        }
+        return ((columns - 1) - (column % columns));
+      default:
+        throw Exception();
+    }
   }
-
 }

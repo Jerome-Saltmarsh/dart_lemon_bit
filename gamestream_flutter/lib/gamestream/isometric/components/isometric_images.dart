@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/src.dart';
 import 'classes/sprite_group.dart';
+import 'render/renderer_characters.dart';
 import 'types/sprite_group_type.dart';
 
 class IsometricImages with IsometricComponent {
@@ -125,7 +126,7 @@ class IsometricImages with IsometricComponent {
         rows: 0,
         columns: 0,
         y: 0,
-        loop: true,
+        mode: AnimationMode.Single,
     );
 
     spriteGroupEmpty = SpriteGroup(
@@ -175,11 +176,11 @@ class IsometricImages with IsometricComponent {
     final fallenDeath = await loadSpriteBytes('fallen/death');
 
     spriteFallen = SpriteGroup(
-      idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0, loop: true),
-      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 157, loop: true),
-      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, loop: false),
-      hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, loop: false),
-      death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, loop: false),
+      idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0, mode: AnimationMode.Bounce),
+      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 157, mode: AnimationMode.Loop),
+      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, mode: AnimationMode.Single),
+      hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, mode: AnimationMode.Single),
+      death: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, mode: AnimationMode.Single),
       fire: spriteEmpty,
     );
 
@@ -189,7 +190,7 @@ class IsometricImages with IsometricComponent {
       image: atlas_nodes,
       x: 664,
       y: 1916,
-      loop: true,
+      mode: AnimationMode.Loop
     );
 
     final spriteRainFallingBytes = await loadSpriteBytes('particles/rain_falling');
@@ -198,7 +199,7 @@ class IsometricImages with IsometricComponent {
       image: atlas_nodes,
       x: 664,
       y: 1874,
-      loop: true,
+      mode: AnimationMode.Loop
     );
   }
 
@@ -220,19 +221,19 @@ class IsometricImages with IsometricComponent {
   }
 
   SpriteGroup loadSpriteGroupFromJson(Image image, Map<String, dynamic> json) => SpriteGroup(
-        idle: loadSpriteFromJson(json: json, name: 'idle', image: image, loop: true),
-        running: loadSpriteFromJson(json: json, name: 'running', image: image, loop: true),
-        hurt: loadSpriteFromJson(json: json, name: 'hurt', image: image, loop: false),
-        strike: loadSpriteFromJson(json: json, name: 'strike', image: image, loop: false),
-        death: loadSpriteFromJson(json: json, name: 'death', image: image, loop: false),
-        fire: loadSpriteFromJson(json: json, name: 'fire', image: image, loop: false),
+        idle: loadSpriteFromJson(json: json, name: 'idle', image: image, mode: AnimationMode.Bounce),
+        running: loadSpriteFromJson(json: json, name: 'running', image: image, mode: AnimationMode.Loop),
+        hurt: loadSpriteFromJson(json: json, name: 'hurt', image: image, mode: AnimationMode.Single),
+        strike: loadSpriteFromJson(json: json, name: 'strike', image: image, mode: AnimationMode.Single),
+        death: loadSpriteFromJson(json: json, name: 'death', image: image, mode: AnimationMode.Single),
+        fire: loadSpriteFromJson(json: json, name: 'fire', image: image, mode: AnimationMode.Single),
     );
 
   Sprite loadSpriteFromJson({
     required Map<String, dynamic> json,
     required String name,
     required Image image,
-    required bool loop,
+    required int mode,
   }){
     if (!json.containsKey(name)){
       print('images missing sprite $name');
@@ -242,7 +243,7 @@ class IsometricImages with IsometricComponent {
     final jsonBody = json[name];
     final y = jsonBody['y'] as int;
     final bytes = Uint8List.fromList((jsonBody['bytes'] as List<dynamic>).cast<int>());
-    return Sprite.fromBytes(bytes, image: image, y: y, loop: loop);
+    return Sprite.fromBytes(bytes, image: image, y: y, mode: mode);
   }
 
    Future loadSpriteGroup({
@@ -274,37 +275,37 @@ class IsometricImages with IsometricComponent {
                await loadSpriteBytes('kid/$typeName/$subTypeName/idle'),
                image: image,
                y: yIdle,
-               loop: true,
+               mode: AnimationMode.Bounce,
            ),
            running: Sprite.fromBytes(
                await loadSpriteBytes('kid/$typeName/$subTypeName/running'),
                image: image,
                y: yRunning,
-               loop: true,
+               mode: AnimationMode.Loop,
            ),
            strike: yStrike == null ? spriteEmpty : Sprite.fromBytes(
              await loadSpriteBytes('kid/$typeName/$subTypeName/strike'),
              image: image,
              y: yStrike,
-             loop: false,
+             mode: AnimationMode.Single,
            ),
            fire: yFire == null ? spriteEmpty : Sprite.fromBytes(
              await loadSpriteBytes('kid/$typeName/$subTypeName/fire'),
              image: image,
              y: yFire,
-             loop: false,
+             mode: AnimationMode.Single,
            ),
            hurt: yHurt == null ? spriteEmpty : Sprite.fromBytes(
                await loadSpriteBytes('kid/$typeName/$subTypeName/hurt'),
                image: image,
                y: yHurt,
-               loop: false,
+               mode: AnimationMode.Single
            ),
            death: yDead == null ? spriteEmpty : Sprite.fromBytes(
              await loadSpriteBytes('kid/$typeName/$subTypeName/dead'),
              image: image,
              y: yDead,
-             loop: false,
+             mode: AnimationMode.Single,
            ),
        );
      totalImagesLoaded.value++;

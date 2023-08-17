@@ -57,11 +57,4 @@ class Character extends Position {
 
   double get angle => direction * piQuarter;
 
-  // @override
-  // double get sortOrder {
-  //   if (dead) {
-  //     return super.sortOrder - 20.0;
-  //   }
-  //   return super.sortOrder;
-  // }
 }

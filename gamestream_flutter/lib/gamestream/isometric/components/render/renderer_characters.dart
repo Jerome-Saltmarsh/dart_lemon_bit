@@ -9,6 +9,27 @@ import 'package:golden_ratio/constants.dart';
 import '../../classes/sprite.dart';
 
 
+class AnimationMode {
+  static const Single = 0;
+  static const Loop = 1;
+  static const Bounce = 2;
+
+  static int fromCharacterState(int characterState) =>
+    switch (characterState){
+      CharacterState.Strike => Single,
+      CharacterState.Fire => Single,
+      CharacterState.Hurt => Single,
+      CharacterState.Running => Loop,
+      CharacterState.Idle => Bounce,
+      CharacterState.Dead => Single,
+      CharacterState.Changing => Single,
+      CharacterState.Aiming => Loop,
+      CharacterState.Spawning => Loop,
+      CharacterState.Stunned => Loop,
+      _ => throw Exception(),
+    };
+}
+
 class RendererCharacters extends RenderGroup {
 
   var renderBottom = true;
@@ -475,7 +496,6 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmBehind;
 
     final row = character.renderDirection;
-    var column = character.animationFrame;
     var animationFrame = character.animationFrame;
 
     final leftInFront = const [
@@ -484,21 +504,6 @@ class RendererCharacters extends RenderGroup {
       InputDirection.Down_Left,
     ].contains(direction);
 
-    if (character.firing){
-      animationFrame = min(animationFrame, 7);
-    } else
-    if (character.striking){
-      animationFrame = min(animationFrame, 7);
-    }
-    else if (character.running) {
-      animationFrame = animationFrame % 8;
-    } else {
-      if (animationFrame ~/ 8 % 2 == 0){
-        column = animationFrame % 8;
-      } else {
-        column = (7 - (animationFrame % 8));
-      }
-    }
     if (leftInFront) {
       spriteHandFront = spriteHandsLeft;
       spriteHandBehind = spriteGloveRight;
@@ -516,7 +521,7 @@ class RendererCharacters extends RenderGroup {
       render.sprite(
         sprite: spriteShadow,
         row: row,
-        column: column,
+        column: animationFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -527,7 +532,7 @@ class RendererCharacters extends RenderGroup {
       render.sprite(
         sprite: spriteTorso,
         row: row,
-        column: column,
+        column: animationFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -538,7 +543,7 @@ class RendererCharacters extends RenderGroup {
       render.sprite(
         sprite: spriteLegs,
         row: row,
-        column: column,
+        column: animationFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -551,7 +556,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteArmBehind,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -562,7 +567,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteHandBehind,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -574,7 +579,7 @@ class RendererCharacters extends RenderGroup {
       render.sprite(
         sprite: spriteWeapon,
         row: row,
-        column: column,
+        column: animationFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -586,7 +591,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
         sprite: spriteBody,
         row: row,
-        column: column,
+        column: animationFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -597,7 +602,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteArmFront,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -609,7 +614,7 @@ class RendererCharacters extends RenderGroup {
       render.sprite(
         sprite: spriteWeapon,
         row: row,
-        column: column,
+        column: animationFrame,
         color: color,
         scale: scale,
         dstX: dstX,
@@ -621,7 +626,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteHandFront,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -632,7 +637,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteBodyArm,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -643,7 +648,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteHead,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
@@ -654,7 +659,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteHelm,
       row: row,
-      column: column,
+      column: animationFrame,
       color: color,
       scale: scale,
       dstX: dstX,
