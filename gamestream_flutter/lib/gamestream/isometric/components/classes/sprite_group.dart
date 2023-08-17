@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/common/src/isometric/character_state.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/sprite.dart';
 
 class SpriteGroup {
@@ -16,4 +17,15 @@ class SpriteGroup {
     required this.death,
     required this.fire,
   });
+
+  Sprite fromCharacterState(int characterState) =>
+    switch(characterState) {
+      CharacterState.Idle => idle,
+      CharacterState.Running => running,
+      CharacterState.Strike => strike,
+      CharacterState.Hurt => hurt,
+      CharacterState.Dead => death,
+      CharacterState.Fire => fire,
+      _ => throw Exception(),
+    };
 }

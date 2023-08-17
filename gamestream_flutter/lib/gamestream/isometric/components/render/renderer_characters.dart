@@ -435,46 +435,47 @@ class RendererCharacters extends RenderGroup {
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
 
-    var animationFrame = character.animationFrame;
-
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toStandardDirection(character.direction);
     final color = character.color;
     final dstX = character.renderX;
     final dstY = character.renderY;
 
-    final Sprite spriteWeapon;
-    final Sprite spriteHelm;
-    final Sprite spriteBody;
-    final Sprite spriteBodyArm;
-    final Sprite spriteHead;
-    final Sprite spriteArmLeft;
-    final Sprite spriteArmRight;
-    final Sprite spriteTorso;
-    final Sprite spriteLegs;
-    final Sprite spriteGloveLeft;
-    final Sprite spriteGloveRight;
-    final Sprite spriteGloveFront;
-    final Sprite spriteGloveBehind;
+    final atlasHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
+    final atlasHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
+    final atlasHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
+    final atlasLegs =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
+    final atlasBody = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
+    final atlasWeapon = images.spriteGroupWeapons[character.weaponType] ??
+        (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
+    final atlasBodyArm = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
+    final atlasArmLeft = images.spriteGroupArmsLeft[character.complexionType] ?? (throw Exception());
+    final atlasArmRight = images.spriteGroupArmsRight[character.complexionType] ?? (throw Exception());
+    final atlasHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
+    final atlasTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
+
+    final characterState = character.state;
+
+    final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
+    final spriteHelm = atlasHelm.fromCharacterState(characterState);
+    final spriteBody = atlasBody.fromCharacterState(characterState);
+    final spriteBodyArm = atlasBodyArm.fromCharacterState(characterState);
+    final spriteHead = atlasHead.fromCharacterState(characterState);
+    final spriteArmLeft = atlasArmLeft.fromCharacterState(characterState);
+    final spriteArmRight = atlasArmRight.fromCharacterState(characterState);
+    final spriteTorso = atlasTorso.fromCharacterState(characterState);
+    final spriteLegs = atlasLegs.fromCharacterState(characterState);
+    final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
+    final spriteGloveRight = atlasHandsRight.fromCharacterState(characterState);
+    final Sprite spriteHandFront;
+    final Sprite spriteHandBehind;
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
     final Sprite spriteShadow;
 
-    final spriteGroupHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
-    final spriteGroupHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
-    final spriteGroupHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
-    final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
-    final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
-    final weaponGroup = images.spriteGroupWeapons[character.weaponType] ??
-        (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
-    final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
-    final spriteGroupArmsLeft = images.spriteGroupArmsLeft[character.complexionType] ?? (throw Exception());
-    final spriteGroupArmsRight = images.spriteGroupArmsRight[character.complexionType] ?? (throw Exception());
-    final groupHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
-    final groupTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
-
     final row = character.renderDirection;
     var column = character.animationFrame;
+    var animationFrame = character.animationFrame;
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -484,78 +485,31 @@ class RendererCharacters extends RenderGroup {
 
     if (character.firing){
       animationFrame = min(animationFrame, 7);
-      spriteGloveLeft = spriteGroupHandsLeft.fire;
-      spriteGloveRight = spriteGroupHandsRight.fire;
-      spriteArmLeft = spriteGroupArmsLeft.fire;
-      spriteArmRight = spriteGroupArmsRight.fire;
-      spriteBodyArm = bodyArmGroup.fire;
-      spriteBody =  bodyGroup.fire;
-      spriteHead = groupHead.fire;
-      spriteTorso = groupTorso.fire;
-      spriteLegs = legsGroup.fire;
-      spriteHelm = spriteGroupHelm.fire;
-      spriteWeapon = weaponGroup.fire;
       spriteShadow = images.spriteGroupKidShadow.fire;
     } else
     if (character.striking){
       animationFrame = min(animationFrame, 7);
-      spriteGloveLeft = spriteGroupHandsLeft.strike;
-      spriteGloveRight = spriteGroupHandsRight.strike;
-      spriteArmLeft = spriteGroupArmsLeft.strike;
-      spriteArmRight = spriteGroupArmsRight.strike;
-      spriteBodyArm = bodyArmGroup.strike;
-      spriteBody =  bodyGroup.strike;
-      spriteHead = groupHead.strike;
-      spriteTorso = groupTorso.strike;
-      spriteLegs = legsGroup.strike;
-      spriteHelm = spriteGroupHelm.strike;
-      spriteWeapon = weaponGroup.strike;
       spriteShadow = images.spriteGroupKidShadow.strike;
     }
     else if (character.running) {
       animationFrame = animationFrame % 8;
-      spriteGloveLeft = spriteGroupHandsLeft.running;
-      spriteGloveRight = spriteGroupHandsRight.running;
-      spriteArmLeft = spriteGroupArmsLeft.running;
-      spriteArmRight = spriteGroupArmsRight.running;
-      spriteBodyArm = bodyArmGroup.running;
-      spriteBody =  bodyGroup.running;
-      spriteHead = groupHead.running;
-      spriteTorso = groupTorso.running;
-      spriteLegs = legsGroup.running;
-      spriteHelm = spriteGroupHelm.running;
-      spriteWeapon = weaponGroup.running;
       spriteShadow = images.spriteGroupKidShadow.running;
     } else {
-
       if (animationFrame ~/ 8 % 2 == 0){
         column = animationFrame % 8;
       } else {
         column = (7 - (animationFrame % 8));
       }
-
-      spriteGloveLeft = spriteGroupHandsLeft.idle;
-      spriteGloveRight = spriteGroupHandsRight.idle;
-      spriteArmLeft = spriteGroupArmsLeft.idle;
-      spriteArmRight = spriteGroupArmsRight.idle;
-      spriteBodyArm = bodyArmGroup.idle;
-      spriteBody =  bodyGroup.idle;
-      spriteHead = groupHead.idle;
-      spriteTorso = groupTorso.idle;
-      spriteLegs = legsGroup.idle;
-      spriteHelm = spriteGroupHelm.idle;
-      spriteWeapon = weaponGroup.idle;
       spriteShadow = images.spriteGroupKidShadow.idle;
     }
-
     if (leftInFront) {
-      spriteGloveFront = spriteGloveLeft;
-      spriteGloveBehind = spriteGloveRight;
+      spriteHandFront = spriteHandsLeft;
+      spriteHandBehind = spriteGloveRight;
       spriteArmFront = spriteArmLeft;
       spriteArmBehind = spriteArmRight;
     } else {
-      spriteGloveFront = spriteGloveRight;
-      spriteGloveBehind = spriteGloveLeft;
+      spriteHandFront = spriteGloveRight;
+      spriteHandBehind = spriteHandsLeft;
       spriteArmFront = spriteArmRight; // spriteArmRight
       spriteArmBehind = spriteArmLeft;
     }
@@ -609,7 +563,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     render.sprite(
-      sprite: spriteGloveBehind,
+      sprite: spriteHandBehind,
       row: row,
       column: column,
       color: color,
@@ -619,7 +573,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (spriteGloveRight != spriteGloveFront){
+    if (spriteGloveRight != spriteHandFront){
       render.sprite(
         sprite: spriteWeapon,
         row: row,
@@ -654,7 +608,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (spriteGloveRight == spriteGloveFront){
+    if (spriteGloveRight == spriteHandFront){
       render.sprite(
         sprite: spriteWeapon,
         row: row,
@@ -668,7 +622,7 @@ class RendererCharacters extends RenderGroup {
     }
 
     render.sprite(
-      sprite: spriteGloveFront,
+      sprite: spriteHandFront,
       row: row,
       column: column,
       color: color,
