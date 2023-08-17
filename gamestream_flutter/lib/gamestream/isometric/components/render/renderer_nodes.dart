@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 import 'constants/node_src.dart';
 
@@ -41,6 +42,7 @@ class RendererNodes extends RenderGroup {
     NodeType.Wood: 1904,
   };
 
+  final lightningColorDay = 0;
   var lightningColor = 0;
 
   var lightningFlashing = false;
@@ -397,8 +399,10 @@ class RendererNodes extends RenderGroup {
   void reset() {
     lightningFlashing = environment.lightningFlashing.value;
 
+    final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
+
     if (lightningFlashing) {
-      lightningColor = lerpColors(ambientColor, 0, environment.lightningFlashing01.value);
+      lightningColor = lerpColors(ambientColor, lightningColorMax, environment.lightningFlashing01.value);
     }
 
     ambientColor = scene.ambientColor;

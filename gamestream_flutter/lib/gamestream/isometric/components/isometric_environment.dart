@@ -33,6 +33,10 @@ class IsometricEnvironment with IsometricComponent {
     raining.onChanged(onChangedRaining);
   }
 
+  /// 0 at night is 0
+  /// 12 at day is 1
+  double get brightness => parabola(currentTimeInSeconds / Duration.secondsPerDay);
+
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
