@@ -151,102 +151,16 @@ class IsometricImages with IsometricComponent {
     loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
     loadAtlas(type: SpriteGroupType.Arms_Right, subType: ComplexionType.Fair);
     loadAtlas(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue);
-
-    // loadSpriteGroup(
-    //   yIdle: 0,
-    //   yRunning: 51,
-    //   yStrike: 153,
-    //   yFire: 277,
-    //   type: SpriteGroupType.Body,
-    //   subType: BodyType.Shirt_Blue,
-    // );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 41,
-      yStrike: 83,
-      yFire: 179,
-      type: SpriteGroupType.Body_Arms,
-      subType: BodyType.Shirt_Blue,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 31,
-      yStrike: 60,
-      yFire: 93,
-      type: SpriteGroupType.Hands_Left,
-      subType: HandType.Gauntlets,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 29,
-      yStrike: 57,
-      yFire: 86,
-      type: SpriteGroupType.Hands_Right,
-      subType: HandType.Gauntlets,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 28,
-      yStrike: 57,
-      yFire: 87,
-      type: SpriteGroupType.Heads,
-      subType: ComplexionType.Fair,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 26,
-      yStrike: 53,
-      yFire: 80,
-      type: SpriteGroupType.Helms,
-      subType: HelmType.Steel,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 71,
-      yStrike: 233,
-      yFire: 373,
-      type: SpriteGroupType.Legs,
-      subType: LegType.Brown,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 205,
-      yStrike: 436,
-      yFire: 664,
-      type: SpriteGroupType.Torso,
-      subType: ComplexionType.Fair,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 81,
-      yStrike: 187,
-      type: SpriteGroupType.Weapons,
-      subType: WeaponType.Staff,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 63,
-      yStrike: 114,
-      type: SpriteGroupType.Weapons,
-      subType: WeaponType.Sword,
-    );
-
-    loadSpriteGroup(
-      yIdle: 0,
-      yRunning: 116,
-      yFire: 255,
-      type: SpriteGroupType.Weapons,
-      subType: WeaponType.Bow,
-    );
+    loadAtlas(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue);
+    loadAtlas(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets);
+    loadAtlas(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets);
+    loadAtlas(type: SpriteGroupType.Heads, subType: ComplexionType.Fair);
+    loadAtlas(type: SpriteGroupType.Helms, subType: HelmType.Steel);
+    loadAtlas(type: SpriteGroupType.Legs, subType: LegType.Brown);
+    loadAtlas(type: SpriteGroupType.Torso, subType: ComplexionType.Fair);
+    loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Bow);
+    loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
+    loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
 
     await _completerImages.future;
 
@@ -303,8 +217,8 @@ class IsometricImages with IsometricComponent {
     required int subType,
   }) async {
     totalImages.value++;
-    final typeName = SpriteGroupType.getName(type);
-    final subTypeName = SpriteGroupType.getSubTypeName(type, subType);
+    final typeName = SpriteGroupType.getName(type).toLowerCase();
+    final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase();
     final json = await loadAssetJson('sprites/kid/$typeName/$subTypeName.json');
     final image = await loadImageAsset('sprites/kid/$typeName/$subTypeName.png');
     final spriteGroupType = spriteGroupTypes[type] ?? (throw Exception());
@@ -319,9 +233,9 @@ class IsometricImages with IsometricComponent {
         idle: loadSpriteFromJson(json: json, name: 'idle', image: image, loop: true),
         running: loadSpriteFromJson(json: json, name: 'running', image: image, loop: true),
         hurt: loadSpriteFromJson(json: json, name: 'hurt', image: image, loop: false),
-        strike: loadSpriteFromJson(json: json, name: 'death', image: image, loop: false),
+        strike: loadSpriteFromJson(json: json, name: 'strike', image: image, loop: false),
         death: loadSpriteFromJson(json: json, name: 'death', image: image, loop: false),
-        fire: loadSpriteFromJson(json: json, name: 'running', image: image, loop: false),
+        fire: loadSpriteFromJson(json: json, name: 'fire', image: image, loop: false),
     );
 
   Sprite loadSpriteFromJson({

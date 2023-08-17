@@ -59,8 +59,7 @@ class WeaponType {
 
   static bool isFirearmAutomatic(int value) => Firearms_Automatic.contains(value);
 
-  static String getName(int value) {
-    return const {
+  static String getName(int value) => const {
       Unarmed: 'unarmed',
       Handgun: 'handgun',
       Smg: 'SMG',
@@ -87,7 +86,6 @@ class WeaponType {
       Axe: 'Axe',
       Rifle: 'Rifle',
     }[value] ?? 'weapon-type-unknown-$value';
-  }
 
   static const values = [
     Unarmed,

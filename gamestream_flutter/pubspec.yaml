@@ -60,30 +60,20 @@ flutter:
     - images/sprites/
     - images/website/
     - images/characters/
-    - images/kid/
-    - images/kid/body/
-    - images/kid/body_arms/
-    - images/kid/hands_left/
-    - images/kid/hands_right/
-    - images/kid/heads/
-    - images/kid/helms/
-    - images/kid/legs/
-    - images/kid/torso/
-    - images/kid/weapons/
     - sprites/kid/arms_left/
     - sprites/kid/arms_right/
     - sprites/kid/body/
-    - sprites/kid/body_arms/shirt_blue/
-    - sprites/kid/hands_left/gauntlets/
-    - sprites/kid/hands_right/gauntlets/
-    - sprites/kid/heads/fair/
-    - sprites/kid/helms/steel/
-    - sprites/kid/legs/brown/
+    - sprites/kid/body_arms/
+    - sprites/kid/hands_left/
+    - sprites/kid/hands_right/
+    - sprites/kid/heads/
+    - sprites/kid/helms/
+    - sprites/kid/legs/
     - sprites/kid/shadow/
-    - sprites/kid/torso/fair/
-    - sprites/kid/weapons/bow/
-    - sprites/kid/weapons/staff/
-    - sprites/kid/weapons/sword/
+    - sprites/kid/torso/
+    - sprites/kid/weapons/
+    - sprites/kid/weapons/
+    - sprites/kid/weapons/
     - sprites/particles/
     - audio/
     - audio/music/

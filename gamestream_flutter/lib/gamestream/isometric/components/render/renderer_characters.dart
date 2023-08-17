@@ -465,7 +465,8 @@ class RendererCharacters extends RenderGroup {
     final spriteGroupHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
     final legsGroup =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
     final bodyGroup = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
-    final weaponGroup = images.spriteGroupWeapons[character.weaponType] ?? (throw Exception());
+    final weaponGroup = images.spriteGroupWeapons[character.weaponType] ??
+        (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
     final bodyArmGroup = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
     final spriteGroupArmsLeft = images.spriteGroupArmsLeft[character.complexionType] ?? (throw Exception());
     final spriteGroupArmsRight = images.spriteGroupArmsRight[character.complexionType] ?? (throw Exception());
