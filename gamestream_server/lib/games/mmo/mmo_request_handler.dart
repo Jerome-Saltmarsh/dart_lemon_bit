@@ -106,6 +106,36 @@ extension MMORequestHandler on WebSocketConnection {
       case MMORequest.Unequip_Hand_Right:
         player.unequipHandRight();
         break;
+      case MMORequest.Inventory_Move:
+        final srcTypeIndex = parseArg2(arguments);
+        final srcIndex = parseArg3(arguments);
+        final targetTypeIndex = parseArg4(arguments);
+        final targetIndex = parseArg5(arguments);
+
+        if (srcTypeIndex == null ||
+            srcIndex == null ||
+            targetTypeIndex == null ||
+            targetIndex == null
+        ) return;
+
+        if (!isValidIndex(srcTypeIndex, SlotType.values) ||
+            !isValidIndex(targetTypeIndex, SlotType.values))
+          return;
+
+        final srcType = SlotType.values[srcTypeIndex];
+        final targetType = SlotType.values[srcTypeIndex];
+        final items = player.items;
+
+        if (srcType == SlotType.Items && targetType == SlotType.Items){
+          final itemSrc = player.items[srcIndex];
+          final itemTarget = player.items[targetIndex];
+          items[srcIndex] = itemTarget;
+          items[targetIndex] = itemSrc;
+        }
+
+        player.notifyEquipmentDirty();
+
+        break;
     }
   }
 }
