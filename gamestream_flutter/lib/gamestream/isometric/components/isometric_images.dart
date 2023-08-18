@@ -167,7 +167,6 @@ class IsometricImages with IsometricComponent {
       await loadAssetJson('sprites/kid/shadow.json'),
     );
 
-
     await _completerImages.future;
 
     final fallenIdle = await loadSpriteBytes('fallen/idle');
