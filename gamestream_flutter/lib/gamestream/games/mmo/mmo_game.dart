@@ -29,7 +29,7 @@ class MmoGame extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
   final activatedPowerIndex = Watch(-1);
-  final equippedHead = MMOItemSlot(slotType: SlotType.Equipped_Head, index: 0);
+  final equippedHelm = MMOItemSlot(slotType: SlotType.Equipped_Helm, index: 0);
   final equippedBody = MMOItemSlot(slotType: SlotType.Equipped_Body, index: 0);
   final equippedLegs = MMOItemSlot(slotType: SlotType.Equipped_Legs, index: 0);
   final equippedHandLeft = MMOItemSlot(slotType: SlotType.Equipped_Hand_Left, index: 0);

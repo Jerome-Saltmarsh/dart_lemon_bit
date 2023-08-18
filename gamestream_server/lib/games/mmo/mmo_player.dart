@@ -1306,4 +1306,25 @@ class AmuletPlayer extends IsometricPlayer {
     writeByte(MMOResponse.Error);
     writeString(error);
   }
+
+  MMOItemObject getItemObjectAtSlotType(SlotType slotType, int index){
+    switch (slotType){
+      case SlotType.Items:
+        return items[index];
+      case SlotType.Equipped_Hand_Left:
+        return equippedHandLeft;
+      case SlotType.Equipped_Hand_Right:
+        return equippedHandRight;
+      case SlotType.Equipped_Body:
+        return equippedBody;
+      case SlotType.Equipped_Helm:
+        return equippedHelm;
+      case SlotType.Equipped_Legs:
+        return equippedLegs;
+      case SlotType.Treasures:
+        return treasures[index];
+      case SlotType.Weapons:
+        return weapons[index];
+    }
+  }
 }

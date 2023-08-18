@@ -3,6 +3,8 @@ import 'package:gamestream_server/games/mmo/mmo_player.dart';
 import 'package:gamestream_server/utils/src.dart';
 import 'package:gamestream_server/websocket/websocket_connection.dart';
 
+import 'mmo_item_object.dart';
+
 extension MMORequestHandler on WebSocketConnection {
 
   void handleClientRequestMMORequest(List<String> arguments){
@@ -107,30 +109,44 @@ extension MMORequestHandler on WebSocketConnection {
         player.unequipHandRight();
         break;
       case MMORequest.Inventory_Move:
-        final srcTypeIndex = parseArg2(arguments);
+        final srcSlotTypeIndex = parseArg2(arguments);
         final srcIndex = parseArg3(arguments);
-        final targetTypeIndex = parseArg4(arguments);
+        final targetSlotTypeIndex = parseArg4(arguments);
         final targetIndex = parseArg5(arguments);
 
-        if (srcTypeIndex == null ||
+        if (srcSlotTypeIndex == null ||
             srcIndex == null ||
-            targetTypeIndex == null ||
+            targetSlotTypeIndex == null ||
             targetIndex == null
         ) return;
 
-        if (!isValidIndex(srcTypeIndex, SlotType.values) ||
-            !isValidIndex(targetTypeIndex, SlotType.values))
+        const slotTypes = SlotType.values;
+
+        if (!isValidIndex(srcSlotTypeIndex, slotTypes) ||
+            !isValidIndex(targetSlotTypeIndex, slotTypes))
           return;
 
-        final srcType = SlotType.values[srcTypeIndex];
-        final targetType = SlotType.values[srcTypeIndex];
-        final items = player.items;
+        final srcSlotType = slotTypes[srcSlotTypeIndex];
+        final targetSlotType = slotTypes[targetSlotTypeIndex];
 
-        if (srcType == SlotType.Items && targetType == SlotType.Items){
+        final items = player.items;
+        if (srcSlotType == SlotType.Items && targetSlotType == SlotType.Items){
           final itemSrc = player.items[srcIndex];
           final itemTarget = player.items[targetIndex];
           items[srcIndex] = itemTarget;
           items[targetIndex] = itemSrc;
+          player.notifyEquipmentDirty();
+          return;
+        }
+
+        final srcItemObject = player.getItemObjectAtSlotType(srcSlotType, srcIndex);
+        final targetItemObject = player.getItemObjectAtSlotType(targetSlotType, targetIndex);
+
+        if (targetSlotType == SlotType.Items){
+           if (targetItemObject.item == null){
+              targetItemObject.item = srcItemObject.item;
+              srcItemObject.item = null;
+           }
         }
 
         player.notifyEquipmentDirty();

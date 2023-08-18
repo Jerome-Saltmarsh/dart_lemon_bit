@@ -373,7 +373,7 @@ extension MMOUI on MmoGame {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildItemSlot(equippedHead),
+        buildItemSlot(equippedHelm),
         buildItemSlot(equippedBody),
         buildItemSlot(equippedLegs),
         buildItemSlot(equippedHandLeft),
