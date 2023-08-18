@@ -8,8 +8,11 @@ import 'package:gamestream_flutter/library.dart';
 import 'mmo_actions.dart';
 import 'mmo_render.dart';
 import 'mmo_ui.dart';
+import 'ui/src.dart';
 
 class MmoGame extends IsometricGame {
+
+  final emptyMMOItemImage = MMOItemImage(item: null, size: 64);
 
   var errorTimer = 0;
   var items = <MMOItemSlot>[];
@@ -17,8 +20,8 @@ class MmoGame extends IsometricGame {
   final talentHover = Watch<MMOTalentType?>(null);
   final itemHover = Watch<MMOItem?>(null);
   final activePowerPosition = Position();
-  final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
-  final treasures = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot());
+  final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot(index: index, slotType: SlotType.Weapons));
+  final treasures = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot(index: index, slotType: SlotType.Treasures));
   final error = Watch('');
   final playerInteracting = Watch(false);
   final npcText = Watch('');
@@ -26,11 +29,11 @@ class MmoGame extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
   final activatedPowerIndex = Watch(-1);
-  final equippedHead = Watch<MMOItem?>(null);
-  final equippedBody = Watch<MMOItem?>(null);
-  final equippedLegs = Watch<MMOItem?>(null);
-  final equippedHandLeft = Watch<MMOItem?>(null);
-  final equippedHandRight = Watch<MMOItem?>(null);
+  final equippedHead = MMOItemSlot(slotType: SlotType.Equipped_Head, index: 0);
+  final equippedBody = MMOItemSlot(slotType: SlotType.Equipped_Body, index: 0);
+  final equippedLegs = MMOItemSlot(slotType: SlotType.Equipped_Legs, index: 0);
+  final equippedHandLeft = MMOItemSlot(slotType: SlotType.Equipped_Hand_Left, index: 0);
+  final equippedHandRight = MMOItemSlot(slotType: SlotType.Equipped_Hand_Right, index: 0);
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
@@ -90,7 +93,10 @@ class MmoGame extends IsometricGame {
   }
 
   void setItemLength(int length){
-    items = List.generate(length, (_) => MMOItemSlot());
+    items = List.generate(length, (index) => MMOItemSlot(
+        index: index,
+        slotType: SlotType.Items,
+    ));
   }
 
   @override
@@ -176,4 +182,20 @@ class MmoGame extends IsometricGame {
 
   bool maxLevelReached(MMOTalentType talent) =>
       getTalentLevel(talent) >= talent.maxLevel;
+
+
+  void handleDragRequest({
+    required MMOItemSlot src,
+    required MMOItemSlot target,
+  }){
+
+  }
+
+  void handleItemSlotLeftClicked(MMOItemSlot slot){
+
+  }
+
+  void handleItemSlotRightClicked(MMOItemSlot slot){
+
+  }
 }

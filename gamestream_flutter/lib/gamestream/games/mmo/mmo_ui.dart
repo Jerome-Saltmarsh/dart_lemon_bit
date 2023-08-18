@@ -264,13 +264,13 @@ extension MMOUI on MmoGame {
       ),
     );
 
-  Widget buildInventoryItemSlotAtIndex(int index) => buildInventorySlot(
-    child: buildMMOItemSlot(
-        slot: items[index],
-        onLeftClick: () => selectItem(index),
-        onRightClick: () => dropItem(index),
-      ),
-  );
+  // Widget buildInventoryItemSlotAtIndex(int index) => buildInventorySlot(
+  //   child: buildMMOItemSlot(
+  //       slot: items[index],
+  //       onLeftClick: () => selectItem(index),
+  //       onRightClick: () => dropItem(index),
+  //     ),
+  // );
 
   buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
       itemHover,
@@ -332,12 +332,12 @@ extension MMOUI on MmoGame {
       children: [
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildInventoryItemSlotAtIndex(index),
+                items.length ~/ 2, (index) => buildItemSlot(items[index]),
                 growable: false)
         ),
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildInventoryItemSlotAtIndex(index + (items.length ~/ 2)),
+                items.length ~/ 2, (index) => buildItemSlot(items[index + (items.length ~/ 2)]),
                 growable: false)
         ),
       ],
@@ -359,7 +359,9 @@ extension MMOUI on MmoGame {
         margin: const EdgeInsets.all(2),
         width: 64,
         height: 64,
-        child: MMOItemImage(item: item, size: 64));
+        child: item == null
+            ? emptyMMOItemImage
+            : MMOItemImage(item: item, size: 64));
 
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
@@ -371,26 +373,11 @@ extension MMOUI on MmoGame {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildWatch(equippedHead, (equipped) => onPressed(
-            onRightClick: equipped == null ? null : dropEquippedHead,
-            action: equipped == null ? null : unequipHead,
-            child: buildInventoryItem(equipped))),
-        buildWatch(equippedBody, (equipped) => onPressed(
-            onRightClick: equipped == null ? null : dropEquippedBody,
-            action: equipped == null ? null : unequipBody,
-            child: buildInventoryItem(equipped))),
-        buildWatch(equippedLegs, (equipped) => onPressed(
-            onRightClick: equipped == null ? null : dropEquippedLegs,
-            action: equipped == null ? null : unequipLegs,
-            child: buildInventoryItem(equipped))),
-        buildWatch(equippedHandLeft, (equipped) => onPressed(
-            onRightClick: equipped == null ? null : dropEquippedHandLeft,
-            action: equipped == null ? null : unequipHandLeft,
-            child: buildInventoryItem(equipped))),
-        buildWatch(equippedHandRight, (equipped) => onPressed(
-            onRightClick: equipped == null ? null : dropEquippedHandRight,
-            action: equipped == null ? null : unequipHandRight,
-            child: buildInventoryItem(equipped))),
+        buildItemSlot(equippedHead),
+        buildItemSlot(equippedBody),
+        buildItemSlot(equippedLegs),
+        buildItemSlot(equippedHandLeft),
+        buildItemSlot(equippedHandRight),
       ],),
   );
 
@@ -614,6 +601,32 @@ extension MMOUI on MmoGame {
       ),
   );
 
+  Widget buildItemSlot(MMOItemSlot slot) => DragTarget(
+      onWillAccept: (value) => value is MMOItemSlot && (value.acceptsDragFrom(slot)),
+      onAccept: (value){
+        if (value is! MMOItemSlot)
+          return;
+
+        handleDragRequest(src: value, target: slot);
+      },
+      builder: (context, data, rejectData) {
+        return buildWatch(slot.item, (equipped) {
+
+          if (equipped == null){
+            return buildInventoryItem(null);
+          }
+
+          return Draggable(
+            data: slot,
+            feedback: MMOItemImage(item: equipped, size: 64),
+            child: onPressed(
+              onRightClick: () => handleItemSlotRightClicked(slot),
+              action: () => handleItemSlotLeftClicked(slot),
+              child: buildInventoryItem(equipped)),
+          );
+        });
+      },
+    );
 }
 
 

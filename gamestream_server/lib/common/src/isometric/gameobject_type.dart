@@ -50,6 +50,12 @@ class GameObjectType {
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 
+  static int compress(int type, int subType) => type << 8 | subType;
+
+  static int decompressSubType(int compressed) => compressed & 0xFF;
+
+  static int decompressType(int compressed) => (compressed >> 8) & 0xFF;
+
   static const values = [
     Weapon,
     Legs,
