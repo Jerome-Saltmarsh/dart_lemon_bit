@@ -61,6 +61,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var mouseX = 0.0;
   var mouseY = 0.0;
 
+  var charactersIStart = 0;
+  var charactersIEnd = 0;
+
   var positionCacheX = 0;
   var positionCacheY = 0;
   var positionCacheZ = 0;
@@ -341,13 +344,113 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     const padding = 100.0;
     final characters = game.characters;
     final charactersLength = characters.length;
-
-    cacheIndex = 0;
-
     final screenBottomPadded = screenBottom + padding;
     final screenTopPadded = screenTop - padding;
     final screenLeftPadded = screenLeft - padding;
     final screenRightPadded = screenRight + padding;
+
+    cacheIndex = 0;
+
+    // var start = charactersIStart;
+    // var end = charactersIEnd;
+    // var startShiftedDown = false;
+    // var endShiftedDown = false;
+    //
+    // while (true) {
+    //
+    //   if (start == 0)
+    //     break;
+    //
+    //   if (start >= charactersLength){
+    //     start--;
+    //     continue;
+    //   }
+    //
+    //   final previous = characters[start - 1];
+    //
+    //   if (
+    //      previous.renderX > screenLeftPadded ||
+    //      previous.renderY > screenTopPadded
+    //   ){
+    //     start--;
+    //     startShiftedDown = true;
+    //     continue;
+    //   }
+    //   break;
+    // }
+    //
+    // if (!startShiftedDown) {
+    //   while (true) {
+    //
+    //     if (start >= charactersLength){
+    //       break;
+    //     }
+    //
+    //     final next = characters[start + 1];
+    //
+    //     if (
+    //       next.renderX < screenLeftPadded ||
+    //       next.renderY < screenTopPadded
+    //     ){
+    //       start++;
+    //       continue;
+    //     }
+    //     break;
+    //   }
+    // }
+    //
+    //
+    // /// check end
+    //
+    // if (end <= start){
+    //   end = start + 1;
+    // }
+    //
+    // while (true) {
+    //
+    //   if (end <= 0)
+    //     break;
+    //
+    //   if (end >= charactersLength){
+    //     end--;
+    //     continue;
+    //   }
+    //
+    //   final previous = characters[end - 1];
+    //
+    //   if (
+    //      previous.renderX > screenRightPadded ||
+    //      previous.renderY > screenBottomPadded
+    //   ){
+    //     end--;
+    //     endShiftedDown = true;
+    //     continue;
+    //   }
+    //   break;
+    // }
+    //
+    // if (!endShiftedDown) {
+    //   while (true) {
+    //
+    //     if (end >= charactersLength - 1){
+    //       break;
+    //     }
+    //
+    //     final next = characters[end + 1];
+    //
+    //     if (
+    //       next.renderX < screenRightPadded ||
+    //       next.renderY < screenBottomPadded
+    //     ){
+    //       end++;
+    //       continue;
+    //     }
+    //     break;
+    //   }
+    // }
+    //
+    // charactersIStart = start;
+    // charactersIEnd = end;
 
     for (var i = 0; i < charactersLength; i++) {
 
@@ -380,7 +483,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
         }());
         break;
       }
-
 
       final characterX = character.x.toInt();
       final characterY = character.y.toInt();
@@ -449,7 +551,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       }
 
       writePercentage(character.actionCompletionPercentage);
-
       cacheIndex++;
     }
     writeByte(CHARACTER_END);

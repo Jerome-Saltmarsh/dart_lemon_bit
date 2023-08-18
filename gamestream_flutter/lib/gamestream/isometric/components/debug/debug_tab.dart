@@ -11,4 +11,5 @@ enum DebugTab {
   Options,
   Particles,
   Environment,
+  Scene,
 }

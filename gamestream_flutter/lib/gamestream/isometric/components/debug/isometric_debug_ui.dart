@@ -45,6 +45,7 @@ extension isometricDebugUI on IsometricDebug {
                   DebugTab.Options => buildTabOptions(),
                   DebugTab.Particles => buildTabParticles(),
                   DebugTab.Environment => buildTabEnvironment(),
+                  DebugTab.Scene => buildTabScene(),
                 },
               ),
             ),
@@ -146,19 +147,12 @@ extension isometricDebugUI on IsometricDebug {
         children: [
           GSRefresh(() =>  buildText(
               'mouse-scene: x: ${mouse.positionX.toInt()}, y: ${mouse.positionY.toInt()}\n'
-                  'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
-                  'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
-                  'aim-target-action: ${TargetAction.getName(player.aimTargetAction.value)}\n'
-                  'aim-target-type: ${player.aimTargetType}\n'
-                  'aim-target-position: ${player.aimTargetPosition}\n'
-                  'target-position: ${player.targetPosition}\n'
-                  'scene-light-sources: ${scene.nodeLightSourcesTotal}\n'
-                  'scene-light-active: ${scene.totalActiveLights}\n'
-                  'scene.smoke-sources: ${scene.smokeSourcesTotal}\n'
-                  'total-gameobjects: ${scene.gameObjects.length}\n'
-                  'total-characters: ${scene.totalCharacters}\n'
-                  'total-particles: ${particles.children.length}\n'
-                  'total-particles-active: ${particles.countActiveParticles}\n'
+              'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
+              'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
+              'aim-target-action: ${TargetAction.getName(player.aimTargetAction.value)}\n'
+              'aim-target-type: ${player.aimTargetType}\n'
+              'aim-target-position: ${player.aimTargetPosition}\n'
+              'target-position: ${player.targetPosition}\n'
           )),
           buildWatch(options.gameType, (GameType value) => buildText('game-type: ${value.name}')),
           // buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
@@ -641,6 +635,18 @@ extension isometricDebugUI on IsometricDebug {
         ),
       );
 
+  Widget buildTabScene()=> Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+         buildRowRefresh('light-sources-total', () => scene.nodeLightSourcesTotal),
+         buildRowRefresh('light-sources-active', () => scene.totalActiveLights),
+         buildRowRefresh('smoke-sources', () => scene.smokeSourcesTotal),
+         buildRowRefresh('total-gameobjects', () => scene.gameObjects.length),
+         buildRowRefresh('total-characters', () => scene.totalCharacters),
+    ],
+  );
+
   Widget buildTabEnvironment() => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -679,6 +685,9 @@ extension isometricDebugUI on IsometricDebug {
 
   Widget buildRowWatch<T>(String text, Watch<T> watch, Widget build(T t)) =>
       buildRow(text, buildWatch(watch, build));
+
+  Widget buildRowRefresh(String text,  dynamic getValue()) =>
+      buildRow(text, GSRefresh(() => buildText(getValue())));
 }
 
 Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))
