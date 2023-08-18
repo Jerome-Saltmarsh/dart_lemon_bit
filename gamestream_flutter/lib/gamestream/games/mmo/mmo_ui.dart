@@ -131,7 +131,7 @@ extension MMOUI on MmoGame {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
                 treasures.length,
-                buildTreasureSlotAtIndex
+                (i) => buildItemSlot(treasures[i])
             )
         ),
       );
@@ -592,14 +592,6 @@ extension MMOUI on MmoGame {
         )
     );
   }
-
-  Widget buildTreasureSlotAtIndex(int index) => buildInventorySlot(
-    child: buildMMOItemSlot(
-        slot: treasures[index],
-        onLeftClick: () => selectTreasure(index),
-        onRightClick: () => dropTreasure(index),
-      ),
-  );
 
   Widget buildItemSlot(MMOItemSlot slot) => DragTarget(
       onWillAccept: (value) => value is MMOItemSlot && (value.acceptsDragFrom(slot)),
