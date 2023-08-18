@@ -208,6 +208,53 @@ class Sprite {
     );
   }
 
+  Future buildCells() async {
+    final files = await loadFilesFromDisk();
+    if (files == null) {
+      return;
+    }
+
+    final image = Image(
+        width: columns.value * 256,
+        height: rows.value * 256,
+        numChannels: 4,
+        backgroundColor: transparent,
+    );
+
+    var row = 0;
+    var column = 0;
+
+    for (final file in files) {
+      final bytes = file.bytes;
+      if (bytes == null){
+        throw Exception();
+      }
+
+      if (files.length != 64){
+        throw Exception('expect 64');
+      }
+
+      final imageDecoded = decodePng(bytes) ?? (throw Exception());
+
+      var pasteX = column * 256;
+      var pasteY = row * 256;
+
+      for (var x = 0; x < 256; x++){
+        for (var y = 0; y < 256; y++){
+          image.setPixel(pasteX +x, pasteY + y, imageDecoded.getPixel(x, y));
+        }
+      }
+
+      column++;
+      if (column >= 8){
+        row++;
+        column = 0;
+      }
+    }
+
+    downloadBytes(bytes: encodePng(image), name: 'cells.png');
+  }
+
   Future buildAtlas() async {
     final files = await loadFilesFromDisk();
     if (files == null) {

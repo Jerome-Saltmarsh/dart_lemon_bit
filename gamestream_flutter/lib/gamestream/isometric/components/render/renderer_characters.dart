@@ -457,7 +457,7 @@ class RendererCharacters extends RenderGroup {
     const anchorY = 0.7;
 
     final scale = options.characterRenderScale;
-    final direction = IsometricDirection.toStandardDirection(character.direction);
+    final direction = IsometricDirection.toInputDirection(character.direction);
     final color = character.color;
     final dstX = character.renderX;
     final dstY = character.renderY;
@@ -497,6 +497,8 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteHandBehind;
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
+
+    // render.textPosition(character, direction, offsetY: -100);
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -594,17 +596,28 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.spriteFrame(
-      sprite: spriteBody,
-      frame: completingAction
-          ? spriteBody.getFramePercentage(row, actionComplete)
-          : spriteBody.getFrame(row: row, column: animationFrame),
-      color: color,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    final bodyFirst = const [
+      InputDirection.Left,
+      InputDirection.Down_Left,
+      InputDirection.Down,
+      InputDirection.Down_Right,
+      InputDirection.Right,
+    ].contains(direction);
+
+    if (bodyFirst){
+      render.spriteFrame(
+        sprite: spriteBody,
+        frame: completingAction
+            ? spriteBody.getFramePercentage(row, actionComplete)
+            : spriteBody.getFrame(row: row, column: animationFrame),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+    }
+
 
     render.spriteFrame(
       sprite: spriteArmFront,
@@ -643,6 +656,20 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
+
+    if (!bodyFirst){
+      render.spriteFrame(
+        sprite: spriteBody,
+        frame: completingAction
+            ? spriteBody.getFramePercentage(row, actionComplete)
+            : spriteBody.getFrame(row: row, column: animationFrame),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+    }
 
     render.spriteFrame(
       sprite: spriteBodyArm,

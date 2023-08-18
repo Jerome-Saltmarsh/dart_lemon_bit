@@ -13,8 +13,7 @@ class IsometricDirection {
   static const North_West = 7;
   static const None = 8;
 
-  static int fromInputDirection(int inputDirection){
-    return const {
+  static int fromInputDirection(int inputDirection) => const {
       InputDirection.Up         : IsometricDirection.North_East,
       InputDirection.Up_Right   : IsometricDirection.East,
       InputDirection.Right      : IsometricDirection.South_East,
@@ -25,9 +24,8 @@ class IsometricDirection {
       InputDirection.Up_Left    : IsometricDirection.North,
       InputDirection.None       : IsometricDirection.None,
     }[inputDirection] ?? IsometricDirection.None;
-  }
 
-  static int toStandardDirection(int isometricDirection) => const {
+  static int toInputDirection(int isometricDirection) => const {
       IsometricDirection.North_East : InputDirection.Up,
       IsometricDirection.East : InputDirection.Up_Right,
       IsometricDirection.South_East : InputDirection.Right,

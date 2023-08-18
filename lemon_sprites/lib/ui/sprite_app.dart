@@ -34,6 +34,7 @@ class SpriteApp extends StatelessWidget {
           title: const Text('LEMON-SPRITES'),
           actions: [
             buildControlReduction(),
+            buildButtonCells(),
             buildButtonAtlas(),
             buildControlRows(),
             buildControlColumns(),
@@ -104,6 +105,12 @@ class SpriteApp extends StatelessWidget {
       buildButton(
         action: onButtonLoadPressed,
         child: buildButtonText('LOAD'),
+      );
+
+  Widget buildButtonCells() =>
+      buildButton(
+        action: sprite.buildCells,
+        child: buildButtonText('Cells'),
       );
 
   Widget buildButtonAtlas() =>
