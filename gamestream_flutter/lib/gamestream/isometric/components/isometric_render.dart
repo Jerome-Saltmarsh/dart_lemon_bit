@@ -446,6 +446,9 @@ class IsometricRender with IsometricComponent {
     if (!options.renderCursorEnable)
       return;
 
+    if (amulet.dragging.value != null)
+      return;
+
     final cooldown = player.weaponCooldown.value;
     final accuracy = player.accuracy.value;
     final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
