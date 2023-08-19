@@ -2475,11 +2475,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   bool characterConditionKillTarget(Character character) =>
       character.isEnemy(character.target);
 
-  bool shouldCharacterPerformAttackOnTarget(Character character){
-    return character.target != null &&
-        character.targetWithinAttackRange &&
-        character.targetPerceptible;
-  }
+  bool shouldCharacterPerformAttackOnTarget(Character character) =>
+      character.target != null &&
+      character.targetWithinAttackRange &&
+      (!character.pathFindingEnabled || character.targetPerceptible);
 
   void characterGoalKillTarget(Character character){
     character.goal = CharacterGoal.Kill_Target;
