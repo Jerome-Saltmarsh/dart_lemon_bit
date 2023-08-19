@@ -10,7 +10,7 @@ export '../types/hand_type.dart';
 export 'isometric_direction.dart';
 export 'isometric_request.dart';
 export 'isometric_response.dart';
-export '../types/gameobject_type.dart';
+export '../types/item_type.dart';
 export 'lightning_type.dart';
 export 'node_orientation.dart';
 export 'node_size.dart';

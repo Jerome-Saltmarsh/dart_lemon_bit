@@ -42,18 +42,18 @@ class WebsiteGame extends Game {
   }
 
   void validateAtlases(){
-    for (final entry in GameObjectType.collections.entries){
+    for (final entry in ItemType.collections.entries){
       final type = entry.key;
       final values = entry.value;
       final atlas = Atlas.SrcCollection[type];
       if (atlas == null) {
-        print('missing atlas ${GameObjectType.getName(type)}');
+        print('missing atlas ${ItemType.getName(type)}');
         continue;
       }
       for (final value in values){
         if (!atlas.containsKey(value)){
-          error.value = 'missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}';
-          print('missing atlas src for ${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, value)}');
+          error.value = 'missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}';
+          print('missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}');
         }
       }
     }
@@ -62,7 +62,7 @@ class WebsiteGame extends Game {
       try {
         TemplateAnimation.getWeaponPerformAnimation(weaponType);
       } catch (e){
-        print('attack animation missing for ${GameObjectType.getNameSubType(GameObjectType.Weapon, weaponType)}');
+        print('attack animation missing for ${ItemType.getNameSubType(ItemType.Weapon, weaponType)}');
       }
     }
   }

@@ -382,7 +382,7 @@ class IsometricUI with IsometricComponent {
   Widget buildImageGameObject(int objectType) =>
       buildImageFromSrc(
         images.atlas_gameobjects,
-        Atlas.getSrc(GameObjectType.Object, objectType),
+        Atlas.getSrc(ItemType.Object, objectType),
       );
 
   Widget buildImageFromSrc(ui.Image image, List<double> src) =>

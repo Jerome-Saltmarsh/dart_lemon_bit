@@ -18,7 +18,7 @@ class CaptureTheFlagGameObjectFlag extends GameObject with ICaptureTheFlagTeam {
     required super.id,
     required super.subType,
     required super.team,
-  }) :super(type: GameObjectType.Object) {
+  }) :super(type: ItemType.Object) {
     recyclable = false;
     fixed = false;
     physical = false;

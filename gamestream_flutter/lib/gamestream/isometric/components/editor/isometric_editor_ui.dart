@@ -1079,10 +1079,10 @@ extension IsometricEditorUI on IsometricEditor {
                         height8,
                         buildButtonDuplicate(),
                         height8,
-                        buildText(GameObjectType.getName(type), size: 22),
+                        buildText(ItemType.getName(type), size: 22),
                         height8,
                         buildText(
-                            GameObjectType.getNameSubType(type, subType),
+                            ItemType.getNameSubType(type, subType),
                             size: 22),
                         height8,
                         buildWatchCollidable(),

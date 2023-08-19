@@ -445,7 +445,7 @@ class WebSocketConnection with ByteReader {
           x: scene.getIndexX(index) + Node_Size_Half,
           y: scene.getIndexY(index) + Node_Size_Half,
           z: scene.getIndexZ(index),
-          type: GameObjectType.Object,
+          type: ItemType.Object,
           subType: type,
           team: 0, // TODO
         );

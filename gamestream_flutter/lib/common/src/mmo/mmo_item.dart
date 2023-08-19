@@ -4,7 +4,7 @@ import '../../src.dart';
 enum MMOItem {
   Blink_Dagger(
     quality: MMOItemQuality.Rare,
-    type: GameObjectType.Weapon,
+    type: ItemType.Weapon,
     subType: WeaponType.Sword,
     cooldown: 40,
     range: 180,
@@ -14,7 +14,7 @@ enum MMOItem {
   ),
   Rusty_Old_Sword(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Weapon,
+      type: ItemType.Weapon,
       subType: WeaponType.Sword,
       cooldown: 40,
       damage: 2,
@@ -25,7 +25,7 @@ enum MMOItem {
   ),
   Staff_Of_Flames(
       quality: MMOItemQuality.Unique,
-      type: GameObjectType.Weapon,
+      type: ItemType.Weapon,
       subType: WeaponType.Staff,
       cooldown: 40,
       damage: 2,
@@ -36,7 +36,7 @@ enum MMOItem {
   ),
   Staff_Of_Frozen_Lake(
       quality: MMOItemQuality.Rare,
-      type: GameObjectType.Weapon,
+      type: ItemType.Weapon,
       subType: WeaponType.Staff,
       cooldown: 40,
       damage: 2,
@@ -47,7 +47,7 @@ enum MMOItem {
   ),
   Old_Bow(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Weapon,
+      type: ItemType.Weapon,
       subType: WeaponType.Bow,
       cooldown: 40,
       damage: 1,
@@ -58,7 +58,7 @@ enum MMOItem {
   ),
   Holy_Bow(
       quality: MMOItemQuality.Rare,
-      type: GameObjectType.Weapon,
+      type: ItemType.Weapon,
       subType: WeaponType.Bow,
       cooldown: 20,
       damage: 100,
@@ -69,104 +69,104 @@ enum MMOItem {
   ),
   Steel_Helmet(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Helm,
+      type: ItemType.Helm,
       subType: HelmType.Steel,
       health: 10,
   ),
   Rogues_Hood(
       quality: MMOItemQuality.Unique,
-      type: GameObjectType.Helm,
+      type: ItemType.Helm,
       subType: HelmType.Rogues_Hood,
       health: 5,
       movement: 0.1,
   ),
   Travellers_Pants(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Legs,
+      type: ItemType.Legs,
       subType: LegType.Brown,
       health: 2,
       movement: 0.1,
   ),
   Gauntlet(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Hand,
+      type: ItemType.Hand,
       subType: HandType.Gauntlets,
       health: 2,
   ),
   Squires_Pants(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Legs,
+      type: ItemType.Legs,
       subType: LegType.Green,
       health: 3,
   ),
   Knights_Pants(
       quality: MMOItemQuality.Unique,
-      type: GameObjectType.Legs,
+      type: ItemType.Legs,
       subType: LegType.Blue,
       health: 5,
       movement: -0.1,
   ),
   Worn_Red_Shirt (
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Body,
+      type: ItemType.Body,
       subType: BodyType.Shirt_Red,
       health: 1,
   ),
   Worn_Shirt_Blue (
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Body,
+      type: ItemType.Body,
       subType: BodyType.Shirt_Blue,
       health: 1,
   ),
   Basic_Padded_Armour (
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Body,
+      type: ItemType.Body,
       subType: BodyType.Tunic_Padded,
       health: 5,
   ),
   Squires_Armour (
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Body,
+      type: ItemType.Body,
       subType: BodyType.Tunic_Padded,
       health: 7,
   ),
   Plated_Armour (
       quality: MMOItemQuality.Unique,
-      type: GameObjectType.Body,
+      type: ItemType.Body,
       subType: BodyType.Tunic_Padded,
       health: 10,
   ),
   Health_Potion(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Consumable,
+      type: ItemType.Consumable,
       subType: ConsumableType.Health_Potion,
       health: 10,
       consumable: true,
   ),
   Treasure_Box(
     quality: MMOItemQuality.Common,
-    type: GameObjectType.Consumable,
+    type: ItemType.Consumable,
     subType: ConsumableType.Treasure_Box,
     collectable: false,
     experience: 3,
   ),
   Meat_Drumstick(
       quality: MMOItemQuality.Common,
-      type: GameObjectType.Consumable,
+      type: ItemType.Consumable,
       subType: ConsumableType.Meat_Drumstick,
       health: 4,
       collectable: false,
   ),
   Lost_Pendant_Of_Dreams(
     quality: MMOItemQuality.Mythical,
-    type: GameObjectType.Treasure,
+    type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     health: 100,
     isTreasure: true,
   ),
   Sapphire_Pendant(
       quality: MMOItemQuality.Rare,
-      type: GameObjectType.Treasure,
+      type: ItemType.Treasure,
       subType: TreasureType.Pendant_1,
       health: 5,
       isTreasure: true,
@@ -188,15 +188,15 @@ enum MMOItem {
   final int actionFrame;
   final int performDuration;
 
-  bool get isWeapon => type == GameObjectType.Weapon;
+  bool get isWeapon => type == ItemType.Weapon;
 
-  bool get isHelm => type == GameObjectType.Helm;
+  bool get isHelm => type == ItemType.Helm;
 
-  bool get isHand => type == GameObjectType.Hand;
+  bool get isHand => type == ItemType.Hand;
 
-  bool get isBody => type == GameObjectType.Body;
+  bool get isBody => type == ItemType.Body;
 
-  bool get isLegs => type == GameObjectType.Legs;
+  bool get isLegs => type == ItemType.Legs;
 
   const MMOItem({
     required this.type,

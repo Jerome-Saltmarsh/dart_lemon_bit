@@ -280,7 +280,7 @@ extension isometricDebugUI on IsometricDebug {
               .map((gameObject) => onPressed(
                 action: () => network.sendIsometricRequestSelectGameObject(gameObject),
                 child: buildText(
-                    '${GameObjectType.getName(gameObject.type)} - ${GameObjectType.getNameSubType(gameObject.type, gameObject.subType)}'),
+                    '${ItemType.getName(gameObject.type)} - ${ItemType.getNameSubType(gameObject.type, gameObject.subType)}'),
               ))
               .toList(growable: false),
         ),
@@ -441,8 +441,8 @@ extension isometricDebugUI on IsometricDebug {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildRow('type', buildText(GameObjectType.getName(type))),
-              buildRow('sub-type', WatchBuilder(selectedGameObjectSubType, (subType) => buildText(GameObjectType.getNameSubType(type, subType))))
+              buildRow('type', buildText(ItemType.getName(type))),
+              buildRow('sub-type', WatchBuilder(selectedGameObjectSubType, (subType) => buildText(ItemType.getNameSubType(type, subType))))
             ],
           ))
 

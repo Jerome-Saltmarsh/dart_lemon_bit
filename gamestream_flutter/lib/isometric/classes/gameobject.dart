@@ -55,6 +55,6 @@ class GameObject extends Position {
   String toString() => '{x: ${x.toInt()}, '
       'y: ${y.toInt()}, '
       'z: ${z.toInt()}, '
-      'type: ${GameObjectType.getName(type)}, '
-      'subType: ${GameObjectType.getNameSubType(type, subType)}}';
+      'type: ${ItemType.getName(type)}, '
+      'subType: ${ItemType.getNameSubType(type, subType)}}';
 }

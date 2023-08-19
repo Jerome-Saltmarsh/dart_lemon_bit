@@ -226,7 +226,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     final item = weapon.item;
 
-    if (item == null || item.type != GameObjectType.Weapon){
+    if (item == null || item.type != ItemType.Weapon){
       return;
     }
 
@@ -597,7 +597,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    if (itemType == GameObjectType.Consumable){
+    if (itemType == ItemType.Consumable){
       if (subType == ConsumableType.Health_Potion){
         health = maxHealth;
         setCharacterStateChanging();
@@ -608,9 +608,9 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     switch (item.type) {
-      case GameObjectType.Consumable:
+      case ItemType.Consumable:
         break;
-      case GameObjectType.Weapon:
+      case ItemType.Weapon:
         final emptyWeaponIndex = getEmptyWeaponIndex();
         if (emptyWeaponIndex != -1){
           setWeapon(
@@ -636,16 +636,16 @@ class AmuletPlayer extends IsometricPlayer {
           setCharacterStateChanging();
         }
         break;
-      case GameObjectType.Helm:
+      case ItemType.Helm:
         swap(equippedHelm, selected);
         break;
-      case GameObjectType.Body:
+      case ItemType.Body:
         swap(equippedBody, selected);
         break;
-      case GameObjectType.Legs:
+      case ItemType.Legs:
         swap(equippedLegs, selected);
         break;
-      case GameObjectType.Hand:
+      case ItemType.Hand:
         if (equippedHandLeft.item == null){
           swap(equippedHandLeft, selected);
         } else {

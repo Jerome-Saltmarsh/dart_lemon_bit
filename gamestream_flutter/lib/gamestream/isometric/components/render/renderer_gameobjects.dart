@@ -17,21 +17,21 @@ class RendererGameObjects extends RenderGroup {
   @override
   void onComponentReady() {
     mapGameObjectTypeToImage = {
-      GameObjectType.Weapon: images.atlas_weapons,
-      GameObjectType.Object: images.atlas_gameobjects,
-      GameObjectType.Helm: images.atlas_helms,
-      GameObjectType.Body: images.atlas_body,
-      GameObjectType.Legs: images.atlas_legs,
-      GameObjectType.Consumable: images.atlas_consumables,
-      GameObjectType.Hand: images.atlas_hands,
-      GameObjectType.Treasure: images.atlas_treasures,
+      ItemType.Weapon: images.atlas_weapons,
+      ItemType.Object: images.atlas_gameobjects,
+      ItemType.Helm: images.atlas_helms,
+      ItemType.Body: images.atlas_body,
+      ItemType.Legs: images.atlas_legs,
+      ItemType.Consumable: images.atlas_consumables,
+      ItemType.Hand: images.atlas_hands,
+      ItemType.Treasure: images.atlas_treasures,
     };
   }
 
   Image getImageForGameObjectType(int type) =>
       mapGameObjectTypeToImage [type] ?? (
           throw Exception(
-              'getImageForGameObjectType(type: ${GameObjectType.getName(type)}})'
+              'getImageForGameObjectType(type: ${ItemType.getName(type)}})'
           )
       );
 
@@ -47,11 +47,11 @@ class RendererGameObjects extends RenderGroup {
     final src = Atlas.getSrc(type, gameObject.subType);
 
     final isCollectable = const [
-      GameObjectType.Weapon,
-      GameObjectType.Helm,
-      GameObjectType.Body,
-      GameObjectType.Legs,
-      GameObjectType.Consumable,
+      ItemType.Weapon,
+      ItemType.Helm,
+      ItemType.Body,
+      ItemType.Legs,
+      ItemType.Consumable,
     ].contains(type);
 
     if (isCollectable){

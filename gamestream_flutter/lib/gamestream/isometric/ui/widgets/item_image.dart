@@ -23,7 +23,7 @@ class ItemImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (type == 0) {
       return buildText(type == 0 ? '-' :
-      '${GameObjectType.getName(type)} ${GameObjectType.getNameSubType(type, subType)}'
+      '${ItemType.getName(type)} ${ItemType.getNameSubType(type, subType)}'
       );
     }
 

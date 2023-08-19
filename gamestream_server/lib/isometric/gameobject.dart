@@ -42,9 +42,9 @@ class GameObject extends Collider {
 
   bool get positionDirty => x != previousX || y != previousY || z != previousZ;
 
-  String get typeName => GameObjectType.getName(type);
+  String get typeName => ItemType.getName(type);
 
-  String get subTypeName => GameObjectType.getNameSubType(type, subType);
+  String get subTypeName => ItemType.getNameSubType(type, subType);
 
   void synchronizePrevious(){
     previousX = x;
@@ -58,7 +58,7 @@ class GameObject extends Collider {
   }
 
   @override
-  String get name => GameObjectType.getNameSubType(type, subType);
+  String get name => ItemType.getNameSubType(type, subType);
 }
 
 

@@ -1,6 +1,6 @@
 import '../../../common.dart';
 
-class GameObjectType {
+class ItemType {
   static const Weapon = 1;
   static const Helm = 2;
   static const Body = 3;

@@ -148,13 +148,13 @@ extension MMORequestHandler on WebSocketConnection {
 
   bool slotTypeSupportsType(SlotType slotType, int type) =>
       switch (slotType){
-        SlotType.Equipped_Helm => type == GameObjectType.Helm,
-        SlotType.Equipped_Legs => type == GameObjectType.Legs,
-        SlotType.Equipped_Body => type == GameObjectType.Body,
-        SlotType.Equipped_Hand_Left => type == GameObjectType.Hand,
-        SlotType.Equipped_Hand_Right => type == GameObjectType.Hand,
-        SlotType.Treasures => type == GameObjectType.Treasure,
-        SlotType.Weapons => type == GameObjectType.Weapon,
+        SlotType.Equipped_Helm => type == ItemType.Helm,
+        SlotType.Equipped_Legs => type == ItemType.Legs,
+        SlotType.Equipped_Body => type == ItemType.Body,
+        SlotType.Equipped_Hand_Left => type == ItemType.Hand,
+        SlotType.Equipped_Hand_Right => type == ItemType.Hand,
+        SlotType.Treasures => type == ItemType.Treasure,
+        SlotType.Weapons => type == ItemType.Weapon,
         SlotType.Items => true
       };
 }
