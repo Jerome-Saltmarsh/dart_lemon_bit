@@ -247,6 +247,10 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Bow_Drawn:
         audio.play(audio.bow_draw, x, y, z);
         break;
+
+      case GameEventType.Bow_Released:
+        audio.play(audio.bow_release, x, y, z);
+        break;
     }
   }
 

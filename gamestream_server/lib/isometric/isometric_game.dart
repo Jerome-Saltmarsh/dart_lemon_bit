@@ -1476,6 +1476,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (weaponType == WeaponType.Bow) {
+      dispatchGameEvent(
+        GameEventType.Bow_Released,
+        character.x,
+        character.y,
+        character.z,
+      );
       spawnProjectileArrow(
         src: character,
         damage: character.weaponDamage,

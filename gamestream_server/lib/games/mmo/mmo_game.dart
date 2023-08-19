@@ -178,6 +178,12 @@ class Amulet extends IsometricGame<AmuletPlayer> {
         applyAttackTypeMelee(character);
         break;
       case MMOAttackType.Arrow:
+        dispatchGameEvent(
+          GameEventType.Bow_Released,
+          character.x,
+          character.y,
+          character.z,
+        );
         spawnProjectileArrow(
           src: character,
           damage: item.damage,
