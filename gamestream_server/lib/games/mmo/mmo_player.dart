@@ -1333,6 +1333,10 @@ class AmuletPlayer extends IsometricPlayer {
       return;
 
     switch (slotType){
+      case SlotType.Weapons:
+        equippedWeaponIndex = index;
+        return;
+
       case SlotType.Items:
         if (index >= items.length)
           return;
@@ -1348,8 +1352,8 @@ class AmuletPlayer extends IsometricPlayer {
           consumeItem(consumableType);
           clearSlot(inventorySlot);
           writePlayerEventItemTypeConsumed(consumableType);
+          return;
         }
-
         break;
 
       default:

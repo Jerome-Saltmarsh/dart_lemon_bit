@@ -205,7 +205,7 @@ class MmoGame extends IsometricGame {
   }) =>
     network.send(
       ClientRequest.Inventory_Request,
-      '${InventoryRequest.Item_Dragged.index} '
+      '${InventoryRequest.Move.index} '
       '${src.slotType.index} '
       '${src.index} '
       '${target.slotType.index} '
@@ -215,7 +215,7 @@ class MmoGame extends IsometricGame {
   void reportItemSlotLeftClicked(ItemSlot itemSlot) =>
     network.send(
       ClientRequest.Inventory_Request,
-      '${InventoryRequest.Item_Clicked_Left.index} '
+      '${InventoryRequest.Use.index} '
       '${itemSlot.slotType.index} '
       '${itemSlot.index}'
     );
@@ -223,7 +223,7 @@ class MmoGame extends IsometricGame {
   void dropItemSlot(ItemSlot itemSlot) =>
     network.send(
       ClientRequest.Inventory_Request,
-      '${InventoryRequest.Item_Clicked_Right.index} '
+      '${InventoryRequest.Drop.index} '
       '${itemSlot.slotType.index} '
       '${itemSlot.index}'
     );

@@ -12,7 +12,7 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
   }
 
   switch (InventoryRequest.values[arguments[1]]) {
-    case InventoryRequest.Item_Dragged:
+    case InventoryRequest.Move:
       final srcSlotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
       final targetSlotTypeIndex = arguments[4];
@@ -46,13 +46,13 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       player.notifyEquipmentDirty();
       break;
 
-    case InventoryRequest.Item_Clicked_Left:
+    case InventoryRequest.Use:
       final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
       player.useInventorySlot(SlotType.values[slotTypeIndex], srcIndex);
       break;
 
-    case InventoryRequest.Item_Clicked_Right:
+    case InventoryRequest.Drop:
       final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
       player.inventoryDrop(SlotType.values[slotTypeIndex], srcIndex);
