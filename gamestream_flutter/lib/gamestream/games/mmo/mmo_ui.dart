@@ -220,7 +220,7 @@ extension MMOUI on MmoGame {
         children: [
           backgroundSelectedWeapon,
           backgroundActivePower,
-          Positioned(child: buildItemSlot(weapons[index])),
+          Positioned(child: buildItemSlot(weapons[index], color: Colors.transparent)),
           Positioned(
               top: 8,
               left: 8,
@@ -550,7 +550,7 @@ extension MMOUI on MmoGame {
     );
   }
 
-  Widget buildItemSlot(ItemSlot slot) => Container(
+  Widget buildItemSlot(ItemSlot slot, {Color? color}) => Container(
     margin: const EdgeInsets.all(2),
     child: buildWatch(
         slot.item,
@@ -566,7 +566,7 @@ extension MMOUI on MmoGame {
                   height: 64.0,
                   color: dragging != null && slot.acceptsDragFrom(dragging)
                       ? colors.green_4
-                      : colors.brown_1,
+                      : (color ?? colors.brown_1),
                   alignment: Alignment.center,
                   child: item == null
                       ? buildText('-')
