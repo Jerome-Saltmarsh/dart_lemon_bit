@@ -550,42 +550,45 @@ extension MMOUI on MmoGame {
     );
   }
 
-  Widget buildItemSlot(ItemSlot slot) => buildWatch(
-      slot.item,
-      (item) =>
-          buildWatch(dragging, (dragging) => DragTarget(
-            onWillAccept: (value) => true,
-            onAccept: (value) {
-              if (value is! ItemSlot) return;
-              reportItemSlotDragged(src: value, target: slot);
-            },
-            builder: (context, data, rejectData) => Container(
-                width: 64.0,
-                height: 64.0,
-                color: dragging != null && slot.acceptsDragFrom(dragging)
-                    ? colors.green_0
-                    : colors.brown01,
-                alignment: Alignment.center,
-                child: item == null
-                    ? buildText('-')
-                    : Draggable(
-                  data: slot,
-                  feedback: MMOItemImage(item: item, size: 64),
-                  onDragStarted: () {
-                    this.dragging.value = slot;
-                  },
-                  onDragEnd: (details) {
-                    this.dragging.value = null;
-                  },
-                  // child: MMOItemImage(item: item, size: 64),
-                  child: onPressed(
-                    onRightClick: () =>
-                        reportItemSlotRightClicked(slot),
-                    action: () => reportItemSlotLeftClicked(slot),
-                    child: MMOItemImage(item: item, size: 64),
+  Widget buildItemSlot(ItemSlot slot) => Container(
+    margin: const EdgeInsets.all(2),
+    child: buildWatch(
+        slot.item,
+        (item) =>
+            buildWatch(dragging, (dragging) => DragTarget(
+              onWillAccept: (value) => true,
+              onAccept: (value) {
+                if (value is! ItemSlot) return;
+                reportItemSlotDragged(src: value, target: slot);
+              },
+              builder: (context, data, rejectData) => Container(
+                  width: 64.0,
+                  height: 64.0,
+                  color: dragging != null && slot.acceptsDragFrom(dragging)
+                      ? colors.green_4
+                      : colors.brown_1,
+                  alignment: Alignment.center,
+                  child: item == null
+                      ? buildText('-')
+                      : Draggable(
+                    data: slot,
+                    feedback: MMOItemImage(item: item, size: 64),
+                    onDragStarted: () {
+                      this.dragging.value = slot;
+                    },
+                    onDragEnd: (details) {
+                      this.dragging.value = null;
+                    },
+                    // child: MMOItemImage(item: item, size: 64),
+                    child: onPressed(
+                      onRightClick: () =>
+                          reportItemSlotRightClicked(slot),
+                      action: () => reportItemSlotLeftClicked(slot),
+                      child: MMOItemImage(item: item, size: 64),
+                    ),
                   ),
                 ),
-              ),
-          ))
-         );
+            ))
+           ),
+  );
 }

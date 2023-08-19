@@ -701,7 +701,7 @@ extension IsometricEditorUI on IsometricEditor {
       right: 70,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: colors.brown02,
+        color: colors.brown_2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
