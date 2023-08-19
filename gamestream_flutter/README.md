@@ -17,6 +17,8 @@ shift + alt + J     : backspace
 - kid complexion dark
 - kid hair type
 - kid shoe type
+- stash
+- store
 - fix render nodes corner and bottom
 - fix set node light source refresh
 - player attributes dialog

@@ -569,7 +569,7 @@ extension MMOUI on MmoGame {
                       : (color ?? colors.brown_1),
                   alignment: Alignment.center,
                   child: item == null
-                      ? buildText('-')
+                      ? nothing
                       : Draggable(
                     data: slot,
                     feedback: MMOItemImage(item: item, size: 64),
@@ -579,7 +579,6 @@ extension MMOUI on MmoGame {
                     onDragEnd: (details) {
                       this.dragging.value = null;
                     },
-                    // child: MMOItemImage(item: item, size: 64),
                     child: onPressed(
                       onRightClick: () =>
                           reportItemSlotRightClicked(slot),
