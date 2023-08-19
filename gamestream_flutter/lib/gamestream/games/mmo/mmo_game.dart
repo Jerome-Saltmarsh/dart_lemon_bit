@@ -201,7 +201,7 @@ class MmoGame extends IsometricGame {
       ClientRequest.Inventory_Request,
       '${InventoryRequest.Item_Clicked_Left.index} '
       '${itemSlot.slotType.index} '
-      '${itemSlot.index} '
+      '${itemSlot.index}'
     );
 
   void reportItemSlotRightClicked(MMOItemSlot itemSlot) =>
@@ -209,6 +209,6 @@ class MmoGame extends IsometricGame {
       ClientRequest.Inventory_Request,
       '${InventoryRequest.Item_Clicked_Right.index} '
       '${itemSlot.slotType.index} '
-      '${itemSlot.index} '
+      '${itemSlot.index}'
     );
 }

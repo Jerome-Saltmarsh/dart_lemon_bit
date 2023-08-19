@@ -2,7 +2,7 @@
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/common/src/mmo/mmo_item.dart';
 
-class MMOItemObject {
+class ItemSlot {
   MMOItem? item;
   var cooldown = 0;
 

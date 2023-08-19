@@ -699,7 +699,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writePlayerEventItemTypeConsumed(int itemType){
     writePlayerEvent(PlayerEvent.Item_Consumed);
-    writeUInt16(itemType);
+    writeByte(itemType);
   }
 
   void writePlayerEventRecipeCrafted() =>

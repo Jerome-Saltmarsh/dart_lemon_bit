@@ -45,9 +45,14 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       break;
 
     case InventoryRequest.Item_Clicked_Left:
+      final slotTypeIndex = arguments[2];
+      final srcIndex = arguments[3];
+      player.useInventorySlot(SlotType.values[slotTypeIndex], srcIndex);
       break;
 
     case InventoryRequest.Item_Clicked_Right:
+      final srcSlotTypeIndex = arguments[2];
+      final srcIndex = arguments[3];
       break;
   }
 }

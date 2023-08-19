@@ -188,16 +188,6 @@ enum MMOItem {
   final int actionFrame;
   final int performDuration;
 
-  bool get isWeapon => type == ItemType.Weapon;
-
-  bool get isHelm => type == ItemType.Helm;
-
-  bool get isHand => type == ItemType.Hand;
-
-  bool get isBody => type == ItemType.Body;
-
-  bool get isLegs => type == ItemType.Legs;
-
   const MMOItem({
     required this.type,
     required this.subType,
@@ -215,6 +205,18 @@ enum MMOItem {
     this.performDuration = -1,
     this.attackType
   });
+
+  bool get isWeapon => type == ItemType.Weapon;
+
+  bool get isHelm => type == ItemType.Helm;
+
+  bool get isHand => type == ItemType.Hand;
+
+  bool get isConsumable => type == ItemType.Consumable;
+
+  bool get isBody => type == ItemType.Body;
+
+  bool get isLegs => type == ItemType.Legs;
 
   static final valuesCommon = _findByQuality(MMOItemQuality.Common);
   static final valuesUnique = _findByQuality(MMOItemQuality.Unique);

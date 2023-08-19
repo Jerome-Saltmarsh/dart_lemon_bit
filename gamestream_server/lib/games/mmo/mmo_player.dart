@@ -19,17 +19,17 @@ class AmuletPlayer extends IsometricPlayer {
   var npcOptions = <TalkOption>[];
   var performingActivePower = false;
 
-  final weapons = List<MMOItemObject>.generate(4, (index) => MMOItemObject());
-  final treasures = List<MMOItemObject>.generate(4, (index) => MMOItemObject());
+  final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot());
+  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot());
   final talents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
 
-  final equippedHelm = MMOItemObject();
-  final equippedBody = MMOItemObject();
-  final equippedLegs = MMOItemObject();
-  final equippedHandLeft = MMOItemObject();
-  final equippedHandRight = MMOItemObject();
+  final equippedHelm = ItemSlot();
+  final equippedBody = ItemSlot();
+  final equippedLegs = ItemSlot();
+  final equippedHandLeft = ItemSlot();
+  final equippedHandRight = ItemSlot();
 
-  late List<MMOItemObject> items;
+  late List<ItemSlot> items;
 
   var _inventoryOpen = false;
   var _skillsDialogOpen = false;
@@ -146,7 +146,7 @@ class AmuletPlayer extends IsometricPlayer {
     return base;
   }
 
-  MMOItemObject? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+  ItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
   set experience(int value){
     _experience = value;
@@ -244,7 +244,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void setItemsLength(int value){
-    items = List.generate(value, (index) => MMOItemObject());
+    items = List.generate(value, (index) => ItemSlot());
     writeItemLength(value);
   }
 
@@ -977,7 +977,7 @@ class AmuletPlayer extends IsometricPlayer {
     talentDialogOpen = !talentDialogOpen;
   }
 
-  static MMOItemObject? getEmptySlot(List<MMOItemObject> items){
+  static ItemSlot? getEmptySlot(List<ItemSlot> items){
     for (final item in items) {
       if (item.item == null)
         return item;
@@ -985,7 +985,7 @@ class AmuletPlayer extends IsometricPlayer {
     return null;
   }
 
-  static int getEmptyIndex(List<MMOItemObject> items){
+  static int getEmptyIndex(List<ItemSlot> items){
     for (var i = 0; i < items.length; i++){
       if (items[i].item == null)
         return i;
@@ -1219,7 +1219,7 @@ class AmuletPlayer extends IsometricPlayer {
       isValidIndex(index, weapons) ? weapons[index].item : null;
 
 
-  void addToEmptyTreasureSlot(MMOItemObject slot){
+  void addToEmptyTreasureSlot(ItemSlot slot){
     final item = slot.item;
 
     if (item == null || !item.isTreasure)
@@ -1233,7 +1233,7 @@ class AmuletPlayer extends IsometricPlayer {
     swap(slot, emptyTreasureSlot);
   }
 
-  void swapWithAvailableItemSlot(MMOItemObject slot){
+  void swapWithAvailableItemSlot(ItemSlot slot){
     if (slot.item == null)
       return;
 
@@ -1245,16 +1245,16 @@ class AmuletPlayer extends IsometricPlayer {
     swap(availableItemSlot, slot);
   }
 
-  MMOItemObject? getEmptyItemSlot() => getEmptySlot(items);
+  ItemSlot? getEmptyItemSlot() => getEmptySlot(items);
 
 
-  void clearSlot(MMOItemObject slot){
+  void clearSlot(ItemSlot slot){
     slot.clear();
     notifyEquipmentDirty();
   }
 
   void setSlot({
-    required MMOItemObject slot,
+    required ItemSlot slot,
     required MMOItem? item,
     required int cooldown,
   }) {
@@ -1263,7 +1263,7 @@ class AmuletPlayer extends IsometricPlayer {
     notifyEquipmentDirty();
   }
 
-  void swap(MMOItemObject a, MMOItemObject b){
+  void swap(ItemSlot a, ItemSlot b){
      final aItem = a.item;
      final aCooldown = a.cooldown;
      final bItem = b.item;
@@ -1307,7 +1307,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeString(error);
   }
 
-  MMOItemObject getItemObjectAtSlotType(SlotType slotType, int index){
+  ItemSlot getItemObjectAtSlotType(SlotType slotType, int index){
     switch (slotType){
       case SlotType.Items:
         return items[index];
@@ -1326,5 +1326,43 @@ class AmuletPlayer extends IsometricPlayer {
       case SlotType.Weapons:
         return weapons[index];
     }
+  }
+
+  void useInventorySlot(SlotType slotType, int index) {
+    if (index < 0)
+      return;
+
+    switch (slotType){
+      case SlotType.Items:
+        if (index >= items.length)
+          return;
+
+        final inventorySlot = items[index];
+        final item = inventorySlot.item;
+
+        if (item == null)
+          return;
+
+        if (item.isConsumable){
+          final consumableType = item.subType;
+          consumeItem(consumableType);
+          clearSlot(inventorySlot);
+          writePlayerEventItemTypeConsumed(consumableType);
+        }
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  void consumeItem(int consumableType) {
+      switch (consumableType) {
+        case ConsumableType.Health_Potion:
+          health += 10;
+          break;
+
+      }
   }
 }

@@ -385,6 +385,8 @@ class IsometricEvents with IsometricComponent {
         action.writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
+        final consumableType = parser.readByte();
+        onItemConsumed(consumableType);
         break;
       case PlayerEvent.Eat:
         audio.eat();
@@ -688,5 +690,9 @@ class IsometricEvents with IsometricComponent {
     network.websocket.connectionStatus.onChanged(
         onChangedNetworkConnectionStatus
     );
+  }
+
+  void onItemConsumed(int consumableType) {
+    audio.drink.play();
   }
 }
