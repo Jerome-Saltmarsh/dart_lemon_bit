@@ -26,7 +26,7 @@ class IsometricActions with IsometricComponent {
 
   void createExplosion(double x, double y, double z){
     spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
-    audio.playAudioXYZ(audio.explosion_grenade_04, x, y, z);
+    audio.play(audio.explosion_grenade_04, x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
@@ -87,7 +87,7 @@ class IsometricActions with IsometricComponent {
 
   void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
 
-    audio.playAudioXYZ(audio.magical_impact_16,x, y, z);
+    audio.play(audio.magical_impact_16,x, y, z);
 
     for (var i = 0; i < amount; i++) {
       particles.spawnParticleFirePurple(

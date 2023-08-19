@@ -1531,6 +1531,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         );
         character.velocityZ += 1;
       }
+    } else if (character.firing) {
+      if (character.frame == 0){
+        dispatchGameEvent(
+          GameEventType.Bow_Drawn,
+          character.x,
+          character.y,
+          character.z,
+        );
+      }
     }
 
     character.frame++;

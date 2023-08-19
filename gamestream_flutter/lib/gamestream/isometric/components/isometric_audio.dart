@@ -395,7 +395,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
     WeaponType.Grenade: dagger_woosh_9,
   };
 
-  void playAudioXYZ(
+  void play(
       AudioSingle audioSingle,
       double x,
       double y,
@@ -417,7 +417,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
   void playAudioSingleV3({
     required AudioSingle audioSingle,
     required Position position,
-    double maxDistance = 600}) => playAudioXYZ(
+    double maxDistance = 600}) => play(
     audioSingle,
     position.x,
     position.y,

@@ -194,6 +194,8 @@ class Character extends Collider {
 
   bool get running => state == CharacterState.Running;
 
+  bool get firing => state == CharacterState.Fire;
+
   bool get striking => state == CharacterState.Strike;
 
   bool get idling => state == CharacterState.Idle;

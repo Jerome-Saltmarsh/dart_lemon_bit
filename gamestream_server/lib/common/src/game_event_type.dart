@@ -42,5 +42,5 @@ class GameEventType {
   static const Blink_Depart             = 83;
   static const Blink_Arrive             = 84;
   static const Item_Landed              = 85;
-
+  static const Bow_Drawn                = 86;
 }
