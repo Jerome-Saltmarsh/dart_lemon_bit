@@ -32,15 +32,17 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
           player.getItemObjectAtSlotType(targetSlotType, targetIndex);
 
       final srcItem = srcItemObject.item;
+      final targetItem = targetItemObject.item;
 
-      if (srcItem == null) throw Exception('srcItem is null');
+      if (srcItem == null)
+        return;
 
       if (!targetSlotType.supportsItemType(srcItem.type)) {
         return;
       }
 
-      targetItemObject.item = srcItemObject.item;
-      srcItemObject.item = null;
+      targetItemObject.item = srcItem;
+      srcItemObject.item = targetItem;
       player.notifyEquipmentDirty();
       break;
 
