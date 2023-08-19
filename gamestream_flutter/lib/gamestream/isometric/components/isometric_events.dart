@@ -11,6 +11,8 @@ class IsometricEvents with IsometricComponent {
 
   void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
+      case WeaponType.Sword:
+        audio.play(audio.sword_unsheathe, x, y, z);
       case WeaponType.Shotgun:
         audio.play(audio.cock_shotgun_3, x, y, z);
         break;
@@ -125,8 +127,8 @@ class IsometricEvents with IsometricComponent {
         audio.play(audio.hover_over_button_sound_30, x, y, z);
         break;
       case GameEventType.Weapon_Type_Equipped:
-        final attackType = network.parser.readByte();
-        return onWeaponTypeEquipped(attackType, x, y, z);
+        final weaponType = (angle * radiansToDegrees).toInt();
+        return onWeaponTypeEquipped(weaponType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
           particles.spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());

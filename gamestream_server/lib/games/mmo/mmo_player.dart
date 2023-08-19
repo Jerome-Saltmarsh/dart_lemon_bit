@@ -234,6 +234,14 @@ class AmuletPlayer extends IsometricPlayer {
     weaponType = equippedWeaponType;
     attackActionFrame = item.actionFrame;
     attackDuration = item.performDuration;
+
+    game.dispatchGameEvent(GameEventType.Weapon_Type_Equipped,
+        x,
+        y,
+        z,
+        weaponType * degreesToRadians,
+    );
+
     writeEquippedWeaponIndex(value);
   }
 
