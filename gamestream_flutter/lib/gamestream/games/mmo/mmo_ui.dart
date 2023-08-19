@@ -577,11 +577,14 @@ extension MMOUI on MmoGame {
                       this.dragging.value = slot;
                     },
                     onDragEnd: (details) {
+                      if (engine.mouseOverCanvas){
+                        dropItemSlot(slot);
+                      }
                       this.dragging.value = null;
                     },
                     child: onPressed(
                       onRightClick: () =>
-                          reportItemSlotRightClicked(slot),
+                          dropItemSlot(slot),
                       action: () => reportItemSlotLeftClicked(slot),
                       child: MMOItemImage(item: item, size: 64),
                     ),

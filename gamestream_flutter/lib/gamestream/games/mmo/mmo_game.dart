@@ -220,7 +220,7 @@ class MmoGame extends IsometricGame {
       '${itemSlot.index}'
     );
 
-  void reportItemSlotRightClicked(ItemSlot itemSlot) =>
+  void dropItemSlot(ItemSlot itemSlot) =>
     network.send(
       ClientRequest.Inventory_Request,
       '${InventoryRequest.Item_Clicked_Right.index} '
