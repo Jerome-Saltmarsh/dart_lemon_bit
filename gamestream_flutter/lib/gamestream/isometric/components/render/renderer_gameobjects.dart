@@ -22,7 +22,7 @@ class RendererGameObjects extends RenderGroup {
       GameObjectType.Helm: images.atlas_helms,
       GameObjectType.Body: images.atlas_body,
       GameObjectType.Legs: images.atlas_legs,
-      GameObjectType.Item: images.atlas_items,
+      GameObjectType.Consumable: images.atlas_consumables,
       GameObjectType.Hand: images.atlas_hands,
       GameObjectType.Treasure: images.atlas_treasures,
     };
@@ -51,7 +51,7 @@ class RendererGameObjects extends RenderGroup {
       GameObjectType.Helm,
       GameObjectType.Body,
       GameObjectType.Legs,
-      GameObjectType.Item,
+      GameObjectType.Consumable,
     ].contains(type);
 
     if (isCollectable){

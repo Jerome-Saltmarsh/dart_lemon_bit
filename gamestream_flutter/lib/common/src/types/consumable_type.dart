@@ -1,5 +1,5 @@
 
-class ItemType {
+class ConsumableType {
   static const Health_Potion = 0;
   static const Magic_Potion = 1;
   static const Meat_Drumstick = 2;

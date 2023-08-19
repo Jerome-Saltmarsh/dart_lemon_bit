@@ -597,8 +597,8 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    if (itemType == GameObjectType.Item){
-      if (subType == ItemType.Health_Potion){
+    if (itemType == GameObjectType.Consumable){
+      if (subType == ConsumableType.Health_Potion){
         health = maxHealth;
         setCharacterStateChanging();
         clearItem(index);
@@ -608,7 +608,7 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     switch (item.type) {
-      case GameObjectType.Item:
+      case GameObjectType.Consumable:
         break;
       case GameObjectType.Weapon:
         final emptyWeaponIndex = getEmptyWeaponIndex();

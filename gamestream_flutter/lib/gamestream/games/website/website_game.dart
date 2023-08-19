@@ -42,7 +42,7 @@ class WebsiteGame extends Game {
   }
 
   void validateAtlases(){
-    for (final entry in GameObjectType.Collection.entries){
+    for (final entry in GameObjectType.collections.entries){
       final type = entry.key;
       final values = entry.value;
       final atlas = Atlas.SrcCollection[type];

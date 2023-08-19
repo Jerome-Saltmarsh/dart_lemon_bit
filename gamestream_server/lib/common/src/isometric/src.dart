@@ -29,7 +29,7 @@ export 'object_type.dart';
 export 'isometric_type.dart';
 export 'character_action.dart';
 export 'compress_type.dart';
-export '../types/item_type.dart';
+export '../types/consumable_type.dart';
 export 'character_goal.dart';
 export 'power_type.dart';
 export 'power_mode.dart';

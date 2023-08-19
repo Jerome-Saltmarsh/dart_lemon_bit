@@ -6,22 +6,18 @@ class GameObjectType {
   static const Body = 3;
   static const Legs = 4;
   static const Object = 5;
-  static const Item = 6;
+  static const Consumable = 6;
   static const Hand = 7;
   static const Treasure = 8;
 
-  static const items = [
-     Weapon, Helm, Body, Legs, Object, Item, Hand, Treasure,
-  ];
-
-  static const Collection = {
+  static const collections = {
     Weapon: WeaponType.values,
     Helm: HelmType.values,
     Body: BodyType.values,
     Legs: LegType.values,
     Hand: HandType.values,
     Object: ObjectType.values,
-    Item: ItemType.values,
+    Consumable: ConsumableType.values,
     Treasure: TreasureType.values,
   };
 
@@ -32,7 +28,7 @@ class GameObjectType {
       Body: 'Body',
       Hand: 'Hands',
       Object: 'Object',
-      Item: 'Consumable',
+      Consumable: 'Consumable',
     }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {
@@ -42,7 +38,8 @@ class GameObjectType {
       Object => ObjectType.getName(subType),
       Hand => HandType.getName(subType),
       Weapon => WeaponType.getName(subType),
-      Item => ItemType.getName(subType),
+      Consumable => ConsumableType.getName(subType),
+      Treasure => TreasureType.getName(subType),
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 
@@ -58,6 +55,7 @@ class GameObjectType {
     Body,
     Helm,
     Object,
-    Item,
+    Consumable,
+    Treasure,
   ];
 }

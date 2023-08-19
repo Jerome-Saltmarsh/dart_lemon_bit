@@ -38,7 +38,7 @@ class RendererProjectiles extends RenderGroup {
         break;
       case ProjectileType.Rocket:
         engine.renderSpriteRotated(
-          image: images.atlas_items,
+          image: images.atlas_consumables,
           srcX: 201,
           srcY: 109,
           srcWidth: 16,

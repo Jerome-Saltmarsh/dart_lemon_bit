@@ -118,7 +118,7 @@ class Atlas {
     GameObjectType.Helm: Collection_Helm,
     GameObjectType.Object: Collection_Objects,
     GameObjectType.Hand: Collection_Hands,
-    GameObjectType.Item: atlasSrcItems,
+    GameObjectType.Consumable: atlasSrcConsumables,
     GameObjectType.Treasure: atlasSrcTreasures,
   };
 
