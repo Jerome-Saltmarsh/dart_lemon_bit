@@ -11,11 +11,7 @@ alt + m             : go to declaration
 shift + alt + n     : enter
 shift + alt + J     : backspace
 
-
 [TODO]
-- inventory item draggable
-- kid state change
-- kid state death
 - kid state caste
 - kid state hurt
 - kid complexion dark
@@ -25,7 +21,12 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 - player attributes dialog
 
-14.08.2023
+19.08.2023
+- inventory item draggable
+- kid state change
+- kid state death
+
+- 14.08.2023
 - fix player not hittable after death
 - fix ai
 
