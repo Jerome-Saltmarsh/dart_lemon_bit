@@ -12,6 +12,7 @@ import 'ui/src.dart';
 
 class MmoGame extends IsometricGame {
 
+  final dragging = Watch<MMOItemSlot?>(null);
   final emptyMMOItemImage = MMOItemImage(item: null, size: 64);
 
   var errorTimer = 0;

@@ -162,14 +162,12 @@ enum MMOItem {
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     health: 100,
-    isTreasure: true,
   ),
   Sapphire_Pendant(
       quality: MMOItemQuality.Rare,
       type: ItemType.Treasure,
       subType: TreasureType.Pendant_1,
       health: 5,
-      isTreasure: true,
   );
 
   final int damage;
@@ -179,7 +177,6 @@ enum MMOItem {
   final int health;
   final int experience;
   final bool collectable;
-  final bool isTreasure;
   final bool consumable;
   final double range;
   final double movement;
@@ -198,7 +195,6 @@ enum MMOItem {
     this.health = 0,
     this.collectable = true,
     this.movement = 0,
-    this.isTreasure = false,
     this.consumable = false,
     this.experience = 0,
     this.actionFrame = -1,
@@ -217,6 +213,8 @@ enum MMOItem {
   bool get isBody => type == ItemType.Body;
 
   bool get isLegs => type == ItemType.Legs;
+
+  bool get isTreasure => type == ItemType.Treasure;
 
   static final valuesCommon = _findByQuality(MMOItemQuality.Common);
   static final valuesUnique = _findByQuality(MMOItemQuality.Unique);

@@ -609,10 +609,39 @@ extension MMOUI on MmoGame {
           return Draggable(
             data: slot,
             feedback: MMOItemImage(item: equipped, size: 64),
+            onDragStarted: (){
+              dragging.value = slot;
+            },
+            onDragEnd: (details) {
+              dragging.value = null;
+            },
             child: onPressed(
               onRightClick: () => reportItemSlotRightClicked(slot),
               action: () => reportItemSlotLeftClicked(slot),
-              child: buildInventoryItem(equipped)),
+              child: Stack(
+                children: [
+                  buildWatch(dragging, (dragging) {
+                    if (dragging == null)
+                      return nothing;
+
+                    final item = dragging.item.value;
+
+                    if (item == null)
+                      return nothing;
+
+                    if (!slot.acceptsDragFrom(dragging))
+                      return nothing;
+
+                    return Container(
+                      width: 66,
+                      height: 66,
+                      color: Colors.green,
+                    );
+                  }),
+                  buildInventoryItem(equipped),
+                ],
+              ),
+            ),
           );
         });
       },
