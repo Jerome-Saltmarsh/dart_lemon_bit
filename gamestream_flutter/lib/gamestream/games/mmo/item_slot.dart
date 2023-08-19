@@ -1,17 +1,17 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-class MMOItemSlot {
+class ItemSlot {
   final int index;
   final SlotType slotType;
   final item = Watch<MMOItem?>(null);
   final cooldown = Watch(0);
 
-  MMOItemSlot({required this.slotType, required this.index});
+  ItemSlot({required this.slotType, required this.index});
 
   bool get isEmpty => item.value != null;
 
-  bool acceptsDragFrom(MMOItemSlot src){
+  bool acceptsDragFrom(ItemSlot src){
 
     final srcItem = src.item.value;
 

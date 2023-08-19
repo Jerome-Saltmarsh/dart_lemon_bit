@@ -16,6 +16,8 @@ class IsometricColors {
   final blue_3 = Color.fromARGB(255, 72, 74, 119);
   final blue_4 = Color.fromARGB(255, 50, 51, 83);
 
+  final green_0 = Colors.green;
+
 
   final brown00 = Color.fromRGBO(46, 34, 47, 1);
   final brown01 = Color.fromRGBO(62, 53, 70, 1);

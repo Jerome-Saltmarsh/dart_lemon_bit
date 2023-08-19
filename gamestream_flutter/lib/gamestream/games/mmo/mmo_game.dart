@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -8,21 +8,36 @@ import 'package:gamestream_flutter/library.dart';
 import 'mmo_actions.dart';
 import 'mmo_render.dart';
 import 'mmo_ui.dart';
-import 'ui/src.dart';
 
 class MmoGame extends IsometricGame {
 
-  final dragging = Watch<MMOItemSlot?>(null);
-  final emptyMMOItemImage = MMOItemImage(item: null, size: 64);
+  final dragging = Watch<ItemSlot?>(null);
+  final emptyItemSlot = buildText('-');
+
+  final slotContainerDefault = Container(
+    color: Colors.black12,
+    alignment: Alignment.center,
+    margin: const EdgeInsets.all(2),
+    width: 64,
+    height: 64,
+  );
+
+  final slotContainerDragTarget = Container(
+    color: Colors.green.withOpacity(0.5),
+    alignment: Alignment.center,
+    margin: const EdgeInsets.all(2),
+    width: 64,
+    height: 64,
+  );
 
   var errorTimer = 0;
-  var items = <MMOItemSlot>[];
+  var items = <ItemSlot>[];
 
   final talentHover = Watch<MMOTalentType?>(null);
   final itemHover = Watch<MMOItem?>(null);
   final activePowerPosition = Position();
-  final weapons = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot(index: index, slotType: SlotType.Weapons));
-  final treasures = List<MMOItemSlot>.generate(4, (index) => MMOItemSlot(index: index, slotType: SlotType.Treasures));
+  final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Weapons));
+  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasures));
   final error = Watch('');
   final playerInteracting = Watch(false);
   final npcText = Watch('');
@@ -30,11 +45,11 @@ class MmoGame extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
   final activatedPowerIndex = Watch(-1);
-  final equippedHelm = MMOItemSlot(slotType: SlotType.Equipped_Helm, index: 0);
-  final equippedBody = MMOItemSlot(slotType: SlotType.Equipped_Body, index: 0);
-  final equippedLegs = MMOItemSlot(slotType: SlotType.Equipped_Legs, index: 0);
-  final equippedHandLeft = MMOItemSlot(slotType: SlotType.Equipped_Hand_Left, index: 0);
-  final equippedHandRight = MMOItemSlot(slotType: SlotType.Equipped_Hand_Right, index: 0);
+  final equippedHelm = ItemSlot(slotType: SlotType.Equipped_Helm, index: 0);
+  final equippedBody = ItemSlot(slotType: SlotType.Equipped_Body, index: 0);
+  final equippedLegs = ItemSlot(slotType: SlotType.Equipped_Legs, index: 0);
+  final equippedHandLeft = ItemSlot(slotType: SlotType.Equipped_Hand_Left, index: 0);
+  final equippedHandRight = ItemSlot(slotType: SlotType.Equipped_Hand_Right, index: 0);
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
@@ -94,7 +109,7 @@ class MmoGame extends IsometricGame {
   }
 
   void setItemLength(int length){
-    items = List.generate(length, (index) => MMOItemSlot(
+    items = List.generate(length, (index) => ItemSlot(
         index: index,
         slotType: SlotType.Items,
     ));
@@ -185,8 +200,8 @@ class MmoGame extends IsometricGame {
       getTalentLevel(talent) >= talent.maxLevel;
 
   void reportItemSlotDragged({
-    required MMOItemSlot src,
-    required MMOItemSlot target,
+    required ItemSlot src,
+    required ItemSlot target,
   }) =>
     network.send(
       ClientRequest.Inventory_Request,
@@ -197,7 +212,7 @@ class MmoGame extends IsometricGame {
       '${target.index}'
     );
 
-  void reportItemSlotLeftClicked(MMOItemSlot itemSlot) =>
+  void reportItemSlotLeftClicked(ItemSlot itemSlot) =>
     network.send(
       ClientRequest.Inventory_Request,
       '${InventoryRequest.Item_Clicked_Left.index} '
@@ -205,7 +220,7 @@ class MmoGame extends IsometricGame {
       '${itemSlot.index}'
     );
 
-  void reportItemSlotRightClicked(MMOItemSlot itemSlot) =>
+  void reportItemSlotRightClicked(ItemSlot itemSlot) =>
     network.send(
       ClientRequest.Inventory_Request,
       '${InventoryRequest.Item_Clicked_Right.index} '

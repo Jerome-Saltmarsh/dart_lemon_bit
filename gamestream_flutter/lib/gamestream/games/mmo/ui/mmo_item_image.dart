@@ -3,11 +3,10 @@ import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/item_image.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
 
 class MMOItemImage extends StatelessWidget {
   final double size;
-  final MMOItem? item;
+  final MMOItem item;
   final double scale;
 
   MMOItemImage({
@@ -18,7 +17,6 @@ class MMOItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      item == null ? buildText('-', color: Colors.white54) :
         IsometricBuilder(
           builder: (context, isometric) {
             return MouseRegion(
@@ -32,8 +30,8 @@ class MMOItemImage extends StatelessWidget {
                 },
                 child: ItemImage(
                   size: size,
-                  type: item!.type,
-                  subType: item!.subType,
+                  type: item.type,
+                  subType: item.subType,
                   scale: scale,
                 )
             );

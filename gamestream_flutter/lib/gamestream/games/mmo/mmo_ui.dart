@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
 import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_item_slot.dart';
+import 'package:gamestream_flutter/gamestream/games/mmo/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';
@@ -239,37 +239,6 @@ extension MMOUI on MmoGame {
     );
   }
 
-  Widget buildMMOItemSlot({
-    required MMOItemSlot slot,
-    double size = 64,
-    Function? onLeftClick,
-    Function? onRightClick,
-  }) =>
-    MouseRegion(
-      onEnter: (_){
-        itemHover.value = slot.item.value;
-      },
-      onExit: (_){
-        if (itemHover.value == slot)
-          itemHover.value = null;
-      },
-      child: buildWatch(
-          slot.item,
-              (item) => onPressed(
-                    action: item != null ? onLeftClick : null,
-                    onRightClick: item != null ? onRightClick : null,
-                    child: MMOItemImage(item: item, size: size)),
-      ),
-    );
-
-  // Widget buildInventoryItemSlotAtIndex(int index) => buildInventorySlot(
-  //   child: buildMMOItemSlot(
-  //       slot: items[index],
-  //       onLeftClick: () => selectItem(index),
-  //       onRightClick: () => dropItem(index),
-  //     ),
-  // );
-
   buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
       itemHover,
       (item) => item == null
@@ -350,16 +319,6 @@ extension MMOUI on MmoGame {
         height: 64,
         child: child,
     );
-
-  Widget buildInventoryItem(MMOItem? item) => Container(
-        color: Colors.black12,
-        alignment: Alignment.center,
-        margin: const EdgeInsets.all(2),
-        width: 64,
-        height: 64,
-        child: item == null
-            ? emptyMMOItemImage
-            : MMOItemImage(item: item, size: 64));
 
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
@@ -591,61 +550,42 @@ extension MMOUI on MmoGame {
     );
   }
 
-  Widget buildItemSlot(MMOItemSlot slot) => DragTarget(
-      onWillAccept: (value) => value is MMOItemSlot && (value.acceptsDragFrom(slot)),
-      onAccept: (value){
-        if (value is! MMOItemSlot)
-          return;
-
-        reportItemSlotDragged(src: value, target: slot);
-      },
-      builder: (context, data, rejectData) {
-        return buildWatch(slot.item, (equipped) {
-
-          if (equipped == null){
-            return buildInventoryItem(null);
-          }
-
-          return Draggable(
-            data: slot,
-            feedback: MMOItemImage(item: equipped, size: 64),
-            onDragStarted: (){
-              dragging.value = slot;
+  Widget buildItemSlot(ItemSlot slot) => buildWatch(
+      slot.item,
+      (item) =>
+          buildWatch(dragging, (dragging) => DragTarget(
+            onWillAccept: (value) => true,
+            onAccept: (value) {
+              if (value is! ItemSlot) return;
+              reportItemSlotDragged(src: value, target: slot);
             },
-            onDragEnd: (details) {
-              dragging.value = null;
-            },
-            child: onPressed(
-              onRightClick: () => reportItemSlotRightClicked(slot),
-              action: () => reportItemSlotLeftClicked(slot),
-              child: Stack(
-                children: [
-                  buildWatch(dragging, (dragging) {
-                    if (dragging == null)
-                      return nothing;
-
-                    final item = dragging.item.value;
-
-                    if (item == null)
-                      return nothing;
-
-                    if (!slot.acceptsDragFrom(dragging))
-                      return nothing;
-
-                    return Container(
-                      width: 66,
-                      height: 66,
-                      color: Colors.green,
-                    );
-                  }),
-                  buildInventoryItem(equipped),
-                ],
+            builder: (context, data, rejectData) => Container(
+                width: 64.0,
+                height: 64.0,
+                color: dragging != null && slot.acceptsDragFrom(dragging)
+                    ? colors.green_0
+                    : colors.brown01,
+                alignment: Alignment.center,
+                child: item == null
+                    ? buildText('-')
+                    : Draggable(
+                  data: slot,
+                  feedback: MMOItemImage(item: item, size: 64),
+                  onDragStarted: () {
+                    this.dragging.value = slot;
+                  },
+                  onDragEnd: (details) {
+                    this.dragging.value = null;
+                  },
+                  // child: MMOItemImage(item: item, size: 64),
+                  child: onPressed(
+                    onRightClick: () =>
+                        reportItemSlotRightClicked(slot),
+                    action: () => reportItemSlotLeftClicked(slot),
+                    child: MMOItemImage(item: item, size: 64),
+                  ),
+                ),
               ),
-            ),
-          );
-        });
-      },
-    );
+          ))
+         );
 }
-
-
