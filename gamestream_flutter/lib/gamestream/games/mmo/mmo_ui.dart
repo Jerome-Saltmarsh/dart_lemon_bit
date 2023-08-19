@@ -220,15 +220,14 @@ extension MMOUI on MmoGame {
         children: [
           backgroundSelectedWeapon,
           backgroundActivePower,
-          Positioned(child: buildMMOItemSlot(
-              slot: weapons[index],
-              size: size,
-              onLeftClick: () => selectWeapon(index),
-          )),
+          Positioned(child: buildItemSlot(weapons[index])),
           Positioned(
               top: 8,
               left: 8,
-              child: buildText(const['A', 'S', 'D', 'F'][index], color: Colors.white70)
+              child: buildText(
+                  const['A', 'S', 'D', 'F'][index],
+                  color: Colors.white70,
+              )
           ),
           Positioned(
             bottom: 8,
