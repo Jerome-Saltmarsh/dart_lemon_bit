@@ -183,26 +183,32 @@ class MmoGame extends IsometricGame {
   bool maxLevelReached(MMOTalentType talent) =>
       getTalentLevel(talent) >= talent.maxLevel;
 
-  void handleDragRequest({
+  void reportItemSlotDragged({
     required MMOItemSlot src,
     required MMOItemSlot target,
-  }){
-    print('amulet.ui.handleDragRequest()');
+  }) =>
     network.send(
-        ClientRequest.MMO,
-        '${MMORequest.Inventory_Move.index} '
-        '${src.slotType.index} '
-        '${src.index} '
-        '${target.slotType.index} '
-        '${target.index}'
+      ClientRequest.Inventory_Request,
+      '${InventoryRequest.Item_Dragged.index} '
+      '${src.slotType.index} '
+      '${src.index} '
+      '${target.slotType.index} '
+      '${target.index}'
     );
-  }
 
-  void handleItemSlotLeftClicked(MMOItemSlot slot){
+  void reportItemSlotLeftClicked(MMOItemSlot itemSlot) =>
+    network.send(
+      ClientRequest.Inventory_Request,
+      '${InventoryRequest.Item_Clicked_Left.index} '
+      '${itemSlot.slotType.index} '
+      '${itemSlot.index} '
+    );
 
-  }
-
-  void handleItemSlotRightClicked(MMOItemSlot slot){
-
-  }
+  void reportItemSlotRightClicked(MMOItemSlot itemSlot) =>
+    network.send(
+      ClientRequest.Inventory_Request,
+      '${InventoryRequest.Item_Clicked_Right.index} '
+      '${itemSlot.slotType.index} '
+      '${itemSlot.index} '
+    );
 }

@@ -599,7 +599,7 @@ extension MMOUI on MmoGame {
         if (value is! MMOItemSlot)
           return;
 
-        handleDragRequest(src: value, target: slot);
+        reportItemSlotDragged(src: value, target: slot);
       },
       builder: (context, data, rejectData) {
         return buildWatch(slot.item, (equipped) {
@@ -612,8 +612,8 @@ extension MMOUI on MmoGame {
             data: slot,
             feedback: MMOItemImage(item: equipped, size: 64),
             child: onPressed(
-              onRightClick: () => handleItemSlotRightClicked(slot),
-              action: () => handleItemSlotLeftClicked(slot),
+              onRightClick: () => reportItemSlotRightClicked(slot),
+              action: () => reportItemSlotLeftClicked(slot),
               child: buildInventoryItem(equipped)),
           );
         });

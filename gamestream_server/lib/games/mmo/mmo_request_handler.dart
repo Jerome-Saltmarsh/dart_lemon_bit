@@ -106,55 +106,6 @@ extension MMORequestHandler on WebSocketConnection {
       case MMORequest.Unequip_Hand_Right:
         player.unequipHandRight();
         break;
-      case MMORequest.Inventory_Move:
-        final srcSlotTypeIndex = parseArg2(arguments);
-        final srcIndex = parseArg3(arguments);
-        final targetSlotTypeIndex = parseArg4(arguments);
-        final targetIndex = parseArg5(arguments);
-
-        if (srcSlotTypeIndex == null ||
-            srcIndex == null ||
-            targetSlotTypeIndex == null ||
-            targetIndex == null
-        ) return;
-
-        const slotTypes = SlotType.values;
-
-        if (!isValidIndex(srcSlotTypeIndex, slotTypes) ||
-            !isValidIndex(targetSlotTypeIndex, slotTypes))
-          return;
-
-        final srcSlotType = slotTypes[srcSlotTypeIndex];
-        final targetSlotType = slotTypes[targetSlotTypeIndex];
-
-        final srcItemObject = player.getItemObjectAtSlotType(srcSlotType, srcIndex);
-        final targetItemObject = player.getItemObjectAtSlotType(targetSlotType, targetIndex);
-
-        final srcItem = srcItemObject.item;
-
-        if (srcItem == null)
-          throw Exception('srcItem is null');
-
-        if (!slotTypeSupportsType(targetSlotType, srcItem.type)){
-          return;
-        }
-
-        targetItemObject.item = srcItemObject.item;
-        srcItemObject.item = null;
-        player.notifyEquipmentDirty();
-        break;
     }
   }
-
-  bool slotTypeSupportsType(SlotType slotType, int type) =>
-      switch (slotType){
-        SlotType.Equipped_Helm => type == ItemType.Helm,
-        SlotType.Equipped_Legs => type == ItemType.Legs,
-        SlotType.Equipped_Body => type == ItemType.Body,
-        SlotType.Equipped_Hand_Left => type == ItemType.Hand,
-        SlotType.Equipped_Hand_Right => type == ItemType.Hand,
-        SlotType.Treasures => type == ItemType.Treasure,
-        SlotType.Weapons => type == ItemType.Weapon,
-        SlotType.Items => true
-      };
 }

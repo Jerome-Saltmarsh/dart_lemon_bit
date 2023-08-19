@@ -295,6 +295,13 @@ class WebSocketConnection with ByteReader {
         handleClientRequestMMORequest(arguments);
         break;
 
+      case ClientRequest.Inventory_Request:
+        if (player is! AmuletPlayer)
+          return;
+
+        handleInventoryRequest(player, arguments.map(int.parse).toList(growable: false));
+        break;
+
       case ClientRequest.Set_FPS:
         final value = parseArg1(arguments);
         if (value == null) return;

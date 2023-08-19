@@ -21,5 +21,4 @@ enum MMORequest {
   Toggle_Skills_Dialog,
   Toggle_Inventory_Open,
   Upgrade_Talent,
-  Inventory_Move,
 }
