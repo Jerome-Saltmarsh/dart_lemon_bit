@@ -2585,7 +2585,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   bool shouldCharacterRunTowardsEnemy(Character character) =>
        character.runToDestinationEnabled &&
-       character.targetPerceptible &&
+       (!character.pathFindingEnabled || character.targetPerceptible) &&
        !character.targetWithinAttackRange;
 
   bool characterConditionRunTowardsCollectTarget(Character character) =>
