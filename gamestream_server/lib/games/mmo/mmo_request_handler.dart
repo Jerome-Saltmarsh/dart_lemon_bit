@@ -40,40 +40,10 @@ extension MMORequestHandler on WebSocketConnection {
         if (index == null) return;
         player.selectWeapon(index);
         break;
-      case MMORequest.Drop_Item:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.dropItem(index);
-        break;
-      case MMORequest.Drop_Weapon:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.dropWeapon(index);
-        break;
-      case MMORequest.Drop_Treasure:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.dropTreasure(index);
-        break;
       case MMORequest.Select_Talk_Option:
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectNpcTalkOption(index);
-        break;
-      case MMORequest.Drop_Equipped_Head:
-        player.dropEquippedHead();
-        break;
-      case MMORequest.Drop_Equipped_Body:
-        player.dropEquippedBody();
-        break;
-      case MMORequest.Drop_Equipped_Legs:
-        player.dropEquippedLegs();
-        break;
-      case MMORequest.Drop_Equipped_Hand_Left:
-        player.dropEquippedHandLeft();
-        break;
-      case MMORequest.Drop_Equipped_Hand_Right:
-        player.dropEquippedHandRight();
         break;
       case MMORequest.Toggle_Skills_Dialog:
         player.toggleSkillsDialog();
@@ -90,21 +60,6 @@ extension MMORequestHandler on WebSocketConnection {
         }
         final mmoTalentType = MMOTalentType.values[index];
         player.upgradeTalent(mmoTalentType);
-        break;
-      case MMORequest.Unequip_Head:
-        player.unequipHead();
-        break;
-      case MMORequest.Unequip_Body:
-        player.unequipBody();
-        break;
-      case MMORequest.Unequip_Legs:
-        player.unequipLegs();
-        break;
-      case MMORequest.Unequip_Hand_Left:
-        player.unequipHandLeft();
-        break;
-      case MMORequest.Unequip_Hand_Right:
-        player.unequipHandRight();
         break;
     }
   }

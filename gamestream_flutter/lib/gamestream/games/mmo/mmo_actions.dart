@@ -6,54 +6,6 @@ extension MMOActions on MmoGame {
   void toggleInventoryOpen() =>
       sendMMORequest(MMORequest.Toggle_Inventory_Open);
 
-  void selectWeapon(int index) =>
-      sendMMORequest(MMORequest.Select_Weapon, index);
-
-  void selectItem(int index) =>
-      sendMMORequest(MMORequest.Select_Item, index);
-
-  void selectTreasure(int index) =>
-      sendMMORequest(MMORequest.Select_Treasure, index);
-
-  void dropWeapon(int index) =>
-      sendMMORequest(MMORequest.Drop_Weapon, index);
-
-  void dropItem(int index) =>
-      sendMMORequest(MMORequest.Drop_Item, index);
-
-  void dropTreasure(int index) =>
-      sendMMORequest(MMORequest.Drop_Treasure, index);
-
-  void dropEquippedHead() =>
-      sendMMORequest(MMORequest.Drop_Equipped_Head);
-
-  void dropEquippedBody() =>
-      sendMMORequest(MMORequest.Drop_Equipped_Body);
-
-  void dropEquippedLegs() =>
-      sendMMORequest(MMORequest.Drop_Equipped_Legs);
-
-  void dropEquippedHandLeft() =>
-      sendMMORequest(MMORequest.Drop_Equipped_Hand_Left);
-
-  void dropEquippedHandRight() =>
-      sendMMORequest(MMORequest.Drop_Equipped_Hand_Right);
-
-  void unequipHead() =>
-      sendMMORequest(MMORequest.Unequip_Head);
-
-  void unequipBody() =>
-      sendMMORequest(MMORequest.Unequip_Body);
-
-  void unequipLegs() =>
-      sendMMORequest(MMORequest.Unequip_Legs);
-
-  void unequipHandLeft() =>
-      sendMMORequest(MMORequest.Unequip_Hand_Left);
-
-  void unequipHandRight() =>
-      sendMMORequest(MMORequest.Unequip_Hand_Right);
-
   void selectTalkOption(int index) =>
       sendMMORequest(MMORequest.Select_Talk_Option, index);
 

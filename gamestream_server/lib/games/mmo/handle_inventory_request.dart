@@ -51,8 +51,9 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       break;
 
     case InventoryRequest.Item_Clicked_Right:
-      final srcSlotTypeIndex = arguments[2];
+      final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
+      player.inventoryDrop(SlotType.values[slotTypeIndex], srcIndex);
       break;
   }
 }

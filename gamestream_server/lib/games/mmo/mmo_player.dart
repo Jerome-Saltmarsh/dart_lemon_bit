@@ -415,7 +415,7 @@ class AmuletPlayer extends IsometricPlayer {
     spawnItem(item);
   }
 
-  void dropEquippedHead(){
+  void dropEquippedHelm(){
 
     final equippedHeadItem = equippedHelm.item;
 
@@ -1364,5 +1364,34 @@ class AmuletPlayer extends IsometricPlayer {
           break;
 
       }
+  }
+
+  void inventoryDrop(SlotType slotType, int index) {
+    switch (slotType) {
+      case SlotType.Items:
+        dropItem(index);
+        break;
+      case SlotType.Equipped_Helm:
+        dropEquippedHelm();
+        break;
+      case SlotType.Equipped_Body:
+        dropEquippedBody();
+        break;
+      case SlotType.Equipped_Legs:
+        dropEquippedLegs();
+        break;
+      case SlotType.Equipped_Hand_Left:
+        dropEquippedHandLeft();
+        break;
+      case SlotType.Equipped_Hand_Right:
+        dropEquippedHandRight();
+        break;
+      case SlotType.Weapons:
+        dropWeapon(index);
+        break;
+      case SlotType.Treasures:
+        dropTreasure(index);
+        break;
+    }
   }
 }

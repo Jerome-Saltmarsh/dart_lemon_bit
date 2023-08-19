@@ -211,4 +211,13 @@ class MmoGame extends IsometricGame {
       '${itemSlot.slotType.index} '
       '${itemSlot.index}'
     );
+
+  void selectWeapon(int index) =>
+      sendMMORequest(MMORequest.Select_Weapon, index);
+
+  void selectItem(int index) =>
+      sendMMORequest(MMORequest.Select_Item, index);
+
+  void selectTreasure(int index) =>
+      sendMMORequest(MMORequest.Select_Treasure, index);
 }

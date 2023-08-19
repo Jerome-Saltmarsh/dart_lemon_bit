@@ -224,7 +224,6 @@ extension MMOUI on MmoGame {
               slot: weapons[index],
               size: size,
               onLeftClick: () => selectWeapon(index),
-              onRightClick: () => dropWeapon(index),
           )),
           Positioned(
               top: 8,
