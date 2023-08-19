@@ -51,6 +51,7 @@ class Character extends Collider {
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
   var _goal = CharacterGoal.Idle;
+  var forceShot = false;
 
   int get goal => _goal;
 
@@ -353,6 +354,13 @@ class Character extends Collider {
   void face(Position position) => faceXY(position.x, position.y);
 
   void lookAt(Position position) => lookAtXY(position.x, position.y);
+
+  void lookAtTarget(){
+    final target = this.target;
+    if (target != null) {
+       lookAt(target);
+    }
+  }
 
   void faceXY(double x, double y) {
     if (deadOrBusy) return;

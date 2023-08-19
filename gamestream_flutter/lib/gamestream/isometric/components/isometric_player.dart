@@ -146,9 +146,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     }
   }
 
-  void toggleControlsRunInDirectionEnabled() =>
-      network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled);
-
   void toggleControlsCanTargetEnemies() =>
       network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
 

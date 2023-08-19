@@ -81,7 +81,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   IsometricGame game;
   Collider? selectedCollider;
 
-  var controlsRunInDirectionEnabled = true;
   var controlsCanTargetEnemies = false;
 
   IsometricPlayer({
@@ -1205,12 +1204,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(ServerResponse.Isometric);
     writeByte(IsometricResponse.Player_Controls);
     writeBool(controlsCanTargetEnemies);
-    writeBool(controlsRunInDirectionEnabled);
-  }
-
-  void toggleControlsRunInDirectionEnabled() {
-    controlsRunInDirectionEnabled = !controlsRunInDirectionEnabled;
-    writePlayerControls();
+    writeBool(false); // TODO delete on client
   }
 
   void toggleControlsCanTargetEnemies() {

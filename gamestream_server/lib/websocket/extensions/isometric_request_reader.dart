@@ -187,16 +187,9 @@ extension IsometricRequestReader on WebSocketConnection {
         player.toggleDebugging();
         break;
 
-      case IsometricRequest.Toggle_Controls_Run_In_Direction_Enabled:
-        player.toggleControlsRunInDirectionEnabled();
-        break;
-
       case IsometricRequest.Toggle_Controls_Can_Target_Enemies:
         player.toggleControlsCanTargetEnemies();
         break;
-
-
     }
   }
-
 }

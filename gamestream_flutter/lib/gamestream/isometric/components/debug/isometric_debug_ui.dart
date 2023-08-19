@@ -486,14 +486,6 @@ extension isometricDebugUI on IsometricDebug {
             child: buildRow('render-health-enemy', GSRefresh(() => buildValueText(options.renderHealthBarEnemies))),
         ),
         onPressed(
-            action: player.toggleControlsRunInDirectionEnabled,
-            child: buildRowWatchBool(
-                watch: player.controlsRunInDirectionEnabled,
-                text: 'controlsRunInDirectionEnabled',
-            ),
-        ),
-
-        onPressed(
             action: player.toggleControlsCanTargetEnemies,
             child: buildRowWatchBool(
                 watch: player.controlsCanTargetEnemies,

@@ -47,7 +47,6 @@ class AmuletPlayer extends IsometricPlayer {
     required super.y,
     required super.z,
   }) : super(game: game, health: 10, team: MmoTeam.Human) {
-    controlsRunInDirectionEnabled = false;
     controlsCanTargetEnemies = true;
     characterType = CharacterType.Kid;
     hurtable = false;

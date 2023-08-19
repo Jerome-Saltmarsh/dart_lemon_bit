@@ -263,7 +263,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
           player.lookAtMouse();
-          characterAttack(player);
+          player.forceShot = true;
+          return;
         } else {
           player.deselectActivatedPower();
         }
@@ -298,7 +299,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
           player.lookAtMouse();
-          characterAttack(player);
+          player.forceShot = true;
           return;
         } else {
           player.setDestinationToMouse();
@@ -311,17 +312,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player.runToDestinationEnabled = true;
         player.pathFindingEnabled = false;
         player.mouseLeftDownIgnore = true;
+        player.lookAtMouse();
+        player.forceShot = true;
       }
       return;
-    }
-
-    if (player.controlsRunInDirectionEnabled && direction != IsometricDirection.None){
-      player.runToDestinationEnabled = false;
-      characterRunInDirection(player, IsometricDirection.fromInputDirection(direction));
-    } else if (!player.runToDestinationEnabled){
-      if (player.target == null){
-        player.setCharacterStateIdle();
-      }
     }
   }
 
@@ -2374,18 +2368,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacterAction(Character character) {
 
-    if (character.dead){
-      character.action = CharacterAction.Dead;
-      return;
-    }
-
     if (character.busy) {
-      character.action = CharacterAction.Busy;
       return;
     }
 
-    if (character.striking){
-      character.action = CharacterAction.Attacking;
+    if (character.forceShot){
+      characterGoalForceShot(character);
       return;
     }
 
@@ -2423,6 +2411,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!character.idling) {
       characterActionIdle(character);
     }
+  }
+
+  void characterGoalForceShot(Character character) {
+    character.goal = CharacterGoal.Force_Shot;
+    character.lookAtTarget();
+    characterAttack(character);
+    character.forceShot = false;
   }
 
   void characterActionIdle(Character character) {
