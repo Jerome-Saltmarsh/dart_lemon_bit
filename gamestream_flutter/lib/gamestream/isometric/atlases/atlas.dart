@@ -118,7 +118,8 @@ class Atlas {
     GameObjectType.Helm: Collection_Helm,
     GameObjectType.Object: Collection_Objects,
     GameObjectType.Hand: Collection_Hands,
-    GameObjectType.Item: SrcItems.collection,
+    GameObjectType.Item: atlasSrcItems,
+    GameObjectType.Treasure: atlasSrcTreasures,
   };
 
   static List<double> getSrc(int type, int subType) =>

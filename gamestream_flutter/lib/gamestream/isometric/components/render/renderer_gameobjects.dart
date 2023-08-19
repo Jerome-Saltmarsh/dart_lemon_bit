@@ -11,6 +11,7 @@ import '../functions/format_percentage.dart';
 
 class RendererGameObjects extends RenderGroup {
 
+  // TODO Move to images
   late final Map<int, Image> mapGameObjectTypeToImage;
 
   @override
@@ -23,6 +24,7 @@ class RendererGameObjects extends RenderGroup {
       GameObjectType.Legs: images.atlas_legs,
       GameObjectType.Item: images.atlas_items,
       GameObjectType.Hand: images.atlas_hands,
+      GameObjectType.Treasure: images.atlas_treasures,
     };
   }
 

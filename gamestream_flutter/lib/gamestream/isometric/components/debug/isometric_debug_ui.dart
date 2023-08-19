@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:gamestream_flutter/common/src/types/myst_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
 import 'package:gamestream_flutter/ui.dart';

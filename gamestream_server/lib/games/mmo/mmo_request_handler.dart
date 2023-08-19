@@ -3,8 +3,6 @@ import 'package:gamestream_server/games/mmo/mmo_player.dart';
 import 'package:gamestream_server/utils/src.dart';
 import 'package:gamestream_server/websocket/websocket_connection.dart';
 
-import 'mmo_item_object.dart';
-
 extension MMORequestHandler on WebSocketConnection {
 
   void handleClientRequestMMORequest(List<String> arguments){
@@ -129,29 +127,34 @@ extension MMORequestHandler on WebSocketConnection {
         final srcSlotType = slotTypes[srcSlotTypeIndex];
         final targetSlotType = slotTypes[targetSlotTypeIndex];
 
-        final items = player.items;
-        if (srcSlotType == SlotType.Items && targetSlotType == SlotType.Items){
-          final itemSrc = player.items[srcIndex];
-          final itemTarget = player.items[targetIndex];
-          items[srcIndex] = itemTarget;
-          items[targetIndex] = itemSrc;
-          player.notifyEquipmentDirty();
-          return;
-        }
-
         final srcItemObject = player.getItemObjectAtSlotType(srcSlotType, srcIndex);
         final targetItemObject = player.getItemObjectAtSlotType(targetSlotType, targetIndex);
 
-        if (targetSlotType == SlotType.Items){
-           if (targetItemObject.item == null){
-              targetItemObject.item = srcItemObject.item;
-              srcItemObject.item = null;
-           }
+        final srcItem = srcItemObject.item;
+
+        if (srcItem == null)
+          throw Exception('srcItem is null');
+
+        if (!slotTypeSupportsType(targetSlotType, srcItem.type)){
+          return;
         }
 
+        targetItemObject.item = srcItemObject.item;
+        srcItemObject.item = null;
         player.notifyEquipmentDirty();
-
         break;
     }
   }
+
+  bool slotTypeSupportsType(SlotType slotType, int type) =>
+      switch (slotType){
+        SlotType.Equipped_Helm => type == GameObjectType.Helm,
+        SlotType.Equipped_Legs => type == GameObjectType.Legs,
+        SlotType.Equipped_Body => type == GameObjectType.Body,
+        SlotType.Equipped_Hand_Left => type == GameObjectType.Hand,
+        SlotType.Equipped_Hand_Right => type == GameObjectType.Hand,
+        SlotType.Treasures => type == GameObjectType.Treasure,
+        SlotType.Weapons => type == GameObjectType.Weapon,
+        SlotType.Items => true
+      };
 }

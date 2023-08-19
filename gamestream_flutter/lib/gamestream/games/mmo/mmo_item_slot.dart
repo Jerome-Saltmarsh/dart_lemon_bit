@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/common/src/types/slot_type.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class MMOItemSlot {

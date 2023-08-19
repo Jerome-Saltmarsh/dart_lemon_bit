@@ -1,10 +1,4 @@
-import 'body_type.dart';
-import 'hand_type.dart';
-import 'helm_type.dart';
-import 'leg_type.dart';
-import 'object_type.dart';
-import 'weapon_type.dart';
-import 'item_type.dart';
+import '../../../common.dart';
 
 class GameObjectType {
   static const Weapon = 1;
@@ -14,9 +8,10 @@ class GameObjectType {
   static const Object = 5;
   static const Item = 6;
   static const Hand = 7;
+  static const Treasure = 8;
 
   static const items = [
-     Weapon, Helm, Body, Legs, Object, Item, Hand,
+     Weapon, Helm, Body, Legs, Object, Item, Hand, Treasure,
   ];
 
   static const Collection = {
@@ -27,6 +22,7 @@ class GameObjectType {
     Hand: HandType.values,
     Object: ObjectType.values,
     Item: ItemType.values,
+    Treasure: TreasureType.values,
   };
 
   static String getName(int value) => const {

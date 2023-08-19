@@ -1,4 +1,5 @@
-import '../../../common.dart';
+
+import '../../src.dart';
 
 enum MMOItem {
   Blink_Dagger(
@@ -158,15 +159,15 @@ enum MMOItem {
   ),
   Lost_Pendant_Of_Dreams(
     quality: MMOItemQuality.Mythical,
-    type: GameObjectType.Item,
-    subType: ItemType.Pendant_1,
+    type: GameObjectType.Treasure,
+    subType: TreasureType.Pendant_1,
     health: 100,
     isTreasure: true,
   ),
   Sapphire_Pendant(
       quality: MMOItemQuality.Rare,
-      type: GameObjectType.Item,
-      subType: ItemType.Pendant_1,
+      type: GameObjectType.Treasure,
+      subType: TreasureType.Pendant_1,
       health: 5,
       isTreasure: true,
   );
