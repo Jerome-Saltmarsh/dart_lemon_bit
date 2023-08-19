@@ -11,29 +11,6 @@ import '../functions/format_percentage.dart';
 
 class RendererGameObjects extends RenderGroup {
 
-  // TODO Move to images
-  late final Map<int, Image> mapGameObjectTypeToImage;
-
-  @override
-  void onComponentReady() {
-    mapGameObjectTypeToImage = {
-      ItemType.Weapon: images.atlas_weapons,
-      ItemType.Object: images.atlas_gameobjects,
-      ItemType.Helm: images.atlas_helms,
-      ItemType.Body: images.atlas_body,
-      ItemType.Legs: images.atlas_legs,
-      ItemType.Consumable: images.atlas_consumables,
-      ItemType.Hand: images.atlas_hands,
-      ItemType.Treasure: images.atlas_treasures,
-    };
-  }
-
-  Image getImageForGameObjectType(int type) =>
-      mapGameObjectTypeToImage [type] ?? (
-          throw Exception(
-              'getImageForGameObjectType(type: ${ItemType.getName(type)}})'
-          )
-      );
 
   late GameObject gameObject;
 
@@ -112,4 +89,11 @@ class RendererGameObjects extends RenderGroup {
         scale: shadowScale + (shadowScaleHeight * animation.frameWaterHeight.toDouble())
     );
   }
+
+  Image getImageForGameObjectType(int type) =>
+      images.itemTypeAtlases[type] ?? (
+          throw Exception(
+              'getImageForGameObjectType(type: ${ItemType.getName(type)}})'
+          )
+      );
 }

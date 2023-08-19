@@ -82,6 +82,8 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_shield;
   late final Image template_spinning;
 
+  late final Map<int, Image> itemTypeAtlases;
+
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
@@ -170,6 +172,17 @@ class IsometricImages with IsometricComponent {
     );
 
     await _completerImages.future;
+
+    itemTypeAtlases = {
+      ItemType.Weapon: atlas_weapons,
+      ItemType.Object: atlas_gameobjects,
+      ItemType.Helm: atlas_helms,
+      ItemType.Body: atlas_body,
+      ItemType.Legs: atlas_legs,
+      ItemType.Consumable: atlas_consumables,
+      ItemType.Hand: atlas_hands,
+      ItemType.Treasure: atlas_treasures,
+    };
 
     final fallenIdle = await loadSpriteBytes('fallen/idle');
     final fallenRunning = await loadSpriteBytes('fallen/run');
