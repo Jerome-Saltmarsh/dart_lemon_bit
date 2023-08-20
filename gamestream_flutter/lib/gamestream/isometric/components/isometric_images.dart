@@ -80,6 +80,7 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_talents;
   late final Image sprite_stars;
   late final Image sprite_shield;
+  late final Image square;
   late final Image template_spinning;
 
   late final Map<int, Image> itemTypeAtlases;
@@ -90,6 +91,7 @@ class IsometricImages with IsometricComponent {
 
     empty = await loadPng('empty');
     loadPng('shades').then((value) => shades = value);
+    loadPng('square').then((value) => square = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
     loadPng('atlas_characters').then((value) => atlas_characters = value);
     loadPng('atlas_zombie').then((value) => zombie = value);

@@ -165,14 +165,6 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabLighting() =>
       Column(
         children: [
-          onPressed(
-              child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
-              action: (){
-                final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
-                final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
-                engine.bufferBlendMode = BlendMode.values[nextIndex];
-              }
-          ),
           height8,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,6 +246,14 @@ extension isometricDebugUI on IsometricDebug {
       buildWatch(engine.renderFramesSkipped, (t) {
         return buildRowText(text: 'render.frames-skipped', value:t);
       }),
+      onPressed(
+          child: GSRefresh(() => buildText('blend-mode: ${engine.bufferBlendMode.name}')),
+          action: (){
+            final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
+            final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
+            engine.bufferBlendMode = BlendMode.values[nextIndex];
+          }
+      ),
       onPressed(
           action: () => engine.drawCanvasAfterUpdate = !engine.drawCanvasAfterUpdate,
           child: GSRefresh(() => buildText(' engine.drawCanvasAfterUpdate = ${engine.drawCanvasAfterUpdate}'))
@@ -601,6 +601,11 @@ extension isometricDebugUI on IsometricDebug {
              text: 'render rain twice',
              action: options.toggleRenderRainTwice,
              value: () => options.renderRainFallingTwice,
+          ),
+          buildRowToggle(
+             text: 'skin-blend',
+             action: options.incrementSkinBlend,
+             value: () => options.skinBlend,
           ),
         ],
       );

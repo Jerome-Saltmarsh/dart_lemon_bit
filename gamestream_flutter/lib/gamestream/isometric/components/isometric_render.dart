@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -76,6 +77,39 @@ class IsometricRender with IsometricComponent {
     engine.incrementBufferIndex();
   }
 
+  void modulate({
+    required Sprite sprite,
+    required int frame,
+    required int color1,
+    required int color2,
+    required double scale,
+    required double dstX,
+    required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+  }){
+    engine.bufferBlendMode = options.skinBlend;
+    render.spriteFrame(
+      sprite: sprite,
+      frame: frame,
+      color: color1,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+    render.spriteFrame(
+      sprite: sprite,
+      frame: frame,
+      color: color2,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+    engine.bufferBlendMode = BlendMode.dstATop;
+  }
+
   void spriteFrame({
     required Sprite sprite,
     required int frame,
@@ -125,13 +159,39 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
-
     highlightAimTargetEnemy();
 
     camera.update();
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
+
+
+    engine.bufferBlendMode = BlendMode.modulate;
+    engine.renderSprite(
+      image: images.square,
+      // color: aRGBToColor(255, 253, 203, 176),
+      color: colors.fair_0.value,
+      srcX: 0,
+      srcY: 0,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
+      dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
+    );
+    engine.renderSprite(
+      image: images.square,
+      color: scene.getNodeColorAtIndex(mouse.nodeIndex),
+      srcX: 0,
+      srcY: 0,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
+      dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
+    );
+
+    engine.bufferBlendMode = BlendMode.dstATop;
+
     renderEditMode();
     renderMouseTargetName();
     debug.drawCanvas();

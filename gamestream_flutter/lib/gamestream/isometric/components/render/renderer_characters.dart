@@ -498,6 +498,8 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
+    final colorSkin = colors.fair_0.value;
+
     // render.textPosition(character, direction, offsetY: -100);
 
     final leftInFront = const [
@@ -532,12 +534,13 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.spriteFrame(
+      render.modulate(
         sprite: spriteTorso,
         frame: completingAction
             ? spriteTorso.getFramePercentage(row, actionComplete)
             : spriteTorso.getFrame(row: row, column: animationFrame),
-        color: color,
+        color1: colorSkin,
+        color2: color,
         scale: scale,
         dstX: dstX,
         dstY: dstY,
@@ -558,12 +561,13 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    render.spriteFrame(
+    render.modulate(
       sprite: spriteArmBehind,
       frame: completingAction
           ? spriteArmBehind.getFramePercentage(row, actionComplete)
           : spriteArmBehind.getFrame(row: row, column: animationFrame),
-      color: color,
+      color1: colorSkin,
+      color2: color,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -619,12 +623,13 @@ class RendererCharacters extends RenderGroup {
     }
 
 
-    render.spriteFrame(
+    render.modulate(
       sprite: spriteArmFront,
       frame: completingAction
           ? spriteArmFront.getFramePercentage(row, actionComplete)
           : spriteArmFront.getFrame(row: row, column: animationFrame),
-      color: color,
+      color1: colorSkin,
+      color2: color,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -683,12 +688,13 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.spriteFrame(
+    render.modulate(
       sprite: spriteHead,
       frame: completingAction
           ? spriteHead.getFramePercentage(row, actionComplete)
           : spriteHead.getFrame(row: row, column: animationFrame),
-      color: color,
+      color1: colorSkin,
+      color2: color,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

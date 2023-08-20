@@ -29,6 +29,14 @@ class IsometricColors {
   final brown_3 = Color.fromRGBO(150, 108, 108, 1);
   final brown_4 = Color.fromRGBO(171, 148, 122, 1);
 
+  final fair_0 = Color.fromRGBO(253, 203, 176, 1);
+  final fair_1 = Color.fromRGBO(252, 167, 144, 1);
+  final fair_2 = Color.fromRGBO(246, 129, 129, 1);
+  final fair_3 = Color.fromRGBO(240, 79, 120, 1);
+  final fair_4 = Color.fromRGBO(195, 36, 84, 1);
+  final fair_5 = Color.fromRGBO(131, 28, 93, 1);
+  final fair_6 = Color.fromRGBO(84, 30, 71, 1);
+
   final brownDark = Color.fromRGBO(36, 33, 38, 1);
   final brownDarkX = Color.fromRGBO(29, 27, 31, 1.0);
   final brownLight = Color.fromRGBO(48, 48, 48, 1.0);

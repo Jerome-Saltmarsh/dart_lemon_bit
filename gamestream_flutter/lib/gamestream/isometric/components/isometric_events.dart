@@ -16,6 +16,9 @@ class IsometricEvents with IsometricComponent {
       case WeaponType.Shotgun:
         audio.play(audio.cock_shotgun_3, x, y, z);
         break;
+      case WeaponType.Bow:
+        audio.play(audio.bow_draw, x, y, z);
+        break;
       default:
         break;
     }

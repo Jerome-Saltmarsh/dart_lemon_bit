@@ -11,7 +11,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/lemon_components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
-
+  var skinBlend = BlendMode.modulate;
   var renderRainFallingTwice = true;
   var renderCharacterAnimationFrame = false;
   var characterRenderScale = 0.35;
@@ -197,4 +197,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleRenderRainTwice() =>
       renderRainFallingTwice = !renderRainFallingTwice;
+
+  void incrementSkinBlend() {
+    skinBlend = BlendMode.values[(BlendMode.values.indexOf(skinBlend) + 1) % BlendMode.values.length];
+  }
 }
