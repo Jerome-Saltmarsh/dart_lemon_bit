@@ -1,6 +1,6 @@
-# lemon_atlas
+# lemon_sprites
 
-Compiles sprites into an atlas
+Packs atlases into sprites
 
 ## Getting Started
 

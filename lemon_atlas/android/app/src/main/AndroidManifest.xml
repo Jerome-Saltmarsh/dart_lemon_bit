@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="lemon_atlas"
+        android:label="lemon_sprites"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

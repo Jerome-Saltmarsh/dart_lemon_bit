@@ -1,11 +1,11 @@
 {
-    "name": "lemon_atlas",
-    "short_name": "lemon_atlas",
+    "name": "lemon_sprites",
+    "short_name": "lemon_sprites",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Compiles sprites into an atlas",
+    "description": "Packs atlases into sprites",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.lemon" "\0"
-            VALUE "FileDescription", "lemon_atlas" "\0"
+            VALUE "FileDescription", "lemon_sprites" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "lemon_atlas" "\0"
+            VALUE "InternalName", "lemon_sprites" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.lemon. All rights reserved." "\0"
-            VALUE "OriginalFilename", "lemon_atlas.exe" "\0"
-            VALUE "ProductName", "lemon_atlas" "\0"
+            VALUE "OriginalFilename", "lemon_sprites.exe" "\0"
+            VALUE "ProductName", "lemon_sprites" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

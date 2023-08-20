@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lemon_atlas/ui/atlas_ui.dart';
+import 'package:lemon_atlas/sprites/sprite.dart';
+import 'package:lemon_atlas/sprites/style.dart';
+import 'package:lemon_atlas/ui/sprite_app.dart';
 
-import 'atlas/atlas.dart';
 
-void main() {
-  runApp(AtlasUI(atlas: Atlas()));
+void main() async {
+  runApp(
+      AmuletSprites(
+      sprite: Sprite(),
+      style: Style(),
+    )
+  );
 }
+
+
 
