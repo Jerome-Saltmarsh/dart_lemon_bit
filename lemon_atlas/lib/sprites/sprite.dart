@@ -41,31 +41,33 @@ class Sprite {
   }) async {
 
     final renders = await getImages(state, part);
-    final bounds = buildBounds(renders, rows, columns);
+    final src = buildSrc(renders, rows, columns);
+    final dst = buildDstFromSrc(src);
+    final width = getTotalWidthFromDst(dst);
+    final height = getMaxHeightFromDst(dst);
 
-    final width = getTotalWidthFromBounds(bounds);
-    final height = getMaxHeightFromBounds(bounds);
+    final dstImage = Image(width: width, height: height, numChannels: 4, backgroundColor: transparent);
 
-    final packedImage = Image(width: width, height: height, numChannels: 4, backgroundColor: transparent);
-    final dst = buildDstFromBounds(bounds);
+    var iSrc = 0;
+    var iDst = 0;
 
-    var i = 0;
+    for (final srcImage in renders){
+      final dstX = dst[iDst + 0];
+      final dstY = dst[iDst + 1];
 
-    var dstX = 0;
-    var dstY = 0;
+      iDst += 6;
 
-    for (final render in renders){
-      final left = bounds[i++];
-      final top = bounds[i++];
-      final right = bounds[i++];
-      final bottom = bounds[i++];
+      final left = src[iSrc++];
+      final top = src[iSrc++];
+      final right = src[iSrc++];
+      final bottom = src[iSrc++];
 
       final renderWidth = right - left;
       final renderHeight = bottom - top;
 
       copyPaste(
-          srcImage: render,
-          dstImage: packedImage,
+          srcImage: srcImage,
+          dstImage: dstImage,
           width: renderWidth,
           height: renderHeight,
           srcX: left,
@@ -73,13 +75,11 @@ class Sprite {
           dstX: dstX,
           dstY: dstY,
       );
-      dstX += renderWidth;
     }
 
     final groupName = KidPart.getGroupName(part);
-    final packedBytes = encodePng(packedImage);
+    final packedBytes = encodePng(dstImage);
     final outputName = state.name;
-    // final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/kid/$groupName/${part.fileName}';
     final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/kid/$groupName/${part.fileName}';
     await createDirectoryIfNotExists(directory);
     final png = File('$directory/$outputName.png');
@@ -89,69 +89,86 @@ class Sprite {
     print('saved "$directory/$outputName"');
   }
 
-  Uint16List buildDstFromBounds(Uint16List bounds){
-    final dst = Uint16List(bounds.length ~/ 4 * 6);
+  Uint16List buildDstFromSrc(Uint16List src){
+    final dst = Uint16List(src.length ~/ 4 * 6);
 
-    var i = 0;
+    var iSrc = 0;
+    var iDst = 0;
 
     var dstX = 0;
     var dstY = 0;
+    var maxHeight = 0;
 
-    while (i < bounds.length){
-      final left = bounds[i++];
-      final top = bounds[i++];
-      final right = bounds[i++];
-      final bottom = bounds[i++];
+    while (iSrc < src.length){
+      final left = src[iSrc++];
+      final top = src[iSrc++];
+      final right = src[iSrc++];
+      final bottom = src[iSrc++];
       final width = right - left;
       final height = bottom - top;
+      maxHeight = max(maxHeight, height);
 
-      dst[i++] = dstX;
-      dst[i++] = dstY;
-      dst[i++] = width;
-      dst[i++] = height;
-      dst[i++] = left;
-      dst[i++] = top;
+      if (dstX + width >= 2048) {
+        dstX = 0;
+        dstY += maxHeight + 1;
+        maxHeight = 0;
+      }
+
+      dst[iDst++] = dstX; // left
+      dst[iDst++] = dstY; // top
+      dst[iDst++] = dstX + width; // right
+      dst[iDst++] = dstY + height; // bottom
+      dst[iDst++] = left; // dstX
+      dst[iDst++] = top;  // dstY
+
+      dstX += width + 1;
     }
 
     return dst;
   }
 
-  int getTotalWidthFromBounds(Uint16List bounds){
-     var totalWidth = 0;
+  int getTotalWidthFromDst(Uint16List dst){
      var i = 0;
-     while (i < bounds.length){
-        final left = bounds[i];
-        final right = bounds[i + 2];
-        totalWidth += (right - left);
-        i += 4;
+     var maxWidth = 0;
+     while (i < dst.length){
+        final left = dst[i++];
+        final top = dst[i++];
+        final right = dst[i++];
+        final bottom = dst[i++];
+        final dstX = dst[i++];
+        final dstY = dst[i++];
+        maxWidth = max(maxWidth, right);
      }
-     return totalWidth;
+     return maxWidth;
   }
 
-  int getMaxHeightFromBounds(Uint16List bounds){
-    var maxHeight = 0;
+  int getMaxHeightFromDst(Uint16List dst){
     var i = 0;
-    while (i < bounds.length){
-      final top = bounds[i + 1];
-      final bottom = bounds[i + 3];
-      final height = bottom - top;
-      maxHeight = max(maxHeight, height);
-      i += 4;
+    var maxHeight = 0;
+    while (i < dst.length){
+      final left = dst[i++];
+      final top = dst[i++];
+      final right = dst[i++];
+      final bottom = dst[i++];
+      final dstX = dst[i++];
+      final dstY = dst[i++];
+
+      maxHeight = max(maxHeight, bottom);
     }
     return maxHeight;
   }
 
-  Uint16List buildBounds(List<Image> images, int rows, int columns){
-    final bounds = Uint16List(rows * columns * 4);
+  Uint16List buildSrc(List<Image> images, int rows, int columns){
+    final src = Uint16List(rows * columns * 4);
     var i = 0;
 
     for (final image in images){
-      bounds[i++] = findBoundsLeft(image);
-      bounds[i++] = findBoundsTop(image);
-      bounds[i++] = findBoundsRight(image);
-      bounds[i++] = findBoundsBottom(image);
+      src[i++] = findBoundsLeft(image);
+      src[i++] = findBoundsTop(image);
+      src[i++] = findBoundsRight(image);
+      src[i++] = findBoundsBottom(image);
     }
-    return bounds;
+    return src;
   }
 
   Future<List<Image>> getImages(KidState state, KidPart part) async {

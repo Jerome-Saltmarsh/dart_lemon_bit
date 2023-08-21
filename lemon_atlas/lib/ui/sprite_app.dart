@@ -1,4 +1,8 @@
 
+import 'dart:io';
+
+import 'package:shell/shell.dart';
+
 import 'package:flutter/material.dart';
 import 'package:lemon_atlas/sprites/kid_part.dart';
 import 'package:lemon_atlas/sprites/kid_state.dart';
@@ -37,16 +41,16 @@ class AmuletSprites extends StatelessWidget {
           title: const Text('AMULET ATLAS'),
           actions: [
             onPressed(
-              action: packSelected,
+              action: renderSelected,
               child: Container(
                   padding: const EdgeInsets.all(16),
-                  child: buildText("PACK")),
+                  child: buildText("RENDER")),
             ),
             onPressed(
-              action: packSelected,
+              action: buildSelected,
               child: Container(
                   padding: const EdgeInsets.all(16),
-                  child: buildText("SPRITE")),
+                  child: buildText("RUN")),
             ),
           ],
         ),
@@ -100,7 +104,23 @@ class AmuletSprites extends StatelessWidget {
     changeNotifier.value++;
   }
 
-  void packSelected() {
+  void renderSelected() async {
+    const blender = '"C:/Program Files/Blender Foundation/Blender 3.5/blender"';
+    const script = 'C:/Users/Jerome/github/bleed/lemon_atlas/scripts/render.py';
+    const blend = 'C:/Users/Jerome/github/bleed/resources/blender/character_kid.blend';
+    const command = '$blender $blend --background --python $script';
+    print(command);
+
+    final process = await Shell().start(
+      blender,
+      arguments: [blend, '--background', '--python', script],
+    );
+    final exitCode = await process.exitCode;
+
+    print(exitCode);
+  }
+
+  void buildSelected() {
     for (final state in activeKidStates) {
       for (final part in activeKidParts) {
         sprite.buildKidStateAndPart(
