@@ -79,12 +79,14 @@ class Sprite {
     final groupName = KidPart.getGroupName(part);
     final packedBytes = encodePng(packedImage);
     final outputName = state.name;
-    final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites/kid/$groupName/${part.fileName}';
+    // final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/kid/$groupName/${part.fileName}';
+    final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/kid/$groupName/${part.fileName}';
     await createDirectoryIfNotExists(directory);
     final png = File('$directory/$outputName.png');
     await png.writeAsBytes(packedBytes);
     final dstFile = File('$directory/$outputName.dst');
     await dstFile.writeAsBytes(dst.buffer.asUint8List());
+    print('saved "$directory/$outputName"');
   }
 
   Uint16List buildDstFromBounds(Uint16List bounds){
@@ -155,17 +157,15 @@ class Sprite {
   Future<List<Image>> getImages(KidState state, KidPart part) async {
     final directoryName = getDirectoryName(state, part);
     final images = <Image> [];
-    final now = DateTime.now();
     for (var i = 1; i <= 64; i++){
       final iPadded = i.toString().padLeft(4, '0');
       final fileName = '$directoryName/$iPadded.png';
-      final bytes = await loadAssetBytes(fileName);
+      final bytes = await loadFileBytes(fileName);
       final image = decodePng(bytes);
 
       if (image == null) {
         throw Exception();
       }
-
       images.add(image);
     }
     return images;
@@ -182,5 +182,16 @@ class Sprite {
     await directory.create(recursive: true);
   }
 }
+
+Future<Uint8List> loadFileBytes(String filePath) async {
+  final file = File(filePath);
+  if (await file.exists()) {
+    return await file.readAsBytes();
+  } else {
+    throw FileSystemException('File not found: $filePath');
+  }
+}
+
+
 
 
