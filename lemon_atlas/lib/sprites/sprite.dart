@@ -7,7 +7,6 @@ import 'package:image/image.dart';
 import 'package:lemon_atlas/sprites/copy_paste.dart';
 import 'package:lemon_atlas/sprites/kid_part.dart';
 import 'package:lemon_atlas/sprites/kid_state.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
 
 import '../functions/find_bounds.dart';
 
@@ -46,7 +45,13 @@ class Sprite {
     final width = getTotalWidthFromDst(dst);
     final height = getMaxHeightFromDst(dst);
 
-    final dstImage = Image(width: width, height: height, numChannels: 4, backgroundColor: transparent);
+    final dstImage = Image(
+        width: width,
+        height: height,
+        numChannels: 4,
+        backgroundColor: transparent,
+        format: Format.uint16,
+    );
 
     var iSrc = 0;
     var iDst = 0;
@@ -77,15 +82,15 @@ class Sprite {
       );
     }
 
-    final groupName = KidPart.getGroupName(part);
-    final packedBytes = encodePng(dstImage);
+    final groupName = part.groupName;
+    final dstImageBytes = encodePng(dstImage);
     final outputName = state.name;
     final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/kid/$groupName/${part.fileName}';
     await createDirectoryIfNotExists(directory);
-    final png = File('$directory/$outputName.png');
-    await png.writeAsBytes(packedBytes);
-    final dstFile = File('$directory/$outputName.dst');
-    await dstFile.writeAsBytes(dst.buffer.asUint8List());
+    final filePng = File('$directory/$outputName.png');
+    await filePng.writeAsBytes(dstImageBytes);
+    final fileDst = File('$directory/$outputName.dst');
+    await fileDst.writeAsBytes(dst.buffer.asUint8List());
     print('saved "$directory/$outputName"');
   }
 
@@ -189,7 +194,7 @@ class Sprite {
   }
 
   String getDirectoryName(KidState state, KidPart part) =>
-      'assets/renders/kid/${KidPart.getGroupName(part)}/${part.fileName}/${state.name}';
+      'assets/renders/kid/${part.groupName}/${part.fileName}/${state.name}';
 
   Future createDirectoryIfNotExists(String directoryPath) async {
     final directory = Directory(directoryPath);

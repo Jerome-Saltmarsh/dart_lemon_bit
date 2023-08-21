@@ -1,6 +1,4 @@
 
-import 'dart:io';
-
 import 'package:shell/shell.dart';
 
 import 'package:flutter/material.dart';
