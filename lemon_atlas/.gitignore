@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 assets/renders
+assets/sprites
 compact
 
 # IntelliJ related
