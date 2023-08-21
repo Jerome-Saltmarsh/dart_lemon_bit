@@ -1,384 +1,186 @@
 
-import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:image/image.dart';
 import 'package:lemon_atlas/sprites/copy_paste.dart';
-import 'package:lemon_atlas/sprites/draw_rec.dart';
-import 'package:lemon_watch/src.dart';
+import 'package:lemon_atlas/sprites/kid_part.dart';
+import 'package:lemon_atlas/sprites/kid_state.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'sprite_bounds.dart';
-
-
-class Sprite {
-
-  static const maxSize = 2048;
-
-  var packStackIndex = 0;
-  var fileName = '';
-  var packStack = Uint16List(0);
-
-  final rows = WatchInt(8);
-  final columns = WatchInt(8);
-  final bounds = SpriteBounds();
-  final reduction = Watch(0);
-
-  final transparent = ColorRgba8(0, 0, 0, 0);
-  final previewBound = Watch<Image?>(null);
-  final previewPacked = Watch<Image?>(null);
-  final previewGrid = Watch<Image?>(null);
-
-  Image? _image;
-
-  final imageSet = Watch(false);
-  final imageWatch = Watch<Image?>(null);
-
-  set file(PlatformFile? value){
-
-    if (value == null){
-      clearPackedImage();
-      return;
-    }
-
-    final bytes = value.bytes;
-    if (bytes == null){
-      throw Exception();
-    }
-    image = decodePng(bytes);
-    fileName = value.name;
-
-  }
-
-  Image? get image => _image;
-
-  set image(Image? value){
-    _image = value;
-    imageSet.value = value != null;
-    imageWatch.value = value;
-    clearPackedImage();
-  }
-
-  void clearPackedImage() {
-    previewBound.value = null;
-    previewPacked.value = null;
-    reduction.value = 0;
-  }
-
-  void bind(Image image, {required bool drawPreview}){
-    final copy = drawPreview ? image.clone() : image;
-    bounds.bind(copy, rows.value, columns.value);
-    final total = bounds.boundStackIndex;
-
-    if (drawPreview){
-      final color = ColorRgb8(255, 0, 0);
-      for (var i = 0; i < total; i++){
-        drawRec(
-          image: copy,
-          left: bounds.boundStackLeft[i],
-          top: bounds.boundStackTop[i],
-          right: bounds.boundStackRight[i],
-          bottom: bounds.boundStackBottom[i],
-          color: color,
-        );
-      }
-      previewBound.value = copy;
-    }
-
-    if (drawPreview){
-      final previousArea = (image.width * image.height).toInt();
-      final boundArea = bounds.totalArea;
-      reduction.value = ((1 - (boundArea / previousArea)) * 100).toInt();
-    }
-  }
-
-  Image pack(Image img){
-
-    if (bounds.boundStackIndex <= 0){
-      throw Exception();
-    }
-
-    final spriteWidth = bounds.spriteWidth;
-    final spriteHeight = bounds.spriteHeight;
-
-    final stackLeft = bounds.boundStackLeft;
-    final stackTop = bounds.boundStackTop;
-    final stackRight = bounds.boundStackRight;
-    final stackBottom = bounds.boundStackBottom;
-
-    var canvasWidth = 0;
-    var canvasHeight = 0;
-    var rowHeight = 0;
-
-    var pasteX = 0;
-    var pasteY = 0;
-    final totalBounds = bounds.boundStackIndex;
-    packStack = Uint16List(4 + (totalBounds * 6));
-    packStackIndex = 0;
-    writeToPackStack(spriteWidth);
-    writeToPackStack(spriteHeight);
-    writeToPackStack(rows.value);
-    writeToPackStack(columns.value);
-
-    for (var i = 0; i < totalBounds; i++) {
-      final srcLeft = stackLeft[i];
-      final srcRight = stackRight[i];
-      final scrTop = stackTop[i];
-      final srcBottom = stackBottom[i];
-      final width = srcRight - srcLeft;
-      final height = srcBottom - scrTop;
-
-      rowHeight = max(height, rowHeight);
-
-      if (pasteX + width > maxSize){
-        pasteX = 0;
-        pasteY += rowHeight + 1;
-        rowHeight = height;
-      }
-
-      canvasHeight = max(canvasHeight, pasteY + rowHeight);
-
-      packStack[packStackIndex++] = pasteX;
-      packStack[packStackIndex++] = pasteY;
-      packStack[packStackIndex++] = pasteX + width;
-      packStack[packStackIndex++] = pasteY + height;
-      packStack[packStackIndex++] = srcLeft % spriteWidth;
-      packStack[packStackIndex++] = scrTop % spriteHeight;
-      pasteX += width;
-      pasteX++;
-      canvasWidth = max(canvasWidth, pasteX);
-    }
-
-    final packedImage = Image(
-      width: canvasWidth,
-      height: canvasHeight,
-      backgroundColor: transparent,
-      numChannels: 4,
-    );
-
-    if (canvasHeight > maxSize){
-      throw Exception('canvas height exceeds max height');
-    }
-
-    var j = 4; // the first four indexes are used to store width, height, columns and rows
-    for (var i = 0; i < totalBounds; i++){
-      final srcLeft = stackLeft[i];
-      final srcTop = stackTop[i];
-      final pasteLeft = packStack[j++];
-      final pasteTop = packStack[j++];
-      final pasteRight = packStack[j++];
-      final pasteBottom = packStack[j++];
-      packStack[j++];
-      packStack[j++];
-
-      final width = pasteRight - pasteLeft;
-      final height = pasteBottom - pasteTop;
-
-      copyPaste(
-        srcImage: img,
-        dstImage: packedImage,
-        width: width,
-        height: height,
-        srcX: srcLeft,
-        srcY: srcTop,
-        dstX: pasteLeft,
-        dstY: pasteTop,
-      );
-    }
-
-    return packedImage;
-  }
-
-  void writeToPackStack(int value){
-    packStack[packStackIndex++] = value;
-  }
-
-  void save() {
-    final imgPacked = previewPacked.value;
-    if (imgPacked == null){
-      throw Exception();
-    }
-    downloadBytes(bytes: encodePng(imgPacked), name: fileName);
-
-    downloadBytes(
-        bytes: packStack.buffer.asUint8List(),
-        name: fileName.replaceAll('.png', '.sprite'),
-    );
-  }
-
-  Future buildCells() async {
-    final files = await loadFilesFromDisk();
-    if (files == null) {
-      return;
-    }
-
-    final image = Image(
-        width: columns.value * 256,
-        height: rows.value * 256,
-        numChannels: 4,
-        backgroundColor: transparent,
-    );
-
-    var row = 0;
-    var column = 0;
-
-    for (final file in files) {
-      final bytes = file.bytes;
-      if (bytes == null){
-        throw Exception();
-      }
-
-      if (files.length != 64){
-        throw Exception('expect 64');
-      }
-
-      final imageDecoded = decodePng(bytes) ?? (throw Exception());
-
-      var pasteX = column * 256;
-      var pasteY = row * 256;
-
-      for (var x = 0; x < 256; x++){
-        for (var y = 0; y < 256; y++){
-          image.setPixel(pasteX +x, pasteY + y, imageDecoded.getPixel(x, y));
-        }
-      }
-
-      column++;
-      if (column >= 8){
-        row++;
-        column = 0;
-      }
-    }
-
-    downloadBytes(bytes: encodePng(image), name: 'cells.png');
-  }
-
-  Future buildAtlas() async {
-    final files = await loadFilesFromDisk();
-    if (files == null) {
-      return;
-    }
-
-    final spriteSheets = <SpriteSheet>[];
-
-    for (final file in files) {
-      final bytes = file.bytes;
-      if (bytes == null){
-        throw Exception();
-      }
-
-      final imageDecoded = decodePng(bytes) ?? (throw Exception());
-      bind(imageDecoded, drawPreview: false);
-      final imagePacked = pack(imageDecoded);
-
-      spriteSheets.add(
-        SpriteSheet(
-            image: imagePacked,
-            bounds: packStack.buffer.asUint8List(),
-            name: file.name.replaceAll('.png', ''),
-        )
-      );
-    }
-
-    var width = 0;
-    var height = 0;
-
-    for (final spriteSheet in spriteSheets){
-      height += spriteSheet.image.height + 1;
-      width = max(width, spriteSheet.image.width);
-    }
-
-    height--;
-
-    final atlas = Image(
-        width: width,
-        height: height,
-        backgroundColor: transparent,
-        numChannels: 4,
-    );
-
-    var row = 0;
-
-    final spriteMaps = <SpriteMap>[];
-
-    for (final spriteSheet in spriteSheets){
-      final image = spriteSheet.image;
-      final imageHeight = image.height;
-      final imageWidth = image.width;
-
-      spriteMaps.add(SpriteMap(spriteSheet.name, row, spriteSheet.bounds));
-
-      for (var y = 0; y < imageHeight; y++){
-         for (var x = 0; x < imageWidth; x++){
-
-           if (x >= atlas.width){
-             throw Exception();
-           }
-           if (row >= atlas.height){
-             throw Exception();
-           }
-
-           atlas.setPixel(x, row, image.getPixel(x, y));
-         }
-         row++;
-      }
-    }
-    downloadBytes(bytes: encodePng(atlas), name: 'atlas.png');
-
-    final json = <String, dynamic>{};
-
-    for (final spriteMap in spriteMaps){
-      final data = <String, dynamic> {
-        'y': spriteMap.y,
-        'bytes': spriteMap.bytes,
-      };
-      json[spriteMap.name] = data;
-    }
-
-    final jsonString = jsonEncode(json);
-    downloadString(contents: jsonString, filename: 'atlas.json');
-  }
-
-  void loadFiles(List<PlatformFile> files) async {
-    files.forEach(process);
-  }
-
-  void process(PlatformFile file) async {
-    this.file = file;
-    fileName = file.name;
-    final bytes = file.bytes;
-    if (bytes == null){
-      throw Exception();
-    }
-    final decodedImage = decodePng(bytes) ?? (throw Exception());
-    bind(decodedImage, drawPreview: true);
-    previewPacked.value = pack(decodedImage);
-    save();
-  }
-
-  void compile(){
-
-  }
-}
-
-class SpriteSheet {
-   final Image image;
-   final Uint8List bounds;
-   final String name;
-
-  SpriteSheet({
+import '../functions/find_bounds.dart';
+
+class ImagePack {
+  final Image image;
+  final int spriteWidth;
+  final int spriteHeight;
+  final int rows;
+  final int columns;
+  final Uint16List bounds;
+
+  ImagePack({
     required this.image,
+    required this.spriteWidth,
+    required this.spriteHeight,
+    required this.rows,
+    required this.columns,
     required this.bounds,
-    required this.name,
   });
 }
 
-class SpriteMap {
-  final String name;
-  final int y;
-  final Uint8List bytes;
+class Sprite {
 
-  SpriteMap(this.name, this.y, this.bytes);
+  final transparent = ColorRgba8(0, 0, 0, 0);
+
+  void buildKidStateAndPart({
+    required KidState state,
+    required KidPart part,
+    required int rows,
+    required int columns,
+  }) async {
+
+    final renders = await getImages(state, part);
+    final bounds = buildBounds(renders, rows, columns);
+
+    final width = getTotalWidthFromBounds(bounds);
+    final height = getMaxHeightFromBounds(bounds);
+
+    final packedImage = Image(width: width, height: height, numChannels: 4, backgroundColor: transparent);
+    final dst = buildDstFromBounds(bounds);
+
+    var i = 0;
+
+    var dstX = 0;
+    var dstY = 0;
+
+    for (final render in renders){
+      final left = bounds[i++];
+      final top = bounds[i++];
+      final right = bounds[i++];
+      final bottom = bounds[i++];
+
+      final renderWidth = right - left;
+      final renderHeight = bottom - top;
+
+      copyPaste(
+          srcImage: render,
+          dstImage: packedImage,
+          width: renderWidth,
+          height: renderHeight,
+          srcX: left,
+          srcY: top,
+          dstX: dstX,
+          dstY: dstY,
+      );
+      dstX += renderWidth;
+    }
+
+    final groupName = KidPart.getGroupName(part);
+    final packedBytes = encodePng(packedImage);
+    final outputName = state.name;
+    final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites/kid/$groupName/${part.fileName}';
+    await createDirectoryIfNotExists(directory);
+    final png = File('$directory/$outputName.png');
+    await png.writeAsBytes(packedBytes);
+    final dstFile = File('$directory/$outputName.dst');
+    await dstFile.writeAsBytes(dst.buffer.asUint8List());
+  }
+
+  Uint16List buildDstFromBounds(Uint16List bounds){
+    final dst = Uint16List(bounds.length ~/ 4 * 6);
+
+    var i = 0;
+
+    var dstX = 0;
+    var dstY = 0;
+
+    while (i < bounds.length){
+      final left = bounds[i++];
+      final top = bounds[i++];
+      final right = bounds[i++];
+      final bottom = bounds[i++];
+      final width = right - left;
+      final height = bottom - top;
+
+      dst[i++] = dstX;
+      dst[i++] = dstY;
+      dst[i++] = width;
+      dst[i++] = height;
+      dst[i++] = left;
+      dst[i++] = top;
+    }
+
+    return dst;
+  }
+
+  int getTotalWidthFromBounds(Uint16List bounds){
+     var totalWidth = 0;
+     var i = 0;
+     while (i < bounds.length){
+        final left = bounds[i];
+        final right = bounds[i + 2];
+        totalWidth += (right - left);
+        i += 4;
+     }
+     return totalWidth;
+  }
+
+  int getMaxHeightFromBounds(Uint16List bounds){
+    var maxHeight = 0;
+    var i = 0;
+    while (i < bounds.length){
+      final top = bounds[i + 1];
+      final bottom = bounds[i + 3];
+      final height = bottom - top;
+      maxHeight = max(maxHeight, height);
+      i += 4;
+    }
+    return maxHeight;
+  }
+
+  Uint16List buildBounds(List<Image> images, int rows, int columns){
+    final bounds = Uint16List(rows * columns * 4);
+    var i = 0;
+
+    for (final image in images){
+      bounds[i++] = findBoundsLeft(image);
+      bounds[i++] = findBoundsTop(image);
+      bounds[i++] = findBoundsRight(image);
+      bounds[i++] = findBoundsBottom(image);
+    }
+    return bounds;
+  }
+
+  Future<List<Image>> getImages(KidState state, KidPart part) async {
+    final directoryName = getDirectoryName(state, part);
+    final images = <Image> [];
+    final now = DateTime.now();
+    for (var i = 1; i <= 64; i++){
+      final iPadded = i.toString().padLeft(4, '0');
+      final fileName = '$directoryName/$iPadded.png';
+      final bytes = await loadAssetBytes(fileName);
+      final image = decodePng(bytes);
+
+      if (image == null) {
+        throw Exception();
+      }
+
+      images.add(image);
+    }
+    return images;
+  }
+
+  String getDirectoryName(KidState state, KidPart part) =>
+      'assets/renders/kid/${KidPart.getGroupName(part)}/${part.fileName}/${state.name}';
+
+  Future createDirectoryIfNotExists(String directoryPath) async {
+    final directory = Directory(directoryPath);
+    if (await directory.exists()) {
+      return;
+    }
+    await directory.create(recursive: true);
+  }
 }
+
+
