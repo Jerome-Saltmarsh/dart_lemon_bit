@@ -1,0 +1,5 @@
+
+enum CharacterType {
+  fallen,
+  kid,
+}

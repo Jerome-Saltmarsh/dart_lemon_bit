@@ -1,5 +1,5 @@
 
-enum KidState {
+enum character_state {
   idle,
   running,
   strike,

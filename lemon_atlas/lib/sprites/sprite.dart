@@ -5,8 +5,8 @@ import 'dart:typed_data';
 
 import 'package:image/image.dart';
 import 'package:lemon_atlas/sprites/copy_paste.dart';
-import 'package:lemon_atlas/sprites/kid_part.dart';
-import 'package:lemon_atlas/sprites/kid_state.dart';
+import 'package:lemon_atlas/enums/kid_part.dart';
+import 'package:lemon_atlas/enums/character_state.dart';
 
 import '../functions/find_bounds.dart';
 
@@ -33,7 +33,7 @@ class Sprite {
   final transparent = ColorRgba8(0, 0, 0, 0);
 
   void buildKidStateAndPart({
-    required KidState state,
+    required character_state state,
     required KidPart part,
     required int rows,
     required int columns,
@@ -176,7 +176,7 @@ class Sprite {
     return src;
   }
 
-  Future<List<Image>> getImages(KidState state, KidPart part) async {
+  Future<List<Image>> getImages(character_state state, KidPart part) async {
     final directoryName = getDirectoryName(state, part);
     final images = <Image> [];
     for (var i = 1; i <= 64; i++){
@@ -193,7 +193,7 @@ class Sprite {
     return images;
   }
 
-  String getDirectoryName(KidState state, KidPart part) =>
+  String getDirectoryName(character_state state, KidPart part) =>
       'assets/renders/kid/${part.groupName}/${part.fileName}/${state.name}';
 
   Future createDirectoryIfNotExists(String directoryPath) async {

@@ -1,9 +1,10 @@
 
+import 'package:lemon_atlas/enums/character_type.dart';
 import 'package:shell/shell.dart';
 
 import 'package:flutter/material.dart';
-import 'package:lemon_atlas/sprites/kid_part.dart';
-import 'package:lemon_atlas/sprites/kid_state.dart';
+import 'package:lemon_atlas/enums/kid_part.dart';
+import 'package:lemon_atlas/enums/character_state.dart';
 import 'package:lemon_atlas/sprites/sprite.dart';
 import 'package:lemon_atlas/sprites/style.dart';
 import 'package:lemon_watch/src.dart';
@@ -15,7 +16,8 @@ class AmuletSprites extends StatelessWidget {
   final Sprite sprite;
   final Style style;
 
-  final activeKidStates = <KidState>[];
+  final characterType = Watch(CharacterType.kid);
+  final activeKidStates = <character_state>[];
   final activeKidParts = <KidPart>[];
 
   AmuletSprites({
@@ -62,9 +64,17 @@ class AmuletSprites extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
+                        children: CharacterType.values.map((e) => onPressed(
+                            action: () => selectCharacterType(e),
+                            child: WatchBuilder(characterType, (activeCharacterType){
+                                return buildText(e.name, color: activeCharacterType == e ? Colors.green : Colors.white70);
+                            })
+                  )).toList(growable: false)
+                      ),
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: KidState.values.map((e) => onPressed(
+                        children: character_state.values.map((e) => onPressed(
                             action: () => toggleKidState(e),
                             child: buildText(e.name, color: activeKidStates.contains(e) ? Colors.green : Colors.white70))).toList(growable: false),
                       ),
@@ -84,7 +94,11 @@ class AmuletSprites extends StatelessWidget {
     );
   }
 
-  void toggleKidState(KidState kidState){
+  void selectCharacterType(CharacterType value){
+    characterType.value = value;
+  }
+
+  void toggleKidState(character_state kidState){
     if (activeKidStates.contains(kidState)){
       activeKidStates.remove(kidState);
     } else {
