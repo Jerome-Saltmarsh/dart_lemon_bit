@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/sprite2.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -110,6 +110,39 @@ class IsometricRender with IsometricComponent {
     engine.bufferBlendMode = BlendMode.dstATop;
   }
 
+  void modulate2({
+    required Sprite2 sprite,
+    required int frame,
+    required int color1,
+    required int color2,
+    required double scale,
+    required double dstX,
+    required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+  }){
+    engine.bufferBlendMode = options.skinBlend;
+    render.sprite2Frame(
+      sprite: sprite,
+      frame: frame,
+      color: color1,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+    render.sprite2Frame(
+      sprite: sprite,
+      frame: frame,
+      color: color2,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+    engine.bufferBlendMode = BlendMode.dstATop;
+  }
+
   void spriteFrame({
     required Sprite sprite,
     required int frame,
@@ -152,6 +185,48 @@ class IsometricRender with IsometricComponent {
     engine.incrementBufferIndex();
   }
 
+  void sprite2Frame({
+    required Sprite2 sprite,
+    required int frame,
+    required int color,
+    required double scale,
+    required double dstX,
+    required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+  }){
+    if (sprite.values.isEmpty)
+      return;
+
+    engine.bufferImage = sprite.image;
+    final bufferIndex = engine.bufferIndex;
+    final values = sprite.values;
+    final fStart = bufferIndex << 2;
+    var f = fStart;
+    var j = frame * 6; // each frame consumes for indexes
+    // final x = sprite.x;
+    // final y = sprite.y;
+
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f++] = values[j++]; // left
+    bufferSrc[f++] = values[j++]; // top
+    bufferSrc[f++] = values[j++]; // right
+    bufferSrc[f++] = values[j++]; // bottom
+    f = fStart;
+    bufferDst[f++] = scale;
+    bufferDst[f++] = 0; // rotation
+
+    final spriteDstX = values[j++];
+    final spriteDstY = values[j++];
+
+    final srcWidth = 256; // TODO read from file
+    final srcHeight = 256; // TODO read from file
+
+    bufferDst[f++] = dstX - (srcWidth * anchorX * scale) + (spriteDstX * scale);
+    bufferDst[f++] = dstY - (srcHeight * anchorY * scale) + (spriteDstY * scale);
+    engine.incrementBufferIndex();
+  }
+
   void drawCanvas(Canvas canvas, Size size) {
 
     if (options.gameType.value == GameType.Website) {
@@ -166,31 +241,30 @@ class IsometricRender with IsometricComponent {
     particles.onComponentUpdate();
     compositor.render3D();
 
-
-    engine.bufferBlendMode = BlendMode.modulate;
-    engine.renderSprite(
-      image: images.square,
-      // color: aRGBToColor(255, 253, 203, 176),
-      color: colors.fair_0.value,
-      srcX: 0,
-      srcY: 0,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
-      dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
-    );
-    engine.renderSprite(
-      image: images.square,
-      color: scene.getNodeColorAtIndex(mouse.nodeIndex),
-      srcX: 0,
-      srcY: 0,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
-      dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
-    );
-
-    engine.bufferBlendMode = BlendMode.dstATop;
+    // engine.bufferBlendMode = BlendMode.modulate;
+    // engine.renderSprite(
+    //   image: images.square,
+    //   // color: aRGBToColor(255, 253, 203, 176),
+    //   color: colors.fair_0.value,
+    //   srcX: 0,
+    //   srcY: 0,
+    //   srcWidth: 64,
+    //   srcHeight: 64,
+    //   dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
+    //   dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
+    // );
+    // engine.renderSprite(
+    //   image: images.square,
+    //   color: scene.getNodeColorAtIndex(mouse.nodeIndex),
+    //   srcX: 0,
+    //   srcY: 0,
+    //   srcWidth: 64,
+    //   srcHeight: 64,
+    //   dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
+    //   dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
+    // );
+    //
+    // engine.bufferBlendMode = BlendMode.dstATop;
 
     renderEditMode();
     renderMouseTargetName();

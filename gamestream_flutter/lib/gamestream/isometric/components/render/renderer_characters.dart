@@ -2,33 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/sprite2.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
-import '../../classes/sprite.dart';
 
-
-class AnimationMode {
-  static const Single = 0;
-  static const Loop = 1;
-  static const Bounce = 2;
-
-  static int fromCharacterState(int characterState) =>
-    switch (characterState){
-      CharacterState.Strike => Single,
-      CharacterState.Fire => Single,
-      CharacterState.Hurt => Single,
-      CharacterState.Running => Loop,
-      CharacterState.Idle => Bounce,
-      CharacterState.Dead => Single,
-      CharacterState.Changing => Single,
-      CharacterState.Aiming => Loop,
-      CharacterState.Spawning => Loop,
-      CharacterState.Stunned => Loop,
-      _ => throw Exception(),
-    };
-}
 
 class RendererCharacters extends RenderGroup {
 
@@ -467,18 +446,18 @@ class RendererCharacters extends RenderGroup {
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
 
-    final atlasHandsLeft = images.spriteGroupHandsLeft[character.handTypeLeft] ?? (throw Exception());
-    final atlasHandsRight = images.spriteGroupHandsRight[character.handTypeRight] ?? (throw Exception());
-    final atlasHelm = images.spriteGroupHelms[character.headType] ?? (throw Exception());
-    final atlasLegs =  images.spriteGroupLegs[character.legType] ?? (throw Exception());
-    final atlasBody = images.spriteGroupBody[character.bodyType] ?? (throw Exception());
-    final atlasWeapon = images.spriteGroupWeapons[character.weaponType] ??
+    final atlasHandsLeft = images.spriteGroup2HandsLeft[character.handTypeLeft] ?? (throw Exception());
+    final atlasHandsRight = images.spriteGroup2HandsRight[character.handTypeRight] ?? (throw Exception());
+    final atlasHelm = images.spriteGroup2Helms[character.headType] ?? (throw Exception());
+    final atlasLegs =  images.spriteGroup2Legs[character.legType] ?? (throw Exception());
+    final atlasBody = images.spriteGroup2Body[character.bodyType] ?? (throw Exception());
+    final atlasWeapon = images.spriteGroup2Weapons[character.weaponType] ??
         (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
-    final atlasBodyArm = images.spriteGroupBodyArms[character.bodyType] ?? (throw Exception());
-    final atlasArmLeft = images.spriteGroupArmsLeft[character.complexionType] ?? (throw Exception());
-    final atlasArmRight = images.spriteGroupArmsRight[character.complexionType] ?? (throw Exception());
-    final atlasHead = images.spriteGroupHeads[character.complexionType] ?? (throw Exception());
-    final atlasTorso = images.spriteGroupTorso[character.complexionType] ?? (throw Exception());
+    final atlasBodyArm = images.spriteGroup2BodyArms[character.bodyType] ?? (throw Exception());
+    final atlasArmLeft = images.spriteGroup2ArmsLeft[character.complexionType] ?? (throw Exception());
+    final atlasArmRight = images.spriteGroup2ArmsRight[character.complexionType] ?? (throw Exception());
+    final atlasHead = images.spriteGroup2Heads[character.complexionType] ?? (throw Exception());
+    final atlasTorso = images.spriteGroup2Torso[character.complexionType] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -490,13 +469,13 @@ class RendererCharacters extends RenderGroup {
     final spriteTorso = atlasTorso.fromCharacterState(characterState);
     final spriteLegs = atlasLegs.fromCharacterState(characterState);
     final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
-    final spriteGloveRight = atlasHandsRight.fromCharacterState(characterState);
+    final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
     final spriteShadow = images.spriteGroupKidShadow.fromCharacterState(characterState);
 
-    final Sprite spriteHandFront;
-    final Sprite spriteHandBehind;
-    final Sprite spriteArmFront;
-    final Sprite spriteArmBehind;
+    final Sprite2 spriteHandFront;
+    final Sprite2 spriteHandBehind;
+    final Sprite2 spriteArmFront;
+    final Sprite2 spriteArmBehind;
 
     final colorSkin = colors.fair_0.value;
 
@@ -510,11 +489,11 @@ class RendererCharacters extends RenderGroup {
 
     if (leftInFront) {
       spriteHandFront = spriteHandsLeft;
-      spriteHandBehind = spriteGloveRight;
+      spriteHandBehind = spriteHandsRight;
       spriteArmFront = spriteArmLeft;
       spriteArmBehind = spriteArmRight;
     } else {
-      spriteHandFront = spriteGloveRight;
+      spriteHandFront = spriteHandsRight;
       spriteHandBehind = spriteHandsLeft;
       spriteArmFront = spriteArmRight; // spriteArmRight
       spriteArmBehind = spriteArmLeft;
@@ -534,11 +513,11 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.modulate(
+      render.modulate2(
         sprite: spriteTorso,
         frame: completingAction
             ? spriteTorso.getFramePercentage(row, actionComplete)
-            : spriteTorso.getFrame(row: row, column: animationFrame),
+            : spriteTorso.getFrame(column: animationFrame, row: row),
         color1: colorSkin,
         color2: color,
         scale: scale,
@@ -547,7 +526,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.spriteFrame(
+      render.sprite2Frame(
         sprite: spriteLegs,
         frame: completingAction
             ? spriteLegs.getFramePercentage(row, actionComplete)
@@ -561,7 +540,7 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    render.modulate(
+    render.modulate2(
       sprite: spriteArmBehind,
       frame: completingAction
           ? spriteArmBehind.getFramePercentage(row, actionComplete)
@@ -574,7 +553,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.spriteFrame(
+    render.sprite2Frame(
       sprite: spriteHandBehind,
       frame: completingAction
           ? spriteHandBehind.getFramePercentage(row, actionComplete)
@@ -586,8 +565,8 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (spriteGloveRight != spriteHandFront){
-      render.spriteFrame(
+    if (spriteHandsRight != spriteHandFront){
+      render.sprite2Frame(
         sprite: spriteWeapon,
         frame: completingAction
             ? spriteWeapon.getFramePercentage(row, actionComplete)
@@ -609,7 +588,7 @@ class RendererCharacters extends RenderGroup {
     ].contains(direction);
 
     if (bodyFirst){
-      render.spriteFrame(
+      render.sprite2Frame(
         sprite: spriteBody,
         frame: completingAction
             ? spriteBody.getFramePercentage(row, actionComplete)
@@ -623,7 +602,7 @@ class RendererCharacters extends RenderGroup {
     }
 
 
-    render.modulate(
+    render.modulate2(
       sprite: spriteArmFront,
       frame: completingAction
           ? spriteArmFront.getFramePercentage(row, actionComplete)
@@ -636,8 +615,8 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (spriteGloveRight == spriteHandFront){
-      render.spriteFrame(
+    if (spriteHandsRight == spriteHandFront){
+      render.sprite2Frame(
         sprite: spriteWeapon,
         frame: completingAction
             ? spriteWeapon.getFramePercentage(row, actionComplete)
@@ -650,7 +629,7 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.spriteFrame(
+    render.sprite2Frame(
       sprite: spriteHandFront,
       frame: completingAction
           ? spriteHandFront.getFramePercentage(row, actionComplete)
@@ -663,7 +642,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (!bodyFirst){
-      render.spriteFrame(
+      render.sprite2Frame(
         sprite: spriteBody,
         frame: completingAction
             ? spriteBody.getFramePercentage(row, actionComplete)
@@ -676,7 +655,7 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.spriteFrame(
+    render.sprite2Frame(
       sprite: spriteBodyArm,
       frame: completingAction
           ? spriteBodyArm.getFramePercentage(row, actionComplete)
@@ -688,7 +667,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.modulate(
+    render.modulate2(
       sprite: spriteHead,
       frame: completingAction
           ? spriteHead.getFramePercentage(row, actionComplete)
@@ -701,7 +680,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.spriteFrame(
+    render.sprite2Frame(
       sprite: spriteHelm,
       frame: completingAction
           ? spriteHelm.getFramePercentage(row, actionComplete)

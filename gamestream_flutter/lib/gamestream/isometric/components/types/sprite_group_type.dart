@@ -21,7 +21,7 @@ class SpriteGroupType {
     Body_Arms: 'body_arms',
     Hands_Left: 'hands_left',
     Hands_Right: 'hands_right',
-    Heads: 'heads',
+    Heads: 'head',
     Helms: 'helms',
     Legs: 'legs',
     Shadow: 'shadow',
@@ -30,16 +30,16 @@ class SpriteGroupType {
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
 
   static String getSubTypeName(int type, int subType) => switch (type) {
-      Arms_Left => ComplexionType.getName(subType),
-      Arms_Right => ComplexionType.getName(subType),
+      Arms_Left => 'regular',
+      Arms_Right => 'regular',
       Body => BodyType.getName(subType),
       Body_Arms => BodyType.getName(subType),
       Hands_Left => HandType.getName(subType),
       Hands_Right => HandType.getName(subType),
-      Heads => ComplexionType.getName(subType),
+      Heads => 'regular',
       Helms => HelmType.getName(subType),
       Legs => LegType.getName(subType),
-      Torso => ComplexionType.getName(subType),
+      Torso => 'regular',
       Weapons => WeaponType.getName(subType),
       _ => throw Exception(
           'SpriteGroupType.getName(type: $type, subType: $subType)'

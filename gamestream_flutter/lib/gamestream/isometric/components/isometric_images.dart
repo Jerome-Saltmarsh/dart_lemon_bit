@@ -2,14 +2,18 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/sprite2.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/src.dart';
 import 'classes/sprite_group.dart';
-import 'render/renderer_characters.dart';
+import 'render/classes/sprite_group2.dart';
+import 'render/types/animation_mode.dart';
 import 'types/sprite_group_type.dart';
+
 
 class IsometricImages with IsometricComponent {
 
@@ -20,32 +24,59 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
-  final spriteGroupArmsLeft = <int, SpriteGroup> {};
-  final spriteGroupArmsRight = <int, SpriteGroup> {};
-  final spriteGroupBody = <int, SpriteGroup> {};
-  final spriteGroupBodyArms = <int, SpriteGroup> {};
-  final spriteGroupHandsLeft = <int, SpriteGroup> {};
-  final spriteGroupHandsRight = <int, SpriteGroup> {};
-  final spriteGroupHeads = <int, SpriteGroup> {};
-  final spriteGroupHelms = <int, SpriteGroup> {};
-  final spriteGroupLegs = <int, SpriteGroup> {};
-  final spriteGroupTorso = <int, SpriteGroup> {};
-  final spriteGroupWeapons = <int, SpriteGroup> {};
+  final spriteGroup2ArmsLeft = <int, SpriteGroup2> {};
+  final spriteGroup2ArmsRight = <int, SpriteGroup2> {};
+  final spriteGroup2Body = <int, SpriteGroup2> {};
+  final spriteGroup2BodyArms = <int, SpriteGroup2> {};
+  final spriteGroup2HandsLeft = <int, SpriteGroup2> {};
+  final spriteGroup2HandsRight = <int, SpriteGroup2> {};
+  final spriteGroup2Heads = <int, SpriteGroup2> {};
+  final spriteGroup2Helms = <int, SpriteGroup2> {};
+  final spriteGroup2Legs = <int, SpriteGroup2> {};
+  final spriteGroup2Torso = <int, SpriteGroup2> {};
+  final spriteGroup2Weapons = <int, SpriteGroup2> {};
 
-  late final spriteGroupTypes = {
-    SpriteGroupType.Arms_Left: spriteGroupArmsLeft,
-    SpriteGroupType.Arms_Right: spriteGroupArmsRight,
-    SpriteGroupType.Body: spriteGroupBody,
-    SpriteGroupType.Body_Arms: spriteGroupBodyArms,
-    SpriteGroupType.Hands_Left: spriteGroupHandsLeft,
-    SpriteGroupType.Hands_Right: spriteGroupHandsRight,
-    SpriteGroupType.Heads: spriteGroupHeads,
-    SpriteGroupType.Helms: spriteGroupHelms,
-    SpriteGroupType.Legs: spriteGroupLegs,
-    SpriteGroupType.Torso: spriteGroupTorso,
-    SpriteGroupType.Weapons: spriteGroupWeapons,
+  late final spriteGroup2Types = {
+    SpriteGroupType.Arms_Left: spriteGroup2ArmsLeft,
+    SpriteGroupType.Arms_Right: spriteGroup2ArmsRight,
+    SpriteGroupType.Body: spriteGroup2Body,
+    SpriteGroupType.Body_Arms: spriteGroup2BodyArms,
+    SpriteGroupType.Hands_Left: spriteGroup2HandsLeft,
+    SpriteGroupType.Hands_Right: spriteGroup2HandsRight,
+    SpriteGroupType.Heads: spriteGroup2Heads,
+    SpriteGroupType.Helms: spriteGroup2Helms,
+    SpriteGroupType.Legs: spriteGroup2Legs,
+    SpriteGroupType.Torso: spriteGroup2Torso,
+    SpriteGroupType.Weapons: spriteGroup2Weapons,
   };
 
+  // final spriteGroupArmsLeft = <int, SpriteGroup> {};
+  // final spriteGroupArmsRight = <int, SpriteGroup> {};
+  // final spriteGroupBody = <int, SpriteGroup> {};
+  // final spriteGroupBodyArms = <int, SpriteGroup> {};
+  // final spriteGroupHandsLeft = <int, SpriteGroup> {};
+  // final spriteGroupHandsRight = <int, SpriteGroup> {};
+  // final spriteGroupHeads = <int, SpriteGroup> {};
+  // final spriteGroupHelms = <int, SpriteGroup> {};
+  // final spriteGroupLegs = <int, SpriteGroup> {};
+  // final spriteGroupTorso = <int, SpriteGroup> {};
+  // final spriteGroupWeapons = <int, SpriteGroup> {};
+  //
+  // late final spriteGroupTypes = {
+  //   SpriteGroupType.Arms_Left: spriteGroupArmsLeft,
+  //   SpriteGroupType.Arms_Right: spriteGroupArmsRight,
+  //   SpriteGroupType.Body: spriteGroupBody,
+  //   SpriteGroupType.Body_Arms: spriteGroupBodyArms,
+  //   SpriteGroupType.Hands_Left: spriteGroupHandsLeft,
+  //   SpriteGroupType.Hands_Right: spriteGroupHandsRight,
+  //   SpriteGroupType.Heads: spriteGroupHeads,
+  //   SpriteGroupType.Helms: spriteGroupHelms,
+  //   SpriteGroupType.Legs: spriteGroupLegs,
+  //   SpriteGroupType.Torso: spriteGroupTorso,
+  //   SpriteGroupType.Weapons: spriteGroupWeapons,
+  // };
+
+  late final SpriteGroup2 spriteGroup2Empty;
   late final SpriteGroup spriteGroupEmpty;
   late final SpriteGroup spriteFallen;
   late final SpriteGroup spriteGroupKidShadow;
@@ -53,6 +84,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite spriteEmpty;
   late final Sprite spriteFlame;
   late final Sprite spriteRainFalling;
+  late final dstEmpty = Uint16List(0);
 
   late final Image empty;
   late final Image shades;
@@ -82,6 +114,8 @@ class IsometricImages with IsometricComponent {
   late final Image sprite_shield;
   late final Image square;
   late final Image template_spinning;
+
+  late final Sprite2 emptySprite2;
 
   late final Map<int, Image> itemTypeAtlases;
 
@@ -117,6 +151,14 @@ class IsometricImages with IsometricComponent {
     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
     loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);
 
+    emptySprite2 = Sprite2(
+        image: empty,
+        values: Float32List(0),
+        rows: 0,
+        columns: 0,
+        mode: 0,
+    );
+
     totalImagesLoaded.onChanged((totalImagesLoaded) {
       if (totalImagesLoaded < totalImages.value)
         return;
@@ -145,28 +187,52 @@ class IsometricImages with IsometricComponent {
       change: spriteEmpty,
     );
 
+    spriteGroup2Empty = SpriteGroup2(
+        idle: emptySprite2,
+        running: emptySprite2,
+        change: emptySprite2,
+        dead: emptySprite2,
+        fire: emptySprite2,
+        strike: emptySprite2,
+        hurt: emptySprite2,
+    );
 
-    spriteGroupHandsLeft[HandType.None] = spriteGroupEmpty;
-    spriteGroupHandsRight[HandType.None] = spriteGroupEmpty;
-    spriteGroupWeapons[WeaponType.Unarmed] = spriteGroupEmpty;
-    spriteGroupHelms[HelmType.None] = spriteGroupEmpty;
-    spriteGroupBody[BodyType.None] = spriteGroupEmpty;
-    spriteGroupLegs[LegType.None] = spriteGroupEmpty;
-    spriteGroupBodyArms[BodyType.None] = spriteGroupEmpty;
 
-    loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
-    loadAtlas(type: SpriteGroupType.Arms_Right, subType: ComplexionType.Fair);
-    loadAtlas(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue);
-    loadAtlas(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue);
-    loadAtlas(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets);
-    loadAtlas(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets);
-    loadAtlas(type: SpriteGroupType.Heads, subType: ComplexionType.Fair);
-    loadAtlas(type: SpriteGroupType.Helms, subType: HelmType.Steel);
-    loadAtlas(type: SpriteGroupType.Legs, subType: LegType.Brown);
-    loadAtlas(type: SpriteGroupType.Torso, subType: ComplexionType.Fair);
-    loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Bow);
-    loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
-    loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
+    spriteGroup2HandsLeft[HandType.None] = spriteGroup2Empty;
+    spriteGroup2HandsRight[HandType.None] = spriteGroup2Empty;
+    spriteGroup2Weapons[WeaponType.Unarmed] = spriteGroup2Empty;
+    spriteGroup2Helms[HelmType.None] = spriteGroup2Empty;
+    spriteGroup2Body[BodyType.None] = spriteGroup2Empty;
+    spriteGroup2Legs[LegType.None] = spriteGroup2Empty;
+    spriteGroup2BodyArms[BodyType.None] = spriteGroup2Empty;
+    
+    loadSpriteGroup2(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Heads, subType: HeadType.regular, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Helms, subType: HelmType.Steel, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Legs, subType: LegType.Brown, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Torso, subType: TorsoType.regular, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Weapons, subType: WeaponType.Bow, skipHurt: true, skipStrike: true);
+    loadSpriteGroup2(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, skipHurt: true, skipFire: true);
+    loadSpriteGroup2(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
+
+    // loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
+    // loadAtlas(type: SpriteGroupType.Arms_Right, subType: ComplexionType.Fair);
+    // loadAtlas(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue);
+    // loadAtlas(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue);
+    // loadAtlas(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets);
+    // loadAtlas(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets);
+    // loadAtlas(type: SpriteGroupType.Heads, subType: ComplexionType.Fair);
+    // loadAtlas(type: SpriteGroupType.Helms, subType: HelmType.Steel);
+    // loadAtlas(type: SpriteGroupType.Legs, subType: LegType.Brown);
+    // loadAtlas(type: SpriteGroupType.Torso, subType: ComplexionType.Fair);
+    // loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Bow);
+    // loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
+    // loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
 
     spriteGroupKidShadow = loadSpriteGroupFromJson(
       await loadImageAsset('sprites/kid/shadow.png'),
@@ -221,22 +287,57 @@ class IsometricImages with IsometricComponent {
     );
   }
 
-  void loadAtlas({
+  void loadSpriteGroup2({
     required int type,
     required int subType,
+    bool skipIdle = false,
+    bool skipRunning = false,
+    bool skipChange = false,
+    bool skipDead = false,
+    bool skipFire = false,
+    bool skipStrike = false,
+    bool skipHurt = false,
   }) async {
-    totalImages.value++;
     final typeName = SpriteGroupType.getName(type).toLowerCase();
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase();
-    final json = await loadAssetJson('sprites/kid/$typeName/$subTypeName.json');
-    final image = await loadImageAsset('sprites/kid/$typeName/$subTypeName.png');
-    final spriteGroupType = spriteGroupTypes[type] ?? (throw Exception());
-    spriteGroupType[subType] = loadSpriteGroupFromJson(
-        image,
-        json,
+    final spriteGroup2Type = spriteGroup2Types[type] ?? (throw Exception());
+    final directory = 'sprites_2/kid/$typeName/$subTypeName';
+
+    spriteGroup2Type[subType] = SpriteGroup2(
+        idle: skipIdle ? emptySprite2 : await loadSprite2(fileName: '$directory/idle', mode: AnimationMode.Bounce),
+        running: skipRunning ? emptySprite2 : await loadSprite2(fileName: '$directory/running', mode: AnimationMode.Loop),
+        change: skipChange ? emptySprite2 : await loadSprite2(fileName: '$directory/change', mode: AnimationMode.Single),
+        dead: skipDead ? emptySprite2 : await loadSprite2(fileName: '$directory/dead', mode: AnimationMode.Single),
+        fire: skipFire ? emptySprite2 : await loadSprite2(fileName: '$directory/fire', mode: AnimationMode.Single),
+        strike: skipStrike ? emptySprite2 : await loadSprite2(fileName: '$directory/strike', mode: AnimationMode.Single),
+        hurt: skipHurt ? emptySprite2 : await loadSprite2(fileName: '$directory/hurt', mode: AnimationMode.Single),
     );
-    totalImagesLoaded.value++;
   }
+  
+  Future<Sprite2> loadSprite2({required String fileName, required int mode}) async => Sprite2.fromList(
+        image: await loadImageAsset('$fileName.png').catchError((_) => empty),
+        list: await loadDst2('$fileName.dst').catchError((_) => dstEmpty),
+        rows: 8,
+        columns: 8,
+        mode: mode,
+    );
+
+  // void loadAtlas({
+  //   required int type,
+  //   required int subType,
+  // }) async {
+  //   totalImages.value++;
+  //   final typeName = SpriteGroupType.getName(type).toLowerCase();
+  //   final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase();
+  //   final json = await loadAssetJson('sprites/kid/$typeName/$subTypeName.json');
+  //   final image = await loadImageAsset('sprites/kid/$typeName/$subTypeName.png');
+  //   final spriteGroupType = spriteGroupTypes[type] ?? (throw Exception());
+  //   spriteGroupType[subType] = loadSpriteGroupFromJson(
+  //       image,
+  //       json,
+  //   );
+  //   totalImagesLoaded.value++;
+  // }
 
   SpriteGroup loadSpriteGroupFromJson(Image image, Map<String, dynamic> json) => SpriteGroup(
         idle: loadSpriteFromJson(json: json, name: 'idle', image: image, mode: AnimationMode.Bounce),
@@ -300,8 +401,27 @@ class IsometricImages with IsometricComponent {
 
   Future<Uint8List?> tryLoadSpriteBytes(String fileName) =>
       tryLoadAssetBytes('sprites/$fileName.sprite');
-}
 
+  Future<Uint16List> loadDst(String name) async => (await loadAssetBytes(name)).buffer.asUint16List();
+
+  final byteDataEmpty = ByteData(0);
+
+  Future<Uint16List> loadDst2(String url) async {
+    try {
+      final bytes = await rootBundle.load(url).catchError((e) {
+        return byteDataEmpty;
+      });
+      return Uint8List
+          .view(bytes.buffer)
+          .buffer
+          .asUint16List();
+    } catch (e) {
+      return dstEmpty;
+    }
+  }
+
+
+}
 
 
 

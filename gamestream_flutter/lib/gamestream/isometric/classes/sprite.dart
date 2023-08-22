@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/types/animation_mode.dart';
 
 class Sprite {
   final Image image;

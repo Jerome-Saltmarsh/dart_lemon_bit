@@ -1,5 +1,8 @@
 library src;
 
+export 'torso_type.dart';
+export 'head_type.dart';
+export 'arm_type.dart';
 export 'complexion_type.dart';
 export 'ai_mode.dart';
 export 'character_state.dart';
