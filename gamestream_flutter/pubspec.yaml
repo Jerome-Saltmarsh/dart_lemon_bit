@@ -75,6 +75,7 @@ flutter:
     - sprites_2/kid/weapons/bow/
     - sprites_2/kid/weapons/staff/
     - sprites_2/kid/weapons/sword/
+    - sprites_2/fallen/
     - audio/
     - audio/music/
     - audio/sounds/

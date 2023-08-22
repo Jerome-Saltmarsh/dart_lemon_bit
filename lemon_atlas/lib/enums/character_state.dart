@@ -1,9 +1,10 @@
 
-enum character_state {
+enum CharacterState {
   idle,
   running,
   strike,
   dead,
   fire,
   change,
+  hurt,
 }

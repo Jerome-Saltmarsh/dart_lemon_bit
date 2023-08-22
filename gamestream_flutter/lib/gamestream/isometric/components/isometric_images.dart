@@ -38,6 +38,7 @@ class IsometricImages with IsometricComponent {
   final spriteGroup2Weapons = <int, SpriteGroup2> {};
 
   late final SpriteGroup2 spriteGroup2KidShadow;
+  late final SpriteGroup2 fallenSpriteGroup2;
 
   late final spriteGroup2Types = {
     SpriteGroupType.Arms_Left: spriteGroup2ArmsLeft,
@@ -56,7 +57,7 @@ class IsometricImages with IsometricComponent {
 
   late final SpriteGroup2 spriteGroup2Empty;
   late final SpriteGroup spriteGroupEmpty;
-  late final SpriteGroup spriteFallen;
+  // late final SpriteGroup spriteFallen;
 
   late final Sprite spriteEmpty;
   late final Sprite spriteFlame;
@@ -70,7 +71,7 @@ class IsometricImages with IsometricComponent {
   late final Image zombie;
   late final Image zombie_shadow;
   late final Image character_dog;
-  late final Image character_fallen;
+  // late final Image character_fallen;
   late final Image atlas_particles;
   late final Image atlas_helms;
   late final Image atlas_hands;
@@ -123,7 +124,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_body').then((value) => atlas_body = value);
     loadPng('atlas_legs').then((value) => atlas_legs = value);
 
-    loadPng('characters/fallen').then((value) => character_fallen = value);
+    // loadPng('characters/fallen').then((value) => character_fallen = value);
     loadPng('character-dog').then((value) => character_dog = value);
     loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
     loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);
@@ -211,21 +212,16 @@ class IsometricImages with IsometricComponent {
       ItemType.Treasure: atlas_treasures,
     };
 
-    final fallenIdle = await loadSpriteBytes('fallen/idle');
-    final fallenRunning = await loadSpriteBytes('fallen/run');
-    final fallenStrike = await loadSpriteBytes('fallen/strike');
-    final fallenHurt = await loadSpriteBytes('fallen/hurt');
-    final fallenDeath = await loadSpriteBytes('fallen/death');
-
-    spriteFallen = SpriteGroup(
-      idle: Sprite.fromBytes(fallenIdle, image: character_fallen, y: 0, mode: AnimationMode.Bounce),
-      running: Sprite.fromBytes(fallenRunning, image: character_fallen, y: 157, mode: AnimationMode.Loop),
-      strike: Sprite.fromBytes(fallenStrike, image: character_fallen, y: 338, mode: AnimationMode.Single),
-      hurt: Sprite.fromBytes(fallenHurt, image: character_fallen, y: 524, mode: AnimationMode.Single),
-      dead: Sprite.fromBytes(fallenDeath, image: character_fallen, y: 707, mode: AnimationMode.Single),
-      change: spriteEmpty,
-      fire: spriteEmpty,
+    fallenSpriteGroup2 = SpriteGroup2(
+      idle: await loadSprite2(fileName: 'sprites_2/fallen/idle', mode: AnimationMode.Bounce),
+      running: await loadSprite2(fileName: 'sprites_2/fallen/running', mode: AnimationMode.Loop),
+      dead: await loadSprite2(fileName: 'sprites_2/fallen/dead', mode: AnimationMode.Single),
+      strike: await loadSprite2(fileName: 'sprites_2/fallen/strike', mode: AnimationMode.Single),
+      hurt: await loadSprite2(fileName: 'sprites_2/fallen/hurt', mode: AnimationMode.Single),
+      fire: emptySprite2,
+      change: emptySprite2,
     );
+
 
     final spriteBytesFlame = await loadSpriteBytes('particles/flame');
     spriteFlame = Sprite.fromBytes(

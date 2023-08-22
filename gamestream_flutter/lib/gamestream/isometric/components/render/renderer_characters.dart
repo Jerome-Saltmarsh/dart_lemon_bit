@@ -706,67 +706,16 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
-    final spriteGroup = images.spriteFallen;
+    final sprite = images.fallenSpriteGroup2.fromCharacterState(character.state);
 
-    // render.textPosition(character, column, offsetY: -100);
-    // render.circleOutlineAtPosition(position: character, radius: 10);
-
-    switch (character.state) {
-      case CharacterState.Idle:
-        render.sprite(
-            sprite: spriteGroup.idle,
-            row: row,
-            column: column,
-            color: character.color,
-            scale: scale,
-            dstX: character.renderX,
-            dstY: character.renderY,
-            anchorY: anchorY,
-        );
-      case CharacterState.Running:
-        render.sprite(
-            sprite: spriteGroup.running,
-            row: row,
-            column: column,
-            color: character.color,
-            scale: scale,
-            dstX: character.renderX,
-            dstY: character.renderY,
-            anchorY: anchorY,
-        );
-      case CharacterState.Strike:
-        render.sprite(
-            sprite: spriteGroup.strike,
-            row: row,
-            column: column,
-            color: character.color,
-            scale: scale,
-            dstX: character.renderX,
-            dstY: character.renderY,
-            anchorY: anchorY,
-        );
-      case CharacterState.Hurt:
-        render.sprite(
-            sprite: spriteGroup.hurt,
-            row: row,
-            column: column,
-            color: character.color,
-            scale: scale,
-            dstX: character.renderX,
-            dstY: character.renderY,
-            anchorY: anchorY,
-        );
-      case CharacterState.Dead:
-        render.sprite(
-            sprite: spriteGroup.dead,
-            row: row,
-            column: column,
-            color: character.color,
-            scale: scale,
-            dstX: character.renderX,
-            dstY: character.renderY,
-            anchorY: anchorY,
-        );
-    }
+    render.sprite2Frame(
+      sprite: sprite,
+      frame: sprite.getFrame(row: row, column: column),
+      color: character.color,
+      scale: scale,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      anchorY: anchorY,
+    );
   }
 }

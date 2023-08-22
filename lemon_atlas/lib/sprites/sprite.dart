@@ -4,43 +4,78 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/sprites/copy_paste.dart';
+import 'package:lemon_atlas/functions/copy_paste.dart';
 import 'package:lemon_atlas/enums/kid_part.dart';
 import 'package:lemon_atlas/enums/character_state.dart';
 
 import '../functions/find_bounds.dart';
 
-class ImagePack {
-  final Image image;
-  final int spriteWidth;
-  final int spriteHeight;
-  final int rows;
-  final int columns;
-  final Uint16List bounds;
-
-  ImagePack({
-    required this.image,
-    required this.spriteWidth,
-    required this.spriteHeight,
-    required this.rows,
-    required this.columns,
-    required this.bounds,
-  });
-}
-
 class Sprite {
 
   final transparent = ColorRgba8(0, 0, 0, 0);
 
-  void buildKidStateAndPart({
-    required character_state state,
+  void buildCharacterFallen(CharacterState state) async {
+    final renders = await getImagesFallen(state);
+    final src = buildSrc(renders, 8, 8);
+    final dst = buildDstFromSrc(src);
+    final width = getTotalWidthFromDst(dst);
+    final height = getMaxHeightFromDst(dst);
+
+    final dstImage = Image(
+      width: width,
+      height: height,
+      numChannels: 4,
+      backgroundColor: transparent,
+      format: renders.first.format,
+    );
+
+    var iSrc = 0;
+    var iDst = 0;
+
+    for (final srcImage in renders){
+      final dstX = dst[iDst + 0];
+      final dstY = dst[iDst + 1];
+
+      iDst += 6;
+
+      final left = src[iSrc++];
+      final top = src[iSrc++];
+      final right = src[iSrc++];
+      final bottom = src[iSrc++];
+
+      final renderWidth = right - left;
+      final renderHeight = bottom - top;
+
+      copyPaste(
+        srcImage: srcImage,
+        dstImage: dstImage,
+        width: renderWidth,
+        height: renderHeight,
+        srcX: left,
+        srcY: top,
+        dstX: dstX,
+        dstY: dstY,
+      );
+    }
+
+    final dstImageBytes = encodePng(dstImage);
+    final outputName = state.name;
+    final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/fallen/${state.name}';
+    await createDirectoryIfNotExists(directory);
+    final filePng = File('$directory/$outputName.png');
+    await filePng.writeAsBytes(dstImageBytes);
+    final fileDst = File('$directory/$outputName.dst');
+    await fileDst.writeAsBytes(dst.buffer.asUint8List());
+    print('saved "$directory/$outputName"');
+  }
+
+  void buildCharacterKid({
+    required CharacterState state,
     required KidPart part,
-    required int rows,
-    required int columns,
   }) async {
 
-    final renders = await getImages(state, part);
-    final src = buildSrc(renders, rows, columns);
+    final renders = await getImagesKid(state, part);
+    final src = buildSrc(renders, 8, 8);
     final dst = buildDstFromSrc(src);
     final width = getTotalWidthFromDst(dst);
     final height = getMaxHeightFromDst(dst);
@@ -166,7 +201,6 @@ class Sprite {
   Uint16List buildSrc(List<Image> images, int rows, int columns){
     final src = Uint16List(rows * columns * 4);
     var i = 0;
-
     for (final image in images){
       src[i++] = findBoundsLeft(image);
       src[i++] = findBoundsTop(image);
@@ -176,8 +210,10 @@ class Sprite {
     return src;
   }
 
-  Future<List<Image>> getImages(character_state state, KidPart part) async {
-    final directoryName = getDirectoryName(state, part);
+  Future<List<Image>> getImagesFallen(CharacterState state) async {
+    Directory currentDirectory = Directory.current;
+    print('Current Directory: ${currentDirectory.path}');
+    final directoryName = getDirectoryNameFallen(state);
     final images = <Image> [];
     for (var i = 1; i <= 64; i++){
       final iPadded = i.toString().padLeft(4, '0');
@@ -193,8 +229,28 @@ class Sprite {
     return images;
   }
 
-  String getDirectoryName(character_state state, KidPart part) =>
-      'assets/renders/kid/${part.groupName}/${part.fileName}/${state.name}';
+  Future<List<Image>> getImagesKid(CharacterState state, KidPart part) async {
+    final directoryName = getDirectoryNameKid(state, part);
+    final images = <Image> [];
+    for (var i = 1; i <= 64; i++){
+      final iPadded = i.toString().padLeft(4, '0');
+      final fileName = '$directoryName/$iPadded.png';
+      final bytes = await loadFileBytes(fileName);
+      final image = decodePng(bytes);
+
+      if (image == null) {
+        throw Exception();
+      }
+      images.add(image);
+    }
+    return images;
+  }
+
+  String getDirectoryNameKid(CharacterState state, KidPart part) =>
+      '${Directory.current.path}/assets/renders/kid/${part.groupName}/${part.fileName}/${state.name}';
+
+  String getDirectoryNameFallen(CharacterState state) =>
+      '${Directory.current.path}/assets/renders/fallen/${state.name}';
 
   Future createDirectoryIfNotExists(String directoryPath) async {
     final directory = Directory(directoryPath);
