@@ -56,26 +56,11 @@ flutter:
   assets:
     - sprites/
     - sprites/fallen/
+    - sprites/particles/
     - images/
     - images/sprites/
     - images/website/
     - images/characters/
-    - sprites/kid/
-    - sprites/kid/arms_left/
-    - sprites/kid/arms_right/
-    - sprites/kid/body/
-    - sprites/kid/body_arms/
-    - sprites/kid/hands_left/
-    - sprites/kid/hands_right/
-    - sprites/kid/heads/
-    - sprites/kid/helms/
-    - sprites/kid/legs/
-    - sprites/kid/shadow/
-    - sprites/kid/torso/
-    - sprites/kid/weapons/
-    - sprites/kid/weapons/
-    - sprites/kid/weapons/
-    - sprites/particles/
     - sprites_2/kid/arms_left/regular/
     - sprites_2/kid/arms_right/regular/
     - sprites_2/kid/body/shirt_blue/
@@ -85,6 +70,7 @@ flutter:
     - sprites_2/kid/head/regular/
     - sprites_2/kid/helms/steel/
     - sprites_2/kid/legs/brown/
+    - sprites_2/kid/shadow/regular/
     - sprites_2/kid/torso/regular/
     - sprites_2/kid/weapons/bow/
     - sprites_2/kid/weapons/staff/

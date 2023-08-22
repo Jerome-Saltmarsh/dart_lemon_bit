@@ -41,9 +41,10 @@ class SpriteGroupType {
       Legs => LegType.getName(subType),
       Torso => 'regular',
       Weapons => WeaponType.getName(subType),
+      Shadow => 'regular',
       _ => throw Exception(
           'SpriteGroupType.getName(type: $type, subType: $subType)'
-      )
+      ),
     };
 
   static const values = [

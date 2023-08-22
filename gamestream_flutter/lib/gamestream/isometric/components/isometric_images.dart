@@ -33,8 +33,11 @@ class IsometricImages with IsometricComponent {
   final spriteGroup2Heads = <int, SpriteGroup2> {};
   final spriteGroup2Helms = <int, SpriteGroup2> {};
   final spriteGroup2Legs = <int, SpriteGroup2> {};
+  final spriteGroup2Shadow = <int, SpriteGroup2> {};
   final spriteGroup2Torso = <int, SpriteGroup2> {};
   final spriteGroup2Weapons = <int, SpriteGroup2> {};
+
+  late final SpriteGroup2 spriteGroup2KidShadow;
 
   late final spriteGroup2Types = {
     SpriteGroupType.Arms_Left: spriteGroup2ArmsLeft,
@@ -46,40 +49,14 @@ class IsometricImages with IsometricComponent {
     SpriteGroupType.Heads: spriteGroup2Heads,
     SpriteGroupType.Helms: spriteGroup2Helms,
     SpriteGroupType.Legs: spriteGroup2Legs,
+    SpriteGroupType.Shadow: spriteGroup2Shadow,
     SpriteGroupType.Torso: spriteGroup2Torso,
     SpriteGroupType.Weapons: spriteGroup2Weapons,
   };
 
-  // final spriteGroupArmsLeft = <int, SpriteGroup> {};
-  // final spriteGroupArmsRight = <int, SpriteGroup> {};
-  // final spriteGroupBody = <int, SpriteGroup> {};
-  // final spriteGroupBodyArms = <int, SpriteGroup> {};
-  // final spriteGroupHandsLeft = <int, SpriteGroup> {};
-  // final spriteGroupHandsRight = <int, SpriteGroup> {};
-  // final spriteGroupHeads = <int, SpriteGroup> {};
-  // final spriteGroupHelms = <int, SpriteGroup> {};
-  // final spriteGroupLegs = <int, SpriteGroup> {};
-  // final spriteGroupTorso = <int, SpriteGroup> {};
-  // final spriteGroupWeapons = <int, SpriteGroup> {};
-  //
-  // late final spriteGroupTypes = {
-  //   SpriteGroupType.Arms_Left: spriteGroupArmsLeft,
-  //   SpriteGroupType.Arms_Right: spriteGroupArmsRight,
-  //   SpriteGroupType.Body: spriteGroupBody,
-  //   SpriteGroupType.Body_Arms: spriteGroupBodyArms,
-  //   SpriteGroupType.Hands_Left: spriteGroupHandsLeft,
-  //   SpriteGroupType.Hands_Right: spriteGroupHandsRight,
-  //   SpriteGroupType.Heads: spriteGroupHeads,
-  //   SpriteGroupType.Helms: spriteGroupHelms,
-  //   SpriteGroupType.Legs: spriteGroupLegs,
-  //   SpriteGroupType.Torso: spriteGroupTorso,
-  //   SpriteGroupType.Weapons: spriteGroupWeapons,
-  // };
-
   late final SpriteGroup2 spriteGroup2Empty;
   late final SpriteGroup spriteGroupEmpty;
   late final SpriteGroup spriteFallen;
-  late final SpriteGroup spriteGroupKidShadow;
 
   late final Sprite spriteEmpty;
   late final Sprite spriteFlame;
@@ -205,7 +182,7 @@ class IsometricImages with IsometricComponent {
     spriteGroup2Body[BodyType.None] = spriteGroup2Empty;
     spriteGroup2Legs[LegType.None] = spriteGroup2Empty;
     spriteGroup2BodyArms[BodyType.None] = spriteGroup2Empty;
-    
+
     loadSpriteGroup2(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue, skipHurt: true);
@@ -215,29 +192,11 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup2(type: SpriteGroupType.Heads, subType: HeadType.regular, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Helms, subType: HelmType.Steel, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Legs, subType: LegType.Brown, skipHurt: true);
+    loadSpriteGroup2(type: SpriteGroupType.Shadow, subType: ShadowType.regular, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Torso, subType: TorsoType.regular, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Weapons, subType: WeaponType.Bow, skipHurt: true, skipStrike: true);
     loadSpriteGroup2(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, skipHurt: true, skipFire: true);
     loadSpriteGroup2(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
-
-    // loadAtlas(type: SpriteGroupType.Arms_Left, subType: ComplexionType.Fair);
-    // loadAtlas(type: SpriteGroupType.Arms_Right, subType: ComplexionType.Fair);
-    // loadAtlas(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue);
-    // loadAtlas(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue);
-    // loadAtlas(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets);
-    // loadAtlas(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets);
-    // loadAtlas(type: SpriteGroupType.Heads, subType: ComplexionType.Fair);
-    // loadAtlas(type: SpriteGroupType.Helms, subType: HelmType.Steel);
-    // loadAtlas(type: SpriteGroupType.Legs, subType: LegType.Brown);
-    // loadAtlas(type: SpriteGroupType.Torso, subType: ComplexionType.Fair);
-    // loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Bow);
-    // loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
-    // loadAtlas(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
-
-    spriteGroupKidShadow = loadSpriteGroupFromJson(
-      await loadImageAsset('sprites/kid/shadow.png'),
-      await loadAssetJson('sprites/kid/shadow.json'),
-    );
 
     await _completerImages.future;
 

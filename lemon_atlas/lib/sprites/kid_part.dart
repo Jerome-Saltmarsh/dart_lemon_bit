@@ -12,7 +12,8 @@ enum KidPart {
   torso('torso', 'regular'),
   weaponBow('weapons', 'bow'),
   weaponStaff('weapons', 'staff'),
-  weaponSword('weapons', 'sword');
+  weaponSword('weapons', 'sword'),
+  shadow('shadow', 'regular');
 
   final String fileName;
   final String groupName;

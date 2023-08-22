@@ -1,5 +1,6 @@
 library src;
 
+export 'shadow_type.dart';
 export 'torso_type.dart';
 export 'head_type.dart';
 export 'arm_type.dart';

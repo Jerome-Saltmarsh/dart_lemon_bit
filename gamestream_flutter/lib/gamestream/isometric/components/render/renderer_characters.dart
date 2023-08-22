@@ -454,10 +454,11 @@ class RendererCharacters extends RenderGroup {
     final atlasWeapon = images.spriteGroup2Weapons[character.weaponType] ??
         (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
     final atlasBodyArm = images.spriteGroup2BodyArms[character.bodyType] ?? (throw Exception());
-    final atlasArmLeft = images.spriteGroup2ArmsLeft[character.complexionType] ?? (throw Exception());
-    final atlasArmRight = images.spriteGroup2ArmsRight[character.complexionType] ?? (throw Exception());
-    final atlasHead = images.spriteGroup2Heads[character.complexionType] ?? (throw Exception());
-    final atlasTorso = images.spriteGroup2Torso[character.complexionType] ?? (throw Exception());
+    final atlasArmLeft = images.spriteGroup2ArmsLeft[ArmType.regular] ?? (throw Exception());
+    final atlasArmRight = images.spriteGroup2ArmsRight[ArmType.regular] ?? (throw Exception());
+    final atlasHead = images.spriteGroup2Heads[HeadType.regular] ?? (throw Exception());
+    final atlasTorso = images.spriteGroup2Torso[TorsoType.regular] ?? (throw Exception());
+    final atlasShadow = images.spriteGroup2Shadow[ShadowType.regular] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -470,7 +471,7 @@ class RendererCharacters extends RenderGroup {
     final spriteLegs = atlasLegs.fromCharacterState(characterState);
     final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
     final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
-    final spriteShadow = images.spriteGroupKidShadow.fromCharacterState(characterState);
+    final spriteShadow = atlasShadow.fromCharacterState(characterState);
 
     final Sprite2 spriteHandFront;
     final Sprite2 spriteHandBehind;
@@ -501,7 +502,7 @@ class RendererCharacters extends RenderGroup {
 
     if (renderBottom) {
 
-      render.spriteFrame(
+      render.sprite2Frame(
         sprite: spriteShadow,
         frame: completingAction
             ? spriteShadow.getFramePercentage(row, actionComplete)
