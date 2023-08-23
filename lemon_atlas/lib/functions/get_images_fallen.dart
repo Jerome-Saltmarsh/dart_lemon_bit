@@ -11,10 +11,14 @@ Future<List<Image>> getImagesFallen(CharacterState state) async {
     final iPadded = i.toString().padLeft(4, '0');
     final fileName = '$directoryName/$iPadded.png';
     final bytes = await loadFileBytes(fileName);
-    final image = decodePng(bytes);
+    var image = decodePng(bytes);
 
     if (image == null) {
       throw Exception();
+    }
+
+    if (image.format != Format.int8){
+      image = image.convert(format: Format.int8);
     }
     images.add(image);
   }

@@ -1,22 +1,18 @@
 
 import 'package:image/image.dart';
 
-import 'is_empty.dart';
-
 int findBoundsLeft(Image image, {
-  int x = 0,
-  int y = 0,
-  int? width,
-  int? height,
+  int left = 0,
+  int top = 0,
+  int? right,
+  int? bottom,
 }){
-  width = width ?? image.width;
-  height = height ?? image.height;
-  final xEnd = x + width;
-  final yEnd = y + height;
+  right = right ?? image.width;
+  bottom = bottom ?? image.height;
 
-  for (; x < xEnd; x++) {
-    for (; y < yEnd; y++) {
-      if (!isEmpty(image.getPixel(x, y))) {
+  for (var x = left; x < right; x++) {
+    for (var y = top; y < bottom; y++) {
+      if (image.getPixel(x, y).a > 0) {
         return x;
       }
     }
@@ -24,13 +20,18 @@ int findBoundsLeft(Image image, {
   return -1;
 }
 
-int findBoundsRight(Image image){
-  final width = image.width;
-  final height = image.height;
+int findBoundsRight(Image image, {
+  int left = 0,
+  int top = 0,
+  int? right,
+  int? bottom,
+}){
+  right = right ?? image.width;
+  bottom = bottom ?? image.height;
 
-  for (var x = width - 1; x >= 0; x--) {
-    for (var y = 0; y < height; y++) {
-      if (!isEmpty(image.getPixel(x, y))) {
+  for (var x = right - 1; x >= left; x--) {
+    for (var y = top; y < bottom; y++) {
+      if (image.getPixel(x, y).a > 0) {
         return x;
       }
     }
@@ -38,13 +39,18 @@ int findBoundsRight(Image image){
   return -1;
 }
 
-int findBoundsTop(Image image,){
-  final width = image.width;
-  final height = image.height;
+int findBoundsTop(Image image, {
+  int left = 0,
+  int top = 0,
+  int? right,
+  int? bottom,
+}){
+  right = right ?? image.width;
+  bottom = bottom ?? image.height;
 
-  for (var y = 0; y < height; y++){
-    for (var x = 0; x < width; x++){
-      if (!isEmpty(image.getPixel(x, y))) {
+  for (var y = top; y < bottom; y++){
+    for (var x = left; x < right; x++){
+      if (image.getPixel(x, y).a > 0) {
         return y;
       }
     }
@@ -52,13 +58,17 @@ int findBoundsTop(Image image,){
   return -1;
 }
 
-int findBoundsBottom(Image image){
-  final width = image.width;
-  final height = image.height;
-
-  for (var y = height -1; y >= 0; y--){
-    for (var x = 0; x < width; x++){
-      if (!isEmpty(image.getPixel(x, y))) {
+int findBoundsBottom(Image image, {
+  int left = 0,
+  int top = 0,
+  int? right,
+  int? bottom,
+}){
+  right = right ?? image.width;
+  bottom = bottom ?? image.height;
+  for (var y = bottom - 1; y >= top; y--){
+    for (var x = left; x < right; x++){
+      if (image.getPixel(x, y).a > 0) {
         return y;
       }
     }

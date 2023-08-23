@@ -19,8 +19,9 @@ void buildAtlas({
   }
 
   buildFromAtlas(
-      atlas: decodePng(fileBytes) ?? (throw Exception()),
+      srcImage: decodePng(fileBytes) ?? (throw Exception()),
       rows: rows,
       columns: columns,
+      name: file.name.replaceAll('.png', ''),
   );
 }
