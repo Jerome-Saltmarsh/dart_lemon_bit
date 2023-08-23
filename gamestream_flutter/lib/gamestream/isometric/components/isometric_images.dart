@@ -251,7 +251,7 @@ class IsometricImages with IsometricComponent {
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
         idle: skipIdle ? emptySprite2 : await loadSprite2(fileName: '$directory/idle', mode: AnimationMode.bounce, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
         running: skipRunning ? emptySprite2 : await loadSprite2(fileName: '$directory/running', mode: AnimationMode.loop, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
-        change: skipChange ? emptySprite2 : await loadSprite2(fileName: '$directory/change', mode: AnimationMode.single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        change: skipChange ? emptySprite2 : await loadSprite2(fileName: '$directory/change', mode: AnimationMode.bounce, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
         dead: skipDead ? emptySprite2 : await loadSprite2(fileName: '$directory/dead', mode: AnimationMode.single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
         fire: skipFire ? emptySprite2 : await loadSprite2(fileName: '$directory/fire', mode: AnimationMode.single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
         strike: skipStrike ? emptySprite2 : await loadSprite2(fileName: '$directory/strike', mode: AnimationMode.single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
