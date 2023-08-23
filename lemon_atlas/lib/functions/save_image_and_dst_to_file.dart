@@ -1,16 +1,19 @@
 import 'dart:io';
-import 'dart:typed_data';
-
+import 'dart:convert';
 import 'package:image/image.dart';
+import 'package:lemon_atlas/functions/build_atlas.dart';
 
 import 'create_directory_if_not_exists.dart';
+import 'map_sprite_sheet_to_json.dart';
 
-Future<void> saveImageAndDstToFile(Image dstImage, Uint16List dst, String directory, String name) async {
-  final dstImageBytes = encodePng(dstImage);
+void exportSpriteSheet(SpriteSheet spriteSheet, String directory, String name) async {
   await createDirectoryIfNotExists(directory);
+  final dstImageBytes = encodePng(spriteSheet.image);
   final outputName = '$directory/$name';
-  final filePng = File('$outputName.png');
-  await filePng.writeAsBytes(dstImageBytes);
-  final fileDst = File('$outputName.dst');
-  await fileDst.writeAsBytes(dst.buffer.asUint8List());
+  final spriteSheetJson = mapSpriteSheetToJson(spriteSheet);
+  final jsonStr = json.encode(spriteSheetJson);
+  File('$outputName.json').writeAsStringSync(jsonStr);
+  File('$outputName.png').writeAsBytes(dstImageBytes);
 }
+
+

@@ -1,6 +1,8 @@
 
 import 'package:image/image.dart';
 import 'package:lemon_atlas/functions/build_atlas.dart';
+import 'package:lemon_atlas/functions/save_image_and_dst_to_file.dart';
+import 'package:lemon_atlas/variables/tmp.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 void buildAtlas({
@@ -18,10 +20,11 @@ void buildAtlas({
     throw Exception();
   }
 
-  buildFromAtlas(
+  final spriteSheet = buildSpriteSheet(
       srcImage: decodePng(fileBytes) ?? (throw Exception()),
       rows: rows,
       columns: columns,
-      name: file.name.replaceAll('.png', ''),
   );
+
+  exportSpriteSheet(spriteSheet, tmp, file.name.replaceAll('.png', ''));
 }
