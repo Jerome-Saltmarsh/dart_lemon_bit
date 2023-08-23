@@ -42,6 +42,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite2 flame0;
   late final Sprite2 flame1;
   late final Sprite2 flame2;
+  late final Sprite2 rainFalling;
 
   late final spriteGroup2Types = {
     SpriteGroupType.Arms_Left: spriteGroup2ArmsLeft,
@@ -60,11 +61,8 @@ class IsometricImages with IsometricComponent {
 
   late final SpriteGroup2 spriteGroup2Empty;
   late final SpriteGroup spriteGroupEmpty;
-  // late final SpriteGroup spriteFallen;
 
   late final Sprite spriteEmpty;
-  // late final Sprite spriteFlame;
-  late final Sprite spriteRainFalling;
   late final dstEmpty = Uint16List(0);
 
   late final Image empty;
@@ -262,14 +260,18 @@ class IsometricImages with IsometricComponent {
       y: 1764,
     );
 
-    final spriteRainFallingBytes = await loadSpriteBytes('particles/rain_falling');
-    spriteRainFalling = Sprite.fromBytes(
-      spriteRainFallingBytes,
+    rainFalling = Sprite2.fromList(
       image: atlas_nodes,
+      list: await loadDst2('sprites_2/nodes/rain_falling.dst'),
+      rows: 6,
+      columns: 6,
+      mode: AnimationMode.Loop,
+      srcWidth: 48,
+      srcHeight: 72,
       x: 664,
-      y: 1874,
-      mode: AnimationMode.Loop
+      y: 1916,
     );
+
   }
 
   void loadSpriteGroup2({

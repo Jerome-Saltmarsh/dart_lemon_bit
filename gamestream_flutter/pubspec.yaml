@@ -61,6 +61,7 @@ flutter:
     - images/website/
     - images/characters/
     - sprites_2/flame/
+    - sprites_2/nodes/
     - sprites_2/kid/arms_left/regular/
     - sprites_2/kid/arms_right/regular/
     - sprites_2/kid/body/shirt_blue/

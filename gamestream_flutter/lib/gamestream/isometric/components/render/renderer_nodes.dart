@@ -1791,16 +1791,15 @@ class RendererNodes extends RenderGroup {
     }
   }
 
-  void renderNodeRainFalling() =>
-      render.sprite(
-        sprite: images.spriteRainFalling,
-        row: (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value,
-        column: animation.frame + currentNodeVariation,
-        color: colorCurrent,
-        scale: 1.0,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY,
+  void renderNodeRainFalling() {
+    final row =  (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value;
+    final column = (animation.frame + currentNodeVariation) % 6;
+
+    renderStandardNode(
+      srcX: 1596 + (column * 48),
+      srcY: 1306 + (row * 72),
     );
+  }
 
   void renderTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderTreeTopOak();
 

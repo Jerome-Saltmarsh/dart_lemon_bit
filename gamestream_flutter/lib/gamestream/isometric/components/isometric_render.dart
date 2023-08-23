@@ -77,6 +77,50 @@ class IsometricRender with IsometricComponent {
     engine.incrementBufferIndex();
   }
 
+  void sprite2({
+    required Sprite2 sprite,
+    required int row,
+    required int column,
+    required int color,
+    required double scale,
+    required double dstX,
+    required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+  }){
+    if (sprite.values.isEmpty)
+      return;
+
+    engine.bufferImage = sprite.image;
+    final bufferIndex = engine.bufferIndex;
+    final values = sprite.values;
+    final fStart = bufferIndex << 2;
+    final frame = sprite.getFrame(row: row, column: column);
+    var f = fStart;
+    var j = frame * 6; // each frame consumes for indexes
+    final x = sprite.x;
+    final y = sprite.y;
+
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f++] = values[j++] + x; // left
+    bufferSrc[f++] = values[j++] + y; // top
+    bufferSrc[f++] = values[j++] + x; // right
+    bufferSrc[f++] = values[j++] + y; // bottom
+    f = fStart;
+    bufferDst[f++] = scale;
+    bufferDst[f++] = 0; // rotation
+
+    final spriteDstX = values[j++];
+    final spriteDstY = values[j++];
+
+    final srcWidth = sprite.srcWidth;
+    final srcHeight = sprite.srcHeight;
+
+    bufferDst[f++] = dstX - (srcWidth * anchorX * scale) + (spriteDstX * scale);
+    bufferDst[f++] = dstY - (srcHeight * anchorY * scale) + (spriteDstY * scale);
+    engine.incrementBufferIndex();
+  }
+
   void modulate({
     required Sprite sprite,
     required int frame,
