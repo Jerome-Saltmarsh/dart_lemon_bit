@@ -55,12 +55,12 @@ flutter:
         - asset: fonts/VT323-Regular.ttf
   assets:
     - sprites/
-    - sprites/fallen/
     - sprites/particles/
     - images/
     - images/sprites/
     - images/website/
     - images/characters/
+    - sprites_2/flame/
     - sprites_2/kid/arms_left/regular/
     - sprites_2/kid/arms_right/regular/
     - sprites_2/kid/body/shirt_blue/

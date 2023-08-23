@@ -39,6 +39,9 @@ class IsometricImages with IsometricComponent {
 
   late final SpriteGroup2 spriteGroup2KidShadow;
   late final SpriteGroup2 fallenSpriteGroup2;
+  late final Sprite2 flame0;
+  late final Sprite2 flame1;
+  late final Sprite2 flame2;
 
   late final spriteGroup2Types = {
     SpriteGroupType.Arms_Left: spriteGroup2ArmsLeft,
@@ -60,7 +63,7 @@ class IsometricImages with IsometricComponent {
   // late final SpriteGroup spriteFallen;
 
   late final Sprite spriteEmpty;
-  late final Sprite spriteFlame;
+  // late final Sprite spriteFlame;
   late final Sprite spriteRainFalling;
   late final dstEmpty = Uint16List(0);
 
@@ -71,7 +74,6 @@ class IsometricImages with IsometricComponent {
   late final Image zombie;
   late final Image zombie_shadow;
   late final Image character_dog;
-  // late final Image character_fallen;
   late final Image atlas_particles;
   late final Image atlas_helms;
   late final Image atlas_hands;
@@ -135,6 +137,8 @@ class IsometricImages with IsometricComponent {
         rows: 0,
         columns: 0,
         mode: 0,
+        srcWidth: 0,
+        srcHeight: 0,
     );
 
     totalImagesLoaded.onChanged((totalImagesLoaded) {
@@ -213,23 +217,49 @@ class IsometricImages with IsometricComponent {
     };
 
     fallenSpriteGroup2 = SpriteGroup2(
-      idle: await loadSprite2(fileName: 'sprites_2/fallen/idle', mode: AnimationMode.Bounce),
-      running: await loadSprite2(fileName: 'sprites_2/fallen/running', mode: AnimationMode.Loop),
-      dead: await loadSprite2(fileName: 'sprites_2/fallen/dead', mode: AnimationMode.Single),
-      strike: await loadSprite2(fileName: 'sprites_2/fallen/strike', mode: AnimationMode.Single),
-      hurt: await loadSprite2(fileName: 'sprites_2/fallen/hurt', mode: AnimationMode.Single),
+      idle: await loadSprite2(fileName: 'sprites_2/fallen/idle', mode: AnimationMode.Bounce, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+      running: await loadSprite2(fileName: 'sprites_2/fallen/running', mode: AnimationMode.Loop, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+      dead: await loadSprite2(fileName: 'sprites_2/fallen/dead', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+      strike: await loadSprite2(fileName: 'sprites_2/fallen/strike', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+      hurt: await loadSprite2(fileName: 'sprites_2/fallen/hurt', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
       fire: emptySprite2,
       change: emptySprite2,
     );
 
-
-    final spriteBytesFlame = await loadSpriteBytes('particles/flame');
-    spriteFlame = Sprite.fromBytes(
-      spriteBytesFlame,
+    flame0 = Sprite2.fromList(
       image: atlas_nodes,
+      list: await loadDst2('sprites_2/flame/flame_0.dst').catchError((_) => dstEmpty),
+      rows: 1,
+      columns: 10,
+      mode: AnimationMode.Loop,
+      srcWidth: 64,
+      srcHeight: 64,
       x: 664,
-      y: 1916,
-      mode: AnimationMode.Loop
+      y: 1764,
+    );
+
+    flame1 = Sprite2.fromList(
+      image: atlas_nodes,
+      list: await loadDst2('sprites_2/flame/flame_1.dst').catchError((_) => dstEmpty),
+      rows: 1,
+      columns: 10,
+      mode: AnimationMode.Loop,
+      srcWidth: 64,
+      srcHeight: 64,
+      x: 822,
+      y: 1764,
+    );
+
+    flame2 = Sprite2.fromList(
+      image: atlas_nodes,
+      list: await loadDst2('sprites_2/flame/flame_2.dst').catchError((_) => dstEmpty),
+      rows: 1,
+      columns: 10,
+      mode: AnimationMode.Loop,
+      srcWidth: 64,
+      srcHeight: 64,
+      x: 1048,
+      y: 1764,
     );
 
     final spriteRainFallingBytes = await loadSpriteBytes('particles/rain_falling');
@@ -259,22 +289,32 @@ class IsometricImages with IsometricComponent {
     final directory = 'sprites_2/kid/$typeName/$subTypeName';
 
     spriteGroup2Type[subType] = SpriteGroup2(
-        idle: skipIdle ? emptySprite2 : await loadSprite2(fileName: '$directory/idle', mode: AnimationMode.Bounce),
-        running: skipRunning ? emptySprite2 : await loadSprite2(fileName: '$directory/running', mode: AnimationMode.Loop),
-        change: skipChange ? emptySprite2 : await loadSprite2(fileName: '$directory/change', mode: AnimationMode.Single),
-        dead: skipDead ? emptySprite2 : await loadSprite2(fileName: '$directory/dead', mode: AnimationMode.Single),
-        fire: skipFire ? emptySprite2 : await loadSprite2(fileName: '$directory/fire', mode: AnimationMode.Single),
-        strike: skipStrike ? emptySprite2 : await loadSprite2(fileName: '$directory/strike', mode: AnimationMode.Single),
-        hurt: skipHurt ? emptySprite2 : await loadSprite2(fileName: '$directory/hurt', mode: AnimationMode.Single),
+        idle: skipIdle ? emptySprite2 : await loadSprite2(fileName: '$directory/idle', mode: AnimationMode.Bounce, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        running: skipRunning ? emptySprite2 : await loadSprite2(fileName: '$directory/running', mode: AnimationMode.Loop, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        change: skipChange ? emptySprite2 : await loadSprite2(fileName: '$directory/change', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        dead: skipDead ? emptySprite2 : await loadSprite2(fileName: '$directory/dead', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        fire: skipFire ? emptySprite2 : await loadSprite2(fileName: '$directory/fire', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        strike: skipStrike ? emptySprite2 : await loadSprite2(fileName: '$directory/strike', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
+        hurt: skipHurt ? emptySprite2 : await loadSprite2(fileName: '$directory/hurt', mode: AnimationMode.Single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
     );
   }
   
-  Future<Sprite2> loadSprite2({required String fileName, required int mode}) async => Sprite2.fromList(
+  Future<Sprite2> loadSprite2({
+    required String fileName,
+    required int mode,
+    required double srcWidth,
+    required double srcHeight,
+    required int rows,
+    required int columns,
+
+  }) async => Sprite2.fromList(
         image: await loadImageAsset('$fileName.png').catchError((_) => empty),
         list: await loadDst2('$fileName.dst').catchError((_) => dstEmpty),
-        rows: 8,
-        columns: 8,
+        rows: rows,
+        columns: columns,
         mode: mode,
+        srcWidth: srcWidth,
+        srcHeight: srcHeight,
     );
 
   // void loadAtlas({

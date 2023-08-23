@@ -5,12 +5,23 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/render/types/animation_mode.dart';
 
+/// values
+/// [0] srcLeft
+/// [1] srcTop
+/// [2] srcRight
+/// [3] srcBottom
+/// [4] dstX
+/// [5] dstY
 class Sprite2 {
   final Image image;
   final Float32List values;
   final int rows;
   final int columns;
   final int mode;
+  final double srcWidth;
+  final double srcHeight;
+  final int x;
+  final int y;
 
   Sprite2({
     required this.image,
@@ -18,6 +29,10 @@ class Sprite2 {
     required this.rows,
     required this.columns,
     required this.mode,
+    required this.srcWidth,
+    required this.srcHeight,
+    this.x = 0,
+    this.y = 0,
   });
 
   factory Sprite2.fromList({
@@ -26,11 +41,19 @@ class Sprite2 {
     required int rows,
     required int columns,
     required int mode,
+    required double srcWidth,
+    required double srcHeight,
+    int x = 0,
+    int y = 0,
   }) => Sprite2(
       image: image,
       rows: rows,
       columns: columns,
       mode: mode,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
+      x: x,
+      y: y,
       values: Float32List.fromList(
           list
               .map((e) => e.toDouble())

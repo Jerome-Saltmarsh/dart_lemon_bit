@@ -825,7 +825,7 @@ class RendererNodes extends RenderGroup {
         color: 0,
     );
 
-    render.flame(dstX: dstX, dstY: dstY + 8, scale: 0.4);
+    render.flame(dstX: dstX, dstY: dstY + 4, scale: 0.7);
   }
 
   bool assertOnScreen(){

@@ -204,14 +204,15 @@ class IsometricRender with IsometricComponent {
     final fStart = bufferIndex << 2;
     var f = fStart;
     var j = frame * 6; // each frame consumes for indexes
-    // final x = sprite.x;
-    // final y = sprite.y;
+
+    final x = sprite.x;
+    final y = sprite.y;
 
     bufferClr[bufferIndex] = color;
-    bufferSrc[f++] = values[j++]; // left
-    bufferSrc[f++] = values[j++]; // top
-    bufferSrc[f++] = values[j++]; // right
-    bufferSrc[f++] = values[j++]; // bottom
+    bufferSrc[f++] = values[j++] + x; // left
+    bufferSrc[f++] = values[j++] + y; // top
+    bufferSrc[f++] = values[j++] + x; // right
+    bufferSrc[f++] = values[j++] + y; // bottom
     f = fStart;
     bufferDst[f++] = scale;
     bufferDst[f++] = 0; // rotation
@@ -219,8 +220,8 @@ class IsometricRender with IsometricComponent {
     final spriteDstX = values[j++];
     final spriteDstY = values[j++];
 
-    final srcWidth = 256; // TODO read from file
-    final srcHeight = 256; // TODO read from file
+    final srcWidth = sprite.srcWidth;
+    final srcHeight = sprite.srcHeight;
 
     bufferDst[f++] = dstX - (srcWidth * anchorX * scale) + (spriteDstX * scale);
     bufferDst[f++] = dstY - (srcHeight * anchorY * scale) + (spriteDstY * scale);
@@ -820,13 +821,28 @@ class IsometricRender with IsometricComponent {
   void flame({
     required double dstX,
     required double dstY,
-    double scale = 0.5,
+    double scale = 1.0,
     int seed = 0,
   }){
-    render.sprite(
-      sprite: images.spriteFlame,
-      row: environment.wind.value,
-      column: seed + animation.frame,
+
+    Sprite2 sprite;
+
+    switch (environment.wind.value){
+      case 0:
+        sprite = images.flame0;
+      case 1:
+        sprite = images.flame1;
+      case 2:
+        sprite = images.flame2;
+      default:
+        sprite = images.flame0;
+    }
+
+    final frame = sprite.getFrame(row: 0, column: seed + animation.frame);
+
+    render.sprite2Frame(
+      sprite: sprite,
+      frame: frame,
       color: 0,
       scale: scale,
       dstX: dstX,

@@ -1,4 +1,5 @@
 
+import 'package:image/image.dart';
 import 'package:lemon_atlas/enums/character_type.dart';
 import 'package:shell/shell.dart';
 
@@ -45,6 +46,12 @@ class AmuletSprites extends StatelessWidget {
               child: Container(
                   padding: const EdgeInsets.all(16),
                   child: buildText("RUN")),
+            ),
+            onPressed(
+              action: loadImagesFromFile,
+              child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: buildText("LOAD")),
             ),
           ],
         ),
@@ -143,7 +150,15 @@ class AmuletSprites extends StatelessWidget {
         activeKidStates.forEach(sprite.buildCharacterFallen);
         break;
     }
+  }
 
+  void loadImagesFromFile() async {
+    final files = await loadFilesFromDisk();
+    if (files == null) throw Exception();
+    final images = files
+        .map((file) => decodeImage(file.bytes ?? (throw Exception())) ?? (throw Exception()))
+        .toList(growable: false);
 
+    sprite.buildRenders(images, rows: 1, columns: images.length);
   }
 }
