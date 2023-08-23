@@ -327,6 +327,13 @@ packages:
       relative: true
     source: path
     version: "1.2.29"
+  lemon_sprite:
+    dependency: "direct main"
+    description:
+      path: "../lemon_sprite"
+      relative: true
+    source: path
+    version: "1.0.0"
   lemon_watch:
     dependency: transitive
     description:

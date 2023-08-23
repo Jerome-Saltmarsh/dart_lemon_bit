@@ -1,5 +1,5 @@
 import 'package:gamestream_flutter/common/src/isometric/character_state.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/sprite.dart';
+import 'package:lemon_sprite/lib.dart';
 
 class SpriteGroup {
   final Sprite idle;

@@ -25,6 +25,8 @@ dependencies:
   typedef: ^1.0.5
   url_launcher: ^6.1.10
 
+  lemon_sprite:
+    path: ..\lemon_sprite
   lemon_widgets:
     path: ..\lemon_widgets
   lemon_math:

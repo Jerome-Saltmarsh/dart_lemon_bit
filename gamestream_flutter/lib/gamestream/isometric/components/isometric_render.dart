@@ -4,11 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/sprite2.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_sprite/lib.dart';
 
 import '../classes/src.dart';
 
@@ -33,52 +33,8 @@ class IsometricRender with IsometricComponent {
     bufferSrc = engine.bufferSrc;
   }
 
-  void sprite({
-    required Sprite sprite,
-    required int row,
-    required int column,
-    required int color,
-    required double scale,
-    required double dstX,
-    required double dstY,
-    double anchorX = 0.5,
-    double anchorY = 0.5,
-  }){
-    if (sprite.isEmpty)
-      return;
-
-    engine.bufferImage = sprite.image;
-    final bufferIndex = engine.bufferIndex;
-    final values = sprite.values;
-    final fStart = bufferIndex << 2;
-    final frame = sprite.getFrame(row: row, column: column);
-    var f = fStart;
-    var j = frame * 6; // each frame consumes for indexes
-    final x = sprite.x;
-    final y = sprite.y;
-
-    bufferClr[bufferIndex] = color;
-    bufferSrc[f++] = values[j++] + x; // left
-    bufferSrc[f++] = values[j++] + y; // top
-    bufferSrc[f++] = values[j++] + x; // right
-    bufferSrc[f++] = values[j++] + y; // bottom
-    f = fStart;
-    bufferDst[f++] = scale;
-    bufferDst[f++] = 0; // rotation
-
-    final spriteDstX = values[j++];
-    final spriteDstY = values[j++];
-
-    final srcWidth = sprite.width;
-    final srcHeight = sprite.height;
-
-    bufferDst[f++] = dstX - (srcWidth * anchorX * scale) + (spriteDstX * scale);
-    bufferDst[f++] = dstY - (srcHeight * anchorY * scale) + (spriteDstY * scale);
-    engine.incrementBufferIndex();
-  }
-
   void sprite2({
-    required Sprite2 sprite,
+    required Sprite sprite,
     required int row,
     required int column,
     required int color,
@@ -121,41 +77,8 @@ class IsometricRender with IsometricComponent {
     engine.incrementBufferIndex();
   }
 
-  void modulate({
-    required Sprite sprite,
-    required int frame,
-    required int color1,
-    required int color2,
-    required double scale,
-    required double dstX,
-    required double dstY,
-    double anchorX = 0.5,
-    double anchorY = 0.5,
-  }){
-    engine.bufferBlendMode = options.skinBlend;
-    render.spriteFrame(
-      sprite: sprite,
-      frame: frame,
-      color: color1,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-    render.spriteFrame(
-      sprite: sprite,
-      frame: frame,
-      color: color2,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-    engine.bufferBlendMode = BlendMode.dstATop;
-  }
-
   void modulate2({
-    required Sprite2 sprite,
+    required Sprite sprite,
     required int frame,
     required int color1,
     required int color2,
@@ -185,52 +108,10 @@ class IsometricRender with IsometricComponent {
       anchorY: anchorY,
     );
     engine.bufferBlendMode = BlendMode.dstATop;
-  }
-
-  void spriteFrame({
-    required Sprite sprite,
-    required int frame,
-    required int color,
-    required double scale,
-    required double dstX,
-    required double dstY,
-    double anchorX = 0.5,
-    double anchorY = 0.5,
-  }){
-    if (sprite.isEmpty)
-      return;
-
-    engine.bufferImage = sprite.image;
-    final bufferIndex = engine.bufferIndex;
-    final values = sprite.values;
-    final fStart = bufferIndex << 2;
-    var f = fStart;
-    var j = frame * 6; // each frame consumes for indexes
-    final x = sprite.x;
-    final y = sprite.y;
-
-    bufferClr[bufferIndex] = color;
-    bufferSrc[f++] = values[j++] + x; // left
-    bufferSrc[f++] = values[j++] + y; // top
-    bufferSrc[f++] = values[j++] + x; // right
-    bufferSrc[f++] = values[j++] + y; // bottom
-    f = fStart;
-    bufferDst[f++] = scale;
-    bufferDst[f++] = 0; // rotation
-
-    final spriteDstX = values[j++];
-    final spriteDstY = values[j++];
-
-    final srcWidth = sprite.width;
-    final srcHeight = sprite.height;
-
-    bufferDst[f++] = dstX - (srcWidth * anchorX * scale) + (spriteDstX * scale);
-    bufferDst[f++] = dstY - (srcHeight * anchorY * scale) + (spriteDstY * scale);
-    engine.incrementBufferIndex();
   }
 
   void sprite2Frame({
-    required Sprite2 sprite,
+    required Sprite sprite,
     required int frame,
     required int color,
     required double scale,
@@ -869,7 +750,7 @@ class IsometricRender with IsometricComponent {
     int seed = 0,
   }){
 
-    Sprite2 sprite;
+    Sprite sprite;
 
     switch (environment.wind.value){
       case 0:

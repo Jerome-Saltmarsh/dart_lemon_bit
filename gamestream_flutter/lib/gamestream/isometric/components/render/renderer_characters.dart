@@ -2,10 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/sprite2.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_sprite/lib.dart';
 
 
 
@@ -473,10 +473,10 @@ class RendererCharacters extends RenderGroup {
     final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
     final spriteShadow = atlasShadow.fromCharacterState(characterState);
 
-    final Sprite2 spriteHandFront;
-    final Sprite2 spriteHandBehind;
-    final Sprite2 spriteArmFront;
-    final Sprite2 spriteArmBehind;
+    final Sprite spriteHandFront;
+    final Sprite spriteHandBehind;
+    final Sprite spriteArmFront;
+    final Sprite spriteArmBehind;
 
     final colorSkin = colors.fair_0.value;
 

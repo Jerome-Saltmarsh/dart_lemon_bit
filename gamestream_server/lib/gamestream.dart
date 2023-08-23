@@ -21,6 +21,10 @@ class Gamestream {
 
   var frame = 0;
 
+  Gamestream(){
+    run();
+  }
+
 
   Future run() async {
     print('gamestream-version: $version');
