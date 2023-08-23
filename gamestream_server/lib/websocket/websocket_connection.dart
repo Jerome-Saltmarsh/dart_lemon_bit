@@ -20,7 +20,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 
 class WebSocketConnection with ByteReader {
-  final Gamestream engine;
+  final GamestreamServer engine;
   final started = DateTime.now();
   late WebSocketChannel webSocket;
   late WebSocketSink sink;

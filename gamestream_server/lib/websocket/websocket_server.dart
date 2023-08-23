@@ -10,7 +10,7 @@ import 'websocket_connection.dart';
 class WebSocketServer implements ServerBase {
   var connectionsTotal = 0;
   final connections = <WebSocketConnection>[];
-  final Gamestream engine;
+  final GamestreamServer engine;
 
   WebSocketServer(this.engine);
 

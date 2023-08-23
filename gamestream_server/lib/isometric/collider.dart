@@ -108,16 +108,16 @@ abstract class Collider extends Position {
     if (fixed) return;
 
 
-    x += (velocityX * Gamestream.Fixed_Time);
-    y += (velocityY * Gamestream.Fixed_Time);
-    z += (velocityZ * Gamestream.Fixed_Time);
+    x += (velocityX * GamestreamServer.Fixed_Time);
+    y += (velocityY * GamestreamServer.Fixed_Time);
+    z += (velocityZ * GamestreamServer.Fixed_Time);
     velocityX *= friction;
     velocityY *= friction;
 
     if (gravity) {
-      velocityZ -= Physics.Gravity * Gamestream.Fixed_Time;
+      velocityZ -= Physics.Gravity * GamestreamServer.Fixed_Time;
       if (velocityZ < -Physics.Max_Fall_Velocity) {
-        velocityZ = -Physics.Max_Fall_Velocity * Gamestream.Fixed_Time;
+        velocityZ = -Physics.Max_Fall_Velocity * GamestreamServer.Fixed_Time;
       }
     }
   }

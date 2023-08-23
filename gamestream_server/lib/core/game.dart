@@ -12,7 +12,7 @@ abstract class Game <T extends Player> {
   int get maxPlayers;
   bool get isFull => players.length >= maxPlayers;
 
-  int get fps => Gamestream.Frames_Per_Second;
+  int get fps => GamestreamServer.Frames_Per_Second;
 
   var _id = 0;
 

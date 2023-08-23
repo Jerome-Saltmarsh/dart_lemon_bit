@@ -77,7 +77,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
     if (cooldownTimer-- > 0)
       return;
 
-    cooldownTimer = Gamestream.Frames_Per_Second;
+    cooldownTimer = GamestreamServer.Frames_Per_Second;
     for (final player in players) {
       player.reduceCooldown();
     }
@@ -373,7 +373,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
 
     final duration = frame - gameObject.frameSpawned;
 
-    if (duration < Gamestream.Frames_Per_Second * 1)
+    if (duration < GamestreamServer.Frames_Per_Second * 1)
       return;
 
     player.pickupItem(gameObject.item);

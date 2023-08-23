@@ -71,6 +71,6 @@ extension PlayerExtension on Player {
 
   void writeFPS() {
     writeByte(ServerResponse.FPS);
-    writeUInt16(Gamestream.Frames_Per_Second);
+    writeUInt16(GamestreamServer.Frames_Per_Second);
   }
 }

@@ -9,7 +9,7 @@ import 'core.dart';
 import 'isometric.dart';
 import 'websocket/websocket_server.dart';
 
-class Gamestream {
+class GamestreamServer {
 
   static const Frames_Per_Second = 45;
   static const Fixed_Time = 50 / Frames_Per_Second;
@@ -19,17 +19,46 @@ class Gamestream {
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
   late final server = WebSocketServer(this);
 
+  Timer? updateTimer;
   var frame = 0;
 
-  Gamestream(){
-    run();
+  GamestreamServer(){
+    _construct();
   }
 
 
-  Future run() async {
+  Future _construct() async {
+    printSystemInformation();
+    await validate();
+    await loadResources();
+    initializeUpdateTimer();
+    startServer();
+  }
+
+  void startServer() {
+    server.start();
+  }
+
+  void initializeUpdateTimer() => updateTimer = Timer.periodic(
+        Duration(milliseconds: 1000 ~/ Frames_Per_Second),
+        _fixedUpdate,
+    );
+
+  void printSystemInformation() {
     print('gamestream-version: $version');
     print('dart-version: ${Platform.version}');
+    if (isLocalMachine) {
+      print("environment: Jerome's Computer");
+    } else {
+      print("environment: Google Cloud");
+    }
+  }
 
+  Future loadResources() async {
+    await isometricScenes.load();
+  }
+
+  Future validate() async {
     Amulet.validate();
 
     final sceneDirectoryExists = await isometricScenes.sceneDirectory.exists();
@@ -39,17 +68,6 @@ class Gamestream {
           .sceneDirectoryPath}');
     }
 
-    if (isLocalMachine) {
-      print("environment: Jerome's Computer");
-    } else {
-      print("environment: Google Cloud");
-    }
-
-    await isometricScenes.load();
-
-    Timer.periodic(
-        Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
-    server.start();
   }
 
   void _fixedUpdate(Timer timer) {
