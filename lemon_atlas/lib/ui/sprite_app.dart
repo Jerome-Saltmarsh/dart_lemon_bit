@@ -1,12 +1,14 @@
 
 import 'package:image/image.dart';
 import 'package:lemon_atlas/enums/character_type.dart';
+import 'package:lemon_atlas/functions/build_character_kid.dart';
+import 'package:lemon_atlas/functions/build_renders.dart';
+import 'package:lemon_atlas/functions/build_character_fallen.dart';
 import 'package:shell/shell.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lemon_atlas/enums/kid_part.dart';
 import 'package:lemon_atlas/enums/character_state.dart';
-import 'package:lemon_atlas/sprites/sprite.dart';
 import 'package:lemon_atlas/ui/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -14,7 +16,6 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 class AmuletSprites extends StatelessWidget {
 
   final changeNotifier = Watch(0);
-  final Sprite sprite;
   final Style style;
 
   final characterType = Watch(CharacterType.kid);
@@ -23,7 +24,6 @@ class AmuletSprites extends StatelessWidget {
 
   AmuletSprites({
     super.key,
-    required this.sprite,
     required this.style,
   });
 
@@ -139,7 +139,7 @@ class AmuletSprites extends StatelessWidget {
       case CharacterType.kid:
         for (final state in activeKidStates) {
           for (final part in activeKidParts) {
-            sprite.buildCharacterKid(
+            buildCharacterKid(
               state: state,
               part: part,
             );
@@ -147,7 +147,7 @@ class AmuletSprites extends StatelessWidget {
         }
         break;
       case CharacterType.fallen:
-        activeKidStates.forEach(sprite.buildCharacterFallen);
+        activeKidStates.forEach(buildCharacterFallen);
         break;
     }
   }
@@ -159,6 +159,6 @@ class AmuletSprites extends StatelessWidget {
         .map((file) => decodeImage(file.bytes ?? (throw Exception())) ?? (throw Exception()))
         .toList(growable: false);
 
-    sprite.buildRenders(images, rows: 1, columns: images.length);
+    buildRenders(images, rows: 1, columns: images.length);
   }
 }
