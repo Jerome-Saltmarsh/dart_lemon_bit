@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:lemon_sprite/lib.dart';
 
-
 class Sprite {
   final Image image;
   /// [0] srcLeft

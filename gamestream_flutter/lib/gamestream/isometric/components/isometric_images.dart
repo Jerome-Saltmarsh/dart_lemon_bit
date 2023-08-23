@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'classes/sprite_group.dart';
 import 'render/classes/sprite_group2.dart';
 import 'types/sprite_group_type.dart';
 
@@ -58,7 +57,6 @@ class IsometricImages with IsometricComponent {
   };
 
   late final SpriteGroup2 spriteGroup2Empty;
-  late final SpriteGroup spriteGroupEmpty;
 
   late final Sprite spriteEmpty;
   late final dstEmpty = Uint16List(0);
@@ -152,16 +150,6 @@ class IsometricImages with IsometricComponent {
         columns: 0,
         y: 0,
         mode: AnimationMode.single,
-    );
-
-    spriteGroupEmpty = SpriteGroup(
-      idle: spriteEmpty,
-      running: spriteEmpty,
-      strike: spriteEmpty,
-      hurt: spriteEmpty,
-      dead: spriteEmpty,
-      fire: spriteEmpty,
-      change: spriteEmpty,
     );
 
     spriteGroup2Empty = SpriteGroup2(
