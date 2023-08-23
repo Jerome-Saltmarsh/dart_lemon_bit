@@ -17,10 +17,12 @@ class GamestreamServer {
   final games = <Game>[];
   final isometricScenes = Scenes();
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
-  late final server = WebSocketServer(this);
 
-  Timer? updateTimer;
   var frame = 0;
+  var _updateTimerInitialized = false;
+
+  late final server = WebSocketServer(this);
+  late final Timer updateTimer;
 
   GamestreamServer(){
     _construct();
@@ -31,7 +33,7 @@ class GamestreamServer {
     printSystemInformation();
     await validate();
     await loadResources();
-    initializeUpdateTimer();
+    _initializeUpdateTimer();
     startServer();
   }
 
@@ -39,10 +41,16 @@ class GamestreamServer {
     server.start();
   }
 
-  void initializeUpdateTimer() => updateTimer = Timer.periodic(
+  void _initializeUpdateTimer() {
+    if (_updateTimerInitialized) {
+      return;
+    }
+    _updateTimerInitialized = true;
+    updateTimer = Timer.periodic(
         Duration(milliseconds: 1000 ~/ Frames_Per_Second),
         _fixedUpdate,
     );
+  }
 
   void printSystemInformation() {
     print('gamestream-version: $version');
