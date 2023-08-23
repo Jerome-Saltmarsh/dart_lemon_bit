@@ -13,6 +13,8 @@ import 'package:lemon_atlas/ui/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'actions/build_atlas.dart';
+
 class AmuletSprites extends StatelessWidget {
 
   final changeNotifier = Watch(0);
@@ -53,6 +55,7 @@ class AmuletSprites extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: buildText("LOAD")),
             ),
+            buildButtonAtlas(),
           ],
         ),
         body: Center(
@@ -94,6 +97,15 @@ class AmuletSprites extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildButtonAtlas() => Builder(
+    builder: (context) => onPressed(
+      action: () => openLoadAtlasDialog(context),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: buildText("ATLAS")),
+      )
+  );
 
   void selectCharacterType(CharacterType value){
     characterType.value = value;
@@ -161,4 +173,74 @@ class AmuletSprites extends StatelessWidget {
 
     buildRenders(images, rows: 1, columns: images.length);
   }
+
+  void openLoadAtlasDialog(BuildContext context) =>
+      showDialog(context: context, builder: (dialogContext) {
+        final rows = WatchInt(1, min: 1);
+        final columns = WatchInt(1, min: 1);
+        return AlertDialog(
+        title: buildText('Load Atlas'),
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildRowWatchInt(rows, "ROWS"),
+            buildRowWatchInt(columns, "COLUMNS"),
+            onPressed(
+              action: () => buildAtlas(
+                  rows: rows.value,
+                  columns: columns.value,
+                ),
+                child: buildText("NEXT"),
+            )
+          ],
+        ),
+      );
+      });
+
+  Widget buildRowWatchInt(WatchInt value, String name) => Container(
+    height: 60,
+    width: 250,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 90,
+                alignment: Alignment.centerLeft,
+                child: buildText(name, color: Colors.white70)
+              ),
+              WatchBuilder(value, buildText),
+            ],
+          ),
+          Row(
+            children: [
+              onPressed(
+                action: value.decrement,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  color: Colors.black12,
+                  child: buildText('-'),
+                ),
+              ),
+              onPressed(
+                action: value.increment,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  color: Colors.black12,
+                  child: buildText('+'),
+                ),
+              ),
+            ],
+          )
+
+        ],
+      ),
+  );
 }
