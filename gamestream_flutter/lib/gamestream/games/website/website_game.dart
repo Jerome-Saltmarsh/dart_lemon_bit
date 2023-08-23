@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/games/website/website_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/classes/template_animation.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -55,14 +54,6 @@ class WebsiteGame extends Game {
           error.value = 'missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}';
           print('missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}');
         }
-      }
-    }
-
-    for (final weaponType in WeaponType.values){
-      try {
-        TemplateAnimation.getWeaponPerformAnimation(weaponType);
-      } catch (e){
-        print('attack animation missing for ${ItemType.getNameSubType(ItemType.Weapon, weaponType)}');
       }
     }
   }

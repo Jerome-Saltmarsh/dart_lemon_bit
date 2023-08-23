@@ -4,59 +4,33 @@ import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/sprites/character_sprites.dart';
+import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'render/classes/sprite_group2.dart';
 import 'types/sprite_group_type.dart';
-
 
 class IsometricImages with IsometricComponent {
 
   var imagesCached = false;
 
+  final kidCharacterSprites = KidCharacterSprites();
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
   final values = <Image>[];
   final _completerImages = Completer();
 
-  final spriteGroup2ArmsLeft = <int, SpriteGroup2> {};
-  final spriteGroup2ArmsRight = <int, SpriteGroup2> {};
-  final spriteGroup2Body = <int, SpriteGroup2> {};
-  final spriteGroup2BodyArms = <int, SpriteGroup2> {};
-  final spriteGroup2HandsLeft = <int, SpriteGroup2> {};
-  final spriteGroup2HandsRight = <int, SpriteGroup2> {};
-  final spriteGroup2Heads = <int, SpriteGroup2> {};
-  final spriteGroup2Helms = <int, SpriteGroup2> {};
-  final spriteGroup2Legs = <int, SpriteGroup2> {};
-  final spriteGroup2Shadow = <int, SpriteGroup2> {};
-  final spriteGroup2Torso = <int, SpriteGroup2> {};
-  final spriteGroup2Weapons = <int, SpriteGroup2> {};
+  late final CharacterSpriteGroup spriteGroup2KidShadow;
+  late final CharacterSpriteGroup fallenSpriteGroup2;
 
-  late final SpriteGroup2 spriteGroup2KidShadow;
-  late final SpriteGroup2 fallenSpriteGroup2;
   late final Sprite flame0;
   late final Sprite flame1;
   late final Sprite flame2;
   late final Sprite rainFalling;
 
-  late final spriteGroup2Types = {
-    SpriteGroupType.Arms_Left: spriteGroup2ArmsLeft,
-    SpriteGroupType.Arms_Right: spriteGroup2ArmsRight,
-    SpriteGroupType.Body: spriteGroup2Body,
-    SpriteGroupType.Body_Arms: spriteGroup2BodyArms,
-    SpriteGroupType.Hands_Left: spriteGroup2HandsLeft,
-    SpriteGroupType.Hands_Right: spriteGroup2HandsRight,
-    SpriteGroupType.Heads: spriteGroup2Heads,
-    SpriteGroupType.Helms: spriteGroup2Helms,
-    SpriteGroupType.Legs: spriteGroup2Legs,
-    SpriteGroupType.Shadow: spriteGroup2Shadow,
-    SpriteGroupType.Torso: spriteGroup2Torso,
-    SpriteGroupType.Weapons: spriteGroup2Weapons,
-  };
-
-  late final SpriteGroup2 spriteGroup2Empty;
+  late final CharacterSpriteGroup spriteGroup2Empty;
 
   late final Sprite spriteEmpty;
   late final dstEmpty = Uint16List(0);
@@ -152,7 +126,7 @@ class IsometricImages with IsometricComponent {
         mode: AnimationMode.single,
     );
 
-    spriteGroup2Empty = SpriteGroup2(
+    spriteGroup2Empty = CharacterSpriteGroup(
         idle: emptySprite2,
         running: emptySprite2,
         change: emptySprite2,
@@ -161,15 +135,13 @@ class IsometricImages with IsometricComponent {
         strike: emptySprite2,
         hurt: emptySprite2,
     );
-
-
-    spriteGroup2HandsLeft[HandType.None] = spriteGroup2Empty;
-    spriteGroup2HandsRight[HandType.None] = spriteGroup2Empty;
-    spriteGroup2Weapons[WeaponType.Unarmed] = spriteGroup2Empty;
-    spriteGroup2Helms[HelmType.None] = spriteGroup2Empty;
-    spriteGroup2Body[BodyType.None] = spriteGroup2Empty;
-    spriteGroup2Legs[LegType.None] = spriteGroup2Empty;
-    spriteGroup2BodyArms[BodyType.None] = spriteGroup2Empty;
+    kidCharacterSprites.handLeft[HandType.None] = spriteGroup2Empty;
+    kidCharacterSprites.handRight[HandType.None] = spriteGroup2Empty;
+    kidCharacterSprites.weapons[WeaponType.Unarmed] = spriteGroup2Empty;
+    kidCharacterSprites.helm[HelmType.None] = spriteGroup2Empty;
+    kidCharacterSprites.body[BodyType.None] = spriteGroup2Empty;
+    kidCharacterSprites.bodyArms[BodyType.None] = spriteGroup2Empty;
+    kidCharacterSprites.legs[LegType.None] = spriteGroup2Empty;
 
     loadSpriteGroup2(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup2(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
@@ -199,7 +171,7 @@ class IsometricImages with IsometricComponent {
       ItemType.Treasure: atlas_treasures,
     };
 
-    fallenSpriteGroup2 = SpriteGroup2(
+    fallenSpriteGroup2 = CharacterSpriteGroup(
       idle: await loadSprite2(fileName: 'sprites_2/fallen/idle', mode: AnimationMode.bounce, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
       running: await loadSprite2(fileName: 'sprites_2/fallen/running', mode: AnimationMode.loop, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
       dead: await loadSprite2(fileName: 'sprites_2/fallen/dead', mode: AnimationMode.single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
@@ -272,10 +244,11 @@ class IsometricImages with IsometricComponent {
   }) async {
     final typeName = SpriteGroupType.getName(type).toLowerCase();
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase();
-    final spriteGroup2Type = spriteGroup2Types[type] ?? (throw Exception());
+    final kidCharacterSpriteGroup = kidCharacterSprites.values[type] ?? (throw Exception('images.loadSpriteGroup2($typeName, $subTypeName)'));
     final directory = 'sprites_2/kid/$typeName/$subTypeName';
 
-    spriteGroup2Type[subType] = SpriteGroup2(
+
+    kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
         idle: skipIdle ? emptySprite2 : await loadSprite2(fileName: '$directory/idle', mode: AnimationMode.bounce, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
         running: skipRunning ? emptySprite2 : await loadSprite2(fileName: '$directory/running', mode: AnimationMode.loop, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),
         change: skipChange ? emptySprite2 : await loadSprite2(fileName: '$directory/change', mode: AnimationMode.single, srcWidth: 256, srcHeight: 256, rows: 8, columns: 8),

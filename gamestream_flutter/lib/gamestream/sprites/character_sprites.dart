@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/common/src/isometric/character_state.dart';
 import 'package:lemon_sprite/lib.dart';
 
-class SpriteGroup2 {
+class CharacterSpriteGroup {
   final Sprite idle;
   final Sprite running;
   final Sprite change;
@@ -11,7 +11,7 @@ class SpriteGroup2 {
   final Sprite strike;
   final Sprite hurt;
 
-  SpriteGroup2({
+  CharacterSpriteGroup({
     required this.idle,
     required this.running,
     required this.change,
