@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/enums/character_state.dart';
 import 'package:lemon_atlas/functions/load_file_bytes.dart';
+
+import 'enums/character_state.dart';
 
 Future<List<Image>> getImagesFallen(CharacterState state) async {
   final directoryName = '${Directory.current.path}/assets/renders/fallen/${state.name}';

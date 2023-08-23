@@ -1,24 +1,20 @@
-
 import 'dart:io';
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/enums/character_state.dart';
-import 'package:lemon_atlas/enums/kid_part.dart';
 import 'package:lemon_atlas/functions/build_dst_from_src.dart';
 import 'package:lemon_atlas/functions/build_src.dart';
 import 'package:lemon_atlas/functions/copy_paste.dart';
 import 'package:lemon_atlas/functions/create_directory_if_not_exists.dart';
-import 'package:lemon_atlas/functions/get_images_kid.dart';
 import 'package:lemon_atlas/functions/get_max_height_from_dst.dart';
 import 'package:lemon_atlas/functions/get_total_width_from_dst.dart';
 import 'package:lemon_atlas/variables/transparent.dart';
 
-void buildCharacterKid({
-  required CharacterState state,
-  required KidPart part,
-}) async {
+import 'enums/character_state.dart';
+import 'get_images_fallen.dart';
 
-  final renders = await getImagesKid(state, part);
+
+void buildCharacterFallen(CharacterState state) async {
+  final renders = await getImagesFallen(state);
   final src = buildSrc(renders, 8, 8);
   final dst = buildDstFromSrc(src);
   final width = getTotalWidthFromDst(dst);
@@ -29,7 +25,7 @@ void buildCharacterKid({
     height: height,
     numChannels: 4,
     backgroundColor: transparent,
-    format: Format.uint16,
+    format: renders.first.format,
   );
 
   var iSrc = 0;
@@ -61,10 +57,9 @@ void buildCharacterKid({
     );
   }
 
-  final groupName = part.groupName;
   final dstImageBytes = encodePng(dstImage);
   final outputName = state.name;
-  final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/kid/$groupName/${part.fileName}';
+  final directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/sprites_2/fallen/${state.name}';
   await createDirectoryIfNotExists(directory);
   final filePng = File('$directory/$outputName.png');
   await filePng.writeAsBytes(dstImageBytes);

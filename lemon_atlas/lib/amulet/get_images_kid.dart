@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/enums/character_state.dart';
-import 'package:lemon_atlas/enums/kid_part.dart';
 
-import 'load_file_bytes.dart';
+import '../functions/load_file_bytes.dart';
+import 'enums/character_state.dart';
+import 'enums/kid_part.dart';
 
 Future<List<Image>> getImagesKid(CharacterState state, KidPart part) async {
   final directoryName = '${Directory.current.path}/assets/renders/kid/${part.groupName}/${part.fileName}/${state.name}';

@@ -1,14 +1,12 @@
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/enums/character_type.dart';
-import 'package:lemon_atlas/functions/build_character_kid.dart';
+import 'package:lemon_atlas/amulet/build_character_kid.dart';
+import 'package:lemon_atlas/amulet/enums/src.dart';
 import 'package:lemon_atlas/functions/build_renders.dart';
-import 'package:lemon_atlas/functions/build_character_fallen.dart';
+import 'package:lemon_atlas/amulet/build_character_fallen.dart';
 import 'package:shell/shell.dart';
 
 import 'package:flutter/material.dart';
-import 'package:lemon_atlas/enums/kid_part.dart';
-import 'package:lemon_atlas/enums/character_state.dart';
 import 'package:lemon_atlas/ui/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -198,7 +196,7 @@ class AmuletSprites extends StatelessWidget {
       );
       });
 
-  Widget buildRowWatchInt(WatchInt value, String name) => Container(
+  Widget buildRowWatchInt(WatchInt value, String name) => SizedBox(
     height: 60,
     width: 250,
     child: Row(
