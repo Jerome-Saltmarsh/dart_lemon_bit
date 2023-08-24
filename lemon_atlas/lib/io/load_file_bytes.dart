@@ -6,7 +6,6 @@ Future<Uint8List> loadFileBytes(String filePath) async {
   final file = File(filePath);
   if (await file.exists()) {
     return await file.readAsBytes();
-  } else {
-    throw FileSystemException('File not found: $filePath');
   }
+  throw FileSystemException('File not found: $filePath');
 }

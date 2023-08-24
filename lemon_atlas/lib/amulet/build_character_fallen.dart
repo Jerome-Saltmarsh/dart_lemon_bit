@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/functions/build_dst_from_src.dart';
-import 'package:lemon_atlas/functions/build_src.dart';
-import 'package:lemon_atlas/functions/copy_paste.dart';
-import 'package:lemon_atlas/functions/create_directory_if_not_exists.dart';
-import 'package:lemon_atlas/functions/get_max_height_from_dst.dart';
-import 'package:lemon_atlas/functions/get_total_width_from_dst.dart';
-import 'package:lemon_atlas/variables/transparent.dart';
+import 'package:lemon_atlas/atlas/functions/build_dst_from_src.dart';
+import 'package:lemon_atlas/atlas/functions/build_src.dart';
+import 'package:lemon_atlas/atlas/functions/copy_paste.dart';
+import 'package:lemon_atlas/io/create_directory_if_not_exists.dart';
+import 'package:lemon_atlas/atlas/functions/get_max_bottom_from_dst.dart';
+import 'package:lemon_atlas/atlas/functions/get_max_right_from_dst.dart';
+import 'package:lemon_atlas/atlas/variables/transparent.dart';
 
 import 'enums/character_state.dart';
 import 'get_images_fallen.dart';
@@ -15,10 +15,10 @@ import 'get_images_fallen.dart';
 
 void buildCharacterFallen(CharacterState state) async {
   final renders = await getImagesFallen(state);
-  final src = buildSrc(renders, 8, 8);
-  final dst = buildDstFromSrc(src);
-  final width = getTotalWidthFromDst(dst);
-  final height = getMaxHeightFromDst(dst);
+  final src = buildSrcAbs(renders, 8, 8);
+  final dst = buildDstFromSrcAbs(src);
+  final width = getMaxRightFromDst(dst);
+  final height = getMaxBottomFromDst(dst);
 
   final dstImage = Image(
     width: width,
@@ -65,5 +65,4 @@ void buildCharacterFallen(CharacterState state) async {
   await filePng.writeAsBytes(dstImageBytes);
   final fileDst = File('$directory/$outputName.dst');
   await fileDst.writeAsBytes(dst.buffer.asUint8List());
-  print('saved "$directory/$outputName"');
 }

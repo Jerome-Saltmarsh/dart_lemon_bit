@@ -2,8 +2,8 @@
 import 'package:image/image.dart';
 import 'package:lemon_atlas/amulet/build_character_kid.dart';
 import 'package:lemon_atlas/amulet/enums/src.dart';
-import 'package:lemon_atlas/functions/build_renders.dart';
 import 'package:lemon_atlas/amulet/build_character_fallen.dart';
+import 'package:lemon_atlas/atlas/functions/build_renders.dart';
 import 'package:shell/shell.dart';
 
 import 'package:flutter/material.dart';

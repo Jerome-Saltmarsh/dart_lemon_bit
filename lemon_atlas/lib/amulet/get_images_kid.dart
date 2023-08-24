@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:image/image.dart';
+import 'package:lemon_atlas/io/load_file_bytes.dart';
 
-import '../functions/load_file_bytes.dart';
 import 'enums/character_state.dart';
 import 'enums/kid_part.dart';
 

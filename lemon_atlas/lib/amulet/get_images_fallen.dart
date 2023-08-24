@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:image/image.dart';
-import 'package:lemon_atlas/functions/load_file_bytes.dart';
+import 'package:lemon_atlas/io/load_file_bytes.dart';
 
 import 'enums/character_state.dart';
 
