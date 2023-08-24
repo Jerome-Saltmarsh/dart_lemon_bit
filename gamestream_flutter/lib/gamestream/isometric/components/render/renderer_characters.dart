@@ -444,19 +444,20 @@ class RendererCharacters extends RenderGroup {
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
 
-    final atlasHandsLeft = images.kidCharacterSprites.handLeft[character.handTypeLeft] ?? (throw Exception());
-    final atlasHandsRight = images.kidCharacterSprites.handRight[character.handTypeRight] ?? (throw Exception());
-    final atlasHelm = images.kidCharacterSprites.helm[character.headType] ?? (throw Exception());
-    final atlasLegs =  images.kidCharacterSprites.legs[character.legType] ?? (throw Exception());
-    final atlasBody = images.kidCharacterSprites.body[character.bodyType] ?? (throw Exception());
-    final atlasWeapon = images.kidCharacterSprites.weapons[character.weaponType] ??
+    final sprites = images.kidCharacterSprites;
+    final atlasHandsLeft = sprites.handLeft[character.handTypeLeft] ?? (throw Exception());
+    final atlasHandsRight = sprites.handRight[character.handTypeRight] ?? (throw Exception());
+    final atlasHelm = sprites.helm[character.headType] ?? (throw Exception());
+    final atlasLegs =  sprites.legs[character.legType] ?? (throw Exception());
+    final atlasBody = sprites.body[character.bodyType] ?? (throw Exception());
+    final atlasWeapon = sprites.weapons[character.weaponType] ??
         (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
-    final atlasBodyArm = images.kidCharacterSprites.bodyArms[character.bodyType] ?? (throw Exception());
-    final atlasArmLeft = images.kidCharacterSprites.armLeft[ArmType.regular] ?? (throw Exception());
-    final atlasArmRight = images.kidCharacterSprites.armRight[ArmType.regular] ?? (throw Exception());
-    final atlasHead = images.kidCharacterSprites.helm[HeadType.regular] ?? (throw Exception());
-    final atlasTorso = images.kidCharacterSprites.torso[TorsoType.regular] ?? (throw Exception());
-    final atlasShadow = images.kidCharacterSprites.shadow[ShadowType.regular] ?? (throw Exception());
+    final atlasBodyArm = sprites.bodyArms[character.bodyType] ?? (throw Exception());
+    final atlasArmLeft = sprites.armLeft[ArmType.regular] ?? (throw Exception());
+    final atlasArmRight = sprites.armRight[ArmType.regular] ?? (throw Exception());
+    final atlasHead = sprites.head[HeadType.regular] ?? (throw Exception());
+    final atlasTorso = sprites.torso[TorsoType.regular] ?? (throw Exception());
+    final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
