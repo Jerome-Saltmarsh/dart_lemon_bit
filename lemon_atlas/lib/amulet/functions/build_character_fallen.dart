@@ -1,4 +1,4 @@
-import 'package:lemon_atlas/amulet/variables/export_directory.dart';
+import 'package:lemon_atlas/amulet/variables/directory_tmp.dart';
 import 'package:lemon_atlas/atlas/src.dart';
 
 import '../enums/character_state.dart';
@@ -20,7 +20,7 @@ void buildCharacterFallen(CharacterState characterState) async {
 
   exportSprite(
       sprite: sprite,
-      directory: '$exportDirectory/fallen',
+      directory: '$directoryTmp/fallen',
       name: characterState.name,
   );
 }

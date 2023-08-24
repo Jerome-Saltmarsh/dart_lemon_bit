@@ -5,7 +5,7 @@ export 'build_dst_from_src.dart';
 export 'build_image_from_dst.dart';
 export 'build_dst_image_from_src_images.dart';
 export 'build_dst_image_from_src_image.dart';
-export 'build_images.dart';
+export 'build_and_export_images.dart';
 export 'build_sprite_from_image.dart';
 export 'build_sprite_from_images.dart';
 export 'build_src.dart';

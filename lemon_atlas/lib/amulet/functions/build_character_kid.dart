@@ -17,7 +17,7 @@ Future buildCharacterKid({
 
   return exportSprite(
     sprite: sprite,
-    directory: '$exportDirectory/kid/${part.groupName}/${part.fileName}',
+    directory: '$directoryTmp/kid/${part.groupName}/${part.fileName}',
     name: state.name,
   );
 }

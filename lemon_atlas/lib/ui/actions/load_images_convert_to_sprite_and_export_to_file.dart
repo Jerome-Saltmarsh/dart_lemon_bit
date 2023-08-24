@@ -28,7 +28,7 @@ void loadImagesConvertToSpriteAndExportToFile({
 
   exportSprite(
       sprite: spriteSheet,
-      directory: exportDirectory,
+      directory: directoryTmp,
       name: file.name.replaceAll('.png', ''),
   );
 }
