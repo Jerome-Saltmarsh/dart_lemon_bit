@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:image/image.dart';
 import 'package:lemon_atlas/io/load_file_bytes.dart';
 
-import 'enums/character_state.dart';
+import '../enums/character_state.dart';
 
-Future<List<Image>> getImagesFallen(CharacterState state) async {
-  final directoryName = '${Directory.current.path}/assets/renders/fallen/${state.name}';
+Future<List<Image>> getImagesFallenForCharacterState(
+    CharacterState characterState
+) async {
+
+  final directoryName = '${Directory.current.path}/assets/renders/fallen/${characterState.name}';
   final images = <Image> [];
   for (var i = 1; i <= 64; i++){
     final iPadded = i.toString().padLeft(4, '0');

@@ -4,10 +4,10 @@ import 'package:lemon_atlas/atlas/classes/sprite.dart';
 import 'package:lemon_atlas/atlas/functions/build_src_rel_from_src_abs.dart';
 
 import 'build_dst_from_src.dart';
-import 'build_image_from_src_and_dst.dart';
+import 'build_dst_image_from_src_image.dart';
 import 'build_src_abs_from_atlas.dart';
 
-Sprite buildSprite({
+Sprite buildSpriteFromImage({
   required Image srcImage,
   required int rows,
   required int columns,
@@ -18,7 +18,7 @@ Sprite buildSprite({
   final srcAbs = buildSrcAbsFromAtlas(rows, columns, srcImage);
   final dst = buildDstFromSrcAbs(srcAbs);
 
-  final dstImage = buildImageFromSrcAbsAndDst(
+  final dstImage = buildDstImageFromSrcImage(
     srcAbs: srcAbs,
     dst: dst,
     srcImage: srcImage,

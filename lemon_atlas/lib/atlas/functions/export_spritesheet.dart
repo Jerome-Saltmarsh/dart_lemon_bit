@@ -6,7 +6,11 @@ import 'package:lemon_atlas/atlas/classes/sprite.dart';
 import '../../io/create_directory_if_not_exists.dart';
 import 'map_sprite_sheet_to_json.dart';
 
-void exportSprite(Sprite sprite, String directory, String name) async {
+void exportSprite({
+  required Sprite sprite,
+  required String directory,
+  required String name,
+}) async {
   await createDirectoryIfNotExists(directory);
   final dstImageBytes = encodePng(sprite.image);
   final outputName = '$directory/$name';

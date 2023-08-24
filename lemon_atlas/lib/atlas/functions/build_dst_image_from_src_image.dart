@@ -3,23 +3,20 @@ import 'dart:typed_data';
 import 'package:image/image.dart';
 
 import '../variables/transparent.dart';
+import 'build_image_from_dst.dart';
 import 'copy_paste.dart';
 import 'get_max_bottom_from_dst.dart';
 import 'get_max_right_from_dst.dart';
 
-Image buildImageFromSrcAbsAndDst({
+Image buildDstImageFromSrcImage({
   required Uint16List srcAbs,
   required Uint16List dst,
   required Image srcImage,
 }) {
-  final dstWidth = getMaxRightFromDst(dst);
-  final dstHeight = getMaxBottomFromDst(dst);
 
-  final dstImage = Image(
-    width: dstWidth,
-    height: dstHeight,
-    numChannels: 4,
-    backgroundColor: transparent,
+  final dstImage = buildImageFromDst(
+      dst: dst,
+      format: srcImage.format,
   );
 
   var i = 0;

@@ -1,17 +1,17 @@
 
-import 'package:image/image.dart';
-import 'package:lemon_atlas/amulet/build_character_kid.dart';
-import 'package:lemon_atlas/amulet/enums/src.dart';
-import 'package:lemon_atlas/amulet/build_character_fallen.dart';
-import 'package:lemon_atlas/atlas/functions/build_renders.dart';
-import 'package:shell/shell.dart';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image/image.dart';
+import 'package:lemon_atlas/amulet/functions/build_character_fallen.dart';
+import 'package:lemon_atlas/amulet/functions/build_character_kid.dart';
+import 'package:lemon_atlas/amulet/enums/src.dart';
+import 'package:lemon_atlas/atlas/functions/build_images.dart';
 import 'package:lemon_atlas/ui/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'actions/build_atlas.dart';
+import 'actions/load_images_convert_to_sprite_and_export_to_file.dart';
 
 class AmuletSprites extends StatelessWidget {
 
@@ -127,22 +127,6 @@ class AmuletSprites extends StatelessWidget {
     changeNotifier.value++;
   }
 
-  void renderSelected() async {
-    const blender = '"C:/Program Files/Blender Foundation/Blender 3.5/blender"';
-    const script = 'C:/Users/Jerome/github/bleed/lemon_atlas/scripts/render.py';
-    const blend = 'C:/Users/Jerome/github/bleed/resources/blender/character_kid.blend';
-    const command = '$blender $blend --background --python $script';
-    print(command);
-
-    final process = await Shell().start(
-      blender,
-      arguments: [blend, '--background', '--python', script],
-    );
-    final exitCode = await process.exitCode;
-
-    print(exitCode);
-  }
-
   void buildSelected() {
 
     switch (characterType.value){
@@ -169,7 +153,13 @@ class AmuletSprites extends StatelessWidget {
         .map((file) => decodeImage(file.bytes ?? (throw Exception())) ?? (throw Exception()))
         .toList(growable: false);
 
-    buildRenders(images, rows: 1, columns: images.length);
+    buildImages(
+        images,
+        rows: 1,
+        columns: images.length,
+        directory: '${Directory.current.path}/assets/tmp',
+        name: 'export',
+    );
   }
 
   void openLoadAtlasDialog(BuildContext context) =>
@@ -185,7 +175,7 @@ class AmuletSprites extends StatelessWidget {
             buildRowWatchInt(rows, "ROWS"),
             buildRowWatchInt(columns, "COLUMNS"),
             onPressed(
-              action: () => buildAtlas(
+              action: () => loadImagesConvertToSpriteAndExportToFile(
                   rows: rows.value,
                   columns: columns.value,
                 ),

@@ -11,11 +11,13 @@ import 'copy_paste.dart';
 import 'get_max_bottom_from_dst.dart';
 import 'get_max_right_from_dst.dart';
 
-void buildRenders(List<Image> renders, {
+void buildImages(List<Image> images, {
   required int rows,
   required int columns,
+  required String directory,
+  required String name,
 }) async {
-  final srcAbs = buildSrcAbs(renders, rows, columns);
+  final srcAbs = buildSrcAbsFromImages(images: images, rows: 8, columns: 8);
   final dst = buildDstFromSrcAbs(srcAbs);
   final width = getMaxRightFromDst(dst);
   final height = getMaxBottomFromDst(dst);
@@ -25,12 +27,12 @@ void buildRenders(List<Image> renders, {
     height: height,
     numChannels: 4,
     backgroundColor: transparent,
-    format: renders.first.format,
+    format: images.first.format,
   );
 
   var i = 0;
 
-  for (final srcImage in renders){
+  for (final srcImage in images){
 
     final srcLeft = srcAbs[i + 0];
     final srcTop = srcAbs[i + 1];
@@ -58,12 +60,9 @@ void buildRenders(List<Image> renders, {
   }
 
   final dstImageBytes = encodePng(dstImage);
-  const outputName = 'export';
-  const directory = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/tmp';
   await createDirectoryIfNotExists(directory);
-  final filePng = File('$directory/$outputName.png');
+  final filePng = File('$directory/$name.png');
   await filePng.writeAsBytes(dstImageBytes);
-  final fileDst = File('$directory/$outputName.dst');
+  final fileDst = File('$directory/$name.dst');
   await fileDst.writeAsBytes(dst.buffer.asUint8List());
-  print('saved "$directory/$outputName"');
 }
