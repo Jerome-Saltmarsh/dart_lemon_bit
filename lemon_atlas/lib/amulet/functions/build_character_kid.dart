@@ -1,13 +1,8 @@
 
-import 'dart:io';
-
+import 'package:lemon_atlas/amulet/src.dart';
 import 'package:lemon_atlas/atlas/functions/src.dart';
 
-import '../enums/character_state.dart';
-import '../enums/kid_part.dart';
-import 'get_images_kid.dart';
-
-void buildCharacterKid({
+Future buildCharacterKid({
   required CharacterState state,
   required KidPart part,
 }) async {
@@ -20,9 +15,9 @@ void buildCharacterKid({
     columns: 8,
   );
 
-  exportSprite(
+  return exportSprite(
     sprite: sprite,
-    directory: '${Directory.current.path}/assets/sprites_3/kid/${part.groupName}/${part.fileName}',
+    directory: '$exportDirectory/kid/${part.groupName}/${part.fileName}',
     name: state.name,
   );
 }

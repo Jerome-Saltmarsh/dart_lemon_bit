@@ -6,7 +6,7 @@ import 'package:lemon_atlas/atlas/classes/sprite.dart';
 import '../../io/create_directory_if_not_exists.dart';
 import 'map_sprite_sheet_to_json.dart';
 
-void exportSprite({
+Future exportSprite({
   required Sprite sprite,
   required String directory,
   required String name,

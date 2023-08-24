@@ -2,11 +2,8 @@ import 'dart:typed_data';
 
 import 'package:image/image.dart';
 
-import '../variables/transparent.dart';
 import 'build_image_from_dst.dart';
 import 'copy_paste.dart';
-import 'get_max_bottom_from_dst.dart';
-import 'get_max_right_from_dst.dart';
 
 Image buildDstImageFromSrcImage({
   required Uint16List srcAbs,

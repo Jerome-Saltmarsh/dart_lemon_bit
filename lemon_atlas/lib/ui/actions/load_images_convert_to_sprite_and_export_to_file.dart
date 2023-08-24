@@ -1,8 +1,8 @@
 
 import 'package:image/image.dart';
+import 'package:lemon_atlas/amulet/src.dart';
 import 'package:lemon_atlas/atlas/functions/build_sprite_from_image.dart';
 import 'package:lemon_atlas/atlas/functions/export_spritesheet.dart';
-import 'package:lemon_atlas/ui/actions/tmp.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 void loadImagesConvertToSpriteAndExportToFile({
@@ -28,7 +28,7 @@ void loadImagesConvertToSpriteAndExportToFile({
 
   exportSprite(
       sprite: spriteSheet,
-      directory: tmp,
+      directory: exportDirectory,
       name: file.name.replaceAll('.png', ''),
   );
 }
