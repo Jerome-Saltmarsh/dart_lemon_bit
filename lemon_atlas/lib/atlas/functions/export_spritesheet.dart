@@ -18,6 +18,7 @@ void exportSprite({
   final jsonStr = json.encode(spriteSheetJson);
   File('$outputName.json').writeAsStringSync(jsonStr);
   File('$outputName.png').writeAsBytes(dstImageBytes);
+  print('exported: $outputName');
 }
 
 

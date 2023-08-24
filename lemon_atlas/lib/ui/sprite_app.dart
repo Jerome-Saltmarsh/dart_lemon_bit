@@ -1,5 +1,6 @@
 
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:image/image.dart';
@@ -141,9 +142,19 @@ class AmuletSprites extends StatelessWidget {
         }
         break;
       case CharacterType.fallen:
-        activeKidStates.forEach(buildCharacterFallen);
+        exportCharacterFallen();
         break;
     }
+  }
+
+  void exportCharacterFallen() {
+    const [
+      CharacterState.strike,
+      CharacterState.running,
+      CharacterState.hurt,
+      CharacterState.dead,
+      CharacterState.idle,
+    ].forEach(buildCharacterFallen);
   }
 
   void loadImagesFromFile() async {

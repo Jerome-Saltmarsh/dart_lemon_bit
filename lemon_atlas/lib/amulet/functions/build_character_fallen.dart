@@ -22,7 +22,7 @@ void buildCharacterFallen(CharacterState characterState) async {
   final name = characterState.name;
   exportSprite(
       sprite: sprite,
-      directory: '${Directory.current.path}/assets/sprites_3/fallen/${characterState.name}',
+      directory: '${Directory.current.path}/assets/sprites_3/fallen',
       name: name,
   );
 }
