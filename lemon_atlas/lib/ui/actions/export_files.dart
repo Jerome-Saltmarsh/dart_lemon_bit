@@ -1,19 +1,17 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:image/image.dart';
 import 'package:lemon_atlas/amulet/src.dart';
 import 'package:lemon_atlas/atlas/functions/build_sprite_from_images.dart';
 import 'package:lemon_atlas/atlas/functions/export_spritesheet.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
 
-void loadImagesFromFileAndExport({
+void exportFiles({
+  required List<PlatformFile> files,
   required int rows,
   required int columns,
 }) async {
-  final files = await loadFilesFromDisk();
-  if (files == null) {
-    return;
-  }
+
   final images = files
       .map((file) => decodeImage(file.bytes ?? (throw Exception())) ?? (throw Exception()))
       .toList(growable: false);
