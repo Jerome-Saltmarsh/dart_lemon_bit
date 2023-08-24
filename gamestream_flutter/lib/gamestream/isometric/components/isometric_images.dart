@@ -187,21 +187,21 @@ class IsometricImages with IsometricComponent {
         name: 'sprites/flame/wind0',
         mode: AnimationMode.loop,
         atlasX: 664,
-        atlasY: 1764,
+        atlasY: 1681,
         image: atlas_nodes,
     );
     flame1 = await loadSprite(
         name: 'sprites/flame/wind1',
         mode: AnimationMode.loop,
         atlasX: 664,
-        atlasY: 1764,
+        atlasY: 1733,
         image: atlas_nodes,
     );
     flame2 = await loadSprite(
         name: 'sprites/flame/wind2',
         mode: AnimationMode.loop,
         atlasX: 664,
-        atlasY: 1764,
+        atlasY: 1778,
         image: atlas_nodes,
     );
   }
