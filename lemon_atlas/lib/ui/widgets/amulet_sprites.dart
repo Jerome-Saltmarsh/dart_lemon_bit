@@ -34,7 +34,7 @@ class AmuletSprites extends StatelessWidget {
           title: const Text('AMULET ATLAS'),
           actions: [
             buildButtonRun(),
-            buildButtonExport(),
+            buildButtonFile(),
           ],
         ),
         body: Center(
@@ -85,12 +85,12 @@ class AmuletSprites extends StatelessWidget {
           );
   }
 
-  Widget buildButtonExport() => Builder(
+  Widget buildButtonFile() => Builder(
     builder: (context) => onPressed(
       action: () => showDialogLoadImage(context),
       child: Container(
         padding: const EdgeInsets.all(16),
-        child: buildText("EXPORT")),
+        child: buildText("FILE")),
       )
   );
 

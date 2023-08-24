@@ -500,7 +500,7 @@ class RendererCharacters extends RenderGroup {
 
     if (renderBottom) {
 
-      render.sprite2Frame(
+      render.sprite(
         sprite: spriteShadow,
         frame: completingAction
             ? spriteShadow.getFramePercentage(row, actionComplete)
@@ -512,7 +512,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.modulate2(
+      render.modulate(
         sprite: spriteTorso,
         frame: completingAction
             ? spriteTorso.getFramePercentage(row, actionComplete)
@@ -525,7 +525,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite2Frame(
+      render.sprite(
         sprite: spriteLegs,
         frame: completingAction
             ? spriteLegs.getFramePercentage(row, actionComplete)
@@ -539,7 +539,7 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    render.modulate2(
+    render.modulate(
       sprite: spriteArmBehind,
       frame: completingAction
           ? spriteArmBehind.getFramePercentage(row, actionComplete)
@@ -552,7 +552,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite2Frame(
+    render.sprite(
       sprite: spriteHandBehind,
       frame: completingAction
           ? spriteHandBehind.getFramePercentage(row, actionComplete)
@@ -565,7 +565,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (spriteHandsRight != spriteHandFront){
-      render.sprite2Frame(
+      render.sprite(
         sprite: spriteWeapon,
         frame: completingAction
             ? spriteWeapon.getFramePercentage(row, actionComplete)
@@ -587,7 +587,7 @@ class RendererCharacters extends RenderGroup {
     ].contains(direction);
 
     if (bodyFirst){
-      render.sprite2Frame(
+      render.sprite(
         sprite: spriteBody,
         frame: completingAction
             ? spriteBody.getFramePercentage(row, actionComplete)
@@ -601,7 +601,7 @@ class RendererCharacters extends RenderGroup {
     }
 
 
-    render.modulate2(
+    render.modulate(
       sprite: spriteArmFront,
       frame: completingAction
           ? spriteArmFront.getFramePercentage(row, actionComplete)
@@ -615,7 +615,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (spriteHandsRight == spriteHandFront){
-      render.sprite2Frame(
+      render.sprite(
         sprite: spriteWeapon,
         frame: completingAction
             ? spriteWeapon.getFramePercentage(row, actionComplete)
@@ -628,7 +628,7 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.sprite2Frame(
+    render.sprite(
       sprite: spriteHandFront,
       frame: completingAction
           ? spriteHandFront.getFramePercentage(row, actionComplete)
@@ -641,7 +641,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (!bodyFirst){
-      render.sprite2Frame(
+      render.sprite(
         sprite: spriteBody,
         frame: completingAction
             ? spriteBody.getFramePercentage(row, actionComplete)
@@ -654,7 +654,7 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.sprite2Frame(
+    render.sprite(
       sprite: spriteBodyArm,
       frame: completingAction
           ? spriteBodyArm.getFramePercentage(row, actionComplete)
@@ -666,7 +666,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.modulate2(
+    render.modulate(
       sprite: spriteHead,
       frame: completingAction
           ? spriteHead.getFramePercentage(row, actionComplete)
@@ -679,7 +679,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite2Frame(
+    render.sprite(
       sprite: spriteHelm,
       frame: completingAction
           ? spriteHelm.getFramePercentage(row, actionComplete)
@@ -706,7 +706,7 @@ class RendererCharacters extends RenderGroup {
     final column = character.animationFrame;
     final sprite = images.fallenSpriteGroup2.fromCharacterState(character.state);
 
-    render.sprite2Frame(
+    render.sprite(
       sprite: sprite,
       frame: sprite.getFrame(row: row, column: column),
       color: character.color,
