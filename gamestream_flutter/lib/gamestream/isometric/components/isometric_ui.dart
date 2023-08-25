@@ -407,7 +407,7 @@ class IsometricUI with IsometricComponent {
   }) {
     engine.disableKeyEventHandler();
     final controller = TextEditingController(text: text);
-    dialog.value = OnDisposed(
+    showDialog(child: OnDisposed(
       onDisposed: engine.enableKeyEventHandler,
       child: GSContainer(
         width: 300,
@@ -417,17 +417,13 @@ class IsometricUI with IsometricComponent {
             Container(
               height: 80,
               width: 150,
-              child: StatefulBuilder(builder: (context, setState) =>
-                  TextField(
-                    style: TextStyle(color: Colors.white70),
-                  // controller: controller,
-                  onChanged: (value) {
-                    print('onChanged($value)');
-                    controller.text = value;
-                    setState(() {
-                    });
-                  },
-                )),
+              child: TextField(
+                style: TextStyle(color: Colors.white70),
+                onChanged: (value) {
+                  print('onChanged($value)');
+                  controller.text = value;
+                },
+              ),
             ),
             onPressed(
               action: () {
@@ -440,40 +436,50 @@ class IsometricUI with IsometricComponent {
           ],
         ),
       ),
-    );
+    ));
   }
 
   void showDialogGetColor({
-    required Function(Color color) onSelected
-  }) {
-    dialog.value = GSContainer(
-      width: 682,
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            buildText('Complexion', color: Colors.white70),
-            onPressed(
-                action: closeDialog,
-                child: buildText('close')
-            ),
-          ],
-        ),
-        SizedBox(height: 16),
-        Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: colors.shades.map((shade) => Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: shade.map((color) => onPressed(
-                action: () => onSelected(color),
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  color: color,
-                ),
-              )).toList(growable: false),
-            )).toList(growable: false))
-      ]),
+    required Function(Color color) onSelected,
+    bool closeOnSelected = true,
+  }) => showDialog(
+      child: GSContainer(
+        width: 682,
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Complexion', color: Colors.white70),
+              onPressed(
+                  action: closeDialog,
+                  child: buildText('close')
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: colors.shades.map((shade) => Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: shade.map((color) => onPressed(
+                  action: () {
+                    onSelected(color);
+                    if (closeOnSelected) {
+                      closeDialog();
+                    }
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    color: color,
+                  ),
+                )).toList(growable: false),
+              )).toList(growable: false))
+        ])
+      )
     );
+
+  void showDialog({required Widget child}){
+    dialog.value = child;
   }
 }

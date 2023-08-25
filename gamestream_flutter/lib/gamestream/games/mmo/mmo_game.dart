@@ -236,4 +236,8 @@ class MmoGame extends IsometricGame {
 
   void selectTreasure(int index) =>
       sendMMORequest(MMORequest.Select_Treasure, index);
+
+  void showDialogCharacterCreation(){
+    // ui.dialog.value
+  }
 }
