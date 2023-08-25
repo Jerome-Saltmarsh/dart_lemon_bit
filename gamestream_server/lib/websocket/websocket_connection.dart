@@ -818,10 +818,10 @@ class WebSocketConnection with ByteReader {
         player.complexion = value;
         break;
       case PlayerRequest.setName:
-        if (arguments.length <= 1){
+        if (arguments.length <= 2){
           return;
         }
-        player.name = arguments[1];
+        player.name = arguments[2];
         break;
     }
   }

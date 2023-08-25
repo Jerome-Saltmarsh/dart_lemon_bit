@@ -219,7 +219,10 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     );
 
   void changeName() =>
-      ui.showDialogGetString(onSelected: sendRequestSetName);
+      ui.showDialogGetString(
+          onSelected: sendRequestSetName,
+          text: name.value,
+      );
 
   void sendRequestSetName(String name){
     network.sendRequest(
