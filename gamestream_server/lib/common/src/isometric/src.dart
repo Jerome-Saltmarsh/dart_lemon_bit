@@ -1,5 +1,6 @@
 library src;
 
+
 export 'shadow_type.dart';
 export 'torso_type.dart';
 export 'head_type.dart';
@@ -35,3 +36,9 @@ export 'compress_type.dart';
 export 'consumable_type.dart';
 export 'character_goal.dart';
 export 'power_type.dart';
+export 'slot_type.dart';
+export 'myst_type.dart';
+export 'mark_type.dart';
+export 'leg_type.dart';
+export 'helm_type.dart';
+
