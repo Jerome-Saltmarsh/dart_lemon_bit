@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 import 'classes/src.dart';
 import 'components/isometric_options.dart';

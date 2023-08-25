@@ -1,8 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/amulet/talent_type_src.dart';
-import 'package:gamestream_flutter/ui/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class MMOTalentIcon extends StatelessWidget {

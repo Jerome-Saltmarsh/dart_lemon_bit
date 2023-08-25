@@ -1,4 +1,5 @@
-import 'package:gamestream_flutter/common.dart';
+
+import 'package:gamestream_flutter/packages/common/src/isometric/consumable_type.dart';
 
 const atlasSrcConsumables = <int, List<double>>{
   ConsumableType.Health_Potion: [

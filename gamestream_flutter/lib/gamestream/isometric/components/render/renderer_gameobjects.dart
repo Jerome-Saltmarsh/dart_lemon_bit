@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/item_type.dart';
 
 import '../functions/format_percentage.dart';
 

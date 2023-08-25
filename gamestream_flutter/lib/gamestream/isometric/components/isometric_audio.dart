@@ -1,16 +1,17 @@
 
 import 'dart:math';
 
+import 'package:just_audio/just_audio.dart';
+
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
-
-import '../../../library.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_math/src.dart';
 import '../../audio/audio_loop.dart';
 import '../../audio/audio_single.dart';
 import '../../audio/audio_tracks.dart';
-
+import 'package:lemon_watch/src.dart';
 
 class IsometricAudio with IsometricComponent implements Updatable {
 

@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/ui/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 
 class IsometricIcon extends StatelessWidget {
 

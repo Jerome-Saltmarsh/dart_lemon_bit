@@ -1,14 +1,16 @@
 
+import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
+import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/isometric_debug.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/functions/format_bytes.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/helm_type.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/leg_type.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/myst_type.dart';
-import 'package:gamestream_flutter/ui.dart';
-import 'package:gamestream_flutter/library.dart';
-
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_refresh.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 import 'debug_tab.dart';
 
 extension isometricDebugUI on IsometricDebug {

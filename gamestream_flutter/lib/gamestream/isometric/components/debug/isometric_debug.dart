@@ -1,11 +1,15 @@
 
+import 'dart:typed_data';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
-import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 
 class IsometricDebug with IsometricComponent {
   Particle? particleSelected;

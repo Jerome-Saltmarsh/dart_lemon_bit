@@ -1,6 +1,7 @@
-
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
+import 'package:lemon_math/src.dart';
 
 class ParticleWhisp extends Particle {
 

@@ -1,5 +1,5 @@
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 
 class AtlasNodeX {
   static const Bau_Haus_Solid = 520.0;

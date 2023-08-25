@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/node_size.dart';
+import 'package:lemon_math/src.dart';
 
 class Position implements Comparable<Position>{
 

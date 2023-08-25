@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
-import 'package:gamestream_flutter/ui/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 
 class GSCheckBox extends StatelessWidget {
   final bool value;

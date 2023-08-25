@@ -1,7 +1,8 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common/src.dart';
+import 'package:lemon_math/src.dart';
 
 
 class IsometricActions with IsometricComponent {

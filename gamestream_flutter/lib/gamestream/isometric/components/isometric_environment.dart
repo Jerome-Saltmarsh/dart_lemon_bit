@@ -1,7 +1,9 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_math/src.dart';
+import 'package:lemon_watch/src.dart';
 
 import 'isometric_audio.dart';
 

@@ -1,5 +1,5 @@
 
-import '../../../library.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/node_size.dart';
 
 class IsometricAnimation {
   var frame = 0;

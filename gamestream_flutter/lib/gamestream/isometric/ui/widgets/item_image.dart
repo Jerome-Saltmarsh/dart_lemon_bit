@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/common.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
-import 'package:gamestream_flutter/ui/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class ItemImage extends StatelessWidget {

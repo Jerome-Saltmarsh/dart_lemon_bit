@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:gamestream_flutter/library.dart';
-
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_math/src.dart';
 import '../../gamestream/isometric/enums/emission_type.dart';
 
 class GameObject extends Position {

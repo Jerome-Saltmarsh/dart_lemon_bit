@@ -1,5 +1,5 @@
-import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/amulet/mmo_game.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 
 extension MMOActions on MmoGame {
 

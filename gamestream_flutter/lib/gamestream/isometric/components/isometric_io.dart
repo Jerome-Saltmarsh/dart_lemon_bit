@@ -1,10 +1,11 @@
 
-import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_components/src.dart';
 import 'package:lemon_byte/byte_writer.dart';
-
-import '../../../library.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import 'classes/touch_controller.dart';
 
 class IsometricIO with ByteWriter, IsometricComponent implements Updatable {

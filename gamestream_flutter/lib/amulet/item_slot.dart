@@ -1,6 +1,6 @@
 
-import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/slot_type.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_watch/src.dart';
 
 class ItemSlot {
   final int index;

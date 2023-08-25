@@ -1,8 +1,9 @@
 
 import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/library.dart';
-
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import '../../../../isometric/classes/gameobject.dart';
 import '../../enums/editor_dialog.dart';
 import '../../enums/emission_type.dart';

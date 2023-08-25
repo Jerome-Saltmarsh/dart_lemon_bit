@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 
 extension MMOResponseReader on IsometricParser {

@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common.dart';
+import 'package:gamestream_flutter/packages/common/src/mmo/mmo_talent_type.dart';
 
 class TalentTypeSrc {
 

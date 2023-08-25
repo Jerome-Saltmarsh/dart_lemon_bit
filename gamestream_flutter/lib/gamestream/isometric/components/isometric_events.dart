@@ -1,7 +1,9 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
 
 class IsometricEvents with IsometricComponent {
 

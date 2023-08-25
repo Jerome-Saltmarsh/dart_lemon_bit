@@ -1,8 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:gamestream_flutter/ui.dart';
+import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'isometric_builder.dart';
 
 class LoadingPage extends StatelessWidget {
   @override

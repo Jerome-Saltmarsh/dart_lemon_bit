@@ -1,6 +1,7 @@
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_math/src.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 
 class RendererProjectiles extends RenderGroup {
 

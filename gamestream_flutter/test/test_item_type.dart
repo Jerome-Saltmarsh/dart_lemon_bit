@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:gamestream_flutter/common.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 
 void main() {
 

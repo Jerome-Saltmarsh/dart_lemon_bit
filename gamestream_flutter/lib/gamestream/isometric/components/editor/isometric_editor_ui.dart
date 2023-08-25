@@ -1,12 +1,26 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
+import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
+import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/width.dart';
+import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
+import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
-import 'package:gamestream_flutter/isometric.dart';
-import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/mark_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/build_button.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:gamestream_flutter/packages/utils.dart';
-import 'package:gamestream_flutter/ui.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
+import 'editor_tab.dart';
+import 'isometric_editor.dart';
 
 extension IsometricEditorUI on IsometricEditor {
 

@@ -13,12 +13,11 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
-import 'package:gamestream_flutter/ui/loading_page.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
-
+import 'package:lemon_engine/lemon_engine.dart';
 import 'gamestream/isometric/src.dart';
 import 'gamestream/isometric/ui/isometric_colors.dart';
-import 'library.dart';
 
 Widget buildApp(){
   print('buildApp()');

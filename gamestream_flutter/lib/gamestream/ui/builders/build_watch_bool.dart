@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:lemon_watch/src.dart';
 
 Widget buildWatchBool(
     Watch<bool> watch,

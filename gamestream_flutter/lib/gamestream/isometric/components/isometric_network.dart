@@ -2,9 +2,10 @@
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
+import 'package:gamestream_flutter/packages/common/src/game_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/isometric_request.dart';
+import 'package:gamestream_flutter/packages/common/src/network/network_request.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
-
-import '../../../common.dart';
 
 class IsometricNetwork with IsometricComponent {
 

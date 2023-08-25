@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:gamestream_flutter/library.dart';
+import 'package:lemon_math/src.dart';
 import 'package:test/test.dart';
 
 void main() {

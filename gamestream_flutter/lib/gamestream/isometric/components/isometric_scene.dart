@@ -1,18 +1,20 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/functions/convert_seconds_to_ambient_alpha.dart';
-import 'package:gamestream_flutter/functions/get_render.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
+import 'package:lemon_watch/src.dart';
+import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/mark_type.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
-import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 
 import '../../../isometric/classes/position.dart';
 
@@ -1841,5 +1843,11 @@ class IsometricScene with IsometricComponent implements Updatable {
 
 }
 
-
-
+int convertSecondsToAmbientAlpha(int totalSeconds) {
+  const Seconds_Per_Hours_12 = Duration.secondsPerHour * 12;
+  return ((totalSeconds < Seconds_Per_Hours_12
+      ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+      : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) *
+      255)
+      .round();
+}

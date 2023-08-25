@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 
 class GSContainer extends StatelessWidget {
   final Widget? child;

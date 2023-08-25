@@ -1,8 +1,7 @@
 
 
-import 'package:gamestream_flutter/functions/get_render.dart';
-import 'package:gamestream_flutter/library.dart';
-
+import 'package:gamestream_flutter/isometric/functions/get_render.dart';
+import 'package:lemon_math/src.dart';
 import 'isometric_component.dart';
 
 class IsometricMouse with IsometricComponent {
