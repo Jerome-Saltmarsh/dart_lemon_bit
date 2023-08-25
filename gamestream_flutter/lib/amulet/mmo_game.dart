@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/item_slot.dart';
+import 'package:gamestream_flutter/amulet/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -238,6 +238,10 @@ class MmoGame extends IsometricGame {
       sendMMORequest(MMORequest.Select_Treasure, index);
 
   void showDialogCharacterCreation(){
-    // ui.dialog.value
+    ui.showDialog(child: Column(
+      children: [
+
+      ],
+    ));
   }
 }

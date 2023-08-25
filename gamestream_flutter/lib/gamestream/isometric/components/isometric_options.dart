@@ -186,8 +186,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
     GameType.Website => website,
-    GameType.Capture_The_Flag => captureTheFlag,
-    // GameType.Moba => findComponent<Moba>(),
     GameType.Amulet => amulet,
     _ => throw Exception('mapGameTypeToGame($gameType)')
   };

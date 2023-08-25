@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/common/src/isometric/power_mode.dart';
 import 'package:gamestream_flutter/common/src/mmo/mmo_item.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
+import 'package:gamestream_flutter/amulet/mmo_game.dart';
 
 extension MMORender on MmoGame {
 

@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
-import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
+import 'package:gamestream_flutter/amulet/mmo_game.dart';
+import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
@@ -68,8 +66,6 @@ Widget buildApp(){
       compositor: IsometricCompositor(),
       website: WebsiteGame(),
       mmo: MmoGame(),
-      moba: Moba(),
-      captureTheFlag: CaptureTheFlagGame(),
       animation: IsometricAnimation(),
       screen: IsometricScreen(),
       lighting: IsometricLighting(),

@@ -20,7 +20,6 @@ class NetworkResponse {
   static const GameObjects = 23;
   static const GameObject_Deleted = 24;
   static const Info = 26;
-  static const Capture_The_Flag = 31;
   static const MMO = 32;
   static const Isometric = 33;
   static const Isometric_Characters = 34;
@@ -54,7 +53,6 @@ class NetworkResponse {
       GameObjects: 'GameObjects',
       GameObject_Deleted: 'GameObject_Deleted',
       Info: 'Info',
-      Capture_The_Flag: 'Capture_The_Flag',
       MMO: 'MMO',
       Isometric: 'Isometric',
       FPS: 'FPS',

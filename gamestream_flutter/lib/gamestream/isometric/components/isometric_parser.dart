@@ -1,8 +1,7 @@
 
 
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_response_reader.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_parser.dart';
+import 'package:gamestream_flutter/amulet/mmo_parser.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -112,9 +111,6 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case NetworkResponse.Info:
         readServerResponseInfo();
-        break;
-      case NetworkResponse.Capture_The_Flag:
-        readCaptureTheFlag();
         break;
       case NetworkResponse.MMO:
         readMMOResponse();

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_actions.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/item_slot.dart';
+import 'package:gamestream_flutter/amulet/mmo_actions.dart';
+import 'package:gamestream_flutter/amulet/mmo_game.dart';
+import 'package:gamestream_flutter/amulet/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui.dart';

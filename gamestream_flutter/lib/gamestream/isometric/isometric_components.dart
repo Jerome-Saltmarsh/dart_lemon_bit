@@ -1,8 +1,6 @@
 
-import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:gamestream_flutter/gamestream/games/mmo/mmo_game.dart';
-import 'package:gamestream_flutter/gamestream/games/moba/moba.dart';
-import 'package:gamestream_flutter/gamestream/games/website/website_game.dart';
+import 'package:gamestream_flutter/amulet/mmo_game.dart';
+import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_screen.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_characters.dart';
@@ -26,8 +24,6 @@ class IsometricComponents extends ComponentContainer {
   final Engine engine;
   final WebsiteGame website;
   final MmoGame mmo;
-  final Moba moba;
-  final CaptureTheFlagGame captureTheFlag;
   final IsometricRender render;
   final IsometricOptions options;
   final IsometricAudio audio;
@@ -91,8 +87,6 @@ class IsometricComponents extends ComponentContainer {
     required this.compositor,
     required this.website,
     required this.mmo,
-    required this.moba,
-    required this.captureTheFlag,
     required this.animation,
     required this.screen,
     required this.lighting,
@@ -134,8 +128,6 @@ class IsometricComponents extends ComponentContainer {
     components.add(compositor);
     components.add(website);
     components.add(mmo);
-    components.add(moba);
-    components.add(captureTheFlag);
     components.add(isometricEditor);
     components.add(animation);
     components.add(screen);
@@ -172,7 +164,6 @@ class IsometricComponents extends ComponentContainer {
       component.parser = responseReader;
       component.website = website;
       component.amulet = mmo;
-      component.captureTheFlag = captureTheFlag;
       component.options = options;
       component.animation = animation;
       component.images = images;
