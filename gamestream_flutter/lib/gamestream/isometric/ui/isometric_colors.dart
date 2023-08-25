@@ -93,24 +93,8 @@ class IsometricColors {
 
   IsometricColors(){
     palette = [
-      brown_4,
-      brown_3,
-      brown_2,
-      brown_1,
-      brown_0,
-      green_5,
-      green_4,
-      green_3,
-      green_2,
-      green_1,
-      green_0,
-      fair_6,
-      fair_5,
-      fair_4,
-      fair_3,
-      fair_2,
-      fair_1,
-      fair_0,
+      ...shadeBrown,
+      ...shadeAqua,
     ];
   }
 }

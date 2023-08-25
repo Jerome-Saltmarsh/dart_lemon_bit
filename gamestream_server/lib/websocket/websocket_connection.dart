@@ -30,6 +30,12 @@ class WebSocketConnection with ByteReader {
 
   Function? onDone;
 
+  int? arg0;
+  int? arg1;
+  int? arg2;
+  int? arg3;
+  int? arg4;
+
   Player? get player => _player;
 
   WebSocketConnection(this.webSocket, this.engine){
@@ -93,6 +99,12 @@ class WebSocketConnection with ByteReader {
       sendGameError(GameError.ClientRequestArgumentsEmpty);
       return;
     }
+
+    arg0 = parseArg(arguments, 0, error: false);
+    arg1 = parseArg(arguments, 1, error: false);
+    arg2 = parseArg(arguments, 2, error: false);
+    arg3 = parseArg(arguments, 3, error: false);
+    arg4 = parseArg(arguments, 4, error: false);
 
     final clientRequestInt = parse(arguments[0]);
 
@@ -293,6 +305,10 @@ class WebSocketConnection with ByteReader {
 
       case NetworkRequest.MMO:
         handleClientRequestMMORequest(arguments);
+        break;
+
+      case NetworkRequest.Debug:
+        handleNetworkRequestDebug();
         break;
 
       case NetworkRequest.Inventory_Request:
@@ -652,14 +668,19 @@ class WebSocketConnection with ByteReader {
   int? parseArg5(List<String> arguments,) => parseArg(arguments, 5);
   int? parseArg6(List<String> arguments,) => parseArg(arguments, 6);
 
-  int? parseArg(List<String> arguments, int index){
+  int? parseArg(List<String> arguments, int index, {bool error = true}){
+
      if (index >= arguments.length) {
-       errorInvalidClientRequest();
+       if (error){
+         errorInvalidClientRequest();
+       }
        return null;
      }
      final value = int.tryParse(arguments[index]);
      if (value == null) {
-       errorInvalidClientRequest();
+       if (error){
+         errorInvalidClientRequest();
+       }
      }
      return value;
   }
@@ -735,5 +756,35 @@ class WebSocketConnection with ByteReader {
         player.game.environment.lightningFlash();
         break;
     }
+  }
+
+  void handleNetworkRequestDebug() {
+
+    if (_player is! IsometricPlayer) {
+      return;
+    }
+    final debugRequest = arg1;
+
+    if (debugRequest == null){
+      return;
+    }
+
+    final player = _player as IsometricPlayer;
+
+     switch (debugRequest) {
+       case DebugRequest.Set_Complexion:
+         final complexion = arg2;
+         if (complexion == null){
+           return;
+         }
+         final selectedCollider = player.selectedCollider;
+         if (selectedCollider is! Character) {
+           return;
+         }
+         final selectedCharacter = selectedCollider;
+         selectedCharacter.complexion = complexion;
+         break;
+     }
+
   }
 }

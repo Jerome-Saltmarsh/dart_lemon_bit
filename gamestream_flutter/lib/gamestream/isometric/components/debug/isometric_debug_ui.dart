@@ -706,7 +706,7 @@ extension isometricDebugUI on IsometricDebug {
         child: Row(children: colors.shades.map((shade) => Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: shade.map((color) => onPressed(
-            action: (){
+            action: () {
                 network.request(
                     NetworkRequest.Debug,
                     DebugRequest.Set_Complexion,
