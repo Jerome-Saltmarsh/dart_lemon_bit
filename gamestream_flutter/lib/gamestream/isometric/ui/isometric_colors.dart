@@ -81,21 +81,6 @@ class IsometricColors {
   final peach_4 = Color.fromRGBO(195, 36, 84, 1);
   final peach_5 = Color.fromRGBO(131, 28, 93, 1);
 
-  final green_0 = Color.fromRGBO(205, 223, 108, 1);
-  final green_1 = Color.fromRGBO(145, 219, 105, 1);
-  final green_2 = Color.fromRGBO(30, 188, 115, 1);
-  final green_3 = Color.fromRGBO(35, 144, 99, 1);
-  final green_4 = Color.fromRGBO(22, 90, 76, 1);
-  final green_5 = Color.fromRGBO(30, 61, 62, 1);
-
-  final fair_0 = Color.fromRGBO(253, 203, 176, 1);
-  final fair_1 = Color.fromRGBO(252, 167, 144, 1);
-  final fair_2 = Color.fromRGBO(246, 129, 129, 1);
-  final fair_3 = Color.fromRGBO(240, 79, 120, 1);
-  final fair_4 = Color.fromRGBO(195, 36, 84, 1);
-  final fair_5 = Color.fromRGBO(131, 28, 93, 1);
-  final fair_6 = Color.fromRGBO(84, 30, 71, 1);
-
   final brownDark = Color.fromRGBO(36, 33, 38, 1);
   final brownDarkX = Color.fromRGBO(29, 27, 31, 1.0);
   final brownLight = Color.fromRGBO(48, 48, 48, 1.0);
@@ -128,17 +113,124 @@ class IsometricColors {
     brown_0,
   ];
 
+  late final List<Color> shadeGrey = [
+    grey_4,
+    grey_3,
+    grey_2,
+    grey_1,
+    grey_0,
+  ];
+
+  late final List<Color> shadeRed = [
+    red_3,
+    red_2,
+    red_1,
+    red_0,
+  ];
+
+  late final List<Color> shadeOrange = [
+    orange_4,
+    orange_3,
+    orange_2,
+    orange_1,
+    orange_0,
+  ];
+
+  late final List<Color> shadeApricot = [
+    apricot_4,
+    apricot_3,
+    apricot_2,
+    apricot_1,
+    apricot_0,
+  ];
+
+  late final List<Color> shadeButter = [
+    butter_4,
+    butter_3,
+    butter_2,
+    butter_1,
+    butter_0,
+  ];
+
+  late final List<Color> shadeTeal = [
+    teal_4,
+    teal_3,
+    teal_2,
+    teal_1,
+    teal_0,
+  ];
+
+  late final List<Color> shadeSage = [
+    sage_4,
+    sage_3,
+    sage_2,
+    sage_1,
+    sage_0,
+  ];
+
   late final List<Color> shadeAqua = [
-    aqua_1,
-    aqua_2,
-    aqua_3,
-    aqua_4,
     aqua_5,
+    aqua_4,
+    aqua_3,
+    aqua_2,
+    aqua_1,
+  ];
+
+  late final List<Color> shadeBlue = [
+    blue_4,
+    blue_3,
+    blue_2,
+    blue_1,
+    blue_0,
+  ];
+
+  late final List<Color> shadePurple = [
+    purple_4,
+    purple_3,
+    purple_2,
+    purple_1,
+    purple_0,
+  ];
+
+  late final List<Color> shadePink = [
+    pink_3,
+    pink_2,
+    pink_1,
+    pink_0,
+  ];
+
+  late final List<Color> shadePeach = [
+    peach_5,
+    peach_4,
+    peach_3,
+    peach_2,
+    peach_1,
+    peach_0,
+  ];
+
+  late final List<Color> shadeGreen = [
+    peach_5,
+    peach_4,
+    peach_3,
+    peach_2,
+    peach_1,
+    peach_0,
   ];
 
   late final List<List<Color>> shades = [
     shadeBrown,
+    shadeGrey,
+    shadeRed,
+    shadeOrange,
+    shadeApricot,
+    shadeButter,
+    shadeTeal,
+    shadeSage,
     shadeAqua,
+    shadeBlue,
+    shadePurple,
+    shadePink,
+    shadePeach
   ];
 
   late final List<Color> palette;

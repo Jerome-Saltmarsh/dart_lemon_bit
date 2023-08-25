@@ -511,8 +511,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       if (compressionLevel == CHARACTER_END) break;
       final character = scene.getCharacterInstance();
 
-      character.complexion = colors.palette.indexOf(colors.fair_0);
-
       final stateAChanged = readBitFromByte(compressionLevel, 0);
       final stateBChanged = readBitFromByte(compressionLevel, 1);
       final changeTypeX = (compressionLevel & Hex00001100) >> 2;
