@@ -2,8 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
+import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 
 import '../../../common.dart';
 

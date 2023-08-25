@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/lemon_websocket_client/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 
 class IsometricEvents with IsometricComponent {
 
