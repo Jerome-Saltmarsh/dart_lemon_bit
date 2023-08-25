@@ -560,7 +560,6 @@ class WebSocketConnection with ByteReader {
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
     player.mouseLeftDown = mouseDownLeft;
 
-
     final compress1 = readByte();
     final compress2 = readByte();
 

@@ -18,6 +18,7 @@ class Amulet extends IsometricGame {
 
   final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
+  final characterCreated = WatchBool(false);
 
   final slotContainerDefault = Container(
     color: Colors.black12,

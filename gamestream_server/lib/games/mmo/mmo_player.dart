@@ -9,16 +9,22 @@ class AmuletPlayer extends IsometricPlayer {
 
   final Amulet game;
 
-  var _dialogVisibleCreateCharacter = false;
+  var _characterCreated = false;
 
-  bool get dialogVisibleCreateCharacter => _dialogVisibleCreateCharacter;
+  bool get characterCreated => _characterCreated;
 
-  set dialogVisibleCreateCharacter(bool value){
-    if (_dialogVisibleCreateCharacter == value){
+  set characterCreated(bool value){
+    if (_characterCreated == value){
       return;
     }
+    _characterCreated = value;
+    writePlayerCharacterCreated();
+  }
 
-
+  void writePlayerCharacterCreated() {
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(AmuletPlayerResponse.Character_Created);
+    writeBool(_characterCreated);
   }
 
   var equipmentDirty = true;

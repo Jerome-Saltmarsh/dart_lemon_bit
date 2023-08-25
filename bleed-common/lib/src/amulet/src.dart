@@ -1,5 +1,6 @@
 library src;
 
+export 'network/src.dart';
 export 'mmo_attack_type.dart';
 export 'mmo_item.dart';
 export 'mmo_item_quality.dart';

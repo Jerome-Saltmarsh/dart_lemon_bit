@@ -28,6 +28,7 @@ class NetworkResponse {
   static const Player = 37;
   static const Scene = 38;
   static const Editor_Response = 39;
+  static const Amulet_Player = 40;
 
   static String getName(int value) => const <int, String> {
       Api_Player: 'Api_Player',
