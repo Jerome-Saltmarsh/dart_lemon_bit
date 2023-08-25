@@ -8,8 +8,8 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/utils.dart';
 import 'package:gamestream_flutter/ui/isometric_builder.dart';
-import 'package:gamestream_flutter/utils.dart';
 
 
 class IsometricUI with IsometricComponent {
