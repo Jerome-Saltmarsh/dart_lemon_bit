@@ -1,19 +1,20 @@
 
+import 'package:gamestream_flutter/amulet/mmo_ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/item_slot.dart';
+import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'mmo_actions.dart';
 import 'mmo_render.dart';
-import 'mmo_ui.dart';
 
-class MmoGame extends IsometricGame {
+class Amulet extends IsometricGame {
 
+  late final AmuletUI amuletUI;
   final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
 
@@ -62,8 +63,9 @@ class MmoGame extends IsometricGame {
   final playerTalents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
   final playerTalentsChangedNotifier = Watch(0);
 
-  MmoGame(){
+  Amulet(){
     print('MmoGame()');
+    amuletUI = AmuletUI(this);
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     error.onChanged(onChangedError);
@@ -119,7 +121,7 @@ class MmoGame extends IsometricGame {
   }
 
   @override
-  Widget customBuildUI(BuildContext context) => buildMMOUI();
+  Widget customBuildUI(BuildContext context) => amuletUI.buildAmuletUI();
 
   @override
   void onKeyPressed(int key) {
@@ -240,7 +242,7 @@ class MmoGame extends IsometricGame {
   void selectTreasure(int index) =>
       sendMMORequest(MMORequest.Select_Treasure, index);
 
-  void showDialogCharacterCreation(){
+  void showDialogCharacterCreation() {
     ui.showDialog(child: Column(
       children: [
 

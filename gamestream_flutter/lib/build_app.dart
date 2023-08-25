@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/mmo_game.dart';
+import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
@@ -64,7 +64,7 @@ Widget buildApp(){
       options: IsometricOptions(),
       compositor: IsometricCompositor(),
       website: WebsiteGame(),
-      mmo: MmoGame(),
+      mmo: Amulet(),
       animation: IsometricAnimation(),
       screen: IsometricScreen(),
       lighting: IsometricLighting(),

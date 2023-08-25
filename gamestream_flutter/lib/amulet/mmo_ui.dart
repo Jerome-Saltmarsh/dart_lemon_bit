@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/mmo_actions.dart';
-import 'package:gamestream_flutter/amulet/mmo_game.dart';
-import 'package:gamestream_flutter/amulet/item_slot.dart';
+import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
@@ -16,7 +16,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import '../gamestream/ui/enums/icon_type.dart';
 import 'ui/src.dart';
 
-extension MMOUI on MmoGame {
+class AmuletUI {
 
   static const itemImageSize = 64.0;
   static const margin1 = 16.0;
@@ -24,8 +24,11 @@ extension MMOUI on MmoGame {
   static const margin3 = 315.0;
   static const margin4 = 560.0;
 
-  Widget buildMMOUI() {
-    return Stack(
+  final Amulet amulet;
+
+  AmuletUI(this.amulet);
+
+  Widget buildAmuletUI() => Stack(
     alignment: Alignment.center,
     children: [
       buildNpcText(),
@@ -63,18 +66,17 @@ extension MMOUI on MmoGame {
       Positioned(
           bottom: margin2,
           child: Container(
-              width: engine.screen.width,
+              width: amulet.engine.screen.width,
               alignment: Alignment.center,
               child: buildError(),
           ),
       ),
     ],
   );
-  }
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
-    return IgnorePointer(child: buildWatch(error, (error) => buildText(error, color: color)));
+    return IgnorePointer(child: buildWatch(amulet.error, (error) => buildText(error, color: color)));
   }
 
   Positioned buildNpcText() {
@@ -82,21 +84,21 @@ extension MMOUI on MmoGame {
     const width = 200.0;
     const height = width * goldenRatio_0618;
 
-    final options = buildWatch(npcOptionsReads, (t) =>
+    final options = buildWatch(amulet.npcOptionsReads, (t) =>
         Container(
           width: width,
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: npcOptions.map((option)=> onPressed(
-                action: () => selectTalkOption(npcOptions.indexOf(option)),
+              children: amulet.npcOptions.map((option)=> onPressed(
+                action: () => amulet.selectTalkOption(amulet.npcOptions.indexOf(option)),
                 child: buildText(option))).toList(growable: false)),
         ));
 
     return Positioned(
       bottom: margin1,
       child:
-      buildWatch(playerInteracting, (interacting) => !interacting ? nothing :
-      buildWatch(npcText, (npcText) => npcText.isEmpty ? nothing :
+      buildWatch(amulet.playerInteracting, (interacting) => !interacting ? nothing :
+      buildWatch(amulet.npcText, (npcText) => npcText.isEmpty ? nothing :
       GSContainer(
         width: width,
         height: height,
@@ -111,7 +113,7 @@ extension MMOUI on MmoGame {
               right: 8,
               top: 8,
               child: onPressed(
-                  action: endInteraction,
+                  action: amulet.endInteraction,
                   child: buildText('x', size: 25)),
             ),
           ],
@@ -126,7 +128,7 @@ extension MMOUI on MmoGame {
     child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(weapons.length, buildWeaponSlotAtIndex),
+          children: List.generate(amulet.weapons.length, buildWeaponSlotAtIndex),
         ),
       );
 
@@ -135,8 +137,8 @@ extension MMOUI on MmoGame {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
-                treasures.length,
-                (i) => buildItemSlot(treasures[i])
+                amulet.treasures.length,
+                (i) => buildItemSlot(amulet.treasures[i])
             )
         ),
       );
@@ -146,20 +148,20 @@ extension MMOUI on MmoGame {
     const width = 120.0;
     const height = width * goldenRatio_0381;
 
-    final healthPercentageBox = buildWatch(player.aimTargetHealthPercentage, (healthPercentage) => Container(
+    final healthPercentageBox = buildWatch(amulet.player.aimTargetHealthPercentage, (healthPercentage) => Container(
       width: width * healthPercentage,
       height: height,
-      color: colors.red_3,
+      color: amulet.colors.red_3,
     ));
 
     final name = Container(
       alignment: Alignment.centerLeft,
       height: height,
-      color: colors.brownDark,
+      color: amulet.colors.brownDark,
       width: width,
       child: Stack(
         children: [
-          buildWatch(player.aimTargetAction, (targetAction) {
+          buildWatch(amulet.player.aimTargetAction, (targetAction) {
              if (targetAction != TargetAction.Attack)
                return nothing;
 
@@ -170,7 +172,7 @@ extension MMOUI on MmoGame {
             height: height,
             alignment: Alignment.center,
             child: FittedBox(
-              child: buildWatch(player.aimTargetName, (name) => buildText(name.replaceAll('_', ' '))),
+              child: buildWatch(amulet.player.aimTargetName, (name) => buildText(name.replaceAll('_', ' '))),
             ),
           ),
         ],
@@ -180,9 +182,9 @@ extension MMOUI on MmoGame {
         top: 16,
         left: 0,
         child: Container(
-          width: engine.screen.width,
+          width: amulet.engine.screen.width,
           alignment: Alignment.center,
-          child: buildWatch(player.aimTargetSet, (t) {
+          child: buildWatch(amulet.player.aimTargetSet, (t) {
             if (!t) return nothing;
             return name;
           }),
@@ -192,7 +194,7 @@ extension MMOUI on MmoGame {
   Widget buildWeaponSlotAtIndex(int index, {double size = 64}) {
 
     final backgroundSelectedWeapon = buildWatch(
-        equippedWeaponIndex,
+        amulet.equippedWeaponIndex,
         (equippedWeaponIndex) => Positioned(
               child: GSContainer(
                 color: index == equippedWeaponIndex
@@ -204,7 +206,7 @@ extension MMOUI on MmoGame {
               ),
             ));
 
-    final backgroundActivePower = buildWatch(activatedPowerIndex, (activatedPowerIndex){
+    final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
       if (index != activatedPowerIndex)
         return nothing;
 
@@ -225,7 +227,7 @@ extension MMOUI on MmoGame {
         children: [
           backgroundSelectedWeapon,
           backgroundActivePower,
-          Positioned(child: buildItemSlot(weapons[index], color: Colors.transparent)),
+          Positioned(child: buildItemSlot(amulet.weapons[index], color: Colors.transparent)),
           Positioned(
               top: 8,
               left: 8,
@@ -237,7 +239,7 @@ extension MMOUI on MmoGame {
           Positioned(
             bottom: 8,
             right: 8,
-            child: buildWatch(weapons[index].cooldown, (cooldown) => cooldown <= 0 ? nothing: buildText(cooldown, color: Colors.red))
+            child: buildWatch(amulet.weapons[index].cooldown, (cooldown) => cooldown <= 0 ? nothing: buildText(cooldown, color: Colors.red))
           )
         ],
       ),
@@ -245,7 +247,7 @@ extension MMOUI on MmoGame {
   }
 
   buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
-      itemHover,
+      amulet.itemHover,
       (item) => item == null
           ? nothing
           : GSContainer(
@@ -304,12 +306,12 @@ extension MMOUI on MmoGame {
       children: [
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildItemSlot(items[index]),
+                amulet.items.length ~/ 2, (index) => buildItemSlot(amulet.items[index]),
                 growable: false)
         ),
         Column(
             children: List.generate(
-                items.length ~/ 2, (index) => buildItemSlot(items[index + (items.length ~/ 2)]),
+                amulet.items.length ~/ 2, (index) => buildItemSlot(amulet.items[index + (amulet.items.length ~/ 2)]),
                 growable: false)
         ),
       ],
@@ -335,19 +337,19 @@ extension MMOUI on MmoGame {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildItemSlot(equippedHelm),
-        buildItemSlot(equippedBody),
-        buildItemSlot(equippedLegs),
-        buildItemSlot(equippedHandLeft),
-        buildItemSlot(equippedHandRight),
+        buildItemSlot(amulet.equippedHelm),
+        buildItemSlot(amulet.equippedBody),
+        buildItemSlot(amulet.equippedLegs),
+        buildItemSlot(amulet.equippedHandLeft),
+        buildItemSlot(amulet.equippedHandRight),
       ],),
   );
 
   Widget buildTalentPointsRemaining() =>
       buildWatch(
-      playerTalentPoints,
+          amulet.playerTalentPoints,
       (skillPoints) => onPressed(
-          action: toggleTalentsDialog,
+          action: amulet.toggleTalentsDialog,
           child: GSContainer(
               child: buildText('Talents $skillPoints',
                   color: skillPoints > 0 ? Colors.green : Colors.white70))));
@@ -357,9 +359,9 @@ extension MMOUI on MmoGame {
     const height = 40.0;
      return Tooltip(
        message: 'Health',
-       child: buildWatch(player.maxHealth, (maxHealth) {
+       child: buildWatch(amulet.player.maxHealth, (maxHealth) {
          if (maxHealth == 0) return nothing;
-         return buildWatch(player.health, (health) {
+         return buildWatch(amulet.player.health, (health) {
            return Container(
              width: width,
              height: height,
@@ -368,7 +370,7 @@ extension MMOUI on MmoGame {
                  Container(
                    width: width,
                    height: height,
-                   color: style.containerColor,
+                   color: amulet.style.containerColor,
                  ),
                  Container(
                    width: width * (health / maxHealth),
@@ -394,7 +396,7 @@ extension MMOUI on MmoGame {
         width: size * goldenRatio_1618,
         height: size,
         rounded: true,
-        child: buildWatch(playerLevel, (level) => buildText('Lvl $level', color: Colors.white70))
+        child: buildWatch(amulet.playerLevel, (level) => buildText('Lvl $level', color: Colors.white70))
       );
 
   Widget buildPlayerExperienceBar({double width = 150, double height = 30}) => Tooltip(
@@ -409,9 +411,9 @@ extension MMOUI on MmoGame {
             child: Container(
               color: Colors.transparent,
               child: buildWatch(
-                      playerExperienceRequired,
+                  amulet.playerExperienceRequired,
                       (experienceRequired) =>
-                          buildWatch(playerExperience, (experience) {
+                          buildWatch(amulet.playerExperience, (experience) {
                             if (experienceRequired <= 0) return nothing;
 
                             final percentage =
@@ -425,12 +427,12 @@ extension MMOUI on MmoGame {
   );
 
   Widget buildTalent(MMOTalentType talentType){
-    final currentLevel = getTalentLevel(talentType);
+    final currentLevel = amulet.getTalentLevel(talentType);
     final nextLevel = currentLevel + 1;
     final maxLevel = talentType.maxLevel;
     final maxLevelReached = currentLevel >= maxLevel;
     final cost = nextLevel * talentType.levelCostMultiplier;
-    final talentPoints = playerTalentPoints.value;
+    final talentPoints = amulet.playerTalentPoints.value;
     final canUpgrade = currentLevel < maxLevel && cost <= talentPoints;
     final canAfford = cost <= talentPoints;
 
@@ -439,11 +441,11 @@ extension MMOUI on MmoGame {
 
     return MouseRegion(
       onEnter: (_){
-        talentHover.value = talentType;
+        amulet.talentHover.value = talentType;
       },
       onExit: (_){
-        if (talentHover.value == talentType){
-          talentHover.value = null;
+        if (amulet.talentHover.value == talentType){
+          amulet.talentHover.value = null;
         }
       },
       child: GSContainer(
@@ -452,7 +454,7 @@ extension MMOUI on MmoGame {
         padding: null,
         rounded: true,
         child: onPressed(
-          action: canUpgrade ? () => upgradeTalent(talentType) : null,
+          action: canUpgrade ? () => amulet.upgradeTalent(talentType) : null,
           child: Container(
             padding: const EdgeInsets.all(4),
             width: 200,
@@ -533,7 +535,7 @@ extension MMOUI on MmoGame {
     final iconOpen = IsometricIcon(iconType: IconType.Inventory_Open, scale: scale,);
     final iconClosed = IsometricIcon(iconType: IconType.Inventory_Closed, scale: scale,);
     return onPressed(
-        action: toggleInventoryOpen,
+        action: amulet.toggleInventoryOpen,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -541,7 +543,7 @@ extension MMOUI on MmoGame {
               child: GSContainer(
                 width: itemImageSize,
                 height: itemImageSize,
-                child: buildWatch(playerInventoryOpen, (inventoryOpen) =>
+                child: buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
                     inventoryOpen ? iconOpen : iconClosed)
               ),
             ),
@@ -560,18 +562,18 @@ extension MMOUI on MmoGame {
     child: buildWatch(
         slot.item,
         (item) =>
-            buildWatch(dragging, (dragging) => DragTarget(
+            buildWatch(amulet.dragging, (dragging) => DragTarget(
               onWillAccept: (value) => true,
               onAccept: (value) {
                 if (value is! ItemSlot) return;
-                reportItemSlotDragged(src: value, target: slot);
+                amulet.reportItemSlotDragged(src: value, target: slot);
               },
               builder: (context, data, rejectData) => Container(
                   width: 64.0,
                   height: 64.0,
                   color: dragging != null && slot.acceptsDragFrom(dragging)
-                      ? colors.teal_4
-                      : (color ?? colors.brown_3),
+                      ? amulet.colors.teal_4
+                      : (color ?? amulet.colors.brown_3),
                   alignment: Alignment.center,
                   child: item == null
                       ? nothing
@@ -579,18 +581,18 @@ extension MMOUI on MmoGame {
                     data: slot,
                     feedback: MMOItemImage(item: item, size: 64),
                     onDragStarted: () {
-                      this.dragging.value = slot;
+                      this.amulet.dragging.value = slot;
                     },
                     onDragEnd: (details) {
-                      if (engine.mouseOverCanvas){
-                        dropItemSlot(slot);
+                      if (amulet.engine.mouseOverCanvas){
+                        amulet.dropItemSlot(slot);
                       }
-                      this.dragging.value = null;
+                      this.amulet.dragging.value = null;
                     },
                     child: onPressed(
                       onRightClick: () =>
-                          dropItemSlot(slot),
-                      action: () => reportItemSlotLeftClicked(slot),
+                          amulet.dropItemSlot(slot),
+                      action: () => amulet.reportItemSlotLeftClicked(slot),
                       child: MMOItemImage(item: item, size: 64),
                     ),
                   ),
@@ -598,4 +600,99 @@ extension MMOUI on MmoGame {
             ))
            ),
   );
+
+
+  Widget buildButtonClose({required Function action}) => onPressed(child: Container(
+      width: 80,
+      height: 80 * goldenRatio_0381,
+      alignment: Alignment.center,
+      color: Colors.black26,
+      child: buildText('x', color: Colors.white70, size: 22)
+  ), action: action
+  );
+
+  Widget buildDialogTitle(String text) =>
+      buildText(text, size: 28.0, color: Colors.white70);
+
+  Widget buildDialogPlayerInventory(){
+
+    final dialog = GSContainer(
+      rounded: true,
+      width: 340,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  margin: const EdgeInsets.only(left: 5),
+                  child: buildDialogTitle('INVENTORY')),
+              buildButtonClose(action: amulet.toggleInventoryOpen),
+            ],
+          ),
+          height16,
+          buildPlayerTreasures(),
+          height16,
+          Row(
+            children: [
+              buildPlayerEquipped(),
+              width16,
+              buildPlayerItems(),
+            ],
+          )
+        ],),
+    );
+
+    final inventoryButton = buildInventoryButton();
+
+    return buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
+    inventoryOpen ? dialog : inventoryButton);
+  }
+
+  Widget buildDialogPlayerTalents() {
+    return buildWatch(
+        amulet.playerTalentsChangedNotifier,
+            (_) {
+
+          final dialog = GSContainer(
+            width: 500,
+            rounded: true,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: buildDialogTitle('TALENTS ${amulet.playerTalentPoints.value}')
+                    ),
+                    buildButtonClose(action: amulet.toggleTalentsDialog),
+                  ],
+                ),
+                GSContainer(
+                    height: amulet.engine.screen.height - 270,
+                    alignment: Alignment.topLeft,
+                    child: GridView.count(
+                        crossAxisCount: 4,
+                        children: MMOTalentType.values
+                            .map(buildTalent)
+                            .toList(growable: false))),
+              ],
+            ),
+          );
+
+          return buildWatch(amulet.playerTalentDialogOpen,
+                  (playersDialogOpen) => !playersDialogOpen ? nothing : dialog);
+        });
+  }
+
+  Widget buildTalentHoverDialog() => buildWatch(
+      amulet.talentHover,
+          (talentType) => talentType == null
+          ? nothing
+          : GSContainer(
+        child: buildText(talentType.name),
+      ));
 }

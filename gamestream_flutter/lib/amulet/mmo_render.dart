@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/mmo_game.dart';
+import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/packages/common/src/mmo/mmo_item.dart';
 import 'package:gamestream_flutter/packages/common/src/mmo/power_mode.dart';
 
-extension MMORender on MmoGame {
+extension MMORender on Amulet {
 
   void renderMMO(Canvas canvas, Size size) {
     renderPlayerHoverItemRange();
