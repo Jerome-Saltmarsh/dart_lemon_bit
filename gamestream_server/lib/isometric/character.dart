@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/isometric/isometric_game.dart';
+import 'package:gamestream_server/lemon_bits/src/compress_bytes_to_uint32.dart';
 import 'package:gamestream_server/lemon_math.dart';
 
 import 'collider.dart';
-import 'position.dart';
 import 'isometric_settings.dart';
+import 'position.dart';
 
 class Character extends Collider {
 

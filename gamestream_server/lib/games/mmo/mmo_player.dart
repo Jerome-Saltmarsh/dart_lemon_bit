@@ -9,6 +9,18 @@ class AmuletPlayer extends IsometricPlayer {
 
   final Amulet game;
 
+  var _dialogVisibleCreateCharacter = false;
+
+  bool get dialogVisibleCreateCharacter => _dialogVisibleCreateCharacter;
+
+  set dialogVisibleCreateCharacter(bool value){
+    if (_dialogVisibleCreateCharacter == value){
+      return;
+    }
+
+
+  }
+
   var equipmentDirty = true;
   var activePowerX = 0.0;
   var activePowerY = 0.0;

@@ -19,8 +19,6 @@ class IsometricDebug with IsometricComponent {
   final healthMax = Watch(0);
   final radius = Watch(0);
   final position = Position();
-  final characterSelectedAIDecision = Watch(CaptureTheFlagAIDecision.Idle);
-  final characterSelectedAIRole = Watch(CaptureTheFlagAIRole.Defense);
   final destinationX = Watch(0.0);
   final destinationY = Watch(0.0);
   final x = Watch(0.0);

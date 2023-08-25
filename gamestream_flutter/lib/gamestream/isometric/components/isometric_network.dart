@@ -7,9 +7,16 @@ import 'package:gamestream_flutter/packages/common/src/isometric/isometric_reque
 import 'package:gamestream_flutter/packages/common/src/network/network_request.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 
+import 'classes/send_amulet_request.dart';
+
 class IsometricNetwork with IsometricComponent {
 
   late final WebsocketClient websocket;
+  late final SendAmuletRequest sendAmuletRequest;
+
+  IsometricNetwork(){
+    sendAmuletRequest = SendAmuletRequest(this);
+  }
 
   @override
   Future onComponentInit(sharedPreferences) async {
@@ -139,3 +146,4 @@ class IsometricNetwork with IsometricComponent {
     websocket.disconnect();
   }
 }
+

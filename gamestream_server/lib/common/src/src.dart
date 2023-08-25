@@ -1,11 +1,8 @@
 library src;
 
-export 'capture_the_flag/src.dart';
 export 'isometric/src.dart';
-export 'isometric_editor/src.dart';
-export 'moba/src.dart';
-export 'mmo/src.dart';
-export 'rock_paper_scissors/src.dart';
+export 'amulet/src.dart';
+export 'editor/src.dart';
 export 'input_type.dart';
 export 'api_player.dart';
 export 'byte_hex.dart';

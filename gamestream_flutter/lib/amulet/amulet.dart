@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/amulet/mmo_ui.dart';
+import 'package:gamestream_flutter/amulet/amulet_ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -9,12 +9,13 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.d
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'mmo_actions.dart';
 import 'mmo_render.dart';
 
 class Amulet extends IsometricGame {
 
+  // late final AmuletActions amuletNetwork;
   late final AmuletUI amuletUI;
+
   final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
 
@@ -65,10 +66,15 @@ class Amulet extends IsometricGame {
 
   Amulet(){
     print('MmoGame()');
-    amuletUI = AmuletUI(this);
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     error.onChanged(onChangedError);
+  }
+
+  @override
+  void onComponentReady() {
+    amuletUI = AmuletUI(this);
+    // amuletNetwork = AmuletActions(network);
   }
 
   void onChangedError(String value){
@@ -128,7 +134,7 @@ class Amulet extends IsometricGame {
     super.onKeyPressed(key);
 
     if (key == KeyCode.Q){
-      toggleInventoryOpen();
+      network.sendAmuletRequest.toggleInventoryOpen();
       return;
     }
     if (key == KeyCode.W){
@@ -160,7 +166,7 @@ class Amulet extends IsometricGame {
       return;
     }
     if (key == KeyCode.T){
-      toggleTalentsDialog();
+      network.sendAmuletRequest.toggleTalentsDialog();
       return;
     }
   }
@@ -234,13 +240,13 @@ class Amulet extends IsometricGame {
     );
 
   void selectWeapon(int index) =>
-      sendMMORequest(MMORequest.Select_Weapon, index);
+      network.sendAmuletRequest.sendAmuletRequest(MMORequest.Select_Weapon, index);
 
   void selectItem(int index) =>
-      sendMMORequest(MMORequest.Select_Item, index);
+      network.sendAmuletRequest.sendAmuletRequest(MMORequest.Select_Item, index);
 
   void selectTreasure(int index) =>
-      sendMMORequest(MMORequest.Select_Treasure, index);
+      network.sendAmuletRequest.sendAmuletRequest(MMORequest.Select_Treasure, index);
 
   void showDialogCharacterCreation() {
     ui.showDialog(child: Column(

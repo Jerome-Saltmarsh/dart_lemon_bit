@@ -2,8 +2,9 @@
 import 'dart:typed_data';
 
 
-import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/lemon_bits/src/compress_bytes_to_uint32.dart';
+import 'package:gamestream_server/lemon_bits/src/write_bits_to_byte.dart';
 import 'package:gamestream_server/utils.dart';
 
 import 'package:gamestream_server/core/player.dart';
@@ -19,7 +20,6 @@ import 'isometric_game.dart';
 import 'character.dart';
 import 'gameobject.dart';
 import 'position.dart';
-import 'power.dart';
 import 'projectile.dart';
 import 'scene.dart';
 import 'scene_writer.dart';
@@ -29,9 +29,6 @@ import 'isometric_settings.dart';
 class IsometricPlayer extends Character with ByteWriter implements Player {
 
   static const Cache_Length = 100;
-
-  /// The power the user has selected but must still caste
-  late final powerActivated = ChangeNotifier<Power?>(null, onActivatedPowerChanged);
 
   var _cacheAimTargetHealthPercentage = 0.0;
   var _debugging = false;
@@ -1172,26 +1169,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void toggleDebugging() {
     debugging = !debugging;
-  }
-
-  void writePower(Power power) {
-    writeByte(power.type.index);
-    writeUInt16(power.cooldown);
-    writeUInt16(power.cooldownRemaining);
-    // writeBool(powerActivated.value == power);
-    writeByte(power.level);
-  }
-
-  void onActivatedPowerChanged(Power? value){
-    // writeByte(NetworkResponse.Capture_The_Flag);
-    // writeByte(CaptureTheFlagResponse.Activated_Power);
-    // if (value == null) {
-    //   writeBool(false);
-    //   return;
-    // }
-    // writeBool(true);
-    // writeByte(value.type.index);
-    // writeUInt16(value.range.toInt());
   }
 
   void writePlayerControls(){

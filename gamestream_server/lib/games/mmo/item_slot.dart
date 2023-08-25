@@ -1,6 +1,5 @@
 
 import 'package:gamestream_server/common.dart';
-import 'package:gamestream_server/common/src/mmo/mmo_item.dart';
 
 class ItemSlot {
   MMOItem? item;

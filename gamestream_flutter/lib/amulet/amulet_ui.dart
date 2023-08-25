@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/mmo_actions.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
@@ -90,7 +89,7 @@ class AmuletUI {
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: amulet.npcOptions.map((option)=> onPressed(
-                action: () => amulet.selectTalkOption(amulet.npcOptions.indexOf(option)),
+                action: () => amulet.network.sendAmuletRequest.selectTalkOption(amulet.npcOptions.indexOf(option)),
                 child: buildText(option))).toList(growable: false)),
         ));
 
@@ -113,7 +112,7 @@ class AmuletUI {
               right: 8,
               top: 8,
               child: onPressed(
-                  action: amulet.endInteraction,
+                  action: amulet.network.sendAmuletRequest.endInteraction,
                   child: buildText('x', size: 25)),
             ),
           ],
@@ -349,7 +348,7 @@ class AmuletUI {
       buildWatch(
           amulet.playerTalentPoints,
       (skillPoints) => onPressed(
-          action: amulet.toggleTalentsDialog,
+          action: amulet.network.sendAmuletRequest.toggleTalentsDialog,
           child: GSContainer(
               child: buildText('Talents $skillPoints',
                   color: skillPoints > 0 ? Colors.green : Colors.white70))));
@@ -454,7 +453,7 @@ class AmuletUI {
         padding: null,
         rounded: true,
         child: onPressed(
-          action: canUpgrade ? () => amulet.upgradeTalent(talentType) : null,
+          action: canUpgrade ? () => amulet.network.sendAmuletRequest.upgradeTalent(talentType) : null,
           child: Container(
             padding: const EdgeInsets.all(4),
             width: 200,
@@ -535,7 +534,7 @@ class AmuletUI {
     final iconOpen = IsometricIcon(iconType: IconType.Inventory_Open, scale: scale,);
     final iconClosed = IsometricIcon(iconType: IconType.Inventory_Closed, scale: scale,);
     return onPressed(
-        action: amulet.toggleInventoryOpen,
+        action: amulet.network.sendAmuletRequest.toggleInventoryOpen,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -629,7 +628,7 @@ class AmuletUI {
               Container(
                   margin: const EdgeInsets.only(left: 5),
                   child: buildDialogTitle('INVENTORY')),
-              buildButtonClose(action: amulet.toggleInventoryOpen),
+              buildButtonClose(action: amulet.network.sendAmuletRequest.toggleInventoryOpen),
             ],
           ),
           height16,
@@ -668,7 +667,7 @@ class AmuletUI {
                         margin: EdgeInsets.only(left: 20),
                         child: buildDialogTitle('TALENTS ${amulet.playerTalentPoints.value}')
                     ),
-                    buildButtonClose(action: amulet.toggleTalentsDialog),
+                    buildButtonClose(action: amulet.network.sendAmuletRequest.toggleTalentsDialog),
                   ],
                 ),
                 GSContainer(

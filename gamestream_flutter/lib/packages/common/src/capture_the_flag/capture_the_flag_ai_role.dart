@@ -1,5 +1,0 @@
-enum CaptureTheFlagAIRole {
-  Defense,
-  Offense,
-}
-

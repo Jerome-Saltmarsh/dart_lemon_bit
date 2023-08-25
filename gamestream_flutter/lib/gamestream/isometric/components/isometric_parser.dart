@@ -692,10 +692,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     return valueMap;
   }
 
-  CaptureTheFlagAIDecision readCaptureTheFlagAIDecision() => CaptureTheFlagAIDecision.values[readByte()];
-
-  CaptureTheFlagAIRole readCaptureTheFlagAIRole() => CaptureTheFlagAIRole.values[readByte()];
-
   void parseServerResponseScene() {
     switch (readByte()){
       case SceneResponse.Marks:
