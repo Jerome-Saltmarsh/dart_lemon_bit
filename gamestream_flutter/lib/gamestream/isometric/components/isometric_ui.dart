@@ -405,21 +405,40 @@ class IsometricUI with IsometricComponent {
     required Function(String value) onSelected,
     String text = '',
   }) {
+    engine.disableKeyEventHandler();
     final controller = TextEditingController(text: text);
-    dialog.value = GSContainer(
-      width: 300,
-      height: 200,
-      child: Column(
-        children: [
-          TextField(controller: controller),
-          onPressed(
-            action: () {
-              onSelected(controller.text);
-              closeDialog();
-            },
-            child: buildText('OKAY'),
-          ),
-        ],
+    dialog.value = OnDisposed(
+      onDisposed: engine.enableKeyEventHandler,
+      child: GSContainer(
+        width: 300,
+        height: 200,
+        child: Column(
+          children: [
+            Container(
+              height: 80,
+              width: 150,
+              child: StatefulBuilder(builder: (context, setState) =>
+                  TextField(
+                    style: TextStyle(color: Colors.white70),
+                  // controller: controller,
+                  onChanged: (value) {
+                    print('onChanged($value)');
+                    controller.text = value;
+                    setState(() {
+                    });
+                  },
+                )),
+            ),
+            onPressed(
+              action: () {
+                onSelected(controller.text);
+                controller.dispose();
+                closeDialog();
+              },
+              child: buildText('OKAY'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -12,12 +12,13 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- set player name
+- player persistence
 - player creation dialog
 - kid hair type
 - kid hair color
 - kid state caste
 - kid state hurt
-- set player name
 - kid shoe type
 - stash
 - store

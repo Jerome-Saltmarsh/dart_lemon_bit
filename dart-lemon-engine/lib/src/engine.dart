@@ -531,6 +531,14 @@ class Engine extends StatelessWidget {
 
   var _initCallAmount = 0;
 
+  void enableKeyEventHandler(){
+    SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
+  }
+
+  void disableKeyEventHandler(){
+    SystemChannels.keyEvent.setMessageHandler(null);
+  }
+
   Future _internalInit() async {
     _initCallAmount++;
     print("engine.internalInit()");
@@ -538,7 +546,7 @@ class Engine extends StatelessWidget {
       print('engine - warning init called ${_initCallAmount}');
       return;
     }
-    SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
+    enableKeyEventHandler();
     _bufferImage = await _generateEmptyImage();
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;

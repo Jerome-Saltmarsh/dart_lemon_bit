@@ -561,10 +561,9 @@ extension isometricDebugUI on IsometricDebug {
             action: player.changeName,
             child: buildRowWatch('name', player.name, (value){
               return Container(
-                width: 50,
-                height: 50,
-                color: Colors.blue,
-              );
+                  width: 100,
+                  height: 50,
+                  child: buildText(value));
             }),
           ),
         ],
