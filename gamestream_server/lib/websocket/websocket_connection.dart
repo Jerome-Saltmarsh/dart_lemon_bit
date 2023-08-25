@@ -313,7 +313,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case NetworkRequest.Player:
-        handlePlayerRequest();
+        handlePlayerRequest(arguments);
         break;
 
       case NetworkRequest.Inventory_Request:
@@ -793,7 +793,7 @@ class WebSocketConnection with ByteReader {
 
   }
 
-  void handlePlayerRequest() {
+  void handlePlayerRequest(List<String> arguments) {
     if (_player is! IsometricPlayer) {
       return;
     }
@@ -816,6 +816,12 @@ class WebSocketConnection with ByteReader {
           return;
         }
         player.complexion = value;
+        break;
+      case PlayerRequest.setName:
+        if (arguments.length <= 1){
+          return;
+        }
+        player.name = arguments[1];
         break;
     }
   }

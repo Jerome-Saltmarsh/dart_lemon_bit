@@ -401,6 +401,28 @@ class IsometricUI with IsometricComponent {
             srcHeight: src[Atlas.SrcHeight],
           ));
 
+  void showDialogGetString({
+    required Function(String value) onSelected,
+    String text = '',
+  }) {
+    final controller = TextEditingController(text: text);
+    dialog.value = GSContainer(
+      width: 300,
+      height: 200,
+      child: Column(
+        children: [
+          TextField(controller: controller),
+          onPressed(
+            action: () {
+              onSelected(controller.text);
+              closeDialog();
+            },
+            child: buildText('OKAY'),
+          ),
+        ],
+      ),
+    );
+  }
 
   void showDialogGetColor({
     required Function(Color color) onSelected

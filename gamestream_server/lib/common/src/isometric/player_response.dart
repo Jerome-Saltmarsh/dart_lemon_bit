@@ -8,4 +8,5 @@ class PlayerResponse {
   static const Aim_Target_Health = 5;
   static const Aim_Target_Action = 6;
   static const Complexion = 7;
+  static const Name = 8;
 }

@@ -26,7 +26,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   var runZ = 0.0;
   var areaNodeIndex = 0;
 
-  late final debugging = Watch(false, onChanged: onChangedDebugging);
+  final name = Watch('');
   final runToDestinationEnabled = Watch(false);
   final arrivedAtDestination = Watch(false);
   final aimTargetSet = Watch(false);
@@ -70,14 +70,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   late final active = Watch(false);
   late final alive = Watch(true);
   late final weapon = Watch(0);
-
-  IsometricPlayer(){
-    bodyType.onChanged((t) {
-      print('player.onChangedBodyType(${BodyType.getName(t)}');
-    });
-
-    // aimTargetAction.onChanged(onChangedAimTargetAction);
-  }
+  late final debugging = Watch(false, onChanged: onChangedDebugging);
 
   double get x => position.x;
   double get y => position.y;
@@ -189,6 +182,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case PlayerResponse.Complexion:
         complexion.value = parser.readByte();
         break;
+      case PlayerResponse.Name:
+        name.value = parser.readString();
+        break;
       case PlayerResponse.Aim_Target_Health:
         aimTargetHealthPercentage.value = parser.readPercentage();
         break;
@@ -218,11 +214,22 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     helmType.value = parser.readByte();
   }
 
-  void selectComplexion() => ui.showDialogGetColor(
-        onSelected: requestSetComplexion
+  void changeComplexion() => ui.showDialogGetColor(
+        onSelected: sendRequestSetComplexion
     );
 
-  void requestSetComplexion(Color color) {
+  void changeName() =>
+      ui.showDialogGetString(onSelected: sendRequestSetName);
+
+  void sendRequestSetName(String name){
+    network.sendRequest(
+      NetworkRequest.Player,
+      PlayerRequest.setName.index,
+      name,
+    );
+  }
+
+  void sendRequestSetComplexion(Color color) {
     final index = colors.palette.indexOf(color);
     if (index == -1) {
       return;

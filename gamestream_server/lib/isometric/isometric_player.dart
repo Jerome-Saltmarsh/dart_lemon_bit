@@ -52,7 +52,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var framesSinceClientRequest = 0;
-  var name = generateRandomName();
   var sceneDownloaded = false;
   var initialized = false;
   var id = 0;
@@ -1239,6 +1238,25 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   @override
+  set complexion(int value) {
+    if (complexion == value || value < 0 || value > 64)
+      return;
+
+    super.complexion = value;
+    writePlayerComplexion(value);
+  }
+
+  @override
+  set name(String value) {
+    if (name == value){
+      return;
+    }
+    super.name = value;
+    writePlayerName();
+  }
+
+
+  @override
   set helmType(int value) {
     if (helmType == value)
       return;
@@ -1325,18 +1343,15 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   writeClampUInt16(int value) => writeUInt16(value.clamp(0, 65535));
 
-  @override
-  set complexion(int value) {
-    if (complexion == value || value < 0 || value > 64)
-      return;
-
-    super.complexion = value;
-    writePlayerComplexion(value);
-  }
-
   void writePlayerComplexion(int value) {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.Complexion);
     writeByte(value);
+  }
+
+  void writePlayerName() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.Name);
+    writeString(name);
   }
 }

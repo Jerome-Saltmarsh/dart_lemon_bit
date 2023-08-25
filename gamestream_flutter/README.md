@@ -12,16 +12,21 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- player creation dialog
+- kid hair type
+- kid hair color
 - kid state caste
 - kid state hurt
-- kid complexion dark
-- kid hair type
+- set player name
 - kid shoe type
 - stash
 - store
 - fix render nodes corner and bottom
 - fix set node light source refresh
 - player attributes dialog
+
+25.08.2023
+- change player complexion
 
 19.08.2023
 - inventory item draggable

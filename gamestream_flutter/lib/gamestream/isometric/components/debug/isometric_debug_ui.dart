@@ -550,8 +550,22 @@ extension isometricDebugUI on IsometricDebug {
           buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
           buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),
           onPressed(
-            action: player.selectComplexion,
-            child: buildRowWatch('complexion', player.complexion, buildText),
+            action: player.changeComplexion,
+            child: buildRowWatch('complexion', player.complexion, (complexion) => Container(
+                width: 50,
+                height: 50,
+                color: colors.palette[complexion],
+              )),
+          ),
+          onPressed(
+            action: player.changeName,
+            child: buildRowWatch('name', player.name, (value){
+              return Container(
+                width: 50,
+                height: 50,
+                color: Colors.blue,
+              );
+            }),
           ),
         ],
       );
