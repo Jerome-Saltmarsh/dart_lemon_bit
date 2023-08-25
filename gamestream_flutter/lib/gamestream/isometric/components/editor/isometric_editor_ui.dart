@@ -591,7 +591,7 @@ extension IsometricEditorUI on IsometricEditor {
             message: '$i - ${convertHourToString(i)}',
             child: buildButton(
               width: buttonWidth,
-              color: colors.orange,
+              color: colors.orange_0,
               action: () => network.sendIsometricRequestTimeSetHour(i),
             ),
           ),

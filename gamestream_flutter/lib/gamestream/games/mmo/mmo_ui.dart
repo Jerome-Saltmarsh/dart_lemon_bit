@@ -144,7 +144,7 @@ extension MMOUI on MmoGame {
     final healthPercentageBox = buildWatch(player.aimTargetHealthPercentage, (healthPercentage) => Container(
       width: width * healthPercentage,
       height: height,
-      color: colors.red1,
+      color: colors.red_3,
     ));
 
     final name = Container(
