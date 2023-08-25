@@ -1,5 +1,4 @@
-import 'package:gamestream_server/common/src/requests/inventory_request.dart';
-import 'package:gamestream_server/common/src/types/slot_type.dart';
+import 'package:gamestream_server/common.dart';
 import 'package:gamestream_server/utils/is_valid_index.dart';
 
 import 'mmo_player.dart';
