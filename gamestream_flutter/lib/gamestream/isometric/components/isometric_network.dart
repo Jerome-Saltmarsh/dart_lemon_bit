@@ -1,12 +1,11 @@
 
-import 'package:gamestream_flutter/common/src/client_request.dart';
-import 'package:gamestream_flutter/common/src/game_type.dart';
-import 'package:gamestream_flutter/common/src/isometric/isometric_request.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/convert_http_to_wss.dart';
 import 'package:gamestream_flutter/lemon_websocket_client/websocket_client.dart';
+
+import '../../../common.dart';
 
 class IsometricNetwork with IsometricComponent {
 
@@ -56,24 +55,6 @@ class IsometricNetwork with IsometricComponent {
   void sendIsometricRequestEditorLoadGame(String name) =>
       sendIsometricRequest(IsometricRequest.Editor_Load_Game, name);
 
-  void sendIsometricRequestMoveSelectedColliderToMouse() =>
-      sendIsometricRequest(IsometricRequest.Move_Selected_Collider_To_Mouse);
-
-  void sendIsometricRequestDebugCharacterWalkToMouse() =>
-      sendIsometricRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
-
-  void sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies() =>
-      sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
-
-  void sendIsometricRequestDebugCharacterTogglePathFindingEnabled() =>
-      sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
-
-  void sendIsometricRequestDebugCharacterToggleRunToDestination() =>
-      sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Run_To_Destination);
-
-  void sendIsometricRequestDebugCharacterDebugUpdate() =>
-      sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
-
   void sendIsometricRequestSelectGameObject(GameObject gameObject) =>
       sendIsometricRequest(IsometricRequest.Select_GameObject, '${gameObject.id}');
 
@@ -102,7 +83,10 @@ class IsometricNetwork with IsometricComponent {
       sendIsometricRequest(IsometricRequest.Toggle_Debugging);
 
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
-      send(ClientRequest.Isometric, '${request.index} $message');
+      send(NetworkRequest.Isometric, '${request.index} $message');
+
+  void request(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>
+    websocket.send('$requestType $a $b $c $d'.trim());
 
   void send(int clientRequest, [dynamic message]) =>
       message != null
@@ -134,7 +118,7 @@ class IsometricNetwork with IsometricComponent {
   }
 
   void connectToServer(String uri, String message) {
-    websocket.connect(uri: uri, message: '${ClientRequest.Join} $message');
+    websocket.connect(uri: uri, message: '${NetworkRequest.Join} $message');
   }
 
   void connectToGame(GameType gameType, [String message = '']) {

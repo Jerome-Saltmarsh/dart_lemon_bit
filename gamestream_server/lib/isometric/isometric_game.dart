@@ -831,7 +831,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void sortGameObjects(){
-    playersWriteByte(ServerResponse.Sort_GameObjects);
+    playersWriteByte(NetworkResponse.Sort_GameObjects);
     gameObjects.sort();
   }
 
@@ -1292,7 +1292,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       instance.active = false;
       gameObjects.remove(instance);
       for (final player in players) {
-        player.writeUInt8(ServerResponse.GameObject_Deleted);
+        player.writeUInt8(NetworkResponse.GameObject_Deleted);
         player.writeUInt16(instance.id);
       }
       return;

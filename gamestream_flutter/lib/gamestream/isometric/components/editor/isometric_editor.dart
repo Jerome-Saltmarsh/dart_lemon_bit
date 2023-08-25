@@ -558,7 +558,7 @@ class IsometricEditor with IsometricComponent {
 
   void sendEditorRequest(EditorRequest request, [dynamic message]) =>
       network.send(
-        ClientRequest.Editor_Request,
+        NetworkRequest.Editor_Request,
         '${request.index} $message',
       );
 
@@ -604,27 +604,27 @@ class IsometricEditor with IsometricComponent {
 
   void markAdd(int value) =>
       network.sendArgs2(
-        ClientRequest.Editor_Request,
+        NetworkRequest.Editor_Request,
         EditorRequest.Mark_Add.index,
         value,
       );
 
   void markDelete() =>
       network.send(
-        ClientRequest.Editor_Request,
+        NetworkRequest.Editor_Request,
         EditorRequest.Mark_Delete.index,
       );
 
   void markSelect(int index) =>
       network.sendArgs2(
-        ClientRequest.Editor_Request,
+        NetworkRequest.Editor_Request,
         EditorRequest.Mark_Select.index,
         index,
       );
 
   void markSetType(int markType) =>
       network.sendArgs2(
-        ClientRequest.Editor_Request,
+        NetworkRequest.Editor_Request,
         EditorRequest.Mark_Set_Type.index,
         markType,
       );

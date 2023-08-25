@@ -5,8 +5,7 @@ import 'package:lemon_math/src.dart';
 class Character extends Position {
   var characterType = CharacterType.Template;
   var weaponType = WeaponType.Unarmed;
-  var weaponState = 0;
-  var complexionType = ComplexionType.Fair;
+  var complexion = 0;
   var bodyType = 0;
   var headType = 0;
   var legType = 0;
@@ -22,12 +21,8 @@ class Character extends Position {
   /// percentage between 0 and 1
   var health = 1.0;
   /// percentage between 0 and 1
-  var magic = 1.0;
-  var lookDirection = 0;
   var color = 0;
   var actionComplete = 0.0;
-
-  double get radius => CharacterType.getRadius(characterType);
 
   bool get dead => state == CharacterState.Dead;
 
@@ -35,23 +30,7 @@ class Character extends Position {
 
   bool get running => state == CharacterState.Running;
 
-  bool get striking => state == CharacterState.Strike;
-
-  bool get firing => state == CharacterState.Fire;
-
-  bool get performing => state == CharacterState.Strike;
-
-  bool get hurt => state == CharacterState.Hurt;
-
-  bool get alive => !dead;
-
-  bool get unarmed => weaponType == WeaponType.Unarmed;
-
-  bool get weaponTypeIsShotgun => weaponType == WeaponType.Shotgun;
-
   int get renderDirection => (direction - 1) % 8;
-
-  int get renderLookDirection => (lookDirection - 1) % 8;
 
   double get angle => direction * piQuarter;
 

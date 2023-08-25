@@ -10,13 +10,13 @@ extension CaptureTheFlagActions on CaptureTheFlagGame {
 
   void selectCharacterClass(CaptureTheFlagCharacterClass value) =>
       network.send(
-          ClientRequest.Capture_The_Flag,
+          NetworkRequest.Capture_The_Flag,
           '${CaptureTheFlagRequest.selectClass.index} ${value.index}'
       );
 
   void toggleSelectedCharacterAIRole() =>
       network.send(
-          ClientRequest.Capture_The_Flag,
+          NetworkRequest.Capture_The_Flag,
           CaptureTheFlagRequest.toggleSelectedAIRole.index
       );
 
@@ -26,13 +26,13 @@ extension CaptureTheFlagActions on CaptureTheFlagGame {
 
   void upgradePower(CaptureTheFlagPower power) =>
       network.send(
-          ClientRequest.Capture_The_Flag,
+          NetworkRequest.Capture_The_Flag,
           '${CaptureTheFlagRequest.Upgrade_Power.index} ${power.type.value.index}'
       );
 
   void sendCaptureTheFlagRequest(CaptureTheFlagRequest value, [dynamic message]){
     network.send(
-        ClientRequest.Capture_The_Flag,
+        NetworkRequest.Capture_The_Flag,
         '${value.index} $message'
     );
   }

@@ -20,7 +20,7 @@ extension MMOActions on MmoGame {
 
   void sendMMORequest(MMORequest request, [dynamic message]) =>
       network.send(
-          ClientRequest.MMO,
+          NetworkRequest.MMO,
           '${request.index} $message'
       );
 

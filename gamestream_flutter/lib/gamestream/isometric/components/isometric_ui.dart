@@ -15,6 +15,12 @@ import 'package:gamestream_flutter/utils.dart';
 class IsometricUI with IsometricComponent {
   static const Icon_Scale = 1.5;
 
+  final dialog = Watch<Widget?>(null);
+
+  void closeDialog() {
+    dialog.value = null;
+  }
+
   Widget buildMapCircle({required double size}) {
     return IgnorePointer(
       child: Container(

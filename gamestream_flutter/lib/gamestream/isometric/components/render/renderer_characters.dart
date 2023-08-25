@@ -443,6 +443,7 @@ class RendererCharacters extends RenderGroup {
     final animationFrame = character.animationFrame;
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
+    final complexion = character.complexion;
 
     final sprites = images.kidCharacterSprites;
     final atlasHandsLeft = sprites.handLeft[character.handTypeLeft] ?? (throw Exception());
@@ -477,8 +478,7 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    final colorSkin = colors.fair_0.value;
-
+    final colorSkin = colors.palette[character.complexion].value;
     // render.textPosition(character, direction, offsetY: -100);
 
     final leftInFront = const [

@@ -8,8 +8,6 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/lemon_bits/src/binary_hex.dart';
 import 'package:gamestream_flutter/lemon_bits/src/read_bit_from_byte.dart';
-import 'package:gamestream_flutter/lemon_bits/src/read_nibble_from_byte_1.dart';
-import 'package:gamestream_flutter/lemon_bits/src/read_nibble_from_byte_2.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
@@ -51,99 +49,99 @@ class IsometricParser with ByteReader, IsometricComponent {
     options.rendersSinceUpdate.value = 0;
 
     switch (serverResponse) {
-      case ServerResponse.Isometric_Characters:
+      case NetworkResponse.Isometric_Characters:
         readIsometricCharacters();
         break;
-      case ServerResponse.Api_Player:
+      case NetworkResponse.Api_Player:
         readApiPlayer();
         break;
-      case ServerResponse.Player:
+      case NetworkResponse.Player:
         player.parsePlayerResponse();
         break;
-      case ServerResponse.Isometric:
+      case NetworkResponse.Isometric:
         readIsometricResponse();
         break;
-      case ServerResponse.GameObject:
+      case NetworkResponse.GameObject:
         readGameObject();
         break;
-      case ServerResponse.Projectiles:
+      case NetworkResponse.Projectiles:
         readProjectiles();
         break;
-      case ServerResponse.Game_Event:
+      case NetworkResponse.Game_Event:
         readGameEvent();
         break;
-      case ServerResponse.Player_Event:
+      case NetworkResponse.Player_Event:
         readPlayerEvent();
         break;
-      case ServerResponse.Game_Time:
+      case NetworkResponse.Game_Time:
         readGameTime();
         break;
-      case ServerResponse.Game_Type:
+      case NetworkResponse.Game_Type:
         final index = readByte();
         if (index >= GameType.values.length){
           throw Exception('invalid game type index $index');
         }
         options.gameType.value = GameType.values[index];
         break;
-      case ServerResponse.Environment:
+      case NetworkResponse.Environment:
         readServerResponseEnvironment();
         break;
-      case ServerResponse.Node:
+      case NetworkResponse.Node:
         readNode();
         break;
-      case ServerResponse.Player_Target:
+      case NetworkResponse.Player_Target:
         readIsometricPosition(player.target);
         break;
-      case ServerResponse.Store_Items:
+      case NetworkResponse.Store_Items:
         readStoreItems();
         break;
-      case ServerResponse.Npc_Talk:
+      case NetworkResponse.Npc_Talk:
         readNpcTalk();
         break;
-      case ServerResponse.Weather:
+      case NetworkResponse.Weather:
         readWeather();
         break;
-      case ServerResponse.Game_Properties:
+      case NetworkResponse.Game_Properties:
         readGameProperties();
         break;
-      case ServerResponse.Map_Coordinate:
+      case NetworkResponse.Map_Coordinate:
         readMapCoordinate();
         break;
-      case ServerResponse.Editor_GameObject_Selected:
+      case NetworkResponse.Editor_GameObject_Selected:
         readEditorGameObjectSelected();
         break;
-      case ServerResponse.Info:
+      case NetworkResponse.Info:
         readServerResponseInfo();
         break;
-      case ServerResponse.Capture_The_Flag:
+      case NetworkResponse.Capture_The_Flag:
         readCaptureTheFlag();
         break;
-      case ServerResponse.MMO:
+      case NetworkResponse.MMO:
         readMMOResponse();
         break;
-      case ServerResponse.Download_Scene:
+      case NetworkResponse.Download_Scene:
         final name = readString();
         final length = readUInt16();
         final bytes = readBytes(length);
         downloadBytes(bytes: bytes, name: '$name.scene');
         break;
-      case ServerResponse.GameObject_Deleted:
+      case NetworkResponse.GameObject_Deleted:
         scene.removeGameObjectById(readUInt16());
         break;
-      case ServerResponse.Game_Error:
+      case NetworkResponse.Game_Error:
         final errorTypeIndex = readByte();
         options.error.value = GameError.fromIndex(errorTypeIndex);
         return;
-      case ServerResponse.FPS:
+      case NetworkResponse.FPS:
         options.serverFPS.value = readUInt16();
         return;
-      case ServerResponse.Sort_GameObjects:
+      case NetworkResponse.Sort_GameObjects:
         scene.gameObjects.sort();
         break;
-      case ServerResponse.Scene:
+      case NetworkResponse.Scene:
         parseServerResponseScene();
         break;
-      case ServerResponse.Editor_Response:
+      case NetworkResponse.Editor_Response:
         parseEditorResponse();
         break;
 
@@ -266,6 +264,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
       debug.characterType.value = readByte();
       debug.characterState.value = readByte();
+      debug.characterComplexion.value = readByte();
       debug.characterStateDuration.value = readInt16();
       debug.characterStateDurationRemaining.value = readUInt16();
 
@@ -512,6 +511,7 @@ class IsometricParser with ByteReader, IsometricComponent {
       if (compressionLevel == CHARACTER_END) break;
       final character = scene.getCharacterInstance();
 
+      character.complexion = colors.palette.indexOf(colors.fair_0);
 
       final stateAChanged = readBitFromByte(compressionLevel, 0);
       final stateBChanged = readBitFromByte(compressionLevel, 1);
@@ -656,9 +656,8 @@ class IsometricParser with ByteReader, IsometricComponent {
     final compression = readByte();
 
     final readA = readBitFromByte(compression, 0);
-    final readB = readBitFromByte(compression, 1);
 
-    if (readA){
+    if (readA) {
       character.weaponType = readByte();
       character.bodyType = readByte();
       character.headType = readByte();
@@ -667,12 +666,7 @@ class IsometricParser with ByteReader, IsometricComponent {
       character.handTypeRight = readByte();
     }
 
-    if (readB){
-      final lookDirectionWeaponState = readByte();
-      character.lookDirection = readNibbleFromByte1(lookDirectionWeaponState);
-      final weaponState = readNibbleFromByte2(lookDirectionWeaponState);
-      character.weaponState = weaponState;
-    }
+    character.complexion = readByte();
   }
 
   void readPlayerEvent() {

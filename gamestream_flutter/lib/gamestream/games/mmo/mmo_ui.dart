@@ -566,7 +566,7 @@ extension MMOUI on MmoGame {
                   height: 64.0,
                   color: dragging != null && slot.acceptsDragFrom(dragging)
                       ? colors.green_4
-                      : (color ?? colors.brown_1),
+                      : (color ?? colors.brown_3),
                   alignment: Alignment.center,
                   child: item == null
                       ? nothing

@@ -58,7 +58,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       return;
 
     if (!options.gameRunning.value) {
-      writeByte(ClientRequest.Update);
+      writeByte(NetworkRequest.Update);
       applyComputerInputToUpdateBuffer();
       sendUpdateBuffer();
       return;

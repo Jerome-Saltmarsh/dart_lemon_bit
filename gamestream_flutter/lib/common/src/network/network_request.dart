@@ -1,4 +1,4 @@
-class ClientRequest {
+class NetworkRequest {
   static const Update                   = 00;
   static const Join                     = 01;
   static const Version                  = 03;
@@ -6,7 +6,7 @@ class ClientRequest {
   static const Editor_Request           = 36;
   static const Capture_The_Flag         = 37;
   static const MMO                      = 40;
-  static const Debugging                = 41;
+  static const Debug                    = 41;
   static const Set_FPS                  = 42;
   static const Scene                    = 43;
   static const Environment_Request = 44;

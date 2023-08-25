@@ -20,6 +20,7 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
+  var complexion = 0;
   var hurtStateBusy = true;
   var interacting = false;
   var targetPerceptible = false;

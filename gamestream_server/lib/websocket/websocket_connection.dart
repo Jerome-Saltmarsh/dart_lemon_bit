@@ -62,7 +62,7 @@ class WebSocketConnection with ByteReader {
   }
 
   void sendGameError(GameError error) {
-    errorWriter.writeByte(ServerResponse.Game_Error);
+    errorWriter.writeByte(NetworkResponse.Game_Error);
     errorWriter.writeByte(error.index);
     final compiled = errorWriter.compile();
     sink.add(compiled);
@@ -104,7 +104,7 @@ class WebSocketConnection with ByteReader {
 
     final clientRequest = clientRequestInt;
 
-    if (clientRequest == ClientRequest.Join)
+    if (clientRequest == NetworkRequest.Join)
       return handleClientRequestJoin(arguments);
 
     final player = _player;
@@ -116,7 +116,7 @@ class WebSocketConnection with ByteReader {
 
     switch (clientRequest) {
 
-      case ClientRequest.Editor_Request:
+      case NetworkRequest.Editor_Request:
 
         if (player is! IsometricPlayer){
           return;
@@ -230,7 +230,7 @@ class WebSocketConnection with ByteReader {
 
           case EditorRequest.Download:
             final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
-            player.writeByte(ServerResponse.Download_Scene);
+            player.writeByte(NetworkResponse.Download_Scene);
 
             if (player.scene.name.isEmpty){
               player.scene.name = generateRandomName();
@@ -279,35 +279,35 @@ class WebSocketConnection with ByteReader {
         }
         break;
 
-      case ClientRequest.Isometric:
+      case NetworkRequest.Isometric:
         readIsometricRequest(arguments);
         break;
 
-      case ClientRequest.Scene:
+      case NetworkRequest.Scene:
         readSceneRequest(arguments);
         break;
 
-      case ClientRequest.Capture_The_Flag:
+      case NetworkRequest.Capture_The_Flag:
         handleClientRequestCaptureTheFlag(arguments);
         break;
 
-      case ClientRequest.MMO:
+      case NetworkRequest.MMO:
         handleClientRequestMMORequest(arguments);
         break;
 
-      case ClientRequest.Inventory_Request:
+      case NetworkRequest.Inventory_Request:
         if (player is! AmuletPlayer)
           return;
 
         handleInventoryRequest(player, arguments.map(int.parse).toList(growable: false));
         break;
 
-      case ClientRequest.Set_FPS:
+      case NetworkRequest.Set_FPS:
         final value = parseArg1(arguments);
         if (value == null) return;
         break;
 
-      case ClientRequest.Environment_Request:
+      case NetworkRequest.Environment_Request:
         readEnvironmentRequest(arguments);
         break;
 

@@ -850,7 +850,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeEquipped(){
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Equipped);
     writeMMOItem(equippedHelm.item);
     writeMMOItem(equippedBody.item);
@@ -880,19 +880,19 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeInteracting() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Interacting);
     writeBool(interacting);
   }
 
   void writeEquippedWeaponIndex(int value) {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Equipped_Weapon_Index);
     writeInt16(value);
   }
 
   void writePlayerWeapon(int index) {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Weapon);
     writeUInt16(index);
     final slot = weapons[index];
@@ -906,7 +906,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writePlayerTreasure(int index) {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Treasure);
     writeUInt16(index);
     final treasure = treasures[index].item;
@@ -918,7 +918,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writePlayerItem(int index, MMOItem? item) {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Item);
     writeUInt16(index);
     if (item == null){
@@ -929,7 +929,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeNpcTalk() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Npc_Talk);
     writeString(npcText);
     writeByte(npcOptions.length);
@@ -939,43 +939,43 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeItemLength(int value) {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Item_Length);
     writeUInt16(value);
   }
 
   void writePlayerExperience() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Experience);
     writeUInt24(experience);
   }
 
   void writePlayerExperienceRequired() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Experience_Required);
     writeUInt24(experienceRequired);
   }
 
   void writePlayerLevel() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Level);
     writeByte(level);
   }
 
   void writePlayerTalentPoints() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Talent_Points);
     writeByte(talentPoints);
   }
 
   void writePlayerTalentDialogOpen() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Talent_Dialog_Open);
     writeBool(talentDialogOpen);
   }
 
   void writePlayerInventoryOpen() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Inventory_Open);
     writeBool(inventoryOpen);
   }
@@ -1030,7 +1030,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writePlayerTalents() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Player_Talents);
     talents.forEach(writeByte);
   }
@@ -1047,7 +1047,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeActivatedPowerIndex() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Activated_Power_Index);
     writeInt8(_activatedPowerIndex);
   }
@@ -1215,7 +1215,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeActivePowerPosition() {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Active_Power_Position);
     writeDouble(activePowerX);
     writeDouble(activePowerY);
@@ -1309,7 +1309,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeMMOError(String error) {
-    writeByte(ServerResponse.MMO);
+    writeByte(NetworkResponse.MMO);
     writeByte(MMOResponse.Error);
     writeString(error);
   }

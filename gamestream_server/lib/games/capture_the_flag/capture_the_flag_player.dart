@@ -112,14 +112,14 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
 
   void writeActivatedPowerPosition() {
     if (powerActivated.value == null) return;
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Activated_Power_Position);
     writeUInt24(activatedPowerX.toInt());
     writeUInt24(activatedPowerY.toInt());
   }
 
   void writeActivatedPowerTarget() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Activated_Power_Target);
     if (powerActivated.value == null) {
       writeBool(false);
@@ -135,34 +135,34 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void writeFlagPositions() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Flag_Positions);
     writeIsometricPosition(game.flagRed);
     writeIsometricPosition(game.flagBlue);
   }
 
   void writeBasePositions() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Base_Positions);
     writeIsometricPosition(game.baseRed);
     writeIsometricPosition(game.baseBlue);
   }
 
   void writePlayerFlagStatus(int flagStatus) {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Flag_Status);
     writeByte(flagStatus);
   }
 
   void writeScore() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Score);
     writeUInt16(game.scoreRed.value);
     writeUInt16(game.scoreBlue.value);
   }
 
   void writeFlagStatus() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Flag_Status);
     writeByte(game.flagRed.status);
     writeByte(game.flagBlue.status);
@@ -177,25 +177,25 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void writeSelectClass(bool value){
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Select_Class);
     writeBool(value);
   }
 
   void writeCaptureTheFlagGameStatus(CaptureTheFlagGameStatus value){
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Game_Status);
     writeByte(value.index);
   }
 
   void writeNextGameCountDown(int value) {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Next_Game_Count_Down);
     writeUInt16(value);
   }
 
   void writeAIList(){
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.AI_List);
     final characters = game.characters;
     for (final character in characters){
@@ -224,21 +224,21 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void writePower1() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_1);
     writePower(power1);
     writeBool(powerActivated.value == power1);
   }
 
   void writePower2() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_2);
     writePower(power2);
     writeBool(powerActivated.value == power2);
   }
 
   void writePower3() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Power_3);
     writePower(power3);
     writeBool(powerActivated.value == power3);
@@ -265,7 +265,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void writePlayerLevel(){
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Level);
     writeByte(level.value);
     writeUInt24(experienceRequiredForNextLevel);
@@ -273,18 +273,18 @@ class CaptureTheFlagPlayer extends IsometricPlayer with ICaptureTheFlagTeam {
   }
 
   void writePlayerExperience() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Experience);
     writeUInt24(experience.value);
   }
 
   void writePlayerEventLevelGained() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Event_Level_Gained);
   }
 
   void writePlayerEventSkillUpgraded() {
-    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(NetworkResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Event_Skill_Upgraded);
   }
 

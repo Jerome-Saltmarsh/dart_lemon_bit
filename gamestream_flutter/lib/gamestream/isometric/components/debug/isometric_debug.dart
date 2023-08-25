@@ -38,6 +38,7 @@ class IsometricDebug with IsometricComponent {
 
   final characterType = Watch(0);
   final characterState = Watch(0);
+  final characterComplexion = Watch(0);
   final characterStateDuration = Watch(0);
   final characterStateDurationRemaining = Watch(0);
 
@@ -218,7 +219,7 @@ class IsometricDebug with IsometricComponent {
 
   void onKeyPressed(int key){
     if (key == KeyCode.G) {
-      network.sendIsometricRequestMoveSelectedColliderToMouse();
+      sendIsometricRequestMoveSelectedColliderToMouse();
       return;
     }
   }
@@ -235,4 +236,23 @@ class IsometricDebug with IsometricComponent {
     camera.target = particle;
     particleSelected = particle;
   }
+
+  void sendIsometricRequestMoveSelectedColliderToMouse() =>
+      network.sendIsometricRequest(IsometricRequest.Move_Selected_Collider_To_Mouse);
+
+  void sendIsometricRequestDebugCharacterWalkToMouse() =>
+      network.sendIsometricRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
+
+  void sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies() =>
+      network.sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
+
+  void sendIsometricRequestDebugCharacterTogglePathFindingEnabled() =>
+      network.sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
+
+  void sendIsometricRequestDebugCharacterToggleRunToDestination() =>
+      network.sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Run_To_Destination);
+
+  void sendIsometricRequestDebugCharacterDebugUpdate() =>
+      network.sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
+
 }

@@ -371,7 +371,7 @@ extension isometricDebugUI on IsometricDebug {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         onPressed(
-          action: network.sendIsometricRequestDebugCharacterDebugUpdate,
+          action: sendIsometricRequestDebugCharacterDebugUpdate,
           child: buildText('DEBUG'), ),
         height8,
         onPressed(
@@ -401,23 +401,28 @@ extension isometricDebugUI on IsometricDebug {
         buildRowWatchInt(text: 'path-target-index', watch: pathTargetIndex),
         buildRow('character-type', buildDropDownCharacterType()),
         buildRow('character-state', buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
+        buildRow('character-complexion', buildWatch(characterComplexion, (complexion) => onPressed(
+            action: (){
+              ui.dialog.value = buildDialogSelectComplexion();
+            },
+            child: buildText(complexion)))
+        ),
         buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
         buildRowWatchInt(text: 'character-state-duration-remaining', watch: characterStateDurationRemaining),
         buildRow('weapon-type', buildDropDownWeaponType()),
         buildRowWatchInt(text: 'weapon-damage', watch: weaponDamage),
         buildRowWatchInt(text: 'weapon-range', watch: weaponRange),
-        // buildRow('weapon-state', buildWatch(weaponState, (t) => buildText(WeaponState.getName(t)))),
         buildRowWatchInt(text: 'weapon-state-duration', watch: weaponStateDuration),
         onPressed(
-            action: network.sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,
+            action: sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies,
             child: buildRowWatchBool(text: 'auto-attack', watch: autoAttack)
         ),
         onPressed(
-            action: network.sendIsometricRequestDebugCharacterTogglePathFindingEnabled,
+            action: sendIsometricRequestDebugCharacterTogglePathFindingEnabled,
             child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
         ),
         onPressed(
-            action: network.sendIsometricRequestDebugCharacterToggleRunToDestination,
+            action: sendIsometricRequestDebugCharacterToggleRunToDestination,
             child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
         ),
         buildTarget(),
@@ -684,7 +689,43 @@ extension isometricDebugUI on IsometricDebug {
 
   Widget buildRowRefresh(String text,  dynamic getValue()) =>
       buildRow(text, GSRefresh(() => buildText(getValue())));
+
+  GSContainer buildDialogSelectComplexion() => GSContainer(
+    child: Column(children: [
+      Row(
+        children: [
+          buildText('Complexion'),
+          onPressed(
+              action: ui.closeDialog,
+              child: buildText('close')
+          ),
+        ],
+      ),
+      Container(
+        height: 300,
+        child: Row(children: colors.shades.map((shade) => Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: shade.map((color) => onPressed(
+            action: (){
+                network.request(
+                    NetworkRequest.Debug,
+                    DebugRequest.Set_Complexion,
+                    colors.palette.indexOf(color),
+                );
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              color: color,
+            ),
+          )).toList(growable: false),
+        )).toList(growable: false)),
+      )
+    ]),
+  );
+
 }
+
 
 Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))
   => buildWatch(watch, (t) => buildText(mapper(t)));

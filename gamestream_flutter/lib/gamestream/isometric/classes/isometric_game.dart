@@ -30,7 +30,7 @@ class IsometricGame extends Game {
   }
 
   void sendIsometricClientRequest([dynamic message]) {
-    network.send(ClientRequest.Isometric, message);
+    network.send(NetworkRequest.Isometric, message);
   }
 
   @override
@@ -66,6 +66,15 @@ class IsometricGame extends Game {
           top: 16,
           left: 16,
           child: debug.buildUI()
+      ),
+      Positioned(
+        top: 0,
+        left: 0,
+        child: Container(
+            width: engine.screen.width,
+            alignment: Alignment.center,
+            child: buildWatch(ui.dialog, (t) => t ?? nothing),
+        ),
       ),
       Positioned(
           top: 16,

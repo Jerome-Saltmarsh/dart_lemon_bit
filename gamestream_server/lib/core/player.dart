@@ -60,17 +60,17 @@ abstract class Player with ByteWriter {
 extension PlayerExtension on Player {
 
   void writeGameError(GameError gameError){
-    writeByte(ServerResponse.Game_Error);
+    writeByte(NetworkResponse.Game_Error);
     writeByte(gameError.index);
   }
 
   void writeGameType(){
-    writeByte(ServerResponse.Game_Type);
+    writeByte(NetworkResponse.Game_Type);
     writeByte(game.gameType.index);
   }
 
   void writeFPS() {
-    writeByte(ServerResponse.FPS);
+    writeByte(NetworkResponse.FPS);
     writeUInt16(GamestreamServer.Frames_Per_Second);
   }
 }

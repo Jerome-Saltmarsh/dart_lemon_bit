@@ -1,4 +1,4 @@
-class ServerResponse {
+class NetworkResponse {
   static const Api_Player = 00;
   static const Projectiles = 01;
   static const Game_Event = 02;

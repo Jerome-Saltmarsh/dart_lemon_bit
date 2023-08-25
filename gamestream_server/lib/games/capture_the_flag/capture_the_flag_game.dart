@@ -365,7 +365,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         ? CaptureTheFlagResponse.Blue_Team_Scored
         : CaptureTheFlagResponse.Red_Team_Scored;
     for (final player in players) {
-      player.writeByte(ServerResponse.Capture_The_Flag);
+      player.writeByte(NetworkResponse.Capture_The_Flag);
       player.writeByte(response);
     }
   }
@@ -382,7 +382,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     onFlagScored(flagBlue);
 
     for (final player in players) {
-      player.writeByte(ServerResponse.Capture_The_Flag);
+      player.writeByte(NetworkResponse.Capture_The_Flag);
       player.writeByte(CaptureTheFlagResponse.Red_Team_Scored);
     }
   }
