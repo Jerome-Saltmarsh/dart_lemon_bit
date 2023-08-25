@@ -8,6 +8,8 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 import 'package:gamestream_flutter/gamestream/sprites/character_sprites.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/helm_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/leg_type.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

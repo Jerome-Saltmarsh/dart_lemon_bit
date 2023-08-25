@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/amulet/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/slot_type.dart';
 
 import 'mmo_actions.dart';
 import 'mmo_render.dart';

@@ -1,2 +1,2 @@
 
-export 'common/src.dart';
+export 'packages/common/src.dart';

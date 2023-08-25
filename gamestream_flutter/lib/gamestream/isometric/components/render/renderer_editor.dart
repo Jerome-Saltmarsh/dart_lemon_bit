@@ -1,7 +1,7 @@
 
-import 'package:gamestream_flutter/common/src/isometric/node_size.dart';
-import 'package:gamestream_flutter/common/src/types/mark_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/mark_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/node_size.dart';
 
 
 class RendererEditor extends RenderGroup {

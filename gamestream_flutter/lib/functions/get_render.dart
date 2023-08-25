@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/common/src/isometric/node_size.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/node_size.dart';
 
 
 double getRenderXOfRowAndColumn(int row, int column) =>

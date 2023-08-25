@@ -1,4 +1,11 @@
-import '../../../common.dart';
+import 'body_type.dart';
+import 'consumable_type.dart';
+import 'hand_type.dart';
+import 'helm_type.dart';
+import 'leg_type.dart';
+import 'object_type.dart';
+import 'treasure_type.dart';
+import 'weapon_type.dart';
 
 class ItemType {
   static const Weapon = 1;

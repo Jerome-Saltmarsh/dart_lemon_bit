@@ -1,5 +1,8 @@
 
 import '../../src.dart';
+import '../isometric/helm_type.dart';
+import '../isometric/leg_type.dart';
+import '../isometric/treasure_type.dart';
 
 enum MMOItem {
   Blink_Dagger(

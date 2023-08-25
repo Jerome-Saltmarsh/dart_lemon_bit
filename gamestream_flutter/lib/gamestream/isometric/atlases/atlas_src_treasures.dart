@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common/src/types/treasure_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/treasure_type.dart';
 
 const atlasSrcTreasures = <int, List<double>>{
 

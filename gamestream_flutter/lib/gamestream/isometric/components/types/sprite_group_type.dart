@@ -1,4 +1,6 @@
 import 'package:gamestream_flutter/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/helm_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/leg_type.dart';
 
 class SpriteGroupType {
   static const Arms_Left = 1;

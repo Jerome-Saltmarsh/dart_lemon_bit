@@ -1,5 +1,5 @@
 
-import 'power_mode.dart';
+import '../mmo/power_mode.dart';
 
 enum PowerType {
   Blink(PowerMode.Positional),

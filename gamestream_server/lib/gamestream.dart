@@ -116,8 +116,6 @@ class GamestreamServer {
 
   Game createNewGameByType(GameType gameType) => switch (gameType){
       GameType.Amulet => buildGameMMO(),
-      GameType.Capture_The_Flag => buildGameCaptureTheFlag(),
-      GameType.Moba => buildGameMoba(),
       GameType.Editor => IsometricEditor(),
       _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
   };
@@ -125,18 +123,6 @@ class GamestreamServer {
   Game buildGameMMO() => Amulet(
       scene: isometricScenes.mmoTown,
       time: IsometricTime(enabled: true, hour: 14),
-      environment: Environment(),
-    );
-
-  Game buildGameCaptureTheFlag() => CaptureTheFlagGame(
-      scene: isometricScenes.captureTheFlag,
-      time: IsometricTime(enabled: false, hour: 14),
-      environment: Environment(),
-    );
-
-  Game buildGameMoba() => MobaGame(
-      scene: isometricScenes.moba,
-      time: IsometricTime(enabled: false, hour: 14),
       environment: Environment(),
     );
 

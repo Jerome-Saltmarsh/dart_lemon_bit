@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:gamestream_server/common/src/network/requests/player_request.dart';
 import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/games/src.dart';
@@ -298,10 +297,6 @@ class WebSocketConnection with ByteReader {
 
       case NetworkRequest.Scene:
         readSceneRequest(arguments);
-        break;
-
-      case NetworkRequest.Capture_The_Flag:
-        handleClientRequestCaptureTheFlag(arguments);
         break;
 
       case NetworkRequest.MMO:

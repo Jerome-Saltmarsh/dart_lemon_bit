@@ -1,4 +1,4 @@
-import '../../../common.dart';
+import 'power_mode.dart';
 
 enum MMOAttackType {
   Melee(PowerMode.Equip),

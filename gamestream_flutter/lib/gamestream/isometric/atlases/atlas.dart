@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/src.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/helm_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/leg_type.dart';
 
 import 'atlas_src_hands.dart';
 

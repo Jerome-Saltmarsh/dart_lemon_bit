@@ -20,5 +20,4 @@ export 'player_event.dart';
 export 'request_modify_canvas_size.dart';
 export 'scene_json.dart';
 export 'version.dart';
-export 'types/src.dart';
 export 'network/src.dart';

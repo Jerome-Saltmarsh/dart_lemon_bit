@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/common/src/game_error.dart';
+import 'package:gamestream_flutter/packages/common/src/game_error.dart';
 
 import 'isometric/components/src.dart';
 

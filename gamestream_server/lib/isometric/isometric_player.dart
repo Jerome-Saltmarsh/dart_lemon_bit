@@ -1183,15 +1183,15 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void onActivatedPowerChanged(Power? value){
-    writeByte(NetworkResponse.Capture_The_Flag);
-    writeByte(CaptureTheFlagResponse.Activated_Power);
-    if (value == null) {
-      writeBool(false);
-      return;
-    }
-    writeBool(true);
-    writeByte(value.type.index);
-    writeUInt16(value.range.toInt());
+    // writeByte(NetworkResponse.Capture_The_Flag);
+    // writeByte(CaptureTheFlagResponse.Activated_Power);
+    // if (value == null) {
+    //   writeBool(false);
+    //   return;
+    // }
+    // writeBool(true);
+    // writeByte(value.type.index);
+    // writeUInt16(value.range.toInt());
   }
 
   void writePlayerControls(){
