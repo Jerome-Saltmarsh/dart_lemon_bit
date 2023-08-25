@@ -691,6 +691,7 @@ extension isometricDebugUI on IsometricDebug {
       buildRow(text, GSRefresh(() => buildText(getValue())));
 
   GSContainer buildDialogSelectComplexion() => GSContainer(
+    width: 250,
     child: Column(children: [
       Row(
         children: [
@@ -701,26 +702,23 @@ extension isometricDebugUI on IsometricDebug {
           ),
         ],
       ),
-      Container(
-        height: 300,
-        child: Row(children: colors.shades.map((shade) => Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: shade.map((color) => onPressed(
-            action: () {
-                network.request(
-                    NetworkRequest.Debug,
-                    DebugRequest.Set_Complexion,
-                    colors.palette.indexOf(color),
-                );
-            },
-            child: Container(
-              width: 50,
-              height: 50,
-              color: color,
-            ),
-          )).toList(growable: false),
-        )).toList(growable: false)),
-      )
+      Row(children: colors.shades.map((shade) => Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: shade.map((color) => onPressed(
+          action: () {
+              network.request(
+                  NetworkRequest.Debug,
+                  DebugRequest.Set_Complexion,
+                  colors.palette.indexOf(color),
+              );
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            color: color,
+          ),
+        )).toList(growable: false),
+      )).toList(growable: false))
     ]),
   );
 

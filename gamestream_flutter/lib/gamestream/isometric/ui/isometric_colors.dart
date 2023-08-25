@@ -10,17 +10,76 @@ class IsometricColors {
   final brown_1 = Color.fromRGBO(150, 108, 108, 1);
   final brown_0 = Color.fromRGBO(171, 148, 122, 1);
 
-  final aqua_5 = Color.fromRGBO(11, 94, 101, 1);
-  final aqua_4 = Color.fromRGBO(11, 138, 143, 1);
-  final aqua_3 = Color.fromRGBO(14, 175, 155, 1);
-  final aqua_2 = Color.fromRGBO(48, 225, 185, 1);
+  final grey_0 = Color.fromRGBO(255, 255, 255, 1);
+  final grey_1 = Color.fromRGBO(199, 220, 208, 1);
+  final grey_2 = Color.fromRGBO(155, 171, 178, 1);
+  final grey_3 = Color.fromRGBO(127, 112, 138, 1);
+  final grey_4 = Color.fromRGBO(105, 79, 98, 1);
+
+  final red_0  = Color.fromRGBO(245, 125, 74, 1);
+  final red_1  = Color.fromRGBO(234, 79, 54, 1);
+  final red_2  = Color.fromRGBO(179, 56, 49, 1);
+  final red_3  = Color.fromRGBO(110, 39, 39, 1);
+
+  final orange_0  = Color.fromRGBO(249, 194, 43, 1);
+  final orange_1  = Color.fromRGBO(247, 150, 23, 1);
+  final orange_2  = Color.fromRGBO(251, 107, 29, 1);
+  final orange_3  = Color.fromRGBO(232, 59, 59, 1);
+  final orange_4  = Color.fromRGBO(174, 35, 52, 1);
+
+  final apricot_0  = Color.fromRGBO(251, 185, 84, 1);
+  final apricot_1  = Color.fromRGBO(230, 144, 78, 1);
+  final apricot_2  = Color.fromRGBO(205, 104, 61, 1);
+  final apricot_3  = Color.fromRGBO(158, 69, 57, 1);
+  final apricot_4  = Color.fromRGBO(122, 48, 69, 1);
+
+  final butter_0  = Color.fromRGBO(251, 255, 134, 1);
+  final butter_1  = Color.fromRGBO(213, 224, 75, 1);
+  final butter_2  = Color.fromRGBO(162, 169, 71, 1);
+  final butter_3  = Color.fromRGBO(103, 102, 51, 1);
+  final butter_4  = Color.fromRGBO(76, 62, 36 , 1);
+
+  final teal_0  = Color.fromRGBO(205, 223, 108 , 1);
+  final teal_1  = Color.fromRGBO(145, 219, 105 , 1);
+  final teal_2  = Color.fromRGBO(30, 188, 115 , 1);
+  final teal_3  = Color.fromRGBO(35, 144, 99 , 1);
+  final teal_4  = Color.fromRGBO(22, 90, 76 , 1);
+
+  final sage_0  = Color.fromRGBO(178, 186, 144 , 1);
+  final sage_1  = Color.fromRGBO(148, 169, 132 , 1);
+  final sage_2  = Color.fromRGBO(84, 126, 100 , 1);
+  final sage_3  = Color.fromRGBO(55, 78, 74 , 1);
+  final sage_4  = Color.fromRGBO(49, 54, 56 , 1);
+
   final aqua_1 = Color.fromRGBO(143, 248, 226, 1);
+  final aqua_2 = Color.fromRGBO(48, 225, 185, 1);
+  final aqua_3 = Color.fromRGBO(14, 175, 155, 1);
+  final aqua_4 = Color.fromRGBO(11, 138, 143, 1);
+  final aqua_5 = Color.fromRGBO(11, 94, 101, 1);
 
   final blue_0 = Color.fromARGB(255, 143, 211, 255);
   final blue_1 = Color.fromARGB(255, 77, 155, 230);
   final blue_2 = Color.fromARGB(255, 77, 101, 180);
   final blue_3 = Color.fromARGB(255, 72, 74, 119);
   final blue_4 = Color.fromARGB(255, 50, 51, 83);
+
+  final purple_0 = Color.fromRGBO(234, 173, 237, 1);
+  final purple_1 = Color.fromRGBO(168, 132, 243, 1);
+  final purple_2 = Color.fromRGBO(144, 94, 169, 1);
+  final purple_3 = Color.fromRGBO(107, 62, 117, 1);
+  final purple_4 = Color.fromRGBO(69, 41, 63, 1);
+
+  final pink_0 = Color.fromRGBO(237, 128, 153, 1);
+  final pink_1 = Color.fromRGBO(207, 101, 127, 1);
+  final pink_2 = Color.fromRGBO(162, 75, 111, 1);
+  final pink_3 = Color.fromRGBO(117, 60, 84, 1);
+
+  final peach_0 = Color.fromRGBO(253, 203, 176, 1);
+  final peach_1 = Color.fromRGBO(252, 167, 144, 1);
+  final peach_2 = Color.fromRGBO(246, 129, 129, 1);
+  final peach_3 = Color.fromRGBO(240, 79, 120, 1);
+  final peach_4 = Color.fromRGBO(195, 36, 84, 1);
+  final peach_5 = Color.fromRGBO(131, 28, 93, 1);
 
   final green_0 = Color.fromRGBO(205, 223, 108, 1);
   final green_1 = Color.fromRGBO(145, 219, 105, 1);
