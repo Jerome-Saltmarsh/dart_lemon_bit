@@ -405,10 +405,11 @@ class IsometricUI with IsometricComponent {
     required Function(String value) onSelected,
     String text = '',
   }) {
-    engine.disableKeyEventHandler();
     final controller = TextEditingController(text: text);
-    showDialog(child: OnDisposed(
-      onDisposed: engine.enableKeyEventHandler,
+    showDialog(
+      onOpen: engine.disableKeyEventHandler,
+      onClosed: engine.enableKeyEventHandler,
+      child: OnDisposed(
       child: GSContainer(
         width: 300,
         height: 200,
@@ -479,7 +480,11 @@ class IsometricUI with IsometricComponent {
       )
     );
 
-  void showDialog({required Widget child}){
-    dialog.value = child;
+  void showDialog({required Widget child, Function? onClosed, Function? onOpen}){
+    onOpen?.call();
+    dialog.value = OnDisposed(
+      onDisposed: onClosed,
+      child: child,
+    );
   }
 }
