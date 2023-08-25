@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/ui.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'ui/src.dart';
-import 'ui/talent_icon.dart';
 
 extension MMOUI on MmoGame {
 

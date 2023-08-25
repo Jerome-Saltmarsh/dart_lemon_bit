@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/lemon_components/src.dart';
+import 'package:gamestream_flutter/packages/lemon_components.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricLighting implements Updatable {

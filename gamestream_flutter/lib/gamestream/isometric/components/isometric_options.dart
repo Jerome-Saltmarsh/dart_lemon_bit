@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/gamestream/network/enums/connection_region.da
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/lemon_components/src.dart';
+import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
   var skinBlend = BlendMode.modulate;
@@ -177,8 +177,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
         error.value = null;
     }
   }
-
-
 
   void _onChangedRendersSinceUpdate(int value){
     triggerAlarmNoMessageReceivedFromServer.value = value > 200;

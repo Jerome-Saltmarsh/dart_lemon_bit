@@ -1,6 +1,6 @@
 
 import 'dart:math';
-import 'package:gamestream_flutter/lemon_components/src.dart';
+import 'package:gamestream_flutter/packages/lemon_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';

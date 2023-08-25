@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/lemon_components/src.dart';
+import 'package:gamestream_flutter/packages/lemon_components.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/particle_emittors/particle_whisp.dart';
 
