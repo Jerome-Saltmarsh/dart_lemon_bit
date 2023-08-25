@@ -1,0 +1,4 @@
+
+enum PlayerRequest {
+  setComplexion,
+}

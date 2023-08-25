@@ -85,7 +85,7 @@ class IsometricNetwork with IsometricComponent {
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
       send(NetworkRequest.Isometric, '${request.index} $message');
 
-  void request(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>
+  void sendRequest(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>
     websocket.send('$requestType $a $b $c $d'.trim());
 
   void send(int clientRequest, [dynamic message]) =>

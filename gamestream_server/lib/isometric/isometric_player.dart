@@ -1324,4 +1324,19 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   writeClampUInt16(int value) => writeUInt16(value.clamp(0, 65535));
+
+  @override
+  set complexion(int value) {
+    if (complexion == value || value < 0 || value > 64)
+      return;
+
+    super.complexion = value;
+    writePlayerComplexion(value);
+  }
+
+  void writePlayerComplexion(int value) {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.Complexion);
+    writeByte(value);
+  }
 }

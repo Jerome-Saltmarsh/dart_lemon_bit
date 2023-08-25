@@ -400,4 +400,39 @@ class IsometricUI with IsometricComponent {
             srcWidth: src[Atlas.SrcWidth],
             srcHeight: src[Atlas.SrcHeight],
           ));
+
+
+  void showDialogGetColor({
+    required Function(Color color) onSelected
+  }) {
+    dialog.value = GSContainer(
+      width: 682,
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildText('Complexion', color: Colors.white70),
+            onPressed(
+                action: closeDialog,
+                child: buildText('close')
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: colors.shades.map((shade) => Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: shade.map((color) => onPressed(
+                action: () => onSelected(color),
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  color: color,
+                ),
+              )).toList(growable: false),
+            )).toList(growable: false))
+      ]),
+    );
+  }
 }

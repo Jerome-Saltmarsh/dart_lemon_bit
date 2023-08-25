@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:gamestream_server/common/src/network/requests/player_request.dart';
 import 'package:gamestream_server/lemon_bits.dart';
 import 'package:gamestream_server/common/src.dart';
 import 'package:gamestream_server/games/src.dart';
@@ -309,6 +310,10 @@ class WebSocketConnection with ByteReader {
 
       case NetworkRequest.Debug:
         handleNetworkRequestDebug();
+        break;
+
+      case NetworkRequest.Player:
+        handlePlayerRequest();
         break;
 
       case NetworkRequest.Inventory_Request:
@@ -786,5 +791,32 @@ class WebSocketConnection with ByteReader {
          break;
      }
 
+  }
+
+  void handlePlayerRequest() {
+    if (_player is! IsometricPlayer) {
+      return;
+    }
+    final playerRequestIndex = arg1;
+    if (playerRequestIndex == null){
+      return;
+    }
+
+    if (!isValidIndex(playerRequestIndex, PlayerRequest.values)){
+      return;
+    }
+    final playerRequest = PlayerRequest.values[playerRequestIndex];
+
+    final player = _player as IsometricPlayer;
+
+    switch (playerRequest) {
+      case PlayerRequest.setComplexion:
+        final value = arg2;
+        if (value == null) {
+          return;
+        }
+        player.complexion = value;
+        break;
+    }
   }
 }

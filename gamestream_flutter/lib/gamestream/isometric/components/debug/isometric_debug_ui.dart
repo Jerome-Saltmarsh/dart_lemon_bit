@@ -402,9 +402,7 @@ extension isometricDebugUI on IsometricDebug {
         buildRow('character-type', buildDropDownCharacterType()),
         buildRow('character-state', buildWatch(characterState, (t) => buildText(CharacterState.getName(t)))),
         buildRow('character-complexion', buildWatch(characterComplexion, (complexion) => onPressed(
-            action: (){
-              ui.dialog.value = buildDialogSelectComplexion();
-            },
+            action: selectCharacterComplexion,
             child: buildText(complexion)))
         ),
         buildRowWatchInt(text: 'character-state-duration', watch: characterStateDuration),
@@ -551,6 +549,12 @@ extension isometricDebugUI on IsometricDebug {
           buildRowMapped('helm-type', player.helmType, HelmType.getName),
           buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
           buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),
+          onPressed(
+            action: () => ui.showDialogGetColor(
+                onSelected: player.requestSetComplexion
+            ),
+            child: buildRowWatch('complexion', player.complexion, buildText),
+          ),
         ],
       );
 
@@ -690,41 +694,14 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildRowRefresh(String text,  dynamic getValue()) =>
       buildRow(text, GSRefresh(() => buildText(getValue())));
 
-  GSContainer buildDialogSelectComplexion() => GSContainer(
-    width: 682,
-    child: Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildText('Complexion', color: Colors.white70),
-          onPressed(
-              action: ui.closeDialog,
-              child: buildText('close')
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-      Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: colors.shades.map((shade) => Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: shade.map((color) => onPressed(
-          action: () {
-              network.request(
-                  NetworkRequest.Debug,
-                  DebugRequest.Set_Complexion,
-                  colors.palette.indexOf(color),
-              );
-          },
-          child: Container(
-            width: 50,
-            height: 50,
-            color: color,
-          ),
-        )).toList(growable: false),
-      )).toList(growable: false))
-    ]),
-  );
+  void selectCharacterComplexion() =>
+      ui.showDialogGetColor(
+        onSelected: (color) => network.sendRequest(
+          NetworkRequest.Debug,
+          DebugRequest.Set_Complexion,
+          colors.palette.indexOf(color),
+        )
+    );
 
 }
 

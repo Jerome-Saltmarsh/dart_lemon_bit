@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/lemon_components/src.dart';
@@ -44,6 +46,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final legsType = Watch(0);
   final handTypeLeft = Watch(0);
   final handTypeRight = Watch(0);
+  final complexion = Watch(0);
   final previousPosition = Position();
   final accuracy = Watch(1.0);
   final storeItems = Watch(<int>[]);
@@ -183,6 +186,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case PlayerResponse.HandTypeRight:
         readHandTypeRight();
         break;
+      case PlayerResponse.Complexion:
+        complexion.value = parser.readByte();
+        break;
       case PlayerResponse.Aim_Target_Health:
         aimTargetHealthPercentage.value = parser.readPercentage();
         break;
@@ -212,10 +218,15 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     helmType.value = parser.readByte();
   }
 
-  // void onChangedAimTargetAction(int targetAction) {
-  //   render.renderAimTargetName = const [
-  //     TargetAction.Talk,
-  //     TargetAction.Collect,
-  //   ].contains(targetAction);
-  // }
+  void requestSetComplexion(Color color) {
+    final index = colors.palette.indexOf(color);
+    if (index == -1) {
+      return;
+    }
+    network.sendRequest(
+      NetworkRequest.Player,
+      PlayerRequest.setComplexion.index,
+      index,
+    );
+  }
 }
