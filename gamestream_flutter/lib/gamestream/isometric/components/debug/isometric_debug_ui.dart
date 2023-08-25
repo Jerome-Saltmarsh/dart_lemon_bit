@@ -550,9 +550,7 @@ extension isometricDebugUI on IsometricDebug {
           buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
           buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),
           onPressed(
-            action: () => ui.showDialogGetColor(
-                onSelected: player.requestSetComplexion
-            ),
+            action: player.selectComplexion,
             child: buildRowWatch('complexion', player.complexion, buildText),
           ),
         ],
@@ -702,7 +700,6 @@ extension isometricDebugUI on IsometricDebug {
           colors.palette.indexOf(color),
         )
     );
-
 }
 
 
