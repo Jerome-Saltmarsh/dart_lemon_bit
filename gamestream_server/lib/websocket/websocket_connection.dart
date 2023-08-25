@@ -774,7 +774,7 @@ class WebSocketConnection with ByteReader {
      switch (debugRequest) {
        case DebugRequest.Set_Complexion:
          final complexion = arg2;
-         if (complexion == null){
+         if (complexion == null || complexion < 0 || complexion >= 64){
            return;
          }
          final selectedCollider = player.selectedCollider;

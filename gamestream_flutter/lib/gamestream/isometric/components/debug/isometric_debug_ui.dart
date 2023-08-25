@@ -691,18 +691,22 @@ extension isometricDebugUI on IsometricDebug {
       buildRow(text, GSRefresh(() => buildText(getValue())));
 
   GSContainer buildDialogSelectComplexion() => GSContainer(
-    width: 250,
+    width: 682,
     child: Column(children: [
       Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildText('Complexion'),
+          buildText('Complexion', color: Colors.white70),
           onPressed(
               action: ui.closeDialog,
               child: buildText('close')
           ),
         ],
       ),
-      Row(children: colors.shades.map((shade) => Column(
+      SizedBox(height: 16),
+      Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: colors.shades.map((shade) => Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: shade.map((color) => onPressed(
           action: () {

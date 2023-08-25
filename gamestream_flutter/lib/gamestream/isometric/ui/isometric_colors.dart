@@ -238,7 +238,18 @@ class IsometricColors {
   IsometricColors(){
     palette = [
       ...shadeBrown,
+      ...shadeGrey,
+      ...shadeRed,
+      ...shadeOrange,
+      ...shadeApricot,
+      ...shadeButter,
+      ...shadeTeal,
+      ...shadeSage,
       ...shadeAqua,
+      ...shadeBlue,
+      ...shadePurple,
+      ...shadePink,
+      ...shadePeach,
     ];
   }
 }
