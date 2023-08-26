@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
+import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/width.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
@@ -61,6 +62,9 @@ class AmuletUI {
           bottom: margin1,
           right: margin1,
           child: buildPlayerStatsRow(),
+      ),
+      Positioned(
+          child: buildDialogCreateCharacter(),
       ),
       Positioned(
           bottom: margin2,
@@ -694,4 +698,16 @@ class AmuletUI {
           : GSContainer(
         child: buildText(talentType.name),
       ));
+
+  Widget buildDialogCreateCharacter() => buildWatchBool(
+      amulet.characterCreated, () =>
+        GSContainer(
+            child: Column(
+              children: [
+                buildText('CHARACTER CREATION'),
+                buildText('ENTER NAME'),
+                buildText('SELECT COMPLEXION'),
+              ],
+            )),
+  );
 }

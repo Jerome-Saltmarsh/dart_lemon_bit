@@ -15,27 +15,19 @@ import 'constants/node_src.dart';
 class RendererNodes extends RenderGroup {
 
   static const Node_Size = 48.0;
-
   static const Node_Size_Half = 24.0;
   static const Node_Size_Third = 16.0;
   static const Node_Size_Sixth = 8.0;
-
   static const Node_Sprite_Width = 48.0;
-
   static const Cell_Size = 16.0;
   static const Cell_Size_Half = 8.0;
-
   static const Cell_Top_Width =  8.0;
   static const Cell_Top_Height =  8.0;
-
   static const Cell_South_Width = 8.0;
   static const Cell_South_Height = 8.0;
-
   static const Cell_West_Width = 8.0;
   static const Cell_West_Height = 8.0;
-
   static const Node_South_Height = 24.0;
-
 
   static const MapNodeTypeToSrcY = <int, double>{
     NodeType.Brick: 1760,
@@ -275,7 +267,7 @@ class RendererNodes extends RenderGroup {
     final height = scene.totalZ;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
-    final rowMax = rows - 1;
+    final rowMax = rows;
     final columnMax = columns - 1;
     final heightMax = height - 1;
     final shiftRight = columns - 1;
