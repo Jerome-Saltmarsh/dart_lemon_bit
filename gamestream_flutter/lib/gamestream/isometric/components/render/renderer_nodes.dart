@@ -751,6 +751,8 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           variation: scene.nodeVariations[currentNodeIndex],
+          onWater: scene.getType(currentNodeIndex - scene.area) == NodeType.Water,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         return;
       case NodeType.Sandbag:
@@ -1101,8 +1103,10 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int variation,
+    required int color,
+    required bool onWater,
   }) {
-    if (currentNodeIndex > scene.area && scene.nodeTypes[currentNodeIndex - scene.area] == NodeType.Water){
+    if (onWater){
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
@@ -1112,21 +1116,23 @@ class RendererNodes extends RenderGroup {
         dstX: dstX,
         dstY: dstY + animation.frameWaterHeight + 14,
         anchorY: 0.3,
-        color: scene.getNodeColorAtIndex(currentNodeIndex),
+        color: color,
       );
       return;
-    }
+    } // if (onWater){
+
     renderStandardNode(
       srcX: environment.srcXRainLanding,
       srcY: 72.0 * ((animation.frame + variation) % 6), // TODO Expensive Operation
       dstX: dstX,
       dstY: dstY,
     );
+
     if (options.renderRainFallingTwice){
       renderNodeRainFalling(
         dstX: dstX,
         dstY: dstY,
-        nodeVariation: scene.nodeVariations[currentNodeIndex],
+        nodeVariation: variation,
       );
     }
   }

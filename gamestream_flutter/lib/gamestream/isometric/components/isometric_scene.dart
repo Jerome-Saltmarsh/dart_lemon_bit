@@ -1869,6 +1869,16 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
     return nodeColors[index + totalColumns];
   }
+
+  int getType(int i) {
+    if (i < 0){
+      return NodeType.Boundary;
+    }
+    if (i >= totalNodes)
+      return NodeType.Boundary;
+
+    return nodeTypes[i];
+  }
 }
 
 int convertSecondsToAmbientAlpha(int totalSeconds) {
