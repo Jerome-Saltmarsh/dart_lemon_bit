@@ -1001,6 +1001,8 @@ class RendererNodes extends RenderGroup {
       case NodeOrientation.Half_North:
         renderDynamicHalfNorth(
             srcY: srcY,
+            dstX: currentNodeDstX,
+            dstY: currentNodeDstY,
             colorSouth: colorSouth,
             colorWest: colorWest,
         );
@@ -1417,8 +1419,10 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderCornerNorthWest(double srcY) {
-     renderDynamicHalfNorth(
+    renderDynamicHalfNorth(
       srcY: srcY,
+      dstX: currentNodeDstX,
+      dstY: currentNodeDstY,
       colorSouth: colorCurrent,
       colorWest: colorWest,
     );
@@ -1430,6 +1434,8 @@ class RendererNodes extends RenderGroup {
 
   void renderCornerNorthEast(double srcY) {
      renderDynamicHalfNorth(
+        dstX: currentNodeDstX,
+        dstY: currentNodeDstY,
         srcY: srcY,
         colorWest: colorWest,
         colorSouth: colorCurrent,
@@ -1611,25 +1617,25 @@ class RendererNodes extends RenderGroup {
     required double srcY,
     required int colorSouth,
     required int colorWest,
-  }) {
-    renderDynamicSideNorthSouth(
-      srcY: srcY,
-      dstX: currentNodeDstX - Node_Size_Half,
-      dstY: currentNodeDstY,
-      colorSouth: colorSouth,
-      colorWest: colorWest,
-    );
-  }
+    required double dstX,
+    required double dstY,
+  }) =>
+      renderDynamicSideNorthSouth(
+        srcY: srcY,
+        dstX: dstX - Node_Size_Half,
+        dstY: dstY,
+        colorSouth: colorSouth,
+        colorWest: colorWest,
+      );
 
-  void renderDynamicHalfSouth(double srcY) {
-     renderDynamicSideNorthSouth(
-      srcY: srcY,
-      dstX: currentNodeDstX - Node_Size_Sixth,
-      dstY: currentNodeDstY + Node_Size_Third,
-      colorWest: colorWest,
-      colorSouth: colorSouth,
-    );
-  }
+  void renderDynamicHalfSouth(double srcY) =>
+      renderDynamicSideNorthSouth(
+        srcY: srcY,
+        dstX: currentNodeDstX - Node_Size_Sixth,
+        dstY: currentNodeDstY + Node_Size_Third,
+        colorWest: colorWest,
+        colorSouth: colorSouth,
+      );
 
   void renderDynamicSolid({
     required double srcX,
