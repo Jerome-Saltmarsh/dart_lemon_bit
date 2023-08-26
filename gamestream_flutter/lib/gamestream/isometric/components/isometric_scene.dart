@@ -396,13 +396,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   int getProjectionIndex(int nodeIndex) => nodeIndex % projection;
 
-  int getTypeBelow(int index){
-    if (index < area) return NodeType.Boundary;
-    final indexBelow = index - area;
-    if (indexBelow >= totalNodes) return NodeType.Boundary;
-    return nodeTypes[indexBelow];
-  }
-
   int getIndexBelow(int index) => index - area;
 
   int getIndexBelowPosition(Position position) =>
@@ -1870,7 +1863,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[index + totalColumns];
   }
 
-  int getType(int i) {
+  bool nodeTypeBelowIs(int index, int value) => nodeType(index) == value;
+
+  int nodeTypeBelow(int index) => nodeType(index - area);
+
+  int nodeType(int i) {
     if (i < 0){
       return NodeType.Boundary;
     }
