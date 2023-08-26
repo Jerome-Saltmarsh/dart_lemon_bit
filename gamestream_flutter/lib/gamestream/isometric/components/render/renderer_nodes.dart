@@ -63,8 +63,8 @@ class RendererNodes extends RenderGroup {
   var row = 0;
   var column = 0;
   var z = 0;
-  var currentNodeDstX = 0.0;
-  var currentNodeDstY = 0.0;
+  // var currentNodeDstX = 0.0;
+  // var currentNodeDstY = 0.0;
   var currentNodeIndex = 0;
 
   var offscreenNodesTop = 0;
@@ -112,8 +112,6 @@ class RendererNodes extends RenderGroup {
     atlasNodes = images.atlas_nodes;
     atlasNodesLoaded = true;
   }
-
-  int get colorCurrent => nodeColors[currentNodeIndex];
 
   int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
@@ -207,7 +205,7 @@ class RendererNodes extends RenderGroup {
 
     while (lineZ >= 0) {
       z = lineZ;
-      currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
+      var currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
       if (currentNodeDstY > screenTop) {
         if (currentNodeDstY > screenBottom){
@@ -215,7 +213,7 @@ class RendererNodes extends RenderGroup {
         }
 
         currentNodeIndex = scene.getIndexZRC(lineZ, lineRow, lineColumn);
-        currentNodeDstX = (row - column) * Node_Size_Half;
+        var currentNodeDstX = (row - column) * Node_Size_Half;
 
         while (true) {
           if (currentNodeDstX > screenLeft &&
@@ -626,9 +624,10 @@ class RendererNodes extends RenderGroup {
     assert (nodeStartColumn < scene.totalColumns);
   }
 
-  void renderNodeTorch(){
-    final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY - 16;
+  void renderNodeTorch({
+    required double dstX,
+    required double dstY,
+}){
     const Src_X_Plain = 1294.0;
     const Src_X_Grassy = 1311.0;
     final srcX = nodeTypeBelow == NodeType.Grass ? Src_X_Grassy : Src_X_Plain;
@@ -646,26 +645,26 @@ class RendererNodes extends RenderGroup {
     render.flame(dstX: dstX, dstY: dstY + 4, scale: 0.7);
   }
 
-  bool assertOnScreen(){
-    if (currentNodeDstX < screenLeft){
-      offscreenNodesLeft++;
-      return true;
-    }
-    if (currentNodeDstX > screenRight){
-      offscreenNodesRight++;
-      return true;
-    }
-    if (currentNodeDstY < screenTop){
-      offscreenNodesTop++;
-      return true;
-    }
-    if (currentNodeDstY > screenBottom){
-      offscreenNodesBottom++;
-      return true;
-    }
-
-    return true;
-  }
+  // bool assertOnScreen(){
+  //   if (currentNodeDstX < screenLeft){
+  //     offscreenNodesLeft++;
+  //     return true;
+  //   }
+  //   if (currentNodeDstX > screenRight){
+  //     offscreenNodesRight++;
+  //     return true;
+  //   }
+  //   if (currentNodeDstY < screenTop){
+  //     offscreenNodesTop++;
+  //     return true;
+  //   }
+  //   if (currentNodeDstY > screenBottom){
+  //     offscreenNodesBottom++;
+  //     return true;
+  //   }
+  //
+  //   return true;
+  // }
 
   bool get currentNodeTransparent {
     if (currentNodeZ <= playerZ) return false;
@@ -719,55 +718,109 @@ class RendererNodes extends RenderGroup {
     switch (nodeType) {
 
       case NodeType.Bricks_Red:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_13);
+        renderNodeTemplateShaded(
+            srcX: IsometricConstants.Sprite_Width_Padded_13,
+            dstX: dstX,
+            dstY: dstY,
+        );
         return;
       case NodeType.Bricks_Brown:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_14);
+        renderNodeTemplateShaded(
+            srcX: IsometricConstants.Sprite_Width_Padded_14,
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Water:
-        renderNodeWater();
+        renderNodeWater(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Dust:
-        renderNodeDust();
+        renderNodeDust(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Rain_Falling:
-        renderNodeRainFalling();
+        renderNodeRainFalling(
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Rain_Landing:
-        renderNodeRainLanding();
+        renderNodeRainLanding(
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Sandbag:
         renderStandardNode(
           srcX: 539,
           srcY: 0,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
       case NodeType.Concrete:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_8);
+        renderNodeTemplateShaded(
+            srcX: IsometricConstants.Sprite_Width_Padded_8,
+            dstX: dstX,
+            dstY: dstY,
+        );
         return;
       case NodeType.Metal:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_4);
+        renderNodeTemplateShaded(
+            srcX: IsometricConstants.Sprite_Width_Padded_4,
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Road:
         renderNodeTemplateShadedOffset(IsometricConstants.Sprite_Width_Padded_9, offsetY: 7);
         return;
       case NodeType.Tree_Bottom:
-        renderNodeTreeBottom();
+        renderNodeTreeBottom(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Tree_Top:
-        renderNodeTreeTop();
+        renderNodeTreeTop(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Scaffold:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_15);
+        renderNodeTemplateShaded(
+          srcX: IsometricConstants.Sprite_Width_Padded_15,
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Road_2:
-        renderNodeShadedOffset(srcX: 1490, srcY: 305, offsetX: 0, offsetY: 7);
+        renderNodeShadedOffset(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 1490,
+            srcY: 305,
+            offsetX: 0,
+            offsetY: 7,
+        );
         return;
       case NodeType.Wooden_Plank:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_10);
+        renderNodeTemplateShaded(
+          srcX: IsometricConstants.Sprite_Width_Padded_10,
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Torch:
-        renderNodeTorch();
+        renderNodeTorch(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Torch_Blue:
         renderCustomNode(
@@ -775,9 +828,9 @@ class RendererNodes extends RenderGroup {
           srcY: 306,
           srcWidth: 14,
           srcHeight: 28,
-          dstX: currentNodeDstX - 7,
-          dstY: currentNodeDstY + 4,
-          color: colorCurrent,
+          dstX: dstX - 7,
+          dstY: dstY + 4,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
 
         renderCustomNode(
@@ -785,8 +838,8 @@ class RendererNodes extends RenderGroup {
             srcY: 306,
             srcWidth: 14,
             srcHeight: 32,
-            dstX: currentNodeDstX - 8,
-            dstY: currentNodeDstY - 16,
+            dstX: dstX - 8,
+            dstY: dstY - 16,
             color: 0,
         );
         break;
@@ -796,9 +849,9 @@ class RendererNodes extends RenderGroup {
           srcY: 306,
           srcWidth: 14,
           srcHeight: 28,
-          dstX: currentNodeDstX - 7,
-          dstY: currentNodeDstY + 4,
-          color: colorCurrent,
+          dstX: dstX - 7,
+          dstY: dstY + 4,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
 
         renderCustomNode(
@@ -806,62 +859,100 @@ class RendererNodes extends RenderGroup {
             srcY: 339,
             srcWidth: 14,
             srcHeight: 32,
-            dstX: currentNodeDstX - 8,
-            dstY: currentNodeDstY - 16,
+            dstX: dstX - 8,
+            dstY: dstY - 16,
             color: 0,
         );
         break;
       case NodeType.Shopping_Shelf:
-        renderNodeShoppingShelf();
+        renderNodeShoppingShelf(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Bookshelf:
-        renderNodeBookShelf();
+        renderNodeBookShelf(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Grass_Long:
-        renderNodeGrassLong();
+        renderNodeGrassLong(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Tile:
-        renderNodeTemplateShaded(588);
+        renderNodeTemplateShaded(
+          srcX: 588,
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Glass:
-        renderNodeTemplateShaded(IsometricConstants.Sprite_Width_Padded_16);
+        renderNodeTemplateShaded(
+          srcX: IsometricConstants.Sprite_Width_Padded_16,
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Bau_Haus:
         const index_grass = 6;
         const srcX = IsometricConstants.Sprite_Width_Padded * index_grass;
-        renderNodeTemplateShaded(srcX);
+        renderNodeTemplateShaded(
+          srcX: srcX,
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Sunflower:
         renderStandardNode(
           srcX: 1753.0,
           srcY: 867.0,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeType.Fireplace:
-        renderFireplace();
+        renderFireplace(
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Boulder:
-        renderBoulder();
+        renderBoulder(
+          dstX: dstX,
+          dstY: dstY,
+        );
         return;
       case NodeType.Oven:
         renderStandardNode(
           srcX: AtlasNodeX.Oven,
           srcY: AtlasNodeY.Oven,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeType.Chimney:
         renderStandardNode(
           srcX: AtlasNode.Chimney_X,
           srcY: AtlasNode.Node_Chimney_Y,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeType.Window:
-        renderNodeWindow();
+        renderNodeWindow(
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
       case NodeType.Table:
         renderStandardNode(
           srcX: AtlasNode.Table_X,
           srcY: AtlasNode.Node_Table_Y,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeType.Respawning:
@@ -871,21 +962,24 @@ class RendererNodes extends RenderGroup {
     }
   }
 
-  void renderFireplace() => engine.renderSprite(
+  void renderFireplace({
+    required double dstX,
+    required double dstY,
+}) => engine.renderSprite(
       image: atlasNodes,
       srcX: AtlasNode.Src_Fireplace_X,
       srcY: AtlasNode.Src_Fireplace_Y + (animation.frame6 * AtlasNode.Src_Fireplace_Height),
       srcWidth: 48,
       srcHeight: 72,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY + 12,
+      dstX: dstX,
+      dstY: dstY + 12,
       color: 0,
     );
 
-  void renderBoulder() {
-    final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY + 14;
-
+  void renderBoulder({
+    required double dstX,
+    required double dstY,
+  }) {
     engine.renderSprite(
       image: atlasNodes,
       srcX: Src_X_Sprite_Boulder_West,
@@ -910,28 +1004,41 @@ class RendererNodes extends RenderGroup {
 
   }
 
-  void renderNodeShoppingShelf() {
+  void renderNodeShoppingShelf({
+    required double dstX,
+    required double dstY,
+}) {
      if (currentNodeVariation == 0){
       renderStandardNode(
         srcX: 1392,
         srcY: 160,
+        dstX: dstX,
+        dstY: dstY,
       );
     } else {
       renderStandardNode(
         srcX: 1441,
         srcY: 160,
+        dstX: dstX,
+        dstY: dstY,
       );
     }
   }
 
-  void renderNodeBookShelf() {
-    renderStandardNode(
+  void renderNodeBookShelf({
+    required double dstX,
+    required double dstY,
+  }) => renderStandardNode(
       srcX: 1392,
       srcY: 233,
+      dstX: dstX,
+      dstY: dstY,
     );
-  }
 
-  void renderNodeGrassLong() {
+  void renderNodeGrassLong({
+    required double dstX,
+    required double dstY,
+  }) {
     final frame = wind == WindType.Calm
         ? 0
         : (((row - column) + animation.frame6) % 6);
@@ -941,16 +1048,14 @@ class RendererNodes extends RenderGroup {
     const Src_Height = 72.0;
 
     final srcX = Src_X + (frame * Src_Width);
-    final dstX = currentNodeDstX - 24;
-    final dstY = currentNodeDstY - 24;
 
     renderCustomNode(
       srcX: srcX,
       srcY: Src_Y,
       srcWidth: Src_Width,
       srcHeight: Src_Height,
-      dstX: dstX,
-      dstY: dstY,
+      dstX: dstX - 24,
+      dstY: dstY - 24,
       color: scene.getColorAbove(currentNodeIndex),
     );
 
@@ -975,7 +1080,10 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderNodeRainLanding() {
+  void renderNodeRainLanding({
+    required double dstX,
+    required double dstY,
+  }) {
     if (currentNodeIndex > scene.area && scene.nodeTypes[currentNodeIndex - scene.area] == NodeType.Water){
       engine.renderSprite(
         image: atlasNodes,
@@ -983,99 +1091,126 @@ class RendererNodes extends RenderGroup {
         srcY: 72.0 * ((animation.frame + currentNodeVariation) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY + animation.frameWaterHeight + 14,
+        dstX: dstX,
+        dstY: dstY + animation.frameWaterHeight + 14,
         anchorY: 0.3,
-        color: colorCurrent,
+        color: scene.getNodeColorAtIndex(currentNodeIndex),
       );
       return;
     }
     renderStandardNode(
       srcX: environment.srcXRainLanding,
       srcY: 72.0 * ((animation.frame + currentNodeVariation) % 6), // TODO Expensive Operation
+      dstX: dstX,
+      dstY: dstY,
     );
     if (options.renderRainFallingTwice){
-      renderNodeRainFalling();
+      renderNodeRainFalling(
+        dstX: dstX,
+        dstY: dstY,
+      );
     }
   }
 
-  void renderNodeRainFalling() {
+  void renderNodeRainFalling({
+    required double dstX,
+    required double dstY,
+  }) {
     final row =  (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value;
     final column = (animation.frame + currentNodeVariation) % 6;
 
     renderStandardNode(
       srcX: 1596 + (column * 48),
       srcY: 1306 + (row * 72),
+      dstX: dstX,
+      dstY: dstY,
     );
   }
 
-  void renderNodeTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderNodeTreeTopOak();
+  void renderNodeTreeTop({
+    required double dstX,
+    required double dstY,
+  }) => renderNodeBelowVariation == 0
+      ? renderTreeTopPine(
+          dstX: dstX,
+          dstY: dstY,
+        )
+      : renderNodeTreeTopOak(
+          dstX: dstX,
+          dstY: dstY,
+      );
 
-  void renderNodeTreeBottom() => currentNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
+  void renderNodeTreeBottom({
+    required double dstX,
+    required double dstY,
+  }) => currentNodeVariation == 0 ? renderTreeBottomPine(
+      dstX: dstX,
+      dstY: dstY
+  ) : renderTreeBottomOak(
+    dstX: dstX,
+    dstY: dstY,
+  );
 
-  void renderNodeTreeTopOak(){
+  void renderNodeTreeTopOak({
+    required double dstX,
+    required double dstY,
+  }){
     final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
-    final dstX = currentNodeDstX + (shift * 0.5);
-    final dstY = currentNodeDstY + 40;
     final rotation = shiftRotation * 0.0066;
     const anchorY = 0.82;
 
-    // west
     engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Oak_Top_West,
       srcY: Src_Y_Sprite_Tree,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
-      dstX: dstX,
-      dstY: dstY,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
       color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
 
-    // south
     engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Oak_Top_South,
       srcY: Src_Y_Sprite_Tree,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
-      dstX: dstX,
-      dstY: dstY,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
       color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
   }
 
-  void renderTreeTopPine() {
-
+  void renderTreeTopPine({
+    required double dstX,
+    required double dstY,
+}) {
     final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
-    final dstX = currentNodeDstX + (shift * 0.5);
-    final dstY = currentNodeDstY + 40;
     final rotation = shiftRotation * 0.0066;
     const anchorY = 0.82;
 
-    // west
     engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Top_West,
       srcY: Src_Y_Sprite_Tree,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
-      dstX: dstX,
-      dstY: dstY,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
       color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
 
-    // south
     engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Top_South,
@@ -1091,13 +1226,13 @@ class RendererNodes extends RenderGroup {
 
   }
 
-  void renderTreeBottomOak() {
-
+  void renderTreeBottomOak({
+    required double dstX,
+    required double dstY,
+}) {
     final treeAnimation = animation.treeAnimation;
     final frame = row - column + 4;
     final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
-    final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY + 32;
     final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
 
@@ -1109,7 +1244,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY,
+      dstY: dstY + 32,
       color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
@@ -1123,19 +1258,20 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY,
+      dstY: dstY + 32,
       color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
   }
 
-  void renderTreeBottomPine() {
+  void renderTreeBottomPine({
+    required double dstX,
+    required double dstY,
+  }) {
     final treeAnimation = animation.treeAnimation;
     final frame = row - column + 4;
     final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
-    final dstX = currentNodeDstX;
-    final dstY = currentNodeDstY + 32;
     final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
 
@@ -1147,7 +1283,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY,
+      dstY: dstY + 32,
       color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
@@ -1168,7 +1304,12 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderNodeTemplateShadedOffset(double srcX, {double offsetX = 0, double offsetY = 0}) {
+  void renderNodeTemplateShadedOffset(double srcX, {
+    double offsetX = 0,
+    double offsetY = 0,
+    double dstX = 0,
+    double dstY = 0,
+  }) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
         renderNodeShadedOffset(
@@ -1176,6 +1317,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_00,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_North:
@@ -1184,6 +1327,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
+            dstX: dstX,
+            dstY: dstY,
         );
         return;
       case NodeOrientation.Half_South:
@@ -1192,6 +1337,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_East:
@@ -1200,6 +1347,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + offsetX,
           offsetY: -8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_West:
@@ -1208,6 +1357,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
 
@@ -1218,6 +1369,8 @@ class RendererNodes extends RenderGroup {
           offsetX: 8 + 16 + offsetX,
           offsetY: -8 + offsetY,
           srcWidth: 32,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedCustom(
           srcX: srcX,
@@ -1225,6 +1378,8 @@ class RendererNodes extends RenderGroup {
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
           srcWidth: 32,
+          dstX: dstX,
+          dstY: dstY,
         );
 
         return;
@@ -1234,12 +1389,16 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + offsetX,
           offsetY: -8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Corner_South_West:
@@ -1248,12 +1407,16 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Corner_North_West:
@@ -1262,12 +1425,16 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_North:
@@ -1276,6 +1443,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_03,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_East:
@@ -1284,6 +1453,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_04,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_South:
@@ -1292,6 +1463,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_05,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_West:
@@ -1300,6 +1473,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_06,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_South_West:
@@ -1308,6 +1483,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_07,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_North_West:
@@ -1316,6 +1493,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_08,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_North_East:
@@ -1324,6 +1503,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_09,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_South_East:
@@ -1332,6 +1513,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_10,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_South_East:
@@ -1340,6 +1523,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_11,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_North_East :
@@ -1348,6 +1533,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_12,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_North_West:
@@ -1356,6 +1543,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_13,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_South_West:
@@ -1364,6 +1553,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_14,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Radial:
@@ -1372,6 +1563,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_15,
           offsetX: offsetX,
           offsetY: offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_Vertical_Top:
@@ -1380,6 +1573,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
           offsetY: -9 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_Vertical_Center:
@@ -1388,6 +1583,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
           offsetY: -1 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_Vertical_Bottom:
@@ -1396,6 +1593,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
           offsetY: 2 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Top_Right:
@@ -1404,6 +1603,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
           offsetY: -16 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Top_Center:
@@ -1412,6 +1613,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8 + offsetX,
           offsetY: -8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Top_Left:
@@ -1420,6 +1623,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -16 + offsetX,
           offsetY: 0 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Center_Right:
@@ -1428,6 +1633,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8 + offsetX,
           offsetY: -8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
       case NodeOrientation.Column_Center_Center:
@@ -1436,6 +1643,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
           offsetY: 0 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
       case NodeOrientation.Column_Center_Left:
@@ -1444,6 +1653,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
 
@@ -1453,6 +1664,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
           offsetY: 16 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Bottom_Center:
@@ -1461,6 +1674,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8 + offsetX,
           offsetY: 8 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Bottom_Right:
@@ -1469,17 +1684,25 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 16 + offsetX,
           offsetY: 0 + offsetY,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
     }
   }
 
-  void renderNodeTemplateShaded(double srcX) {
+  void renderNodeTemplateShaded({
+    required double srcX,
+    required double dstX,
+    required double dstY,
+  }) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_00,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_North:
@@ -1488,6 +1711,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_South:
@@ -1496,6 +1721,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_East:
@@ -1504,6 +1731,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_West:
@@ -1512,6 +1741,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Corner_North_East:
@@ -1521,6 +1752,8 @@ class RendererNodes extends RenderGroup {
           offsetX: 8 + 16,
           offsetY: -8,
           srcWidth: 32,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedCustom(
           srcX: srcX,
@@ -1528,6 +1761,8 @@ class RendererNodes extends RenderGroup {
           offsetX: -8,
           offsetY: -8,
           srcWidth: 32,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Corner_South_East:
@@ -1536,12 +1771,16 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Corner_South_West:
@@ -1550,12 +1789,16 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Corner_North_West:
@@ -1564,90 +1807,120 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         renderNodeShadedOffset(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_North:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_03,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_East:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_04,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_South:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_05,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_West:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_06,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_South_West:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_07,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_North_West:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_08,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_North_East:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_09,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Outer_South_East:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_10,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_South_East:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_11,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_North_East :
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_12,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_North_West:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_13,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Slope_Inner_South_West:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_14,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Radial:
         renderStandardNode(
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_15,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_Vertical_Top:
@@ -1657,6 +1930,8 @@ class RendererNodes extends RenderGroup {
           offsetX: 0,
           offsetY: -8,
           color: scene.nodeColors[currentNodeIndex + scene.area < scene.totalNodes ? currentNodeIndex + scene.area : currentNodeIndex],
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_Vertical_Center:
@@ -1665,6 +1940,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: 0,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_Vertical_Bottom:
@@ -1673,6 +1950,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Top_Right:
@@ -1681,6 +1960,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
           offsetY: -16,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Top_Center:
@@ -1689,6 +1970,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Top_Left:
@@ -1697,6 +1980,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -16,
           offsetY: 0,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Center_Right:
@@ -1705,6 +1990,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
       case NodeOrientation.Column_Center_Center:
@@ -1713,6 +2000,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
           offsetY: 0,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
       case NodeOrientation.Column_Center_Left:
@@ -1721,6 +2010,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         break;
 
@@ -1730,6 +2021,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
           offsetY: 16,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Bottom_Center:
@@ -1738,6 +2031,8 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Column_Bottom_Right:
@@ -1746,13 +2041,18 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 16,
           offsetY: 0,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
     }
   }
 
 
-  void renderNodeWindow(){
+  void renderNodeWindow({
+    required double dstX,
+    required double dstY,
+  }){
     const srcX = 1508.0;
     switch (renderNodeOrientation) {
       case NodeOrientation.Half_North:
@@ -1761,6 +2061,8 @@ class RendererNodes extends RenderGroup {
           srcY: 80 + IsometricConstants.Sprite_Height_Padded,
           offsetX: -8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_South:
@@ -1769,6 +2071,8 @@ class RendererNodes extends RenderGroup {
           srcY: 80 + IsometricConstants.Sprite_Height_Padded,
           offsetX: 8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_East:
@@ -1777,6 +2081,8 @@ class RendererNodes extends RenderGroup {
           srcY: 80,
           offsetX: 8,
           offsetY: -8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeOrientation.Half_West:
@@ -1785,6 +2091,8 @@ class RendererNodes extends RenderGroup {
           srcY: 80,
           offsetX: -8,
           offsetY: 8,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       default:
@@ -1792,45 +2100,53 @@ class RendererNodes extends RenderGroup {
     }
   }
 
-  void renderNodeDust() =>
+  void renderNodeDust({
+    required double dstX,
+    required double dstY,
+  }) =>
       engine.renderSprite(
         image: atlasNodes,
         srcX: 1552,
         srcY: 432 + (animation.frame6 * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY,
+        dstX: dstX,
+        dstY: dstY,
         anchorY: 0.3334,
-        color: colorCurrent,
+        color: scene.getNodeColorAtIndex(currentNodeIndex),
       );
 
-  void renderNodeWater() =>
+  void renderNodeWater({
+    required double dstX,
+    required double dstY,
+  }) =>
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((animation.frameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY + animation.frameWaterHeight + 14,
+        dstX: dstX,
+        dstY: dstY + animation.frameWaterHeight + 14,
         anchorY: 0.3334,
-        color: colorCurrent,
+        color: scene.getNodeColorAtIndex(currentNodeIndex),
       );
 
   void renderStandardNode({
     required double srcX,
     required double srcY,
+    required double dstX,
+    required double dstY,
   }) => engine.render(
-        color: colorCurrent,
+        color: scene.getNodeColorAtIndex(currentNodeIndex),
         srcLeft: srcX,
         srcTop: srcY,
         srcRight: srcX + IsometricConstants.Sprite_Width,
         srcBottom: srcY + IsometricConstants.Sprite_Height,
         scale: 1.0,
         rotation: 0,
-        dstX: currentNodeDstX - (IsometricConstants.Sprite_Width_Half),
-        dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third),
+        dstX: dstX - (IsometricConstants.Sprite_Width_Half),
+        dstY: dstY - (IsometricConstants.Sprite_Height_Third),
     );
 
 
@@ -1858,38 +2174,42 @@ class RendererNodes extends RenderGroup {
   void renderNodeShadedCustom({
     required double srcX,
     required double srcY,
+    required double dstX,
+    required double dstY,
     required double offsetX,
     required double offsetY,
     int? color,
     double? srcWidth,
     double? srcHeight
   }) => engine.render(
-    color: color ?? colorCurrent,
+    color: color ?? scene.getNodeColorAtIndex(currentNodeIndex),
     srcLeft: srcX,
     srcTop: srcY,
     srcRight: srcX + (srcWidth ?? IsometricConstants.Sprite_Width),
     srcBottom: srcY + (srcHeight ?? IsometricConstants.Sprite_Height),
     scale: 1.0,
     rotation: 0,
-    dstX: currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
-    dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
+    dstX: dstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
+    dstY: dstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
   );
 
   void renderNodeShadedOffset({
     required double srcX,
     required double srcY,
+    required double dstX,
+    required double dstY,
     required double offsetX,
     required double offsetY,
   }) => engine.render(
-    color: colorCurrent,
+    color: scene.getNodeColorAtIndex(currentNodeIndex),
     srcLeft: srcX,
     srcTop: srcY,
     srcRight: srcX + IsometricConstants.Sprite_Width,
     srcBottom: srcY + IsometricConstants.Sprite_Height,
     scale: 1.0,
     rotation: 0,
-    dstX: currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
-    dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
+    dstX: dstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
+    dstY: dstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
   );
 
   void renderDynamic({
