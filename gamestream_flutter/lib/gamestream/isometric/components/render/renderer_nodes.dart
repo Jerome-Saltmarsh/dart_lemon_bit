@@ -41,9 +41,6 @@ class RendererNodes extends RenderGroup {
   var nodeSize = Node_Size;
   var nodeScale = 1.0;
   var plainIndex = 0;
-  var plainStartRow = 0;
-  var plainStartColumn = 0;
-  var plainStartZ = 0;
   var totalPlains = 0;
   var orderShiftY = 151.0;
 
@@ -219,9 +216,9 @@ class RendererNodes extends RenderGroup {
     final columnMax = columns - 1;
     final heightMax = height - 1;
     final index = plainIndex;
-    plainStartRow = clamp(index - (height + columns), 0, rowMax);
-    plainStartColumn = clamp(index - height + 1, 0, columnMax);
-    plainStartZ = clamp(index, 0, heightMax);
+    final plainStartRow = clamp(index - (height + columns), 0, rowMax);
+    final plainStartColumn = clamp(index - height + 1, 0, columnMax);
+    final plainStartZ = clamp(index, 0, heightMax);
     order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height) + orderShiftY;
   }
 
@@ -240,17 +237,13 @@ class RendererNodes extends RenderGroup {
     var lineColumn = clamp(index - height + 1, 0, columnMax);
     var lineZ = clamp(index, 0, heightMax);
 
-    plainStartRow = lineRow;
-    plainStartColumn = lineColumn;
-    plainStartZ = lineZ;
-
-    column = lineColumn;
-    row = lineRow;
-
     final screenLeft = this.screenLeft; // cache in cpu
     final screenTop = this.screenTop; // cache in cpu
     final screenRight = this.screenRight; // cache in cpu
     final screenBottom = this.screenBottom; // cache in cpu
+
+    column = lineColumn;
+    row = lineRow;
 
     while (lineZ >= 0) {
       z = lineZ;
