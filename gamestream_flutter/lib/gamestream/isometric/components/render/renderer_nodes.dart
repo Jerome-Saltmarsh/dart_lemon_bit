@@ -699,7 +699,6 @@ class RendererNodes extends RenderGroup {
     final nodeType = nodeTypes[currentNodeIndex];
     final nodeOrientation = nodeOrientations[currentNodeIndex];
 
-
     if (nodeTypeSrcY.containsKey(nodeType)){
       renderDynamic(
         nodeType:nodeType,
@@ -715,6 +714,8 @@ class RendererNodes extends RenderGroup {
       return;
     }
 
+    final color = scene.nodeColors[currentNodeIndex];
+
     switch (nodeType) {
 
       case NodeType.Bricks_Red:
@@ -722,13 +723,17 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_13,
             dstX: dstX,
             dstY: dstY,
+            nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+            color: color
         );
         return;
       case NodeType.Bricks_Brown:
         renderNodeTemplateShaded(
-            srcX: IsometricConstants.Sprite_Width_Padded_14,
+          srcX: IsometricConstants.Sprite_Width_Padded_14,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+            color: color
         );
         return;
       case NodeType.Water:
@@ -768,6 +773,8 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_8,
             dstX: dstX,
             dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+            color: color
         );
         return;
       case NodeType.Metal:
@@ -775,10 +782,17 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_4,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+
+            color: color
         );
         return;
       case NodeType.Road:
-        renderNodeTemplateShadedOffset(IsometricConstants.Sprite_Width_Padded_9, offsetY: 7);
+        renderNodeTemplateShadedOffset(
+          IsometricConstants.Sprite_Width_Padded_9,
+          offsetY: 7,
+          color: scene.getColorAbove(currentNodeIndex),
+        );
         return;
       case NodeType.Tree_Top:
         final nodeVariationBelow = scene.nodeVariations[currentNodeIndex - scene.area];
@@ -804,6 +818,9 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_15,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+
+            color: color
         );
         break;
       case NodeType.Road_2:
@@ -814,6 +831,7 @@ class RendererNodes extends RenderGroup {
             srcY: 305,
             offsetX: 0,
             offsetY: 7,
+            color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         return;
       case NodeType.Wooden_Plank:
@@ -821,6 +839,9 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_10,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+
+            color: color
         );
         return;
       case NodeType.Torch:
@@ -897,6 +918,9 @@ class RendererNodes extends RenderGroup {
           srcX: 588,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+
+            color: color
         );
         return;
       case NodeType.Glass:
@@ -904,6 +928,9 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_16,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+
+            color: color
         );
         return;
       case NodeType.Bau_Haus:
@@ -913,6 +940,9 @@ class RendererNodes extends RenderGroup {
           srcX: srcX,
           dstX: dstX,
           dstY: dstY,
+          nodeOrientation: scene.nodeOrientations[currentNodeIndex],
+
+            color: color
         );
         break;
       case NodeType.Sunflower:
@@ -957,6 +987,7 @@ class RendererNodes extends RenderGroup {
         renderNodeWindow(
           dstX: dstX,
           dstY: dstY,
+          color: scene.nodeColors[currentNodeIndex],
         );
         break;
       case NodeType.Table:
@@ -1356,6 +1387,7 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderNodeTemplateShadedOffset(double srcX, {
+    required int color,
     double offsetX = 0,
     double offsetY = 0,
     double dstX = 0,
@@ -1370,10 +1402,12 @@ class RendererNodes extends RenderGroup {
           offsetY: offsetY,
           dstX: dstX,
           dstY: dstY,
+          color: color,
         );
         return;
       case NodeOrientation.Half_North:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
@@ -1384,6 +1418,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_South:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
@@ -1394,6 +1429,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8 + offsetX,
@@ -1404,6 +1440,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
@@ -1422,6 +1459,7 @@ class RendererNodes extends RenderGroup {
           srcWidth: 32,
           dstX: dstX,
           dstY: dstY,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         renderNodeShadedCustom(
           srcX: srcX,
@@ -1431,6 +1469,7 @@ class RendererNodes extends RenderGroup {
           srcWidth: 32,
           dstX: dstX,
           dstY: dstY,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
 
         return;
@@ -1442,8 +1481,10 @@ class RendererNodes extends RenderGroup {
           offsetY: -8 + offsetY,
           dstX: dstX,
           dstY: dstY,
+          color: color,
         );
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
@@ -1454,6 +1495,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Corner_South_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
@@ -1462,6 +1504,7 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
         );
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8 + offsetX,
@@ -1472,6 +1515,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Corner_North_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8 + offsetX,
@@ -1480,6 +1524,7 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
         );
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8 + offsetX,
@@ -1490,6 +1535,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_North:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_03,
           offsetX: offsetX,
@@ -1500,6 +1546,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_04,
           offsetX: offsetX,
@@ -1510,6 +1557,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_South:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_05,
           offsetX: offsetX,
@@ -1520,6 +1568,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_06,
           offsetX: offsetX,
@@ -1530,6 +1579,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_South_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_07,
           offsetX: offsetX,
@@ -1540,6 +1590,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_North_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_08,
           offsetX: offsetX,
@@ -1550,6 +1601,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_North_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_09,
           offsetX: offsetX,
@@ -1560,6 +1612,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_South_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_10,
           offsetX: offsetX,
@@ -1570,6 +1623,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_South_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_11,
           offsetX: offsetX,
@@ -1580,6 +1634,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_North_East :
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_12,
           offsetX: offsetX,
@@ -1590,6 +1645,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_North_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_13,
           offsetX: offsetX,
@@ -1600,6 +1656,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_South_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_14,
           offsetX: offsetX,
@@ -1610,6 +1667,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Radial:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_15,
           offsetX: offsetX,
@@ -1620,6 +1678,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_Vertical_Top:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
@@ -1630,6 +1689,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_Vertical_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
@@ -1640,6 +1700,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_Vertical_Bottom:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0 + offsetX,
@@ -1650,6 +1711,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Top_Right:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
@@ -1660,6 +1722,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Top_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8 + offsetX,
@@ -1670,6 +1733,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Top_Left:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -16 + offsetX,
@@ -1680,6 +1744,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Center_Right:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8 + offsetX,
@@ -1690,6 +1755,7 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Column_Center_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
@@ -1700,6 +1766,7 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Column_Center_Left:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8 + offsetX,
@@ -1711,6 +1778,7 @@ class RendererNodes extends RenderGroup {
 
       case NodeOrientation.Column_Bottom_Left:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0 + offsetX,
@@ -1721,6 +1789,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Bottom_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8 + offsetX,
@@ -1731,6 +1800,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Bottom_Right:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 16 + offsetX,
@@ -1743,11 +1813,13 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderNodeTemplateShaded({
+    required int nodeOrientation,
+    required int color,
     required double srcX,
     required double dstX,
     required double dstY,
   }) {
-    switch (scene.nodeOrientations[currentNodeIndex]){
+    switch (nodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNode(
           srcX: srcX,
@@ -1758,6 +1830,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_North:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
@@ -1768,6 +1841,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_South:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
@@ -1778,6 +1852,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8,
@@ -1788,6 +1863,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
@@ -1805,6 +1881,7 @@ class RendererNodes extends RenderGroup {
           srcWidth: 32,
           dstX: dstX,
           dstY: dstY,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         renderNodeShadedCustom(
           srcX: srcX,
@@ -1814,10 +1891,12 @@ class RendererNodes extends RenderGroup {
           srcWidth: 32,
           dstX: dstX,
           dstY: dstY,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         return;
       case NodeOrientation.Corner_South_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: 8,
@@ -1826,6 +1905,7 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
         );
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
@@ -1836,6 +1916,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Corner_South_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
@@ -1844,6 +1925,7 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
         );
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: 8,
@@ -1854,6 +1936,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Corner_North_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_01,
           offsetX: -8,
@@ -1862,6 +1945,7 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
         );
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_02,
           offsetX: -8,
@@ -1987,6 +2071,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_Vertical_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
@@ -1997,6 +2082,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_Vertical_Bottom:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
@@ -2007,6 +2093,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Top_Right:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
@@ -2017,6 +2104,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Top_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -8,
@@ -2027,6 +2115,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Top_Left:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: -16,
@@ -2037,6 +2126,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Column_Center_Right:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 8,
@@ -2047,6 +2137,7 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Column_Center_Center:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_17,
           offsetX: 0,
@@ -2063,6 +2154,8 @@ class RendererNodes extends RenderGroup {
           offsetY: 8,
           dstX: dstX,
           dstY: dstY,
+
+            color: color
         );
         break;
 
@@ -2074,6 +2167,8 @@ class RendererNodes extends RenderGroup {
           offsetY: 16,
           dstX: dstX,
           dstY: dstY,
+
+            color: color
         );
         return;
       case NodeOrientation.Column_Bottom_Center:
@@ -2084,6 +2179,8 @@ class RendererNodes extends RenderGroup {
           offsetY: 8,
           dstX: dstX,
           dstY: dstY,
+
+            color: color
         );
         return;
       case NodeOrientation.Column_Bottom_Right:
@@ -2094,6 +2191,8 @@ class RendererNodes extends RenderGroup {
           offsetY: 0,
           dstX: dstX,
           dstY: dstY,
+
+            color: color
         );
         return;
     }
@@ -2103,6 +2202,7 @@ class RendererNodes extends RenderGroup {
   void renderNodeWindow({
     required double dstX,
     required double dstY,
+    required int color,
   }){
     const srcX = 1508.0;
     switch (renderNodeOrientation) {
@@ -2114,10 +2214,13 @@ class RendererNodes extends RenderGroup {
           offsetY: -8,
           dstX: dstX,
           dstY: dstY,
+            color: color
+
         );
         return;
       case NodeOrientation.Half_South:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: 80 + IsometricConstants.Sprite_Height_Padded,
           offsetX: 8,
@@ -2128,6 +2231,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_East:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: 80,
           offsetX: 8,
@@ -2138,6 +2242,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Half_West:
         renderNodeShadedOffset(
+          color: color,
           srcX: srcX,
           srcY: 80,
           offsetX: -8,
@@ -2213,11 +2318,11 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required double offsetX,
     required double offsetY,
-    int? color,
+    required int color,
     double? srcWidth,
     double? srcHeight
   }) => engine.render(
-    color: color ?? scene.getNodeColorAtIndex(currentNodeIndex),
+    color: color,
     srcLeft: srcX,
     srcTop: srcY,
     srcRight: srcX + (srcWidth ?? IsometricConstants.Sprite_Width),
@@ -2235,8 +2340,9 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required double offsetX,
     required double offsetY,
+    required int color,
   }) => engine.render(
-    color: scene.getNodeColorAtIndex(currentNodeIndex),
+    color: color,
     srcLeft: srcX,
     srcTop: srcY,
     srcRight: srcX + IsometricConstants.Sprite_Width,
