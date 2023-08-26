@@ -2662,20 +2662,17 @@ class RendererNodes extends RenderGroup {
     int? color,
     double? srcWidth,
     double? srcHeight
-  }){
-    onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = color ?? colorCurrent;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + (srcWidth ?? IsometricConstants.Sprite_Width);
-    bufferSrc[f + 3] = srcY + (srcHeight ?? IsometricConstants.Sprite_Height);
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
-  }
+  }) => engine.render(
+        color: color ?? colorCurrent,
+        srcLeft: srcX,
+        srcTop: srcY,
+        srcRight: srcX + (srcWidth ?? IsometricConstants.Sprite_Width),
+        srcBottom: srcY + (srcHeight ?? IsometricConstants.Sprite_Height),
+        scale: 1.0,
+        rotation: 0,
+        dstX: currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
+        dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
+    );
 
   void renderNodeShadedOffset({
     required double srcX,
