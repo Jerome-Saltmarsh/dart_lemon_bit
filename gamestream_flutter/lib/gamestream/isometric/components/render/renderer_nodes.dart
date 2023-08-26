@@ -959,168 +959,6 @@ class RendererNodes extends RenderGroup {
 
   }
 
-  void renderDynamic({
-    required int nodeType,
-    required int nodeOrientation,
-    required double dstX,
-    required double dstY,
-    required int colorAbove,
-    required int colorSouth,
-    required int colorWest,
-    required int colorCurrent,
-  }) {
-    final srcY = mapNodeTypeToSrcY[nodeType] ??
-        (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
-
-    switch (nodeOrientation) {
-      case NodeOrientation.Solid:
-        renderDynamicSolid(
-          dstX: dstX,
-          dstY: dstY,
-          srcY: srcY,
-          srcX: currentNodeVariation < 126 ? 0.0 : 128.0,
-          colorAbove: colorAbove,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-        );
-        break;
-      case NodeOrientation.Half_West:
-        renderDynamicHalfWest(
-          srcY: srcY,
-          colorWest: colorWest,
-          colorSouth: colorSouth,
-          colorAbove: colorAbove,
-          dstX: dstX,
-          dstY: dstY,
-        );
-        break;
-      case NodeOrientation.Half_East:
-        renderDynamicHalfEast(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorWest: colorWest,
-          colorSouth: colorSouth,
-          colorAbove: colorAbove,
-        );
-        break;
-      case NodeOrientation.Half_South:
-        renderDynamicHalfSouth(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorWest: colorWest,
-          colorSouth: colorSouth,
-          colorAbove: colorAbove,
-        );
-        break;
-      case NodeOrientation.Half_North:
-        renderDynamicHalfNorth(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-          colorAbove: colorAbove,
-        );
-        break;
-
-      case NodeOrientation.Corner_South_East:
-        renderCornerSouthEast(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-          colorAbove: colorAbove,
-          colorCurrent: colorCurrent,
-        );
-        break;
-
-      case NodeOrientation.Corner_North_East:
-        renderCornerNorthEast(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-          colorAbove: colorAbove,
-          colorCurrent: colorCurrent,
-        );
-        break;
-
-      case NodeOrientation.Corner_North_West:
-        renderCornerNorthWest(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorWest: colorWest,
-          colorSouth: colorSouth,
-          colorAbove: colorAbove,
-          colorCurrent: colorCurrent,
-        );
-        break;
-
-      case NodeOrientation.Corner_South_West:
-        renderCornerSouthWest(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorWest: colorWest,
-          colorSouth: colorSouth,
-          colorAbove: colorAbove,
-        );
-        break;
-
-      case NodeOrientation.Slope_East:
-        renderSlopeEast(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorAbove: colorAbove,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-        );
-        break;
-
-      case NodeOrientation.Slope_West:
-        renderSlopeWest(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorAbove: colorAbove,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-          colorCurrent: colorCurrent,
-        );
-        break;
-
-      case NodeOrientation.Slope_South:
-        renderSlopeSouth(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorAbove: colorAbove,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-          colorCurrent: colorCurrent,
-        );
-        break;
-
-      case NodeOrientation.Slope_North:
-        renderSlopeNorth(
-          srcY: srcY,
-          dstX: dstX,
-          dstY: dstY,
-          colorAbove: colorAbove,
-          colorSouth: colorSouth,
-          colorWest: colorWest,
-          colorCurrent: colorCurrent,
-        );
-        break;
-    }
-  }
-
   void renderNodeShoppingShelf() {
      if (currentNodeVariation == 0){
       renderStandardNode(
@@ -2103,6 +1941,168 @@ class RendererNodes extends RenderGroup {
     dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
   );
 
+  void renderDynamic({
+    required int nodeType,
+    required int nodeOrientation,
+    required double dstX,
+    required double dstY,
+    required int colorAbove,
+    required int colorSouth,
+    required int colorWest,
+    required int colorCurrent,
+  }) {
+    final srcY = mapNodeTypeToSrcY[nodeType] ??
+        (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
+
+    switch (nodeOrientation) {
+      case NodeOrientation.Solid:
+        renderDynamicSolid(
+          dstX: dstX,
+          dstY: dstY,
+          srcY: srcY,
+          srcX: currentNodeVariation < 126 ? 0.0 : 128.0,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+        );
+        break;
+      case NodeOrientation.Half_West:
+        renderDynamicHalfWest(
+          srcY: srcY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          colorAbove: colorAbove,
+          dstX: dstX,
+          dstY: dstY,
+        );
+        break;
+      case NodeOrientation.Half_East:
+        renderDynamicHalfEast(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          colorAbove: colorAbove,
+        );
+        break;
+      case NodeOrientation.Half_South:
+        renderDynamicHalfSouth(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          colorAbove: colorAbove,
+        );
+        break;
+      case NodeOrientation.Half_North:
+        renderDynamicHalfNorth(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+        );
+        break;
+
+      case NodeOrientation.Corner_South_East:
+        renderCornerSouthEast(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+          colorCurrent: colorCurrent,
+        );
+        break;
+
+      case NodeOrientation.Corner_North_East:
+        renderCornerNorthEast(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+          colorCurrent: colorCurrent,
+        );
+        break;
+
+      case NodeOrientation.Corner_North_West:
+        renderCornerNorthWest(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          colorAbove: colorAbove,
+          colorCurrent: colorCurrent,
+        );
+        break;
+
+      case NodeOrientation.Corner_South_West:
+        renderCornerSouthWest(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          colorAbove: colorAbove,
+        );
+        break;
+
+      case NodeOrientation.Slope_East:
+        renderSlopeEast(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+        );
+        break;
+
+      case NodeOrientation.Slope_West:
+        renderSlopeWest(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorCurrent: colorCurrent,
+        );
+        break;
+
+      case NodeOrientation.Slope_South:
+        renderSlopeSouth(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorCurrent: colorCurrent,
+        );
+        break;
+
+      case NodeOrientation.Slope_North:
+        renderSlopeNorth(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorCurrent: colorCurrent,
+        );
+        break;
+    }
+  }
+
   void renderSlopeNorth({
     required double srcY,
     required double dstX,
@@ -2176,8 +2176,6 @@ class RendererNodes extends RenderGroup {
       color: colorWest,
     );
 
-    // column 2
-
     renderCellWest(
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Cell_West_Width,
@@ -2191,8 +2189,6 @@ class RendererNodes extends RenderGroup {
       dstY: dstY + Cell_West_Height + Cell_West_Height + Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
-
-    // column 3
 
     renderCellWest(
       srcY: srcY,
@@ -2296,9 +2292,6 @@ class RendererNodes extends RenderGroup {
       color: colorAbove,
     );
 
-
-    // row 2
-
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Top_Width - Cell_Top_Width,
@@ -2319,8 +2312,6 @@ class RendererNodes extends RenderGroup {
       dstY: dstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
-
-    // column 1
 
     renderCellWest(
       srcY: srcY,
@@ -2343,8 +2334,6 @@ class RendererNodes extends RenderGroup {
       color: colorWest,
     );
 
-    // column 2
-
     renderCellWest(
       srcY: srcY,
       dstX: dstX - Cell_West_Width - Cell_West_Width,
@@ -2359,16 +2348,12 @@ class RendererNodes extends RenderGroup {
       color: colorWest,
     );
 
-    // column 3
-
     renderCellWest(
       srcY: srcY,
       dstX: dstX - Cell_West_Width - Cell_West_Width - Cell_West_Width,
       dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
-
-    // row 1
 
     renderCellTop(
       srcY: srcY,
@@ -2402,7 +2387,6 @@ class RendererNodes extends RenderGroup {
     required int colorCurrent,
   }) {
 
-    // 1
     renderCellTop(
       srcY: srcY,
       dstX: dstX + Cell_Size_Half,
@@ -2410,7 +2394,6 @@ class RendererNodes extends RenderGroup {
       color: colorCurrent,
     );
 
-    //2
     renderCellTop(
       srcY: srcY,
       dstX: dstX,
@@ -2418,7 +2401,6 @@ class RendererNodes extends RenderGroup {
       color: colorCurrent,
     );
 
-    //3
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half,
@@ -2426,7 +2408,6 @@ class RendererNodes extends RenderGroup {
       color: colorCurrent,
     );
 
-    //4
     renderCellTop(
       srcY: srcY,
       dstX: dstX,
@@ -2434,7 +2415,6 @@ class RendererNodes extends RenderGroup {
       color: colorCurrent,
     );
 
-    //5
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half,
@@ -2442,7 +2422,6 @@ class RendererNodes extends RenderGroup {
       color: colorCurrent,
     );
 
-    //6
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half - Cell_Size_Half,
@@ -2450,7 +2429,6 @@ class RendererNodes extends RenderGroup {
       color: colorCurrent,
     );
 
-    //7
     renderNodeSideWest(
       srcY: srcY,
       dstX: dstX - Node_Size_Half,
@@ -2458,7 +2436,6 @@ class RendererNodes extends RenderGroup {
       color: colorWest,
     );
 
-    //8
     renderCellSouth(
       srcY: srcY,
       dstX: dstX,
@@ -2466,7 +2443,6 @@ class RendererNodes extends RenderGroup {
       color: colorSouth,
     );
 
-    //9
     renderCellSouth(
       srcY: srcY,
       dstX: dstX + Cell_South_Width,
@@ -2474,7 +2450,6 @@ class RendererNodes extends RenderGroup {
       color: colorSouth,
     );
 
-    //10
     renderCellSouth(
       srcY: srcY,
       dstX: dstX + Cell_South_Width + Cell_South_Width,
@@ -2482,7 +2457,6 @@ class RendererNodes extends RenderGroup {
       color: colorSouth,
     );
 
-    //11
     renderCellSouth(
       srcY: srcY,
       dstX: dstX,
@@ -2490,7 +2464,6 @@ class RendererNodes extends RenderGroup {
       color: colorSouth,
     );
 
-    //12
     renderCellSouth(
       srcY: srcY,
       dstX: dstX + Cell_South_Width,
@@ -2498,17 +2471,13 @@ class RendererNodes extends RenderGroup {
       color: colorSouth,
     );
 
-    const cellSouthDstYZ = Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height;
-
-    //13
     renderCellSouth(
       srcY: srcY,
       dstX: dstX,
-      dstY: dstY + cellSouthDstYZ,
+      dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
       color: colorSouth,
     );
 
-    // 14
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half,
@@ -2516,7 +2485,6 @@ class RendererNodes extends RenderGroup {
       color: colorAbove,
     );
 
-    // 15
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half - Cell_Size_Half,
@@ -2524,7 +2492,6 @@ class RendererNodes extends RenderGroup {
       color: colorAbove,
     );
 
-    // 16
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
@@ -2705,7 +2672,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Cell_Size_Half,
       dstY: dstY + Node_South_Height - Cell_South_Height - Cell_Size,
-      colorWest: colorCurrent,
+      colorWest: colorWest,
       colorTop: colorAbove,
       colorSouth: colorSouth,
     );
@@ -2713,7 +2680,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Cell_Size_Half + Cell_Size_Half,
       dstY: dstY + Node_South_Height - Cell_South_Height - Cell_Size - Cell_Size,
-      colorWest: colorCurrent,
+      colorWest: colorWest,
       colorTop: colorAbove,
       colorSouth: colorSouth,
     );
