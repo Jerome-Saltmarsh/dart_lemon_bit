@@ -35,7 +35,6 @@ class RendererNodes extends RenderGroup {
     NodeType.Wood: 1904,
   };
 
-  var srcY = 0.0;
   var lightningColor = 0;
   var previousNodeTransparent = false;
   var lightningFlashing = false;
@@ -968,7 +967,7 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int colorWest,
   }) {
-    srcY = mapNodeTypeToSrcY[nodeType] ??
+    final srcY = mapNodeTypeToSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
@@ -1040,11 +1039,11 @@ class RendererNodes extends RenderGroup {
         break;
 
       case NodeOrientation.Slope_South:
-        renderSlopeSouth();
+        renderSlopeSouth(srcY: srcY);
         break;
 
       case NodeOrientation.Slope_North:
-        renderSlopeNorth();
+        renderSlopeNorth(srcY: srcY);
         break;
     }
   }
@@ -2031,39 +2030,47 @@ class RendererNodes extends RenderGroup {
     dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
   );
 
-  void renderSlopeNorth() {
+  void renderSlopeNorth({
+    required double srcY,
+  }) {
 
     renderCellTopColumn(
+      srcY: srcY,
       dstX: -Node_Size_Half,
       dstY: -Cell_South_Height,
       color: colorAbove,
     );
 
     renderCellSouthColumn(
+      srcY: srcY,
       dstX: -Cell_South_Width - Cell_South_Width,
       dstY: 0,
       color: colorCurrent,
     );
 
     renderCellTopColumn(
+      srcY: srcY,
       dstX: -Node_Size_Half + Cell_South_Width,
       dstY: -Cell_South_Height + Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
     );
 
     renderCellSouthColumn(
+      srcY: srcY,
       dstX: -Cell_South_Width - Cell_South_Width + Cell_South_Width,
       dstY: Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
     );
 
     renderCellTopColumn(
+      srcY: srcY,
       dstX: -Node_Size_Half + Cell_South_Width + Cell_South_Width,
       dstY: -Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
     );
 
     renderCellSouthColumn(
+      srcY: srcY,
       dstX: -Cell_South_Width - Cell_South_Width + Cell_South_Width + Cell_South_Width,
       dstY: Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
@@ -2117,6 +2124,7 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderCellTopColumn({
+    required double srcY,
     required double dstX,
     required double dstY,
     required int color,
@@ -2146,6 +2154,7 @@ class RendererNodes extends RenderGroup {
 
 
   void renderCellSouthColumn({
+    required double srcY,
     required double dstX,
     required double dstY,
     required int color,
@@ -2170,7 +2179,7 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderSlopeSouth() {
+  void renderSlopeSouth({required double srcY}) {
 
     renderNodeSideSouth(
       srcY: srcY,
