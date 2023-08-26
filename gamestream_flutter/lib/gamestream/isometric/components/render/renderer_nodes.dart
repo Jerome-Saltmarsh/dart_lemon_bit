@@ -36,9 +36,8 @@ class RendererNodes extends RenderGroup {
     NodeType.Wood: 1904,
   };
 
-  final lightningColorDay = 0;
   var lightningColor = 0;
-
+  var previousNodeTransparent = false;
   var lightningFlashing = false;
   var dynamicResolutionEnabled = true;
   var totalNodes = 0;
@@ -129,7 +128,6 @@ class RendererNodes extends RenderGroup {
   var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
   var atlasNodesLoaded = false;
-  var ambientColor = 0;
 
   late Uint32List nodeColors;
   late Uint8List nodeOrientations;
@@ -163,34 +161,34 @@ class RendererNodes extends RenderGroup {
 
     final nodeAboveIndex = currentNodeIndex + scene.area;
     if (nodeAboveIndex >= totalNodes)
-      return ambientColor;
+      return scene.ambientColor;
     return nodeColors[nodeAboveIndex];
   }
 
   int get colorWest {
     if (column + 1 >= totalColumns){
-      return ambientColor;
+      return scene.ambientColor;
     }
     return nodeColors[currentNodeIndex + 1];
   }
 
   int get colorEast {
     if (column - 1 < 0){
-      return ambientColor;
+      return scene.ambientColor;
     }
     return nodeColors[currentNodeIndex - 1];
   }
 
   int get colorNorth {
     if (row - 1 < 0) {
-      return ambientColor;
+      return scene.ambientColor;
     }
     return nodeColors[currentNodeIndex - totalColumns];
   }
 
   int get colorSouth {
     if (row + 1 >= totalRows) {
-      return ambientColor;
+      return scene.ambientColor;
     }
     return nodeColors[currentNodeIndex + totalColumns];
   }
@@ -316,7 +314,7 @@ class RendererNodes extends RenderGroup {
         }
       }
 
-      if (lineColumn < rowMax){
+      if (lineColumn <= rowMax){
         lineColumn++;
       } else {
         lineRow++;
@@ -395,11 +393,10 @@ class RendererNodes extends RenderGroup {
 
     if (lightningFlashing) {
       final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
-      final ambientBrightness = lerpColors(ambientColor, 0, environment.brightness);
+      final ambientBrightness = lerpColors(scene.ambientColor, 0, environment.brightness);
       lightningColor = lerpColors(ambientBrightness, lightningColorMax, environment.lightningFlashing01.value * goldenRatio_0618);
     }
 
-    ambientColor = scene.ambientColor;
     nodeColors = scene.nodeColors;
     totalNodes = scene.totalNodes;
     totalRows = scene.totalRows;
@@ -860,19 +857,15 @@ class RendererNodes extends RenderGroup {
     return row >= playerRow && column >= playerColumn;
   }
 
-
-
-  var previousNodeTransparent = false;
-
   void renderCurrentNode() {
 
-    if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
-
-    final transparent = currentNodeTransparent;
-    if (previousNodeTransparent != transparent) {
-      previousNodeTransparent = transparent;
-      engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
-    }
+    // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
+    // final transparent = currentNodeTransparent;
+    // if (previousNodeTransparent != transparent) {
+    // TODO use engine.color.opacity = 0.5;
+    //   previousNodeTransparent = transparent;
+    //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
+    // }
 
     final nodeType = currentNodeType;
     final nodeOrientation = currentNodeOrientation;
