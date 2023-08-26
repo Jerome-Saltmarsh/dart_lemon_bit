@@ -2115,8 +2115,8 @@ class RendererNodes extends RenderGroup {
 
     renderCellTopColumn(
       srcY: srcY,
-      dstX: -Node_Size_Half,
-      dstY: -Cell_South_Height,
+      dstX: currentNodeDstX - Node_Size_Half,
+      dstY: currentNodeDstY - Cell_South_Height,
       color: colorAbove,
     );
 
@@ -2129,8 +2129,8 @@ class RendererNodes extends RenderGroup {
 
     renderCellTopColumn(
       srcY: srcY,
-      dstX: -Node_Size_Half + Cell_South_Width,
-      dstY: -Cell_South_Height + Cell_South_Height + Cell_South_Height,
+      dstX: currentNodeDstX - Node_Size_Half + Cell_South_Width,
+      dstY: currentNodeDstY - Cell_South_Height + Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
     );
 
@@ -2143,8 +2143,8 @@ class RendererNodes extends RenderGroup {
 
     renderCellTopColumn(
       srcY: srcY,
-      dstX: -Node_Size_Half + Cell_South_Width + Cell_South_Width,
-      dstY: -Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height,
+      dstX: currentNodeDstX - Node_Size_Half + Cell_South_Width + Cell_South_Width,
+      dstY: currentNodeDstY - Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height,
       color: colorCurrent,
     );
 
@@ -2211,22 +2211,22 @@ class RendererNodes extends RenderGroup {
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX + dstX,
-      dstY: currentNodeDstY + dstY,
+      dstX: dstX,
+      dstY: dstY,
       color: color,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX + dstX + Cell_Top_Width,
-      dstY: currentNodeDstY + dstY - Cell_Top_Height,
+      dstX: dstX + Cell_Top_Width,
+      dstY: dstY - Cell_Top_Height,
       color: color,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX + dstX + Cell_Top_Width + Cell_Top_Width,
-      dstY: currentNodeDstY + dstY - Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX + Cell_Top_Width + Cell_Top_Width,
+      dstY: dstY - Cell_Top_Height - Cell_Top_Height,
       color: color,
     );
   }
