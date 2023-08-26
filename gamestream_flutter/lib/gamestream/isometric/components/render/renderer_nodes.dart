@@ -12,6 +12,11 @@ import 'package:lemon_math/src.dart';
 
 import 'constants/node_src.dart';
 
+class TreeType {
+  static const Pine = 0;
+  static const Oak = 1;
+}
+
 class RendererNodes extends RenderGroup {
 
   static const Node_Size = 48.0;
@@ -99,7 +104,6 @@ class RendererNodes extends RenderGroup {
   var transparencyGridStack = Uint16List(0);
   var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
-  var atlasNodesLoaded = false;
 
   late Uint8List nodeTypes;
   late Uint32List nodeColors;
@@ -110,20 +114,15 @@ class RendererNodes extends RenderGroup {
   @override
   void onComponentReady() {
     atlasNodes = images.atlas_nodes;
-    atlasNodesLoaded = true;
   }
 
-  int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
-
   int get wind => environment.wind.value;
-
-  int get currentNodeVariation => scene.nodeVariations[currentNodeIndex];
 
   int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
 
   int get renderNodeBelowIndex => currentNodeIndex - scene.area;
 
-  int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : currentNodeVariation;
+  // int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : currentNodeVariation;
 
   int get renderNodeBelowColor => scene.getNodeColorAtIndex(currentNodeIndex - scene.area);
 
@@ -312,7 +311,7 @@ class RendererNodes extends RenderGroup {
   }
 
   @override
-  int getTotal() => atlasNodesLoaded ? scene.totalNodes : 0;
+  int getTotal() => scene.totalNodes;
 
   @override
   void reset() {
@@ -671,7 +670,7 @@ class RendererNodes extends RenderGroup {
     final currentNodeProjection = currentNodeIndex % scene.projection;
     if (!transparencyGrid[currentNodeProjection]) return false;
 
-    final nodeOrientation = currentNodeOrientation;
+    final nodeOrientation = scene.nodeOrientations[currentNodeIndex];
 
     if (nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South){
       return row >= playerRow;
@@ -705,12 +704,13 @@ class RendererNodes extends RenderGroup {
       renderDynamic(
         nodeType:nodeType,
         nodeOrientation: nodeOrientation,
-        dstX: dstX,
-        dstY: dstY,
+        nodeVariation: scene.nodeVariations[currentNodeIndex],
         colorAbove: scene.getColorAbove(currentNodeIndex),
         colorWest: scene.getColorWest(currentNodeIndex),
         colorSouth: scene.getColorSouth(currentNodeIndex),
-        colorCurrent: scene.getNodeColorAtIndex(currentNodeIndex)
+        colorCurrent: scene.getNodeColorAtIndex(currentNodeIndex),
+        dstX: dstX,
+        dstY: dstY,
       );
       return;
     }
@@ -784,12 +784,15 @@ class RendererNodes extends RenderGroup {
         renderNodeTreeBottom(
           dstX: dstX,
           dstY: dstY,
+          treeType: mapVariationToTreeType(scene.nodeVariations[currentNodeIndex])
         );
         break;
       case NodeType.Tree_Top:
+        final nodeVariationBelow = scene.nodeVariations[currentNodeIndex - scene.area];
         renderNodeTreeTop(
           dstX: dstX,
           dstY: dstY,
+          treeType: mapVariationToTreeType(nodeVariationBelow),
         );
         break;
       case NodeType.Scaffold:
@@ -1008,6 +1011,8 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
 }) {
+    final currentNodeVariation = scene.nodeVariations[currentNodeIndex];
+
      if (currentNodeVariation == 0){
       renderStandardNode(
         srcX: 1392,
@@ -1084,6 +1089,7 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
   }) {
+    final currentNodeVariation = scene.nodeVariations[currentNodeIndex];
     if (currentNodeIndex > scene.area && scene.nodeTypes[currentNodeIndex - scene.area] == NodeType.Water){
       engine.renderSprite(
         image: atlasNodes,
@@ -1116,6 +1122,7 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
   }) {
+    final currentNodeVariation = scene.nodeVariations[currentNodeIndex];
     final row =  (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value;
     final column = (animation.frame + currentNodeVariation) % 6;
 
@@ -1130,7 +1137,8 @@ class RendererNodes extends RenderGroup {
   void renderNodeTreeTop({
     required double dstX,
     required double dstY,
-  }) => renderNodeBelowVariation == 0
+    required int treeType,
+  }) => treeType == TreeType.Pine
       ? renderTreeTopPine(
           dstX: dstX,
           dstY: dstY,
@@ -1143,7 +1151,8 @@ class RendererNodes extends RenderGroup {
   void renderNodeTreeBottom({
     required double dstX,
     required double dstY,
-  }) => currentNodeVariation == 0 ? renderTreeBottomPine(
+    required int treeType,
+  }) => treeType == TreeType.Pine ? renderTreeBottomPine(
       dstX: dstX,
       dstY: dstY
   ) : renderTreeBottomOak(
@@ -1310,7 +1319,7 @@ class RendererNodes extends RenderGroup {
     double dstX = 0,
     double dstY = 0,
   }) {
-    switch (currentNodeOrientation){
+    switch (scene.nodeOrientations[currentNodeIndex]){
       case NodeOrientation.Solid:
         renderNodeShadedOffset(
           srcX: srcX,
@@ -1696,7 +1705,7 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
   }) {
-    switch (currentNodeOrientation){
+    switch (scene.nodeOrientations[currentNodeIndex]){
       case NodeOrientation.Solid:
         renderStandardNode(
           srcX: srcX,
@@ -2215,12 +2224,13 @@ class RendererNodes extends RenderGroup {
   void renderDynamic({
     required int nodeType,
     required int nodeOrientation,
-    required double dstX,
-    required double dstY,
+    required int nodeVariation,
     required int colorAbove,
     required int colorSouth,
     required int colorWest,
     required int colorCurrent,
+    required double dstX,
+    required double dstY,
   }) {
     final srcY = nodeTypeSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
@@ -2231,7 +2241,7 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           srcY: srcY,
-          srcX: currentNodeVariation < 126 ? 0.0 : 128.0,
+          srcX: nodeVariation < 126 ? 0.0 : 128.0,
           colorAbove: colorAbove,
           colorSouth: colorSouth,
           colorWest: colorWest,
@@ -3331,4 +3341,12 @@ class RendererNodes extends RenderGroup {
         dstY: dstY,
     );
   }
+}
+
+int mapVariationToTreeType(int variation){
+  if (variation < 126) {
+    return TreeType.Oak;
+  }
+  return TreeType.Pine;
+
 }
