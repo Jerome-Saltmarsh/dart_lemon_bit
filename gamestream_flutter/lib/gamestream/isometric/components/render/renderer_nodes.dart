@@ -740,6 +740,7 @@ class RendererNodes extends RenderGroup {
         renderNodeWater(
           dstX: dstX,
           dstY: dstY,
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         break;
       case NodeType.Dust:
@@ -749,6 +750,7 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           nodeVariation: scene.nodeVariations[currentNodeIndex],
+          color: scene.getNodeColorAtIndex(currentNodeIndex),
         );
         return;
       case NodeType.Rain_Landing:
@@ -766,6 +768,7 @@ class RendererNodes extends RenderGroup {
           srcY: 0,
           dstX: dstX,
           dstY: dstY,
+          color: color,
         );
         break;
       case NodeType.Concrete:
@@ -792,6 +795,7 @@ class RendererNodes extends RenderGroup {
           IsometricConstants.Sprite_Width_Padded_9,
           offsetY: 7,
           color: scene.getColorAbove(currentNodeIndex),
+          orientation: scene.nodeOrientations[currentNodeIndex],
         );
         return;
       case NodeType.Tree_Top:
@@ -896,12 +900,15 @@ class RendererNodes extends RenderGroup {
         renderNodeShoppingShelf(
           dstX: dstX,
           dstY: dstY,
+          variation: scene.nodeVariations[currentNodeIndex],
+          color: scene.nodeColors[currentNodeIndex],
         );
         break;
       case NodeType.Bookshelf:
         renderNodeBookShelf(
           dstX: dstX,
           dstY: dstY,
+          color: scene.nodeColors[currentNodeIndex],
         );
         break;
       case NodeType.Grass_Long:
@@ -951,6 +958,7 @@ class RendererNodes extends RenderGroup {
           srcY: 867.0,
           dstX: dstX,
           dstY: dstY,
+          color: color,
         );
         return;
       case NodeType.Fireplace:
@@ -969,6 +977,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeType.Oven:
         renderStandardNode(
+          color: color,
           srcX: AtlasNodeX.Oven,
           srcY: AtlasNodeY.Oven,
           dstX: dstX,
@@ -977,6 +986,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeType.Chimney:
         renderStandardNode(
+          color: color,
           srcX: AtlasNode.Chimney_X,
           srcY: AtlasNode.Node_Chimney_Y,
           dstX: dstX,
@@ -992,6 +1002,7 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeType.Table:
         renderStandardNode(
+          color: color,
           srcX: AtlasNode.Table_X,
           srcY: AtlasNode.Node_Table_Y,
           dstX: dstX,
@@ -1052,11 +1063,12 @@ class RendererNodes extends RenderGroup {
   void renderNodeShoppingShelf({
     required double dstX,
     required double dstY,
+    required int variation,
+    required int color,
 }) {
-    final currentNodeVariation = scene.nodeVariations[currentNodeIndex];
-
-     if (currentNodeVariation == 0){
+     if (variation == 0){
       renderStandardNode(
+        color: color,
         srcX: 1392,
         srcY: 160,
         dstX: dstX,
@@ -1064,6 +1076,7 @@ class RendererNodes extends RenderGroup {
       );
     } else {
       renderStandardNode(
+        color: color,
         srcX: 1441,
         srcY: 160,
         dstX: dstX,
@@ -1075,7 +1088,9 @@ class RendererNodes extends RenderGroup {
   void renderNodeBookShelf({
     required double dstX,
     required double dstY,
+    required int color,
   }) => renderStandardNode(
+      color: color,
       srcX: 1392,
       srcY: 233,
       dstX: dstX,
@@ -1153,6 +1168,7 @@ class RendererNodes extends RenderGroup {
     } // if (onWater){
 
     renderStandardNode(
+      color: color,
       srcX: environment.srcXRainLanding,
       srcY: 72.0 * ((animation.frame + variation) % 6), // TODO Expensive Operation
       dstX: dstX,
@@ -1164,6 +1180,7 @@ class RendererNodes extends RenderGroup {
         dstX: dstX,
         dstY: dstY,
         nodeVariation: variation,
+        color: scene.getNodeColorAtIndex(currentNodeIndex),
       );
     }
   }
@@ -1172,10 +1189,12 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int nodeVariation,
+    required int color,
   }) {
     final row =  (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value;
     final column = (animation.frame + nodeVariation) % 6;
     renderStandardNode(
+      color: color,
       srcX: 1596 + (column * 48),
       srcY: 1306 + (row * 72),
       dstX: dstX,
@@ -1388,12 +1407,13 @@ class RendererNodes extends RenderGroup {
 
   void renderNodeTemplateShadedOffset(double srcX, {
     required int color,
+    required int orientation,
     double offsetX = 0,
     double offsetY = 0,
     double dstX = 0,
     double dstY = 0,
   }) {
-    switch (scene.nodeOrientations[currentNodeIndex]){
+    switch (orientation){
       case NodeOrientation.Solid:
         renderNodeShadedOffset(
           srcX: srcX,
@@ -1822,6 +1842,7 @@ class RendererNodes extends RenderGroup {
     switch (nodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_00,
           dstX: dstX,
@@ -1956,6 +1977,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_North:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_03,
           dstX: dstX,
@@ -1964,6 +1986,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_East:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_04,
           dstX: dstX,
@@ -1972,6 +1995,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_South:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_05,
           dstX: dstX,
@@ -1980,6 +2004,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_West:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_06,
           dstX: dstX,
@@ -1988,6 +2013,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_South_West:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_07,
           dstX: dstX,
@@ -1996,6 +2022,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_North_West:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_08,
           dstX: dstX,
@@ -2004,6 +2031,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_North_East:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_09,
           dstX: dstX,
@@ -2012,6 +2040,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Outer_South_East:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_10,
           dstX: dstX,
@@ -2020,6 +2049,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_South_East:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_11,
           dstX: dstX,
@@ -2028,6 +2058,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_North_East :
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_12,
           dstX: dstX,
@@ -2036,6 +2067,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_North_West:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_13,
           dstX: dstX,
@@ -2044,6 +2076,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Slope_Inner_South_West:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_14,
           dstX: dstX,
@@ -2052,6 +2085,7 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeOrientation.Radial:
         renderStandardNode(
+          color: color,
           srcX: srcX,
           srcY: IsometricConstants.Sprite_Height_Padded_15,
           dstX: dstX,
@@ -2064,7 +2098,7 @@ class RendererNodes extends RenderGroup {
           srcY: IsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: -8,
-          color: scene.nodeColors[currentNodeIndex + scene.area < scene.totalNodes ? currentNodeIndex + scene.area : currentNodeIndex],
+          color: color,
           dstX: dstX,
           dstY: dstY,
         );
@@ -2259,6 +2293,7 @@ class RendererNodes extends RenderGroup {
   void renderNodeWater({
     required double dstX,
     required double dstY,
+    required int color,
   }) =>
       engine.renderSprite(
         image: atlasNodes,
@@ -2269,7 +2304,7 @@ class RendererNodes extends RenderGroup {
         dstX: dstX,
         dstY: dstY + animation.frameWaterHeight + 14,
         anchorY: 0.3334,
-        color: scene.getNodeColorAtIndex(currentNodeIndex),
+        color: color,
       );
 
   void renderStandardNode({
@@ -2277,8 +2312,9 @@ class RendererNodes extends RenderGroup {
     required double srcY,
     required double dstX,
     required double dstY,
+    required int color,
   }) => engine.render(
-        color: scene.getNodeColorAtIndex(currentNodeIndex),
+        color: color,
         srcLeft: srcX,
         srcTop: srcY,
         srcRight: srcX + IsometricConstants.Sprite_Width,
