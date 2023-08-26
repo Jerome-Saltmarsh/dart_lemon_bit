@@ -778,19 +778,23 @@ class RendererNodes extends RenderGroup {
       case NodeType.Road:
         renderNodeTemplateShadedOffset(IsometricConstants.Sprite_Width_Padded_9, offsetY: 7);
         return;
-      case NodeType.Tree_Bottom:
-        renderNodeTreeBottom(
-          dstX: dstX,
-          dstY: dstY,
-          treeType: mapVariationToTreeType(scene.nodeVariations[currentNodeIndex])
-        );
-        break;
       case NodeType.Tree_Top:
         final nodeVariationBelow = scene.nodeVariations[currentNodeIndex - scene.area];
         renderNodeTreeTop(
           dstX: dstX,
           dstY: dstY,
           treeType: mapVariationToTreeType(nodeVariationBelow),
+          colorWest: scene.getColorWest(currentNodeIndex),
+          colorSouth: scene.getColorSouth(currentNodeIndex),
+        );
+        break;
+      case NodeType.Tree_Bottom:
+        renderNodeTreeBottom(
+          dstX: dstX,
+          dstY: dstY,
+          treeType: mapVariationToTreeType(scene.nodeVariations[currentNodeIndex]),
+          colorWest: scene.getColorWest(currentNodeIndex),
+          colorSouth: scene.getColorSouth(currentNodeIndex),
         );
         break;
       case NodeType.Scaffold:
@@ -1146,31 +1150,49 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int treeType,
-  }) => treeType == TreeType.Pine
-      ? renderTreeTopPine(
-          dstX: dstX,
-          dstY: dstY,
-        )
-      : renderNodeTreeTopOak(
-          dstX: dstX,
-          dstY: dstY,
-      );
+    required int colorWest,
+    required int colorSouth,
+  }) =>
+      treeType == TreeType.Pine
+          ? renderTreeTopPine(
+              dstX: dstX,
+              dstY: dstY,
+              colorWest: colorWest,
+              colorSouth: colorSouth,
+            )
+          : renderNodeTreeTopOak(
+              dstX: dstX,
+              dstY: dstY,
+              colorWest: colorWest,
+              colorSouth: colorSouth,
+            );
 
   void renderNodeTreeBottom({
     required double dstX,
     required double dstY,
     required int treeType,
-  }) => treeType == TreeType.Pine ? renderTreeBottomPine(
-      dstX: dstX,
-      dstY: dstY
-  ) : renderTreeBottomOak(
-    dstX: dstX,
-    dstY: dstY,
-  );
+    required int colorWest,
+    required int colorSouth,
+  }) =>
+      treeType == TreeType.Pine
+          ? renderTreeBottomPine(
+              dstX: dstX,
+              dstY: dstY,
+              colorWest: colorWest,
+              colorSouth: colorSouth,
+            )
+          : renderTreeBottomOak(
+              dstX: dstX,
+              dstY: dstY,
+              colorWest: colorWest,
+              colorSouth: colorSouth,
+            );
 
   void renderNodeTreeTopOak({
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorSouth,
   }){
     final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
@@ -1186,7 +1208,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX + (shift * 0.5),
       dstY: dstY + 40,
-      color: scene.getColorWest(currentNodeIndex),
+      color: colorWest,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1199,7 +1221,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX + (shift * 0.5),
       dstY: dstY + 40,
-      color: scene.getColorSouth(currentNodeIndex),
+      color: colorSouth,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1208,6 +1230,8 @@ class RendererNodes extends RenderGroup {
   void renderTreeTopPine({
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorSouth,
 }) {
     final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
@@ -1223,7 +1247,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX + (shift * 0.5),
       dstY: dstY + 40,
-      color: scene.getColorWest(currentNodeIndex),
+      color: colorWest,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1236,7 +1260,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY + 40,
-      color: scene.getColorSouth(currentNodeIndex),
+      color: colorSouth,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1246,6 +1270,8 @@ class RendererNodes extends RenderGroup {
   void renderTreeBottomOak({
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorSouth,
 }) {
     final treeAnimation = animation.treeAnimation;
     final frame = row - column + 4;
@@ -1262,7 +1288,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY + 32,
-      color: scene.getColorWest(currentNodeIndex),
+      color: colorWest,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1276,7 +1302,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY + 32,
-      color: scene.getColorSouth(currentNodeIndex),
+      color: colorSouth,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1285,6 +1311,8 @@ class RendererNodes extends RenderGroup {
   void renderTreeBottomPine({
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorSouth,
   }) {
     final treeAnimation = animation.treeAnimation;
     final frame = row - column + 4;
@@ -1301,7 +1329,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY + 32,
-      color: scene.getColorWest(currentNodeIndex),
+      color: colorWest,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1315,7 +1343,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY + 32,
-      color: scene.getColorSouth(currentNodeIndex),
+      color: colorSouth,
       rotation: rotation,
       anchorY: anchorY,
     );
