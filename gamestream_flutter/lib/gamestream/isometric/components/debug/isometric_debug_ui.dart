@@ -622,11 +622,6 @@ extension isometricDebugUI on IsometricDebug {
              action: options.toggleRenderRainTwice,
              value: () => options.renderRainFallingTwice,
           ),
-          buildRowToggle(
-             text: 'skin-blend',
-             action: options.incrementSkinBlend,
-             value: () => options.skinBlend,
-          ),
         ],
       );
 

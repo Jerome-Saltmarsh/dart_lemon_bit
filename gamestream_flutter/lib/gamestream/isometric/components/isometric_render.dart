@@ -19,21 +19,10 @@ class IsometricRender with IsometricComponent {
 
   var renderAimTargetName = false;
 
-  late final Float32List bufferSrc;
-  late final Float32List bufferDst;
-  late final Int32List bufferClr;
-
   @override
   Future onComponentInit(sharedPreferences) async {
     engine.onDrawCanvas = drawCanvas;
     engine.onDrawForeground = drawForeground;
-  }
-
-  @override
-  void onComponentReady() {
-    bufferClr = engine.bufferClr;
-    bufferDst = engine.bufferDst;
-    bufferSrc = engine.bufferSrc;
   }
 
   void modulate({
@@ -47,7 +36,7 @@ class IsometricRender with IsometricComponent {
     double anchorX = 0.5,
     double anchorY = 0.5,
   }){
-    engine.bufferBlendMode = options.skinBlend;
+    engine.bufferBlendMode = BlendMode.modulate;
     this.sprite(
       sprite: sprite,
       frame: frame,
