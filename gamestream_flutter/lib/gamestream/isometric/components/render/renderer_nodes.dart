@@ -1113,19 +1113,19 @@ class RendererNodes extends RenderGroup {
     renderCellSouth(
         srcY: srcY,
         dstX: currentNodeDstX + dstX,
-        dstY: dstY,
+        dstY: currentNodeDstY + dstY,
         color: color,
     );
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX + dstX + Cell_South_Width,
-      dstY: dstY -Cell_South_Height,
+      dstY: currentNodeDstY + dstY - Cell_South_Height,
       color: color,
     );
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX + dstX + Cell_South_Width + Cell_South_Width,
-      dstY: dstY -Cell_South_Height - Cell_South_Height,
+      dstY: currentNodeDstY + dstY - Cell_South_Height - Cell_South_Height,
       color: color,
     );
   }
@@ -1306,42 +1306,42 @@ class RendererNodes extends RenderGroup {
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX,
-      dstY: Node_Size_Half + Cell_South_Height,
+      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height,
       color: colorSouth,
     );
 
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX + Cell_South_Width,
-      dstY: Node_Size_Half + Cell_South_Height -Cell_South_Height,
+      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height -Cell_South_Height,
       color: colorSouth,
     );
 
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX + Cell_South_Width + Cell_South_Width,
-      dstY:  Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
+      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
       color: colorSouth,
     );
 
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX,
-      dstY: Node_Size_Half + Cell_South_Height - Cell_South_Height,
+      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_South_Height,
       color: colorSouth,
     );
 
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX + Cell_South_Width,
-      dstY: Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
+      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
       color: colorSouth,
     );
 
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX,
-      dstY: Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
+      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_South_Height - Cell_South_Height,
       color: colorSouth,
     );
 
@@ -1494,19 +1494,19 @@ class RendererNodes extends RenderGroup {
     renderCellSouth(
       srcY: srcY,
         dstX: currentNodeDstX - Node_Size_Half +Cell_Size + Cell_Size,
-        dstY: Node_South_Height,
+        dstY: currentNodeDstY + Node_South_Height,
         color: colorSouth,
     );
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX - Node_Size_Half + Cell_Size + Cell_Size + Cell_South_Width,
-      dstY: Node_South_Height -Cell_South_Height,
+      dstY: currentNodeDstY + Node_South_Height - Cell_South_Height,
       color: colorSouth,
     );
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX - Node_Size_Half + Cell_Size + Cell_Size + Cell_South_Width,
-      dstY: Node_South_Height -Cell_South_Height - Cell_South_Height,
+      dstY: currentNodeDstY + Node_South_Height - Cell_South_Height - Cell_South_Height,
       color: colorSouth,
     );
   }
@@ -1561,7 +1561,7 @@ class RendererNodes extends RenderGroup {
     renderCellSouth(
       srcY: srcY,
       dstX: currentNodeDstX + dstX + Cell_Size_Half + Cell_Size_Half + Cell_Size_Half,
-      dstY: dstY - Cell_Size_Half + Cell_Size_Half + Cell_Size_Half + Cell_Size_Half,
+      dstY: currentNodeDstY + dstY - Cell_Size_Half + Cell_Size_Half + Cell_Size_Half + Cell_Size_Half,
       color: colorSouth,
     );
   }
@@ -2777,7 +2777,7 @@ class RendererNodes extends RenderGroup {
         scale: 1.0,
         rotation: 0,
         dstX: dstX,
-        dstY: currentNodeDstY + dstY,
+        dstY: dstY,
       );
 
   void renderNodeSideTop({
