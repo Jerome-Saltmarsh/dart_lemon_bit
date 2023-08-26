@@ -1278,6 +1278,7 @@ class RendererNodes extends RenderGroup {
     );
 
     renderNodeSideWest(
+      srcY: srcY,
       dstX: currentNodeDstX - Node_Size_Half,
       dstY: currentNodeDstY,
       color: colorWest,
@@ -1369,6 +1370,7 @@ class RendererNodes extends RenderGroup {
     final dstY = -Cell_Size;
 
     renderNodeSideWest(
+      srcY: srcY,
       dstX: currentNodeDstX,
       dstY: currentNodeDstY + dstY + Node_Size_Sixth,
       width: Cell_Size,
@@ -1407,6 +1409,7 @@ class RendererNodes extends RenderGroup {
     );
 
     renderNodeSideWest(
+      srcY: srcY,
       dstX: currentNodeDstX - Cell_Size_Half,
       dstY: currentNodeDstY + dstY,
       width: Node_Size_Sixth,
@@ -1555,9 +1558,10 @@ class RendererNodes extends RenderGroup {
       dstY: currentNodeDstY - Node_Size_Half,
     );
     renderNodeSideWest(
-        dstX: currentNodeDstX - Node_Size_Half,
-        dstY: currentNodeDstY,
-        color: colorWest,
+      srcY: srcY,
+      dstX: currentNodeDstX - Node_Size_Half,
+      dstY: currentNodeDstY,
+      color: colorWest,
     );
     renderNodeSideSouth(
       dstX: 0,
@@ -2517,6 +2521,7 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
   }){
     renderNodeSideWest(
+      srcY: srcY,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY,
       width: Node_Size_Sixth,
@@ -2556,6 +2561,7 @@ class RendererNodes extends RenderGroup {
   }){
 
     renderNodeSideWest(
+      srcY: srcY,
       dstX: currentNodeDstX + dstX,
       dstY: currentNodeDstY + dstY + Node_Size_Sixth,
       color: colorWest,
@@ -2720,8 +2726,8 @@ class RendererNodes extends RenderGroup {
       );
 
   void renderNodeSideTop({
-    required double srcX,
     required int color,
+    required double srcX,
     required double srcY,
     required double dstX,
     required double dstY,
@@ -2741,6 +2747,7 @@ class RendererNodes extends RenderGroup {
 
   void renderNodeSideWest({
     required int color,
+    required double srcY,
     required double dstX,
     required double dstY,
     double width = Src_Width_Side_West,
