@@ -28,7 +28,7 @@ class RendererNodes extends RenderGroup {
   static const Cell_West_Height = 8.0;
   static const Node_South_Height = 24.0;
 
-  static const MapNodeTypeToSrcY = <int, double>{
+  static const mapNodeTypeToSrcY = <int, double>{
     NodeType.Brick: 1760,
     NodeType.Grass: 1808,
     NodeType.Soil: 1856,
@@ -272,9 +272,8 @@ class RendererNodes extends RenderGroup {
           ) {
             final nodeType = nodeTypes[currentNodeIndex];
             if (nodeType != NodeType.Empty){
-              renderCurrentNode(
-                nodeType: nodeTypes[currentNodeIndex],
-                nodeOrientation: nodeOrientations[currentNodeIndex],
+              renderCurrentNodeIndex(
+                currentNodeIndex: currentNodeIndex,
                 dstX: currentNodeDstX,
                 dstY: currentNodeDstY,
               );
@@ -734,12 +733,14 @@ class RendererNodes extends RenderGroup {
     return row >= playerRow && column >= playerColumn;
   }
 
-  void renderCurrentNode({
-    required int nodeType,
-    required int nodeOrientation,
+  void renderCurrentNodeIndex({
+    required int currentNodeIndex,
     required double dstX,
     required double dstY,
   }) {
+
+    final nodeType = nodeTypes[currentNodeIndex];
+    final nodeOrientation = nodeOrientations[currentNodeIndex];
 
     // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
     // final transparent = currentNodeTransparent;
@@ -750,14 +751,16 @@ class RendererNodes extends RenderGroup {
     // }
 
     // currentNodeType = scene.nodeTypes[currentNodeIndex];
-    final nodeOrientation = currentNodeOrientation;
 
-    if (MapNodeTypeToSrcY.containsKey(nodeType)){
+    if (mapNodeTypeToSrcY.containsKey(nodeType)){
       renderDynamic(
         nodeType:nodeType,
         nodeOrientation: nodeOrientation,
         dstX: dstX,
         dstY: dstY,
+        colorAbove: colorAbove,
+        colorWest: colorWest,
+        colorSouth: colorSouth,
       );
       return;
     }
@@ -961,8 +964,11 @@ class RendererNodes extends RenderGroup {
     required int nodeOrientation,
     required double dstX,
     required double dstY,
+    required int colorAbove,
+    required int colorSouth,
+    required int colorWest,
   }) {
-    srcY = MapNodeTypeToSrcY[nodeType] ??
+    srcY = mapNodeTypeToSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
