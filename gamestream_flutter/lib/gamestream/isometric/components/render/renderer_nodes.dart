@@ -115,13 +115,6 @@ class RendererNodes extends RenderGroup {
 
   int get colorCurrent => nodeColors[currentNodeIndex];
 
-  int get colorWest {
-    if (column + 1 >= totalColumns){
-      return scene.ambientColor;
-    }
-    return nodeColors[currentNodeIndex + 1];
-  }
-
   int get colorEast {
     if (column - 1 < 0){
       return scene.ambientColor;
@@ -922,7 +915,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Boulder,
       dstX: dstX,
       dstY: dstY,
-      color: colorWest,
+      color: scene.getColorWest(currentNodeIndex),
     );
 
     engine.renderSprite(
@@ -989,7 +982,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height,
       dstX: dstX,
       dstY: dstY,
-      color: colorWest,
+      color: scene.getColorWest(currentNodeIndex),
     );
 
     renderCustomNode(
@@ -1059,7 +1052,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorWest,
+      color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1098,7 +1091,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorWest,
+      color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1138,7 +1131,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorWest,
+      color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1176,7 +1169,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorWest,
+      color: scene.getColorWest(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
