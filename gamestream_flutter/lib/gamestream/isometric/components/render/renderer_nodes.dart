@@ -66,8 +66,8 @@ class RendererNodes extends RenderGroup {
   var nodesMinZ = 0;
   var currentNodeZ = 0;
   // var row = 0;
-  var column = 0;
-  var z = 0;
+  // var column = 0;
+  // var z = 0;
   // var currentNodeDstX = 0.0;
   // var currentNodeDstY = 0.0;
   // var currentNodeIndex = 0;
@@ -199,11 +199,10 @@ class RendererNodes extends RenderGroup {
     final screenRight = this.screenRight; // cache in cpu
     final screenBottom = this.screenBottom; // cache in cpu
 
-    column = lineColumn;
+    var column = lineColumn;
     var row = lineRow;
 
     while (lineZ >= 0) {
-      z = lineZ;
       var currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
       if (currentNodeDstY > screenTop) {
