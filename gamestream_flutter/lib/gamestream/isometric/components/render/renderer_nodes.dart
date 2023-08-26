@@ -115,27 +115,6 @@ class RendererNodes extends RenderGroup {
 
   int get colorCurrent => nodeColors[currentNodeIndex];
 
-  int get colorEast {
-    if (column - 1 < 0){
-      return scene.ambientColor;
-    }
-    return nodeColors[currentNodeIndex - 1];
-  }
-
-  int get colorNorth {
-    if (row - 1 < 0) {
-      return scene.ambientColor;
-    }
-    return nodeColors[currentNodeIndex - totalColumns];
-  }
-
-  int get colorSouth {
-    if (row + 1 >= totalRows) {
-      return scene.ambientColor;
-    }
-    return nodeColors[currentNodeIndex + totalColumns];
-  }
-
   int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
 
   int get wind => environment.wind.value;
@@ -926,7 +905,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Boulder,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
+      color: scene.getColorSouth(currentNodeIndex),
     );
 
   }
@@ -992,7 +971,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
+      color: scene.getColorSouth(currentNodeIndex),
     );
   }
 
@@ -1066,7 +1045,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
+      color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1105,7 +1084,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
+      color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1145,7 +1124,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
+      color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1183,7 +1162,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
+      color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
     );
