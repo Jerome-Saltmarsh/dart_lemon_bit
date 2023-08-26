@@ -35,6 +35,7 @@ class RendererNodes extends RenderGroup {
     NodeType.Wood: 1904,
   };
 
+  var srcY = 0.0;
   var lightningColor = 0;
   var previousNodeTransparent = false;
   var lightningFlashing = false;
@@ -287,7 +288,15 @@ class RendererNodes extends RenderGroup {
           if (currentNodeDstX > screenLeft &&
               currentNodeDstX < screenRight
           ) {
-            renderCurrentNode();
+            final nodeType = nodeTypes[currentNodeIndex];
+            if (nodeType != NodeType.Empty){
+              renderCurrentNode(
+                nodeType: nodeTypes[currentNodeIndex],
+                nodeOrientation: nodeOrientations[currentNodeIndex],
+                dstX: currentNodeDstX,
+                dstY: currentNodeDstY,
+              );
+            }
           }
 
           row++;
@@ -301,6 +310,7 @@ class RendererNodes extends RenderGroup {
         }
       }
 
+      // TODO check logic
       if (lineColumn <= rowMax){
         lineColumn++;
       } else {
@@ -747,7 +757,12 @@ class RendererNodes extends RenderGroup {
     return row >= playerRow && column >= playerColumn;
   }
 
-  void renderCurrentNode() {
+  void renderCurrentNode({
+    required int nodeType,
+    required int nodeOrientation,
+    required double dstX,
+    required double dstY,
+  }) {
 
     // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
     // final transparent = currentNodeTransparent;
@@ -758,15 +773,15 @@ class RendererNodes extends RenderGroup {
     // }
 
     // currentNodeType = scene.nodeTypes[currentNodeIndex];
-
-    final nodeType = nodeTypes[currentNodeIndex];
-    if (nodeType == NodeType.Empty) {
-      return;
-    }
     final nodeOrientation = currentNodeOrientation;
 
     if (MapNodeTypeToSrcY.containsKey(nodeType)){
-      renderDynamic(nodeType, nodeOrientation);
+      renderDynamic(
+        nodeType:nodeType,
+        nodeOrientation: nodeOrientation,
+        dstX: dstX,
+        dstY: dstY,
+      );
       return;
     }
 
@@ -964,15 +979,18 @@ class RendererNodes extends RenderGroup {
 
   }
 
-  var srcY = 0.0;
-
-  void renderDynamic(int nodeType, int nodeOrientation) {
+  void renderDynamic({
+    required int nodeType,
+    required int nodeOrientation,
+    required double dstX,
+    required double dstY,
+  }) {
     srcY = MapNodeTypeToSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
       case NodeOrientation.Solid:
-        renderDynamicSolid(srcY);
+        renderDynamicSolid();
         break;
       case NodeOrientation.Half_West:
         renderDynamicHalfWest(
@@ -1551,7 +1569,7 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderDynamicSolid(double srcY) {
+  void renderDynamicSolid() {
     renderNodeSideTop();
     renderNodeSideWest(
         dstX: -Node_Size_Half,
