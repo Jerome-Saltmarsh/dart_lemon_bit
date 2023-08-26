@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -831,21 +830,6 @@ class Engine extends StatelessWidget {
     bufferIndex = 0;
   }
 
-  void flushAll(){
-    batchesRendered++;
-    canvas.drawRawAtlas(
-      _bufferImage,
-      bufferDst,
-      bufferSrc,
-      bufferClr,
-      _bufferBlendMode,
-      null,
-      paint,
-    );
-    bufferIndex = 0;
-    batches128Rendered++;
-  }
-
   void renderSprite({
     required ui.Image image,
     required double srcX,
@@ -860,17 +844,17 @@ class Engine extends StatelessWidget {
     int color = 1,
   }){
     bufferImage = image;
-    final f = bufferIndex << 2;
-    bufferClr[bufferIndex] = color;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + srcWidth;
-    bufferSrc[f + 3] = srcY + srcHeight;
-    bufferDst[f] = scale;
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = dstX - (srcWidth * anchorX * scale);
-    bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
-    incrementBufferIndex();
+    render(
+        color: color,
+        srcLeft: srcX,
+        srcTop: srcY,
+        srcRight: srcX + srcWidth,
+        srcBottom: srcY + srcHeight,
+        scale: scale,
+        rotation: 0,
+        dstX: dstX - (srcWidth * anchorX * scale),
+        dstY: dstY - (srcHeight * anchorY * scale),
+    );
   }
 
   /// The anchor determines the point around which the sprite is rotated
@@ -909,44 +893,43 @@ class Engine extends StatelessWidget {
     final adjX2 = opp(rotation - piHalf, scaledWidth);
 
     bufferImage = image;
-    final f = bufferIndex << 2;
-    bufferClr[bufferIndex] = color;
-    bufferSrc[f + 0] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + srcWidth;
-    bufferSrc[f + 3] = srcY + srcHeight;
-    bufferDst[f + 0] = cos(rotation) * scale;
-    bufferDst[f + 1] = sin(rotation) * scale;
-    bufferDst[f + 2] = tx + adjX2 + adjX;
-    bufferDst[f + 3] = ty - adjY2 + adjY;
-    incrementBufferIndex();
+    render(
+        color: color,
+        srcLeft: srcX,
+        srcTop: srcY,
+        srcRight: srcX + srcWidth,
+        srcBottom: srcY + srcHeight,
+        scale: cos(rotation) * scale,
+        rotation: sin(rotation) * scale,
+        dstX: tx + adjX2 + adjX,
+        dstY: ty - adjY2 + adjY,
+    );
   }
 
-  // void renderExternalCanvas({
-  //   required Canvas canvas,
-  //   required ui.Image image,
-  //   required double srcX,
-  //   required double srcY,
-  //   required double srcWidth,
-  //   required double srcHeight,
-  //   required double dstX,
-  //   required double dstY,
-  //   double anchorX = 0.5,
-  //   double anchorY = 0.5,
-  //   double scale = 1.0,
-  //   int color = 1,
-  // }){
-  //   _bufferClr1[0] = color;
-  //   _bufferSrc1[0] = srcX;
-  //   _bufferSrc1[1] = srcY;
-  //   _bufferSrc1[2] = srcX + srcWidth;
-  //   _bufferSrc1[3] = srcY + srcHeight;
-  //   _bufferDst1[0] = scale;
-  //   _bufferDst1[1] = 0;
-  //   _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
-  //   _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
-  //   canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferClr1, _bufferBlendMode, null, paint);
-  // }
+  void render({
+    required int color,
+    required double srcLeft,
+    required double srcTop,
+    required double srcRight,
+    required double srcBottom,
+    required double scale,
+    required double rotation,
+    required double dstX,
+    required double dstY,
+  }){
+    final index = bufferIndex;
+    final i = index << 2;
+    bufferClr[index] = color;
+    bufferSrc[i] = srcLeft;
+    bufferSrc[i + 1] = srcTop;
+    bufferSrc[i + 2] = srcRight;
+    bufferSrc[i + 3] = srcBottom;
+    bufferDst[i] = scale;
+    bufferDst[i + 1] = rotation;
+    bufferDst[i + 2] = dstX;
+    bufferDst[i + 3] = dstY;
+    incrementBufferIndex();
+  }
 
   void renderCircle(double x, double y, double radius, Color color) {
     renderCircleOffset(Offset(x, y), radius, color);
@@ -1194,10 +1177,25 @@ class Engine extends StatelessWidget {
   }
 
   void incrementBufferIndex(){
-    this.bufferIndex++;
-    if (this.bufferIndex == 128) {
-      this.flushAll();
+    bufferIndex++;
+    if (bufferIndex == 128) {
+      flushAll();
     }
+  }
+
+  void flushAll(){
+    batchesRendered++;
+    canvas.drawRawAtlas(
+      _bufferImage,
+      bufferDst,
+      bufferSrc,
+      bufferClr,
+      _bufferBlendMode,
+      null,
+      paint,
+    );
+    bufferIndex = 0;
+    batches128Rendered++;
   }
 
   bool isOnscreen(double x, double y, {required double padding}) {
