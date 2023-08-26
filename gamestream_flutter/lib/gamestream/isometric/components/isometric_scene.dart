@@ -1860,6 +1860,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
     return nodeColors[index + 1];
   }
+
+  int getColorSouth(int index){
+    final row = getIndexRow(index);
+    if (row + 1 >= totalRows) {
+      return ambientColor;
+    }
+    return nodeColors[index + totalColumns];
+  }
 }
 
 int convertSecondsToAmbientAlpha(int totalSeconds) {
