@@ -988,6 +988,7 @@ class RendererNodes extends RenderGroup {
           srcY: srcY,
           colorWest: colorWest,
           colorSouth: colorSouth,
+          colorAbove: colorAbove,
         );
         break;
       case NodeOrientation.Half_East:
@@ -995,6 +996,7 @@ class RendererNodes extends RenderGroup {
           srcY: srcY,
           colorWest: colorWest,
           colorSouth: colorSouth,
+          colorAbove: colorAbove,
         );
         break;
       case NodeOrientation.Half_South:
@@ -2439,6 +2441,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       colorWest: colorWest,
       colorSouth: colorSouth,
+      colorAbove: colorAbove,
     );
   }
 
@@ -2454,6 +2457,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       colorSouth: colorSouth,
       colorWest: colorWest,
+      colorAbove: colorAbove,
     );
   }
 
@@ -2510,6 +2514,7 @@ class RendererNodes extends RenderGroup {
       dstY: currentNodeDstY - Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
       colorWest: colorCurrent,
       colorSouth: colorSouth,
+      colorAbove: colorAbove,
     );
 
     renderNodeSideWest(
@@ -2699,6 +2704,7 @@ class RendererNodes extends RenderGroup {
   void renderDynamicHalfWest({
     required int colorWest,
     required int colorSouth,
+    required int colorAbove,
     required double srcY,
   }) => renderSideEastWest(
     srcY: srcY,
@@ -2706,11 +2712,13 @@ class RendererNodes extends RenderGroup {
     dstY: currentNodeDstY - Node_Size_Sixth,
     colorWest: colorWest,
     colorSouth: colorSouth,
+    colorAbove: colorAbove,
   );
 
   void renderDynamicHalfEast({
     required int colorWest,
     required int colorSouth,
+    required int colorAbove,
     required double srcY,
   }) => renderSideEastWest(
     srcY: srcY,
@@ -2718,6 +2726,7 @@ class RendererNodes extends RenderGroup {
     dstY: currentNodeDstY - Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
     colorSouth: colorSouth,
     colorWest: colorWest,
+    colorAbove: colorAbove,
   );
 
   void renderSideEastWest({
@@ -2726,6 +2735,7 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required colorWest,
     required colorSouth,
+    required colorAbove,
   }){
 
     renderNodeSideWest(
