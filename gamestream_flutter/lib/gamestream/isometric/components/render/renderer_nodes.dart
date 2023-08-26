@@ -1082,21 +1082,21 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Node_Size_Half,
+      dstX: currentNodeDstX - Node_Size_Half,
       dstY: 0,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Node_Size_Half,
+      dstX: currentNodeDstX - Node_Size_Half,
       dstY: Cell_West_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Node_Size_Half,
+      dstX: currentNodeDstX - Node_Size_Half,
       dstY: Cell_West_Height + Cell_West_Height,
       color: colorWest,
     );
@@ -1105,14 +1105,14 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Node_Size_Half + Cell_West_Width,
+      dstX: currentNodeDstX - Node_Size_Half + Cell_West_Width,
       dstY: Cell_West_Height + Cell_West_Height + Cell_West_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Node_Size_Half + Cell_West_Width,
+      dstX: currentNodeDstX - Node_Size_Half + Cell_West_Width,
       dstY: Cell_West_Height + Cell_West_Height + Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
@@ -1121,7 +1121,7 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Node_Size_Half + Cell_West_Width + Cell_West_Width,
+      dstX: currentNodeDstX - Node_Size_Half + Cell_West_Width + Cell_West_Width,
       dstY: Cell_West_Height + Cell_West_Height + Cell_West_Height + Cell_West_Height,
       color: colorWest,
     );
@@ -1212,21 +1212,21 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Cell_West_Width,
+      dstX: currentNodeDstX - Cell_West_Width,
       dstY: Node_Size_Half + Cell_South_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Cell_West_Width,
+      dstX: currentNodeDstX - Cell_West_Width,
       dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Cell_West_Width,
+      dstX: currentNodeDstX - Cell_West_Width,
       dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
@@ -1235,14 +1235,14 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Cell_West_Width - Cell_West_Width,
+      dstX: currentNodeDstX - Cell_West_Width - Cell_West_Width,
       dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Cell_West_Width - Cell_West_Width,
+      dstX: currentNodeDstX - Cell_West_Width - Cell_West_Width,
       dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
@@ -1251,7 +1251,7 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: -Cell_West_Width - Cell_West_Width - Cell_West_Width,
+      dstX: currentNodeDstX - Cell_West_Width - Cell_West_Width - Cell_West_Width,
       dstY: Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
@@ -1580,21 +1580,21 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: dstX,
+      dstX: currentNodeDstX + dstX,
       dstY: dstY + 1,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: dstX + Cell_West_Width,
+      dstX: currentNodeDstX + dstX + Cell_West_Width,
       dstY: dstY + Cell_Size_Half + 1,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: dstX + Cell_West_Width + Cell_West_Width,
+      dstX: currentNodeDstX + dstX + Cell_West_Width + Cell_West_Width,
       dstY: dstY + Cell_Size_Half + Cell_Size_Half + 1,
       color: colorWest,
     );
@@ -2829,7 +2829,7 @@ class RendererNodes extends RenderGroup {
         srcBottom: srcY + Src_Y_Cell_West + Src_Height_Cell_West,
         scale: 1.0,
         rotation: 0,
-        dstX: currentNodeDstX + dstX,
+        dstX: dstX,
         dstY: currentNodeDstY + dstY,
     );
 
