@@ -1047,7 +1047,13 @@ class RendererNodes extends RenderGroup {
         break;
 
       case NodeOrientation.Slope_East:
-        renderSlopeEast(srcY);
+        renderSlopeEast(
+          srcY: srcY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorCurrent: colorCurrent,
+        );
         break;
 
       case NodeOrientation.Slope_West:
@@ -2597,13 +2603,20 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderSlopeEast(double srcY) {
+  void renderSlopeEast({
+    required double srcY,
+    required int colorAbove,
+    required int colorWest,
+    required int colorSouth,
+    required int colorCurrent,
+  }) {
     renderSlopeEastStep(
       srcY: srcY,
       dstX: -Node_Size_Half,
       dstY: Node_South_Height - Cell_South_Height,
       colorWest: colorWest,
       colorTop: colorCurrent,
+      colorSouth: colorSouth,
     );
     renderSlopeEastStep(
       srcY: srcY,
@@ -2611,6 +2624,7 @@ class RendererNodes extends RenderGroup {
       dstY: Node_South_Height - Cell_South_Height - Cell_Size,
       colorWest: colorCurrent,
       colorTop: colorCurrent,
+      colorSouth: colorSouth,
     );
     renderSlopeEastStep(
       srcY: srcY,
@@ -2618,6 +2632,7 @@ class RendererNodes extends RenderGroup {
       dstY: Node_South_Height - Cell_South_Height - Cell_Size - Cell_Size,
       colorWest: colorCurrent,
       colorTop: colorAbove,
+      colorSouth: colorSouth,
     );
     renderCellSouth(
       srcY: srcY,
@@ -2645,6 +2660,7 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int colorWest,
     required int colorTop,
+    required int colorSouth,
   }) {
 
     renderCellWest(
