@@ -1278,7 +1278,7 @@ class RendererNodes extends RenderGroup {
     );
 
     renderNodeSideWest(
-      dstX: -Node_Size_Half,
+      dstX: currentNodeDstX - Node_Size_Half,
       dstY: 0,
       color: colorWest,
     );
@@ -1369,7 +1369,7 @@ class RendererNodes extends RenderGroup {
     final dstY = -Cell_Size;
 
     renderNodeSideWest(
-      dstX: dstX,
+      dstX: currentNodeDstX,
       dstY: dstY + Node_Size_Sixth,
       width: Cell_Size,
       color: colorCurrent,
@@ -1407,7 +1407,7 @@ class RendererNodes extends RenderGroup {
     );
 
     renderNodeSideWest(
-      dstX: dstX,
+      dstX: currentNodeDstX - Cell_Size_Half,
       dstY: dstY,
       width: Node_Size_Sixth,
       color: colorWest,
@@ -1555,7 +1555,7 @@ class RendererNodes extends RenderGroup {
       dstY: currentNodeDstY - Node_Size_Half,
     );
     renderNodeSideWest(
-        dstX: -Node_Size_Half,
+        dstX: currentNodeDstX - Node_Size_Half,
         color: colorWest,
     );
     renderNodeSideSouth(
@@ -2516,7 +2516,7 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
   }){
     renderNodeSideWest(
-      dstX: dstX,
+      dstX: currentNodeDstX + dstX,
       dstY: dstY,
       width: Node_Size_Sixth,
       color: colorWest
@@ -2555,7 +2555,7 @@ class RendererNodes extends RenderGroup {
   }){
 
     renderNodeSideWest(
-      dstX: dstX,
+      dstX: currentNodeDstX + dstX,
       dstY: dstY + Node_Size_Sixth,
       color: colorWest,
     );
@@ -2740,11 +2740,12 @@ class RendererNodes extends RenderGroup {
 
   void renderNodeSideWest({
     required int color,
-    double dstX = 0,
+    required double dstX,
     double dstY = 0,
     double width = Src_Width_Side_West,
     double height = Src_Height_Side_West,
-  }) => engine.render(
+  }) =>
+      engine.render(
         color: color,
         srcLeft: Src_X_Side_West,
         srcTop: srcY,
@@ -2752,9 +2753,9 @@ class RendererNodes extends RenderGroup {
         srcBottom: srcY + height,
         scale: 1.0,
         rotation: 0,
-        dstX: currentNodeDstX + dstX,
+        dstX: dstX,
         dstY: currentNodeDstY + dstY,
-    );
+      );
 
   void renderNodeSideSouth({
     required double dstX,
