@@ -39,7 +39,6 @@ class RendererNodes extends RenderGroup {
   var lightningColor = 0;
   var previousNodeTransparent = false;
   var lightningFlashing = false;
-  var dynamicResolutionEnabled = true;
   var totalNodes = 0;
   var totalRows = 0;
   var totalColumns = 0;
@@ -48,7 +47,6 @@ class RendererNodes extends RenderGroup {
   var nodeSideWestSrcX = 0.0;
   var nodeSize = Node_Size;
   var nodeScale = 1.0;
-  var highResolution = true;
   var plainIndex = 0;
   var plainStartRow = 0;
   var plainStartColumn = 0;
@@ -400,11 +398,10 @@ class RendererNodes extends RenderGroup {
     totalRows = scene.totalRows;
     totalColumns = scene.totalColumns;
     totalZ = scene.totalZ;
-    highResolution = !dynamicResolutionEnabled || engine.zoom >= 0.8;
-    nodeScale = highResolution ? 1.0 : 1.5;
+    nodeScale = 1.0;
     nodeSize = Node_Size / nodeScale;
-    nodeSideTopSrcX = highResolution ? 0.0 : 128.0;
-    nodeSideWestSrcX = highResolution ? 49.0 : 161.0;
+    nodeSideTopSrcX = 0.0;
+    nodeSideWestSrcX = 49.0;
 
 
     final columns = scene.totalColumns;
@@ -458,10 +455,6 @@ class RendererNodes extends RenderGroup {
 
   void decreaseOrderShiftY(){
     orderShiftY--;
-  }
-
-  void toggleDynamicResolutionEnabled(){
-    dynamicResolutionEnabled = !dynamicResolutionEnabled;
   }
 
   void updateTransparencyGrid() {

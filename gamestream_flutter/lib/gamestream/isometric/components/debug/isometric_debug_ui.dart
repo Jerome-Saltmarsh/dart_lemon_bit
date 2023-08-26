@@ -462,14 +462,9 @@ extension isometricDebugUI on IsometricDebug {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        onPressed(
-            action: compositor.rendererNodes.toggleDynamicResolutionEnabled,
-            child: buildRow('dynamic-resolution-enabled', GSRefresh(() => buildText(compositor.rendererNodes.dynamicResolutionEnabled))),
-        ),
         GSRefresh(() => buildText(
             'camera-target: ${camera.target}\n'
         )),
-        buildRow('high-resolution', GSRefresh(() => buildText(compositor.rendererNodes.highResolution))),
         buildRow('nodes-screen-on', GSRefresh(() => buildText(compositor.rendererNodes.onscreenNodes))),
         buildRow('nodes-screen-off', GSRefresh(() => buildText(compositor.rendererNodes.offscreenNodes))),
         buildRow('order-shift-y', GSRefresh(() => buildValueText(compositor.rendererNodes.orderShiftY))),
