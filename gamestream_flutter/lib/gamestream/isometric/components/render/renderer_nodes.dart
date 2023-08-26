@@ -1096,11 +1096,27 @@ class RendererNodes extends RenderGroup {
         break;
 
       case NodeOrientation.Slope_South:
-        renderSlopeSouth(srcY: srcY);
+        renderSlopeSouth(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorCurrent: colorCurrent,
+        );
         break;
 
       case NodeOrientation.Slope_North:
-        renderSlopeNorth(srcY: srcY);
+        renderSlopeNorth(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorAbove: colorAbove,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorCurrent: colorCurrent,
+        );
         break;
     }
   }
@@ -2089,6 +2105,12 @@ class RendererNodes extends RenderGroup {
 
   void renderSlopeNorth({
     required double srcY,
+    required double dstX,
+    required double dstY,
+    required int colorWest,
+    required int colorSouth,
+    required int colorAbove,
+    required int colorCurrent,
   }) {
 
     renderCellTopColumn(
@@ -2236,33 +2258,41 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderSlopeSouth({required double srcY}) {
+  void renderSlopeSouth({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+    required int colorWest,
+    required int colorSouth,
+    required int colorAbove,
+    required int colorCurrent,
+  }) {
 
     renderNodeSideSouth(
       srcY: srcY,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY,
+      dstX: dstX,
+      dstY: dstY,
       color: colorSouth,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
@@ -2271,22 +2301,22 @@ class RendererNodes extends RenderGroup {
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
@@ -2294,22 +2324,22 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_West_Width,
-      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height,
+      dstX: dstX - Cell_West_Width,
+      dstY: dstY + Node_Size_Half + Cell_South_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_West_Width,
-      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_West_Height,
+      dstX: dstX - Cell_West_Width,
+      dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_West_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_West_Width,
-      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
+      dstX: dstX - Cell_West_Width,
+      dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
 
@@ -2317,15 +2347,15 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_West_Width - Cell_West_Width,
-      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_West_Height,
+      dstX: dstX - Cell_West_Width - Cell_West_Width,
+      dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_West_Height,
       color: colorWest,
     );
 
     renderCellWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_West_Width - Cell_West_Width,
-      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
+      dstX: dstX - Cell_West_Width - Cell_West_Width,
+      dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
 
@@ -2333,8 +2363,8 @@ class RendererNodes extends RenderGroup {
 
     renderCellWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_West_Width - Cell_West_Width - Cell_West_Width,
-      dstY: currentNodeDstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
+      dstX: dstX - Cell_West_Width - Cell_West_Width - Cell_West_Width,
+      dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_West_Height - Cell_West_Height,
       color: colorWest,
     );
 
@@ -2342,22 +2372,22 @@ class RendererNodes extends RenderGroup {
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width + Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width + Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX - Cell_Top_Width + Cell_Top_Width + Cell_Top_Width,
-      dstY: currentNodeDstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
+      dstX: dstX - Cell_Top_Width + Cell_Top_Width + Cell_Top_Width,
+      dstY: dstY + Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
   }
