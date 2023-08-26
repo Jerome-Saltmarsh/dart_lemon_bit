@@ -928,7 +928,11 @@ class Engine extends StatelessWidget {
     bufferDst[i + 1] = rotation;
     bufferDst[i + 2] = dstX;
     bufferDst[i + 3] = dstY;
-    incrementBufferIndex();
+
+    bufferIndex++;
+    if (bufferIndex == 128) {
+      flushAll();
+    }
   }
 
   void renderCircle(double x, double y, double radius, Color color) {
@@ -1174,13 +1178,6 @@ class Engine extends StatelessWidget {
     final body = html.document.body;
     if (body == null) return;
     body.style.cursor = name;
-  }
-
-  void incrementBufferIndex(){
-    bufferIndex++;
-    if (bufferIndex == 128) {
-      flushAll();
-    }
   }
 
   void flushAll(){

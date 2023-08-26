@@ -83,32 +83,27 @@ class IsometricRender with IsometricComponent {
       return;
 
     engine.bufferImage = sprite.image;
-    final bufferIndex = engine.bufferIndex;
     final spriteSrc = sprite.src;
     final spriteDst = sprite.dst;
     final srcWidth = sprite.srcWidth;
     final srcHeight = sprite.srcHeight;
     final atlasX = sprite.atlasX;
     final atlasY = sprite.atlasY;
-    final i = bufferIndex << 2;
     final f = frame * 4;
-
     final srcLeft = spriteSrc[f + 0];
     final srcTop = spriteSrc[f + 1];
 
-    bufferClr[bufferIndex] = color;
-
-    bufferSrc[i + 0] = spriteDst[f + 0] + atlasX; // left
-    bufferSrc[i + 1] = spriteDst[f + 1] + atlasY; // top
-    bufferSrc[i + 2] = spriteDst[f + 2] + atlasX; // right
-    bufferSrc[i + 3] = spriteDst[f + 3] + atlasY; // bottom
-
-    bufferDst[i + 0] = scale;
-    bufferDst[i + 1] = 0; // rotation
-    bufferDst[i + 2] = dstX - (srcWidth * anchorX * scale) + (srcLeft * scale);
-    bufferDst[i + 3] = dstY - (srcHeight * anchorY * scale) + (srcTop * scale);
-
-    engine.incrementBufferIndex();
+    engine.render(
+        color: color,
+        srcLeft: spriteDst[f + 0] + atlasX,
+        srcTop: spriteDst[f + 1] + atlasY,
+        srcRight: spriteDst[f + 2] + atlasX,
+        srcBottom: spriteDst[f + 3] + atlasY,
+        scale: scale,
+        rotation: 0,
+        dstX: dstX - (srcWidth * anchorX * scale) + (srcLeft * scale),
+        dstY: dstY - (srcHeight * anchorY * scale) + (srcTop * scale),
+    );
   }
 
   void drawCanvas(Canvas canvas, Size size) {
@@ -124,32 +119,6 @@ class IsometricRender with IsometricComponent {
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
-
-    // engine.bufferBlendMode = BlendMode.modulate;
-    // engine.renderSprite(
-    //   image: images.square,
-    //   // color: aRGBToColor(255, 253, 203, 176),
-    //   color: colors.fair_0.value,
-    //   srcX: 0,
-    //   srcY: 0,
-    //   srcWidth: 64,
-    //   srcHeight: 64,
-    //   dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
-    //   dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
-    // );
-    // engine.renderSprite(
-    //   image: images.square,
-    //   color: scene.getNodeColorAtIndex(mouse.nodeIndex),
-    //   srcX: 0,
-    //   srcY: 0,
-    //   srcWidth: 64,
-    //   srcHeight: 64,
-    //   dstX: getRenderX(mouse.positionX, mouse.positionY, mouse.positionZ),
-    //   dstY: getRenderY(mouse.positionX, mouse.positionY, mouse.positionZ),
-    // );
-    //
-    // engine.bufferBlendMode = BlendMode.dstATop;
-
     renderEditMode();
     renderMouseTargetName();
     debug.drawCanvas();

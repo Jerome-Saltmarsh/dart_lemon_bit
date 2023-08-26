@@ -54,17 +54,9 @@ class RendererNodes extends RenderGroup {
   var totalPlains = 0;
   var orderShiftY = 151.0;
 
-  /// see engine.incrementBufferIndex
-  /// cached to save engine lookup for each render
-  late final Function incrementBufferIndex;
-
 
   // VARIABLES
   var previousVisibility = 0;
-
-  late final Int32List bufferClr;
-  late final Float32List bufferSrc;
-  late final Float32List bufferDst;
 
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
@@ -129,14 +121,6 @@ class RendererNodes extends RenderGroup {
   void onComponentReady() {
     atlasNodes = images.atlas_nodes;
     atlasNodesLoaded = true;
-  }
-
-  @override
-  Future onComponentInit(sharedPreferences) async {
-    bufferClr = engine.bufferClr;
-    bufferDst = engine.bufferDst;
-    bufferSrc = engine.bufferSrc;
-    incrementBufferIndex = engine.incrementBufferIndex;
   }
 
   int get colorCurrent => nodeColors[currentNodeIndex];
