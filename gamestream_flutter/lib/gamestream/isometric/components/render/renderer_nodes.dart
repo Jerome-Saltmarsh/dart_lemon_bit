@@ -738,21 +738,19 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case NodeType.Dust:
-        renderNodeDust(
-          dstX: dstX,
-          dstY: dstY,
-        );
         break;
       case NodeType.Rain_Falling:
         renderNodeRainFalling(
           dstX: dstX,
           dstY: dstY,
+          nodeVariation: scene.nodeVariations[currentNodeIndex],
         );
         return;
       case NodeType.Rain_Landing:
         renderNodeRainLanding(
           dstX: dstX,
           dstY: dstY,
+          variation: scene.nodeVariations[currentNodeIndex],
         );
         return;
       case NodeType.Sandbag:
@@ -883,6 +881,9 @@ class RendererNodes extends RenderGroup {
         renderNodeGrassLong(
           dstX: dstX,
           dstY: dstY,
+          colorAbove: scene.getColorAbove(currentNodeIndex),
+          colorWest: scene.getColorWest(currentNodeIndex),
+          colorSouth: scene.getColorSouth(currentNodeIndex),
         );
         break;
       case NodeType.Tile:
@@ -926,6 +927,8 @@ class RendererNodes extends RenderGroup {
         renderBoulder(
           dstX: dstX,
           dstY: dstY,
+          colorWest: scene.getColorWest(currentNodeIndex),
+          colorSouth: scene.getColorSouth(currentNodeIndex),
         );
         return;
       case NodeType.Oven:
@@ -982,6 +985,8 @@ class RendererNodes extends RenderGroup {
   void renderBoulder({
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorSouth,
   }) {
     engine.renderSprite(
       image: atlasNodes,
@@ -991,7 +996,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Boulder,
       dstX: dstX,
       dstY: dstY,
-      color: scene.getColorWest(currentNodeIndex),
+      color: colorWest,
     );
 
     engine.renderSprite(
@@ -1002,7 +1007,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height_Sprite_Boulder,
       dstX: dstX,
       dstY: dstY,
-      color: scene.getColorSouth(currentNodeIndex),
+      color: colorSouth,
     );
 
   }
@@ -1043,6 +1048,9 @@ class RendererNodes extends RenderGroup {
   void renderNodeGrassLong({
     required double dstX,
     required double dstY,
+    required int colorAbove,
+    required int colorWest,
+    required int colorSouth,
   }) {
     final frame = wind == WindType.Calm
         ? 0
@@ -1061,7 +1069,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height,
       dstX: dstX - 24,
       dstY: dstY - 24,
-      color: scene.getColorAbove(currentNodeIndex),
+      color: colorAbove,
     );
 
     renderCustomNode(
@@ -1071,7 +1079,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height,
       dstX: dstX,
       dstY: dstY,
-      color: scene.getColorWest(currentNodeIndex),
+      color: colorWest,
     );
 
     renderCustomNode(
@@ -1081,20 +1089,20 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height,
       dstX: dstX,
       dstY: dstY,
-      color: scene.getColorSouth(currentNodeIndex),
+      color: colorSouth,
     );
   }
 
   void renderNodeRainLanding({
     required double dstX,
     required double dstY,
+    required int variation,
   }) {
-    final currentNodeVariation = scene.nodeVariations[currentNodeIndex];
     if (currentNodeIndex > scene.area && scene.nodeTypes[currentNodeIndex - scene.area] == NodeType.Water){
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((animation.frame + currentNodeVariation) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((animation.frame + variation) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: dstX,
@@ -1106,7 +1114,7 @@ class RendererNodes extends RenderGroup {
     }
     renderStandardNode(
       srcX: environment.srcXRainLanding,
-      srcY: 72.0 * ((animation.frame + currentNodeVariation) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((animation.frame + variation) % 6), // TODO Expensive Operation
       dstX: dstX,
       dstY: dstY,
     );
@@ -1114,6 +1122,7 @@ class RendererNodes extends RenderGroup {
       renderNodeRainFalling(
         dstX: dstX,
         dstY: dstY,
+        nodeVariation: scene.nodeVariations[currentNodeIndex],
       );
     }
   }
@@ -1121,11 +1130,10 @@ class RendererNodes extends RenderGroup {
   void renderNodeRainFalling({
     required double dstX,
     required double dstY,
+    required int nodeVariation,
   }) {
-    final currentNodeVariation = scene.nodeVariations[currentNodeIndex];
     final row =  (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value;
-    final column = (animation.frame + currentNodeVariation) % 6;
-
+    final column = (animation.frame + nodeVariation) % 6;
     renderStandardNode(
       srcX: 1596 + (column * 48),
       srcY: 1306 + (row * 72),
@@ -1227,7 +1235,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY,
+      dstY: dstY + 40,
       color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
@@ -1306,7 +1314,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY,
+      dstY: dstY + 32,
       color: scene.getColorSouth(currentNodeIndex),
       rotation: rotation,
       anchorY: anchorY,
@@ -2108,22 +2116,6 @@ class RendererNodes extends RenderGroup {
         throw Exception('render_node_window(${NodeOrientation.getName(renderNodeOrientation)})');
     }
   }
-
-  void renderNodeDust({
-    required double dstX,
-    required double dstY,
-  }) =>
-      engine.renderSprite(
-        image: atlasNodes,
-        srcX: 1552,
-        srcY: 432 + (animation.frame6 * 72.0), // TODO Optimize
-        srcWidth: IsometricConstants.Sprite_Width,
-        srcHeight: IsometricConstants.Sprite_Height,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: 0.3334,
-        color: scene.getNodeColorAtIndex(currentNodeIndex),
-      );
 
   void renderNodeWater({
     required double dstX,
