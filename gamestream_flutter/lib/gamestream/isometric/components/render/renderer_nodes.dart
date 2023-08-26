@@ -967,7 +967,12 @@ class RendererNodes extends RenderGroup {
 
     switch (nodeOrientation) {
       case NodeOrientation.Solid:
-        renderDynamicSolid();
+        renderDynamicSolid(
+          dstX: currentNodeDstX,
+          dstY: currentNodeDstY,
+          srcY: srcY,
+          srcX: currentNodeVariation < 126 ? 0.0 : 128.0,
+        );
         break;
       case NodeOrientation.Half_West:
         renderDynamicHalfWest(
@@ -1617,24 +1622,29 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderDynamicSolid() {
+  void renderDynamicSolid({
+    required double srcX,
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
     renderNodeSideTop(
-      srcX: currentNodeVariation < 126 ? 0.0 : 128.0,
+      srcX: srcX,
       srcY: srcY,
       color: colorAbove,
-      dstX: currentNodeDstX - Node_Size_Half,
-      dstY: currentNodeDstY - Node_Size_Half,
+      dstX: dstX - Node_Size_Half,
+      dstY: dstY - Node_Size_Half,
     );
     renderNodeSideWest(
       srcY: srcY,
-      dstX: currentNodeDstX - Node_Size_Half,
-      dstY: currentNodeDstY,
+      dstX: dstX - Node_Size_Half,
+      dstY: dstY,
       color: colorWest,
     );
     renderNodeSideSouth(
       srcY: srcY,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY,
+      dstX: dstX,
+      dstY: dstY,
       color: colorSouth,
     );
   }
