@@ -994,6 +994,8 @@ class RendererNodes extends RenderGroup {
       case NodeOrientation.Half_East:
         renderDynamicHalfEast(
           srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
           colorWest: colorWest,
           colorSouth: colorSouth,
           colorAbove: colorAbove,
@@ -1005,8 +1007,8 @@ class RendererNodes extends RenderGroup {
       case NodeOrientation.Half_North:
         renderDynamicHalfNorth(
           srcY: srcY,
-          dstX: currentNodeDstX,
-          dstY: currentNodeDstY,
+          dstX: dstX,
+          dstY: dstY,
           colorSouth: colorSouth,
           colorWest: colorWest,
           colorAbove: colorAbove,
@@ -2726,10 +2728,12 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int colorAbove,
     required double srcY,
+    required double dstX,
+    required double dstY,
   }) => renderSideEastWest(
     srcY: srcY,
-    dstX: currentNodeDstX - Node_Size_Sixth,
-    dstY: currentNodeDstY - Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+    dstX: dstX - Node_Size_Sixth,
+    dstY: dstY - Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
     colorSouth: colorSouth,
     colorWest: colorWest,
     colorAbove: colorAbove,
