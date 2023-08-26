@@ -2507,7 +2507,7 @@ class RendererNodes extends RenderGroup {
     renderSideEastWest(
       srcY: srcY,
       dstX: currentNodeDstX - Node_Size_Sixth,
-      dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+      dstY: currentNodeDstY - Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
       colorWest: colorCurrent,
       colorSouth: colorSouth,
     );
@@ -2703,7 +2703,7 @@ class RendererNodes extends RenderGroup {
   }) => renderSideEastWest(
     srcY: srcY,
     dstX: currentNodeDstX - Node_Size_Half,
-    dstY: -Node_Size_Sixth,
+    dstY: currentNodeDstY - Node_Size_Sixth,
     colorWest: colorWest,
     colorSouth: colorSouth,
   );
@@ -2715,7 +2715,7 @@ class RendererNodes extends RenderGroup {
   }) => renderSideEastWest(
     srcY: srcY,
     dstX: currentNodeDstX - Node_Size_Sixth,
-    dstY: -Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
+    dstY: currentNodeDstY - Node_Size_Sixth - Node_Size_Sixth - Node_Size_Sixth,
     colorSouth: colorSouth,
     colorWest: colorWest,
   );
@@ -2731,14 +2731,14 @@ class RendererNodes extends RenderGroup {
     renderNodeSideWest(
       srcY: srcY,
       dstX: dstX,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth,
+      dstY: dstY + Node_Size_Sixth,
       color: colorWest,
     );
 
     renderNodeSideSouth(
       srcY: srcY,
       dstX: dstX + Node_Size_Half,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth,
+      dstY: dstY + Node_Size_Sixth,
       width: Node_Size_Sixth,
       color: colorSouth,
     );
@@ -2746,21 +2746,21 @@ class RendererNodes extends RenderGroup {
     renderCellTop(
       srcY: srcY,
       dstX: dstX,
-      dstY: currentNodeDstY + dstY,
+      dstY: dstY,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX + Node_Size_Sixth,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth,
+      dstY: dstY + Node_Size_Sixth,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth + Node_Size_Sixth,
+      dstY: dstY + Node_Size_Sixth + Node_Size_Sixth,
       color: colorAbove,
     );
   }
