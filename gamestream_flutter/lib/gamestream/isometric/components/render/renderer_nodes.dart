@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
@@ -95,12 +94,6 @@ class RendererNodes extends RenderGroup {
   var onscreenNodes = 0;
   var offscreenNodes = 0;
 
-  // var nodesRowsMax = 0;
-  // var nodesScreenTopLeftRow = 0;
-  // var nodesScreenBottomRightRow = 0;
-  // var nodesGridTotalColumnsMinusOne = 0;
-  // var nodesGridTotalZMinusOne = 0;
-  // var nodesPlayerColumnRow = 0;
   var playerProjection = 0;
 
   var playerZ = 0;
@@ -146,9 +139,6 @@ class RendererNodes extends RenderGroup {
     bufferSrc = engine.bufferSrc;
     incrementBufferIndex = engine.incrementBufferIndex;
   }
-
-
-  double get currentNodeRenderY => getRenderYOfRowColumnZ(row, column, currentNodeZ);
 
   int get colorCurrent => nodeColors[currentNodeIndex];
 
@@ -252,9 +242,10 @@ class RendererNodes extends RenderGroup {
     final rowMax = rows - 1;
     final columnMax = columns - 1;
     final heightMax = height - 1;
-    plainStartRow = clamp(plainIndex - (height + columns), 0, rowMax);
-    plainStartColumn = clamp(plainIndex - height + 1, 0, columnMax);
-    plainStartZ = clamp(plainIndex, 0, heightMax);
+    final index = plainIndex;
+    plainStartRow = clamp(index - (height + columns), 0, rowMax);
+    plainStartColumn = clamp(index - height + 1, 0, columnMax);
+    plainStartZ = clamp(index, 0, heightMax);
     order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height) + orderShiftY;
   }
 
@@ -267,14 +258,15 @@ class RendererNodes extends RenderGroup {
     final columnMax = columns - 1;
     final heightMax = height - 1;
     final shiftRight = columns - 1;
+    final index = plainIndex;
 
-    plainStartRow = clamp(plainIndex - (height + columns), 0, rowMax);
-    plainStartColumn = clamp(plainIndex - height + 1, 0, columnMax);
-    plainStartZ = clamp(plainIndex, 0, heightMax);
+    var lineRow = clamp(index - (height + columns), 0, rowMax);
+    var lineColumn = clamp(index - height + 1, 0, columnMax);
+    var lineZ = clamp(index, 0, heightMax);
 
-    var lineColumn = plainStartColumn;
-    var lineRow = plainStartRow;
-    var lineZ = plainStartZ;
+    plainStartRow = lineRow;
+    plainStartColumn = lineColumn;
+    plainStartZ = lineZ;
 
     column = lineColumn;
     row = lineRow;
