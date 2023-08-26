@@ -86,7 +86,6 @@ class RendererNodes extends RenderGroup {
   var currentNodeDstX = 0.0;
   var currentNodeDstY = 0.0;
   var currentNodeIndex = 0;
-  // var currentNodeType = 0;
 
   var offscreenNodesTop = 0;
   var offscreenNodesRight = 0;
@@ -96,13 +95,12 @@ class RendererNodes extends RenderGroup {
   var onscreenNodes = 0;
   var offscreenNodes = 0;
 
-  var nodesRowsMax = 0;
-  var nodesShiftIndex = 0;
-  var nodesScreenTopLeftRow = 0;
-  var nodesScreenBottomRightRow = 0;
-  var nodesGridTotalColumnsMinusOne = 0;
-  var nodesGridTotalZMinusOne = 0;
-  var nodesPlayerColumnRow = 0;
+  // var nodesRowsMax = 0;
+  // var nodesScreenTopLeftRow = 0;
+  // var nodesScreenBottomRightRow = 0;
+  // var nodesGridTotalColumnsMinusOne = 0;
+  // var nodesGridTotalZMinusOne = 0;
+  // var nodesPlayerColumnRow = 0;
   var playerProjection = 0;
 
   var playerZ = 0;
@@ -129,6 +127,7 @@ class RendererNodes extends RenderGroup {
   var currentNodeWithinIsland = false;
   var atlasNodesLoaded = false;
 
+  late Uint8List nodeTypes;
   late Uint32List nodeColors;
   late Uint8List nodeOrientations;
 
@@ -394,6 +393,7 @@ class RendererNodes extends RenderGroup {
     }
 
     nodeColors = scene.nodeColors;
+    nodeTypes = scene.nodeTypes;
     totalNodes = scene.totalNodes;
     totalRows = scene.totalRows;
     totalColumns = scene.totalColumns;
@@ -411,8 +411,6 @@ class RendererNodes extends RenderGroup {
     totalPlains = columns + rows + height - 2;
     plainIndex = 0;
     onPlainIndexChanged();
-    nodesRowsMax = scene.totalRows - 1;
-    nodesGridTotalZMinusOne = scene.totalZ - 1;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
@@ -420,13 +418,10 @@ class RendererNodes extends RenderGroup {
     offscreenNodes = 0;
     onscreenNodes = 0;
     nodesMinZ = 0;
-    // orderZ = 0;
     currentNodeZ = 0;
-    nodesGridTotalColumnsMinusOne = scene.totalColumns - 1;
     playerZ = player.position.indexZ;
     playerRow = player.position.indexRow;
     playerColumn = player.position.indexColumn;
-    nodesPlayerColumnRow = playerRow + playerColumn;
     playerRenderRow = playerRow - (player.position.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.position.indexZ ~/ 2);
     playerProjection = playerIndex % scene.projection;
@@ -437,34 +432,6 @@ class RendererNodes extends RenderGroup {
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
-    var screenTopLeftColumn = convertRenderToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(convertRenderToRow(screenRight, screenBottom, 0), 0, scene.totalRows - 1);
-    nodesScreenTopLeftRow = convertRenderToRow(screenLeft, screenTop, 0);
-
-    if (nodesScreenTopLeftRow < 0){
-      screenTopLeftColumn += nodesScreenTopLeftRow;
-      nodesScreenTopLeftRow = 0;
-    }
-    if (screenTopLeftColumn < 0){
-      nodesScreenTopLeftRow += screenTopLeftColumn;
-      screenTopLeftColumn = 0;
-    }
-    if (screenTopLeftColumn >= scene.totalColumns){
-      nodesScreenTopLeftRow = screenTopLeftColumn - nodesGridTotalColumnsMinusOne;
-      screenTopLeftColumn = nodesGridTotalColumnsMinusOne;
-    }
-    if (nodesScreenTopLeftRow < 0 || screenTopLeftColumn < 0){
-      nodesScreenTopLeftRow = 0;
-      screenTopLeftColumn = 0;
-    }
-
-    row = nodesScreenTopLeftRow;
-    column = screenTopLeftColumn;
-
-    nodesShiftIndex = 0;
-    nodesCalculateMinMaxZ();
-    nodesTrimTop();
-    trimLeft();
 
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
@@ -720,17 +687,6 @@ class RendererNodes extends RenderGroup {
     return true;
   }
 
-  void trimLeft(){
-    var currentNodeRenderX = (row - column) * Node_Size_Half;
-    final maxRow = scene.totalRows - 1;
-    while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
-      row++;
-      column--;
-      currentNodeRenderX += Node_Size;
-    }
-    nodesSetStart();
-  }
-
   void nodesSetStart(){
     nodesStartRow = clamp(row, 0, scene.totalRows - 1);
     nodeStartColumn = clamp(column, 0, scene.totalColumns - 1);
@@ -739,59 +695,6 @@ class RendererNodes extends RenderGroup {
     assert (nodeStartColumn >= 0);
     assert (nodesStartRow < scene.totalRows);
     assert (nodeStartColumn < scene.totalColumns);
-  }
-
-  void nodesShiftIndexDown(){
-
-    column = row + column + 1;
-    row = 0;
-    if (column < scene.totalColumns) {
-      nodesSetStart();
-      return;
-    }
-
-    if (column - nodesGridTotalColumnsMinusOne >= scene.totalRows){
-      remaining = false;
-      return;
-    }
-
-    row = column - nodesGridTotalColumnsMinusOne;
-    column = nodesGridTotalColumnsMinusOne;
-    currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    nodesSetStart();
-  }
-
-  void nodesCalculateMinMaxZ(){
-    final bottom = (row + column) * Node_Size_Half;
-    final distance =  bottom - screenTop;
-    nodesMaxZ = (distance ~/ Node_Height); // TODO optimize
-    if (nodesMaxZ > nodesGridTotalZMinusOne){
-      nodesMaxZ = nodesGridTotalZMinusOne;
-    }
-    if (nodesMaxZ < 0){
-      nodesMaxZ = 0;
-    }
-
-    var renderY = bottom - (nodesMinZ * Node_Height);
-    while (renderY > screenBottom){
-      nodesMinZ++;
-      renderY -= Node_Height;
-      if (nodesMinZ >= scene.totalZ){
-        compositor.rendererNodes.remaining = false;
-        return;
-      }
-    }
-  }
-
-
-
-  void nodesTrimTop() {
-    // TODO optimize
-    while (currentNodeRenderY < screenTop){
-      nodesShiftIndexDown();
-    }
-    nodesCalculateMinMaxZ();
-    nodesSetStart();
   }
 
   void renderNodeTorch(){
@@ -864,7 +767,7 @@ class RendererNodes extends RenderGroup {
 
     // currentNodeType = scene.nodeTypes[currentNodeIndex];
 
-    final nodeType = scene.nodeTypes[currentNodeIndex];
+    final nodeType = nodeTypes[currentNodeIndex];
     if (nodeType == NodeType.Empty) {
       return;
     }
