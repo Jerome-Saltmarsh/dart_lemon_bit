@@ -1132,7 +1132,7 @@ class RendererNodes extends RenderGroup {
     renderNodeSideSouth(
       srcY: srcY,
       dstX: currentNodeDstX,
-      dstY: 0,
+      dstY: currentNodeDstY,
       color: colorSouth,
     );
 
@@ -1382,7 +1382,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       width: Node_Size_Sixth,
       dstX: currentNodeDstX + dstX + Node_Size_Half - Cell_Size_Half,
-      dstY: dstY + Node_Size_Sixth - Cell_Size_Half,
+      dstY: currentNodeDstY + dstY + Node_Size_Sixth - Cell_Size_Half,
       color: colorSouth,
     );
 
@@ -1421,7 +1421,7 @@ class RendererNodes extends RenderGroup {
     renderNodeSideSouth(
       srcY: srcY,
       dstX: currentNodeDstX + dstX + Node_Size_Sixth,
-      dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+      dstY: currentNodeDstY + dstY - Node_Size_Half + Node_Size_Sixth,
       color: colorSouth,
     );
 
@@ -1569,7 +1569,7 @@ class RendererNodes extends RenderGroup {
     renderNodeSideSouth(
       srcY: srcY,
       dstX: currentNodeDstX,
-      dstY: 0,
+      dstY: currentNodeDstY,
       color: colorSouth,
     );
   }
@@ -2535,7 +2535,7 @@ class RendererNodes extends RenderGroup {
     renderNodeSideSouth(
       srcY: srcY,
       dstX: currentNodeDstX + dstX + Node_Size_Sixth,
-      dstY: dstY - Node_Size_Half + Node_Size_Sixth,
+      dstY: currentNodeDstY + dstY - Node_Size_Half + Node_Size_Sixth,
       color: colorSouth,
     );
 
@@ -2575,7 +2575,7 @@ class RendererNodes extends RenderGroup {
     renderNodeSideSouth(
       srcY: srcY,
       dstX: currentNodeDstX + dstX + Node_Size_Half,
-      dstY: dstY + Node_Size_Sixth,
+      dstY: currentNodeDstY + dstY + Node_Size_Sixth,
       width: Node_Size_Sixth,
       color: colorSouth,
     );
@@ -2787,6 +2787,6 @@ class RendererNodes extends RenderGroup {
         scale: 1.0,
         rotation: 0,
         dstX: dstX,
-        dstY: currentNodeDstY + dstY,
+        dstY: dstY,
     );
 }
