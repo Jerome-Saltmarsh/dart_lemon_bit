@@ -1139,18 +1139,21 @@ class RendererNodes extends RenderGroup {
     // row 3
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
       dstY: Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
       dstY: Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width - Cell_Top_Width,
       dstY: Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
@@ -1160,18 +1163,21 @@ class RendererNodes extends RenderGroup {
     // row 2
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width - Cell_Top_Width,
       dstY: Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
       dstY: Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width + Cell_Top_Width + Cell_Top_Width - Cell_Top_Width,
       dstY: Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
@@ -1222,18 +1228,21 @@ class RendererNodes extends RenderGroup {
     // row 1
 
     renderCellTop(
+      srcY: srcY,
         dstX: -Cell_Top_Width,
         dstY: Cell_Top_Height,
         color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width + Cell_Top_Width,
       dstY: Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: -Cell_Top_Width + Cell_Top_Width + Cell_Top_Width,
       dstY: Cell_Top_Height - Cell_Top_Height - Cell_Top_Height,
       color: colorAbove,
@@ -1243,36 +1252,42 @@ class RendererNodes extends RenderGroup {
   void renderSlopeWest(double srcY) {
 
     renderCellTop(
+      srcY: srcY,
       dstX: Cell_Size_Half,
       dstY:  Node_Size_Half + Cell_South_Height -Cell_Size - Cell_Size_Half,
       color: colorCurrent,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: 0,
       dstY: Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half,
       color: colorCurrent,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: - Cell_Size_Half,
       dstY:  Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
       color: colorCurrent,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: 0,
       dstY:  Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half,
       color: colorCurrent,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: - Cell_Size_Half,
       dstY: Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half,
       color: colorCurrent,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: - Cell_Size_Half - Cell_Size_Half,
       dstY: Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
       color: colorCurrent,
@@ -1322,18 +1337,21 @@ class RendererNodes extends RenderGroup {
     );
 
     renderCellTop(
+      srcY: srcY,
         dstX: -Cell_Size_Half,
         dstY: Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half,
         color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
         dstX: -Cell_Size_Half - Cell_Size_Half,
         dstY: Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half,
         color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
         dstX: -Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
         dstY: Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
         color: colorAbove,
@@ -1387,12 +1405,14 @@ class RendererNodes extends RenderGroup {
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Node_Size_Sixth,
       dstY: dstY + Node_Size_Sixth,
       color: colorAbove,
@@ -1426,12 +1446,14 @@ class RendererNodes extends RenderGroup {
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY - Node_Size_Half + Node_Size_Third,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Node_Size_Sixth,
       dstY: dstY - Node_Size_Half + Node_Size_Sixth,
       color: colorAbove,
@@ -1504,18 +1526,21 @@ class RendererNodes extends RenderGroup {
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY - Cell_Size_Half,
       color: colorTop,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Cell_Size_Half,
       dstY: dstY - Cell_Size_Half + Cell_Size_Half,
       color: colorTop,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Cell_Size_Half + Cell_Size_Half,
       dstY: dstY - Cell_Size_Half + Cell_Size_Half + Cell_Size_Half,
       color: colorTop,
@@ -2540,18 +2565,21 @@ class RendererNodes extends RenderGroup {
     );
 
     renderCellTop(
+      srcY: srcY,
         dstX: dstX,
         dstY: dstY - Node_Size_Half + Node_Size_Third,
         color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Node_Size_Sixth,
       dstY: dstY - Node_Size_Half + Node_Size_Sixth,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
       dstY: dstY - Node_Size_Half,
       color: colorAbove,
@@ -2581,18 +2609,21 @@ class RendererNodes extends RenderGroup {
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Node_Size_Sixth,
       dstY: dstY + Node_Size_Sixth,
       color: colorAbove,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Node_Size_Sixth + Node_Size_Sixth,
       dstY: dstY + Node_Size_Sixth + Node_Size_Sixth,
       color: colorAbove,
@@ -2606,18 +2637,21 @@ class RendererNodes extends RenderGroup {
   }){
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY,
       color: color,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Cell_Top_Width,
       dstY: dstY - Cell_Top_Height,
       color: color,
     );
 
     renderCellTop(
+      srcY: srcY,
       dstX: dstX + Cell_Top_Width + Cell_Top_Width,
       dstY: dstY - Cell_Top_Height - Cell_Top_Height,
       color: color,
@@ -2683,6 +2717,7 @@ class RendererNodes extends RenderGroup {
     );
 
   void renderCellTop({
+    required double srcY,
     required double dstX,
     required double dstY,
     required int color,
