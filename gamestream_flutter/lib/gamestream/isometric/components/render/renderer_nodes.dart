@@ -86,7 +86,7 @@ class RendererNodes extends RenderGroup {
   var currentNodeDstX = 0.0;
   var currentNodeDstY = 0.0;
   var currentNodeIndex = 0;
-  var currentNodeType = 0;
+  // var currentNodeType = 0;
 
   var offscreenNodesTop = 0;
   var offscreenNodesRight = 0;
@@ -261,7 +261,6 @@ class RendererNodes extends RenderGroup {
 
   void renderPlain(){
 
-    final nodeTypes = scene.nodeTypes;
     final height = scene.totalZ;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
@@ -297,10 +296,7 @@ class RendererNodes extends RenderGroup {
           if (currentNodeDstX > screenLeft &&
               currentNodeDstX < screenRight
           ) {
-            currentNodeType = nodeTypes[currentNodeIndex];
-            if (currentNodeType != NodeType.Empty) {
-              renderCurrentNode();
-            }
+            renderCurrentNode();
           }
 
           row++;
@@ -473,7 +469,6 @@ class RendererNodes extends RenderGroup {
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * scene.area) + (row * scene.totalColumns) + column;
-    currentNodeType = scene.nodeTypes[currentNodeIndex];
     currentNodeWithinIsland = false;
 
     updateTransparencyGrid();
@@ -867,7 +862,12 @@ class RendererNodes extends RenderGroup {
     //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
     // }
 
-    final nodeType = currentNodeType;
+    // currentNodeType = scene.nodeTypes[currentNodeIndex];
+
+    final nodeType = scene.nodeTypes[currentNodeIndex];
+    if (nodeType == NodeType.Empty) {
+      return;
+    }
     final nodeOrientation = currentNodeOrientation;
 
     if (MapNodeTypeToSrcY.containsKey(nodeType)){
@@ -1026,7 +1026,7 @@ class RendererNodes extends RenderGroup {
       case NodeType.Respawning:
         return;
       default:
-        throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
+        throw Exception('renderNode(index: ${currentNodeIndex}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
     }
   }
 
