@@ -2506,20 +2506,17 @@ class RendererNodes extends RenderGroup {
   void renderStandardNode({
     required double srcX,
     required double srcY,
-  }){
-    onscreenNodes++;
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = colorCurrent;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half);
-    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third);
-    engine.incrementBufferIndex();
-  }
+  }) => engine.render(
+        color: colorCurrent,
+        srcLeft: srcX,
+        srcTop: srcY,
+        srcRight: srcX + IsometricConstants.Sprite_Width,
+        srcBottom: srcY + IsometricConstants.Sprite_Height,
+        scale: 1.0,
+        rotation: 0,
+        dstX: currentNodeDstX - (IsometricConstants.Sprite_Width_Half),
+        dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third),
+    );
 
   void renderDynamicSideNorthSouth({
     required double srcY,
