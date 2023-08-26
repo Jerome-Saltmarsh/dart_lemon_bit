@@ -115,18 +115,6 @@ class RendererNodes extends RenderGroup {
 
   int get colorCurrent => nodeColors[currentNodeIndex];
 
-  int get colorAbove {
-
-    if (lightningFlashing) {
-      return lightningColor;
-    }
-
-    final nodeAboveIndex = currentNodeIndex + scene.area;
-    if (nodeAboveIndex >= totalNodes)
-      return scene.ambientColor;
-    return nodeColors[nodeAboveIndex];
-  }
-
   int get colorWest {
     if (column + 1 >= totalColumns){
       return scene.ambientColor;
@@ -406,9 +394,9 @@ class RendererNodes extends RenderGroup {
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
 
-    currentNodeDstX = (row - column) * Node_Size_Half;
-    currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * scene.area) + (row * scene.totalColumns) + column;
+    // currentNodeDstX = (row - column) * Node_Size_Half;
+    // currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
+    // currentNodeIndex = (currentNodeZ * scene.area) + (row * scene.totalColumns) + column;
     currentNodeWithinIsland = false;
 
     updateTransparencyGrid();
@@ -991,7 +979,7 @@ class RendererNodes extends RenderGroup {
       srcHeight: Src_Height,
       dstX: dstX,
       dstY: dstY,
-      color: colorAbove,
+      color: scene.getColorAbove(currentNodeIndex),
     );
 
     renderCustomNode(
