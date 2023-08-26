@@ -1,6 +1,5 @@
 
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class IsometricRender with IsometricComponent {
     double anchorX = 0.5,
     double anchorY = 0.5,
   }){
-    engine.bufferBlendMode = BlendMode.modulate;
+    engine.setBlendModeModulate();
     this.sprite(
       sprite: sprite,
       frame: frame,
@@ -55,7 +54,7 @@ class IsometricRender with IsometricComponent {
       dstY: dstY,
       anchorY: anchorY,
     );
-    engine.bufferBlendMode = BlendMode.dstATop;
+    engine.setBlendModeDstATop();
   }
 
   void sprite({

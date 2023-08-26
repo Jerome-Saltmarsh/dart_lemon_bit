@@ -170,6 +170,14 @@ class Engine extends StatelessWidget {
     flushBuffer();
     _bufferBlendMode = value;
   }
+  
+  void setBlendModeModulate(){
+    bufferBlendMode = BlendMode.modulate;
+  }
+  
+  void setBlendModeDstATop(){
+    bufferBlendMode = BlendMode.dstATop;
+  }
 
   set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
 

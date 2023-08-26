@@ -1547,7 +1547,13 @@ class RendererNodes extends RenderGroup {
   }
 
   void renderDynamicSolid() {
-    renderNodeSideTop();
+    renderNodeSideTop(
+      srcX: currentNodeVariation < 126 ? 0.0 : 128.0,
+      srcY: srcY,
+      color: colorAbove,
+      dstX: currentNodeDstX - Node_Size_Half,
+      dstY: currentNodeDstY - Node_Size_Half,
+    );
     renderNodeSideWest(
         dstX: -Node_Size_Half,
         color: colorWest,
@@ -2712,18 +2718,23 @@ class RendererNodes extends RenderGroup {
         dstY: currentNodeDstY + dstY,
       );
 
-  void renderNodeSideTop() {
-    final srcX = currentNodeVariation < 126 ? 0.0 : 128.0;
+  void renderNodeSideTop({
+    required double srcX,
+    required int color,
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
     engine.render(
-        color: colorAbove,
+        color: color,
         srcLeft: srcX,
         srcTop: srcY,
         srcRight: srcX + Src_Width_Side_Top,
-        srcBottom:  srcY + Src_Height_Side_Top,
+        srcBottom: srcY + Src_Height_Side_Top,
         scale: 1.0,
         rotation: 0,
-        dstX: currentNodeDstX - Node_Size_Half,
-        dstY: currentNodeDstY - Node_Size_Half,
+        dstX: dstX,
+        dstY: dstY,
     );
   }
 
