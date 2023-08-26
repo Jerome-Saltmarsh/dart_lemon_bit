@@ -1028,11 +1028,19 @@ class RendererNodes extends RenderGroup {
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+          colorCurrent: colorCurrent,
         );
         break;
 
       case NodeOrientation.Corner_North_East:
-        renderCornerNorthEast(srcY);
+        renderCornerNorthEast(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+        );
         break;
 
       case NodeOrientation.Corner_North_West:
@@ -2521,23 +2529,24 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderCornerNorthEast(double srcY) {
+  void renderCornerNorthEast({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }) {
     renderDynamicHalfNorth(
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY,
+      dstX: dstX,
+      dstY: dstY,
       srcY: srcY,
       colorWest: colorWest,
       colorSouth: colorCurrent,
       colorAbove: colorAbove,
     );
 
-    final dstX = 0.0;
-    final dstY = -Cell_Size;
-
     renderNodeSideWest(
       srcY: srcY,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth,
+      dstX: dstX,
+      dstY: dstY - Cell_Size + Node_Size_Sixth,
       width: Cell_Size,
       color: colorCurrent,
     );
@@ -2545,22 +2554,22 @@ class RendererNodes extends RenderGroup {
     renderNodeSideSouth(
       srcY: srcY,
       width: Node_Size_Sixth,
-      dstX: currentNodeDstX + dstX + Node_Size_Half - Cell_Size_Half,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth - Cell_Size_Half,
+      dstX: dstX + Node_Size_Half - Cell_Size_Half,
+      dstY: dstY - Cell_Size + Node_Size_Sixth - Cell_Size_Half,
       color: colorSouth,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX + dstX,
-      dstY: currentNodeDstY + dstY,
+      dstX: dstX,
+      dstY: dstY - Cell_Size,
       color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
-      dstX: currentNodeDstX + dstX + Node_Size_Sixth,
-      dstY: currentNodeDstY + dstY + Node_Size_Sixth,
+      dstX: dstX + Node_Size_Sixth,
+      dstY: dstY - Cell_Size + Node_Size_Sixth,
       color: colorAbove,
     );
   }
@@ -2569,6 +2578,10 @@ class RendererNodes extends RenderGroup {
     required double srcY,
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorAbove,
+    required int colorSouth,
+    required int colorCurrent,
   }) {
     renderSideEastWest(
       srcY: srcY,
