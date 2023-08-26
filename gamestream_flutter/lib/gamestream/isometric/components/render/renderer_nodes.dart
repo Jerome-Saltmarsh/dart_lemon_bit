@@ -2682,20 +2682,17 @@ class RendererNodes extends RenderGroup {
     required double srcY,
     required double offsetX,
     required double offsetY,
-  }){
-    onscreenNodes++;
-    final f = engine.bufferIndex << 2;
-    bufferClr[engine.bufferIndex] = colorCurrent;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + IsometricConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + IsometricConstants.Sprite_Height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX;
-    bufferDst[f + 3] = currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY;
-    engine.incrementBufferIndex();
-  }
+  }) => engine.render(
+        color: colorCurrent,
+        srcLeft: srcX,
+        srcTop: srcY,
+        srcRight: srcX + IsometricConstants.Sprite_Width,
+        srcBottom: srcY + IsometricConstants.Sprite_Height,
+        scale: 1.0,
+        rotation: 0,
+        dstX: currentNodeDstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
+        dstY: currentNodeDstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
+    );
 
   void renderCellTop({
     required double dstX,
