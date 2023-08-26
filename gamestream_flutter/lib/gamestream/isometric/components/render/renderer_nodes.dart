@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -27,13 +28,6 @@ class RendererNodes extends RenderGroup {
   static const Cell_West_Width = 8.0;
   static const Cell_West_Height = 8.0;
   static const Node_South_Height = 24.0;
-
-  static const mapNodeTypeToSrcY = <int, double>{
-    NodeType.Brick: 1760,
-    NodeType.Grass: 1808,
-    NodeType.Soil: 1856,
-    NodeType.Wood: 1904,
-  };
 
   var lightningColor = 0;
   var previousNodeTransparent = false;
@@ -252,6 +246,11 @@ class RendererNodes extends RenderGroup {
 
     column = lineColumn;
     row = lineRow;
+
+    final screenLeft = this.screenLeft; // cache in cpu
+    final screenTop = this.screenTop; // cache in cpu
+    final screenRight = this.screenRight; // cache in cpu
+    final screenBottom = this.screenBottom; // cache in cpu
 
     while (lineZ >= 0) {
       z = lineZ;
@@ -750,8 +749,7 @@ class RendererNodes extends RenderGroup {
     final nodeOrientation = nodeOrientations[currentNodeIndex];
 
 
-    if (mapNodeTypeToSrcY.containsKey(nodeType)){
-
+    if (nodeTypeSrcY.containsKey(nodeType)){
       renderDynamic(
         nodeType:nodeType,
         nodeOrientation: nodeOrientation,
@@ -1951,7 +1949,7 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int colorCurrent,
   }) {
-    final srcY = mapNodeTypeToSrcY[nodeType] ??
+    final srcY = nodeTypeSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
