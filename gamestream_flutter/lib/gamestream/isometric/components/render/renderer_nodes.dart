@@ -760,6 +760,7 @@ class RendererNodes extends RenderGroup {
         colorAbove: scene.getColorAbove(currentNodeIndex),
         colorWest: scene.getColorWest(currentNodeIndex),
         colorSouth: scene.getColorSouth(currentNodeIndex),
+        colorCurrent: scene.getNodeColorAtIndex(currentNodeIndex)
       );
       return;
     }
@@ -966,6 +967,7 @@ class RendererNodes extends RenderGroup {
     required int colorAbove,
     required int colorSouth,
     required int colorWest,
+    required int colorCurrent,
   }) {
     final srcY = mapNodeTypeToSrcY[nodeType] ??
         (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
@@ -1040,11 +1042,23 @@ class RendererNodes extends RenderGroup {
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+          colorCurrent: colorCurrent,
         );
         break;
 
       case NodeOrientation.Corner_North_West:
-        renderCornerNorthWest(srcY);
+        renderCornerNorthWest(
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          colorAbove: colorAbove,
+          colorCurrent: colorCurrent,
+        );
         break;
 
       case NodeOrientation.Corner_South_West:
@@ -2510,19 +2524,27 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderCornerNorthWest(double srcY) {
+  void renderCornerNorthWest({
+    required double srcY,
+    required double dstX,
+    required double dstY,
+    required int colorWest,
+    required int colorCurrent,
+    required int colorAbove,
+    required int colorSouth,
+  }) {
     renderDynamicHalfNorth(
       srcY: srcY,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY,
+      dstX: dstX,
+      dstY: dstY,
       colorSouth: colorCurrent,
       colorWest: colorWest,
       colorAbove: colorAbove,
     );
     renderDynamicHalfWest(
       srcY: srcY,
-      dstX: currentNodeDstX,
-      dstY: currentNodeDstY,
+      dstX: dstX,
+      dstY: dstY,
       colorSouth: colorSouth,
       colorWest: colorWest,
       colorAbove: colorAbove,
@@ -2533,6 +2555,10 @@ class RendererNodes extends RenderGroup {
     required double srcY,
     required double dstX,
     required double dstY,
+    required int colorWest,
+    required int colorCurrent,
+    required int colorAbove,
+    required int colorSouth,
   }) {
     renderDynamicHalfNorth(
       dstX: dstX,
