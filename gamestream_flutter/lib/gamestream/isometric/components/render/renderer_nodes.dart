@@ -2740,22 +2740,18 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int color,
-  }) {
-    final bufferIndex = engine.bufferIndex;
-    final f = bufferIndex * 4;
-    final _srcY = srcY + Src_Y_Cell_South;
-
-    bufferClr[bufferIndex] = color;
-    bufferSrc[f] = Src_X_Cell_South;
-    bufferSrc[f + 1] = _srcY;
-    bufferSrc[f + 2] = Src_X_Cell_South + Src_Width_Cell_South;
-    bufferSrc[f + 3] = _srcY + Src_Height_Cell_South;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX + dstX;
-    bufferDst[f + 3] = currentNodeDstY + dstY;
-    incrementBufferIndex();
-  }
+  }) =>
+      engine.render(
+        color: color,
+        srcLeft: Src_X_Cell_South,
+        srcTop: srcY + Src_Y_Cell_South,
+        srcRight: Src_X_Cell_South + Src_Width_Cell_South,
+        srcBottom: srcY + Src_Y_Cell_South + Src_Height_Cell_South,
+        scale: 1.0,
+        rotation: 0,
+        dstX: currentNodeDstX + dstX,
+        dstY: currentNodeDstY + dstY,
+      );
 
   void renderNodeSideTop() {
     final srcX = currentNodeVariation < 126 ? 0.0 : 128.0;
