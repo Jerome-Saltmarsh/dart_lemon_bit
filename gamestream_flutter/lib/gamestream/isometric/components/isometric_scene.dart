@@ -1841,6 +1841,17 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nearestIndex;
   }
 
+  int getColorAbove(int nodeIndex){
+    if (environment.lightningFlashing.value) {
+      return rendererNodes.lightningColor;
+    }
+
+    final nodeAboveIndex = nodeIndex + area;
+    if (nodeAboveIndex >= totalNodes)
+      return ambientColor;
+
+    return nodeColors[nodeAboveIndex];
+  }
 }
 
 int convertSecondsToAmbientAlpha(int totalSeconds) {
@@ -1850,4 +1861,5 @@ int convertSecondsToAmbientAlpha(int totalSeconds) {
       : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) *
       255)
       .round();
+
 }

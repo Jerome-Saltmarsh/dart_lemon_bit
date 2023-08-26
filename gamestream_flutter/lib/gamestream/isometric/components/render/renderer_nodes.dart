@@ -739,9 +739,6 @@ class RendererNodes extends RenderGroup {
     required double dstY,
   }) {
 
-    final nodeType = nodeTypes[currentNodeIndex];
-    final nodeOrientation = nodeOrientations[currentNodeIndex];
-
     // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
     // final transparent = currentNodeTransparent;
     // if (previousNodeTransparent != transparent) {
@@ -750,15 +747,18 @@ class RendererNodes extends RenderGroup {
     //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
     // }
 
-    // currentNodeType = scene.nodeTypes[currentNodeIndex];
+    final nodeType = nodeTypes[currentNodeIndex];
+    final nodeOrientation = nodeOrientations[currentNodeIndex];
+
 
     if (mapNodeTypeToSrcY.containsKey(nodeType)){
+
       renderDynamic(
         nodeType:nodeType,
         nodeOrientation: nodeOrientation,
         dstX: dstX,
         dstY: dstY,
-        colorAbove: colorAbove,
+        colorAbove: scene.getColorAbove(currentNodeIndex),
         colorWest: colorWest,
         colorSouth: colorSouth,
       );
