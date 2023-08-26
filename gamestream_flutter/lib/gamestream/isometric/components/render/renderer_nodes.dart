@@ -2779,20 +2779,17 @@ class RendererNodes extends RenderGroup {
     double dstY = 0,
     double width = Src_Width_Side_West,
     double height = Src_Height_Side_West,
-  }) {
-    final bufferIndex = engine.bufferIndex;
-    final f = bufferIndex * 4;
-    bufferClr[bufferIndex] = color;
-    bufferSrc[f] = Src_X_Side_West;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = Src_X_Side_West + width;
-    bufferSrc[f + 3] = srcY + height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX + dstX;
-    bufferDst[f + 3] = currentNodeDstY + dstY;
-    incrementBufferIndex();
-  }
+  }) => engine.render(
+        color: color,
+        srcLeft: Src_X_Side_West,
+        srcTop: srcY,
+        srcRight: Src_X_Side_West + width,
+        srcBottom: srcY + height,
+        scale: 1.0,
+        rotation: 0,
+        dstX: currentNodeDstX + dstX,
+        dstY: currentNodeDstY + dstY,
+    );
 
   void renderNodeSideSouth({
     required double dstX,
