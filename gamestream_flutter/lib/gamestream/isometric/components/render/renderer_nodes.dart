@@ -759,7 +759,7 @@ class RendererNodes extends RenderGroup {
         dstX: dstX,
         dstY: dstY,
         colorAbove: scene.getColorAbove(currentNodeIndex),
-        colorWest: colorWest,
+        colorWest: scene.getColorWest(currentNodeIndex),
         colorSouth: colorSouth,
       );
       return;
