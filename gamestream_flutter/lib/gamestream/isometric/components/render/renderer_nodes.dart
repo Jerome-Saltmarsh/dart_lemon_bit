@@ -2633,26 +2633,17 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int color,
     double scale = 1.0,
-  }){
-    final f = engine.bufferIndex * 4;
-    bufferClr[engine.bufferIndex] = color;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + srcWidth;
-    bufferSrc[f + 3] = srcY + srcHeight;
-    bufferDst[f] = scale; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = dstX;
-    bufferDst[f + 3] = dstY;
-    engine.incrementBufferIndex();
-  }
-
-  void someMethod(int i, Float32List bufferSrc){
-    bufferSrc[i] = 0;
-    bufferSrc[i + 1] = 10;
-    bufferSrc[i + 2] = 20;
-    bufferSrc[i + 3] = 20;
-  }
+  }) => engine.render(
+        color: color,
+        srcLeft: srcX,
+        srcTop: srcY,
+        srcRight: srcX + srcWidth,
+        srcBottom: srcY + srcHeight,
+        scale: scale,
+        rotation: 0,
+        dstX: dstX,
+        dstY: dstY,
+    );
 
   void renderNodeShadedCustom({
     required double srcX,
