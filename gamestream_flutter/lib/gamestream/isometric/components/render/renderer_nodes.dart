@@ -65,7 +65,7 @@ class RendererNodes extends RenderGroup {
   var nodesMaxZ = 0;
   var nodesMinZ = 0;
   var currentNodeZ = 0;
-  var row = 0;
+  // var row = 0;
   var column = 0;
   var z = 0;
   // var currentNodeDstX = 0.0;
@@ -200,7 +200,7 @@ class RendererNodes extends RenderGroup {
     final screenBottom = this.screenBottom; // cache in cpu
 
     column = lineColumn;
-    row = lineRow;
+    var row = lineRow;
 
     while (lineZ >= 0) {
       z = lineZ;
@@ -221,7 +221,7 @@ class RendererNodes extends RenderGroup {
             final nodeType = nodeTypes[currentNodeIndex];
             if (nodeType != NodeType.Empty){
               renderNodeIndex(
-                nodeIndex: currentNodeIndex,
+                index: currentNodeIndex,
                 dstX: currentNodeDstX,
                 dstY: currentNodeDstY,
               );
@@ -471,8 +471,8 @@ class RendererNodes extends RenderGroup {
   }
 
   void ensureIndexPerceptible(int index){
-    var projectionRow     = scene.getIndexRow(index);
-    var projectionColumn  = scene.getIndexColumn(index);
+    var projectionRow     = scene.getRow(index);
+    var projectionColumn  = scene.getColumn(index);
     var projectionZ       = scene.getIndexZ(index);
 
     while (true) {
@@ -613,16 +613,6 @@ class RendererNodes extends RenderGroup {
     return true;
   }
 
-  void nodesSetStart(){
-    nodesStartRow = clamp(row, 0, scene.totalRows - 1);
-    nodeStartColumn = clamp(column, 0, scene.totalColumns - 1);
-
-    assert (nodesStartRow >= 0);
-    assert (nodeStartColumn >= 0);
-    assert (nodesStartRow < scene.totalRows);
-    assert (nodeStartColumn < scene.totalColumns);
-  }
-
   void renderNodeTorch({
     required double dstX,
     required double dstY,
@@ -684,7 +674,7 @@ class RendererNodes extends RenderGroup {
   // }
 
   void renderNodeIndex({
-    required int nodeIndex,
+    required int index,
     required double dstX,
     required double dstY,
   }) {
@@ -697,25 +687,25 @@ class RendererNodes extends RenderGroup {
     //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
     // }
 
-    final nodeType = nodeTypes[nodeIndex];
-    final nodeOrientation = nodeOrientations[nodeIndex];
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
 
     if (nodeTypeSrcY.containsKey(nodeType)){
       renderDynamic(
-        nodeType:nodeType,
+        nodeType: nodeType,
         nodeOrientation: nodeOrientation,
-        nodeVariation: scene.nodeVariations[nodeIndex],
-        colorAbove: scene.getColorAbove(nodeIndex),
-        colorWest: scene.getColorWest(nodeIndex),
-        colorSouth: scene.getColorSouth(nodeIndex),
-        colorCurrent: scene.getNodeColorAtIndex(nodeIndex),
+        nodeVariation: scene.nodeVariations[index],
+        colorAbove: scene.colorAbove(index),
+        colorWest: scene.colorWest(index),
+        colorSouth: scene.colorSouth(index),
+        colorCurrent: scene.getColor(index),
         dstX: dstX,
         dstY: dstY,
       );
       return;
     }
 
-    final color = scene.nodeColors[nodeIndex];
+    final color = scene.nodeColors[index];
 
     switch (nodeType) {
 
@@ -724,7 +714,7 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_13,
             dstX: dstX,
             dstY: dstY,
-            nodeOrientation: scene.nodeOrientations[nodeIndex],
+            nodeOrientation: scene.nodeOrientations[index],
             color: color
         );
         return;
@@ -733,15 +723,16 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_14,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
-            color: color
+          nodeOrientation: scene.nodeOrientations[index],
+          color: color
         );
         return;
       case NodeType.Water:
         renderNodeWater(
           dstX: dstX,
           dstY: dstY,
-          color: scene.getNodeColorAtIndex(nodeIndex),
+          color: scene.getColor(index),
+          animationFrame: ((animation.frameWater + ((scene.getRowColumn(index)) * 3)) % 10),
         );
         break;
       case NodeType.Dust:
@@ -750,17 +741,17 @@ class RendererNodes extends RenderGroup {
         renderNodeRainFalling(
           dstX: dstX,
           dstY: dstY,
-          nodeVariation: scene.nodeVariations[nodeIndex],
-          color: scene.getNodeColorAtIndex(nodeIndex),
+          nodeVariation: scene.nodeVariations[index],
+          color: scene.getColor(index),
         );
         return;
       case NodeType.Rain_Landing:
         renderNodeRainLanding(
           dstX: dstX,
           dstY: dstY,
-          variation: scene.nodeVariations[nodeIndex],
-          onWater: scene.nodeTypeBelowIs(nodeIndex, NodeType.Water),
-          color: scene.getNodeColorAtIndex(nodeIndex),
+          variation: scene.nodeVariations[index],
+          onWater: scene.nodeTypeBelowIs(index, NodeType.Water),
+          color: scene.getColor(index),
         );
         return;
       case NodeType.Sandbag:
@@ -777,7 +768,7 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_8,
             dstX: dstX,
             dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
             color: color
         );
         return;
@@ -786,7 +777,7 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_4,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
 
             color: color
         );
@@ -795,27 +786,33 @@ class RendererNodes extends RenderGroup {
         renderNodeTemplateShadedOffset(
           IsometricConstants.Sprite_Width_Padded_9,
           offsetY: 7,
-          color: scene.getColorAbove(nodeIndex),
-          orientation: scene.nodeOrientations[nodeIndex],
+          color: scene.colorAbove(index),
+          orientation: scene.nodeOrientations[index],
         );
         return;
       case NodeType.Tree_Top:
-        final nodeVariationBelow = scene.nodeVariations[nodeIndex - scene.area];
+        final nodeVariationBelow = scene.nodeVariations[index - scene.area];
+        final row = scene.getRow(index);
+        final column = scene.getColumn(index);
         renderNodeTreeTop(
           dstX: dstX,
           dstY: dstY,
           treeType: mapVariationToTreeType(nodeVariationBelow),
-          colorWest: scene.getColorWest(nodeIndex),
-          colorSouth: scene.getColorSouth(nodeIndex),
+          colorWest: scene.colorWest(index),
+          colorSouth: scene.colorSouth(index),
+          animationFrame: row + column + animation.frame,
         );
         break;
       case NodeType.Tree_Bottom:
+        final row = scene.getRow(index);
+        final column = scene.getRow(index);
         renderNodeTreeBottom(
           dstX: dstX,
           dstY: dstY,
-          treeType: mapVariationToTreeType(scene.nodeVariations[nodeIndex]),
-          colorWest: scene.getColorWest(nodeIndex),
-          colorSouth: scene.getColorSouth(nodeIndex),
+          treeType: mapVariationToTreeType(scene.nodeVariations[index]),
+          colorWest: scene.colorWest(index),
+          colorSouth: scene.colorSouth(index),
+          animationFrame: row + column + animation.frame,
         );
         break;
       case NodeType.Scaffold:
@@ -823,7 +820,7 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_15,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
 
             color: color
         );
@@ -836,7 +833,7 @@ class RendererNodes extends RenderGroup {
             srcY: 305,
             offsetX: 0,
             offsetY: 7,
-            color: scene.getNodeColorAtIndex(nodeIndex),
+            color: scene.getColor(index),
         );
         return;
       case NodeType.Wooden_Plank:
@@ -844,7 +841,7 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_10,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
 
             color: color
         );
@@ -853,7 +850,7 @@ class RendererNodes extends RenderGroup {
         renderNodeTorch(
           dstX: dstX,
           dstY: dstY,
-          grassy: scene.nodeTypeBelowIs(nodeIndex, NodeType.Grass),
+          grassy: scene.nodeTypeBelowIs(index, NodeType.Grass),
         );
         break;
       case NodeType.Torch_Blue:
@@ -864,7 +861,7 @@ class RendererNodes extends RenderGroup {
           srcHeight: 28,
           dstX: dstX - 7,
           dstY: dstY + 4,
-          color: scene.getNodeColorAtIndex(nodeIndex),
+          color: scene.getColor(index),
         );
 
         renderCustomNode(
@@ -885,7 +882,7 @@ class RendererNodes extends RenderGroup {
           srcHeight: 28,
           dstX: dstX - 7,
           dstY: dstY + 4,
-          color: scene.getNodeColorAtIndex(nodeIndex),
+          color: scene.getColor(index),
         );
 
         renderCustomNode(
@@ -902,24 +899,30 @@ class RendererNodes extends RenderGroup {
         renderNodeShoppingShelf(
           dstX: dstX,
           dstY: dstY,
-          variation: scene.nodeVariations[nodeIndex],
-          color: scene.nodeColors[nodeIndex],
+          variation: scene.nodeVariations[index],
+          color: scene.nodeColors[index],
         );
         break;
       case NodeType.Bookshelf:
         renderNodeBookShelf(
           dstX: dstX,
           dstY: dstY,
-          color: scene.nodeColors[nodeIndex],
+          color: scene.nodeColors[index],
         );
         break;
       case NodeType.Grass_Long:
+        final row = scene.getRow(index);
+        final column = scene.getColumn(index);
+
         renderNodeGrassLong(
           dstX: dstX,
           dstY: dstY,
-          colorAbove: scene.getColorAbove(nodeIndex),
-          colorWest: scene.getColorWest(nodeIndex),
-          colorSouth: scene.getColorSouth(nodeIndex),
+          colorAbove: scene.colorAbove(index),
+          colorWest: scene.colorWest(index),
+          colorSouth: scene.colorSouth(index),
+          animationFrame: wind == WindType.Calm
+              ? 0
+              : (((row - column) + animation.frame6) % 6),
         );
         break;
       case NodeType.Tile:
@@ -927,7 +930,7 @@ class RendererNodes extends RenderGroup {
           srcX: 588,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
 
             color: color
         );
@@ -937,7 +940,7 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_16,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
 
             color: color
         );
@@ -949,7 +952,7 @@ class RendererNodes extends RenderGroup {
           srcX: srcX,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[nodeIndex],
+          nodeOrientation: scene.nodeOrientations[index],
 
             color: color
         );
@@ -973,8 +976,8 @@ class RendererNodes extends RenderGroup {
         renderBoulder(
           dstX: dstX,
           dstY: dstY,
-          colorWest: scene.getColorWest(nodeIndex),
-          colorSouth: scene.getColorSouth(nodeIndex),
+          colorWest: scene.colorWest(index),
+          colorSouth: scene.colorSouth(index),
         );
         return;
       case NodeType.Oven:
@@ -999,8 +1002,8 @@ class RendererNodes extends RenderGroup {
         renderNodeWindow(
           dstX: dstX,
           dstY: dstY,
-          color: scene.nodeColors[nodeIndex],
-          orientation: scene.nodeOrientations[nodeIndex],
+          color: scene.nodeColors[index],
+          orientation: scene.nodeOrientations[index],
         );
         break;
       case NodeType.Table:
@@ -1015,7 +1018,7 @@ class RendererNodes extends RenderGroup {
       case NodeType.Respawning:
         return;
       default:
-        throw Exception('renderNode(index: ${nodeIndex}, orientation: ${NodeOrientation.getName(nodeOrientations[nodeIndex])}');
+        throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(nodeOrientations[index])}');
     }
   }
 
@@ -1106,16 +1109,14 @@ class RendererNodes extends RenderGroup {
     required int colorAbove,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
   }) {
-    final frame = wind == WindType.Calm
-        ? 0
-        : (((row - column) + animation.frame6) % 6);
     const Src_X = 957.0;
     const Src_Y = 305.0;
     const Src_Width = 48.0;
     const Src_Height = 72.0;
 
-    final srcX = Src_X + (frame * Src_Width);
+    final srcX = Src_X + (animationFrame * Src_Width);
 
     renderCustomNode(
       srcX: srcX,
@@ -1211,6 +1212,7 @@ class RendererNodes extends RenderGroup {
     required int treeType,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
   }) =>
       treeType == TreeType.Pine
           ? renderTreeTopPine(
@@ -1218,12 +1220,14 @@ class RendererNodes extends RenderGroup {
               dstY: dstY,
               colorWest: colorWest,
               colorSouth: colorSouth,
+              animationFrame: animationFrame,
             )
           : renderNodeTreeTopOak(
               dstX: dstX,
               dstY: dstY,
               colorWest: colorWest,
               colorSouth: colorSouth,
+              animationFrame: animationFrame,
             );
 
   void renderNodeTreeBottom({
@@ -1232,6 +1236,7 @@ class RendererNodes extends RenderGroup {
     required int treeType,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
   }) =>
       treeType == TreeType.Pine
           ? renderTreeBottomPine(
@@ -1239,12 +1244,14 @@ class RendererNodes extends RenderGroup {
               dstY: dstY,
               colorWest: colorWest,
               colorSouth: colorSouth,
+              animationFrame: animationFrame,
             )
           : renderTreeBottomOak(
               dstX: dstX,
               dstY: dstY,
               colorWest: colorWest,
               colorSouth: colorSouth,
+              animationFrame: animationFrame,
             );
 
   void renderNodeTreeTopOak({
@@ -1252,10 +1259,11 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
   }){
     final treeAnimation = animation.treeAnimation;
-    final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
-    final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
+    final shift = treeAnimation[animationFrame % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimation.length] * wind;
     final rotation = shiftRotation * 0.0066;
     const anchorY = 0.82;
 
@@ -1291,10 +1299,12 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
 }) {
     final treeAnimation = animation.treeAnimation;
-    final shift = treeAnimation[((row - column) + animation.frame) % treeAnimation.length] * wind;
-    final shiftRotation = treeAnimation[((row - column) + animation.frame - 2) % treeAnimation.length] * wind;
+    final treeAnimationLength = treeAnimation.length;
+    final shift = treeAnimation[animationFrame % treeAnimationLength] * wind;
+    final shiftRotation = treeAnimation[(animationFrame + animation.frame - 2) % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.0066;
     const anchorY = 0.82;
 
@@ -1331,10 +1341,10 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
 }) {
     final treeAnimation = animation.treeAnimation;
-    final frame = row - column + 4;
-    final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[animationFrame % treeAnimation.length] * wind;
     final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
 
@@ -1372,10 +1382,10 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int colorWest,
     required int colorSouth,
+    required int animationFrame,
   }) {
     final treeAnimation = animation.treeAnimation;
-    final frame = row - column + 4;
-    final shiftRotation = treeAnimation[(frame + animation.frame - 2) % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[animationFrame % treeAnimation.length] * wind;
     final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
 
@@ -2298,11 +2308,12 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int color,
+    required int animationFrame,
   }) =>
       engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNodeX.Water,
-        srcY: AtlasNodeY.Water + (((animation.frameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
+        srcY: AtlasNodeY.Water + (animationFrame * 72.0), // TODO Optimize
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: dstX,

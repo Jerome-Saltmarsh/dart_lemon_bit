@@ -300,7 +300,7 @@ class RendererParticles extends RenderGroup {
           break;
 
         case ParticleType.Whisp:
-          final nodeColor = scene.getNodeColorAtIndex(particle.nodeIndex);
+          final nodeColor = scene.getColor(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);
           final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
           engine.renderSprite(

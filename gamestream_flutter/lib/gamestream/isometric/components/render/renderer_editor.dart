@@ -18,8 +18,8 @@ class RendererEditor extends RenderGroup {
     markIndex = MarkType.getIndex(markValue);
     markType = MarkType.getType(markValue);
     final indexZ = scene.getIndexZ(markIndex);
-    final indexRow = scene.getIndexRow(markIndex);
-    final indexColumn = scene.getIndexColumn(markIndex);
+    final indexRow = scene.getRow(markIndex);
+    final indexColumn = scene.getColumn(markIndex);
     order =  (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height) + Node_Size_Half;
   }
 

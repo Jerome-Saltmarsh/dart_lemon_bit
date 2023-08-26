@@ -310,23 +310,24 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  int getIndexRow(int index) => (index % area) ~/ totalColumns;
+  int getRow(int index) => (index % area) ~/ totalColumns;
 
   int getIndexZ(int index) => index ~/ area;
 
-  int getIndexColumn(int index) => index % totalColumns;
+  int getColumn(int index) => index % totalColumns;
 
+  int getRowColumn(int index)=> getRow(index) + getColumn(index);
 
   bool isValidIndex(int index) => index >= 0 && index < totalNodes;
 
   double getIndexRenderX(int index) =>
       getRenderXOfRowAndColumn(
-          getIndexRow(index),
-          getIndexColumn(index),
+          getRow(index),
+          getColumn(index),
       );
 
   double getIndexRenderY(int index) =>
-      getRenderYOfRowColumnZ(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
+      getRenderYOfRowColumnZ(getRow(index), getColumn(index), getIndexZ(index));
 
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
@@ -547,8 +548,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
      for (var i = 0; i < nodeLightSourcesTotal; i++){
        final lightSourceIndex = nodeLightSources[i];
-       final lightSourceRow = getIndexRow(lightSourceIndex);
-       final lightSourceColumn = getIndexColumn(lightSourceIndex);
+       final lightSourceRow = getRow(lightSourceIndex);
+       final lightSourceColumn = getColumn(lightSourceIndex);
        final lightSourceZ = getIndexZ(lightSourceIndex);
 
        final distance =
@@ -566,14 +567,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nearestLightSourceIndex;
   }
 
-  int getNodeColorAtIndex(int index )=>
+  int getColor(int index )=>
       index < 0 || index >= totalNodes ? ambientColor : nodeColors[index];
 
   double getIndexPositionX(int index) =>
-      (getIndexRow(index) * Node_Size) + Node_Size_Half;
+      (getRow(index) * Node_Size) + Node_Size_Half;
 
   double getIndexPositionY(int index) =>
-      (getIndexColumn(index) * Node_Size) + Node_Size_Half;
+      (getColumn(index) * Node_Size) + Node_Size_Half;
 
   double getIndexPositionZ(int index) =>
       (getIndexZ(index) * Node_Height) + Node_Height_Half;
@@ -709,8 +710,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     totalActiveLights++;
 
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
+    final row = getRow(index);
+    final column = getColumn(index);
     final z = getIndexZ(index);
 
     final nodeType = nodeTypes[index];
@@ -791,8 +792,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (ry > engine.Screen_Bottom + padding) return;
     totalActiveLights++;
 
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
+    final row = getRow(index);
+    final column = getColumn(index);
     final z = getIndexZ(index);
 
     final nodeType = nodeTypes[index];
@@ -1756,8 +1757,8 @@ class IsometricScene with IsometricComponent implements Updatable {
       return false;
 
     final index = getIndexPosition(position);
-    final indexRow = getIndexRow(index);
-    final indexColumn = getIndexRow(index);
+    final indexRow = getRow(index);
+    final indexColumn = getRow(index);
     final i = indexRow * totalColumns + indexColumn;
 
     if (!rendererNodes.island[i])
@@ -1834,7 +1835,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nearestIndex;
   }
 
-  int getColorAbove(int index){
+  int colorAbove(int index){
     // TODO Optimize
     if (environment.lightningFlashing.value) {
       return rendererNodes.lightningColor;
@@ -1847,16 +1848,16 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[nodeAboveIndex];
   }
 
-  int getColorWest(int index){
-    final column = getIndexColumn(index);
+  int colorWest(int index){
+    final column = getColumn(index);
     if (column + 1 >= totalColumns){
       return ambientColor;
     }
     return nodeColors[index + 1];
   }
 
-  int getColorSouth(int index){
-    final row = getIndexRow(index);
+  int colorSouth(int index){
+    final row = getRow(index);
     if (row + 1 >= totalRows) {
       return ambientColor;
     }

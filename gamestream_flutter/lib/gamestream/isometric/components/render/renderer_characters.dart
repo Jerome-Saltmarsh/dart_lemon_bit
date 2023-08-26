@@ -381,8 +381,8 @@ class RendererCharacters extends RenderGroup {
     double radius;
 
     if (lightIndex != -1) {
-      final lightRow = scene.getIndexRow(lightIndex);
-      final lightColumn = scene.getIndexColumn(lightIndex);
+      final lightRow = scene.getRow(lightIndex);
+      final lightColumn = scene.getColumn(lightIndex);
       final lightZ = scene.getIndexZ(lightIndex);
 
       final lightX = (lightRow * Node_Size) + Node_Size_Half;

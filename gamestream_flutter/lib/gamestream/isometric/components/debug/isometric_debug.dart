@@ -172,8 +172,8 @@ class IsometricDebug with IsometricComponent {
       if (pathTargetIndexValue != -1) {
         render.wireFrameBlue(
           scene.getIndexZ(pathTargetIndexValue),
-          scene.getIndexRow(pathTargetIndexValue),
-          scene.getIndexColumn(pathTargetIndexValue),
+          scene.getRow(pathTargetIndexValue),
+          scene.getColumn(pathTargetIndexValue),
         );
       }
     }

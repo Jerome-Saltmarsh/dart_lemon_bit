@@ -154,8 +154,8 @@ class IsometricRender with IsometricComponent {
       textZRC(
         text,
         scene.getIndexZ(index),
-        scene.getIndexRow(index),
-        scene.getIndexColumn(index),
+        scene.getRow(index),
+        scene.getColumn(index),
       );
 
   void textZRC(dynamic text, int z, int row, int column) =>
