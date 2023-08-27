@@ -1301,9 +1301,8 @@ class RendererNodes extends RenderGroup {
     required int animationFrame,
 }) {
     final treeAnimation = animation.treeAnimation;
-    final treeAnimationLength = treeAnimation.length;
-    final shift = treeAnimation[animationFrame % treeAnimationLength] * wind;
-    final shiftRotation = treeAnimation[(animationFrame + animation.frame - 2) % treeAnimationLength] * wind;
+    final shift = treeAnimation[animationFrame % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimation.length] * wind;
     final rotation = shiftRotation * 0.0066;
     const anchorY = 0.82;
 
@@ -1326,7 +1325,7 @@ class RendererNodes extends RenderGroup {
       srcY: Src_Y_Sprite_Tree,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
-      dstX: dstX,
+      dstX: dstX + (shift * 0.5),
       dstY: dstY + 40,
       color: colorSouth,
       rotation: rotation,
