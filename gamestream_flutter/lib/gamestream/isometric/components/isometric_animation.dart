@@ -16,8 +16,6 @@ class IsometricAnimation {
   var _next = 0;
   var rendersPerFrame = 3;
 
-  final treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
-
   void update() {
     if (_next++ < rendersPerFrame)
       return;

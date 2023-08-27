@@ -19,6 +19,8 @@ class TreeType {
 
 class RendererNodes extends RenderGroup {
 
+  static const treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
+  static final treeAnimationLength = treeAnimation.length;
   static const Node_Size = 48.0;
   static const Node_Size_Half = 24.0;
   static const Node_Size_Third = 16.0;
@@ -1260,7 +1262,6 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int animationFrame,
   }){
-    final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[animationFrame % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimation.length] * wind;
     final rotation = shiftRotation * 0.0066;
@@ -1300,7 +1301,6 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int animationFrame,
 }) {
-    final treeAnimation = animation.treeAnimation;
     final shift = treeAnimation[animationFrame % treeAnimation.length] * wind;
     final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimation.length] * wind;
     final rotation = shiftRotation * 0.0066;
@@ -1341,10 +1341,10 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int animationFrame,
 }) {
-    final treeAnimation = animation.treeAnimation;
-    final shiftRotation = treeAnimation[animationFrame % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
+    const dstYShift = 32;
 
     // west
     engine.renderSpriteRotated(
@@ -1354,7 +1354,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY + 32,
+      dstY: dstY + dstYShift,
       color: colorWest,
       rotation: rotation,
       anchorY: anchorY,
@@ -1368,7 +1368,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY + 32,
+      dstY: dstY + dstYShift,
       color: colorSouth,
       rotation: rotation,
       anchorY: anchorY,
@@ -1382,10 +1382,10 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int animationFrame,
   }) {
-    final treeAnimation = animation.treeAnimation;
-    final shiftRotation = treeAnimation[animationFrame % treeAnimation.length] * wind;
+    final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
+    const dstYShift = 32;
 
     // west
     engine.renderSpriteRotated(
@@ -1395,7 +1395,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY + 32,
+      dstY: dstY + dstYShift,
       color: colorWest,
       rotation: rotation,
       anchorY: anchorY,
@@ -1409,7 +1409,7 @@ class RendererNodes extends RenderGroup {
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
-      dstY: dstY + 32,
+      dstY: dstY + dstYShift,
       color: colorSouth,
       rotation: rotation,
       anchorY: anchorY,
