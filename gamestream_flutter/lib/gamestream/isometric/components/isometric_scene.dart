@@ -1155,11 +1155,27 @@ class IsometricScene with IsometricComponent implements Updatable {
       amulet.lighting.torchEmissionIntensityAmbient,
     ).toInt().clamp(0, 255);
 
-    for (var i = 0; i < bakeStackTorchTotal; i++){
-      final index = bakeStackTorchIndex[i];
+    final total =  bakeStackTorchTotal;
+    final stack = bakeStackTorchIndex;
 
-      if (!indexOnscreen(index, padding: (Node_Size * 6)))
+    const padding = Node_Size * 6;
+    final screenLeft = engine.Screen_Left - padding;
+    final screenTop = engine.Screen_Top - padding;
+    final screenRight = engine.Screen_Right + padding;
+    final screenBottom = engine.Screen_Bottom + padding;
+
+    for (var i = 0; i < total; i++){
+      final index = stack[i];
+
+      final x = getIndexRenderX(index);
+      if (x < screenLeft || x > screenRight){
         continue;
+      }
+
+      final y = getIndexRenderY(index);
+      if (y > screenBottom && y < screenTop){
+        continue;
+      }
 
       final start = bakeStackStartIndex[i];
       final size = bakeStackTorchSize[i];
@@ -1201,6 +1217,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (brightness < 0)
       return;
 
+    final area = this.area; // cache on cpu
     final rows = totalRows;
     final columns = totalColumns;
     final zs = totalZ;
@@ -1480,7 +1497,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   bool indexOnscreen(int index, {double padding = Node_Size}){
     final x = getIndexRenderX(index);
-    final engine = amulet.engine;
     if (x < engine.Screen_Left - padding || x > engine.Screen_Right + padding)
       return false;
 
