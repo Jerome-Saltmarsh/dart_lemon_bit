@@ -43,6 +43,9 @@ class IsometricCompositor with IsometricComponent {
     var particlesRemaining = particles.remaining;
     var editorRemaining = editor.remaining;
 
+    if (nodes.remaining){
+      totalRemaining++;
+    }
     if (charactersRemaining){
       totalRemaining++;
     }
@@ -59,11 +62,11 @@ class IsometricCompositor with IsometricComponent {
       totalRemaining++;
     }
 
-    // var charactersOrder = characters.order;
-    // var projectilesOrder = projectiles.order;
-    // var gameObjectsOrder = gameObjects.order;
-    // var particlesOrder = particles.order;
-    // var editorOrder = editor.order;
+    var charactersOrder = characters.order;
+    var projectilesOrder = projectiles.order;
+    var gameObjectsOrder = gameObjects.order;
+    var particlesOrder = particles.order;
+    var editorOrder = editor.order;
 
     if (totalRemaining == 0) {
       return;
@@ -74,35 +77,63 @@ class IsometricCompositor with IsometricComponent {
       RenderGroup next = nodes;
       var nextOrder = next.order;
 
-      if (charactersRemaining && characters.order < nextOrder){
+      if (charactersRemaining && charactersOrder < nextOrder){
         next = characters;
-        nextOrder = next.order;
+        nextOrder = charactersOrder;
       }
 
-      if (projectilesRemaining && projectiles.order < nextOrder){
+      if (projectilesRemaining && projectilesOrder < nextOrder){
         next = projectiles;
-        nextOrder = next.order;
+        nextOrder = projectilesOrder;
       }
 
-      if (gameObjectsRemaining && gameObjects.order < nextOrder){
+      if (gameObjectsRemaining && gameObjectsOrder < nextOrder){
         next = gameObjects;
-        nextOrder = next.order;
+        nextOrder = gameObjectsOrder;
       }
 
-      if (particlesRemaining && particles.order < nextOrder){
+      if (particlesRemaining && particlesOrder < nextOrder){
         next = particles;
-        nextOrder = next.order;
+        nextOrder = particlesOrder;
       }
 
-      if (editorRemaining && editor.order < nextOrder){
+      if (editorRemaining && editorOrder < nextOrder){
         next = editor;
-        nextOrder = next.order;
+        nextOrder = editorOrder;
       }
 
       next.renderNext();
 
-      if (next.remaining){
-        continue;
+      if (next.remaining) {
+        if (next == nodes){
+          continue;
+        }
+
+        if (charactersRemaining && next == characters){
+          charactersOrder = characters.order;
+          continue;
+        }
+
+        if (projectilesRemaining && next == projectiles){
+          projectilesOrder = projectiles.order;
+          continue;
+        }
+
+        if (gameObjectsRemaining && next == gameObjects){
+          gameObjectsOrder = gameObjects.order;
+          continue;
+        }
+
+        if (particlesRemaining && next == particles){
+          particlesOrder = particles.order;
+          continue;
+        }
+
+        if (editorRemaining && next == editor){
+          editorOrder = editor.order;
+          continue;
+        }
+
       }
 
       totalRemaining--;
