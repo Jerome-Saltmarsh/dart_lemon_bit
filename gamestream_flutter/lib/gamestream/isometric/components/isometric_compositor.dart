@@ -21,26 +21,14 @@ class IsometricCompositor with IsometricComponent {
 
   void render3D() {
     var totalRemaining = 0;
-    RenderGroup next = rendererNodes;
 
-    if (resetRenderOrder(rendererNodes)){
-      totalRemaining++;
-    }
-    if (resetRenderOrder(rendererCharacters)){
-      totalRemaining++;
-    }
-    if (resetRenderOrder(rendererGameObjects)){
-      totalRemaining++;
-    }
-    if (resetRenderOrder(rendererParticles)){
-      totalRemaining++;
-    }
-    if (resetRenderOrder(rendererProjectiles)){
-      totalRemaining++;
-    }
-    if (resetRenderOrder(rendererEditor)){
-      totalRemaining++;
-    }
+    rendererNodes.reset();
+    rendererCharacters.reset();
+    rendererGameObjects.reset();
+    rendererParticles.reset();
+    rendererProjectiles.reset();
+    rendererEditor.reset();
+
 
     final nodes = rendererNodes;
     final characters = rendererCharacters;
@@ -55,75 +43,99 @@ class IsometricCompositor with IsometricComponent {
     var particlesRemaining = particles.remaining;
     var editorRemaining = editor.remaining;
 
-    if (totalRemaining == 0)
+    if (charactersRemaining){
+      totalRemaining++;
+    }
+    if (projectilesRemaining){
+      totalRemaining++;
+    }
+    if (gameObjectsRemaining){
+      totalRemaining++;
+    }
+    if (particlesRemaining){
+      totalRemaining++;
+    }
+    if (editorRemaining){
+      totalRemaining++;
+    }
+
+    // var charactersOrder = characters.order;
+    // var projectilesOrder = projectiles.order;
+    // var gameObjectsOrder = gameObjects.order;
+    // var particlesOrder = particles.order;
+    // var editorOrder = editor.order;
+
+    if (totalRemaining == 0) {
       return;
+    }
 
     while (true) {
-      next = nodes;
 
-      if (charactersRemaining){
-        next = checkNext(characters, next);
+      RenderGroup next = nodes;
+      var nextOrder = next.order;
+
+      if (charactersRemaining && characters.order < nextOrder){
+        next = characters;
+        nextOrder = next.order;
       }
 
-      if (projectilesRemaining){
-        next = checkNext(projectiles, next);
+      if (projectilesRemaining && projectiles.order < nextOrder){
+        next = projectiles;
+        nextOrder = next.order;
       }
 
-      if (gameObjectsRemaining){
-        next = checkNext(gameObjects, next);
+      if (gameObjectsRemaining && gameObjects.order < nextOrder){
+        next = gameObjects;
+        nextOrder = next.order;
       }
 
-      if (particlesRemaining){
-        next = checkNext(particles, next);
+      if (particlesRemaining && particles.order < nextOrder){
+        next = particles;
+        nextOrder = next.order;
       }
 
-      if (editorRemaining){
-        next = checkNext(editor, next);
+      if (editorRemaining && editor.order < nextOrder){
+        next = editor;
+        nextOrder = next.order;
       }
 
+      next.renderNext();
 
-      if (next.remaining) {
-        next.renderNext();
+      if (next.remaining){
         continue;
       }
 
       totalRemaining--;
-      if (totalRemaining == 0)
+
+      if (totalRemaining == 0){
         return;
+      }
 
       if (charactersRemaining && next == characters){
         charactersRemaining = false;
-      } else
-      if (projectilesRemaining && next == projectiles){
-        projectilesRemaining = false;
-      } else
-      if (gameObjectsRemaining && next == gameObjects){
-        gameObjectsRemaining = false;
-      } else
-      if (particlesRemaining && next == particles){
-        particlesRemaining = false;
-      } else
-      if (editorRemaining && next == editor){
-        editorRemaining = false;
+        continue;
       }
 
-      if (totalRemaining == 1) {
-        while (rendererNodes.remaining) {
-          rendererNodes.renderNext();
-        }
-        while (rendererEditor.remaining) {
-          rendererNodes.renderNext();
-        }
-        while (rendererCharacters.remaining) {
-          rendererCharacters.renderNext();
-        }
-        while (rendererParticles.remaining) {
-          rendererParticles.renderNext();
-        }
-        while (rendererProjectiles.remaining) {
-          rendererProjectiles.renderNext();
-        }
+      if (projectilesRemaining && next == projectiles){
+        projectilesRemaining = false;
+        continue;
       }
+
+      if (gameObjectsRemaining && next == gameObjects){
+        gameObjectsRemaining = false;
+        continue;
+      }
+
+      if (particlesRemaining && next == particles){
+        particlesRemaining = false;
+        continue;
+      }
+
+      if (editorRemaining && next == editor){
+        editorRemaining = false;
+        continue;
+      }
+
       return;
     }
   }
