@@ -693,7 +693,9 @@ class RendererNodes extends RenderGroup {
         nodeType: nodeType,
         nodeOrientation: nodeOrientation,
         nodeVariation: scene.nodeVariations[index],
-        colorAbove: scene.colorAbove(index),
+        colorAbove: lightningFlashing
+            ? lightningColor
+            : scene.colorAbove(index),
         colorWest: scene.colorWest(index),
         colorSouth: scene.colorSouth(index),
         colorCurrent: scene.getColor(index),
