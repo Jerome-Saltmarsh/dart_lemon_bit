@@ -785,11 +785,17 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     final padding = interpolationPadding;
     final rx = getIndexRenderX(index);
-    if (rx < engine.Screen_Left - padding) return;
-    if (rx > engine.Screen_Right + padding) return;
+
+    final minRenderX = engine.Screen_Left - padding;
+    final maxRenderX = engine.Screen_Right + padding;
+    final minRenderY = engine.Screen_Top - padding;
+    final maxRenderY = engine.Screen_Bottom + padding;
+
+    if (rx < minRenderX) return;
+    if (rx > maxRenderX) return;
     final ry = getIndexRenderY(index);
-    if (ry < engine.Screen_Top - padding) return;
-    if (ry > engine.Screen_Bottom + padding) return;
+    if (ry < minRenderY) return;
+    if (ry > maxRenderY) return;
     totalActiveLights++;
 
     final row = getRow(index);
@@ -851,6 +857,10 @@ class IsometricScene with IsometricComponent implements Updatable {
             vz: vz,
             color: color,
             intensity: intensity,
+            minRenderX: minRenderX,
+            maxRenderX: maxRenderX,
+            minRenderY: minRenderY,
+            maxRenderY: maxRenderY,
           );
         }
       }
@@ -864,10 +874,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int brightness,
     required int color,
     required double intensity,
+    required double minRenderX,
+    required double maxRenderX,
+    required double minRenderY,
+    required double maxRenderY,
     int vx = 0,
     int vy = 0,
     int vz = 0,
-
   }){
     // assert (brightness < interpolationLength);
     var velocity = vx.abs() + vy.abs() + vz.abs();
@@ -895,24 +908,22 @@ class IsometricScene with IsometricComponent implements Updatable {
         return;
     }
 
-    const padding = Node_Size + Node_Size_Half;
-
     final index = (z * area) + (row * totalColumns) + column;
 
     final renderX = getIndexRenderX(index);
 
-    if (renderX < amulet.engine.Screen_Left - padding && (vx < 0 || vy > 0))
+    if (renderX < minRenderX && (vx < 0 || vy > 0))
       return;
 
-    if (renderX > amulet.engine.Screen_Right + padding && (vx > 0 || vy < 0))
+    if (renderX > maxRenderX && (vx > 0 || vy < 0))
       return;
 
     final renderY = getIndexRenderY(index);
 
-    if (renderY < amulet.engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+    if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
       return;
 
-    if (renderY > amulet.engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+    if (renderY > maxRenderY && (vx > 0 || vy > 0))
       return;
 
     final nodeType = nodeTypes[index];
@@ -1044,6 +1055,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: vz,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
@@ -1058,6 +1073,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: 0,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
@@ -1072,6 +1091,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: vz,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
@@ -1086,6 +1109,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: vz,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
@@ -1100,6 +1127,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: 0,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
@@ -1114,6 +1145,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: 0,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
@@ -1128,6 +1163,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         vz: vz,
         color: color,
         intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
       );
     }
 
