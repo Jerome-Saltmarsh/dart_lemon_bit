@@ -64,7 +64,9 @@ class AmuletUI {
           child: buildPlayerStatsRow(),
       ),
       Positioned(
-          child: buildDialogCreateCharacter(),
+        top: margin1,
+        left: margin1,
+        child: buildDialogCreateCharacter(),
       ),
       Positioned(
           bottom: margin2,
