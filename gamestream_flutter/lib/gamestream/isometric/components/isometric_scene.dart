@@ -1555,7 +1555,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   int colorAbove(int index){
     // TODO Optimize
-    if (environment.lightningFlashing.value) {
+    if (environment.lightningFlashing) {
       return rendererNodes.lightningColor;
     }
 

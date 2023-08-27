@@ -12,9 +12,9 @@ class IsometricEnvironment with IsometricComponent {
   var windLine = 0;
   var srcXRainFalling = 6640.0;
   var srcXRainLanding = 6739.0;
+  var lightningFlashing = false;
+  var lightningFlashing01 = 0.0;
 
-  final lightningFlashing = Watch(false);
-  final lightningFlashing01 = Watch(0.0);
   final rainType = Watch(RainType.None);
   final seconds = Watch(0);
   final hours = Watch(0);
@@ -27,7 +27,6 @@ class IsometricEnvironment with IsometricComponent {
   final minutes = Watch(0);
 
   IsometricEnvironment(){
-    lightningFlashing.onChanged(onChangedLightningFlashing);
     rainType.onChanged(onChangedRain);
     seconds.onChanged(onChangedSeconds);
     hours.onChanged(onChangedHour);
@@ -58,12 +57,6 @@ class IsometricEnvironment with IsometricComponent {
   int get currentTimeInSeconds =>
       (hours.value * Duration.secondsPerHour) +
       (minutes.value * Duration.secondsPerMinute);
-
-  void onChangedLightningFlashing(bool lightningFlashing){
-    if (lightningFlashing) {
-      audio.thunder(1.0);
-    }
-  }
 
   void onChangedRain(int value) {
     raining.value = value != RainType.None;

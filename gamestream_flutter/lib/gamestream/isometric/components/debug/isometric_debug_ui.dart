@@ -666,7 +666,7 @@ extension isometricDebugUI on IsometricDebug {
             action: environment.requestLightningFlash,
             child: buildText('LIGHTNING FLASH'),
           ),
-          buildRowWatch('lightningFlashing01', environment.lightningFlashing01, (t) => buildText(t.toStringAsFixed(2))),
+          buildRowRefresh('lightningFlashing01', () => environment.lightningFlashing01),
           buildRowWatch('myst', environment.myst, (activeMyst) =>
                 Row(
                     children: MystType.values
