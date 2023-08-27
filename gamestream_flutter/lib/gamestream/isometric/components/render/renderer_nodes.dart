@@ -12,10 +12,7 @@ import 'package:lemon_math/src.dart';
 
 import 'constants/node_src.dart';
 
-class TreeType {
-  static const Pine = 0;
-  static const Oak = 1;
-}
+
 
 class RendererNodes extends RenderGroup {
 
@@ -183,6 +180,7 @@ class RendererNodes extends RenderGroup {
 
   void renderPlain(){
 
+    final area = scene.area;
     final height = scene.totalZ;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
@@ -191,6 +189,7 @@ class RendererNodes extends RenderGroup {
     final heightMax = height - 1;
     final shiftRight = columns - 1;
     final index = plainIndex;
+    final nodeTypes = scene.nodeTypes;
 
     var lineRow = clamp(index - (height + columns), 0, rowMax);
     var lineColumn = clamp(index - height + 1, 0, columnMax);
@@ -205,26 +204,26 @@ class RendererNodes extends RenderGroup {
     var row = lineRow;
 
     while (lineZ >= 0) {
-      var currentNodeDstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
+      var dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
-      if (currentNodeDstY > screenTop) {
-        if (currentNodeDstY > screenBottom){
+      if (dstY > screenTop) {
+        if (dstY > screenBottom){
           break;
         }
 
-        var currentNodeIndex = scene.getIndexZRC(lineZ, lineRow, lineColumn);
-        var currentNodeDstX = (row - column) * Node_Size_Half;
+        var index = (lineZ * area) + (row * columns) + column;
+        var dstX = (row - column) * Node_Size_Half;
 
         while (true) {
-          if (currentNodeDstX > screenLeft &&
-              currentNodeDstX < screenRight
+          if (dstX > screenLeft &&
+              dstX < screenRight
           ) {
-            final nodeType = nodeTypes[currentNodeIndex];
+            final nodeType = nodeTypes[index];
             if (nodeType != NodeType.Empty){
               renderNodeIndex(
-                index: currentNodeIndex,
-                dstX: currentNodeDstX,
-                dstY: currentNodeDstY,
+                index: index,
+                dstX: dstX,
+                dstY: dstY,
               );
             }
           }
@@ -235,8 +234,8 @@ class RendererNodes extends RenderGroup {
           if (column < 0 || row >= rowMax)
             break;
 
-          currentNodeIndex += shiftRight;
-          currentNodeDstX += Node_Sprite_Width;
+          index += shiftRight;
+          dstX += Node_Sprite_Width;
         }
       }
 
@@ -250,7 +249,7 @@ class RendererNodes extends RenderGroup {
       column = lineColumn;
       row = lineRow;
       lineZ--;
-      currentNodeDstY += Node_Height;
+      dstY += Node_Height;
     }
 
     plainIndex++;
@@ -1043,6 +1042,8 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int colorSouth,
   }) {
+    const anchorY = 0.6;
+
     engine.renderSprite(
       image: atlasNodes,
       srcX: Src_X_Sprite_Boulder_West,
@@ -1052,6 +1053,7 @@ class RendererNodes extends RenderGroup {
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
+      anchorY: anchorY,
     );
 
     engine.renderSprite(
@@ -1063,6 +1065,7 @@ class RendererNodes extends RenderGroup {
       dstX: dstX,
       dstY: dstY,
       color: colorSouth,
+      anchorY: anchorY,
     );
 
   }
