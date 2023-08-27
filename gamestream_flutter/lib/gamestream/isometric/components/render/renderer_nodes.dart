@@ -47,6 +47,7 @@ class RendererNodes extends RenderGroup {
   var plainIndex = 0;
   var totalPlains = 0;
   var orderShiftY = 151.0;
+  var renderRainFalling = true;
 
 
   // VARIABLES
@@ -311,6 +312,7 @@ class RendererNodes extends RenderGroup {
   @override
   void reset() {
     lightningFlashing = environment.lightningFlashing.value;
+    renderRainFalling = options.renderRainFallingTwice;
 
     if (lightningFlashing) {
       final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
@@ -748,6 +750,7 @@ class RendererNodes extends RenderGroup {
           variation: scene.nodeVariations[index],
           onWater: scene.nodeTypeBelowIs(index, NodeType.Water),
           color: scene.getColor(index),
+          renderRainFalling: renderRainFalling,
         );
         return;
       case NodeType.Sandbag:
@@ -1156,6 +1159,7 @@ class RendererNodes extends RenderGroup {
     required int variation,
     required int color,
     required bool onWater,
+    required bool renderRainFalling,
   }) {
     if (onWater){
       engine.renderSprite(
@@ -1180,7 +1184,7 @@ class RendererNodes extends RenderGroup {
       dstY: dstY,
     );
 
-    if (options.renderRainFallingTwice){
+    if (renderRainFalling){
       renderNodeRainFalling(
         dstX: dstX,
         dstY: dstY,
