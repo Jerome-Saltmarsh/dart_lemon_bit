@@ -216,6 +216,7 @@ class RendererNodes extends RenderGroup {
             if (nodeType != NodeType.Empty){
               renderNodeIndex(
                 index: index,
+                nodeType: nodeType,
                 dstX: dstX,
                 dstY: dstY,
               );
@@ -669,6 +670,7 @@ class RendererNodes extends RenderGroup {
 
   void renderNodeIndex({
     required int index,
+    required int nodeType,
     required double dstX,
     required double dstY,
   }) {
@@ -681,7 +683,7 @@ class RendererNodes extends RenderGroup {
     //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
     // }
 
-    final nodeType = nodeTypes[index];
+    // final nodeType = nodeTypes[index];
     final nodeOrientation = nodeOrientations[index];
 
     if (nodeTypeSrcY.containsKey(nodeType)){

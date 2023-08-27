@@ -4,45 +4,62 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 
 class IsometricCompositor with IsometricComponent {
 
-  var totalRemaining = 0;
-  var totalIndex = 0;
-
-  late RenderGroup next = rendererNodes;
-
-  void resetRenderOrder(RenderGroup value){
+  bool resetRenderOrder(RenderGroup value){
     value.reset();
-    if (value.remaining){
-      totalRemaining++;
-    }
+    return value.remaining;
   }
 
-  void checkNext(RenderGroup renderer){
+  static RenderGroup checkNext(RenderGroup renderer, RenderGroup next){
     if (
       !renderer.remaining ||
       renderer.order > next.order
-    ) return;
-    next = renderer;
+    ) {
+      return next;
+    }
+    return renderer;
   }
 
   void render3D() {
-    totalRemaining = 0;
-    resetRenderOrder(rendererNodes);
-    resetRenderOrder(rendererCharacters);
-    resetRenderOrder(rendererGameObjects);
-    resetRenderOrder(rendererParticles);
-    resetRenderOrder(rendererProjectiles);
-    resetRenderOrder(rendererEditor);
+    var totalRemaining = 0;
+    RenderGroup next = rendererNodes;
+
+    if (resetRenderOrder(rendererNodes)){
+      totalRemaining++;
+    }
+    if (resetRenderOrder(rendererCharacters)){
+      totalRemaining++;
+    }
+    if (resetRenderOrder(rendererGameObjects)){
+      totalRemaining++;
+    }
+    if (resetRenderOrder(rendererParticles)){
+      totalRemaining++;
+    }
+    if (resetRenderOrder(rendererProjectiles)){
+      totalRemaining++;
+    }
+    if (resetRenderOrder(rendererEditor)){
+      totalRemaining++;
+    }
+
+    final nodes = rendererNodes;
+    final characters = rendererCharacters;
+    final projectiles = rendererProjectiles;
+    final gameObjects = rendererGameObjects;
+    final particles = rendererParticles;
+    final editor = rendererEditor;
 
     if (totalRemaining == 0)
       return;
 
     while (true) {
-      next = rendererNodes;
-      checkNext(rendererCharacters);
-      checkNext(rendererProjectiles);
-      checkNext(rendererGameObjects);
-      checkNext(rendererParticles);
-      checkNext(rendererEditor);
+      next = nodes;
+      next = checkNext(characters, next);
+      next = checkNext(projectiles, next);
+      next = checkNext(gameObjects, next);
+      next = checkNext(particles, next);
+      next = checkNext(editor, next);
+
       if (next.remaining) {
         next.renderNext();
         continue;
