@@ -49,16 +49,38 @@ class IsometricCompositor with IsometricComponent {
     final particles = rendererParticles;
     final editor = rendererEditor;
 
+    var charactersRemaining = characters.remaining;
+    var projectilesRemaining = projectiles.remaining;
+    var gameObjectsRemaining = gameObjects.remaining;
+    var particlesRemaining = particles.remaining;
+    var editorRemaining = editor.remaining;
+
     if (totalRemaining == 0)
       return;
 
     while (true) {
       next = nodes;
-      next = checkNext(characters, next);
-      next = checkNext(projectiles, next);
-      next = checkNext(gameObjects, next);
-      next = checkNext(particles, next);
-      next = checkNext(editor, next);
+
+      if (charactersRemaining){
+        next = checkNext(characters, next);
+      }
+
+      if (projectilesRemaining){
+        next = checkNext(projectiles, next);
+      }
+
+      if (gameObjectsRemaining){
+        next = checkNext(gameObjects, next);
+      }
+
+      if (particlesRemaining){
+        next = checkNext(particles, next);
+      }
+
+      if (editorRemaining){
+        next = checkNext(editor, next);
+      }
+
 
       if (next.remaining) {
         next.renderNext();
@@ -68,6 +90,22 @@ class IsometricCompositor with IsometricComponent {
       totalRemaining--;
       if (totalRemaining == 0)
         return;
+
+      if (charactersRemaining && next == characters){
+        charactersRemaining = false;
+      } else
+      if (projectilesRemaining && next == projectiles){
+        projectilesRemaining = false;
+      } else
+      if (gameObjectsRemaining && next == gameObjects){
+        gameObjectsRemaining = false;
+      } else
+      if (particlesRemaining && next == particles){
+        particlesRemaining = false;
+      } else
+      if (editorRemaining && next == editor){
+        editorRemaining = false;
+      }
 
       if (totalRemaining == 1) {
         while (rendererNodes.remaining) {
