@@ -117,16 +117,6 @@ class RendererNodes extends RenderGroup {
 
   int get wind => environment.wind.value;
 
-  // int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-
-  // int get renderNodeBelowIndex => currentNodeIndex - scene.area;
-
-  // int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? scene.nodeVariations[renderNodeBelowIndex] : currentNodeVariation;
-
-  // int get renderNodeBelowColor => scene.getNodeColorAtIndex(currentNodeIndex - scene.area);
-
-  // int get nodeTypeBelow => scene.getTypeBelow(currentNodeIndex);
-
   @override
   void renderFunction() {
     engine.bufferImage = atlasNodes;
@@ -175,7 +165,10 @@ class RendererNodes extends RenderGroup {
     final plainStartRow = clamp(index - (height + columns), 0, rowMax);
     final plainStartColumn = clamp(index - height + 1, 0, columnMax);
     final plainStartZ = clamp(index, 0, heightMax);
-    order = (plainStartRow * Node_Size) + (plainStartColumn * Node_Size) + (plainStartZ * Node_Height) + orderShiftY;
+    order = (plainStartRow * Node_Size)
+        + (plainStartColumn * Node_Size)
+        + (plainStartZ * Node_Height)
+        + orderShiftY;
   }
 
   void renderPlain(){
@@ -215,6 +208,7 @@ class RendererNodes extends RenderGroup {
         var dstX = (row - column) * Node_Size_Half;
 
         while (true) {
+          // TODO if dstX > screenRight then break
           if (dstX > screenLeft &&
               dstX < screenRight
           ) {
@@ -1042,7 +1036,7 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int colorSouth,
   }) {
-    const anchorY = 0.6;
+    const anchorY = 0.28;
 
     engine.renderSprite(
       image: atlasNodes,
