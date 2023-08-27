@@ -615,21 +615,17 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required bool grassy,
 }){
-    const Src_X_Plain = 1294.0;
-    const Src_X_Grassy = 1311.0;
-    final srcX = grassy ? Src_X_Grassy : Src_X_Plain;
-
     renderCustomNode(
-        srcX: srcX,
+        srcX: grassy ? 1294.0 : 1311.0,
         srcY: 304,
         srcWidth: 16,
         srcHeight: 34,
         dstX: dstX - 8,
-        dstY: dstY + 16,
+        dstY: dstY,
         color: 0,
     );
 
-    render.flame(dstX: dstX, dstY: dstY + 4, scale: 0.7);
+    render.flame(dstX: dstX, dstY: dstY - 12, scale: 0.7);
   }
 
   // bool assertOnScreen(){
