@@ -1113,6 +1113,7 @@ class RendererNodes extends RenderGroup {
     const Src_Y = 305.0;
     const Src_Width = 48.0;
     const Src_Height = 72.0;
+    const dstOff = -24;
 
     final srcX = Src_X + (animationFrame * Src_Width);
 
@@ -1121,8 +1122,8 @@ class RendererNodes extends RenderGroup {
       srcY: Src_Y,
       srcWidth: Src_Width,
       srcHeight: Src_Height,
-      dstX: dstX - 24,
-      dstY: dstY - 24,
+      dstX: dstX + dstOff,
+      dstY: dstY + dstOff,
       color: colorAbove,
     );
 
@@ -1131,8 +1132,8 @@ class RendererNodes extends RenderGroup {
       srcY: Src_Y + Src_Height,
       srcWidth: Src_Width,
       srcHeight: Src_Height,
-      dstX: dstX,
-      dstY: dstY,
+      dstX: dstX + dstOff,
+      dstY: dstY + dstOff,
       color: colorWest,
     );
 
@@ -1141,8 +1142,8 @@ class RendererNodes extends RenderGroup {
       srcY: Src_Y + Src_Height + Src_Height,
       srcWidth: Src_Width,
       srcHeight: Src_Height,
-      dstX: dstX,
-      dstY: dstY,
+      dstX: dstX + dstOff,
+      dstY: dstY + dstOff,
       color: colorSouth,
     );
   }
