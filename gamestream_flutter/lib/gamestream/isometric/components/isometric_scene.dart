@@ -684,17 +684,19 @@ class IsometricScene with IsometricComponent implements Updatable {
     assert (alpha >= 0);
     assert (alpha <= 255);
     if (!inBoundsPosition(v)) return;
-    emitLightAmbient(
+    emitLight(
       index: getIndexPosition(v),
-      alpha: alpha,
+      value: alpha,
       intensity: intensity,
+      ambient: true,
     );
   }
 
-  void emitLightAmbient({
+  void emitLight({
     required int index,
-    required int alpha,
+    required int value,
     required double intensity,
+    required bool ambient,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
@@ -706,8 +708,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     final maxRenderY = engine.Screen_Bottom + padding;
 
     if (!bakeStackRecording){
-
-
       final rx = getIndexRenderX(index);
       if (rx < minRenderX) return;
       if (rx > maxRenderX) return;
@@ -772,110 +772,17 @@ class IsometricScene with IsometricComponent implements Updatable {
             column: column,
             z: z,
             brightness: 7,
-            value: alpha,
+            value: value,
             vx: vx,
             vy: vy,
             vz: vz,
             intensity: intensity,
-            ambient: true,
+            ambient: ambient,
             minRenderX: minRenderX,
             maxRenderX: maxRenderX,
             minRenderY: minRenderY,
             maxRenderY: maxRenderY,
-          );
-        }
-      }
-    }
-  }
-
-
-  void emitLightColored({
-    required int index,
-    required int color,
-    required double intensity,
-  }){
-    if (index < 0) return;
-    if (index >= totalNodes) return;
-
-    final padding = interpolationPadding;
-    final rx = getIndexRenderX(index);
-
-    final minRenderX = engine.Screen_Left - padding;
-    final maxRenderX = engine.Screen_Right + padding;
-    final minRenderY = engine.Screen_Top - padding;
-    final maxRenderY = engine.Screen_Bottom + padding;
-
-    if (rx < minRenderX) return;
-    if (rx > maxRenderX) return;
-    final ry = getIndexRenderY(index);
-    if (ry < minRenderY) return;
-    if (ry > maxRenderY) return;
-    totalActiveLights++;
-
-    final row = getRow(index);
-    final column = getColumn(index);
-    final z = getIndexZ(index);
-
-    final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
-
-    var vxStart = -1;
-    var vxEnd = 1;
-    var vyStart = -1;
-    var vyEnd = 1;
-
-    if (!isNodeTypeTransparent(nodeType)){
-      if (const [
-        NodeOrientation.Half_North,
-        NodeOrientation.Corner_North_East,
-        NodeOrientation.Corner_North_West
-      ].contains(nodeOrientation)) {
-        vxStart = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_South,
-        NodeOrientation.Corner_South_West,
-        NodeOrientation.Corner_South_East
-      ].contains(nodeOrientation)) {
-        vxEnd = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_East,
-        NodeOrientation.Corner_North_East,
-        NodeOrientation.Corner_South_East
-      ].contains(nodeOrientation)) {
-        vyStart = 0;
-      }
-
-      if (const [
-        NodeOrientation.Half_West,
-        NodeOrientation.Corner_South_West,
-        NodeOrientation.Corner_North_West
-      ].contains(nodeOrientation)) {
-        vyEnd = 0;
-      }
-    }
-
-    for (var vz = -1; vz <= 1; vz++){
-      for (var vx = vxStart; vx <= vxEnd; vx++){
-        for (var vy = vyStart; vy <= vyEnd; vy++){
-          emitLightBeam(
-            row: row,
-            column: column,
-            z: z,
-            brightness: 7,
-            vx: vx,
-            vy: vy,
-            vz: vz,
-            value: color,
-            ambient: false,
-            intensity: intensity,
-            minRenderX: minRenderX,
-            maxRenderX: maxRenderX,
-            minRenderY: minRenderY,
-            maxRenderY: maxRenderY,
+            recordMode: bakeStackRecording,
           );
         }
       }
@@ -887,10 +794,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     double intensity = 1.0,
   }){
     if (!inBoundsPosition(v)) return;
-    emitLightColored(
+    emitLight(
       index: getIndexPosition(v),
-      color: color,
+      value: color,
       intensity: intensity,
+      ambient: false,
     );
   }
 
@@ -945,10 +853,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (!options.editMode) return;
     final editor = amulet.editor;
     if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
-      emitLightAmbient(
+      emitLight(
         index:  editor.nodeSelectedIndex.value,
-        alpha: 0,
+        value: 0,
         intensity: 1.0,
+        ambient: true,
       );
     }
   }
@@ -968,6 +877,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     required double maxRenderX,
     required double minRenderY,
     required double maxRenderY,
+    required bool recordMode,
   }){
     if (brightness < 0)
       return;
@@ -976,7 +886,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     final rows = totalRows;
     final columns = totalColumns;
     final zs = totalZ;
-    final recordMode = bakeStackRecording;
 
     while (true) {
       var velocity = vx.abs() + vy.abs() + vz.abs();
@@ -1173,6 +1082,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
 
@@ -1192,6 +1102,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
 
@@ -1211,6 +1122,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
 
@@ -1230,6 +1142,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
 
@@ -1249,6 +1162,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
 
@@ -1268,6 +1182,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
 
@@ -1287,6 +1202,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         maxRenderX: maxRenderX,
         minRenderY: minRenderY,
         maxRenderY: maxRenderY,
+        recordMode: recordMode,
       );
     }
   }
@@ -1313,10 +1229,11 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       switch (nodeType){
         case NodeType.Torch:
-          emitLightAmbient(
+          emitLight(
             index: nodeIndex,
-            alpha: alpha,
+            value: alpha,
             intensity: 1.0,
+            ambient: true,
           );
           break;
       }
@@ -1436,10 +1353,11 @@ class IsometricScene with IsometricComponent implements Updatable {
       final particle = particles[i];
       if (!particle.active) continue;
       if (!particle.emitsLight) continue;
-      emitLightColored(
+      emitLight(
         index: getIndexPosition(particle),
-        color: particle.emissionColor,
+        value: particle.emissionColor,
         intensity: particle.emissionIntensity,
+        ambient: false,
       );
     }
   }
@@ -1491,24 +1409,27 @@ class IsometricScene with IsometricComponent implements Updatable {
         case NodeType.Torch:
           break;
         case NodeType.Fireplace:
-          emitLightColored(
+          emitLight(
             index: nodeIndex,
-            color: colors.orange_0.value,
+            value: colors.orange_0.value,
             intensity: torchEmissionIntensityColored,
+            ambient: false,
           );
           break;
         case NodeType.Torch_Blue:
-          emitLightColored(
+          emitLight(
             index: nodeIndex,
-            color: colors.blue_1.value,
+            value: colors.blue_1.value,
             intensity: torchEmissionIntensityColored,
+            ambient: false,
           );
           break;
         case NodeType.Torch_Red:
-          emitLightColored(
+          emitLight(
             index: nodeIndex,
-            color: colors.red_1.value,
+            value: colors.red_1.value,
             intensity: torchEmissionIntensityColored,
+            ambient: false,
           );
           break;
       }
