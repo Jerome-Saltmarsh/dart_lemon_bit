@@ -3024,9 +3024,9 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int colorWest,
-    required int colorCurrent,
     required int colorAbove,
     required int colorSouth,
+    required int colorCurrent,
   }) {
     renderDynamicHalfNorth(
       dstX: dstX,
