@@ -2445,7 +2445,7 @@ class RendererNodes extends RenderGroup {
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
-          colorWest: colorWest,
+          colorWest: colorCurrent,
           colorSouth: colorSouth,
           colorAbove: colorAbove,
         );
