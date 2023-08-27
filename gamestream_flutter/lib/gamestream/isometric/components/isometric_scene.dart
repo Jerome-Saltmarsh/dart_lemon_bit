@@ -789,19 +789,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  void emitLightColoredAtPosition(Position v, {
-    required int color,
-    double intensity = 1.0,
-  }){
-    if (!inBoundsPosition(v)) return;
-    emitLight(
-      index: getIndexPosition(v),
-      value: color,
-      intensity: intensity,
-      ambient: false,
-    );
-  }
-
   void applyEmissionBakeStack() {
 
     final ambient = ambientAlpha.clamp(0, 255);
@@ -1277,12 +1264,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      //  emitLightColoredAtPosition(projectile,
-      //   hue: 100,
-      //   saturation: 1,
-      //   value: 1,
-      //   alpha: 20,
-      // );
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
