@@ -1198,9 +1198,19 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int vy,
     required int vz,
   }){
-    // assert (brightness >= 0);
     if (brightness < 0)
       return;
+
+    final rows = totalRows;
+    final columns = totalColumns;
+    final zs = totalZ;
+    final recordMode = bakeStackRecording;
+
+    const padding = Node_Size + Node_Size_Half;
+    final screenLeft = engine.Screen_Left - padding;
+    final screenRight = engine.Screen_Right + padding;
+    final screenTop = engine.Screen_Top - padding;
+    final screenBottom = engine.Screen_Bottom + padding;
 
     while (true) {
       var velocity = vx.abs() + vy.abs() + vz.abs();
@@ -1211,45 +1221,42 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       if (vx != 0) {
         row += vx;
-        if (row < 0 || row >= totalRows)
+        if (row < 0 || row >= rows)
           return;
       }
 
       if (vy != 0) {
         column += vy;
-        if (column < 0 || column >= totalColumns)
+        if (column < 0 || column >= columns)
           return;
       }
 
       if (vz != 0) {
         z += vz;
-        if (z < 0 || z >= totalZ)
+        if (z < 0 || z >= zs)
           return;
       }
 
-      const padding = Node_Size + Node_Size_Half;
 
-      final index = (z * area) + (row * totalColumns) + column;
+      final index = (z * area) + (row * columns) + column;
 
-      if (!bakeStackRecording){
+      if (!recordMode){
         final renderX = getIndexRenderX(index);
-        final engine = amulet.engine;
 
-        if (renderX < engine.Screen_Left - padding && (vx < 0 || vy > 0))
+        if (renderX < screenLeft && (vx < 0 || vy > 0))
           return;
 
-        if (renderX > engine.Screen_Right + padding && (vx > 0 || vy < 0))
+        if (renderX > screenRight + padding && (vx > 0 || vy < 0))
           return;
 
         final renderY = getIndexRenderY(index);
 
-        if (renderY < engine.Screen_Top - padding && (vx < 0 || vy < 0 || vz > 0))
+        if (renderY < screenTop && (vx < 0 || vy < 0 || vz > 0))
           return;
 
-        if (renderY > engine.Screen_Bottom + padding && (vx > 0 || vy > 0))
+        if (renderY > screenBottom && (vx > 0 || vy > 0))
           return;
       }
-
 
       final nodeType = nodeTypes[index];
       final nodeOrientation = nodeOrientations[index];
@@ -1355,7 +1362,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
       );
 
-      if (bakeStackRecording) {
+      if (recordMode) {
         bakeStackIndex[bakeStackTotal] = index;
         bakeStackBrightness[bakeStackTotal] = brightness;
         bakeStackTotal++;

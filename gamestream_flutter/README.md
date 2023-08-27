@@ -26,7 +26,10 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 - player attributes dialog
 
-26.08.2023
+27.08.2023
+- optimize compositor
+
+- 26.08.2023
 - optimize render nodes
 
 25.08.2023
