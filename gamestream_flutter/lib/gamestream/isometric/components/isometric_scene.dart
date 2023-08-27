@@ -644,7 +644,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void updateCharacterColors(){
-    for (var i = 0; i <  totalCharacters; i++){
+    for (var i = 0; i < totalCharacters; i++){
       final character = characters[i];
       character.color =  getRenderColorPosition(character);
     }
@@ -687,12 +687,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     emitLightAmbient(
       index: getIndexPosition(v),
       alpha: alpha,
+      intensity: intensity,
     );
   }
 
   void emitLightAmbient({
     required int index,
     required int alpha,
+    required double intensity,
   }){
     if (index < 0) return;
     if (index >= totalNodes) return;
@@ -759,15 +761,17 @@ class IsometricScene with IsometricComponent implements Updatable {
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
-          shootLightTreeAmbient(
+          shootLightTree(
             row: row,
             column: column,
             z: z,
             brightness: 7,
-            alpha: alpha,
+            value: alpha,
             vx: vx,
             vy: vy,
             vz: vz,
+            intensity: intensity,
+            ambient: true,
           );
         }
       }
@@ -847,7 +851,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
-          shootLightTreeColor(
+          shootLightTree(
             row: row,
             column: column,
             z: z,
@@ -855,322 +859,321 @@ class IsometricScene with IsometricComponent implements Updatable {
             vx: vx,
             vy: vy,
             vz: vz,
-            color: color,
+            value: color,
+            ambient: false,
             intensity: intensity,
-            minRenderX: minRenderX,
-            maxRenderX: maxRenderX,
-            minRenderY: minRenderY,
-            maxRenderY: maxRenderY,
           );
         }
       }
     }
   }
 
-  void shootLightTreeColor({
-    required int row,
-    required int column,
-    required int z,
-    required int brightness,
-    required int color,
-    required double intensity,
-    required double minRenderX,
-    required double maxRenderX,
-    required double minRenderY,
-    required double maxRenderY,
-    int vx = 0,
-    int vy = 0,
-    int vz = 0,
-  }){
-    // assert (brightness < interpolationLength);
-    var velocity = vx.abs() + vy.abs() + vz.abs();
-
-    brightness -= velocity;
-    if (brightness < 0) {
-      return;
-    }
-
-    if (vx != 0) {
-      row += vx;
-      if (row < 0 || row >= totalRows)
-        return;
-    }
-
-    if (vy != 0) {
-      column += vy;
-      if (column < 0 || column >= totalColumns)
-        return;
-    }
-
-    if (vz != 0) {
-      z += vz;
-      if (z < 0 || z >= totalZ)
-        return;
-    }
-
-    final index = (z * area) + (row * totalColumns) + column;
-
-    final renderX = getIndexRenderX(index);
-
-    if (renderX < minRenderX && (vx < 0 || vy > 0))
-      return;
-
-    if (renderX > maxRenderX && (vx > 0 || vy < 0))
-      return;
-
-    final renderY = getIndexRenderY(index);
-
-    if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
-      return;
-
-    if (renderY > maxRenderY && (vx > 0 || vy > 0))
-      return;
-
-    final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
-
-    if (!isNodeTypeTransparent(nodeType)) {
-      if (nodeOrientation == NodeOrientation.Solid)
-        return;
-
-      if (vx < 0) {
-        if (const [
-          NodeOrientation.Half_South,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_South,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_North,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_North,
-        ].contains(nodeOrientation)) vx = 0;
-      } else if (vx > 0) {
-        if (const [
-          NodeOrientation.Half_North,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_North,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_South,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_South,
-        ].contains(nodeOrientation)) vx = 0;
-      }
-
-      if (vy < 0) {
-        if (const [
-          NodeOrientation.Half_West,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Slope_West,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_East,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Slope_East,
-        ].contains(nodeOrientation)) vy = 0;
-      } else if (vy > 0) {
-        if (const [
-          NodeOrientation.Half_East,
-          NodeOrientation.Corner_South_East,
-          NodeOrientation.Corner_North_East,
-          NodeOrientation.Slope_East,
-        ].contains(nodeOrientation)) return;
-
-        if (const [
-          NodeOrientation.Half_West,
-          NodeOrientation.Corner_South_West,
-          NodeOrientation.Corner_North_West,
-          NodeOrientation.Slope_West,
-        ].contains(nodeOrientation)) vy = 0;
-      }
-
-      if (vz < 0) {
-        if (const [
-          NodeOrientation.Half_Vertical_Bottom,
-        ].contains(nodeOrientation)) {
-          return;
-        }
-
-        if (const [
-          NodeOrientation.Half_Vertical_Bottom,
-          NodeOrientation.Half_Vertical_Center,
-        ].contains(nodeOrientation)) {
-          vz = 0;
-        }
-      }
-
-      if (vz > 0) {
-        if (const [NodeOrientation.Half_Vertical_Top]
-            .contains(nodeOrientation)) {
-          return;
-        }
-
-        if (const [
-          NodeOrientation.Half_Vertical_Top,
-          NodeOrientation.Half_Vertical_Center,
-        ].contains(nodeOrientation)) {
-          vz = 0;
-        }
-      }
-    }
-
-    applyColor(
-      index: index,
-      intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
-      color: color,
-    );
-
-    if (const [
-      NodeType.Grass_Long,
-      NodeType.Tree_Bottom,
-      NodeType.Tree_Top,
-    ].contains(nodeType)) {
-      brightness--;
-      if (brightness >= interpolationLength)
-        return;
-    }
-
-    velocity = vx.abs() + vy.abs() + vz.abs();
-
-    if (velocity == 0)
-      return;
-
-    if (vx.abs() + vy.abs() + vz.abs() == 3) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: vy,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-    if (vx.abs() + vy.abs() == 2) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: vy,
-        vz: 0,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-    if (vx.abs() + vz.abs() == 2) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: 0,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-    if (vy.abs() + vz.abs() == 2) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: 0,
-        vy: vy,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-    if (vy != 0) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: 0,
-        vy: vy,
-        vz: 0,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-    if (vx != 0) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: vx,
-        vy: 0,
-        vz: 0,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-    if (vz != 0) {
-      shootLightTreeColor(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        vx: 0,
-        vy: 0,
-        vz: vz,
-        color: color,
-        intensity: intensity,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-      );
-    }
-
-  }
+  // void shootLightTreeColor({
+  //   required int row,
+  //   required int column,
+  //   required int z,
+  //   required int brightness,
+  //   required int color,
+  //   required double intensity,
+  //   required double minRenderX,
+  //   required double maxRenderX,
+  //   required double minRenderY,
+  //   required double maxRenderY,
+  //   int vx = 0,
+  //   int vy = 0,
+  //   int vz = 0,
+  // }){
+  //
+  //   // TODO Use while loop on velocity == 1
+  //
+  //   var velocity = vx.abs() + vy.abs() + vz.abs();
+  //
+  //   brightness -= velocity;
+  //   if (brightness < 0) {
+  //     return;
+  //   }
+  //
+  //   if (vx != 0) {
+  //     row += vx;
+  //     if (row < 0 || row >= totalRows)
+  //       return;
+  //   }
+  //
+  //   if (vy != 0) {
+  //     column += vy;
+  //     if (column < 0 || column >= totalColumns)
+  //       return;
+  //   }
+  //
+  //   if (vz != 0) {
+  //     z += vz;
+  //     if (z < 0 || z >= totalZ)
+  //       return;
+  //   }
+  //
+  //   final index = (z * area) + (row * totalColumns) + column;
+  //
+  //   final renderX = getIndexRenderX(index);
+  //
+  //   if (renderX < minRenderX && (vx < 0 || vy > 0))
+  //     return;
+  //
+  //   if (renderX > maxRenderX && (vx > 0 || vy < 0))
+  //     return;
+  //
+  //   final renderY = getIndexRenderY(index);
+  //
+  //   if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
+  //     return;
+  //
+  //   if (renderY > maxRenderY && (vx > 0 || vy > 0))
+  //     return;
+  //
+  //   final nodeType = nodeTypes[index];
+  //   final nodeOrientation = nodeOrientations[index];
+  //
+  //   if (!isNodeTypeTransparent(nodeType)) {
+  //     if (nodeOrientation == NodeOrientation.Solid)
+  //       return;
+  //
+  //     if (vx < 0) {
+  //       if (const [
+  //         NodeOrientation.Half_South,
+  //         NodeOrientation.Corner_South_East,
+  //         NodeOrientation.Corner_South_West,
+  //         NodeOrientation.Slope_South,
+  //       ].contains(nodeOrientation)) return;
+  //
+  //       if (const [
+  //         NodeOrientation.Half_North,
+  //         NodeOrientation.Corner_North_East,
+  //         NodeOrientation.Corner_North_West,
+  //         NodeOrientation.Slope_North,
+  //       ].contains(nodeOrientation)) vx = 0;
+  //     } else if (vx > 0) {
+  //       if (const [
+  //         NodeOrientation.Half_North,
+  //         NodeOrientation.Corner_North_East,
+  //         NodeOrientation.Corner_North_West,
+  //         NodeOrientation.Slope_North,
+  //       ].contains(nodeOrientation)) return;
+  //
+  //       if (const [
+  //         NodeOrientation.Half_South,
+  //         NodeOrientation.Corner_South_East,
+  //         NodeOrientation.Corner_South_West,
+  //         NodeOrientation.Slope_South,
+  //       ].contains(nodeOrientation)) vx = 0;
+  //     }
+  //
+  //     if (vy < 0) {
+  //       if (const [
+  //         NodeOrientation.Half_West,
+  //         NodeOrientation.Corner_North_West,
+  //         NodeOrientation.Corner_South_West,
+  //         NodeOrientation.Slope_West,
+  //       ].contains(nodeOrientation)) return;
+  //
+  //       if (const [
+  //         NodeOrientation.Half_East,
+  //         NodeOrientation.Corner_South_East,
+  //         NodeOrientation.Corner_North_East,
+  //         NodeOrientation.Slope_East,
+  //       ].contains(nodeOrientation)) vy = 0;
+  //     } else if (vy > 0) {
+  //       if (const [
+  //         NodeOrientation.Half_East,
+  //         NodeOrientation.Corner_South_East,
+  //         NodeOrientation.Corner_North_East,
+  //         NodeOrientation.Slope_East,
+  //       ].contains(nodeOrientation)) return;
+  //
+  //       if (const [
+  //         NodeOrientation.Half_West,
+  //         NodeOrientation.Corner_South_West,
+  //         NodeOrientation.Corner_North_West,
+  //         NodeOrientation.Slope_West,
+  //       ].contains(nodeOrientation)) vy = 0;
+  //     }
+  //
+  //     if (vz < 0) {
+  //       if (const [
+  //         NodeOrientation.Half_Vertical_Bottom,
+  //       ].contains(nodeOrientation)) {
+  //         return;
+  //       }
+  //
+  //       if (const [
+  //         NodeOrientation.Half_Vertical_Bottom,
+  //         NodeOrientation.Half_Vertical_Center,
+  //       ].contains(nodeOrientation)) {
+  //         vz = 0;
+  //       }
+  //     }
+  //
+  //     if (vz > 0) {
+  //       if (const [NodeOrientation.Half_Vertical_Top]
+  //           .contains(nodeOrientation)) {
+  //         return;
+  //       }
+  //
+  //       if (const [
+  //         NodeOrientation.Half_Vertical_Top,
+  //         NodeOrientation.Half_Vertical_Center,
+  //       ].contains(nodeOrientation)) {
+  //         vz = 0;
+  //       }
+  //     }
+  //   }
+  //
+  //   applyColor(
+  //     index: index,
+  //     intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
+  //     color: color,
+  //   );
+  //
+  //   if (const [
+  //     NodeType.Grass_Long,
+  //     NodeType.Tree_Bottom,
+  //     NodeType.Tree_Top,
+  //   ].contains(nodeType)) {
+  //     brightness--;
+  //     if (brightness >= interpolationLength)
+  //       return;
+  //   }
+  //
+  //   velocity = vx.abs() + vy.abs() + vz.abs();
+  //
+  //   if (velocity == 0)
+  //     return;
+  //
+  //   if (vx.abs() + vy.abs() + vz.abs() == 3) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: vx,
+  //       vy: vy,
+  //       vz: vz,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  //   if (vx.abs() + vy.abs() == 2) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: vx,
+  //       vy: vy,
+  //       vz: 0,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  //   if (vx.abs() + vz.abs() == 2) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: vx,
+  //       vy: 0,
+  //       vz: vz,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  //   if (vy.abs() + vz.abs() == 2) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: 0,
+  //       vy: vy,
+  //       vz: vz,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  //   if (vy != 0) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: 0,
+  //       vy: vy,
+  //       vz: 0,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  //   if (vx != 0) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: vx,
+  //       vy: 0,
+  //       vz: 0,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  //   if (vz != 0) {
+  //     shootLightTreeColor(
+  //       row: row,
+  //       column: column,
+  //       z: z,
+  //       brightness: brightness,
+  //       vx: 0,
+  //       vy: 0,
+  //       vz: vz,
+  //       color: color,
+  //       intensity: intensity,
+  //       minRenderX: minRenderX,
+  //       maxRenderX: maxRenderX,
+  //       minRenderY: minRenderY,
+  //       maxRenderY: maxRenderY,
+  //     );
+  //   }
+  //
+  // }
 
 
   void emitLightColoredAtPosition(Position v, {
@@ -1239,19 +1242,22 @@ class IsometricScene with IsometricComponent implements Updatable {
       emitLightAmbient(
         index:  editor.nodeSelectedIndex.value,
         alpha: 0,
+        intensity: 1.0,
       );
     }
   }
 
-  void shootLightTreeAmbient({
+  void shootLightTree({
     required int row,
     required int column,
     required int z,
     required int brightness,
-    required int alpha,
     required int vx,
     required int vy,
     required int vz,
+    required int value,
+    required double intensity,
+    required bool ambient,
   }){
     if (brightness < 0)
       return;
@@ -1411,12 +1417,18 @@ class IsometricScene with IsometricComponent implements Updatable {
         }
       }
 
-      final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
-
-      applyAmbient(
-        index: index,
-        alpha: interpolate(ambientAlpha, alpha, intensity).toInt(),
-      );
+      if (ambient){
+        applyAmbient(
+          index: index,
+          alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
+        );
+      } else {
+        applyColor(
+          index: index,
+          intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
+          color: value,
+        );
+      }
 
       if (recordMode) {
         bakeStackIndex[bakeStackTotal] = index;
@@ -1443,93 +1455,107 @@ class IsometricScene with IsometricComponent implements Updatable {
         break;
     }
     if (vx.abs() + vy.abs() + vz.abs() == 3) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: vx,
         vy: vy,
         vz: vz,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
 
     if (vx.abs() + vy.abs() == 2) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: vx,
         vy: vy,
         vz: 0,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
 
     if (vx.abs() + vz.abs() == 2) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: vx,
         vy: 0,
         vz: vz,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
 
     if (vy.abs() + vz.abs() == 2) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: 0,
         vy: vy,
         vz: vz,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
 
     if (vy != 0) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: 0,
         vy: vy,
         vz: 0,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
 
     if (vx != 0) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: vx,
         vy: 0,
         vz: 0,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
 
     if (vz != 0) {
-      shootLightTreeAmbient(
+      shootLightTree(
         row: row,
         column: column,
         z: z,
         brightness: brightness,
-        alpha: alpha,
+        value: value,
         vx: 0,
         vy: 0,
         vz: vz,
+        intensity: intensity,
+        ambient: ambient,
       );
     }
   }
@@ -1550,11 +1576,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     for (var i = 0; i < nodeLightSourcesTotal; i++){
       final nodeIndex = nodeLightSources[i];
       final nodeType = nodeTypes[nodeIndex];
-      final alpha = interpolate(
-        ambientAlpha,
-        0,
-        1.0,
-      ).toInt();
+      final alpha = ambientAlpha;
 
       final currentSize = bakeStackTotal;
 
@@ -1563,6 +1585,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           emitLightAmbient(
             index: nodeIndex,
             alpha: alpha,
+            intensity: 1.0,
           );
           break;
       }
