@@ -48,14 +48,9 @@ class RendererNodes extends RenderGroup {
   var totalPlains = 0;
   var orderShiftY = 151.0;
   var renderRainFalling = true;
-
-
-  // VARIABLES
   var previousVisibility = 0;
-
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
-
   var indexShow = 0;
   var indexRow = 0;
   var indexColumn = 0;
@@ -65,32 +60,20 @@ class RendererNodes extends RenderGroup {
   var nodesMaxZ = 0;
   var nodesMinZ = 0;
   var currentNodeZ = 0;
-  // var row = 0;
-  // var column = 0;
-  // var z = 0;
-  // var currentNodeDstX = 0.0;
-  // var currentNodeDstY = 0.0;
-  // var currentNodeIndex = 0;
-
   var offscreenNodesTop = 0;
   var offscreenNodesRight = 0;
   var offscreenNodesBottom = 0;
   var offscreenNodesLeft = 0;
-
   var onscreenNodes = 0;
   var offscreenNodes = 0;
-
   var playerProjection = 0;
-
   var playerZ = 0;
   var playerRow = 0;
   var playerColumn = 0;
-
   var screenTop = 0.0;
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var screenLeft = 0.0;
-
   var visited2DStack = Uint16List(0);
   var visited2DStackIndex = 0;
   var visited2D = <bool>[];
@@ -122,57 +105,7 @@ class RendererNodes extends RenderGroup {
   void renderFunction() {
     engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
-    renderPlain();
-    return;
 
-
-    // final playerInsideIsland = gamestream.player.playerInsideIsland;
-    // final nodeTypes = scene.nodeTypes;
-    //
-    // while (
-    //     column >= 0            &&
-    //     row    <= nodesRowsMax &&
-    //     currentNodeDstX   <= screenRight
-    // ){
-    //   currentNodeType = nodeTypes[currentNodeIndex];
-    //   if (currentNodeType != NodeType.Empty){
-    //     if (!playerInsideIsland){
-    //       renderCurrentNode();
-    //     } else {
-    //       currentNodeWithinIsland = island[row * scene.totalColumns + column];
-    //       if (!currentNodeWithinIsland){
-    //         renderCurrentNode();
-    //       } else if (currentNodeZ <= playerZ || visible3D[currentNodeIndex]) {
-    //         renderCurrentNode();
-    //       }
-    //     }
-    //   }
-    //   if (row + 1 > nodesRowsMax) return;
-    //   row++;
-    //   column--;
-    //   currentNodeIndex += nodesGridTotalColumnsMinusOne;
-    //   currentNodeDstX += IsometricConstants.Sprite_Width;
-    // }
-  }
-
-  void onPlainIndexChanged(){
-    final columns = scene.totalColumns;
-    final rows = scene.totalRows;
-    final height = scene.totalZ;
-    final rowMax = rows - 1;
-    final columnMax = columns - 1;
-    final heightMax = height - 1;
-    final index = plainIndex;
-    final plainStartRow = clamp(index - (height + columns), 0, rowMax);
-    final plainStartColumn = clamp(index - height + 1, 0, columnMax);
-    final plainStartZ = clamp(index, 0, heightMax);
-    order = (plainStartRow * Node_Size)
-        + (plainStartColumn * Node_Size)
-        + (plainStartZ * Node_Height)
-        + orderShiftY;
-  }
-
-  void renderPlain(){
 
     final area = scene.area;
     final height = scene.totalZ;
@@ -235,8 +168,7 @@ class RendererNodes extends RenderGroup {
         }
       }
 
-      // TODO check logic
-      if (lineColumn <= rowMax){
+      if (lineColumn < columnMax){
         lineColumn++;
       } else {
         lineRow++;
@@ -256,6 +188,51 @@ class RendererNodes extends RenderGroup {
     }
 
     end();
+
+    // final playerInsideIsland = gamestream.player.playerInsideIsland;
+    // final nodeTypes = scene.nodeTypes;
+    //
+    // while (
+    //     column >= 0            &&
+    //     row    <= nodesRowsMax &&
+    //     currentNodeDstX   <= screenRight
+    // ){
+    //   currentNodeType = nodeTypes[currentNodeIndex];
+    //   if (currentNodeType != NodeType.Empty){
+    //     if (!playerInsideIsland){
+    //       renderCurrentNode();
+    //     } else {
+    //       currentNodeWithinIsland = island[row * scene.totalColumns + column];
+    //       if (!currentNodeWithinIsland){
+    //         renderCurrentNode();
+    //       } else if (currentNodeZ <= playerZ || visible3D[currentNodeIndex]) {
+    //         renderCurrentNode();
+    //       }
+    //     }
+    //   }
+    //   if (row + 1 > nodesRowsMax) return;
+    //   row++;
+    //   column--;
+    //   currentNodeIndex += nodesGridTotalColumnsMinusOne;
+    //   currentNodeDstX += IsometricConstants.Sprite_Width;
+    // }
+  }
+
+  void onPlainIndexChanged(){
+    final columns = scene.totalColumns;
+    final rows = scene.totalRows;
+    final height = scene.totalZ;
+    final rowMax = rows - 1;
+    final columnMax = columns - 1;
+    final heightMax = height - 1;
+    final index = plainIndex;
+    final plainStartRow = clamp(index - (height + columns), 0, rowMax);
+    final plainStartColumn = clamp(index - height + 1, 0, columnMax);
+    final plainStartZ = clamp(index, 0, heightMax);
+    order = (plainStartRow * Node_Size)
+        + (plainStartColumn * Node_Size)
+        + (plainStartZ * Node_Height)
+        + orderShiftY;
   }
 
   @override
