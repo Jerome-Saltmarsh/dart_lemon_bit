@@ -723,8 +723,10 @@ class RendererNodes extends RenderGroup {
 
     // final nodeType = nodeTypes[index];
     final nodeOrientation = nodeOrientations[index];
+    final srcY = nodeTypeSrcY[nodeType];
+    final scene = this.scene;
 
-    if (nodeTypeSrcY.containsKey(nodeType)){
+    if (srcY != null){
       renderDynamic(
         nodeType: nodeType,
         nodeOrientation: nodeOrientation,
@@ -737,6 +739,7 @@ class RendererNodes extends RenderGroup {
         colorCurrent: scene.getColor(index),
         dstX: dstX,
         dstY: dstY,
+        srcY: srcY,
       );
       return;
     }
@@ -2454,9 +2457,8 @@ class RendererNodes extends RenderGroup {
     required int colorCurrent,
     required double dstX,
     required double dstY,
+    required double srcY,
   }) {
-    final srcY = nodeTypeSrcY[nodeType] ??
-        (throw Exception('RendererNodes.mapNodeTypeToSrcY(nodeType: $nodeType)'));
 
     switch (nodeOrientation) {
       case NodeOrientation.Solid:
