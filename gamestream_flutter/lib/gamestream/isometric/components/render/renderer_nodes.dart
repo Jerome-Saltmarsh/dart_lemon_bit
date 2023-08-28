@@ -108,19 +108,19 @@ class RendererNodes extends RenderGroup {
 
 
     final area = scene.area;
-    final zMax = scene.totalZ;
+    final totalZ = scene.totalZ;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
     final columnMax = columns - 1;
     final rowMax = rows - 1;
-    final heightMax = zMax - 1;
+    final maxZ = totalZ - 1;
     final shiftRight = columns - 1;
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
 
-    var lineRow = clamp(index - (zMax + columns), 0, rows);
-    var lineColumn = clamp(index - zMax + 1, 0, columns - 1);
-    var lineZ = clamp(index, 0, heightMax);
+    var lineRow = clamp(index - (totalZ + columns), 0, rows - 1);
+    var lineColumn = clamp(index - totalZ + 1, 0, columns - 1);
+    var lineZ = clamp(index, 0, maxZ);
 
     final screenLeft = this.screenLeft; // cache in cpu
     final screenTop = this.screenTop; // cache in cpu
