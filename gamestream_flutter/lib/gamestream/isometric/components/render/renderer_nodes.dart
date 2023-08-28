@@ -206,7 +206,7 @@ class RendererNodes extends RenderGroup {
 
     plainIndex++;
 
-    if (plainIndex < totalPlains) {
+    if (plainIndex <= totalPlains) {
       onPlainIndexChanged();
       return;
     }
