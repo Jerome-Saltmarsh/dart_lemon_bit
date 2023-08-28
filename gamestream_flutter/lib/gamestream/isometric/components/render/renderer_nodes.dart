@@ -194,7 +194,7 @@ class RendererNodes extends RenderGroup {
         if (lineRow < rowMax){
           lineRow++;
         } else {
-          //
+          break;
         }
       }
 
