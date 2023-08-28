@@ -2,6 +2,7 @@
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
+import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -655,6 +656,9 @@ extension isometricDebugUI on IsometricDebug {
          buildRowRefresh('smoke-sources', () => scene.smokeSourcesTotal),
          buildRowRefresh('total-gameobjects', () => scene.gameObjects.length),
          buildRowRefresh('total-characters', () => scene.totalCharacters),
+         buildRowRefresh('screen-top-left-column', () {
+           return convertRenderToColumn(engine.Screen_Right, engine.Screen_Top, 0);
+         }),
     ],
   );
 

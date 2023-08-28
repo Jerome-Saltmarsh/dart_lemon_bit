@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
+import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
@@ -350,11 +351,12 @@ class RendererNodes extends RenderGroup {
     onscreenNodes = 0;
     nodesMinZ = 0;
     currentNodeZ = 0;
-    playerZ = player.position.indexZ;
-    playerRow = player.position.indexRow;
-    playerColumn = player.position.indexColumn;
-    playerRenderRow = playerRow - (player.position.indexZ ~/ 2);
-    playerRenderColumn = playerColumn - (player.position.indexZ ~/ 2);
+    final playerPosition = player.position;
+    playerZ = playerPosition.indexZ;
+    playerRow = playerPosition.indexRow;
+    playerColumn =playerPosition.indexColumn;
+    playerRenderRow = playerRow - (playerPosition.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (playerPosition.indexZ ~/ 2);
     playerProjection = playerIndex % scene.projection;
     scene.offscreenNodes = 0;
     scene.onscreenNodes = 0;
@@ -370,12 +372,39 @@ class RendererNodes extends RenderGroup {
     updateHeightMapPerception();
 
     total = getTotal();
-    index = 0;
     remaining = total > 0;
     scene.resetNodeColorStack();
     scene.resetNodeAmbientStack();
     scene.applyEmissions();
     render.highlightAimTargetEnemy();
+
+    // get the column at the top left screen
+    // the the row at the top left screen
+    // add total z, that will give the index
+
+    var column = 0;
+    var row = 0;
+    final sTop = screenTop;
+
+    index = 0;
+
+    while (true){
+      var renderY = getRenderYfOfRowColumn(row, column);
+
+      if (renderY >= sTop){
+        break;
+      }
+
+      if (column < totalColumns -1){
+        column++;
+      } else if (row < totalRows - 1){
+        row++;
+      } else {
+        break;
+      }
+      index++;
+    }
+
   }
 
   void increaseOrderShiftY(){

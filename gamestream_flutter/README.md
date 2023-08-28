@@ -22,9 +22,11 @@ shift + alt + J     : backspace
 - kid shoe type
 - stash
 - store
-- fix render nodes corner and bottom
 - fix set node light source refresh
 - player attributes dialog
+
+28.08.2023
+- fix render nodes corner and bottom
 
 27.08.2023
 - optimize compositor
