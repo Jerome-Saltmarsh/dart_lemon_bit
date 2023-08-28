@@ -258,21 +258,26 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void resetNodeColorStack() {
-    while (colorStackIndex >= 0) {
-      final i = colorStack[colorStackIndex];
+    var stackI = colorStackIndex;
+    final ambientColor = this.ambientColor;
+    while (stackI >= 0) {
+      final i = colorStack[stackI];
       nodeColors[i] = ambientColor;
-      colorStackIndex--;
+      stackI--;
     }
     colorStackIndex = -1;
   }
 
   void resetNodeAmbientStack() {
-    while (ambientStackIndex >= 0) {
-      final i = ambientStack[ambientStackIndex];
-      nodeColors[i] = ambientColor;
-      ambientStackIndex--;
+    var stackI = this.ambientStackIndex; // cache in cpu
+    final ambientColor = this.ambientColor; // cache in cpu
+    final ambientStack = this.ambientStack; // cache in cpu
+    while (stackI >= 0) {
+      final index = ambientStack[stackI];
+      nodeColors[index] = ambientColor;
+      stackI--;
     }
-    ambientStackIndex = -1;
+    this.ambientStackIndex = -1;
   }
 
   int getTorchIndex(int nodeIndex){
