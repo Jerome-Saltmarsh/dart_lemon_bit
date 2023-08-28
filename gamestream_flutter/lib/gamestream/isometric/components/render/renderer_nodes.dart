@@ -142,13 +142,12 @@ class RendererNodes extends RenderGroup {
         var dstX = (row - column) * Node_Size_Half;
 
         while (true) {
-          // TODO if dstX > screenRight then break
-
-          if (dstX > screenRight) {
-            break;
-          }
 
           if (dstX > screenLeft) {
+            if (dstX > screenRight) {
+              break;
+            }
+
             final nodeType = nodeTypes[index];
             if (nodeType != NodeType.Empty){
               renderNodeIndex(
