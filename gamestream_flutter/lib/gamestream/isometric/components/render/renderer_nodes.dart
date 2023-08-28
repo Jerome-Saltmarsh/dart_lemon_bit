@@ -494,9 +494,12 @@ class RendererNodes extends RenderGroup {
      var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
      var gapReached = false;
 
+     final area = scene.area;
+     final totalNodes = scene.totalNodes;
+
      while (true) {
-       searchIndex += scene.area;
-        if (searchIndex >= scene.totalNodes) break;
+       searchIndex += area;
+        if (searchIndex >= totalNodes) break;
         final nodeOrientation = nodeOrientations[searchIndex];
         if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Center) break;
@@ -520,11 +523,11 @@ class RendererNodes extends RenderGroup {
 
         addVisible3D(searchIndex);
      }
-     searchIndex = i + (scene.area * player.indexZ);
+     searchIndex = i + (area * player.indexZ);
      while (true) {
        addVisible3D(searchIndex);
        if (blocksBeamVertical(searchIndex)) break;
-       searchIndex -= scene.area;
+       searchIndex -= area;
        if (searchIndex < 0) break;
      }
 
