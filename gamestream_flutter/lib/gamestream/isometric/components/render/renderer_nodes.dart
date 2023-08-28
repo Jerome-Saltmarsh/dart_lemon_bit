@@ -118,9 +118,27 @@ class RendererNodes extends RenderGroup {
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
 
-    var lineRow = clamp(index - (totalZ + columns), 0, rows - 1);
-    var lineColumn = clamp(index - totalZ + 1, 0, columns - 1);
-    var lineZ = clamp(index, 0, maxZ);
+    // var lineZ = clamp(index, 0, maxZ);
+    // var lineColumn = clamp(index - totalZ + 1, 0, columns - 1);
+    // var lineRow = clamp(index - (totalZ + columns), 0, rows - 1);
+
+    int lineZ;
+    int lineColumn;
+    int lineRow;
+
+    if (index < maxZ){
+      lineZ = index;
+      lineColumn = 0;
+      lineRow = 0;
+    } else if (index < maxZ + columns){
+      lineZ = maxZ;
+      lineColumn = index - maxZ;
+      lineRow = 0;
+    } else {
+      lineZ = maxZ;
+      lineColumn = columnMax;
+      lineRow = index - maxZ - columns;
+    }
 
     final screenLeft = this.screenLeft; // cache in cpu
     final screenTop = this.screenTop; // cache in cpu
