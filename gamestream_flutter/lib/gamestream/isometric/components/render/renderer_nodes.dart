@@ -221,6 +221,7 @@ class RendererNodes extends RenderGroup {
   }
 
   void onPlainIndexChanged(){
+    final scene = this.scene;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
     final height = scene.totalZ;
@@ -339,9 +340,6 @@ class RendererNodes extends RenderGroup {
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
 
-    // currentNodeDstX = (row - column) * Node_Size_Half;
-    // currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    // currentNodeIndex = (currentNodeZ * scene.area) + (row * scene.totalColumns) + column;
     currentNodeWithinIsland = false;
 
     updateTransparencyGrid();
@@ -378,18 +376,25 @@ class RendererNodes extends RenderGroup {
 
     const r = 2;
 
-    for (var z = playerZ; z <= playerZ + 1; z++){
+
+    final totalColumns = scene.totalColumns;
+    final totalRows = scene.totalRows;
+    final projection = scene.projection;
+
+    final maxZ = playerZ + 1;
+
+    for (var z = playerZ; z <= maxZ; z++){
       if (z >= scene.totalZ) break;
       final indexZ = z * scene.area;
       for (var row = playerRow - r; row <= playerRow + r; row++){
         if (row < 0) continue;
-        if (row >= scene.totalRows) break;
-        final rowIndex = row * scene.totalColumns + indexZ;
+        if (row >= totalRows) break;
+        final rowIndex = row * totalColumns + indexZ;
         for (var column = playerColumn - r; column <= playerColumn + r; column++){
           if (column < 0) continue;
-          if (column >= scene.totalColumns) break;
+          if (column >= totalColumns) break;
           final index = rowIndex + column;
-          final projectionIndex = index % scene.projection;
+          final projectionIndex = index % projection;
           transparencyGrid[projectionIndex] = true;
           transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
           transparencyGridStackIndex++;
