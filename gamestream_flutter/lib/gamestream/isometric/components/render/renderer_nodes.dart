@@ -111,8 +111,8 @@ class RendererNodes extends RenderGroup {
     final zMax = scene.totalZ;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
-    final rowMax = rows;
     final columnMax = columns - 1;
+    final rowMax = rows - 1;
     final heightMax = zMax - 1;
     final shiftRight = columns - 1;
     final index = plainIndex;
@@ -162,7 +162,7 @@ class RendererNodes extends RenderGroup {
           row++;
           column--;
 
-          if (column < 0 || row >= rowMax)
+          if (column < 0 || row >= rows)
             break;
 
           index += shiftRight;
@@ -173,7 +173,11 @@ class RendererNodes extends RenderGroup {
       if (lineColumn < columnMax){
         lineColumn++;
       } else {
-        lineRow++;
+        if (lineRow < rowMax){
+          lineRow++;
+        } else {
+          //
+        }
       }
 
       column = lineColumn;
