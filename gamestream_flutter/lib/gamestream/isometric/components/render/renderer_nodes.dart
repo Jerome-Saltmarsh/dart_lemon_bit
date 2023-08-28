@@ -106,7 +106,6 @@ class RendererNodes extends RenderGroup {
     engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
 
-
     final area = scene.area;
     final totalZ = scene.totalZ;
     final columns = scene.totalColumns;
@@ -117,10 +116,6 @@ class RendererNodes extends RenderGroup {
     final shiftRight = columns - 1;
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
-
-    // var lineZ = clamp(index, 0, maxZ);
-    // var lineColumn = clamp(index - totalZ + 1, 0, columns - 1);
-    // var lineRow = clamp(index - (totalZ + columns), 0, rows - 1);
 
     int lineZ;
     int lineColumn;
@@ -148,8 +143,15 @@ class RendererNodes extends RenderGroup {
     var column = lineColumn;
     var row = lineRow;
 
+    var dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
+
+    if (dstY > screenBottom){
+      end();
+      return;
+    }
+
     while (lineZ >= 0) {
-      var dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
+      dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
       if (dstY > screenTop) {
         if (dstY > screenBottom){
