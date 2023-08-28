@@ -812,16 +812,22 @@ class IsometricScene with IsometricComponent implements Updatable {
     final screenRight = engine.Screen_Right + padding;
     final screenBottom = engine.Screen_Bottom + padding;
 
+    final totalColumns = this.totalColumns;
+    final area = this.area;
+
     for (var i = 0; i < total; i++){
       final index = stack[i];
 
-      final x = getIndexRenderX(index);
-      if (x < screenLeft || x > screenRight){
+      final row = (index % area) ~/ totalColumns;
+      final column = index % totalColumns;
+
+      final renderX = (row - column) * Node_Size_Half;
+      if (renderX < screenLeft || renderX > screenRight){
         continue;
       }
 
-      final y = getIndexRenderY(index);
-      if (y > screenBottom && y < screenTop){
+      final renderY = (row + column) * Node_Size_Half;
+      if (renderY > screenBottom && renderY < screenTop){
         continue;
       }
 
