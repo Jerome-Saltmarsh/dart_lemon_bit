@@ -108,18 +108,18 @@ class RendererNodes extends RenderGroup {
 
 
     final area = scene.area;
-    final height = scene.totalZ;
+    final zMax = scene.totalZ;
     final columns = scene.totalColumns;
     final rows = scene.totalRows;
     final rowMax = rows;
     final columnMax = columns - 1;
-    final heightMax = height - 1;
+    final heightMax = zMax - 1;
     final shiftRight = columns - 1;
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
 
-    var lineRow = clamp(index - (height + columns), 0, rowMax);
-    var lineColumn = clamp(index - height + 1, 0, columnMax);
+    var lineRow = clamp(index - (zMax + columns), 0, rows);
+    var lineColumn = clamp(index - zMax + 1, 0, columns - 1);
     var lineZ = clamp(index, 0, heightMax);
 
     final screenLeft = this.screenLeft; // cache in cpu
@@ -143,9 +143,12 @@ class RendererNodes extends RenderGroup {
 
         while (true) {
           // TODO if dstX > screenRight then break
-          if (dstX > screenLeft &&
-              dstX < screenRight
-          ) {
+
+          if (dstX > screenRight) {
+            break;
+          }
+
+          if (dstX > screenLeft) {
             final nodeType = nodeTypes[index];
             if (nodeType != NodeType.Empty){
               renderNodeIndex(
