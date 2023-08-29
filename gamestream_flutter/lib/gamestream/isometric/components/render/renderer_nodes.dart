@@ -35,6 +35,8 @@ class RendererNodes extends RenderGroup {
   static const Cell_West_Height = 8.0;
   static const Node_South_Height = 24.0;
 
+
+  var srcXRainLanding = 6739.0;
   var windType = 0;
   var rainType = 0;
   var lightningColor = 0;
@@ -785,9 +787,9 @@ class RendererNodes extends RenderGroup {
           renderNodeRainLandingOnGround(
             dstX: dstX,
             dstY: dstY,
-            variation: variation,
             color: scene.getColor(index),
             rainType: rainType,
+            animationFrame: animation.frame + variation,
           );
         }
 
@@ -1229,13 +1231,13 @@ class RendererNodes extends RenderGroup {
   void renderNodeRainLandingOnGround({
     required double dstX,
     required double dstY,
-    required int variation,
     required int color,
     required int rainType,
+    required int animationFrame,
   }) => renderStandardNode(
       color: color,
-      srcX: environment.srcXRainLanding,
-      srcY: 72.0 * ((animation.frame + variation) % 6), // TODO Expensive Operation
+      srcX: srcXRainLanding,
+      srcY: 72.0 * (animationFrame % 6), // TODO Expensive Operation
       dstX: dstX,
       dstY: dstY,
     );

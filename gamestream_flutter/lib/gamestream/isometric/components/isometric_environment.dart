@@ -11,7 +11,6 @@ class IsometricEnvironment with IsometricComponent {
 
   var windLine = 0;
   var srcXRainFalling = 6640.0;
-  var srcXRainLanding = 6739.0;
   var lightningFlashing = false;
   var lightningFlashing01 = 0.0;
 
@@ -87,7 +86,7 @@ class IsometricEnvironment with IsometricComponent {
       case RainType.None:
         break;
       case RainType.Light:
-        srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
+        rendererNodes.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
         if ( wind.value == WindType.Calm){
           srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
         } else {
@@ -95,7 +94,7 @@ class IsometricEnvironment with IsometricComponent {
         }
         break;
       case RainType.Heavy:
-        srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
+        rendererNodes.srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
         if ( wind.value == WindType.Calm){
           srcXRainFalling = 1900;
         } else {
