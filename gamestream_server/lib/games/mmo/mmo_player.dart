@@ -70,13 +70,16 @@ class AmuletPlayer extends IsometricPlayer {
     hurtable = false;
     hurtStateBusy = false;
     setItemsLength(itemLength);
-    addItem(MMOItem.Rusty_Old_Sword);
-    addItem(MMOItem.Staff_Of_Frozen_Lake);
-    addItem(MMOItem.Holy_Bow);
     addItem(MMOItem.Health_Potion);
-    addItem(MMOItem.Blink_Dagger);
     addItem(MMOItem.Sapphire_Pendant);
     addItem(MMOItem.Steel_Helmet);
+
+    addItemToEmptyWeaponSlot(MMOItem.Rusty_Old_Sword);
+    addItemToEmptyWeaponSlot(MMOItem.Staff_Of_Frozen_Lake);
+    addItemToEmptyWeaponSlot(MMOItem.Holy_Bow);
+    addItemToEmptyWeaponSlot(MMOItem.Blink_Dagger);
+
+
     equipHelm(MMOItem.Wizards_Hat);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
@@ -273,37 +276,35 @@ class AmuletPlayer extends IsometricPlayer {
     writeItemLength(value);
   }
 
+  void addItemToEmptyWeaponSlot(MMOItem item) {
+    final emptyIndex = getEmptyWeaponIndex();
+    if (emptyIndex == -1) {
+      reportInventoryFull();
+      return;
+    }
+    setWeapon(
+      index: emptyIndex,
+      item: item,
+      cooldown: 0,
+    );
+  }
+
   bool addItem(MMOItem item){
 
     if (deadOrBusy)
       return false;
 
-    if (item.isWeapon) {
-      final emptyIndex = getEmptyWeaponIndex();
-      if (emptyIndex != -1){
-        setWeapon(
-            index: emptyIndex,
-            item: item,
-            cooldown: 0,
-        );
-        return true;
-      }
-    }
-
-    if (item.isHelm && equippedHelm.item == null){
-      equipHelm(item);
-      return true;
-    }
-
-    if (item.isBody && equippedBody.item == null){
-      equipBody(item);
-      return true;
-    }
-
-    if (item.isLegs && equippedLegs.item == null) {
-      equipLegs(item);
-      return true;
-    }
+    // if (item.isWeapon) {
+    //   final emptyIndex = getEmptyWeaponIndex();
+    //   if (emptyIndex != -1){
+    //     setWeapon(
+    //         index: emptyIndex,
+    //         item: item,
+    //         cooldown: 0,
+    //     );
+    //     return true;
+    //   }
+    // }
 
     final emptyItemSlot = getEmptyItemSlot();
     if (emptyItemSlot == null) {
