@@ -670,8 +670,22 @@ class Engine extends StatelessWidget {
 
   void flushBuffer() {
     batchesRendered++;
-    if (bufferIndex == 0) return;
+
+    if (this.bufferIndex == 0)
+      return;
+
     var flushIndex = 0;
+
+    final bufferDst = this.bufferDst;
+    final bufferSrc = this.bufferSrc;
+    final bufferClr = this.bufferClr;
+    final image = this.bufferImage;
+    final blendMode = this.bufferBlendMode;
+    final paint = this.paint;
+    final canvas = this.canvas;
+
+    final bufferIndex = this.bufferIndex;
+
     while (flushIndex < bufferIndex) {
       final remaining = bufferIndex - flushIndex;
       assert (remaining > 0);
@@ -682,15 +696,15 @@ class Engine extends StatelessWidget {
         _bufferDst1.setRange(0, 4, bufferDst, f);
         _bufferSrc1.setRange(0, 4, bufferSrc, f);
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst1,
-            _bufferSrc1,
-            _bufferClr1,
-            _bufferBlendMode,
-            null,
-            paint,
+          image,
+          _bufferDst1,
+          _bufferSrc1,
+          _bufferClr1,
+          blendMode,
+          null,
+          paint,
         );
-        bufferIndex = 0;
+        this.bufferIndex = 0;
         batches1Rendered++;
         return;
       }
@@ -706,13 +720,13 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-            _bufferImage,
-            _bufferDst2,
-            _bufferSrc2,
-            _bufferClr2,
-            _bufferBlendMode,
-            null,
-            paint,
+          image,
+          _bufferDst2,
+          _bufferSrc2,
+          _bufferClr2,
+          blendMode,
+          null,
+          paint,
         );
         batches2Rendered++;
         continue;
@@ -729,11 +743,11 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-          _bufferImage,
+          image,
           _bufferDst4,
           _bufferSrc4,
           _bufferClr4,
-          _bufferBlendMode,
+          blendMode,
           null,
           paint,
         );
@@ -752,11 +766,11 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-          _bufferImage,
+          image,
           _bufferDst8,
           _bufferSrc8,
           _bufferClr8,
-          _bufferBlendMode,
+          blendMode,
           null,
           paint,
         );
@@ -775,11 +789,11 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-          _bufferImage,
+          image,
           _bufferDst16,
           _bufferSrc16,
           _bufferClr16,
-          _bufferBlendMode,
+          blendMode,
           null,
           paint,
         );
@@ -798,11 +812,11 @@ class Engine extends StatelessWidget {
           flushIndex++;
         }
         canvas.drawRawAtlas(
-          _bufferImage,
+          image,
           _bufferDst32,
           _bufferSrc32,
           _bufferClr32,
-          _bufferBlendMode,
+          blendMode,
           null,
           paint,
         );
@@ -811,21 +825,24 @@ class Engine extends StatelessWidget {
       }
 
       if (remaining < 128) {
+        final dst64 = _bufferDst64;
+        final src64 = _bufferSrc64;
+        final clr64 = _bufferClr64;
         for (var i = 0; i < 64; i++) {
           final start = i << 2;
           final end = start + 4;
           final f = flushIndex << 2;
-          _bufferClr64[i] = bufferClr[flushIndex];
-          _bufferDst64.setRange(start, end, bufferDst, f);
-          _bufferSrc64.setRange(start, end, bufferSrc, f);
+          clr64[i] = bufferClr[flushIndex];
+          dst64.setRange(start, end, bufferDst, f);
+          src64.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
         canvas.drawRawAtlas(
-          _bufferImage,
-          _bufferDst64,
-          _bufferSrc64,
-          _bufferClr64,
-          _bufferBlendMode,
+          image,
+          dst64,
+          src64,
+          clr64,
+          blendMode,
           null,
           paint,
         );
@@ -835,7 +852,7 @@ class Engine extends StatelessWidget {
 
       throw Exception();
     }
-    bufferIndex = 0;
+    this.bufferIndex = 0;
   }
 
   void renderSprite({
@@ -927,15 +944,17 @@ class Engine extends StatelessWidget {
   }){
     final index = bufferIndex;
     final i = index << 2;
+    final src = this.bufferSrc;
+    final dst = this.bufferDst;
     bufferClr[index] = color;
-    bufferSrc[i] = srcLeft;
-    bufferSrc[i + 1] = srcTop;
-    bufferSrc[i + 2] = srcRight;
-    bufferSrc[i + 3] = srcBottom;
-    bufferDst[i] = scale;
-    bufferDst[i + 1] = rotation;
-    bufferDst[i + 2] = dstX;
-    bufferDst[i + 3] = dstY;
+    src[i] = srcLeft;
+    src[i + 1] = srcTop;
+    src[i + 2] = srcRight;
+    src[i + 3] = srcBottom;
+    dst[i] = scale;
+    dst[i + 1] = rotation;
+    dst[i + 2] = dstX;
+    dst[i + 3] = dstY;
 
     bufferIndex++;
     if (bufferIndex == 128) {
@@ -1400,5 +1419,7 @@ class CustomPainterPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+
 }
+
 
