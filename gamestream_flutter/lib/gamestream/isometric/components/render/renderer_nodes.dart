@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -109,6 +110,7 @@ class RendererNodes extends RenderGroup {
     engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
 
+    final scene = this.scene;
     final area = scene.area;
     final totalZ = scene.totalZ;
     final columns = scene.totalColumns;
@@ -119,6 +121,7 @@ class RendererNodes extends RenderGroup {
     final shiftRight = columns - 1;
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
+    final variations = scene.nodeVariations;
 
     int lineZ;
     int lineColumn;
@@ -178,6 +181,8 @@ class RendererNodes extends RenderGroup {
                 nodeType: nodeType,
                 dstX: dstX,
                 dstY: dstY,
+                scene: scene,
+                variation: variations[index],
               );
             }
           }
@@ -713,8 +718,10 @@ class RendererNodes extends RenderGroup {
   void renderNodeIndex({
     required int index,
     required int nodeType,
+    required int variation,
     required double dstX,
     required double dstY,
+    required IsometricScene scene,
   }) {
 
     // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
@@ -728,14 +735,13 @@ class RendererNodes extends RenderGroup {
     // final nodeType = nodeTypes[index];
     final nodeOrientation = nodeOrientations[index];
     final srcY = nodeTypeSrcY[nodeType];
-    final scene = this.scene;
     final color = scene.nodeColors[index];
 
     if (srcY != null){
       renderDynamic(
         nodeType: nodeType,
         nodeOrientation: nodeOrientation,
-        nodeVariation: scene.nodeVariations[index],
+        nodeVariation: variation,
         colorAbove: lightningFlashing
             ? lightningColor
             : scene.colorAbove(index),
@@ -749,7 +755,6 @@ class RendererNodes extends RenderGroup {
       return;
     }
 
-
     switch (nodeType) {
 
       case NodeType.Rain_Falling:
@@ -759,7 +764,7 @@ class RendererNodes extends RenderGroup {
             color: scene.getColor(index),
             rainType: rainType,
             windType: windType,
-            animationFrame: (animation.frame + scene.nodeVariations[index])
+            animationFrame: (animation.frame + variation)
         );
         return;
       case NodeType.Rain_Landing:
@@ -768,7 +773,7 @@ class RendererNodes extends RenderGroup {
           renderNodeRainLandingOnWater(
             dstX: dstX,
             dstY: dstY,
-            variation: scene.nodeVariations[index],
+            variation: variation,
             color: scene.getColor(index),
             rainType: rainType,
           );
@@ -776,7 +781,7 @@ class RendererNodes extends RenderGroup {
           renderNodeRainLandingOnGround(
             dstX: dstX,
             dstY: dstY,
-            variation: scene.nodeVariations[index],
+            variation: variation,
             color: scene.getColor(index),
             rainType: rainType,
           );
@@ -789,7 +794,7 @@ class RendererNodes extends RenderGroup {
               color: color,
               rainType: rainType,
               windType: windType,
-              animationFrame: (animation.frame + scene.nodeVariations[index])
+              animationFrame: (animation.frame + variation)
           );
         }
 
@@ -877,7 +882,7 @@ class RendererNodes extends RenderGroup {
         renderNodeTreeBottom(
           dstX: dstX,
           dstY: dstY,
-          treeType: mapVariationToTreeType(scene.nodeVariations[index]),
+          treeType: mapVariationToTreeType(variation),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
           animationFrame: row + column + animation.frame,
