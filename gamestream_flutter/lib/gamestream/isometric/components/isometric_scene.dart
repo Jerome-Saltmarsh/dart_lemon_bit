@@ -815,6 +815,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     final screenTop = engine.Screen_Top - padding;
     final screenRight = engine.Screen_Right + padding;
     final screenBottom = engine.Screen_Bottom + padding;
+    final bakeStackIndex = this.bakeStackIndex;
+    final bakeStackBrightness = this.bakeStackBrightness;
+    final interpolations = this.interpolations;
 
     final totalColumns = this.totalColumns;
     final area = this.area;
