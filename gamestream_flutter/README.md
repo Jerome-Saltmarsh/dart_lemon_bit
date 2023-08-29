@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- kid shoe type
 - helm type hoodie
 - glove type leather
 - glove type silk
@@ -21,12 +22,11 @@ shift + alt + J     : backspace
 - kid hair type
 - kid hair color
 - kid state hurt
-- kid shoe type
 - stash
 - store
-- fix set node light source refresh
 - player attributes dialog
 - optimize lights
+- fix set node light source refresh
 
 29.08.2023
 - fix auto attack bow and sword

@@ -643,6 +643,10 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
     }
 
+    if (alpha < 0 || alpha > 255){
+      print('applyAmbient() invalid alpha: $alpha');
+    }
+
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
     nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);

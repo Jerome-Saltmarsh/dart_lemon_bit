@@ -34,6 +34,7 @@ class RendererNodes extends RenderGroup {
   static const Cell_West_Height = 8.0;
   static const Node_South_Height = 24.0;
 
+  var rainType = 0;
   var lightningColor = 0;
   var previousNodeTransparent = false;
   var lightningFlashing = false;
@@ -318,6 +319,7 @@ class RendererNodes extends RenderGroup {
   void reset() {
     lightningFlashing = environment.lightningFlashing;
     renderRainFalling = options.renderRainFallingTwice;
+    rainType = environment.rainType.value;
 
     if (lightningFlashing) {
       final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
@@ -782,6 +784,7 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
           nodeVariation: scene.nodeVariations[index],
           color: scene.getColor(index),
+          rainType: rainType,
         );
         return;
       case NodeType.Rain_Landing:
@@ -792,6 +795,7 @@ class RendererNodes extends RenderGroup {
           onWater: scene.nodeTypeBelowIs(index, NodeType.Water),
           color: scene.getColor(index),
           renderRainFalling: renderRainFalling,
+          rainType: rainType,
         );
         return;
       case NodeType.Sandbag:
@@ -1201,6 +1205,7 @@ class RendererNodes extends RenderGroup {
     required int color,
     required bool onWater,
     required bool renderRainFalling,
+    required int rainType,
   }) {
     if (onWater){
       engine.renderSprite(
@@ -1231,6 +1236,7 @@ class RendererNodes extends RenderGroup {
         dstY: dstY,
         nodeVariation: variation,
         color: color,
+        rainType: rainType,
       );
     }
   }
@@ -1240,8 +1246,9 @@ class RendererNodes extends RenderGroup {
     required double dstY,
     required int nodeVariation,
     required int color,
+    required int rainType,
   }) {
-    final row =  (environment.rainType.value == RainType.Heavy ? 3 : 0) + environment.wind.value;
+    final row =  (rainType == RainType.Heavy ? 3 : 0) + environment.wind.value;
     final column = (animation.frame + nodeVariation) % 6;
     renderStandardNode(
       color: color,
