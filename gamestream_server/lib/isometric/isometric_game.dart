@@ -314,9 +314,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player.mouseLeftDownIgnore = true;
         player.lookAtMouse();
 
-        if (player.targetIsEnemy){
-          player.forceShot = true;
-        }
+        // if (player.targetIsEnemy){
+        //   player.forceShot = true;
+        // }
 
       }
       return;

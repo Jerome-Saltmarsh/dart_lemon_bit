@@ -29,6 +29,7 @@ shift + alt + J     : backspace
 - optimize lights
 
 29.08.2023
+- fix auto attack bow and sword
 - fix cannot pick up items
 - fix fire bow animation
 - helm type wizards hat
