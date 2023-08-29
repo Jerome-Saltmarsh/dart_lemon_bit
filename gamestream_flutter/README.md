@@ -12,7 +12,6 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- fix cannot pick up items
 - helm type hoodie
 - glove type leather
 - glove type silk
@@ -30,6 +29,7 @@ shift + alt + J     : backspace
 - optimize lights
 
 29.08.2023
+- fix cannot pick up items
 - fix fire bow animation
 - helm type wizards hat
 - fix item not adding to inventory
