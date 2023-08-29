@@ -156,6 +156,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Heads, subType: HeadType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Helms, subType: HelmType.Steel, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Helms, subType: HelmType.Wizard_Hat, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Legs, subType: LegType.Brown, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Shadow, subType: ShadowType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Torso, subType: TorsoType.regular, skipHurt: true);
@@ -221,7 +222,7 @@ class IsometricImages with IsometricComponent {
     bool skipHurt = false,
   }) async {
     final typeName = SpriteGroupType.getName(type).toLowerCase();
-    final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase();
+    final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase().replaceAll(' ', '_');
     final kidCharacterSpriteGroup = kidCharacterSprites.values[type] ?? (throw Exception('images.loadSpriteGroup2($typeName, $subTypeName)'));
     final directory = 'sprites/kid/$typeName/$subTypeName';
 

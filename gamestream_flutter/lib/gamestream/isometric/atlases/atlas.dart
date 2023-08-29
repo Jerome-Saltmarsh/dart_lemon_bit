@@ -63,8 +63,7 @@ class Atlas {
   static const Collection_Helm = <int, List<double>>{
     HelmType.None: AtlasSrcHelm.None,
     HelmType.Steel: AtlasSrcHelm.Steel,
-    HelmType.Rogues_Hood: AtlasSrcHelm.Rogue_Hood,
-    HelmType.Wizards_Hat: AtlasSrcHelm.Wizards_Hat,
+    HelmType.Wizard_Hat: AtlasSrcHelm.Wizards_Hat,
   };
 
   static const Collection_Hands = <int, List<double>>{

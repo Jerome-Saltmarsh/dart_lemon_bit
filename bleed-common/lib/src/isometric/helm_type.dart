@@ -2,18 +2,17 @@
 class HelmType {
   static const None = 0;
   static const Steel = 1;
-  static const Rogues_Hood = 2;
-  static const Wizards_Hat = 3;
+  static const Wizard_Hat = 2;
 
   static const values = [
     None,
     Steel,
+    Wizard_Hat,
   ];
 
   static String getName(int value) => const {
     None: 'none',
     Steel: 'steel',
-    Rogues_Hood: 'Rogues Hood',
-    Wizards_Hat: 'Wizards Hat',
+    Wizard_Hat: 'Wizard Hat',
   }[value] ?? (throw Exception());
 }

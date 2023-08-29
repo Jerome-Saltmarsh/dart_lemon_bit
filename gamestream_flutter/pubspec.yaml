@@ -69,6 +69,7 @@ flutter:
     - sprites/kid/hands_right/gauntlets/
     - sprites/kid/head/regular/
     - sprites/kid/helms/steel/
+    - sprites/kid/helms/wizard_hat/
     - sprites/kid/legs/brown/
     - sprites/kid/shadow/regular/
     - sprites/kid/torso/regular/

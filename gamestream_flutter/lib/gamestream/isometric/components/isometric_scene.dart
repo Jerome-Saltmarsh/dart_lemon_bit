@@ -841,7 +841,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
         applyAmbient(
           index: index,
-          alpha: interpolate(ambient, alpha, intensity).toInt(),
+          alpha: interpolate(ambient, alpha, intensity).toInt().clamp(0, 255),
         );
       }
     }

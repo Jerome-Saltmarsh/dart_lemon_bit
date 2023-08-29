@@ -218,7 +218,7 @@ class Character extends Collider {
 
   bool get targetSet => target != null;
 
-  double get healthPercentage => health / maxHealth;
+  double get healthPercentage => (health / maxHealth).clamp(0, 1.0);
 
   double get angle => _angle;
 

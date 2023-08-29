@@ -75,12 +75,11 @@ enum MMOItem {
       subType: HelmType.Steel,
       health: 10,
   ),
-  Rogues_Hood(
-      quality: MMOItemQuality.Unique,
+  Wizards_Hat(
+      quality: MMOItemQuality.Common,
       type: ItemType.Helm,
-      subType: HelmType.Rogues_Hood,
-      health: 5,
-      movement: 0.1,
+      subType: HelmType.Wizard_Hat,
+      health: 10,
   ),
   Travellers_Pants(
       quality: MMOItemQuality.Common,

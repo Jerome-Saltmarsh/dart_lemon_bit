@@ -12,18 +12,26 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- 5 helm types
+  - helm type wizards hat
+  - leather hat
+  - crown
+  - full helm
+- 5 glove types
+- 5 body types
+- 5 leg types
 - set player name
 - player persistence
 - player creation dialog
 - kid hair type
 - kid hair color
-- kid state caste
 - kid state hurt
 - kid shoe type
 - stash
 - store
 - fix set node light source refresh
 - player attributes dialog
+- optimize lights
 
 28.08.2023
 - fix render nodes corner and bottom
