@@ -733,20 +733,23 @@ class Engine extends StatelessWidget {
       }
 
       if (remaining < 8) {
+        final clr = _bufferClr4;
+        final dst = _bufferDst4;
+        final src = _bufferSrc4;
         for (var i = 0; i < 4; i++) {
           final start = i << 2;
           final end = start + 4;
           final f = flushIndex << 2;
-          _bufferClr4[i] = bufferClr[flushIndex];
-          _bufferDst4.setRange(start, end, bufferDst, f);
-          _bufferSrc4.setRange(start, end, bufferSrc, f);
+          clr[i] = bufferClr[flushIndex];
+          dst.setRange(start, end, bufferDst, f);
+          src.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
         canvas.drawRawAtlas(
           image,
-          _bufferDst4,
-          _bufferSrc4,
-          _bufferClr4,
+          dst,
+          src,
+          clr,
           blendMode,
           null,
           paint,
@@ -756,20 +759,23 @@ class Engine extends StatelessWidget {
       }
 
       if (remaining < 16) {
+        final clr = _bufferClr8;
+        final dst = _bufferDst8;
+        final src = _bufferSrc8;
         for (var i = 0; i < 8; i++) {
           final start = i << 2;
           final end = start + 4;
           final f = flushIndex << 2;
-          _bufferClr8[i] = bufferClr[flushIndex];
-          _bufferDst8.setRange(start, end, bufferDst, f);
-          _bufferSrc8.setRange(start, end, bufferSrc, f);
+          clr[i] = bufferClr[flushIndex];
+          dst.setRange(start, end, bufferDst, f);
+          src.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
         canvas.drawRawAtlas(
           image,
-          _bufferDst8,
-          _bufferSrc8,
-          _bufferClr8,
+          dst,
+          src,
+          clr,
           blendMode,
           null,
           paint,
@@ -779,20 +785,23 @@ class Engine extends StatelessWidget {
       }
 
       if (remaining < 32) {
+        final clr = _bufferClr16;
+        final dst = _bufferDst16;
+        final src = _bufferSrc16;
         for (var i = 0; i < 16; i++) {
           final start = i << 2;
           final end = start + 4;
           final f = flushIndex << 2;
-          _bufferClr16[i] = bufferClr[flushIndex];
-          _bufferDst16.setRange(start, end, bufferDst, f);
-          _bufferSrc16.setRange(start, end, bufferSrc, f);
+          clr[i] = bufferClr[flushIndex];
+          dst.setRange(start, end, bufferDst, f);
+          src.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
         canvas.drawRawAtlas(
           image,
-          _bufferDst16,
-          _bufferSrc16,
-          _bufferClr16,
+          dst,
+          src,
+          clr,
           blendMode,
           null,
           paint,
@@ -802,20 +811,23 @@ class Engine extends StatelessWidget {
       }
 
       if (remaining < 64) {
+        final clr = _bufferClr32;
+        final dst = _bufferDst32;
+        final src = _bufferSrc32;
         for (var i = 0; i < 32; i++) {
           final start = i << 2;
           final end = start + 4;
           final f = flushIndex << 2;
-          _bufferClr32[i] = bufferClr[flushIndex];
-          _bufferDst32.setRange(start, end, bufferDst, f);
-          _bufferSrc32.setRange(start, end, bufferSrc, f);
+          clr[i] = bufferClr[flushIndex];
+          dst.setRange(start, end, bufferDst, f);
+          src.setRange(start, end, bufferSrc, f);
           flushIndex++;
         }
         canvas.drawRawAtlas(
           image,
-          _bufferDst32,
-          _bufferSrc32,
-          _bufferClr32,
+          dst,
+          src,
+          clr,
           blendMode,
           null,
           paint,
