@@ -122,6 +122,8 @@ class RendererNodes extends RenderGroup {
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
     final variations = scene.nodeVariations;
+    final orientations = scene.nodeOrientations;
+    final nodeColors = scene.nodeColors;
 
     int lineZ;
     int lineColumn;
@@ -179,10 +181,12 @@ class RendererNodes extends RenderGroup {
               renderNodeIndex(
                 index: index,
                 nodeType: nodeType,
+                orientation: orientations[index],
                 dstX: dstX,
                 dstY: dstY,
                 scene: scene,
                 variation: variations[index],
+                color: nodeColors[index],
               );
             }
           }
@@ -719,9 +723,11 @@ class RendererNodes extends RenderGroup {
     required int index,
     required int nodeType,
     required int variation,
+    required int orientation,
     required double dstX,
     required double dstY,
     required IsometricScene scene,
+    required int color,
   }) {
 
     // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
@@ -733,14 +739,12 @@ class RendererNodes extends RenderGroup {
     // }
 
     // final nodeType = nodeTypes[index];
-    final nodeOrientation = nodeOrientations[index];
     final srcY = nodeTypeSrcY[nodeType];
-    final color = scene.nodeColors[index];
 
     if (srcY != null){
       renderDynamic(
         nodeType: nodeType,
-        nodeOrientation: nodeOrientation,
+        nodeOrientation: orientation,
         nodeVariation: variation,
         colorAbove: lightningFlashing
             ? lightningColor
@@ -805,7 +809,7 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_13,
             dstX: dstX,
             dstY: dstY,
-            nodeOrientation: scene.nodeOrientations[index],
+            nodeOrientation: orientation,
             color: color
         );
         return;
@@ -814,7 +818,7 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_14,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
+          nodeOrientation: orientation,
           color: color
         );
         return;
@@ -842,7 +846,7 @@ class RendererNodes extends RenderGroup {
             srcX: IsometricConstants.Sprite_Width_Padded_8,
             dstX: dstX,
             dstY: dstY,
-            nodeOrientation: scene.nodeOrientations[index],
+            nodeOrientation: orientation,
             color: color
         );
         return;
@@ -851,7 +855,7 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_4,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
+          nodeOrientation: orientation,
           color: color
         );
         return;
@@ -860,7 +864,7 @@ class RendererNodes extends RenderGroup {
           IsometricConstants.Sprite_Width_Padded_9,
           offsetY: 7,
           color: scene.colorAbove(index),
-          orientation: scene.nodeOrientations[index],
+          orientation: orientation,
         );
         return;
       case NodeType.Tree_Top:
@@ -893,9 +897,8 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_15,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
-
-            color: color
+          nodeOrientation: orientation,
+          color: color
         );
         break;
       case NodeType.Road_2:
@@ -914,9 +917,8 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_10,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
-
-            color: color
+          nodeOrientation: orientation,
+          color: color
         );
         return;
       case NodeType.Torch:
@@ -972,8 +974,8 @@ class RendererNodes extends RenderGroup {
         renderNodeShoppingShelf(
           dstX: dstX,
           dstY: dstY,
-          variation: scene.nodeVariations[index],
-          color: scene.nodeColors[index],
+          variation: variation,
+          color: color,
         );
         break;
       case NodeType.Bookshelf:
@@ -1003,9 +1005,8 @@ class RendererNodes extends RenderGroup {
           srcX: 588,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
-
-            color: color
+          nodeOrientation: orientation,
+          color: color
         );
         return;
       case NodeType.Glass:
@@ -1013,9 +1014,8 @@ class RendererNodes extends RenderGroup {
           srcX: IsometricConstants.Sprite_Width_Padded_16,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
-
-            color: color
+          nodeOrientation: orientation,
+          color: color
         );
         return;
       case NodeType.Bau_Haus:
@@ -1025,9 +1025,8 @@ class RendererNodes extends RenderGroup {
           srcX: srcX,
           dstX: dstX,
           dstY: dstY,
-          nodeOrientation: scene.nodeOrientations[index],
-
-            color: color
+          nodeOrientation: orientation,
+          color: color
         );
         break;
       case NodeType.Sunflower:
