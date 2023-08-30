@@ -669,6 +669,7 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required bool grassy,
+    required int wind,
 }){
     renderCustomNode(
         srcX: grassy ? 1294.0 : 1311.0,
@@ -680,7 +681,7 @@ class RendererNodes extends RenderGroup {
         color: 0,
     );
 
-    render.flame(dstX: dstX, dstY: dstY - 12, scale: 0.7);
+    render.flame(dstX: dstX, dstY: dstY - 12, scale: 0.7, wind: wind);
   }
 
   // bool assertOnScreen(){
@@ -928,6 +929,7 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           grassy: scene.nodeTypeBelowIs(index, NodeType.Grass),
+          wind: wind,
         );
         break;
       case NodeType.Torch_Blue:

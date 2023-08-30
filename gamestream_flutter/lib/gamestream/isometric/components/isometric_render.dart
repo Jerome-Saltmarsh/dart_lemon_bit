@@ -18,10 +18,21 @@ class IsometricRender with IsometricComponent {
 
   var renderAimTargetName = false;
 
+  late final List<Sprite> _flames ;
+
   @override
   Future onComponentInit(sharedPreferences) async {
     engine.onDrawCanvas = drawCanvas;
     engine.onDrawForeground = drawForeground;
+  }
+
+  @override
+  void onComponentReady() {
+    _flames = [
+      images.flame0,
+      images.flame1,
+      images.flame2,
+    ];
   }
 
   void modulate({
@@ -661,25 +672,12 @@ class IsometricRender with IsometricComponent {
   void flame({
     required double dstX,
     required double dstY,
+    required int wind,
     double scale = 1.0,
     int seed = 0,
   }){
-
-    Sprite sprite;
-
-    switch (environment.wind.value){
-      case 0:
-        sprite = images.flame0;
-      case 1:
-        sprite = images.flame1;
-      case 2:
-        sprite = images.flame2;
-      default:
-        sprite = images.flame0;
-    }
-
+    final sprite = _flames[wind];
     final frame = sprite.getFrame(row: 0, column: seed + animation.frame);
-
     render.sprite(
       sprite: sprite,
       frame: frame,
