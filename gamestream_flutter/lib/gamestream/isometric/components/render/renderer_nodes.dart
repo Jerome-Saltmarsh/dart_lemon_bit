@@ -516,7 +516,12 @@ class RendererNodes extends RenderGroup {
     }
 
     zMin = max(player.indexZ - 1, 0);
-    visit2D(player.areaNodeIndex);
+    visit2D(
+      player.areaNodeIndex,
+      columns: scene.totalColumns,
+      rows: scene.totalRows,
+      scene: scene,
+    );
   }
 
   void ensureIndexPerceptible(int index){
@@ -537,7 +542,11 @@ class RendererNodes extends RenderGroup {
       if (projectionZ > projectionHeight) continue;
       player.playerInsideIsland = true;
       zMin = max(player.indexZ - 1, 0);
-      visit2D(projectionIndex);
+      visit2D(projectionIndex,
+        columns: scene.totalColumns,
+        rows: scene.totalRows,
+        scene: scene,
+      );
       return;
     }
   }
@@ -548,21 +557,28 @@ class RendererNodes extends RenderGroup {
     visible3DIndex++;
   }
 
-  void visit2D(int i) {
-     if (visited2D[i]) return;
+  void visit2D(int i, {
+    required int columns,
+    required int rows,
+    required IsometricScene scene,
+  }) {
+     if (visited2D[i])
+       return;
+
      visited2D[i] = true;
      visited2DStack[visited2DStackIndex] = i;
      visited2DStackIndex++;
      if (scene.heightMap[i] <= zMin) return;
      island[i] = true;
 
-     var searchIndex = i + (scene.area * player.indexZ);
+     final area = scene.area;
+     final playerIndexZ = player.indexZ;
+     var searchIndex = i + (area * playerIndexZ);
      addVisible3D(searchIndex);
 
      var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
      var gapReached = false;
 
-     final area = scene.area;
      final totalNodes = scene.totalNodes;
 
      while (true) {
@@ -591,7 +607,7 @@ class RendererNodes extends RenderGroup {
 
         addVisible3D(searchIndex);
      }
-     searchIndex = i + (area * player.indexZ);
+     searchIndex = i + (area * playerIndexZ);
      while (true) {
        addVisible3D(searchIndex);
        if (blocksBeamVertical(searchIndex)) break;
@@ -599,21 +615,21 @@ class RendererNodes extends RenderGroup {
        if (searchIndex < 0) break;
      }
 
-     final iAbove = i - scene.totalColumns;
+     final iAbove = i - columns;
      if (iAbove > 0) {
-       visit2D(iAbove);
+       visit2D(iAbove, columns: columns, rows: rows, scene: scene);
      }
-     final iBelow = i + scene.totalColumns;
-     if (iBelow < scene.area) {
-       visit2D(iBelow);
+     final iBelow = i + columns;
+     if (iBelow < area) {
+       visit2D(iBelow, columns: columns, rows: rows, scene: scene);
      }
 
-     final row = i % scene.totalRows;
+     final row = i % rows;
      if (row - 1 >= 0) {
-       visit2D(i - 1);
+       visit2D(i - 1, columns: columns, rows: rows, scene: scene);
      }
-     if (row + 1 < scene.totalRows){
-       visit2D(i + 1);
+     if (row + 1 < rows){
+       visit2D(i + 1, columns: columns, rows: rows, scene: scene);
      }
   }
 
