@@ -370,6 +370,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         final flashing = readBool();
         environment.lightningFlashing01 = readPercentage();
         if (environment.lightningFlashing != flashing){
+          rendererNodes.lightningFlashing = flashing;
           environment.lightningFlashing = flashing;
           if (flashing) {
             audio.thunder(1.0);

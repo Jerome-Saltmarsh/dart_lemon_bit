@@ -329,7 +329,7 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
-    lightningFlashing = environment.lightningFlashing;
+    // lightningFlashing = environment.lightningFlashing;
     renderRainFalling = options.renderRainFallingTwice;
     rainType = environment.rainType.value;
     windType = environment.wind.value;
