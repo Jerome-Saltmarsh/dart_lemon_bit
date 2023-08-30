@@ -6,7 +6,7 @@ class IsometricLighting implements Updatable {
   var emissionAlphaCharacter = 125;
   var torchEmissionIntensityColored = 0.0;
   var torchEmissionIntensityAmbient = 1.0;
-  var torchEmissionStart = 0.8;
+  var torchEmissionStart = 0.75;
   var torchEmissionEnd = 1.0;
   var torchEmissionVal = 0.061;
   var torchEmissionT = 0.0;

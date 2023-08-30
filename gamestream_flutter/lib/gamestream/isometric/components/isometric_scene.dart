@@ -804,7 +804,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final alpha = interpolate(
       ambient,
       0,
-      amulet.lighting.torchEmissionIntensityAmbient,
+      lighting.torchEmissionIntensityAmbient,
     ).toInt().clamp(0, 255);
 
     final total =  bakeStackTorchTotal;
