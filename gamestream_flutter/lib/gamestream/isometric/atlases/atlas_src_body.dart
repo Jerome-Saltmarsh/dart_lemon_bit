@@ -1,56 +1,30 @@
 
-class AtlasSrcBody {
-  static const None = <double>[
+
+import 'package:gamestream_flutter/packages/common/src/isometric/body_type.dart';
+
+const atlasSrcBodyType = <int, List<double>>{
+  BodyType.None: [
     102,  // x
     4,    // y
     22,   // width
     23 ,   // height
     1,  // scale
     0.5, // anchorY
-  ];
-
-  static const Shirt_Red = <double>[
-    6,  // x
-    4,    // y
-    22,   // width
-    23,   // height
-    1,  // scale
-    0.5, // anchorY
-  ];
-
-  static const Shirt_Blue = <double>[
+  ],
+  BodyType.Shirt_Blue: [
     38,  // x
     4,    // y
     22,   // width
     23,   // height
     1,  // scale
     0.5, // anchorY
-  ];
-
-  static const Shirt_Cyan = <double>[
-    70,  // x
-    4,    // y
-    22,   // width
-    23,   // height
-    1,  // scale
-    0.5, // anchorY
-  ];
-
-  static const Swat = <double>[
-    134,  // x
-    3,    // y
-    22,   // width
-    26,   // height
-    1,  // scale
-    0.5, // anchorY
-  ];
-
-  static const Tunic = <double>[
-    166,  // x
+  ],
+  BodyType.Leather_Armour: [
+    8,  // x
     5,    // y
-    22,   // width
-    23,   // height
+    18,   // width
+    16,   // height
     1,  // scale
     0.5, // anchorY
-  ];
-}
+  ],
+};

@@ -152,6 +152,16 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Body, subType: BodyType.Leather_Armour, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Body_Arms, subType: BodyType.Leather_Armour,
+      skipHurt: true,
+      skipFire: true,
+      skipStrike: true,
+      skipChange: true,
+      skipDead: true,
+      skipIdle: true,
+      skipRunning: true,
+    );
     loadSpriteGroup(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Heads, subType: HeadType.regular, skipHurt: true);

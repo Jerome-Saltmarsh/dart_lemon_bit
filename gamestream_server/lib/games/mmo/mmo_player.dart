@@ -73,6 +73,7 @@ class AmuletPlayer extends IsometricPlayer {
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Sapphire_Pendant);
     addItem(MMOItem.Steel_Helmet);
+    addItem(MMOItem.Basic_Leather_Armour);
 
     addItemToEmptyWeaponSlot(MMOItem.Rusty_Old_Sword);
     addItemToEmptyWeaponSlot(MMOItem.Staff_Of_Frozen_Lake);

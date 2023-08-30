@@ -28,7 +28,10 @@ shift + alt + J     : backspace
 - optimize lights
 - fix set node light source refresh
 
-29.08.2023
+30.08.2023
+- body type leather armour
+
+- 29.08.2023
 - fix auto attack bow and sword
 - fix cannot pick up items
 - fix fire bow animation

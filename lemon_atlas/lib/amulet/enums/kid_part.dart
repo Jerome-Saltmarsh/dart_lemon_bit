@@ -3,6 +3,7 @@ enum KidPart {
   armLeftRegular('arms_left', 'regular'),
   armRightRegular('arms_right', 'regular'),
   bodyShirtBlue('body', 'shirt_blue'),
+  bodyLeatherArmour('body', 'leather_armour'),
   bodyArmsShirtBlue('body_arms', 'shirt_blue'),
   handsLeftGauntlet('hands_left', 'gauntlets'),
   handsRightGauntlet('hands_right', 'gauntlets'),

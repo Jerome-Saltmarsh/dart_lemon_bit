@@ -51,15 +51,6 @@ class Atlas {
     LegType.White: AtlasSrcLegs.Green,
   };
 
-  static const Collection_Body = <int, List<double>>{
-    BodyType.None: AtlasSrcBody.None,
-    BodyType.Shirt_Red: AtlasSrcBody.Shirt_Red,
-    BodyType.Shirt_Blue: AtlasSrcBody.Shirt_Blue,
-    BodyType.Shirt_Cyan: AtlasSrcBody.Shirt_Cyan,
-    BodyType.Swat: AtlasSrcBody.Swat,
-    BodyType.Tunic_Padded: AtlasSrcBody.Tunic,
-  };
-
   static const Collection_Helm = <int, List<double>>{
     HelmType.None: AtlasSrcHelm.None,
     HelmType.Steel: AtlasSrcHelm.Steel,
@@ -112,7 +103,7 @@ class Atlas {
   static const SrcCollection = <int, Map<int, List<double>>>{
     ItemType.Weapon: Collection_Weapons,
     ItemType.Legs: Collection_Legs,
-    ItemType.Body: Collection_Body,
+    ItemType.Body: atlasSrcBodyType,
     ItemType.Helm: Collection_Helm,
     ItemType.Object: Collection_Objects,
     ItemType.Hand: Collection_Hands,

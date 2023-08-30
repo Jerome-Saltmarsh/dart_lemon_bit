@@ -107,35 +107,17 @@ enum MMOItem {
       health: 5,
       movement: -0.1,
   ),
-  Worn_Red_Shirt (
-      quality: MMOItemQuality.Common,
-      type: ItemType.Body,
-      subType: BodyType.Shirt_Red,
-      health: 1,
-  ),
   Worn_Shirt_Blue (
       quality: MMOItemQuality.Common,
       type: ItemType.Body,
       subType: BodyType.Shirt_Blue,
       health: 1,
   ),
-  Basic_Padded_Armour (
+  Basic_Leather_Armour (
       quality: MMOItemQuality.Common,
       type: ItemType.Body,
-      subType: BodyType.Tunic_Padded,
+      subType: BodyType.Leather_Armour,
       health: 5,
-  ),
-  Squires_Armour (
-      quality: MMOItemQuality.Common,
-      type: ItemType.Body,
-      subType: BodyType.Tunic_Padded,
-      health: 7,
-  ),
-  Plated_Armour (
-      quality: MMOItemQuality.Unique,
-      type: ItemType.Body,
-      subType: BodyType.Tunic_Padded,
-      health: 10,
   ),
   Health_Potion(
       quality: MMOItemQuality.Common,
