@@ -947,8 +947,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       final index = (z * area) + (row * columns) + column;
 
-      if (!recordMode){
-        final renderX = getIndexRenderX(index);
+      if (!recordMode) {
+        final row =  (index % area) ~/ columns;
+        final column = index % columns;
+        final renderX = (row - column) * Node_Size_Half;
 
         if (renderX < minRenderX && (vx < 0 || vy > 0))
           return;
@@ -956,7 +958,11 @@ class IsometricScene with IsometricComponent implements Updatable {
         if (renderX > maxRenderX && (vx > 0 || vy < 0))
           return;
 
-        final renderY = getIndexRenderY(index);
+        final renderY = getRenderYOfRowColumnZ(
+            row,
+            column,
+            index ~/ area,
+        );
 
         if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
           return;
