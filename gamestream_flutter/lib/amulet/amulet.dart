@@ -192,6 +192,9 @@ class Amulet extends IsometricGame {
 
   void onChangedPlayerInventoryOpen(bool value) {
     audio.click_sound_8();
+    if (!value){
+      clearItemHover();
+    }
   }
 
   void onChangedPlayerTalentsDialogOpen(bool talentsDialogOpen) {
