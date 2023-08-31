@@ -1,5 +1,5 @@
-import 'package:gamestream_server/packages/common.dart';
 import 'package:gamestream_server/gamestream/gamestream_server.dart';
+import 'package:gamestream_server/packages/common/src/game_type.dart';
 
 import 'job.dart';
 import 'player.dart';

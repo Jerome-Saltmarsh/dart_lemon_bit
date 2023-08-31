@@ -593,6 +593,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (index >= totalNodes) return;
 
     final ambientIntensity = intensity * (ambientAlpha / 255);
+    final nodeColors = this.nodeColors;
 
     final currentColor = nodeColors[index];
     final currentRed = getRed(currentColor);
@@ -623,10 +624,13 @@ class IsometricScene with IsometricComponent implements Updatable {
   void applyAmbient({
     required int index,
     required int alpha,
+    required int ambientRGB,
+    required int ambientAlpha,
   }){
     assert (index >= 0);
     assert (index < totalNodes);
 
+    final nodeColors = this.nodeColors;
     final currentColor = nodeColors[index];
     final currentAlpha = getAlpha(currentColor);
     if (currentAlpha <= alpha) {
@@ -799,6 +803,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyEmissionBakeStack() {
+    final ambientAlpha = this.ambientAlpha;
+    final ambientRGB = this.ambientRGB;
 
     final ambient = ambientAlpha.clamp(0, 255);
     final alpha = interpolate(
@@ -818,6 +824,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final bakeStackIndex = this.bakeStackIndex;
     final bakeStackBrightness = this.bakeStackBrightness;
     final interpolations = this.interpolations;
+
 
     final totalColumns = this.totalColumns;
     final area = this.area;
@@ -849,6 +856,8 @@ class IsometricScene with IsometricComponent implements Updatable {
         applyAmbient(
           index: index,
           alpha: interpolate(ambient, alpha, intensity).toInt().clamp(0, 255),
+          ambientAlpha: ambientAlpha,
+          ambientRGB: ambientRGB,
         );
       }
     }
@@ -883,12 +892,12 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int vz,
     required int value,
     required double intensity,
-    required bool ambient,
     required double minRenderX,
     required double maxRenderX,
     required double minRenderY,
     required double maxRenderY,
     required bool recordMode,
+    required bool ambient,
   }){
     if (brightness < 0)
       return;
@@ -897,6 +906,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     final rows = totalRows;
     final columns = totalColumns;
     final zs = totalZ;
+    final ambientAlpha = this.ambientAlpha;
+    final ambientRGB = this.ambientRGB;
 
     while (true) {
       var velocity = vx.abs() + vy.abs() + vz.abs();
@@ -1044,6 +1055,8 @@ class IsometricScene with IsometricComponent implements Updatable {
         applyAmbient(
           index: index,
           alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
+          ambientRGB: ambientRGB,
+          ambientAlpha: ambientAlpha,
         );
       } else {
         applyColor(
