@@ -854,9 +854,15 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
+  var bakeColors = Uint32List(0);
+
+  void resetNodeToBake(int index){
+    final bakeColor = bakeColors[index];
+    
+  }
+
   void applyEmissionEditorSelectedNode() {
     if (!options.editMode) return;
-    final editor = amulet.editor;
     if (( editor.gameObject.value == null ||  editor.gameObject.value!.colorType == EmissionType.None)){
       emitLight(
         index:  editor.nodeSelectedIndex.value,

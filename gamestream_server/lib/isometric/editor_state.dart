@@ -1,5 +1,5 @@
 
-import '../common.dart';
+import 'package:gamestream_server/packages/common.dart';
 import 'isometric_game.dart';
 import 'isometric_player.dart';
 import 'scene.dart';

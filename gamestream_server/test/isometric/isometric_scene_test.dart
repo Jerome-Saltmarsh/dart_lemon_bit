@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 
-import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/packages/common.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:test/test.dart';
 

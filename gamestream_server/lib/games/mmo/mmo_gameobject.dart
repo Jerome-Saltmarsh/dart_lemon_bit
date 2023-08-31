@@ -1,5 +1,4 @@
-
-import 'package:gamestream_server/common/src.dart';
+import 'package:gamestream_server/packages/common.dart';
 import 'package:gamestream_server/isometric.dart';
 
 class MMOGameObject extends GameObject {

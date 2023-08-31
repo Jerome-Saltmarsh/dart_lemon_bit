@@ -1,5 +1,5 @@
 
-import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/packages/common.dart';
 
 import 'physics.dart';
 import 'collider.dart';

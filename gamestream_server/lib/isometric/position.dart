@@ -1,9 +1,6 @@
 
 import 'dart:math';
-
-import 'package:gamestream_server/common/src/isometric/node_size.dart';
-
-import 'package:gamestream_server/lemon_math.dart';
+import 'package:gamestream_server/packages.dart';
 
 class Position implements Comparable<Position> {
   double x;

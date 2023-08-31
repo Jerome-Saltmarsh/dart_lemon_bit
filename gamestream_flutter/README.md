@@ -12,6 +12,11 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- body type chain mail
+- particle butterfly
+- particle glow worm red
+- particle glow worm green
+- particle glow worm yellow
 - kid shoe type
 - helm type hoodie
 - glove type leather

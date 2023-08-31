@@ -1,4 +1,4 @@
-import 'package:gamestream_server/common.dart';
+import 'package:gamestream_server/packages/common.dart';
 import 'package:gamestream_server/core/player.dart';
 import 'package:gamestream_server/core/job.dart';
 import 'package:gamestream_server/gamestream.dart';
