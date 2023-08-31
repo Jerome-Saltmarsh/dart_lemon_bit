@@ -152,10 +152,15 @@ class Scene {
       getZ(index) * Node_Height;
 
   int findPath(var indexStart, var indexEnd, {int max = 100}) {
+
+    final shapes = this.shapes;
+
     if (indexEnd <= 0 ||
         indexEnd >= shapes.length ||
         shapes[indexEnd] == NodeOrientation.Solid
     ) return indexStart;
+
+    final path = this.path;
 
     for (var i = 0; i <= visitHistoryIndex; i++) {
       path[visitHistory[i]] = Not_Visited;

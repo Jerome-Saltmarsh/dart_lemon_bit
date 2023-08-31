@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- floating flaming skull monster
 - body type chain mail
 - particle butterfly
 - particle glow worm red
