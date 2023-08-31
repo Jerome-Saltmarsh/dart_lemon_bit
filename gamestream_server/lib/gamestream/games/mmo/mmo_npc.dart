@@ -1,6 +1,7 @@
 
-import 'package:gamestream_server/games/mmo/mmo_player.dart';
 import 'package:gamestream_server/isometric.dart';
+
+import 'mmo_player.dart';
 
 class MMONpc extends Character {
 

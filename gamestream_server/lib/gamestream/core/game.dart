@@ -1,7 +1,8 @@
 import 'package:gamestream_server/packages/common.dart';
-import 'package:gamestream_server/core/player.dart';
-import 'package:gamestream_server/core/job.dart';
-import 'package:gamestream_server/gamestream.dart';
+import 'package:gamestream_server/gamestream/gamestream_server.dart';
+
+import 'job.dart';
+import 'player.dart';
 
 abstract class Game <T extends Player> {
   var playerId = 0;

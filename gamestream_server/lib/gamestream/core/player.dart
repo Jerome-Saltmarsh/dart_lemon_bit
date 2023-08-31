@@ -1,5 +1,5 @@
 import 'package:gamestream_server/packages/common.dart';
-import 'package:gamestream_server/gamestream.dart';
+import 'package:gamestream_server/gamestream/gamestream_server.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import 'game.dart';

@@ -1,10 +1,10 @@
-import 'package:gamestream_server/gamestream.dart';
-import 'package:gamestream_server/websocket/server_base.dart';
+import 'package:gamestream_server/gamestream/gamestream_server.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
+import 'server_base.dart';
 import 'websocket_connection.dart';
 
 class WebSocketServer implements ServerBase {

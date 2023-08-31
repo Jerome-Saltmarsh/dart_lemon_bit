@@ -1,8 +1,11 @@
-import 'package:gamestream_server/games.dart';
-import 'package:gamestream_server/gamestream.dart';
+import 'package:gamestream_server/gamestream/gamestream_server.dart';
 import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/packages.dart';
+
+import 'mmo_gameobject.dart';
+import 'mmo_npc.dart';
+import 'mmo_player.dart';
 
 class Amulet extends IsometricGame<AmuletPlayer> {
 

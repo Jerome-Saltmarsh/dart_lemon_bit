@@ -1,7 +1,5 @@
 import 'dart:math';
-
-import 'package:gamestream_server/core/game.dart';
-import 'package:gamestream_server/games.dart';
+import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/packages.dart';
 
 import 'character.dart';
