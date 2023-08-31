@@ -626,11 +626,12 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int alpha,
     required int ambientRGB,
     required int ambientAlpha,
+    required Uint32List nodeColors,
+    required Uint16List ambientStack,
   }){
     assert (index >= 0);
     assert (index < totalNodes);
 
-    final nodeColors = this.nodeColors;
     final currentColor = nodeColors[index];
     final currentAlpha = getAlpha(currentColor);
     if (currentAlpha <= alpha) {
@@ -824,6 +825,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     final bakeStackIndex = this.bakeStackIndex;
     final bakeStackBrightness = this.bakeStackBrightness;
     final interpolations = this.interpolations;
+    final nodeColors = this.nodeColors;
+    final ambientStack = this.ambientStack;
 
 
     final totalColumns = this.totalColumns;
@@ -858,6 +861,8 @@ class IsometricScene with IsometricComponent implements Updatable {
           alpha: interpolate(ambient, alpha, intensity).toInt().clamp(0, 255),
           ambientAlpha: ambientAlpha,
           ambientRGB: ambientRGB,
+          nodeColors: nodeColors,
+          ambientStack: ambientStack,
         );
       }
     }
@@ -902,12 +907,18 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (brightness < 0)
       return;
 
-    final area = this.area; // cache on cpu
+    // cache values in cpu
+    final area = this.area;
     final rows = totalRows;
     final columns = totalColumns;
     final zs = totalZ;
     final ambientAlpha = this.ambientAlpha;
     final ambientRGB = this.ambientRGB;
+    final nodeColors = this.nodeColors;
+    final ambientStack = this.ambientStack;
+    final interpolations = this.interpolations;
+    final nodeTypes = this.nodeTypes;
+    final nodeOrientations = this.nodeOrientations;
 
     while (true) {
       var velocity = vx.abs() + vy.abs() + vz.abs();
@@ -1057,6 +1068,8 @@ class IsometricScene with IsometricComponent implements Updatable {
           alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
           ambientRGB: ambientRGB,
           ambientAlpha: ambientAlpha,
+          nodeColors: nodeColors,
+          ambientStack: ambientStack,
         );
       } else {
         applyColor(
