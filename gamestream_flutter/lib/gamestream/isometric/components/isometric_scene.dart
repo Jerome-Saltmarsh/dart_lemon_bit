@@ -997,8 +997,11 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Half_South,
             NodeOrientation.Corner_South_East,
             NodeOrientation.Corner_South_West,
-            NodeOrientation.Slope_South,
           ].contains(nodeOrientation)) return;
+
+          if (nodeOrientation == NodeOrientation.Slope_South && vz == 0){
+            return;
+          }
 
           if (const [
             NodeOrientation.Half_North,
@@ -1011,15 +1014,20 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Half_North,
             NodeOrientation.Corner_North_East,
             NodeOrientation.Corner_North_West,
-            NodeOrientation.Slope_North,
           ].contains(nodeOrientation)) return;
+
+          if (NodeOrientation.Slope_North == nodeOrientation && vz == 0){
+            return;
+          }
 
           if (const [
             NodeOrientation.Half_South,
             NodeOrientation.Corner_South_East,
             NodeOrientation.Corner_South_West,
             NodeOrientation.Slope_South,
-          ].contains(nodeOrientation)) vx = 0;
+          ].contains(nodeOrientation)){
+            vx = 0;
+          }
         }
 
         if (vy < 0) {
@@ -1027,8 +1035,13 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Half_West,
             NodeOrientation.Corner_North_West,
             NodeOrientation.Corner_South_West,
-            NodeOrientation.Slope_West,
-          ].contains(nodeOrientation)) return;
+          ].contains(nodeOrientation)) {
+            return;
+          }
+
+          if (nodeOrientation == NodeOrientation.Slope_West && vz == 0){
+            return;
+          }
 
           if (const [
             NodeOrientation.Half_East,
@@ -1041,8 +1054,11 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Half_East,
             NodeOrientation.Corner_South_East,
             NodeOrientation.Corner_North_East,
-            NodeOrientation.Slope_East,
           ].contains(nodeOrientation)) return;
+
+          if (nodeOrientation == NodeOrientation.Slope_East && vz == 0){
+            return;
+          }
 
           if (const [
             NodeOrientation.Half_West,
@@ -1068,7 +1084,9 @@ class IsometricScene with IsometricComponent implements Updatable {
         }
 
         if (vz > 0) {
-          if (const [NodeOrientation.Half_Vertical_Top]
+          if (const [
+            NodeOrientation.Half_Vertical_Top
+          ]
               .contains(nodeOrientation)) {
             return;
           }

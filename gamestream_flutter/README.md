@@ -12,7 +12,11 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- hot key add mark 1 2 3 4 
 - particle butterfly
+- particle bat
+- particle crow
+- fix fire animation speed
 - floating flaming skull monster
 - body type chain mail
 - kid shoe type
