@@ -2715,7 +2715,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Cell_South_Width,
       dstY: dstY - Cell_South_Height + Cell_South_Height + Cell_South_Height,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellSouthColumn(
@@ -2729,7 +2729,7 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       dstX: dstX - Node_Size_Half + Cell_South_Width + Cell_South_Width,
       dstY: dstY - Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height + Cell_South_Height,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellSouthColumn(
