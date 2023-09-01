@@ -98,7 +98,7 @@ class RendererParticles extends RenderGroup {
           // final nodeColor = scene.getColor(particle.nodeIndex);
           // final nodeAlpha = getAlpha(nodeColor);
           // final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
-        final color = colors.aqua_1.value;
+        final color = particle.emissionColor;
           engine.renderSprite(
             image: images.atlas_nodes,
             dstX: dstX,

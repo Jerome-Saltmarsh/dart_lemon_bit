@@ -926,9 +926,19 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double y,
     required double z,
   }) => children.add(
-      ParticleGlow(x: x, y: y, z: z)
-        ..emissionColor = colors.aqua_1.value
+      ParticleGlow(
+          x: x,
+          y: y,
+          z: z,
+          color: randomItem([
+              colors.aqua_1.value,
+              colors.red_0.value,
+              colors.purple_0.value,
+              colors.pink_0.value,
+          ]),
+      )
         ..emissionIntensity = 0.5
+        ..movementSpeed = 0.35
   );
 
   void spawnMystAtIndex(int index) {

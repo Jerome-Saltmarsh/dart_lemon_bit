@@ -15,9 +15,6 @@ shift + alt + J     : backspace
 - floating flaming skull monster
 - body type chain mail
 - particle butterfly
-- particle glow worm red
-- particle glow worm green
-- particle glow worm yellow
 - kid shoe type
 - helm type hoodie
 - glove type leather
@@ -35,6 +32,7 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 
 01.09.2023
+- particle glow
 - fixed camera not starting on player
 - fix mark types not rendering
 

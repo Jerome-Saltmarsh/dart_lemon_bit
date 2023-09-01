@@ -12,10 +12,13 @@ class ParticleGlow extends ParticleWhisp {
     required super.x,
     required super.y,
     required super.z,
+    required int color,
   }) {
     emitsLight = true;
     blownByWind = false;
     type = ParticleType.Glow;
+    emissionColor = color;
+    _i = random.nextDouble();
   }
 
   @override
