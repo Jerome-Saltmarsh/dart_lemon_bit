@@ -2975,42 +2975,42 @@ class RendererNodes extends RenderGroup {
       srcY: srcY,
       dstX: dstX + Cell_Size_Half,
       dstY: dstY + Node_Size_Half + Cell_South_Height -Cell_Size - Cell_Size_Half,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX,
       dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half,
       dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX,
       dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half,
       dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_Size_Half - Cell_Size_Half,
       dstY: dstY + Node_Size_Half + Cell_South_Height - Cell_Size - Cell_Size_Half - Cell_Size_Half - Cell_Size_Half,
-      color: colorCurrent,
+      color: colorAbove,
     );
 
     renderNodeSideWest(
