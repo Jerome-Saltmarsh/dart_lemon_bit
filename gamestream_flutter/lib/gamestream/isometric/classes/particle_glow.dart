@@ -3,6 +3,14 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.d
 
 class ParticleGlow extends ParticleWhisp {
 
-  ParticleGlow({required super.x, required super.y, required super.z});
+  ParticleGlow({
+    required super.x,
+    required super.y,
+    required super.z,
+  }) {
+    emitsLight = true;
+    // emissionColor = colors.
+    // intensity: particle.emissionIntensity,
+  }
 
 }

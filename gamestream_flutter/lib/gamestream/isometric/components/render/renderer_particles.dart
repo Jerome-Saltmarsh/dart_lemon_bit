@@ -35,10 +35,10 @@ class RendererParticles extends RenderGroup {
 
       if (const [
         ParticleType.Blood,
-        ParticleType.Zombie_Head,
-        ParticleType.Zombie_Torso,
-        ParticleType.Zombie_leg,
-        ParticleType.Zombie_Arm,
+        // ParticleType.Zombie_Head,
+        // ParticleType.Zombie_Torso,
+        // ParticleType.Zombie_leg,
+        // ParticleType.Zombie_Arm,
         ParticleType.Block_Wood,
         ParticleType.Block_Sand,
         ParticleType.Block_Brick,
@@ -79,6 +79,21 @@ class RendererParticles extends RenderGroup {
           renderMyst();
           break;
         case ParticleType.Whisp:
+          final nodeColor = scene.getColor(particle.nodeIndex);
+          final nodeAlpha = getAlpha(nodeColor);
+          final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
+          engine.renderSprite(
+            image: images.atlas_nodes,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 736,
+            srcY: 1848.0 - perc,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+          );
+          break;
+        case ParticleType.Glow:
           final nodeColor = scene.getColor(particle.nodeIndex);
           final nodeAlpha = getAlpha(nodeColor);
           final perc = ((nodeAlpha / 255) * 4).toInt() * 8;

@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'dart:math';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
@@ -918,9 +919,17 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double x,
     required double y,
     required double z,
-  }) {
-    children.add(ParticleWhisp(x: x, y: y, z: z));
-  }
+  }) => children.add(ParticleWhisp(x: x, y: y, z: z));
+
+  void spawnGlow({
+    required double x,
+    required double y,
+    required double z,
+  }) => children.add(
+      ParticleGlow(x: x, y: y, z: z)
+        ..emissionColor = colors.aqua_1.value
+        ..emissionIntensity = 0.5
+  );
 
   void spawnMystAtIndex(int index) {
     const radius = 100.0;

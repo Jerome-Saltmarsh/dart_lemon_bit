@@ -97,19 +97,20 @@ class IsometricScene with IsometricComponent implements Updatable {
     particles.mystIndexes.clear();
     for (final markValue in marks) {
       final markType = MarkType.getType(markValue);
+      final markIndex = MarkType.getIndex(markValue);
+      final x = getIndexPositionX(markIndex);
+      final y = getIndexPositionY(markIndex);
+      final z = getIndexPositionZ(markIndex);
+
       switch (markType){
         case MarkType.Spawn_Whisp:
-          final markIndex = MarkType.getIndex(markValue);
-          particles.spawnWhisp(
-            x: getIndexPositionX(markIndex),
-            y: getIndexPositionY(markIndex),
-            z: getIndexPositionZ(markIndex),
-          );
+          particles.spawnWhisp(x: x, y: y, z: z);
+          break;
+        case MarkType.Glow:
+          particles.spawnGlow(x: x, y: y, z: z);
           break;
         case MarkType.Spawn_Myst:
-          particles.mystIndexes.add(
-            MarkType.getIndex(markValue)
-          );
+          particles.mystIndexes.add(markIndex);
           break;
       }
     }
@@ -681,6 +682,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyEmissionsCharacters() {
+    final alpha = lighting.emissionAlphaCharacter;
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
 
@@ -693,7 +695,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       applyVector3EmissionAmbient(
         character,
-        alpha: lighting.emissionAlphaCharacter,
+        alpha: alpha,
       );
     }
   }
