@@ -162,6 +162,9 @@ class RendererNodes extends RenderGroup {
     var nodeIndex = -1;
     var dstX = 0.0;
 
+    final lightningFlashing = environment.lightningFlashing;
+    final lightningColor = this.lightningColor;
+
     while (lineZ >= 0) {
       dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
 
@@ -182,16 +185,36 @@ class RendererNodes extends RenderGroup {
 
             final nodeType = nodeTypes[nodeIndex];
             if (nodeType != NodeType.Empty){
-              renderNodeIndex(
-                index: nodeIndex,
-                nodeType: nodeType,
-                orientation: orientations[nodeIndex],
-                dstX: dstX,
-                dstY: dstY,
-                scene: scene,
-                variation: variations[nodeIndex],
-                color: nodeColors[nodeIndex],
-              );
+
+              final srcY = nodeTypeSrcY[nodeType];
+
+              if (srcY != null) {
+                renderDynamic(
+                  nodeType: nodeType,
+                  nodeOrientation: orientations[nodeIndex],
+                  nodeVariation: variations[nodeIndex],
+                  colorAbove: lightningFlashing
+                      ? lightningColor
+                      : scene.colorAbove(nodeIndex),
+                  colorWest: scene.colorWest(nodeIndex),
+                  colorSouth: scene.colorSouth(nodeIndex),
+                  colorCurrent: nodeColors[nodeIndex],
+                  dstX: dstX,
+                  dstY: dstY,
+                  srcY: srcY,
+                );
+              } else {
+                renderNodeIndex(
+                  index: nodeIndex,
+                  nodeType: nodeType,
+                  orientation: orientations[nodeIndex],
+                  dstX: dstX,
+                  dstY: dstY,
+                  scene: scene,
+                  variation: variations[nodeIndex],
+                  color: nodeColors[nodeIndex],
+                );
+              }
             }
           }
 
@@ -758,27 +781,6 @@ class RendererNodes extends RenderGroup {
     //   previousNodeTransparent = transparent;
     //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
     // }
-
-    // final nodeType = nodeTypes[index];
-    final srcY = nodeTypeSrcY[nodeType];
-
-    if (srcY != null){
-      renderDynamic(
-        nodeType: nodeType,
-        nodeOrientation: orientation,
-        nodeVariation: variation,
-        colorAbove: lightningFlashing
-            ? lightningColor
-            : scene.colorAbove(index),
-        colorWest: scene.colorWest(index),
-        colorSouth: scene.colorSouth(index),
-        colorCurrent: color,
-        dstX: dstX,
-        dstY: dstY,
-        srcY: srcY,
-      );
-      return;
-    }
 
     switch (nodeType) {
 
