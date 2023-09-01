@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- fix mark types not rendering
 - floating flaming skull monster
 - body type chain mail
 - particle butterfly
@@ -34,9 +35,11 @@ shift + alt + J     : backspace
 - optimize lights
 - fix set node light source refresh
 
+01.09.2023
+- fixed camera not starting on player
+
 30.08.2023
 - body type leather armour
-
 - 29.08.2023
 - fix auto attack bow and sword
 - fix cannot pick up items

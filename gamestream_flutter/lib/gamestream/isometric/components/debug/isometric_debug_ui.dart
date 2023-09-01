@@ -651,6 +651,7 @@ extension isometricDebugUI on IsometricDebug {
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+         buildRowRefresh('total-marks', () => rendererEditor.getTotal()),
          buildRowRefresh('light-sources-total', () => scene.nodeLightSourcesTotal),
          buildRowRefresh('light-sources-active', () => scene.totalActiveLights),
          buildRowRefresh('smoke-sources', () => scene.smokeSourcesTotal),

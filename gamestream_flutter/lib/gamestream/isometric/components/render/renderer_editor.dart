@@ -14,13 +14,14 @@ class RendererEditor extends RenderGroup {
 
   @override
   void updateFunction() {
+    final scene = this.scene;
     final markValue = scene.marks[index];
     markIndex = MarkType.getIndex(markValue);
     markType = MarkType.getType(markValue);
     final indexZ = scene.getIndexZ(markIndex);
     final indexRow = scene.getRow(markIndex);
     final indexColumn = scene.getColumn(markIndex);
-    order =  (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height) + Node_Size_Half;
+    order =  (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height) + Node_Size;
   }
 
   @override
@@ -38,6 +39,10 @@ class RendererEditor extends RenderGroup {
         break;
       case MarkType.Spawn_Fallen:
         engine.color = colors.red_2;
+        render.circleOutlineAtIndex(index: markIndex, radius: 100.0);
+        break;
+      case MarkType.Glow:
+        engine.color = colors.aqua_1;
         render.circleOutlineAtIndex(index: markIndex, radius: 100.0);
         break;
     }

@@ -34,13 +34,15 @@ abstract class RenderGroup with IsometricComponent {
     remaining = false;
   }
 
-  void renderNext() {
+  // returns true if remaining
+  bool renderNext() {
     renderFunction();
     _index++;
     if (_index >= total) {
       remaining = false;
-      return;
+      return false;
     }
     updateFunction();
+    return true;
   }
 }

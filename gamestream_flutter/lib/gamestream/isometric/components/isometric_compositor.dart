@@ -72,10 +72,13 @@ class IsometricCompositor with IsometricComponent {
       return;
     }
 
+    RenderGroup next = nodes;
+    var nextOrder = next.order;
+
     while (true) {
 
-      RenderGroup next = nodes;
-      var nextOrder = next.order;
+      next = nodes;
+      nextOrder = next.order;
 
       if (charactersRemaining && charactersOrder < nextOrder){
         next = characters;
