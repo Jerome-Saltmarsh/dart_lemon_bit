@@ -126,6 +126,7 @@ class RendererNodes extends RenderGroup {
     final variations = scene.nodeVariations;
     final orientations = scene.nodeOrientations;
     final nodeColors = scene.nodeColors;
+    final ambientColor = scene.ambientColor;
 
     int lineZ;
     int lineColumn;
@@ -189,6 +190,15 @@ class RendererNodes extends RenderGroup {
               final srcY = nodeTypeSrcY[nodeType];
 
               if (srcY != null) {
+
+                final int colorWest;
+                final column = nodeIndex % columns;
+                if (column + 1 >= columns){
+                  colorWest = ambientColor;
+                } else {
+                  colorWest = nodeColors[nodeIndex + 1];
+                }
+
                 renderDynamic(
                   nodeType: nodeType,
                   nodeOrientation: orientations[nodeIndex],
@@ -196,7 +206,7 @@ class RendererNodes extends RenderGroup {
                   colorAbove: lightningFlashing
                       ? lightningColor
                       : scene.colorAbove(nodeIndex),
-                  colorWest: scene.colorWest(nodeIndex),
+                  colorWest: colorWest,
                   colorSouth: scene.colorSouth(nodeIndex),
                   colorCurrent: nodeColors[nodeIndex],
                   dstX: dstX,
