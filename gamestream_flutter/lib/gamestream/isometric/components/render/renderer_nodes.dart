@@ -525,6 +525,8 @@ class RendererNodes extends RenderGroup {
 
   void updateHeightMapPerception() {
 
+    final scene = this.scene;
+
     if (visible3D.length != scene.totalNodes) {
       visible3D = List.generate(scene.totalNodes, (index) => false);
       visible3DIndex = 0;
