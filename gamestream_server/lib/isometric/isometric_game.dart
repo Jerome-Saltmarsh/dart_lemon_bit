@@ -733,6 +733,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void updateColliderSceneCollisionHorizontal(Collider collider) {
     const Shifts = 5;
     final z = collider.z + Node_Height_Half;
+    final scene = this.scene;
 
     if (scene.getCollisionAt(collider.left, collider.y, z)) {
       if (collider.velocityX < 0) {
@@ -774,6 +775,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateGameObjects() {
     var sortRequired = false;
+    final gameObjects = this.gameObjects;
     final totalGameObjects = gameObjects.length;
     for (var i = 0; i < totalGameObjects; i++) {
       final gameObject = gameObjects[i];
@@ -1060,6 +1062,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!colliderA.active) continue;
       final colliderAOrder = colliderA.order;
       final colliderARadius = colliderA.radius;
+      final colliderATop = colliderA.top;
+      final colliderABottom = colliderA.bottom;
+      final colliderARight = colliderA.right;
+      final colliderALeft = colliderA.left;
       for (var indexB = bStart; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.active) continue;
@@ -1075,10 +1081,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (orderDiff > colliderARadius + colliderB.radius)
           break;
 
-        if (colliderA.bottom < colliderB.top) continue;
-        if (colliderA.top > colliderB.bottom) continue;
-        if (colliderA.right < colliderB.left) continue;
-        if (colliderA.left > colliderB.right) continue;
+        if (colliderABottom < colliderB.top) continue;
+        if (colliderATop > colliderB.bottom) continue;
+        if (colliderARight < colliderB.left) continue;
+        if (colliderALeft > colliderB.right) continue;
         if ((colliderA.z - colliderB.z).abs() > Node_Height) continue;
         if (colliderA == colliderB) continue;
         internalOnCollisionBetweenColliders(colliderA, colliderB);
@@ -1901,6 +1907,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateColliderSceneCollisionVertical(Collider collider) {
+    final scene = this.scene;
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
       deactivate(collider);
