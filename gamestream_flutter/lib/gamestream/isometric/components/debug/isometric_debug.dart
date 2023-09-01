@@ -209,7 +209,21 @@ class IsometricDebug with IsometricComponent {
      }
   }
 
-  void onMouseLeftClicked() => network.sendIsometricRequestDebugSelect();
+  void onMouseLeftClicked() {
+    if (tab.value == DebugTab.Particles){
+      selectNearestParticleToMouse();
+    } else {
+      network.sendIsometricRequestDebugSelect();
+    }
+  }
+
+  void selectNearestParticleToMouse() {
+    final nearestParticle = getParticleNearestToMouse();
+    if (nearestParticle != null){
+      selectParticle(nearestParticle);
+    }
+  }
+
 
   void onMouseRightClicked() {
     if (engine.keyPressedShiftLeft){
@@ -256,5 +270,26 @@ class IsometricDebug with IsometricComponent {
 
   void sendIsometricRequestDebugCharacterDebugUpdate() =>
       network.sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
+
+  Particle? getParticleNearestToMouse() {
+
+    if (particles.children.isEmpty)
+      return null;
+
+    var nearest = particles.children.first;
+    var nearestDistance = mouse.getRenderDistanceSquare(nearest);
+
+    for (final particle in particles.children){
+      final distance = mouse.getRenderDistanceSquare(particle);
+
+      if (distance >= nearestDistance)
+        continue;
+
+      nearest = particle;
+      nearestDistance = distance;
+    }
+
+    return nearest;
+  }
 
 }

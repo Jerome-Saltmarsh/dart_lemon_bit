@@ -16,6 +16,7 @@ class ParticleWhisp extends Particle {
   var movementSpeed = 0.2;
   var movementAngle = 0.0;
   var rotationSpeed = 0.0085;
+  var blownByWind = true;
 
   static const maxScale = 0.4;
   static const minScale = 0.15;
@@ -56,7 +57,7 @@ class ParticleWhisp extends Particle {
 
     if (scale < minScale){
 
-      if (wind > 0) {
+      if (blownByWind && wind > 0) {
         if (y > startY + roamRadius){
           y = startY - roamRadius;
           x = startX + giveOrTake(roamRadius);
@@ -73,7 +74,7 @@ class ParticleWhisp extends Particle {
       scale = maxScale;
     }
 
-    if (wind > 0)
+    if (blownByWind && wind > 0)
       return;
 
     if (shouldChangeDestination){

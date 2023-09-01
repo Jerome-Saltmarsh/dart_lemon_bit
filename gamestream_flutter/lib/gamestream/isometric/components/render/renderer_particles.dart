@@ -106,6 +106,18 @@ class RendererParticles extends RenderGroup {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
+            color: colors.aqua_1.value,
+          );
+          engine.render(
+            dstX: dstX,
+            dstY: dstY,
+            srcLeft: 976,
+            srcTop: 1760,
+            srcRight: 976 + 48,
+            srcBottom: 1760 + 48,
+            scale: particle.scale,
+            color: colors.aqua_1.value,
+            rotation: 0,
           );
           break;
         case ParticleType.Block_Wood:
