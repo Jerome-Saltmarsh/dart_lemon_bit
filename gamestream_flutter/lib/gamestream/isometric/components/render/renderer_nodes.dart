@@ -162,6 +162,10 @@ class RendererNodes extends RenderGroup {
     }
     var nodeIndex = -1;
     var dstX = 0.0;
+    var colorWest = -1;
+    var colorSouth = -1;
+    var nodeType = -1;
+    double? srcY;
 
     final lightningFlashing = environment.lightningFlashing;
     final lightningColor = this.lightningColor;
@@ -184,19 +188,23 @@ class RendererNodes extends RenderGroup {
               break;
             }
 
-            final nodeType = nodeTypes[nodeIndex];
+            nodeType = nodeTypes[nodeIndex];
             if (nodeType != NodeType.Empty){
 
-              final srcY = nodeTypeSrcY[nodeType];
+              srcY = nodeTypeSrcY[nodeType];
 
               if (srcY != null) {
 
-                final int colorWest;
-                final column = nodeIndex % columns;
-                if (column + 1 >= columns){
+                if (nodeIndex % columns + 1 >= columns){
                   colorWest = ambientColor;
                 } else {
                   colorWest = nodeColors[nodeIndex + 1];
+                }
+
+                if ((nodeIndex % area) ~/ columns + 1 >= rows) {
+                  colorSouth = ambientColor;
+                } else {
+                  colorSouth = nodeColors[nodeIndex + columns];
                 }
 
                 renderDynamic(
@@ -207,7 +215,7 @@ class RendererNodes extends RenderGroup {
                       ? lightningColor
                       : scene.colorAbove(nodeIndex),
                   colorWest: colorWest,
-                  colorSouth: scene.colorSouth(nodeIndex),
+                  colorSouth: colorSouth,
                   colorCurrent: nodeColors[nodeIndex],
                   dstX: dstX,
                   dstY: dstY,
