@@ -119,7 +119,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         readMMOResponse();
         break;
       case NetworkResponse.Amulet_Player:
-        readAmuletPlayerResponse();
+        readNetworkResponseAmulet();
         break;
       case NetworkResponse.Download_Scene:
         final name = readString();
@@ -723,9 +723,9 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readAmuletPlayerResponse() {
-    switch (readByte()){
-      case AmuletPlayerResponse.Character_Created:
+  void readNetworkResponseAmulet() {
+    switch (readByte()) {
+      case NetworkResponseAmulet.Character_Created:
         amulet.characterCreated.value = readBool();
         break;
     }

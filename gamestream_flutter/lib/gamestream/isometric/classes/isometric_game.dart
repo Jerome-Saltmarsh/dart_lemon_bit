@@ -34,7 +34,7 @@ class IsometricGame extends Game {
   }
 
   void sendIsometricClientRequest([dynamic message]) {
-    network.send(NetworkRequest.Isometric, message);
+    network.sendNetworkRequest(NetworkRequest.Isometric, message);
   }
 
   @override
@@ -155,6 +155,10 @@ class IsometricGame extends Game {
     if (key == KeyCode.Z) {
       action.toggleZoom();
       return;
+    }
+
+    if (key == KeyCode.M){
+      amulet.spawnRandomEnemy();
     }
 
     if (debugMode) {

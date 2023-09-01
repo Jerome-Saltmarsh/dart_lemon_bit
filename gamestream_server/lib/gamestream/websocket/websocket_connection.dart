@@ -295,8 +295,8 @@ class WebSocketConnection with ByteReader {
         readSceneRequest(arguments);
         break;
 
-      case NetworkRequest.MMO:
-        handleClientRequestMMORequest(arguments);
+      case NetworkRequest.Amulet:
+        handleNetworkRequestAmulet(arguments);
         break;
 
       case NetworkRequest.Debug:
@@ -755,16 +755,16 @@ class WebSocketConnection with ByteReader {
 
   void handleNetworkRequestDebug() {
 
-    if (_player is! IsometricPlayer) {
+    final player = _player;
+
+    if (player is! AmuletPlayer) {
       return;
     }
     final debugRequest = arg1;
-
     if (debugRequest == null){
       return;
     }
 
-    final player = _player as IsometricPlayer;
 
      switch (debugRequest) {
        case DebugRequest.Set_Complexion:

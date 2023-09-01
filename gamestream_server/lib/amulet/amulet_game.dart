@@ -390,4 +390,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        target.interact?.call(character);
     }
   }
+
+  List<int> getMarkTypes(int markType) =>
+      scene.marks.where((markValue) => MarkType.getType(markValue) == markType).toList(growable: false);
+
+  void spawnRandomEnemy() {
+    final marks = scene.marks;
+    if (marks.isEmpty){
+      return;
+    }
+    final spawnFallens = getMarkTypes(MarkType.Spawn_Fallen);
+    if (spawnFallens.isEmpty)
+      return;
+
+    final markValue = randomItem(spawnFallens.toList());
+    final index = MarkType.getIndex(markValue);
+    spawnFallenAtIndex(index);
+  }
 }

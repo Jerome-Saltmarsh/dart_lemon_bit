@@ -560,7 +560,7 @@ class IsometricEditor with IsometricComponent {
   void saveScene() => sendEditorRequest(EditorRequest.Save);
 
   void sendEditorRequest(EditorRequest request, [dynamic message]) =>
-      network.send(
+      network.sendNetworkRequest(
         NetworkRequest.Editor_Request,
         '${request.index} $message',
       );
@@ -613,7 +613,7 @@ class IsometricEditor with IsometricComponent {
       );
 
   void markDelete() =>
-      network.send(
+      network.sendNetworkRequest(
         NetworkRequest.Editor_Request,
         EditorRequest.Mark_Delete.index,
       );

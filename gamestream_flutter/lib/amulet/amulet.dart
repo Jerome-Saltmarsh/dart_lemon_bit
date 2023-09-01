@@ -218,7 +218,7 @@ class Amulet extends IsometricGame {
     required ItemSlot src,
     required ItemSlot target,
   }) =>
-    network.send(
+    network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${InventoryRequest.Move.index} '
       '${src.slotType.index} '
@@ -228,7 +228,7 @@ class Amulet extends IsometricGame {
     );
 
   void reportItemSlotLeftClicked(ItemSlot itemSlot) =>
-    network.send(
+    network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${InventoryRequest.Use.index} '
       '${itemSlot.slotType.index} '
@@ -236,7 +236,7 @@ class Amulet extends IsometricGame {
     );
 
   void dropItemSlot(ItemSlot itemSlot) =>
-    network.send(
+    network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${InventoryRequest.Drop.index} '
       '${itemSlot.slotType.index} '
@@ -244,13 +244,13 @@ class Amulet extends IsometricGame {
     );
 
   void selectWeapon(int index) =>
-      network.sendAmuletRequest.sendAmuletRequest(MMORequest.Select_Weapon, index);
+      network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Weapon, index);
 
   void selectItem(int index) =>
-      network.sendAmuletRequest.sendAmuletRequest(MMORequest.Select_Item, index);
+      network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Item, index);
 
   void selectTreasure(int index) =>
-      network.sendAmuletRequest.sendAmuletRequest(MMORequest.Select_Treasure, index);
+      network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Treasure, index);
 
   void showDialogCharacterCreation() {
     ui.showDialog(child: Column(
@@ -259,4 +259,10 @@ class Amulet extends IsometricGame {
       ],
     ));
   }
+
+  void spawnRandomEnemy() =>
+      network.sendNetworkRequestAmulet(
+        NetworkRequestAmulet.Spawn_Random_Enemy,
+      );
+
 }

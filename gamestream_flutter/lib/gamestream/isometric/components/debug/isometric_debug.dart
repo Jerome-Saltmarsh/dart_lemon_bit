@@ -291,5 +291,4 @@ class IsometricDebug with IsometricComponent {
 
     return nearest;
   }
-
 }

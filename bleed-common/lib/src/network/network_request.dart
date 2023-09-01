@@ -5,7 +5,7 @@ class NetworkRequest {
   static const Isometric                = 35;
   static const Editor_Request           = 36;
   static const Capture_The_Flag         = 37;
-  static const MMO                      = 40;
+  static const Amulet                      = 40;
   static const Debug                    = 41;
   static const Set_FPS                  = 42;
   static const Scene                    = 43;

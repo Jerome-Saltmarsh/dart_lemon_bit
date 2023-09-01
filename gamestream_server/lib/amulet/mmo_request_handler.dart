@@ -5,7 +5,7 @@ import 'mmo_player.dart';
 
 extension MMORequestHandler on WebSocketConnection {
 
-  void handleClientRequestMMORequest(List<String> arguments){
+  void handleNetworkRequestAmulet(List<String> arguments){
 
     final player = this.player;
     if (player is! AmuletPlayer) {
@@ -13,45 +13,50 @@ extension MMORequestHandler on WebSocketConnection {
       return;
     }
 
+    final amulet = player.game;
+
     final requestIndex = parseArg1(arguments);
     if (requestIndex == null) return;
-    if (!isValidIndex(requestIndex, MMORequest.values)){
+    if (!isValidIndex(requestIndex, NetworkRequestAmulet.values)){
       errorInvalidClientRequest();
       return;
     }
-    final mmoRequest = MMORequest.values[requestIndex];
+    final mmoRequest = NetworkRequestAmulet.values[requestIndex];
 
     switch (mmoRequest){
-      case MMORequest.End_Interaction:
+      case NetworkRequestAmulet.Spawn_Random_Enemy:
+        amulet.spawnRandomEnemy();
+        break;
+      case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;
-      case MMORequest.Select_Item:
+      case NetworkRequestAmulet.Select_Item:
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectItem(index);
         break;
-      case MMORequest.Select_Treasure:
+      case NetworkRequestAmulet.Select_Treasure:
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectTreasure(index);
         break;
-      case MMORequest.Select_Weapon:
+      case NetworkRequestAmulet.Select_Weapon:
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectWeapon(index);
         break;
-      case MMORequest.Select_Talk_Option:
+      case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectNpcTalkOption(index);
         break;
-      case MMORequest.Toggle_Skills_Dialog:
+      case NetworkRequestAmulet.Toggle_Skills_Dialog:
         player.toggleSkillsDialog();
         break;
-      case MMORequest.Toggle_Inventory_Open:
+      case NetworkRequestAmulet.Toggle_Inventory_Open:
         player.toggleInventoryOpen();
         break;
-      case MMORequest.Upgrade_Talent:
+      case NetworkRequestAmulet.Upgrade_Talent:
         final index = parseArg2(arguments);
         if (index == null) return;
         if (!isValidIndex(index, MMOTalentType.values)){

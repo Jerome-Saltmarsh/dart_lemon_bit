@@ -134,7 +134,7 @@ class IsometricEnvironment with IsometricComponent {
       );
 
   void requestLightningFlash() {
-    network.send(
+    network.sendNetworkRequest(
       NetworkRequest.Environment_Request,
       EnvironmentRequest.Lightning_Flash,
     );

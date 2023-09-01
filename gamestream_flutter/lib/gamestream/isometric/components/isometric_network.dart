@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/isometric_request.dart';
 import 'package:gamestream_flutter/packages/common/src/network/network_request.dart';
+import 'package:gamestream_flutter/packages/common/src/network/requests/network_request_amulet.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 
 import 'classes/send_amulet_request.dart';
@@ -90,15 +91,11 @@ class IsometricNetwork with IsometricComponent {
       sendIsometricRequest(IsometricRequest.Toggle_Debugging);
 
   void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
-      send(NetworkRequest.Isometric, '${request.index} $message');
+      sendNetworkRequest(NetworkRequest.Isometric, '${request.index} $message');
 
   void sendRequest(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>
     websocket.send('$requestType $a $b $c $d'.trim());
 
-  void send(int clientRequest, [dynamic message]) =>
-      message != null
-          ? websocket.send('${clientRequest} $message')
-          : websocket.send(clientRequest);
 
   void sendArgs2(int clientRequest, dynamic a, dynamic b) =>
       websocket.send('$clientRequest $a $b');
@@ -145,5 +142,14 @@ class IsometricNetwork with IsometricComponent {
     print('isometricNetwork.onComponentDispose()');
     websocket.disconnect();
   }
+
+  void sendNetworkRequestAmulet(NetworkRequestAmulet request, [dynamic message]) =>
+      sendNetworkRequest(NetworkRequest.Amulet, '${request.index} $message');
+
+  void sendNetworkRequest(int networkRequest, [dynamic message]) =>
+      message != null
+          ? websocket.send('${networkRequest} $message')
+          : websocket.send(networkRequest);
+
 }
 

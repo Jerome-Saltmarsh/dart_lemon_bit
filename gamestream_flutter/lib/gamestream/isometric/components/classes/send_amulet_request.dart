@@ -9,23 +9,23 @@ class SendAmuletRequest {
   SendAmuletRequest(this.network);
 
   void toggleInventoryOpen() =>
-      sendAmuletRequest(MMORequest.Toggle_Inventory_Open);
+      sendAmuletRequest(NetworkRequestAmulet.Toggle_Inventory_Open);
 
   void selectTalkOption(int index) =>
-      sendAmuletRequest(MMORequest.Select_Talk_Option, index);
+      sendAmuletRequest(NetworkRequestAmulet.Select_Talk_Option, index);
 
   void endInteraction() =>
-      sendAmuletRequest(MMORequest.End_Interaction);
+      sendAmuletRequest(NetworkRequestAmulet.End_Interaction);
 
   void toggleTalentsDialog() =>
-      sendAmuletRequest(MMORequest.Toggle_Skills_Dialog);
+      sendAmuletRequest(NetworkRequestAmulet.Toggle_Skills_Dialog);
 
   void upgradeTalent(MMOTalentType talentType) =>
-      sendAmuletRequest(MMORequest.Upgrade_Talent, talentType.index);
+      sendAmuletRequest(NetworkRequestAmulet.Upgrade_Talent, talentType.index);
 
-  void sendAmuletRequest(MMORequest request, [dynamic message]) =>
-      network.send(
-          NetworkRequest.MMO,
+  void sendAmuletRequest(NetworkRequestAmulet request, [dynamic message]) =>
+      network.sendNetworkRequest(
+          NetworkRequest.Amulet,
           '${request.index} $message'
       );
 
