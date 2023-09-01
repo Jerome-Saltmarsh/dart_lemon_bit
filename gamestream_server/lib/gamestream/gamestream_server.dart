@@ -164,6 +164,7 @@ class GamestreamServer {
   }
 
   void sendResponseToClients(){
+    final connections = this.connections; // cache in cpu
     for (final connection in connections) {
       connection.sendBufferToClient();
     }
