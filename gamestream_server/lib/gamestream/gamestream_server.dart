@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:gamestream_server/amulet.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_server/gamestream/websocket/websocket_connection.dart';
 import 'package:gamestream_server/packages.dart';
@@ -11,7 +12,6 @@ import 'core/game.dart';
 import 'core/player.dart';
 import 'firestore/firestore.dart';
 import '../editor/isometric_editor.dart';
-import '../amulet/mmo_game.dart';
 
 class GamestreamServer {
 
@@ -67,7 +67,7 @@ class GamestreamServer {
   }
 
   Future validate() async {
-    Amulet.validate();
+    AmuletGame.validate();
 
     final sceneDirectoryExists = await isometricScenes.sceneDirectory.exists();
 
@@ -120,7 +120,7 @@ class GamestreamServer {
       _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
   };
 
-  Game buildGameMMO() => Amulet(
+  Game buildGameMMO() => AmuletGame(
       scene: isometricScenes.mmoTown,
       time: IsometricTime(enabled: true, hour: 14),
       environment: Environment(),

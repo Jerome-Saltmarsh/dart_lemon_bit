@@ -1,7 +1,7 @@
 library src;
 
 export 'mmo_player.dart';
-export 'mmo_game.dart';
+export 'amulet_game.dart';
 export 'mmo_gameobject.dart';
 export 'item_slot.dart';
 export 'mmo_npc.dart';

@@ -117,8 +117,10 @@ class IsometricEditor with IsometricComponent {
 
     selectedMarkNodeIndex.onChanged((index) {
       if (index != -1){
-        camera.clearTarget();
-        camera.setPositionIndex(index);
+        if (options.editMode){
+          camera.clearTarget();
+          camera.setPositionIndex(index);
+        }
         nodeSelectedIndex.value = index;
       }
     });

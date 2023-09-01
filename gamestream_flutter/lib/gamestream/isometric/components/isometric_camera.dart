@@ -70,5 +70,9 @@ class IsometricCamera with IsometricComponent {
     target = null;
   }
 
+  void centerOnPlayer() {
+    target = player.position;
+    centerOnChaseTarget();
+  }
 }
 

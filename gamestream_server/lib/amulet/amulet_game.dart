@@ -7,7 +7,7 @@ import 'mmo_gameobject.dart';
 import 'mmo_npc.dart';
 import 'mmo_player.dart';
 
-class Amulet extends IsometricGame<AmuletPlayer> {
+class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
@@ -21,7 +21,7 @@ class Amulet extends IsometricGame<AmuletPlayer> {
 
   late MMONpc npcGuard;
 
-  Amulet({
+  AmuletGame({
     required super.scene,
     required super.time,
     required super.environment,

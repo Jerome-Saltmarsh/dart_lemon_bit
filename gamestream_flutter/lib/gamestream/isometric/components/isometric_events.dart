@@ -456,6 +456,9 @@ class IsometricEvents with IsometricComponent {
       case PlayerEvent.Talent_Upgraded:
         audio.collect_star_3();
         break;
+      case PlayerEvent.Game_Joined:
+        onGameJoined();
+        break;
     }
   }
 
@@ -709,5 +712,9 @@ class IsometricEvents with IsometricComponent {
 
   void onItemConsumed(int consumableType) {
     audio.drink.play();
+  }
+
+  void onGameJoined() {
+    camera.centerOnPlayer();
   }
 }

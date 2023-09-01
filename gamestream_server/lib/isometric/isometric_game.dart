@@ -2204,6 +2204,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     characters.add(player);
     customOnPlayerJoined(player);
     player.writePlayerAlive();
+    player.writePlayerEvent(PlayerEvent.Player_Moved);
+    player.writePlayerEvent(PlayerEvent.Game_Joined);
     return player;
   }
 
