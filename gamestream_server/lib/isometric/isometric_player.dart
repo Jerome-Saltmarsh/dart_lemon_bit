@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 
+import 'package:gamestream_server/editor/isometric_editor.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/packages.dart';
 import 'package:lemon_byte/byte_writer.dart';

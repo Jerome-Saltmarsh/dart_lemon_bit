@@ -1,4 +1,4 @@
-import 'package:gamestream_server/gamestream/games/isometric_editor/isometric_editor.dart';
+import 'package:gamestream_server/editor/isometric_editor.dart';
 import 'package:gamestream_server/gamestream/websocket/websocket_connection.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/packages.dart';

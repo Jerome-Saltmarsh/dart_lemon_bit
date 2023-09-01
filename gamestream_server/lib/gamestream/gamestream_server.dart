@@ -6,8 +6,8 @@ import '../isometric.dart';
 import 'core/game.dart';
 import 'core/player.dart';
 import 'firestore/firestore.dart';
-import 'games/isometric_editor/isometric_editor.dart';
-import 'games/mmo/mmo_game.dart';
+import '../editor/isometric_editor.dart';
+import '../amulet/mmo_game.dart';
 import 'websocket/websocket_server.dart';
 
 class GamestreamServer {
