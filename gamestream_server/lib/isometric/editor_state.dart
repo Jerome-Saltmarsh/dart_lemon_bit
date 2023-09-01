@@ -45,13 +45,13 @@ class EditorState {
       throw Exception('nothing selected');
     }
     final markValue = scene.setMarkType(listIndex: _selectedMarkListIndex, markType: markType);
-    game.notifySceneMarksChanged();
+    game.sortMarksAndDispatch();
     selectedMarkListIndex = scene.marks.indexOf(markValue);
   }
 
   void addMark(int markValue) {
     scene.marks.add(markValue);
-    game.notifySceneMarksChanged();
+    game.sortMarksAndDispatch();
     selectedMarkListIndex = scene.marks.indexOf(markValue);
   }
 
@@ -65,7 +65,7 @@ class EditorState {
 
     scene.marks.removeAt(listIndex);
     deselectMarkListIndex();
-    game.notifySceneMarksChanged();
+    game.sortMarksAndDispatch();
   }
 
   void deselectMarkListIndex() {

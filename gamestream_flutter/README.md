@@ -12,7 +12,6 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- fix mark types not rendering
 - floating flaming skull monster
 - body type chain mail
 - particle butterfly
@@ -37,6 +36,7 @@ shift + alt + J     : backspace
 
 01.09.2023
 - fixed camera not starting on player
+- fix mark types not rendering
 
 30.08.2023
 - body type leather armour
