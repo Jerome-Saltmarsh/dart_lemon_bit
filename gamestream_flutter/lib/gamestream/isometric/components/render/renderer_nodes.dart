@@ -113,6 +113,7 @@ class RendererNodes extends RenderGroup {
     previousNodeTransparent = false;
 
     final scene = this.scene;
+    final totalNodes = scene.totalNodes;
     final area = scene.area;
     final totalZ = scene.totalZ;
     final columns = scene.totalColumns;
@@ -164,6 +165,7 @@ class RendererNodes extends RenderGroup {
     var dstX = 0.0;
     var colorWest = -1;
     var colorSouth = -1;
+    var colorAbove = -1;
     var nodeType = -1;
     double? srcY;
 
@@ -207,13 +209,20 @@ class RendererNodes extends RenderGroup {
                   colorSouth = nodeColors[nodeIndex + columns];
                 }
 
+                final nodeAboveIndex = nodeIndex + area;
+                if (nodeAboveIndex >= totalNodes){
+                  colorAbove = ambientColor;
+                } else {
+                  colorAbove = nodeColors[nodeAboveIndex];
+                }
+
                 renderDynamic(
                   nodeType: nodeType,
                   nodeOrientation: orientations[nodeIndex],
                   nodeVariation: variations[nodeIndex],
                   colorAbove: lightningFlashing
                       ? lightningColor
-                      : scene.colorAbove(nodeIndex),
+                      : colorAbove,
                   colorWest: colorWest,
                   colorSouth: colorSouth,
                   colorCurrent: nodeColors[nodeIndex],
