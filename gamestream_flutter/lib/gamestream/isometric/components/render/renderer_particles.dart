@@ -1,6 +1,7 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 
 class RendererParticles extends RenderGroup {
@@ -94,30 +95,31 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Glow:
-          final nodeColor = scene.getColor(particle.nodeIndex);
-          final nodeAlpha = getAlpha(nodeColor);
-          final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
+          // final nodeColor = scene.getColor(particle.nodeIndex);
+          // final nodeAlpha = getAlpha(nodeColor);
+          // final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
+        final color = colors.aqua_1.value;
           engine.renderSprite(
             image: images.atlas_nodes,
             dstX: dstX,
             dstY: dstY,
-            srcX: 736,
-            srcY: 1848.0 - perc,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: colors.aqua_1.value,
+            srcX: 976,
+            srcY: 1712,
+            srcWidth: 48,
+            srcHeight: 48,
+            scale: particle.emissionIntensity,
+            color: color,
           );
-          engine.render(
+          engine.renderSprite(
+            image: images.atlas_nodes,
             dstX: dstX,
             dstY: dstY,
-            srcLeft: 976,
-            srcTop: 1760,
-            srcRight: 976 + 48,
-            srcBottom: 1760 + 48,
-            scale: particle.scale,
-            color: colors.aqua_1.value,
-            rotation: 0,
+            srcX: 976,
+            srcY: 1760,
+            srcWidth: 48,
+            srcHeight: 48,
+            scale: particle.emissionIntensity * goldenRatio_0381,
+            color: color,
           );
           break;
         case ParticleType.Block_Wood:

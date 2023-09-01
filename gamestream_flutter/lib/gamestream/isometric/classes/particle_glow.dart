@@ -20,12 +20,14 @@ class ParticleGlow extends ParticleWhisp {
 
   @override
   void update() {
-    super.update();
+    updateMovement();
+
     _i += _iDirection;
     if (_i > 1.0 || _i < 0){
       _iDirection = -_iDirection;
       _i = _i.clamp(0, 1);
     }
     emissionIntensity = interpolate(_i, 0.2, 0.7);
+    scale =  interpolate(_i, 0.5, 1.0);
   }
 }

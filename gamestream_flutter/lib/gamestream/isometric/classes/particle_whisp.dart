@@ -55,6 +55,32 @@ class ParticleWhisp extends Particle {
   @override
   void update() {
 
+    updateScale();
+
+    if (blownByWind && wind > 0)
+      return;
+
+    updateMovement();
+  }
+
+  void updateMovement() {
+    if (shouldChangeDestination){
+      changeDestination();
+    }
+
+    final angle = getAngle(destinationX, destinationY);
+    final diff = radianDiff(angle, movementAngle);
+
+    if (diff < 0){
+      movementAngle -= rotationSpeed;
+    }  else {
+      movementAngle += rotationSpeed;
+    }
+
+    setSpeed(movementAngle, movementSpeed);
+  }
+
+  void updateScale() {
     if (scale < minScale){
 
       if (blownByWind && wind > 0) {
@@ -73,24 +99,6 @@ class ParticleWhisp extends Particle {
       scaleVelocity = -scaleVelocity;
       scale = maxScale;
     }
-
-    if (blownByWind && wind > 0)
-      return;
-
-    if (shouldChangeDestination){
-      changeDestination();
-    }
-
-    final angle = getAngle(destinationX, destinationY);
-    final diff = radianDiff(angle, movementAngle);
-
-    if (diff < 0){
-      movementAngle -= rotationSpeed;
-    }  else {
-      movementAngle += rotationSpeed;
-    }
-
-    setSpeed(movementAngle, movementSpeed);
   }
 
   void changeDestination(){
