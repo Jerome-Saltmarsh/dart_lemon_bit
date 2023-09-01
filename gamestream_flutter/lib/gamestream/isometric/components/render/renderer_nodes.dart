@@ -159,6 +159,8 @@ class RendererNodes extends RenderGroup {
       end();
       return;
     }
+    var nodeIndex = -1;
+    var dstX = 0.0;
 
     while (lineZ >= 0) {
       dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
@@ -168,8 +170,8 @@ class RendererNodes extends RenderGroup {
           break;
         }
 
-        var index = (lineZ * area) + (row * columns) + column;
-        var dstX = (row - column) * Node_Size_Half;
+        nodeIndex = (lineZ * area) + (row * columns) + column;
+        dstX = (row - column) * Node_Size_Half;
 
         while (true) {
 
@@ -178,17 +180,17 @@ class RendererNodes extends RenderGroup {
               break;
             }
 
-            final nodeType = nodeTypes[index];
+            final nodeType = nodeTypes[nodeIndex];
             if (nodeType != NodeType.Empty){
               renderNodeIndex(
-                index: index,
+                index: nodeIndex,
                 nodeType: nodeType,
-                orientation: orientations[index],
+                orientation: orientations[nodeIndex],
                 dstX: dstX,
                 dstY: dstY,
                 scene: scene,
-                variation: variations[index],
-                color: nodeColors[index],
+                variation: variations[nodeIndex],
+                color: nodeColors[nodeIndex],
               );
             }
           }
@@ -199,7 +201,7 @@ class RendererNodes extends RenderGroup {
           if (column < 0 || row >= rows)
             break;
 
-          index += shiftRight;
+          nodeIndex += shiftRight;
           dstX += Node_Sprite_Width;
         }
       }
