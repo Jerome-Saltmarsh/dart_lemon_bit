@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
@@ -90,8 +91,9 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void onChangedMarks(int count){
-    print('scene.onChangedMarks()');
+    final particles = this.particles;
     particles.children.removeWhere((element) => element is ParticleWhisp);
+    particles.children.removeWhere((element) => element is ParticleGlow);
     particles.mystIndexes.clear();
     for (final markValue in marks) {
       final markType = MarkType.getType(markValue);

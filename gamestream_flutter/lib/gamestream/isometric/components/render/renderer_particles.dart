@@ -21,14 +21,17 @@ class RendererParticles extends RenderGroup {
 
   @override
   void renderFunction() {
+    final dstX = particle.renderX;
+    final dstY = particle.renderY;
+
       assert (particle.active);
       assert (particle.delay <= 0);
-      final dstX = particle.renderX;
       assert (dstX > engine.Screen_Left - 50);
       assert (dstX < engine.Screen_Right + 50);
-      final dstY = particle.renderY;
       assert (dstY > engine.Screen_Top - 50);
       assert (dstY < engine.Screen_Bottom + 50);
+
+      final particleType = particle.type;
 
       if (const [
         ParticleType.Blood,
@@ -40,11 +43,11 @@ class RendererParticles extends RenderGroup {
         ParticleType.Block_Sand,
         ParticleType.Block_Brick,
         ParticleType.Block_Grass,
-      ].contains(particle.type)){
+      ].contains(particleType)){
         render.shadowBelowPosition(particle);
       }
 
-      switch (particle.type) {
+      switch (particleType) {
         case ParticleType.Water_Drop:
           engine.renderSprite(
             image: images.atlas_gameobjects,
@@ -69,63 +72,24 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
-        case ParticleType.Bubble:
-          if (particle.duration > 26) {
-            particle.deactivate();
-            break;
-          }
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 8,
-            srcHeight: 8,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Bubble_Small:
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 4,
-            srcHeight: 4,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Bullet_Ring:
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 4,
-            srcHeight: 4,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
         case ParticleType.Smoke:
           renderSmoke();
           break;
-        case ParticleType.Gunshot_Smoke:
-          if (particle.frame >= 24) {
-            particle.deactivate();
-            return;
-          }
-          final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
+        case ParticleType.Myst:
+          renderMyst();
+          break;
+        case ParticleType.Whisp:
+          final nodeColor = scene.getColor(particle.nodeIndex);
+          final nodeAlpha = getAlpha(nodeColor);
+          final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
           engine.renderSprite(
-            image: images.atlas_particles,
+            image: images.atlas_nodes,
             dstX: dstX,
             dstY: dstY,
-            srcX: 544,
-            srcY: 32.0 * frame,
-            srcWidth: 32,
-            srcHeight: 32,
+            srcX: 736,
+            srcY: 1848.0 - perc,
+            srcWidth: 8,
+            srcHeight: 8,
             scale: particle.scale,
           );
           break;
@@ -178,6 +142,30 @@ class RendererParticles extends RenderGroup {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
+            color: scene.getRenderColorPosition(particle),
+          );
+          break;
+        case ParticleType.Bubble_Small:
+          engine.renderSprite(
+            image: images.atlas_gameobjects,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 0.0,
+            srcY: 32,
+            srcWidth: 4,
+            srcHeight: 4,
+            color: scene.getRenderColorPosition(particle),
+          );
+          break;
+        case ParticleType.Bullet_Ring:
+          engine.renderSprite(
+            image: images.atlas_gameobjects,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 0.0,
+            srcY: 32,
+            srcWidth: 4,
+            srcHeight: 4,
             color: scene.getRenderColorPosition(particle),
           );
           break;
@@ -247,6 +235,23 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
+        case ParticleType.Gunshot_Smoke:
+          if (particle.frame >= 24) {
+            particle.deactivate();
+            return;
+          }
+          final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
+          engine.renderSprite(
+            image: images.atlas_particles,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 544,
+            srcY: 32.0 * frame,
+            srcWidth: 32,
+            srcHeight: 32,
+            scale: particle.scale,
+          );
+          break;
         case ParticleType.Block_Sand:
           engine.renderSprite(
             image: images.atlas_gameobjects,
@@ -295,25 +300,6 @@ class RendererParticles extends RenderGroup {
           );
           break;
 
-        case ParticleType.Myst:
-          renderMyst();
-          break;
-
-        case ParticleType.Whisp:
-          final nodeColor = scene.getColor(particle.nodeIndex);
-          final nodeAlpha = getAlpha(nodeColor);
-          final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
-          engine.renderSprite(
-            image: images.atlas_nodes,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 736,
-            srcY: 1848.0 - perc,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-          );
-          break;
         case ParticleType.Orb_Shard:
           const size = 16.0;
           engine.renderSprite(
@@ -341,6 +327,22 @@ class RendererParticles extends RenderGroup {
             srcHeight: 32,
           );
           return;
+        case ParticleType.Bubble:
+          if (particle.duration > 26) {
+            particle.deactivate();
+            break;
+          }
+          engine.renderSprite(
+            image: images.atlas_gameobjects,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 0.0,
+            srcY: 32,
+            srcWidth: 8,
+            srcHeight: 8,
+            color: scene.getRenderColorPosition(particle),
+          );
+          break;
         case ParticleType.Zombie_Arm:
           engine.renderSprite(
             image: images.atlas_particles,
