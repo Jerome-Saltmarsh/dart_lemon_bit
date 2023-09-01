@@ -127,7 +127,7 @@ class IsometricDirection {
     return South;
   }
 
-  static int convertToVelocityRow(int direction) => <int, int> {
+  static int convertToVelocityRow(int direction) => const <int, int> {
         North: -1,
         North_East: -1,
         East: 0,
@@ -139,7 +139,7 @@ class IsometricDirection {
   }[direction] ??
       (throw Exception('IsometricDirection.convertToVelocityRow($direction)'));
 
-  static int convertToVelocityColumn(int direction) => <int, int> {
+  static int convertToVelocityColumn(int direction) => const  <int, int> {
     North: 0,
     North_East: -1,
     East: -1,

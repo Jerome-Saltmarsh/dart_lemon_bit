@@ -12,9 +12,9 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- particle butterfly
 - floating flaming skull monster
 - body type chain mail
-- particle butterfly
 - kid shoe type
 - helm type hoodie
 - glove type leather

@@ -78,6 +78,7 @@ flutter:
     - sprites/kid/weapons/staff/
     - sprites/kid/weapons/sword/
     - sprites/fallen/
+    - sprites/butterfly/
     - audio/
     - audio/music/
     - audio/sounds/

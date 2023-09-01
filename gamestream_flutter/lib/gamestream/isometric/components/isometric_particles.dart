@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'dart:math';
@@ -932,10 +933,24 @@ class IsometricParticles with IsometricComponent implements Updatable {
           z: z,
           color: randomItem([
               colors.aqua_1.value,
-              colors.red_0.value,
               colors.purple_0.value,
               colors.pink_0.value,
+              colors.teal_0.value,
           ]),
+      )
+        ..emissionIntensity = 0.5
+        ..movementSpeed = 0.35
+  );
+
+  void spawnButterfly({
+    required double x,
+    required double y,
+    required double z,
+  }) => children.add(
+      ParticleButterfly(
+          x: x,
+          y: y,
+          z: z,
       )
         ..emissionIntensity = 0.5
         ..movementSpeed = 0.35

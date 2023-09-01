@@ -9,6 +9,7 @@ class MarkType {
   static const Spawn_Whisp = 2;
   static const Spawn_Myst = 3;
   static const Glow = 4;
+  static const Butterfly = 5;
 
   static const values = [
     Spawn_Player,
@@ -16,6 +17,7 @@ class MarkType {
     Spawn_Whisp,
     Spawn_Myst,
     Glow,
+    Butterfly,
   ];
 
   static String getTypeName(int markValue) => getName(getType(markValue));
@@ -26,6 +28,7 @@ class MarkType {
     Spawn_Whisp: 'Spawn Whisp',
     Spawn_Myst: 'Spawn Myst',
     Glow: 'Glow',
+    Butterfly: 'Butterfly',
   }[markType] ?? (throw Exception('MarkType.getName($markType)'));
 
   static int getIndex(int markValue) => markValue & 0xFFFF;

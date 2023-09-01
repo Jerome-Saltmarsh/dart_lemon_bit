@@ -1,6 +1,7 @@
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
-import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 
@@ -22,6 +23,7 @@ class RendererParticles extends RenderGroup {
 
   @override
   void renderFunction() {
+    final particle = this.particle;
     final dstX = particle.renderX;
     final dstY = particle.renderY;
 
@@ -36,10 +38,6 @@ class RendererParticles extends RenderGroup {
 
       if (const [
         ParticleType.Blood,
-        // ParticleType.Zombie_Head,
-        // ParticleType.Zombie_Torso,
-        // ParticleType.Zombie_leg,
-        // ParticleType.Zombie_Arm,
         ParticleType.Block_Wood,
         ParticleType.Block_Sand,
         ParticleType.Block_Brick,
@@ -121,6 +119,24 @@ class RendererParticles extends RenderGroup {
             scale: particle.emissionIntensity * goldenRatio_0381,
             color: color,
           );
+          break;
+        case ParticleType.Butterfly:
+          final sprite = images.butterfly;
+
+          if (particle is ParticleButterfly){
+            render.sprite(
+              sprite: sprite,
+              frame: sprite.getFrame(
+                  row: IsometricDirection.toInputDirection(IsometricDirection.fromRadian(particle.movementAngle)),
+                  column: (animation.frame ~/ 2) % 2
+              ),
+              color: scene.getColor(particle.nodeIndex),
+              scale: goldenRatio_0381,
+              dstX: dstX,
+              dstY: dstY,
+            );
+          }
+
           break;
         case ParticleType.Block_Wood:
           engine.renderSprite(

@@ -33,6 +33,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite flame0;
   late final Sprite flame1;
   late final Sprite flame2;
+  late final Sprite butterfly;
 
   late final CharacterSpriteGroup spriteGroup2Empty;
 
@@ -175,6 +176,8 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
 
     await _completerImages.future;
+
+    loadSprite(name: 'sprites/butterfly/butterfly', mode: AnimationMode.loop).then((value) => butterfly = value);
 
     itemTypeAtlases = {
       ItemType.Weapon: atlas_weapons,

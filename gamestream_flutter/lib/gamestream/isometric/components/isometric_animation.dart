@@ -7,6 +7,7 @@ class IsometricAnimation {
   var frameWaterHeight = 0;
   var frameWaterSrcX = 0.0;
   var frameWaterFlowingSrcX = 0.0;
+  var frame2 = 0;
   var frame6 = 0;
   var frame8 = 0;
   var frame16 = 0;
@@ -21,10 +22,15 @@ class IsometricAnimation {
       return;
 
     _next = 0;
+    frame2++;
     frame++;
     frame6++;
     frame8++;
     frame16++;
+
+    if (frame2 >= 2){
+      frame2 = 0;
+    }
 
     if (frame6 >= 6){
       frame6 = 0;
