@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
+import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
 import 'package:lemon_math/src.dart';
 
 class ParticleGlow extends ParticleWhisp {
@@ -14,6 +15,7 @@ class ParticleGlow extends ParticleWhisp {
   }) {
     emitsLight = true;
     blownByWind = false;
+    type = ParticleType.Glow;
   }
 
   @override
