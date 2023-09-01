@@ -3388,25 +3388,66 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int colorSouth,
   }) {
-    renderNodeSideTop(
-      srcX: srcX,
-      srcY: srcY,
+
+    final engine = this.engine;
+
+    engine.render(
       color: colorAbove,
+      srcLeft: srcX,
+      srcTop: srcY,
+      srcRight: srcX + Src_Width_Side_Top,
+      srcBottom: srcY + Src_Height_Side_Top,
+      scale: 1.0,
+      rotation: 0,
       dstX: dstX - Node_Size_Half,
       dstY: dstY - Node_Size_Half,
     );
-    renderNodeSideWest(
-      srcY: srcY,
+
+    engine.render(
+      color: colorWest,
+      srcLeft: Src_X_Side_West,
+      srcTop: srcY,
+      srcRight: Src_X_Side_West + Src_Width_Side_West,
+      srcBottom: srcY + Src_Height_Side_West,
+      scale: 1.0,
+      rotation: 0,
       dstX: dstX - Node_Size_Half,
       dstY: dstY,
-      color: colorWest,
     );
-    renderNodeSideSouth(
-      srcY: srcY,
+
+    engine.render(
+      color: colorSouth,
+      srcLeft: Src_X_Side_South,
+      srcTop: srcY,
+      srcRight: Src_X_Side_South + Src_Width_Side_South,
+      srcBottom: srcY + Src_Height_Side_South,
+      scale: 1.0,
+      rotation: 0,
       dstX: dstX,
       dstY: dstY,
-      color: colorSouth,
     );
+
+    // renderNodeSideTop(
+    //   srcX: srcX,
+    //   srcY: srcY,
+    //   color: colorAbove,
+    //   dstX: dstX - Node_Size_Half,
+    //   dstY: dstY - Node_Size_Half,
+    // );
+
+    // renderNodeSideWest(
+    //   srcY: srcY,
+    //   dstX: dstX - Node_Size_Half,
+    //   dstY: dstY,
+    //   color: colorWest,
+    // );
+
+    // renderNodeSideSouth(
+    //   srcY: srcY,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   color: colorSouth,
+    // );
   }
 
   void renderDynamicHalfWest({
