@@ -25,6 +25,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
     colors.purple_0.value,
     colors.pink_0.value,
     colors.teal_0.value,
+    colors.white.value,
+    colors.blue_0.value,
+    colors.grey_0.value,
+    colors.apricot_0.value,
   ];
 
   final children = <Particle>[];
