@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_particles.dart';
 import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
 import 'package:lemon_math/src.dart';
 
@@ -7,6 +8,8 @@ class ParticleGlow extends ParticleWhisp {
 
   var _i = 0.0;
   var _iDirection = 0.02;
+
+  var nextSpawnTrail = 0;
 
   ParticleGlow({
     required super.x,
@@ -19,10 +22,11 @@ class ParticleGlow extends ParticleWhisp {
     type = ParticleType.Glow;
     emissionColor = color;
     _i = random.nextDouble();
+    movementSpeed = 0.7;
   }
 
   @override
-  void update() {
+  void update(IsometricParticles particles) {
     updateMovement();
 
     _i += _iDirection;
@@ -32,5 +36,10 @@ class ParticleGlow extends ParticleWhisp {
     }
     emissionIntensity = interpolate(_i, 0.2, 0.7);
     scale =  interpolate(_i, 0.5, 1.0);
+
+    if (nextSpawnTrail-- <= 0){
+      particles.spawnTrail(x, y, z, color: emissionColor);
+      nextSpawnTrail = 15;
+    }
   }
 }

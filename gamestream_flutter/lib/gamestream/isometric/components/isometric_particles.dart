@@ -908,7 +908,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         particle.vz = 0;
       }
     }
-    particle.update();
+    particle.update(this);
     particle.applyLimits();
   }
 
@@ -939,7 +939,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
           ]),
       )
         ..emissionIntensity = 0.5
-        ..movementSpeed = 0.35
+        ..movementSpeed = 0.7
   );
 
   void spawnButterfly({
@@ -969,4 +969,15 @@ class IsometricParticles with IsometricComponent implements Updatable {
         rotationV: giveOrTake(0.005),
     )..nodeCollidable = false;
   }
+
+  void spawnTrail(double x, double y, double z, {required int color}) => spawnParticle(
+         type: ParticleType.Trail,
+         x: x,
+         y: y,
+         z: z,
+         frictionAir: 0,
+         weight: 0.04,
+         duration: 120,
+     )..nodeCollidable = false
+      ..emissionColor = color;
 }

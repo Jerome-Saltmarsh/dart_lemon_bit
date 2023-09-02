@@ -1,6 +1,7 @@
 
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_particles.dart';
 import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
 import 'package:lemon_math/src.dart';
 
@@ -26,7 +27,7 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   @override
-  void update() {
+  void update(IsometricParticles particles) {
     duration--;
     if (duration <= 0){
       duration = randomInt(300, 500);

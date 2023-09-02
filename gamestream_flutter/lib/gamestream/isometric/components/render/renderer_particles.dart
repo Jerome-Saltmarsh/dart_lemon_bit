@@ -138,7 +138,21 @@ class RendererParticles extends RenderGroup {
               dstY: dstY,
             );
           }
-
+          break;
+        case ParticleType.Trail:
+          final frame = getFrame(1.0 - particle.duration01, 7);
+          engine.renderSprite(
+            image: images.atlas_nodes,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 736,
+            srcY: 1864 - (frame * 8),
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: 0.5 * (1.0 - particle.duration01),
+            // color: colors.white.value,
+            color: particle.emissionColor,
+          );
           break;
         case ParticleType.Block_Wood:
           engine.renderSprite(
@@ -643,4 +657,6 @@ class RendererParticles extends RenderGroup {
       return;
     }
   }
+
+  static int getFrame(double percentage, int total) => ((1.0 - percentage) * total).round();
 }

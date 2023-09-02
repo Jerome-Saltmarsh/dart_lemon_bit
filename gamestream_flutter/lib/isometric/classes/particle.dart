@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common/src.dart';
 import 'package:lemon_math/src.dart';
@@ -122,7 +123,7 @@ class Particle extends Position {
      return a.compareTo(b);
   }
 
-  void update(){
+  void update(IsometricParticles particles){
     duration++;
     if (durationTotal >= 0 && duration >= durationTotal) {
       deactivate();
