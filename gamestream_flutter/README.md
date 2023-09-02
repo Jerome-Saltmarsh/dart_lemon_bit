@@ -15,7 +15,6 @@ shift + alt + J     : backspace
 - add tail to particle glow
 - character wolf 
 - hot key add mark 1 2 3 4 
-- particle butterfly
 - particle bat
 - particle crow
 - fix fire animation speed
@@ -36,6 +35,9 @@ shift + alt + J     : backspace
 - player attributes dialog
 - optimize lights
 - fix set node light source refresh
+
+02.09.2023
+- particle butterfly
 
 01.09.2023
 - removed memory leak from find path

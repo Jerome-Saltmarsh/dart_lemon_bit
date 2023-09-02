@@ -9,6 +9,7 @@ class ParticleWhisp extends ParticleRoam {
   var movementAngle = 0.0;
   var rotationSpeed = 0.0085;
   var blownByWind = true;
+  var targetDuration = 0;
 
   static const maxScale = 0.4;
   static const minScale = 0.15;
@@ -32,9 +33,6 @@ class ParticleWhisp extends ParticleRoam {
     scaleVelocity = scaleDelta;
   }
 
-
-
-
   @override
   void update() {
 
@@ -46,10 +44,22 @@ class ParticleWhisp extends ParticleRoam {
     updateMovement();
   }
 
+  @override
+  bool get shouldChangeDestination =>
+      super.shouldChangeDestination || targetDuration > 400;
+
+  @override
+  void changeTarget() {
+    super.changeTarget();
+    targetDuration = 0;
+  }
+
   void updateMovement() {
     if (shouldChangeDestination){
       changeTarget();
     }
+
+    targetDuration++;
 
     final angle = getAngle(targetX, targetY);
     final diff = radianDiff(angle, movementAngle);
