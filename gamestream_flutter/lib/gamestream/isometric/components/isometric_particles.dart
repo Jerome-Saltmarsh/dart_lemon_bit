@@ -952,8 +952,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
           y: y,
           z: z,
       )
-        ..emissionIntensity = 0.5
-        ..movementSpeed = 0.35
   );
 
   void spawnMystAtIndex(int index) {

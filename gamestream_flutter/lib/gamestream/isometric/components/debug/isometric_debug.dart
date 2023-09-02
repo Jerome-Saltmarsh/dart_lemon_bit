@@ -1,5 +1,7 @@
 
 import 'dart:typed_data';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
@@ -78,21 +80,26 @@ class IsometricDebug with IsometricComponent {
     render.circleOutlineAtPosition(position: particle, radius: 10);
 
     engine.setPaintColor(colors.white60);
-    if (particle is ParticleWhisp){
+
+    if (particle is ParticleRoam){
       render.circleOutline(
-          x: particle.startX,
-          y: particle.startY,
-          z: particle.startZ,
-          radius: particle.roamRadius,
+        x: particle.startX,
+        y: particle.startY,
+        z: particle.startZ,
+        radius: particle.roamRadius,
       );
+
       render.line(
-          particle.x,
-          particle.y,
-          particle.z,
-          particle.destinationX,
-          particle.destinationY,
-          particle.destinationZ,
+        particle.x,
+        particle.y,
+        particle.z,
+        particle.targetX,
+        particle.targetY,
+        particle.targetZ,
       );
+    }
+
+    if (particle is ParticleWhisp){
 
       engine.setPaintColor(colors.blue_0);
       render.line(

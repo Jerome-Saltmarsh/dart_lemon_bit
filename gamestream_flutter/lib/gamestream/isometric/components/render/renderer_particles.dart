@@ -124,10 +124,12 @@ class RendererParticles extends RenderGroup {
           final sprite = images.butterfly;
 
           if (particle is ParticleButterfly){
+            final direction = IsometricDirection.fromRadian(particle.rotation);
+            render.textPosition(particle, direction, offsetY: -20);
             render.sprite(
               sprite: sprite,
               frame: sprite.getFrame(
-                  row: IsometricDirection.toInputDirection(IsometricDirection.fromRadian(particle.movementAngle)),
+                  row: IsometricDirection.toInputDirection(direction),
                   column: (animation.frame ~/ 2) % 2
               ),
               color: scene.getColor(particle.nodeIndex),

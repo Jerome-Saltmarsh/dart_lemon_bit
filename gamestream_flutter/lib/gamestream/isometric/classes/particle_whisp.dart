@@ -1,18 +1,10 @@
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
 import 'package:gamestream_flutter/packages/common/src/particle_type.dart';
 import 'package:lemon_math/src.dart';
 
-class ParticleWhisp extends Particle {
+class ParticleWhisp extends ParticleRoam {
 
-  var startX = 0.0;
-  var startY = 0.0;
-  var startZ = 0.0;
-
-  var destinationX = 0.0;
-  var destinationY = 0.0;
-  var destinationZ = 0.0;
-  var roamRadius = 150.0;
   var movementSpeed = 0.2;
   var movementAngle = 0.0;
   var rotationSpeed = 0.0085;
@@ -27,9 +19,6 @@ class ParticleWhisp extends Particle {
     required super.y,
     required super.z,
   }) {
-    startX = x;
-    startY = y;
-    startZ = z;
     duration = 0;
     durationTotal = -1;
     active = true;
@@ -39,16 +28,10 @@ class ParticleWhisp extends Particle {
     type = ParticleType.Whisp;
     scale = randomBetween(minScale, maxScale);
     nodeCollidable = false;
-    changeDestination();
+    changeTarget();
     scaleVelocity = scaleDelta;
   }
 
-  bool get shouldChangeDestination => withinRadius(
-      x: destinationX,
-      y: destinationY,
-      z: destinationZ,
-      radius: 5,
-  );
 
 
 
@@ -65,10 +48,10 @@ class ParticleWhisp extends Particle {
 
   void updateMovement() {
     if (shouldChangeDestination){
-      changeDestination();
+      changeTarget();
     }
 
-    final angle = getAngle(destinationX, destinationY);
+    final angle = getAngle(targetX, targetY);
     final diff = radianDiff(angle, movementAngle);
 
     if (diff < 0){
@@ -99,12 +82,6 @@ class ParticleWhisp extends Particle {
       scaleVelocity = -scaleVelocity;
       scale = maxScale;
     }
-  }
-
-  void changeDestination(){
-    destinationX = startX + giveOrTake(roamRadius);
-    destinationY = startY + giveOrTake(roamRadius);
-    destinationZ = startZ;
   }
 
   @override
