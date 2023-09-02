@@ -38,8 +38,8 @@ class IsometricActions with IsometricComponent {
           y: y,
           z: z,
       )
-      ..xv = adj(angle, speed)
-      ..yv = opp(angle, speed)
+      ..vx = adj(angle, speed)
+      ..vy = opp(angle, speed)
       ;
     }
 
@@ -76,7 +76,7 @@ class IsometricActions with IsometricComponent {
       )
         ..deactiveOnNodeCollision = false
         ..delay = i
-        ..zv = 0.75
+        ..vz = 0.75
         ..setSpeed(randomAngle(), giveOrTake(3));
     }
   }

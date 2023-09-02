@@ -125,15 +125,15 @@ class RendererParticles extends RenderGroup {
 
           if (particle is ParticleButterfly){
             final direction = IsometricDirection.fromRadian(particle.rotation);
-            render.textPosition(particle, direction, offsetY: -20);
+            // render.textPosition(particle, direction, offsetY: -20);
             render.sprite(
               sprite: sprite,
               frame: sprite.getFrame(
                   row: IsometricDirection.toInputDirection(direction),
-                  column: (animation.frame ~/ 2) % 2
+                  column: particle.moving ? animation.frame % 2 : 0,
               ),
               color: scene.getColor(particle.nodeIndex),
-              scale: goldenRatio_0381,
+              scale: 0.2,
               dstX: dstX,
               dstY: dstY,
             );

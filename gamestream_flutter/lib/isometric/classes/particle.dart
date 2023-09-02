@@ -8,9 +8,9 @@ class Particle extends Position {
   var wind = 0;
   var active = false;
   var delay = 0;
-  var xv = 0.0;
-  var yv = 0.0;
-  var zv = 0.0;
+  var vx = 0.0;
+  var vy = 0.0;
+  var vz = 0.0;
   var frame = 0;
   var weight = 0.0;
   var duration = 0;
@@ -40,8 +40,8 @@ class Particle extends Position {
   double get duration01 => duration / durationTotal;
 
   void setSpeed(double angle, double speed){
-    xv = adj(angle, speed);
-    yv = opp(angle, speed);
+    vx = adj(angle, speed);
+    vy = opp(angle, speed);
   }
 
   void deactivate(){
@@ -53,14 +53,14 @@ class Particle extends Position {
   }
 
   void setAngle({required double value, required double speed}){
-    xv = adj(value, speed);
-    yv = opp(value, speed);
+    vx = adj(value, speed);
+    vy = opp(value, speed);
   }
 
   void applyMotion(){
-    x += xv;
-    y += yv;
-    z += zv;
+    x += vx;
+    y += vy;
+    z += vz;
     if (z < 0){
       z = 0;
     }
@@ -77,16 +77,16 @@ class Particle extends Position {
 
   void applyAirFriction(){
     const gravity = 0.04;
-    zv -= gravity * weight;
-    xv *= frictionAir;
-    yv *= frictionAir;
+    vz -= gravity * weight;
+    vx *= frictionAir;
+    vy *= frictionAir;
   }
 
   void applyFloorFriction(){
     const floorFriction = 0.9;
     const rotationFriction = 0.93;
-    xv *= floorFriction;
-    yv *= floorFriction;
+    vx *= floorFriction;
+    vy *= floorFriction;
     rotationVelocity *= rotationFriction;
   }
 

@@ -22,9 +22,9 @@ class ParticleWhisp extends ParticleRoam {
     duration = 0;
     durationTotal = -1;
     active = true;
-    xv = 0;
-    yv = 0;
-    zv = 0;
+    vx = 0;
+    vy = 0;
+    vz = 0;
     type = ParticleType.Whisp;
     scale = randomBetween(minScale, maxScale);
     nodeCollidable = false;
@@ -70,8 +70,8 @@ class ParticleWhisp extends ParticleRoam {
         if (y > startY + roamRadius){
           y = startY - roamRadius;
           x = startX + giveOrTake(roamRadius);
-          xv *= 0.5;
-          yv *= 0.5;
+          vx *= 0.5;
+          vy *= 0.5;
         }
       }
 

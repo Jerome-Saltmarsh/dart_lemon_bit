@@ -82,14 +82,14 @@ class IsometricParticles with IsometricComponent implements Updatable {
     particle.delay = delay;
 
     if (speed > 0){
-      particle.xv = adj(angle, speed);
-      particle.yv = opp(angle, speed);
+      particle.vx = adj(angle, speed);
+      particle.vy = opp(angle, speed);
     } else {
-      particle.xv = 0;
-      particle.yv = 0;
+      particle.vx = 0;
+      particle.vy = 0;
     }
 
-    particle.zv = zv;
+    particle.vz = zv;
     particle.weight = weight;
     particle.duration = 0;
     particle.durationTotal = duration;
@@ -885,12 +885,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ParticleType.Whisp,
         ParticleType.Myst,
       ].contains(particle.type)) {
-        particle.xv = clamp(particle.xv - windStrength, -maxVelocity, maxVelocity);
-        particle.yv = clamp(particle.yv + windStrength, -maxVelocity, maxVelocity);
+        particle.vx = clamp(particle.vx - windStrength, -maxVelocity, maxVelocity);
+        particle.vy = clamp(particle.vy + windStrength, -maxVelocity, maxVelocity);
       }
     }
 
-    final bounce = nodeCollision && particle.zv < 0;
+    final bounce = nodeCollision && particle.vz < 0;
     particle.applyMotion();
 
     if (scene.outOfBoundsPosition(particle)){
@@ -902,10 +902,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
       if (nodeType == NodeType.Water){
         return particle.deactivate();
       }
-      if (particle.zv < -0.1){
-        particle.zv = -particle.zv * particle.bounciness;
+      if (particle.vz < -0.1){
+        particle.vz = -particle.vz * particle.bounciness;
       } else {
-        particle.zv = 0;
+        particle.vz = 0;
       }
     }
     particle.update();
