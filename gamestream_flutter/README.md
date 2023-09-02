@@ -12,7 +12,6 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- add tail to particle glow
 - character wolf 
 - hot key add mark 1 2 3 4 
 - particle bat
@@ -37,6 +36,8 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 
 02.09.2023
+- particle glow change color
+- add tail to particle glow
 - particle butterfly
 
 01.09.2023

@@ -9,6 +9,11 @@ class ParticleGlow extends ParticleWhisp {
   var _i = 0.0;
   var _iDirection = 0.02;
 
+  var _colorI = 0.0;
+  var nextColorChange = 0;
+  var nextColor = 0;
+  var currentColor = 0;
+
   var nextSpawnTrail = 0;
 
   ParticleGlow({
@@ -40,6 +45,18 @@ class ParticleGlow extends ParticleWhisp {
     if (nextSpawnTrail-- <= 0){
       particles.spawnTrail(x, y, z, color: emissionColor);
       nextSpawnTrail = 15;
+    }
+
+    if (_colorI < 1.0){
+      emissionColor = interpolateColors(currentColor, nextColor, _colorI);
+      _colorI += 0.005;
+    }
+
+    if (nextColorChange-- <= 0){
+      _colorI = 0;
+      nextColorChange = randomInt(500, 1500);
+      currentColor = emissionColor;
+      nextColor = randomItem(particles.whispColors);
     }
   }
 }

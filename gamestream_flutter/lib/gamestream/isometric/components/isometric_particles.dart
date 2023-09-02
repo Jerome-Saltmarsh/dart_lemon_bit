@@ -20,6 +20,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
   var nextParticleFrame = 0;
   var nodeType = 0;
 
+  late final whispColors = [
+    colors.aqua_1.value,
+    colors.purple_0.value,
+    colors.pink_0.value,
+    colors.teal_0.value,
+  ];
+
   final children = <Particle>[];
 
   final mystIndexes = <int>[];
@@ -931,12 +938,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
           x: x,
           y: y,
           z: z,
-          color: randomItem([
-              colors.aqua_1.value,
-              colors.purple_0.value,
-              colors.pink_0.value,
-              colors.teal_0.value,
-          ]),
+          color: randomItem(whispColors),
       )
         ..emissionIntensity = 0.5
         ..movementSpeed = 0.7
