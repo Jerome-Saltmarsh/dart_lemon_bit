@@ -254,22 +254,34 @@ class IsometricDebug with IsometricComponent {
   }
 
   void sendIsometricRequestMoveSelectedColliderToMouse() =>
-      network.sendIsometricRequest(IsometricRequest.Move_Selected_Collider_To_Mouse);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Move_Selected_Collider_To_Mouse
+      );
 
   void sendIsometricRequestDebugCharacterWalkToMouse() =>
-      network.sendIsometricRequest(IsometricRequest.Debug_Character_Walk_To_Mouse);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Debug_Character_Walk_To_Mouse
+      );
 
   void sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies() =>
-      network.sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies
+      );
 
   void sendIsometricRequestDebugCharacterTogglePathFindingEnabled() =>
-      network.sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Debug_Character_Toggle_Path_Finding_Enabled
+      );
 
   void sendIsometricRequestDebugCharacterToggleRunToDestination() =>
-      network.sendIsometricRequest(IsometricRequest.Debug_Character_Toggle_Run_To_Destination);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Debug_Character_Toggle_Run_To_Destination
+      );
 
   void sendIsometricRequestDebugCharacterDebugUpdate() =>
-      network.sendIsometricRequest(IsometricRequest.Debug_Character_Debug_Update);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Debug_Character_Debug_Update
+      );
 
   Particle? getParticleNearestToMouse() {
 

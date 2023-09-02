@@ -2,10 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
-import 'package:gamestream_flutter/packages/common/src/game_type.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/isometric_request.dart';
-import 'package:gamestream_flutter/packages/common/src/network/network_request.dart';
-import 'package:gamestream_flutter/packages/common/src/network/requests/network_request_amulet.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 
 import 'classes/send_amulet_request.dart';
@@ -43,54 +40,54 @@ class IsometricNetwork with IsometricComponent {
   }
 
   void sendIsometricRequestRevive() =>
-      sendIsometricRequest(IsometricRequest.Revive);
+      sendIsometricRequest(NetworkRequestIsometric.Revive);
 
   void sendIsometricRequestWeatherSetRain(int value) =>
-      sendIsometricRequest(IsometricRequest.Weather_Set_Rain, value);
+      sendIsometricRequest(NetworkRequestIsometric.Weather_Set_Rain, value);
 
   void sendIsometricRequestWeatherSetWind(int value) =>
-      sendIsometricRequest(IsometricRequest.Weather_Set_Wind, value);
+      sendIsometricRequest(NetworkRequestIsometric.Weather_Set_Wind, value);
 
   void sendIsometricRequestWeatherSetLightning(int value) =>
-      sendIsometricRequest(IsometricRequest.Weather_Set_Lightning, value);
+      sendIsometricRequest(NetworkRequestIsometric.Weather_Set_Lightning, value);
 
   void sendIsometricRequestWeatherToggleBreeze() =>
-      sendIsometricRequest(IsometricRequest.Weather_Toggle_Breeze);
+      sendIsometricRequest(NetworkRequestIsometric.Weather_Toggle_Breeze);
 
   void sendIsometricRequestTimeSetHour(int value) =>
-      sendIsometricRequest(IsometricRequest.Time_Set_Hour, value);
+      sendIsometricRequest(NetworkRequestIsometric.Time_Set_Hour, value);
 
   void sendIsometricRequestEditorLoadGame(String name) =>
-      sendIsometricRequest(IsometricRequest.Editor_Load_Game, name);
+      sendIsometricRequest(NetworkRequestIsometric.Editor_Load_Game, name);
 
   void sendIsometricRequestSelectGameObject(GameObject gameObject) =>
-      sendIsometricRequest(IsometricRequest.Select_GameObject, '${gameObject.id}');
+      sendIsometricRequest(NetworkRequestIsometric.Select_GameObject, '${gameObject.id}');
 
   void sendIsometricRequestDebugCharacterSetCharacterType(int characterType) =>
       sendIsometricRequest(
-        IsometricRequest.Debug_Character_Set_Character_Type,
+        NetworkRequestIsometric.Debug_Character_Set_Character_Type,
         characterType,
       );
 
   void sendIsometricRequestDebugCharacterSetWeaponType(int weaponType) =>
       sendIsometricRequest(
-        IsometricRequest.Debug_Character_Set_Weapon_Type,
+        NetworkRequestIsometric.Debug_Character_Set_Weapon_Type,
         weaponType,
       );
 
   void sendIsometricRequestDebugSelect() =>
-      sendIsometricRequest(IsometricRequest.Debug_Select);
+      sendIsometricRequest(NetworkRequestIsometric.Debug_Select);
 
   void sendIsometricRequestDebugCommand() =>
-      sendIsometricRequest(IsometricRequest.Debug_Command);
+      sendIsometricRequest(NetworkRequestIsometric.Debug_Command);
 
   void sendIsometricRequestDebugAttack() =>
-      sendIsometricRequest(IsometricRequest.Debug_Attack);
+      sendIsometricRequest(NetworkRequestIsometric.Debug_Attack);
 
   void sendIsometricRequestToggleDebugging() =>
-      sendIsometricRequest(IsometricRequest.Toggle_Debugging);
+      sendIsometricRequest(NetworkRequestIsometric.Toggle_Debugging);
 
-  void sendIsometricRequest(IsometricRequest request, [dynamic message]) =>
+  void sendIsometricRequest(NetworkRequestIsometric request, [dynamic message]) =>
       sendNetworkRequest(NetworkRequest.Isometric, '${request.index} $message');
 
   void sendRequest(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>

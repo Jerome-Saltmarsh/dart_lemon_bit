@@ -858,37 +858,37 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writeEnvironmentLightning(int value){
     writeByte(NetworkResponse.Environment);
-    writeByte(EnvironmentResponse.Lightning);
+    writeByte(NetworkResponseEnvironment.Lightning);
     writeByte(value);
   }
 
   void writeEnvironmentWind(int windType){
     writeByte(NetworkResponse.Environment);
-    writeByte(EnvironmentResponse.Wind);
+    writeByte(NetworkResponseEnvironment.Wind);
     writeByte(windType);
   }
 
   void writeGameTimeEnabled(){
     writeByte(NetworkResponse.Environment);
-    writeByte(EnvironmentResponse.Time_Enabled);
+    writeByte(NetworkResponseEnvironment.Time_Enabled);
     writeBool(game.time.enabled);
   }
 
   void writeEnvironmentRain(int rainType){
     writeByte(NetworkResponse.Environment);
-    writeByte(EnvironmentResponse.Rain);
+    writeByte(NetworkResponseEnvironment.Rain);
     writeByte(rainType);
   }
 
   void writeEnvironmentBreeze(bool value){
     writeByte(NetworkResponse.Environment);
-    writeByte(EnvironmentResponse.Breeze);
+    writeByte(NetworkResponseEnvironment.Breeze);
     writeBool(value);
   }
 
   void writeEnvironmentLightningFlashing(){
     writeByte(NetworkResponse.Environment);
-    writeByte(EnvironmentResponse.Lightning_Flashing);
+    writeByte(NetworkResponseEnvironment.Lightning_Flashing);
     writeBool(game.environment.lightningFlashing);
     writePercentage(game.environment.lightningFlash01);
   }
@@ -1307,7 +1307,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void downloadSceneMarks() {
     writeByte(NetworkResponse.Scene);
-    writeByte(SceneResponse.Marks);
+    writeByte(NetworkResponseScene.Marks);
     final marks = scene.marks;
     writeUInt16(marks.length);
     for (final mark in marks){

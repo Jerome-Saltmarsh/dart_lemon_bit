@@ -1,5 +1,4 @@
-
-library src;
+library;
 
 export 'requests/src.dart';
 export 'responses/src.dart';

@@ -1,4 +1,0 @@
-
-enum SceneRequest {
-  Test,
-}

@@ -526,7 +526,7 @@ class IsometricEditor with IsometricComponent {
   void toggleGameRunning() =>
       sendEditorRequest(EditorRequest.Toggle_Game_Running);
 
-  void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
+  void sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize request) =>
       sendEditorRequest(EditorRequest.Modify_Canvas_Size, request.index);
 
   void sendClientRequestEditGenerateScene({

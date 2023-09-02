@@ -20,7 +20,7 @@ class IsometricEnvironment with IsometricComponent {
   final wind = Watch(WindType.Calm);
   final myst = Watch(0);
   final raining = Watch(false);
-  final gameTimeEnabled = Watch(false);
+  final timeEnabled = Watch(false);
   final lightningType = Watch(LightningType.Off);
   final weatherBreeze = Watch(false);
   final minutes = Watch(0);
@@ -129,21 +129,21 @@ class IsometricEnvironment with IsometricComponent {
   void setMystType(int mystType) =>
       network.sendArgs2(
           NetworkRequest.Environment_Request,
-          EnvironmentRequest.Set_Myst,
+          NetworkRequestEnvironment.Set_Myst,
           mystType,
       );
 
   void requestLightningFlash() {
     network.sendNetworkRequest(
       NetworkRequest.Environment_Request,
-      EnvironmentRequest.Lightning_Flash,
+      NetworkRequestEnvironment.Lightning_Flash,
     );
   }
 
   void setLightningType(int lightningType) =>
     network.sendArgs2(
       NetworkRequest.Environment_Request,
-      EnvironmentRequest.Set_Lightning,
+      NetworkRequestEnvironment.Set_Lightning,
       lightningType,
     );
 

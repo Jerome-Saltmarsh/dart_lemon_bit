@@ -1,6 +1,6 @@
+library;
 
-library src;
-
-export 'scene_response.dart';
-export 'editor_response.dart';
 export 'network_response_amulet.dart';
+export 'network_response_editor.dart';
+export 'network_response_environment.dart';
+export 'network_response_scene.dart';

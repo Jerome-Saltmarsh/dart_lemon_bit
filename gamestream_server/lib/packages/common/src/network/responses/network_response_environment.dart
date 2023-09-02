@@ -1,5 +1,5 @@
 
-class EnvironmentResponse {
+class NetworkResponseEnvironment {
    static const Time = 0;
    static const Rain = 2;
    static const Wind = 3;

@@ -1,5 +1,5 @@
 
-enum PlayerRequest {
+enum NetworkRequestPlayer {
   setComplexion,
   setName,
 }

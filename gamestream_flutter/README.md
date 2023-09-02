@@ -12,6 +12,8 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- add tail to particle glow
+- character wolf 
 - hot key add mark 1 2 3 4 
 - particle butterfly
 - particle bat
@@ -36,6 +38,8 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 
 01.09.2023
+- removed memory leak from find path
+- fix emit beam on slope
 - particle glow
 - fixed camera not starting on player
 - fix mark types not rendering

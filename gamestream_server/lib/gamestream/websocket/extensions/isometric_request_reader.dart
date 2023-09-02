@@ -17,14 +17,14 @@ extension IsometricRequestReader on WebSocketConnection {
     if (isometricClientRequestIndex == null)
       return;
 
-    if (!isValidIndex(isometricClientRequestIndex, IsometricRequest.values)){
+    if (!isValidIndex(isometricClientRequestIndex, NetworkRequestIsometric.values)){
       errorInvalidClientRequest();
       return;
     }
 
-    switch (IsometricRequest.values[isometricClientRequestIndex]){
+    switch (NetworkRequestIsometric.values[isometricClientRequestIndex]){
 
-      case IsometricRequest.Teleport:
+      case NetworkRequestIsometric.Teleport:
         if (!isLocalMachine && game is! IsometricEditor) return;
         player.x = player.mouseSceneX;
         player.y = player.mouseSceneY;
@@ -33,7 +33,7 @@ extension IsometricRequestReader on WebSocketConnection {
         player.active = true;
         break;
 
-      case IsometricRequest.Revive:
+      case NetworkRequestIsometric.Revive:
         if (player.aliveAndActive) {
           sendGameError(GameError.PlayerStillAlive);
           return;
@@ -41,7 +41,7 @@ extension IsometricRequestReader on WebSocketConnection {
         game.revive(player);
         return;
 
-      case IsometricRequest.Weather_Set_Rain:
+      case NetworkRequestIsometric.Weather_Set_Rain:
         final rainType = parseArg2(arguments);
         if (rainType == null || !isValidIndex(rainType, RainType.values)) {
           sendGameError(GameError.Invalid_Client_Request);
@@ -50,7 +50,7 @@ extension IsometricRequestReader on WebSocketConnection {
         game.environment.rainType = rainType;
         break;
 
-      case IsometricRequest.Weather_Set_Wind:
+      case NetworkRequestIsometric.Weather_Set_Wind:
         final index = parseArg2(arguments);
         if (index == null || !isValidIndex(index, WindType.values)) {
           sendGameError(GameError.Invalid_Client_Request);
@@ -59,7 +59,7 @@ extension IsometricRequestReader on WebSocketConnection {
         game.environment.windType = index;
         break;
 
-      case IsometricRequest.Weather_Set_Lightning:
+      case NetworkRequestIsometric.Weather_Set_Lightning:
         final index = parseArg2(arguments);
         if (index == null || !isValidIndex(index, LightningType.values)) {
           sendGameError(GameError.Invalid_Client_Request);
@@ -71,21 +71,21 @@ extension IsometricRequestReader on WebSocketConnection {
         }
         break;
 
-      case IsometricRequest.Weather_Toggle_Breeze:
+      case NetworkRequestIsometric.Weather_Toggle_Breeze:
         game.environment.toggleBreeze();
         break;
 
-      case IsometricRequest.Time_Set_Hour:
+      case NetworkRequestIsometric.Time_Set_Hour:
         final hour = parseArg2(arguments);
         if (hour == null) return;
         game.setHourMinutes(hour, 0);
         break;
 
-      case IsometricRequest.Editor_Load_Game:
+      case NetworkRequestIsometric.Editor_Load_Game:
       // _player = engine.joinGameEditor(name: arguments[2]);
         break;
 
-      case IsometricRequest.Move_Selected_Collider_To_Mouse:
+      case NetworkRequestIsometric.Move_Selected_Collider_To_Mouse:
         final selectedCollider = player.selectedCollider;
         if (selectedCollider == null) return;
         final scene = player.game.scene;
@@ -103,7 +103,7 @@ extension IsometricRequestReader on WebSocketConnection {
         }
         break;
 
-      case IsometricRequest.Debug_Character_Walk_To_Mouse:
+      case NetworkRequestIsometric.Debug_Character_Walk_To_Mouse:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character) return;
         final scene = player.game.scene;
@@ -113,32 +113,32 @@ extension IsometricRequestReader on WebSocketConnection {
         debugCharacter.pathTargetIndex = index;
         break;
 
-      case IsometricRequest.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies:
+      case NetworkRequestIsometric.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character) return;
         debugCharacter.autoTarget = !debugCharacter.autoTarget;
         break;
 
-      case IsometricRequest.Debug_Character_Toggle_Path_Finding_Enabled:
+      case NetworkRequestIsometric.Debug_Character_Toggle_Path_Finding_Enabled:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character) return;
         debugCharacter.pathFindingEnabled = !debugCharacter.pathFindingEnabled;
         debugCharacter.clearPath();
         break;
 
-      case IsometricRequest.Debug_Character_Toggle_Run_To_Destination:
+      case NetworkRequestIsometric.Debug_Character_Toggle_Run_To_Destination:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character) return;
         debugCharacter.runToDestinationEnabled = !debugCharacter.runToDestinationEnabled;
         break;
 
-      case IsometricRequest.Debug_Character_Debug_Update:
+      case NetworkRequestIsometric.Debug_Character_Debug_Update:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character) return;
         player.game.updateCharacter(debugCharacter);
         break;
 
-      case IsometricRequest.Debug_Character_Set_Character_Type:
+      case NetworkRequestIsometric.Debug_Character_Set_Character_Type:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character)
           return;
@@ -148,7 +148,7 @@ extension IsometricRequestReader on WebSocketConnection {
         debugCharacter.characterType = characterType;
         break;
 
-      case IsometricRequest.Debug_Character_Set_Weapon_Type:
+      case NetworkRequestIsometric.Debug_Character_Set_Weapon_Type:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character)
           return;
@@ -158,7 +158,7 @@ extension IsometricRequestReader on WebSocketConnection {
         debugCharacter.weaponType = weaponType;
         break;
 
-      case IsometricRequest.Select_GameObject:
+      case NetworkRequestIsometric.Select_GameObject:
         final id = parseArg2(arguments);
         if (id == null) return;
         final gameObject = game.findGameObjectById(id);
@@ -169,23 +169,23 @@ extension IsometricRequestReader on WebSocketConnection {
         player.selectedCollider = gameObject;
         break;
 
-      case IsometricRequest.Debug_Select:
+      case NetworkRequestIsometric.Debug_Select:
         player.selectNearestColliderToMouse();
         break;
 
-      case IsometricRequest.Debug_Command:
+      case NetworkRequestIsometric.Debug_Command:
         player.debugCommand();
         break;
 
-      case IsometricRequest.Debug_Attack:
+      case NetworkRequestIsometric.Debug_Attack:
         game.characterAttack(player);
         break;
 
-      case IsometricRequest.Toggle_Debugging:
+      case NetworkRequestIsometric.Toggle_Debugging:
         player.toggleDebugging();
         break;
 
-      case IsometricRequest.Toggle_Controls_Can_Target_Enemies:
+      case NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies:
         player.toggleControlsCanTargetEnemies();
         break;
     }

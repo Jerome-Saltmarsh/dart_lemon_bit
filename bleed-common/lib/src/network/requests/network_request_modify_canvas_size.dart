@@ -1,4 +1,4 @@
-enum RequestModifyCanvasSize {
+enum NetworkRequestModifyCanvasSize {
    Add_Row_Start,
    Add_Row_End,
    Add_Column_Start,

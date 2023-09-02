@@ -3,12 +3,12 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/isometric/isometric_player.dart';
 
-void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPlayer player){
+void handleRequestModifyCanvasSize(NetworkRequestModifyCanvasSize request, IsometricPlayer player){
   final game = player.game;
   final scene = game.scene;
   scene.compiled = null;
   switch (request) {
-    case RequestModifyCanvasSize.Add_Row_Start:
+    case NetworkRequestModifyCanvasSize.Add_Row_Start:
       final newGridVolume = scene.volume + (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -40,7 +40,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         gameObject.x += Node_Size;
       }
       break;
-    case RequestModifyCanvasSize.Remove_Row_Start:
+    case NetworkRequestModifyCanvasSize.Remove_Row_Start:
       final newGridVolume = scene.volume - (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -64,7 +64,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         gameObject.x -= Node_Size;
       }
       break;
-    case RequestModifyCanvasSize.Add_Row_End:
+    case NetworkRequestModifyCanvasSize.Add_Row_End:
       final newGridVolume = scene.volume + (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -96,7 +96,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         gameObject.x += Node_Size;
       }
       break;
-    case RequestModifyCanvasSize.Remove_Row_End:
+    case NetworkRequestModifyCanvasSize.Remove_Row_End:
       final newGridVolume = scene.volume - (scene.columns * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -116,7 +116,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       scene.rows--;
       game.onGridChanged();
       break;
-    case RequestModifyCanvasSize.Add_Z:
+    case NetworkRequestModifyCanvasSize.Add_Z:
       final newGridVolume = scene.volume + (scene.area);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -129,7 +129,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       scene.height++;
       game.onGridChanged();
       break;
-    case RequestModifyCanvasSize.Remove_Z:
+    case NetworkRequestModifyCanvasSize.Remove_Z:
       if (scene.height <= 5) return;
       final newGridVolume = scene.volume - (scene.area);
       final newNodeTypes = Uint8List(newGridVolume);
@@ -143,7 +143,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
       scene.height--;
       game.onGridChanged();
       break;
-    case RequestModifyCanvasSize.Add_Column_Start:
+    case NetworkRequestModifyCanvasSize.Add_Column_Start:
       final newGridVolume = scene.volume + (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -171,7 +171,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         gameObject.y += Node_Size;
       }
       break;
-    case RequestModifyCanvasSize.Remove_Column_Start:
+    case NetworkRequestModifyCanvasSize.Remove_Column_Start:
       final newGridVolume = scene.volume - (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -193,7 +193,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         gameObject.y -= Node_Size;
       }
       break;
-    case RequestModifyCanvasSize.Add_Column_End:
+    case NetworkRequestModifyCanvasSize.Add_Column_End:
       final newGridVolume = scene.volume + (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
@@ -221,7 +221,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPla
         gameObject.y += Node_Size;
       }
       break;
-    case RequestModifyCanvasSize.Remove_Column_End:
+    case NetworkRequestModifyCanvasSize.Remove_Column_End:
       final newGridVolume = scene.volume - (scene.rows * scene.height);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);

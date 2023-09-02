@@ -5,12 +5,12 @@ import 'mmo_player.dart';
 void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
   if (arguments.isEmpty) return;
 
-  if (!isValidIndex(arguments[1], InventoryRequest.values)) {
+  if (!isValidIndex(arguments[1], NetworkRequestInventory.values)) {
     return;
   }
 
-  switch (InventoryRequest.values[arguments[1]]) {
-    case InventoryRequest.Move:
+  switch (NetworkRequestInventory.values[arguments[1]]) {
+    case NetworkRequestInventory.Move:
       final srcSlotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
       final targetSlotTypeIndex = arguments[4];
@@ -44,13 +44,13 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       player.notifyEquipmentDirty();
       break;
 
-    case InventoryRequest.Use:
+    case NetworkRequestInventory.Use:
       final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
       player.useInventorySlot(SlotType.values[slotTypeIndex], srcIndex);
       break;
 
-    case InventoryRequest.Drop:
+    case NetworkRequestInventory.Drop:
       final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
       player.inventoryDrop(SlotType.values[slotTypeIndex], srcIndex);

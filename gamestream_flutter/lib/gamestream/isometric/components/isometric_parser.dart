@@ -352,21 +352,20 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readServerResponseEnvironment() {
-    final environmentResponse = readByte();
-    switch (environmentResponse) {
-      case EnvironmentResponse.Rain:
+    switch (readByte()) {
+      case NetworkResponseEnvironment.Rain:
         environment.rainType.value = readByte();
         break;
-      case EnvironmentResponse.Lightning:
+      case NetworkResponseEnvironment.Lightning:
         environment.lightningType.value = readByte();
         break;
-      case EnvironmentResponse.Wind:
+      case NetworkResponseEnvironment.Wind:
         environment.wind.value = readByte();
         break;
-      case EnvironmentResponse.Breeze:
+      case NetworkResponseEnvironment.Breeze:
         environment.weatherBreeze.value = readBool();
         break;
-      case EnvironmentResponse.Lightning_Flashing:
+      case NetworkResponseEnvironment.Lightning_Flashing:
         final flashing = readBool();
         environment.lightningFlashing01 = readPercentage();
         if (environment.lightningFlashing != flashing){
@@ -377,8 +376,8 @@ class IsometricParser with ByteReader, IsometricComponent {
           }
         }
         break;
-      case EnvironmentResponse.Time_Enabled:
-        environment.gameTimeEnabled.value = readBool();
+      case NetworkResponseEnvironment.Time_Enabled:
+        environment.timeEnabled.value = readBool();
         break;
     }
   }
@@ -704,7 +703,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void parseServerResponseScene() {
     switch (readByte()){
-      case SceneResponse.Marks:
+      case NetworkResponseScene.Marks:
         final length = readUInt16();
         scene.marks = Uint32List(length);
         for (var i = 0; i < length; i++) {
@@ -717,7 +716,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void parseEditorResponse() {
     switch (readByte()){
-      case EditorResponse.Selected_Mark_List_Index:
+      case NetworkResponseEditor.Selected_Mark_List_Index:
         editor.selectedMarkListIndex.value = readInt16();
         break;
     }

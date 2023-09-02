@@ -278,10 +278,10 @@ class WebSocketConnection with ByteReader {
             }
             final modifyCanvasSizeIndex = parse(arguments[2]);
             if (modifyCanvasSizeIndex == null) return;
-            if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
+            if (!isValidIndex(modifyCanvasSizeIndex, NetworkRequestModifyCanvasSize.values)){
               return errorInvalidClientRequest();
             }
-            final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
+            final request = NetworkRequestModifyCanvasSize.values[modifyCanvasSizeIndex];
             handleRequestModifyCanvasSize(request, player);
             return;
         }
@@ -708,7 +708,7 @@ class WebSocketConnection with ByteReader {
     if (sceneRequestIndex == null)
       return;
 
-    if (!isValidIndex(sceneRequestIndex, SceneRequest.values)){
+    if (!isValidIndex(sceneRequestIndex, NetworkRequestScene.values)){
       errorInvalidClientRequest();
       return;
     }
@@ -725,7 +725,7 @@ class WebSocketConnection with ByteReader {
     final environmentRequest = parseArg1(arguments);
 
     switch (environmentRequest) {
-      case EnvironmentRequest.Set_Myst:
+      case NetworkRequestEnvironment.Set_Myst:
         final mystType = parseArg2(arguments);
         if (mystType == null)
           return;
@@ -736,7 +736,7 @@ class WebSocketConnection with ByteReader {
         player.game.environment.mystType = mystType;
         break;
 
-      case EnvironmentRequest.Set_Lightning:
+      case NetworkRequestEnvironment.Set_Lightning:
         final type = parseArg2(arguments);
         if (type == null)
           return;
@@ -747,7 +747,7 @@ class WebSocketConnection with ByteReader {
         player.game.environment.lightningType = type;
         break;
 
-      case EnvironmentRequest.Lightning_Flash:
+      case NetworkRequestEnvironment.Lightning_Flash:
         player.game.environment.lightningFlash();
         break;
     }
@@ -767,7 +767,7 @@ class WebSocketConnection with ByteReader {
 
 
      switch (debugRequest) {
-       case DebugRequest.Set_Complexion:
+       case NetworkRequestDebug.Set_Complexion:
          final complexion = arg2;
          if (complexion == null || complexion < 0 || complexion >= 64){
            return;
@@ -792,22 +792,22 @@ class WebSocketConnection with ByteReader {
       return;
     }
 
-    if (!isValidIndex(playerRequestIndex, PlayerRequest.values)){
+    if (!isValidIndex(playerRequestIndex, NetworkRequestPlayer.values)){
       return;
     }
-    final playerRequest = PlayerRequest.values[playerRequestIndex];
+    final playerRequest = NetworkRequestPlayer.values[playerRequestIndex];
 
     final player = _player as IsometricPlayer;
 
     switch (playerRequest) {
-      case PlayerRequest.setComplexion:
+      case NetworkRequestPlayer.setComplexion:
         final value = arg2;
         if (value == null) {
           return;
         }
         player.complexion = value;
         break;
-      case PlayerRequest.setName:
+      case NetworkRequestPlayer.setName:
         if (arguments.length <= 2){
           return;
         }

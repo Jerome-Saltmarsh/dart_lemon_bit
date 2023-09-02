@@ -1,5 +1,5 @@
 
-enum IsometricRequest {
+enum NetworkRequestIsometric {
    Teleport,
    Revive,
    Weather_Set_Rain,

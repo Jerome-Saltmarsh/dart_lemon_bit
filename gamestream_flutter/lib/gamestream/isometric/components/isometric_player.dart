@@ -144,7 +144,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   }
 
   void toggleControlsCanTargetEnemies() =>
-      network.sendIsometricRequest(IsometricRequest.Toggle_Controls_Can_Target_Enemies);
+      network.sendIsometricRequest(
+          NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies
+      );
 
   void onPlayerInitialized(){
     position.x = 0;
@@ -228,7 +230,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   void sendRequestSetName(String name){
     network.sendRequest(
       NetworkRequest.Player,
-      PlayerRequest.setName.index,
+      NetworkRequestPlayer.setName.index,
       name,
     );
   }
@@ -240,7 +242,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     }
     network.sendRequest(
       NetworkRequest.Player,
-      PlayerRequest.setComplexion.index,
+      NetworkRequestPlayer.setComplexion.index,
       index,
     );
   }

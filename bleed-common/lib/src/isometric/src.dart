@@ -12,7 +12,6 @@ export 'characters_end.dart';
 export 'change_type.dart';
 export 'hand_type.dart';
 export 'isometric_direction.dart';
-export 'isometric_request.dart';
 export 'isometric_response.dart';
 export 'item_type.dart';
 export 'lightning_type.dart';

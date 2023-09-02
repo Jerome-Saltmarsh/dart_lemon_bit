@@ -709,7 +709,7 @@ extension isometricDebugUI on IsometricDebug {
       ui.showDialogGetColor(
         onSelected: (color) => network.sendRequest(
           NetworkRequest.Debug,
-          DebugRequest.Set_Complexion,
+          NetworkRequestDebug.Set_Complexion,
           colors.palette.indexOf(color),
         )
     );

@@ -220,7 +220,7 @@ class Amulet extends IsometricGame {
   }) =>
     network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
-      '${InventoryRequest.Move.index} '
+      '${NetworkRequestInventory.Move.index} '
       '${src.slotType.index} '
       '${src.index} '
       '${target.slotType.index} '
@@ -230,7 +230,7 @@ class Amulet extends IsometricGame {
   void reportItemSlotLeftClicked(ItemSlot itemSlot) =>
     network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
-      '${InventoryRequest.Use.index} '
+      '${NetworkRequestInventory.Use.index} '
       '${itemSlot.slotType.index} '
       '${itemSlot.index}'
     );
@@ -238,7 +238,7 @@ class Amulet extends IsometricGame {
   void dropItemSlot(ItemSlot itemSlot) =>
     network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
-      '${InventoryRequest.Drop.index} '
+      '${NetworkRequestInventory.Drop.index} '
       '${itemSlot.slotType.index} '
       '${itemSlot.index}'
     );
