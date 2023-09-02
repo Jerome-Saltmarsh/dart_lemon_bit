@@ -677,7 +677,7 @@ class IsometricRender with IsometricComponent {
     int seed = 0,
   }){
     final sprite = _flames[wind];
-    final frame = sprite.getFrame(row: 0, column: seed + animation.frame);
+    final frame = sprite.getFrame(row: 0, column: seed + animation.frame1);
     render.sprite(
       sprite: sprite,
       frame: frame,

@@ -12,12 +12,14 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- character wolf 
-- hot key add mark 1 2 3 4 
 - particle bat
 - particle crow
+- particle chicken
+- hot key add mark 1 2 3 4 
 - fix fire animation speed
-- floating flaming skull monster
+- character wolf
+- character floating flaming skull
+- character skeleton
 - body type chain mail
 - kid shoe type
 - helm type hoodie

@@ -820,7 +820,7 @@ class RendererNodes extends RenderGroup {
             color: scene.getColor(index),
             rainType: rainType,
             windType: windType,
-            animationFrame: (animation.frame + variation)
+            animationFrame: (animation.frame1 + variation)
         );
         return;
       case NodeType.Rain_Landing:
@@ -839,7 +839,7 @@ class RendererNodes extends RenderGroup {
             dstY: dstY,
             color: scene.getColor(index),
             rainType: rainType,
-            animationFrame: animation.frame + variation,
+            animationFrame: animation.frame1 + variation,
           );
         }
 
@@ -850,7 +850,7 @@ class RendererNodes extends RenderGroup {
               color: color,
               rainType: rainType,
               windType: windType,
-              animationFrame: (animation.frame + variation)
+              animationFrame: (animation.frame1 + variation)
           );
         }
 
@@ -929,7 +929,7 @@ class RendererNodes extends RenderGroup {
           treeType: mapVariationToTreeType(nodeVariationBelow),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
-          animationFrame: row + column + animation.frame,
+          animationFrame: row + column + animation.frame1,
         );
         break;
       case NodeType.Tree_Bottom:
@@ -941,7 +941,7 @@ class RendererNodes extends RenderGroup {
           treeType: mapVariationToTreeType(variation),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
-          animationFrame: row + column + animation.frame,
+          animationFrame: row + column + animation.frame1,
         );
         break;
       case NodeType.Scaffold:
@@ -1301,7 +1301,7 @@ class RendererNodes extends RenderGroup {
   }) => engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((animation.frame + variation) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((animation.frame1 + variation) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: dstX,

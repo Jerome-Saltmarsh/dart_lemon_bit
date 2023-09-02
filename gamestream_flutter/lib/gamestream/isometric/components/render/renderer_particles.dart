@@ -130,7 +130,24 @@ class RendererParticles extends RenderGroup {
               sprite: sprite,
               frame: sprite.getFrame(
                   row: IsometricDirection.toInputDirection(direction),
-                  column: particle.moving ? animation.frame % 2 : 0,
+                  column: particle.moving ? animation.frame1 % 2 : 0,
+              ),
+              color: scene.getColor(particle.nodeIndex),
+              scale: 0.2,
+              dstX: dstX,
+              dstY: dstY,
+            );
+          }
+          break;
+        case ParticleType.Bat:
+          final sprite = images.bat;
+          if (particle is ParticleButterfly){
+            final direction = IsometricDirection.fromRadian(particle.rotation);
+            render.sprite(
+              sprite: sprite,
+              frame: sprite.getFrame(
+                row: IsometricDirection.toInputDirection(direction),
+                column: particle.moving ? animation.frame1: 0,
               ),
               color: scene.getColor(particle.nodeIndex),
               scale: 0.2,

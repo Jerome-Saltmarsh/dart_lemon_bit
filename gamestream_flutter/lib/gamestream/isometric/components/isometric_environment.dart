@@ -14,6 +14,7 @@ class IsometricEnvironment with IsometricComponent {
   var lightningFlashing = false;
   var lightningFlashing01 = 0.0;
 
+  final night = WatchBool(false);
   final rainType = Watch(RainType.None);
   final seconds = Watch(0);
   final hours = Watch(0);
@@ -31,6 +32,7 @@ class IsometricEnvironment with IsometricComponent {
     hours.onChanged(onChangedHour);
     wind.onChanged(onChangedWindType);
     raining.onChanged(onChangedRaining);
+    night.onChanged(onChangedNight);
   }
 
   /// 0 at night is 0
@@ -71,6 +73,23 @@ class IsometricEnvironment with IsometricComponent {
 
   void onChangedHour(int hour){
     scene.updateAmbientAlphaAccordingToTime();
+    night.value = hour < 6 || hour > 18;
+  }
+
+  void onChangedNight(bool night){
+      if (night){
+        for (final particle in particles.children) {
+          if (particle.type == ParticleType.Butterfly) {
+            particle.type = ParticleType.Bat;
+          }
+        }
+      } else {
+        for (final particle in particles.children) {
+          if (particle.type == ParticleType.Bat) {
+            particle.type = ParticleType.Butterfly;
+          }
+        }
+      }
   }
 
   void onChangedWindType(int windType) {

@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/packages/common/src/isometric/node_size.dart';
 
 class IsometricAnimation {
-  var frame = 0;
+  var frame1 = 0;
   var frameWater = 0;
   var frameWaterHeight = 0;
   var frameWaterSrcX = 0.0;
@@ -14,16 +14,16 @@ class IsometricAnimation {
   var frameRainWater = 0;
   var frameTreePosition = 0;
   var rainPosition = 0.0;
-  var _next = 0;
+  var frame = 0;
   var rendersPerFrame = 3;
 
   void update() {
-    if (_next++ < rendersPerFrame)
+    if (frame++ < rendersPerFrame)
       return;
 
-    _next = 0;
+    frame = 0;
+    frame1++;
     frame2++;
-    frame++;
     frame6++;
     frame8++;
     frame16++;

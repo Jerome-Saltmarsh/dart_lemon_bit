@@ -34,6 +34,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite flame1;
   late final Sprite flame2;
   late final Sprite butterfly;
+  late final Sprite bat;
 
   late final CharacterSpriteGroup spriteGroup2Empty;
 
@@ -178,6 +179,7 @@ class IsometricImages with IsometricComponent {
     await _completerImages.future;
 
     loadSprite(name: 'sprites/butterfly/butterfly', mode: AnimationMode.loop).then((value) => butterfly = value);
+    loadSprite(name: 'sprites/bat/bat', mode: AnimationMode.bounce).then((value) => bat = value);
 
     itemTypeAtlases = {
       ItemType.Weapon: atlas_weapons,

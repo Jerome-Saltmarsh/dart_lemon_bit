@@ -44,6 +44,7 @@ class ParticleType {
   static const Glow = 42;
   static const Butterfly = 43;
   static const Trail = 44;
+  static const Bat = 45;
 
   static String getName(int particleType) => const {
       Smoke: 'Smoke',
