@@ -8,6 +8,7 @@ class IsometricScreen with IsometricComponent implements Updatable  {
   bool contains(Position position) {
     const Pad_Distance = 75.0;
     final rx = position.renderX;
+    final engine = this.engine;
 
     if (rx < engine.Screen_Left - Pad_Distance || rx > engine.Screen_Right + Pad_Distance)
       return false;

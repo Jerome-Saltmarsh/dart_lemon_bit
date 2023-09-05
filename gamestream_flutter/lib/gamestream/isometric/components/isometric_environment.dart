@@ -77,14 +77,15 @@ class IsometricEnvironment with IsometricComponent {
   }
 
   void onChangedNight(bool night){
+    final particles = this.particles.children;
       if (night){
-        for (final particle in particles.children) {
+        for (final particle in particles) {
           if (particle.type == ParticleType.Butterfly) {
             particle.type = ParticleType.Bat;
           }
         }
       } else {
-        for (final particle in particles.children) {
+        for (final particle in particles) {
           if (particle.type == ParticleType.Bat) {
             particle.type = ParticleType.Butterfly;
           }
