@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'dart:math';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
@@ -814,9 +815,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     nextParticleFrame--;
 
+    final children = this.children;
+    final scene = this.scene;
+
     for (final particle in children) {
       if (!particle.active) continue;
-      updateParticle(particle);
+      updateParticle(particle, scene);
       if (nextParticleFrame <= 0){
         particle.frame++;
       }
@@ -826,7 +830,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
   }
 
-  void updateParticle(Particle particle) {
+  void updateParticle(Particle particle, IsometricScene scene) {
     if (!particle.active)
       return;
 
@@ -908,6 +912,8 @@ class IsometricParticles with IsometricComponent implements Updatable {
       particle.deactivate();
       return;
     }
+
+
 
     if (bounce) {
       if (nodeType == NodeType.Water){

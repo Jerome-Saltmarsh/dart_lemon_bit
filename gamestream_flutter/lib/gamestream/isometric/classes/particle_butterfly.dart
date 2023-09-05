@@ -36,6 +36,8 @@ class ParticleButterfly extends ParticleRoam {
     if (moving && shouldChangeDestination){
       changeTarget();
     }
+
+    particles.render.projectShadow(this);
   }
 
   void toggleMoving() {
