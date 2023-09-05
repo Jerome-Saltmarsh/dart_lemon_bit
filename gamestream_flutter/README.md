@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- fix hover over player name 
 - particle crow
 - particle chicken
 - hot key add mark 1 2 3 4 
@@ -35,6 +36,10 @@ shift + alt + J     : backspace
 - player attributes dialog
 - optimize lights
 - fix set node light source refresh
+
+05.09.2023
+- butterfly takes off and land
+- butterfly get scared of players and take off
 
 02.09.2023
 - particle bat

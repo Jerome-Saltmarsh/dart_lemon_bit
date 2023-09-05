@@ -73,7 +73,7 @@ class IsometricEnvironment with IsometricComponent {
 
   void onChangedHour(int hour){
     scene.updateAmbientAlphaAccordingToTime();
-    night.value = hour < 6 || hour > 18;
+    night.value = hour < 6 || hour >= 18;
   }
 
   void onChangedNight(bool night){
