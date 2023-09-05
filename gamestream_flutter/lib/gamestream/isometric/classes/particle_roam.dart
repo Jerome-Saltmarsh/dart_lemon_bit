@@ -29,6 +29,6 @@ abstract class ParticleRoam extends Particle {
   void changeTarget(){
     targetX = startX + giveOrTake(roamRadius);
     targetY = startY + giveOrTake(roamRadius);
-    targetZ = startZ;
+    targetZ = z;
   }
 }

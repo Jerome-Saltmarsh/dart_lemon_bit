@@ -3,8 +3,8 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
-import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 
 import '../../../isometric/classes/position.dart';
 
@@ -1678,6 +1677,38 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     return nodeTypes[i];
   }
+
+  double getProjectionZ(Position vector3){
+
+    final x = vector3.x;
+    final y = vector3.y;
+    var z = vector3.z;
+    final nodeOrientations = this.nodeOrientations;
+
+    while (true) {
+      if (z < 0) return -1;
+      final nodeIndex =  getIndexXYZ(x, y, z);
+      final nodeOrientation =  nodeOrientations[nodeIndex];
+
+      if (const <int> [
+        NodeOrientation.None,
+        NodeOrientation.Radial,
+        NodeOrientation.Half_South,
+        NodeOrientation.Half_North,
+        NodeOrientation.Half_East,
+        NodeOrientation.Half_West,
+      ].contains(nodeOrientation)) {
+        z -= IsometricConstants.Node_Height;
+        continue;
+      }
+      if (z > Node_Height){
+        return z + (z % Node_Height);
+      } else {
+        return Node_Height;
+      }
+    }
+  }
+
 }
 
 int convertSecondsToAmbientAlpha(int totalSeconds) {

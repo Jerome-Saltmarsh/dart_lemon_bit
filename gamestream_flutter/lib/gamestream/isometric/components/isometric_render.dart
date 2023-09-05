@@ -623,10 +623,14 @@ class IsometricRender with IsometricComponent {
   }
 
   void projectShadow(Position v3){
+    final scene = this.scene;
     if (!scene.inBoundsPosition(v3)) return;
 
-    final z = getProjectionZ(v3);
+    final z = scene.getProjectionZ(v3);
     if (z < 0) return;
+    if (z > v3.z)
+      return;
+
     particles.spawnParticle(
       type: ParticleType.Shadow,
       x: v3.x,
@@ -639,35 +643,6 @@ class IsometricRender with IsometricComponent {
     );
   }
 
-  double getProjectionZ(Position vector3){
-
-    final x = vector3.x;
-    final y = vector3.y;
-    var z = vector3.z;
-
-    while (true) {
-      if (z < 0) return -1;
-      final nodeIndex =  scene.getIndexXYZ(x, y, z);
-      final nodeOrientation =  scene.nodeOrientations[nodeIndex];
-
-      if (const <int> [
-        NodeOrientation.None,
-        NodeOrientation.Radial,
-        NodeOrientation.Half_South,
-        NodeOrientation.Half_North,
-        NodeOrientation.Half_East,
-        NodeOrientation.Half_West,
-      ].contains(nodeOrientation)) {
-        z -= IsometricConstants.Node_Height;
-        continue;
-      }
-      if (z > Node_Height){
-        return z + (z % Node_Height);
-      } else {
-        return Node_Height;
-      }
-    }
-  }
 
   void flame({
     required double dstX,
