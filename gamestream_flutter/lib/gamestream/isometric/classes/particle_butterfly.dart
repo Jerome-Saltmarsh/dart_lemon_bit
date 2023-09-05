@@ -23,9 +23,8 @@ class ParticleButterfly extends ParticleRoam {
   var duration = 0;
   var mode = ButterflyMode.flying;
 
-
   static const changeTargetRadius = 5.0;
-  static const verticalSpeed = 0.7;
+  static const verticalSpeed = 1.5;
 
   ParticleButterfly({required super.x, required super.y, required super.z}) {
     type = ParticleType.Butterfly;
@@ -75,9 +74,17 @@ class ParticleButterfly extends ParticleRoam {
         break;
       case ButterflyMode.landed:
         if (duration-- <= 0){
-          mode = ButterflyMode.takingOff;
-          targetZ = z + Node_Height + Node_Height_Half;
-          moving = true;
+          takeOff();
+        } else {
+          final scene = particles.scene;
+          final characters = scene.characters;
+          final totalCharacters = scene.totalCharacters;
+          for (var i = 0; i < totalCharacters; i++){
+            final character = characters[i];
+            if (this.withinRadiusPosition(position: character, radius: 24)){
+              takeOff();
+            }
+          }
         }
         break;
       case ButterflyMode.takingOff:
@@ -93,6 +100,12 @@ class ParticleButterfly extends ParticleRoam {
     if (moving && particles.screen.contains(this)){
       particles.render.projectShadow(this);
     }
+  }
+
+  void takeOff() {
+    mode = ButterflyMode.takingOff;
+    targetZ = z + Node_Height + Node_Height_Half;
+    moving = true;
   }
 
   void updateBat(){

@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
-import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common/src.dart';
 import 'package:lemon_math/src.dart';
 

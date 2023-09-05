@@ -54,6 +54,12 @@ class Position implements Comparable<Position>{
 
   double getAngle(double x, double y) => angleBetween(this.x, this.y, x, y);
 
+  bool withinRadiusPosition({
+    required Position position,
+    required double radius,
+  }) =>
+    withinRadius(x: position.x, y: position.y, z: position.z, radius: radius);
+
   bool withinRadius({
     required double x,
     required double y,
