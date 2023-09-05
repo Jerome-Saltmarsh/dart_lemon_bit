@@ -19,11 +19,11 @@ abstract class ParticleRoam extends Particle {
     changeTarget();
   }
 
-  bool get shouldChangeDestination => withinRadius(
+  bool get closeToTarget => withinRadius(
     x: targetX,
     y: targetY,
     z: targetZ,
-    radius: 5,
+    radius: 3,
   );
 
   void changeTarget(){

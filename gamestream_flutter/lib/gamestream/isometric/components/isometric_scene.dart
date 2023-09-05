@@ -1709,6 +1709,44 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
+  int findNearestNodeType({
+    required int index,
+    required int nodeType,
+    required int radius,
+  }) {
+      final types = this.nodeTypes;
+
+      if (types[index] == nodeType){
+        return index;
+      }
+
+      final indexRow = getRow(index);
+      final indexColumn = getColumn(index);
+      final indexZ = getIndexZ(index);
+
+      for (var r = 1; r < radius; r++){
+        final maxZ = min(indexZ + r, totalZ);
+        final maxRow = min(indexRow + r, totalRows);
+        final maxColumn = min(indexColumn + r, totalColumns);
+
+        final startZ = max(indexZ - r, 0);
+        final startRow = max(indexRow - r, 0);
+        final startColumn = max(indexColumn - r, 0);
+
+        for (var z = startZ; z < maxZ; z++){
+          for (var row = startRow; row < maxRow; row++){
+            for (var column = startColumn; column < maxColumn; column++){
+              if (getTypeZRC(z, row, column) == nodeType){
+                return getIndexZRC(z, row, column);
+              }
+            }
+          }
+        }
+      }
+
+      return -1;
+  }
+
 }
 
 int convertSecondsToAmbientAlpha(int totalSeconds) {

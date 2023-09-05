@@ -2,6 +2,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_particles.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_math/src.dart';
 
@@ -40,8 +41,12 @@ class ParticleButterfly extends ParticleRoam {
   @override
   void update(IsometricParticles particles) {
 
+    if (moving && particles.screen.contains(this)){
+      particles.render.projectShadow(this);
+    }
+
     if (type == ParticleType.Bat){
-      updateBat();
+      updateBat(particles.scene);
     } else {
       updateButterfly(particles);
     }
@@ -56,7 +61,7 @@ class ParticleButterfly extends ParticleRoam {
           vx = 0;
           vy = 0;
           targetZ = particles.scene.getProjectionZ(this) + 0.1;
-        } else if (shouldChangeDestination){
+        } else if (closeToTarget){
           changeTarget();
         }
         break;
@@ -67,9 +72,7 @@ class ParticleButterfly extends ParticleRoam {
           mode = ButterflyMode.landed;
           duration = randomInt(300, 500);
           moving = false;
-          vx = 0;
-          vy = 0;
-          vz = 0;
+          stopVelocity();
         }
         break;
       case ButterflyMode.landed:
@@ -96,10 +99,6 @@ class ParticleButterfly extends ParticleRoam {
           changeTarget();
         }
     }
-
-    if (moving && particles.screen.contains(this)){
-      particles.render.projectShadow(this);
-    }
   }
 
   void takeOff() {
@@ -108,8 +107,62 @@ class ParticleButterfly extends ParticleRoam {
     moving = true;
   }
 
-  void updateBat(){
+  void updateBat(IsometricScene scene) {
 
+    switch (mode) {
+      case ButterflyMode.flying:
+        updateBatFlying(scene);
+        break;
+      case ButterflyMode.landing:
+        updateBatLanding();
+        break;
+      case ButterflyMode.landed:
+        updateBatLanded();
+        break;
+    }
+  }
+
+  void updateBatFlying(IsometricScene scene) {
+    moveVerticallyTowardsTargetZ();
+
+    if (duration-- <= 0){
+      setModeLanding(scene);
+    } else if (closeToTarget){
+      changeTarget();
+    }
+  }
+
+  void moveVerticallyTowardsTargetZ() {
+    if (targetZ > z){
+      z += verticalSpeed;
+    } else {
+      z -= verticalSpeed;
+    }
+  }
+
+  void setModeLanding(IsometricScene scene) {
+    final nearestTreeTop = scene.findNearestNodeType(
+      index: this.nodeIndex,
+      nodeType: NodeType.Tree_Top,
+      radius: 10,
+    );
+    if (nearestTreeTop == -1) {
+      return;
+    }
+
+    moving = true;
+    mode = ButterflyMode.landing;
+    targetX = scene.getIndexPositionX(nearestTreeTop);
+    targetY = scene.getIndexPositionY(nearestTreeTop);
+    targetZ = scene.getIndexPositionZ(nearestTreeTop);
+    rotation = getAngle(targetX, targetY);
+    setSpeed(rotation, speed);
+
+    if (targetZ < z){
+      vz = -verticalSpeed;
+    } else if (targetZ > z){
+      vz = verticalSpeed;
+    }
   }
 
   @override
@@ -123,5 +176,41 @@ class ParticleButterfly extends ParticleRoam {
     rotation = getAngle(targetX, targetY);
     setSpeed(rotation, speed);
     moving = true;
+  }
+
+  void updateBatLanding() {
+    moveVerticallyTowardsTargetZ();
+    if (closeToTarget){
+      setModeLanded();
+    }
+  }
+
+  void setModeLanded() {
+    mode = ButterflyMode.landed;
+    moving = false;
+    setRandomDuration(100, 300);
+    stopVelocity();
+  }
+
+  void setRandomDuration(int min, int max) {
+    duration = randomInt(min, max);
+  }
+
+  void stopVelocity() {
+    vx = 0;
+    vy = 0;
+    vz = 0;
+  }
+
+  void updateBatLanded() {
+     if (duration-- <= 0){
+       setBatModeFlying();
+     }
+  }
+
+  void setBatModeFlying() {
+    mode = ButterflyMode.flying;
+    changeTarget();
+    setRandomDuration(300, 500);
   }
 }

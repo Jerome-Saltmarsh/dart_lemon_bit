@@ -46,8 +46,8 @@ class ParticleWhisp extends ParticleRoam {
   }
 
   @override
-  bool get shouldChangeDestination =>
-      super.shouldChangeDestination || targetDuration > 400;
+  bool get closeToTarget =>
+      super.closeToTarget || targetDuration > 400;
 
   @override
   void changeTarget() {
@@ -56,7 +56,7 @@ class ParticleWhisp extends ParticleRoam {
   }
 
   void updateMovement() {
-    if (shouldChangeDestination){
+    if (closeToTarget){
       changeTarget();
     }
 
