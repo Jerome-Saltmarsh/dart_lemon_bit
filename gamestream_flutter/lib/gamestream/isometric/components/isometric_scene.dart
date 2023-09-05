@@ -633,6 +633,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int ambientAlpha,
     required Uint32List nodeColors,
     required Uint16List ambientStack,
+    required int ambientStackIndex,
   }){
     assert (index >= 0);
     assert (index < totalNodes);
@@ -664,7 +665,6 @@ class IsometricScene with IsometricComponent implements Updatable {
       print('applyAmbient() invalid alpha: $alpha');
     }
 
-    ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
     nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
   }
@@ -840,7 +840,10 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolations = this.interpolations;
     final nodeColors = this.nodeColors;
     final ambientStack = this.ambientStack;
+    final bakeStackStartIndex = this.bakeStackStartIndex;
+    final bakeStackTorchSize = this.bakeStackTorchSize;
 
+    var ambientStackIndex = this.ambientStackIndex;
 
     final totalColumns = this.totalColumns;
     final area = this.area;
@@ -869,6 +872,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         final brightness = bakeStackBrightness[j];
         final index = bakeStackIndex[j];
         final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
+        ambientStackIndex++;
         applyAmbient(
           index: index,
           alpha: interpolate(ambient, alpha, intensity).toInt().clamp(0, 255),
@@ -876,16 +880,12 @@ class IsometricScene with IsometricComponent implements Updatable {
           ambientRGB: ambientRGB,
           nodeColors: nodeColors,
           ambientStack: ambientStack,
+          ambientStackIndex: ambientStackIndex,
         );
       }
     }
-  }
 
-  var bakeColors = Uint32List(0);
-
-  void resetNodeToBake(int index){
-    final bakeColor = bakeColors[index];
-    
+    this.ambientStackIndex = ambientStackIndex;
   }
 
   void applyEmissionEditorSelectedNode() {
@@ -1100,6 +1100,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
 
       if (ambient){
+        ambientStackIndex++;
         applyAmbient(
           index: index,
           alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
@@ -1107,6 +1108,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           ambientAlpha: ambientAlpha,
           nodeColors: nodeColors,
           ambientStack: ambientStack,
+          ambientStackIndex: ambientStackIndex,
         );
       } else {
         applyColor(

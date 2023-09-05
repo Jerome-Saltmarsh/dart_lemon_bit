@@ -17,6 +17,7 @@ shift + alt + J     : backspace
 - character wolf
 - character floating flaming skull
 - character skeleton
+- character witch
 - body type chain mail
 - kid shoe type
 - helm type hoodie
