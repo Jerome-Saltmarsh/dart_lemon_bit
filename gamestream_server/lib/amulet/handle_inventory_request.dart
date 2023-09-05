@@ -1,6 +1,6 @@
 import 'package:gamestream_server/packages.dart';
 
-import 'mmo_player.dart';
+import 'amulet_player.dart';
 
 void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
   if (arguments.isEmpty) return;

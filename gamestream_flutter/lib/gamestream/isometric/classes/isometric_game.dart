@@ -146,7 +146,7 @@ class IsometricGame extends Game {
     }
 
     if (options.editMode){
-      editor.onKeyPressedModeEdit(key);
+      editor.onKeyPressed(key);
       return;
     }
 

@@ -527,8 +527,15 @@ class Scene {
 
     final markValue = marks[listIndex];
     final markIndex = MarkType.getIndex(markValue);
-    final newMarkValue = markIndex | (markType << 16);
+    final newMarkValue = MarkType.build(index: markIndex, type: markType);
     marks[listIndex] = newMarkValue;
     return newMarkValue;
+  }
+
+  void addMark({required int index, required int markType}) {
+    if (index < 0){
+      throw Exception('invalid index');
+    }
+    marks.add(MarkType.build(index: index, type: markType));
   }
 }

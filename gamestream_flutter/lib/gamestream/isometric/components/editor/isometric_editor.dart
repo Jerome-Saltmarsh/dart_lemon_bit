@@ -141,7 +141,7 @@ class IsometricEditor with IsometricComponent {
   double get posZ => z * Node_Height;
 
 
-  void onKeyPressedModeEdit(int key) {
+  void onKeyPressed(int key) {
     switch (key) {
       case KeyCode.Delete:
         delete();
@@ -202,7 +202,47 @@ class IsometricEditor with IsometricComponent {
         }
         cursorColumnIncrease();
         break;
+      case KeyCode.Digit_1:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[0],
+        );
+        break;
+      case KeyCode.Digit_2:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[1],
+        );
+        break;
+      case KeyCode.Digit_3:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[2],
+        );
+        break;
+      case KeyCode.Digit_4:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[3],
+        );
+        break;
+      case KeyCode.Digit_5:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[4],
+        );
+        break;
+      case KeyCode.Digit_6:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[5],
+        );
+        break;
     }
+  }
+
+  void addMark({required int index, required int markType}){
+    network.sendNetworkRequest(NetworkRequest.Scene, '${NetworkRequestScene.Add_Mark.index} $index $markType');
   }
 
 

@@ -188,11 +188,11 @@ class WebSocketConnection with ByteReader {
             break;
 
           case EditorRequest.Mark_Add:
-            final nodeIndex = parseArg2(arguments);
-            if (nodeIndex == null)
+            final markIndex = parseArg2(arguments);
+            if (markIndex == null)
               return;
 
-            editor.addMark(nodeIndex);
+            editor.addMark(markIndex);
             break;
 
           case EditorRequest.Mark_Delete:
@@ -711,6 +711,22 @@ class WebSocketConnection with ByteReader {
     if (!isValidIndex(sceneRequestIndex, NetworkRequestScene.values)){
       errorInvalidClientRequest();
       return;
+    }
+
+    final sceneRequest = NetworkRequestScene.values[sceneRequestIndex];
+
+    switch (sceneRequest){
+      case NetworkRequestScene.Add_Mark:
+        final index = parseArg2(arguments);
+        final markType = parseArg3(arguments);
+
+        if (index == null || markType == null){
+          return;
+        }
+
+        player.scene.addMark(index: index, markType: markType);
+        player.game.sortMarksAndDispatch();
+        break;
     }
   }
 

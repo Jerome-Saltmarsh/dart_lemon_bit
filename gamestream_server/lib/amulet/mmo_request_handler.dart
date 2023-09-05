@@ -1,7 +1,7 @@
 import 'package:gamestream_server/gamestream/websocket/websocket_connection.dart';
 import 'package:gamestream_server/packages.dart';
 
-import 'mmo_player.dart';
+import 'amulet_player.dart';
 
 extension MMORequestHandler on WebSocketConnection {
 

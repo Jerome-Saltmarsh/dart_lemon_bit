@@ -22,6 +22,9 @@ class MarkType {
 
   static String getTypeName(int markValue) => getName(getType(markValue));
 
+  static int build({required int index, required int type}) =>
+      index | type << 16;
+
   static getName(int markType) => const {
     Spawn_Player: 'Spawn Player',
     Spawn_Fallen: 'Spawn Fallen',

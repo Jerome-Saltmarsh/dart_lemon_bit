@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:gamestream_server/amulet/mmo_player.dart';
+import 'package:gamestream_server/amulet/amulet_player.dart';
 import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/packages.dart';
 

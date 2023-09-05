@@ -13,9 +13,6 @@ shift + alt + J     : backspace
 
 [TODO]
 - fix hover over player name 
-- particle crow
-- particle chicken
-- hot key add mark 1 2 3 4 
 - fix fire animation speed
 - character wolf
 - character floating flaming skull
@@ -36,8 +33,11 @@ shift + alt + J     : backspace
 - player attributes dialog
 - optimize lights
 - fix set node light source refresh
+- particle crow
+- particle chicken
 
 05.09.2023
+- hot key add mark 1 2 3 4
 - butterfly takes off and land
 - butterfly get scared of players and take off
 
