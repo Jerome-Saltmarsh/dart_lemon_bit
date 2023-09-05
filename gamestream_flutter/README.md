@@ -12,7 +12,6 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- particle bat
 - particle crow
 - particle chicken
 - hot key add mark 1 2 3 4 
@@ -38,6 +37,7 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 
 02.09.2023
+- particle bat
 - particle glow change color
 - add tail to particle glow
 - particle butterfly

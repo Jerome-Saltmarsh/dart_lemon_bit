@@ -8,7 +8,7 @@ import 'package:lemon_math/src.dart';
 class ParticleButterfly extends ParticleRoam {
 
   var speed = 1.0;
-  var moving = true;
+  var moving = false;
   var duration = 0;
 
   static const changeTargetRadius = 5.0;
@@ -21,34 +21,32 @@ class ParticleButterfly extends ParticleRoam {
     durationTotal = -1;
     nodeCollidable = false;
     active = true;
-    moving = randomBool();
-    duration = randomInt(300, 500);
-    changeTarget();
+    duration = randomInt(0, 500);
+
+
   }
 
   @override
   void update(IsometricParticles particles) {
-    duration--;
-    if (duration <= 0){
+    if (duration-- <= 0){
       duration = randomInt(300, 500);
-      moving = !moving;
-
-      if (moving){
-        changeTarget();
-      } else {
-        vx = 0;
-        vy = 0;
-        vz = 0;
-        return;
-      }
+      toggleMoving();
     }
 
-    if (!moving){
-      return;
-    }
-
-    if (shouldChangeDestination){
+    if (moving && shouldChangeDestination){
       changeTarget();
+    }
+  }
+
+  void toggleMoving() {
+    moving = !moving;
+
+    if (moving){
+      changeTarget();
+    } else {
+      vx = 0;
+      vy = 0;
+      vz = 0;
     }
   }
 
@@ -62,5 +60,6 @@ class ParticleButterfly extends ParticleRoam {
     super.changeTarget();
     rotation = getAngle(targetX, targetY);
     setSpeed(rotation, speed);
+    moving = true;
   }
 }
