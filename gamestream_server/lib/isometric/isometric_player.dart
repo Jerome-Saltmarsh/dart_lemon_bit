@@ -24,6 +24,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   static const Cache_Length = 200;
 
+  var _playerMode = PlayerMode.playing;
   var _cacheAimTargetHealthPercentage = 0.0;
   var _debugging = false;
   var mouseLeftDownDuration = 0;
@@ -59,7 +60,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var positionCacheZ = 0;
   var cacheIndex = 0;
 
-  late final EditorState editor;
+  late final editor = EditorState(this);
   final cacheStateB = Uint8List(Cache_Length);
   final cacheStateA = Uint32List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);
@@ -88,7 +89,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     weaponType: WeaponType.Unarmed,
     weaponDamage: 1,
   ){
-    editor  = EditorState(this);
     this.autoTarget = autoTargetNearbyEnemies;
     id = game.playerId++;
   }
@@ -1327,5 +1327,18 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.Name);
     writeString(name);
+  }
+
+  int get playerMode => _playerMode;
+
+  set playerMode(int value){
+    _playerMode = value;
+    writePlayerMode();
+  }
+
+  void writePlayerMode() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.Player_Mode);
+    writeByte(_playerMode);
   }
 }

@@ -9,4 +9,5 @@ class PlayerResponse {
   static const Aim_Target_Action = 6;
   static const Complexion = 7;
   static const Name = 8;
+  static const Player_Mode = 9;
 }

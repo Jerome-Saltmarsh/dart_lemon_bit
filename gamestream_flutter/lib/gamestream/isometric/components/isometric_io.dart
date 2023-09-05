@@ -66,7 +66,6 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       return;
     }
 
-    readPlayerInputEdit();
     applyComputerInputToUpdateBuffer();
     sendUpdateBuffer();
   }
@@ -209,6 +208,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   /// [7] Space
   void applyComputerInputToUpdateBuffer() {
 
+    final engine = this.engine;
     final mouseX = engine.mouseWorldX.toInt();
     final mouseY = engine.mouseWorldY.toInt();
     final screenLeft = engine.Screen_Left.toInt();
@@ -247,7 +247,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       | changeScreenRight << 4
       | changeScreenBottom << 6;
 
-    writeByte(io.getComputerInputAsByte());
+    writeByte(getComputerInputAsByte());
     writeByte(compress1);
     writeByte(compress2);
 
@@ -311,20 +311,6 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       inputMode.value = engine.deviceIsComputer
           ? InputMode.Keyboard
           : InputMode.Touch;
-
-
-  void readPlayerInputEdit() {
-    if (!options.edit.value)
-      return;
-
-    if (engine.keyPressedSpace) {
-      engine.panCamera();
-    }
-    if (getInputDirectionKeyboard() != IsometricDirection.None) {
-      // actionSetModePlay();
-    }
-    return;
-  }
 
 }
 

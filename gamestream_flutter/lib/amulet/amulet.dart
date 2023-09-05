@@ -134,6 +134,9 @@ class Amulet extends IsometricGame {
   void onKeyPressed(int key) {
     super.onKeyPressed(key);
 
+    if (editMode)
+      return;
+
     if (key == KeyCode.Q){
       network.sendAmuletRequest.toggleInventoryOpen();
       return;
