@@ -277,6 +277,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     var stackI = this.ambientStackIndex; // cache in cpu
     final ambientColor = this.ambientColor; // cache in cpu
     final ambientStack = this.ambientStack; // cache in cpu
+    final nodeColors = this.nodeColors;
     while (stackI >= 0) {
       final index = ambientStack[stackI];
       nodeColors[index] = ambientColor;
