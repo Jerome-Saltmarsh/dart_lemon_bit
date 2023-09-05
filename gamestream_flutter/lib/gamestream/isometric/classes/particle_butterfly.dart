@@ -26,6 +26,8 @@ class ParticleButterfly extends ParticleRoam {
 
   static const changeTargetRadius = 5.0;
   static const verticalSpeed = 1.5;
+  static const verticalSpeedBat = 0.3;
+  static const speedBat = 1.5;
 
   ParticleButterfly({required super.x, required super.y, required super.z}) {
     type = ParticleType.Butterfly;
@@ -72,7 +74,7 @@ class ParticleButterfly extends ParticleRoam {
           mode = ButterflyMode.landed;
           duration = randomInt(300, 500);
           moving = false;
-          stopVelocity();
+          stop();
         }
         break;
       case ButterflyMode.landed:
@@ -109,6 +111,14 @@ class ParticleButterfly extends ParticleRoam {
 
   void updateBat(IsometricScene scene) {
 
+    if (moving){
+      moveTowardsTargetVertically();
+      if (closeToTargetHorizontally){
+        vx = 0;
+        vy = 0;
+      }
+    }
+
     switch (mode) {
       case ButterflyMode.flying:
         updateBatFlying(scene);
@@ -123,8 +133,6 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void updateBatFlying(IsometricScene scene) {
-    moveVerticallyTowardsTargetZ();
-
     if (duration-- <= 0){
       setModeLanding(scene);
     } else if (closeToTarget){
@@ -132,11 +140,11 @@ class ParticleButterfly extends ParticleRoam {
     }
   }
 
-  void moveVerticallyTowardsTargetZ() {
+  void moveTowardsTargetVertically() {
     if (targetZ > z){
-      z += verticalSpeed;
+      z += verticalSpeedBat;
     } else {
-      z -= verticalSpeed;
+      z -= verticalSpeedBat;
     }
   }
 
@@ -155,14 +163,7 @@ class ParticleButterfly extends ParticleRoam {
     targetX = scene.getIndexPositionX(nearestTreeTop);
     targetY = scene.getIndexPositionY(nearestTreeTop);
     targetZ = scene.getIndexPositionZ(nearestTreeTop);
-    rotation = getAngle(targetX, targetY);
-    setSpeed(rotation, speed);
-
-    if (targetZ < z){
-      vz = -verticalSpeed;
-    } else if (targetZ > z){
-      vz = verticalSpeed;
-    }
+    faceTargetAndMove();
   }
 
   @override
@@ -173,13 +174,16 @@ class ParticleButterfly extends ParticleRoam {
   @override
   void changeTarget(){
     super.changeTarget();
+    faceTargetAndMove();
+  }
+
+  void faceTargetAndMove() {
     rotation = getAngle(targetX, targetY);
     setSpeed(rotation, speed);
     moving = true;
   }
 
   void updateBatLanding() {
-    moveVerticallyTowardsTargetZ();
     if (closeToTarget){
       setModeLanded();
     }
@@ -189,14 +193,14 @@ class ParticleButterfly extends ParticleRoam {
     mode = ButterflyMode.landed;
     moving = false;
     setRandomDuration(100, 300);
-    stopVelocity();
+    stop();
   }
 
   void setRandomDuration(int min, int max) {
     duration = randomInt(min, max);
   }
 
-  void stopVelocity() {
+  void stop() {
     vx = 0;
     vy = 0;
     vz = 0;
@@ -209,8 +213,11 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void setBatModeFlying() {
-    mode = ButterflyMode.flying;
     changeTarget();
-    setRandomDuration(300, 500);
+    mode = ButterflyMode.flying;
+    targetZ = z + Node_Height;
+    setRandomDuration(300, 600);
   }
+
+  bool get closeToTargetHorizontally => getDistanceXYSquared(x, y, targetX, targetY) < 8;
 }
