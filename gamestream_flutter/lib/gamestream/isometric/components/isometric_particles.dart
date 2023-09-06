@@ -831,12 +831,26 @@ class IsometricParticles with IsometricComponent implements Updatable {
       }
     }
 
+    final sceneLengthRows = scene.lengthRows;
+    final sceneLengthColumns = scene.lengthColumns;
+    final sceneLengthZ = scene.lengthZ;
+
     for (final particle in children) {
       if (!particle.active)
         continue;
 
-      // TODO OPTIMIZE
-      if (scene.outOfBoundsPosition(particle)){
+      final x = particle.x;
+      final y = particle.y;
+      final z = particle.z;
+
+      if (
+        x < 0 ||
+        y < 0 ||
+        z < 0 ||
+        x > sceneLengthRows ||
+        y > sceneLengthColumns ||
+        z > sceneLengthZ
+      ){
         particle.deactivate();
         continue;
       }
