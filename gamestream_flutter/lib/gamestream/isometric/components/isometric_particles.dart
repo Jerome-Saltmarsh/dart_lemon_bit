@@ -90,6 +90,11 @@ class IsometricParticles with IsometricComponent implements Updatable {
        ParticleType.Blood,
        ParticleType.Water_Drop,
     ].contains(type);
+
+    if (particle.deactiveOnNodeCollision){
+      particle.nodeCollidable = true;
+    }
+
     particle.animation = animation;
     particle.emitsLight = false;
     particle.delay = delay;
@@ -835,6 +840,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final sceneLengthColumns = scene.lengthColumns;
     final sceneLengthZ = scene.lengthZ;
 
+    final sceneArea = scene.area;
+    final sceneColumns = scene.totalColumns;
+    final nodeOrientations = scene.nodeOrientations;
+
     for (final particle in children) {
       if (!particle.active)
         continue;
@@ -847,20 +856,28 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x < 0 ||
         y < 0 ||
         z < 0 ||
-        x > sceneLengthRows ||
-        y > sceneLengthColumns ||
-        z > sceneLengthZ
+        x >= sceneLengthRows ||
+        y >= sceneLengthColumns ||
+        z >= sceneLengthZ
       ){
         particle.deactivate();
         continue;
       }
 
-      updateParticle(particle, scene);
+      final indexX = x ~/ Node_Size;
+      final indexY = y ~/ Node_Size;
+      final indexZ = z ~/ Node_Size_Half;
+
+      final index = (indexZ * sceneArea) + (indexX * sceneColumns) + indexY;
+      final nodeOrientation = nodeOrientations[index];
+
+      particle.nodeIndex = index;
+      updateParticle(particle, scene, index, nodeOrientation);
     }
   }
 
   // TODO Optimize
-  void updateParticle(Particle particle, IsometricScene scene) {
+  void updateParticle(Particle particle, IsometricScene scene, int index, int nodeOrientation) {
     assert (particle.active);
 
     if (particle.delay > 0) {
@@ -893,22 +910,11 @@ class IsometricParticles with IsometricComponent implements Updatable {
       return;
     }
 
-    final index = scene.getIndexPosition(particle);
-
     assert (index >= 0);
     assert (index < scene.totalNodes);
 
-    particle.nodeIndex = index;
-    final nodeType = scene.nodeTypes[index];
-    particle.nodeType = nodeType;
-    final nodeCollision = particle.nodeCollidable &&
-          !const [
-            NodeType.Empty,
-            NodeType.Rain_Landing,
-            NodeType.Rain_Falling,
-            NodeType.Grass_Long,
-            NodeType.Fireplace,
-          ].contains(nodeType);
+    final nodeCollision = nodeOrientation != NodeOrientation.None && particle.nodeCollidable;
+
     if (nodeCollision) {
       if (particle.deactiveOnNodeCollision){
         particle.deactivate();
@@ -933,7 +939,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     particle.applyMotion();
 
     if (bounce) {
-      if (nodeType == NodeType.Water){
+      if (nodeOrientation == NodeType.Water){
         return particle.deactivate();
       }
       if (particle.vz < -0.1){
@@ -943,7 +949,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       }
     }
     particle.update(this);
-    // particle.applyLimits();
   }
 
   void sort(){

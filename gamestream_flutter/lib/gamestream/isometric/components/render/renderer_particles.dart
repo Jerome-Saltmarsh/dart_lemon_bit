@@ -27,14 +27,15 @@ class RendererParticles extends RenderGroup {
     final dstX = particle.renderX;
     final dstY = particle.renderY;
 
-      assert (particle.active);
-      assert (particle.delay <= 0);
-      assert (dstX > engine.Screen_Left - 50);
-      assert (dstX < engine.Screen_Right + 50);
-      assert (dstY > engine.Screen_Top - 50);
-      assert (dstY < engine.Screen_Bottom + 50);
+    assert(particle.active);
+    assert(particle.delay <= 0);
 
-      final particleType = particle.type;
+    assert(dstX > engine.Screen_Left - 50);
+    assert(dstX < engine.Screen_Right + 50);
+    assert(dstY > engine.Screen_Top - 50);
+    assert(dstY < engine.Screen_Bottom + 50);
+
+    final particleType = particle.type;
 
       if (const [
         ParticleType.Blood,
@@ -93,9 +94,6 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Glow:
-          // final nodeColor = scene.getColor(particle.nodeIndex);
-          // final nodeAlpha = getAlpha(nodeColor);
-          // final perc = ((nodeAlpha / 255) * 4).toInt() * 8;
         final color = particle.emissionColor;
           engine.renderSprite(
             image: images.atlas_nodes,
@@ -125,14 +123,13 @@ class RendererParticles extends RenderGroup {
 
           if (particle is ParticleButterfly){
             final direction = IsometricDirection.fromRadian(particle.rotation);
-            // render.textPosition(particle, direction, offsetY: -20);
             render.sprite(
               sprite: sprite,
               frame: sprite.getFrame(
                   row: IsometricDirection.toInputDirection(direction),
                   column: particle.moving ? animation.frame1 % 2 : 0,
               ),
-              color: scene.getColor(particle.nodeIndex),
+              color: scene.getColor(particle.nodeIndex), // TODO Optimize
               scale: 0.2,
               dstX: dstX,
               dstY: dstY,
@@ -660,14 +657,17 @@ class RendererParticles extends RenderGroup {
     final minY = engine.Screen_Top - 50;
     final maxY = engine.Screen_Bottom + 50;
     final particles = this.particles.children;
+    final scene = this.scene;
+    final total = this.total;
 
     while (index < total) {
       particle = particles[index++];
-      if (particle.delay > 0 || !particle.active) continue;
+      if (!particle.active || particle.delay > 0) continue;
       final dstX = particle.renderX;
       if (dstX < minX || dstX > maxX) continue;
       final dstY = particle.renderY;
       if (dstY < minY || dstY > maxY) continue;
+      // TODO Optimize
       if (!scene.isPerceptiblePosition(particle)) continue;
       order = particle.sortOrder;
       index--;
