@@ -3,14 +3,12 @@ import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:gamestream_server/gamestream/websocket/websocket_connection.dart';
 import 'package:gamestream_server/packages.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../isometric.dart';
-import 'core/game.dart';
-import 'core/player.dart';
-import 'firestore/firestore.dart';
+import 'classes/src.dart';
+import 'firestore.dart';
 import '../editor/isometric_editor.dart';
 
 class GamestreamServer {
@@ -21,7 +19,7 @@ class GamestreamServer {
   final games = <Game>[];
   final isometricScenes = Scenes();
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
-  final connections = <WebSocketConnection>[];
+  final connections = <Connection>[];
 
   var connectionsTotal = 0;
   var frame = 0;
@@ -151,14 +149,14 @@ class GamestreamServer {
   }
 
   void onConnection(WebSocketChannel webSocketChannel) {
-    final connection = WebSocketConnection(webSocketChannel, this);
+    final connection = Connection(webSocketChannel, this);
     connections.add(connection);
     connection.onDone = () => onConnectionDone(connection);
     connectionsTotal++;
     print("Connection Added. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
   }
 
-  void onConnectionDone(WebSocketConnection connection){
+  void onConnectionDone(Connection connection){
     connections.remove(connection);
     print("Connection Done. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
   }

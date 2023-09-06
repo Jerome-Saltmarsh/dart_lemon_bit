@@ -1459,8 +1459,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   void removeGameObjectById(int id )=>
       gameObjects.removeWhere((element) => element.id == id);
 
-  /// TODO Optimize
   void updateGameObjects() {
+    final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       gameObject.update();

@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- glove type leather
 - fix hover over player name 
 - fix fire animation speed
 - character wolf
@@ -21,18 +22,15 @@ shift + alt + J     : backspace
 - body type chain mail
 - kid shoe type
 - helm type hoodie
-- glove type leather
 - glove type silk
 - set player name
 - player persistence
 - player creation dialog
 - kid hair type
 - kid hair color
-- kid state hurt
 - stash
 - store
 - player attributes dialog
-- optimize lights
 - fix set node light source refresh
 - particle crow
 - particle chicken

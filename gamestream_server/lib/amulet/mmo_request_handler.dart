@@ -1,9 +1,9 @@
-import 'package:gamestream_server/gamestream/websocket/websocket_connection.dart';
+import 'package:gamestream_server/gamestream/classes/connection.dart';
 import 'package:gamestream_server/packages.dart';
 
 import 'amulet_player.dart';
 
-extension MMORequestHandler on WebSocketConnection {
+extension MMORequestHandler on Connection {
 
   void handleNetworkRequestAmulet(List<String> arguments){
 

@@ -1,9 +1,9 @@
 import 'package:gamestream_server/editor/isometric_editor.dart';
-import 'package:gamestream_server/gamestream/websocket/websocket_connection.dart';
+import 'package:gamestream_server/gamestream.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/packages.dart';
 
-extension IsometricRequestReader on WebSocketConnection {
+extension IsometricRequestReader on Connection {
 
   void readIsometricRequest(List<String> arguments){
     final player = this.player;

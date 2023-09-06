@@ -15,9 +15,10 @@ import 'isometric_component.dart';
 class IsometricParticles with IsometricComponent implements Updatable {
 
   static const windStrengthMultiplier = 0.003;
+
+  var maxVelocity = 1.25;
   var windy = false;
   var windStrength = 0.0;
-  var maxVelocity = 1.25;
   var nextParticleFrame = 0;
   var nodeType = 0;
 
@@ -801,7 +802,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
 
+    final scene = this.scene;
+    final children = this.children;
     final wind = environment.wind.value;
+
     windStrength = wind * windStrengthMultiplier;
     windy = wind != 0;
     maxVelocity = 0.3 * wind;
@@ -815,32 +819,38 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     nextParticleFrame--;
 
-    final children = this.children;
-    final scene = this.scene;
+    if (nextParticleFrame <= 0){
 
-    for (final particle in children) {
-      if (!particle.active) continue;
-      updateParticle(particle, scene);
-      if (nextParticleFrame <= 0){
+      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
+
+      for (final particle in children) {
+        if (!particle.active)
+          continue;
+
         particle.frame++;
       }
     }
-    if (nextParticleFrame <= 0) {
-      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
+
+    for (final particle in children) {
+      if (!particle.active)
+        continue;
+
+      // TODO OPTIMIZE
+      if (scene.outOfBoundsPosition(particle)){
+        particle.deactivate();
+        continue;
+      }
+
+      updateParticle(particle, scene);
     }
   }
 
+  // TODO Optimize
   void updateParticle(Particle particle, IsometricScene scene) {
-    if (!particle.active)
-      return;
+    assert (particle.active);
 
     if (particle.delay > 0) {
       particle.delay--;
-      return;
-    }
-
-    if (scene.outOfBoundsPosition(particle)){
-      particle.deactivate();
       return;
     }
 
@@ -907,13 +917,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     final bounce = nodeCollision && particle.vz < 0;
     particle.applyMotion();
-
-    if (scene.outOfBoundsPosition(particle)){
-      particle.deactivate();
-      return;
-    }
-
-
 
     if (bounce) {
       if (nodeType == NodeType.Water){

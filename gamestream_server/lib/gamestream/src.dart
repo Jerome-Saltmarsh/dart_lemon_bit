@@ -1,7 +1,6 @@
 
 library;
 
-export 'core/src.dart';
-export 'firestore/firestore.dart';
-export 'websocket/src.dart';
+export 'classes/src.dart';
+export 'firestore.dart';
 export 'gamestream_server.dart';

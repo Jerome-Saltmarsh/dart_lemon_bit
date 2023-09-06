@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:gamestream_server/amulet.dart';
 import 'package:gamestream_server/editor/isometric_editor.dart';
 import 'package:gamestream_server/gamestream/src.dart';
-import 'package:gamestream_server/gamestream/websocket/extensions/isometric_request_reader.dart';
+import 'package:gamestream_server/isometric/isometric_request_reader.dart';
 import 'package:gamestream_server/isometric/scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/packages.dart';
@@ -15,15 +15,17 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 
-class WebSocketConnection with ByteReader {
-  final GamestreamServer engine;
+class Connection with ByteReader {
+
+  final GamestreamServer server;
+  final errorWriter = ByteWriter();
   final started = DateTime.now();
+
   late WebSocketChannel webSocket;
   late WebSocketSink sink;
   late StreamSubscription subscription;
-  Player? _player;
-  final errorWriter = ByteWriter();
 
+  Player? _player;
   Function? onDone;
 
   int? arg0;
@@ -34,7 +36,7 @@ class WebSocketConnection with ByteReader {
 
   Player? get player => _player;
 
-  WebSocketConnection(this.webSocket, this.engine){
+  Connection(this.webSocket, this.server){
     sink = webSocket.sink;
 
     sink.done.then((value){
@@ -88,7 +90,6 @@ class WebSocketConnection with ByteReader {
     }
     throw Exception("Invalid arg type");
   }
-
 
   void onDataStringArray(List<String> arguments) {
     if (arguments.isEmpty) {
@@ -269,7 +270,7 @@ class WebSocketConnection with ByteReader {
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
             }
-            engine.isometricScenes.saveSceneToFile(game.scene);
+            server.isometricScenes.saveSceneToFile(game.scene);
             break;
 
           case EditorRequest.Modify_Canvas_Size:
@@ -648,7 +649,7 @@ class WebSocketConnection with ByteReader {
       return;
     }
     final gameType = GameType.values[gameTypeIndex];
-    _player = engine.joinGameByType(gameType);
+    _player = server.joinGameByType(gameType);
   }
 
   void cancelSubscription() {
