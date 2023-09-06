@@ -929,7 +929,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       }
     }
     particle.update(this);
-    particle.applyLimits();
+    // particle.applyLimits();
   }
 
   void sort(){

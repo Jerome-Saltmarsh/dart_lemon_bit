@@ -90,16 +90,16 @@ class Particle extends Position {
     rotationVelocity *= rotationFriction;
   }
 
-  void applyLimits(){
-    if (scale < 0) {
-      scale = 0;
-      deactivate();
-    }
-    if (z <= 0) {
-      z = 0;
-      deactivate();
-    }
-  }
+  // void applyLimits(){
+  //   if (scale < 0) {
+  //     scale = 0;
+  //     deactivate();
+  //   }
+  //   if (z <= 0) {
+  //     z = 0;
+  //     deactivate();
+  //   }
+  // }
 
   @override
   String toString() {
