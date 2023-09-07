@@ -205,11 +205,11 @@ class IsometricImages with IsometricComponent {
 
     spriteGroupSkeleton = CharacterSpriteGroup(
       idle: await loadSprite(name: 'sprites/skeleton/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/skeleton/walking', mode: AnimationMode.loop),
+      running: await loadSprite(name: 'sprites/skeleton/walk', mode: AnimationMode.loop),
       dead: await loadSprite(name: 'sprites/skeleton/dead', mode: AnimationMode.single),
-      strike: await loadSprite(name: 'sprites/skeleton/firing', mode: AnimationMode.single),
+      strike: await loadSprite(name: 'sprites/skeleton/fire', mode: AnimationMode.single),
       hurt: await loadSprite(name: 'sprites/skeleton/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'sprites/skeleton/firing', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'sprites/skeleton/fire', mode: AnimationMode.single),
       change: emptySprite,
     );
 

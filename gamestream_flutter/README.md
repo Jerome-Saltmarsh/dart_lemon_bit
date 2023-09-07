@@ -12,7 +12,6 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- character skeleton
 - glove type leather
 - fix hover over player name 
 - fix fire animation speed
@@ -34,6 +33,9 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 - particle crow
 - particle chicken
+
+07.09.2023
+- character skeleton
 
 06.09.2023
 - optimize update particles
