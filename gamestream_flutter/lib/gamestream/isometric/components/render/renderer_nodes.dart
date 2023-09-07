@@ -2759,6 +2759,26 @@ class RendererNodes extends RenderGroup {
           colorAbove: colorAbove,
         );
         break;
+      case NodeOrientation.Column_Bottom_Left:
+        renderColumn(
+          colorSouth: colorSouth,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY + 16,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+        );
+        break;
+      case NodeOrientation.Column_Top_Left:
+        renderColumn(
+          colorSouth: colorSouth,
+          srcY: srcY,
+          dstX: dstX - 16,
+          dstY: dstY,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+        );
+        break;
     }
   }
 
