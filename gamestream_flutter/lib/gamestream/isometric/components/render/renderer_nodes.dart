@@ -2728,6 +2728,43 @@ class RendererNodes extends RenderGroup {
           dstY: dstY - Node_Height,
         );
         break;
+
+      case NodeOrientation.Column_Center_Center:
+
+        // west
+        engine.render(
+          color: colorSouth,
+          srcLeft: 65,
+          srcTop: srcY + 17,
+          srcRight: 72,
+          srcBottom: srcY + 48,
+          scale: 1.0,
+          rotation: 0,
+          dstX: dstX - Cell_Size_Half,
+          dstY: dstY + 4,
+        );
+
+        // south
+        engine.render(
+          color: colorWest,
+          srcLeft: 74,
+          srcTop: srcY + 16,
+          srcRight: 74 + 8,
+          srcBottom: srcY + 48,
+          scale: 1.0,
+          rotation: 0,
+          dstX: dstX ,
+          dstY: dstY,
+        );
+
+        renderCellTop(
+          srcY: srcY,
+          dstX: dstX - Cell_South_Width,
+          dstY: dstY - 4,
+          color: colorAbove,
+        );
+
+        break;
     }
   }
 
