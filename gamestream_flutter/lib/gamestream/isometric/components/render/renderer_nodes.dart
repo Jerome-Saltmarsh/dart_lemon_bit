@@ -880,6 +880,7 @@ class RendererNodes extends RenderGroup {
      final playerIndexZ = player.indexZ;
      var searchIndex = i + (area * playerIndexZ);
      addVisible3D(searchIndex);
+     final nodeOrientations = this.nodeOrientations;
 
      var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
      var gapReached = false;
@@ -1069,9 +1070,9 @@ class RendererNodes extends RenderGroup {
             dstX: dstX,
             dstY: dstY,
             color: scene.getColor(index),
-            rainType: rainType,
-            windType: windType,
-            animationFrame: (animation.frame1 + variation)
+            rainType: rainType, // TODO Optimize
+            windType: windType, // TODO Optimize
+            animationFrame: (animation.frame1 + variation) // TODO Optimize
         );
         return;
       case NodeType.Rain_Landing:
@@ -1082,26 +1083,27 @@ class RendererNodes extends RenderGroup {
             dstY: dstY,
             variation: variation,
             color: scene.getColor(index),
-            rainType: rainType,
+            rainType: rainType, // TODO Optimize
           );
         } else {
           renderNodeRainLandingOnGround(
             dstX: dstX,
             dstY: dstY,
             color: scene.getColor(index),
-            rainType: rainType,
-            animationFrame: animation.frame1 + variation,
+            rainType: rainType, // TODO Optimize
+            animationFrame: animation.frame1 + variation, // TODO Optimize
           );
         }
 
+        // TODO Optimize
         if (renderRainFalling) {
           renderNodeRainFalling(
               dstX: dstX,
               dstY: dstY,
               color: color,
-              rainType: rainType,
-              windType: windType,
-              animationFrame: (animation.frame1 + variation)
+              rainType: rainType, // TODO Optimize
+              windType: windType, // TODO Optimize
+              animationFrame: (animation.frame1 + variation) // TODO Optimize
           );
         }
 
@@ -1130,7 +1132,7 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           color: scene.getColor(index),
-          animationFrame: ((animation.frameWater + ((scene.getRowColumn(index)) * 3)) % 10),
+          animationFrame: ((animation.frameWater + ((scene.getRowColumn(index)) * 3)) % 10), // TODO Optimize
         );
         break;
       case NodeType.Dust:
@@ -1171,7 +1173,7 @@ class RendererNodes extends RenderGroup {
         );
         return;
       case NodeType.Tree_Top:
-        final nodeVariationBelow = scene.nodeVariations[index - scene.area];
+        final nodeVariationBelow = scene.nodeVariations[index - scene.area]; // TODO Optimize
         final row = scene.getRow(index);
         final column = scene.getColumn(index);
         renderNodeTreeTop(
@@ -1180,7 +1182,7 @@ class RendererNodes extends RenderGroup {
           treeType: mapVariationToTreeType(nodeVariationBelow),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
-          animationFrame: row + column + animation.frame1,
+          animationFrame: row + column + animation.frame1, // TODO Optimize
         );
         break;
       case NodeType.Tree_Bottom:
@@ -1192,7 +1194,7 @@ class RendererNodes extends RenderGroup {
           treeType: mapVariationToTreeType(variation),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
-          animationFrame: row + column + animation.frame1,
+          animationFrame: row + column + animation.frame1, // TODO Optimize
         );
         break;
       case NodeType.Scaffold:
@@ -1229,7 +1231,7 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           grassy: scene.nodeTypeBelowIs(index, NodeType.Grass),
-          wind: wind,
+          wind: wind, // TODO Optimize
         );
         break;
       case NodeType.Torch_Blue:
@@ -1244,7 +1246,7 @@ class RendererNodes extends RenderGroup {
         );
 
         renderCustomNode(
-            srcX: 1343 + (animation.frame6 * 16),
+            srcX: 1343 + (animation.frame6 * 16), // TODO Optimize
             srcY: 306,
             srcWidth: 14,
             srcHeight: 32,
@@ -1265,7 +1267,7 @@ class RendererNodes extends RenderGroup {
         );
 
         renderCustomNode(
-            srcX: 1343 + (animation.frame6 * 16),
+            srcX: 1343 + (animation.frame6 * 16), // TODO Optimize
             srcY: 339,
             srcWidth: 14,
             srcHeight: 32,
@@ -1299,9 +1301,9 @@ class RendererNodes extends RenderGroup {
           colorAbove: scene.colorAbove(index),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
-          animationFrame: wind == WindType.Calm
+          animationFrame: wind == WindType.Calm // TODO Optimize
               ? 0
-              : (((row - column) + animation.frame6) % 6),
+              : (((row - column) + animation.frame6) % 6), // TODO Optimize
         );
         break;
       case NodeType.Tile:
@@ -1378,8 +1380,8 @@ class RendererNodes extends RenderGroup {
         renderNodeWindow(
           dstX: dstX,
           dstY: dstY,
-          color: scene.nodeColors[index],
-          orientation: scene.nodeOrientations[index],
+          color: scene.nodeColors[index], // TODO Optimize
+          orientation: scene.nodeOrientations[index], // TODO Optimize
         );
         break;
       case NodeType.Table:
@@ -3560,28 +3562,6 @@ class RendererNodes extends RenderGroup {
       dstX: dstX,
       dstY: dstY,
     );
-
-    // renderNodeSideTop(
-    //   srcX: srcX,
-    //   srcY: srcY,
-    //   color: colorAbove,
-    //   dstX: dstX - Node_Size_Half,
-    //   dstY: dstY - Node_Size_Half,
-    // );
-
-    // renderNodeSideWest(
-    //   srcY: srcY,
-    //   dstX: dstX - Node_Size_Half,
-    //   dstY: dstY,
-    //   color: colorWest,
-    // );
-
-    // renderNodeSideSouth(
-    //   srcY: srcY,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   color: colorSouth,
-    // );
   }
 
   void renderDynamicHalfWest({
