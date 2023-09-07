@@ -107,7 +107,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
       final markIndex = MarkType.getIndex(markValue);
        for (var j = 0; j < 3; j++){
-         spawnFallenAtIndex(markIndex);
+         if (randomBool()){
+           spawnFallenAtIndex(markIndex);
+         } else {
+           spawnSkeletonArcherAtIndex(markIndex);
+         }
        }
     }
   }
@@ -120,13 +124,36 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: scene.getIndexZ(index),
       health: 7,
       weaponDamage: 1,
-      characterType: randomItem(const[CharacterType.Fallen, CharacterType.Skeleton]),
+      characterType: CharacterType.Fallen,
       weaponType: WeaponType.Unarmed,
       weaponRange: 20,
       weaponCooldown: 30,
       actionFrame: 15,
       doesWander: true,
       name: 'Fallen',
+      runSpeed: 0.75,
+    )
+      ..weaponHitForce = 2
+      ..attackDuration = 20
+      ..attackActionFrame = 12
+    );
+  }
+
+  void spawnSkeletonArcherAtIndex(int index) {
+    characters.add(Character(
+      team: MmoTeam.Monsters,
+      x: scene.getIndexX(index),
+      y: scene.getIndexY(index),
+      z: scene.getIndexZ(index),
+      health: 7,
+      weaponDamage: 1,
+      characterType: CharacterType.Skeleton,
+      weaponType: WeaponType.Bow,
+      weaponRange: 220,
+      weaponCooldown: 30,
+      actionFrame: 15,
+      doesWander: true,
+      name: 'Skeleton',
       runSpeed: 0.75,
     )
       ..weaponHitForce = 2

@@ -709,7 +709,7 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
-    final sprite = images.spriteGroupSkeleton.fromCharacterState(character.state);
+    final sprite = images.spriteGroupFallen.fromCharacterState(character.state);
 
     render.sprite(
       sprite: sprite,
@@ -734,7 +734,7 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
-    final sprite = images.spriteGroupFallen.fromCharacterState(character.state);
+    final sprite = images.spriteGroupSkeleton.fromCharacterState(character.state);
 
     render.sprite(
       sprite: sprite,

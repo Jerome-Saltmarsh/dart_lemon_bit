@@ -1450,8 +1450,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void performCharacterAction(Character character){
     character.actionFrame = -1;
 
-    if (!character.striking) return;
-
     final weaponType = character.weaponType;
 
     if (WeaponType.isMelee(weaponType)) {

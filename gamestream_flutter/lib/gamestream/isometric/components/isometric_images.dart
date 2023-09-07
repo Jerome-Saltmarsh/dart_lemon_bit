@@ -207,9 +207,9 @@ class IsometricImages with IsometricComponent {
       idle: await loadSprite(name: 'sprites/skeleton/idle', mode: AnimationMode.bounce),
       running: await loadSprite(name: 'sprites/skeleton/walking', mode: AnimationMode.loop),
       dead: emptySprite, // TODO
-      strike: emptySprite, // TODO
+      strike: await loadSprite(name: 'sprites/skeleton/firing', mode: AnimationMode.single),
       hurt: emptySprite, // TODO
-      fire: emptySprite, // TODO
+      fire: await loadSprite(name: 'sprites/skeleton/firing', mode: AnimationMode.single),
       change: emptySprite,
     );
 
