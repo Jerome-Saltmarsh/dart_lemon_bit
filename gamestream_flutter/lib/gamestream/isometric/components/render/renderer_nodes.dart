@@ -2734,9 +2734,9 @@ class RendererNodes extends RenderGroup {
         // west
         engine.render(
           color: colorSouth,
-          srcLeft: 65,
+          srcLeft: 64,
           srcTop: srcY + 17,
-          srcRight: 72,
+          srcRight: 64 + 8,
           srcBottom: srcY + 48,
           scale: 1.0,
           rotation: 0,
@@ -2753,8 +2753,8 @@ class RendererNodes extends RenderGroup {
           srcBottom: srcY + 48,
           scale: 1.0,
           rotation: 0,
-          dstX: dstX ,
-          dstY: dstY,
+          dstX: dstX,
+          dstY: dstY + 4,
         );
 
         renderCellTop(
