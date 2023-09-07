@@ -2684,6 +2684,50 @@ class RendererNodes extends RenderGroup {
           colorCurrent: colorCurrent,
         );
         break;
+
+      case NodeOrientation.Half_Vertical_Top:
+
+        renderCellWest(
+            srcY: srcY,
+            dstX: dstX - Node_Size_Half,
+            dstY: dstY,
+            color: colorWest,
+        );
+
+        renderCellWest(
+          srcY: srcY,
+          dstX: dstX - Node_Size_Half + Cell_South_Width,
+          dstY: dstY + Cell_South_Height,
+          color: colorWest,
+        );
+
+        renderCellWest(
+          srcY: srcY,
+          dstX: dstX - Node_Size_Half + Cell_South_Width + Cell_South_Width,
+          dstY: dstY + Cell_South_Height + Cell_South_Height,
+          color: colorWest,
+        );
+
+        engine.render(
+          color: colorSouth,
+          srcLeft: 248,
+          srcTop: srcY,
+          srcRight: 271,
+          srcBottom: srcY + 30,
+          scale: 1.0,
+          rotation: 0,
+          dstX: dstX,
+          dstY: dstY,
+        );
+
+        renderNodeSideTop(
+          color: colorCurrent,
+          srcX: 0,
+          srcY: srcY,
+          dstX: dstX - Node_Size_Half,
+          dstY: dstY - Node_Height,
+        );
+        break;
     }
   }
 
