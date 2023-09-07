@@ -120,7 +120,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: scene.getIndexZ(index),
       health: 7,
       weaponDamage: 1,
-      characterType: CharacterType.Fallen,
+      characterType: randomItem(const[CharacterType.Fallen, CharacterType.Skeleton]),
       weaponType: WeaponType.Unarmed,
       weaponRange: 20,
       weaponCooldown: 30,

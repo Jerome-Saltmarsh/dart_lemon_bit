@@ -6,7 +6,7 @@ import 'package:lemon_atlas/amulet/src.dart';
 import 'package:lemon_atlas/atlas/functions/build_sprite_from_images.dart';
 import 'package:lemon_atlas/atlas/functions/export_spritesheet.dart';
 
-void exportFiles({
+Future<String> exportFiles({
   required List<PlatformFile> files,
   required int rows,
   required int columns,
@@ -33,7 +33,7 @@ void exportFiles({
     name = 'export';
   }
 
-  exportSprite(
+  return await exportSprite(
       sprite: buildSpriteFromSrcImages(
           srcImages: images,
           rows: rows,

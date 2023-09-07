@@ -5,7 +5,7 @@ import 'package:lemon_atlas/amulet/variables/directory_tmp.dart';
 import 'package:lemon_atlas/atlas/functions/build_sprite_from_image.dart';
 import 'package:lemon_atlas/atlas/functions/export_spritesheet.dart';
 
-void exportFile(List<PlatformFile> files, int rows, int columns) {
+Future<String> exportFile(List<PlatformFile> files, int rows, int columns) {
   final file = files.first;
   final fileBytes = file.bytes;
   if (fileBytes == null){
@@ -18,7 +18,7 @@ void exportFile(List<PlatformFile> files, int rows, int columns) {
     columns: columns,
   );
 
-  exportSprite(
+  return exportSprite(
     sprite: spriteSheet,
     directory: directoryTmp,
     name: file.name.replaceAll('.png', ''),

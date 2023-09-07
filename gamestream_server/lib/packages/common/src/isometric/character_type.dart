@@ -8,6 +8,7 @@ class CharacterType {
    static const Dog = 6;
    static const Kid = 7;
    static const Fallen = 8;
+   static const Skeleton = 9;
 
    static const values = [
      Template,
@@ -18,6 +19,7 @@ class CharacterType {
      Dog,
      Kid,
      Fallen,
+     Skeleton,
    ];
    
    static String getName(int value){
@@ -30,6 +32,7 @@ class CharacterType {
        Dog: 'Dog',
        Kid: 'Kid',
        Fallen: 'Fallen',
+       Skeleton: 'Skeleton',
      }[value] ?? ' unknown-$value';
    }
 

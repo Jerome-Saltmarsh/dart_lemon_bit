@@ -28,7 +28,8 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
 
   late final CharacterSpriteGroup spriteGroup2KidShadow;
-  late final CharacterSpriteGroup fallenSpriteGroup2;
+  late final CharacterSpriteGroup spriteGroupFallen;
+  late final CharacterSpriteGroup spriteGroupSkeleton;
 
   late final Sprite flame0;
   late final Sprite flame1;
@@ -192,13 +193,23 @@ class IsometricImages with IsometricComponent {
       ItemType.Treasure: atlas_treasures,
     };
 
-    fallenSpriteGroup2 = CharacterSpriteGroup(
+    spriteGroupFallen = CharacterSpriteGroup(
       idle: await loadSprite(name: 'sprites/fallen/idle', mode: AnimationMode.bounce),
       running: await loadSprite(name: 'sprites/fallen/running', mode: AnimationMode.loop),
       dead: await loadSprite(name: 'sprites/fallen/dead', mode: AnimationMode.single),
       strike: await loadSprite(name: 'sprites/fallen/strike', mode: AnimationMode.single),
       hurt: await loadSprite(name: 'sprites/fallen/hurt', mode: AnimationMode.single),
       fire: emptySprite,
+      change: emptySprite,
+    );
+
+    spriteGroupSkeleton = CharacterSpriteGroup(
+      idle: await loadSprite(name: 'sprites/skeleton/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'sprites/skeleton/walking', mode: AnimationMode.loop),
+      dead: emptySprite, // TODO
+      strike: emptySprite, // TODO
+      hurt: emptySprite, // TODO
+      fire: emptySprite, // TODO
       change: emptySprite,
     );
 

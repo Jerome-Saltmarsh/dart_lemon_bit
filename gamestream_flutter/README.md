@@ -12,12 +12,12 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- character skeleton
 - glove type leather
 - fix hover over player name 
 - fix fire animation speed
 - character wolf
 - character floating flaming skull
-- character skeleton
 - character witch
 - body type chain mail
 - kid shoe type
@@ -34,6 +34,9 @@ shift + alt + J     : backspace
 - fix set node light source refresh
 - particle crow
 - particle chicken
+
+06.09.2023
+- optimize update particles
 
 05.09.2023
 - hot key add mark 1 2 3 4

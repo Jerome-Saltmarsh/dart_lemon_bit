@@ -98,6 +98,9 @@ class RendererCharacters extends RenderGroup {
       case CharacterType.Fallen:
         renderCharacterFallen(character);
         break;
+      case CharacterType.Skeleton:
+        renderCharacterSkeleton(character);
+        break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
@@ -706,7 +709,32 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
-    final sprite = images.fallenSpriteGroup2.fromCharacterState(character.state);
+    final sprite = images.spriteGroupSkeleton.fromCharacterState(character.state);
+
+    render.sprite(
+      sprite: sprite,
+      frame: sprite.getFrame(row: row, column: column),
+      color: character.color,
+      scale: scale,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      anchorY: anchorY,
+    );
+  }
+
+  void renderCharacterSkeleton(Character character) {
+
+    if (
+      (renderBottom && !character.dead) ||
+      (!renderBottom && character.dead))
+      return;
+
+    const scale = 0.61;
+    const anchorY = 0.6;
+
+    final row = character.renderDirection;
+    final column = character.animationFrame;
+    final sprite = images.spriteGroupFallen.fromCharacterState(character.state);
 
     render.sprite(
       sprite: sprite,
