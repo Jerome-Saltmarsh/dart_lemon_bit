@@ -128,6 +128,10 @@ class RendererNodes extends RenderGroup {
     final orientations = scene.nodeOrientations;
     final nodeColors = scene.nodeColors;
     final ambientColor = scene.ambientColor;
+    final rainType = this.rainType;
+    final windType = this.windType;
+    final animationFrame1 = this.animation.frame1;
+    final renderRainFalling = this.renderRainFalling;
 
     int lineZ;
     int lineColumn;
@@ -482,16 +486,65 @@ class RendererNodes extends RenderGroup {
 
 
               } else {
-                renderNodeIndex(
-                  index: nodeIndex,
-                  nodeType: nodeType,
-                  orientation: orientations[nodeIndex],
-                  dstX: dstX,
-                  dstY: dstY,
-                  scene: scene,
-                  variation: variations[nodeIndex],
-                  color: nodeColors[nodeIndex],
-                );
+
+                switch (nodeType){
+                  case NodeType.Rain_Falling:
+                    renderNodeRainFalling(
+                        dstX: dstX,
+                        dstY: dstY,
+                        color: scene.getColor(index),
+                        rainType: rainType,
+                        windType: windType,
+                        animationFrame: animationFrame1 + variations[nodeIndex],
+                    );
+                    break;
+
+                  case NodeType.Rain_Landing:
+
+                    if (scene.nodeTypeBelowIs(index, NodeType.Water)){
+                      renderNodeRainLandingOnWater(
+                        dstX: dstX,
+                        dstY: dstY,
+                        variation: variations[nodeIndex],
+                        color: scene.getColor(index),
+                        rainType: rainType,
+                      );
+                    } else {
+                      renderNodeRainLandingOnGround(
+                        dstX: dstX,
+                        dstY: dstY,
+                        color: scene.getColor(index),
+                        rainType: rainType,
+                        animationFrame: animationFrame1 + variations[nodeIndex],
+                      );
+                    }
+
+                    if (renderRainFalling) {
+                      renderNodeRainFalling(
+                          dstX: dstX,
+                          dstY: dstY,
+                          color: nodeColors[nodeIndex],
+                          rainType: rainType,
+                          windType: windType,
+                          animationFrame: (animationFrame1 + variations[nodeIndex]),
+                      );
+                    }
+
+                    break;
+
+                  default:
+                    renderNodeIndex(
+                      index: nodeIndex,
+                      nodeType: nodeType,
+                      orientation: orientations[nodeIndex],
+                      dstX: dstX,
+                      dstY: dstY,
+                      scene: scene,
+                      variation: variations[nodeIndex],
+                      color: nodeColors[nodeIndex],
+                    );
+                    break;
+                }
               }
             }
           }
@@ -733,6 +786,7 @@ class RendererNodes extends RenderGroup {
     orderShiftY--;
   }
 
+  // TODO Optimize
   void updateTransparencyGrid() {
 
     if (transparencyGrid.length != scene.projection) {
@@ -754,6 +808,7 @@ class RendererNodes extends RenderGroup {
 
     final maxZ = playerZ + 1;
 
+
     for (var z = playerZ; z <= maxZ; z++){
       if (z >= scene.totalZ) break;
       final indexZ = z * scene.area;
@@ -774,19 +829,26 @@ class RendererNodes extends RenderGroup {
     }
   }
 
+  // TODO Optimize
   void updateHeightMapPerception() {
 
     final scene = this.scene;
 
+    var visible3D = this.visible3D;
+
     if (visible3D.length != scene.totalNodes) {
       visible3D = List.generate(scene.totalNodes, (index) => false);
-      visible3DIndex = 0;
+      this.visible3D = visible3D;
+      this.visible3DIndex = 0;
     }
+
+    final visible3DIndex = this.visible3DIndex;
+    final visible3DStack = this.visible3DStack;
 
     for (var i = 0; i < visible3DIndex; i++){
       visible3D[visible3DStack[i]] = false;
     }
-    visible3DIndex = 0;
+    this.visible3DIndex = 0;
 
     if (visited2D.length != scene.area) {
       visited2D = List.generate(scene.area, (index) => false, growable: false);
@@ -794,6 +856,11 @@ class RendererNodes extends RenderGroup {
       visited2DStackIndex = 0;
       island = List.generate(scene.area, (index) => false, growable: false);
     } else {
+      final visited2DStackIndex = this.visited2DStackIndex;
+      final visited2DStack = this.visited2DStack;
+      final visited2D = this.visited2D;
+      final island = this.island;
+
       for (var i = 0; i < visited2DStackIndex; i++){
         final j = visited2DStack[i];
         visited2D[j] = false;
@@ -1065,49 +1132,49 @@ class RendererNodes extends RenderGroup {
 
     switch (nodeType) {
 
-      case NodeType.Rain_Falling:
-        renderNodeRainFalling(
-            dstX: dstX,
-            dstY: dstY,
-            color: scene.getColor(index),
-            rainType: rainType, // TODO Optimize
-            windType: windType, // TODO Optimize
-            animationFrame: (animation.frame1 + variation) // TODO Optimize
-        );
-        return;
-      case NodeType.Rain_Landing:
-
-        if (scene.nodeTypeBelowIs(index, NodeType.Water)){
-          renderNodeRainLandingOnWater(
-            dstX: dstX,
-            dstY: dstY,
-            variation: variation,
-            color: scene.getColor(index),
-            rainType: rainType, // TODO Optimize
-          );
-        } else {
-          renderNodeRainLandingOnGround(
-            dstX: dstX,
-            dstY: dstY,
-            color: scene.getColor(index),
-            rainType: rainType, // TODO Optimize
-            animationFrame: animation.frame1 + variation, // TODO Optimize
-          );
-        }
-
-        // TODO Optimize
-        if (renderRainFalling) {
-          renderNodeRainFalling(
-              dstX: dstX,
-              dstY: dstY,
-              color: color,
-              rainType: rainType, // TODO Optimize
-              windType: windType, // TODO Optimize
-              animationFrame: (animation.frame1 + variation) // TODO Optimize
-          );
-        }
-
-        return;
+      // case NodeType.Rain_Falling:
+      //   renderNodeRainFalling(
+      //       dstX: dstX,
+      //       dstY: dstY,
+      //       color: scene.getColor(index),
+      //       rainType: rainType, // TODO Optimize
+      //       windType: windType, // TODO Optimize
+      //       animationFrame: (animation.frame1 + variation) // TODO Optimize
+      //   );
+      //   return;
+      // case NodeType.Rain_Landing:
+      //
+      //   if (scene.nodeTypeBelowIs(index, NodeType.Water)){
+      //     renderNodeRainLandingOnWater(
+      //       dstX: dstX,
+      //       dstY: dstY,
+      //       variation: variation,
+      //       color: scene.getColor(index),
+      //       rainType: rainType, // TODO Optimize
+      //     );
+      //   } else {
+      //     renderNodeRainLandingOnGround(
+      //       dstX: dstX,
+      //       dstY: dstY,
+      //       color: scene.getColor(index),
+      //       rainType: rainType, // TODO Optimize
+      //       animationFrame: animation.frame1 + variation, // TODO Optimize
+      //     );
+      //   }
+      //
+      //   // TODO Optimize
+      //   if (renderRainFalling) {
+      //     renderNodeRainFalling(
+      //         dstX: dstX,
+      //         dstY: dstY,
+      //         color: color,
+      //         rainType: rainType, // TODO Optimize
+      //         windType: windType, // TODO Optimize
+      //         animationFrame: (animation.frame1 + variation) // TODO Optimize
+      //     );
+      //   }
+      //
+      //   return;
 
       case NodeType.Bricks_Red:
         renderNodeTemplateShaded(
