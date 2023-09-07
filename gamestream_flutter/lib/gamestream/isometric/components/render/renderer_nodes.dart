@@ -2739,6 +2739,16 @@ class RendererNodes extends RenderGroup {
           colorAbove: colorAbove,
         );
         break;
+      case NodeOrientation.Column_Top_Right:
+        renderColumn(
+          colorSouth: colorSouth,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY - 16,
+          colorWest: colorWest,
+          colorAbove: colorAbove,
+        );
+        break;
     }
   }
 
@@ -2750,9 +2760,10 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int colorAbove,
   }) {
-         // west
+
+    // west
     engine.render(
-      color: colorSouth,
+      color: colorWest,
       srcLeft: 64,
       srcTop: srcY + 17,
       srcRight: 64 + 8,
@@ -2760,12 +2771,12 @@ class RendererNodes extends RenderGroup {
       scale: 1.0,
       rotation: 0,
       dstX: dstX - Cell_Size_Half,
-      dstY: dstY + 4,
+      dstY: dstY,
     );
 
     // south
     engine.render(
-      color: colorWest,
+      color: colorSouth,
       srcLeft: 74,
       srcTop: srcY + 16,
       srcRight: 74 + 8,
@@ -2773,13 +2784,13 @@ class RendererNodes extends RenderGroup {
       scale: 1.0,
       rotation: 0,
       dstX: dstX,
-      dstY: dstY + 4,
+      dstY: dstY,
     );
 
     renderCellTop(
       srcY: srcY,
       dstX: dstX - Cell_South_Width,
-      dstY: dstY - 4,
+      dstY: dstY - 8,
       color: colorAbove,
     );
   }
