@@ -492,7 +492,7 @@ class RendererNodes extends RenderGroup {
                     renderNodeRainFalling(
                         dstX: dstX,
                         dstY: dstY,
-                        color: scene.getColor(index),
+                        color: nodeColors[nodeIndex],
                         rainType: rainType,
                         windType: windType,
                         animationFrame: animationFrame1 + variations[nodeIndex],
@@ -501,19 +501,19 @@ class RendererNodes extends RenderGroup {
 
                   case NodeType.Rain_Landing:
 
-                    if (scene.nodeTypeBelowIs(index, NodeType.Water)){
+                    if (scene.nodeTypeBelowIs(nodeIndex, NodeType.Water)){
                       renderNodeRainLandingOnWater(
                         dstX: dstX,
                         dstY: dstY,
                         variation: variations[nodeIndex],
-                        color: scene.getColor(index),
+                        color: scene.getColor(nodeIndex),
                         rainType: rainType,
                       );
                     } else {
                       renderNodeRainLandingOnGround(
                         dstX: dstX,
                         dstY: dstY,
-                        color: scene.getColor(index),
+                        color: scene.getColor(nodeIndex),
                         rainType: rainType,
                         animationFrame: animationFrame1 + variations[nodeIndex],
                       );
