@@ -658,6 +658,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
     final compression = readByte();
     final readA = readBitFromByte(compression, 0);
+    final readB = readBitFromByte(compression, 1);
 
     if (readA) {
       character.weaponType = readByte();
@@ -670,7 +671,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       character.hairColor = readByte();
     }
 
-    character.complexion = readByte();
+    if (readB) {
+      character.complexion = readByte();
+    }
   }
 
   void readPlayerEvent() {

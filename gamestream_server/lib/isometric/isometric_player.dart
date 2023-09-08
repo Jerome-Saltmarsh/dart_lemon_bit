@@ -67,6 +67,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
   final cacheTemplateA = Uint64List(Cache_Length);
+  final cacheTemplateB = Uint64List(Cache_Length);
 
   GameObject? editorSelectedGameObject;
   IsometricGame game;
@@ -757,10 +758,22 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       character.hairColor,
     );
 
+    final compressedB = compressBytesToUInt64(
+      character.complexion,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    );
+
     final writeA = cacheTemplateA[cacheIndex] != compressedA;
+    final writeB = cacheTemplateB[cacheIndex] != compressedB;
 
     writeByte(
-      writeBitsToByte(writeA, false, false, false, false, false, false, false)
+      writeBitsToByte(writeA, writeB, false, false, false, false, false, false)
     );
 
     if (writeA){
@@ -775,8 +788,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(character.hairColor);
     }
 
-    // TODO OPTIMIZE
-    writeByte(character.complexion);
+    if (writeB){
+      writeByte(character.complexion);
+    }
   }
 
   void writeWeather() {
