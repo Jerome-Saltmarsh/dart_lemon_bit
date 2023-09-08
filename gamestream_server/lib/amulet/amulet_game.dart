@@ -48,6 +48,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         ]);
       }
     )..invincible = true
+        ..helmType = HelmType.None
+        ..bodyType = BodyType.Leather_Armour
+        ..legsType = LegType.Brown
+        ..complexion = ComplexionType.fair
     );
 
     //
