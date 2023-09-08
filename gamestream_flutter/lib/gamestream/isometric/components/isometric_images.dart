@@ -179,6 +179,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, skipHurt: true, skipFire: true);
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
     loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_1, skipHurt: true, skipFire: false);
+    loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_2, skipHurt: true, skipFire: false);
 
     await _completerImages.future;
 

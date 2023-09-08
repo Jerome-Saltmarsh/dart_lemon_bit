@@ -8,6 +8,7 @@ enum KidPart {
   handsLeftGauntlet('hands_left', 'gauntlets'),
   handsRightGauntlet('hands_right', 'gauntlets'),
   hairBasic01('hair', 'basic_1'),
+  hairBasic02('hair', 'basic_2'),
   head('head', 'regular'),
   helmsSteel('helms', 'steel'),
   helmsWizardHat('helms', 'wizard_hat'),
