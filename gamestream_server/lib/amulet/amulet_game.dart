@@ -39,7 +39,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       weaponType: WeaponType.Unarmed,
       weaponDamage: 1,
       weaponRange: 200,
-      weaponCooldown: 20,
+      weaponCooldown: 30,
       name: "Sybil",
       interact: (player) {
         player.talk("Hello there", options: [
@@ -54,21 +54,29 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         ..complexion = ComplexionType.fair
     );
 
-    //
-    // npcGuard = MMONpc(
-    //   characterType: CharacterType.Template,
-    //   x: playerSpawnX + giveOrTake(50),
-    //   y: playerSpawnY + giveOrTake(50),
-    //   z: 25,
-    //   health: 200,
-    //   weaponType: WeaponType.Machine_Gun,
-    //   weaponRange: 200,
-    //   weaponDamage: 1,
-    //   weaponCooldown: 5,
-    //   team: MmoTeam.Human,
-    //   name: "Sam",
-    // );
-    // characters.add(npcGuard);
+
+    npcGuard = MMONpc(
+      characterType: CharacterType.Kid,
+      x: 2416,
+      y: 1851,
+      z: 24,
+      health: 200,
+      weaponType: WeaponType.Bow,
+      weaponRange: 200,
+      weaponDamage: 1,
+      weaponCooldown: 30,
+      team: MmoTeam.Human,
+      name: "Guard",
+    )
+      ..invincible = true
+      ..helmType = HelmType.Steel
+      ..bodyType = BodyType.Leather_Armour
+      ..legsType = LegType.Brown
+      ..attackDuration = 30
+      ..attackActionFrame = 20
+      ..complexion = ComplexionType.fair;
+
+    characters.add(npcGuard);
   }
 
   @override
@@ -132,8 +140,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       weaponDamage: 1,
       characterType: CharacterType.Fallen,
       weaponType: WeaponType.Unarmed,
+      weaponCooldown: 20,
       weaponRange: 20,
-      weaponCooldown: 30,
       actionFrame: 15,
       doesWander: true,
       name: 'Fallen',
@@ -373,6 +381,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: playerSpawnZ,
   )..level = 1
    ..experience = 0
+   ..complexion = ComplexionType.fair
    ..experienceRequired = getExperienceRequiredForLevel(2);
 
   @override

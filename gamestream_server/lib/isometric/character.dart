@@ -259,6 +259,9 @@ class Character extends Collider {
   }){
     assert (active);
     assert (alive);
+    assert (duration > 0);
+    assert (actionFrame < duration);
+
     this.actionFrame = actionFrame;
     setDestinationToCurrentPosition();
     setCharacterState(value: CharacterState.Fire, duration: duration);
