@@ -1,6 +1,7 @@
 import 'dart:typed_data';
-import 'package:gamestream_server/packages.dart';
+
 import 'package:gamestream_server/isometric/isometric_game.dart';
+import 'package:gamestream_server/packages.dart';
 
 import 'collider.dart';
 import 'isometric_settings.dart';
@@ -17,6 +18,7 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
+  var hairType = HairType.none;
   var complexion = 0;
   var hurtStateBusy = true;
   var interacting = false;

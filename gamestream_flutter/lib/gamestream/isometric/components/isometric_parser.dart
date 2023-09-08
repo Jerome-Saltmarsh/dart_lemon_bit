@@ -670,6 +670,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
 
     character.complexion = readByte();
+    character.hairType = readByte();
   }
 
   void readPlayerEvent() {

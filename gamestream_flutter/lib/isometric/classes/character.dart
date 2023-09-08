@@ -8,6 +8,7 @@ class Character extends Position {
   var complexion = 0;
   var bodyType = 0;
   var headType = 0;
+  var hairType = 0;
   var legType = 0;
   var handTypeLeft = 0;
   var handTypeRight = 0;

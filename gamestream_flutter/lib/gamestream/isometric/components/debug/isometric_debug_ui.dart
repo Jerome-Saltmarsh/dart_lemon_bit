@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart'
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -549,6 +550,7 @@ extension isometricDebugUI on IsometricDebug {
           }),
           buildRowMapped('legs-type', player.legsType, LegType.getName),
           buildRowMapped('body-type', player.bodyType, BodyType.getName),
+          buildRowMapped('hair-type', player.hairType, HairType.getName),
           buildRowMapped('helm-type', player.helmType, HelmType.getName),
           buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
           buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),
