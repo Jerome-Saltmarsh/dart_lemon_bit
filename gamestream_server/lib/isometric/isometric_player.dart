@@ -753,8 +753,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       character.legsType,
       character.handTypeLeft,
       character.handTypeRight,
-      0,
-      0,
+      character.hairType,
+      character.hairColor,
     );
 
     final writeA = cacheTemplateA[cacheIndex] != compressedA;
@@ -771,14 +771,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(character.legsType);
       writeByte(character.handTypeLeft);
       writeByte(character.handTypeRight);
+      writeByte(character.hairType);
+      writeByte(character.hairColor);
     }
 
     // TODO OPTIMIZE
     writeByte(character.complexion);
-    // TODO OPTIMIZE
-    writeByte(character.hairType);
-    // TODO OPTIMIZE
-    writeByte(character.hairColor);
   }
 
   void writeWeather() {
