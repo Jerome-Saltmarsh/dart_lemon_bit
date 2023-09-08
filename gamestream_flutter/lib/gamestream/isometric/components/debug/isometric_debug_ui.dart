@@ -550,7 +550,10 @@ extension isometricDebugUI on IsometricDebug {
           }),
           buildRowMapped('legs-type', player.legsType, LegType.getName),
           buildRowMapped('body-type', player.bodyType, BodyType.getName),
-          buildRowMapped('hair-type', player.hairType, HairType.getName),
+          onPressed(
+            action: () => ui.showDialogGetHairType(onSelected: player.setHairType),
+            child: buildRowMapped('hair-type', player.hairType, HairType.getName)
+          ),
           buildRowMapped('helm-type', player.helmType, HelmType.getName),
           buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
           buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),

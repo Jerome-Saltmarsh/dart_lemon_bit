@@ -254,4 +254,10 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   void readHairType() {
     hairType.value = parser.readByte();
   }
+
+  void setHairType(int hairType) => network.sendNetworkRequest(
+        NetworkRequest.Player,
+        NetworkRequestPlayer.setHairType.index,
+        hairType,
+    );
 }

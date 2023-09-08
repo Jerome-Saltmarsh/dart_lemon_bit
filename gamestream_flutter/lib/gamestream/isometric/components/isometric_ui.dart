@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -439,6 +440,20 @@ class IsometricUI with IsometricComponent {
             ),
           ],
         ),
+      ),
+    ));
+  }
+
+  void showDialogGetHairType({
+    required Function(int value) onSelected,
+  }){
+    this.showDialog(child: GSContainer(
+      child: Column(
+        children: HairType.values
+            .map((hairType) => onPressed(
+              action: () => onSelected(hairType),
+              child: buildText(HairType.getName(hairType))))
+            .toList(growable: false),
       ),
     ));
   }

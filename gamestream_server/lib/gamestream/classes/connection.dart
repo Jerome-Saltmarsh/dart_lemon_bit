@@ -817,6 +817,16 @@ class Connection with ByteReader {
     final player = _player as IsometricPlayer;
 
     switch (playerRequest) {
+
+
+      case NetworkRequestPlayer.setHairType:
+        final value = arg2;
+        if (value == null) {
+          return;
+        }
+        player.hairType = value;
+        break;
+
       case NetworkRequestPlayer.setComplexion:
         final value = arg2;
         if (value == null) {
