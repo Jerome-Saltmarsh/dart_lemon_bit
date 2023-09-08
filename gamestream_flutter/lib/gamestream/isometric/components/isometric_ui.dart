@@ -448,6 +448,7 @@ class IsometricUI with IsometricComponent {
     required Function(int value) onSelected,
   }){
     this.showDialog(child: GSContainer(
+      width: 150,
       child: Column(
         children: HairType.values
             .map((hairType) => onPressed(
