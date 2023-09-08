@@ -1,9 +1,10 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
@@ -250,6 +251,7 @@ class RendererCharacters extends RenderGroup {
     final atlasHead = sprites.head[HeadType.regular] ?? (throw Exception());
     final atlasTorso = sprites.torso[TorsoType.regular] ?? (throw Exception());
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
+    final atlasHair = sprites.hair[HairType.basic_1] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -263,6 +265,7 @@ class RendererCharacters extends RenderGroup {
     final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
     final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
     final spriteShadow = atlasShadow.fromCharacterState(characterState);
+    final spriteHair = atlasHair.fromCharacterState(characterState);
 
     final Sprite spriteHandFront;
     final Sprite spriteHandBehind;
@@ -271,6 +274,8 @@ class RendererCharacters extends RenderGroup {
 
     final colorSkin = colors.palette[character.complexion].value;
     // render.textPosition(character, direction, offsetY: -100);
+
+    final render = this.render;
 
     final leftInFront = const [
       InputDirection.Up_Left,
@@ -465,6 +470,18 @@ class RendererCharacters extends RenderGroup {
           : spriteHead.getFrame(row: row, column: animationFrame),
       color1: colorSkin,
       color2: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteHair,
+      frame: completingAction
+          ? spriteHair.getFramePercentage(row, actionComplete)
+          : spriteHair.getFrame(row: row, column: animationFrame),
+      color: color,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

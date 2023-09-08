@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 
 class SpriteGroupType {
   static const Arms_Left = 1;
@@ -13,6 +14,7 @@ class SpriteGroupType {
   static const Shadow = 10;
   static const Torso = 11;
   static const Weapons = 12;
+  static const Hair = 13;
 
   static String getName(int value)=> const {
     Arms_Left: 'arms_left',
@@ -27,6 +29,7 @@ class SpriteGroupType {
     Shadow: 'shadow',
     Torso: 'torso',
     Weapons: 'weapons',
+    Hair: 'hair',
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
 
   static String getSubTypeName(int type, int subType) => switch (type) {
@@ -42,6 +45,7 @@ class SpriteGroupType {
       Torso => 'regular',
       Weapons => WeaponType.getName(subType),
       Shadow => 'regular',
+      Hair => HairType.getName(subType),
       _ => throw Exception(
           'SpriteGroupType.getName(type: $type, subType: $subType)'
       ),
@@ -60,5 +64,6 @@ class SpriteGroupType {
     Shadow,
     Torso,
     Weapons,
+    Hair,
   ];
 }

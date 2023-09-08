@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/packages/utils/parse.dart';
@@ -150,6 +151,7 @@ class IsometricImages with IsometricComponent {
     kidCharacterSprites.body[BodyType.None] = spriteGroup2Empty;
     kidCharacterSprites.bodyArms[BodyType.None] = spriteGroup2Empty;
     kidCharacterSprites.legs[LegType.None] = spriteGroup2Empty;
+    kidCharacterSprites.hair[HairType.none] = spriteGroup2Empty;
 
     loadSpriteGroup(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
@@ -176,6 +178,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Bow, skipHurt: true, skipStrike: true);
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, skipHurt: true, skipFire: true);
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
+    loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_1, skipHurt: true, skipFire: false);
 
     await _completerImages.future;
 
