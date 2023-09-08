@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.d
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 
 import 'constants/node_src.dart';
@@ -167,7 +166,7 @@ class RendererNodes extends RenderGroup {
     var colorWest = -1;
     var colorSouth = -1;
     var nodeType = -1;
-    var lineZAbovePlayer = lineZ > playerZ;
+    var inFrontOfPlayer = (lineZ > playerZ) && (row > playerRow || column > playerColumn);
     var transparent = false;
     var previousTransparent = false;
 
@@ -188,8 +187,6 @@ class RendererNodes extends RenderGroup {
         nodeIndex = (lineZ * area) + (row * columns) + column;
         dstX = (row - column) * Node_Size_Half;
 
-
-
         while (true) {
 
           if (dstX > screenLeft) {
@@ -197,22 +194,23 @@ class RendererNodes extends RenderGroup {
               break;
             }
 
-            transparent = lineZAbovePlayer ? transparencyGrid[nodeIndex % projection] : false;
-
-            if (transparent != previousTransparent){
-              engine.flushBuffer();
-              previousTransparent = transparent;
-
-              if (transparent){
-                engine.color = colorTransparent;
-              } else {
-                engine.color = colorOpaque;
-              }
-            }
-
             nodeType = nodeTypes[nodeIndex];
 
             if (nodeType != NodeType.Empty){
+
+              inFrontOfPlayer = (lineZ > playerZ) && (row > playerRow && column > playerColumn);
+              transparent = inFrontOfPlayer ? transparencyGrid[nodeIndex % projection] : false;
+
+              if (transparent != previousTransparent){
+                engine.flushBuffer();
+                previousTransparent = transparent;
+
+                if (transparent){
+                  engine.color = colorTransparent;
+                } else {
+                  engine.color = colorOpaque;
+                }
+              }
 
               srcY = nodeTypeSrcY[nodeType];
 
@@ -577,7 +575,7 @@ class RendererNodes extends RenderGroup {
       row = lineRow;
       lineZ--;
       dstY += Node_Height;
-      lineZAbovePlayer = lineZ > playerZ + 1;
+      inFrontOfPlayer = lineZ > playerZ + 1;
     }
 
     plainIndex++;
@@ -695,7 +693,7 @@ class RendererNodes extends RenderGroup {
     currentNodeWithinIsland = false;
 
     updateTransparencyGrid();
-    updateHeightMapPerception();
+    // updateHeightMapPerception();
 
     total = getTotal();
     remaining = total > 0;
