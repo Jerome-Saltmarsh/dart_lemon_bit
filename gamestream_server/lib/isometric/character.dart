@@ -29,6 +29,7 @@ class Character extends Collider {
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
 
+  var invincible = false;
   var actionDuration = -1;
   var actionFrame = -1;
   var attackDuration = 0;
@@ -170,15 +171,9 @@ class Character extends Collider {
 
   bool get aliveAndActive => alive && active;
 
-  bool get isTemplate => characterType == CharacterType.Template;
-
   double get weaponAccuracy => _weaponAccuracy;
 
-  // TODO REMOVE
-  bool get characterTypeZombie => characterType == CharacterType.Zombie;
-
   bool get characterTypeTemplate =>
-      characterType == CharacterType.Template ||
       characterType == CharacterType.Kid;
 
   bool get dead => state == CharacterState.Dead;

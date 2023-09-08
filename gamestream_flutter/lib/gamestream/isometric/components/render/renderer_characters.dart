@@ -79,22 +79,9 @@ class RendererCharacters extends RenderGroup {
     }
 
     switch (character.characterType) {
-      case CharacterType.Template:
-        // renderCharacterTemplate(character);
-        break;
-      case CharacterType.Zombie:
-        renderCharacterZombie(character);
-        break;
       case CharacterType.Kid:
         renderCharacterKid(character);
         break;
-      case CharacterType.Slime:
-        break;
-      case CharacterType.Rat:
-        renderCharacterRat(character);
-        break;
-      case CharacterType.Dog:
-        renderCharacterDog(character);
       case CharacterType.Fallen:
         renderCharacterFallen(character);
         break;
@@ -104,160 +91,6 @@ class RendererCharacters extends RenderGroup {
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
-  }
-
-  void renderCharacterDog(Character character){
-    const Src_Size = 80.0;
-    const Anchor_Y = 0.66;
-
-    if (character.state == CharacterState.Idle){
-      engine.renderSprite(
-        image: images.character_dog,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: 0,
-        srcY: Src_Size * character.direction,
-        srcWidth: Src_Size,
-        srcHeight: Src_Size,
-        anchorY: Anchor_Y,
-        scale: 1,
-        color: character.color,
-      );
-      return;
-    }
-
-    if (character.state == CharacterState.Running) {
-      const frames = const [4, 5];
-      final frame = frames[(character.animationFrame % 2)];
-      engine.renderSprite(
-        image: images.character_dog,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: frame * Src_Size,
-        srcY: Src_Size * character.direction,
-        srcWidth: Src_Size,
-        srcHeight: Src_Size,
-        anchorY: Anchor_Y,
-        scale: 1,
-        color: character.color,
-      );
-      return;
-    }
-
-    // if (character.state == CharacterState.Performing) {
-    //   const frames = const [1, 2];
-    //   var frame = character.animationFrame;
-    //   if (character.animationFrame >= frames.length){
-    //     frame = frames.last;
-    //   } else {
-    //     frame = frames[frame];
-    //   }
-    //   engine.renderSprite(
-    //     image: images.character_dog,
-    //     dstX: character.renderX,
-    //     dstY: character.renderY,
-    //     srcX: frame * Src_Size,
-    //     srcY: Src_Size * character.direction,
-    //     srcWidth: Src_Size,
-    //     srcHeight: Src_Size,
-    //     anchorY: Anchor_Y,
-    //     scale: 1,
-    //     color: character.color,
-    //   );
-    //   return;
-    // }
-
-    if (character.state == CharacterState.Hurt) {
-      engine.renderSprite(
-        image: images.character_dog,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: Src_Size,
-        srcY: Src_Size * character.direction,
-        srcWidth: Src_Size,
-        srcHeight: Src_Size,
-        anchorY: Anchor_Y,
-        scale: 1,
-        color: character.color,
-      );
-      return;
-    }
-
-    if (character.state == CharacterState.Stunned){
-      render.starsPosition(character);
-      engine.renderSprite(
-        image: images.character_dog,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: 0,
-        srcY: Src_Size * character.direction,
-        srcWidth: Src_Size,
-        srcHeight: Src_Size,
-        anchorY: Anchor_Y,
-        scale: 1,
-        color: character.color,
-      );
-      return;
-    }
-  }
-
-  void renderCharacterZombie(Character character) {
-    if (character.dead) return;
-    if (character.spawning) return;
-
-    var angle = 0.0;
-    var dist = 0.0;
-    // final nodes = gamestream.scene;
-
-    // if (!nodes.outOfBoundsV3(character)){
-    //   var torchIndex = nodes.getTorchIndex(nodes.getNodeIndexV3(character));
-    //   if (torchIndex != -1) {
-    //     final torchRow = nodes.convertNodeIndexToIndexX(torchIndex);
-    //     final torchColumn = nodes.convertNodeIndexToIndexY(torchIndex);
-    //     final torchPosX = torchRow * Node_Size + Node_Size_Half;
-    //     final torchPosY = torchColumn * Node_Size + Node_Size_Half;
-    //     angle = angleBetween(character.x, character.y, torchPosX, torchPosY);
-    //     dist = min(
-    //       Character_Shadow_Distance_Max,
-    //       distanceBetween(
-    //           character.x,
-    //           character.y,
-    //           torchPosX,
-    //           torchPosY
-    //       ) * Character_Shadow_Distance_Ratio,
-    //     );
-    //   }
-    // }
-
-    final shadowX = character.x + adj(angle, dist);
-    final shadowY = character.y + opp(angle, dist);
-    final shadowZ = character.z;
-
-    engine.renderSprite(
-      image: images.zombie_shadow,
-      srcX: getZombieSrcX(character),
-      srcY: character.renderDirection * 64,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: getRenderX(shadowX, shadowY, shadowZ),
-      dstY: getRenderY(shadowX, shadowY, shadowZ),
-      anchorY: 0.66,
-      scale: 0.7,
-      color: character.color,
-    );
-
-    engine.renderSprite(
-      image: images.zombie,
-      srcX: getZombieSrcX(character),
-      srcY: character.renderDirection * 64,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: character.renderX,
-      dstY: character.renderY,
-      anchorY: 0.68,
-      scale: 0.7,
-      color: character.color,
-    );
   }
 
   double getZombieSrcX(Character character) {
@@ -298,51 +131,6 @@ class RendererCharacters extends RenderGroup {
       default:
         throw Exception('Render zombie invalid state ${character.state}');
     }
-  }
-
-  void renderCharacterRat(Character character){
-    if (character.state == CharacterState.Running){
-      engine.renderSprite(
-        image: images.atlas_gameobjects,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
-        srcY: 853,
-        srcWidth: 64,
-        srcHeight: 64,
-        anchorY: 0.66,
-        scale: 1,
-        color: scene.getRenderColorPosition(character),
-      );
-    }
-
-    // if (character.state == CharacterState.Performing){
-    //   engine.renderSprite(
-    //     image: images.atlas_gameobjects,
-    //     dstX: character.renderX,
-    //     dstY: character.renderY,
-    //     srcX: 2680,
-    //     srcY: character.direction * 64,
-    //     srcWidth: 64,
-    //     srcHeight: 64,
-    //     anchorY: 0.66,
-    //     scale: 1,
-    //     color: scene.getRenderColorPosition(character),
-    //   );
-    // }
-
-    engine.renderSprite(
-      image: images.atlas_gameobjects,
-      dstX: character.renderX,
-      dstY: character.renderY,
-      srcX: 2680,
-      srcY: character.direction * 64,
-      srcWidth: 64,
-      srcHeight: 64,
-      anchorY: 0.66,
-      scale: 1,
-      color: scene.getRenderColorPosition(character),
-    );
   }
 
   double single({
@@ -447,7 +235,6 @@ class RendererCharacters extends RenderGroup {
     final animationFrame = character.animationFrame;
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
-    final complexion = character.complexion;
 
     final sprites = images.kidCharacterSprites;
     final atlasHandsLeft = sprites.handLeft[character.handTypeLeft] ?? (throw Exception());

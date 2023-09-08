@@ -563,10 +563,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         character.z = readDouble();
       }
 
-      if (const [
-        CharacterType.Template,
-        CharacterType.Kid
-      ].contains(character.characterType)){
+      if (character.characterType == CharacterType.Kid){
         readCharacterTemplate(character);
       }
 

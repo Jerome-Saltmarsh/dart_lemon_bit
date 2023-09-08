@@ -1,7 +1,6 @@
 library isometric;
 
 export 'handle_request_modify_canvas_size.dart';
-export 'isometric_zombie.dart';
 export 'character.dart';
 export 'collider.dart';
 export 'environment.dart';

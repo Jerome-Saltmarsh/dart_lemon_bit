@@ -979,7 +979,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required Character target,
     required int amount,
   }) {
-    if (target.dead) return;
+    if (target.dead || target.invincible) return;
 
     final damage = min(amount, target.health);
     target.health -= damage;
@@ -1415,10 +1415,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
        }
     }
 
-    // TODO Remove Hack
-    if (srcCharacter.characterTypeZombie) {
-      dispatchGameEventPosition(GameEventType.Zombie_Strike, srcCharacter);
-    }
+    // // TODO Remove Hack
+    // if (srcCharacter.characterTypeZombie) {
+    //   dispatchGameEventPosition(GameEventType.Zombie_Strike, srcCharacter);
+    // }
+
     if (target is Character) {
       if (!friendlyFire && Collider.onSameTeam(srcCharacter, target)) return;
       if (target.dead) return;

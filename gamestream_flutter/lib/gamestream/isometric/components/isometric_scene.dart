@@ -690,9 +690,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       final character = characters[i];
 
       if (const [
-        CharacterType.Zombie,
         CharacterType.Fallen,
-        CharacterType.Dog,
       ].contains(character.characterType))
         continue;
 

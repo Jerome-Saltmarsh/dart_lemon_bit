@@ -113,7 +113,7 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.AI_Target_Acquired:
         final characterType = network.parser.readByte();
         switch (characterType){
-          case CharacterType.Zombie:
+          case CharacterType.Fallen:
             audio.play(randomItem(audio.audioSingleZombieTalking), x, y, z);
             break;
         }
@@ -477,13 +477,11 @@ class IsometricEvents with IsometricComponent {
     }
 
     switch (characterType) {
-      case CharacterType.Zombie:
-        return onCharacterDeathZombie(characterType, x, y, z, angle);
       case CharacterType.Fallen:
         return onCharacterDeathZombie(characterType, x, y, z, angle);
-      case CharacterType.Dog:
-        audio.play(audio.dog_woolf_howl_4, x, y, z);
-        break;
+      // case CharacterType.Dog:
+      //   audio.play(audio.dog_woolf_howl_4, x, y, z);
+      //   break;
     }
   }
 
@@ -593,28 +591,12 @@ class IsometricEvents with IsometricComponent {
 
 
     switch (type) {
-      case CharacterType.Zombie:
-        if (randomBool()){
-          audio.play(audio.zombie_hurt_1, x, y, z);
-        } else {
-          audio.play(audio.zombie_hurt_4, x, y, z);
-        }
-        break;
       case CharacterType.Fallen:
         if (randomBool()){
           audio.play(audio.zombie_hurt_1, x, y, z);
         } else {
           audio.play(audio.zombie_hurt_4, x, y, z);
         }
-        break;
-      case CharacterType.Rat:
-        audio.play(audio.rat_squeak, x, y, z);
-        break;
-      case CharacterType.Slime:
-        audio.play(audio.bloody_punches_3, x, y, z);
-        break;
-      case CharacterType.Dog:
-        audio.play(audio.dog_woolf_howl_4, x, y, z);
         break;
     }
   }

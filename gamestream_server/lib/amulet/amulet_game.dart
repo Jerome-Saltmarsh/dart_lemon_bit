@@ -3,6 +3,7 @@ import 'package:gamestream_server/isometric.dart';
 
 import 'package:gamestream_server/packages.dart';
 
+import 'talk_option.dart';
 import 'mmo_gameobject.dart';
 import 'mmo_npc.dart';
 import 'amulet_player.dart';
@@ -28,26 +29,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }) : super(gameType: GameType.Amulet) {
 
     spawnMonstersAtSpawnNodes();
-    // characters.add(MMONpc(
-    //   characterType: CharacterType.Template,
-    //   x: playerSpawnX + giveOrTake(50),
-    //   y: playerSpawnY + giveOrTake(50),
-    //   z: 25,
-    //   health: 50,
-    //   team: MmoTeam.Human,
-    //   weaponType: WeaponType.Handgun,
-    //   weaponDamage: 1,
-    //   weaponRange: 200,
-    //   weaponCooldown: 20,
-    //   name: "Gus",
-    //   interact: (player) {
-    //     player.talk("Hello there", options: [
-    //       TalkOption("Goodbye", player.endInteraction),
-    //       TalkOption("Buy", player.endInteraction),
-    //     ]);
-    //   }
-    // )
-    // );
+    characters.add(MMONpc(
+      characterType: CharacterType.Kid,
+      x: 2010,
+      y: 1760,
+      z: 24,
+      health: 50,
+      team: MmoTeam.Human,
+      weaponType: WeaponType.Unarmed,
+      weaponDamage: 1,
+      weaponRange: 200,
+      weaponCooldown: 20,
+      name: "Sybil",
+      interact: (player) {
+        player.talk("Hello there", options: [
+          TalkOption("Goodbye", player.endInteraction),
+          TalkOption("Buy", player.endInteraction),
+        ]);
+      }
+    )..invincible = true
+    );
+
     //
     // npcGuard = MMONpc(
     //   characterType: CharacterType.Template,
@@ -84,15 +86,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  @override
-  void endCharacterAction(Character character) {
-    if (character.characterTypeZombie){
-      setCharacterStateIdle(character, duration: randomInt(50, 250));
-      return;
-    }
-
-    super.endCharacterAction(character);
-  }
+  // @override
+  // void endCharacterAction(Character character) {
+  //   if (character.characterTypeZombie){
+  //     setCharacterStateIdle(character, duration: randomInt(50, 250));
+  //     return;
+  //   }
+  //
+  //   super.endCharacterAction(character);
+  // }
 
   static void validate() => MMOItem.values.forEach((item) => item.validate());
 
