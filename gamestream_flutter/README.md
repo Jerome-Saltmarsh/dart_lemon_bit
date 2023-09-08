@@ -34,6 +34,7 @@ shift + alt + J     : backspace
 - particle chicken
 
 08.09.2023
+- optimized template compression
 - kid hair type
 - kid hair color
 

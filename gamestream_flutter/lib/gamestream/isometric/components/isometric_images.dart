@@ -56,9 +56,7 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_body;
   late final Image atlas_legs;
   late final Image atlas_gameobjects;
-  late final Image atlas_gameobjects_transparent;
   late final Image atlas_nodes;
-  late final Image atlas_nodes_transparent;
   late final Image atlas_characters;
   late final Image atlas_icons;
   late final Image atlas_consumables;
@@ -87,10 +85,8 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_zombie').then((value) => zombie = value);
     loadPng('atlas_zombie_shadow').then((value) => zombie_shadow = value);
     loadPng('atlas_gameobjects').then((value) => atlas_gameobjects = value);
-    loadPng('atlas_gameobjects_transparent').then((value) => atlas_gameobjects_transparent = value);
     loadPng('atlas_particles').then((value) => atlas_particles = value);
     loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
-    loadPng('atlas_nodes_transparent').then((value) => atlas_nodes_transparent = value);
     loadPng('atlas_nodes_mini').then((value) => atlas_nodes_mini = value);
     loadPng('atlas_weapons').then((value) => atlas_weapons = value);
     loadPng('atlas_talents').then((value) => atlas_talents = value);
