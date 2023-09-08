@@ -132,10 +132,18 @@ class RendererNodes extends RenderGroup {
     final windType = this.windType;
     final animationFrame1 = this.animation.frame1;
     final renderRainFalling = this.renderRainFalling;
+    final screenLeft = this.screenLeft; // cache in cpu
+    final screenTop = this.screenTop; // cache in cpu
+    final screenRight = this.screenRight; // cache in cpu
+    final screenBottom = this.screenBottom; // cache in cpu
+    final lightningFlashing = environment.lightningFlashing;
+    final lightningColor = this.lightningColor;
 
     int lineZ;
     int lineColumn;
     int lineRow;
+
+    double? srcY;
 
     if (index < maxZ){
       lineZ = index;
@@ -151,29 +159,19 @@ class RendererNodes extends RenderGroup {
       lineRow = index - maxZ - columns;
     }
 
-    final screenLeft = this.screenLeft; // cache in cpu
-    final screenTop = this.screenTop; // cache in cpu
-    final screenRight = this.screenRight; // cache in cpu
-    final screenBottom = this.screenBottom; // cache in cpu
-
     var column = lineColumn;
     var row = lineRow;
-
     var dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
-
-    if (dstY > screenBottom){
-      end();
-      return;
-    }
     var nodeIndex = -1;
     var dstX = 0.0;
     var colorWest = -1;
     var colorSouth = -1;
     var nodeType = -1;
-    double? srcY;
 
-    final lightningFlashing = environment.lightningFlashing;
-    final lightningColor = this.lightningColor;
+    if (dstY > screenBottom){
+      end();
+      return;
+    }
 
     while (lineZ >= 0) {
       dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
@@ -222,21 +220,6 @@ class RendererNodes extends RenderGroup {
                 } else {
                   colorAbove = nodeColors[nodeAboveIndex];
                 }
-
-                // renderDynamic(
-                //   nodeType: nodeType,
-                //   nodeOrientation: orientations[nodeIndex],
-                //   nodeVariation: variations[nodeIndex],
-                //   colorAbove: lightningFlashing
-                //       ? lightningColor
-                //       : colorAbove,
-                //   colorWest: colorWest,
-                //   colorSouth: colorSouth,
-                //   colorCurrent: nodeColors[nodeIndex],
-                //   dstX: dstX,
-                //   dstY: dstY,
-                //   srcY: srcY,
-                // );
 
                 final nodeVariation = variations[nodeIndex];
                 final colorCurrent = nodeColors[nodeIndex];
@@ -635,49 +618,6 @@ class RendererNodes extends RenderGroup {
   @override
   void updateFunction() {
 
-    // currentNodeZ++;
-    // if (currentNodeZ > nodesMaxZ) {
-    //   currentNodeZ = 0;
-    //   nodesShiftIndexDown();
-    //   if (!remaining) return;
-    //   nodesCalculateMinMaxZ();
-    //   if (!remaining) return;
-    //
-    //   assert (column >= 0);
-    //   assert (row >= 0);
-    //   assert (row < totalRows);
-    //   assert (column < totalColumns);
-    //
-    //   trimLeft();
-    //
-    //   while (currentNodeRenderY > screenBottom) {
-    //     currentNodeZ++;
-    //     if (currentNodeZ > nodesMaxZ) {
-    //       remaining = false;
-    //       return;
-    //     }
-    //   }
-    // } else {
-    //   assert (nodesStartRow < totalRows);
-    //   assert (column < totalColumns);
-    //   row = nodesStartRow;
-    //   column = nodeStartColumn;
-    // }
-    //
-    // currentNodeIndex = (currentNodeZ * area) + (row * totalColumns) + column;
-    // assert (currentNodeZ >= 0);
-    // assert (row >= 0);
-    // assert (column >= 0);
-    // assert (currentNodeIndex >= 0);
-    // assert (currentNodeZ < totalZ);
-    // assert (row < totalRows);
-    // assert (column < totalColumns);
-    // assert (currentNodeIndex < totalNodes);
-    // currentNodeDstX = (row - column) * Node_Size_Half;
-    // currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    // currentNodeType = nodeTypes[currentNodeIndex];
-    // // orderZ = currentNodeZ;
-    // order = (row + column).toDouble() - 0.5;
   }
 
   @override
@@ -685,7 +625,6 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
-    // lightningFlashing = environment.lightningFlashing;
     renderRainFalling = options.renderRainFallingTwice;
     rainType = environment.rainType.value;
     windType = environment.wind.value;
@@ -749,15 +688,18 @@ class RendererNodes extends RenderGroup {
     scene.applyEmissions();
     render.highlightAimTargetEnemy();
 
-    // get the column at the top left screen
-    // the the row at the top left screen
-    // add total z, that will give the index
-
     var column = 0;
     var row = 0;
     final sTop = screenTop;
 
     index = 0;
+    skipPlainsAboveScreenTop(row, column, sTop);
+  }
+
+  void skipPlainsAboveScreenTop(int row, int column, double sTop) {
+    final maxColumns = totalColumns - 1;
+    final maxRows = totalRows - 1;
+    var skipped = 0;
 
     while (true){
       var renderY = getRenderYfOfRowColumn(row, column);
@@ -766,16 +708,16 @@ class RendererNodes extends RenderGroup {
         break;
       }
 
-      if (column < totalColumns -1){
+      if (column < maxColumns){
         column++;
-      } else if (row < totalRows - 1){
+      } else if (row < maxRows){
         row++;
       } else {
         break;
       }
-      index++;
+      skipped++;
     }
-
+    index = skipped;
   }
 
   void increaseOrderShiftY(){
