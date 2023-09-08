@@ -26,14 +26,16 @@ shift + alt + J     : backspace
 - set player name
 - player persistence
 - player creation dialog
-- kid hair type
-- kid hair color
 - stash
 - store
 - player attributes dialog
 - fix set node light source refresh
 - particle crow
 - particle chicken
+
+08.09.2023
+- kid hair type
+- kid hair color
 
 07.09.2023
 - character skeleton
