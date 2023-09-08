@@ -543,6 +543,10 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabPlayer() =>
       buildTab(
         children: [
+          buildRowRefresh('position', () {
+            final position = player.position;
+            return 'x: ${position.x.toInt()}, y: ${position.y.toInt()}, z: ${position.z.toInt()}';
+          }),
           buildRowMapped('legs-type', player.legsType, LegType.getName),
           buildRowMapped('body-type', player.bodyType, BodyType.getName),
           buildRowMapped('helm-type', player.helmType, HelmType.getName),
