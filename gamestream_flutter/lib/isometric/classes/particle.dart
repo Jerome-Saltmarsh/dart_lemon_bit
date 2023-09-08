@@ -4,6 +4,7 @@ import 'package:lemon_math/src.dart';
 
 class Particle extends Position {
 
+  var blownByWind = true;
   var frictionAir = 0.98;
   var wind = 0;
   var active = false;

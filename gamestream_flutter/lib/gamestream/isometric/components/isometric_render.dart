@@ -640,6 +640,7 @@ class IsometricRender with IsometricComponent {
       speed: 0,
       duration: 2,
       frictionAir: 1.0,
+      blownByWind: false,
     );
   }
 

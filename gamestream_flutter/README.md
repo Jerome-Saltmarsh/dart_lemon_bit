@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- fix speech box
 - fix node transparency
 - glove type leather
 - fix hover over player name 

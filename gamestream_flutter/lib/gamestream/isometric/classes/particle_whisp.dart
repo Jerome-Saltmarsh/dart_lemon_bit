@@ -9,7 +9,6 @@ class ParticleWhisp extends ParticleRoam {
   var movementSpeed = 0.2;
   var movementAngle = 0.0;
   var rotationSpeed = 0.0085;
-  var blownByWind = true;
   var targetDuration = 0;
 
   static const maxScale = 0.4;

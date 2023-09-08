@@ -38,6 +38,7 @@ class ParticleButterfly extends ParticleRoam {
     nodeCollidable = false;
     active = true;
     duration = randomInt(0, 500);
+    blownByWind = false;
   }
 
   @override
