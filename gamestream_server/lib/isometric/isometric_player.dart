@@ -1374,6 +1374,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writeHairColor() {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.HairColor);
-    writeByte(hairType);
+    writeByte(hairColor);
   }
 }

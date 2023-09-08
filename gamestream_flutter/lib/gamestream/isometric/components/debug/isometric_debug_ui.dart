@@ -555,13 +555,11 @@ extension isometricDebugUI on IsometricDebug {
             child: buildRowMapped('hair type', player.hairType, HairType.getName)
           ),
           onPressed(
-            action: () => ui.showDialogGetColor(
-                  onSelected: player.setHairColor
-              ),
-            child: buildRowWatch('hair color', player.hairColor, (color) => Container(
+            action: () => ui.showDialogGetColor(onSelected: player.setHairColor),
+            child: buildRowWatch('hair color', player.hairColor, (hairColor) => Container(
               width: 50,
               height: 50,
-              color: colors.palette[color],
+              color: colors.palette[hairColor],
             )),
           ),
           buildRowMapped('helm type', player.helmType, HelmType.getName),
