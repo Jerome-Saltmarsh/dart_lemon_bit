@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
@@ -10,6 +11,7 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.d
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 
 import 'constants/node_src.dart';
@@ -54,7 +56,6 @@ class RendererNodes extends RenderGroup {
   var totalPlains = 0;
   var orderShiftY = 151.0;
   var renderRainFalling = true;
-  var previousVisibility = 0;
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
   var indexShow = 0;
@@ -66,12 +67,6 @@ class RendererNodes extends RenderGroup {
   var nodesMaxZ = 0;
   var nodesMinZ = 0;
   var currentNodeZ = 0;
-  var offscreenNodesTop = 0;
-  var offscreenNodesRight = 0;
-  var offscreenNodesBottom = 0;
-  var offscreenNodesLeft = 0;
-  var onscreenNodes = 0;
-  var offscreenNodes = 0;
   var playerProjection = 0;
   var playerZ = 0;
   var playerRow = 0;
@@ -107,6 +102,9 @@ class RendererNodes extends RenderGroup {
 
   int get wind => environment.wind.value;
 
+  final colorOpaque = Colors.white;
+  final colorTransparent = Colors.white38;
+
   @override
   void renderFunction() {
     engine.bufferImage = atlasNodes;
@@ -138,6 +136,8 @@ class RendererNodes extends RenderGroup {
     final screenBottom = this.screenBottom; // cache in cpu
     final lightningFlashing = environment.lightningFlashing;
     final lightningColor = this.lightningColor;
+    final transparencyGrid = this.transparencyGrid;
+    final projection = scene.projection;
 
     int lineZ;
     int lineColumn;
@@ -167,6 +167,10 @@ class RendererNodes extends RenderGroup {
     var colorWest = -1;
     var colorSouth = -1;
     var nodeType = -1;
+    var lineZAbovePlayer = lineZ > playerZ;
+    var transparent = false;
+    var previousTransparent = false;
+
 
     if (dstY > screenBottom){
       end();
@@ -184,6 +188,8 @@ class RendererNodes extends RenderGroup {
         nodeIndex = (lineZ * area) + (row * columns) + column;
         dstX = (row - column) * Node_Size_Half;
 
+
+
         while (true) {
 
           if (dstX > screenLeft) {
@@ -191,7 +197,21 @@ class RendererNodes extends RenderGroup {
               break;
             }
 
+            transparent = lineZAbovePlayer ? transparencyGrid[nodeIndex % projection] : false;
+
+            if (transparent != previousTransparent){
+              engine.flushBuffer();
+              previousTransparent = transparent;
+
+              if (transparent){
+                engine.color = colorTransparent;
+              } else {
+                engine.color = colorOpaque;
+              }
+            }
+
             nodeType = nodeTypes[nodeIndex];
+
             if (nodeType != NodeType.Empty){
 
               srcY = nodeTypeSrcY[nodeType];
@@ -557,15 +577,16 @@ class RendererNodes extends RenderGroup {
       row = lineRow;
       lineZ--;
       dstY += Node_Height;
+      lineZAbovePlayer = lineZ > playerZ + 1;
     }
 
     plainIndex++;
+    engine.color = colorOpaque;
 
     if (plainIndex <= totalPlains) {
       onPlainIndexChanged();
       return;
     }
-
     end();
 
     // final playerInsideIsland = gamestream.player.playerInsideIsland;
@@ -628,6 +649,7 @@ class RendererNodes extends RenderGroup {
     renderRainFalling = options.renderRainFallingTwice;
     rainType = environment.rainType.value;
     windType = environment.wind.value;
+    final scene = this.scene;
 
     if (lightningFlashing) {
       final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
@@ -653,12 +675,6 @@ class RendererNodes extends RenderGroup {
     totalPlains = columns + rows + height - 2;
     plainIndex = 0;
     onPlainIndexChanged();
-    offscreenNodesTop = 0;
-    offscreenNodesRight = 0;
-    offscreenNodesBottom = 0;
-    offscreenNodesLeft = 0;
-    offscreenNodes = 0;
-    onscreenNodes = 0;
     nodesMinZ = 0;
     currentNodeZ = 0;
     final playerPosition = player.position;
@@ -686,25 +702,25 @@ class RendererNodes extends RenderGroup {
     scene.resetNodeColorStack();
     scene.resetNodeAmbientStack();
     scene.applyEmissions();
-    render.highlightAimTargetEnemy();
-
-    var column = 0;
-    var row = 0;
-    final sTop = screenTop;
-
     index = 0;
-    skipPlainsAboveScreenTop(row, column, sTop);
+    skipPlainsAboveScreenTop();
+    render.highlightAimTargetEnemy();
   }
 
-  void skipPlainsAboveScreenTop(int row, int column, double sTop) {
+  void skipPlainsAboveScreenTop() {
+
     final maxColumns = totalColumns - 1;
     final maxRows = totalRows - 1;
+    final screenTop = this.screenTop;
+
     var skipped = 0;
+    var column = 0;
+    var row = 0;
 
     while (true){
       var renderY = getRenderYfOfRowColumn(row, column);
 
-      if (renderY >= sTop){
+      if (renderY >= screenTop){
         break;
       }
 

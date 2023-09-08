@@ -466,8 +466,6 @@ extension isometricDebugUI on IsometricDebug {
         GSRefresh(() => buildText(
             'camera-target: ${camera.target}\n'
         )),
-        buildRow('nodes-screen-on', GSRefresh(() => buildText(compositor.rendererNodes.onscreenNodes))),
-        buildRow('nodes-screen-off', GSRefresh(() => buildText(compositor.rendererNodes.offscreenNodes))),
         buildRow('order-shift-y', GSRefresh(() => buildValueText(compositor.rendererNodes.orderShiftY))),
         onPressed(
           action: compositor.rendererNodes.increaseOrderShiftY,
