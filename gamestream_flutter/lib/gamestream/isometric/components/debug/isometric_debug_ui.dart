@@ -548,15 +548,25 @@ extension isometricDebugUI on IsometricDebug {
             final position = player.position;
             return 'x: ${position.x.toInt()}, y: ${position.y.toInt()}, z: ${position.z.toInt()}';
           }),
-          buildRowMapped('legs-type', player.legsType, LegType.getName),
-          buildRowMapped('body-type', player.bodyType, BodyType.getName),
+          buildRowMapped('legs type', player.legsType, LegType.getName),
+          buildRowMapped('body type', player.bodyType, BodyType.getName),
           onPressed(
             action: () => ui.showDialogGetHairType(onSelected: player.setHairType),
-            child: buildRowMapped('hair-type', player.hairType, HairType.getName)
+            child: buildRowMapped('hair type', player.hairType, HairType.getName)
           ),
-          buildRowMapped('helm-type', player.helmType, HelmType.getName),
-          buildRowMapped('hand-type-left', player.handTypeLeft, HandType.getName),
-          buildRowMapped('hand-type-right', player.handTypeRight, HandType.getName),
+          onPressed(
+            action: () => ui.showDialogGetColor(
+                  onSelected: player.setHairColor
+              ),
+            child: buildRowWatch('hair color', player.hairColor, (color) => Container(
+              width: 50,
+              height: 50,
+              color: colors.palette[color],
+            )),
+          ),
+          buildRowMapped('helm type', player.helmType, HelmType.getName),
+          buildRowMapped('hand type left', player.handTypeLeft, HandType.getName),
+          buildRowMapped('hand type right', player.handTypeRight, HandType.getName),
           onPressed(
             action: player.changeComplexion,
             child: buildRowWatch('complexion', player.complexion, (complexion) => Container(
@@ -714,10 +724,10 @@ extension isometricDebugUI on IsometricDebug {
 
   void selectCharacterComplexion() =>
       ui.showDialogGetColor(
-        onSelected: (color) => network.sendRequest(
+        onSelected: (index) => network.sendRequest(
           NetworkRequest.Debug,
           NetworkRequestDebug.Set_Complexion,
-          colors.palette.indexOf(color),
+          index,
         )
     );
 }

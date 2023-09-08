@@ -818,6 +818,13 @@ class Connection with ByteReader {
 
     switch (playerRequest) {
 
+      case NetworkRequestPlayer.setHairColor:
+        final value = arg2;
+        if (value == null) {
+          return;
+        }
+        player.hairColor = value;
+        break;
 
       case NetworkRequestPlayer.setHairType:
         final value = arg2;

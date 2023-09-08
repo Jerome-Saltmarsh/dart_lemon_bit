@@ -273,6 +273,7 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmBehind;
 
     final colorSkin = colors.palette[character.complexion].value;
+    final colorHair = colors.palette[character.hairColor].value;
     // render.textPosition(character, direction, offsetY: -100);
 
     final render = this.render;
@@ -476,12 +477,13 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    render.modulate(
       sprite: spriteHair,
       frame: completingAction
           ? spriteHair.getFramePercentage(row, actionComplete)
           : spriteHair.getFrame(row: row, column: animationFrame),
-      color: color,
+      color1: colorHair,
+      color2: color,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

@@ -777,6 +777,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(character.complexion);
     // TODO OPTIMIZE
     writeByte(character.hairType);
+    // TODO OPTIMIZE
+    writeByte(character.hairColor);
   }
 
   void writeWeather() {
@@ -1252,6 +1254,15 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   @override
+  set hairColor(int value) {
+    if (hairColor == value){
+      return;
+    }
+    super.hairColor = value;
+    writeHairColor();
+  }
+
+  @override
   set bodyType(int value) {
     if (bodyType == value)
       return;
@@ -1357,6 +1368,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writeHairType() {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.HairType);
+    writeByte(hairType);
+  }
+
+  void writeHairColor() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.HairColor);
     writeByte(hairType);
   }
 }

@@ -19,6 +19,7 @@ class Character extends Collider {
   var _maxHealth = 1;
 
   var hairType = HairType.none;
+  var hairColor = 0;
   var complexion = 0;
   var hurtStateBusy = true;
   var interacting = false;

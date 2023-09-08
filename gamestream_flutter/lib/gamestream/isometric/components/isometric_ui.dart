@@ -460,7 +460,7 @@ class IsometricUI with IsometricComponent {
   }
 
   void showDialogGetColor({
-    required Function(Color color) onSelected,
+    required Function(int index) onSelected,
     bool closeOnSelected = true,
   }) => showDialog(
       child: GSContainer(
@@ -469,7 +469,7 @@ class IsometricUI with IsometricComponent {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildText('Complexion', color: Colors.white70),
+              buildText('select color', color: Colors.white70),
               onPressed(
                   action: closeDialog,
                   child: buildText('close')
@@ -483,7 +483,7 @@ class IsometricUI with IsometricComponent {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: shade.map((color) => onPressed(
                   action: () {
-                    onSelected(color);
+                    onSelected(colors.palette.indexOf(color));
                     if (closeOnSelected) {
                       closeDialog();
                     }
