@@ -83,9 +83,9 @@ class RendererNodes extends RenderGroup {
   var visible3DStack = Uint16List(10000);
   var visible3DIndex = 0;
   var playerIndex = 0;
-  var transparencyGrid = <bool>[];
-  var transparencyGridStack = Uint16List(10000);
-  var transparencyGridStackIndex = 0;
+  // var transparencyGrid = <bool>[];
+  // var transparencyGridStack = Uint16List(10000);
+  // var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
 
   late Uint8List nodeTypes;
@@ -135,7 +135,7 @@ class RendererNodes extends RenderGroup {
     final screenBottom = this.screenBottom; // cache in cpu
     final lightningFlashing = environment.lightningFlashing;
     final lightningColor = this.lightningColor;
-    final transparencyGrid = this.transparencyGrid;
+    // final transparencyGrid = this.transparencyGrid;
     final projection = scene.projection;
 
     int lineZ;
@@ -199,13 +199,9 @@ class RendererNodes extends RenderGroup {
 
             if (nodeType != NodeType.Empty){
 
-              transparent = zAbovePlayer && transparencyGrid[nodeIndex % projection];
-
-              // final d = transparencyDistance[nodeIndex];
-              //
-              // if (d != 0) {
-              //   render.textIndex(d, nodeIndex);
-              // }
+              // transparent = zAbovePlayer && transparencyGrid[nodeIndex % projection];
+              final visibility = scene.nodeVisibility[nodeIndex];
+              transparent = visibility == Visibility.transparent;
 
               if (transparent != previousTransparent){
                 engine.flushBuffer();
@@ -697,7 +693,13 @@ class RendererNodes extends RenderGroup {
 
     currentNodeWithinIsland = false;
 
-    resetTransparencyGrid();
+    for (var i = 0; i < nodeVisibilityStackIndex; i++){
+      final index = nodeVisibilityStack[i];
+       scene.nodeVisibility[index] = Visibility.opaque;
+    }
+    nodeVisibilityStackIndex = 0;
+
+    // resetTransparencyGrid();
     emitBeamTransparency(player.nodeIndex);
 
     // updateHeightMapPerception();
@@ -3740,8 +3742,8 @@ class RendererNodes extends RenderGroup {
     final beamIndexesTgt = this.beamIndexesTgt;
     final beamVelocities = this.beamVelocities;
     final beamDistance = this.beamDistance;
-    final transparencyGrid = this.transparencyGrid;
-    final transparencyGridStack = this.transparencyGridStack;
+    // final transparencyGrid = this.transparencyGrid;
+    // final transparencyGridStack = this.transparencyGridStack;
     final projection = scene.projection;
 
     var beamI = 0;
@@ -3790,18 +3792,23 @@ class RendererNodes extends RenderGroup {
 
        final targetIndex = scene.getIndexZRC(z, row, column);
 
+
+
        if (scene.nodeOrientations[targetIndex] != NodeOrientation.None)
          continue;
 
-       final projectionIndex = targetIndex % projection;
-       transparencyGrid[projectionIndex] = true;
-       transparencyGridStack[transparencyGridStackIndex++] = projectionIndex;
 
-       final projectionIndexAbove = (targetIndex + scene.area) % projection;
-       transparencyGrid[projectionIndexAbove] = true;
-       transparencyGridStack[transparencyGridStackIndex++] = projectionIndexAbove;
+       setTransparent(targetIndex);
 
-       if (distance >= 4)
+       // final projectionIndex = targetIndex % projection;
+       // transparencyGrid[projectionIndex] = true;
+       // transparencyGridStack[transparencyGridStackIndex++] = projectionIndex;
+       //
+       // final projectionIndexAbove = (targetIndex + scene.area) % projection;
+       // transparencyGrid[projectionIndexAbove] = true;
+       // transparencyGridStack[transparencyGridStackIndex++] = projectionIndexAbove;
+
+       if (distance >= 3)
          continue;
 
        if (vx != 0){
@@ -3864,17 +3871,20 @@ class RendererNodes extends RenderGroup {
      this.beamTotal = beamTotal;
   }
 
-  void resetTransparencyGrid() {
-    if (transparencyGrid.length < scene.projection){
-      transparencyGrid = List.generate(scene.projection, (index) => false);
-    } else {
-      for (var i = 0; i < transparencyGridStackIndex; i++) {
-        transparencyGrid[transparencyGridStack[i]] = false;
-      }
-    }
+  // void resetTransparencyGrid() {
+  //   if (transparencyGrid.length < scene.projection){
+  //     transparencyGrid = List.generate(scene.projection, (index) => false);
+  //   } else {
+  //     for (var i = 0; i < transparencyGridStackIndex; i++) {
+  //       transparencyGrid[transparencyGridStack[i]] = false;
+  //     }
+  //   }
+  //
+  //   transparencyGridStackIndex = 0;
+  // }
 
-    transparencyGridStackIndex = 0;
-  }
+  var nodeVisibilityStack = Uint16List(10000);
+  var nodeVisibilityStackIndex = 0;
 
   void renderVisibilityBeams() {
     engine.color = Colors.white;
@@ -3885,6 +3895,24 @@ class RendererNodes extends RenderGroup {
       render.lineBetweenIndexes(indexSrc, indexTgt);
     }
   }
+
+  void setTransparent(int targetIndex) {
+
+    while (targetIndex < scene.totalNodes){
+      // if (scene.nodeVisibility[targetIndex] == Visibility.transparent)
+      //   break;
+
+      scene.nodeVisibility[targetIndex] = Visibility.transparent;
+      nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
+      targetIndex += scene.projection;
+    }
+  }
+}
+
+class Visibility {
+  static const opaque = 0;
+  static const transparent = 1;
+  static const invisible = 2;
 }
 
 int mapVariationToTreeType(int variation){

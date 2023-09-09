@@ -313,6 +313,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     final decoder = ZLibDecoder();
     scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
     scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+    scene.nodeVisibility = Uint8List(scene.nodeTypes.length);
     scene.area = scene.totalRows * scene.totalColumns;
     scene.area2 = scene.area * 2;
     scene.projection = scene.area2 + scene.totalColumns + 1;

@@ -51,6 +51,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var nodeLightSourcesTotal = 0;
   var nodeColors = Uint32List(0);
   var nodeOrientations = Uint8List(0);
+  var nodeVisibility = Uint8List(0);
   var nodeTypes = Uint8List(0);
   var nodeVariations = Uint8List(0);
   var miniMap = Uint8List(0);
