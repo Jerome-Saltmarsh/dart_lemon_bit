@@ -118,7 +118,7 @@ class IsometricRender with IsometricComponent {
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
-    rendererNodes.renderVisibilityBeams();
+    // rendererNodes.renderVisibilityBeams();
     renderEditMode();
     renderMouseTargetName();
     debug.drawCanvas();

@@ -171,6 +171,7 @@ class RendererNodes extends RenderGroup {
     var nodeType = -1;
     var transparent = false;
     var previousTransparent = false;
+    var zAbovePlayer = false;
 
 
     if (dstY > screenBottom){
@@ -180,6 +181,7 @@ class RendererNodes extends RenderGroup {
 
     while (lineZ >= 0) {
       dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
+      zAbovePlayer = lineZ > player.indexZ;
 
       if (dstY > screenTop) {
         if (dstY > screenBottom){
@@ -200,13 +202,13 @@ class RendererNodes extends RenderGroup {
 
             if (nodeType != NodeType.Empty){
 
-              // transparent = transparencyGrid[nodeIndex % projection];
+              transparent = zAbovePlayer && transparencyGrid[nodeIndex % projection];
 
-              final d = transparencyDistance[nodeIndex];
-
-              if (d != 0) {
-                render.textIndex(d, nodeIndex);
-              }
+              // final d = transparencyDistance[nodeIndex];
+              //
+              // if (d != 0) {
+              //   render.textIndex(d, nodeIndex);
+              // }
 
               if (transparent != previousTransparent){
                 engine.flushBuffer();
@@ -707,7 +709,6 @@ class RendererNodes extends RenderGroup {
     transparencyDistanceStackIndex = 0;
 
     emitBeamTransparency(player.nodeIndex);
-    // emitBeamTransparency(player.nodeIndex + scene.area);
 
     // updateHeightMapPerception();
 
@@ -3964,6 +3965,7 @@ class RendererNodes extends RenderGroup {
   void renderVisibilityBeams() {
     engine.color = Colors.white;
     for (var i = 0; i < beamTotal; i++){
+      if (beamDistance[i] <= 0) continue;
       final indexSrc = beamIndexesSrc[i];
       final indexTgt = beamIndexesTgt[i];
       render.lineBetweenIndexes(indexSrc, indexTgt);
