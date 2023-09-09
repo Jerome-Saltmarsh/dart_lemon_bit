@@ -199,9 +199,10 @@ class RendererNodes extends RenderGroup {
 
             if (nodeType != NodeType.Empty){
 
+              srcY = nodeTypeSrcY[nodeType];
               // transparent = zAbovePlayer && transparencyGrid[nodeIndex % projection];
-              final visibility = scene.nodeVisibility[nodeIndex];
-              transparent = visibility == Visibility.transparent;
+              // final visibility = (srcY != null) || (scene.nodeVisibility[nodeIndex]);
+              final transparent = srcY != null && scene.nodeVisibility[nodeIndex] == Visibility.transparent;
 
               if (transparent != previousTransparent){
                 engine.flushBuffer();
@@ -214,7 +215,6 @@ class RendererNodes extends RenderGroup {
                 }
               }
 
-              srcY = nodeTypeSrcY[nodeType];
 
               if (srcY != null) {
 
@@ -3792,21 +3792,10 @@ class RendererNodes extends RenderGroup {
 
        final targetIndex = scene.getIndexZRC(z, row, column);
 
-
-
        if (scene.nodeOrientations[targetIndex] != NodeOrientation.None)
          continue;
 
-
        setTransparent(targetIndex);
-
-       // final projectionIndex = targetIndex % projection;
-       // transparencyGrid[projectionIndex] = true;
-       // transparencyGridStack[transparencyGridStackIndex++] = projectionIndex;
-       //
-       // final projectionIndexAbove = (targetIndex + scene.area) % projection;
-       // transparencyGrid[projectionIndexAbove] = true;
-       // transparencyGridStack[transparencyGridStackIndex++] = projectionIndexAbove;
 
        if (distance >= 3)
          continue;
@@ -3899,9 +3888,6 @@ class RendererNodes extends RenderGroup {
   void setTransparent(int targetIndex) {
 
     while (targetIndex < scene.totalNodes){
-      // if (scene.nodeVisibility[targetIndex] == Visibility.transparent)
-      //   break;
-
       scene.nodeVisibility[targetIndex] = Visibility.transparent;
       nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
       targetIndex += scene.projection;
