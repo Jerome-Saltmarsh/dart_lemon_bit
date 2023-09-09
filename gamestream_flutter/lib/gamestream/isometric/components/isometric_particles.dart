@@ -907,7 +907,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   // TODO Optimize
-  void updateParticle(Particle particle, IsometricScene scene, int index, int nodeOrientation) {
+  void updateParticle(
+      Particle particle,
+      IsometricScene scene,
+      int index,
+      int nodeOrientation,
+  ) {
     assert (particle.active);
 
     if (particle.delay > 0) {

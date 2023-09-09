@@ -12,6 +12,7 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- shoe type
 - fix speech box
 - fix node transparency
 - glove type leather

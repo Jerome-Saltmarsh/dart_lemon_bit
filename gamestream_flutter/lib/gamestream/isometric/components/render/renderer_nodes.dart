@@ -84,7 +84,10 @@ class RendererNodes extends RenderGroup {
   var visible3DIndex = 0;
   var playerIndex = 0;
   var transparencyGrid = <bool>[];
-  var transparencyGridStack = Uint16List(0);
+  var transparencyGridStack = Uint16List(10000);
+  var transparencyDistance = Uint8List(100000);
+  var transparencyDistanceStack = Uint8List(100000);
+  var transparencyDistanceStackIndex = 0;
   var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
 
@@ -166,7 +169,6 @@ class RendererNodes extends RenderGroup {
     var colorWest = -1;
     var colorSouth = -1;
     var nodeType = -1;
-    var inFrontOfPlayer = (lineZ > playerZ) && (row > playerRow || column > playerColumn);
     var transparent = false;
     var previousTransparent = false;
 
@@ -198,8 +200,7 @@ class RendererNodes extends RenderGroup {
 
             if (nodeType != NodeType.Empty){
 
-              inFrontOfPlayer = (lineZ > playerZ) && (row > playerRow && column > playerColumn);
-              transparent = inFrontOfPlayer ? transparencyGrid[nodeIndex % projection] : false;
+              transparent = transparencyGrid[nodeIndex % projection];
 
               if (transparent != previousTransparent){
                 engine.flushBuffer();
@@ -575,7 +576,6 @@ class RendererNodes extends RenderGroup {
       row = lineRow;
       lineZ--;
       dstY += Node_Height;
-      inFrontOfPlayer = lineZ > playerZ + 1;
     }
 
     plainIndex++;
@@ -692,7 +692,11 @@ class RendererNodes extends RenderGroup {
 
     currentNodeWithinIsland = false;
 
-    updateTransparencyGrid();
+    // updateTransparencyGrid();
+    resetTransparencyGrid();
+    emitBeamTransparency(player.nodeIndex);
+    // emitBeamTransparency(player.nodeIndex + scene.area);
+
     // updateHeightMapPerception();
 
     total = getTotal();
@@ -743,47 +747,47 @@ class RendererNodes extends RenderGroup {
   }
 
   // TODO Optimize
-  void updateTransparencyGrid() {
-
-    if (transparencyGrid.length != scene.projection) {
-      transparencyGrid = List.generate(scene.projection, (index) => false, growable: false);
-      transparencyGridStack = Uint16List(scene.projection);
-    } else {
-      for (var i = 0; i < transparencyGridStackIndex; i++){
-        transparencyGrid[transparencyGridStack[i]] = false;
-      }
-    }
-    transparencyGridStackIndex = 0;
-
-    const r = 2;
-
-
-    final totalColumns = scene.totalColumns;
-    final totalRows = scene.totalRows;
-    final projection = scene.projection;
-
-    final maxZ = playerZ + 1;
-
-
-    for (var z = playerZ; z <= maxZ; z++){
-      if (z >= scene.totalZ) break;
-      final indexZ = z * scene.area;
-      for (var row = playerRow - r; row <= playerRow + r; row++){
-        if (row < 0) continue;
-        if (row >= totalRows) break;
-        final rowIndex = row * totalColumns + indexZ;
-        for (var column = playerColumn - r; column <= playerColumn + r; column++){
-          if (column < 0) continue;
-          if (column >= totalColumns) break;
-          final index = rowIndex + column;
-          final projectionIndex = index % projection;
-          transparencyGrid[projectionIndex] = true;
-          transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
-          transparencyGridStackIndex++;
-        }
-      }
-    }
-  }
+  // void updateTransparencyGrid() {
+  //
+  //   if (transparencyGrid.length != scene.projection) {
+  //     transparencyGrid = List.generate(scene.projection, (index) => false, growable: false);
+  //     transparencyGridStack = Uint16List(scene.projection);
+  //   } else {
+  //     for (var i = 0; i < transparencyGridStackIndex; i++){
+  //       transparencyGrid[transparencyGridStack[i]] = false;
+  //     }
+  //   }
+  //   transparencyGridStackIndex = 0;
+  //
+  //   const r = 2;
+  //
+  //
+  //   final totalColumns = scene.totalColumns;
+  //   final totalRows = scene.totalRows;
+  //   final projection = scene.projection;
+  //
+  //   final maxZ = playerZ + 1;
+  //
+  //
+  //   for (var z = playerZ; z <= maxZ; z++){
+  //     if (z >= scene.totalZ) break;
+  //     final indexZ = z * scene.area;
+  //     for (var row = playerRow - r; row <= playerRow + r; row++){
+  //       if (row < 0) continue;
+  //       if (row >= totalRows) break;
+  //       final rowIndex = row * totalColumns + indexZ;
+  //       for (var column = playerColumn - r; column <= playerColumn + r; column++){
+  //         if (column < 0) continue;
+  //         if (column >= totalColumns) break;
+  //         final index = rowIndex + column;
+  //         final projectionIndex = index % projection;
+  //         transparencyGrid[projectionIndex] = true;
+  //         transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
+  //         transparencyGridStackIndex++;
+  //       }
+  //     }
+  //   }
+  // }
 
   // TODO Optimize
   void updateHeightMapPerception() {
@@ -3819,6 +3823,123 @@ class RendererNodes extends RenderGroup {
         dstX: dstX,
         dstY: dstY,
     );
+  }
+
+  static int toRawVelocity(int x, int y){
+    return parseSigned(x) | (parseSigned(y) << 2);
+  }
+
+  static int parseSigned(int value) => switch (value) {
+        0 => 0,
+        1 => 1,
+        -1 => 2,
+        _ => (throw Exception()),
+      };
+
+  static int parseRaw(int raw) => switch(raw) {
+      0 => 0,
+      1 => 1,
+      2 => -1,
+      _ => (throw Exception())
+    };
+
+  final beamIndexes = Uint16List(1000);
+  final beamVelocities = Uint8List(1000);
+  final beamDistance = Uint8List(1000);
+  var beamTotal = 0;
+
+  void emitBeamTransparency(int index){
+
+    if (index < 0)
+      return;
+
+    if (index >= scene.totalNodes)
+      return;
+
+    final z = scene.getIndexZ(index);
+
+    beamTotal = 0;
+
+     for (var vx = -1; vx <= 1; vx++) {
+       for (var vy = -1; vy <= 1; vy++) {
+         beamIndexes[beamTotal] = index;
+         beamDistance[beamTotal] = 0;
+         beamVelocities[beamTotal] = toRawVelocity(vx, vy);
+         beamTotal++;
+       }
+     }
+
+     var beamI = 0;
+
+     while (beamI < beamTotal) {
+       final srcIndex = beamIndexes[beamI];
+       final velocity = beamVelocities[beamI];
+       final distance = beamDistance[beamI];
+       beamI++;
+
+       final vxRaw = velocity & 0x3;
+       final vyRaw = velocity >> 2 & 0x3;
+       final vx = parseRaw(vxRaw);
+       final vy = parseRaw(vyRaw);
+
+       final row = scene.getRow(srcIndex) + vx;
+       final column = scene.getColumn(srcIndex) + vy;
+
+       if (
+          row < 0 ||
+          column < 0 ||
+          row >= scene.totalRows ||
+          column >= scene.totalColumns
+       )
+         continue;
+
+       final targetIndex = scene.getIndexZRC(z, row, column);
+
+       if (scene.nodeOrientations[targetIndex] != NodeOrientation.None)
+         continue;
+
+       final projectionIndex = targetIndex % scene.projection;
+       transparencyGrid[projectionIndex] = true;
+       transparencyGridStack[transparencyGridStackIndex++] = projectionIndex;
+
+       final projectionIndexAbove = (targetIndex + scene.area) % scene.projection;
+       transparencyGrid[projectionIndexAbove] = true;
+       transparencyGridStack[transparencyGridStackIndex++] = projectionIndexAbove;
+
+       if (distance >= 4)
+         continue;
+
+       if (vx != 0){
+         beamTotal++;
+         beamIndexes[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  vxRaw;
+         beamDistance[beamTotal] =  distance + 1;
+       }
+       if (vy != 0){
+         beamTotal++;
+         beamIndexes[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  vyRaw << 2;
+         beamDistance[beamTotal] =  distance + 1;
+       }
+       if (vx != 0 && vy != 0){
+         beamTotal++;
+         beamIndexes[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  velocity;
+         beamDistance[beamTotal] =  distance + 2;
+       }
+     }
+  }
+
+  void resetTransparencyGrid() {
+    if (transparencyGrid.length < scene.projection){
+      transparencyGrid = List.generate(scene.projection, (index) => false);
+    } else {
+      for (var i = 0; i < transparencyGridStackIndex; i++) {
+        transparencyGrid[transparencyGridStack[i]] = false;
+      }
+    }
+
+    transparencyGridStackIndex = 0;
   }
 }
 

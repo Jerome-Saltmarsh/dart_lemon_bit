@@ -95,8 +95,8 @@ class IsometricEnvironment with IsometricComponent {
 
   void onChangedWindType(int windType) {
     refreshRain();
-
-    for (final particle in particles.children) {
+    final children = particles.children;
+    for (final particle in children) {
       particle.wind = windType;
     }
   }
