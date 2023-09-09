@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/packages/utils/parse.dart';

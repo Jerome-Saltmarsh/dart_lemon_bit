@@ -85,9 +85,6 @@ class RendererNodes extends RenderGroup {
   var playerIndex = 0;
   var transparencyGrid = <bool>[];
   var transparencyGridStack = Uint16List(10000);
-  var transparencyDistance = Uint8List(100000);
-  var transparencyDistanceStack = Uint8List(100000);
-  var transparencyDistanceStackIndex = 0;
   var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
 
@@ -700,14 +697,7 @@ class RendererNodes extends RenderGroup {
 
     currentNodeWithinIsland = false;
 
-    // updateTransparencyGrid();
     resetTransparencyGrid();
-
-    for (var i = 0; i < transparencyDistanceStackIndex; i++){
-      transparencyDistance[transparencyDistanceStack[i]] = 0;
-    }
-    transparencyDistanceStackIndex = 0;
-
     emitBeamTransparency(player.nodeIndex);
 
     // updateHeightMapPerception();
@@ -758,49 +748,6 @@ class RendererNodes extends RenderGroup {
   void decreaseOrderShiftY(){
     orderShiftY--;
   }
-
-  // TODO Optimize
-  // void updateTransparencyGrid() {
-  //
-  //   if (transparencyGrid.length != scene.projection) {
-  //     transparencyGrid = List.generate(scene.projection, (index) => false, growable: false);
-  //     transparencyGridStack = Uint16List(scene.projection);
-  //   } else {
-  //     for (var i = 0; i < transparencyGridStackIndex; i++){
-  //       transparencyGrid[transparencyGridStack[i]] = false;
-  //     }
-  //   }
-  //   transparencyGridStackIndex = 0;
-  //
-  //   const r = 2;
-  //
-  //
-  //   final totalColumns = scene.totalColumns;
-  //   final totalRows = scene.totalRows;
-  //   final projection = scene.projection;
-  //
-  //   final maxZ = playerZ + 1;
-  //
-  //
-  //   for (var z = playerZ; z <= maxZ; z++){
-  //     if (z >= scene.totalZ) break;
-  //     final indexZ = z * scene.area;
-  //     for (var row = playerRow - r; row <= playerRow + r; row++){
-  //       if (row < 0) continue;
-  //       if (row >= totalRows) break;
-  //       final rowIndex = row * totalColumns + indexZ;
-  //       for (var column = playerColumn - r; column <= playerColumn + r; column++){
-  //         if (column < 0) continue;
-  //         if (column >= totalColumns) break;
-  //         final index = rowIndex + column;
-  //         final projectionIndex = index % projection;
-  //         transparencyGrid[projectionIndex] = true;
-  //         transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
-  //         transparencyGridStackIndex++;
-  //       }
-  //     }
-  //   }
-  // }
 
   // TODO Optimize
   void updateHeightMapPerception() {
@@ -1046,44 +993,6 @@ class RendererNodes extends RenderGroup {
     render.flame(dstX: dstX, dstY: dstY - 12, scale: 0.7, wind: wind);
   }
 
-  // bool assertOnScreen(){
-  //   if (currentNodeDstX < screenLeft){
-  //     offscreenNodesLeft++;
-  //     return true;
-  //   }
-  //   if (currentNodeDstX > screenRight){
-  //     offscreenNodesRight++;
-  //     return true;
-  //   }
-  //   if (currentNodeDstY < screenTop){
-  //     offscreenNodesTop++;
-  //     return true;
-  //   }
-  //   if (currentNodeDstY > screenBottom){
-  //     offscreenNodesBottom++;
-  //     return true;
-  //   }
-  //
-  //   return true;
-  // }
-
-  // bool get currentNodeTransparent {
-  //   if (currentNodeZ <= playerZ) return false;
-  //   final currentNodeProjection = currentNodeIndex % scene.projection;
-  //   if (!transparencyGrid[currentNodeProjection]) return false;
-  //
-  //   final nodeOrientation = scene.nodeOrientations[currentNodeIndex];
-  //
-  //   if (nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South){
-  //     return row >= playerRow;
-  //   }
-  //   if (nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West){
-  //     return column >= playerColumn;
-  //   }
-  //
-  //   return row >= playerRow && column >= playerColumn;
-  // }
-
   void renderNodeIndex({
     required int index,
     required int nodeType,
@@ -1104,50 +1013,6 @@ class RendererNodes extends RenderGroup {
     // }
 
     switch (nodeType) {
-
-      // case NodeType.Rain_Falling:
-      //   renderNodeRainFalling(
-      //       dstX: dstX,
-      //       dstY: dstY,
-      //       color: scene.getColor(index),
-      //       rainType: rainType, // TODO Optimize
-      //       windType: windType, // TODO Optimize
-      //       animationFrame: (animation.frame1 + variation) // TODO Optimize
-      //   );
-      //   return;
-      // case NodeType.Rain_Landing:
-      //
-      //   if (scene.nodeTypeBelowIs(index, NodeType.Water)){
-      //     renderNodeRainLandingOnWater(
-      //       dstX: dstX,
-      //       dstY: dstY,
-      //       variation: variation,
-      //       color: scene.getColor(index),
-      //       rainType: rainType, // TODO Optimize
-      //     );
-      //   } else {
-      //     renderNodeRainLandingOnGround(
-      //       dstX: dstX,
-      //       dstY: dstY,
-      //       color: scene.getColor(index),
-      //       rainType: rainType, // TODO Optimize
-      //       animationFrame: animation.frame1 + variation, // TODO Optimize
-      //     );
-      //   }
-      //
-      //   // TODO Optimize
-      //   if (renderRainFalling) {
-      //     renderNodeRainFalling(
-      //         dstX: dstX,
-      //         dstY: dstY,
-      //         color: color,
-      //         rainType: rainType, // TODO Optimize
-      //         windType: windType, // TODO Optimize
-      //         animationFrame: (animation.frame1 + variation) // TODO Optimize
-      //     );
-      //   }
-      //
-      //   return;
 
       case NodeType.Bricks_Red:
         renderNodeTemplateShaded(
@@ -3890,9 +3755,6 @@ class RendererNodes extends RenderGroup {
        final velocity = beamVelocities[beamI];
        final distance = beamDistance[beamI];
        beamI++;
-
-       transparencyDistance[srcIndex] = distance;
-       transparencyDistanceStack[transparencyDistanceStackIndex++] = srcIndex;
 
        final vxRaw = velocity & 0x3;
        final vyRaw = velocity >> 2 & 0x3;

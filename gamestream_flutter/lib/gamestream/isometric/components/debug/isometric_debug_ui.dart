@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart'
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';

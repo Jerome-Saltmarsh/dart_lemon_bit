@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/hair_type.dart';
 
 class SpriteGroupType {
   static const Arms_Left = 1;
