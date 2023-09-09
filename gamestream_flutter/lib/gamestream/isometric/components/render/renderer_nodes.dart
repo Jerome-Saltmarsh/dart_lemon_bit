@@ -102,7 +102,7 @@ class RendererNodes extends RenderGroup {
   int get wind => environment.wind.value;
 
   final colorOpaque = Colors.white;
-  final colorTransparent = Colors.white38;
+  final colorTransparent = Colors.white12;
 
   @override
   void renderFunction() {
@@ -3703,14 +3703,13 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  static int toRawVelocity(int x, int y){
-    return parseSigned(x) | (parseSigned(y) << 2);
-  }
+  static int toRawVelocity(int x, int y, int z) =>
+      parseSigned(x) | (parseSigned(y) << 2) | parseSigned(z) << 4;
 
   static int parseSigned(int value) => switch (value) {
-        0 => 0,
-        1 => 1,
-        -1 => 2,
+        0 => 0x0,
+        1 => 0x1,
+        -1 => 0x2,
         _ => (throw Exception()),
       };
 
@@ -3718,7 +3717,7 @@ class RendererNodes extends RenderGroup {
       0 => 0,
       1 => 1,
       2 => -1,
-      _ => (throw Exception())
+      _ => (throw Exception(raw))
     };
 
   final beamIndexesSrc = Uint16List(1000);
@@ -3732,23 +3731,35 @@ class RendererNodes extends RenderGroup {
     if (index < 0)
       return;
 
+    final scene = this.scene;
+
     if (index >= scene.totalNodes)
       return;
 
-    final z = scene.getIndexZ(index);
+    final beamIndexesSrc = this.beamIndexesSrc;
+    final beamIndexesTgt = this.beamIndexesTgt;
+    final beamVelocities = this.beamVelocities;
+    final beamDistance = this.beamDistance;
+    final transparencyGrid = this.transparencyGrid;
+    final transparencyGridStack = this.transparencyGridStack;
+    final projection = scene.projection;
 
-    beamTotal = 0;
+    var beamI = 0;
+    var beamTotal = 0;
 
-     for (var vx = -1; vx <= 1; vx++) {
-       for (var vy = -1; vy <= 1; vy++) {
-         beamIndexesTgt[beamTotal] = index;
-         beamDistance[beamTotal] = 0;
-         beamVelocities[beamTotal] = toRawVelocity(vx, vy);
-         beamTotal++;
-       }
-     }
+    for (var vx = -1; vx <= 1; vx++) {
+      for (var vy = -1; vy <= 1; vy++) {
+        for (var vz = -1; vz <= 1; vz++) {
+          beamIndexesTgt[beamTotal] = index;
+          beamDistance[beamTotal] = 0;
+          final raw = toRawVelocity(vx, vy, vz);
+          beamVelocities[beamTotal] = raw;
+          beamTotal++;
+        }
+      }
+    }
 
-     var beamI = 0;
+
 
      while (beamI < beamTotal) {
        final srcIndex = beamIndexesTgt[beamI];
@@ -3757,18 +3768,23 @@ class RendererNodes extends RenderGroup {
        beamI++;
 
        final vxRaw = velocity & 0x3;
-       final vyRaw = velocity >> 2 & 0x3;
+       final vyRaw = (velocity >> 2) & 0x3;
+       final vzRaw = (velocity >> 4) & 0x3;
        final vx = parseRaw(vxRaw);
        final vy = parseRaw(vyRaw);
+       final vz = parseRaw(vzRaw);
 
        final row = scene.getRow(srcIndex) + vx;
        final column = scene.getColumn(srcIndex) + vy;
+       final z = scene.getIndexZ(srcIndex) + vz;
 
        if (
           row < 0 ||
           column < 0 ||
+          z < 0 ||
           row >= scene.totalRows ||
-          column >= scene.totalColumns
+          column >= scene.totalColumns ||
+          z >= scene.totalZ
        )
          continue;
 
@@ -3777,11 +3793,11 @@ class RendererNodes extends RenderGroup {
        if (scene.nodeOrientations[targetIndex] != NodeOrientation.None)
          continue;
 
-       final projectionIndex = targetIndex % scene.projection;
+       final projectionIndex = targetIndex % projection;
        transparencyGrid[projectionIndex] = true;
        transparencyGridStack[transparencyGridStackIndex++] = projectionIndex;
 
-       final projectionIndexAbove = (targetIndex + scene.area) % scene.projection;
+       final projectionIndexAbove = (targetIndex + scene.area) % projection;
        transparencyGrid[projectionIndexAbove] = true;
        transparencyGridStack[transparencyGridStackIndex++] = projectionIndexAbove;
 
@@ -3794,22 +3810,58 @@ class RendererNodes extends RenderGroup {
          beamVelocities[beamTotal] =  vxRaw;
          beamDistance[beamTotal] =  distance + 1;
          beamTotal++;
+
+         if (vy != 0){
+           beamIndexesSrc[beamTotal] = srcIndex;
+           beamIndexesTgt[beamTotal] = targetIndex;
+           beamVelocities[beamTotal] =  vxRaw | (vyRaw << 2);
+           beamDistance[beamTotal] =  distance + 2;
+           beamTotal++;
+         }
+
+         if (vz != 0){
+           beamIndexesSrc[beamTotal] = srcIndex;
+           beamIndexesTgt[beamTotal] = targetIndex;
+           beamVelocities[beamTotal] =  vxRaw | (vzRaw << 4);
+           beamDistance[beamTotal] =  distance + 2;
+           beamTotal++;
+         }
        }
+
        if (vy != 0){
          beamIndexesSrc[beamTotal] = srcIndex;
          beamIndexesTgt[beamTotal] = targetIndex;
          beamVelocities[beamTotal] =  vyRaw << 2;
          beamDistance[beamTotal] =  distance + 1;
          beamTotal++;
+
+         if (vz != 0){
+           beamIndexesSrc[beamTotal] = srcIndex;
+           beamIndexesTgt[beamTotal] = targetIndex;
+           beamVelocities[beamTotal] =  (vyRaw << 2) | (vzRaw << 4);
+           beamDistance[beamTotal] =  distance + 2;
+           beamTotal++;
+         }
        }
-       if (vx != 0 && vy != 0){
+
+       if (vz != 0){
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  vzRaw << 4;
+         beamDistance[beamTotal] =  distance + 1;
+         beamTotal++;
+       }
+
+       if (vx != 0 && vy != 0 && vz != 0){
          beamIndexesSrc[beamTotal] = srcIndex;
          beamIndexesTgt[beamTotal] = targetIndex;
          beamVelocities[beamTotal] =  velocity;
-         beamDistance[beamTotal] =  distance + 2;
+         beamDistance[beamTotal] =  distance + 3;
          beamTotal++;
        }
      }
+
+     this.beamTotal = beamTotal;
   }
 
   void resetTransparencyGrid() {
