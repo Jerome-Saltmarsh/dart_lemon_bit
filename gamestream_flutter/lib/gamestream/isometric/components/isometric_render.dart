@@ -118,6 +118,7 @@ class IsometricRender with IsometricComponent {
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
+    rendererNodes.renderVisibilityBeams();
     renderEditMode();
     renderMouseTargetName();
     debug.drawCanvas();
@@ -661,6 +662,18 @@ class IsometricRender with IsometricComponent {
       scale: scale,
       dstX: dstX,
       dstY: dstY,
+    );
+  }
+
+  void lineBetweenIndexes(int indexSrc, int indexTgt) {
+    final scene = this.scene;
+    line(
+        scene.getIndexPositionX(indexSrc),
+        scene.getIndexPositionY(indexSrc),
+        scene.getIndexPositionZ(indexSrc),
+        scene.getIndexPositionX(indexTgt),
+        scene.getIndexPositionY(indexTgt),
+        scene.getIndexPositionZ(indexTgt),
     );
   }
 }

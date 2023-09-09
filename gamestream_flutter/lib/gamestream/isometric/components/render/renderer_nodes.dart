@@ -200,7 +200,13 @@ class RendererNodes extends RenderGroup {
 
             if (nodeType != NodeType.Empty){
 
-              transparent = transparencyGrid[nodeIndex % projection];
+              // transparent = transparencyGrid[nodeIndex % projection];
+
+              final d = transparencyDistance[nodeIndex];
+
+              if (d != 0) {
+                render.textIndex(d, nodeIndex);
+              }
 
               if (transparent != previousTransparent){
                 engine.flushBuffer();
@@ -694,6 +700,12 @@ class RendererNodes extends RenderGroup {
 
     // updateTransparencyGrid();
     resetTransparencyGrid();
+
+    for (var i = 0; i < transparencyDistanceStackIndex; i++){
+      transparencyDistance[transparencyDistanceStack[i]] = 0;
+    }
+    transparencyDistanceStackIndex = 0;
+
     emitBeamTransparency(player.nodeIndex);
     // emitBeamTransparency(player.nodeIndex + scene.area);
 
@@ -3843,7 +3855,8 @@ class RendererNodes extends RenderGroup {
       _ => (throw Exception())
     };
 
-  final beamIndexes = Uint16List(1000);
+  final beamIndexesSrc = Uint16List(1000);
+  final beamIndexesTgt = Uint16List(1000);
   final beamVelocities = Uint8List(1000);
   final beamDistance = Uint8List(1000);
   var beamTotal = 0;
@@ -3862,7 +3875,7 @@ class RendererNodes extends RenderGroup {
 
      for (var vx = -1; vx <= 1; vx++) {
        for (var vy = -1; vy <= 1; vy++) {
-         beamIndexes[beamTotal] = index;
+         beamIndexesTgt[beamTotal] = index;
          beamDistance[beamTotal] = 0;
          beamVelocities[beamTotal] = toRawVelocity(vx, vy);
          beamTotal++;
@@ -3872,10 +3885,13 @@ class RendererNodes extends RenderGroup {
      var beamI = 0;
 
      while (beamI < beamTotal) {
-       final srcIndex = beamIndexes[beamI];
+       final srcIndex = beamIndexesTgt[beamI];
        final velocity = beamVelocities[beamI];
        final distance = beamDistance[beamI];
        beamI++;
+
+       transparencyDistance[srcIndex] = distance;
+       transparencyDistanceStack[transparencyDistanceStackIndex++] = srcIndex;
 
        final vxRaw = velocity & 0x3;
        final vyRaw = velocity >> 2 & 0x3;
@@ -3910,22 +3926,25 @@ class RendererNodes extends RenderGroup {
          continue;
 
        if (vx != 0){
-         beamTotal++;
-         beamIndexes[beamTotal] = targetIndex;
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
          beamVelocities[beamTotal] =  vxRaw;
          beamDistance[beamTotal] =  distance + 1;
+         beamTotal++;
        }
        if (vy != 0){
-         beamTotal++;
-         beamIndexes[beamTotal] = targetIndex;
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
          beamVelocities[beamTotal] =  vyRaw << 2;
          beamDistance[beamTotal] =  distance + 1;
+         beamTotal++;
        }
        if (vx != 0 && vy != 0){
-         beamTotal++;
-         beamIndexes[beamTotal] = targetIndex;
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
          beamVelocities[beamTotal] =  velocity;
          beamDistance[beamTotal] =  distance + 2;
+         beamTotal++;
        }
      }
   }
@@ -3940,6 +3959,15 @@ class RendererNodes extends RenderGroup {
     }
 
     transparencyGridStackIndex = 0;
+  }
+
+  void renderVisibilityBeams() {
+    engine.color = Colors.white;
+    for (var i = 0; i < beamTotal; i++){
+      final indexSrc = beamIndexesSrc[i];
+      final indexTgt = beamIndexesTgt[i];
+      render.lineBetweenIndexes(indexSrc, indexTgt);
+    }
   }
 }
 
