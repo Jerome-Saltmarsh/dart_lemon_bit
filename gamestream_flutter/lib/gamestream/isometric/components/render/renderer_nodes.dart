@@ -103,6 +103,7 @@ class RendererNodes extends RenderGroup {
 
   @override
   void renderFunction() {
+    final engine = this.engine;
     engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
 
@@ -132,6 +133,7 @@ class RendererNodes extends RenderGroup {
     final screenBottom = this.screenBottom; // cache in cpu
     final lightningFlashing = environment.lightningFlashing;
     final lightningColor = this.lightningColor;
+    final nodeVisibility = scene.nodeVisibility;
 
     int lineZ;
     int lineColumn;
@@ -210,7 +212,7 @@ class RendererNodes extends RenderGroup {
 
               if (srcY != null) {
 
-                final visibility = scene.nodeVisibility[nodeIndex];
+                final visibility = nodeVisibility[nodeIndex];
                 if (visibility != Visibility.invisible) {
                   if (visibility != previousVisibility) {
                     engine.flushBuffer();
