@@ -188,7 +188,9 @@ class Engine extends StatelessWidget {
   set color(Color value){
     if (color == value)
       return;
+
     paint.color = value;
+    flushBuffer();
   }
 
   Color get color => paint.color;

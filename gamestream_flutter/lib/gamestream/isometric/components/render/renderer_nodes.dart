@@ -214,7 +214,6 @@ class RendererNodes extends RenderGroup {
               if (srcY != null) {
 
                 final visibility = scene.nodeVisibility[nodeIndex];
-
                 if (visibility != Visibility.invisible) {
                   if (visibility != previousVisibility) {
                     engine.flushBuffer();
@@ -498,63 +497,77 @@ class RendererNodes extends RenderGroup {
                 }
               } else {
 
-                switch (nodeType){
-                  case NodeType.Rain_Falling:
-                    renderNodeRainFalling(
+                final visibility = scene.nodeVisibility[nodeIndex];
+                if (visibility != Visibility.invisible) {
+                  if (visibility != previousVisibility) {
+                    engine.flushBuffer();
+                    previousVisibility = visibility;
+                    if (visibility == Visibility.transparent) {
+                      engine.color = colorTransparent;
+                    } else {
+                      engine.color = colorOpaque;
+                    }
+                  }
+
+                  switch (nodeType) {
+                    case NodeType.Rain_Falling:
+                      renderNodeRainFalling(
                         dstX: dstX,
                         dstY: dstY,
                         color: nodeColors[nodeIndex],
                         rainType: rainType,
                         windType: windType,
                         animationFrame: animationFrame1 + variations[nodeIndex],
-                    );
-                    break;
-
-                  case NodeType.Rain_Landing:
-
-                    if (scene.nodeTypeBelowIs(nodeIndex, NodeType.Water)){
-                      renderNodeRainLandingOnWater(
-                        dstX: dstX,
-                        dstY: dstY,
-                        variation: variations[nodeIndex],
-                        color: scene.getColor(nodeIndex),
-                        rainType: rainType,
                       );
-                    } else {
-                      renderNodeRainLandingOnGround(
-                        dstX: dstX,
-                        dstY: dstY,
-                        color: scene.getColor(nodeIndex),
-                        rainType: rainType,
-                        animationFrame: animationFrame1 + variations[nodeIndex],
-                      );
-                    }
+                      break;
 
-                    if (renderRainFalling) {
-                      renderNodeRainFalling(
+                    case NodeType.Rain_Landing:
+                      if (scene.nodeTypeBelowIs(nodeIndex, NodeType.Water)) {
+                        renderNodeRainLandingOnWater(
+                          dstX: dstX,
+                          dstY: dstY,
+                          variation: variations[nodeIndex],
+                          color: scene.getColor(nodeIndex),
+                          rainType: rainType,
+                        );
+                      } else {
+                        renderNodeRainLandingOnGround(
+                          dstX: dstX,
+                          dstY: dstY,
+                          color: scene.getColor(nodeIndex),
+                          rainType: rainType,
+                          animationFrame: animationFrame1 +
+                              variations[nodeIndex],
+                        );
+                      }
+
+                      if (renderRainFalling) {
+                        renderNodeRainFalling(
                           dstX: dstX,
                           dstY: dstY,
                           color: nodeColors[nodeIndex],
                           rainType: rainType,
                           windType: windType,
-                          animationFrame: (animationFrame1 + variations[nodeIndex]),
+                          animationFrame: (animationFrame1 +
+                              variations[nodeIndex]),
+                        );
+                      }
+
+                      break;
+
+                    default:
+                      renderNodeIndex(
+                        index: nodeIndex,
+                        nodeType: nodeType,
+                        orientation: orientations[nodeIndex],
+                        dstX: dstX,
+                        dstY: dstY,
+                        scene: scene,
+                        variation: variations[nodeIndex],
+                        color: nodeColors[nodeIndex],
                       );
-                    }
-
-                    break;
-
-                  default:
-                    renderNodeIndex(
-                      index: nodeIndex,
-                      nodeType: nodeType,
-                      orientation: orientations[nodeIndex],
-                      dstX: dstX,
-                      dstY: dstY,
-                      scene: scene,
-                      variation: variations[nodeIndex],
-                      color: nodeColors[nodeIndex],
-                    );
-                    break;
+                      break;
+                  }
                 }
               }
             }
