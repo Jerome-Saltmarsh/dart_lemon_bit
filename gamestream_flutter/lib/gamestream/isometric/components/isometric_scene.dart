@@ -234,8 +234,11 @@ class IsometricScene with IsometricComponent implements Updatable {
   int getHeightAt(int row, int column){
     var i = totalNodes - area + ((row * totalColumns) + column);
     for (var z = totalZ - 1; z >= 0; z--){
+
       if (nodeOrientations[i] != NodeOrientation.None) {
-        return z;
+        if (!const [NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeTypes[i])) {
+          return z;
+        }
       }
 
       i -= area;

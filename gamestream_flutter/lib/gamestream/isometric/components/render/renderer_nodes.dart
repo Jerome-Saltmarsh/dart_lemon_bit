@@ -4116,10 +4116,13 @@ class RendererNodes extends RenderGroup {
         continue;
       }
 
-      if (vx < 0 || vy < 0) {
+      if ((vx > 0 || vy > 0) && !(vx < 0 || vy < 0)) {
+        var i = scene.getIndexZRC(initialZ, row, column);
+        emitVisibilityVertical(i, Visibility.transparent);
+      } else {
         while (
-          targetIndex < totalNodes &&
-          scene.nodeOrientations[targetIndex] != NodeOrientation.None
+        targetIndex < totalNodes &&
+            scene.nodeOrientations[targetIndex] != NodeOrientation.None
         ) {
           targetIndex += area;
         }
@@ -4128,14 +4131,6 @@ class RendererNodes extends RenderGroup {
         } else {
           emitVisibilityVertical(targetIndex, Visibility.transparent);
         }
-      } else {
-        var i = scene.getIndexZRC(initialZ, row, column);
-        emitVisibilityVertical(i, Visibility.transparent);
-        // while (i < totalNodes) {
-        //   scene.nodeVisibility[i] = Visibility.transparent;
-        //   nodeVisibilityStack[nodeVisibilityStackIndex++] = i;
-        //   i += area;
-        // }
       }
 
       if (distance >= 10)
