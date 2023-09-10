@@ -678,10 +678,10 @@ class IsometricRender with IsometricComponent {
     line(
         scene.getIndexPositionX(indexSrc),
         scene.getIndexPositionY(indexSrc),
-        scene.getIndexPositionZ(indexSrc),
+        scene.getIndexPositionZ(indexSrc) + 16,
         scene.getIndexPositionX(indexTgt),
         scene.getIndexPositionY(indexTgt),
-        scene.getIndexPositionZ(indexTgt),
+        scene.getIndexPositionZ(indexTgt) + 16,
     );
   }
 }
