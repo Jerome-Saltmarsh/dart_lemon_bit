@@ -714,7 +714,14 @@ class RendererNodes extends RenderGroup {
     resetNodeVisibilityStack(scene);
     // final heightMapHeight = scene.getHeightMapHeightAt(player.nodeIndex);
     beamTotal = 0;
-    scene.emitHeightMapIsland(player.nodeIndex + scene.area);
+
+    var searchIndex = 0;
+    if (nodeOrientations[scene.area + scene.area] == NodeOrientation.None){
+      searchIndex = player.nodeIndex + scene.area + scene.area;
+    } else {
+      searchIndex = player.nodeIndex + scene.area;
+    }
+    scene.emitHeightMapIsland(searchIndex);
 
 
     total = getTotal();
