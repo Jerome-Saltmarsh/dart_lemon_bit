@@ -83,9 +83,6 @@ class RendererNodes extends RenderGroup {
   var visible3DStack = Uint16List(10000);
   var visible3DIndex = 0;
   var playerIndex = 0;
-  // var transparencyGrid = <bool>[];
-  // var transparencyGridStack = Uint16List(10000);
-  // var transparencyGridStackIndex = 0;
   var currentNodeWithinIsland = false;
 
   late Uint8List nodeTypes;
@@ -715,13 +712,9 @@ class RendererNodes extends RenderGroup {
     currentNodeWithinIsland = false;
 
     resetNodeVisibilityStack(scene);
-    final heightMapHeight = scene.getHeightMapHeightAt(player.nodeIndex);
-
-    if (heightMapHeight > player.indexZ){
-      emitHeightMapBeam(player.nodeIndex + scene.area);
-    } else {
-      beamTotal = 0;
-    }
+    // final heightMapHeight = scene.getHeightMapHeightAt(player.nodeIndex);
+    beamTotal = 0;
+    scene.emitHeightMapIsland(player.nodeIndex + scene.area);
 
 
     total = getTotal();
@@ -3800,6 +3793,30 @@ class RendererNodes extends RenderGroup {
     }
   }
 
+  static bool orientationBlocksVelocity(int vx, int vy, int orientation){
+     if (orientation == NodeOrientation.None)
+       return false;
+     if (orientation == NodeOrientation.Solid)
+       return true;
+
+     if (vx != 0){
+       return const [
+         NodeOrientation.Half_North,
+         NodeOrientation.Half_South,
+       ].contains(orientation);
+     }
+
+     if (vy != 0){
+       return const [
+         NodeOrientation.Half_West,
+         NodeOrientation.Half_East,
+       ].contains(orientation);
+     }
+
+     return false;
+
+  }
+
   void emitHeightMapBeam(int index) {
     if (index < 0)
       return;
@@ -3869,12 +3886,12 @@ class RendererNodes extends RenderGroup {
 
       if ((vx > 0 || vy > 0) && !(vx < 0 || vy < 0)) {
         var i = scene.getIndexZRC(initialZ, row, column);
-        emitVisibilityVertical(i, Visibility.transparent);
+        emitVisibilityVertical(i, Visibility.invisible);
       } else {
 
         while (
           targetIndex < totalNodes &&
-          orientations[targetIndex] != NodeOrientation.None
+          orientationBlocksVelocity(vx, vy, orientations[targetIndex])
         ) {
           targetIndex += area;
         }
@@ -3926,6 +3943,8 @@ class RendererNodes extends RenderGroup {
     this.beamTotal = beamTotal;
 
   }
+
+
 
 
 }

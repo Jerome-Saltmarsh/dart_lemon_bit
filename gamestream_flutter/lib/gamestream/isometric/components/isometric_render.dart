@@ -126,12 +126,16 @@ class IsometricRender with IsometricComponent {
     renderEditMode();
     renderMouseTargetName();
 
-    textPosition(player.position, scene.getHeightMapHeightAt(player.nodeIndex), offsetY: -20);
+    // renderPlayerHeightMap();
 
 
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
+  }
+
+  void renderPlayerHeightMap() {
+    textPosition(player.position, scene.getHeightMapHeightAt(player.nodeIndex), offsetY: -20);
   }
 
   void highlightAimTargetEnemy() {

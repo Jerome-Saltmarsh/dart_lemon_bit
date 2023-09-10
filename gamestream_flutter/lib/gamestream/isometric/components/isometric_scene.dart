@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -18,6 +19,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 import '../../../isometric/classes/position.dart';
+import 'render/classes/bool_list.dart';
 
 class IsometricScene with IsometricComponent implements Updatable {
 
@@ -1765,6 +1767,98 @@ class IsometricScene with IsometricComponent implements Updatable {
     final row = getRow(index);
     final column = getColumn(index);
     return heightMap[(row * totalColumns) + column];
+  }
+
+  final visited3DStack = Uint16List(10000);
+  final visited2DStack = Uint16List(10000);
+
+  var visited2D = BoolList(0);
+  var visited2DStackIndex = 0;
+  var visited3DStackIndex = 0;
+
+  void emitHeightMapIsland(int index) {
+
+    if (this.visited2D.length != area){
+      this.visited2D = BoolList(area);
+    }
+
+    final visited2DStack = this.visited2DStack;
+    final totalColumns = this.totalColumns;
+    final z = getIndexZ(index);
+
+    final visited2DStackIndex = this.visited2DStackIndex;
+    final visited3DStackIndex = this.visited3DStackIndex;
+
+    final visited2D = this.visited2D;
+    final nodeVisibility = this.nodeVisibility;
+    final visited3DStack = this.visited3DStack;
+
+    for (var i = 0; i < visited2DStackIndex; i++){
+      visited2D[visited2DStack[i]] = false;
+    }
+
+    for (var i = 0; i < visited3DStackIndex; i++){
+      nodeVisibility[visited3DStack[i]] = Visibility.opaque;
+    }
+
+    final heightMapHeight = getHeightMapHeightAt(index);
+
+    if (z >= heightMapHeight) {
+      return;
+    }
+
+    this.visited3DStackIndex = 0;
+    this.visited2DStackIndex = 0;
+
+
+    visit(getRow(index), getColumn(index), z);
+
+    var j = 0;
+
+    while (j < visited2DStackIndex){
+      final i = visited2DStack[j];
+      final row = i ~/ totalColumns;
+      final column = i % totalColumns;
+
+      visit(row - 1, column, z);
+      visit(row + 1, column, z);
+      visit(row, column + 1, z);
+      visit(row, column - 1, z);
+      j++;
+    }
+
+  }
+
+  void visit(int row, int column, int z){
+
+    if (
+      row < 0 ||
+      column < 0 ||
+      row >= totalRows ||
+      column >= totalColumns
+    ){
+      return;
+    }
+
+    final i = (row * totalColumns) + column;
+    if (heightMap[i] < z || visited2D[i]){
+      return;
+    }
+
+    visited2D[i] = true;
+    visited2DStack[visited2DStackIndex++] = i;
+
+    var index = getIndexZRC(z, row, column);
+    var hide = false;
+
+    while (index < totalNodes){
+       if (hide || nodeOrientations[index] != NodeOrientation.Solid){
+         hide = true;
+         nodeVisibility[index] = Visibility.invisible;
+         visited3DStack[visited3DStackIndex++] = index;
+       }
+       index += area;
+    }
   }
 }
 
