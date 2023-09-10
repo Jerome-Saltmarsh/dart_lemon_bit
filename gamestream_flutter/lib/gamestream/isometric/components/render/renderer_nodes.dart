@@ -102,7 +102,7 @@ class RendererNodes extends RenderGroup {
   int get wind => environment.wind.value;
 
   final colorOpaque = Colors.white;
-  final colorTransparent = Colors.white12;
+  final colorTransparent = Colors.white.withOpacity(0.15);
 
   @override
   void renderFunction() {
@@ -166,9 +166,7 @@ class RendererNodes extends RenderGroup {
     var colorWest = -1;
     var colorSouth = -1;
     var nodeType = -1;
-    var transparent = false;
-    var previousTransparent = false;
-    var zAbovePlayer = false;
+    var previousVisibility = 0;
 
 
     if (dstY > screenBottom){
@@ -178,7 +176,6 @@ class RendererNodes extends RenderGroup {
 
     while (lineZ >= 0) {
       dstY = ((row + column) * Node_Size_Half) - (lineZ * Node_Height);
-      zAbovePlayer = lineZ > player.indexZ;
 
       if (dstY > screenTop) {
         if (dstY > screenBottom){
@@ -200,294 +197,292 @@ class RendererNodes extends RenderGroup {
             if (nodeType != NodeType.Empty){
 
               srcY = nodeTypeSrcY[nodeType];
-              // transparent = zAbovePlayer && transparencyGrid[nodeIndex % projection];
-              // final visibility = (srcY != null) || (scene.nodeVisibility[nodeIndex]);
-              final transparent = srcY != null && scene.nodeVisibility[nodeIndex] == Visibility.transparent;
-
-              if (transparent != previousTransparent){
-                engine.flushBuffer();
-                previousTransparent = transparent;
-
-                if (transparent){
-                  engine.color = colorTransparent;
-                } else {
-                  engine.color = colorOpaque;
-                }
-              }
-
 
               if (srcY != null) {
 
-                if (nodeIndex % columns + 1 >= columns){
-                  colorWest = ambientColor;
-                } else {
-                  colorWest = nodeColors[nodeIndex + 1];
+                final visibility = scene.nodeVisibility[nodeIndex];
+
+                if (visibility != Visibility.invisible) {
+                  if (visibility != previousVisibility) {
+                    engine.flushBuffer();
+                    previousVisibility = visibility;
+                    if (visibility == Visibility.transparent) {
+                      engine.color = colorTransparent;
+                    } else {
+                      engine.color = colorOpaque;
+                    }
+                  }
+
+
+                  if (nodeIndex % columns + 1 >= columns) {
+                    colorWest = ambientColor;
+                  } else {
+                    colorWest = nodeColors[nodeIndex + 1];
+                  }
+
+                  if ((nodeIndex % area) ~/ columns + 1 >= rows) {
+                    colorSouth = ambientColor;
+                  } else {
+                    colorSouth = nodeColors[nodeIndex + columns];
+                  }
+
+                  final nodeAboveIndex = nodeIndex + area;
+                  int colorAbove;
+
+                  if (lightningFlashing) {
+                    colorAbove = lightningColor;
+                  } else if (nodeAboveIndex >= totalNodes) {
+                    colorAbove = ambientColor;
+                  } else {
+                    colorAbove = nodeColors[nodeAboveIndex];
+                  }
+
+                  final nodeVariation = variations[nodeIndex];
+                  final colorCurrent = nodeColors[nodeIndex];
+
+                  switch (orientations[nodeIndex]) {
+                    case NodeOrientation.Solid:
+                      renderDynamicSolid(
+                        dstX: dstX,
+                        dstY: dstY,
+                        srcY: srcY,
+                        srcX: nodeVariation < 126 ? 0.0 : 128.0,
+                        colorAbove: colorAbove,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                      );
+                      break;
+                    case NodeOrientation.Half_West:
+                      renderDynamicHalfWest(
+                        srcY: srcY,
+                        colorWest: colorWest,
+                        colorSouth: colorSouth,
+                        colorAbove: colorAbove,
+                        dstX: dstX,
+                        dstY: dstY,
+                      );
+                      break;
+                    case NodeOrientation.Half_East:
+                      renderDynamicHalfEast(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorWest: colorCurrent,
+                        colorSouth: colorSouth,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                    case NodeOrientation.Half_South:
+                      renderDynamicHalfSouth(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorWest: colorWest,
+                        colorSouth: colorSouth,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                    case NodeOrientation.Half_North:
+                      renderDynamicHalfNorth(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorSouth: colorCurrent,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+
+                    case NodeOrientation.Corner_South_East:
+                      renderCornerSouthEast(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                        colorCurrent: colorCurrent,
+                      );
+                      break;
+
+                    case NodeOrientation.Corner_North_East:
+                      renderCornerNorthEast(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                        colorCurrent: colorCurrent,
+                      );
+                      break;
+
+                    case NodeOrientation.Corner_North_West:
+                      renderCornerNorthWest(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorWest: colorWest,
+                        colorSouth: colorSouth,
+                        colorAbove: colorAbove,
+                        colorCurrent: colorCurrent,
+                      );
+                      break;
+
+                    case NodeOrientation.Corner_South_West:
+                      renderCornerSouthWest(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorWest: colorWest,
+                        colorSouth: colorSouth,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+
+                    case NodeOrientation.Slope_East:
+                      renderSlopeEast(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorAbove: colorAbove,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                      );
+                      break;
+
+                    case NodeOrientation.Slope_West:
+                      renderSlopeWest(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorAbove: colorAbove,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                        colorCurrent: colorCurrent,
+                      );
+                      break;
+
+                    case NodeOrientation.Slope_South:
+                      renderSlopeSouth(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorAbove: colorAbove,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                        colorCurrent: colorCurrent,
+                      );
+                      break;
+
+                    case NodeOrientation.Slope_North:
+                      renderSlopeNorth(
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorAbove: colorAbove,
+                        colorSouth: colorSouth,
+                        colorWest: colorWest,
+                        colorCurrent: colorCurrent,
+                      );
+                      break;
+
+                    case NodeOrientation.Half_Vertical_Top:
+                      renderCellWest(
+                        srcY: srcY,
+                        dstX: dstX - Node_Size_Half,
+                        dstY: dstY,
+                        color: colorWest,
+                      );
+
+                      renderCellWest(
+                        srcY: srcY,
+                        dstX: dstX - Node_Size_Half + Cell_South_Width,
+                        dstY: dstY + Cell_South_Height,
+                        color: colorWest,
+                      );
+
+                      renderCellWest(
+                        srcY: srcY,
+                        dstX: dstX - Node_Size_Half + Cell_South_Width +
+                            Cell_South_Width,
+                        dstY: dstY + Cell_South_Height + Cell_South_Height,
+                        color: colorWest,
+                      );
+
+                      engine.render(
+                        color: colorSouth,
+                        srcLeft: 248,
+                        srcTop: srcY,
+                        srcRight: 271,
+                        srcBottom: srcY + 30,
+                        scale: 1.0,
+                        rotation: 0,
+                        dstX: dstX,
+                        dstY: dstY,
+                      );
+
+                      renderNodeSideTop(
+                        color: colorCurrent,
+                        srcX: 0,
+                        srcY: srcY,
+                        dstX: dstX - Node_Size_Half,
+                        dstY: dstY - Node_Height,
+                      );
+                      break;
+
+                    case NodeOrientation.Column_Center_Center:
+                      renderColumn(
+                        colorSouth: colorSouth,
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                    case NodeOrientation.Column_Top_Right:
+                      renderColumn(
+                        colorSouth: colorSouth,
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY - 16,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                    case NodeOrientation.Column_Bottom_Right:
+                      renderColumn(
+                        colorSouth: colorSouth,
+                        srcY: srcY,
+                        dstX: dstX + 16,
+                        dstY: dstY,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                    case NodeOrientation.Column_Bottom_Left:
+                      renderColumn(
+                        colorSouth: colorSouth,
+                        srcY: srcY,
+                        dstX: dstX,
+                        dstY: dstY + 16,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                    case NodeOrientation.Column_Top_Left:
+                      renderColumn(
+                        colorSouth: colorSouth,
+                        srcY: srcY,
+                        dstX: dstX - 16,
+                        dstY: dstY,
+                        colorWest: colorWest,
+                        colorAbove: colorAbove,
+                      );
+                      break;
+                  }
                 }
-
-                if ((nodeIndex % area) ~/ columns + 1 >= rows) {
-                  colorSouth = ambientColor;
-                } else {
-                  colorSouth = nodeColors[nodeIndex + columns];
-                }
-
-                final nodeAboveIndex = nodeIndex + area;
-                int colorAbove;
-
-                if (lightningFlashing){
-                  colorAbove = lightningColor;
-                } else if (nodeAboveIndex >= totalNodes){
-                  colorAbove = ambientColor;
-                } else {
-                  colorAbove = nodeColors[nodeAboveIndex];
-                }
-
-                final nodeVariation = variations[nodeIndex];
-                final colorCurrent = nodeColors[nodeIndex];
-
-                switch (orientations[nodeIndex]) {
-                  case NodeOrientation.Solid:
-                    renderDynamicSolid(
-                      dstX: dstX,
-                      dstY: dstY,
-                      srcY: srcY,
-                      srcX: nodeVariation < 126 ? 0.0 : 128.0,
-                      colorAbove: colorAbove,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                    );
-                    break;
-                  case NodeOrientation.Half_West:
-                    renderDynamicHalfWest(
-                      srcY: srcY,
-                      colorWest: colorWest,
-                      colorSouth: colorSouth,
-                      colorAbove: colorAbove,
-                      dstX: dstX,
-                      dstY: dstY,
-                    );
-                    break;
-                  case NodeOrientation.Half_East:
-                    renderDynamicHalfEast(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorWest: colorCurrent,
-                      colorSouth: colorSouth,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                  case NodeOrientation.Half_South:
-                    renderDynamicHalfSouth(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorWest: colorWest,
-                      colorSouth: colorSouth,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                  case NodeOrientation.Half_North:
-                    renderDynamicHalfNorth(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorSouth: colorCurrent,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-
-                  case NodeOrientation.Corner_South_East:
-                    renderCornerSouthEast(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                      colorCurrent: colorCurrent,
-                    );
-                    break;
-
-                  case NodeOrientation.Corner_North_East:
-                    renderCornerNorthEast(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                      colorCurrent: colorCurrent,
-                    );
-                    break;
-
-                  case NodeOrientation.Corner_North_West:
-                    renderCornerNorthWest(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorWest: colorWest,
-                      colorSouth: colorSouth,
-                      colorAbove: colorAbove,
-                      colorCurrent: colorCurrent,
-                    );
-                    break;
-
-                  case NodeOrientation.Corner_South_West:
-                    renderCornerSouthWest(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorWest: colorWest,
-                      colorSouth: colorSouth,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-
-                  case NodeOrientation.Slope_East:
-                    renderSlopeEast(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorAbove: colorAbove,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                    );
-                    break;
-
-                  case NodeOrientation.Slope_West:
-                    renderSlopeWest(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorAbove: colorAbove,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                      colorCurrent: colorCurrent,
-                    );
-                    break;
-
-                  case NodeOrientation.Slope_South:
-                    renderSlopeSouth(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorAbove: colorAbove,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                      colorCurrent: colorCurrent,
-                    );
-                    break;
-
-                  case NodeOrientation.Slope_North:
-                    renderSlopeNorth(
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorAbove: colorAbove,
-                      colorSouth: colorSouth,
-                      colorWest: colorWest,
-                      colorCurrent: colorCurrent,
-                    );
-                    break;
-
-                  case NodeOrientation.Half_Vertical_Top:
-
-                    renderCellWest(
-                      srcY: srcY,
-                      dstX: dstX - Node_Size_Half,
-                      dstY: dstY,
-                      color: colorWest,
-                    );
-
-                    renderCellWest(
-                      srcY: srcY,
-                      dstX: dstX - Node_Size_Half + Cell_South_Width,
-                      dstY: dstY + Cell_South_Height,
-                      color: colorWest,
-                    );
-
-                    renderCellWest(
-                      srcY: srcY,
-                      dstX: dstX - Node_Size_Half + Cell_South_Width + Cell_South_Width,
-                      dstY: dstY + Cell_South_Height + Cell_South_Height,
-                      color: colorWest,
-                    );
-
-                    engine.render(
-                      color: colorSouth,
-                      srcLeft: 248,
-                      srcTop: srcY,
-                      srcRight: 271,
-                      srcBottom: srcY + 30,
-                      scale: 1.0,
-                      rotation: 0,
-                      dstX: dstX,
-                      dstY: dstY,
-                    );
-
-                    renderNodeSideTop(
-                      color: colorCurrent,
-                      srcX: 0,
-                      srcY: srcY,
-                      dstX: dstX - Node_Size_Half,
-                      dstY: dstY - Node_Height,
-                    );
-                    break;
-
-                  case NodeOrientation.Column_Center_Center:
-                    renderColumn(
-                      colorSouth: colorSouth,
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                  case NodeOrientation.Column_Top_Right:
-                    renderColumn(
-                      colorSouth: colorSouth,
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY - 16,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                  case NodeOrientation.Column_Bottom_Right:
-                    renderColumn(
-                      colorSouth: colorSouth,
-                      srcY: srcY,
-                      dstX: dstX + 16,
-                      dstY: dstY,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                  case NodeOrientation.Column_Bottom_Left:
-                    renderColumn(
-                      colorSouth: colorSouth,
-                      srcY: srcY,
-                      dstX: dstX,
-                      dstY: dstY + 16,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                  case NodeOrientation.Column_Top_Left:
-                    renderColumn(
-                      colorSouth: colorSouth,
-                      srcY: srcY,
-                      dstX: dstX - 16,
-                      dstY: dstY,
-                      colorWest: colorWest,
-                      colorAbove: colorAbove,
-                    );
-                    break;
-                }
-
-
               } else {
 
                 switch (nodeType){
@@ -700,9 +695,18 @@ class RendererNodes extends RenderGroup {
     nodeVisibilityStackIndex = 0;
 
     // resetTransparencyGrid();
-    emitBeamTransparency(player.nodeIndex);
-
+    // emitBeamTransparency(player.nodeIndex);
+    // emitTransparencySquare(player.nodeIndex);
+    // emitVisibilityVertical(player.nodeIndex, Visibility.invisible);
+    // emitBeamTransparency2(player.nodeIndex);
     // updateHeightMapPerception();
+
+    final heightMapHeight = scene.getHeightMapHeightAt(player.nodeIndex);
+
+    if (heightMapHeight > player.indexZ){
+      emitHeightMapBeam(player.nodeIndex);
+    }
+
 
     total = getTotal();
     remaining = total > 0;
@@ -805,9 +809,9 @@ class RendererNodes extends RenderGroup {
       ensureIndexPerceptible(player.nodeIndex);
     }
 
-    if (mouse.inBounds){
-      ensureIndexPerceptible(mouse.nodeIndex);
-    }
+    // if (mouse.inBounds){
+    //   ensureIndexPerceptible(mouse.nodeIndex);
+    // }
 
     zMin = max(player.indexZ - 1, 0);
     visit2D(
@@ -3728,6 +3732,40 @@ class RendererNodes extends RenderGroup {
   final beamDistance = Uint8List(1000);
   var beamTotal = 0;
 
+
+  void emitTransparencySquare(int index){
+
+    var b = index + scene.area;
+
+    while (index < scene.totalNodes){
+      if (scene.nodeOrientations[index] != NodeOrientation.None) {
+        scene.nodeVisibility[index] = Visibility.transparent;
+        nodeVisibilityStack[nodeVisibilityStackIndex++] = index;
+      }
+      index += scene.projection;
+    }
+
+    while (b < scene.totalNodes){
+      if (scene.nodeOrientations[b] != NodeOrientation.None) {
+        scene.nodeVisibility[b] = Visibility.transparent;
+        nodeVisibilityStack[nodeVisibilityStackIndex++] = b;
+      }
+      b += scene.projection;
+    }
+  }
+
+  void emitVisibilityVertical(int index, int value) {
+
+    final scene = this.scene;
+    final total = scene.totalNodes;
+
+    while (index < total) {
+      scene.nodeVisibility[index] = value;
+      nodeVisibilityStack[nodeVisibilityStackIndex++] = index;
+      index += scene.area;
+    }
+  }
+
   void emitBeamTransparency(int index){
 
     if (index < 0)
@@ -3792,10 +3830,20 @@ class RendererNodes extends RenderGroup {
 
        final targetIndex = scene.getIndexZRC(z, row, column);
 
+       final forward = vx + vy + vz > 0;
+
+       if (forward && vz >= 0){
+         setProjectionTransparent(targetIndex);
+         setProjectionTransparent(targetIndex + scene.area);
+       }
+
        if (scene.nodeOrientations[targetIndex] != NodeOrientation.None)
          continue;
 
-       setTransparent(targetIndex);
+       if (!forward){
+         setProjectionTransparent(targetIndex);
+         setProjectionTransparent(targetIndex + scene.area);
+       }
 
        if (distance >= 3)
          continue;
@@ -3860,17 +3908,122 @@ class RendererNodes extends RenderGroup {
      this.beamTotal = beamTotal;
   }
 
-  // void resetTransparencyGrid() {
-  //   if (transparencyGrid.length < scene.projection){
-  //     transparencyGrid = List.generate(scene.projection, (index) => false);
-  //   } else {
-  //     for (var i = 0; i < transparencyGridStackIndex; i++) {
-  //       transparencyGrid[transparencyGridStack[i]] = false;
-  //     }
-  //   }
-  //
-  //   transparencyGridStackIndex = 0;
-  // }
+  void emitBeamTransparency2(int index){
+
+    if (index < 0)
+      return;
+
+    final scene = this.scene;
+
+    if (index >= scene.totalNodes)
+      return;
+
+    final beamIndexesSrc = this.beamIndexesSrc;
+    final beamIndexesTgt = this.beamIndexesTgt;
+    final beamVelocities = this.beamVelocities;
+    final beamDistance = this.beamDistance;
+    final area = scene.area;
+    final totalNodes = scene.totalNodes;
+
+    final initialZ = scene.getIndexZ(index);
+
+    var beamI = 0;
+    var beamTotal = 0;
+
+    for (var vx = -1; vx <= 1; vx++) {
+      for (var vy = -1; vy <= 1; vy++) {
+          beamIndexesTgt[beamTotal] = index;
+          beamDistance[beamTotal] = 0;
+          final raw = toRawVelocity(vx, vy, 0);
+          beamVelocities[beamTotal] = raw;
+          beamTotal++;
+        }
+    }
+
+     while (beamI < beamTotal) {
+       final srcIndex = beamIndexesTgt[beamI];
+       final velocity = beamVelocities[beamI];
+       final distance = beamDistance[beamI];
+       beamI++;
+
+       final vxRaw = velocity & 0x3;
+       final vyRaw = (velocity >> 2) & 0x3;
+       final vx = parseRaw(vxRaw);
+       final vy = parseRaw(vyRaw);
+
+       final row = scene.getRow(srcIndex) + vx;
+       final column = scene.getColumn(srcIndex) + vy;
+       var z = scene.getIndexZ(srcIndex);
+
+       if (
+          row < 0 ||
+          column < 0 ||
+          z < 0 ||
+          row >= scene.totalRows ||
+          column >= scene.totalColumns ||
+          z >= scene.totalZ
+       )
+         continue;
+
+       var targetIndex = scene.getIndexZRC(z, row, column);
+
+       while (targetIndex < totalNodes && scene.nodeOrientations[targetIndex] != NodeOrientation.None) {
+
+         if (vx > 0 || vy > 0){
+           if (initialZ < z){
+             scene.nodeVisibility[targetIndex] = Visibility.transparent;
+             nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
+           }
+
+         }
+         targetIndex += area;
+         z++;
+       }
+
+       if (targetIndex >= totalNodes){
+         continue;
+       }
+
+       emitVisibilityVertical(targetIndex, Visibility.invisible);
+
+       if (distance >= 5)
+         continue;
+
+       if (vx != 0){
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  vxRaw;
+         beamDistance[beamTotal] =  distance + 1;
+         beamTotal++;
+
+         if (vy != 0){
+           beamIndexesSrc[beamTotal] = srcIndex;
+           beamIndexesTgt[beamTotal] = targetIndex;
+           beamVelocities[beamTotal] =  vxRaw | (vyRaw << 2);
+           beamDistance[beamTotal] =  distance + 2;
+           beamTotal++;
+         }
+       }
+
+       if (vy != 0){
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  vyRaw << 2;
+         beamDistance[beamTotal] =  distance + 1;
+         beamTotal++;
+       }
+
+       if (vx != 0 && vy != 0){
+         beamIndexesSrc[beamTotal] = srcIndex;
+         beamIndexesTgt[beamTotal] = targetIndex;
+         beamVelocities[beamTotal] =  velocity;
+         beamDistance[beamTotal] =  distance + 2;
+         beamTotal++;
+       }
+     }
+
+     this.beamTotal = beamTotal;
+  }
 
   var nodeVisibilityStack = Uint16List(10000);
   var nodeVisibilityStackIndex = 0;
@@ -3885,14 +4038,143 @@ class RendererNodes extends RenderGroup {
     }
   }
 
-  void setTransparent(int targetIndex) {
+  void setProjectionTransparent(int targetIndex) {
 
     while (targetIndex < scene.totalNodes){
+      if (scene.nodeOrientations[targetIndex] == NodeOrientation.None)
+        continue;
+
       scene.nodeVisibility[targetIndex] = Visibility.transparent;
       nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
       targetIndex += scene.projection;
     }
   }
+
+  void emitHeightMapBeam(int index) {
+    if (index < 0)
+      return;
+
+    final scene = this.scene;
+
+    if (index >= scene.totalNodes)
+      return;
+
+    final beamIndexesSrc = this.beamIndexesSrc;
+    final beamIndexesTgt = this.beamIndexesTgt;
+    final beamVelocities = this.beamVelocities;
+    final beamDistance = this.beamDistance;
+    final area = scene.area;
+    final totalNodes = scene.totalNodes;
+    final totalRows = scene.totalRows;
+    final totalColumns = scene.totalColumns;
+    final totalZ = scene.totalZ;
+
+    final initialZ = scene.getIndexZ(index);
+
+    var beamI = 0;
+    var beamTotal = 0;
+
+    for (var vx = -1; vx <= 1; vx++) {
+      for (var vy = -1; vy <= 1; vy++) {
+        beamIndexesTgt[beamTotal] = index;
+        beamDistance[beamTotal] = 0;
+        final raw = toRawVelocity(vx, vy, 0);
+        beamVelocities[beamTotal] = raw;
+        beamTotal++;
+      }
+    }
+
+    while (beamI < beamTotal) {
+      final srcIndex = beamIndexesTgt[beamI];
+      final velocity = beamVelocities[beamI];
+      final distance = beamDistance[beamI];
+      beamI++;
+
+      final vxRaw = velocity & 0x3;
+      final vyRaw = (velocity >> 2) & 0x3;
+      final vx = parseRaw(vxRaw);
+      final vy = parseRaw(vyRaw);
+
+      final row = scene.getRow(srcIndex) + vx;
+      final column = scene.getColumn(srcIndex) + vy;
+      var z = scene.getIndexZ(srcIndex);
+
+      if (
+          row < 0 ||
+          column < 0 ||
+          z < 0 ||
+          row >= totalRows ||
+          column >= totalColumns ||
+          z >= totalZ
+      )
+        continue;
+
+
+      var targetIndex = scene.getIndexZRC(z, row, column);
+
+      if (scene.getHeightMapHeightAt(targetIndex) < z) {
+        continue;
+      }
+
+      while (targetIndex < totalNodes && scene.nodeOrientations[targetIndex] != NodeOrientation.None) {
+        if (vx > 0 || vy > 0){
+          if (initialZ < z){
+            scene.nodeVisibility[targetIndex] = Visibility.transparent;
+            nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
+          }
+
+        }
+        targetIndex += area;
+        z++;
+      }
+
+      if (targetIndex >= totalNodes){
+        continue;
+      }
+
+      emitVisibilityVertical(targetIndex, Visibility.invisible);
+
+      if (distance >= 10)
+        continue;
+
+      if (vx != 0){
+        beamIndexesSrc[beamTotal] = srcIndex;
+        beamIndexesTgt[beamTotal] = targetIndex;
+        beamVelocities[beamTotal] =  vxRaw;
+        beamDistance[beamTotal] =  distance + 1;
+        beamTotal++;
+
+        if (vy != 0){
+          beamIndexesSrc[beamTotal] = srcIndex;
+          beamIndexesTgt[beamTotal] = targetIndex;
+          beamVelocities[beamTotal] =  vxRaw | (vyRaw << 2);
+          beamDistance[beamTotal] =  distance + 2;
+          beamTotal++;
+        }
+      }
+
+      if (vy != 0){
+        beamIndexesSrc[beamTotal] = srcIndex;
+        beamIndexesTgt[beamTotal] = targetIndex;
+        beamVelocities[beamTotal] =  vyRaw << 2;
+        beamDistance[beamTotal] =  distance + 1;
+        beamTotal++;
+      }
+
+      if (vx != 0 && vy != 0){
+        beamIndexesSrc[beamTotal] = srcIndex;
+        beamIndexesTgt[beamTotal] = targetIndex;
+        beamVelocities[beamTotal] =  velocity;
+        beamDistance[beamTotal] =  distance + 2;
+        beamTotal++;
+      }
+    }
+
+    this.beamTotal = beamTotal;
+
+  }
+
+
 }
 
 class Visibility {

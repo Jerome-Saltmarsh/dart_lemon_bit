@@ -218,15 +218,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     ambientResetIndex += ambientResetBatchSize;
   }
 
-  int getHeightAt(int row, int column){
-    var i = totalNodes - area + ((row * totalColumns) + column);
-    for (var z = totalZ - 1; z >= 0; z--){
-      if (nodeOrientations[i] != NodeOrientation.None) return z;
-      i -= area;
-    }
-    return 0;
-  }
-
+  // TODO OPTIMIZE
   void generateHeightMap() {
     if (heightMap.length != area) {
       heightMap = Uint16List(area);
@@ -237,6 +229,18 @@ class IsometricScene with IsometricComponent implements Updatable {
         heightMap[rowIndex + column] = getHeightAt(row, column);
       }
     }
+  }
+
+  int getHeightAt(int row, int column){
+    var i = totalNodes - area + ((row * totalColumns) + column);
+    for (var z = totalZ - 1; z >= 0; z--){
+      if (nodeOrientations[i] != NodeOrientation.None) {
+        return z;
+      }
+
+      i -= area;
+    }
+    return 0;
   }
 
   void generateMiniMap(){
@@ -1749,6 +1753,11 @@ class IsometricScene with IsometricComponent implements Updatable {
       return -1;
   }
 
+  int getHeightMapHeightAt(int index) {
+    final row = getRow(index);
+    final column = getColumn(index);
+    return heightMap[(row * totalColumns) + column];
+  }
 }
 
 int convertSecondsToAmbientAlpha(int totalSeconds) {
