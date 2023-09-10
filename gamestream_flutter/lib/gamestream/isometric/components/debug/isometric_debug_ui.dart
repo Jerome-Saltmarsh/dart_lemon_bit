@@ -628,6 +628,11 @@ extension isometricDebugUI on IsometricDebug {
       buildTab(
         children: [
           buildRowToggle(
+             text: 'render height map',
+             action: () => options.renderHeightMap = !options.renderHeightMap,
+             value: () => options.renderHeightMap,
+          ),
+          buildRowToggle(
              text: 'render character animation frame',
              action: options.toggleRenderCharacterAnimationFrame,
              value: () => options.renderCharacterAnimationFrame,

@@ -168,6 +168,8 @@ class RendererNodes extends RenderGroup {
     var nodeType = -1;
     var previousVisibility = 0;
 
+    final renderHeightMap = options.renderHeightMap;
+
 
     if (dstY > screenBottom){
       end();
@@ -194,7 +196,20 @@ class RendererNodes extends RenderGroup {
 
             nodeType = nodeTypes[nodeIndex];
 
-            if (nodeType != NodeType.Empty){
+            if (renderHeightMap) {
+              if (nodeType != NodeType.Empty){
+                final heightMapZ = scene.getHeightAt(row, column);
+                if (lineZ < heightMapZ){
+                  renderStandardNode(
+                      srcX: 392,
+                      srcY: 0,
+                      dstX: dstX,
+                      dstY: dstY - 24,
+                      color: Colors.white.value,
+                  );
+                }
+              }
+            } else if (nodeType != NodeType.Empty){
 
               srcY = nodeTypeSrcY[nodeType];
 
@@ -4129,7 +4144,7 @@ class RendererNodes extends RenderGroup {
         if (targetIndex >= totalNodes){
           continue;
         } else {
-          emitVisibilityVertical(targetIndex, Visibility.transparent);
+          emitVisibilityVertical(targetIndex, Visibility.invisible);
         }
       }
 
