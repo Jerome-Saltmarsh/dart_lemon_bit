@@ -3763,11 +3763,14 @@ class RendererNodes extends RenderGroup {
 
     final scene = this.scene;
     final total = scene.totalNodes;
+    final nodeVisibility = scene.nodeVisibility;
+    final nodeVisibilityStack = this.nodeVisibilityStack;
+    final area = scene.area;
 
     while (index < total) {
-      scene.nodeVisibility[index] = value;
+      nodeVisibility[index] = value;
       nodeVisibilityStack[nodeVisibilityStackIndex++] = index;
-      index += scene.area;
+      index += area;
     }
   }
 
@@ -3806,6 +3809,7 @@ class RendererNodes extends RenderGroup {
     if (index >= scene.totalNodes)
       return;
 
+    final orientations = scene.nodeOrientations;
     final beamIndexesSrc = this.beamIndexesSrc;
     final beamIndexesTgt = this.beamIndexesTgt;
     final beamVelocities = this.beamVelocities;
@@ -3870,7 +3874,7 @@ class RendererNodes extends RenderGroup {
 
         while (
           targetIndex < totalNodes &&
-          scene.nodeOrientations[targetIndex] != NodeOrientation.None
+          orientations[targetIndex] != NodeOrientation.None
         ) {
           targetIndex += area;
         }
