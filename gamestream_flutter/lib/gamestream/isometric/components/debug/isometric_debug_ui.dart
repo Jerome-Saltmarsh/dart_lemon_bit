@@ -633,6 +633,11 @@ extension isometricDebugUI on IsometricDebug {
              value: () => options.renderHeightMap,
           ),
           buildRowToggle(
+             text: 'render visibility beams',
+             action: () => options.renderVisibilityBeams = !options.renderVisibilityBeams,
+             value: () => options.renderVisibilityBeams,
+          ),
+          buildRowToggle(
              text: 'render character animation frame',
              action: options.toggleRenderCharacterAnimationFrame,
              value: () => options.renderCharacterAnimationFrame,

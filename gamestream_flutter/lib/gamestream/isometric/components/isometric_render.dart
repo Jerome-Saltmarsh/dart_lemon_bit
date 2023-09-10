@@ -118,9 +118,17 @@ class IsometricRender with IsometricComponent {
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
-    // rendererNodes.renderVisibilityBeams();
+
+    if (options.renderVisibilityBeams){
+      rendererNodes.renderVisibilityBeams();
+    }
+
     renderEditMode();
     renderMouseTargetName();
+
+    textPosition(player.position, scene.getHeightMapHeightAt(player.nodeIndex), offsetY: -20);
+
+
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;

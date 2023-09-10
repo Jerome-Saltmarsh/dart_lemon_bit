@@ -13,6 +13,8 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
+
+  var renderVisibilityBeams = false;
   var renderHeightMap = false;
   var renderRainFallingTwice = true;
   var renderCharacterAnimationFrame = false;
