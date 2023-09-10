@@ -1861,7 +1861,7 @@ class IsometricScene with IsometricComponent implements Updatable {
        if (hide || nodeOrientations[index] != NodeOrientation.None){
          hide = true;
          if (j >= 1) {
-           nodeVisibility[index] = (space || j > 2) ? Visibility.invisible : Visibility.transparent;
+           nodeVisibility[index] = (space || j >= 2) ? Visibility.invisible : Visibility.transparent;
            visited3DStack[visited3DStackIndex++] = index;
          }
        } else {
