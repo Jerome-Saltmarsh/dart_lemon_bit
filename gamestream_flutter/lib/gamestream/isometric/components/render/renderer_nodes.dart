@@ -704,7 +704,7 @@ class RendererNodes extends RenderGroup {
     final heightMapHeight = scene.getHeightMapHeightAt(player.nodeIndex);
 
     if (heightMapHeight > player.indexZ){
-      emitHeightMapBeam(player.nodeIndex);
+      emitHeightMapBeam(player.nodeIndex + scene.area);
     }
 
 
@@ -4097,7 +4097,7 @@ class RendererNodes extends RenderGroup {
 
       final row = scene.getRow(srcIndex) + vx;
       final column = scene.getColumn(srcIndex) + vy;
-      var z = scene.getIndexZ(srcIndex);
+      final z = scene.getIndexZ(srcIndex);
 
       if (
           row < 0 ||
@@ -4116,23 +4116,27 @@ class RendererNodes extends RenderGroup {
         continue;
       }
 
-      while (targetIndex < totalNodes && scene.nodeOrientations[targetIndex] != NodeOrientation.None) {
-        if (vx > 0 || vy > 0){
-          if (initialZ < z){
-            scene.nodeVisibility[targetIndex] = Visibility.transparent;
-            nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
-          }
-
+      if (vx < 0 || vy < 0) {
+        while (
+          targetIndex < totalNodes &&
+          scene.nodeOrientations[targetIndex] != NodeOrientation.None
+        ) {
+          targetIndex += area;
         }
-        targetIndex += area;
-        z++;
+        if (targetIndex >= totalNodes){
+          continue;
+        } else {
+          emitVisibilityVertical(targetIndex, Visibility.transparent);
+        }
+      } else {
+        var i = scene.getIndexZRC(initialZ, row, column);
+        emitVisibilityVertical(i, Visibility.transparent);
+        // while (i < totalNodes) {
+        //   scene.nodeVisibility[i] = Visibility.transparent;
+        //   nodeVisibilityStack[nodeVisibilityStackIndex++] = i;
+        //   i += area;
+        // }
       }
-
-      if (targetIndex >= totalNodes){
-        continue;
-      }
-
-      emitVisibilityVertical(targetIndex, Visibility.invisible);
 
       if (distance >= 10)
         continue;
