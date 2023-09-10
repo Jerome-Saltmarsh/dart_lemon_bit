@@ -1841,7 +1841,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     final i = (row * totalColumns) + column;
-    if (heightMap[i] < z || visited2D[i]){
+    if (heightMap[i] <= z || visited2D[i]){
       return;
     }
 
@@ -1851,13 +1851,18 @@ class IsometricScene with IsometricComponent implements Updatable {
     var index = getIndexZRC(z, row, column);
     var hide = false;
 
+    final totalNodes = this.totalNodes;
+
+    var j = 0;
+
     while (index < totalNodes){
-       if (hide || nodeOrientations[index] != NodeOrientation.Solid){
+       if (hide || nodeOrientations[index] != NodeOrientation.None){
          hide = true;
-         nodeVisibility[index] = Visibility.invisible;
+         nodeVisibility[index] = j > 1 ? Visibility.invisible : Visibility.transparent;
          visited3DStack[visited3DStackIndex++] = index;
        }
        index += area;
+       j++;
     }
   }
 }
