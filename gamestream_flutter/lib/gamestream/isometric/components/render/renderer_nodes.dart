@@ -434,7 +434,7 @@ class RendererNodes extends RenderGroup {
                       );
 
                       renderNodeSideTop(
-                        color: colorCurrent,
+                        color: colorAbove,
                         srcX: 0,
                         srcY: srcY,
                         dstX: dstX - Node_Size_Half,
