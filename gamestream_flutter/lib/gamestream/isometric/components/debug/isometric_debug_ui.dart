@@ -628,6 +628,11 @@ extension isometricDebugUI on IsometricDebug {
       buildTab(
         children: [
           buildRowToggle(
+             text: 'emitLightsUsingRecursion',
+             action: () => options.emitLightsUsingRecursion = !options.emitLightsUsingRecursion,
+             value: () => options.emitLightsUsingRecursion,
+          ),
+          buildRowToggle(
              text: 'render height map',
              action: () => options.renderHeightMap = !options.renderHeightMap,
              value: () => options.renderHeightMap,
