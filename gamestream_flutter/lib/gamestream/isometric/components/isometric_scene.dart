@@ -840,14 +840,16 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
     } else {
       for (var vz = -1; vz <= 1; vz++){
-        for (var vx = vxStart; vx <= vxEnd; vx++){
-          for (var vy = vyStart; vy <= vyEnd; vy++){
-            stackB[total++] =
-            signToByte(vx) << 0 |
-            signToByte(vy) << 2 |
-            signToByte(vz) << 4 ;
+        final vzByte = signToByte(vz) << 4;
+        for (var vy = vyStart; vy <= vyEnd; vy++){
+          final vyByte = signToByte(vy) << 2;
+          for (var vx = vxStart; vx <= vxEnd; vx++){
+              stackB[total++] =
+                signToByte(vx) |
+                vyByte |
+                vzByte ;
+            }
           }
-        }
       }
 
       stackA.fillRange(0, total, row | column << 8 | z << 16 | brightness << 24);
@@ -996,6 +998,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     var vz = -1;
     var stackTotal = this.emitLightBeamStackTotal;
 
+    var velocity = -1;
+
     while (stackFrame < stackTotal) {
       
       stackValueA = stackA[stackFrame];
@@ -1014,7 +1018,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       vy = byteToSign(vyByte);
       vz = byteToSign(vzByte);
       
-      var velocity = vx.abs() + vy.abs() + vz.abs();
+      velocity = vx.abs() + vy.abs() + vz.abs();
       brightness -= velocity;
 
       if (brightness < 0) {
@@ -1225,6 +1229,14 @@ class IsometricScene with IsometricComponent implements Updatable {
         continue;
       }
 
+      vxByte = vx == -1 ? 2 : vx;
+      vyByte = vy == -1 ? 2 : vy;
+      vzByte = vz == -1 ? 2 : vz;
+
+      assert (vxByte <= 2);
+      assert (vyByte <= 2);
+      assert (vzByte <= 2);
+
       if (vx.abs() + vy.abs() + vz.abs() == 3) {
 
         stackA[stackTotal] =
@@ -1234,9 +1246,9 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          signToByte(vx) << 0 |
-          signToByte(vy) << 2 |
-          signToByte(vz) << 4 ;
+          vxByte << 0 |
+          vyByte << 2 |
+          vzByte << 4 ;
 
       }
 
@@ -1248,8 +1260,8 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          signToByte(vx) << 0 |
-          signToByte(vy) << 2 ;
+          vxByte << 0 |
+          vyByte << 2 ;
           // signToByte(0) << 4 ;
       }
 
@@ -1261,9 +1273,9 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          signToByte(vx) << 0 |
+          vxByte << 0 |
           // signToByte(0) << 2 |
-          signToByte(vz) << 4 ;
+          vzByte << 4 ;
       }
 
       if (vy.abs() + vz.abs() == 2) {
@@ -1275,8 +1287,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
         stackB[stackTotal++] =
           // signToByte(vx) << 0 |
-          signToByte(vy) << 2 |
-          signToByte(vz) << 4 ;
+          vyByte << 2 |
+          vzByte << 4 ;
       }
 
       if (vx != 0) {
@@ -1288,7 +1300,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          signToByte(vx) << 0 ;
+          vxByte << 0 ;
           // signToByte(0) << 2 |
           // signToByte(vz) << 4 ;
       }
@@ -1302,7 +1314,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
         stackB[stackTotal++] =
           // signToByte(vx) << 0 |
-          signToByte(vy) << 2;
+          vyByte << 2;
           // signToByte(vz) << 4 ;
       }
 
@@ -1316,7 +1328,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         stackB[stackTotal++] =
           // signToByte(vx) << 0 |
           // signToByte(0) << 2 |
-          signToByte(vz) << 4 ;
+          vzByte << 4 ;
       }
     }
   }
