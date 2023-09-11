@@ -1000,6 +1000,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     var velocity = -1;
 
+    var ambientStackIndex = this.ambientStackIndex;
+
     while (stackFrame < stackTotal) {
       
       stackValueA = stackA[stackFrame];
@@ -1331,6 +1333,8 @@ class IsometricScene with IsometricComponent implements Updatable {
           vzByte << 4 ;
       }
     }
+
+    this.ambientStackIndex = ambientStackIndex;
   }
 
   void emitLightBeamRecursive({
