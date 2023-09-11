@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/functions/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -805,29 +806,45 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
     }
 
+    final brightness = 7;
+    final stackA = this.emitLightBeamStackA;
+    final stackB = this.emitLightBeamStackB;
+    this.emitLightBeamStackTotal = 0;
+
+    var total = 0;
+
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
-          emitLightBeam(
-            row: row,
-            column: column,
-            z: z,
-            brightness: 7,
-            value: value,
-            vx: vx,
-            vy: vy,
-            vz: vz,
-            intensity: intensity,
-            ambient: ambient,
-            minRenderX: minRenderX,
-            maxRenderX: maxRenderX,
-            minRenderY: minRenderY,
-            maxRenderY: maxRenderY,
-            recordMode: bakeStackRecording,
-          );
+          // stackA[total] =
+          //   row |
+          //   column << 8 |
+          //   z << 16 |
+          //   brightness << 24 ;
+          stackB[total++] =
+            signToByte(vx) << 0 |
+            signToByte(vy) << 2 |
+            signToByte(vz) << 4 ;
         }
       }
     }
+
+    stackA.fillRange(0, total, row | column << 8 | z << 16 | brightness << 24);
+
+    emitLightBeamStackTotal = total;
+
+    emitLightBeam(
+      value: value,
+      intensity: intensity,
+      ambient: ambient,
+      minRenderX: minRenderX,
+      maxRenderX: maxRenderX,
+      minRenderY: minRenderY,
+      maxRenderY: maxRenderY,
+      recordMode: bakeStackRecording,
+    );
+
+    emitLightBeamStackTotal = 0;
   }
 
   void applyEmissionBakeStack() {
@@ -914,14 +931,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
+  final emitLightBeamStackA = Uint32List(100000);
+  final emitLightBeamStackB = Uint32List(100000);
+  var emitLightBeamStackTotal = 0;
+
   void emitLightBeam({
-    required int row,
-    required int column,
-    required int z,
-    required int brightness,
-    required int vx,
-    required int vy,
-    required int vz,
     required int value,
     required double intensity,
     required double minRenderX,
@@ -931,10 +945,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     required bool recordMode,
     required bool ambient,
   }){
-    if (brightness < 0)
-      return;
-
-    // cache values in cpu
     final area = this.area;
     final rows = totalRows;
     final columns = totalColumns;
@@ -946,30 +956,70 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolations = this.interpolations;
     final nodeTypes = this.nodeTypes;
     final nodeOrientations = this.nodeOrientations;
+    final stackA = this.emitLightBeamStackA;
+    final stackB = this.emitLightBeamStackB;
 
-    while (true) {
+    var stackFrame = 0;
+    var stackValueA = -1;
+    var stackValueB = -1;
+
+    var row = -1;
+    var column = -1;
+    var z = -1;
+    var brightness = -1;
+    var vxByte = -1;
+    var vyByte = -1;
+    var vzByte = -1;
+
+    var vx = -1;
+    var vy = -1;
+    var vz = -1;
+    var stackTotal = this.emitLightBeamStackTotal;
+
+    while (stackFrame < stackTotal) {
+      
+      stackValueA = stackA[stackFrame];
+      stackValueB = stackB[stackFrame++];
+
+      row = stackValueA & 0xFF;
+      column = (stackValueA >> 8) & 0xFF;
+      z = (stackValueA >> 16) & 0xFF;
+      brightness = (stackValueA >> 24) & 0xFF;
+
+      vxByte = (stackValueB) & 0x3;
+      vyByte = (stackValueB >> 2) & 0x3;
+      vzByte = (stackValueB >> 4) & 0x3;
+
+      vx = byteToSign(vxByte);
+      vy = byteToSign(vyByte);
+      vz = byteToSign(vzByte);
+      
       var velocity = vx.abs() + vy.abs() + vz.abs();
       brightness -= velocity;
 
-      if (brightness < 0)
-        return;
+      if (brightness < 0) {
+        continue;
+      }
 
       if (vx != 0) {
         row += vx;
-        if (row < 0 || row >= rows)
-          return;
+        if (row < 0 || row >= rows) {
+          continue;
+        }
       }
 
       if (vy != 0) {
         column += vy;
-        if (column < 0 || column >= columns)
-          return;
+        if (column < 0 || column >= columns){
+          continue;
+        }
       }
 
       if (vz != 0) {
         z += vz;
-        if (z < 0 || z >= zs)
-          return;
+        if (z < 0 || z >= zs) {
+          continue;
+        }
       }
 
       final index = (z * area) + (row * columns) + column;
@@ -980,10 +1030,10 @@ class IsometricScene with IsometricComponent implements Updatable {
         final renderX = (row - column) * Node_Size_Half;
 
         if (renderX < minRenderX && (vx < 0 || vy > 0))
-          return;
+          continue;
 
         if (renderX > maxRenderX && (vx > 0 || vy < 0))
-          return;
+          continue;
 
         final renderY = getRenderYOfRowColumnZ(
             row,
@@ -992,28 +1042,29 @@ class IsometricScene with IsometricComponent implements Updatable {
         );
 
         if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
-          return;
+          continue;
 
         if (renderY > maxRenderY && (vx > 0 || vy > 0))
-          return;
+          continue;
       }
 
       final nodeType = nodeTypes[index];
       final nodeOrientation = nodeOrientations[index];
 
       if (!isNodeTypeTransparent(nodeType)) {
-        if (nodeOrientation == NodeOrientation.Solid)
-          return;
+        if (nodeOrientation == NodeOrientation.Solid){
+          continue;
+        }
 
         if (vx < 0) {
           if (const [
             NodeOrientation.Half_South,
             NodeOrientation.Corner_South_East,
             NodeOrientation.Corner_South_West,
-          ].contains(nodeOrientation)) return;
+          ].contains(nodeOrientation)) continue;
 
           if (nodeOrientation == NodeOrientation.Slope_South && vz == 0){
-            return;
+            continue;
           }
 
           if (const [
@@ -1027,10 +1078,10 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Half_North,
             NodeOrientation.Corner_North_East,
             NodeOrientation.Corner_North_West,
-          ].contains(nodeOrientation)) return;
+          ].contains(nodeOrientation)) continue;
 
           if (NodeOrientation.Slope_North == nodeOrientation && vz == 0){
-            return;
+            continue;
           }
 
           if (const [
@@ -1049,11 +1100,11 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Corner_North_West,
             NodeOrientation.Corner_South_West,
           ].contains(nodeOrientation)) {
-            return;
+            continue;
           }
 
           if (nodeOrientation == NodeOrientation.Slope_West && vz == 0){
-            return;
+            continue;
           }
 
           if (const [
@@ -1067,10 +1118,10 @@ class IsometricScene with IsometricComponent implements Updatable {
             NodeOrientation.Half_East,
             NodeOrientation.Corner_South_East,
             NodeOrientation.Corner_North_East,
-          ].contains(nodeOrientation)) return;
+          ].contains(nodeOrientation)) continue;
 
           if (nodeOrientation == NodeOrientation.Slope_East && vz == 0){
-            return;
+            continue;
           }
 
           if (const [
@@ -1085,7 +1136,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           if (const [
             NodeOrientation.Half_Vertical_Bottom,
           ].contains(nodeOrientation)) {
-            return;
+            continue;
           }
 
           if (const [
@@ -1099,9 +1150,8 @@ class IsometricScene with IsometricComponent implements Updatable {
         if (vz > 0) {
           if (const [
             NodeOrientation.Half_Vertical_Top
-          ]
-              .contains(nodeOrientation)) {
-            return;
+          ].contains(nodeOrientation)) {
+            continue;
           }
 
           if (const [
@@ -1144,166 +1194,111 @@ class IsometricScene with IsometricComponent implements Updatable {
         NodeType.Tree_Top,
       ].contains(nodeType)) {
         brightness--;
-        if (brightness < 0)
-          return;
+        if (brightness < 0){
+          continue;
+        }
       }
 
       velocity = vx.abs() + vy.abs() + vz.abs();
 
-      if (velocity <= 0)
-        return;
+      if (velocity <= 0) {
+        continue;
+      }
 
-      if (velocity > 1)
-        break;
+      if (vx.abs() + vy.abs() + vz.abs() == 3) {
+
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          signToByte(vx) << 0 |
+          signToByte(vy) << 2 |
+          signToByte(vz) << 4 ;
+
+      }
+
+      if (vx.abs() + vy.abs() == 2) {
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          signToByte(vx) << 0 |
+          signToByte(vy) << 2 ;
+          // signToByte(0) << 4 ;
+      }
+
+      if (vx.abs() + vz.abs() == 2) {
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          signToByte(vx) << 0 |
+          // signToByte(0) << 2 |
+          signToByte(vz) << 4 ;
+      }
+
+      if (vy.abs() + vz.abs() == 2) {
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          // signToByte(vx) << 0 |
+          signToByte(vy) << 2 |
+          signToByte(vz) << 4 ;
+      }
+
+      if (vx != 0) {
+
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          signToByte(vx) << 0 ;
+          // signToByte(0) << 2 |
+          // signToByte(vz) << 4 ;
+      }
+
+      if (vy != 0) {
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          // signToByte(vx) << 0 |
+          signToByte(vy) << 2;
+          // signToByte(vz) << 4 ;
+      }
+
+      if (vz != 0) {
+        stackA[stackTotal] =
+          row |
+          column << 8 |
+          z << 16 |
+          brightness << 24 ;
+
+        stackB[stackTotal++] =
+          // signToByte(vx) << 0 |
+          // signToByte(0) << 2 |
+          signToByte(vz) << 4 ;
+      }
     }
-    if (vx.abs() + vy.abs() + vz.abs() == 3) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: vy,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vx.abs() + vy.abs() == 2) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: vy,
-        vz: 0,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vx.abs() + vz.abs() == 2) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: 0,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vy.abs() + vz.abs() == 2) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: 0,
-        vy: vy,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vy != 0) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: 0,
-        vy: vy,
-        vz: 0,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vx != 0) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: 0,
-        vz: 0,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vz != 0) {
-      emitLightBeam(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: 0,
-        vy: 0,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-  }
-
-  bool indexOnscreen(int index, {double padding = Node_Size}){
-    final x = getIndexRenderX(index);
-    if (x < engine.Screen_Left - padding || x > engine.Screen_Right + padding)
-      return false;
-
-    final y = getIndexRenderY(index);
-    return y > engine.Screen_Top - padding && y < engine.Screen_Bottom + padding;
   }
 
   void recordBakeStack() {
@@ -1852,6 +1847,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     var hide = false;
 
     final totalNodes = this.totalNodes;
+    final area = this.area;
+    final nodeVisibility = this.nodeVisibility;
+    final visited3DStack = this.visited3DStack;
 
     var j = 0;
 

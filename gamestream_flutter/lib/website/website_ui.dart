@@ -186,6 +186,7 @@ extension WebsiteUI on WebsiteGame {
                   ConnectionRegion.Asia_South,
                   ConnectionRegion.Europe,
                   ConnectionRegion.Oceania,
+                  ConnectionRegion.LocalHost,
                 ])
                     .map((ConnectionRegion region) =>
                     onPressed(

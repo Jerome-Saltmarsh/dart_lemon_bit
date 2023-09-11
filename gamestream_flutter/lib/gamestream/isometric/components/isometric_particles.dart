@@ -873,8 +873,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final sceneArea = scene.area;
     final sceneColumns = scene.totalColumns;
     final nodeOrientations = scene.nodeOrientations;
+    final totalParticles = children.length;
 
-    for (final particle in children) {
+    for (var i = 0; i < totalParticles; i++) {
+      final particle = children[i];
       if (!particle.active)
         continue;
 
