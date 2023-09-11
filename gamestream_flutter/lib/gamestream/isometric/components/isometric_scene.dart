@@ -1014,9 +1014,9 @@ class IsometricScene with IsometricComponent implements Updatable {
       vyByte = (stackValueB >> 2) & 0x3;
       vzByte = (stackValueB >> 4) & 0x3;
 
-      vx = byteToSign(vxByte);
-      vy = byteToSign(vyByte);
-      vz = byteToSign(vzByte);
+      vx = vxByte == 2 ? -1 : vxByte;
+      vy = vyByte == 2 ? -1 : vyByte;
+      vz = vzByte == 2 ? -1 : vzByte;
       
       velocity = vx.abs() + vy.abs() + vz.abs();
       brightness -= velocity;
