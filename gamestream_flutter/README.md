@@ -14,7 +14,6 @@ shift + alt + J     : backspace
 [TODO]
 - shoe type
 - fix speech box
-- fix node transparency
 - glove type leather
 - fix hover over player name 
 - fix fire animation speed
@@ -36,6 +35,7 @@ shift + alt + J     : backspace
 - particle chicken
 
 14.09.2023
+- fix node transparency
 - Change Type One
 
 08.09.2023

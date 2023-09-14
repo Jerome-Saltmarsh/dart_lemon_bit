@@ -806,15 +806,14 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
     }
 
-    final resursive = options.emitLightsUsingRecursion;
     final brightness = 7;
     final stackA = this.emitLightBeamStackA;
     final stackB = this.emitLightBeamStackB;
-    this.emitLightBeamStackTotal = 0;
 
+    this.emitLightBeamStackTotal = 0;
     var total = 0;
 
-    if (resursive){
+    if (options.emitLightsUsingRecursion){
       for (var vz = -1; vz <= 1; vz++){
         for (var vx = vxStart; vx <= vxEnd; vx++){
           for (var vy = vyStart; vy <= vyEnd; vy++){
