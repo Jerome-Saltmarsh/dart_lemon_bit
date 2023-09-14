@@ -252,7 +252,7 @@ class RendererCharacters extends RenderGroup {
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHair = sprites.hair[character.hairType] ?? (throw Exception());
     final atlasShoesLeft = sprites.shoesLeft[ShoeType.Boots] ?? (throw Exception());
-    final atlasShoesRight = sprites.shoesLeft[ShoeType.Boots] ?? (throw Exception());
+    final atlasShoesRight = sprites.shoesRight[ShoeType.Boots] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -275,8 +275,9 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
 
-    final colorSkin = colors.palette[character.complexion].value;
-    final colorHair = colors.palette[character.hairColor].value;
+    final palette = colors.palette;
+    final colorSkin = palette[character.complexion].value;
+    final colorHair = palette[character.hairColor].value;
     // render.textPosition(character, direction, offsetY: -100);
 
     final render = this.render;

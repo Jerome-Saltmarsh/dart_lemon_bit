@@ -35,6 +35,7 @@ class KidCharacterSprites {
     SpriteGroupType.Shadow: shadow,
     SpriteGroupType.Hair: hair,
     SpriteGroupType.Shoes_Left: shoesLeft,
+    SpriteGroupType.Shoes_Right: shoesRight,
 
   };
 }
