@@ -21,7 +21,6 @@ shift + alt + J     : backspace
 - character floating flaming skull
 - character witch
 - body type chain mail
-- kid shoe type
 - helm type hoodie
 - glove type silk
 - set player name
