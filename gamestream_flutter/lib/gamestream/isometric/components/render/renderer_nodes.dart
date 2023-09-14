@@ -718,8 +718,19 @@ class RendererNodes extends RenderGroup {
       searchIndex = player.nodeIndex + scene.area;
     }
     scene.emitHeightMapIsland(searchIndex);
-    ensureVisible(player.nodeIndex);
-    ensureVisible(player.nodeIndex + scene.area);
+    ensureVisible2(player.nodeIndex);
+
+    if (player.indexRow + 1 < scene.totalRows - 1){
+      ensureVisible2(player.nodeIndex + scene.totalColumns);
+    }
+
+    if (player.indexColumn + 1 < scene.totalColumns - 1){
+      ensureVisible2(player.nodeIndex + 1);
+    }
+
+    if (player.indexRow + 1 < scene.totalRows - 1 && player.indexColumn + 1 < scene.totalColumns - 1){
+      ensureVisible2(player.nodeIndex + scene.totalColumns + 1);
+    }
 
 
     total = getTotal();
@@ -730,6 +741,11 @@ class RendererNodes extends RenderGroup {
     index = 0;
     skipPlainsAboveScreenTop();
     render.highlightAimTargetEnemy();
+  }
+
+  void ensureVisible2(int index){
+    ensureVisible(index);
+    ensureVisible(index + scene.area);
   }
 
   void ensureVisible(int index) {
