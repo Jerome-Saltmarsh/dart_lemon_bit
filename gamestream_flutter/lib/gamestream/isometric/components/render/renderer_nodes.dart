@@ -763,10 +763,13 @@ class RendererNodes extends RenderGroup {
     final projection = scene.projection;
 
     while (projectionIndex < totalNodes){
-      if (orientations[projectionIndex] != NodeOrientation.None && const [
+      if (orientations[projectionIndex] != NodeOrientation.None && !const [
         NodeType.Torch,
+        NodeType.Torch_Blue,
+        NodeType.Torch_Red,
         NodeType.Tree_Top,
         NodeType.Tree_Bottom,
+        NodeType.Grass_Long,
       ].contains(types[projectionIndex])){
         if (!scene.visited2D[projectionIndex % area]){
           scene.emitHeightMapIsland(projectionIndex - (zi * area));
