@@ -439,8 +439,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
         writeCharacterTemplate(character, cacheIndex);
       }
 
-      // TODO OPTIMIZE
-      writePercentage(character.actionCompletionPercentage);
+      if (const [
+        CharacterState.Fire,
+        CharacterState.Strike,
+      ].contains(character.state)
+      ){
+        writePercentage(character.actionCompletionPercentage);
+      }
+
       cacheIndex++;
     }
 

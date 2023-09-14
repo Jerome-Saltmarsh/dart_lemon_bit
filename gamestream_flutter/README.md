@@ -34,6 +34,7 @@ shift + alt + J     : backspace
 - particle chicken
 
 14.09.2023
+- optimize write character
 - fix node transparency
 - Change Type One
 

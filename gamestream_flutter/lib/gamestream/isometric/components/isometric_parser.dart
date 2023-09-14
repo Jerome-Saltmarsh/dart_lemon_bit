@@ -586,7 +586,15 @@ class IsometricParser with ByteReader, IsometricComponent {
         readCharacterTemplate(character);
       }
 
-      character.actionComplete = readPercentage();
+      if (const[
+        CharacterState.Strike,
+        CharacterState.Fire,
+      ].contains(character.state)){
+        character.actionComplete = readPercentage();
+      } else {
+        character.actionComplete = 0;
+      }
+
 
       scene.totalCharacters++;
     }
