@@ -58,7 +58,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var positionCacheX = 0;
   var positionCacheY = 0;
   var positionCacheZ = 0;
-  var cacheIndex = 0;
 
   late final editor = EditorState(this);
   final cacheStateB = Uint8List(Cache_Length);
@@ -343,6 +342,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     final cachePositionY = this.cachePositionY;
     final cachePositionZ = this.cachePositionZ;
 
+    final cacheStateA = this.cacheStateA;
+    final cacheStateB = this.cacheStateB;
+
     var cacheIndex = 0;
 
     for (var i = 0; i < charactersLength; i++) {
@@ -434,7 +436,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       }
 
       if (character.characterTypeTemplate) {
-        writeCharacterTemplate(character);
+        writeCharacterTemplate(character, cacheIndex);
       }
 
       // TODO OPTIMIZE
@@ -442,7 +444,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       cacheIndex++;
     }
 
-    this.cacheIndex = cacheIndex;
     writeByte(CHARACTER_END);
   }
 
@@ -642,7 +643,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeCharacterTemplate(Character character) {
+  void writeCharacterTemplate(Character character, int cacheIndex) {
 
     final compressedA = compressBytesToUInt64(
       character.weaponType,
