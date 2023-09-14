@@ -17,6 +17,8 @@ class KidCharacterSprites {
   final weapons = <int, CharacterSpriteGroup>{};
   final shadow = <int, CharacterSpriteGroup>{};
   final hair = <int, CharacterSpriteGroup>{};
+  final shoesLeft = <int, CharacterSpriteGroup>{};
+  final shoesRight = <int, CharacterSpriteGroup>{};
 
   late final values = {
     SpriteGroupType.Arms_Left: armLeft,
@@ -32,5 +34,7 @@ class KidCharacterSprites {
     SpriteGroupType.Weapons: weapons,
     SpriteGroupType.Shadow: shadow,
     SpriteGroupType.Hair: hair,
+    SpriteGroupType.Shoes_Left: shoesLeft,
+
   };
 }

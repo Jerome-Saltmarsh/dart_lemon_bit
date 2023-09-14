@@ -251,6 +251,8 @@ class RendererCharacters extends RenderGroup {
     final atlasTorso = sprites.torso[TorsoType.regular] ?? (throw Exception());
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHair = sprites.hair[character.hairType] ?? (throw Exception());
+    final atlasShoesLeft = sprites.shoesLeft[ShoeType.Boots] ?? (throw Exception());
+    final atlasShoesRight = sprites.shoesLeft[ShoeType.Boots] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -265,6 +267,8 @@ class RendererCharacters extends RenderGroup {
     final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
     final spriteShadow = atlasShadow.fromCharacterState(characterState);
     final spriteHair = atlasHair.fromCharacterState(characterState);
+    final spriteShoesLeft = atlasShoesLeft.fromCharacterState(characterState);
+    final spriteShoesRight = atlasShoesRight.fromCharacterState(characterState);
 
     final Sprite spriteHandFront;
     final Sprite spriteHandBehind;
@@ -327,6 +331,30 @@ class RendererCharacters extends RenderGroup {
         frame: completingAction
             ? spriteLegs.getFramePercentage(row, actionComplete)
             : spriteLegs.getFrame(row: row, column: animationFrame),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: spriteShoesLeft,
+        frame: completingAction
+            ? spriteShoesLeft.getFramePercentage(row, actionComplete)
+            : spriteShoesLeft.getFrame(row: row, column: animationFrame),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: spriteShoesRight,
+        frame: completingAction
+            ? spriteShoesRight.getFramePercentage(row, actionComplete)
+            : spriteShoesRight.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,

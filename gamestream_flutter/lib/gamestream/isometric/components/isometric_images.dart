@@ -27,7 +27,7 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
-  late final CharacterSpriteGroup spriteGroup2KidShadow;
+  late final CharacterSpriteGroup spriteGroupKidShadow;
   late final CharacterSpriteGroup spriteGroupFallen;
   late final CharacterSpriteGroup spriteGroupSkeleton;
 
@@ -175,6 +175,8 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
     loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_1, skipHurt: true, skipFire: false);
     loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_2, skipHurt: true, skipFire: false);
+    loadSpriteGroup(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Boots, skipHurt: true, skipFire: false);
+    loadSpriteGroup(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Boots, skipHurt: true, skipFire: false);
 
     await _completerImages.future;
 

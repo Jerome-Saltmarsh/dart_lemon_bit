@@ -24,6 +24,7 @@ export 'projectile_type.dart';
 export 'rain_type.dart';
 export 'scene_part.dart';
 export 'target_action.dart';
+export 'shoe_type.dart';
 export 'team_type.dart';
 export 'weapon_state.dart';
 export 'wind_type.dart';

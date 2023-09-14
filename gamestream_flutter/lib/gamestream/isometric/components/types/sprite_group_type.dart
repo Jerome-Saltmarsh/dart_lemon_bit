@@ -14,6 +14,8 @@ class SpriteGroupType {
   static const Torso = 11;
   static const Weapons = 12;
   static const Hair = 13;
+  static const Shoes_Left = 14;
+  static const Shoes_Right = 15;
 
   static String getName(int value)=> const {
     Arms_Left: 'arms_left',
@@ -29,6 +31,8 @@ class SpriteGroupType {
     Torso: 'torso',
     Weapons: 'weapons',
     Hair: 'hair',
+    Shoes_Left: 'shoes_left',
+    Shoes_Right: 'shoes_right',
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
 
   static String getSubTypeName(int type, int subType) => switch (type) {
@@ -45,6 +49,8 @@ class SpriteGroupType {
       Weapons => WeaponType.getName(subType),
       Shadow => 'regular',
       Hair => HairType.getName(subType),
+      Shoes_Left => ShoeType.getName(subType),
+      Shoes_Right => ShoeType.getName(subType),
       _ => throw Exception(
           'SpriteGroupType.getName(type: $type, subType: $subType)'
       ),
@@ -64,5 +70,6 @@ class SpriteGroupType {
     Torso,
     Weapons,
     Hair,
+    Shoes_Left,
   ];
 }

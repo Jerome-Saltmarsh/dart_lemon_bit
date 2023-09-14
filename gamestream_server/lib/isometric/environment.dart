@@ -90,7 +90,7 @@ class Environment {
   }
 
   void update(){
-    // updateRain();
+    updateRain();
     updateLightning();
     updateBreeze();
     updateWind();
