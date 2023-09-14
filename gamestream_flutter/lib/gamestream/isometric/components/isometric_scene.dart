@@ -2197,7 +2197,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     final totalColumns = this.totalColumns;
     final z = getIndexZ(index);
 
-    resetNodeVisibility();
 
     final heightMapHeight = getHeightMapHeightAt(index);
 
