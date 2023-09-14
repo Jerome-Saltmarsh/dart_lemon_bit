@@ -107,7 +107,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       switch (markType){
         case MarkType.Spawn_Whisp:
-          particles.spawnWhisp(x: x, y: y, z: z);
+          particles.spawnWhisp(x: x + giveOrTake(10), y: y + giveOrTake(10), z: z);
+          particles.spawnWhisp(x: x + giveOrTake(10), y: y + giveOrTake(10), z: z);
           break;
         case MarkType.Glow:
           particles.spawnGlow(x: x, y: y, z: z);
