@@ -2193,38 +2193,17 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void emitHeightMapIsland(int index) {
 
-    if (this.visited2D.length != area){
-      this.visited2D = BoolList(area);
-    }
-
     final visited2DStack = this.visited2DStack;
     final totalColumns = this.totalColumns;
     final z = getIndexZ(index);
 
-    final visited2DStackIndex = this.visited2DStackIndex;
-    final visited3DStackIndex = this.visited3DStackIndex;
-
-    final visited2D = this.visited2D;
-    final nodeVisibility = this.nodeVisibility;
-    final visited3DStack = this.visited3DStack;
-
-    for (var i = 0; i < visited2DStackIndex; i++){
-      visited2D[visited2DStack[i]] = false;
-    }
-
-    for (var i = 0; i < visited3DStackIndex; i++){
-      nodeVisibility[visited3DStack[i]] = Visibility.opaque;
-    }
+    resetNodeVisibility();
 
     final heightMapHeight = getHeightMapHeightAt(index);
 
     if (z >= heightMapHeight) {
       return;
     }
-
-    this.visited3DStackIndex = 0;
-    this.visited2DStackIndex = 0;
-
 
     visit(getRow(index), getColumn(index), z);
 
@@ -2242,6 +2221,32 @@ class IsometricScene with IsometricComponent implements Updatable {
       j++;
     }
 
+  }
+
+  void resetNodeVisibility() {
+
+    if (this.visited2D.length != area){
+      this.visited2D = BoolList(area);
+    }
+
+    final visited2DStack = this.visited2DStack;
+    final visited2DStackIndex = this.visited2DStackIndex;
+    final visited3DStackIndex = this.visited3DStackIndex;
+
+    final visited2D = this.visited2D;
+    final nodeVisibility = this.nodeVisibility;
+    final visited3DStack = this.visited3DStack;
+
+    for (var i = 0; i < visited2DStackIndex; i++){
+      visited2D[visited2DStack[i]] = false;
+    }
+
+    for (var i = 0; i < visited3DStackIndex; i++){
+      nodeVisibility[visited3DStack[i]] = Visibility.opaque;
+    }
+
+    this.visited2DStackIndex = 0;
+    this.visited3DStackIndex = 0;
   }
 
   void visit(int row, int column, int z){
