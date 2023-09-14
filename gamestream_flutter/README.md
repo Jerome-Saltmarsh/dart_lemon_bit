@@ -35,6 +35,9 @@ shift + alt + J     : backspace
 - particle crow
 - particle chicken
 
+14.09.2023
+- Change Type One
+
 08.09.2023
 - optimized template compression
 - kid hair type
