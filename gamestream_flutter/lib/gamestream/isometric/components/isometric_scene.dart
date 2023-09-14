@@ -1986,25 +1986,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
 
   bool isPerceptiblePosition(Position position) {
-    if (!player.playerInsideIsland)
-      return true;
-
     if (outOfBoundsPosition(position))
       return false;
 
-    final index = getIndexPosition(position);
-    final indexRow = getRow(index);
-    final indexColumn = getRow(index);
-    final i = indexRow * totalColumns + indexColumn;
-
-    if (!rendererNodes.island[i])
-      return true;
-
-    final indexZ = getIndexZ(index);
-    if (indexZ > player.indexZ + 2)
-      return false;
-
-    return rendererNodes.visible3D[index];
+    return nodeVisibility[getIndexPosition(position)] != Visibility.invisible;
   }
 
   int getNodeTypeAtPosition(Position position) =>
@@ -2196,8 +2181,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     final visited2DStack = this.visited2DStack;
     final totalColumns = this.totalColumns;
     final z = getIndexZ(index);
-
-
     final heightMapHeight = getHeightMapHeightAt(index);
 
     if (z >= heightMapHeight) {

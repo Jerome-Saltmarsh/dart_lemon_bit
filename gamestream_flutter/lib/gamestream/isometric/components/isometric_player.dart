@@ -9,7 +9,6 @@ import '../../../isometric/classes/position.dart';
 
 class IsometricPlayer with IsometricComponent implements Updatable {
 
-  var playerInsideIsland = false;
   var energyPercentage = 0.0;
   var runningToTarget = false;
   var aimTargetType = 0;

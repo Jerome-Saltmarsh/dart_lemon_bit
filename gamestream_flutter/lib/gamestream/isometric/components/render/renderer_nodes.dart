@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -76,12 +75,7 @@ class RendererNodes extends RenderGroup {
   var screenLeft = 0.0;
   var visited2DStack = Uint16List(0);
   var visited2DStackIndex = 0;
-  var visited2D = <bool>[];
-  var island = <bool>[];
   var zMin = 0;
-  var visible3D = <bool>[];
-  var visible3DStack = Uint16List(10000);
-  var visible3DIndex = 0;
   var playerIndex = 0;
   var currentNodeWithinIsland = false;
 
@@ -724,6 +718,8 @@ class RendererNodes extends RenderGroup {
       searchIndex = player.nodeIndex + scene.area;
     }
     scene.emitHeightMapIsland(searchIndex);
+    ensureVisible(player.nodeIndex);
+    ensureVisible(player.nodeIndex + scene.area);
 
 
     total = getTotal();
@@ -734,6 +730,30 @@ class RendererNodes extends RenderGroup {
     index = 0;
     skipPlainsAboveScreenTop();
     render.highlightAimTargetEnemy();
+  }
+
+  void ensureVisible(int index) {
+    if (index < 0 || index >= this.totalNodes){
+      return;
+    }
+
+    var projectionIndex = index;
+    var zi = 0;
+    final scene = this.scene;
+    final totalNodes = this.totalNodes;
+    final orientations = this.nodeOrientations;
+    final area = scene.area;
+    final projection = scene.projection;
+
+    while (projectionIndex < totalNodes){
+      if (orientations[projectionIndex] != NodeOrientation.None){
+        if (!scene.visited2D[projectionIndex % area]){
+          scene.emitHeightMapIsland(projectionIndex - (zi * area));
+        }
+      }
+      projectionIndex += projection;
+      zi++;
+    }
   }
 
   void resetNodeVisibilityStack(IsometricScene scene) {
@@ -781,183 +801,6 @@ class RendererNodes extends RenderGroup {
 
   void decreaseOrderShiftY(){
     orderShiftY--;
-  }
-
-  // TODO Optimize
-  void updateHeightMapPerception() {
-
-    final scene = this.scene;
-
-    var visible3D = this.visible3D;
-
-    if (visible3D.length != scene.totalNodes) {
-      visible3D = List.generate(scene.totalNodes, (index) => false);
-      this.visible3D = visible3D;
-      this.visible3DIndex = 0;
-    }
-
-    final visible3DIndex = this.visible3DIndex;
-    final visible3DStack = this.visible3DStack;
-
-    for (var i = 0; i < visible3DIndex; i++){
-      visible3D[visible3DStack[i]] = false;
-    }
-    this.visible3DIndex = 0;
-
-    if (visited2D.length != scene.area) {
-      visited2D = List.generate(scene.area, (index) => false, growable: false);
-      visited2DStack = Uint16List(scene.area);
-      visited2DStackIndex = 0;
-      island = List.generate(scene.area, (index) => false, growable: false);
-    } else {
-      final visited2DStackIndex = this.visited2DStackIndex;
-      final visited2DStack = this.visited2DStack;
-      final visited2D = this.visited2D;
-      final island = this.island;
-
-      for (var i = 0; i < visited2DStackIndex; i++){
-        final j = visited2DStack[i];
-        visited2D[j] = false;
-        island[j] = false;
-      }
-    }
-    visited2DStackIndex = 0;
-
-    final height = scene.heightMap[player.areaNodeIndex];
-
-    if (player.indexZ <= 0) {
-      zMin = 0;
-      player.playerInsideIsland = false;
-      return;
-    }
-
-    player.playerInsideIsland = player.indexZ < height;
-
-    if (!player.playerInsideIsland) {
-      ensureIndexPerceptible(player.nodeIndex);
-    }
-
-    // if (mouse.inBounds){
-    //   ensureIndexPerceptible(mouse.nodeIndex);
-    // }
-
-    zMin = max(player.indexZ - 1, 0);
-    visit2D(
-      player.areaNodeIndex,
-      columns: scene.totalColumns,
-      rows: scene.totalRows,
-      scene: scene,
-    );
-  }
-
-  void ensureIndexPerceptible(int index){
-    var projectionRow     = scene.getRow(index);
-    var projectionColumn  = scene.getColumn(index);
-    var projectionZ       = scene.getIndexZ(index);
-
-    while (true) {
-      projectionZ += 2;
-      projectionColumn++;
-      projectionRow++;
-      if (projectionZ >= scene.totalZ) return;
-      if (projectionColumn >= scene.totalColumns) return;
-      if (projectionRow >= scene.totalRows) return;
-      final projectionIndex =
-          (projectionRow * scene.totalColumns) + projectionColumn;
-      final projectionHeight = scene.heightMap[projectionIndex];
-      if (projectionZ > projectionHeight) continue;
-      player.playerInsideIsland = true;
-      zMin = max(player.indexZ - 1, 0);
-      visit2D(projectionIndex,
-        columns: scene.totalColumns,
-        rows: scene.totalRows,
-        scene: scene,
-      );
-      return;
-    }
-  }
-
-  void addVisible3D(int i){
-    visible3D[i] = true;
-    visible3DStack[visible3DIndex] = i;
-    visible3DIndex++;
-  }
-
-  void visit2D(int i, {
-    required int columns,
-    required int rows,
-    required IsometricScene scene,
-  }) {
-     if (visited2D[i])
-       return;
-
-     visited2D[i] = true;
-     visited2DStack[visited2DStackIndex] = i;
-     visited2DStackIndex++;
-     if (scene.heightMap[i] <= zMin) return;
-     island[i] = true;
-
-     final area = scene.area;
-     final playerIndexZ = player.indexZ;
-     var searchIndex = i + (area * playerIndexZ);
-     addVisible3D(searchIndex);
-     final nodeOrientations = this.nodeOrientations;
-
-     var spaceReached = nodeOrientations[searchIndex] == NodeOrientation.None;
-     var gapReached = false;
-
-     final totalNodes = scene.totalNodes;
-
-     while (true) {
-       searchIndex += area;
-        if (searchIndex >= totalNodes) break;
-        final nodeOrientation = nodeOrientations[searchIndex];
-        if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
-        if (nodeOrientation == NodeOrientation.Half_Vertical_Center) break;
-        if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) break;
-        if (!spaceReached){
-           spaceReached = nodeOrientation == NodeOrientation.None;
-        } else
-
-        if (nodeOrientation != NodeOrientation.None)  break;
-
-        if (!gapReached) {
-          gapReached =
-              NodeOrientation.isHalf(nodeOrientation)     ||
-              NodeOrientation.isCorner(nodeOrientation)   ||
-              NodeOrientation.isColumn(nodeOrientation)   ;
-        } else if (
-          NodeOrientation.slopeSymmetric.contains(nodeOrientation) ||
-          NodeOrientation.isSlopeCornerInner(nodeOrientation) ||
-          NodeOrientation.isSlopeCornerOuter(nodeOrientation)
-        ) break;
-
-        addVisible3D(searchIndex);
-     }
-     searchIndex = i + (area * playerIndexZ);
-     while (true) {
-       addVisible3D(searchIndex);
-       if (blocksBeamVertical(searchIndex)) break;
-       searchIndex -= area;
-       if (searchIndex < 0) break;
-     }
-
-     final iAbove = i - columns;
-     if (iAbove > 0) {
-       visit2D(iAbove, columns: columns, rows: rows, scene: scene);
-     }
-     final iBelow = i + columns;
-     if (iBelow < area) {
-       visit2D(iBelow, columns: columns, rows: rows, scene: scene);
-     }
-
-     final row = i % rows;
-     if (row - 1 >= 0) {
-       visit2D(i - 1, columns: columns, rows: rows, scene: scene);
-     }
-     if (row + 1 < rows){
-       visit2D(i + 1, columns: columns, rows: rows, scene: scene);
-     }
   }
 
   int getProjectionIndex(int index){
