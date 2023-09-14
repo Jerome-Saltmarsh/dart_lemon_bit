@@ -660,7 +660,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     final currentColor = nodeColors[index];
-    final currentAlpha = getAlpha(currentColor);
+    final currentAlpha =  (currentColor & 0xFF000000) >> 24;
     if (currentAlpha <= alpha) {
       return;
     }

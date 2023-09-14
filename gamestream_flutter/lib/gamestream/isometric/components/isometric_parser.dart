@@ -540,28 +540,46 @@ class IsometricParser with ByteReader, IsometricComponent {
         character.animationFrame = (animationAndFrameDirection & Hex00011111);
       }
 
-
-
-      assert (changeTypeX >= 0 && changeTypeX <= 2);
-      assert (changeTypeY >= 0 && changeTypeY <= 2);
-      assert (changeTypeZ >= 0 && changeTypeZ <= 2);
-
-      if (changeTypeX == ChangeType.Small) {
-        character.x += readInt8();
-      } else if (changeTypeX == ChangeType.Big) {
-        character.x = readDouble();
+      switch (changeTypeX) {
+        case ChangeType.None:
+          break;
+        case ChangeType.One:
+          character.x++;
+          break;
+        case ChangeType.Delta:
+          character.x += readInt8();
+          break;
+        case ChangeType.Absolute:
+          character.x = readInt16().toDouble();
+          break;
       }
 
-      if (changeTypeY == ChangeType.Small) {
-        character.y += readInt8();
-      } else if (changeTypeY == ChangeType.Big) {
-        character.y = readDouble();
+      switch (changeTypeY) {
+        case ChangeType.None:
+          break;
+        case ChangeType.One:
+          character.y++;
+          break;
+        case ChangeType.Delta:
+          character.y += readInt8();
+          break;
+        case ChangeType.Absolute:
+          character.y = readInt16().toDouble();
+          break;
       }
 
-      if (changeTypeZ == ChangeType.Small) {
-        character.z += readInt8();
-      } else if (changeTypeZ == ChangeType.Big) {
-        character.z = readDouble();
+      switch (changeTypeZ) {
+        case ChangeType.None:
+          break;
+        case ChangeType.One:
+          character.z++;
+          break;
+        case ChangeType.Delta:
+          character.z += readInt8();
+          break;
+        case ChangeType.Absolute:
+          character.z = readInt16().toDouble();
+          break;
       }
 
       if (character.characterType == CharacterType.Kid){

@@ -462,21 +462,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (renderY > screenBottomPadded)
         continue;
 
-      // if (renderY > screenBottomPadded){
-      //   assert (() {
-      //     while (i < charactersLength){
-      //       final characterI = characters[i];
-      //       final renderY = characterI.renderY;
-      //       if (renderY < screenBottomPadded){
-      //         return false;
-      //       }
-      //       i++;
-      //     }
-      //     return true;
-      //   }());
-      //   break;
-      // }
-
       final characterX = character.x.toInt();
       final characterY = character.y.toInt();
       final characterZ = character.z.toInt();
@@ -515,26 +500,32 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
         cacheStateB[cacheIndex] = compressedFrameAndDirection;
       }
 
-      if (diffXChangeType == ChangeType.Small) {
+      if (diffXChangeType == ChangeType.One) {
+        cachePositionX[cacheIndex]++;
+      } else if (diffXChangeType == ChangeType.Delta) {
         writeInt8(diffX);
         cachePositionX[cacheIndex] = characterX;
-      } else if (diffXChangeType == ChangeType.Big) {
+      } else if (diffXChangeType == ChangeType.Absolute) {
         writeInt16(characterX);
         cachePositionX[cacheIndex] = characterX;
       }
 
-      if (diffYChangeType == ChangeType.Small) {
+      if (diffYChangeType == ChangeType.One) {
+        cachePositionY[cacheIndex]++;
+      } else if (diffYChangeType == ChangeType.Delta) {
         writeInt8(diffY);
         cachePositionY[cacheIndex] = characterY;
-      } else if (diffYChangeType == ChangeType.Big) {
+      } else if (diffYChangeType == ChangeType.Absolute) {
         writeInt16(characterY);
         cachePositionY[cacheIndex] = characterY;
       }
 
-      if (diffZChangeType == ChangeType.Small) {
+      if (diffZChangeType == ChangeType.One) {
+        cachePositionZ[cacheIndex]++;
+      } else if (diffZChangeType == ChangeType.Delta) {
         writeInt8(diffZ);
         cachePositionZ[cacheIndex] = characterZ;
-      } else if (diffZChangeType == ChangeType.Big) {
+      } else if (diffZChangeType == ChangeType.Absolute) {
         writeInt16(characterZ);
         cachePositionZ[cacheIndex] = characterZ;
       }
@@ -543,6 +534,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
         writeCharacterTemplate(character);
       }
 
+      // TODO OPTIMIZE
       writePercentage(character.actionCompletionPercentage);
       cacheIndex++;
     }

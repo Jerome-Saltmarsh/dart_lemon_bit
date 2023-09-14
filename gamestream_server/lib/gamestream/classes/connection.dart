@@ -567,39 +567,51 @@ class Connection with ByteReader {
     final changeScreenRight = (compress2 & Hex00110000) >> 4;
     final changeScreenBottom = (compress2 & Hex11000000) >> 6;
 
-    if (changeMouseWorldX == ChangeType.Small){
+    if (changeMouseWorldX == ChangeType.One) {
+      player.mouseX++;
+    } else if (changeMouseWorldX == ChangeType.Delta){
       player.mouseX += readInt8();
-    } else if (changeMouseWorldX == ChangeType.Big){
+    } else if (changeMouseWorldX == ChangeType.Absolute){
       player.mouseX = readInt16().toDouble();
     }
 
-    if (changeMouseWorldY == ChangeType.Small){
+    if (changeMouseWorldY == ChangeType.One) {
+      player.mouseY++;
+    } else if (changeMouseWorldY == ChangeType.Delta){
       player.mouseY += readInt8();
-    } else if (changeMouseWorldY == ChangeType.Big){
+    } else if (changeMouseWorldY == ChangeType.Absolute){
       player.mouseY = readInt16().toDouble();
     }
 
-    if (changeScreenLeft == ChangeType.Small){
+    if (changeScreenLeft == ChangeType.One) {
+      player.screenLeft++;
+    } else if (changeScreenLeft == ChangeType.Delta){
       player.screenLeft += readInt8();
-    } else if (changeScreenLeft == ChangeType.Big){
+    } else if (changeScreenLeft == ChangeType.Absolute){
       player.screenLeft = readInt16().toDouble();
     }
 
-    if (changeScreenTop == ChangeType.Small){
+    if (changeScreenTop == ChangeType.One) {
+      player.screenTop++;
+    } else if (changeScreenTop == ChangeType.Delta){
       player.screenTop += readInt8();
-    } else if (changeScreenTop == ChangeType.Big){
+    } else if (changeScreenTop == ChangeType.Absolute){
       player.screenTop = readInt16().toDouble();
     }
 
-    if (changeScreenRight == ChangeType.Small){
+    if (changeScreenRight == ChangeType.One) {
+      player.screenRight++;
+    } else if (changeScreenRight == ChangeType.Delta){
       player.screenRight += readInt8();
-    } else if (changeScreenRight == ChangeType.Big){
+    } else if (changeScreenRight == ChangeType.Absolute){
       player.screenRight = readInt16().toDouble();
     }
 
-    if (changeScreenBottom == ChangeType.Small){
+    if (changeScreenBottom == ChangeType.One) {
+      player.screenBottom++;
+    } else if (changeScreenBottom == ChangeType.Delta){
       player.screenBottom += readInt8();
-    } else if (changeScreenBottom == ChangeType.Big){
+    } else if (changeScreenBottom == ChangeType.Absolute){
       player.screenBottom = readInt16().toDouble();
     }
 

@@ -251,39 +251,39 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
     writeByte(compress1);
     writeByte(compress2);
 
-    if (changeMouseWorldX == ChangeType.Small){
+    if (changeMouseWorldX == ChangeType.Delta){
       writeInt8(diffMouseWorldX);
-    } else if (changeMouseWorldX == ChangeType.Big){
+    } else if (changeMouseWorldX == ChangeType.Absolute){
       writeInt16(mouseX);
     }
 
-    if (changeMouseWorldY == ChangeType.Small){
+    if (changeMouseWorldY == ChangeType.Delta){
       writeInt8(diffMouseWorldY);
-    } else if (changeMouseWorldY == ChangeType.Big){
+    } else if (changeMouseWorldY == ChangeType.Absolute){
       writeInt16(mouseY);
     }
 
-    if (changeScreenLeft == ChangeType.Small){
+    if (changeScreenLeft == ChangeType.Delta){
       writeInt8(diffScreenLeft);
-    } else if (changeScreenLeft == ChangeType.Big){
+    } else if (changeScreenLeft == ChangeType.Absolute){
       writeInt16(screenLeft);
     }
 
-    if (changeScreenTop == ChangeType.Small){
+    if (changeScreenTop == ChangeType.Delta){
       writeInt8(diffScreenTop);
-    } else if (changeScreenTop == ChangeType.Big){
+    } else if (changeScreenTop == ChangeType.Absolute){
       writeInt16(screenTop);
     }
 
-    if (changeScreenRight == ChangeType.Small){
+    if (changeScreenRight == ChangeType.Delta){
       writeInt8(diffScreenRight);
-    } else if (changeScreenRight == ChangeType.Big){
+    } else if (changeScreenRight == ChangeType.Absolute){
       writeInt16(screenRight);
     }
 
-    if (changeScreenBottom == ChangeType.Small){
+    if (changeScreenBottom == ChangeType.Delta){
       writeInt8(diffScreenBottom);
-    } else if (changeScreenBottom == ChangeType.Big){
+    } else if (changeScreenBottom == ChangeType.Absolute){
       writeInt16(screenBottom);
     }
   }
