@@ -77,7 +77,8 @@ flutter:
     - sprites/kid/helms/wizard_hat/
     - sprites/kid/legs/brown/
     - sprites/kid/shadow/regular/
-    - sprites/kid/torso/regular/
+    - sprites/kid/torso/female/
+    - sprites/kid/torso/male/
     - sprites/kid/weapons/bow/
     - sprites/kid/weapons/staff/
     - sprites/kid/weapons/sword/

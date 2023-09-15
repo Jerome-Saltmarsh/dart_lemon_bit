@@ -48,7 +48,7 @@ class SpriteGroupType {
       Heads => 'regular',
       Helms => HelmType.getName(subType),
       Legs => LegType.getName(subType),
-      Torso => 'regular',
+      Torso => Gender.getName(subType),
       Weapons => WeaponType.getName(subType),
       Shadow => 'regular',
       Hair => HairType.getName(subType),

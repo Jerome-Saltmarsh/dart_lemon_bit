@@ -12,6 +12,8 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- particle flame spark
+- particle wind animation
 - gender type
 - player creation dialog
 - body shape box

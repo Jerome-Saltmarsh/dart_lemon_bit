@@ -3,7 +3,6 @@ library src;
 export 'gender.dart';
 export 'shadow_type.dart';
 export 'complexion_type.dart';
-export 'torso_type.dart';
 export 'head_type.dart';
 export 'hair_type.dart';
 export 'arm_type.dart';
