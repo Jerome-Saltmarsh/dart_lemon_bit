@@ -176,10 +176,12 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Bow, skipHurt: true, skipStrike: true);
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, skipHurt: true, skipFire: true);
     loadSpriteGroup(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
-    loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_1, skipHurt: true, skipFire: false);
-    loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_2, skipHurt: true, skipFire: false);
-    loadSpriteGroup(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Boots, skipHurt: true, skipFire: false);
-    loadSpriteGroup(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Boots, skipHurt: true, skipFire: false);
+    loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_1, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Hair, subType: HairType.basic_2, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Leather_Boots, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Leather_Boots, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Iron_Plates, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Iron_Plates, skipHurt: true);
 
     await _completerImages.future;
 

@@ -12,11 +12,10 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- shoe type
 - fix speech box
+- fix hover over player name
+- fix set node light source refresh
 - glove type leather
-- fix hover over player name 
-- fix fire animation speed
 - character wolf
 - character floating flaming skull
 - character witch
@@ -29,9 +28,14 @@ shift + alt + J     : backspace
 - stash
 - store
 - player attributes dialog
-- fix set node light source refresh
 - particle crow
 - particle chicken
+
+15.09.2023
+- shoe type iron plates
+- shoe type leather boots
+- shoe type
+- optimize write character
 
 14.09.2023
 - optimize write character

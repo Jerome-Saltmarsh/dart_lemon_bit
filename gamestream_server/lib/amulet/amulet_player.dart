@@ -77,7 +77,7 @@ class AmuletPlayer extends IsometricPlayer {
     addItem(MMOItem.Sapphire_Pendant);
     addItem(MMOItem.Steel_Helmet);
     addItem(MMOItem.Basic_Leather_Armour);
-    addItem(MMOItem.Shoes_Boots);
+    addItem(MMOItem.Shoe_Leather_Boots);
 
     addItemToEmptyWeaponSlot(MMOItem.Rusty_Old_Sword);
     addItemToEmptyWeaponSlot(MMOItem.Staff_Of_Frozen_Lake);
@@ -88,7 +88,7 @@ class AmuletPlayer extends IsometricPlayer {
     equipHelm(MMOItem.Wizards_Hat);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
-    equipShoes(MMOItem.Shoes_Boots);
+    equipShoes(MMOItem.Shoe_Iron_Plates);
     // equipHandLeft(MMOItem.Gauntlet);
     equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
@@ -853,7 +853,6 @@ class AmuletPlayer extends IsometricPlayer {
 
     shoeType = item.subType;
   }
-
 
   void pickupItem(MMOItem item) {
 

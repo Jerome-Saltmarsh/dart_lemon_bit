@@ -79,8 +79,10 @@ flutter:
     - sprites/kid/weapons/bow/
     - sprites/kid/weapons/staff/
     - sprites/kid/weapons/sword/
-    - sprites/kid/shoes_left/boots/
-    - sprites/kid/shoes_right/boots/
+    - sprites/kid/shoes_left/iron_plates/
+    - sprites/kid/shoes_left/leather_boots/
+    - sprites/kid/shoes_right/iron_plates/
+    - sprites/kid/shoes_right/leather_boots/
     - sprites/fallen/
     - sprites/skeleton/
     - sprites/butterfly/

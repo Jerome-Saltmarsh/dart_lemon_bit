@@ -18,8 +18,10 @@ enum KidPart {
   weaponStaff('weapons', 'staff'),
   weaponSword('weapons', 'sword'),
   shadow('shadow', 'regular'),
-  shoesLeftBoots('shoes_left', 'boots'),
-  shoesRightBoots('shoes_right', 'boots');
+  shoesLeftIronPlates('shoes_left', 'iron_plates'),
+  shoesRightIronPlates('shoes_right', 'iron_plates'),
+  shoesLeftLeatherBoots('shoes_left', 'leather_boots'),
+  shoesRightLeatherBoots('shoes_right', 'leather_boots');
 
   final String fileName;
   final String groupName;
