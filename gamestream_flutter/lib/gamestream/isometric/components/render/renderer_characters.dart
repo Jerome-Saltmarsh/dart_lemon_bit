@@ -222,6 +222,7 @@ class RendererCharacters extends RenderGroup {
     engine.color = Colors.white;
   }
 
+  /// TODO OPTIMIZE
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
 
@@ -251,8 +252,8 @@ class RendererCharacters extends RenderGroup {
     final atlasTorso = sprites.torso[TorsoType.regular] ?? (throw Exception());
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHair = sprites.hair[character.hairType] ?? (throw Exception());
-    final atlasShoesLeft = sprites.shoesLeft[ShoeType.Boots] ?? (throw Exception());
-    final atlasShoesRight = sprites.shoesRight[ShoeType.Boots] ?? (throw Exception());
+    final atlasShoesLeft = sprites.shoesLeft[character.shoeType] ?? (throw Exception());
+    final atlasShoesRight = sprites.shoesRight[character.shoeType] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);

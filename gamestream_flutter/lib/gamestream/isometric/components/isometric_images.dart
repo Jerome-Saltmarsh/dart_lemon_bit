@@ -148,6 +148,8 @@ class IsometricImages with IsometricComponent {
     kidCharacterSprites.bodyArms[BodyType.None] = spriteGroup2Empty;
     kidCharacterSprites.legs[LegType.None] = spriteGroup2Empty;
     kidCharacterSprites.hair[HairType.none] = spriteGroup2Empty;
+    kidCharacterSprites.shoesLeft[ShoeType.None] = spriteGroup2Empty;
+    kidCharacterSprites.shoesRight[ShoeType.None] = spriteGroup2Empty;
 
     loadSpriteGroup(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
