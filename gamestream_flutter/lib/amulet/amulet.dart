@@ -13,7 +13,6 @@ import 'mmo_render.dart';
 
 class Amulet extends IsometricGame {
 
-  // late final AmuletActions amuletNetwork;
   late final AmuletUI amuletUI;
 
   final dragging = Watch<ItemSlot?>(null);
@@ -269,4 +268,9 @@ class Amulet extends IsometricGame {
         NetworkRequestAmulet.Spawn_Random_Enemy,
       );
 
+
+  void createPlayer() =>
+      network.sendNetworkRequestAmulet(
+        NetworkRequestAmulet.Create_Player,
+      );
 }

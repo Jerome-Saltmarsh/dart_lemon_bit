@@ -27,6 +27,9 @@ extension MMORequestHandler on Connection {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amulet.spawnRandomEnemy();
         break;
+      case NetworkRequestAmulet.Create_Player:
+        player.create();
+        break;
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;

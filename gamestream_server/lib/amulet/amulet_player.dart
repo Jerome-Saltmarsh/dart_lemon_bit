@@ -11,24 +11,6 @@ class AmuletPlayer extends IsometricPlayer {
 
   final AmuletGame game;
 
-  var _characterCreated = false;
-
-  bool get characterCreated => _characterCreated;
-
-  set characterCreated(bool value){
-    if (_characterCreated == value){
-      return;
-    }
-    _characterCreated = value;
-    writePlayerCharacterCreated();
-  }
-
-  void writePlayerCharacterCreated() {
-    writeByte(NetworkResponse.Amulet_Player);
-    writeByte(NetworkResponseAmulet.Character_Created);
-    writeBool(_characterCreated);
-  }
-
   var equipmentDirty = true;
   var activePowerX = 0.0;
   var activePowerY = 0.0;
@@ -52,6 +34,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   late List<ItemSlot> items;
 
+  var _characterCreated = false;
   var _inventoryOpen = false;
   var _skillsDialogOpen = false;
   var _experience = 0;
@@ -104,7 +87,10 @@ class AmuletPlayer extends IsometricPlayer {
     writePlayerTalents();
 
     name = 'newb';
+    characterCreated = false;
   }
+
+  bool get characterCreated => _characterCreated;
 
   bool get activeAbilitySelected => activatedPowerIndex != -1;
 
@@ -174,6 +160,14 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   ItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+
+  set characterCreated(bool value){
+    if (_characterCreated == value){
+      return;
+    }
+    _characterCreated = value;
+    writeCharacterCreated();
+  }
 
   set experience(int value){
     _experience = value;
@@ -1458,5 +1452,18 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     spawnItem(item);
     equipShoes(null);
+  }
+
+  void writeCharacterCreated() {
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(NetworkResponseAmuletPlayer.Character_Created);
+    writeBool(_characterCreated);
+  }
+
+  void create() {
+    if (characterCreated){
+      return;
+    }
+    characterCreated = true;
   }
 }

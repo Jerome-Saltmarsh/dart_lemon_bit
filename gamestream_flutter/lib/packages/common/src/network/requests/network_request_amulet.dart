@@ -8,5 +8,6 @@ enum NetworkRequestAmulet {
   Toggle_Skills_Dialog,
   Toggle_Inventory_Open,
   Upgrade_Talent,
-  Spawn_Random_Enemy
+  Spawn_Random_Enemy,
+  Create_Player,
 }

@@ -714,7 +714,12 @@ class AmuletUI {
                 buildText('CHARACTER CREATION'),
                 buildText('ENTER NAME'),
                 buildText('SELECT COMPLEXION'),
+                onPressed(
+                  action: amulet.createPlayer,
+                  child: buildText('SUBMIT')
+                ),
               ],
             )),
+      match: false,
   );
 }

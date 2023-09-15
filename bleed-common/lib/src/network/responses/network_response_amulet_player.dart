@@ -1,4 +1,4 @@
 
-class NetworkResponseAmulet {
+class NetworkResponseAmuletPlayer {
   static const Character_Created = 0;
 }

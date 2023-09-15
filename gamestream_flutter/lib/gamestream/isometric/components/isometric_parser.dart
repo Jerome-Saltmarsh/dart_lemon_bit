@@ -755,7 +755,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readNetworkResponseAmulet() {
     switch (readByte()) {
-      case NetworkResponseAmulet.Character_Created:
+      case NetworkResponseAmuletPlayer.Character_Created:
         amulet.characterCreated.value = readBool();
         break;
     }
