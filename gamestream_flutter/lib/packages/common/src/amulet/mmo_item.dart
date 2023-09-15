@@ -119,6 +119,12 @@ enum MMOItem {
       subType: BodyType.Leather_Armour,
       health: 5,
   ),
+  Shoes_Boots (
+      quality: MMOItemQuality.Common,
+      type: ItemType.Shoes,
+      subType: ShoeType.Boots,
+      health: 3,
+  ),
   Health_Potion(
       quality: MMOItemQuality.Common,
       type: ItemType.Consumable,

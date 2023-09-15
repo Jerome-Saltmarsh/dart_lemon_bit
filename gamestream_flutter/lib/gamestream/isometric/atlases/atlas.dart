@@ -1,6 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/atlases/src.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'atlas_src_hands.dart';
+import 'atlas_src_shoes.dart';
 
 class Atlas {
 
@@ -109,6 +110,7 @@ class Atlas {
     ItemType.Hand: Collection_Hands,
     ItemType.Consumable: atlasSrcConsumables,
     ItemType.Treasure: atlasSrcTreasures,
+    ItemType.Shoes: atlasSrcShoes,
   };
 
   static List<double> getSrc(int type, int subType) =>
