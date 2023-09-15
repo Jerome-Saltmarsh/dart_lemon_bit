@@ -48,6 +48,7 @@ class AmuletPlayer extends IsometricPlayer {
   final equippedLegs = ItemSlot();
   final equippedHandLeft = ItemSlot();
   final equippedHandRight = ItemSlot();
+  final equippedShoe = ItemSlot();
 
   late List<ItemSlot> items;
 
@@ -826,6 +827,31 @@ class AmuletPlayer extends IsometricPlayer {
     handTypeRight = item.subType;
   }
 
+  void equipShoes(MMOItem? item){
+    if (deadOrBusy)
+      return;
+
+    if (equippedShoe.item == item)
+      return;
+
+    if (item == null){
+      clearSlot(equippedShoe);
+      shoeType = ShoeType.None;
+      return;
+    }
+
+    if (!item.isShoes)
+      throw Exception();
+
+    setSlot(
+      slot: equippedShoe,
+      item: item,
+      cooldown: item.cooldown,
+    );
+
+    shoeType = item.subType;
+  }
+
 
   void pickupItem(MMOItem item) {
 
@@ -881,6 +907,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeMMOItem(equippedLegs.item);
     writeMMOItem(equippedHandLeft.item);
     writeMMOItem(equippedHandRight.item);
+    writeMMOItem(equippedShoe.item);
   }
 
   void writeMMOItem(MMOItem? value){
@@ -1356,6 +1383,8 @@ class AmuletPlayer extends IsometricPlayer {
         return treasures[index];
       case SlotType.Weapons:
         return weapons[index];
+      case SlotType.Equipped_Shoes:
+        return weapons[index];
     }
   }
 
@@ -1427,6 +1456,17 @@ class AmuletPlayer extends IsometricPlayer {
       case SlotType.Treasures:
         dropTreasure(index);
         break;
+      case SlotType.Equipped_Shoes:
+        dropEquippedShoes(index);
+        break;
     }
+  }
+
+  void dropEquippedShoes(int index) {
+    final item = equippedShoe.item;
+    if (item == null)
+      return;
+    spawnItem(item);
+    equipShoes(null);
   }
 }

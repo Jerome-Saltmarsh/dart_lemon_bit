@@ -187,6 +187,8 @@ enum MMOItem {
 
   bool get isWeapon => type == ItemType.Weapon;
 
+  bool get isShoes => type == ItemType.Shoes;
+
   bool get isHelm => type == ItemType.Helm;
 
   bool get isHand => type == ItemType.Hand;

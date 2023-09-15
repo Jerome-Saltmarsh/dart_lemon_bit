@@ -34,6 +34,8 @@ class ItemSlot {
         return srcItem.isBody;
       case SlotType.Equipped_Legs:
         return srcItem.isLegs;
+      case SlotType.Equipped_Shoes:
+        return srcItem.isShoes;
       case SlotType.Items:
         return true;
     }

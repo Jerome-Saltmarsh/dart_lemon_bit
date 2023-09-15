@@ -9,7 +9,8 @@ enum SlotType {
   Equipped_Hand_Left,
   Equipped_Hand_Right,
   Equipped_Helm,
-  Equipped_Legs;
+  Equipped_Legs,
+  Equipped_Shoes;
 
   bool supportsItemType(int itemType) =>
       switch (this){
@@ -20,6 +21,7 @@ enum SlotType {
         Equipped_Hand_Right => itemType == ItemType.Hand,
         Treasures => itemType == ItemType.Treasure,
         Weapons => itemType == ItemType.Weapon,
+        Equipped_Shoes => itemType == ItemType.Shoes,
         Items => true
       };
 

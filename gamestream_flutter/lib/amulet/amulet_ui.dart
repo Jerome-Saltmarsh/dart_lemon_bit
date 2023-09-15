@@ -306,7 +306,7 @@ class AmuletUI {
      );
   }
 
-  Widget buildPlayerItems() => buildInventoryContainer(
+  Widget buildInventoryItems() => buildInventoryContainer(
     child: Row(
       children: [
         Column(
@@ -337,7 +337,7 @@ class AmuletUI {
         padding: const EdgeInsets.all(2),
     );
 
-  Widget buildPlayerEquipped() => buildInventoryContainer(
+  Widget buildInventoryEquipped() => buildInventoryContainer(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,6 +347,7 @@ class AmuletUI {
         buildItemSlot(amulet.equippedLegs),
         buildItemSlot(amulet.equippedHandLeft),
         buildItemSlot(amulet.equippedHandRight),
+        buildItemSlot(amulet.equippedShoes),
       ],),
   );
 
@@ -642,9 +643,9 @@ class AmuletUI {
           height16,
           Row(
             children: [
-              buildPlayerEquipped(),
+              buildInventoryEquipped(),
               width16,
-              buildPlayerItems(),
+              buildInventoryItems(),
             ],
           )
         ],),

@@ -56,6 +56,7 @@ class Amulet extends IsometricGame {
   final equippedLegs = ItemSlot(slotType: SlotType.Equipped_Legs, index: 0);
   final equippedHandLeft = ItemSlot(slotType: SlotType.Equipped_Hand_Left, index: 0);
   final equippedHandRight = ItemSlot(slotType: SlotType.Equipped_Hand_Right, index: 0);
+  final equippedShoes = ItemSlot(slotType: SlotType.Equipped_Shoes, index: 0);
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
