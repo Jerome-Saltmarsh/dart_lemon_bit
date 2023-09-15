@@ -76,6 +76,7 @@ class AmuletPlayer extends IsometricPlayer {
     health = maxHealth;
     equippedWeaponIndex = 0;
     characterCreated = false;
+    active = false;
 
     writeActivatedPowerIndex();
     writeWeapons();
@@ -167,8 +168,9 @@ class AmuletPlayer extends IsometricPlayer {
 
   set characterCreated(bool value) {
 
-    if (value != _characterCreated)
+    if (value == _characterCreated) {
       return;
+    }
 
     _characterCreated = value;
     writeCharacterCreated();
@@ -1465,10 +1467,11 @@ class AmuletPlayer extends IsometricPlayer {
     writeBool(_characterCreated);
   }
 
-  void create() {
+  void createCharacter() {
     if (characterCreated){
       return;
     }
     characterCreated = true;
+    active = true;
   }
 }
