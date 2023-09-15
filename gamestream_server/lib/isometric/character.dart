@@ -18,6 +18,7 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
+  var gender = Gender.female;
   var shoeType = ShoeType.None;
   var hairType = HairType.none;
   var hairColor = 0;
@@ -524,7 +525,7 @@ class Character extends Collider {
   int get templateDataB => compressBytesToUInt64(
     complexion,
     shoeType,
-    0,
+    gender,
     0,
     0,
     0,

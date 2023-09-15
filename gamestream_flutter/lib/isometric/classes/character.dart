@@ -26,6 +26,7 @@ class Character extends Position {
   /// percentage between 0 and 1
   var color = 0;
   var actionComplete = 0.0;
+  var gender = 0;
 
   bool get dead => state == CharacterState.Dead;
 

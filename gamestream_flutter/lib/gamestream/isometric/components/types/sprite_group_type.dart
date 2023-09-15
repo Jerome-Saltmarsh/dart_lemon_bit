@@ -3,24 +3,26 @@ import 'package:gamestream_flutter/packages/common.dart';
 class SpriteGroupType {
   static const Arms_Left = 1;
   static const Arms_Right = 2;
-  static const Body = 3;
-  static const Body_Arms = 4;
-  static const Hands_Left = 5;
-  static const Hands_Right = 6;
-  static const Heads = 7;
-  static const Helms = 8;
-  static const Legs = 9;
-  static const Shadow = 10;
-  static const Torso = 11;
-  static const Weapons = 12;
-  static const Hair = 13;
-  static const Shoes_Left = 14;
-  static const Shoes_Right = 15;
+  static const Body_Male = 3;
+  static const Body_Female = 4;
+  static const Body_Arms = 5;
+  static const Hands_Left = 6;
+  static const Hands_Right = 7;
+  static const Heads = 8;
+  static const Helms = 9;
+  static const Legs = 10;
+  static const Shadow = 11;
+  static const Torso = 12;
+  static const Weapons = 13;
+  static const Hair = 14;
+  static const Shoes_Left = 15;
+  static const Shoes_Right = 16;
 
   static String getName(int value)=> const {
     Arms_Left: 'arms_left',
     Arms_Right: 'arms_right',
-    Body: 'body',
+    Body_Male: 'body_male',
+    Body_Female: 'body_female',
     Body_Arms: 'body_arms',
     Hands_Left: 'hands_left',
     Hands_Right: 'hands_right',
@@ -38,7 +40,8 @@ class SpriteGroupType {
   static String getSubTypeName(int type, int subType) => switch (type) {
       Arms_Left => 'regular',
       Arms_Right => 'regular',
-      Body => BodyType.getName(subType),
+      Body_Male => BodyType.getName(subType),
+      Body_Female => BodyType.getName(subType),
       Body_Arms => BodyType.getName(subType),
       Hands_Left => HandType.getName(subType),
       Hands_Right => HandType.getName(subType),
@@ -59,7 +62,7 @@ class SpriteGroupType {
   static const values = [
     Arms_Left,
     Arms_Right,
-    Body,
+    Body_Male,
     Body_Arms,
     Hands_Left,
     Hands_Right,

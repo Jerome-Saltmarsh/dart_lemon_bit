@@ -37,7 +37,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite butterfly;
   late final Sprite bat;
 
-  late final CharacterSpriteGroup spriteGroup2Empty;
+  late final CharacterSpriteGroup spriteGroupEmpty;
 
   late final Sprite spriteEmpty;
   late final dstEmpty = Uint16List(0);
@@ -131,7 +131,7 @@ class IsometricImages with IsometricComponent {
         mode: AnimationMode.single,
     );
 
-    spriteGroup2Empty = CharacterSpriteGroup(
+    spriteGroupEmpty = CharacterSpriteGroup(
         idle: emptySprite,
         running: emptySprite,
         change: emptySprite,
@@ -140,22 +140,25 @@ class IsometricImages with IsometricComponent {
         strike: emptySprite,
         hurt: emptySprite,
     );
-    kidCharacterSprites.handLeft[HandType.None] = spriteGroup2Empty;
-    kidCharacterSprites.handRight[HandType.None] = spriteGroup2Empty;
-    kidCharacterSprites.weapons[WeaponType.Unarmed] = spriteGroup2Empty;
-    kidCharacterSprites.helm[HelmType.None] = spriteGroup2Empty;
-    kidCharacterSprites.body[BodyType.None] = spriteGroup2Empty;
-    kidCharacterSprites.bodyArms[BodyType.None] = spriteGroup2Empty;
-    kidCharacterSprites.legs[LegType.None] = spriteGroup2Empty;
-    kidCharacterSprites.hair[HairType.none] = spriteGroup2Empty;
-    kidCharacterSprites.shoesLeft[ShoeType.None] = spriteGroup2Empty;
-    kidCharacterSprites.shoesRight[ShoeType.None] = spriteGroup2Empty;
+    kidCharacterSprites.handLeft[HandType.None] = spriteGroupEmpty;
+    kidCharacterSprites.handRight[HandType.None] = spriteGroupEmpty;
+    kidCharacterSprites.weapons[WeaponType.Unarmed] = spriteGroupEmpty;
+    kidCharacterSprites.helm[HelmType.None] = spriteGroupEmpty;
+    kidCharacterSprites.bodyMale[BodyType.None] = spriteGroupEmpty;
+    kidCharacterSprites.bodyFemale[BodyType.None] = spriteGroupEmpty;
+    kidCharacterSprites.bodyArms[BodyType.None] = spriteGroupEmpty;
+    kidCharacterSprites.legs[LegType.None] = spriteGroupEmpty;
+    kidCharacterSprites.hair[HairType.none] = spriteGroupEmpty;
+    kidCharacterSprites.shoesLeft[ShoeType.None] = spriteGroupEmpty;
+    kidCharacterSprites.shoesRight[ShoeType.None] = spriteGroupEmpty;
 
     loadSpriteGroup(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
-    loadSpriteGroup(type: SpriteGroupType.Body, subType: BodyType.Shirt_Blue, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Body_Female, subType: BodyType.Shirt_Blue, skipHurt: true);
+    loadSpriteGroup(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue, skipHurt: true);
-    loadSpriteGroup(type: SpriteGroupType.Body, subType: BodyType.Leather_Armour, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Arms, subType: BodyType.Leather_Armour,
       skipHurt: true,
       skipFire: true,

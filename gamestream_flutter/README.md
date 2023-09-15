@@ -12,6 +12,8 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- gender type
+- body shape box
 - fix speech box
 - fix hover over player name
 - fix set node light source refresh

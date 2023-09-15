@@ -242,7 +242,8 @@ class RendererCharacters extends RenderGroup {
     final atlasHandsRight = sprites.handRight[character.handTypeRight] ?? (throw Exception());
     final atlasHelm = sprites.helm[character.headType] ?? (throw Exception());
     final atlasLegs =  sprites.legs[character.legType] ?? (throw Exception());
-    final atlasBody = sprites.body[character.bodyType] ?? (throw Exception());
+    final bodySprite = character.gender == Gender.male ? sprites.bodyMale : sprites.bodyFemale;
+    final atlasBody = bodySprite[character.bodyType] ?? (throw Exception());
     final atlasWeapon = sprites.weapons[character.weaponType] ??
         (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
     final atlasBodyArm = sprites.bodyArms[character.bodyType] ?? (throw Exception());

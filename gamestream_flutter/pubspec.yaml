@@ -63,8 +63,10 @@ flutter:
     - sprites/flame/
     - sprites/kid/arms_left/regular/
     - sprites/kid/arms_right/regular/
-    - sprites/kid/body/shirt_blue/
-    - sprites/kid/body/leather_armour/
+    - sprites/kid/body_male/shirt_blue/
+    - sprites/kid/body_male/leather_armour/
+    - sprites/kid/body_female/shirt_blue/
+    - sprites/kid/body_female/leather_armour/
     - sprites/kid/body_arms/shirt_blue/
     - sprites/kid/hair/basic_1/
     - sprites/kid/hair/basic_2/

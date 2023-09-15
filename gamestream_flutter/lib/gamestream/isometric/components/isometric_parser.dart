@@ -702,6 +702,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     if (readB) {
       character.complexion = readByte();
       character.shoeType = readByte();
+      character.gender = readByte();
     }
   }
 

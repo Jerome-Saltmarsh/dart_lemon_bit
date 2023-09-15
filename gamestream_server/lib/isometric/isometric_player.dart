@@ -774,6 +774,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       cacheTemplateB[cacheIndex] = compressedB;
       writeByte(character.complexion);
       writeByte(character.shoeType);
+      writeByte(character.gender);
     }
   }
 

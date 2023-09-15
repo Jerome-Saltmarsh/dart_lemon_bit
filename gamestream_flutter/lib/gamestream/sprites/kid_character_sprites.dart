@@ -6,7 +6,8 @@ import 'character_sprites.dart';
 class KidCharacterSprites {
   final armLeft = <int, CharacterSpriteGroup>{};
   final armRight  = <int, CharacterSpriteGroup>{};
-  final body = <int, CharacterSpriteGroup>{};
+  final bodyMale = <int, CharacterSpriteGroup>{};
+  final bodyFemale = <int, CharacterSpriteGroup>{};
   final bodyArms = <int, CharacterSpriteGroup>{};
   final handLeft = <int, CharacterSpriteGroup>{};
   final handRight = <int, CharacterSpriteGroup>{};
@@ -23,7 +24,8 @@ class KidCharacterSprites {
   late final values = {
     SpriteGroupType.Arms_Left: armLeft,
     SpriteGroupType.Arms_Right: armRight,
-    SpriteGroupType.Body: body,
+    SpriteGroupType.Body_Male: bodyMale,
+    SpriteGroupType.Body_Female: bodyFemale,
     SpriteGroupType.Body_Arms: bodyArms,
     SpriteGroupType.Hands_Left: handLeft,
     SpriteGroupType.Hands_Right: handRight,

@@ -84,7 +84,6 @@ class AmuletPlayer extends IsometricPlayer {
     addItemToEmptyWeaponSlot(MMOItem.Holy_Bow);
     addItemToEmptyWeaponSlot(MMOItem.Blink_Dagger);
 
-
     equipHelm(MMOItem.Wizards_Hat);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
