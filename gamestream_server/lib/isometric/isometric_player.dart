@@ -272,6 +272,15 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeHandTypeRight();
   }
 
+  @override
+  set gender(int value){
+    if (this.gender == value){
+      return;
+    }
+    super.gender = value;
+    writeGender();
+  }
+
   set mouseLeftDown(bool value){
     if (_mouseLeftDown != value) {
       _mouseLeftDown = value;
@@ -1290,4 +1299,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(PlayerResponse.ShoeType);
     writeByte(shoeType);
   }
+
+  void writeGender() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.Gender);
+    writeByte(gender);
+  }
+
+  void toggleGender() =>
+    gender = gender == Gender.male ? Gender.female : Gender.male;
 }

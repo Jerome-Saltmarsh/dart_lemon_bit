@@ -4,4 +4,5 @@ enum NetworkRequestPlayer {
   setName,
   setHairType,
   setHairColor,
+  toggleGender,
 }

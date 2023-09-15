@@ -547,6 +547,10 @@ extension isometricDebugUI on IsometricDebug {
             final position = player.position;
             return 'x: ${position.x.toInt()}, y: ${position.y.toInt()}, z: ${position.z.toInt()}';
           }),
+          onPressed(
+            action: player.toggleGender,
+            child: buildRowMapped('gender', player.gender, Gender.getName)
+          ),
           buildRowMapped('legs type', player.legsType, LegType.getName),
           buildRowMapped('body type', player.bodyType, BodyType.getName),
           onPressed(

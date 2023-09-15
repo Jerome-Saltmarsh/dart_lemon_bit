@@ -43,6 +43,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final hairType = Watch(0);
   final hairColor = Watch(0);
   final shoeType = Watch(0);
+  final gender = Watch(0);
   final bodyType = Watch(0);
   final legsType = Watch(0);
   final handTypeLeft = Watch(0);
@@ -182,6 +183,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case PlayerResponse.ShoeType:
         readShoeType();
         break;
+      case PlayerResponse.Gender:
+        readGender();
+        break;
       case PlayerResponse.Complexion:
         complexion.value = parser.readByte();
         break;
@@ -250,22 +254,26 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     hairType.value = parser.readByte();
   }
 
+  void readHairColor() => hairColor.value = parser.readByte();
+
+  void readShoeType() => shoeType.value = parser.readByte();
+
+  void readGender() => gender.value = parser.readByte();
+
   void setHairType(int hairType) => network.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.setHairType.index,
         hairType,
     );
 
-  void readHairColor() => hairColor.value = parser.readByte();
-
-  void readShoeType() => shoeType.value = parser.readByte();
-
-  void setHairColor(int value) {
-    network.sendNetworkRequest(
+  void setHairColor(int value) => network.sendNetworkRequest(
       NetworkRequest.Player,
       NetworkRequestPlayer.setHairColor.index,
       value,
     );
-  }
 
+  void toggleGender() => network.sendNetworkRequest(
+      NetworkRequest.Player,
+      NetworkRequestPlayer.toggleGender.index,
+    );
 }

@@ -829,6 +829,9 @@ class Connection with ByteReader {
     final player = _player as IsometricPlayer;
 
     switch (playerRequest) {
+      case NetworkRequestPlayer.toggleGender:
+        player.toggleGender();
+        break;
 
       case NetworkRequestPlayer.setHairColor:
         final value = arg2;

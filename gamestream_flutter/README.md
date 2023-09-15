@@ -13,6 +13,7 @@ shift + alt + J     : backspace
 
 [TODO]
 - gender type
+- player creation dialog
 - body shape box
 - fix speech box
 - fix hover over player name
@@ -26,7 +27,6 @@ shift + alt + J     : backspace
 - glove type silk
 - set player name
 - player persistence
-- player creation dialog
 - stash
 - store
 - player attributes dialog
