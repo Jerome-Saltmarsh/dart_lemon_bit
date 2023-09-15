@@ -275,6 +275,8 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteHandBehind;
     final Sprite spriteArmFront;
     final Sprite spriteArmBehind;
+    final Sprite spriteShoesFront;
+    final Sprite spriteShoesBehind;
 
     final palette = colors.palette;
     final colorSkin = palette[character.complexion].value;
@@ -295,11 +297,15 @@ class RendererCharacters extends RenderGroup {
       spriteHandBehind = spriteHandsRight;
       spriteArmFront = spriteArmLeft;
       spriteArmBehind = spriteArmRight;
+      spriteShoesFront = spriteShoesLeft;
+      spriteShoesBehind = spriteShoesRight;
     } else {
       spriteHandFront = spriteHandsRight;
       spriteHandBehind = spriteHandsLeft;
       spriteArmFront = spriteArmRight; // spriteArmRight
       spriteArmBehind = spriteArmLeft;
+      spriteShoesFront = spriteShoesRight;
+      spriteShoesBehind = spriteShoesLeft;
     }
 
     if (renderBottom) {
@@ -342,10 +348,10 @@ class RendererCharacters extends RenderGroup {
       );
 
       render.sprite(
-        sprite: spriteShoesLeft,
+        sprite: spriteShoesBehind,
         frame: completingAction
-            ? spriteShoesLeft.getFramePercentage(row, actionComplete)
-            : spriteShoesLeft.getFrame(row: row, column: animationFrame),
+            ? spriteShoesBehind.getFramePercentage(row, actionComplete)
+            : spriteShoesBehind.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
@@ -354,10 +360,10 @@ class RendererCharacters extends RenderGroup {
       );
 
       render.sprite(
-        sprite: spriteShoesRight,
+        sprite: spriteShoesFront,
         frame: completingAction
-            ? spriteShoesRight.getFramePercentage(row, actionComplete)
-            : spriteShoesRight.getFrame(row: row, column: animationFrame),
+            ? spriteShoesFront.getFramePercentage(row, actionComplete)
+            : spriteShoesFront.getFrame(row: row, column: animationFrame),
         color: color,
         scale: scale,
         dstX: dstX,
