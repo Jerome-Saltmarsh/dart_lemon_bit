@@ -11,5 +11,6 @@ export 'read_bit_from_byte.dart';
 export 'read_bits_from_byte.dart';
 export 'byte_to_binary_string.dart';
 export 'binary_hex.dart';
-export 'write_bits_to_byte.dart';
+export 'write_bits.dart';
 export 'compress_bytes_to_uint32.dart';
+export 'compress_bytes_to_uint64.dart';

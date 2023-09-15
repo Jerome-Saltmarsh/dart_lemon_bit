@@ -1,4 +1,4 @@
-int writeBitsToByte(
+int writeBits(
     bool i0,
     bool i1,
     bool i2,

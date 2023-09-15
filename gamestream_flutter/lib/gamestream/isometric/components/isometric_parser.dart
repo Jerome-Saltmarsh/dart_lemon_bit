@@ -681,6 +681,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
+  // TODO OPTIMIZE
   void readCharacterTemplate(Character character){
 
     final compression = readByte();
@@ -700,6 +701,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
     if (readB) {
       character.complexion = readByte();
+      character.shoeType = readByte();
     }
   }
 

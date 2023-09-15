@@ -5,15 +5,15 @@ void main() {
 
 
   test("All False", () {
-    expect(writeBitsToByte(false, false, false, false, false, false, false, false), 0);
+    expect(writeBits(false, false, false, false, false, false, false, false), 0);
   });
 
   test("All True", () {
-    expect(writeBitsToByte(true, true, true, true, true, true, true, true), 255);
+    expect(writeBits(true, true, true, true, true, true, true, true), 255);
   });
 
   test("Cases", () {
-    final byte = writeBitsToByte(false, true, true, true, true, true, true, true);
+    final byte = writeBits(false, true, true, true, true, true, true, true);
     readBitFromByte(byte, 0);
     expect(readBitFromByte(byte, 0), false);
     expect(readBitFromByte(byte, 1), true);

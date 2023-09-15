@@ -53,7 +53,7 @@ class SceneWriter extends ByteWriter {
       writeByte(gameObject.subType);
       writeByte(gameObject.team);
 
-      writeByte(writeBitsToByte(
+      writeByte(writeBits(
           gameObject.collidable,
           gameObject.collectable,
           gameObject.fixed,

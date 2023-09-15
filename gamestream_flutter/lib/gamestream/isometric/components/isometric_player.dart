@@ -42,6 +42,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final helmType = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
+  final shoeType = Watch(0);
   final bodyType = Watch(0);
   final legsType = Watch(0);
   final handTypeLeft = Watch(0);
@@ -106,16 +107,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       return true;
     }
     return false;
-  }
-
-  Watch<int> getItemTypeWatch(int itemType){
-    // if (ItemType.isTypeWeapon(itemType)) return weapon;
-    // if (ItemType.isTypeHead(itemType)) return head;
-    // if (ItemType.isTypeBody(itemType)) return body;
-    // if (ItemType.isTypeLegs(itemType)) return legs;
-    throw Exception(
-        'gamestream.isometricEngine.player.getItemTypeWatch($itemType)'
-    );
   }
 
   void onComponentUpdate(){
@@ -187,6 +178,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         break;
       case PlayerResponse.HairColor:
         readHairColor();
+        break;
+      case PlayerResponse.ShoeType:
+        readShoeType();
         break;
       case PlayerResponse.Complexion:
         complexion.value = parser.readByte();
@@ -262,7 +256,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         hairType,
     );
 
-  void readHairColor() => player.hairColor.value = parser.readByte();
+  void readHairColor() => hairColor.value = parser.readByte();
+
+  void readShoeType() => shoeType.value = parser.readByte();
 
   void setHairColor(int value) {
     network.sendNetworkRequest(

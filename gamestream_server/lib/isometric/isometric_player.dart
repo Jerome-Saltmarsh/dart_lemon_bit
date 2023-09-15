@@ -101,6 +101,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeDebugging();
   }
 
+  int get playerMode => _playerMode;
+
   bool get debugging => _debugging;
 
   @override
@@ -126,6 +128,11 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     if (maxHealth == value) return;
     super.maxHealth = value;
     writePlayerHealth();
+  }
+
+  set playerMode(int value){
+    _playerMode = value;
+    writePlayerMode();
   }
 
   set health (int value) {
@@ -174,6 +181,96 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   Scene get scene => game.scene;
 
   double get mouseDistance => this.getDistanceXY(mouseSceneX, mouseSceneY);
+
+  @override
+  set complexion(int value) {
+    if (complexion == value || value < 0 || value > 64)
+      return;
+
+    super.complexion = value;
+    writePlayerComplexion(value);
+  }
+
+  @override
+  set name(String value) {
+    if (name == value){
+      return;
+    }
+    super.name = value;
+    writePlayerName();
+  }
+
+  @override
+  set helmType(int value) {
+    if (helmType == value)
+      return;
+
+    super.helmType = value;
+    writeHeadType();
+  }
+
+  @override
+  set hairType(int value) {
+    if (hairType == value)
+      return;
+
+    super.hairType = value;
+    writeHairType();
+  }
+
+  @override
+  set shoeType(int value) {
+    if (shoeType == value){
+      return;
+    }
+    shoeType = value;
+    writeShoeType();
+  }
+
+  @override
+  set hairColor(int value) {
+    if (hairColor == value){
+      return;
+    }
+    super.hairColor = value;
+    writeHairColor();
+  }
+
+  @override
+  set bodyType(int value) {
+    if (bodyType == value)
+      return;
+
+    super.bodyType = value;
+    writeBodyType();
+  }
+
+  @override
+  set legsType(int value) {
+    if (legsType == value)
+      return;
+
+    super.legsType = value;
+    writeLegsType();
+  }
+
+  @override
+  set handTypeLeft(int value){
+    if (handTypeLeft == value)
+      return;
+
+    super.handTypeLeft = value;
+    writeHandTypeLeft();
+  }
+
+  @override
+  set handTypeRight(int value){
+    if (handTypeRight == value)
+      return;
+
+    super.handTypeRight = value;
+    writeHandTypeRight();
+  }
 
   set mouseLeftDown(bool value){
     if (_mouseLeftDown != value) {
@@ -385,7 +482,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       final stateAChanged = compressedState != cacheStateA[cacheIndex];
       final stateBChanged = compressedFrameAndDirection != cacheStateB[cacheIndex];
 
-      final compressionLevel = writeBitsToByte(stateAChanged, stateBChanged, false, false, false, false, false, false)
+      final compressionLevel = writeBits(stateAChanged, stateBChanged, false, false, false, false, false, false)
          | (diffXChangeType << 2)
          | (diffYChangeType << 4)
          | (diffZChangeType << 6);
@@ -651,33 +748,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writeCharacterTemplate(Character character, int cacheIndex) {
 
-    final compressedA = compressBytesToUInt64(
-      character.weaponType,
-      character.bodyType,
-      character.helmType,
-      character.legsType,
-      character.handTypeLeft,
-      character.handTypeRight,
-      character.hairType,
-      character.hairColor,
-    );
-
-    final compressedB = compressBytesToUInt64(
-      character.complexion,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    );
+    final compressedA = character.templateDataA;
+    final compressedB = character.templateDataB;
 
     final writeA = cacheTemplateA[cacheIndex] != compressedA;
     final writeB = cacheTemplateB[cacheIndex] != compressedB;
 
     writeByte(
-      writeBitsToByte(writeA, writeB, false, false, false, false, false, false)
+      writeBits(writeA, writeB, false, false, false, false, false, false)
     );
 
     if (writeA){
@@ -693,7 +771,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
 
     if (writeB){
+      cacheTemplateB[cacheIndex] = compressedB;
       writeByte(character.complexion);
+      writeByte(character.shoeType);
     }
   }
 
@@ -1132,88 +1212,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     // TODO: implement writeError
   }
 
-  @override
-  set complexion(int value) {
-    if (complexion == value || value < 0 || value > 64)
-      return;
-
-    super.complexion = value;
-    writePlayerComplexion(value);
-  }
-
-  @override
-  set name(String value) {
-    if (name == value){
-      return;
-    }
-    super.name = value;
-    writePlayerName();
-  }
-
-
-  @override
-  set helmType(int value) {
-    if (helmType == value)
-      return;
-
-    super.helmType = value;
-    writeHeadType();
-  }
-
-  @override
-  set hairType(int value) {
-    if (hairType == value)
-      return;
-
-    super.hairType = value;
-    writeHairType();
-  }
-
-  @override
-  set hairColor(int value) {
-    if (hairColor == value){
-      return;
-    }
-    super.hairColor = value;
-    writeHairColor();
-  }
-
-  @override
-  set bodyType(int value) {
-    if (bodyType == value)
-      return;
-
-    super.bodyType = value;
-    writeBodyType();
-  }
-
-  @override
-  set legsType(int value) {
-    if (legsType == value)
-      return;
-
-    super.legsType = value;
-    writeLegsType();
-  }
-
-  @override
-  set handTypeLeft(int value){
-    if (handTypeLeft == value)
-      return;
-
-    super.handTypeLeft = value;
-    writeHandTypeLeft();
-  }
-
-  @override
-  set handTypeRight(int value){
-    if (handTypeRight == value)
-      return;
-
-    super.handTypeRight = value;
-    writeHandTypeRight();
-  }
-
   void writeHeadType() {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.HeadType);
@@ -1254,8 +1252,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
-  writeClampUInt16(int value) => writeUInt16(value.clamp(0, 65535));
-
   void writePlayerComplexion(int value) {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.Complexion);
@@ -1266,13 +1262,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.Name);
     writeString(name);
-  }
-
-  int get playerMode => _playerMode;
-
-  set playerMode(int value){
-    _playerMode = value;
-    writePlayerMode();
   }
 
   void writePlayerMode() {
@@ -1291,5 +1280,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.HairColor);
     writeByte(hairColor);
+  }
+
+  writeClampUInt16(int value) => writeUInt16(value.clamp(0, 65535));
+
+  void writeShoeType() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.ShoeType);
+    writeByte(shoeType);
   }
 }

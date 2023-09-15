@@ -6,6 +6,7 @@ class Character extends Position {
   var characterType = CharacterType.Kid;
   var weaponType = WeaponType.Unarmed;
   var complexion = 0;
+  var shoeType = ShoeType.None;
   var bodyType = 0;
   var headType = 0;
   var hairType = 0;

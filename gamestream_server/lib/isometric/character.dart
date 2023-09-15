@@ -18,6 +18,7 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
+  var shoeType = ShoeType.None;
   var hairType = HairType.none;
   var hairColor = 0;
   var complexion = 0;
@@ -508,4 +509,26 @@ class Character extends Collider {
 
   @override
   double get order => dead ? super.order - 25 : super.order;
+  
+  int get templateDataA => compressBytesToUInt64(
+      weaponType,
+      bodyType,
+      helmType,
+      legsType,
+      handTypeLeft,
+      handTypeRight,
+      hairType,
+      hairColor,
+    );
+
+  int get templateDataB => compressBytesToUInt64(
+    complexion,
+    shoeType,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  );
 }
