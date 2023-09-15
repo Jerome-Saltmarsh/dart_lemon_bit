@@ -75,6 +75,8 @@ class AmuletPlayer extends IsometricPlayer {
     equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
     equippedWeaponIndex = 0;
+    characterCreated = false;
+
     writeActivatedPowerIndex();
     writeWeapons();
     writeTreasures();
@@ -85,9 +87,11 @@ class AmuletPlayer extends IsometricPlayer {
     writePlayerTalentPoints();
     writePlayerTalentDialogOpen();
     writePlayerTalents();
+    writeCharacterCreated();
+    writeGender();
 
     name = 'newb';
-    characterCreated = false;
+
   }
 
   bool get characterCreated => _characterCreated;
@@ -161,10 +165,11 @@ class AmuletPlayer extends IsometricPlayer {
 
   ItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
-  set characterCreated(bool value){
-    if (_characterCreated == value){
+  set characterCreated(bool value) {
+
+    if (value != _characterCreated)
       return;
-    }
+
     _characterCreated = value;
     writeCharacterCreated();
   }
