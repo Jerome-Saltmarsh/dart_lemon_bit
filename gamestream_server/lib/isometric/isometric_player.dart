@@ -223,7 +223,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     if (shoeType == value){
       return;
     }
-    shoeType = value;
+    super.shoeType = value;
     writeShoeType();
   }
 

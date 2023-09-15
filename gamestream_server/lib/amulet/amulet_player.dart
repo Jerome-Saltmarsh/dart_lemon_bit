@@ -88,6 +88,7 @@ class AmuletPlayer extends IsometricPlayer {
     equipHelm(MMOItem.Wizards_Hat);
     equipBody(MMOItem.Worn_Shirt_Blue);
     equipLegs(MMOItem.Travellers_Pants);
+    equipShoes(MMOItem.Shoes_Boots);
     // equipHandLeft(MMOItem.Gauntlet);
     equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
@@ -1366,28 +1367,18 @@ class AmuletPlayer extends IsometricPlayer {
     writeString(error);
   }
 
-  ItemSlot getItemObjectAtSlotType(SlotType slotType, int index){
-    switch (slotType){
-      case SlotType.Items:
-        return items[index];
-      case SlotType.Equipped_Hand_Left:
-        return equippedHandLeft;
-      case SlotType.Equipped_Hand_Right:
-        return equippedHandRight;
-      case SlotType.Equipped_Body:
-        return equippedBody;
-      case SlotType.Equipped_Helm:
-        return equippedHelm;
-      case SlotType.Equipped_Legs:
-        return equippedLegs;
-      case SlotType.Treasures:
-        return treasures[index];
-      case SlotType.Weapons:
-        return weapons[index];
-      case SlotType.Equipped_Shoes:
-        return weapons[index];
-    }
-  }
+  ItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
+    switch (slotType) {
+      SlotType.Equipped_Hand_Left => equippedHandLeft,
+      SlotType.Equipped_Hand_Right => equippedHandRight,
+      SlotType.Equipped_Body => equippedBody,
+      SlotType.Equipped_Helm => equippedHelm,
+      SlotType.Equipped_Legs => equippedLegs,
+      SlotType.Equipped_Shoes => equippedShoe,
+      SlotType.Items => items[index],
+      SlotType.Treasures => treasures[index],
+      SlotType.Weapons => weapons[index]
+    };
 
   void useInventorySlot(SlotType slotType, int index) {
     if (index < 0)

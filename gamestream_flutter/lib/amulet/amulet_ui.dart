@@ -624,7 +624,7 @@ class AmuletUI {
 
     final dialog = GSContainer(
       rounded: true,
-      width: 340,
+      width: 450,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -639,13 +639,17 @@ class AmuletUI {
             ],
           ),
           height16,
-          buildPlayerTreasures(),
           height16,
           Row(
             children: [
               buildInventoryEquipped(),
               width16,
-              buildInventoryItems(),
+              Column(
+                children: [
+                  buildPlayerTreasures(),
+                  buildInventoryItems(),
+                ],
+              ),
             ],
           )
         ],),
