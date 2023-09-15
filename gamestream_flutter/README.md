@@ -14,9 +14,7 @@ shift + alt + J     : backspace
 [TODO]
 - particle flame spark
 - particle wind animation
-- gender type
 - player creation dialog
-- body shape box
 - fix speech box
 - fix hover over player name
 - fix set node light source refresh
@@ -36,6 +34,7 @@ shift + alt + J     : backspace
 - particle chicken
 
 15.09.2023
+- gender type
 - shoe type iron plates
 - shoe type leather boots
 - shoe type
