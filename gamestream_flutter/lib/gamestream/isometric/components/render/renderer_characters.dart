@@ -279,9 +279,10 @@ class RendererCharacters extends RenderGroup {
     final palette = colors.palette;
     final colorSkin = palette[character.complexion].value;
     final colorHair = palette[character.hairColor].value;
-    // render.textPosition(character, direction, offsetY: -100);
 
     final render = this.render;
+
+    // render.textPosition(character, ShoeType.getName(character.shoeType), offsetY: -100);
 
     final leftInFront = const [
       InputDirection.Up_Left,
