@@ -78,14 +78,13 @@ class IsometricRender with IsometricComponent {
     double anchorX = 0.5,
     double anchorY = 0.5,
   }){
+    // TODO Optimize
     if (sprite.src.isEmpty)
       return;
 
     engine.bufferImage = sprite.image;
     final spriteSrc = sprite.src;
     final spriteDst = sprite.dst;
-    final srcWidth = sprite.srcWidth;
-    final srcHeight = sprite.srcHeight;
     final atlasX = sprite.atlasX;
     final atlasY = sprite.atlasY;
     final f = frame * 4;
@@ -100,8 +99,8 @@ class IsometricRender with IsometricComponent {
         srcBottom: spriteDst[f + 3] + atlasY,
         scale: scale,
         rotation: 0,
-        dstX: dstX - (srcWidth * anchorX * scale) + (srcLeft * scale),
-        dstY: dstY - (srcHeight * anchorY * scale) + (srcTop * scale),
+        dstX: dstX - (sprite.srcWidth * anchorX * scale) + (srcLeft * scale),
+        dstY: dstY - (sprite.srcHeight * anchorY * scale) + (srcTop * scale),
     );
   }
 
