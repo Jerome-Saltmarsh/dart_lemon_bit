@@ -711,6 +711,46 @@ class AmuletUI {
         child: buildText(talentType.name),
       ));
 
+  void renderSprite({
+    required Canvas canvas,
+    required Sprite? sprite,
+    required int row,
+    required int column,
+    int? color = null,
+    double scale = 1.0,
+  }) {
+    if (sprite == null){
+      return;
+    }
+
+    final blendMode = color == null ? BlendMode.dstATop : BlendMode.modulate;
+    final frame = sprite.getFrame(row: row, column: column);
+
+    spriteExternal(
+      canvas: canvas,
+      sprite: sprite,
+      frame: frame,
+      color: 0,
+      scale: scale,
+      dstX: 0,
+      dstY: 0,
+      blendMode: blendMode,
+    );
+
+    if (color != null){
+      spriteExternal(
+        canvas: canvas,
+        sprite: sprite,
+        frame: sprite.getFrame(row: row, column: column),
+        color: color,
+        scale: scale,
+        dstX: 0,
+        dstY: 0,
+        blendMode: blendMode,
+      );
+    }
+  }
+
   Widget buildDialogCreateCharacter({double width = 300}) => Container(
     child: buildWatchBool(
         amulet.characterCreated, () {
@@ -765,35 +805,25 @@ class AmuletUI {
                             final helm = sprites.helm[player.helmType.value]?.fromCharacterState(characterState);
                             final head = sprites.head[HeadType.regular]?.fromCharacterState(characterState);
                             final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-                            final body = bodySprite[gender]?.fromCharacterState(characterState);
+                            final body = bodySprite[player.bodyType.value]?.fromCharacterState(characterState);
                             final torso = sprites.torso[gender]?.fromCharacterState(characterState);
                             final armsLeft = sprites.armLeft[ArmType.regular]?.fromCharacterState(characterState);
                             final armsRight = sprites.armRight[ArmType.regular]?.fromCharacterState(characterState);
                             final shoesLeft = sprites.shoesLeft[player.shoeType.value]?.fromCharacterState(characterState);
                             final shoesRight = sprites.shoesRight[player.shoeType.value]?.fromCharacterState(characterState);
                             final legs = sprites.legs[player.legsType.value]?.fromCharacterState(characterState);
+                            final complexion = player.complexion.value;
+                            final skinColor = player.skinColor.value;
 
-                            void renderSprite(Sprite? sprite) =>
-                                sprite == null ? null :
-                                  spriteExternal(
-                                    canvas: canvas,
-                                    sprite: sprite,
-                                    frame: sprite.getFrame(row: row, column: column),
-                                    color: color,
-                                    scale: scale,
-                                    dstX: dstX,
-                                    dstY: dstY,
-                                  );
-
-                            renderSprite(torso);
-                            renderSprite(legs);
-                            renderSprite(armsLeft);
-                            renderSprite(armsRight);
-                            renderSprite(shoesLeft);
-                            renderSprite(shoesRight);
-                            renderSprite(body);
-                            renderSprite(head);
-                            renderSprite(helm);
+                            renderSprite(sprite: torso, canvas: canvas, row: row, column: column, color: skinColor);
+                            renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
+                            renderSprite(sprite: armsLeft, canvas: canvas, row: row, column: column, color: skinColor);
+                            renderSprite(sprite: armsRight, canvas: canvas, row: row, column: column, color: skinColor);
+                            renderSprite(sprite: shoesLeft, canvas: canvas, row: row, column: column);
+                            renderSprite(sprite: shoesRight, canvas: canvas, row: row, column: column);
+                            renderSprite(sprite: body, canvas: canvas, row: row, column: column);
+                            renderSprite(sprite: head, canvas: canvas, row: row, column: column, color: skinColor);
+                            renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
                           }
                         ),
                       ),

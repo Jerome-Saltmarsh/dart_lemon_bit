@@ -59,7 +59,6 @@ class AmuletPlayer extends IsometricPlayer {
     addItem(MMOItem.Health_Potion);
     addItem(MMOItem.Sapphire_Pendant);
     addItem(MMOItem.Steel_Helmet);
-    addItem(MMOItem.Basic_Leather_Armour);
     addItem(MMOItem.Shoe_Leather_Boots);
 
     addItemToEmptyWeaponSlot(MMOItem.Rusty_Old_Sword);
@@ -67,16 +66,16 @@ class AmuletPlayer extends IsometricPlayer {
     addItemToEmptyWeaponSlot(MMOItem.Holy_Bow);
     addItemToEmptyWeaponSlot(MMOItem.Blink_Dagger);
 
-    // equipHelm(MMOItem.Wizards_Hat);
     equipBody(MMOItem.Basic_Leather_Armour);
     equipLegs(MMOItem.Travellers_Pants);
     equipShoes(MMOItem.Shoe_Leather_Boots);
-    equipHandRight(MMOItem.Gauntlet);
+    // equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
     equippedWeaponIndex = 0;
     characterCreated = false;
     active = false;
     equipmentDirty = true;
+    complexion = ComplexionType.fair;
 
     writeActivatedPowerIndex();
     writeWeapons();
@@ -90,6 +89,7 @@ class AmuletPlayer extends IsometricPlayer {
     writePlayerTalents();
     writeCharacterCreated();
     writeGender();
+    writePlayerComplexion();
     name = 'newb';
 
   }

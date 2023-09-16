@@ -188,7 +188,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       return;
 
     super.complexion = value;
-    writePlayerComplexion(value);
+    writePlayerComplexion();
   }
 
   @override
@@ -1262,10 +1262,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
-  void writePlayerComplexion(int value) {
+  void writePlayerComplexion() {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.Complexion);
-    writeByte(value);
+    writeByte(complexion);
   }
 
   void writePlayerName() {

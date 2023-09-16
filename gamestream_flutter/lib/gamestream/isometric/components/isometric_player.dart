@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -93,6 +94,8 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   bool get dead => !alive.value;
   bool get inBounds => scene.inBoundsPosition(position);
+
+  Color get skinColor => colors.palette[complexion.value];
 
 
   bool isCharacter(Character character){

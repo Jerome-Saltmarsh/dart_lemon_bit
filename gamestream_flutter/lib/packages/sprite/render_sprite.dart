@@ -13,6 +13,7 @@ void spriteExternal({
   required double scale,
   required double dstX,
   required double dstY,
+  BlendMode blendMode = BlendMode.dstATop,
   double anchorX = 0.5,
   double anchorY = 0.5,
 }) {
@@ -34,6 +35,7 @@ void spriteExternal({
   renderCanvasAbs(
     canvas: canvas,
     image: sprite.image,
+    blendMode: blendMode,
     color: color,
     srcLeft: srcLeft,
     srcTop: srcTop,
