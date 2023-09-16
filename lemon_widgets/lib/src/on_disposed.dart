@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class OnDisposed extends StatefulWidget {
 
-  final Function? onDisposed;
+  final Function? action;
   final Widget child;
 
-  const OnDisposed({super.key, required this.child, this.onDisposed});
+  const OnDisposed({super.key, required this.child, this.action});
 
   @override
   State<OnDisposed> createState() => _OnDisposedState();
@@ -21,7 +21,7 @@ class _OnDisposedState extends State<OnDisposed> {
 
   @override
   void dispose() {
-    widget.onDisposed?.call();
+    widget.action?.call();
     super.dispose();
   }
 

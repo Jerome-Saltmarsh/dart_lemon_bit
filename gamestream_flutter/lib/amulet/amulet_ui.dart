@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
-import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
-import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
-import 'package:gamestream_flutter/gamestream/ui/constants/width.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/sprite/render_sprite.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../gamestream/ui/enums/icon_type.dart';
 import 'ui/src.dart';
 
 class AmuletUI {
@@ -64,9 +61,14 @@ class AmuletUI {
           child: buildPlayerStatsRow(),
       ),
       Positioned(
-        top: margin1,
-        left: margin1,
-        child: buildDialogCreateCharacter(),
+        top: 0,
+        left: 0,
+        child: Container(
+          width: amulet.engine.screen.width,
+          height: amulet.engine.screen.height,
+          alignment: Alignment.center,
+          child: buildDialogCreateCharacter(),
+        ),
       ),
       Positioned(
           bottom: margin2,
@@ -706,20 +708,83 @@ class AmuletUI {
         child: buildText(talentType.name),
       ));
 
-  Widget buildDialogCreateCharacter() => buildWatchBool(
-      amulet.characterCreated, () =>
-        GSContainer(
-            child: Column(
-              children: [
-                buildText('CHARACTER CREATION'),
-                buildText('ENTER NAME'),
-                buildText('SELECT COMPLEXION'),
-                onPressed(
-                  action: amulet.createPlayer,
-                  child: buildText('SUBMIT')
-                ),
-              ],
-            )),
-      match: false,
+  Widget buildDialogCreateCharacter({double width = 500}) => Container(
+    child: buildWatchBool(
+        amulet.characterCreated, () {
+
+          final engine = amulet.engine;
+          final images = amulet.images;
+          final player = amulet.player;
+          final sprites = images.kidCharacterSprites;
+          final nameController = TextEditingController();
+          engine.disableKeyEventHandler();
+
+          return OnDisposed(
+            action: engine.enableKeyEventHandler,
+            child: GSContainer(
+              width: width,
+              height: width * goldenRatio_0618,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    buildDialogTitle('CHARACTER CREATION'),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      child: CustomCanvas(
+                        paint: (canvas, size){
+                          final helm = sprites.helm[player.helmType]?.idle;
+                          final head = sprites.head[HeadType.regular]?.idle;
+                          if (helm != null){
+                            spriteExternal(
+                              canvas: canvas,
+                              sprite: helm,
+                              frame: helm.getFrame(row: 0, column: 0),
+                              color: 0,
+                              scale: 1.0,
+                              dstX: 50,
+                              dstY: 50,
+                            );
+                          }
+                          if (head != null){
+                            spriteExternal(
+                              canvas: canvas,
+                              sprite: head,
+                              frame: head.getFrame(row: 0, column: 0),
+                              color: 0,
+                              scale: 1.0,
+                              dstX: 50,
+                              dstY: 50,
+                            );
+                          }
+
+                        }
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildText('ENTER NAME'),
+                        Container(
+                            width: 150,
+                            child: TextField(controller: nameController),
+                        ),
+                      ],
+                    ),
+                    buildText('SELECT COMPLEXION'),
+                    onPressed(
+                      action: () {
+                        amulet.createPlayer(
+                          name: nameController.text,
+                        );
+                      },
+                      child: buildText('SUBMIT')
+                    ),
+                  ],
+                )),
+          );
+        },
+        match: false,
+    ),
   );
 }

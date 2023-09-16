@@ -501,7 +501,7 @@ class IsometricUI with IsometricComponent {
   void showDialog({required Widget child, Function? onClosed, Function? onOpen}){
     onOpen?.call();
     dialog.value = OnDisposed(
-      onDisposed: onClosed,
+      action: onClosed,
       child: child,
     );
   }

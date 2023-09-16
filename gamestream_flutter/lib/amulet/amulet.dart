@@ -255,22 +255,16 @@ class Amulet extends IsometricGame {
   void selectTreasure(int index) =>
       network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Treasure, index);
 
-  void showDialogCharacterCreation() {
-    ui.showDialog(child: Column(
-      children: [
-
-      ],
-    ));
-  }
-
   void spawnRandomEnemy() =>
       network.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Spawn_Random_Enemy,
       );
 
-
-  void createPlayer() =>
+  void createPlayer({
+    required String name,
+  }) =>
       network.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Create_Player,
+        name,
       );
 }
