@@ -714,6 +714,7 @@ class AmuletUI {
   Widget buildDialogCreateCharacter({double width = 600}) => Container(
     child: buildWatchBool(
         amulet.characterCreated, () {
+          var row = 0;
 
           final engine = amulet.engine;
           final images = amulet.images;
@@ -722,7 +723,10 @@ class AmuletUI {
           final nameController = TextEditingController();
           final canvasFrame = ValueNotifier(0);
           final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
-            canvasFrame.value++;
+
+            if (canvasFrame.value++ % 3 == 0) {
+              row = (row + 1) % 8;
+            };
           });
 
           engine.disableKeyEventHandler();
@@ -750,17 +754,19 @@ class AmuletUI {
                           frame: canvasFrame,
                           paint: (canvas, size) {
                             final color = 0;
-                            final dstX = 50.0;
-                            final dstY = 50.0;
+                            final dstX = 0.0;
+                            final dstY = 0.0;
                             final scale = 1.0;
-                            final row = 0;
                             final column = 0;
                             final characterState = CharacterState.Idle;
-                            final helm = sprites.helm[player.helmType]?.fromCharacterState(characterState);
+                            final helm = sprites.helm[HelmType.Wizard_Hat]?.fromCharacterState(characterState);
                             final head = sprites.head[HeadType.regular]?.fromCharacterState(characterState);
                             final torso = sprites.torso[player.gender.value]?.fromCharacterState(characterState);
                             final armsLeft = sprites.armLeft[ArmType.regular]?.fromCharacterState(characterState);
                             final armsRight = sprites.armRight[ArmType.regular]?.fromCharacterState(characterState);
+                            final shoesLeft = sprites.shoesLeft[ShoeType.Leather_Boots]?.fromCharacterState(characterState);
+                            final shoesRight = sprites.shoesRight[ShoeType.Leather_Boots]?.fromCharacterState(characterState);
+                            final legs = sprites.legs[LegType.Brown]?.fromCharacterState(characterState);
 
                             void renderSprite(Sprite? sprite) =>
                                 sprite == null ? null :
@@ -776,9 +782,12 @@ class AmuletUI {
 
                             renderSprite(helm);
                             renderSprite(head);
-                            renderSprite(torso);
+                            // renderSprite(torso);
+                            renderSprite(legs);
                             renderSprite(armsLeft);
                             renderSprite(armsRight);
+                            renderSprite(shoesLeft);
+                            renderSprite(shoesRight);
                           }
                         ),
                       ),
