@@ -249,7 +249,7 @@ class RendererCharacters extends RenderGroup {
     final atlasBodyArm = sprites.bodyArms[character.bodyType] ?? (throw Exception());
     final atlasArmLeft = sprites.armLeft[ArmType.regular] ?? (throw Exception());
     final atlasArmRight = sprites.armRight[ArmType.regular] ?? (throw Exception());
-    final atlasHead = sprites.head[HeadType.regular] ?? (throw Exception());
+    final atlasHead = sprites.head[character.gender] ?? (throw Exception());
     final atlasTorso = sprites.torso[character.gender] ?? (throw Exception());
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHair = sprites.hair[character.hairType] ?? (throw Exception());

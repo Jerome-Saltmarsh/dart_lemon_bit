@@ -799,7 +799,7 @@ class AmuletUI {
                             final isMale = gender == Gender.male;
                             final characterState = CharacterState.Idle;
                             final helm = sprites.helm[player.helmType.value]?.fromCharacterState(characterState);
-                            final head = sprites.head[HeadType.regular]?.fromCharacterState(characterState);
+                            final head = sprites.head[gender]?.fromCharacterState(characterState);
                             final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
                             final body = bodySprite[player.bodyType.value]?.fromCharacterState(characterState);
                             final torso = sprites.torso[gender]?.fromCharacterState(characterState);
@@ -884,18 +884,22 @@ class AmuletUI {
                         Row(children: [
                           onPressed(
                             action: player.toggleGender,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              color: gender == Gender.male ? Colors.white38 : null,
-                              child: buildText('Square'),
+                            child: buildBorder(
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                color: gender == Gender.male ? Colors.white38 : null,
+                                child: buildText('Square'),
+                              ),
                             ),
                           ),
                           onPressed(
                             action: player.toggleGender,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              color: gender == Gender.female ? Colors.white38 : null,
-                              child: buildText('Curvy'),
+                            child: buildBorder(
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                color: gender == Gender.female ? Colors.white38 : null,
+                                child: buildText('Curvy'),
+                              ),
                             ),
                           ),
                         ]),

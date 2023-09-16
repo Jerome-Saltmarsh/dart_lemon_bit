@@ -72,7 +72,8 @@ flutter:
     - sprites/kid/hair/basic_2/
     - sprites/kid/hands_left/gauntlets/
     - sprites/kid/hands_right/gauntlets/
-    - sprites/kid/head/regular/
+    - sprites/kid/head/boy/
+    - sprites/kid/head/girl/
     - sprites/kid/helms/steel/
     - sprites/kid/helms/wizard_hat/
     - sprites/kid/legs/leather/

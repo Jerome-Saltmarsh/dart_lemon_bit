@@ -45,7 +45,7 @@ class SpriteGroupType {
       Body_Arms => BodyType.getName(subType),
       Hands_Left => HandType.getName(subType),
       Hands_Right => HandType.getName(subType),
-      Heads => 'regular',
+      Heads => HeadType.getName(subType),
       Helms => HelmType.getName(subType),
       Legs => LegType.getName(subType),
       Torso => Gender.getName(subType),
