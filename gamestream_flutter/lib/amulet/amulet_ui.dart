@@ -841,7 +841,20 @@ class AmuletUI {
                         ),
                       ],
                     ),
-                    buildText('COMPLEXION'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildText('COMPLEXION'),
+                        onPressed(
+                          action: player.showDialogChangeComplexion,
+                          child: buildWatch(player.complexion, (complexion) => Container(
+                            width: 50,
+                            height: 50,
+                            color: player.colors.palette[complexion],
+                          )),
+                        )
+                      ],
+                    ),
                     buildWatch(player.gender, (gender) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

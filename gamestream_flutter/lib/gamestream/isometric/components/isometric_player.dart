@@ -230,7 +230,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     helmType.value = parser.readByte();
   }
 
-  void changeComplexion() => ui.showDialogGetColor(
+  void showDialogChangeComplexion() => ui.showDialogGetColor(
         onSelected: sendRequestSetComplexion
     );
 

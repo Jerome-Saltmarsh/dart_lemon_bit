@@ -569,7 +569,7 @@ extension isometricDebugUI on IsometricDebug {
           buildRowMapped('hand type left', player.handTypeLeft, HandType.getName),
           buildRowMapped('hand type right', player.handTypeRight, HandType.getName),
           onPressed(
-            action: player.changeComplexion,
+            action: player.showDialogChangeComplexion,
             child: buildRowWatch('complexion', player.complexion, (complexion) => Container(
                 width: 50,
                 height: 50,
