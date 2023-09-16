@@ -794,10 +794,6 @@ class AmuletUI {
                         child: CustomCanvas(
                           frame: canvasFrame,
                           paint: (canvas, size) {
-                            final color = 0;
-                            final dstX = 0.0;
-                            final dstY = 0.0;
-                            final scale = 1.0;
                             final column = 0;
                             final gender = player.gender.value;
                             final isMale = gender == Gender.male;
@@ -812,8 +808,9 @@ class AmuletUI {
                             final shoesLeft = sprites.shoesLeft[player.shoeType.value]?.fromCharacterState(characterState);
                             final shoesRight = sprites.shoesRight[player.shoeType.value]?.fromCharacterState(characterState);
                             final legs = sprites.legs[player.legsType.value]?.fromCharacterState(characterState);
-                            final complexion = player.complexion.value;
+                            final hair = sprites.hair[player.hairType.value]?.fromCharacterState(characterState);
                             final skinColor = player.skinColor.value;
+                            final hairColor = player.colors.palette[player.hairColor.value].value;
 
                             renderSprite(sprite: torso, canvas: canvas, row: row, column: column, color: skinColor);
                             renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
@@ -823,6 +820,7 @@ class AmuletUI {
                             renderSprite(sprite: shoesRight, canvas: canvas, row: row, column: column);
                             renderSprite(sprite: body, canvas: canvas, row: row, column: column);
                             renderSprite(sprite: head, canvas: canvas, row: row, column: column, color: skinColor);
+                            renderSprite(sprite: hair, canvas: canvas, row: row, column: column, color: hairColor);
                             renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
                           }
                         ),
@@ -851,6 +849,30 @@ class AmuletUI {
                             width: 50,
                             height: 50,
                             color: player.colors.palette[complexion],
+                          )),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildText('HAIR STYLE'),
+                        onPressed(
+                            action: () => player.ui.showDialogGetHairType(onSelected: player.setHairType),
+                            child: buildWatch(player.hairType, (hairType) => buildText(HairType.getName(hairType))),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildText('HAIR COLOR'),
+                        onPressed(
+                          action: player.showDialogChangeHairColor,
+                          child: buildWatch(player.hairColor, (hairColor) => Container(
+                            width: 50,
+                            height: 50,
+                            color: player.colors.palette[hairColor],
                           )),
                         )
                       ],
@@ -892,8 +914,7 @@ class AmuletUI {
                             child: buildText('START', size: 24, bold: true, color: Colors.green)
                         ),
                       ],
-                    )
-
+                    ),
                   ],
                 )),
           );

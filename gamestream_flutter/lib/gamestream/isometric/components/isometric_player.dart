@@ -97,7 +97,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   Color get skinColor => colors.palette[complexion.value];
 
-
   bool isCharacter(Character character){
     return position.x == character.x && position.y == character.y && position.z == character.z;
   }
@@ -232,6 +231,10 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   void showDialogChangeComplexion() => ui.showDialogGetColor(
         onSelected: sendRequestSetComplexion
+    );
+
+  void showDialogChangeHairColor() => ui.showDialogGetColor(
+        onSelected: setHairColor
     );
 
   void changeName() =>
