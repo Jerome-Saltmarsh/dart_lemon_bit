@@ -84,7 +84,7 @@ enum MMOItem {
   Travellers_Pants(
       quality: MMOItemQuality.Common,
       type: ItemType.Legs,
-      subType: LegType.Brown,
+      subType: LegType.Leather,
       health: 2,
       movement: 0.1,
   ),
@@ -97,13 +97,13 @@ enum MMOItem {
   Squires_Pants(
       quality: MMOItemQuality.Common,
       type: ItemType.Legs,
-      subType: LegType.Green,
+      subType: LegType.Leather,
       health: 3,
   ),
   Knights_Pants(
       quality: MMOItemQuality.Unique,
       type: ItemType.Legs,
-      subType: LegType.Blue,
+      subType: LegType.Leather,
       health: 5,
       movement: -0.1,
   ),

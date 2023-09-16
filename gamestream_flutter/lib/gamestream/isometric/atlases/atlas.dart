@@ -44,12 +44,7 @@ class Atlas {
 
   static const Collection_Legs = <int, List<double>> {
     LegType.None: AtlasSrcLegs.None,
-    LegType.Swat: AtlasSrcLegs.Swat,
-    LegType.Blue: AtlasSrcLegs.Blue,
-    LegType.Red: AtlasSrcLegs.Red,
-    LegType.Brown: AtlasSrcLegs.Brown,
-    LegType.Green: AtlasSrcLegs.Green,
-    LegType.White: AtlasSrcLegs.Green,
+    LegType.Leather: AtlasSrcLegs.Red,
   };
 
   static const Collection_Helm = <int, List<double>>{

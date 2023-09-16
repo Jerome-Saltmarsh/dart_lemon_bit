@@ -50,10 +50,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     )..invincible = true
         ..helmType = HelmType.None
         ..bodyType = BodyType.Leather_Armour
-        ..legsType = LegType.Brown
+        ..legsType = LegType.Leather
         ..complexion = ComplexionType.fair
     );
-
 
     npcGuard = MMONpc(
       characterType: CharacterType.Kid,
@@ -71,7 +70,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ..invincible = true
       ..helmType = HelmType.Steel
       ..bodyType = BodyType.Leather_Armour
-      ..legsType = LegType.Brown
+      ..legsType = LegType.Leather
       ..attackDuration = 30
       ..attackActionFrame = 20
       ..complexion = ComplexionType.fair;

@@ -74,6 +74,12 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   late final weapon = Watch(0);
   late final debugging = Watch(false, onChanged: onChangedDebugging);
 
+  IsometricPlayer(){
+    legsType.onChanged((t) {
+      print('player.legsType(${LegType.getName(t)})');
+    });
+  }
+
 
   double get x => position.x;
   double get y => position.y;

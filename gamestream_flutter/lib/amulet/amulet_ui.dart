@@ -769,9 +769,9 @@ class AmuletUI {
                             final torso = sprites.torso[gender]?.fromCharacterState(characterState);
                             final armsLeft = sprites.armLeft[ArmType.regular]?.fromCharacterState(characterState);
                             final armsRight = sprites.armRight[ArmType.regular]?.fromCharacterState(characterState);
-                            final shoesLeft = sprites.shoesLeft[ShoeType.Leather_Boots]?.fromCharacterState(characterState);
-                            final shoesRight = sprites.shoesRight[ShoeType.Leather_Boots]?.fromCharacterState(characterState);
-                            final legs = sprites.legs[LegType.Brown]?.fromCharacterState(characterState);
+                            final shoesLeft = sprites.shoesLeft[player.shoeType.value]?.fromCharacterState(characterState);
+                            final shoesRight = sprites.shoesRight[player.shoeType.value]?.fromCharacterState(characterState);
+                            final legs = sprites.legs[player.legsType.value]?.fromCharacterState(characterState);
 
                             void renderSprite(Sprite? sprite) =>
                                 sprite == null ? null :
