@@ -711,7 +711,7 @@ class AmuletUI {
         child: buildText(talentType.name),
       ));
 
-  Widget buildDialogCreateCharacter({double width = 600}) => Container(
+  Widget buildDialogCreateCharacter({double width = 300}) => Container(
     child: buildWatchBool(
         amulet.characterCreated, () {
           var row = 0;
@@ -738,11 +738,12 @@ class AmuletUI {
             },
             child: GSContainer(
               width: width,
-              height: width * goldenRatio_0618,
+              height: width * goldenRatio_1381,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildDialogTitle('CHARACTER CREATION'),
+                    // buildDialogTitle('CHARACTER CREATION'),
                     buildBorder(
                       width: 2,
                       color: Colors.white,
@@ -758,10 +759,14 @@ class AmuletUI {
                             final dstY = 0.0;
                             final scale = 1.0;
                             final column = 0;
+                            final gender = player.gender.value;
+                            final isMale = gender == Gender.male;
                             final characterState = CharacterState.Idle;
-                            final helm = sprites.helm[HelmType.Wizard_Hat]?.fromCharacterState(characterState);
+                            final helm = sprites.helm[player.helmType.value]?.fromCharacterState(characterState);
                             final head = sprites.head[HeadType.regular]?.fromCharacterState(characterState);
-                            final torso = sprites.torso[player.gender.value]?.fromCharacterState(characterState);
+                            final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
+                            final body = bodySprite[gender]?.fromCharacterState(characterState);
+                            final torso = sprites.torso[gender]?.fromCharacterState(characterState);
                             final armsLeft = sprites.armLeft[ArmType.regular]?.fromCharacterState(characterState);
                             final armsRight = sprites.armRight[ArmType.regular]?.fromCharacterState(characterState);
                             final shoesLeft = sprites.shoesLeft[ShoeType.Leather_Boots]?.fromCharacterState(characterState);
@@ -780,14 +785,15 @@ class AmuletUI {
                                     dstY: dstY,
                                   );
 
-                            renderSprite(helm);
-                            renderSprite(head);
-                            // renderSprite(torso);
+                            renderSprite(torso);
                             renderSprite(legs);
                             renderSprite(armsLeft);
                             renderSprite(armsRight);
                             renderSprite(shoesLeft);
                             renderSprite(shoesRight);
+                            renderSprite(body);
+                            renderSprite(head);
+                            renderSprite(helm);
                           }
                         ),
                       ),
@@ -795,26 +801,56 @@ class AmuletUI {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        buildText('ENTER NAME'),
+                        buildText('NAME'),
                         Container(
                             width: 150,
-                            child: TextField(controller: nameController),
+                            child: TextField(
+                                controller: nameController,
+                                autofocus: true,
+                            ),
                         ),
                       ],
                     ),
-                    buildText('SELECT COMPLEXION'),
-                    onPressed(
-                        action: player.toggleGender,
-                        child: buildText(Gender.getName(player.gender.value)),
-                    ),
-                    onPressed(
-                      action: () {
-                        amulet.createPlayer(
-                          name: nameController.text,
-                        );
-                      },
-                      child: buildText('SUBMIT')
-                    ),
+                    buildText('COMPLEXION'),
+                    buildWatch(player.gender, (gender) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        buildText('BODY'),
+                        Row(children: [
+                          onPressed(
+                            action: player.toggleGender,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              color: gender == Gender.male ? Colors.white38 : null,
+                              child: buildText('Square'),
+                            ),
+                          ),
+                          onPressed(
+                            action: player.toggleGender,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              color: gender == Gender.female ? Colors.white38 : null,
+                              child: buildText('Curvy'),
+                            ),
+                          ),
+                        ]),
+                    ])),
+                    Expanded(child: const SizedBox()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(),
+                        onPressed(
+                            action: () {
+                              amulet.createPlayer(
+                                name: nameController.text,
+                              );
+                            },
+                            child: buildText('START', size: 24, bold: true, color: Colors.green)
+                        ),
+                      ],
+                    )
+
                   ],
                 )),
           );
