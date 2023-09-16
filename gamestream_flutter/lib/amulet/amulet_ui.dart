@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
@@ -9,6 +11,7 @@ import 'package:gamestream_flutter/packages/sprite/render_sprite.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
+import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'ui/src.dart';
@@ -708,7 +711,7 @@ class AmuletUI {
         child: buildText(talentType.name),
       ));
 
-  Widget buildDialogCreateCharacter({double width = 500}) => Container(
+  Widget buildDialogCreateCharacter({double width = 600}) => Container(
     child: buildWatchBool(
         amulet.characterCreated, () {
 
@@ -717,10 +720,18 @@ class AmuletUI {
           final player = amulet.player;
           final sprites = images.kidCharacterSprites;
           final nameController = TextEditingController();
+          final canvasFrame = ValueNotifier(0);
+          final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+            canvasFrame.value++;
+          });
+
           engine.disableKeyEventHandler();
 
           return OnDisposed(
-            action: engine.enableKeyEventHandler,
+            action: () {
+              engine.enableKeyEventHandler();
+              canvasTimer.cancel();
+            },
             child: GSContainer(
               width: width,
               height: width * goldenRatio_0618,
@@ -728,37 +739,48 @@ class AmuletUI {
                 mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     buildDialogTitle('CHARACTER CREATION'),
-                    Container(
-                      width: 100,
-                      height: 100,
-                      child: CustomCanvas(
-                        paint: (canvas, size){
-                          final helm = sprites.helm[player.helmType]?.idle;
-                          final head = sprites.head[HeadType.regular]?.idle;
-                          if (helm != null){
-                            spriteExternal(
-                              canvas: canvas,
-                              sprite: helm,
-                              frame: helm.getFrame(row: 0, column: 0),
-                              color: 0,
-                              scale: 1.0,
-                              dstX: 50,
-                              dstY: 50,
-                            );
-                          }
-                          if (head != null){
-                            spriteExternal(
-                              canvas: canvas,
-                              sprite: head,
-                              frame: head.getFrame(row: 0, column: 0),
-                              color: 0,
-                              scale: 1.0,
-                              dstX: 50,
-                              dstY: 50,
-                            );
-                          }
+                    buildBorder(
+                      width: 2,
+                      color: Colors.white,
+                      child: Container(
+                        width: 100,
+                        height: 150,
+                        alignment: Alignment.center,
+                        child: CustomCanvas(
+                          frame: canvasFrame,
+                          paint: (canvas, size) {
+                            final color = 0;
+                            final dstX = 50.0;
+                            final dstY = 50.0;
+                            final scale = 1.0;
+                            final row = 0;
+                            final column = 0;
+                            final characterState = CharacterState.Idle;
+                            final helm = sprites.helm[player.helmType]?.fromCharacterState(characterState);
+                            final head = sprites.head[HeadType.regular]?.fromCharacterState(characterState);
+                            final torso = sprites.torso[player.gender.value]?.fromCharacterState(characterState);
+                            final armsLeft = sprites.armLeft[ArmType.regular]?.fromCharacterState(characterState);
+                            final armsRight = sprites.armRight[ArmType.regular]?.fromCharacterState(characterState);
 
-                        }
+                            void renderSprite(Sprite? sprite) =>
+                                sprite == null ? null :
+                                  spriteExternal(
+                                    canvas: canvas,
+                                    sprite: sprite,
+                                    frame: sprite.getFrame(row: row, column: column),
+                                    color: color,
+                                    scale: scale,
+                                    dstX: dstX,
+                                    dstY: dstY,
+                                  );
+
+                            renderSprite(helm);
+                            renderSprite(head);
+                            renderSprite(torso);
+                            renderSprite(armsLeft);
+                            renderSprite(armsRight);
+                          }
+                        ),
                       ),
                     ),
                     Row(
@@ -772,6 +794,10 @@ class AmuletUI {
                       ],
                     ),
                     buildText('SELECT COMPLEXION'),
+                    onPressed(
+                        action: player.toggleGender,
+                        child: buildText(Gender.getName(player.gender.value)),
+                    ),
                     onPressed(
                       action: () {
                         amulet.createPlayer(

@@ -26,6 +26,7 @@ void spriteExternal({
   final atlasX = sprite.atlasX;
   final atlasY = sprite.atlasY;
   final f = frame * 4;
+
   final dstLeft = spriteSrc[f + 0];
   final dstTop = spriteSrc[f + 1];
   final srcLeft = spriteDst[f + 0] + atlasX;
