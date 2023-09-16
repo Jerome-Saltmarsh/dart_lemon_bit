@@ -14,7 +14,6 @@ shift + alt + J     : backspace
 [TODO]
 - particle flame spark
 - particle wind animation
-- player creation dialog
 - fix speech box
 - fix hover over player name
 - fix set node light source refresh
@@ -32,6 +31,10 @@ shift + alt + J     : backspace
 - player attributes dialog
 - particle crow
 - particle chicken
+
+16.09.2023
+- head type girl
+- player creation dialog
 
 15.09.2023
 - gender type
