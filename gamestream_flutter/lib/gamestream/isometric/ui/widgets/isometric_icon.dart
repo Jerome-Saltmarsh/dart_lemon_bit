@@ -8,12 +8,12 @@ class IsometricIcon extends StatelessWidget {
 
   final IconType iconType;
   final double scale;
-  final int color;
+  final int? color;
 
   const IsometricIcon({super.key,
     required this.iconType,
     this.scale = 1.0,
-    this.color = 1,
+    this.color,
   });
 
   @override

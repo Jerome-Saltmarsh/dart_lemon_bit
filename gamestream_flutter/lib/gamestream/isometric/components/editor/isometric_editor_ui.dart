@@ -1373,7 +1373,6 @@ extension IsometricEditorUI on IsometricEditor {
           child: MouseOver(builder: (bool mouseOver) =>
               amulet.ui.buildAtlasIconType(
                 iconType,
-                color: mouseOver ? Colors.black38.value : Colors.white.value,
               )
           ),
           hint: hint,

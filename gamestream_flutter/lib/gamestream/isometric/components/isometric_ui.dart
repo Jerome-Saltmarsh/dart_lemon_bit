@@ -294,8 +294,11 @@ class IsometricUI with IsometricComponent {
       )
   );
 
-  Widget buildAtlasIconType(IconType iconType,
-      {double scale = 1, int color = 1}
+  Widget buildAtlasIconType(
+      IconType iconType,
+      {
+        double scale = 1,
+      }
   ) {
 
     final src = atlasSrcIconType[iconType] ??
@@ -321,7 +324,6 @@ class IsometricUI with IsometricComponent {
           srcWidth: src[2],
           srcHeight: src[3],
           scale: scale,
-          color: color,
         ),
       );
   }

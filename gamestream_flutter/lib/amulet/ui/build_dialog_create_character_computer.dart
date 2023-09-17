@@ -135,7 +135,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                           child: MouseOver(builder: (mouseOver) => IsometricIcon(
                                 iconType: IconType.Turn_Right,
                                 scale: 0.2,
-                                color: mouseOver ? Colors.green.value : Colors.white.value,
+                                color: mouseOver ? Colors.green.value : Colors.white38.value,
                             ),),
                       ),
                       Positioned(
@@ -148,7 +148,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                 ),
               ),
             ),
-            height16,
+            height32,
             Column(
               children: [
                 Row(
@@ -173,7 +173,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
 
 Widget buildColumnHeadType(IsometricPlayer player) =>
   buildWatch(player.headType, (playerHeadTye) => buildColumn(
-        title: 'Head Shape',
+        title: 'HEAD SHAPE',
         children: HeadType.values.map((headShape) =>
             onPressed(
               action: () => player.setHeadType(headShape),
@@ -222,6 +222,7 @@ Widget buildControlName(TextEditingController nameController) =>
         ),
         style: TextStyle(
           color: Colors.white,
+          fontSize: 25
         ),
       ),
     );
@@ -284,23 +285,30 @@ Widget buildColumnComplexion(IsometricPlayer player) =>
       ])
     );
 
-Column buildColumn({
+Widget buildColumn({
   required String title,
   required Iterable<Widget> children,
-}) => Column(
-      children: [
-        buildText(title),
-        height8,
-        Container(
-          height: 300,
-          child: SingleChildScrollView(
-            child: Column(
-              children: children.toList(growable: false),
+}) => Container(
+  child:   Column(
+        children: [
+          buildText(title, color: Colors.white.withOpacity(0.8)),
+          height8,
+          Container(
+            height: 300,
+            constraints: BoxConstraints(
+              minWidth: 100,
             ),
-          ),
-        )
-      ],
-    );
+            padding: const EdgeInsets.all(8),
+            color: Colors.black12,
+            child: SingleChildScrollView(
+              child: Column(
+                children: children.toList(growable: false),
+              ),
+            ),
+          )
+        ],
+      ),
+);
 
 CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
     IsometricPlayer player, KidCharacterSprites sprites, int row) {

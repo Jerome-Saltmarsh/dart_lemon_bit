@@ -1267,7 +1267,7 @@ class Engine extends StatelessWidget {
     required double srcWidth,
     required double srcHeight,
     double scale = 1.0,
-    int color = 1,
+    int? color,
   }) =>
       Container(
         alignment: Alignment.center,
@@ -1285,7 +1285,8 @@ class Engine extends StatelessWidget {
                   dstX: 0,
                   dstY: 0,
                   scale: scale,
-                  color: color,
+                  color: color ?? 1,
+                  blendMode: color != null ? BlendMode.modulate : BlendMode.dstATop,
                 )
         ),
       );
