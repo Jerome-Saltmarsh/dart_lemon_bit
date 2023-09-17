@@ -58,7 +58,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                               final characterState = CharacterState.Idle;
                               final helm = sprites.helm[player.helmType.value]
                                   ?.fromCharacterState(characterState);
-                              final head = sprites.head[gender]?.fromCharacterState(characterState);
+                              final head = sprites.head[player.headType.value]?.fromCharacterState(characterState);
                               final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
                               final body = bodySprite[player.bodyType.value]
                                   ?.fromCharacterState(characterState);
