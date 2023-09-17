@@ -39,7 +39,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                 row = (row + 1) % 8;
               },
               child: buildBorder(
-                width: 2,
+                width: 3,
                 color: Colors.black26,
                 child: Container(
                   height: 150,
@@ -166,7 +166,10 @@ Row buildStartButton(Amulet amulet, TextEditingController nameController) {
                     );
                   },
                   child: buildText('START',
-                      size: 32, bold: true, color: Colors.green)
+                      size: 48,
+                      bold: true,
+                      color: amulet.colors.teal_1,
+                  ),
               ),
             ],
           );
@@ -176,8 +179,15 @@ Widget buildControlName(TextEditingController nameController) =>
     Container(
       width: 150,
       child: TextField(
+        cursorColor: Colors.white,
         controller: nameController,
         autofocus: true,
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent), // Set the desired color here
+          ),
+          enabledBorder: InputBorder.none,
+        ),
         style: TextStyle(
           color: Colors.white,
         ),
