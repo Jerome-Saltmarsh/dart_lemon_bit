@@ -20,7 +20,10 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
   final images = amulet.images;
   final player = amulet.player;
   final sprites = images.kidCharacterSprites;
-  final nameController = TextEditingController(text: 'Anon${randomInt(99999, 999999)}');
+  final randomName = 'Anon${randomInt(99999, 999999)}';
+  final nameController = TextEditingController(text: randomName);
+  final textSelection = TextSelection(baseOffset: 0, extentOffset: randomName.length);
+  nameController.selection = textSelection;
   engine.disableKeyEventHandler();
 
   return OnDisposed(
@@ -32,8 +35,6 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // buildControlName(nameController),
-            // height8,
             onPressed(
               action: (){
                 row = (row + 1) % 8;
