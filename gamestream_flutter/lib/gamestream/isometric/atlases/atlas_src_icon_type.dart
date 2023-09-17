@@ -2,6 +2,12 @@ import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 
 /// [srcX, srcY, width, height]
 const atlasSrcIconType = <IconType, List<double>> {
+  IconType.Arrows_Up: [0, 0, 32, 32],
+  IconType.Arrows_Down: [0, 32, 32, 32],
+  IconType.Arrows_North: [0, 64, 32, 32],
+  IconType.Arrows_East: [0, 96, 32, 32],
+  IconType.Arrows_South: [0, 128, 32, 32],
+  IconType.Arrows_West: [0, 160, 32, 32],
   IconType.Checkbox_True: [304, 704, 112, 112],
   IconType.Checkbox_False: [176, 704, 112, 112],
   IconType.Zoom: [32, 0, 0, 0],

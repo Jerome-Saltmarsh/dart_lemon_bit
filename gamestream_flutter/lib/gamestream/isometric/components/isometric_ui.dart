@@ -301,6 +301,18 @@ class IsometricUI with IsometricComponent {
     final src = atlasSrcIconType[iconType] ??
         (throw Exception('atlasSrcIconType[$iconType] is null'));
 
+    if (src.length != 4) {
+      throw Exception('atlasSrcIconType[$iconType] invalid src length ${src.length}');
+    }
+
+    if (src[2] <= 0){
+      throw Exception('atlasSrcIconType[$iconType] width <= 0');
+    }
+
+    if (src[3] <= 0){
+      throw Exception('atlasSrcIconType[$iconType] height <= 0');
+    }
+
     return FittedBox(
         child: engine.buildAtlasImage(
           image: images.atlas_icons,
