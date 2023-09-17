@@ -218,7 +218,7 @@ Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
     player.gender,
     (gender) =>
          buildColumn(
-             title: 'BODY TYPE',
+             title: 'SHAPE',
              children: Gender.values.map((gender) =>
              buildText(gender == Gender.male ? 'SQUARE' : 'CURVED'))
          )
@@ -252,10 +252,12 @@ Widget buildColumnComplexion(IsometricPlayer player) =>
       children: player.colors.palette.map((color) {
         final active = playerComplexion == player.colors.palette.indexOf(color);
         final width = active ? (50 * goldenRatio_1381) : 50.0;
-
         return onPressed(
           action: () => player.setComplexion(color),
-          child: Container(
+          child: AnimatedContainer(
+            curve: Curves.easeInOutQuad,
+            key: ValueKey(color.value),
+            duration: const Duration(milliseconds: 120),
             color: color,
             width: width,
             height: width * goldenRatio_0618,
