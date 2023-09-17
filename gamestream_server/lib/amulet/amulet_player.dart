@@ -68,7 +68,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     equipBody(MMOItem.Basic_Leather_Armour);
     equipLegs(MMOItem.Travellers_Pants);
-    equipShoes(MMOItem.Shoe_Leather_Boots);
+    // equipShoes(MMOItem.Shoe_Leather_Boots);
     // equipHandRight(MMOItem.Gauntlet);
     health = maxHealth;
     equippedWeaponIndex = 0;
@@ -300,18 +300,6 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (deadOrBusy)
       return false;
-
-    // if (item.isWeapon) {
-    //   final emptyIndex = getEmptyWeaponIndex();
-    //   if (emptyIndex != -1){
-    //     setWeapon(
-    //         index: emptyIndex,
-    //         item: item,
-    //         cooldown: 0,
-    //     );
-    //     return true;
-    //   }
-    // }
 
     final emptyItemSlot = getEmptyItemSlot();
     if (emptyItemSlot == null) {

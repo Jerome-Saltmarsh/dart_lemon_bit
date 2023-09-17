@@ -16,6 +16,7 @@ import 'render_sprite.dart';
 
 Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
   var row = 0;
+  var column = 0;
 
   final spinning = WatchBool(true);
   final engine = amulet.engine;
@@ -23,15 +24,19 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
   final player = amulet.player;
   final sprites = images.kidCharacterSprites;
   final nameController = TextEditingController(text: 'Anon${randomInt(99999, 999999)}');
-  final canvasFrame = ValueNotifier(0);
+  // final canvasFrame = ValueNotifier(0);
+  var f = 0;
   final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+    f++;
     if (!spinning.value) {
+      if (f % 2 == 0) {
+        column++;
+      };
       return;
     }
-    if (canvasFrame.value++ % 3 == 0) {
+    if (f % 3 == 0) {
       row = (row + 1) % 8;
-    }
-    ;
+    };
   });
 
   engine.disableKeyEventHandler();
@@ -58,7 +63,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                       spinning.setFalse();
                       row = (row - 1) % 8;
                     },
-                    child: buildText('<-'),
+                    child: buildText('<'),
                   ),
                   Container(
                     width: 80,
@@ -76,7 +81,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                       spinning.setFalse();
                       row = (row + 1) % 8;
                     },
-                    child: buildText('->'),
+                    child: buildText('>'),
                   ),
                 ],
               ),
@@ -89,9 +94,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                 alignment: Alignment.center,
                 color: Colors.black12,
                 child: CustomCanvas(
-                    frame: canvasFrame,
                     paint: (canvas, size) {
-                      final column = 0;
                       final gender = player.gender.value;
                       final isMale = gender == Gender.male;
                       final characterState = CharacterState.Idle;
@@ -224,13 +227,16 @@ Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
          )
    );
 
-Widget buildColumnHairColor(IsometricPlayer player) => buildColumn(
-      title: 'HAIR COLOR',
-      children: player.colors.palette.map((color) => Container(
-            color: color,
-            width: 50,
-            height: 50 * goldenRatio_0618,
-          )),
+Widget buildColumnHairColor(IsometricPlayer player) =>
+    buildWatch(player.hairColor, (playerHairColor) => buildColumn(
+        title: 'HAIR COLOR',
+        children: [
+          buildColorWheel(
+            colors: player.colors.palette,
+            onPickIndex: player.setHairColor,
+            currentIndex: playerHairColor,
+          )
+        ])
     );
 
 Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairType, (playerHairType) => buildColumn(
