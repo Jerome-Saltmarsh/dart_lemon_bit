@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 
@@ -19,16 +19,19 @@ class IsometricIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       IsometricBuilder(
-        builder: (context, isometric) => FittedBox(
+        builder: (context, isometric) {
+          final src = atlasSrcIconType[iconType] ?? (throw Exception('atlasSrcIconType[$iconType] is null'));
+          return FittedBox(
             child: isometric.engine.buildAtlasImage(
               image: isometric.images.atlas_icons,
-              srcX: AtlasIcons.getSrcX(iconType),
-              srcY: AtlasIcons.getSrcY(iconType),
-              srcWidth: AtlasIcons.getSrcWidth(iconType),
-              srcHeight: AtlasIcons.getSrcHeight(iconType),
+              srcX: src[0],
+              srcY: src[1],
+              srcWidth: src[2],
+              srcHeight: src[3],
               scale: scale,
               color: color,
             ),
-          )
+          );
+        }
       );
 }

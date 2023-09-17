@@ -6,7 +6,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_icon_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
@@ -295,18 +295,24 @@ class IsometricUI with IsometricComponent {
   );
 
   Widget buildAtlasIconType(IconType iconType,
-      {double scale = 1, int color = 1}) =>
-      FittedBox(
+      {double scale = 1, int color = 1}
+  ) {
+
+    final src = atlasSrcIconType[iconType] ??
+        (throw Exception('atlasSrcIconType[$iconType] is null'));
+
+    return FittedBox(
         child: engine.buildAtlasImage(
           image: images.atlas_icons,
-          srcX: AtlasIcons.getSrcX(iconType),
-          srcY: AtlasIcons.getSrcY(iconType),
-          srcWidth: AtlasIcons.getSrcWidth(iconType),
-          srcHeight: AtlasIcons.getSrcHeight(iconType),
+          srcX: src[0],
+          srcY: src[1],
+          srcWidth: src[2],
+          srcHeight: src[3],
           scale: scale,
           color: color,
         ),
       );
+  }
 
   Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
     image: images.atlas_nodes,
