@@ -1,11 +1,14 @@
 import 'package:file_picker/file_picker.dart';
 
-Future<List<PlatformFile>?> loadFilesFromDisk() async {
+Future<List<PlatformFile>?> loadFilesFromDisk({
+  List<String>? allowedExtensions,
+  String? dialogTitle,
+}) async {
   final result = await FilePicker.platform.pickFiles(
     withData: true,
-    dialogTitle: 'Load Image',
+    dialogTitle: dialogTitle,
     type: FileType.custom,
-    allowedExtensions: ['png'],
+    allowedExtensions: allowedExtensions,
     allowMultiple: true,
   );
   return result?.files;

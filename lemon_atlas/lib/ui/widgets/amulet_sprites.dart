@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:lemon_atlas/amulet/enums/src.dart';
 import 'package:lemon_atlas/amulet/functions/build_character_fallen.dart';
 import 'package:lemon_atlas/amulet/functions/build_character_kid.dart';
+import 'package:lemon_atlas/atlas/functions/compress_sprite.dart';
+import 'package:lemon_atlas/io/load_file_bytes.dart';
+import 'package:lemon_atlas/io/load_file_sprite.dart';
+import 'package:lemon_atlas/io/load_file_string.dart';
 import 'package:lemon_atlas/ui/classes/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../build/src.dart';
 import '../actions/src.dart';
 
 class AmuletSprites extends StatelessWidget {
@@ -33,6 +36,7 @@ class AmuletSprites extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('AMULET ATLAS'),
           actions: [
+            buildButtonCompress(),
             buildButtonRun(),
             buildButtonFile(),
           ],
@@ -85,6 +89,14 @@ class AmuletSprites extends StatelessWidget {
           );
   }
 
+  Widget buildButtonCompress() =>
+    onPressed(
+      action: onButtonPressedCompress,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: buildText("COMPRESS")),
+    );
+
   Widget buildButtonFile() => Builder(
     builder: (context) => onPressed(
       action: () => showDialogLoadImage(context),
@@ -114,6 +126,13 @@ class AmuletSprites extends StatelessWidget {
       activeKidParts.add(kidPart);
     }
     changeNotifier.value++;
+  }
+
+  void onButtonPressedCompress() async {
+    final sprite = await loadFileSprite();
+    if (sprite != null) {
+      compressSprite(sprite);
+    }
   }
 
   void buildSelected() async {

@@ -10,7 +10,6 @@ class Sprite {
   final Image image;
   final Uint16List src;
   final Uint16List dst;
-  late final Uint16List srcRel;
 
   Sprite({
     required this.spriteWidth,
@@ -20,7 +19,5 @@ class Sprite {
     required this.image,
     required this.src,
     required this.dst,
-  }) {
-    srcRel = Uint16List(src.length);
-  }
+  });
 }

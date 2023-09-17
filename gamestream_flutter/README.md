@@ -17,6 +17,7 @@ shift + alt + J     : backspace
 - fix speech box
 - fix hover over player name
 - fix set node light source refresh
+- fix player wall clipping when up high
 - glove type leather
 - character wolf
 - character floating flaming skull
