@@ -132,7 +132,11 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                       Positioned(
                           top: 8,
                           right: 8,
-                          child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.2,),
+                          child: MouseOver(builder: (mouseOver) => IsometricIcon(
+                                iconType: IconType.Turn_Right,
+                                scale: 0.2,
+                                color: mouseOver ? Colors.green.value : Colors.white.value,
+                            ),),
                       ),
                       Positioned(
                           top: 0,
