@@ -238,7 +238,9 @@ Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairTyp
       children: HairType.values.map((hairType) => onPressed(
         action: () => player.setHairType(hairType),
         child: Container(
-          color: hairType == playerHairType ? Colors.green : Colors.transparent,
+          width: 60,
+          alignment: Alignment.center,
+          color: hairType == playerHairType ? Colors.white24 : Colors.transparent,
           padding: const EdgeInsets.all(4),
           child: buildText(HairType.getName(hairType)),
         ),
@@ -247,19 +249,20 @@ Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairTyp
 Widget buildColumnComplexion(IsometricPlayer player) =>
     buildWatch(player.complexion, (playerComplexion) => buildColumn(
       title: 'COMPLEXION',
-      children: player.colors.palette.map((color) => onPressed(
-        action: () => player.setComplexion(color),
-        child: buildBorder(
-          color: playerComplexion == player.colors.palette.indexOf(color) ? Colors.black : color,
-          width: 2,
-          radius: BorderRadius.zero,
+      children: player.colors.palette.map((color) {
+        final active = playerComplexion == player.colors.palette.indexOf(color);
+        final width = active ? (50 * goldenRatio_1381) : 50.0;
+
+        return onPressed(
+          action: () => player.setComplexion(color),
           child: Container(
             color: color,
-            width: 50,
-            height: 50 * goldenRatio_0618,
+            width: width,
+            height: width * goldenRatio_0618,
+            alignment: Alignment.center,
           ),
-        ),
-      )))
+      );
+      }))
     );
 
 Column buildColumn({
