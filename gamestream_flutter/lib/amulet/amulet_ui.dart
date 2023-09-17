@@ -1,5 +1,4 @@
-import 'package:lemon_watch/src.dart';
-import 'dart:async';
+import 'package:gamestream_flutter/amulet/ui/build_dialog_create_character_computer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
@@ -7,13 +6,12 @@ import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/sprite/render_sprite.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
-import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'ui/build_dialog_create_character_mobile.dart';
 import 'ui/src.dart';
 
 class AmuletUI {
@@ -80,7 +78,12 @@ class AmuletUI {
             width: amulet.engine.screen.width,
             height: amulet.engine.screen.height,
             alignment: Alignment.center,
-            child: buildDialogCreateCharacter(),
+            child: buildWatch(
+                amulet.engine.deviceType,
+                (deviceType) => deviceType == DeviceType.Computer
+                  ? buildDialogCreateCharacterComputer(amulet)
+                  : buildDialogCreateCharacterMobile(amulet),
+            ),
           ),
         ),
       ]
@@ -713,267 +716,4 @@ class AmuletUI {
           : GSContainer(
         child: buildText(talentType.name),
       ));
-
-  void renderSprite({
-    required Canvas canvas,
-    required Sprite? sprite,
-    required int row,
-    required int column,
-    int? color = null,
-    double scale = 1.0,
-  }) {
-    if (sprite == null){
-      return;
-    }
-
-    final blendMode = color == null ? BlendMode.dstATop : BlendMode.modulate;
-    final frame = sprite.getFrame(row: row, column: column);
-
-    spriteExternal(
-      canvas: canvas,
-      sprite: sprite,
-      frame: frame,
-      color: 0,
-      scale: scale,
-      dstX: 0,
-      dstY: 0,
-      blendMode: blendMode,
-    );
-
-    if (color != null){
-      spriteExternal(
-        canvas: canvas,
-        sprite: sprite,
-        frame: sprite.getFrame(row: row, column: column),
-        color: color,
-        scale: scale,
-        dstX: 0,
-        dstY: 0,
-        blendMode: blendMode,
-      );
-    }
-  }
-
-  Widget buildDialogCreateCharacter({double width = 400}) => Container(
-    child: buildWatchBool(
-        amulet.characterCreated, () {
-          var row = 0;
-
-          final spinning = WatchBool(true);
-
-
-          final engine = amulet.engine;
-          final images = amulet.images;
-          final player = amulet.player;
-          final sprites = images.kidCharacterSprites;
-          final nameController = TextEditingController();
-          final canvasFrame = ValueNotifier(0);
-          final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
-
-            if (!spinning.value){
-              return;
-            }
-
-            if (canvasFrame.value++ % 3 == 0) {
-              row = (row + 1) % 8;
-            };
-          });
-
-          engine.disableKeyEventHandler();
-
-          return OnDisposed(
-            action: () {
-              engine.enableKeyEventHandler();
-              canvasTimer.cancel();
-            },
-            child: GSContainer(
-              width: width,
-              height: width * goldenRatio_1381,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildBorder(
-                      width: 2,
-                      color: Colors.black26,
-                      child: Container(
-                        height: 150,
-                        alignment: Alignment.center,
-                        color: Colors.black12,
-                        child: CustomCanvas(
-                          frame: canvasFrame,
-                          paint: (canvas, size) {
-                            final column = 0;
-                            final gender = player.gender.value;
-                            final isMale = gender == Gender.male;
-                            final characterState = CharacterState.Idle;
-                            final helm = sprites.helm[player.helmType.value]?.fromCharacterState(characterState);
-                            final head = sprites.head[gender]?.fromCharacterState(characterState);
-                            final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-                            final body = bodySprite[player.bodyType.value]?.fromCharacterState(characterState);
-                            final torso = sprites.torso[gender]?.fromCharacterState(characterState);
-                            final armsLeft = sprites.armLeft[ArmType.regular]?.fromCharacterState(characterState);
-                            final armsRight = sprites.armRight[ArmType.regular]?.fromCharacterState(characterState);
-                            final shoesLeft = sprites.shoesLeft[player.shoeType.value]?.fromCharacterState(characterState);
-                            final shoesRight = sprites.shoesRight[player.shoeType.value]?.fromCharacterState(characterState);
-                            final legs = sprites.legs[player.legsType.value]?.fromCharacterState(characterState);
-                            final hair = sprites.hair[player.hairType.value]?.fromCharacterState(characterState);
-                            final skinColor = player.skinColor.value;
-                            final hairColor = player.colors.palette[player.hairColor.value].value;
-
-                            renderSprite(sprite: torso, canvas: canvas, row: row, column: column, color: skinColor);
-                            renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
-                            renderSprite(sprite: armsLeft, canvas: canvas, row: row, column: column, color: skinColor);
-                            renderSprite(sprite: armsRight, canvas: canvas, row: row, column: column, color: skinColor);
-                            renderSprite(sprite: shoesLeft, canvas: canvas, row: row, column: column);
-                            renderSprite(sprite: shoesRight, canvas: canvas, row: row, column: column);
-                            renderSprite(sprite: body, canvas: canvas, row: row, column: column);
-                            renderSprite(sprite: head, canvas: canvas, row: row, column: column, color: skinColor);
-                            renderSprite(sprite: hair, canvas: canvas, row: row, column: column, color: hairColor);
-                            renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
-                          }
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          onPressed(
-                            action: (){
-                              spinning.setFalse();
-                              row = (row - 1) % 8;
-                            },
-                            child: buildText('<-'),
-                          ),
-                          Container(
-                            width: 80,
-                            alignment: Alignment.center,
-                            child: onPressed(
-                              action: spinning.toggle,
-                              child: buildWatch(
-                                  spinning,
-                                  (t) => buildText(t ? 'PAUSE' : 'RESUME'),
-                              ),
-                            ),
-                          ),
-                          onPressed(
-                              action: (){
-                                spinning.setFalse();
-                                row = (row + 1) % 8;
-                              },
-                              child: buildText('->'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('NAME'),
-                            Container(
-                              width: 150,
-                              child: TextField(
-                                controller: nameController,
-                                autofocus: true,
-                              ),
-                            ),
-                          ],
-                        ),
-                        height4,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('COMPLEXION'),
-                            onPressed(
-                              action: player.showDialogChangeComplexion,
-                              child: buildWatch(player.complexion, (complexion) => Container(
-                                width: 50,
-                                height: 50,
-                                color: player.colors.palette[complexion],
-                              )),
-                            )
-                          ],
-                        ),
-                        height4,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('HAIR STYLE'),
-                            onPressed(
-                              action: () => player.ui.showDialogGetHairType(onSelected: player.setHairType),
-                              child: buildWatch(player.hairType, (hairType) => buildText(HairType.getName(hairType))),
-                            ),
-                          ],
-                        ),
-                        height4,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildText('HAIR COLOR'),
-                            onPressed(
-                              action: player.showDialogChangeHairColor,
-                              child: buildWatch(player.hairColor, (hairColor) => Container(
-                                width: 50,
-                                height: 50,
-                                color: player.colors.palette[hairColor],
-                              )),
-                            )
-                          ],
-                        ),
-                        height4,
-                        buildWatch(player.gender, (gender) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText('BODY'),
-                              Row(children: [
-                                onPressed(
-                                  action: player.toggleGender,
-                                  child: buildBorder(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      color: gender == Gender.male ? Colors.white38 : null,
-                                      child: buildText('Square'),
-                                    ),
-                                  ),
-                                ),
-                                onPressed(
-                                  action: player.toggleGender,
-                                  child: buildBorder(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      color: gender == Gender.female ? Colors.white38 : null,
-                                      child: buildText('Curvy'),
-                                    ),
-                                  ),
-                                ),
-                              ]),
-                            ])),
-                      ],
-                    ),
-                    Expanded(child: const SizedBox()),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(),
-                        onPressed(
-                            action: () {
-                              amulet.createPlayer(
-                                name: nameController.text,
-                              );
-                            },
-                            child: buildText('START', size: 24, bold: true, color: Colors.green)
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-          );
-        },
-        match: false,
-    ),
-  );
 }

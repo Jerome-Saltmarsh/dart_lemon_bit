@@ -169,9 +169,9 @@ class IsometricRender with IsometricComponent {
     renderCursor(canvas);
     renderPlayerAimTargetNameText();
 
-    if (io.inputModeTouch) {
-      io.touchController.drawCanvas(canvas);
-    }
+    // if (io.inputModeTouch) {
+    //   io.touchController.drawCanvas(canvas);
+    // }
 
     options.game.value.renderForeground(canvas, size);
   }

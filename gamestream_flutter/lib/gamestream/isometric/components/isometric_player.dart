@@ -237,6 +237,10 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         onSelected: setHairColor
     );
 
+  void showDialogChangeHairType() => ui.showDialogGetHairType(
+        onSelected: setHairType
+    );
+
   void changeName() =>
       ui.showDialogGetString(
           onSelected: sendRequestSetName,
