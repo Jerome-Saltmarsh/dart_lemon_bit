@@ -40,6 +40,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final aimTargetChanged = Watch(0);
   final id = Watch(0);
   final team = Watch(0);
+  final headType = Watch(0);
   final helmType = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
@@ -69,13 +70,14 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final controlsRunInDirectionEnabled = Watch(false);
 
   late final message = Watch('');
-  late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
+  late final gameDialog = Watch<GameDialog?>(
+      null, onChanged: onChangedGameDialog);
   late final active = Watch(false);
   late final alive = Watch(true);
   late final weapon = Watch(0);
   late final debugging = Watch(false, onChanged: onChangedDebugging);
 
-  IsometricPlayer(){
+  IsometricPlayer() {
     legsType.onChanged((t) {
       print('player.legsType(${LegType.getName(t)})');
     });
@@ -83,42 +85,48 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
 
   double get x => position.x;
+
   double get y => position.y;
+
   double get z => position.z;
 
   double get renderX => position.renderX;
+
   double get renderY => position.renderY;
 
   double get positionScreenX => engine.worldToScreenX(position.renderX);
+
   double get positionScreenY => engine.worldToScreenY(position.renderY);
 
   bool get dead => !alive.value;
+
   bool get inBounds => scene.inBoundsPosition(position);
 
   Color get skinColor => colors.palette[complexion.value];
 
-  bool isCharacter(Character character){
-    return position.x == character.x && position.y == character.y && position.z == character.z;
+  bool isCharacter(Character character) {
+    return position.x == character.x && position.y == character.y &&
+        position.z == character.z;
   }
 
-  void onChangedGameDialog(GameDialog? value){
+  void onChangedGameDialog(GameDialog? value) {
     audio.click_sound_8();
     if (value == GameDialog.Quests) {
       // actionHideQuestAdded();
     }
   }
 
-  bool isInsideBuilding(){
+  bool isInsideBuilding() {
     if (!inBounds) return false;
     final index = nodeIndex + scene.area;
-    while (index < scene.totalNodes){
+    while (index < scene.totalNodes) {
       if (NodeType.isRainOrEmpty(scene.nodeTypes[index])) continue;
       return true;
     }
     return false;
   }
 
-  void onComponentUpdate(){
+  void onComponentUpdate() {
     updateMessageTimer();
   }
 
@@ -131,14 +139,14 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     message.value = '';
   }
 
-  void savePositionPrevious(){
+  void savePositionPrevious() {
     previousPosition.x = position.x;
     previousPosition.y = position.y;
     previousPosition.z = position.z;
   }
 
-  void onChangedDebugging(bool debugging){
-    if (!debugging){
+  void onChangedDebugging(bool debugging) {
+    if (!debugging) {
       action.cameraTargetPlayer();
     }
   }
@@ -148,7 +156,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
           NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies
       );
 
-  void onPlayerInitialized(){
+  void onPlayerInitialized() {
     position.x = 0;
     position.y = 0;
     position.z = 0;
@@ -194,6 +202,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case PlayerResponse.Gender:
         readGender();
         break;
+      case PlayerResponse.HelmType:
+        readHelmType();
+        break;
       case PlayerResponse.Complexion:
         complexion.value = parser.readByte();
         break;
@@ -226,28 +237,35 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   }
 
   void readHeadType() {
+    headType.value = parser.readByte();
+  }
+
+  void readHelmType() {
     helmType.value = parser.readByte();
   }
 
-  void showDialogChangeComplexion() => ui.showDialogGetColor(
-        onSelected: sendRequestSetComplexion
-    );
+  void showDialogChangeComplexion() =>
+      ui.showDialogGetColor(
+          onSelected: sendRequestSetComplexion
+      );
 
-  void showDialogChangeHairColor() => ui.showDialogGetColor(
-        onSelected: setHairColor
-    );
+  void showDialogChangeHairColor() =>
+      ui.showDialogGetColor(
+          onSelected: setHairColor
+      );
 
-  void showDialogChangeHairType() => ui.showDialogGetHairType(
-        onSelected: setHairType
-    );
+  void showDialogChangeHairType() =>
+      ui.showDialogGetHairType(
+          onSelected: setHairType
+      );
 
   void changeName() =>
       ui.showDialogGetString(
-          onSelected: sendRequestSetName,
-          text: name.value,
+        onSelected: sendRequestSetName,
+        text: name.value,
       );
 
-  void sendRequestSetName(String name){
+  void sendRequestSetName(String name) {
     network.sendRequest(
       NetworkRequest.Player,
       NetworkRequestPlayer.setName.index,
@@ -288,26 +306,37 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   void readGender() => gender.value = parser.readByte();
 
-  void setHairType(int hairType) => network.sendNetworkRequest(
+  void setHairType(int hairType) =>
+      network.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.setHairType.index,
         hairType,
-    );
+      );
 
-  void setHairColor(int value) => network.sendNetworkRequest(
-      NetworkRequest.Player,
-      NetworkRequestPlayer.setHairColor.index,
-      value,
-    );
+  void setHairColor(int value) =>
+      network.sendNetworkRequest(
+        NetworkRequest.Player,
+        NetworkRequestPlayer.setHairColor.index,
+        value,
+      );
 
-  void toggleGender() => network.sendNetworkRequest(
-      NetworkRequest.Player,
-      NetworkRequestPlayer.toggleGender.index,
-    );
+  void toggleGender() =>
+      network.sendNetworkRequest(
+        NetworkRequest.Player,
+        NetworkRequestPlayer.toggleGender.index,
+      );
 
-  void setGender(int gender) => network.sendNetworkRequest(
-    NetworkRequest.Player,
-    NetworkRequestPlayer.setGender.index,
-    gender,
-  );
+  void setGender(int gender) =>
+      network.sendNetworkRequest(
+        NetworkRequest.Player,
+        NetworkRequestPlayer.setGender.index,
+        gender,
+      );
+
+  void setHeadType(int value) =>
+      network.sendNetworkRequest(
+        NetworkRequest.Player,
+        NetworkRequestPlayer.setHeadType.index,
+        value,
+      );
 }

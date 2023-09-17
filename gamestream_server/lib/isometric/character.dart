@@ -19,6 +19,7 @@ class Character extends Collider {
   var _maxHealth = 1;
 
   var gender = Gender.female;
+  var headType = HeadType.boy;
   var shoeType = ShoeType.None;
   var hairType = HairType.none;
   var hairColor = 0;
@@ -526,7 +527,7 @@ class Character extends Collider {
     complexion,
     shoeType,
     gender,
-    0,
+    headType,
     0,
     0,
     0,

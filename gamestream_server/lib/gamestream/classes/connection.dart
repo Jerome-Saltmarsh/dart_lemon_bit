@@ -841,6 +841,14 @@ class Connection with ByteReader {
         player.gender = gender;
         break;
 
+      case NetworkRequestPlayer.setHeadType:
+        final headType = arg2;
+        if (headType == null) {
+          return;
+        }
+        player.headType = headType;
+        break;
+
       case NetworkRequestPlayer.setHairColor:
         final value = arg2;
         if (value == null) {

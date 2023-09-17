@@ -8,6 +8,7 @@ class Character extends Position {
   var complexion = 0;
   var shoeType = ShoeType.None;
   var bodyType = 0;
+  var helmType = 0;
   var headType = 0;
   var hairType = 0;
   var hairColor = 0;

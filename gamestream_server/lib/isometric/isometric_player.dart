@@ -193,90 +193,66 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   @override
   set name(String value) {
-    if (name == value){
-      return;
-    }
     super.name = value;
     writePlayerName();
   }
 
   @override
   set helmType(int value) {
-    if (helmType == value)
-      return;
-
     super.helmType = value;
-    writeHeadType();
+    writeHelmType();
   }
 
   @override
   set hairType(int value) {
-    if (hairType == value)
-      return;
-
     super.hairType = value;
     writeHairType();
   }
 
   @override
+  set headType(int value) {
+    super.headType = value;
+    writeHeadType();
+  }
+
+  @override
   set shoeType(int value) {
-    if (shoeType == value){
-      return;
-    }
     super.shoeType = value;
     writeShoeType();
   }
 
   @override
   set hairColor(int value) {
-    if (hairColor == value){
-      return;
-    }
     super.hairColor = value;
     writeHairColor();
   }
 
   @override
   set bodyType(int value) {
-    if (bodyType == value)
-      return;
-
     super.bodyType = value;
     writeBodyType();
   }
 
   @override
   set legsType(int value) {
-    if (legsType == value)
-      return;
-
     super.legsType = value;
     writeLegsType();
   }
 
   @override
   set handTypeLeft(int value){
-    if (handTypeLeft == value)
-      return;
-
     super.handTypeLeft = value;
     writeHandTypeLeft();
   }
 
   @override
   set handTypeRight(int value){
-    if (handTypeRight == value)
-      return;
-
     super.handTypeRight = value;
     writeHandTypeRight();
   }
 
   @override
   set gender(int value){
-    if (this.gender == value){
-      return;
-    }
     super.gender = value;
     writeGender();
   }
@@ -784,6 +760,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(character.complexion);
       writeByte(character.shoeType);
       writeByte(character.gender);
+      writeByte(character.headType);
     }
   }
 
@@ -1225,6 +1202,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writeHeadType() {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.HeadType);
+    writeByte(headType);
+  }
+
+  void writeHelmType() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.HelmType);
     writeByte(helmType);
   }
 

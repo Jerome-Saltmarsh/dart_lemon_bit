@@ -143,6 +143,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                     buildColumnHairStyle(player),
                     buildColumnHairColor(player),
                     buildColumnBodyShape(player),
+                    buildColumnHeadType(player),
                   ],
                 ),
               ],
@@ -154,8 +155,24 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
   );
 }
 
-Row buildStartButton(Amulet amulet, TextEditingController nameController) {
-  return Row(
+Widget buildColumnHeadType(IsometricPlayer player) =>
+  buildWatch(player.headType, (playerHeadTye) => buildColumn(
+        title: 'Head Shape',
+        children: HeadType.values.map((headShape) =>
+            onPressed(
+              action: () => player.setHeadType(headShape),
+              child: Container(
+                  width: 80,
+                  height: 80 * goldenRatio_0618,
+                  alignment: Alignment.center,
+                  color: headShape == playerHeadTye ? Colors.white24 : Colors.transparent,
+                  padding: const EdgeInsets.all(4),
+                  child: buildText(HeadType.getName(headShape))),
+            ))
+    ));
+
+
+Widget buildStartButton(Amulet amulet, TextEditingController nameController) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(),
@@ -173,7 +190,6 @@ Row buildStartButton(Amulet amulet, TextEditingController nameController) {
               ),
             ],
           );
-}
 
 Widget buildControlName(TextEditingController nameController) =>
     Container(
@@ -198,7 +214,7 @@ Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
     player.gender,
     (playerGender) =>
          buildColumn(
-             title: 'SHAPE',
+             title: 'BODY SHAPE',
              children: Gender.values.map((gender) =>
              onPressed(
                action: () => player.setGender(gender),

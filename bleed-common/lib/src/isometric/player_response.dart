@@ -14,4 +14,5 @@ class PlayerResponse {
   static const HairColor = 11;
   static const ShoeType = 12;
   static const Gender = 13;
+  static const HelmType = 14;
 }
