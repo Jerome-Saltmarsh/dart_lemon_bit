@@ -357,21 +357,6 @@ class IsometricUI with IsometricComponent {
     );
   }
 
-  Widget buildButtonTogglePlayMode() {
-    return buildWatch(scene.sceneEditable, (bool isOwner) {
-      if (!isOwner) return const SizedBox();
-      return buildWatch(options.edit, (bool edit) {
-        return buildButton(
-            toolTip: 'Tab',
-            child: edit ? 'PLAY' : 'EDIT',
-            action: options.toggleEditMode,
-            color: Colors.green,
-            alignment: Alignment.center,
-            width: 100);
-      });
-    });
-  }
-
   Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

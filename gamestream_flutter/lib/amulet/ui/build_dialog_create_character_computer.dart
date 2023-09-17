@@ -1,5 +1,6 @@
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:lemon_math/src.dart';
 
@@ -50,7 +51,6 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                     alignment: Alignment.center,
                     children: [
                       Positioned(
-                        // left: 0,
                         top: 80,
                         child: CustomCanvas(
                             paint: (canvas, size) {
@@ -132,7 +132,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                       Positioned(
                           top: 8,
                           right: 8,
-                          child: buildText('>'),
+                          child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.2,),
                       ),
                       Positioned(
                           top: 0,

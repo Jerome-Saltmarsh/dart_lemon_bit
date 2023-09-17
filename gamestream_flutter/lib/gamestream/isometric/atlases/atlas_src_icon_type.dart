@@ -33,5 +33,6 @@ const atlasSrcIconType = <IconType, List<double>> {
   IconType.Damage: [48, 0, 0, 0],
   IconType.Music_Enabled: [1, 499, 90, 98],
   IconType.Music_Disabled: [1, 609, 90, 98],
+  IconType.Turn_Right: [324, 95, 107, 120],
 };
 
