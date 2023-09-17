@@ -17,6 +17,7 @@ import '../classes/src.dart';
 class IsometricRender with IsometricComponent {
 
   var renderAimTargetName = false;
+  var drawCanvasEnabled = true;
 
   late final List<Sprite> _flames ;
 
@@ -111,6 +112,10 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
+    if (!drawCanvasEnabled){
+      return;
+    }
+
     highlightAimTargetEnemy();
 
     camera.update();
@@ -124,8 +129,6 @@ class IsometricRender with IsometricComponent {
 
     renderEditMode();
     renderMouseTargetName();
-
-    // renderPlayerHeightMap();
 
 
     debug.drawCanvas();

@@ -70,12 +70,15 @@ class Amulet extends IsometricGame {
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     error.onChanged(onChangedError);
+    characterCreated.onChanged((characterCreated) {
+      render.drawCanvasEnabled = characterCreated;
+    });
   }
 
   @override
   void onComponentReady() {
     amuletUI = AmuletUI(this);
-    // amuletNetwork = AmuletActions(network);
+    render.drawCanvasEnabled = false;
   }
 
   void onChangedError(String value){
@@ -177,8 +180,10 @@ class Amulet extends IsometricGame {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    super.drawCanvas(canvas, size);
-    renderMMO(canvas, size);
+    if (characterCreated.value){
+      super.drawCanvas(canvas, size);
+      renderMMO(canvas, size);
+    }
   }
 
   @override

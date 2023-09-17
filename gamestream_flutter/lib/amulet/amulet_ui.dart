@@ -28,61 +28,64 @@ class AmuletUI {
 
   AmuletUI(this.amulet);
 
-  Widget buildAmuletUI() => Stack(
-    alignment: Alignment.center,
-    children: [
-      buildNpcText(),
-      Positioned(
-        bottom: margin1,
-        left: margin1,
-        child: buildPlayerWeapons(),
-      ),
-      Positioned(
-        top: margin1,
-        left: margin1,
-        child: buildDialogPlayerInventory(),
-      ),
-      buildPlayerAimTarget(),
-      Positioned(
-         top: margin1,
-         left: margin3 + 50,
-         child: buildItemHoverDialog(),
-      ),
-      Positioned(
-          bottom: margin2,
-          right: margin1,
-          child: buildDialogPlayerTalents()
-      ),
-      Positioned(
-          bottom: margin2,
-          right: margin4,
-          child: buildTalentHoverDialog()
-      ),
-      Positioned(
+  Widget buildAmuletUI() => buildWatch(amulet.characterCreated, (t) {
+    return Stack(
+      alignment: Alignment.center,
+      children: t ? [
+        buildNpcText(),
+        Positioned(
+          bottom: margin1,
+          left: margin1,
+          child: buildPlayerWeapons(),
+        ),
+        Positioned(
+          top: margin1,
+          left: margin1,
+          child: buildDialogPlayerInventory(),
+        ),
+        buildPlayerAimTarget(),
+        Positioned(
+          top: margin1,
+          left: margin3 + 50,
+          child: buildItemHoverDialog(),
+        ),
+        Positioned(
+            bottom: margin2,
+            right: margin1,
+            child: buildDialogPlayerTalents()
+        ),
+        Positioned(
+            bottom: margin2,
+            right: margin4,
+            child: buildTalentHoverDialog()
+        ),
+        Positioned(
           bottom: margin1,
           right: margin1,
           child: buildPlayerStatsRow(),
-      ),
-      Positioned(
-        top: 0,
-        left: 0,
-        child: Container(
-          width: amulet.engine.screen.width,
-          height: amulet.engine.screen.height,
-          alignment: Alignment.center,
-          child: buildDialogCreateCharacter(),
         ),
-      ),
-      Positioned(
+        Positioned(
           bottom: margin2,
           child: Container(
-              width: amulet.engine.screen.width,
-              alignment: Alignment.center,
-              child: buildError(),
+            width: amulet.engine.screen.width,
+            alignment: Alignment.center,
+            child: buildError(),
           ),
-      ),
-    ],
-  );
+        ),
+      ] : [
+        Positioned(
+          top: 0,
+          left: 0,
+          child: Container(
+            width: amulet.engine.screen.width,
+            height: amulet.engine.screen.height,
+            alignment: Alignment.center,
+            child: buildDialogCreateCharacter(),
+          ),
+        ),
+      ]
+    );
+  });
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
