@@ -255,6 +255,18 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     );
   }
 
+  void setComplexion(Color color) {
+    final index = colors.palette.indexOf(color);
+    if (index == -1) {
+      return;
+    }
+    network.sendRequest(
+      NetworkRequest.Player,
+      NetworkRequestPlayer.setComplexion.index,
+      index,
+    );
+  }
+
   void sendRequestSetComplexion(int index) {
     if (index == -1) {
       return;

@@ -244,16 +244,23 @@ Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairTyp
         ),
       ))));
 
-Column buildColumnComplexion(IsometricPlayer player) => buildColumn(
+Widget buildColumnComplexion(IsometricPlayer player) =>
+    buildWatch(player.complexion, (playerComplexion) => buildColumn(
       title: 'COMPLEXION',
-      children: player.colors.palette
-          .map((color) => Container(
-                color: color,
-                width: 50,
-                height: 50,
-              )
-          )
-);
+      children: player.colors.palette.map((color) => onPressed(
+        action: () => player.setComplexion(color),
+        child: buildBorder(
+          color: playerComplexion == player.colors.palette.indexOf(color) ? Colors.black : color,
+          width: 2,
+          radius: BorderRadius.zero,
+          child: Container(
+            color: color,
+            width: 50,
+            height: 50 * goldenRatio_0618,
+          ),
+        ),
+      )))
+    );
 
 Column buildColumn({
   required String title,
