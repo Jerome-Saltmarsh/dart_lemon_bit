@@ -32,6 +32,8 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // buildControlName(nameController),
+            // height8,
             onPressed(
               action: (){
                 row = (row + 1) % 8;
@@ -119,16 +121,20 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                           top: 8,
                           right: 8,
                           child: buildText('>'),
+                      ),
+                      Positioned(
+                          top: 0,
+                          left: 8,
+                          child: buildControlName(nameController),
                       )
                     ],
                   ),
                 ),
               ),
             ),
+            height16,
             Column(
               children: [
-                buildControlName(nameController),
-                height8,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,21 +172,17 @@ Row buildStartButton(Amulet amulet, TextEditingController nameController) {
           );
 }
 
-Row buildControlName(TextEditingController nameController) {
-  return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  buildText('NAME'),
-                  Container(
-                    width: 150,
-                    child: TextField(
-                      controller: nameController,
-                      autofocus: true,
-                    ),
-                  ),
-                ],
-              );
-}
+Widget buildControlName(TextEditingController nameController) =>
+    Container(
+      width: 150,
+      child: TextField(
+        controller: nameController,
+        autofocus: true,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
 
 Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
     player.gender,
