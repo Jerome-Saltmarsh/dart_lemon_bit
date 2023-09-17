@@ -1062,26 +1062,31 @@ class Engine extends StatelessWidget {
       CustomTicker(
         onTrick: _onTickElapsed,
         onDispose: _internalDispose,
-        child: MaterialApp(
-          title: title,
-          theme: themeData,
-          home: Scaffold(
-            body: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
-                buildContext = context;
-                return Stack(
-                  children: [
-                    _internalBuildCanvas(context),
-                    WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
-                    => buildUI != null ? buildUI(context) : const SizedBox()
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          debugShowCheckedModeBanner: false,
+        child: Builder(
+          builder: (context) {
+            print('MaterialApp()');
+            return MaterialApp(
+              title: title,
+              theme: themeData,
+              home: Scaffold(
+                body: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+                    buildContext = context;
+                    return Stack(
+                      children: [
+                        _internalBuildCanvas(context),
+                        WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
+                        => buildUI != null ? buildUI(context) : const SizedBox()
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              debugShowCheckedModeBanner: false,
+            );
+          }
         ),
       ));
 
@@ -1126,7 +1131,10 @@ class Engine extends StatelessWidget {
                   child: CustomPaint(
                     isComplex: true,
                     willChange: true,
-                    painter: _EnginePainter(repaint: notifierPaintFrame, engine: this),
+                    painter: _EnginePainter(
+                        repaint: notifierPaintFrame,
+                        engine: this,
+                    ),
                     foregroundPainter: _EngineForegroundPainter(
                         repaint: notifierPaintForeground,
                         engine: this,

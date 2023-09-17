@@ -219,11 +219,20 @@ Row buildControlName(TextEditingController nameController) {
 
 Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
     player.gender,
-    (gender) =>
+    (playerGender) =>
          buildColumn(
              title: 'SHAPE',
              children: Gender.values.map((gender) =>
-             buildText(gender == Gender.male ? 'SQUARE' : 'CURVED'))
+             onPressed(
+               action: () => player.setGender(gender),
+               child: Container(
+                   width: 80,
+                   height: 80 * goldenRatio_0618,
+                   alignment: Alignment.center,
+                   color: playerGender == gender ? Colors.white24 : Colors.transparent,
+                   padding: const EdgeInsets.all(4),
+                   child: buildText(gender == Gender.male ? 'Square' : 'Curved'))),
+             )
          )
    );
 
@@ -244,7 +253,8 @@ Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairTyp
       children: HairType.values.map((hairType) => onPressed(
         action: () => player.setHairType(hairType),
         child: Container(
-          width: 60,
+          width: 80,
+          height: 80 * goldenRatio_0618,
           alignment: Alignment.center,
           color: hairType == playerHairType ? Colors.white24 : Colors.transparent,
           padding: const EdgeInsets.all(4),

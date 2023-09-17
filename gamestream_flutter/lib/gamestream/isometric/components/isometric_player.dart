@@ -304,4 +304,10 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       NetworkRequest.Player,
       NetworkRequestPlayer.toggleGender.index,
     );
+
+  void setGender(int gender) => network.sendNetworkRequest(
+    NetworkRequest.Player,
+    NetworkRequestPlayer.setGender.index,
+    gender,
+  );
 }
