@@ -246,25 +246,17 @@ Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairTyp
         ),
       ))));
 
+
 Widget buildColumnComplexion(IsometricPlayer player) =>
     buildWatch(player.complexion, (playerComplexion) => buildColumn(
       title: 'COMPLEXION',
-      children: player.colors.palette.map((color) {
-        final active = playerComplexion == player.colors.palette.indexOf(color);
-        final width = active ? (50 * goldenRatio_1381) : 50.0;
-        return onPressed(
-          action: () => player.setComplexion(color),
-          child: AnimatedContainer(
-            curve: Curves.easeInOutQuad,
-            key: ValueKey(color.value),
-            duration: const Duration(milliseconds: 120),
-            color: color,
-            width: width,
-            height: width * goldenRatio_0618,
-            alignment: Alignment.center,
-          ),
-      );
-      }))
+      children: [
+        buildColorWheel(
+            colors: player.colors.palette,
+            onPickColor: player.setComplexion,
+            currentIndex: playerComplexion,
+        )
+      ])
     );
 
 Column buildColumn({
@@ -355,3 +347,35 @@ CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
         renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
       });
 }
+
+Widget buildColorWheel({
+  required List<Color> colors,
+  Function (Color color)? onPickColor,
+  Function (int index)? onPickIndex,
+  int? currentIndex,
+  double width = 50.0,
+}) => Column(
+  children: colors.map((color) {
+    final active = colors.indexOf(color) == currentIndex;
+    final sizedWidth = active ? (width * goldenRatio_1381) : width;
+    return onPressed(
+      action: () {
+        if (onPickColor != null){
+          onPickColor(color);
+        }
+        if (onPickIndex != null){
+          onPickIndex(colors.indexOf(color));
+        }
+      },
+      child: AnimatedContainer(
+        curve: Curves.easeInOutQuad,
+        key: ValueKey(color.value),
+        duration: const Duration(milliseconds: 120),
+        color: color,
+        width: sizedWidth,
+        height: sizedWidth * goldenRatio_0618,
+        alignment: Alignment.center,
+      ),
+    );
+  }).toList(growable: false),
+);
