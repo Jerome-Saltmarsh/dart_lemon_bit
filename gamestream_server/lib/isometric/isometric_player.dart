@@ -1225,13 +1225,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writeHandTypeLeft() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.LegsType);
+    writeByte(PlayerResponse.HandTypeLeft);
     writeByte(handTypeLeft);
   }
 
   void writeHandTypeRight() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.LegsType);
+    writeByte(PlayerResponse.HandTypeRight);
     writeByte(handTypeRight);
   }
 

@@ -84,19 +84,30 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                                   row: row,
                                   column: column,
                                   color: skinColor);
-                              renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
+
+                              renderSprite(
+                                  sprite: legs,
+                                  canvas: canvas,
+                                  row: row,
+                                  column: column,
+                              );
+
                               renderSprite(
                                   sprite: armsLeft,
                                   canvas: canvas,
                                   row: row,
                                   column: column,
-                                  color: skinColor);
+                                  color: skinColor,
+                              );
+
                               renderSprite(
                                   sprite: armsRight,
                                   canvas: canvas,
                                   row: row,
                                   column: column,
-                                  color: skinColor);
+                                  color: skinColor,
+                              );
+
                               renderSprite(
                                   sprite: shoesLeft, canvas: canvas, row: row, column: column);
                               renderSprite(
