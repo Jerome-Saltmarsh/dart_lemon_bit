@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_pla
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
@@ -15,7 +14,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'render_sprite.dart';
 
 Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
-  var row = 0;
+  var row = 4;
   var column = 0;
 
   final spinning = WatchBool(true);
@@ -24,28 +23,10 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
   final player = amulet.player;
   final sprites = images.kidCharacterSprites;
   final nameController = TextEditingController(text: 'Anon${randomInt(99999, 999999)}');
-  // final canvasFrame = ValueNotifier(0);
-  var f = 0;
-  final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
-    f++;
-    if (!spinning.value) {
-      if (f % 2 == 0) {
-        column++;
-      };
-      return;
-    }
-    if (f % 3 == 0) {
-      row = (row + 1) % 8;
-    };
-  });
-
   engine.disableKeyEventHandler();
 
   return OnDisposed(
-    action: () {
-      engine.enableKeyEventHandler();
-      canvasTimer.cancel();
-    },
+    action: engine.enableKeyEventHandler,
     child: GSContainer(
         width: width,
         height: width * goldenRatio_1381,
@@ -53,39 +34,6 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  onPressed(
-                    action: () {
-                      spinning.setFalse();
-                      row = (row - 1) % 8;
-                    },
-                    child: buildText('<'),
-                  ),
-                  Container(
-                    width: 80,
-                    alignment: Alignment.center,
-                    child: onPressed(
-                      action: spinning.toggle,
-                      child: buildWatch(
-                        spinning,
-                            (t) => buildText(t ? 'PAUSE' : 'RESUME'),
-                      ),
-                    ),
-                  ),
-                  onPressed(
-                    action: () {
-                      spinning.setFalse();
-                      row = (row + 1) % 8;
-                    },
-                    child: buildText('>'),
-                  ),
-                ],
-              ),
-            ),
             buildBorder(
               width: 2,
               color: Colors.black26,
@@ -93,71 +41,91 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
                 height: 150,
                 alignment: Alignment.center,
                 color: Colors.black12,
-                child: CustomCanvas(
-                    paint: (canvas, size) {
-                      final gender = player.gender.value;
-                      final isMale = gender == Gender.male;
-                      final characterState = CharacterState.Idle;
-                      final helm = sprites.helm[player.helmType.value]
-                          ?.fromCharacterState(characterState);
-                      final head = sprites.head[gender]?.fromCharacterState(characterState);
-                      final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-                      final body = bodySprite[player.bodyType.value]
-                          ?.fromCharacterState(characterState);
-                      final torso = sprites.torso[gender]?.fromCharacterState(characterState);
-                      final armsLeft = sprites.armLeft[ArmType.regular]
-                          ?.fromCharacterState(characterState);
-                      final armsRight = sprites.armRight[ArmType.regular]
-                          ?.fromCharacterState(characterState);
-                      final shoesLeft = sprites.shoesLeft[player.shoeType.value]
-                          ?.fromCharacterState(characterState);
-                      final shoesRight = sprites.shoesRight[player.shoeType.value]
-                          ?.fromCharacterState(characterState);
-                      final legs = sprites.legs[player.legsType.value]
-                          ?.fromCharacterState(characterState);
-                      final hair = sprites.hair[player.hairType.value]
-                          ?.fromCharacterState(characterState);
-                      final skinColor = player.skinColor.value;
-                      final hairColor = player.colors.palette[player.hairColor.value].value;
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      // left: 0,
+                      top: 80,
+                      child: CustomCanvas(
+                          paint: (canvas, size) {
+                            final gender = player.gender.value;
+                            final isMale = gender == Gender.male;
+                            final characterState = CharacterState.Idle;
+                            final helm = sprites.helm[player.helmType.value]
+                                ?.fromCharacterState(characterState);
+                            final head = sprites.head[gender]?.fromCharacterState(characterState);
+                            final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
+                            final body = bodySprite[player.bodyType.value]
+                                ?.fromCharacterState(characterState);
+                            final torso = sprites.torso[gender]?.fromCharacterState(characterState);
+                            final armsLeft = sprites.armLeft[ArmType.regular]
+                                ?.fromCharacterState(characterState);
+                            final armsRight = sprites.armRight[ArmType.regular]
+                                ?.fromCharacterState(characterState);
+                            final shoesLeft = sprites.shoesLeft[player.shoeType.value]
+                                ?.fromCharacterState(characterState);
+                            final shoesRight = sprites.shoesRight[player.shoeType.value]
+                                ?.fromCharacterState(characterState);
+                            final legs = sprites.legs[player.legsType.value]
+                                ?.fromCharacterState(characterState);
+                            final hair = sprites.hair[player.hairType.value]
+                                ?.fromCharacterState(characterState);
+                            final skinColor = player.skinColor.value;
+                            final hairColor = player.colors.palette[player.hairColor.value].value;
 
-                      renderSprite(
-                          sprite: torso,
-                          canvas: canvas,
-                          row: row,
-                          column: column,
-                          color: skinColor);
-                      renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
-                      renderSprite(
-                          sprite: armsLeft,
-                          canvas: canvas,
-                          row: row,
-                          column: column,
-                          color: skinColor);
-                      renderSprite(
-                          sprite: armsRight,
-                          canvas: canvas,
-                          row: row,
-                          column: column,
-                          color: skinColor);
-                      renderSprite(
-                          sprite: shoesLeft, canvas: canvas, row: row, column: column);
-                      renderSprite(
-                          sprite: shoesRight, canvas: canvas, row: row, column: column);
-                      renderSprite(sprite: body, canvas: canvas, row: row, column: column);
-                      renderSprite(
-                          sprite: head,
-                          canvas: canvas,
-                          row: row,
-                          column: column,
-                          color: skinColor);
-                      renderSprite(
-                          sprite: hair,
-                          canvas: canvas,
-                          row: row,
-                          column: column,
-                          color: hairColor);
-                      renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
-                    }),
+                            renderSprite(
+                                sprite: torso,
+                                canvas: canvas,
+                                row: row,
+                                column: column,
+                                color: skinColor);
+                            renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
+                            renderSprite(
+                                sprite: armsLeft,
+                                canvas: canvas,
+                                row: row,
+                                column: column,
+                                color: skinColor);
+                            renderSprite(
+                                sprite: armsRight,
+                                canvas: canvas,
+                                row: row,
+                                column: column,
+                                color: skinColor);
+                            renderSprite(
+                                sprite: shoesLeft, canvas: canvas, row: row, column: column);
+                            renderSprite(
+                                sprite: shoesRight, canvas: canvas, row: row, column: column);
+                            renderSprite(sprite: body, canvas: canvas, row: row, column: column);
+                            renderSprite(
+                                sprite: head,
+                                canvas: canvas,
+                                row: row,
+                                column: column,
+                                color: skinColor);
+                            renderSprite(
+                                sprite: hair,
+                                canvas: canvas,
+                                row: row,
+                                column: column,
+                                color: hairColor);
+                            renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
+                          }),
+                    ),
+                    Positioned(
+                        top: 8,
+                        right: 8,
+                        child: onPressed(
+                          action: () {
+                            spinning.setFalse();
+                            row = (row + 1) % 8;
+                          },
+                          child: buildText('>'),
+                        ),
+                    )
+                  ],
+                ),
               ),
             ),
             Column(
