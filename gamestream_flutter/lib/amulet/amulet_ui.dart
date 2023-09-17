@@ -1,4 +1,4 @@
-
+import 'package:lemon_watch/src.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -751,10 +751,13 @@ class AmuletUI {
     }
   }
 
-  Widget buildDialogCreateCharacter({double width = 300}) => Container(
+  Widget buildDialogCreateCharacter({double width = 400}) => Container(
     child: buildWatchBool(
         amulet.characterCreated, () {
           var row = 0;
+
+          final spinning = WatchBool(true);
+
 
           final engine = amulet.engine;
           final images = amulet.images;
@@ -763,6 +766,10 @@ class AmuletUI {
           final nameController = TextEditingController();
           final canvasFrame = ValueNotifier(0);
           final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+
+            if (!spinning.value){
+              return;
+            }
 
             if (canvasFrame.value++ % 3 == 0) {
               row = (row + 1) % 8;
@@ -786,11 +793,12 @@ class AmuletUI {
                     // buildDialogTitle('CHARACTER CREATION'),
                     buildBorder(
                       width: 2,
-                      color: Colors.white,
+                      color: Colors.black26,
                       child: Container(
-                        width: 100,
+                        // width: 100,
                         height: 150,
                         alignment: Alignment.center,
+                        color: Colors.black12,
                         child: CustomCanvas(
                           frame: canvasFrame,
                           paint: (canvas, size) {
@@ -826,84 +834,125 @@ class AmuletUI {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildText('NAME'),
-                        Container(
-                            width: 150,
-                            child: TextField(
-                                controller: nameController,
-                                autofocus: true,
-                            ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildText('COMPLEXION'),
-                        onPressed(
-                          action: player.showDialogChangeComplexion,
-                          child: buildWatch(player.complexion, (complexion) => Container(
-                            width: 50,
-                            height: 50,
-                            color: player.colors.palette[complexion],
-                          )),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildText('HAIR STYLE'),
-                        onPressed(
-                            action: () => player.ui.showDialogGetHairType(onSelected: player.setHairType),
-                            child: buildWatch(player.hairType, (hairType) => buildText(HairType.getName(hairType))),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildText('HAIR COLOR'),
-                        onPressed(
-                          action: player.showDialogChangeHairColor,
-                          child: buildWatch(player.hairColor, (hairColor) => Container(
-                            width: 50,
-                            height: 50,
-                            color: player.colors.palette[hairColor],
-                          )),
-                        )
-                      ],
-                    ),
-                    buildWatch(player.gender, (gender) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Container(
+                      // color: Colors.black12,
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                        buildText('BODY'),
-                        Row(children: [
                           onPressed(
-                            action: player.toggleGender,
-                            child: buildBorder(
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                color: gender == Gender.male ? Colors.white38 : null,
-                                child: buildText('Square'),
+                            action: (){
+                              spinning.setFalse();
+                              row = (row - 1) % 8;
+                            },
+                            child: buildText('<-'),
+                          ),
+                          Container(
+                            width: 80,
+                            alignment: Alignment.center,
+                            child: onPressed(
+                              action: spinning.toggle,
+                              child: buildWatch(
+                                  spinning,
+                                  (t) => buildText(t ? 'PAUSE' : 'RESUME'),
                               ),
                             ),
                           ),
                           onPressed(
-                            action: player.toggleGender,
-                            child: buildBorder(
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                color: gender == Gender.female ? Colors.white38 : null,
-                                child: buildText('Curvy'),
-                              ),
-                            ),
+                              action: (){
+                                spinning.setFalse();
+                                row = (row + 1) % 8;
+                              },
+                              child: buildText('->'),
                           ),
-                        ]),
-                    ])),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      // color: Colors.black12,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText('NAME'),
+                              Container(
+                                width: 150,
+                                child: TextField(
+                                  controller: nameController,
+                                  autofocus: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText('COMPLEXION'),
+                              onPressed(
+                                action: player.showDialogChangeComplexion,
+                                child: buildWatch(player.complexion, (complexion) => Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: player.colors.palette[complexion],
+                                )),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText('HAIR STYLE'),
+                              onPressed(
+                                action: () => player.ui.showDialogGetHairType(onSelected: player.setHairType),
+                                child: buildWatch(player.hairType, (hairType) => buildText(HairType.getName(hairType))),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText('HAIR COLOR'),
+                              onPressed(
+                                action: player.showDialogChangeHairColor,
+                                child: buildWatch(player.hairColor, (hairColor) => Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: player.colors.palette[hairColor],
+                                )),
+                              )
+                            ],
+                          ),
+                          buildWatch(player.gender, (gender) => Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                buildText('BODY'),
+                                Row(children: [
+                                  onPressed(
+                                    action: player.toggleGender,
+                                    child: buildBorder(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        color: gender == Gender.male ? Colors.white38 : null,
+                                        child: buildText('Square'),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed(
+                                    action: player.toggleGender,
+                                    child: buildBorder(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        color: gender == Gender.female ? Colors.white38 : null,
+                                        child: buildText('Curvy'),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                              ])),
+                        ],
+                      ),
+                    ),
                     Expanded(child: const SizedBox()),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
