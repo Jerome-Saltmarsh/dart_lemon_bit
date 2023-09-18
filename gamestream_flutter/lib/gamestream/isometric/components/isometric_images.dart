@@ -150,6 +150,7 @@ class IsometricImages with IsometricComponent {
     kidCharacterSpritesIsometric.legs[0] = spriteGroupEmpty;
     kidCharacterSpritesIsometric.hairFront[0] = spriteGroupEmpty;
     kidCharacterSpritesIsometric.hairBack[0] = spriteGroupEmpty;
+    kidCharacterSpritesIsometric.hairTop[0] = spriteGroupEmpty;
     kidCharacterSpritesIsometric.shoesLeft[0] = spriteGroupEmpty;
     kidCharacterSpritesIsometric.shoesRight[0] = spriteGroupEmpty;
 
@@ -172,11 +173,8 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
     loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
     loadSpriteGroupFront(type: SpriteGroupType.Hair_Front, subType: HairType.basic_1);
-    loadSpriteGroupFront(type: SpriteGroupType.Hair_Front, subType: HairType.basic_2);
-    loadSpriteGroupFront(type: SpriteGroupType.Hair_Front, subType: HairType.basic_3);
     loadSpriteGroupFront(type: SpriteGroupType.Hair_Back, subType: HairType.basic_1);
-    loadSpriteGroupFront(type: SpriteGroupType.Hair_Back, subType: HairType.basic_2);
-    loadSpriteGroupFront(type: SpriteGroupType.Hair_Back, subType: HairType.basic_3);
+    loadSpriteGroupFront(type: SpriteGroupType.Hair_Top, subType: HairType.basic_1);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Leather_Boots);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Leather_Boots);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Iron_Plates);
@@ -211,11 +209,8 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupIsometric(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, skipHurt: true, skipFire: true);
     loadSpriteGroupIsometric(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, skipHurt: true, skipFire: true);
     loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Front, subType: HairType.basic_1, skipHurt: true);
-    loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Front, subType: HairType.basic_2, skipHurt: true);
-    loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Front, subType: HairType.basic_3, skipHurt: true);
     loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Back, subType: HairType.basic_1, skipHurt: true);
-    loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Back, subType: HairType.basic_2, skipHurt: true);
-    loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Back, subType: HairType.basic_3, skipHurt: true);
+    loadSpriteGroupIsometric(type: SpriteGroupType.Hair_Top, subType: HairType.basic_1, skipHurt: true);
     loadSpriteGroupIsometric(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Leather_Boots, skipHurt: true);
     loadSpriteGroupIsometric(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Leather_Boots, skipHurt: true);
     loadSpriteGroupIsometric(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Iron_Plates, skipHurt: true);

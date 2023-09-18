@@ -16,8 +16,9 @@ class SpriteGroupType {
   static const Weapons = 13;
   static const Hair_Back = 14;
   static const Hair_Front = 15;
-  static const Shoes_Left = 16;
-  static const Shoes_Right = 17;
+  static const Hair_Top = 16;
+  static const Shoes_Left = 17;
+  static const Shoes_Right = 18;
 
   static String getName(int value)=> const {
     Arms_Left: 'arms_left',
@@ -35,6 +36,7 @@ class SpriteGroupType {
     Weapons: 'weapons',
     Hair_Back: 'hair_back',
     Hair_Front: 'hair_front',
+    Hair_Top: 'hair_top',
     Shoes_Left: 'shoes_left',
     Shoes_Right: 'shoes_right',
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
@@ -55,6 +57,7 @@ class SpriteGroupType {
       Shadow => 'regular',
       Hair_Back => HairType.getName(subType),
       Hair_Front => HairType.getName(subType),
+      Hair_Top => HairType.getName(subType),
       Shoes_Left => ShoeType.getName(subType),
       Shoes_Right => ShoeType.getName(subType),
       _ => throw Exception(
@@ -77,6 +80,7 @@ class SpriteGroupType {
     Weapons,
     Hair_Back,
     Hair_Front,
+    Hair_Top,
     Shoes_Left,
   ];
 }

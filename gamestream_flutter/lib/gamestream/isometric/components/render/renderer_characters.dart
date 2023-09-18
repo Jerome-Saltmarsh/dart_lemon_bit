@@ -254,6 +254,7 @@ class RendererCharacters extends RenderGroup {
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHairFront = sprites.hairFront[character.hairType] ?? (throw Exception());
     final atlasHairBack = sprites.hairBack[character.hairType] ?? (throw Exception());
+    final atlasHairTop = sprites.hairTop[character.hairType] ?? (throw Exception());
     final atlasShoesLeft = sprites.shoesLeft[character.shoeType] ?? (throw Exception());
     final atlasShoesRight = sprites.shoesRight[character.shoeType] ?? (throw Exception());
 
@@ -273,6 +274,7 @@ class RendererCharacters extends RenderGroup {
     final spriteHairBack = atlasHairBack.fromCharacterState(characterState);
     final spriteShoesLeft = atlasShoesLeft.fromCharacterState(characterState);
     final spriteShoesRight = atlasShoesRight.fromCharacterState(characterState);
+    final spriteHairTop = atlasHairTop.fromCharacterState(characterState);
 
     final Sprite spriteHairInFront;
     final Sprite spriteHairBehind;
@@ -541,6 +543,32 @@ class RendererCharacters extends RenderGroup {
       frame: completingAction
           ? spriteHairInFront.getFramePercentage(row, actionComplete)
           : spriteHairInFront.getFrame(row: row, column: animationFrame),
+      color1: colorHair,
+      color2: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.modulate(
+      sprite: spriteHairInFront,
+      frame: completingAction
+          ? spriteHairInFront.getFramePercentage(row, actionComplete)
+          : spriteHairInFront.getFrame(row: row, column: animationFrame),
+      color1: colorHair,
+      color2: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.modulate(
+      sprite: spriteHairTop,
+      frame: completingAction
+          ? spriteHairTop.getFramePercentage(row, actionComplete)
+          : spriteHairTop.getFrame(row: row, column: animationFrame),
       color1: colorHair,
       color2: color,
       scale: scale,
