@@ -87,6 +87,32 @@ flutter:
     - sprites/kid/shoes_left/leather_boots/
     - sprites/kid/shoes_right/iron_plates/
     - sprites/kid/shoes_right/leather_boots/
+    - sprites/front/kid/arms_left/regular/
+    - sprites/front/kid/arms_right/regular/
+    - sprites/front/kid/body_male/shirt_blue/
+    - sprites/front/kid/body_male/leather_armour/
+    - sprites/front/kid/body_female/shirt_blue/
+    - sprites/front/kid/body_female/leather_armour/
+    - sprites/front/kid/body_arms/shirt_blue/
+    - sprites/front/kid/hair/basic_1/
+    - sprites/front/kid/hair/basic_2/
+    - sprites/front/kid/hands_left/gauntlets/
+    - sprites/front/kid/hands_right/gauntlets/
+    - sprites/front/kid/head/boy/
+    - sprites/front/kid/head/girl/
+    - sprites/front/kid/helms/steel/
+    - sprites/front/kid/helms/wizard_hat/
+    - sprites/front/kid/legs/leather/
+    - sprites/front/kid/shadow/regular/
+    - sprites/front/kid/torso/female/
+    - sprites/front/kid/torso/male/
+    - sprites/front/kid/weapons/bow/
+    - sprites/front/kid/weapons/staff/
+    - sprites/front/kid/weapons/sword/
+    - sprites/front/kid/shoes_left/iron_plates/
+    - sprites/front/kid/shoes_left/leather_boots/
+    - sprites/front/kid/shoes_right/iron_plates/
+    - sprites/front/kid/shoes_right/leather_boots/
     - sprites/fallen/
     - sprites/skeleton/
     - sprites/butterfly/

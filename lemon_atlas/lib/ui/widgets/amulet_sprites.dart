@@ -4,9 +4,7 @@ import 'package:lemon_atlas/amulet/enums/src.dart';
 import 'package:lemon_atlas/amulet/functions/build_character_fallen.dart';
 import 'package:lemon_atlas/amulet/functions/build_character_kid.dart';
 import 'package:lemon_atlas/atlas/functions/compress_sprite.dart';
-import 'package:lemon_atlas/io/load_file_bytes.dart';
 import 'package:lemon_atlas/io/load_file_sprite.dart';
-import 'package:lemon_atlas/io/load_file_string.dart';
 import 'package:lemon_atlas/ui/classes/style.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -15,10 +13,10 @@ import '../actions/src.dart';
 
 class AmuletSprites extends StatelessWidget {
 
+  final perspective = Watch(Perspective.isometric);
   final changeNotifier = Watch(0);
   final style = Style();
   final characterType = Watch(CharacterType.kid);
-  final activeKidStates = <CharacterState>[];
   final activeKidParts = <KidPart>[];
 
   AmuletSprites({super.key});
@@ -36,6 +34,8 @@ class AmuletSprites extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('AMULET ATLAS'),
           actions: [
+            buildTogglePerspective(),
+            const SizedBox(width: 100),
             buildButtonCompress(),
             buildButtonRun(),
             buildButtonFile(),
@@ -57,13 +57,6 @@ class AmuletSprites extends StatelessWidget {
                                 return buildText(e.name, color: activeCharacterType == e ? Colors.green : Colors.white70);
                             })
                   )).toList(growable: false)
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: CharacterState.values.map((e) => onPressed(
-                            action: () => toggleKidState(e),
-                            child: buildText(e.name, color: activeKidStates.contains(e) ? Colors.green : Colors.white70))).toList(growable: false),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -110,15 +103,6 @@ class AmuletSprites extends StatelessWidget {
     characterType.value = value;
   }
 
-  void toggleKidState(CharacterState kidState){
-    if (activeKidStates.contains(kidState)){
-      activeKidStates.remove(kidState);
-    } else {
-      activeKidStates.add(kidState);
-    }
-    changeNotifier.value++;
-  }
-
   void toggleKidPart(KidPart kidPart){
     if (activeKidParts.contains(kidPart)){
       activeKidParts.remove(kidPart);
@@ -137,13 +121,29 @@ class AmuletSprites extends StatelessWidget {
 
   void buildSelected() async {
 
+    const statesIsometric = [
+      CharacterState.idle,
+      CharacterState.dead,
+      CharacterState.running,
+      CharacterState.strike,
+      CharacterState.change,
+      CharacterState.fire,
+    ];
+
+    const statesFront = [
+      CharacterState.idle,
+    ];
+
+    final states = perspective.value == Perspective.isometric ? statesIsometric : statesFront;
+
     switch (characterType.value){
       case CharacterType.kid:
-        for (final state in activeKidStates) {
+        for (final state in states) {
           for (final part in activeKidParts) {
             await buildCharacterKid(
               state: state,
               part: part,
+              perspective: perspective.value,
             );
           }
         }
@@ -163,4 +163,17 @@ class AmuletSprites extends StatelessWidget {
       CharacterState.idle,
     ].forEach(buildCharacterFallen);
   }
+
+  Widget buildTogglePerspective() =>
+      WatchBuilder(perspective, (perspective) => onPressed(
+          action: togglePerspective,
+          child: buildText(perspective.name, color: Colors.red),
+      ));
+
+  void togglePerspective() =>
+      perspective.value =
+      perspective.value == Perspective.isometric
+          ? Perspective.front
+          : Perspective
+          .isometric;
 }

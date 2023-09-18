@@ -6,7 +6,6 @@ import 'package:lemon_atlas/atlas/classes/sprite.dart';
 void compressSprite(Sprite sprite) {
 
   final dst = sprite.dst;
-  // final total = dst.length ~/ 4;
   final image = sprite.image;
 
   final match = getMatch(

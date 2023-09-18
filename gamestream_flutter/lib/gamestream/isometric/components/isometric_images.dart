@@ -22,6 +22,7 @@ class IsometricImages with IsometricComponent {
   
   final byteDataEmpty = ByteData(0);
   final kidCharacterSprites = KidCharacterSprites();
+  final kidCharacterSpritesFront = KidCharacterSprites();
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
   final values = <Image>[];
@@ -152,11 +153,39 @@ class IsometricImages with IsometricComponent {
     kidCharacterSprites.shoesLeft[ShoeType.None] = spriteGroupEmpty;
     kidCharacterSprites.shoesRight[ShoeType.None] = spriteGroupEmpty;
 
+    loadSpriteGroupFront(type: SpriteGroupType.Arms_Left, subType: ArmType.regular);
+    loadSpriteGroupFront(type: SpriteGroupType.Arms_Right, subType: ArmType.regular);
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue);
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour);
+    // loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Shirt_Blue);
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour);
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue);
+    // loadSpriteGroupFront(type: SpriteGroupType.Body_Arms, subType: BodyType.Leather_Armour);
+    loadSpriteGroupFront(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets);
+    loadSpriteGroupFront(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets);
+    loadSpriteGroupFront(type: SpriteGroupType.Heads, subType: HeadType.boy);
+    loadSpriteGroupFront(type: SpriteGroupType.Heads, subType: HeadType.girl);
+    loadSpriteGroupFront(type: SpriteGroupType.Helms, subType: HelmType.Steel);
+    loadSpriteGroupFront(type: SpriteGroupType.Helms, subType: HelmType.Wizard_Hat);
+    loadSpriteGroupFront(type: SpriteGroupType.Legs, subType: LegType.Leather);
+    // loadSpriteGroupFront(type: SpriteGroupType.Shadow, subType: ShadowType.regular);
+    loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male);
+    loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Bow);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Staff);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Sword);
+    loadSpriteGroupFront(type: SpriteGroupType.Hair, subType: HairType.basic_1);
+    loadSpriteGroupFront(type: SpriteGroupType.Hair, subType: HairType.basic_2);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Leather_Boots);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Leather_Boots);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Iron_Plates);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Iron_Plates);
+    
     loadSpriteGroup(type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour, skipHurt: true);
-    loadSpriteGroup(type: SpriteGroupType.Body_Female, subType: BodyType.Shirt_Blue, skipHurt: true);
+    // loadSpriteGroup(type: SpriteGroupType.Body_Female, subType: BodyType.Shirt_Blue, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue, skipHurt: true);
     loadSpriteGroup(type: SpriteGroupType.Body_Arms, subType: BodyType.Leather_Armour,
@@ -272,6 +301,26 @@ class IsometricImages with IsometricComponent {
         fire: skipFire ? emptySprite : await loadSprite(name: '$directory/fire', mode: AnimationMode.single),
         strike: skipStrike ? emptySprite : await loadSprite(name: '$directory/strike', mode: AnimationMode.single),
         hurt: skipHurt ? emptySprite : await loadSprite(name: '$directory/hurt', mode: AnimationMode.single),
+    );
+  }
+
+  void loadSpriteGroupFront({
+    required int type,
+    required int subType,
+  }) async {
+    final typeName = SpriteGroupType.getName(type).toLowerCase();
+    final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase().replaceAll(' ', '_');
+    final kidCharacterSpriteGroup = kidCharacterSpritesFront.values[type] ?? (throw Exception('images.loadSpriteGroupFront($typeName, $subTypeName)'));
+    final directory = 'sprites/front/kid/$typeName/$subTypeName';
+
+    kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
+      idle: await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),
+      running: emptySprite,
+      change: emptySprite,
+      dead: emptySprite,
+      fire: emptySprite,
+      strike: emptySprite,
+      hurt: emptySprite,
     );
   }
 
