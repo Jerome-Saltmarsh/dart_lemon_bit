@@ -240,6 +240,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   @override
+  set weaponType(int value) {
+    super.weaponType = value;
+    writeWeaponType();
+  }
+
+  @override
   set handTypeLeft(int value){
     super.handTypeLeft = value;
     writeHandTypeLeft();
@@ -1227,6 +1233,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Player);
     writeByte(PlayerResponse.HandTypeLeft);
     writeByte(handTypeLeft);
+  }
+
+  void writeWeaponType() {
+    writeByte(NetworkResponse.Player);
+    writeByte(PlayerResponse.WeaponType);
+    writeByte(weaponType);
   }
 
   void writeHandTypeRight() {

@@ -74,7 +74,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       null, onChanged: onChangedGameDialog);
   late final active = Watch(false);
   late final alive = Watch(true);
-  late final weapon = Watch(0);
+  late final weaponType = Watch(0);
   late final debugging = Watch(false, onChanged: onChangedDebugging);
 
   IsometricPlayer() {
@@ -205,6 +205,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case PlayerResponse.HelmType:
         readHelmType();
         break;
+      case PlayerResponse.WeaponType:
+        readWeaponType();
+        break;
       case PlayerResponse.Complexion:
         complexion.value = parser.readByte();
         break;
@@ -242,6 +245,10 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   void readHelmType() {
     helmType.value = parser.readByte();
+  }
+
+  void readWeaponType() {
+    weaponType.value = parser.readByte();
   }
 
   void showDialogChangeComplexion() =>

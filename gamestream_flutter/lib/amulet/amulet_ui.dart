@@ -662,11 +662,11 @@ class AmuletUI {
                 ],
               ),
               Container(
-                width: 150,
-                height: 240,
+                width: 180 * goldenRatio_0618,
+                height: 180,
                 child: buildContainerPlayerFront(
                     player: amulet.player,
-                    height: 240,
+                    height: 180,
                 ),
               ),
             ],

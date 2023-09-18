@@ -144,6 +144,9 @@ void renderPlayerFront(
       ?.fromCharacterState(characterState);
   final hair = sprites.hair[player.hairType.value]
       ?.fromCharacterState(characterState);
+  final weapon = sprites.weapons[player.weaponType.value]
+      ?.fromCharacterState(characterState);
+
   final skinColor = player.skinColor.value;
   final hairColor = player.colors.palette[player.hairColor.value].value;
 
@@ -195,6 +198,7 @@ void renderPlayerFront(
       column: column,
       color: hairColor);
   renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
+  renderSprite(sprite: weapon, canvas: canvas, row: row, column: column);
 }
 
 Widget buildColumnHeadType(IsometricPlayer player) =>

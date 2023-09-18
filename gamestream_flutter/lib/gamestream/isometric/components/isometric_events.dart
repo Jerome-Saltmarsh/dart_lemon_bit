@@ -384,7 +384,7 @@ class IsometricEvents with IsometricComponent {
   void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Reloading:
-        switch (player.weapon.value){
+        switch (player.weaponType.value){
           case WeaponType.Handgun:
             audio.reload_6();
             break;
