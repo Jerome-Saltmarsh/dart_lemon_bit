@@ -19,7 +19,7 @@ Widget buildDialogCreateCharacterMobile(Amulet amulet){
   final engine = amulet.engine;
   final images = amulet.images;
   final player = amulet.player;
-  final sprites = images.kidCharacterSprites;
+  final sprites = images.kidCharacterSpritesIsometric;
   final nameController = TextEditingController();
   final canvasFrame = ValueNotifier(0);
   final canvasTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {

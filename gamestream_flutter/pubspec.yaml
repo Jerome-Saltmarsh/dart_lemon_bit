@@ -60,38 +60,37 @@ flutter:
     - images/sprites/
     - images/website/
     - images/characters/
-    - sprites/flame/
-    - sprites/kid/arms_left/regular/
-    - sprites/kid/arms_right/regular/
-    - sprites/kid/body_male/shirt_blue/
-    - sprites/kid/body_male/leather_armour/
-    - sprites/kid/body_female/shirt_blue/
-    - sprites/kid/body_female/leather_armour/
-    - sprites/kid/body_arms/shirt_blue/
-    - sprites/kid/hair/basic_1/
-    - sprites/kid/hair/basic_2/
-    - sprites/kid/hands_left/gauntlets/
-    - sprites/kid/hands_right/gauntlets/
-    - sprites/kid/head/boy/
-    - sprites/kid/head/girl/
-    - sprites/kid/helms/steel/
-    - sprites/kid/helms/wizard_hat/
-    - sprites/kid/legs/leather/
-    - sprites/kid/shadow/regular/
-    - sprites/kid/torso/female/
-    - sprites/kid/torso/male/
-    - sprites/kid/weapons/bow/
-    - sprites/kid/weapons/staff/
-    - sprites/kid/weapons/sword/
-    - sprites/kid/shoes_left/iron_plates/
-    - sprites/kid/shoes_left/leather_boots/
-    - sprites/kid/shoes_right/iron_plates/
-    - sprites/kid/shoes_right/leather_boots/
+    - sprites/isometric/flame/
+    - sprites/isometric/kid/arms_left/regular/
+    - sprites/isometric/kid/arms_right/regular/
+    - sprites/isometric/kid/body_male/shirt_blue/
+    - sprites/isometric/kid/body_male/leather_armour/
+    - sprites/isometric/kid/body_female/shirt_blue/
+    - sprites/isometric/kid/body_female/leather_armour/
+    - sprites/isometric/kid/body_arms/shirt_blue/
+    - sprites/isometric/kid/hair/basic_1/
+    - sprites/isometric/kid/hair/basic_2/
+    - sprites/isometric/kid/hands_left/gauntlets/
+    - sprites/isometric/kid/hands_right/gauntlets/
+    - sprites/isometric/kid/head/boy/
+    - sprites/isometric/kid/head/girl/
+    - sprites/isometric/kid/helms/steel/
+    - sprites/isometric/kid/helms/wizard_hat/
+    - sprites/isometric/kid/legs/leather/
+    - sprites/isometric/kid/shadow/regular/
+    - sprites/isometric/kid/torso/female/
+    - sprites/isometric/kid/torso/male/
+    - sprites/isometric/kid/weapons/bow/
+    - sprites/isometric/kid/weapons/staff/
+    - sprites/isometric/kid/weapons/sword/
+    - sprites/isometric/kid/shoes_left/iron_plates/
+    - sprites/isometric/kid/shoes_left/leather_boots/
+    - sprites/isometric/kid/shoes_right/iron_plates/
+    - sprites/isometric/kid/shoes_right/leather_boots/
     - sprites/front/kid/arms_left/regular/
     - sprites/front/kid/arms_right/regular/
     - sprites/front/kid/body_male/shirt_blue/
     - sprites/front/kid/body_male/leather_armour/
-    - sprites/front/kid/body_female/shirt_blue/
     - sprites/front/kid/body_female/leather_armour/
     - sprites/front/kid/body_arms/shirt_blue/
     - sprites/front/kid/hair/basic_1/
@@ -103,7 +102,6 @@ flutter:
     - sprites/front/kid/helms/steel/
     - sprites/front/kid/helms/wizard_hat/
     - sprites/front/kid/legs/leather/
-    - sprites/front/kid/shadow/regular/
     - sprites/front/kid/torso/female/
     - sprites/front/kid/torso/male/
     - sprites/front/kid/weapons/bow/
@@ -113,10 +111,10 @@ flutter:
     - sprites/front/kid/shoes_left/leather_boots/
     - sprites/front/kid/shoes_right/iron_plates/
     - sprites/front/kid/shoes_right/leather_boots/
-    - sprites/fallen/
-    - sprites/skeleton/
-    - sprites/butterfly/
-    - sprites/bat/
+    - sprites/isometric/fallen/
+    - sprites/isometric/skeleton/
+    - sprites/isometric/butterfly/
+    - sprites/isometric/bat/
     - audio/
     - audio/music/
     - audio/sounds/

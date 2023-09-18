@@ -237,7 +237,7 @@ class RendererCharacters extends RenderGroup {
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
 
-    final sprites = images.kidCharacterSprites;
+    final sprites = images.kidCharacterSpritesIsometric;
     final atlasHandsLeft = sprites.handLeft[character.handTypeLeft] ?? (throw Exception());
     final atlasHandsRight = sprites.handRight[character.handTypeRight] ?? (throw Exception());
     final atlasHelm = sprites.helm[character.helmType] ?? (throw Exception());
