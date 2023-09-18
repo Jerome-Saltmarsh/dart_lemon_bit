@@ -68,8 +68,12 @@ flutter:
     - sprites/isometric/kid/body_female/shirt_blue/
     - sprites/isometric/kid/body_female/leather_armour/
     - sprites/isometric/kid/body_arms/shirt_blue/
-    - sprites/isometric/kid/hair/basic_1/
-    - sprites/isometric/kid/hair/basic_2/
+    - sprites/isometric/kid/hair_back/1/
+    - sprites/isometric/kid/hair_back/2/
+    - sprites/isometric/kid/hair_back/3/
+    - sprites/isometric/kid/hair_front/1/
+    - sprites/isometric/kid/hair_front/2/
+    - sprites/isometric/kid/hair_front/3/
     - sprites/isometric/kid/hands_left/gauntlets/
     - sprites/isometric/kid/hands_right/gauntlets/
     - sprites/isometric/kid/head/boy/
@@ -93,8 +97,12 @@ flutter:
     - sprites/front/kid/body_male/leather_armour/
     - sprites/front/kid/body_female/leather_armour/
     - sprites/front/kid/body_arms/shirt_blue/
-    - sprites/front/kid/hair/basic_1/
-    - sprites/front/kid/hair/basic_2/
+    - sprites/front/kid/hair_back/1/
+    - sprites/front/kid/hair_back/2/
+    - sprites/front/kid/hair_back/3/
+    - sprites/front/kid/hair_front/1/
+    - sprites/front/kid/hair_front/2/
+    - sprites/front/kid/hair_front/3/
     - sprites/front/kid/hands_left/gauntlets/
     - sprites/front/kid/hands_right/gauntlets/
     - sprites/front/kid/head/boy/

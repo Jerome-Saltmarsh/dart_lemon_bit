@@ -11,19 +11,19 @@ Future buildCharacterKid({
 }) async {
 
   final perspectiveIso = perspective == Perspective.isometric;
-  final renderDir = perspectiveIso ? 'renders' : 'renders_front';
-  final directory = '$directoryAssets/$renderDir/kid/${part.groupName}/${part.fileName}/${state.name}';
+  final renderDir = perspectiveIso ? directoryRendersIsometric : directoryRendersFront;
+  final directory = '$renderDir/kid/${part.groupName}/${part.fileName}/${state.name}';
   final srcImages =
       await loadImagesFomDirectory(directory, total: perspectiveIso ? 64 : 8);
 
   final sprite = buildSpriteFromSrcImages(
     srcImages: srcImages,
     rows: 8,
-    columns: perspective == Perspective.isometric ? 8 : 1,
+    columns: perspectiveIso ? 8 : 1,
   );
 
-  final outputDirectory = perspective == Perspective.isometric
-      ? directorySprites : directorySpritesFront;
+  final outputDirectory = perspectiveIso
+      ? directorySpritesIsometric : directorySpritesFront;
 
   return exportSprite(
     sprite: sprite,

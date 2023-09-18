@@ -144,7 +144,7 @@ void renderPlayerFront(
       ?.fromCharacterState(characterState);
   final legs = sprites.legs[player.legsType.value]
       ?.fromCharacterState(characterState);
-  final hair = sprites.hair[player.hairType.value]
+  final hair = sprites.hairFront[player.hairType.value]
       ?.fromCharacterState(characterState);
   final weapon = sprites.weapons[player.weaponType.value]
       ?.fromCharacterState(characterState);
@@ -371,7 +371,7 @@ CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
             ?.fromCharacterState(characterState);
         final legs = sprites.legs[player.legsType.value]
             ?.fromCharacterState(characterState);
-        final hair = sprites.hair[player.hairType.value]
+        final hair = sprites.hairFront[player.hairType.value]
             ?.fromCharacterState(characterState);
         final skinColor = player.skinColor.value;
         final hairColor = player.colors.palette[player.hairColor.value].value;

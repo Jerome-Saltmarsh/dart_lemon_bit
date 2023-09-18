@@ -252,7 +252,8 @@ class RendererCharacters extends RenderGroup {
     final atlasHead = sprites.head[character.headType] ?? (throw Exception());
     final atlasTorso = sprites.torso[character.gender] ?? (throw Exception());
     final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
-    final atlasHair = sprites.hair[character.hairType] ?? (throw Exception());
+    final atlasHairFront = sprites.hairFront[character.hairType] ?? (throw Exception());
+    final atlasHairBack = sprites.hairBack[character.hairType] ?? (throw Exception());
     final atlasShoesLeft = sprites.shoesLeft[character.shoeType] ?? (throw Exception());
     final atlasShoesRight = sprites.shoesRight[character.shoeType] ?? (throw Exception());
 
@@ -268,10 +269,13 @@ class RendererCharacters extends RenderGroup {
     final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
     final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
     final spriteShadow = atlasShadow.fromCharacterState(characterState);
-    final spriteHair = atlasHair.fromCharacterState(characterState);
+    final spriteHairFront = atlasHairFront.fromCharacterState(characterState);
+    final spriteHairBack = atlasHairBack.fromCharacterState(characterState);
     final spriteShoesLeft = atlasShoesLeft.fromCharacterState(characterState);
     final spriteShoesRight = atlasShoesRight.fromCharacterState(characterState);
 
+    final Sprite spriteHairInFront;
+    final Sprite spriteHairBehind;
     final Sprite spriteHandFront;
     final Sprite spriteHandBehind;
     final Sprite spriteArmFront;
@@ -300,6 +304,8 @@ class RendererCharacters extends RenderGroup {
       spriteArmBehind = spriteArmRight;
       spriteShoesFront = spriteShoesLeft;
       spriteShoesBehind = spriteShoesRight;
+      spriteHairInFront = spriteHairFront;
+      spriteHairBehind = spriteHairBack;
     } else {
       spriteHandFront = spriteHandsRight;
       spriteHandBehind = spriteHandsLeft;
@@ -307,6 +313,8 @@ class RendererCharacters extends RenderGroup {
       spriteArmBehind = spriteArmLeft;
       spriteShoesFront = spriteShoesRight;
       spriteShoesBehind = spriteShoesLeft;
+      spriteHairInFront = spriteHairBack;
+      spriteHairBehind = spriteHairFront;
     }
 
     if (renderBottom) {
@@ -514,11 +522,25 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
+
     render.modulate(
-      sprite: spriteHair,
+      sprite: spriteHairBehind,
       frame: completingAction
-          ? spriteHair.getFramePercentage(row, actionComplete)
-          : spriteHair.getFrame(row: row, column: animationFrame),
+          ? spriteHairBehind.getFramePercentage(row, actionComplete)
+          : spriteHairBehind.getFrame(row: row, column: animationFrame),
+      color1: colorHair,
+      color2: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.modulate(
+      sprite: spriteHairInFront,
+      frame: completingAction
+          ? spriteHairInFront.getFramePercentage(row, actionComplete)
+          : spriteHairInFront.getFrame(row: row, column: animationFrame),
       color1: colorHair,
       color2: color,
       scale: scale,
