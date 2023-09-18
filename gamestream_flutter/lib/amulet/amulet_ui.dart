@@ -664,7 +664,10 @@ class AmuletUI {
               Container(
                 width: 150,
                 height: 240,
-                child: buildContainerPlayerFront(amulet.player, TextEditingController(), height: 240),
+                child: buildContainerPlayerFront(
+                    player: amulet.player,
+                    height: 240,
+                ),
               ),
             ],
           )

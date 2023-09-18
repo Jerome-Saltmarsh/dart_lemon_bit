@@ -31,7 +31,11 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildContainerPlayerFront(player, nameController, height: 180),
+            buildContainerPlayerFront(
+                player: player,
+                nameController: nameController,
+                height: 180,
+            ),
             height32,
             Column(
               children: [
@@ -55,10 +59,10 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
   );
 }
 
-Widget buildContainerPlayerFront(
-    IsometricPlayer player,
-    TextEditingController nameController,
-{double height = 150}
+Widget buildContainerPlayerFront({
+    required IsometricPlayer player,
+    TextEditingController? nameController,
+    double height = 150}
 ) {
   var row = 4;
   var column = 0;
@@ -67,8 +71,8 @@ Widget buildContainerPlayerFront(
               row = (row + 1) % 8;
             },
             child: buildBorder(
-              width: 3,
-              color: Colors.black26,
+              // width: 3,
+              // color: Colors.black26,
               child: Container(
                 height: height,
                 alignment: Alignment.center,
@@ -98,11 +102,12 @@ Widget buildContainerPlayerFront(
                               color: mouseOver ? Colors.green.value : Colors.white38.value,
                           ),),
                     ),
-                    Positioned(
-                        top: 0,
-                        left: 8,
-                        child: buildControlName(nameController),
-                    )
+                    if (nameController != null)
+                      Positioned(
+                          top: 0,
+                          left: 8,
+                          child: buildControlName(nameController),
+                      )
                   ],
                 ),
               ),
