@@ -13,11 +13,9 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'render_sprite.dart';
 
-Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
+Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
   final engine = amulet.engine;
-  final images = amulet.images;
   final player = amulet.player;
-  final sprites = images.kidCharacterSpritesFront;
   final randomName = 'Anon${randomInt(99999, 999999)}';
   final nameController = TextEditingController(text: randomName);
   final textSelection = TextSelection(baseOffset: 0, extentOffset: randomName.length);
@@ -33,7 +31,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 600}) {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildContainerPlayerFront(player, nameController),
+            buildContainerPlayerFront(player, nameController, height: 180),
             height32,
             Column(
               children: [
@@ -79,7 +77,7 @@ Widget buildContainerPlayerFront(
                   alignment: Alignment.center,
                   children: [
                     Positioned(
-                      top: 80,
+                      top: 100,
                       child: CustomCanvas(
                           paint: (canvas, size) =>
                               renderPlayerFront(
@@ -200,7 +198,8 @@ Widget buildColumnHeadType(IsometricPlayer player) =>
         children: HeadType.values.map((headShape) =>
             onPressed(
               action: () => player.setHeadType(headShape),
-              child: Container(
+              child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
                   width: 80,
                   height: 80 * goldenRatio_0618,
                   alignment: Alignment.center,
@@ -258,7 +257,8 @@ Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
              children: Gender.values.map((gender) =>
              onPressed(
                action: () => player.setGender(gender),
-               child: Container(
+               child: AnimatedContainer(
+                   duration: const Duration(milliseconds: 150),
                    width: 80,
                    height: 80 * goldenRatio_0618,
                    alignment: Alignment.center,
@@ -285,7 +285,8 @@ Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairTyp
       title: 'HAIR STYLE',
       children: HairType.values.map((hairType) => onPressed(
         action: () => player.setHairType(hairType),
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
           width: 80,
           height: 80 * goldenRatio_0618,
           alignment: Alignment.center,
