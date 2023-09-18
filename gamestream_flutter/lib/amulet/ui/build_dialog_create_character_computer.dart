@@ -62,7 +62,9 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
 Widget buildContainerPlayerFront({
     required IsometricPlayer player,
     TextEditingController? nameController,
-    double height = 150}
+    double height = 150,
+    Color borderColor = Colors.white,
+}
 ) {
   var row = 4;
   var column = 0;
@@ -72,7 +74,7 @@ Widget buildContainerPlayerFront({
             },
             child: buildBorder(
               // width: 3,
-              // color: Colors.black26,
+              color: borderColor,
               child: Container(
                 height: height,
                 alignment: Alignment.center,

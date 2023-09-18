@@ -667,6 +667,7 @@ class AmuletUI {
                 child: buildContainerPlayerFront(
                     player: amulet.player,
                     height: 180,
+                    borderColor: Colors.transparent,
                 ),
               ),
             ],
