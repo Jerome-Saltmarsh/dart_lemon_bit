@@ -7,4 +7,6 @@ export 'mmo_item_type.dart';
 export 'mmo_talent_type.dart';
 export 'mmo_team.dart';
 export 'power_mode.dart';
-export 'mmo_response.dart';
+export 'network/requests/network_request_amulet.dart';
+export 'network/responses/network_response_amulet.dart';
+export 'network/responses/network_response_amulet_player.dart';

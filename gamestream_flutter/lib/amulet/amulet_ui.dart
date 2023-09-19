@@ -27,8 +27,7 @@ class AmuletUI {
 
   AmuletUI(this.amulet);
 
-  Widget buildAmuletUI() => buildWatch(amulet.characterCreated, (t) {
-    return Stack(
+  Widget buildAmuletUI() => buildWatch(amulet.characterCreated, (t) => Stack(
       alignment: Alignment.center,
       children: t ? [
         buildNpcText(),
@@ -88,8 +87,7 @@ class AmuletUI {
           ),
         ),
       ]
-    );
-  });
+    ));
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);

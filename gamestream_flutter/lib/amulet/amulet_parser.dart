@@ -6,10 +6,10 @@ extension AmuletParser on IsometricParser {
 
   void readMMOResponse(){
      switch (readByte()){
-       case MMOResponse.Player_Interacting:
+       case NetworkResponseAmulet.Player_Interacting:
          amulet.playerInteracting.value = readBool();
          break;
-       case MMOResponse.Npc_Talk:
+       case NetworkResponseAmulet.Npc_Talk:
          amulet.npcText.value = readString();
          final length = readByte();
          final options = amulet.npcOptions;
@@ -19,32 +19,32 @@ extension AmuletParser on IsometricParser {
          }
          amulet.npcOptionsReads.value++;
          break;
-       case MMOResponse.Player_Item_Length:
+       case NetworkResponseAmulet.Player_Item_Length:
          amulet.setItemLength(readUInt16());
          break;
-       case MMOResponse.Player_Item:
+       case NetworkResponseAmulet.Player_Item:
          final index = readUInt16();
          final type = readInt16();
          final item = type != -1 ? MMOItem.values[type] : null;
          amulet.setItem(index: index, item: item);
          break;
-       case MMOResponse.Player_Weapon:
+       case NetworkResponseAmulet.Player_Weapon:
          final index = readUInt16();
          final type = readInt16();
          final cooldown = type != -1 ? readUInt16() : 0;
          final item = type != -1 ? MMOItem.values[type] : null;
          amulet.setWeapon(index: index, item: item, cooldown: cooldown);
          break;
-       case MMOResponse.Player_Treasure:
+       case NetworkResponseAmulet.Player_Treasure:
          final index = readUInt16();
          final type = readInt16();
          final item = type != -1 ? MMOItem.values[type] : null;
          amulet.setTreasure(index: index, item: item);
          break;
-       case MMOResponse.Player_Equipped_Weapon_Index:
+       case NetworkResponseAmulet.Player_Equipped_Weapon_Index:
          amulet.equippedWeaponIndex.value = readInt16();
          break;
-       case MMOResponse.Player_Equipped:
+       case NetworkResponseAmulet.Player_Equipped:
          amulet.equippedHelm.item.value = readMMOItem();
          amulet.equippedBody.item.value = readMMOItem();
          amulet.equippedLegs.item.value = readMMOItem();
@@ -52,39 +52,39 @@ extension AmuletParser on IsometricParser {
          amulet.equippedHandRight.item.value = readMMOItem();
          amulet.equippedShoes.item.value = readMMOItem();
          break;
-       case MMOResponse.Player_Experience:
+       case NetworkResponseAmulet.Player_Experience:
          amulet.playerExperience.value = readUInt24();
          break;
-       case MMOResponse.Player_Experience_Required:
+       case NetworkResponseAmulet.Player_Experience_Required:
          amulet.playerExperienceRequired.value = readUInt24();
          break;
-       case MMOResponse.Player_Level:
+       case NetworkResponseAmulet.Player_Level:
          amulet.playerLevel.value = readByte();
          break;
-       case MMOResponse.Player_Talent_Points:
+       case NetworkResponseAmulet.Player_Talent_Points:
          amulet.playerTalentPoints.value = readByte();
          amulet.playerTalentsChangedNotifier.value++;
          break;
-       case MMOResponse.Player_Talent_Dialog_Open:
+       case NetworkResponseAmulet.Player_Talent_Dialog_Open:
          amulet.playerTalentDialogOpen.value = readBool();
          break;
-       case MMOResponse.Player_Inventory_Open:
+       case NetworkResponseAmulet.Player_Inventory_Open:
          amulet.playerInventoryOpen.value = readBool();
          break;
-       case MMOResponse.Player_Talents:
+       case NetworkResponseAmulet.Player_Talents:
          final playerTalents = amulet.playerTalents;
          for (var i = 0; i < playerTalents.length; i++){
           playerTalents[i] = readByte();
          }
          amulet.playerTalentsChangedNotifier.value++;
          break;
-       case MMOResponse.Activated_Power_Index:
+       case NetworkResponseAmulet.Activated_Power_Index:
          amulet.activatedPowerIndex.value = readInt8();
          break;
-       case MMOResponse.Active_Power_Position:
+       case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
          break;
-       case MMOResponse.Error:
+       case NetworkResponseAmulet.Error:
          amulet.clearError();
          amulet.error.value = readString();
          break;

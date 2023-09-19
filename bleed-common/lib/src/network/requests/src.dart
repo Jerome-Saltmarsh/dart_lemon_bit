@@ -1,6 +1,6 @@
 library;
 
-export 'network_request_amulet.dart';
+export '../../amulet/network/requests/network_request_amulet.dart';
 export 'network_request_debug.dart';
 export 'network_request_environment.dart';
 export 'network_request_inventory.dart';
