@@ -291,13 +291,27 @@ class RendererCharacters extends RenderGroup {
 
     final render = this.render;
 
-    // render.textPosition(character, ShoeType.getName(character.shoeType), offsetY: -100);
-
     final leftInFront = const [
       InputDirection.Up_Left,
       InputDirection.Left,
       InputDirection.Down_Left,
     ].contains(direction);
+
+    final fringeInFront = const [
+      InputDirection.Down_Right,
+      InputDirection.Down,
+      InputDirection.Down_Left,
+    ].contains(direction);
+
+    render.textPosition(character, fringeInFront, offsetY: -100);
+
+    if (fringeInFront){
+      spriteHairInFront = spriteHairFront;
+      spriteHairBehind = spriteHairBack;
+    } else {
+      spriteHairInFront = spriteHairBack;
+      spriteHairBehind = spriteHairFront;
+    }
 
     if (leftInFront) {
       spriteHandFront = spriteHandsLeft;
@@ -306,8 +320,6 @@ class RendererCharacters extends RenderGroup {
       spriteArmBehind = spriteArmRight;
       spriteShoesFront = spriteShoesLeft;
       spriteShoesBehind = spriteShoesRight;
-      spriteHairInFront = spriteHairFront;
-      spriteHairBehind = spriteHairBack;
     } else {
       spriteHandFront = spriteHandsRight;
       spriteHandBehind = spriteHandsLeft;
@@ -315,8 +327,6 @@ class RendererCharacters extends RenderGroup {
       spriteArmBehind = spriteArmLeft;
       spriteShoesFront = spriteShoesRight;
       spriteShoesBehind = spriteShoesLeft;
-      spriteHairInFront = spriteHairBack;
-      spriteHairBehind = spriteHairFront;
     }
 
     final renderSprite = render.sprite;
@@ -386,6 +396,22 @@ class RendererCharacters extends RenderGroup {
       );
       return;
     }
+
+
+    final hairFrame = completingAction
+        ? spriteHairBehind.getFramePercentage(row, actionComplete)
+        : spriteHairBehind.getFrame(row: row, column: animationFrame);
+
+    modulate(
+      sprite: spriteHairBehind,
+      frame: hairFrame,
+      color1: colorHair,
+      color2: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
 
     modulate(
       sprite: spriteArmBehind,
@@ -507,21 +533,6 @@ class RendererCharacters extends RenderGroup {
           ? spriteBodyArm.getFramePercentage(row, actionComplete)
           : spriteBodyArm.getFrame(row: row, column: animationFrame),
       color: color,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    final hairFrame = completingAction
-        ? spriteHairBehind.getFramePercentage(row, actionComplete)
-        : spriteHairBehind.getFrame(row: row, column: animationFrame);
-
-    modulate(
-      sprite: spriteHairBehind,
-      frame: hairFrame,
-      color1: colorHair,
-      color2: color,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
