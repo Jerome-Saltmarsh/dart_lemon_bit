@@ -173,7 +173,7 @@ class IsometricPlayer with IsometricComponent implements Updatable {
     scene.totalCharacters = 0;
   }
 
-  void parsePlayerResponse() {
+  void readNetworkResponsePlayer() {
     switch (parser.readByte()) {
       case PlayerResponse.HeadType:
         readHeadType();

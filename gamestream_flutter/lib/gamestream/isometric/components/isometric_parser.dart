@@ -58,56 +58,49 @@ class IsometricParser with ByteReader, IsometricComponent {
         readApiPlayer();
         break;
       case NetworkResponse.Player:
-        player.parsePlayerResponse();
+        player.readNetworkResponsePlayer();
         break;
       case NetworkResponse.Isometric:
-        readIsometricResponse();
+        readNetworkResponseIsometric();
         break;
       case NetworkResponse.GameObject:
-        readGameObject();
+        readNetworkResponseGameObject();
         break;
       case NetworkResponse.Projectiles:
-        readProjectiles();
+        readNetworkResponseProjectiles();
         break;
       case NetworkResponse.Game_Event:
-        readGameEvent();
+        readNetworkResponseGameEvent();
         break;
       case NetworkResponse.Player_Event:
-        readPlayerEvent();
+        readNetworkResponsePlayerEvent();
         break;
       case NetworkResponse.Game_Time:
-        readGameTime();
+        readNetworkResponseGameTime();
         break;
       case NetworkResponse.Game_Type:
-        final index = readByte();
-        if (index >= GameType.values.length){
-          throw Exception('invalid game type index $index');
-        }
-        options.gameType.value = GameType.values[index];
+        readNetworkResponseGameType();
         break;
       case NetworkResponse.Environment:
-        readServerResponseEnvironment();
+        readNetworkResponseEnvironment();
         break;
       case NetworkResponse.Node:
-        readNode();
+        readNetworkResponseNode();
         break;
       case NetworkResponse.Player_Target:
-        readIsometricPosition(player.target);
+        readNetworkResponsePlayerTarget();
         break;
       case NetworkResponse.Store_Items:
-        readStoreItems();
+        readNetworkResponseStoreItems();
         break;
       case NetworkResponse.Npc_Talk:
-        readNpcTalk();
+        readNetworkResponseNpcTalk();
         break;
       case NetworkResponse.Weather:
-        readWeather();
+        readNetworkResponseWeather();
         break;
       case NetworkResponse.Game_Properties:
-        readGameProperties();
-        break;
-      case NetworkResponse.Map_Coordinate:
-        readMapCoordinate();
+        readNetworkResponseGameProperties();
         break;
       case NetworkResponse.Editor_GameObject_Selected:
         readEditorGameObjectSelected();
@@ -156,8 +149,20 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
+  void readNetworkResponsePlayerTarget() {
+    readIsometricPosition(player.target);
+  }
 
-  void readIsometricResponse() {
+  void readNetworkResponseGameType() {
+    final index = readByte();
+    if (index >= GameType.values.length){
+      throw Exception('invalid game type index $index');
+    }
+    options.gameType.value = GameType.values[index];
+  }
+
+
+  void readNetworkResponseIsometric() {
     switch (readByte()) {
 
       case IsometricResponse.Selected_Collider:
@@ -352,7 +357,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readServerResponseEnvironment() {
+  void readNetworkResponseEnvironment() {
     switch (readByte()) {
       case NetworkResponseEnvironment.Rain:
         environment.rainType.value = readByte();
@@ -383,7 +388,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readGameObject() {
+  void readNetworkResponseGameObject() {
     final id = readUInt16();
     final gameObject = scene.findOrCreateGameObject(id);
     gameObject.active = readBool();
@@ -482,10 +487,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readPlayerHealth() {
     player.health.value = readUInt16();
     player.maxHealth.value = readUInt16();
-  }
-
-  void readMapCoordinate() {
-    readByte(); // DO NOT DELETE
   }
 
   void readEditorGameObjectSelected() {
@@ -600,7 +601,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readNpcTalk() {
+  void readNetworkResponseNpcTalk() {
     player.npcTalk.value = readString();
     final totalOptions = readByte();
     final options = <String>[];
@@ -610,13 +611,13 @@ class IsometricParser with ByteReader, IsometricComponent {
     player.npcTalkOptions.value = options;
   }
 
-  void readGameProperties() {
+  void readNetworkResponseGameProperties() {
     scene.sceneEditable.value = readBool();
     options.sceneName.value = readString();
     options.gameRunning.value = readBool();
   }
 
-  void readWeather() {
+  void readNetworkResponseWeather() {
     environment.rainType.value = readByte();
     environment.weatherBreeze.value = readBool();
     environment.lightningType.value = readByte();
@@ -624,7 +625,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     environment.myst.value = readByte();
   }
 
-  void readStoreItems() {
+  void readNetworkResponseStoreItems() {
     final length = readUInt16();
     if (player.storeItems.value.length != length){
       player.storeItems.value = Uint16List(length);
@@ -634,7 +635,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readNode() {
+  void readNetworkResponseNode() {
     print('parser.readNode()');
     final nodeIndex = readUInt24();
     final nodeType = readByte();
@@ -650,13 +651,13 @@ class IsometricParser with ByteReader, IsometricComponent {
     readIsometricPosition(player.abilityTarget);
   }
 
-  void readGameTime() {
+  void readNetworkResponseGameTime() {
     environment.seconds.value = readUInt24();
   }
 
   double readDouble() => readInt16().toDouble();
 
-  void readGameEvent(){
+  void readNetworkResponseGameEvent(){
     final type = readByte();
     final x = readDouble();
     final y = readDouble();
@@ -665,7 +666,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     events.onGameEvent(type, x, y, z, angle);
   }
 
-  void readProjectiles(){
+  void readNetworkResponseProjectiles(){
     final projectiles = scene.projectiles;
     scene.totalProjectiles = readUInt16();
     while (scene.totalProjectiles >= projectiles.length){
@@ -707,7 +708,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readPlayerEvent() {
+  void readNetworkResponsePlayerEvent() {
     events.onPlayerEvent(readByte());
   }
 

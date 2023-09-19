@@ -11,7 +11,6 @@ class NetworkResponse {
   static const Weather = 11;
   static const Game_Properties = 12;
   static const Npc_Talk = 13;
-  static const Map_Coordinate = 14;
   static const Editor_GameObject_Selected = 16;
   static const GameObject = 17;
   static const Environment = 18;
@@ -44,7 +43,6 @@ class NetworkResponse {
       Weather: 'Weather',
       Game_Properties: 'Game_Properties',
       Npc_Talk: 'Npc_Talk',
-      Map_Coordinate: 'Map_Coordinate',
       Isometric_Characters: 'Isometric Characters',
       Editor_GameObject_Selected: 'Editor_GameObject_Selected',
       GameObject: 'GameObject',
