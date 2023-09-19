@@ -21,7 +21,7 @@ class NetworkResponse {
   static const Info = 26;
   static const Amulet = 32;
   static const Isometric = 33;
-  static const Isometric_Characters = 34;
+  static const Characters = 34;
   static const FPS = 35;
   static const Sort_GameObjects = 36;
   static const Player = 37;
@@ -43,7 +43,7 @@ class NetworkResponse {
       Weather: 'Weather',
       Game_Properties: 'Game_Properties',
       Npc_Talk: 'Npc_Talk',
-      Isometric_Characters: 'Isometric Characters',
+      Characters: 'Isometric Characters',
       Editor_GameObject_Selected: 'Editor_GameObject_Selected',
       GameObject: 'GameObject',
       Environment: 'Environment',

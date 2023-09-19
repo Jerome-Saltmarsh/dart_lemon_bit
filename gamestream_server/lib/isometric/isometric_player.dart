@@ -416,7 +416,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writeCharacters() {
-    writeByte(NetworkResponse.Isometric_Characters);
+    writeByte(NetworkResponse.Characters);
 
     const padding = 100.0;
     final characters = game.characters;

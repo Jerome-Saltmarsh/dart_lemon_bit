@@ -27,6 +27,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     index = 0;
     values = bytes;
     bufferSize.value = bytes.length;
+    options.rendersSinceUpdate.value = 0;
     final length = bytes.length;
 
     while (index < length) {
@@ -48,17 +49,15 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readServerResponse(int serverResponse){
-    options.rendersSinceUpdate.value = 0;
-
     switch (serverResponse) {
-      case NetworkResponse.Isometric_Characters:
-        readIsometricCharacters();
+      case NetworkResponse.Characters:
+        readNetworkResponseCharacters();
         break;
       case NetworkResponse.Api_Player:
-        readApiPlayer();
+        readNetworkResponseApiPlayer();
         break;
       case NetworkResponse.Player:
-        player.readNetworkResponsePlayer();
+        readNetworkResponsePlayer();
         break;
       case NetworkResponse.Isometric:
         readNetworkResponseIsometric();
@@ -103,10 +102,10 @@ class IsometricParser with ByteReader, IsometricComponent {
         readNetworkResponseGameProperties();
         break;
       case NetworkResponse.Editor_GameObject_Selected:
-        readEditorGameObjectSelected();
+        readNetworkResponseEditorGameObjectSelected();
         break;
       case NetworkResponse.Info:
-        readServerResponseInfo();
+        readNetworkResponseInfo();
         break;
       case NetworkResponse.Amulet:
         readNetworkResponseAmulet();
@@ -115,38 +114,64 @@ class IsometricParser with ByteReader, IsometricComponent {
         readNetworkResponseAmuletPlayer();
         break;
       case NetworkResponse.Download_Scene:
-        final name = readString();
-        final length = readUInt16();
-        final bytes = readBytes(length);
-        downloadBytes(bytes: bytes, name: '$name.scene');
+        readNetworkResponseDownloadScene();
         break;
       case NetworkResponse.GameObject_Deleted:
-        scene.removeGameObjectById(readUInt16());
+        readNetworkResponseGameObjectDeleted();
         break;
       case NetworkResponse.Game_Error:
-        final errorTypeIndex = readByte();
-        options.error.value = GameError.fromIndex(errorTypeIndex);
-        return;
+        readNetworkResponseGameError();
+        break;
       case NetworkResponse.FPS:
-        options.serverFPS.value = readUInt16();
-        return;
+        readNetworkResponseFPS();
+        break;
       case NetworkResponse.Sort_GameObjects:
-        scene.gameObjects.sort();
+        readNetworkResponseSortGameObjects();
         break;
       case NetworkResponse.Scene:
-        parseServerResponseScene();
+        readNetworkResponseScene();
         break;
       case NetworkResponse.Editor_Response:
-        parseEditorResponse();
+        readNetworkResponseEditorResponse();
         break;
-
-
       default:
-        print('read error; index: $index');
-        print(values);
-        network.websocket.disconnect();
+        readNetworkResponseDefault();
         return;
     }
+  }
+
+  void readNetworkResponsePlayer() {
+    player.readNetworkResponsePlayer();
+  }
+
+  void readNetworkResponseDefault() {
+    print('read error; index: $index');
+    print(values);
+    network.websocket.disconnect();
+  }
+
+  void readNetworkResponseSortGameObjects() {
+    scene.gameObjects.sort();
+  }
+
+  void readNetworkResponseFPS() {
+    options.serverFPS.value = readUInt16();
+  }
+
+  void readNetworkResponseGameError() {
+    final errorTypeIndex = readByte();
+    options.error.value = GameError.fromIndex(errorTypeIndex);
+  }
+
+  void readNetworkResponseGameObjectDeleted() {
+    scene.removeGameObjectById(readUInt16());
+  }
+
+  void readNetworkResponseDownloadScene() {
+    final name = readString();
+    final length = readUInt16();
+    final bytes = readBytes(length);
+    downloadBytes(bytes: bytes, name: '$name.scene');
   }
 
   void readNetworkResponsePlayerTarget() {
@@ -399,7 +424,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     readIsometricPosition(gameObject);
   }
 
-  void readApiPlayer() {
+  void readNetworkResponseApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Aim_Target_Position:
@@ -476,7 +501,7 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
 
-  void readServerResponseInfo() {
+  void readNetworkResponseInfo() {
     final info = readString();
     print(info);
   }
@@ -489,7 +514,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     player.maxHealth.value = readUInt16();
   }
 
-  void readEditorGameObjectSelected() {
+  void readNetworkResponseEditorGameObjectSelected() {
     // readVector3(isometricEngine.editor.gameObject);
 
     final id = readUInt16();
@@ -512,7 +537,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
   }
 
-  void readIsometricCharacters(){
+  void readNetworkResponseCharacters(){
     scene.totalCharacters = 0;
 
     while (true) {
@@ -734,7 +759,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     return valueMap;
   }
 
-  void parseServerResponseScene() {
+  void readNetworkResponseScene() {
     switch (readByte()){
       case NetworkResponseScene.Marks:
         final length = readUInt16();
@@ -747,7 +772,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void parseEditorResponse() {
+  void readNetworkResponseEditorResponse() {
     switch (readByte()){
       case NetworkResponseEditor.Selected_Mark_List_Index:
         editor.selectedMarkListIndex.value = readInt16();
