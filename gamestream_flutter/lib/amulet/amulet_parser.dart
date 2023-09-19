@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_par
 
 extension AmuletParser on IsometricParser {
 
-  void readMMOResponse(){
+  void readNetworkResponseAmulet(){
      switch (readByte()){
        case NetworkResponseAmulet.Player_Interacting:
          amulet.playerInteracting.value = readBool();
