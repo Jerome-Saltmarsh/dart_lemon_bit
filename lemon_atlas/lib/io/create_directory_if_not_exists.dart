@@ -2,10 +2,10 @@
 import 'dart:io';
 
 
-Future createDirectoryIfNotExists(String directoryPath) async {
+void createDirectoryIfNotExists(String directoryPath) {
   final directory = Directory(directoryPath);
-  if (await directory.exists()) {
+  if (directory.existsSync()) {
     return;
   }
-  await directory.create(recursive: true);
+  directory.createSync(recursive: true);
 }

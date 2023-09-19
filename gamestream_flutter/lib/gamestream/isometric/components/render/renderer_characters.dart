@@ -303,7 +303,7 @@ class RendererCharacters extends RenderGroup {
       InputDirection.Down_Left,
     ].contains(direction);
 
-    render.textPosition(character, fringeInFront, offsetY: -100);
+    // render.textPosition(character, fringeInFront, offsetY: -100);
 
     if (fringeInFront){
       spriteHairInFront = spriteHairFront;

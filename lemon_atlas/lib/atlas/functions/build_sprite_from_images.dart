@@ -31,6 +31,10 @@ Sprite buildSpriteFromSrcImages({
     dst: dst,
   );
 
+  if (dstImage.isEmpty){
+    throw Exception('dstImage.isEmpty');
+  }
+
   final spriteWidth = srcImages.first.width;
   final spriteHeight = srcImages.first.height;
 

@@ -16,6 +16,6 @@ Future<String?> loadAndExport({
 
   return files.length == 1
       ? exportFile(files, rows, columns)
-      : exportFiles(files: files, rows: rows, columns: columns);
+      : await exportFiles(files: files, rows: rows, columns: columns);
 }
 

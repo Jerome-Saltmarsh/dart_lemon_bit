@@ -33,7 +33,7 @@ Future<String> exportFiles({
     name = 'export';
   }
 
-  return await exportSprite(
+  return exportSprite(
       sprite: buildSpriteFromSrcImages(
           srcImages: images,
           rows: rows,

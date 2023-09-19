@@ -13,13 +13,12 @@ Future buildCharacterKid({
   final perspectiveIso = perspective == Perspective.isometric;
   final renderDir = perspectiveIso ? directoryRendersIsometric : directoryRendersFront;
   final directory = '$renderDir/kid/${part.groupName}/${part.fileName}/${state.name}';
-  final srcImages =
-      await loadImagesFomDirectory(directory, total: perspectiveIso ? 64 : 8);
+  final srcImages = await loadImagesFomDirectory(directory);
 
   final sprite = buildSpriteFromSrcImages(
     srcImages: srcImages,
     rows: 8,
-    columns: perspectiveIso ? 8 : 1,
+    columns: srcImages.length ~/ 8,
   );
 
   final outputDirectory = perspectiveIso
