@@ -20,7 +20,7 @@ class SendAmuletRequest {
   void toggleTalentsDialog() =>
       sendAmuletRequest(NetworkRequestAmulet.Toggle_Skills_Dialog);
 
-  void upgradeTalent(MMOTalentType talentType) =>
+  void upgradeTalent(AmuletTalentType talentType) =>
       sendAmuletRequest(NetworkRequestAmulet.Upgrade_Talent, talentType.index);
 
   void sendAmuletRequest(NetworkRequestAmulet request, [dynamic message]) =>

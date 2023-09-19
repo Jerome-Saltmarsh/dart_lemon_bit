@@ -1,5 +1,5 @@
 
-enum MMOItemQuality {
+enum AmuletItemQuality {
   Common,
   Unique,
   Rare,

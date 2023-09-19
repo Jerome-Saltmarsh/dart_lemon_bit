@@ -35,7 +35,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       y: 1760,
       z: 24,
       health: 50,
-      team: MmoTeam.Human,
+      team: AmuletTeam.Human,
       weaponType: WeaponType.Unarmed,
       weaponDamage: 1,
       weaponRange: 200,
@@ -64,7 +64,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       weaponRange: 200,
       weaponDamage: 1,
       weaponCooldown: 30,
-      team: MmoTeam.Human,
+      team: AmuletTeam.Human,
       name: "Guard",
     )
       ..invincible = true
@@ -107,7 +107,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   //   super.endCharacterAction(character);
   // }
 
-  static void validate() => MMOItem.values.forEach((item) => item.validate());
+  static void validate() => AmuletItem.values.forEach((item) => item.validate());
 
   void spawnMonstersAtSpawnNodes() {
     final marks = scene.marks;
@@ -131,7 +131,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void spawnFallenAtIndex(int index) {
     characters.add(Character(
-      team: MmoTeam.Monsters,
+      team: AmuletTeam.Monsters,
       x: scene.getIndexX(index),
       y: scene.getIndexY(index),
       z: scene.getIndexZ(index),
@@ -154,7 +154,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void spawnSkeletonArcherAtIndex(int index) {
     characters.add(Character(
-      team: MmoTeam.Monsters,
+      team: AmuletTeam.Monsters,
       x: scene.getIndexX(index),
       y: scene.getIndexY(index),
       z: scene.getIndexZ(index),
@@ -207,7 +207,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
 
     switch (item.attackType) {
-      case MMOAttackType.Fire_Ball:
+      case AmuletAttackType.Fire_Ball:
         spawnProjectileFireball(
           src: character,
           damage: item.damage,
@@ -215,10 +215,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           angle: character.angle,
         );
         break;
-      case MMOAttackType.Melee:
+      case AmuletAttackType.Melee:
         applyAttackTypeMelee(character);
         break;
-      case MMOAttackType.Arrow:
+      case AmuletAttackType.Arrow:
         dispatchGameEvent(
           GameEventType.Bow_Released,
           character.x,
@@ -232,7 +232,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           angle: character.angle,
         );
         break;
-      case MMOAttackType.Bullet:
+      case AmuletAttackType.Bullet:
         spawnProjectile(
           src: character,
           damage: item.damage,
@@ -241,7 +241,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           angle: character.angle,
         );
         break;
-      case MMOAttackType.Frost_Ball:
+      case AmuletAttackType.Frost_Ball:
         spawnProjectile(
           src: character,
           damage: item.damage,
@@ -256,7 +256,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   }
 
-  MMOItemQuality? getRandomItemQuality({
+  AmuletItemQuality? getRandomItemQuality({
       double chanceOfMythical = 0.005,
       double chanceOfRare = 0.015,
       double chanceOfMagic = 0.05,
@@ -266,19 +266,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final value = random.nextDouble();
 
     if (value <= chanceOfMythical) {
-      return MMOItemQuality.Mythical;
+      return AmuletItemQuality.Mythical;
     }
 
     if (value <= chanceOfRare) {
-      return MMOItemQuality.Rare;
+      return AmuletItemQuality.Rare;
     }
 
     if (value <= chanceOfMagic) {
-      return MMOItemQuality.Unique;
+      return AmuletItemQuality.Unique;
     }
 
     if (value <= chanceOfCommon) {
-      return MMOItemQuality.Common;
+      return AmuletItemQuality.Common;
     }
 
     return null;
@@ -320,7 +320,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     return 1;
   }
 
-  void spawnRandomLootAtPosition(Position position, MMOItemQuality quality )=>
+  void spawnRandomLootAtPosition(Position position, AmuletItemQuality quality )=>
       spawnRandomLoot(
         x: position.x,
         y: position.y,
@@ -332,15 +332,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double x,
     required double y,
     required double z,
-    required MMOItemQuality quality,
+    required AmuletItemQuality quality,
   }) => spawnLoot(
       x: x,
       y: y,
       z: z,
-      item: randomItem(MMOItem.findByQuality(quality)),
+      item: randomItem(AmuletItem.findByQuality(quality)),
   );
 
-  void spawnLootAtIndex({required int index, required MMOItem item}) => spawnLoot(
+  void spawnLootAtIndex({required int index, required AmuletItem item}) => spawnLoot(
     x: scene.getIndexX(index),
     y: scene.getIndexY(index),
     z: scene.getIndexZ(index),
@@ -351,7 +351,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double x,
     required double y,
     required double z,
-    required MMOItem item,
+    required AmuletItem item,
   }) {
     gameObjects.add(MMOGameObject(
       x: x,
@@ -402,7 +402,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     switch (nodeType){
       case NodeType.Grass_Long:
         if (randomChance(chanceOfDropItemOnGrassCut)){
-          spawnLootAtIndex(index: nodeIndex, item: MMOItem.Meat_Drumstick);
+          spawnLootAtIndex(index: nodeIndex, item: AmuletItem.Meat_Drumstick);
         }
         break;
     }

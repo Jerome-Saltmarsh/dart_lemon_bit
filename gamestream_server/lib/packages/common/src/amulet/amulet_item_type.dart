@@ -1,4 +1,4 @@
-enum MMOItemType{
+enum AmuletItemType{
   Weapon,
   Head,
   Body,

@@ -442,7 +442,7 @@ class AmuletUI {
         ),
   );
 
-  Widget buildTalent(MMOTalentType talentType){
+  Widget buildTalent(AmuletTalentType talentType){
     final currentLevel = amulet.getTalentLevel(talentType);
     final nextLevel = currentLevel + 1;
     final maxLevel = talentType.maxLevel;
@@ -705,7 +705,7 @@ class AmuletUI {
                     alignment: Alignment.topLeft,
                     child: GridView.count(
                         crossAxisCount: 4,
-                        children: MMOTalentType.values
+                        children: AmuletTalentType.values
                             .map(buildTalent)
                             .toList(growable: false))),
               ],

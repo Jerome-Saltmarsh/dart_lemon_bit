@@ -1,7 +1,7 @@
 import 'package:gamestream_server/packages/common.dart';
 
 class ItemSlot {
-  MMOItem? item;
+  AmuletItem? item;
   var cooldown = 0;
 
   int get health => item?.health ?? 0;

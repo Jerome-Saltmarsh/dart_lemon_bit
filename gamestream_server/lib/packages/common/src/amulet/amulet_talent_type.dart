@@ -1,5 +1,5 @@
 
-enum MMOTalentType {
+enum AmuletTalentType {
    Treasure_Slots(description: 'Unlock Treasure Slot', maxLevel: 3, levelCostMultiplier: 2),
    Ability_Slots (description: 'Unlock Ability Slot', maxLevel: 2),
    Healthy (description: 'Increase Max Health', maxLevel: 5),
@@ -16,7 +16,7 @@ enum MMOTalentType {
 
    final int levelCostMultiplier;
 
-   const MMOTalentType({
+   const AmuletTalentType({
       required this.description,
       this.maxLevel = 1,
       this.levelCostMultiplier = 1,

@@ -4,7 +4,7 @@ import 'package:gamestream_server/isometric.dart';
 class MMOGameObject extends GameObject {
 
   final int frameSpawned;
-  final MMOItem item;
+  final AmuletItem item;
 
   MMOGameObject({
     required super.x,

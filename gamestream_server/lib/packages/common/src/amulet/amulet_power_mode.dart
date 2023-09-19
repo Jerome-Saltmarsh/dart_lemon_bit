@@ -1,4 +1,4 @@
-enum PowerMode {
+enum AmuletPowerMode {
   Equip,
   Self,
   Positional,

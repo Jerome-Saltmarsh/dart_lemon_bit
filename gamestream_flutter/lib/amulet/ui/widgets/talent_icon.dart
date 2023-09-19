@@ -8,7 +8,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 class MMOTalentIcon extends StatelessWidget {
 
-  final MMOTalentType talentType;
+  final AmuletTalentType talentType;
   final double size;
 
   const MMOTalentIcon({

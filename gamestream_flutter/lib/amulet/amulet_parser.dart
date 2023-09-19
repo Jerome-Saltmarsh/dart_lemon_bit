@@ -25,20 +25,20 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Item:
          final index = readUInt16();
          final type = readInt16();
-         final item = type != -1 ? MMOItem.values[type] : null;
+         final item = type != -1 ? AmuletItem.values[type] : null;
          amulet.setItem(index: index, item: item);
          break;
        case NetworkResponseAmulet.Player_Weapon:
          final index = readUInt16();
          final type = readInt16();
          final cooldown = type != -1 ? readUInt16() : 0;
-         final item = type != -1 ? MMOItem.values[type] : null;
+         final item = type != -1 ? AmuletItem.values[type] : null;
          amulet.setWeapon(index: index, item: item, cooldown: cooldown);
          break;
        case NetworkResponseAmulet.Player_Treasure:
          final index = readUInt16();
          final type = readInt16();
-         final item = type != -1 ? MMOItem.values[type] : null;
+         final item = type != -1 ? AmuletItem.values[type] : null;
          amulet.setTreasure(index: index, item: item);
          break;
        case NetworkResponseAmulet.Player_Equipped_Weapon_Index:
@@ -91,8 +91,8 @@ extension AmuletParser on IsometricParser {
      }
   }
 
-  MMOItem? readMMOItem(){
+  AmuletItem? readMMOItem(){
     final mmoItemIndex = readInt16();
-    return mmoItemIndex == -1 ? null : MMOItem.values[mmoItemIndex];
+    return mmoItemIndex == -1 ? null : AmuletItem.values[mmoItemIndex];
   }
 }

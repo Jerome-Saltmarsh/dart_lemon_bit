@@ -38,8 +38,8 @@ class Amulet extends IsometricGame {
   var errorTimer = 0;
   var items = <ItemSlot>[];
 
-  final talentHover = Watch<MMOTalentType?>(null);
-  final itemHover = Watch<MMOItem?>(null);
+  final talentHover = Watch<AmuletTalentType?>(null);
+  final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
   final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Weapons));
   final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasures));
@@ -62,7 +62,7 @@ class Amulet extends IsometricGame {
   final playerTalentPoints = Watch(0);
   final playerTalentDialogOpen = Watch(false);
   final playerInventoryOpen = Watch(false);
-  final playerTalents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
+  final playerTalents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
   final playerTalentsChangedNotifier = Watch(0);
 
   Amulet(){
@@ -107,7 +107,7 @@ class Amulet extends IsometricGame {
 
   void setWeapon({
     required int index,
-    required MMOItem? item,
+    required AmuletItem? item,
     required int cooldown,
   }){
     final slot = weapons[index];
@@ -115,11 +115,11 @@ class Amulet extends IsometricGame {
     slot.cooldown.value = cooldown;
   }
 
-  void setTreasure({required int index, required MMOItem? item}){
+  void setTreasure({required int index, required AmuletItem? item}){
     treasures[index].item.value = item;
   }
 
-  void setItem({required int index, required MMOItem? item}){
+  void setItem({required int index, required AmuletItem? item}){
     items[index].item.value = item;
   }
 
@@ -216,10 +216,10 @@ class Amulet extends IsometricGame {
     talentHover.value = null;
   }
 
-  int getTalentLevel(MMOTalentType talent) =>
+  int getTalentLevel(AmuletTalentType talent) =>
       playerTalents[talent.index];
 
-  bool maxLevelReached(MMOTalentType talent) =>
+  bool maxLevelReached(AmuletTalentType talent) =>
       getTalentLevel(talent) >= talent.maxLevel;
 
   void reportItemSlotDragged({

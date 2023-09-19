@@ -6,7 +6,7 @@ import 'package:golden_ratio/constants.dart';
 
 class MMOItemImage extends StatelessWidget {
   final double size;
-  final MMOItem item;
+  final AmuletItem item;
   final double scale;
 
   MMOItemImage({

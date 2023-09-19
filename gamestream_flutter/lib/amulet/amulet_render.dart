@@ -32,7 +32,7 @@ extension AmuletRender on Amulet {
     renderPlayerItemRange(item);
   }
 
-  void renderPlayerItemRange(MMOItem item) {
+  void renderPlayerItemRange(AmuletItem item) {
     if (item.range <= 0) return;
     engine.color = Colors.white;
     render.circleOutline(
@@ -54,7 +54,7 @@ extension AmuletRender on Amulet {
       return;
 
     final mode = activatedPower.attackType?.mode;
-    if (mode == PowerMode.Positional) {
+    if (mode == AmuletPowerMode.Positional) {
       engine.color = Colors.white;
       render.circleOutlineAtPosition(
         position: activePowerPosition,

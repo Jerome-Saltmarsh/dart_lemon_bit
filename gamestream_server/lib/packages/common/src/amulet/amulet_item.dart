@@ -3,163 +3,163 @@ import '../../src.dart';
 import '../isometric/treasure_type.dart';
 
 
-enum MMOItem {
+enum AmuletItem {
   Blink_Dagger(
-    quality: MMOItemQuality.Rare,
+    quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
     cooldown: 40,
     range: 180,
-    attackType: MMOAttackType.Blink,
+    attackType: AmuletAttackType.Blink,
     actionFrame: 15,
     performDuration: 20,
   ),
   Rusty_Old_Sword(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Weapon,
       subType: WeaponType.Sword,
       cooldown: 40,
       damage: 2,
       range: 80,
-      attackType: MMOAttackType.Melee,
+      attackType: AmuletAttackType.Melee,
       actionFrame: 20,
       performDuration: 25,
   ),
   Staff_Of_Flames(
-      quality: MMOItemQuality.Unique,
+      quality: AmuletItemQuality.Unique,
       type: ItemType.Weapon,
       subType: WeaponType.Staff,
       cooldown: 40,
       damage: 2,
       range: 180,
-      attackType: MMOAttackType.Fire_Ball,
+      attackType: AmuletAttackType.Fire_Ball,
       actionFrame: 20,
       performDuration: 25,
   ),
   Staff_Of_Frozen_Lake(
-      quality: MMOItemQuality.Rare,
+      quality: AmuletItemQuality.Rare,
       type: ItemType.Weapon,
       subType: WeaponType.Staff,
       cooldown: 40,
       damage: 2,
       range: 180,
-      attackType: MMOAttackType.Frost_Ball,
+      attackType: AmuletAttackType.Frost_Ball,
       actionFrame: 15,
       performDuration: 20
   ),
   Old_Bow(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Weapon,
       subType: WeaponType.Bow,
       cooldown: 40,
       damage: 1,
       range: 200,
-      attackType: MMOAttackType.Arrow,
+      attackType: AmuletAttackType.Arrow,
       actionFrame: 20,
       performDuration: 30,
   ),
   Holy_Bow(
-      quality: MMOItemQuality.Rare,
+      quality: AmuletItemQuality.Rare,
       type: ItemType.Weapon,
       subType: WeaponType.Bow,
       cooldown: 20,
       damage: 100,
       range: 300,
-      attackType: MMOAttackType.Arrow,
+      attackType: AmuletAttackType.Arrow,
       actionFrame: 12,
       performDuration: 25,
   ),
   Steel_Helmet(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Helm,
       subType: HelmType.Steel,
       health: 10,
   ),
   Wizards_Hat(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Helm,
       subType: HelmType.Wizard_Hat,
       health: 10,
   ),
   Travellers_Pants(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Legs,
       subType: LegType.Leather,
       health: 2,
       movement: 0.1,
   ),
   Gauntlet(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Hand,
       subType: HandType.Gauntlets,
       health: 2,
   ),
   Squires_Pants(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Legs,
       subType: LegType.Leather,
       health: 3,
   ),
   Knights_Pants(
-      quality: MMOItemQuality.Unique,
+      quality: AmuletItemQuality.Unique,
       type: ItemType.Legs,
       subType: LegType.Leather,
       health: 5,
       movement: -0.1,
   ),
   Worn_Shirt_Blue (
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Body,
       subType: BodyType.Shirt_Blue,
       health: 1,
   ),
   Basic_Leather_Armour (
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Body,
       subType: BodyType.Leather_Armour,
       health: 5,
   ),
   Shoe_Leather_Boots (
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Shoes,
       subType: ShoeType.Leather_Boots,
       health: 3,
   ),
   Shoe_Iron_Plates (
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Shoes,
       subType: ShoeType.Iron_Plates,
       health: 6,
   ),
   Health_Potion(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Consumable,
       subType: ConsumableType.Health_Potion,
       health: 10,
       consumable: true,
   ),
   Treasure_Box(
-    quality: MMOItemQuality.Common,
+    quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Treasure_Box,
     collectable: false,
     experience: 3,
   ),
   Meat_Drumstick(
-      quality: MMOItemQuality.Common,
+      quality: AmuletItemQuality.Common,
       type: ItemType.Consumable,
       subType: ConsumableType.Meat_Drumstick,
       health: 4,
       collectable: false,
   ),
   Lost_Pendant_Of_Dreams(
-    quality: MMOItemQuality.Mythical,
+    quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     health: 100,
   ),
   Sapphire_Pendant(
-      quality: MMOItemQuality.Rare,
+      quality: AmuletItemQuality.Rare,
       type: ItemType.Treasure,
       subType: TreasureType.Pendant_1,
       health: 5,
@@ -175,12 +175,12 @@ enum MMOItem {
   final bool consumable;
   final double range;
   final double movement;
-  final MMOAttackType? attackType;
-  final MMOItemQuality quality;
+  final AmuletAttackType? attackType;
+  final AmuletItemQuality quality;
   final int actionFrame;
   final int performDuration;
 
-  const MMOItem({
+  const AmuletItem({
     required this.type,
     required this.subType,
     required this.quality,
@@ -213,20 +213,20 @@ enum MMOItem {
 
   bool get isTreasure => type == ItemType.Treasure;
 
-  static final valuesCommon = _findByQuality(MMOItemQuality.Common);
-  static final valuesUnique = _findByQuality(MMOItemQuality.Unique);
-  static final valuesRare = _findByQuality(MMOItemQuality.Rare);
-  static final valuesMythical = _findByQuality(MMOItemQuality.Mythical);
+  static final valuesCommon = _findByQuality(AmuletItemQuality.Common);
+  static final valuesUnique = _findByQuality(AmuletItemQuality.Unique);
+  static final valuesRare = _findByQuality(AmuletItemQuality.Rare);
+  static final valuesMythical = _findByQuality(AmuletItemQuality.Mythical);
 
-  static List<MMOItem> _findByQuality(MMOItemQuality quality) =>
+  static List<AmuletItem> _findByQuality(AmuletItemQuality quality) =>
       values.where((item) => item.quality == quality).toList(growable: false);
 
-  static List<MMOItem> findByQuality(MMOItemQuality quality) =>
+  static List<AmuletItem> findByQuality(AmuletItemQuality quality) =>
         switch (quality) {
-          MMOItemQuality.Common => valuesCommon,
-          MMOItemQuality.Unique => valuesUnique,
-          MMOItemQuality.Rare => valuesRare,
-          MMOItemQuality.Mythical => valuesMythical,
+          AmuletItemQuality.Common => valuesCommon,
+          AmuletItemQuality.Unique => valuesUnique,
+          AmuletItemQuality.Rare => valuesRare,
+          AmuletItemQuality.Mythical => valuesMythical,
         };
 
   void validate(){

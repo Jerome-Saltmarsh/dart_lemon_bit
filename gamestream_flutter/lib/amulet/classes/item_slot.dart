@@ -5,7 +5,7 @@ import 'package:lemon_watch/src.dart';
 class ItemSlot {
   final int index;
   final SlotType slotType;
-  final item = Watch<MMOItem?>(null);
+  final item = Watch<AmuletItem?>(null);
   final cooldown = Watch(0);
 
   ItemSlot({required this.slotType, required this.index});

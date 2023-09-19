@@ -62,11 +62,11 @@ extension MMORequestHandler on Connection {
       case NetworkRequestAmulet.Upgrade_Talent:
         final index = parseArg2(arguments);
         if (index == null) return;
-        if (!isValidIndex(index, MMOTalentType.values)){
+        if (!isValidIndex(index, AmuletTalentType.values)){
           errorInvalidClientRequest();
           return;
         }
-        final mmoTalentType = MMOTalentType.values[index];
+        final mmoTalentType = AmuletTalentType.values[index];
         player.upgradeTalent(mmoTalentType);
         break;
     }

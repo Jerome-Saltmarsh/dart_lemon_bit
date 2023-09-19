@@ -1,7 +1,6 @@
 
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/packages.dart';
-import 'package:gamestream_server/packages/common/src/amulet/network/responses/network_response_amulet.dart';
 
 import 'item_slot.dart';
 import 'amulet_game.dart';
@@ -24,7 +23,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot());
   final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot());
-  final talents = List.generate(MMOTalentType.values.length, (index) => 0, growable: false);
+  final talents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
 
   final equippedHelm = ItemSlot();
   final equippedBody = ItemSlot();
@@ -51,26 +50,26 @@ class AmuletPlayer extends IsometricPlayer {
     required super.x,
     required super.y,
     required super.z,
-  }) : super(game: game, health: 10, team: MmoTeam.Human) {
+  }) : super(game: game, health: 10, team: AmuletTeam.Human) {
     controlsCanTargetEnemies = true;
     characterType = CharacterType.Kid;
     hurtable = false;
     hurtStateBusy = false;
     setItemsLength(itemLength);
-    addItem(MMOItem.Health_Potion);
-    addItem(MMOItem.Sapphire_Pendant);
-    addItem(MMOItem.Steel_Helmet);
-    addItem(MMOItem.Shoe_Leather_Boots);
+    addItem(AmuletItem.Health_Potion);
+    addItem(AmuletItem.Sapphire_Pendant);
+    addItem(AmuletItem.Steel_Helmet);
+    addItem(AmuletItem.Shoe_Leather_Boots);
 
-    addItemToEmptyWeaponSlot(MMOItem.Rusty_Old_Sword);
-    addItemToEmptyWeaponSlot(MMOItem.Staff_Of_Frozen_Lake);
-    addItemToEmptyWeaponSlot(MMOItem.Holy_Bow);
-    addItemToEmptyWeaponSlot(MMOItem.Blink_Dagger);
+    addItemToEmptyWeaponSlot(AmuletItem.Rusty_Old_Sword);
+    addItemToEmptyWeaponSlot(AmuletItem.Staff_Of_Frozen_Lake);
+    addItemToEmptyWeaponSlot(AmuletItem.Holy_Bow);
+    addItemToEmptyWeaponSlot(AmuletItem.Blink_Dagger);
 
-    equipBody(MMOItem.Basic_Leather_Armour);
-    equipLegs(MMOItem.Travellers_Pants);
-    // equipShoes(MMOItem.Shoe_Leather_Boots);
-    // equipHandRight(MMOItem.Gauntlet);
+    equipBody(AmuletItem.Basic_Leather_Armour);
+    equipLegs(AmuletItem.Travellers_Pants);
+    // equipShoes(AmuletItem.Shoe_Leather_Boots);
+    // equipHandRight(AmuletItem.Gauntlet);
     health = maxHealth;
     equippedWeaponIndex = 0;
     characterCreated = false;
@@ -149,8 +148,8 @@ class AmuletPlayer extends IsometricPlayer {
       health += treasure.health;
     }
 
-    final talentHealthLevel = talents[MMOTalentType.Healthy.index];
-    health += talentHealthLevel * MMOTalentType.Healthy_Health_Per_Level;
+    final talentHealthLevel = talents[AmuletTalentType.Healthy.index];
+    health += talentHealthLevel * AmuletTalentType.Healthy_Health_Per_Level;
     return health;
   }
 
@@ -284,7 +283,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeItemLength(value);
   }
 
-  void addItemToEmptyWeaponSlot(MMOItem item) {
+  void addItemToEmptyWeaponSlot(AmuletItem item) {
     final emptyIndex = getEmptyWeaponIndex();
     if (emptyIndex == -1) {
       reportInventoryFull();
@@ -297,7 +296,7 @@ class AmuletPlayer extends IsometricPlayer {
     );
   }
 
-  bool addItem(MMOItem item){
+  bool addItem(AmuletItem item){
 
     if (deadOrBusy)
       return false;
@@ -322,7 +321,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   void setWeapon({
     required int index,
-    required MMOItem? item,
+    required AmuletItem? item,
     required int cooldown,
   }){
     if (!isValidWeaponIndex(index)) {
@@ -337,7 +336,7 @@ class AmuletPlayer extends IsometricPlayer {
     writePlayerWeapon(index);
   }
 
-  void setTreasure({required int index, required MMOItem? item}){
+  void setTreasure({required int index, required AmuletItem? item}){
     if (deadOrBusy)
       return;
 
@@ -355,7 +354,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   void setItem({
     required int index,
-    required MMOItem? item,
+    required AmuletItem? item,
     required int cooldown,
   }){
     if (!isValidItemIndex(index)) {
@@ -496,7 +495,7 @@ class AmuletPlayer extends IsometricPlayer {
     spawnItem(item);
   }
 
-  void spawnItem(MMOItem item){
+  void spawnItem(AmuletItem item){
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
     game.spawnLoot(
@@ -555,35 +554,35 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     switch (attackType.mode) {
-      case PowerMode.Equip:
+      case AmuletPowerMode.Equip:
         equippedWeaponIndex = index;
         deselectActivatedPower();
         if (!controlsCanTargetEnemies){
           // useEquippedWeapon();
         }
         break;
-      case PowerMode.Positional:
+      case AmuletPowerMode.Positional:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case PowerMode.Targeted_Ally:
+      case AmuletPowerMode.Targeted_Ally:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case PowerMode.Targeted_Enemy:
+      case AmuletPowerMode.Targeted_Enemy:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case PowerMode.Self:
+      case AmuletPowerMode.Self:
         // TODO CASTE STRAIGHT AWAY
         break;
     }
@@ -692,7 +691,7 @@ class AmuletPlayer extends IsometricPlayer {
      npcOptions[index].action();
   }
 
-  void equipHelm(MMOItem? item){
+  void equipHelm(AmuletItem? item){
     if (deadOrBusy)
       return;
 
@@ -717,7 +716,7 @@ class AmuletPlayer extends IsometricPlayer {
     helmType = item.subType;
   }
 
-  void equipBody(MMOItem? item){
+  void equipBody(AmuletItem? item){
     if (deadOrBusy)
       return;
 
@@ -743,7 +742,7 @@ class AmuletPlayer extends IsometricPlayer {
     bodyType = item.subType;
   }
 
-  void equipLegs(MMOItem? item){
+  void equipLegs(AmuletItem? item){
     if (deadOrBusy)
       return;
 
@@ -767,7 +766,7 @@ class AmuletPlayer extends IsometricPlayer {
     legsType = item.subType;
   }
 
-  void equipHandLeft(MMOItem? item){
+  void equipHandLeft(AmuletItem? item){
     if (deadOrBusy)
       return;
 
@@ -792,7 +791,7 @@ class AmuletPlayer extends IsometricPlayer {
     handTypeLeft = item.subType;
   }
 
-  void equipHandRight(MMOItem? item){
+  void equipHandRight(AmuletItem? item){
     if (deadOrBusy)
       return;
 
@@ -817,7 +816,7 @@ class AmuletPlayer extends IsometricPlayer {
     handTypeRight = item.subType;
   }
 
-  void equipShoes(MMOItem? item){
+  void equipShoes(AmuletItem? item){
     if (deadOrBusy)
       return;
 
@@ -842,7 +841,7 @@ class AmuletPlayer extends IsometricPlayer {
     shoeType = item.subType;
   }
 
-  void pickupItem(MMOItem item) {
+  void pickupItem(AmuletItem item) {
 
     if (item.health > 0){
       health += item.health;
@@ -891,15 +890,15 @@ class AmuletPlayer extends IsometricPlayer {
   void writeEquipped(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped);
-    writeMMOItem(equippedHelm.item);
-    writeMMOItem(equippedBody.item);
-    writeMMOItem(equippedLegs.item);
-    writeMMOItem(equippedHandLeft.item);
-    writeMMOItem(equippedHandRight.item);
-    writeMMOItem(equippedShoe.item);
+    writeAmuletItem(equippedHelm.item);
+    writeAmuletItem(equippedBody.item);
+    writeAmuletItem(equippedLegs.item);
+    writeAmuletItem(equippedHandLeft.item);
+    writeAmuletItem(equippedHandRight.item);
+    writeAmuletItem(equippedShoe.item);
   }
 
-  void writeMMOItem(MMOItem? value){
+  void writeAmuletItem(AmuletItem? value){
     if (value == null){
       writeInt16(-1);
     } else{
@@ -957,7 +956,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeInt16(treasure.index);
   }
 
-  void writePlayerItem(int index, MMOItem? item) {
+  void writePlayerItem(int index, AmuletItem? item) {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Item);
     writeUInt16(index);
@@ -1040,7 +1039,7 @@ class AmuletPlayer extends IsometricPlayer {
     return -1;
   }
 
-  void upgradeTalent(MMOTalentType talent) {
+  void upgradeTalent(AmuletTalentType talent) {
 
      final currentLevel = talents[talent.index];
 
@@ -1062,7 +1061,7 @@ class AmuletPlayer extends IsometricPlayer {
      talentPoints -= cost;
      writePlayerTalents();
 
-     if (talent == MMOTalentType.Healthy){
+     if (talent == AmuletTalentType.Healthy){
        health = maxHealth;
      }
 
@@ -1113,15 +1112,15 @@ class AmuletPlayer extends IsometricPlayer {
       throw Exception();
 
     switch (attackType.mode) {
-      case PowerMode.Equip:
+      case AmuletPowerMode.Equip:
         throw Exception();
-      case PowerMode.Self:
+      case AmuletPowerMode.Self:
         setCharacterStateStriking(
             actionFrame: item.actionFrame,
             duration: item.performDuration,
         );
         break;
-      case PowerMode.Targeted_Enemy:
+      case AmuletPowerMode.Targeted_Enemy:
         if (target == null) {
           deselectActivatedPower();
           return;
@@ -1132,7 +1131,7 @@ class AmuletPlayer extends IsometricPlayer {
             duration: item.performDuration,
         );
         break;
-      case PowerMode.Targeted_Ally:
+      case AmuletPowerMode.Targeted_Ally:
         if (target == null) {
           deselectActivatedPower();
           return;
@@ -1142,7 +1141,7 @@ class AmuletPlayer extends IsometricPlayer {
           duration: item.performDuration,
         );
         break;
-      case PowerMode.Positional:
+      case AmuletPowerMode.Positional:
         // weaponState = WeaponState.Performing;
         setCharacterStateStriking(
             duration: item.performDuration,
@@ -1182,7 +1181,7 @@ class AmuletPlayer extends IsometricPlayer {
       }
 
       switch (attackType) {
-        case MMOAttackType.Blink:
+        case AmuletAttackType.Blink:
           game.dispatchGameEvent(GameEventType.Blink_Depart, x, y, z);
           x = activePowerX;
           y = activePowerY;
@@ -1237,7 +1236,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (attackType == null)
       return;
 
-    if (attackType.mode == PowerMode.Positional) {
+    if (attackType.mode == AmuletPowerMode.Positional) {
       final mouseDistance = getMouseDistance();
       final maxRange = activeAbility.range;
       if (mouseDistance <= maxRange){
@@ -1262,7 +1261,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeDouble(activePowerZ);
   }
 
-  MMOItem? getWeaponAtIndex(int index) =>
+  AmuletItem? getWeaponAtIndex(int index) =>
       isValidIndex(index, weapons) ? weapons[index].item : null;
 
 
@@ -1302,7 +1301,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   void setSlot({
     required ItemSlot slot,
-    required MMOItem? item,
+    required AmuletItem? item,
     required int cooldown,
   }) {
     slot.item = item;

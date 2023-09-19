@@ -34,11 +34,11 @@ class IsometricParser with ByteReader, IsometricComponent {
       readServerResponse(readByte());
     }
 
-    onReadRespondFinished();
+    onReadResponseFinished();
     index = 0;
   }
 
-  void onReadRespondFinished() {
+  void onReadResponseFinished() {
     if (options.renderResponse){
       engine.redrawCanvas();
     }
