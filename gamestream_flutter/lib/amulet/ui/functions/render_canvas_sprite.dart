@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/packages/sprite/render_sprite.dart';
 import 'package:lemon_sprite/lib.dart';
 
-void renderSprite({
+void renderCanvasSprite({
   required Canvas canvas,
   required Sprite? sprite,
   required int row,
@@ -10,6 +10,7 @@ void renderSprite({
   int? color = null,
   double scale = 1.0,
 }) {
+
   if (sprite == null){
     return;
   }

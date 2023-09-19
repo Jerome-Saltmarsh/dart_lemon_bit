@@ -319,9 +319,12 @@ class RendererCharacters extends RenderGroup {
       spriteHairBehind = spriteHairFront;
     }
 
+    final renderSprite = render.sprite;
+    final modulate = render.modulate;
+
     if (renderBottom) {
 
-      render.sprite(
+      renderSprite(
         sprite: spriteShadow,
         frame: completingAction
             ? spriteShadow.getFramePercentage(row, actionComplete)
@@ -333,7 +336,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.modulate(
+      modulate(
         sprite: spriteTorso,
         frame: completingAction
             ? spriteTorso.getFramePercentage(row, actionComplete)
@@ -346,7 +349,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
+      renderSprite(
         sprite: spriteLegs,
         frame: completingAction
             ? spriteLegs.getFramePercentage(row, actionComplete)
@@ -358,7 +361,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
+      renderSprite(
         sprite: spriteShoesBehind,
         frame: completingAction
             ? spriteShoesBehind.getFramePercentage(row, actionComplete)
@@ -370,7 +373,7 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
+      renderSprite(
         sprite: spriteShoesFront,
         frame: completingAction
             ? spriteShoesFront.getFramePercentage(row, actionComplete)
@@ -384,7 +387,7 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    render.modulate(
+    modulate(
       sprite: spriteArmBehind,
       frame: completingAction
           ? spriteArmBehind.getFramePercentage(row, actionComplete)
@@ -397,7 +400,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    renderSprite(
       sprite: spriteHandBehind,
       frame: completingAction
           ? spriteHandBehind.getFramePercentage(row, actionComplete)
@@ -410,7 +413,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (spriteHandsRight != spriteHandFront){
-      render.sprite(
+      renderSprite(
         sprite: spriteWeapon,
         frame: completingAction
             ? spriteWeapon.getFramePercentage(row, actionComplete)
@@ -432,7 +435,7 @@ class RendererCharacters extends RenderGroup {
     ].contains(direction);
 
     if (bodyFirst){
-      render.sprite(
+      renderSprite(
         sprite: spriteBody,
         frame: completingAction
             ? spriteBody.getFramePercentage(row, actionComplete)
@@ -446,7 +449,7 @@ class RendererCharacters extends RenderGroup {
     }
 
 
-    render.modulate(
+    modulate(
       sprite: spriteArmFront,
       frame: completingAction
           ? spriteArmFront.getFramePercentage(row, actionComplete)
@@ -460,7 +463,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (spriteHandsRight == spriteHandFront){
-      render.sprite(
+      renderSprite(
         sprite: spriteWeapon,
         frame: completingAction
             ? spriteWeapon.getFramePercentage(row, actionComplete)
@@ -473,7 +476,7 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.sprite(
+    renderSprite(
       sprite: spriteHandFront,
       frame: completingAction
           ? spriteHandFront.getFramePercentage(row, actionComplete)
@@ -486,7 +489,7 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (!bodyFirst){
-      render.sprite(
+      renderSprite(
         sprite: spriteBody,
         frame: completingAction
             ? spriteBody.getFramePercentage(row, actionComplete)
@@ -499,7 +502,7 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    render.sprite(
+    renderSprite(
       sprite: spriteBodyArm,
       frame: completingAction
           ? spriteBodyArm.getFramePercentage(row, actionComplete)
@@ -511,7 +514,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.modulate(
+    modulate(
       sprite: spriteHead,
       frame: completingAction
           ? spriteHead.getFramePercentage(row, actionComplete)
@@ -524,8 +527,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-
-    render.modulate(
+    modulate(
       sprite: spriteHairBehind,
       frame: completingAction
           ? spriteHairBehind.getFramePercentage(row, actionComplete)
@@ -538,7 +540,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.modulate(
+    modulate(
       sprite: spriteHairInFront,
       frame: completingAction
           ? spriteHairInFront.getFramePercentage(row, actionComplete)
@@ -551,7 +553,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.modulate(
+    modulate(
       sprite: spriteHairInFront,
       frame: completingAction
           ? spriteHairInFront.getFramePercentage(row, actionComplete)
@@ -564,7 +566,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.modulate(
+    modulate(
       sprite: spriteHairTop,
       frame: completingAction
           ? spriteHairTop.getFramePercentage(row, actionComplete)
@@ -577,7 +579,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    render.sprite(
+    renderSprite(
       sprite: spriteHelm,
       frame: completingAction
           ? spriteHelm.getFramePercentage(row, actionComplete)

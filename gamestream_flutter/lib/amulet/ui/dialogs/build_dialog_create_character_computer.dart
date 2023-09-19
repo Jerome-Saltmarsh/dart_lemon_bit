@@ -11,7 +11,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../functions/render_sprite.dart';
+import '../functions/render_canvas_sprite.dart';
 
 Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
   final engine = amulet.engine;
@@ -233,43 +233,43 @@ CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
         final skinColor = player.skinColor.value;
         final hairColor = player.colors.palette[player.hairColor.value].value;
 
-        renderSprite(
+        renderCanvasSprite(
             sprite: torso,
             canvas: canvas,
             row: row,
             column: column,
             color: skinColor);
-        renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
-        renderSprite(
+        renderCanvasSprite(sprite: legs, canvas: canvas, row: row, column: column);
+        renderCanvasSprite(
             sprite: armsLeft,
             canvas: canvas,
             row: row,
             column: column,
             color: skinColor);
-        renderSprite(
+        renderCanvasSprite(
             sprite: armsRight,
             canvas: canvas,
             row: row,
             column: column,
             color: skinColor);
-        renderSprite(
+        renderCanvasSprite(
             sprite: shoesLeft, canvas: canvas, row: row, column: column);
-        renderSprite(
+        renderCanvasSprite(
             sprite: shoesRight, canvas: canvas, row: row, column: column);
-        renderSprite(sprite: body, canvas: canvas, row: row, column: column);
-        renderSprite(
+        renderCanvasSprite(sprite: body, canvas: canvas, row: row, column: column);
+        renderCanvasSprite(
             sprite: head,
             canvas: canvas,
             row: row,
             column: column,
             color: skinColor);
-        renderSprite(
+        renderCanvasSprite(
             sprite: hair,
             canvas: canvas,
             row: row,
             column: column,
             color: hairColor);
-        renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
+        renderCanvasSprite(sprite: helm, canvas: canvas, row: row, column: column);
       });
 
 Widget buildColorWheel({

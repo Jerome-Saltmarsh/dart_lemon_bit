@@ -9,7 +9,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../functions/render_sprite.dart';
+import '../functions/render_canvas_sprite.dart';
 
 
 Widget buildDialogCreateCharacterMobile(Amulet amulet){
@@ -74,16 +74,16 @@ Widget buildDialogCreateCharacterMobile(Amulet amulet){
                       final skinColor = player.skinColor.value;
                       final hairColor = player.colors.palette[player.hairColor.value].value;
 
-                      renderSprite(sprite: torso, canvas: canvas, row: row, column: column, color: skinColor);
-                      renderSprite(sprite: legs, canvas: canvas, row: row, column: column);
-                      renderSprite(sprite: armsLeft, canvas: canvas, row: row, column: column, color: skinColor);
-                      renderSprite(sprite: armsRight, canvas: canvas, row: row, column: column, color: skinColor);
-                      renderSprite(sprite: shoesLeft, canvas: canvas, row: row, column: column);
-                      renderSprite(sprite: shoesRight, canvas: canvas, row: row, column: column);
-                      renderSprite(sprite: body, canvas: canvas, row: row, column: column);
-                      renderSprite(sprite: head, canvas: canvas, row: row, column: column, color: skinColor);
-                      renderSprite(sprite: hair, canvas: canvas, row: row, column: column, color: hairColor);
-                      renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
+                      renderCanvasSprite(sprite: torso, canvas: canvas, row: row, column: column, color: skinColor);
+                      renderCanvasSprite(sprite: legs, canvas: canvas, row: row, column: column);
+                      renderCanvasSprite(sprite: armsLeft, canvas: canvas, row: row, column: column, color: skinColor);
+                      renderCanvasSprite(sprite: armsRight, canvas: canvas, row: row, column: column, color: skinColor);
+                      renderCanvasSprite(sprite: shoesLeft, canvas: canvas, row: row, column: column);
+                      renderCanvasSprite(sprite: shoesRight, canvas: canvas, row: row, column: column);
+                      renderCanvasSprite(sprite: body, canvas: canvas, row: row, column: column);
+                      renderCanvasSprite(sprite: head, canvas: canvas, row: row, column: column, color: skinColor);
+                      renderCanvasSprite(sprite: hair, canvas: canvas, row: row, column: column, color: hairColor);
+                      renderCanvasSprite(sprite: helm, canvas: canvas, row: row, column: column);
                     }
                 ),
               ),

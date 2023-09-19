@@ -1,9 +1,11 @@
 
 import 'package:flutter/rendering.dart';
-import 'package:gamestream_flutter/amulet/ui/functions/render_sprite.dart';
+import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
+import 'package:gamestream_flutter/packages/common/src/input_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/arm_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/gender.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/isometric_direction.dart';
 
 void renderCanvasCharacterSprites({
   required Canvas canvas,
@@ -45,23 +47,30 @@ void renderCanvasCharacterSprites({
   final weapon = sprites.weapons[weaponType]
       ?.fromCharacterState(characterState);
 
-  // final hairColor = player.colors.palette[player.hairColor.value].value;
+  final leftInFront = const [
+    InputDirection.Up_Left,
+    InputDirection.Left,
+    InputDirection.Down_Left,
+  ].contains(IsometricDirection.toInputDirection(column));
 
-  renderSprite(
+
+
+  renderCanvasSprite(
       sprite: torso,
       canvas: canvas,
       row: row,
       column: column,
-      color: skinColor);
+      color: skinColor,
+  );
 
-  renderSprite(
+  renderCanvasSprite(
     sprite: legs,
     canvas: canvas,
     row: row,
     column: column,
   );
 
-  renderSprite(
+  renderCanvasSprite(
     sprite: armsLeft,
     canvas: canvas,
     row: row,
@@ -69,7 +78,7 @@ void renderCanvasCharacterSprites({
     color: skinColor,
   );
 
-  renderSprite(
+  renderCanvasSprite(
     sprite: armsRight,
     canvas: canvas,
     row: row,
@@ -77,23 +86,55 @@ void renderCanvasCharacterSprites({
     color: skinColor,
   );
 
-  renderSprite(
-      sprite: shoesLeft, canvas: canvas, row: row, column: column);
-  renderSprite(
-      sprite: shoesRight, canvas: canvas, row: row, column: column);
-  renderSprite(sprite: body, canvas: canvas, row: row, column: column);
-  renderSprite(
+  renderCanvasSprite(
+      sprite:
+      shoesLeft,
+      canvas: canvas,
+      row: row,
+      column: column,
+  );
+
+  renderCanvasSprite(
+      sprite: shoesRight,
+      canvas: canvas,
+      row: row,
+      column: column,
+  );
+
+  renderCanvasSprite(
+      sprite: body,
+      canvas: canvas,
+      row: row,
+      column: column,
+  );
+
+  renderCanvasSprite(
       sprite: head,
       canvas: canvas,
       row: row,
       column: column,
-      color: skinColor);
-  renderSprite(
+      color: skinColor,
+  );
+
+  renderCanvasSprite(
       sprite: hair,
       canvas: canvas,
       row: row,
       column: column,
-      color: hairColor);
-  renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
-  renderSprite(sprite: weapon, canvas: canvas, row: row, column: column);
+      color: hairColor,
+  );
+
+  renderCanvasSprite(
+      sprite: helm,
+      canvas: canvas,
+      row: row,
+      column: column,
+  );
+
+  renderCanvasSprite(
+      sprite: weapon,
+      canvas: canvas,
+      row: row,
+      column: column,
+  );
 }
