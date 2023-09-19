@@ -448,7 +448,6 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-
     modulate(
       sprite: spriteArmFront,
       frame: completingAction
@@ -514,6 +513,21 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
+    final hairFrame = completingAction
+        ? spriteHairBehind.getFramePercentage(row, actionComplete)
+        : spriteHairBehind.getFrame(row: row, column: animationFrame);
+
+    modulate(
+      sprite: spriteHairBehind,
+      frame: hairFrame,
+      color1: colorHair,
+      color2: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
     modulate(
       sprite: spriteHead,
       frame: completingAction
@@ -528,36 +542,8 @@ class RendererCharacters extends RenderGroup {
     );
 
     modulate(
-      sprite: spriteHairBehind,
-      frame: completingAction
-          ? spriteHairBehind.getFramePercentage(row, actionComplete)
-          : spriteHairBehind.getFrame(row: row, column: animationFrame),
-      color1: colorHair,
-      color2: color,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    modulate(
       sprite: spriteHairInFront,
-      frame: completingAction
-          ? spriteHairInFront.getFramePercentage(row, actionComplete)
-          : spriteHairInFront.getFrame(row: row, column: animationFrame),
-      color1: colorHair,
-      color2: color,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    modulate(
-      sprite: spriteHairInFront,
-      frame: completingAction
-          ? spriteHairInFront.getFramePercentage(row, actionComplete)
-          : spriteHairInFront.getFrame(row: row, column: animationFrame),
+      frame: hairFrame,
       color1: colorHair,
       color2: color,
       scale: scale,
@@ -568,9 +554,7 @@ class RendererCharacters extends RenderGroup {
 
     modulate(
       sprite: spriteHairTop,
-      frame: completingAction
-          ? spriteHairTop.getFramePercentage(row, actionComplete)
-          : spriteHairTop.getFrame(row: row, column: animationFrame),
+      frame: hairFrame,
       color1: colorHair,
       color2: color,
       scale: scale,
