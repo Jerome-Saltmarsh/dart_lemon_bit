@@ -1,11 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/ui/dialogs/build_dialog_create_character_computer.dart';
-import 'package:gamestream_flutter/amulet/ui/functions/render_player_front.dart';
+import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/character_state.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -14,16 +15,14 @@ Widget buildContainerPlayerFront({
   TextEditingController? nameController,
   double height = 150,
   Color borderColor = Colors.white,
-}
-    ) {
+  double borderWidth = 1,
+}) {
   var row = 4;
   var column = 0;
   return onPressed(
-    action: (){
-      row = (row + 1) % 8;
-    },
+    action: () => row = (row + 1) % 8,
     child: buildBorder(
-      // width: 3,
+      width: borderWidth,
       color: borderColor,
       child: Container(
         height: height,
@@ -36,12 +35,13 @@ Widget buildContainerPlayerFront({
               top: 100,
               child: CustomCanvas(
                   paint: (canvas, size) =>
-                      renderPlayerFront(
-                        player,
-                        player.images.kidCharacterSpritesFront,
-                        canvas,
-                        row,
-                        column,
+                      renderCanvasIsometricPlayer(
+                        player: player,
+                        canvas: canvas,
+                        row: row,
+                        column: column,
+                        sprites: player.images.kidCharacterSpritesFront,
+                        characterState: CharacterState.Idle,
                       )
               ),
             ),
