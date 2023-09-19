@@ -1,5 +1,5 @@
 
 library src;
 
-export 'mmo_item_image.dart';
-export 'talent_icon.dart';
+export 'widgets/mmo_item_image.dart';
+export 'widgets/talent_icon.dart';

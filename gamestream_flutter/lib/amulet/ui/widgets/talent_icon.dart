@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/amulet/talent_type_src.dart';
+import 'package:gamestream_flutter/amulet/ui/consts/atlasSrcTalentType.dart';
+
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -18,7 +19,7 @@ class MMOTalentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final src = TalentTypeSrc.map[talentType];
+    final src = atlasSrcTalentType[talentType];
     return Container(
       width: size,
       child: FittedBox(

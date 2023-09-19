@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 
-extension MMORender on Amulet {
+extension AmuletRender on Amulet {
 
-  void renderMMO(Canvas canvas, Size size) {
+  void renderAmulet(Canvas canvas, Size size) {
     renderPlayerHoverItemRange();
     renderPlayerRunLine();
     renderActivatedPower();

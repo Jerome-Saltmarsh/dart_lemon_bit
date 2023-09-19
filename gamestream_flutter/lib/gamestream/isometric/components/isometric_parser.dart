@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/amulet/mmo_parser.dart';
+import 'package:gamestream_flutter/amulet/amulet_parser.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';

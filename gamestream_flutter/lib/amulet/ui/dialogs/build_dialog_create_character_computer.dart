@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/amulet/ui/containers/build_container_player_front.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:lemon_math/src.dart';
 
@@ -11,7 +11,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'render_sprite.dart';
+import '../functions/render_sprite.dart';
 
 Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
   final engine = amulet.engine;
@@ -59,149 +59,7 @@ Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
   );
 }
 
-Widget buildContainerPlayerFront({
-    required IsometricPlayer player,
-    TextEditingController? nameController,
-    double height = 150,
-    Color borderColor = Colors.white,
-}
-) {
-  var row = 4;
-  var column = 0;
-  return onPressed(
-            action: (){
-              row = (row + 1) % 8;
-            },
-            child: buildBorder(
-              // width: 3,
-              color: borderColor,
-              child: Container(
-                height: height,
-                alignment: Alignment.center,
-                color: Colors.black12,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                      top: 100,
-                      child: CustomCanvas(
-                          paint: (canvas, size) =>
-                              renderPlayerFront(
-                                  player,
-                                  player.images.kidCharacterSpritesFront,
-                                  canvas,
-                                  row,
-                                  column,
-                              )
-                      ),
-                    ),
-                    Positioned(
-                        top: 8,
-                        right: 8,
-                        child: MouseOver(builder: (mouseOver) => IsometricIcon(
-                              iconType: IconType.Turn_Right,
-                              scale: 0.2,
-                              color: mouseOver ? Colors.green.value : Colors.white38.value,
-                          ),),
-                    ),
-                    if (nameController != null)
-                      Positioned(
-                          top: 0,
-                          left: 8,
-                          child: buildControlName(nameController),
-                      )
-                  ],
-                ),
-              ),
-            ),
-          );
-}
 
-void renderPlayerFront(
-    IsometricPlayer player,
-    KidCharacterSprites sprites,
-    Canvas canvas,
-    int row,
-    int column,
-) {
-  final gender = player.gender.value;
-  final isMale = gender == Gender.male;
-  final characterState = CharacterState.Idle;
-  final helm = sprites.helm[player.helmType.value]
-      ?.fromCharacterState(characterState);
-  final head = sprites.head[player.headType.value]?.fromCharacterState(characterState);
-  final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-  final body = bodySprite[player.bodyType.value]
-      ?.fromCharacterState(characterState);
-  final torso = sprites.torso[gender]?.fromCharacterState(characterState);
-  final armsLeft = sprites.armLeft[ArmType.regular]
-      ?.fromCharacterState(characterState);
-  final armsRight = sprites.armRight[ArmType.regular]
-      ?.fromCharacterState(characterState);
-  final shoesLeft = sprites.shoesLeft[player.shoeType.value]
-      ?.fromCharacterState(characterState);
-  final shoesRight = sprites.shoesRight[player.shoeType.value]
-      ?.fromCharacterState(characterState);
-  final legs = sprites.legs[player.legsType.value]
-      ?.fromCharacterState(characterState);
-  final hair = sprites.hairFront[player.hairType.value]
-      ?.fromCharacterState(characterState);
-  final weapon = sprites.weapons[player.weaponType.value]
-      ?.fromCharacterState(characterState);
-
-  final skinColor = player.skinColor.value;
-  final hairColor = player.colors.palette[player.hairColor.value].value;
-
-  renderSprite(
-      sprite: torso,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: skinColor);
-
-  renderSprite(
-      sprite: legs,
-      canvas: canvas,
-      row: row,
-      column: column,
-  );
-
-  renderSprite(
-      sprite: armsLeft,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: skinColor,
-  );
-
-  renderSprite(
-      sprite: armsRight,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: skinColor,
-  );
-
-  renderSprite(
-      sprite: shoesLeft, canvas: canvas, row: row, column: column);
-  renderSprite(
-      sprite: shoesRight, canvas: canvas, row: row, column: column);
-  renderSprite(sprite: body, canvas: canvas, row: row, column: column);
-  renderSprite(
-      sprite: head,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: skinColor);
-  renderSprite(
-      sprite: hair,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: hairColor);
-  renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
-  renderSprite(sprite: weapon, canvas: canvas, row: row, column: column);
-}
 
 Widget buildColumnHeadType(IsometricPlayer player) =>
   buildWatch(player.headType, (playerHeadTye) => buildColumn(
@@ -346,8 +204,7 @@ Widget buildColumn({
 );
 
 CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
-    IsometricPlayer player, KidCharacterSprites sprites, int row) {
-  return CustomCanvas(
+    IsometricPlayer player, KidCharacterSprites sprites, int row) => CustomCanvas(
       frame: canvasFrame,
       paint: (canvas, size) {
         final column = 0;
@@ -414,7 +271,6 @@ CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
             color: hairColor);
         renderSprite(sprite: helm, canvas: canvas, row: row, column: column);
       });
-}
 
 Widget buildColorWheel({
   required List<Color> colors,

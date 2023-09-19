@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.d
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'mmo_render.dart';
+import 'amulet_render.dart';
 
 class Amulet extends IsometricGame {
 
@@ -182,7 +182,7 @@ class Amulet extends IsometricGame {
   void drawCanvas(Canvas canvas, Size size) {
     if (characterCreated.value){
       super.drawCanvas(canvas, size);
-      renderMMO(canvas, size);
+      renderAmulet(canvas, size);
     }
   }
 

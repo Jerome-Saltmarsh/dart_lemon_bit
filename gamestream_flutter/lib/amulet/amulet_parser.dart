@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 
-extension MMOResponseReader on IsometricParser {
+extension AmuletParser on IsometricParser {
 
   void readMMOResponse(){
      switch (readByte()){

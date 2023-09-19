@@ -9,7 +9,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'render_sprite.dart';
+import '../functions/render_sprite.dart';
 
 
 Widget buildDialogCreateCharacterMobile(Amulet amulet){

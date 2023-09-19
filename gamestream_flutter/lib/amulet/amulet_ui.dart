@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/amulet/ui/build_dialog_create_character_computer.dart';
+import 'package:gamestream_flutter/amulet/ui/dialogs/build_dialog_create_character_computer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
@@ -11,7 +11,8 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'ui/build_dialog_create_character_mobile.dart';
+import 'ui/containers/build_container_player_front.dart';
+import 'ui/dialogs/build_dialog_create_character_mobile.dart';
 import 'ui/src.dart';
 
 class AmuletUI {
