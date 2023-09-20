@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  url_launcher: ^6.1.14
   shell: ^2.0.0
   file_picker: ^5.3.3
   lemon_watch: ^1.1.1

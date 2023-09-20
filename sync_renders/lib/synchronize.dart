@@ -82,7 +82,7 @@ Future sync({
   required String targetDirectory,
   required String name,
 }) async {
-  final srcImages = await loadImagesFomDirectory(srcDir);
+  final srcImages = loadImagesFomDirectory(srcDir);
 
   if (srcImages.length % 8 != 0){
     return;
