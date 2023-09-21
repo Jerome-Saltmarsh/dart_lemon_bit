@@ -71,6 +71,9 @@ flutter:
     - sprites/isometric/kid/hair_back/01/
     - sprites/isometric/kid/hair_front/01/
     - sprites/isometric/kid/hair_top/01/
+    - sprites/isometric/kid/hair_back/02/
+    - sprites/isometric/kid/hair_front/02/
+    - sprites/isometric/kid/hair_top/02/
     - sprites/isometric/kid/hands_left/gauntlets/
     - sprites/isometric/kid/hands_right/gauntlets/
     - sprites/isometric/kid/head/boy/
@@ -97,6 +100,9 @@ flutter:
     - sprites/front/kid/hair_back/01/
     - sprites/front/kid/hair_front/01/
     - sprites/front/kid/hair_top/01/
+    - sprites/front/kid/hair_back/02/
+    - sprites/front/kid/hair_front/02/
+    - sprites/front/kid/hair_top/02/
     - sprites/front/kid/hands_left/gauntlets/
     - sprites/front/kid/hands_right/gauntlets/
     - sprites/front/kid/head/boy/
