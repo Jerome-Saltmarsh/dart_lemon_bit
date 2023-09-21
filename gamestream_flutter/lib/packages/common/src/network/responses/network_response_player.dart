@@ -16,4 +16,9 @@ class NetworkResponsePlayer {
   static const Gender = 13;
   static const HelmType = 14;
   static const WeaponType = 15;
+  static const Aim_Target_Position = 16;
+  static const Health = 17;
+  static const Alive = 18;
+  static const Aim_Angle = 19;
+  static const Message = 20;
 }

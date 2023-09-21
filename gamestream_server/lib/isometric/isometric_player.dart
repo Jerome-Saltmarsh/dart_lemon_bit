@@ -326,10 +326,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerHealth(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Health);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Health);
     writeUInt16(health);
-    writeUInt16(maxHealth); // 2
+    writeUInt16(maxHealth);
   }
 
   void writePlayerDamage() {
@@ -339,8 +339,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerAlive(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Alive);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Alive);
     writeBool(alive);
   }
 
@@ -350,15 +350,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeBool(active);
   }
 
-  void writePlayerExperiencePercentage(double value){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Experience_Percentage);
-    writePercentage(value);
-  }
-
   void writePlayerAimAngle(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Aim_Angle);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Aim_Angle);
     writeAngle(mouseAngle);
   }
 
@@ -585,10 +579,11 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerAimTargetPosition() {
+    final aimTarget = this.aimTarget;
     if (aimTarget == null) return;
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Aim_Target_Position);
-    writeIsometricPosition(aimTarget!);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Aim_Target_Position);
+    writeIsometricPosition(aimTarget);
   }
 
   void writePlayerAimTargetAction() {
@@ -717,8 +712,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerMessage(String message){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Message);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Message);
     writeString(message);
   }
 

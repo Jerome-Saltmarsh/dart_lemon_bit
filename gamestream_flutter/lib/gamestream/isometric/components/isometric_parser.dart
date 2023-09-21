@@ -427,9 +427,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
-      case ApiPlayer.Aim_Target_Position:
-        readIsometricPosition(player.aimTargetPosition);
-        break;
       case ApiPlayer.Aim_Target_Type:
         player.aimTargetType = readUInt16();
         break;
@@ -453,20 +450,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case ApiPlayer.Target_Position:
         player.runningToTarget = true;
         readIsometricPosition(player.targetPosition);
-        break;
-      case ApiPlayer.Experience_Percentage:
-        break;
-      case ApiPlayer.Health:
-        readPlayerHealth();
-        break;
-      case ApiPlayer.Aim_Angle:
-        player.mouseAngle = readAngle();
-        break;
-      case ApiPlayer.Message:
-        player.message.value = readString();
-        break;
-      case ApiPlayer.Alive:
-        player.alive.value = readBool();
         break;
       case ApiPlayer.Spawned:
         camera.centerOnChaseTarget();
