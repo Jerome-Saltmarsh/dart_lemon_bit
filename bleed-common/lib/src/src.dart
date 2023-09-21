@@ -5,7 +5,6 @@ export 'isometric/src.dart';
 export 'amulet/src.dart';
 export 'editor/src.dart';
 export 'input_type.dart';
-export 'api_player.dart';
 export 'input_mode.dart';
 export 'constants.dart';
 export 'game_error.dart';

@@ -53,9 +53,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Characters:
         readNetworkResponseCharacters();
         break;
-      // case NetworkResponse.Api_Player:
-      //   readNetworkResponseApiPlayer();
-      //   break;
       case NetworkResponse.Player:
         readNetworkResponsePlayer();
         break;
