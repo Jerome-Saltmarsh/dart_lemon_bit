@@ -588,25 +588,26 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerAimTargetType() {
+    final aimTarget = this.aimTarget;
     if (aimTarget == null) return;
     if (aimTarget is GameObject){
-      writeByte(NetworkResponse.Api_Player);
-      writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as GameObject).type);
+      writeByte(NetworkResponse.Player);
+      writeByte(NetworkResponsePlayer.Aim_Target_Type);
+      writeUInt16(aimTarget.type);
     }
     if (aimTarget is Character) {
-      writeByte(NetworkResponse.Api_Player);
-      writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as Character).characterType);
+      writeByte(NetworkResponse.Player);
+      writeByte(NetworkResponsePlayer.Aim_Target_Type);
+      writeUInt16(aimTarget.characterType);
     }
   }
 
   void writePlayerAimTargetQuantity() {
-    if (aimTarget is GameObject) {
-      writeByte(NetworkResponse.Api_Player);
-      writeByte(ApiPlayer.Aim_Target_Quantity);
-      writeUInt16((aimTarget as GameObject).quantity);
-    }
+    final aimTarget = this.aimTarget;
+    if (aimTarget is! GameObject) return;
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Aim_Target_Quantity);
+    writeUInt16(aimTarget.quantity);
   }
 
   int getTargetAction(Position? value){

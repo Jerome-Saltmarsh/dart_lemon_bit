@@ -236,6 +236,12 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case NetworkResponsePlayer.Message:
         message.value = parser.readString();
         break;
+      case NetworkResponsePlayer.Aim_Target_Type:
+        aimTargetType = parser.readUInt16();
+        break;
+      case NetworkResponsePlayer.Aim_Target_Quantity:
+        aimTargetQuantity = parser.readUInt16();
+        break;
     }
   }
 

@@ -427,12 +427,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
-      case ApiPlayer.Aim_Target_Type:
-        player.aimTargetType = readUInt16();
-        break;
-      case ApiPlayer.Aim_Target_Quantity:
-        player.aimTargetQuantity = readUInt16();
-        break;
       case ApiPlayer.Arrived_At_Destination:
         player.arrivedAtDestination.value = readBool();
         break;

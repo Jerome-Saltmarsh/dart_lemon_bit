@@ -21,4 +21,6 @@ class NetworkResponsePlayer {
   static const Alive = 18;
   static const Aim_Angle = 19;
   static const Message = 20;
+  static const Aim_Target_Type = 21;
+  static const Aim_Target_Quantity = 22;
 }
