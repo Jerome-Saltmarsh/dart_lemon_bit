@@ -53,9 +53,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Characters:
         readNetworkResponseCharacters();
         break;
-      case NetworkResponse.Api_Player:
-        readNetworkResponseApiPlayer();
-        break;
+      // case NetworkResponse.Api_Player:
+      //   readNetworkResponseApiPlayer();
+      //   break;
       case NetworkResponse.Player:
         readNetworkResponsePlayer();
         break;
@@ -427,36 +427,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
-      case ApiPlayer.Arrived_At_Destination:
-        player.arrivedAtDestination.value = readBool();
-        break;
-      case ApiPlayer.Run_To_Destination_Enabled:
-        player.runToDestinationEnabled.value = readBool();
-        break;
-      case ApiPlayer.Debugging:
-        player.debugging.value = readBool();
-        break;
-      case ApiPlayer.Destination:
-        player.runX = readDouble();
-        player.runY = readDouble();
-        player.runZ = readDouble();
-        break;
-      case ApiPlayer.Target_Position:
-        player.runningToTarget = true;
-        readIsometricPosition(player.targetPosition);
-        break;
-      case ApiPlayer.Damage:
-        player.weaponDamage.value = readUInt16();
-        break;
-      case ApiPlayer.Id:
-        player.id.value = readUInt24();
-        break;
-      case ApiPlayer.Active:
-        player.active.value = readBool();
-        break;
-      case ApiPlayer.Team:
-        player.team.value = readByte();
-        break;
       default:
         throw Exception('Cannot parse apiPlayer $apiPlayer');
     }

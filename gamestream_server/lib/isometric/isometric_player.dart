@@ -333,8 +333,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerDamage() {
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Damage);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Weapon_Damage);
     writeUInt16(weaponDamage);
   }
 
@@ -345,8 +345,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerActive(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Active);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Active);
     writeBool(active);
   }
 
@@ -550,26 +550,27 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerTargetPosition(){
+    final target = this.target;
     if (target == null) return;
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Target_Position);
-    writeIsometricPosition(target!);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Target_Position);
+    writeIsometricPosition(target);
   }
 
   void writePlayerDestination(){
     if (!runToDestinationEnabled || arrivedAtDestination)
       return;
 
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Destination);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Destination);
     writeDouble(runX);
     writeDouble(runY);
     writeDouble(runZ);
   }
 
   void writePlayerArrivedAtDestination(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Arrived_At_Destination);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Arrived_At_Destination);
     writeBool(arrivedAtDestination);
   }
 
@@ -916,9 +917,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
-  writePlayerApiId(){
-    writeUInt8(NetworkResponse.Api_Player);
-    writeUInt8(ApiPlayer.Id);
+  void writePlayerId(){
+    writeUInt8(NetworkResponse.Player);
+    writeUInt8(NetworkResponsePlayer.Id);
     writeUInt24(id);
   }
 
@@ -934,8 +935,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerTeam(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Team);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Team);
     writeByte(team);
   }
 
@@ -1133,14 +1134,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writeRunToDestinationEnabled() {
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Run_To_Destination_Enabled);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Run_To_Destination_Enabled);
     writeBool(runToDestinationEnabled);
   }
 
   void writeDebugging() {
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Debugging);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Debugging);
     writeBool(debugging);
   }
 

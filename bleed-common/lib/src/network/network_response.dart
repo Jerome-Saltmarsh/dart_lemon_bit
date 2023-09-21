@@ -1,5 +1,5 @@
 class NetworkResponse {
-  static const Api_Player = 00;
+  // static const Api_Player = 00;
   static const Projectiles = 01;
   static const Game_Event = 02;
   static const Player_Event = 03;
@@ -30,7 +30,7 @@ class NetworkResponse {
   static const Amulet_Player = 40;
 
   static String getName(int value) => const <int, String> {
-      Api_Player: 'Api_Player',
+      // Api_Player: 'Api_Player',
       Projectiles: 'Projectiles',
       Game_Event: 'Game_Event',
       Player_Event: 'Player_Event',

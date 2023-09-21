@@ -23,4 +23,13 @@ class NetworkResponsePlayer {
   static const Message = 20;
   static const Aim_Target_Type = 21;
   static const Aim_Target_Quantity = 22;
+  static const Target_Position = 23;
+  static const Weapon_Damage = 24;
+  static const Id = 25;
+  static const Active = 26;
+  static const Team = 27;
+  static const Destination = 28;
+  static const Arrived_At_Destination = 29;
+  static const Run_To_Destination_Enabled = 30;
+  static const Debugging = 31;
 }
