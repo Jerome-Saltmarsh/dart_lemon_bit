@@ -233,7 +233,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case NetworkResponsePlayer.Aim_Angle:
         mouseAngle = parser.readAngle();
         break;
-        
       case NetworkResponsePlayer.Message:
         message.value = parser.readString();
         break;

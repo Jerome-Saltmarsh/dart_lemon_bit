@@ -383,6 +383,10 @@ class IsometricEvents with IsometricComponent {
 
   void onPlayerEvent(int event) {
     switch (event) {
+      case PlayerEvent.Spawned:
+        camera.centerOnChaseTarget();
+        io.recenterCursor();
+        break;
       case PlayerEvent.Reloading:
         switch (player.weaponType.value){
           case WeaponType.Handgun:

@@ -364,9 +364,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writePlayerInitialized();
       game.customInitPlayer(this);
       writeIsometricPlayer();
-      writePlayerSpawned();
       writePlayerHealth();
       writePlayerAlive();
+      writePlayerEvent(PlayerEvent.Spawned);
       writeDebugging();
       writePlayerControls();
     }
@@ -549,11 +549,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     sceneDownloaded = true;
   }
 
-  void writePlayerSpawned(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Spawned);
-  }
-
   void writePlayerTargetPosition(){
     if (target == null) return;
     writeByte(NetworkResponse.Api_Player);
@@ -704,11 +699,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writePlayerMoved(){
     writeIsometricPlayer();
     writePlayerEvent(PlayerEvent.Player_Moved);
-  }
-
-  void writeApiPlayerSpawned(){
-    writeByte(NetworkResponse.Api_Player);
-    writeByte(ApiPlayer.Spawned);
   }
 
   void writePlayerMessage(String message){

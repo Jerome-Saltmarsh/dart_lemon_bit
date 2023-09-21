@@ -451,10 +451,6 @@ class IsometricParser with ByteReader, IsometricComponent {
         player.runningToTarget = true;
         readIsometricPosition(player.targetPosition);
         break;
-      case ApiPlayer.Spawned:
-        camera.centerOnChaseTarget();
-        io.recenterCursor();
-        break;
       case ApiPlayer.Damage:
         player.weaponDamage.value = readUInt16();
         break;
