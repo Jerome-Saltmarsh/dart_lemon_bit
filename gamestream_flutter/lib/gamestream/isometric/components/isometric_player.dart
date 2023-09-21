@@ -1,5 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/network/responses/network_response_player.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -175,49 +176,49 @@ class IsometricPlayer with IsometricComponent implements Updatable {
 
   void readNetworkResponsePlayer() {
     switch (parser.readByte()) {
-      case PlayerResponse.HeadType:
+      case NetworkResponsePlayer.HeadType:
         readHeadType();
         break;
-      case PlayerResponse.BodyType:
+      case NetworkResponsePlayer.BodyType:
         readBodyType();
         break;
-      case PlayerResponse.LegsType:
+      case NetworkResponsePlayer.LegsType:
         readLegsType();
         break;
-      case PlayerResponse.HandTypeLeft:
+      case NetworkResponsePlayer.HandTypeLeft:
         readHandTypeLeft();
         break;
-      case PlayerResponse.HandTypeRight:
+      case NetworkResponsePlayer.HandTypeRight:
         readHandTypeRight();
         break;
-      case PlayerResponse.HairType:
+      case NetworkResponsePlayer.HairType:
         readHairType();
         break;
-      case PlayerResponse.HairColor:
+      case NetworkResponsePlayer.HairColor:
         readHairColor();
         break;
-      case PlayerResponse.ShoeType:
+      case NetworkResponsePlayer.ShoeType:
         readShoeType();
         break;
-      case PlayerResponse.Gender:
+      case NetworkResponsePlayer.Gender:
         readGender();
         break;
-      case PlayerResponse.HelmType:
+      case NetworkResponsePlayer.HelmType:
         readHelmType();
         break;
-      case PlayerResponse.WeaponType:
+      case NetworkResponsePlayer.WeaponType:
         readWeaponType();
         break;
-      case PlayerResponse.Complexion:
+      case NetworkResponsePlayer.Complexion:
         complexion.value = parser.readByte();
         break;
-      case PlayerResponse.Name:
+      case NetworkResponsePlayer.Name:
         name.value = parser.readString();
         break;
-      case PlayerResponse.Aim_Target_Health:
+      case NetworkResponsePlayer.Aim_Target_Health:
         aimTargetHealthPercentage.value = parser.readPercentage();
         break;
-      case PlayerResponse.Aim_Target_Action:
+      case NetworkResponsePlayer.Aim_Target_Action:
         aimTargetAction.value = parser.readByte();
         break;
     }

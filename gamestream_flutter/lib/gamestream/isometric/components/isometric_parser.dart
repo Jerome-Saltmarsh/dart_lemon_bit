@@ -467,7 +467,6 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case ApiPlayer.Alive:
         player.alive.value = readBool();
-        // ui.mouseOverDialog.setFalse();
         break;
       case ApiPlayer.Spawned:
         camera.centerOnChaseTarget();

@@ -29,7 +29,6 @@ export 'weapon_state.dart';
 export 'wind_type.dart';
 export 'weapon_type.dart';
 export 'body_type.dart';
-export 'player_response.dart';
 export 'object_type.dart';
 export 'isometric_type.dart';
 export 'character_action.dart';

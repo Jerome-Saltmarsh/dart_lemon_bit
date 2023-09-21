@@ -33,6 +33,9 @@ shift + alt + J     : backspace
 - particle crow
 - particle chicken
 
+20.09.2023
+- optimized render pipeline
+
 16.09.2023
 - head type girl
 - player creation dialog

@@ -401,7 +401,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     if (aimTarget is Character && _cacheAimTargetHealthPercentage != aimTarget.healthPercentage) {
       _cacheAimTargetHealthPercentage = aimTarget.healthPercentage;
       writeByte(NetworkResponse.Player);
-      writeByte(PlayerResponse.Aim_Target_Health);
+      writeByte(NetworkResponsePlayer.Aim_Target_Health);
       writePercentage(_cacheAimTargetHealthPercentage);
     }
   }
@@ -593,7 +593,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writePlayerAimTargetAction() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.Aim_Target_Action);
+    writeByte(NetworkResponsePlayer.Aim_Target_Action);
     writeByte(_aimTargetAction);
   }
 
@@ -1207,43 +1207,43 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writeHeadType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.HeadType);
+    writeByte(NetworkResponsePlayer.HeadType);
     writeByte(headType);
   }
 
   void writeHelmType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.HelmType);
+    writeByte(NetworkResponsePlayer.HelmType);
     writeByte(helmType);
   }
 
   void writeBodyType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.BodyType);
+    writeByte(NetworkResponsePlayer.BodyType);
     writeByte(bodyType);
   }
 
   void writeLegsType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.LegsType);
+    writeByte(NetworkResponsePlayer.LegsType);
     writeByte(legsType);
   }
 
   void writeHandTypeLeft() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.HandTypeLeft);
+    writeByte(NetworkResponsePlayer.HandTypeLeft);
     writeByte(handTypeLeft);
   }
 
   void writeWeaponType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.WeaponType);
+    writeByte(NetworkResponsePlayer.WeaponType);
     writeByte(weaponType);
   }
 
   void writeHandTypeRight() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.HandTypeRight);
+    writeByte(NetworkResponsePlayer.HandTypeRight);
     writeByte(handTypeRight);
   }
 
@@ -1259,31 +1259,31 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writePlayerComplexion() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.Complexion);
+    writeByte(NetworkResponsePlayer.Complexion);
     writeByte(complexion);
   }
 
   void writePlayerName() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.Name);
+    writeByte(NetworkResponsePlayer.Name);
     writeString(name);
   }
 
   void writePlayerMode() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.Player_Mode);
+    writeByte(NetworkResponsePlayer.Player_Mode);
     writeByte(_playerMode);
   }
 
   void writeHairType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.HairType);
+    writeByte(NetworkResponsePlayer.HairType);
     writeByte(hairType);
   }
 
   void writeHairColor() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.HairColor);
+    writeByte(NetworkResponsePlayer.HairColor);
     writeByte(hairColor);
   }
 
@@ -1291,13 +1291,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writeShoeType() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.ShoeType);
+    writeByte(NetworkResponsePlayer.ShoeType);
     writeByte(shoeType);
   }
 
   void writeGender() {
     writeByte(NetworkResponse.Player);
-    writeByte(PlayerResponse.Gender);
+    writeByte(NetworkResponsePlayer.Gender);
     writeByte(gender);
   }
 
