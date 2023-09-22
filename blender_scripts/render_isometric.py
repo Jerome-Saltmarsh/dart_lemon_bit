@@ -121,26 +121,21 @@ def mute_animation_tracks(object_name):
 
 def prepare_render(camera_track):
     set_render_engine_eevee()
-    hide_mesh_kid()
     rig_kid_animation_tracks = get_animation_tracks_rig_kid()
-    mute_camera_pivot_tracks()
+    mute_animation_tracks("Camera Pivot")
     camera_track.mute = False
 
-    if camera_track.name == 'camera_front':
+    if camera_track.name == 'front':
         set_render_frames(1, 8)
         unmute_camera_pivot_track('camera_1')
         for rig_kid_animation_track in rig_kid_animation_tracks:
             rig_kid_animation_track.mute = rig_kid_animation_track.name != 'idle'
 
-    if camera_track.name == 'camera_isometric':
+    if camera_track.name == 'isometric':
         set_render_frames(1, 64)
         unmute_camera_pivot_track('camera_8')
         for rig_kid_animation_track in rig_kid_animation_tracks:
             rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
-
-
-def mute_camera_pivot_tracks():
-    mute_animation_tracks("Camera Pivot")
 
 
 def hide_mesh_kid():
@@ -149,16 +144,8 @@ def hide_mesh_kid():
         mesh_obj.hide_render = True
 
 
-def render_mode_front(camera_track):
-    return camera_track.name == 'camera_front'
-
-
 def get_render_directory(camera_track):
-    dir_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders'
-    if render_mode_front(camera_track):
-        return dir_renders + '/front'
-    else:
-        return dir_renders + '/isometric'
+    return 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/' + camera_track.name
 
 
 def render_camera_track(camera_track):
@@ -205,6 +192,7 @@ def render_camera_track(camera_track):
 
 
 def render_unmuted_camera_tracks():
+    hide_mesh_kid()
     unmuted_camera_tracks = get_animation_tracks_unmuted('Camera')
 
     if not unmuted_camera_tracks:
