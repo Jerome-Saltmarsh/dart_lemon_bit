@@ -66,14 +66,26 @@ def render_false(target):
     set_render(target, False)
 
 
+def get_object(object_name):
+    return bpy.data.objects.get(object_name)
+
+
 def prepare_render():
     add_current_directory_to_path()
     set_render_engine_eevee()
     scene = bpy.context.scene
-    mesh_obj = bpy.data.objects.get('Mesh Kid')
+    mesh_obj = get_object('Mesh Kid')
+    camera_tracks = get_unmuted_animation_tracks("Camera")
+    camera_pivot_tracks = get_animation_tracks("Camera Pivot")
+    animation_tracks = get_animation_tracks('Rig Kid')
+
+    if camera_pivot_tracks:
+        for camera_pivot_track in camera_pivot_tracks:
+            camera_pivot_track.mute = True
+
     if mesh_obj:
         mesh_obj.hide_render = True
-    camera_tracks = get_unmuted_animation_tracks("Camera")
+
     if camera_tracks:
         # if len(camera_tracks) > 1:
         #     raise ValueError('camera_front and camera_isometric cannot both be active')
@@ -86,7 +98,11 @@ def prepare_render():
             if camera_track.name == 'camera_front':
                 scene.frame_start = 1
                 scene.frame_end = 8
-                animation_tracks = get_animation_tracks('Rig Kid')
+
+                if camera_pivot_tracks:
+                    for camera_pivot_track in camera_pivot_tracks:
+                        camera_pivot_track.mute = camera_pivot_track.name != 'camera_1'
+
                 if animation_tracks:
                     for animation_track in animation_tracks:
                         animation_track.mute = animation_track.name != 'idle'
@@ -94,6 +110,15 @@ def prepare_render():
             if camera_track.name == 'camera_isometric':
                 scene.frame_start = 1
                 scene.frame_end = 64
+
+                if camera_pivot_tracks:
+                    for camera_pivot_track in camera_pivot_tracks:
+                        camera_pivot_track.mute = camera_pivot_track.name != 'camera_8'
+
+                if animation_tracks:
+                    for animation_track in animation_tracks:
+                        animation_track.mute = animation_track.name == 'tpose'
+
             camera_track.mute = True
 
         for camera_track in camera_tracks:
