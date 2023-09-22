@@ -2,6 +2,8 @@ import bpy
 import os
 import sys
 
+dir_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders'
+
 
 def add_current_directory_to_path():
     current_dir = os.path.dirname(bpy.data.filepath)
@@ -38,8 +40,12 @@ def get_render_active_children(children):
     return visible_children
 
 
+def set_render_engine(value):
+    bpy.context.scene.render.engine = value
+
+
 def set_render_engine_eevee():
-    bpy.context.scene.render.engine = 'BLENDER_EEVEE'
+    set_render_engine('BLENDER_EEVEE')
 
 
 def set_render_false(target):
@@ -70,6 +76,10 @@ def get_object(object_name):
     return bpy.data.objects.get(object_name)
 
 
+def set_render_path(value):
+    bpy.context.scene.render.filepath = value
+
+
 def prepare_render():
     add_current_directory_to_path()
     set_render_engine_eevee()
@@ -87,8 +97,6 @@ def prepare_render():
         mesh_obj.hide_render = True
 
     if camera_tracks:
-        # if len(camera_tracks) > 1:
-        #     raise ValueError('camera_front and camera_isometric cannot both be active')
 
         for camera_track in camera_tracks:
             camera_track.mute = True
@@ -125,20 +133,33 @@ def prepare_render():
             camera_track.mute = False
 
 
-def perform_render():
-    animation_tracks = get_unmuted_animation_tracks("Rig Kid")
-    exports_collection = bpy.data.collections.get("Exports")
+def render_mode_front():
+    unmuted_tracks = get_unmuted_animation_tracks("Camera")
+    for unmuted_track in unmuted_tracks:
+        if unmuted_track.name == 'camera_front':
+            return True
+    return False
 
-    if exports_collection and animation_tracks:
-        for track in animation_tracks:
+
+def get_render_target():
+    if render_mode_front():
+        return dir_renders + '/front'
+    else:
+        return dir_renders + '/isometric'
+
+
+def perform_render():
+    rig_kid_animation_tracks = get_unmuted_animation_tracks("Rig Kid")
+    collections_export = bpy.data.collections.get("Exports")
+
+    if collections_export and rig_kid_animation_tracks:
+        for track in rig_kid_animation_tracks:
             track.mute = True
 
-        for track in animation_tracks:
+        for track in rig_kid_animation_tracks:
             track.mute = False
-            exports_collection.hide_render = False
-            bpy.context.scene.render.filepath = "C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/isometric/kid/"
-
-            active_children = get_render_active_children(exports_collection)
+            collections_export.hide_render = False
+            active_children = get_render_active_children(collections_export)
 
             if active_children:
                 for collection in active_children:
@@ -150,10 +171,11 @@ def perform_render():
                         render_true(obj)
                         object_name = obj.name.replace(collection.name + "_", "")
                         mesh_directory = os.path.join(
-                            "C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/isometric/kid/", collection.name,
-                            object_name, track.name)
+                            get_render_target() + "/kid/",
+                            collection.name, object_name, track.name
+                        )
                         os.makedirs(mesh_directory, exist_ok=True)
-                        bpy.context.scene.render.filepath = os.path.join(mesh_directory, "")
+                        set_render_path(os.path.join(mesh_directory, ""))
                         bpy.ops.render.render(animation=True)
                         render_false(obj)
 
@@ -164,12 +186,10 @@ def perform_render():
 
             track.mute = True
 
-        for track in animation_tracks:
+        for track in rig_kid_animation_tracks:
             track.mute = False
 
 
 prepare_render()
 perform_render()
-
-output_root = "c:/tmp"
-bpy.context.scene.render.filepath = "c:/tmp/"
+set_render_path("c:/tmp")
