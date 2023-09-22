@@ -9,6 +9,13 @@ def add_current_directory_to_path():
         sys.path.append(current_dir)
 
 
+def get_animation_tracks(object_name):
+    object_found = bpy.data.objects.get(object_name)
+    if object_found:
+        return object_found.animation_data.nla_tracks
+    raise ValueError('could not find animation object ' + object_name)
+
+
 def get_unmuted_animation_tracks(object_name):
     object_found = bpy.data.objects.get(object_name)
     unmuted_tracks = []
@@ -59,21 +66,38 @@ def render_false(target):
     set_render(target, False)
 
 
-add_current_directory_to_path()
-set_render_engine_eevee()
-mesh_obj = bpy.data.objects.get('Mesh Kid')
-scene = bpy.context.scene
-scene.frame_start = 1
-scene.frame_end = 64
+def prepare_render():
+    add_current_directory_to_path()
+    set_render_engine_eevee()
+    scene = bpy.context.scene
+    mesh_obj = bpy.data.objects.get('Mesh Kid')
+    if mesh_obj:
+        mesh_obj.hide_render = True
+    camera_tracks = get_unmuted_animation_tracks("Camera")
+    if camera_tracks:
+        # if len(camera_tracks) > 1:
+        #     raise ValueError('camera_front and camera_isometric cannot both be active')
 
-if mesh_obj:
-    mesh_obj.hide_render = True
+        for camera_track in camera_tracks:
+            camera_track.mute = True
 
-camera_tracks = get_unmuted_animation_tracks("Camera")
+        for camera_track in camera_tracks:
+            camera_track.mute = False
+            if camera_track.name == 'camera_front':
+                scene.frame_start = 1
+                scene.frame_end = 8
+                animation_tracks = get_animation_tracks('Rig Kid')
+                if animation_tracks:
+                    for animation_track in animation_tracks:
+                        animation_track.mute = animation_track.name != 'idle'
 
-if camera_tracks:
-    if len(camera_tracks) > 1:
-        raise ValueError('camera_front and camera_isometric cannot both be active')
+            if camera_track.name == 'camera_isometric':
+                scene.frame_start = 1
+                scene.frame_end = 64
+            camera_track.mute = True
+
+        for camera_track in camera_tracks:
+            camera_track.mute = False
 
 
 def perform_render():
@@ -100,7 +124,9 @@ def perform_render():
                     for obj in collection.objects:
                         render_true(obj)
                         object_name = obj.name.replace(collection.name + "_", "")
-                        mesh_directory = os.path.join("C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/isometric/kid/", collection.name, object_name, track.name)
+                        mesh_directory = os.path.join(
+                            "C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/isometric/kid/", collection.name,
+                            object_name, track.name)
                         os.makedirs(mesh_directory, exist_ok=True)
                         bpy.context.scene.render.filepath = os.path.join(mesh_directory, "")
                         bpy.ops.render.render(animation=True)
@@ -117,6 +143,7 @@ def perform_render():
             track.mute = False
 
 
+prepare_render()
 perform_render()
 
 output_root = "c:/tmp"
