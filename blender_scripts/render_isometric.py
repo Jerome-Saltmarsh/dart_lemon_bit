@@ -86,7 +86,15 @@ def set_render_path(value):
 
 
 def get_animation_tracks_rig_kid():
-    return get_animation_tracks("Rig Kid")
+    return get_animation_tracks("armature_kid")
+
+
+def get_armatures():
+    return [obj for obj in bpy.context.scene.objects if obj.type == 'ARMATURE']
+
+
+def get_armatures_render_enabled():
+    return [armature for armature in get_armatures() if not armature.hide_render]
 
 
 def set_animation_track_muted(object_name, track_name, value):
@@ -120,8 +128,43 @@ def mute_animation_tracks(object_name):
 
 # BUSINESS LOGIC
 
-def prepare_render(camera_track):
-    set_render_engine_eevee()
+def build_sprites_from_renders():
+    program_path = r'C:\Users\Jerome\github\bleed\lemon_atlas\build\windows\runner\Release\lemon_sprites.exe'
+    program_args = ['sync_all']
+    try:
+        subprocess.run([program_path] + program_args, check=True, stdout=subprocess.PIPE,
+                       stderr=subprocess.PIPE, text=True)
+        print("Program executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running the program: {e}")
+    except FileNotFoundError:
+        print("The program file was not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def hide_mesh_kid():
+    mesh_obj = get_object('mesh_kid')
+    if mesh_obj:
+        mesh_obj.hide_render = True
+
+
+def get_render_directory(camera_track):
+    return 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/' + camera_track.name
+
+
+def get_character_armatures():
+    return [armature for armature in get_armatures() if armature.name.startswith('armature')]
+
+
+def enable_animation_tracks_by_name(name):
+    for armature in get_character_armatures():
+        animation_tracks = armature.animation_data.nla_tracks
+        for animation_track in animation_tracks:
+            animation_track.mute = animation_track.name != name
+
+
+def render_camera_track(camera_track):
     rig_kid_animation_tracks = get_animation_tracks_rig_kid()
     mute_animation_tracks("Camera Pivot")
     camera_track.mute = False
@@ -138,62 +181,58 @@ def prepare_render(camera_track):
         for rig_kid_animation_track in rig_kid_animation_tracks:
             rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
 
-
-def hide_mesh_kid():
-    mesh_obj = get_object('Mesh Kid')
-    if mesh_obj:
-        mesh_obj.hide_render = True
-
-
-def get_render_directory(camera_track):
-    return 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/' + camera_track.name
-
-
-def render_camera_track(camera_track):
-    prepare_render(camera_track)
-    rig_kid_animation_tracks = get_animation_tracks_unmuted("Rig Kid")
+    rig_kid_animation_tracks = get_animation_tracks_unmuted("armature_kid")
     collections_export = get_collection("Exports")
+    collections_export.hide_render = False
 
-    if collections_export and rig_kid_animation_tracks:
-        for track in rig_kid_animation_tracks:
-            track.mute = True
+    if not collections_export:
+        raise ValueError('collections_export not found')
 
-        for track in rig_kid_animation_tracks:
-            track.mute = False
-            collections_export.hide_render = False
-            active_children = get_render_active_children(collections_export)
+    if not rig_kid_animation_tracks:
+        raise ValueError('rig_kid_animation_tracks not found')
 
-            if active_children:
-                for collection in active_children:
-                    render_false(collection)
+    for track in rig_kid_animation_tracks:
+        track.mute = True
 
-                for collection in active_children:
-                    collection.hide_render = False
-                    for obj in collection.objects:
-                        render_true(obj)
-                        object_name = obj.name.replace(collection.name + "_", "")
-                        mesh_directory = os.path.join(
-                            get_render_directory(camera_track) + "/kid/",
-                            collection.name, object_name, track.name
-                        )
-                        os.makedirs(mesh_directory, exist_ok=True)
-                        set_render_path(os.path.join(mesh_directory, ""))
-                        render()
-                        render_false(obj)
+    for track in rig_kid_animation_tracks:
 
-                    collection.hide_render = True
+        enable_animation_tracks_by_name(track.name)
+        active_children = get_render_active_children(collections_export)
 
-                for collection in active_children:
-                    render_true(collection)
+        if not active_children:
+            raise ValueError('active_children is null')
 
-            track.mute = True
+        for collection in active_children:
+            render_false(collection)
 
-        for track in rig_kid_animation_tracks:
-            track.mute = False
+        for collection in active_children:
+            collection.hide_render = False
+            for obj in collection.objects:
+                render_true(obj)
+                object_name = obj.name.replace(collection.name + "_", "")
+                mesh_directory = os.path.join(
+                    get_render_directory(camera_track) + "/kid/",
+                    collection.name, object_name, track.name
+                )
+                os.makedirs(mesh_directory, exist_ok=True)
+                set_render_path(os.path.join(mesh_directory, ""))
+                # render()
+                render_false(obj)
+
+            collection.hide_render = True
+
+        for collection in active_children:
+            render_true(collection)
+
+        track.mute = True
+
+    for track in rig_kid_animation_tracks:
+        track.mute = False
 
 
 def render_unmuted_camera_tracks():
     hide_mesh_kid()
+    set_render_engine_eevee()
     unmuted_camera_tracks = get_animation_tracks_unmuted('Camera')
 
     if not unmuted_camera_tracks:
@@ -208,17 +247,5 @@ def render_unmuted_camera_tracks():
 
 
 render_unmuted_camera_tracks()
+build_sprites_from_renders()
 set_render_path("c:/tmp")
-
-
-program_path = r'C:\Users\Jerome\github\bleed\lemon_atlas\build\windows\runner\Release\lemon_sprites.exe'
-program_args = ['sync_all']
-try:
-    result = subprocess.run([program_path] + program_args, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    print("Program executed successfully.")
-except subprocess.CalledProcessError as e:
-    print(f"Error running the program: {e}")
-except FileNotFoundError:
-    print("The program file was not found.")
-except Exception as e:
-    print(f"An error occurred: {e}")
