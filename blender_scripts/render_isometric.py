@@ -1,6 +1,7 @@
 import bpy
 import os
 import sys
+import subprocess
 
 
 def add_current_directory_to_path():
@@ -208,3 +209,16 @@ def render_unmuted_camera_tracks():
 
 render_unmuted_camera_tracks()
 set_render_path("c:/tmp")
+
+
+program_path = r'C:\Users\Jerome\github\bleed\lemon_atlas\build\windows\runner\Release\lemon_sprites.exe'
+program_args = ['sync_all']
+try:
+    result = subprocess.run([program_path] + program_args, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    print("Program executed successfully.")
+except subprocess.CalledProcessError as e:
+    print(f"Error running the program: {e}")
+except FileNotFoundError:
+    print("The program file was not found.")
+except Exception as e:
+    print(f"An error occurred: {e}")
