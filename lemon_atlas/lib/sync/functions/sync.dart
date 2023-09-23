@@ -1,5 +1,5 @@
 
-import 'package:lemon_atlas/amulet/functions/load_images_from_directory.dart';
+import 'package:lemon_atlas/sync/functions/load_images_from_directory.dart';
 import 'package:lemon_atlas/atlas/functions/build_sprite_from_images.dart';
 import 'package:lemon_atlas/atlas/functions/export_spritesheet.dart';
 

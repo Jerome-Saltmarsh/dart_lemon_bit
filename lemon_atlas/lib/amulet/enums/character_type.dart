@@ -1,5 +1,0 @@
-
-enum CharacterType {
-  fallen,
-  kid,
-}

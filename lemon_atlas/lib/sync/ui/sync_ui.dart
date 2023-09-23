@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:lemon_atlas/sync/functions/sync_all.dart';
 import 'package:lemon_atlas/sync/classes/sync_job.dart';
 import 'package:lemon_atlas/sync/consts/directories.dart';
 import 'package:lemon_atlas/sync/functions/build_sync_jobs.dart';
@@ -36,6 +37,13 @@ class SyncUI extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: buildText('REFRESH'),
+              ),
+            ),
+            onPressed(
+              action: syncAll,
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: buildText('AUTOSYNC'),
               ),
             ),
           ],

@@ -1,4 +1,0 @@
-enum Perspective {
-  isometric,
-  front,
-}

@@ -1,11 +1,18 @@
-import 'package:flutter/material.dart';
-// import 'package:lemon_atlas/ui/widgets/amulet_sprites.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'sync/functions/sync_all.dart';
 import 'sync/ui/sync_ui.dart';
 
-void main() async {
+void main(List<String> arguments) async {
 
-  runApp(SyncUI());
+  if (arguments.any((element) => element == 'sync_all')) {
+    syncAll();
+    exit(0);
+  } else {
+    runApp(SyncUI());
+  }
+
 }
 
 
