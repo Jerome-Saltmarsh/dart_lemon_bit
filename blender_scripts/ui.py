@@ -13,8 +13,8 @@ def list_textname_callback(scene, context):
 
 
 class TEXT_OT_run_specified_script(bpy.types.Operator):
-    bl_idname = "text.hello_world"
-    bl_label = "Hello World"
+    bl_idname = "text.render_sprites"
+    bl_label = "Render Sprites"
     bl_options = {'REGISTER'}
 
     script_name: bpy.props.EnumProperty(
@@ -24,44 +24,7 @@ class TEXT_OT_run_specified_script(bpy.types.Operator):
     )
 
     def invoke(self, context, event):
-        bpy.utils.execfile('C:/Users/Jerome/hello.py')
-        # script = bpy.data.texts.get('hello_world', None)
-        # if script is not None:
-        #     print(script.as_string())
-        #     # try:
-        #     #     exec(
-        #     #         compile(
-        #     #             script.as_string(),
-        #     #             filename=f"{script.name}",
-        #     #             mode='exec',
-        #     #         ),
-        #     #         {},
-        #     #         bpy.data,
-        #     #     )
-        #     # except Exception as e:
-        #     #     self.report({'ERROR'}, f"Error executing script: {str(e)}")
-        # else:
-        #     self.report({'WARNING'}, "No script found.")
-        return {'FINISHED'}
-
-    def execute(self, context):
-        print('execute()')
-        script = bpy.data.texts.get(self.script_name, None)
-        if script is not None:
-            try:
-                exec(
-                    compile(
-                        script.as_string(),
-                        filename=f"{script.name}",
-                        mode='exec',
-                    ),
-                    {},
-                    bpy.data,
-                )
-            except Exception as e:
-                self.report({'ERROR'}, f"Error executing script: {str(e)}")
-        else:
-            self.report({'WARNING'}, "No script found.")
+        bpy.utils.execfile('C:/Users/Jerome/github/bleed/blender_scripts/render_isometric.py')
         return {'FINISHED'}
 
 
@@ -73,14 +36,25 @@ def _menu_func(self, context):
     )
 
 
+def run_on_startup(dummy):
+    print('installing render_sprites plugin')
+    register()
+
+
 def register():
     bpy.utils.register_class(TEXT_OT_run_specified_script)
     bpy.types.TOPBAR_MT_render.append(_menu_func)
+
+    # Register the function to run on startup
+    bpy.app.handlers.load_post.append(run_on_startup)
 
 
 def unregister():
     bpy.utils.unregister_class(TEXT_OT_run_specified_script)
     bpy.types.TOPBAR_MT_render.remove(_menu_func)
+
+    # Unregister the function from running on startup
+    bpy.app.handlers.load_post.remove(run_on_startup)
 
 
 if __name__ == "__main__":
