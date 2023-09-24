@@ -399,8 +399,8 @@ class RendererCharacters extends RenderGroup {
 
 
     final hairFrame = completingAction
-        ? spriteHairBehind.getFramePercentage(row, actionComplete)
-        : spriteHairBehind.getFrame(row: row, column: animationFrame);
+        ? spriteHairTop.getFramePercentage(row, actionComplete)
+        : spriteHairTop.getFrame(row: row, column: animationFrame);
 
     modulate(
       sprite: spriteHairBehind,

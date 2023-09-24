@@ -348,21 +348,26 @@ class IsometricImages with IsometricComponent {
     int atlasX = 0,
     int atlasY = 0,
   }) async {
-    image = image ?? await loadImageAsset('$name.png');
-    final json = await loadAssetJson('$name.json');
 
-    return Sprite(
-      image: image,
-      src: parse(json['src']),
-      dst: parse(json['dst']),
-      rows: parse(json['rows']),
-      columns: parse(json['columns']),
-      srcWidth: parse(json['width']),
-      srcHeight: parse(json['height']),
-      mode: mode,
-      atlasX: atlasX,
-      atlasY: atlasY,
-    );
+    try {
+      image = image ?? await loadImageAsset('$name.png');
+      final json = await loadAssetJson('$name.json');
+      return Sprite(
+        image: image,
+        src: parse(json['src']),
+        dst: parse(json['dst']),
+        rows: parse(json['rows']),
+        columns: parse(json['columns']),
+        srcWidth: parse(json['width']),
+        srcHeight: parse(json['height']),
+        mode: mode,
+        atlasX: atlasX,
+        atlasY: atlasY,
+      );
+    } catch(e) {
+      print(e);
+      return emptySprite;
+    }
   }
 
    Future<Image> loadPng(String fileName) async => loadImage('$fileName.png');
