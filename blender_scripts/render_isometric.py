@@ -1,13 +1,8 @@
 import bpy
 import os
-import sys
 import subprocess
 
-
-def add_current_directory_to_path():
-    current_dir = os.path.dirname(bpy.data.filepath)
-    if current_dir not in sys.path:
-        sys.path.append(current_dir)
+print('current_dir: ' + os.path.dirname(bpy.data.filepath))
 
 
 def get_animation_tracks(object_name):
@@ -129,6 +124,7 @@ def mute_animation_tracks(object_name):
 # BUSINESS LOGIC
 
 def build_sprites_from_renders():
+    print('build_sprites_from_renders()')
     program_path = r'C:\Users\Jerome\github\bleed\lemon_atlas\build\windows\runner\Release\lemon_sprites.exe'
     program_args = ['sync_all']
     try:
@@ -165,6 +161,7 @@ def enable_animation_tracks_by_name(name):
 
 
 def render_camera_track(camera_track):
+    print(f'render_camera_track({camera_track.name})')
     rig_kid_animation_tracks = get_animation_tracks_rig_kid()
     mute_animation_tracks("Camera Pivot")
     camera_track.mute = False
@@ -191,12 +188,11 @@ def render_camera_track(camera_track):
     if not rig_kid_animation_tracks:
         raise ValueError('rig_kid_animation_tracks not found')
 
-    for track in rig_kid_animation_tracks:
-        track.mute = True
+    # mute_animation_tracks('rig_kid')
 
-    for track in rig_kid_animation_tracks:
+    for rig_kid_track in rig_kid_animation_tracks:
 
-        enable_animation_tracks_by_name(track.name)
+        enable_animation_tracks_by_name(rig_kid_track.name)
         active_children = get_render_active_children(collections_export)
 
         if not active_children:
@@ -212,11 +208,11 @@ def render_camera_track(camera_track):
                 object_name = obj.name.replace(collection.name + "_", "")
                 mesh_directory = os.path.join(
                     get_render_directory(camera_track) + "/kid/",
-                    collection.name, object_name, track.name
+                    collection.name, object_name, rig_kid_track.name
                 )
                 os.makedirs(mesh_directory, exist_ok=True)
                 set_render_path(os.path.join(mesh_directory, ""))
-                # render()
+                render()
                 render_false(obj)
 
             collection.hide_render = True
@@ -224,13 +220,14 @@ def render_camera_track(camera_track):
         for collection in active_children:
             render_true(collection)
 
-        track.mute = True
+        rig_kid_track.mute = True
 
-    for track in rig_kid_animation_tracks:
-        track.mute = False
+    for rig_kid_track in rig_kid_animation_tracks:
+        rig_kid_track.mute = False
 
 
 def render_unmuted_camera_tracks():
+    print('render_unmuted_camera_tracks()')
     hide_mesh_kid()
     set_render_engine_eevee()
     unmuted_camera_tracks = get_animation_tracks_unmuted('Camera')
@@ -249,3 +246,4 @@ def render_unmuted_camera_tracks():
 render_unmuted_camera_tracks()
 build_sprites_from_renders()
 set_render_path("c:/tmp")
+print('render sprites complete')

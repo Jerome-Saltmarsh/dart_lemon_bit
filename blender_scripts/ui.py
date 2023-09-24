@@ -13,61 +13,74 @@ def list_textname_callback(scene, context):
 
 
 class TEXT_OT_run_specified_script(bpy.types.Operator):
-    bl_idname = "text.run_specified_script"
-    bl_label = "Run specified text script"
+    bl_idname = "text.hello_world"
+    bl_label = "Hello World"
     bl_options = {'REGISTER'}
 
-    # fmt: off
     script_name: bpy.props.EnumProperty(
         name="Run script from:",
         description="Run this specified script.",
         items=list_textname_callback
     )
-    # fmt: on
 
     def invoke(self, context, event):
-        # Prompt to ask
-        return context.window_manager.invoke_props_dialog(self)
+        bpy.utils.execfile('C:/Users/Jerome/hello.py')
+        # script = bpy.data.texts.get('hello_world', None)
+        # if script is not None:
+        #     print(script.as_string())
+        #     # try:
+        #     #     exec(
+        #     #         compile(
+        #     #             script.as_string(),
+        #     #             filename=f"{script.name}",
+        #     #             mode='exec',
+        #     #         ),
+        #     #         {},
+        #     #         bpy.data,
+        #     #     )
+        #     # except Exception as e:
+        #     #     self.report({'ERROR'}, f"Error executing script: {str(e)}")
+        # else:
+        #     self.report({'WARNING'}, "No script found.")
+        return {'FINISHED'}
 
     def execute(self, context):
+        print('execute()')
         script = bpy.data.texts.get(self.script_name, None)
-        if script != None:
-            exec(
-                compile(
-                    script.as_string(),
-                    filename=f"{script.name}",
-                    mode='exec',
-                ),
-            )
+        if script is not None:
+            try:
+                exec(
+                    compile(
+                        script.as_string(),
+                        filename=f"{script.name}",
+                        mode='exec',
+                    ),
+                    {},
+                    bpy.data,
+                )
+            except Exception as e:
+                self.report({'ERROR'}, f"Error executing script: {str(e)}")
         else:
             self.report({'WARNING'}, "No script found.")
         return {'FINISHED'}
 
 
 def _menu_func(self, context):
-    self.layout.operator(
+    layout = self.layout
+    layout.operator(
         TEXT_OT_run_specified_script.bl_idname,
         text=TEXT_OT_run_specified_script.bl_label,
     )
 
 
-# fmt: off
-classes = [
-    TEXT_OT_run_specified_script,
-]
-# fmt: on
-
-
 def register():
-    for c in classes:
-        bpy.utils.register_class(c)
-        bpy.types.TOPBAR_MT_window.append(_menu_func)
+    bpy.utils.register_class(TEXT_OT_run_specified_script)
+    bpy.types.TOPBAR_MT_render.append(_menu_func)
 
 
 def unregister():
-    for c in reversed(classes):
-        bpy.utils.unregister_class(c)
-        bpy.types.TOPBAR_MT_window.remove(_menu_func)
+    bpy.utils.unregister_class(TEXT_OT_run_specified_script)
+    bpy.types.TOPBAR_MT_render.remove(_menu_func)
 
 
 if __name__ == "__main__":
