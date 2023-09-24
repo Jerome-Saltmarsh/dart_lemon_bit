@@ -240,6 +240,9 @@ def render_camera_track(camera_track):
 
             active_export.hide_render = True
 
+            for obj in render_enabled_meshes:
+                obj.hide_render = False
+
         for active_export in active_exports:
             active_export.hide_render = False
 
