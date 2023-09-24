@@ -32,6 +32,21 @@ def get_render_active_children(children):
     return visible_children
 
 
+def get_render_active_children_2(value):
+    if not value:
+        raise ValueError('get_render_active_children_2(null)')
+
+    visible_children = []
+    children = value.children
+
+    if children:
+        for child in children:
+            if not child.hide_render:
+                visible_children.append(child)
+
+    return visible_children
+
+
 def set_render_engine(value):
     bpy.context.scene.render.engine = value
 
@@ -162,68 +177,76 @@ def enable_animation_tracks_by_name(name):
 
 def render_camera_track(camera_track):
     print(f'render_camera_track({camera_track.name})')
-    rig_kid_animation_tracks = get_animation_tracks_rig_kid()
+    armature_kid_animation_tracks = get_animation_tracks_rig_kid()
     mute_animation_tracks("Camera Pivot")
     camera_track.mute = False
 
     if camera_track.name == 'front':
         set_render_frames(1, 8)
         unmute_camera_pivot_track('camera_1')
-        for rig_kid_animation_track in rig_kid_animation_tracks:
+        for rig_kid_animation_track in armature_kid_animation_tracks:
             rig_kid_animation_track.mute = rig_kid_animation_track.name != 'idle'
 
     if camera_track.name == 'isometric':
         set_render_frames(1, 64)
         unmute_camera_pivot_track('camera_8')
-        for rig_kid_animation_track in rig_kid_animation_tracks:
+        for rig_kid_animation_track in armature_kid_animation_tracks:
             rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
 
-    rig_kid_animation_tracks = get_animation_tracks_unmuted("armature_kid")
-    collections_export = get_collection("Exports")
-    collections_export.hide_render = False
+    armature_kid_animation_tracks = get_animation_tracks_unmuted("armature_kid")
+    exports = get_collection("exports")
 
-    if not collections_export:
-        raise ValueError('collections_export not found')
+    if not exports:
+        raise ValueError('exports not found')
 
-    if not rig_kid_animation_tracks:
-        raise ValueError('rig_kid_animation_tracks not found')
+    if not armature_kid_animation_tracks:
+        raise ValueError('armature_kid_animation_tracks not found')
 
-    # mute_animation_tracks('rig_kid')
+    exports.hide_render = False
 
-    for rig_kid_track in rig_kid_animation_tracks:
+    for armature_kid_animation_track in armature_kid_animation_tracks:
 
-        enable_animation_tracks_by_name(rig_kid_track.name)
-        active_children = get_render_active_children(collections_export)
+        enable_animation_tracks_by_name(armature_kid_animation_track.name)
+        active_exports = get_render_active_children(exports)
 
-        if not active_children:
+        if not active_exports:
             raise ValueError('active_children is null')
 
-        for collection in active_children:
-            render_false(collection)
+        for active_export in active_exports:
+            active_export.hide_render = True
 
-        for collection in active_children:
-            collection.hide_render = False
-            for obj in collection.objects:
-                render_true(obj)
-                object_name = obj.name.replace(collection.name + "_", "")
+        for active_export in active_exports:
+            active_export.hide_render = False
+
+            render_enabled_meshes = []
+
+            for obj in active_export.objects:
+                if not obj.hide_render:
+                    render_enabled_meshes.append(obj)
+                    obj.hide_render = True
+
+            for obj in render_enabled_meshes:
+                obj.hide_render = False
+                object_name = obj.name.replace(active_export.name + "_", "")
                 mesh_directory = os.path.join(
                     get_render_directory(camera_track) + "/kid/",
-                    collection.name, object_name, rig_kid_track.name
+                    active_export.name, object_name, armature_kid_animation_track.name
                 )
                 os.makedirs(mesh_directory, exist_ok=True)
                 set_render_path(os.path.join(mesh_directory, ""))
                 render()
                 render_false(obj)
+                obj.hide_render = True
 
-            collection.hide_render = True
+            active_export.hide_render = True
 
-        for collection in active_children:
-            render_true(collection)
+        for active_export in active_exports:
+            active_export.hide_render = False
 
-        rig_kid_track.mute = True
+        armature_kid_animation_track.mute = True
 
-    for rig_kid_track in rig_kid_animation_tracks:
-        rig_kid_track.mute = False
+    for armature_kid_animation_track in armature_kid_animation_tracks:
+        armature_kid_animation_track.mute = False
 
 
 def render_unmuted_camera_tracks():
