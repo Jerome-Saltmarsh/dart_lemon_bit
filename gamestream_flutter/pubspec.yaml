@@ -43,15 +43,6 @@ dev_dependencies:
 
 flutter:
   fonts:
-    - family: LibreBarcode39Text-Regular
-      fonts:
-        - asset: fonts/LibreBarcode39Text-Regular.ttf
-    - family: JetBrainsMono-Regular
-      fonts:
-        - asset: fonts/JetBrainsMono-Regular.ttf
-    - family: Audiowide-Regular
-      fonts:
-        - asset: fonts/Audiowide-Regular.ttf
     - family: VT323-Regular
       fonts:
         - asset: fonts/VT323-Regular.ttf
@@ -68,11 +59,9 @@ flutter:
     - sprites/isometric/kid/body_female/shirt_blue/
     - sprites/isometric/kid/body_female/leather_armour/
     - sprites/isometric/kid/body_arms/shirt_blue/
-    - sprites/isometric/kid/hair_back/01/
     - sprites/isometric/kid/hair_front/01/
+    - sprites/isometric/kid/hair_back/01/
     - sprites/isometric/kid/hair_top/01/
-    - sprites/isometric/kid/hair_back/02/
-    - sprites/isometric/kid/hair_front/02/
     - sprites/isometric/kid/hair_top/02/
     - sprites/isometric/kid/hands_left/gauntlets/
     - sprites/isometric/kid/hands_right/gauntlets/
