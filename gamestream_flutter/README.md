@@ -12,9 +12,13 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
+- optimization skip render empty nodes
 - fix player run destination up high
 - fix hover over player name
 - fix set node light source refresh
+- feature player persistence
+- feature stash
+- feature store
 - glove type leather
 - particle flame spark
 - particle wind animation
@@ -24,14 +28,11 @@ shift + alt + J     : backspace
 - body type chain mail
 - helm type hoodie
 - glove type silk
-- player persistence
-- stash
-- store
-- player attributes dialog
 - particle crow
 - particle chicken
 
 25.09.2023
+- fix character weapon render order
 - fix player wall clipping when up high
 - fix speech box
 

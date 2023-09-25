@@ -20,6 +20,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 import '../../../isometric/classes/position.dart';
+import 'functions/convert_seconds_to_ambient_alpha.dart';
 import 'render/classes/bool_list.dart';
 
 class IsometricScene with IsometricComponent implements Updatable {
@@ -56,6 +57,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var nodeOrientations = Uint8List(0);
   var nodeVisibility = Uint8List(0);
   var nodeTypes = Uint8List(0);
+  var emptyNodes = Uint16List(0);
   var nodeVariations = Uint8List(0);
   var miniMap = Uint8List(0);
   var heightMap = Uint16List(0);
@@ -1983,8 +1985,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-
-
   bool isPerceptiblePosition(Position position) {
     if (outOfBoundsPosition(position))
       return false;
@@ -2276,14 +2276,56 @@ class IsometricScene with IsometricComponent implements Updatable {
        j++;
     }
   }
+
+  void generateEmptyNodes(){
+    if (emptyNodes.length != nodeTypes.length){
+      emptyNodes = Uint16List(nodeTypes.length);
+    }
+
+    final shiftRight = totalColumns - 1;
+    final sideLength = totalRows + totalColumns;
+
+    for (var z = 0; z < totalZ; z++){
+      var startIndex = z * area;
+      for (var i = 0; i < sideLength; i++) {
+
+        int r;
+        int c;
+
+        if (i < totalColumns){
+          r = 0;
+          c = i;
+        } else {
+          r = i - totalColumns;
+          c = totalColumns - 1;
+        }
+
+
+        var count = 0;
+        while (r < totalRows && c >= 0){
+          if (nodeTypes[i] == NodeType.Empty){
+
+          } else {
+
+          }
+          i += shiftRight;
+          r++;
+          c--;
+        }
+      }
+
+      for (var row = 0; row < totalRows; row++){
+
+        var r = row;
+        var c = totalColumns - 1;
+
+        // while (r < totalRows && c > 0 )
+
+
+
+      }
+
+    }
+  }
 }
 
-int convertSecondsToAmbientAlpha(int totalSeconds) {
-  const Seconds_Per_Hours_12 = Duration.secondsPerHour * 12;
-  return ((totalSeconds < Seconds_Per_Hours_12
-      ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-      : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) *
-      255)
-      .round();
-
-}

@@ -436,6 +436,8 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
+    var weaponRendered = false;
+
     if (spriteHandsRight != spriteHandFront){
       renderSprite(
         sprite: spriteWeapon,
@@ -448,6 +450,7 @@ class RendererCharacters extends RenderGroup {
         dstY: dstY,
         anchorY: anchorY,
       );
+      weaponRendered = true;
     }
 
     final bodyFirst = const [
@@ -459,7 +462,7 @@ class RendererCharacters extends RenderGroup {
 
 
     // render.textPosition(character, direction, offsetY: -100);
-    render.textPosition(character, bodyFirst, offsetY: -100);
+    // render.textPosition(character, bodyFirst, offsetY: -100);
 
     if (bodyFirst){
       renderSprite(
@@ -475,6 +478,18 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
+    renderSprite(
+      sprite: spriteWeapon,
+      frame: completingAction
+          ? spriteWeapon.getFramePercentage(row, actionComplete)
+          : spriteWeapon.getFrame(row: row, column: animationFrame),
+      color: color,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
     modulate(
       sprite: spriteArmFront,
       frame: completingAction
@@ -487,20 +502,6 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
-
-    if (spriteHandsRight == spriteHandFront){
-      renderSprite(
-        sprite: spriteWeapon,
-        frame: completingAction
-            ? spriteWeapon.getFramePercentage(row, actionComplete)
-            : spriteWeapon.getFrame(row: row, column: animationFrame),
-        color: color,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
 
     renderSprite(
       sprite: spriteHandFront,
