@@ -487,8 +487,8 @@ class RendererNodes extends RenderGroup {
                       );
                       break;
                   }
-                  engine.flushBuffer();
-                  engine.renderText(compositor.order.toString(), dstX - 10, dstY - 10);
+                  // engine.flushBuffer();
+                  // engine.renderText(compositor.order.toString(), dstX - 10, dstY - 10);
                 }
               } else {
 

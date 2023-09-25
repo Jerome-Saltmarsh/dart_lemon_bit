@@ -14,10 +14,8 @@ shift + alt + J     : backspace
 [TODO]
 - particle flame spark
 - particle wind animation
-- fix speech box
 - fix hover over player name
 - fix set node light source refresh
-- fix player wall clipping when up high
 - glove type leather
 - character wolf
 - character floating flaming skull
@@ -32,6 +30,10 @@ shift + alt + J     : backspace
 - player attributes dialog
 - particle crow
 - particle chicken
+
+25.09.2023
+- fix player wall clipping when up high
+- fix speech box
 
 20.09.2023
 - optimized render pipeline

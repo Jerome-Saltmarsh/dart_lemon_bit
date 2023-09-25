@@ -586,7 +586,7 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    engine.renderText(compositor.order.toString(), dstX - 24, dstY - 24);
+    // engine.renderText(compositor.order.toString(), dstX - 24, dstY - 24);
   }
 
   void renderCharacterFallen(Character character) {

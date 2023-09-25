@@ -19,7 +19,7 @@ class Position implements Comparable<Position>{
 
   double get indexSum => (indexRow + indexColumn).toDouble();
 
-  double get sortOrder => x + y + (z * 2);
+  double get sortOrder => x + y + (z + z);
 
   double get renderX => (x - y) * 0.5;
 
