@@ -28,7 +28,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.environment,
   }) : super(gameType: GameType.Amulet) {
 
-    spawnMonstersAtSpawnNodes();
+    // spawnMonstersAtSpawnNodes();
     characters.add(MMONpc(
       characterType: CharacterType.Kid,
       x: 2010,

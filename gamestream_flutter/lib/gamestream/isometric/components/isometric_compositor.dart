@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 
 class IsometricCompositor with IsometricComponent {
 
+  var order = 0;
+
   bool resetRenderOrder(RenderGroup value){
     value.reset();
     return value.remaining;
@@ -105,6 +107,7 @@ class IsometricCompositor with IsometricComponent {
         nextOrder = editorOrder;
       }
 
+      this.order = nextOrder.toInt();
       next.renderNext();
 
       if (next.remaining) {

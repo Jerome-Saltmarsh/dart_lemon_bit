@@ -52,7 +52,7 @@ class RendererNodes extends RenderGroup {
   var nodeScale = 1.0;
   var plainIndex = 0;
   var totalPlains = 0;
-  var orderShiftY = 151.0;
+  var orderShiftY = 13.0;
   var renderRainFalling = true;
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
@@ -487,6 +487,8 @@ class RendererNodes extends RenderGroup {
                       );
                       break;
                   }
+                  engine.flushBuffer();
+                  engine.renderText(compositor.order.toString(), dstX - 10, dstY - 10);
                 }
               } else {
 
@@ -645,7 +647,7 @@ class RendererNodes extends RenderGroup {
     final plainStartZ = clamp(index, 0, heightMax);
     order = (plainStartRow * Node_Size)
         + (plainStartColumn * Node_Size)
-        + (plainStartZ * Node_Height)
+        + (plainStartZ * Node_Size)
         + orderShiftY;
   }
 
