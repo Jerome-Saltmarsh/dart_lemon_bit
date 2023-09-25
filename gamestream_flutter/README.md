@@ -12,18 +12,18 @@ shift + alt + n     : enter
 shift + alt + J     : backspace
 
 [TODO]
-- particle flame spark
-- particle wind animation
+- fix player run destination up high
 - fix hover over player name
 - fix set node light source refresh
 - glove type leather
+- particle flame spark
+- particle wind animation
 - character wolf
 - character floating flaming skull
 - character witch
 - body type chain mail
 - helm type hoodie
 - glove type silk
-- set player name
 - player persistence
 - stash
 - store

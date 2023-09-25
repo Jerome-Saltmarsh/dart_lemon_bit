@@ -303,8 +303,6 @@ class RendererCharacters extends RenderGroup {
       InputDirection.Down_Left,
     ].contains(direction);
 
-    // render.textPosition(character, fringeInFront, offsetY: -100);
-
     if (fringeInFront){
       spriteHairInFront = spriteHairFront;
       spriteHairBehind = spriteHairBack;
@@ -453,12 +451,15 @@ class RendererCharacters extends RenderGroup {
     }
 
     final bodyFirst = const [
-      InputDirection.Left,
       InputDirection.Down_Left,
       InputDirection.Down,
       InputDirection.Down_Right,
       InputDirection.Right,
     ].contains(direction);
+
+
+    // render.textPosition(character, direction, offsetY: -100);
+    render.textPosition(character, bodyFirst, offsetY: -100);
 
     if (bodyFirst){
       renderSprite(
