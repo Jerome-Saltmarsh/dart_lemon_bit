@@ -92,7 +92,6 @@ class RendererNodes extends RenderGroup {
 
   int get wind => environment.wind.value;
 
-  final colorOpaque = Colors.white;
   final colorTransparent = Colors.white.withOpacity(0.15);
 
   @override
@@ -214,7 +213,7 @@ class RendererNodes extends RenderGroup {
                     if (visibility == Visibility.transparent) {
                       engine.color = colorTransparent;
                     } else {
-                      engine.color = colorOpaque;
+                      engine.color = Colors.white;
                     }
                   }
 
@@ -500,7 +499,7 @@ class RendererNodes extends RenderGroup {
                     if (visibility == Visibility.transparent) {
                       engine.color = colorTransparent;
                     } else {
-                      engine.color = colorOpaque;
+                      engine.color = Colors.white;
                     }
                   }
 
@@ -596,41 +595,13 @@ class RendererNodes extends RenderGroup {
     }
 
     plainIndex++;
-    engine.color = colorOpaque;
+    engine.color = Colors.white;
 
     if (plainIndex <= totalPlains) {
       onPlainIndexChanged();
       return;
     }
     end();
-
-    // final playerInsideIsland = gamestream.player.playerInsideIsland;
-    // final nodeTypes = scene.nodeTypes;
-    //
-    // while (
-    //     column >= 0            &&
-    //     row    <= nodesRowsMax &&
-    //     currentNodeDstX   <= screenRight
-    // ){
-    //   currentNodeType = nodeTypes[currentNodeIndex];
-    //   if (currentNodeType != NodeType.Empty){
-    //     if (!playerInsideIsland){
-    //       renderCurrentNode();
-    //     } else {
-    //       currentNodeWithinIsland = island[row * scene.totalColumns + column];
-    //       if (!currentNodeWithinIsland){
-    //         renderCurrentNode();
-    //       } else if (currentNodeZ <= playerZ || visible3D[currentNodeIndex]) {
-    //         renderCurrentNode();
-    //       }
-    //     }
-    //   }
-    //   if (row + 1 > nodesRowsMax) return;
-    //   row++;
-    //   column--;
-    //   currentNodeIndex += nodesGridTotalColumnsMinusOne;
-    //   currentNodeDstX += IsometricConstants.Sprite_Width;
-    // }
   }
 
   void onPlainIndexChanged(){
