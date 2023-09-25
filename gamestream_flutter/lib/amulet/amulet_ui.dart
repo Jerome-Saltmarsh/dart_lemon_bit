@@ -96,7 +96,7 @@ class AmuletUI {
 
   Positioned buildNpcText() {
 
-    const width = 200.0;
+    const width = 300.0;
     const height = width * goldenRatio_0618;
 
     final options = buildWatch(amulet.npcOptionsReads, (t) =>
@@ -120,16 +120,21 @@ class AmuletUI {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(child: buildText(npcText)),
+            Positioned(
+              top: 8,
+              child: buildText(npcText, color: Colors.white70),
+            ),
             Positioned(
               bottom: 8,
-              child: options),
+              child: options,
+            ),
             Positioned(
-              right: 8,
-              top: 8,
+              right: 0,
+              top: 0,
               child: onPressed(
                   action: amulet.network.sendAmuletRequest.endInteraction,
-                  child: buildText('x', size: 25)),
+                  child: buildText('x', size: 25),
+              ),
             ),
           ],
         ),
