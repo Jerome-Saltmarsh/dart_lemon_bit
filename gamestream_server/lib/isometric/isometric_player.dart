@@ -820,7 +820,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writeEditorGameObjectSelected() {
     final selectedGameObject = editorSelectedGameObject;
     if (selectedGameObject == null) return;
-    writeByte(NetworkResponse.Editor_GameObject_Selected);
+    writeByte(NetworkResponse.Editor);
+    writeByte(NetworkResponseEditor.Editor_GameObject_Selected);
     writeUInt16(selectedGameObject.id);
     writeBool(selectedGameObject.hitable);
     writeBool(selectedGameObject.fixed);

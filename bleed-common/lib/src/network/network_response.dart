@@ -8,7 +8,6 @@ class NetworkResponse {
   static const Store_Items = 10;
   static const Weather = 11;
   static const Game_Properties = 12;
-  static const Editor_GameObject_Selected = 16;
   static const GameObject = 17;
   static const Environment = 18;
   static const Game_Error = 19;

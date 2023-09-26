@@ -92,9 +92,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Game_Properties:
         readNetworkResponseGameProperties();
         break;
-      case NetworkResponse.Editor_GameObject_Selected:
-        readNetworkResponseEditorGameObjectSelected();
-        break;
       case NetworkResponse.Info:
         readNetworkResponseInfo();
         break;
@@ -440,8 +437,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readNetworkResponseEditorGameObjectSelected() {
-    // readVector3(isometricEngine.editor.gameObject);
-
     final id = readUInt16();
     final gameObject = scene.findGameObjectById(id);
     if (gameObject == null) throw Exception('could not find gameobject with id $id');
@@ -704,6 +699,9 @@ class IsometricParser with ByteReader, IsometricComponent {
     switch (readByte()){
       case NetworkResponseEditor.Selected_Mark_List_Index:
         editor.selectedMarkListIndex.value = readInt16();
+        break;
+      case NetworkResponseEditor.Editor_GameObject_Selected:
+        readNetworkResponseEditorGameObjectSelected();
         break;
     }
   }
