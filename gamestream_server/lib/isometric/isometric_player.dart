@@ -806,13 +806,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeBytes(compiled);
   }
 
-  void writePlayerTarget() {
-    final target = this.target;
-    if (target == null) return;
-    writeByte(NetworkResponse.Player_Target);
-    writePosition(target);
-  }
-
   void writeAngle(double radians){
     writeDouble(radians * radiansToDegrees);
   }

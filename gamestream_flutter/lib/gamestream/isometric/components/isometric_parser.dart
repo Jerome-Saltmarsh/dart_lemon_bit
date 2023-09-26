@@ -83,9 +83,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Node:
         readNetworkResponseNode();
         break;
-      case NetworkResponse.Player_Target:
-        readNetworkResponsePlayerTarget();
-        break;
       case NetworkResponse.Store_Items:
         readNetworkResponseStoreItems();
         break;
@@ -163,10 +160,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     final length = readUInt16();
     final bytes = readBytes(length);
     downloadBytes(bytes: bytes, name: '$name.scene');
-  }
-
-  void readNetworkResponsePlayerTarget() {
-    readIsometricPosition(player.target);
   }
 
   void readNetworkResponseGameType() {
