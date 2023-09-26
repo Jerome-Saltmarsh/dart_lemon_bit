@@ -10,7 +10,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- fix player run destination up high
 - fix set node light source refresh
 - feature player persistence
 - feature stash
@@ -28,6 +27,7 @@ ctrl + []               : move caret to code block
 - particle chicken
 
 26.09.2023
+- fix player run destination up high
 - optimization skip render empty nodes
 
 25.09.2023

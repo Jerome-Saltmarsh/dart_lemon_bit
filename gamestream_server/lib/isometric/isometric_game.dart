@@ -290,7 +290,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (!player.mouseLeftDownIgnore && mouseLeftDown) {
+    if (mouseLeftDown && !player.mouseLeftDownIgnore) {
       final aimTarget = player.aimTarget;
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){

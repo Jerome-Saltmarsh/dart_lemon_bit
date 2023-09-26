@@ -424,7 +424,15 @@ class Character extends Collider {
     setCharacterStateRunning();
   }
 
-  void faceRunDestination() => faceXY(runX, runY);
+  void faceRunDestination() {
+    if (z != runZ){
+      final diff = z - runZ;
+      runX += diff;
+      runY += diff;
+      runZ = z;
+    }
+    faceXY(runX, runY);
+  }
 
   void clearTarget(){
     target = null;
@@ -494,6 +502,7 @@ class Character extends Collider {
   void setRunDestination(double x, double y, double z) {
     if (!runToDestinationEnabled || deadOrBusy)
       return;
+
     runX = x;
     runY = y;
     runZ = z;
