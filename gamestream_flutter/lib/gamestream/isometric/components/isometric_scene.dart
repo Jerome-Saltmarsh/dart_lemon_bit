@@ -1901,6 +1901,9 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     final colors = amulet.colors;
     final torchEmissionIntensityColored = amulet.lighting.torchEmissionIntensityColored;
+    final nodeLightSourcesTotal = this.nodeLightSourcesTotal;
+    final nodeLightSources = this.nodeLightSources;
+    final nodeTypes = this.nodeTypes;
 
     for (var i = 0; i < nodeLightSourcesTotal; i++){
       final nodeIndex = nodeLightSources[i];
