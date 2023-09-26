@@ -110,9 +110,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.FPS:
         readNetworkResponseFPS();
         break;
-      case NetworkResponse.Sort_GameObjects:
-        readNetworkResponseSortGameObjects();
-        break;
       case NetworkResponse.Scene:
         readNetworkResponseScene();
         break;
@@ -135,7 +132,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     network.websocket.disconnect();
   }
 
-  void readNetworkResponseSortGameObjects() {
+  void readSortGameObjects() {
     scene.gameObjects.sort();
   }
 
@@ -682,17 +679,24 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseScene() {
     switch (readByte()){
       case NetworkResponseScene.Marks:
-        final length = readUInt16();
-        scene.marks = Uint32List(length);
-        for (var i = 0; i < length; i++) {
-          scene.marks[i] = readUInt32();
-        }
-        scene.marksChangedNotifier.value++;
+        readMarks();
         break;
       case NetworkResponseScene.GameObject_Deleted:
         readGameObjectDeleted();
         break;
+      case NetworkResponseScene.Sort_GameObjects:
+        readSortGameObjects();
+        break;
     }
+  }
+
+  void readMarks() {
+    final length = readUInt16();
+    scene.marks = Uint32List(length);
+    for (var i = 0; i < length; i++) {
+      scene.marks[i] = readUInt32();
+    }
+    scene.marksChangedNotifier.value++;
   }
 
   void readNetworkResponseEditor() {

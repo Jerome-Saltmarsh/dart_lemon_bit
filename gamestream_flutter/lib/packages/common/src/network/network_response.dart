@@ -18,7 +18,6 @@ class NetworkResponse {
   static const Isometric = 33;
   static const Characters = 34;
   static const FPS = 35;
-  static const Sort_GameObjects = 36;
   static const Player = 37;
   static const Scene = 38;
   static const Editor = 39;

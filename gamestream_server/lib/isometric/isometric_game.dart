@@ -828,7 +828,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void sortGameObjects(){
-    playersWriteByte(NetworkResponse.Sort_GameObjects);
+    playersWriteByte(NetworkResponse.Scene);
+    playersWriteByte(NetworkResponseScene.Sort_GameObjects);
     gameObjects.sort();
   }
 
