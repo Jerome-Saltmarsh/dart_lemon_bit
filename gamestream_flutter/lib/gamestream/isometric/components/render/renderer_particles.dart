@@ -5,6 +5,8 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 
+import 'renderer_nodes.dart';
+
 class RendererParticles extends RenderGroup {
 
   late Particle particle;
@@ -652,23 +654,17 @@ class RendererParticles extends RenderGroup {
 
   @override
   void updateFunction() {
-    final minX = engine.Screen_Left - 50;
-    final maxX = engine.Screen_Right + 50;
-    final minY = engine.Screen_Top - 50;
-    final maxY = engine.Screen_Bottom + 50;
+
     final particles = this.particles.children;
-    final scene = this.scene;
     final total = this.total;
 
     while (index < total) {
-      particle = particles[index++];
-      if (!particle.active || particle.delay > 0) continue;
-      final dstX = particle.renderX;
-      if (dstX < minX || dstX > maxX) continue;
-      final dstY = particle.renderY;
-      if (dstY < minY || dstY > maxY) continue;
-      // TODO Optimize
-      if (!scene.isPerceptiblePosition(particle)) continue;
+      final particle = particles[index++];
+
+      if (!particle.onscreen)
+        continue;
+
+      this.particle = particle;
       order = particle.sortOrder;
       index--;
       return;

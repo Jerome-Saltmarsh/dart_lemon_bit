@@ -27,6 +27,7 @@ class Particle extends Position {
   var nodeCollidable = true;
   var animation = false;
   var nodeIndex = 0;
+  var onscreen = false;
 
   var emissionColor = 0;
   var emissionIntensity = 0.0;

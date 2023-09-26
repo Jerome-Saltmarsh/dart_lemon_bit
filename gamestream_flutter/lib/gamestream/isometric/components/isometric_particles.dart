@@ -2,6 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'dart:math';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
@@ -866,6 +867,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
       }
     }
 
+    final engine = this.engine;
+    final minX = engine.Screen_Left - 50;
+    final maxX = engine.Screen_Right + 50;
+    final minY = engine.Screen_Top - 50;
+    final maxY = engine.Screen_Bottom + 50;
+    final nodeVisibility = scene.nodeVisibility;
     final sceneLengthRows = scene.lengthRows;
     final sceneLengthColumns = scene.lengthColumns;
     final sceneLengthZ = scene.lengthZ;
@@ -877,8 +884,24 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     for (var i = 0; i < totalParticles; i++) {
       final particle = children[i];
-      if (!particle.active)
-        continue;
+
+      if (!particle.active){
+        particle.onscreen = false;
+      } else {
+        final dstX = particle.renderX;
+        if (dstX < minX || dstX > maxX){
+          particle.onscreen = false;
+        } else {
+          final dstY = particle.renderY;
+          if (dstY < minY || dstY > maxY){
+            particle.onscreen = false;
+          } else if (nodeVisibility[particle.nodeIndex] == Visibility.invisible){
+            particle.onscreen = false;
+          } else {
+            particle.onscreen = true;
+          }
+        }
+      }
 
       final x = particle.x;
       final y = particle.y;
