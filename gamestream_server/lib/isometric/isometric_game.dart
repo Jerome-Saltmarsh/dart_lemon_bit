@@ -1293,7 +1293,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       instance.active = false;
       gameObjects.remove(instance);
       for (final player in players) {
-        player.writeUInt8(NetworkResponse.GameObject_Deleted);
+        player.writeUInt8(NetworkResponse.Scene);
+        player.writeUInt8(NetworkResponseScene.GameObject_Deleted);
         player.writeUInt16(instance.id);
       }
       return;

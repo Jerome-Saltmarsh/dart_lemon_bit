@@ -15,7 +15,6 @@ class NetworkResponse {
   static const Game_Error = 19;
   static const Download_Scene = 22;
   static const GameObjects = 23;
-  static const GameObject_Deleted = 24;
   static const Info = 26;
   static const Amulet = 32;
   static const Isometric = 33;

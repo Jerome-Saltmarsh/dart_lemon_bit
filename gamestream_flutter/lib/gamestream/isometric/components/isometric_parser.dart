@@ -110,9 +110,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Download_Scene:
         readNetworkResponseDownloadScene();
         break;
-      case NetworkResponse.GameObject_Deleted:
-        readNetworkResponseGameObjectDeleted();
-        break;
       case NetworkResponse.Game_Error:
         readNetworkResponseGameError();
         break;
@@ -157,7 +154,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     options.error.value = GameError.fromIndex(errorTypeIndex);
   }
 
-  void readNetworkResponseGameObjectDeleted() {
+  void readGameObjectDeleted() {
     scene.removeGameObjectById(readUInt16());
   }
 
@@ -703,6 +700,9 @@ class IsometricParser with ByteReader, IsometricComponent {
           scene.marks[i] = readUInt32();
         }
         scene.marksChangedNotifier.value++;
+        break;
+      case NetworkResponseScene.GameObject_Deleted:
+        readGameObjectDeleted();
         break;
     }
   }
