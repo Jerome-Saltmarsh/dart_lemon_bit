@@ -119,8 +119,8 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Scene:
         readNetworkResponseScene();
         break;
-      case NetworkResponse.Editor_Response:
-        readNetworkResponseEditorResponse();
+      case NetworkResponse.Editor:
+        readNetworkResponseEditor();
         break;
       default:
         readNetworkResponseDefault();
@@ -700,7 +700,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readNetworkResponseEditorResponse() {
+  void readNetworkResponseEditor() {
     switch (readByte()){
       case NetworkResponseEditor.Selected_Mark_List_Index:
         editor.selectedMarkListIndex.value = readInt16();

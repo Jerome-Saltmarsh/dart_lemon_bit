@@ -35,7 +35,7 @@ class EditorState {
     }
 
     _selectedMarkListIndex = value;
-    player.writeByte(NetworkResponse.Editor_Response);
+    player.writeByte(NetworkResponse.Editor);
     player.writeByte(NetworkResponseEditor.Selected_Mark_List_Index);
     player.writeInt16(value);
   }
