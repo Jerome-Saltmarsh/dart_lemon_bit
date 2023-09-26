@@ -2281,11 +2281,18 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void generateEmptyNodes() {
-    if (emptyNodes.length != nodeTypes.length) {
-      emptyNodes = Uint16List(nodeTypes.length);
+    final nodeTypes = this.nodeTypes;
+    final totalRows = this.totalRows;
+    final totalZ = this.totalZ;
+    final totalColumns = this.totalColumns;
+
+    if (this.emptyNodes.length != nodeTypes.length) {
+      this.emptyNodes = Uint16List(nodeTypes.length);
     } else {
-      emptyNodes.fillRange(0, emptyNodes.length - 1, 0);
+      this.emptyNodes.fillRange(0, this.emptyNodes.length - 1, 0);
     }
+
+    final emptyNodes = this.emptyNodes;
 
     final shift = totalColumns - 1;
     final sideLength = totalRows + totalColumns;
