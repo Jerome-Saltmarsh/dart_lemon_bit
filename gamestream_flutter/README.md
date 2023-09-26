@@ -3,16 +3,13 @@ flutter build web --web-renderer canvaskit --release
 firebase deploy
 
 [shortcut-keys]
-navigate to next method: ctrl + shift + up / down arrows
-ctrl + w            : minimal mode
-ctrl + shift + e    : view recent changes
-alt + m             : go to declaration
-
-shift + alt + n     : enter
-shift + alt + J     : backspace
+ctrl + shift + arrow    : navigate to next method:
+ctrl + w                : minimal mode
+ctrl + shift + e        : view recent changes
+alt + m                 : go to declaration
+ctrl + []               : move caret to code block
 
 [TODO]
-- optimization skip render empty nodes
 - fix player run destination up high
 - fix set node light source refresh
 - feature player persistence
@@ -29,6 +26,9 @@ shift + alt + J     : backspace
 - glove type silk
 - particle crow
 - particle chicken
+
+26.09.2023
+- optimization skip render empty nodes
 
 25.09.2023
 - fix character weapon render order

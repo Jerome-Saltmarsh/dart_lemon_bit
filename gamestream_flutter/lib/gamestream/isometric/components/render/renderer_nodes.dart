@@ -36,6 +36,7 @@ class RendererNodes extends RenderGroup {
   static const Node_South_Height = 24.0;
 
 
+  var totalSkipped = 0;
   var srcXRainLanding = 6739.0;
   var windType = 0;
   var rainType = 0;
@@ -564,6 +565,13 @@ class RendererNodes extends RenderGroup {
                   }
                 }
               }
+            } else {
+              final skips = scene.emptyNodes[nodeIndex];
+              totalSkipped += skips;
+              row += skips;
+              column -= skips;
+              nodeIndex += skips * shiftRight;
+              dstX += skips * Node_Sprite_Width;
             }
           }
 
@@ -632,6 +640,7 @@ class RendererNodes extends RenderGroup {
 
   @override
   void reset() {
+    totalSkipped = 0;
     renderRainFalling = options.renderRainFallingTwice;
     rainType = environment.rainType.value;
     windType = environment.wind.value;

@@ -2280,54 +2280,44 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  void generateEmptyNodes(){
-    if (emptyNodes.length != nodeTypes.length){
+  void generateEmptyNodes() {
+    if (emptyNodes.length != nodeTypes.length) {
       emptyNodes = Uint16List(nodeTypes.length);
+    } else {
+      emptyNodes.fillRange(0, emptyNodes.length - 1, 0);
     }
 
-    final shiftRight = totalColumns - 1;
+    final shift = totalColumns - 1;
     final sideLength = totalRows + totalColumns;
 
     for (var z = 0; z < totalZ; z++){
-      var startIndex = z * area;
       for (var i = 0; i < sideLength; i++) {
 
         int r;
         int c;
 
-        if (i < totalColumns){
-          r = 0;
-          c = i;
+        if (i < totalRows){
+          r = i;
+          c = 0;
         } else {
-          r = i - totalColumns;
-          c = totalColumns - 1;
+          r = totalRows - 1;
+          c = i - r;
         }
-
 
         var count = 0;
-        while (r < totalRows && c >= 0){
-          if (nodeTypes[i] == NodeType.Empty){
-
+        var index = getIndexZRC(z, r, c);
+        while (r >= 0 && c < totalColumns){
+          if (nodeTypes[index] == NodeType.Empty){
+            emptyNodes[index] = count;
+            count++;
           } else {
-
+            count = 0;
           }
-          i += shiftRight;
-          r++;
-          c--;
+          index -= shift;
+          r--;
+          c++;
         }
       }
-
-      for (var row = 0; row < totalRows; row++){
-
-        var r = row;
-        var c = totalColumns - 1;
-
-        // while (r < totalRows && c > 0 )
-
-
-
-      }
-
     }
   }
 }

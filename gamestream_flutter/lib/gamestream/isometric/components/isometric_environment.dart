@@ -63,6 +63,7 @@ class IsometricEnvironment with IsometricComponent {
     raining.value = value != RainType.None;
     refreshRain();
     scene.updateAmbientAlphaAccordingToTime();
+    scene.generateEmptyNodes();
   }
 
   void onChangedSeconds(int seconds){

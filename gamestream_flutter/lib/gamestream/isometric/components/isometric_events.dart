@@ -38,6 +38,7 @@ class IsometricEvents with IsometricComponent {
     scene.refreshSmokeSources();
     scene.refreshLightSources();
     scene.refreshNodeVariations();
+    scene.generateEmptyNodes();
     minimap.generateSrcDst();
 
 

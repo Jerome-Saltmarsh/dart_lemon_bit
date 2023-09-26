@@ -287,6 +287,7 @@ class IsometricRender with IsometricComponent {
 
   void renderText({required String value, required double x, required double y}){
     const charWidth = 4.5;
+    engine.flushBuffer();
     engine.writeText(value, x - charWidth * value.length, y);
   }
 

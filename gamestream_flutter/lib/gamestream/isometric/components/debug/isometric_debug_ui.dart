@@ -631,6 +631,7 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabOptions() =>
       buildTab(
         children: [
+          buildRowRefresh('total_skipped', () => rendererNodes.totalSkipped),
           buildRowToggle(
              text: 'emitLightsUsingRecursion',
              action: () => options.emitLightsUsingRecursion = !options.emitLightsUsingRecursion,
