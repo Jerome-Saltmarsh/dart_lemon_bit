@@ -14,7 +14,6 @@ shift + alt + J     : backspace
 [TODO]
 - optimization skip render empty nodes
 - fix player run destination up high
-- fix hover over player name
 - fix set node light source refresh
 - feature player persistence
 - feature stash

@@ -183,23 +183,23 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readIsometricResponse() {
     switch (readByte()) {
 
-      case IsometricResponse.Selected_Collider:
+      case NetworkResponseIsometric.Selected_Collider:
         readSelectedCollider();
         break;
 
-      case IsometricResponse.Scene:
+      case NetworkResponseIsometric.Scene:
         readScene();
         break;
 
-      case IsometricResponse.Player_Position:
+      case NetworkResponseIsometric.Player_Position:
         readIsometricPlayerPosition();
         break;
 
-      case IsometricResponse.Player_Aim_Target:
+      case NetworkResponseIsometric.Player_Aim_Target:
         readPlayerAimTarget();
         break;
 
-      case IsometricResponse.Player_Position_Change:
+      case NetworkResponseIsometric.Player_Position_Change:
         final position = player.position;
         player.savePositionPrevious();
         final changeX = readInt8().toDouble();
@@ -214,23 +214,23 @@ class IsometricParser with ByteReader, IsometricComponent {
         player.nodeIndex = scene.getIndexPosition(position);
         break;
 
-      case IsometricResponse.Player_Accuracy:
+      case NetworkResponseIsometric.Player_Accuracy:
         player.accuracy.value = readPercentage();
         break;
 
-      case IsometricResponse.Player_Weapon_Duration_Percentage:
+      case NetworkResponseIsometric.Player_Weapon_Duration_Percentage:
         player.weaponCooldown.value = readPercentage();
         break;
 
-      case IsometricResponse.GameObjects:
+      case NetworkResponseIsometric.GameObjects:
         scene.gameObjects.clear();
         break;
 
-      case IsometricResponse.Player_Initialized:
+      case NetworkResponseIsometric.Player_Initialized:
         player.onPlayerInitialized();
         break;
 
-      case IsometricResponse.Player_Controls:
+      case NetworkResponseIsometric.Player_Controls:
         player.controlsCanTargetEnemies.value = readBool();
         player.controlsRunInDirectionEnabled.value = readBool();
         break;
