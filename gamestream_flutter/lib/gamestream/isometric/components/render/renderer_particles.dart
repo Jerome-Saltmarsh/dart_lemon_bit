@@ -31,11 +31,11 @@ class RendererParticles extends RenderGroup {
 
     assert(particle.active);
     assert(particle.delay <= 0);
-
-    assert(dstX > engine.Screen_Left - 50);
-    assert(dstX < engine.Screen_Right + 50);
-    assert(dstY > engine.Screen_Top - 50);
-    assert(dstY < engine.Screen_Bottom + 50);
+    assert(particle.onscreen);
+    // assert(dstX > engine.Screen_Left - 50);
+    // assert(dstX < engine.Screen_Right + 50);
+    // assert(dstY > engine.Screen_Top - 50);
+    // assert(dstY < engine.Screen_Bottom + 50);
 
     final particleType = particle.type;
 

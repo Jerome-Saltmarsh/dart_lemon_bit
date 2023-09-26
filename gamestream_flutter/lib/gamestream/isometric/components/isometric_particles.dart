@@ -868,10 +868,11 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
 
     final engine = this.engine;
-    final minX = engine.Screen_Left - 50;
-    final maxX = engine.Screen_Right + 50;
-    final minY = engine.Screen_Top - 50;
-    final maxY = engine.Screen_Bottom + 50;
+    const padding = 50;
+    final minX = engine.Screen_Left - padding;
+    final maxX = engine.Screen_Right + padding;
+    final minY = engine.Screen_Top - padding;
+    final maxY = engine.Screen_Bottom + padding;
     final nodeVisibility = scene.nodeVisibility;
     final sceneLengthRows = scene.lengthRows;
     final sceneLengthColumns = scene.lengthColumns;
@@ -886,22 +887,23 @@ class IsometricParticles with IsometricComponent implements Updatable {
       final particle = children[i];
 
       if (!particle.active){
+        continue;
+      }
+
+      final dstX = particle.renderX;
+      if (dstX < minX || dstX > maxX){
         particle.onscreen = false;
       } else {
-        final dstX = particle.renderX;
-        if (dstX < minX || dstX > maxX){
+        final dstY = particle.renderY;
+        if (dstY < minY || dstY > maxY){
+          particle.onscreen = false;
+        } else if (nodeVisibility[particle.nodeIndex] == Visibility.invisible){
           particle.onscreen = false;
         } else {
-          final dstY = particle.renderY;
-          if (dstY < minY || dstY > maxY){
-            particle.onscreen = false;
-          } else if (nodeVisibility[particle.nodeIndex] == Visibility.invisible){
-            particle.onscreen = false;
-          } else {
-            particle.onscreen = true;
-          }
+          particle.onscreen = true;
         }
       }
+
 
       final x = particle.x;
       final y = particle.y;

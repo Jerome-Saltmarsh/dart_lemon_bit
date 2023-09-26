@@ -7,7 +7,11 @@ extension AmuletRender on Amulet {
 
   void renderAmulet(Canvas canvas, Size size) {
     renderPlayerHoverItemRange();
-    renderPlayerRunLine();
+
+    if (options.renderRunLine){
+      renderPlayerRunLine();
+    }
+
     renderActivatedPower();
   }
 

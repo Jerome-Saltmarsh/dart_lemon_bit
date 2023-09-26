@@ -51,6 +51,7 @@ class Particle extends Position {
     durationTotal = -1;
     frame = 0;
     delay = 0;
+    onscreen = false;
   }
 
   void setAngle({required double value, required double speed}){
