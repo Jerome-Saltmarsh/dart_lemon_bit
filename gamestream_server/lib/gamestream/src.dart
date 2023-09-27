@@ -2,5 +2,5 @@
 library;
 
 export 'classes/src.dart';
-export 'firestore.dart';
+export '../database/database_firestore.dart';
 export 'gamestream_server.dart';

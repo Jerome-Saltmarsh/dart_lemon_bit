@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/user/user.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_screen.dart';
@@ -55,6 +56,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricLighting lighting;
   final IsometricColors colors;
   final IsometricStyle style;
+  final User user;
 
   final IsometricGame isometricEditor = IsometricGame();
 
@@ -93,6 +95,7 @@ class IsometricComponents extends ComponentContainer {
     required this.colors,
     required this.style,
     required this.engine,
+    required this.user,
   }) {
     print('IsometricComponents()');
     engine.onInit = init;
@@ -134,6 +137,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(lighting);
     components.add(colors);
     components.add(style);
+    components.add(user);
 
     for (final component in components) {
       if (component is! IsometricComponent) {
@@ -173,6 +177,7 @@ class IsometricComponents extends ComponentContainer {
       component.lighting = lighting;
       component.style = style;
       component.engine = engine;
+      component.user = user;
     }
   }
 }

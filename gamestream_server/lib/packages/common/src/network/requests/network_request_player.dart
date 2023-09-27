@@ -7,4 +7,5 @@ enum NetworkRequestPlayer {
   setGender,
   setHeadType,
   toggleGender,
+  persist,
 }

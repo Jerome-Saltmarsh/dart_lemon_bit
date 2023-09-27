@@ -2730,5 +2730,4 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.downloadSceneMarks();
     }
   }
-
 }

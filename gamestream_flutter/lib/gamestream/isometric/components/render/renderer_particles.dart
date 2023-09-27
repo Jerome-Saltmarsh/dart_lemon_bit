@@ -5,8 +5,6 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 
-import 'renderer_nodes.dart';
-
 class RendererParticles extends RenderGroup {
 
   late Particle particle;

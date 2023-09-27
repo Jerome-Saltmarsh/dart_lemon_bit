@@ -10,8 +10,9 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- improve ai pathfinding
+- http server
 - feature player persistence
+- improve ai pathfinding
 - feature stash
 - feature store
 - glove type leather

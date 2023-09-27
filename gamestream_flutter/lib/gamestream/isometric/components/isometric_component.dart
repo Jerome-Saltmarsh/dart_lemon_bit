@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/user/user.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_options.dart';
@@ -54,6 +55,7 @@ mixin IsometricComponent implements Component {
   late final IsometricColors colors;
   late final IsometricCompositor compositor;
   late final IsometricStyle style;
+  late final User user;
 
   /// (save to override)
   Future onComponentInit(SharedPreferences sharedPreferences) async {  }

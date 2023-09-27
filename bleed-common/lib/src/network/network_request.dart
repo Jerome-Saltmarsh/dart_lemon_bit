@@ -12,6 +12,7 @@ class NetworkRequest {
   static const Environment_Request = 44;
   static const Inventory_Request = 45;
   static const Player = 46;
+  static const User = 47;
 }
 
 

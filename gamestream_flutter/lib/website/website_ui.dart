@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/user/user_service.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,7 @@ extension WebsiteUI on WebsiteGame {
               ),
               height32,
               buildRowSelectGame(),
-              buttonDownloadImageTest(),
+              buildDialogSelectCharacter(),
             ],
           );
         }
@@ -83,10 +84,6 @@ extension WebsiteUI on WebsiteGame {
       }),
     );
 
-  Widget buttonDownloadImageTest() => onPressed(
-    action: downloadImageTest,
-    child: buildText('DOWNLOAD IMAGE'),
-  );
 
   void downloadImageTest(){
     final width = 100;
@@ -229,4 +226,16 @@ extension WebsiteUI on WebsiteGame {
                 child: bottomRight ?? buildText('okay'))
         )
     );
+
+  Widget buildDialogSelectCharacter() {
+    return Column(
+      children: [
+        onPressed(
+            action: () async => characters.value = await getCharacter(),
+            child: buildText('refresh'),
+        ),
+        buildWatch(characters, buildText),
+      ],
+    );
+  }
 }

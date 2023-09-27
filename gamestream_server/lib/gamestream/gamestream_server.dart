@@ -2,13 +2,15 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
+import 'package:gamestream_server/database/database_local.dart';
+import 'package:gamestream_server/http_server/http_server.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_server/packages.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../isometric.dart';
 import 'classes/src.dart';
-import 'firestore.dart';
+import '../database/database_firestore.dart';
 import '../editor/isometric_editor.dart';
 
 class GamestreamServer {
@@ -18,7 +20,7 @@ class GamestreamServer {
 
   final games = <Game>[];
   final isometricScenes = Scenes();
-  final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
+  final database = isLocalMachine ? DatabaseLocal() : DatabaseFirestore();
   final connections = <Connection>[];
 
   var connectionsTotal = 0;
@@ -36,7 +38,9 @@ class GamestreamServer {
     await validate();
     await loadResources();
     _initializeUpdateTimer();
-    start();
+
+    startServerHttp(port: 8082);
+    startServerWebsocket(port: 8080);
   }
 
   void _initializeUpdateTimer() {
@@ -132,15 +136,15 @@ class GamestreamServer {
     return player;
   }
 
-  void start(){
-    print("startWebsocketServer()");
+  void startServerWebsocket({required int port}){
+    print("startServerWebsocket(port: $port)");
     var handler = webSocketHandler(
       onConnection,
       protocols: ['gamestream.online'],
       pingInterval: const Duration(seconds: 30),
     );
 
-    shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
+    shelf_io.serve(handler, '0.0.0.0', port).then((server) {
       print('Serving at wss://${server.address.host}:${server.port}');
     }).catchError((error){
       print("Websocket error occurred");

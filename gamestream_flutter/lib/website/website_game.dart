@@ -22,6 +22,7 @@ class WebsiteGame extends Game {
   ];
 
   var imagesCached = false;
+  final characters = Watch('');
   final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);

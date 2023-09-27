@@ -834,6 +834,10 @@ class Connection with ByteReader {
         player.toggleGender();
         break;
 
+      case NetworkRequestPlayer.persist:
+        server.database.persist(player);
+        break;
+
       case NetworkRequestPlayer.setGender:
         final gender = arg2;
         if (gender == null) {

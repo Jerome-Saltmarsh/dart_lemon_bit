@@ -1,14 +1,10 @@
 
 import 'dart:async';
 
+import 'package:gamestream_server/database/database.dart';
+import 'package:gamestream_server/isometric/isometric_player.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
-
-abstract class Database {
-  Future connect();
-  Future<int> getHighScore();
-  Future writeHighScore(int value);
-}
 
 class DatabaseFirestore implements Database {
 
@@ -62,20 +58,9 @@ class DatabaseFirestore implements Database {
     documentFields['score'] = Value(integerValue: value.toString());
     await documents.patch(document, document.name!);
   }
-}
-
-class DatabaseLocalHost implements Database {
-
-  var value = 50;
 
   @override
-  Future connect() => Future.delayed(const Duration(milliseconds: 100));
-
-  @override
-  Future<int> getHighScore() => Future.value(value);
-
-  @override
-  Future writeHighScore(int value) async {
-    this.value = value;
+  void persist(IsometricPlayer player) {
+    // TODO: implement persist
   }
 }
