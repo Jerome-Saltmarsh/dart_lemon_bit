@@ -2015,6 +2015,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     nodeTypes[index] = nodeType;
     nodeOrientations[index] = nodeOrientation;
     // events.onChangedNodes();
+    scene.generateEmptyNodes();
     editor.refreshNodeSelectedIndex();
   }
 

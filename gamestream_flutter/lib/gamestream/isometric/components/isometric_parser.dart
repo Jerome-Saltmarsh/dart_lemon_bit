@@ -80,9 +80,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Environment:
         readNetworkResponseEnvironment();
         break;
-      case NetworkResponse.Node:
-        readNetworkResponseNode();
-        break;
       case NetworkResponse.Game_Properties:
         readNetworkResponseGameProperties();
         break;
@@ -557,7 +554,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readNetworkResponseNode() {
-    print('parser.readNode()');
     final nodeIndex = readUInt24();
     final nodeType = readByte();
     final nodeOrientation = readByte();
@@ -657,6 +653,9 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readNetworkResponseScene() {
     switch (readByte()){
+      case NetworkResponseScene.Node:
+        readNetworkResponseNode();
+        break;
       case NetworkResponseScene.Marks:
         readMarks();
         break;

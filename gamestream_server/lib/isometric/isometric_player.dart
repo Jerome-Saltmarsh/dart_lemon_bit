@@ -867,7 +867,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writeNode(int index){
     assert (index >= 0);
     assert (index < scene.volume);
-    writeByte(NetworkResponse.Node);
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Node);
     writeUInt24(index);
     writeByte(scene.types[index]);
     writeByte(scene.shapes[index]);
