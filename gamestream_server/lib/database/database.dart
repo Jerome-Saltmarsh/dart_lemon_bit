@@ -5,4 +5,6 @@ abstract class Database {
   Future<int> getHighScore();
   Future writeHighScore(int value);
   void persist(IsometricPlayer player);
+
+  Future<List<String>> getUserCharacters(String userId);
 }

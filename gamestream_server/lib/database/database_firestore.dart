@@ -63,4 +63,9 @@ class DatabaseFirestore implements Database {
   void persist(IsometricPlayer player) {
     // TODO: implement persist
   }
+
+  @override
+  Future<List<String>> getUserCharacters(String userId) async {
+    return [];
+  }
 }

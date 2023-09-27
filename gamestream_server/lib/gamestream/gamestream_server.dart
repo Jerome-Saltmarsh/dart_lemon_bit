@@ -39,7 +39,7 @@ class GamestreamServer {
     await loadResources();
     _initializeUpdateTimer();
 
-    startServerHttp(port: 8082);
+    startServerHttp(port: 8082, database: database);
     startServerWebsocket(port: 8080);
   }
 
