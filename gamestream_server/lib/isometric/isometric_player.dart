@@ -282,11 +282,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
      writeGameError(GameError.Invalid_Inventory_Index);
   }
 
-  void writeInfo(String info){
-    writeByte(NetworkResponse.Info);
-    writeString(info);
-  }
-
   void writeIsometricPlayer(){
     // final weaponDurationPercentage = this.weaponDurationPercentage;
     // if (weaponDurationPercentagePrevious != weaponDurationPercentage){

@@ -86,9 +86,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Game_Properties:
         readNetworkResponseGameProperties();
         break;
-      case NetworkResponse.Info:
-        readNetworkResponseInfo();
-        break;
       case NetworkResponse.Amulet:
         readNetworkResponseAmulet();
         break;
@@ -414,12 +411,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       final value = readUInt16();
       map[key] = value;
     }
-  }
-
-
-  void readNetworkResponseInfo() {
-    final info = readString();
-    print(info);
   }
 
   void readApiPlayerEnergy() =>
