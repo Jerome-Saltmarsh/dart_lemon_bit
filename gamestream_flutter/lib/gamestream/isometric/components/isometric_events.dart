@@ -31,7 +31,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onChangedNodes(){
-    scene.refreshGridMetrics();
+    scene.refreshMetrics();
     scene.generateHeightMap();
     scene.generateMiniMap();
     scene.refreshSmokeSources();

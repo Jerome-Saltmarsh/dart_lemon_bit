@@ -323,10 +323,33 @@ class IsometricScene with IsometricComponent implements Updatable {
     return torchIndex;
   }
 
-  void refreshGridMetrics(){
+  void refreshMetrics(){
     lengthRows = totalRows * Node_Size;
     lengthColumns = totalColumns * Node_Size;
     lengthZ = totalZ * Node_Height;
+
+    area = totalRows * totalColumns;
+    area2 = area * 2;
+    projection = area2 + totalColumns + 1;
+    projectionHalf =  projection ~/ 2;
+    totalNodes = totalZ * totalRows * totalColumns;
+
+    if (colorStack.length != totalNodes){
+      colorStack = Uint16List(totalNodes);
+    }
+
+    if (ambientStack.length != totalNodes){
+      ambientStack = Uint16List(totalNodes);
+    }
+
+    if (nodeColors.length != totalNodes){
+      nodeColors = Uint32List(totalNodes);
+    }
+
+    if (nodeVisibility.length != totalNodes){
+      nodeVisibility = Uint8List(totalNodes);
+    }
+
   }
 
   void refreshNodeVariations() {

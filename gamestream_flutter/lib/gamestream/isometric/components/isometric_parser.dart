@@ -306,18 +306,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     final decoder = ZLibDecoder();
     scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
     scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    scene.nodeVisibility = Uint8List(scene.nodeTypes.length);
-    scene.area = scene.totalRows * scene.totalColumns;
-    scene.area2 = scene.area * 2;
-    scene.projection = scene.area2 + scene.totalColumns + 1;
-    scene.projectionHalf =  scene.projection ~/ 2;
-    final totalNodes = scene.totalZ * scene.totalRows * scene.totalColumns;
-    scene.totalNodes = totalNodes;
-    if (scene.colorStack.length != totalNodes){
-      scene.colorStack = Uint16List(totalNodes);
-      scene.ambientStack = Uint16List(totalNodes);
-      scene.nodeColors = Uint32List(totalNodes);
-    }
     scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
     events.onChangedNodes();
     io.recenterCursor();

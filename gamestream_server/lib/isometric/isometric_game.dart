@@ -2071,6 +2071,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           "game.setNode(nodeIndex: $nodeIndex) - node index out of bounds"
       );
     }
+
     if (
       nodeType == scene.types[nodeIndex] &&
       nodeOrientation == scene.shapes[nodeIndex]
@@ -2079,12 +2080,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)) {
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
+
     scene.shapes[nodeIndex] = nodeOrientation;
     scene.types[nodeIndex] = nodeType;
+    scene.compiled = null;
+
     for (final player in players) {
       player.writeNode(nodeIndex);
     }
-    scene.compiled = null;
   }
 
   void clearCharacterTarget(Character character) {
