@@ -8,7 +8,6 @@ class NetworkResponse {
   static const GameObject = 17;
   static const Environment = 18;
   static const Game_Error = 19;
-  static const Download_Scene = 22;
   static const GameObjects = 23;
   static const Amulet = 32;
   static const Isometric = 33;

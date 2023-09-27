@@ -89,9 +89,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Amulet_Player:
         readNetworkResponseAmuletPlayer();
         break;
-      case NetworkResponse.Download_Scene:
-        readNetworkResponseDownloadScene();
-        break;
       case NetworkResponse.Game_Error:
         readNetworkResponseGameError();
         break;
@@ -137,7 +134,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     scene.removeGameObjectById(readUInt16());
   }
 
-  void readNetworkResponseDownloadScene() {
+  void readDownloadScene() {
     final name = readString();
     final length = readUInt16();
     final bytes = readBytes(length);
@@ -664,6 +661,9 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case NetworkResponseScene.Sort_GameObjects:
         readSortGameObjects();
+        break;
+      case NetworkResponseScene.Download_Scene:
+        readDownloadScene();
         break;
     }
   }

@@ -239,7 +239,8 @@ class Connection with ByteReader {
 
           case EditorRequest.Download:
             final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
-            player.writeByte(NetworkResponse.Download_Scene);
+            player.writeByte(NetworkResponse.Scene);
+            player.writeByte(NetworkResponseScene.Download_Scene);
 
             if (player.scene.name.isEmpty){
               player.scene.name = generateRandomName();
