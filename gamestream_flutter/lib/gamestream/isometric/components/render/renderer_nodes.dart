@@ -80,10 +80,6 @@ class RendererNodes extends RenderGroup {
   var playerIndex = 0;
   var currentNodeWithinIsland = false;
 
-  late Uint8List nodeTypes;
-  late Uint32List nodeColors;
-  late Uint8List nodeOrientations;
-
   late final ui.Image atlasNodes;
 
   @override
@@ -652,8 +648,6 @@ class RendererNodes extends RenderGroup {
       lightningColor = lerpColors(ambientBrightness, lightningColorMax, environment.lightningFlashing01 * goldenRatio_0618);
     }
 
-    nodeColors = scene.nodeColors;
-    nodeTypes = scene.nodeTypes;
     totalNodes = scene.totalNodes;
     totalRows = scene.totalRows;
     totalColumns = scene.totalColumns;
@@ -694,7 +688,7 @@ class RendererNodes extends RenderGroup {
     beamTotal = 0;
 
     var searchIndex = 0;
-    if (nodeOrientations[scene.area + scene.area] == NodeOrientation.None){
+    if (scene.nodeOrientations[scene.area + scene.area] == NodeOrientation.None){
       searchIndex = player.nodeIndex + scene.area + scene.area;
     } else {
       searchIndex = player.nodeIndex + scene.area;
@@ -739,8 +733,8 @@ class RendererNodes extends RenderGroup {
     var zi = 0;
     final scene = this.scene;
     final totalNodes = this.totalNodes;
-    final orientations = this.nodeOrientations;
-    final types = this.nodeTypes;
+    final orientations = scene.nodeOrientations;
+    final types = scene.nodeTypes;
     final area = scene.area;
     final projection = scene.projection;
 
@@ -818,42 +812,6 @@ class RendererNodes extends RenderGroup {
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
     if (nodeType == NodeType.Boulder) return false;
-    return true;
-  }
-
-  bool blocksBeamHorizontal(int index, int dirRow, int dirColumn){
-    assert (dirRow == 0 || dirColumn == 0);
-    final nodeOrientation = nodeOrientations[index];
-    if (nodeOrientation == NodeOrientation.None) return false;
-    if (nodeOrientation == NodeOrientation.Solid) return true;
-    if (nodeOrientation == NodeOrientation.Radial) return false;
-    if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) return false;
-    if (NodeOrientation.isColumn(nodeOrientation)) return false;
-    if (NodeOrientation.isCorner(nodeOrientation)) return false;
-
-    if (NodeOrientation.isHalf(nodeOrientation)){
-      if (dirRow != 0){
-        return nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South;
-      }
-      return nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West;
-    }
-
-    final nodeType = scene.nodeTypes[index];
-    if (nodeType == NodeType.Window) return false;
-    if (nodeType == NodeType.Shopping_Shelf) return false;
-    if (nodeType == NodeType.Wooden_Plank) return false;
-    if (nodeType == NodeType.Boulder) return false;
-
-    return true;
-  }
-
-  bool blocksBeamVertical(int index){
-    final nodeOrientation = nodeOrientations[index];
-    if (nodeOrientation == NodeOrientation.None) return false;
-    if (NodeOrientation.isHalf(nodeOrientation)) return false;
-    if (NodeOrientation.isRadial(nodeOrientation)) return false;
-    if (NodeOrientation.isColumn(nodeOrientation)) return false;
-    if (NodeOrientation.isCorner(nodeOrientation)) return false;
     return true;
   }
 
@@ -1184,7 +1142,7 @@ class RendererNodes extends RenderGroup {
       case NodeType.Respawning:
         return;
       default:
-        throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(nodeOrientations[index])}');
+        throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(scene.nodeOrientations[index])}');
     }
   }
 

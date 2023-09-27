@@ -57,7 +57,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         readNetworkResponsePlayer();
         break;
       case NetworkResponse.Isometric:
-        readIsometricResponse();
+        readNetworkResponseIsometric();
         break;
       case NetworkResponse.GameObject:
         readNetworkResponseGameObject();
@@ -149,7 +149,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     options.gameType.value = GameType.values[index];
   }
 
-  void readIsometricResponse() {
+  void readNetworkResponseIsometric() {
     switch (readByte()) {
 
       case NetworkResponseIsometric.Selected_Collider:
@@ -285,7 +285,8 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readScene() {
     final scenePart = readByte(); /// DO NOT DELETE
-    ///
+
+    final scene = this.scene;
     scene.totalZ = readUInt16();
     scene.totalRows = readUInt16();
     scene.totalColumns = readUInt16();
@@ -319,7 +320,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
     scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
     events.onChangedNodes();
-    scene.nodesChangedNotifier.value++;
     io.recenterCursor();
   }
 
@@ -550,7 +550,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     environment.myst.value = readByte();
   }
 
-  void readNetworkResponseNode() {
+  void readNode() {
     final nodeIndex = readUInt24();
     final nodeType = readByte();
     final nodeOrientation = readByte();
@@ -651,7 +651,7 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseScene() {
     switch (readByte()){
       case NetworkResponseScene.Node:
-        readNetworkResponseNode();
+        readNode();
         break;
       case NetworkResponseScene.Marks:
         readMarks();

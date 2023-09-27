@@ -2012,6 +2012,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       refreshLightSources();
       resetNodeColorsToAmbient();
     }
+
     nodeTypes[index] = nodeType;
     nodeOrientations[index] = nodeOrientation;
     // events.onChangedNodes();
