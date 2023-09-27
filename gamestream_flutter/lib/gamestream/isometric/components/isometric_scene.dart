@@ -156,6 +156,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
   }
 
+  // TODO Optimize
   void rainStart(){
     final rows = totalRows;
     final columns = totalColumns;
@@ -185,7 +186,12 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
+  // TODO Optimize
   void rainStop() {
+    final totalNodes = this.totalNodes;
+    final nodeTypes = this.nodeTypes;
+    final nodeOrientations = this.nodeOrientations;
+    
     for (var i = 0; i < totalNodes; i++) {
       if (!NodeType.isRain(nodeTypes[i])) continue;
       nodeTypes[i] = NodeType.Empty;
@@ -459,6 +465,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         position.indexColumn,
       );
 
+  // TODO OPTIMIZE
   void setNodeType(int z, int row, int column, int type){
     if (z < 0)
       return;
