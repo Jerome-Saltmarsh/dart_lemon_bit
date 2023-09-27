@@ -337,7 +337,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     generateHeightMap();
     generateMiniMap();
     refreshSmokeSources();
-    refreshNodeVariations();
     generateEmptyNodes();
 
     if (environment.raining.value) {
@@ -381,6 +380,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     if (nodeVariations.length < totalNodes) {
       nodeVariations = Uint8List(totalNodes);
+      refreshNodeVariations();
     }
   }
 
@@ -2062,9 +2062,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int nodeType,
     required int nodeOrientation,
   }) {
+    final previousNodeType = nodeTypes[index];
     nodeTypes[index] = nodeType;
     nodeOrientations[index] = nodeOrientation;
     events.onChangedNodes();
+
+    if (NodeType.isLightSource(previousNodeType) != NodeType.isLightSource(nodeType)){
+
+    }
   }
 
   int findNearestMark({
