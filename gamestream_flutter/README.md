@@ -11,6 +11,8 @@ ctrl + []               : move caret to code block
 
 [TODO]
 - fix set node light source refresh
+- optimize rain landing
+- improve ai pathfinding
 - feature player persistence
 - feature stash
 - feature store

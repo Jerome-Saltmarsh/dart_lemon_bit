@@ -83,9 +83,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Node:
         readNetworkResponseNode();
         break;
-      case NetworkResponse.Store_Items:
-        readNetworkResponseStoreItems();
-        break;
       case NetworkResponse.Weather:
         readNetworkResponseWeather();
         break;
@@ -565,16 +562,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     environment.lightningType.value = readByte();
     environment.wind.value = readByte();
     environment.myst.value = readByte();
-  }
-
-  void readNetworkResponseStoreItems() {
-    final length = readUInt16();
-    if (player.storeItems.value.length != length){
-      player.storeItems.value = Uint16List(length);
-    }
-    for (var i = 0; i < length; i++){
-      player.storeItems.value[i] = readUInt16();
-    }
   }
 
   void readNetworkResponseNode() {

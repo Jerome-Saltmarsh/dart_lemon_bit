@@ -5,7 +5,6 @@ class NetworkResponse {
   static const Game_Time = 04;
   static const Game_Type = 05;
   static const Node = 09;
-  static const Store_Items = 10;
   static const Weather = 11;
   static const Game_Properties = 12;
   static const GameObject = 17;

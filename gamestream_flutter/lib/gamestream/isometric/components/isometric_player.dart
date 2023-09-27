@@ -54,7 +54,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final complexion = Watch(0);
   final previousPosition = Position();
   final accuracy = Watch(1.0);
-  final storeItems = Watch(<int>[]);
   final energy = Watch(0);
   final energyMax = Watch(0);
   final abilityTarget = Position();
