@@ -308,6 +308,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
     scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
     events.onChangedNodes();
+    particles.clearParticles();
     io.recenterCursor();
   }
 

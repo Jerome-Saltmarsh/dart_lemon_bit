@@ -161,6 +161,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     final rows = totalRows;
     final columns = totalColumns;
     final zs = totalZ - 1;
+    final nodeTypes = this.nodeTypes;
+    final nodeOrientations = this.nodeOrientations;
+
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
@@ -191,7 +194,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final totalNodes = this.totalNodes;
     final nodeTypes = this.nodeTypes;
     final nodeOrientations = this.nodeOrientations;
-    
+
     for (var i = 0; i < totalNodes; i++) {
       if (!NodeType.isRain(nodeTypes[i])) continue;
       nodeTypes[i] = NodeType.Empty;
@@ -327,6 +330,25 @@ class IsometricScene with IsometricComponent implements Updatable {
       rowIndex += totalColumns;
     }
     return torchIndex;
+  }
+  
+  void onChangedNodes(){
+    refreshMetrics();
+    generateHeightMap();
+    generateMiniMap();
+    refreshSmokeSources();
+    refreshLightSources();
+    refreshNodeVariations();
+    generateEmptyNodes();
+
+    if (environment.raining.value) {
+      rainStop();
+      rainStart();
+    }
+
+    updateAmbientAlphaAccordingToTime();
+    resetNodeColorsToAmbient();
+    nodesChangedNotifier.value++;
   }
 
   void refreshMetrics(){
@@ -519,6 +541,9 @@ class IsometricScene with IsometricComponent implements Updatable {
   void refreshLightSources() {
     print('scene.refreshLightSources() - (EXPENSIVE)');
     nodeLightSourcesTotal = 0;
+    final totalNodes = this.totalNodes;
+    final nodeTypes = this.nodeTypes;
+
     for (var i = 0; i < totalNodes; i++) {
 
       if (!NodeType.isLightSource(nodeTypes[i]))
@@ -527,8 +552,10 @@ class IsometricScene with IsometricComponent implements Updatable {
       nodeLightSources[nodeLightSourcesTotal] = i;
       nodeLightSourcesTotal++;
 
-      if (nodeLightSourcesTotal >= nodeLightSources.length)
+      if (nodeLightSourcesTotal >= nodeLightSources.length) {
+        print('max light sources reached');
         return;
+      }
     }
   }
 
@@ -2038,16 +2065,16 @@ class IsometricScene with IsometricComponent implements Updatable {
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     final previousNodeType = nodeTypes[index];
 
+    nodeTypes[index] = nodeType;
+    nodeOrientations[index] = nodeOrientation;
+    events.onChangedNodes();
+    scene.generateEmptyNodes();
+    editor.refreshNodeSelectedIndex();
+
     if (NodeType.isLightSource(nodeType) != NodeType.isLightSource(previousNodeType)){
       refreshLightSources();
       resetNodeColorsToAmbient();
     }
-
-    nodeTypes[index] = nodeType;
-    nodeOrientations[index] = nodeOrientation;
-    // events.onChangedNodes();
-    scene.generateEmptyNodes();
-    editor.refreshNodeSelectedIndex();
   }
 
   int findNearestMark({

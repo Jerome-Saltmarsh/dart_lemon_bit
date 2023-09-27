@@ -31,25 +31,9 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onChangedNodes(){
-    scene.refreshMetrics();
-    scene.generateHeightMap();
-    scene.generateMiniMap();
-    scene.refreshSmokeSources();
-    scene.refreshLightSources();
-    scene.refreshNodeVariations();
-    scene.generateEmptyNodes();
+    scene.onChangedNodes();
     minimap.generateSrcDst();
-
-    if (environment.raining.value) {
-      scene.rainStop();
-      scene.rainStart();
-    }
-
-    scene.updateAmbientAlphaAccordingToTime();
-    scene.resetNodeColorsToAmbient();
-    particles.clearParticles();
     editor.refreshNodeSelectedIndex();
-    scene.nodesChangedNotifier.value++;
   }
 
   void onFootstep(double x, double y, double z) {
