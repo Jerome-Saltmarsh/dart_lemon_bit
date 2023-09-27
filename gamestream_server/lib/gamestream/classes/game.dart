@@ -46,6 +46,7 @@ abstract class Game <T extends Player> {
   });
 
   void writePlayerResponses() {
+    final players = this.players;
     for (var i = 0; i < players.length; i++) {
       final player = players[i];
       player.writePlayerGame();

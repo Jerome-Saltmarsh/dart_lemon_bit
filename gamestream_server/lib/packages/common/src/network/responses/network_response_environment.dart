@@ -7,4 +7,5 @@ class NetworkResponseEnvironment {
    static const Lightning = 5;
    static const Lightning_Flashing = 7;
    static const Time_Enabled = 8;
+   static const Weather = 9;
 }

@@ -759,7 +759,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void writeWeather() {
     final environment = game.environment;
-    writeByte(NetworkResponse.Weather);
+    writeByte(NetworkResponse.Environment);
+    writeByte(NetworkResponseEnvironment.Weather);
     writeByte(environment.rainType);
     writeBool(environment.breezy);
     writeByte(environment.lightningType);

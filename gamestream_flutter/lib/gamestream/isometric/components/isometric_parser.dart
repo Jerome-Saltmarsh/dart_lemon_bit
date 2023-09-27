@@ -83,9 +83,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Node:
         readNetworkResponseNode();
         break;
-      case NetworkResponse.Weather:
-        readNetworkResponseWeather();
-        break;
       case NetworkResponse.Game_Properties:
         readNetworkResponseGameProperties();
         break;
@@ -384,6 +381,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponseEnvironment.Time_Enabled:
         environment.timeEnabled.value = readBool();
         break;
+      case NetworkResponseEnvironment.Weather:
+        readNetworkResponseWeather();
+        break;
     }
   }
 
@@ -557,6 +557,7 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readNetworkResponseWeather() {
+    final environment = this.environment;
     environment.rainType.value = readByte();
     environment.weatherBreeze.value = readBool();
     environment.lightningType.value = readByte();
