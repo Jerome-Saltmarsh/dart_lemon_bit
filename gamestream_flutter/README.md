@@ -10,7 +10,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- fix set node light source refresh
 - optimize rain landing
 - improve ai pathfinding
 - feature player persistence
@@ -27,6 +26,9 @@ ctrl + []               : move caret to code block
 - glove type silk
 - particle crow
 - particle chicken
+
+27.09.2023
+- fix set node light source refresh
 
 26.09.2023
 - fix player run destination up high
