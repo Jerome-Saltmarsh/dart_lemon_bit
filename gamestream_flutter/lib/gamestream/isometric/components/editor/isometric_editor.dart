@@ -245,11 +245,10 @@ class IsometricEditor with IsometricComponent {
     network.sendNetworkRequest(NetworkRequest.Scene, '${NetworkRequestScene.Add_Mark.index} $index $markType');
   }
 
-
   void refreshNodeSelectedIndex() {
     nodeSelectedType.value = scene.nodeTypes[nodeSelectedIndex.value];
     nodeSelectedOrientation.value =
-    scene.nodeOrientations[nodeSelectedIndex.value];
+      scene.nodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {

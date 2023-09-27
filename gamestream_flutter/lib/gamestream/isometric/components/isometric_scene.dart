@@ -378,14 +378,15 @@ class IsometricScene with IsometricComponent implements Updatable {
       nodeVisibility = Uint8List(totalNodes);
     }
 
-  }
-
-  void refreshNodeVariations() {
-    print('scene.refreshNodeVariations()');
     if (nodeVariations.length < totalNodes) {
       nodeVariations = Uint8List(totalNodes);
     }
-    assert (nodeTypes.length == totalNodes);
+  }
+
+  void refreshNodeVariations() {
+    final totalNodes = this.totalNodes;
+    final nodeVariations = this.nodeVariations;
+
     for (var i = 0; i < totalNodes; i++){
       nodeVariations[i] = randomInt(0, 255);
     }
