@@ -10,7 +10,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- optimize rain landing
 - improve ai pathfinding
 - feature player persistence
 - feature stash
@@ -29,6 +28,7 @@ ctrl + []               : move caret to code block
 
 27.09.2023
 - fix set node light source refresh
+- optimize rain landing
 
 26.09.2023
 - fix player run destination up high

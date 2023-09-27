@@ -522,27 +522,26 @@ class RendererNodes extends RenderGroup {
                           rainType: rainType,
                         );
                       } else {
-                        renderNodeRainLandingOnGround(
-                          dstX: dstX,
-                          dstY: dstY,
-                          color: scene.getColor(nodeIndex),
-                          rainType: rainType,
-                          animationFrame: animationFrame1 +
-                              variations[nodeIndex],
-                        );
-                      }
-
-                      if (renderRainFalling) {
-                        renderNodeRainFalling(
+                        renderNodeRainLanding(
                           dstX: dstX,
                           dstY: dstY,
                           color: nodeColors[nodeIndex],
                           rainType: rainType,
                           windType: windType,
-                          animationFrame: (animationFrame1 +
-                              variations[nodeIndex]),
+                          animationFrame: animationFrame1 + variations[nodeIndex],
                         );
                       }
+                      // if (renderRainFalling) {
+                      //   renderNodeRainFalling(
+                      //     dstX: dstX,
+                      //     dstY: dstY,
+                      //     color: nodeColors[nodeIndex],
+                      //     rainType: rainType,
+                      //     windType: windType,
+                      //     animationFrame: (animationFrame1 +
+                      //         variations[nodeIndex]),
+                      //   );
+                      // }
 
                       break;
 
@@ -1318,11 +1317,29 @@ class RendererNodes extends RenderGroup {
     required int animationFrame,
   }) {
     final row =  (rainType == RainType.Heavy ? 3 : 0) + windType;
-    // final column = (animation.frame + nodeVariation) % 6;
     final column = animationFrame % 6;
     renderStandardNode(
       color: color,
       srcX: 1596 + (column * 48),
+      srcY: 1306 + (row * 72),
+      dstX: dstX,
+      dstY: dstY,
+    );
+  }
+
+  void renderNodeRainLanding({
+    required double dstX,
+    required double dstY,
+    required int color,
+    required int rainType,
+    required int windType,
+    required int animationFrame,
+  }) {
+    final row =  (rainType == RainType.Heavy ? 3 : 0) + windType;
+    final column = animationFrame % 6;
+    renderStandardNode(
+      color: color,
+      srcX: 1307 + (column * 48),
       srcY: 1306 + (row * 72),
       dstX: dstX,
       dstY: dstY,
