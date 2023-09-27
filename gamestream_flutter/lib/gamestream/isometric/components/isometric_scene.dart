@@ -2062,19 +2062,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int nodeType,
     required int nodeOrientation,
   }) {
-    assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    final previousNodeType = nodeTypes[index];
-
     nodeTypes[index] = nodeType;
     nodeOrientations[index] = nodeOrientation;
     events.onChangedNodes();
-    editor.refreshNodeSelectedIndex();
-
-    if (NodeType.isLightSource(nodeType) != NodeType.isLightSource(previousNodeType)){
-      refreshLightSources();
-      resetNodeColorsToAmbient();
-    }
-
   }
 
   int findNearestMark({

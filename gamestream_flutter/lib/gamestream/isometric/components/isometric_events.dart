@@ -26,10 +26,6 @@ class IsometricEvents with IsometricComponent {
     }
   }
 
-  void onNodesInitialized(){
-
-  }
-
   void onChangedNodes(){
     scene.onChangedNodes();
     minimap.generateSrcDst();
