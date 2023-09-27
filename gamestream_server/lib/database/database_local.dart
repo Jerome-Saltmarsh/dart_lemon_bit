@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:gamestream_server/database/functions/map_isometric_player_to_json.dart';
 import 'package:gamestream_server/isometric/isometric_player.dart';
+import 'package:gamestream_server/packages.dart';
 import 'package:gamestream_server/packages/lemon_io/src/write_json_to_file.dart';
+import 'package:typedef/json.dart';
 
 import 'database.dart';
 
@@ -41,21 +44,26 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future<List<String>> getUserCharacters(String userId) async {
+  Future<List<Json>> getUserCharacters(String userId) async {
     final dbDir = this.dbDir;
     final dbDirFile = Directory(dbDir);
     final exists = await dbDirFile.exists();
 
-    var names = <String>[];
+    var characters = <Json>[];
 
     if (!exists){
-      return names;
+      return [];
     }
 
     final children = dbDirFile.listSync();
-    for (final child in children){
-      names.add(child.uri.pathSegments.last.split('.').first);
+    for (final entity in children){
+      if (entity is! File) {
+        continue;
+      }
+      final fileEncoded = await entity.readAsString();
+      final fileJson = jsonDecode(fileEncoded) as Map<String, dynamic>;
+      characters.add(fileJson);
     }
-    return names;
+    return characters;
   }
 }

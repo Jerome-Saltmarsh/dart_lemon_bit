@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
-Future<String> getCharacter() async {
+Future<List<String>> getUserCharacterNames() async {
 
   final url = Uri.parse('http://localhost:8082'); // Replace with your desired URL
 
@@ -18,5 +20,6 @@ Future<String> getCharacter() async {
     throw Exception('Failed to load data');
   }
 
-  return response.body;
+  final characters = jsonDecode(response.body) as List;
+  return characters.map((e) => e['name'] as String).toList(growable: false);
 }

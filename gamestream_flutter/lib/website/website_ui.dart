@@ -231,10 +231,14 @@ extension WebsiteUI on WebsiteGame {
     return Column(
       children: [
         onPressed(
-            action: () async => characters.value = await getCharacter(),
+            action: () async => characters.value = await getUserCharacterNames(),
             child: buildText('refresh'),
         ),
-        buildWatch(characters, buildText),
+        buildWatch(characters, (characters) =>
+            Column(
+                children: characters
+                    .map(buildText)
+                    .toList(growable: false))),
       ],
     );
   }

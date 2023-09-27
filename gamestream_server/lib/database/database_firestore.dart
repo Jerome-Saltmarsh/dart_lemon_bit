@@ -5,6 +5,7 @@ import 'package:gamestream_server/database/database.dart';
 import 'package:gamestream_server/isometric/isometric_player.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:typedef/json.dart';
 
 class DatabaseFirestore implements Database {
 
@@ -65,7 +66,7 @@ class DatabaseFirestore implements Database {
   }
 
   @override
-  Future<List<String>> getUserCharacters(String userId) async {
+  Future<List<Json>> getUserCharacters(String userId) async {
     return [];
   }
 }

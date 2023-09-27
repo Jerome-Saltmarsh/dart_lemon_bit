@@ -10,16 +10,11 @@ Future<Response> handleRequest({
 }) async {
   switch (request.method){
     case 'GET':
-      final body = {
-        'characters': await database.getUserCharacters('test')
-      };
-
       return Response(
         200,
-        body: jsonEncode(body),
+        body: jsonEncode(await database.getUserCharacters('test')),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          // HttpHeaders.contentTypeHeader: "text/plain; charset=UTF-8",
           HttpHeaders.accessControlAllowMethodsHeader: "POST, OPTIONS, GET",
           HttpHeaders.accessControlAllowOriginHeader: "*",
           HttpHeaders.accessControlAllowHeadersHeader: "*",
