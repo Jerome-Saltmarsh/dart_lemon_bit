@@ -58,23 +58,29 @@ class DatabaseLocal implements Database {
 
   @override
   Future<List<Json>> getUserCharacters(String userId) async {
-    final exists = await dirCharacters.exists();
-    var characters = <Json>[];
 
-    if (!exists){
-      return [];
+    final user = await findUser(userId);
+    final userCharacterIds = (user['characters'] as List).cast<String>();
+    final userCharacters = <Json>[];
+
+    for (final userCharacterId in userCharacterIds){
+       final userCharacter = await getCharacter(userCharacterId);
+       userCharacters.add(userCharacter);
     }
 
-    final children = dirCharacters.listSync();
-    for (final entity in children){
-      if (entity is! File) {
-        continue;
-      }
-      final fileEncoded = await entity.readAsString();
-      final fileJson = jsonDecode(fileEncoded) as Map<String, dynamic>;
-      characters.add(fileJson);
-    }
-    return characters;
+    return userCharacters;
+    // final characters = <Json>[];
+    // final characterFiles = dirCharacters.listSync();
+    //
+    // for (final entity in characterFiles){
+    //   if (entity is! File) {
+    //     continue;
+    //   }
+    //   final fileEncoded = await entity.readAsString();
+    //   final character = jsonDecode(fileEncoded) as Json;
+    //   characters.add(character);
+    // }
+    // return characters;
   }
 
   @override
@@ -98,5 +104,20 @@ class DatabaseLocal implements Database {
       return fileJson;
     }
     throw Exception('getCharacter($characterId) - could not be found');
+  }
+
+  Future<Json> findUser(String userId) async {
+    final userFiles = dirUsers.listSync();
+    for (final entity in userFiles){
+      if (entity is! File) {
+        continue;
+      }
+      if (!entity.path.contains(userId)){
+        continue;
+      }
+      final fileEncoded = await entity.readAsString();
+      return jsonDecode(fileEncoded) as Json;
+    }
+    throw Exception('user could not be found $userId');
   }
 }

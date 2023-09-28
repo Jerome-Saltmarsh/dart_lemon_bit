@@ -12,7 +12,7 @@ Future<Response> handleRequest({
     case 'GET':
       return Response(
         200,
-        body: jsonEncode(await database.getUserCharacters('test')),
+        body: jsonEncode(await database.getUserCharacters('user_01')),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
           HttpHeaders.accessControlAllowMethodsHeader: "POST, OPTIONS, GET",
