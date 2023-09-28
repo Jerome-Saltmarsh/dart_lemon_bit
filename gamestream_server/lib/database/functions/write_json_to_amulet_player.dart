@@ -32,6 +32,22 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     }
   }
 
+  final itemTypes = (json['item_types'] as List).cast<int>();
+  final itemSubTypes = (json['item_sub_types'] as List).cast<int>();
+
+  for (var i = 0; i < itemTypes.length; i++){
+    final itemType =  itemTypes[i];
+    final itemSubType =  itemSubTypes[i];
+    if (itemType == 0 || itemSubType == 0){
+      player.items[i].item = null;
+    } else {
+      player.items[i].item = AmuletItem.get(
+          type: itemType,
+          subType: itemSubType,
+      );
+    }
+  }
+
   player.equippedWeaponIndex = json['equipped_weapon_index'] ?? 0;
   player.healthBase = 100;
   player.experience = 20;

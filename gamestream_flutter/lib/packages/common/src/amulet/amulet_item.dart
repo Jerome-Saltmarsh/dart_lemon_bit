@@ -243,6 +243,14 @@ enum AmuletItem {
           AmuletItemQuality.Mythical => valuesMythical,
         };
 
+  static AmuletItem get({
+    required int type,
+    required int subType,
+  }) => values.firstWhere((element) =>
+    element.type == type &&
+    element.subType == subType
+  );
+
   void validate(){
     if (actionFrame > performDuration){
       validationError('performFrame cannot be greater than performDuration');

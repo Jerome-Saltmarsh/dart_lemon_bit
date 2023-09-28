@@ -13,19 +13,34 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
   }
   json['uuid'] = player.uuid;
 
+
+
   if (player is AmuletPlayer) {
+
+    final items = [];
+
+    for (final item in player.items){
+      items.add({
+          'type': item.item?.type ?? 0,
+          'sub_type': item.item?.subType ?? 0,
+      });
+    }
+
     json['name'] = player.name;
     json['equipped_helm'] = getSlotType(player.equippedHelm);
     json['equipped_body'] = getSlotType(player.equippedBody);
     json['equipped_legs'] = getSlotType(player.equippedLegs);
     json['equipped_shoes'] = getSlotType(player.equippedShoe);
     json['complexion'] = player.complexion;
-    json['weapons'] = player.weapons.map(getSlotType).toList(growable: false);
-
+    json['weapons'] = getSlotTypes(player.weapons);
+    json['item_types'] = player.items.map((e) => e.item?.type ?? 0).toList(growable: false);
+    json['item_sub_types'] = player.items.map((e) => e.item?.subType ?? 0).toList(growable: false);
     json['equipped_weapon_index'] = player.equippedWeaponIndex;
   }
 
   return json;
 }
+
+List<int> getSlotTypes(List<ItemSlot> slots) => slots.map(getSlotType).toList(growable: false);
 
 int getSlotType(ItemSlot slot) => slot.item?.subType ?? 0;
