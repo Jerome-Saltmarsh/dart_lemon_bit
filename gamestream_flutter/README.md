@@ -10,12 +10,15 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- fix persist weapons
+- feature user
 - feature cloud persistence
+- fix light flicker on rain changed
+- fix render front 
 - render torso top and bottom separately
 - improve ai pathfinding
 - feature stash
 - feature store
+- feature element water air fire stone
 - glove type leather
 - particle flame spark
 - particle wind animation

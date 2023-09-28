@@ -173,6 +173,10 @@ extension isometricDebugUI on IsometricDebug {
         children: [
           buildText('ambient-color'),
           buildRowRefresh('bake-stack-recording', () => scene.bakeStackRecording),
+          onPressed(
+            action: scene.recordBakeStack,
+            child: buildText('record bake'),
+          ),
           // ColorPicker(
           //   portraitOnly: true,
           //   pickerColor: HSVColor.fromAHSV(

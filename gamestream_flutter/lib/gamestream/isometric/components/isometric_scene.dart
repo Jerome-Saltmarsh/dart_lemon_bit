@@ -1769,6 +1769,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     print('scene.recordBakeStack()');
     bakeStackRecording = true;
     bakeStackTorchTotal = 0;
+    bakeStackTotal = 0;
+
     for (var i = 0; i < nodeLightSourcesTotal; i++){
       final nodeIndex = nodeLightSources[i];
       final nodeType = nodeTypes[nodeIndex];
