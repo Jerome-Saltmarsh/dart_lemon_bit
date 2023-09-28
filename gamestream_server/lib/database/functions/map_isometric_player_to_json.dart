@@ -33,10 +33,9 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
     json['equipped_shoes'] = getSlotType(player.equippedShoe);
     json['equipped_hand_left'] = getSlotType(player.equippedHandLeft);
     json['equipped_hand_right'] = getSlotType(player.equippedHandRight);
-    json['weapons'] = player.weapons.map((weapon) => weapon.item?.name ?? '-').toList(growable: false);
+    json['weapons'] = getSlotTypeNames(player.weapons);
+    json['items'] = getSlotTypeNames(player.items);
     json['complexion'] = player.complexion;
-    json['item_types'] = player.items.map((e) => e.item?.type ?? 0).toList(growable: false);
-    json['item_sub_types'] = player.items.map((e) => e.item?.subType ?? 0).toList(growable: false);
     json['equipped_weapon_index'] = player.equippedWeaponIndex;
     json['gender'] = player.gender;
     json['hair_type'] = player.hairType;
@@ -51,3 +50,6 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
 List<int> getSlotTypes(List<ItemSlot> slots) => slots.map(getSlotType).toList(growable: false);
 
 int getSlotType(ItemSlot slot) => slot.item?.subType ?? 0;
+
+List<String> getSlotTypeNames(List<ItemSlot> slots) =>
+    slots.map((slotItem) => slotItem.item?.name ?? '-').toList(growable: false);

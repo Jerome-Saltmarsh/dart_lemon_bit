@@ -50,7 +50,6 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   }
 
   final weaponNames = (json['weapons'] as List).cast<String>();
-
   for (var i = 0; i < weaponNames.length; i++){
     final weaponName =  weaponNames[i];
     if (weaponName != '-'){
@@ -60,19 +59,13 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     }
   }
 
-  final itemTypes = (json['item_types'] as List).cast<int>();
-  final itemSubTypes = (json['item_sub_types'] as List).cast<int>();
-
-  for (var i = 0; i < itemTypes.length; i++){
-    final itemType =  itemTypes[i];
-    final itemSubType =  itemSubTypes[i];
-    if (itemType == 0 || itemSubType == 0){
-      player.items[i].item = null;
+  final itemNames = (json['items'] as List).cast<String>();
+  for (var i = 0; i < itemNames.length; i++){
+    final itemName =  itemNames[i];
+    if (itemName != '-'){
+      player.items[i].item = AmuletItem.findByName(itemName);
     } else {
-      player.items[i].item = AmuletItem.get(
-          type: itemType,
-          subType: itemSubType,
-      );
+      player.items[i].item = null;
     }
   }
 
