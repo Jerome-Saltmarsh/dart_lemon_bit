@@ -8,9 +8,9 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
 
   final bodyType = json['equipped_body'] ?? 0;
   if (bodyType != BodyType.None){
-    player.equippedBody.item = AmuletItem.findBody(bodyType);
+    player.equipBody(AmuletItem.findBody(bodyType));
   } else {
-    player.equippedBody.item = null;
+    player.equipBody(null);
   }
 
   player.healthBase = 100;
@@ -18,4 +18,5 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   player.characterCreated = true;
   player.active = true;
   player.writePlayerHealth();
+  player.notifyEquipmentDirty();
 }

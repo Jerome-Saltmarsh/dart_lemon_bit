@@ -673,10 +673,12 @@ class Connection with ByteReader {
 
     if (arguments.length > 2){
       final player = _player;
+
       if (player is! AmuletPlayer) {
         throw Exception('player is not AmuletPlayer');
       }
-
+      player.characterCreated = true;
+      player.active = false;
       final characterUuid = arguments[2];
       server.database.getCharacter(characterUuid)
           .then((json) => writeJsonToAmuletPlayer(json, player))

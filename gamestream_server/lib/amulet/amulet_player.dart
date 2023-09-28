@@ -231,6 +231,8 @@ class AmuletPlayer extends IsometricPlayer {
     writeActivatedPowerIndex();
   }
 
+  int get equippedWeaponIndex => _equippedWeaponIndex;
+
   set equippedWeaponIndex(int value){
     if (_equippedWeaponIndex == value){
       return;
