@@ -768,8 +768,8 @@ class AmuletPlayer extends IsometricPlayer {
     legsType = item.subType;
   }
 
-  void equipHandLeft(AmuletItem? item){
-    if (deadOrBusy)
+  void equipHandLeft(AmuletItem? item, {bool force = false}){
+    if (deadOrBusy && !force)
       return;
 
     if (equippedHandLeft.item == item)
@@ -793,8 +793,8 @@ class AmuletPlayer extends IsometricPlayer {
     handTypeLeft = item.subType;
   }
 
-  void equipHandRight(AmuletItem? item){
-    if (deadOrBusy)
+  void equipHandRight(AmuletItem? item, {bool force = false}){
+    if (deadOrBusy && !force)
       return;
 
     if (equippedHandRight.item == item)
