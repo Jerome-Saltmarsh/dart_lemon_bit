@@ -28,6 +28,13 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     player.equipHandLeft(null, force: true);
   }
 
+  final equippedHandRight = json['equipped_hand_right'] ?? 0;
+  if (equippedHandRight != HandType.None) {
+    player.equipHandRight(AmuletItem.getHand(equippedHandRight), force: true);
+  } else {
+    player.equipHandRight(null, force: true);
+  }
+
   final weapons = (json['weapons'] as List).cast<int>();
 
   for (var i = 0; i < weapons.length; i++){
