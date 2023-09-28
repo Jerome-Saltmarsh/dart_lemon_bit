@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/user/user_service.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -227,19 +226,23 @@ extension WebsiteUI on WebsiteGame {
         )
     );
 
-  Widget buildDialogSelectCharacter() {
-    return Column(
-      children: [
-        onPressed(
-            action: () async => characters.value = await getUserCharacterNames(),
-            child: buildText('refresh'),
+  Widget buildDialogSelectCharacter() => GSContainer(
+        child: Column(
+          children: [
+            onPressed(
+              action: user.refreshCharacterNames,
+              child: buildText('CHARACTERS'),
+            ),
+            height12,
+            buildWatch(
+                user.characters,
+                (characters) => Column(
+                    children:
+                        characters.map((character) => onPressed(
+                            action: () => loadCharacterByName(character['uuid']),
+                            child: buildText(character['name']),
+                          )).toList(growable: false))),
+          ],
         ),
-        buildWatch(characters, (characters) =>
-            Column(
-                children: characters
-                    .map(buildText)
-                    .toList(growable: false))),
-      ],
-    );
-  }
+      );
 }

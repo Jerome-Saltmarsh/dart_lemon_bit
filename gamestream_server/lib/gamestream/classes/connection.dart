@@ -654,8 +654,13 @@ class Connection with ByteReader {
     sendGameError(GameError.PlayerDead);
   }
 
-  void handleClientRequestJoin(List<String> arguments,) {
-    if (arguments.length < 2) return errorInvalidClientRequest();
+  void handleClientRequestJoin(List<String> arguments) {
+
+    if (arguments.length < 2) {
+      errorInvalidClientRequest();
+      return;
+    }
+
     final gameTypeIndex = parse(arguments[1]);
     if (gameTypeIndex == null || !isValidIndex(gameTypeIndex, GameType.values)){
       errorInvalidClientRequest();

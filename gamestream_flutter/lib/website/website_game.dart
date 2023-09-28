@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/user/get_user_characters.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
@@ -16,13 +17,12 @@ import 'enums/website_page.dart';
 class WebsiteGame extends Game {
 
   final gameTypes = [
-    GameType.Capture_The_Flag,
-    GameType.Moba,
+    // GameType.Capture_The_Flag,
+    // GameType.Moba,
     GameType.Amulet,
   ];
 
   var imagesCached = false;
-  final characters = Watch(<String>[]);
   final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);
@@ -194,5 +194,9 @@ class WebsiteGame extends Game {
   @override
   void update() {
     // TODO: implement update
+  }
+
+  void loadCharacterByName(String characterName){
+    network.connectToGame(GameType.Amulet, characterName);
   }
 }
