@@ -8,4 +8,5 @@ abstract class Database {
   void persist(IsometricPlayer player);
 
   Future<List<Json>> getUserCharacters(String userId);
+  Future<Json> getCharacter(String characterId);
 }

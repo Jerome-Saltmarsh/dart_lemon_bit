@@ -25,7 +25,5 @@ Future<List<Json>> getUserCharacters({
     throw Exception('Failed to load data');
   }
 
-  final bodyJson = jsonDecode(response.body);
-  final json = bodyJson.cast<Map<String, dynamic>>();
-  return json;
+  return jsonDecode(response.body).cast<Json>();
 }

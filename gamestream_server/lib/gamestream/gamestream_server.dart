@@ -105,6 +105,12 @@ class GamestreamServer {
 
   Player joinGameByType(GameType gameType) => joinGame(findGameByGameType(gameType));
 
+  Player joinGameByCharacterUuid(String characterUuid) {
+    return joinGame(
+      findGameByGameType(GameType.Amulet)
+  );
+  }
+
   Game findGameByGameType(GameType gameType){
     for (final game in games) {
       if (game.isFull) continue;

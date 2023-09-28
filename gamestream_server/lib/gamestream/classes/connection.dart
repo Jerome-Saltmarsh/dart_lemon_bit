@@ -666,8 +666,31 @@ class Connection with ByteReader {
       errorInvalidClientRequest();
       return;
     }
+
     final gameType = GameType.values[gameTypeIndex];
     _player = server.joinGameByType(gameType);
+
+    if (arguments.length > 2){
+      final player = _player;
+      if (player is! AmuletPlayer) {
+        throw Exception('player is not AmuletPlayer');
+      }
+
+      final characterUuid = arguments[2];
+      server.database.getCharacter(characterUuid).then((character) {
+        player.uuid = character['uuid'];
+
+        final bodyType = character['body_type'];
+        if (bodyType != BodyType.None){
+          player.equippedBody.item = AmuletItem.values.firstWhere((element) => element.isBody && element.subType == bodyType);
+        }
+
+        player.healthBase = 100;
+        player.experience = 20;
+      }).catchError((error){
+        player.writeAmuletError(error.toString());
+      });
+    }
   }
 
   void cancelSubscription() {
@@ -699,7 +722,7 @@ class Connection with ByteReader {
      return value;
   }
 
-  int? parse(String source, {int? radix}) {
+  int? parse(String source) {
     final value = int.tryParse(source);
     if (value == null) {
         errorInvalidClientRequest();

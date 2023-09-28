@@ -69,4 +69,10 @@ class DatabaseFirestore implements Database {
   Future<List<Json>> getUserCharacters(String userId) async {
     return [];
   }
+
+  @override
+  Future<Json> getCharacter(String characterId) {
+    // TODO: implement getCharacter
+    throw UnimplementedError();
+  }
 }

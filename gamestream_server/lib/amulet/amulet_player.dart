@@ -325,7 +325,7 @@ class AmuletPlayer extends IsometricPlayer {
     required int cooldown,
   }){
     if (!isValidWeaponIndex(index)) {
-      writeMMOError('Invalid weapon index $index');
+      writeAmuletError('Invalid weapon index $index');
       return;
     }
     if (item != null && !item.isWeapon)
@@ -341,7 +341,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
 
     if (!isValidIndexTreasure(index)) {
-      writeMMOError('Invalid treasure index $index');
+      writeAmuletError('Invalid treasure index $index');
       return;
     }
     if (item != null && !item.isTreasure)
@@ -358,7 +358,7 @@ class AmuletPlayer extends IsometricPlayer {
     required int cooldown,
   }){
     if (!isValidItemIndex(index)) {
-      writeMMOError('Invalid item index $index');
+      writeAmuletError('Invalid item index $index');
       return;
     }
     final slot = items[index];
@@ -531,7 +531,7 @@ class AmuletPlayer extends IsometricPlayer {
        return;
 
     if (!isValidWeaponIndex(index)) {
-      writeMMOError('Invalid weapon index $index');
+      writeAmuletError('Invalid weapon index $index');
       return;
     }
 
@@ -544,12 +544,12 @@ class AmuletPlayer extends IsometricPlayer {
     final attackType = weapon.attackType;
 
     if (attackType == null) {
-      writeMMOError('selected weapon attack type is null ($index)');
+      writeAmuletError('selected weapon attack type is null ($index)');
       return;
     }
 
     if (slot.cooldown > 0) {
-      writeMMOError('${slot.item?.name} is cooling down');
+      writeAmuletError('${slot.item?.name} is cooling down');
       return;
     }
 
@@ -685,7 +685,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   void selectNpcTalkOption(int index) {
      if (index < 0 || index >= npcOptions.length){
-       writeMMOError('Invalid talk option index $index');
+       writeAmuletError('Invalid talk option index $index');
        return;
      }
      npcOptions[index].action();
@@ -1044,7 +1044,7 @@ class AmuletPlayer extends IsometricPlayer {
      final currentLevel = talents[talent.index];
 
      if (currentLevel >= talent.maxLevel){
-       writeMMOError("Maximum talent level reached");
+       writeAmuletError("Maximum talent level reached");
        return;
      }
 
@@ -1052,7 +1052,7 @@ class AmuletPlayer extends IsometricPlayer {
      final cost = nextLevel * talent.levelCostMultiplier;
 
      if (talentPoints < cost){
-       writeMMOError('Insufficient talent points');
+       writeAmuletError('Insufficient talent points');
        return;
      }
 
@@ -1214,7 +1214,7 @@ class AmuletPlayer extends IsometricPlayer {
   void unequipHandRight() => swapWithAvailableItemSlot(equippedHandRight);
 
   void reportInventoryFull() =>
-      writeMMOError('Inventory is full');
+      writeAmuletError('Inventory is full');
 
   @override
   void update() {
@@ -1273,7 +1273,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     final emptyTreasureSlot = getEmptySlot(treasures);
     if (emptyTreasureSlot == null){
-      writeMMOError("Treasure slots full");
+      writeAmuletError("Treasure slots full");
       return;
     }
     swap(slot, emptyTreasureSlot);
@@ -1344,10 +1344,10 @@ class AmuletPlayer extends IsometricPlayer {
 
   @override
   void handleRequestException(Object exception) {
-    writeMMOError(exception.toString());
+    writeAmuletError(exception.toString());
   }
 
-  void writeMMOError(String error) {
+  void writeAmuletError(String error) {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Error);
     writeString(error);

@@ -13,9 +13,8 @@ class DatabaseLocal implements Database {
 
   var value = 50;
 
-  final currentPath = Directory.current.path;
-
-  String get dbDir => '$currentPath/database';
+  final dbDirectory = Directory('${Directory.current.path}/database');
+  final dbPath = '${Directory.current.path}/database';
 
   @override
   Future connect() => Future.delayed(const Duration(milliseconds: 100));
@@ -38,24 +37,21 @@ class DatabaseLocal implements Database {
     }
     writeJsonToFile(
       fileName: '$uuid.json',
-      directory: dbDir,
+      directory: dbPath,
       contents: json,
     );
   }
 
   @override
   Future<List<Json>> getUserCharacters(String userId) async {
-    final dbDir = this.dbDir;
-    final dbDirFile = Directory(dbDir);
-    final exists = await dbDirFile.exists();
-
+    final exists = await dbDirectory.exists();
     var characters = <Json>[];
 
     if (!exists){
       return [];
     }
 
-    final children = dbDirFile.listSync();
+    final children = dbDirectory.listSync();
     for (final entity in children){
       if (entity is! File) {
         continue;
@@ -65,5 +61,28 @@ class DatabaseLocal implements Database {
       characters.add(fileJson);
     }
     return characters;
+  }
+
+  @override
+  Future<Json> getCharacter(String characterId) async {
+    final exists = await dbDirectory.exists();
+
+    if (!exists){
+      throw Exception('dbDirectory does not exist');
+    }
+
+    final children = dbDirectory.listSync();
+    for (final entity in children){
+      if (!entity.uri.pathSegments.last.contains(characterId)){
+        continue;
+      }
+      if (entity is! File) {
+        continue;
+      }
+      final fileEncoded = await entity.readAsString();
+      final fileJson = jsonDecode(fileEncoded) as Map<String, dynamic>;
+      return fileJson;
+    }
+    throw Exception('getCharacter($characterId) - could not be found');
   }
 }
