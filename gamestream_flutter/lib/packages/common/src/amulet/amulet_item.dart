@@ -13,6 +13,7 @@ enum AmuletItem {
     attackType: AmuletAttackType.Blink,
     actionFrame: 15,
     performDuration: 20,
+    id: 21,
   ),
   Rusty_Old_Sword(
       quality: AmuletItemQuality.Common,
@@ -24,6 +25,7 @@ enum AmuletItem {
       attackType: AmuletAttackType.Melee,
       actionFrame: 20,
       performDuration: 25,
+      id: 1,
   ),
   Staff_Of_Flames(
       quality: AmuletItemQuality.Unique,
@@ -35,6 +37,7 @@ enum AmuletItem {
       attackType: AmuletAttackType.Fire_Ball,
       actionFrame: 20,
       performDuration: 25,
+      id: 2,
   ),
   Staff_Of_Frozen_Lake(
       quality: AmuletItemQuality.Rare,
@@ -45,7 +48,8 @@ enum AmuletItem {
       range: 180,
       attackType: AmuletAttackType.Frost_Ball,
       actionFrame: 15,
-      performDuration: 20
+      performDuration: 20,
+      id: 3,
   ),
   Old_Bow(
       quality: AmuletItemQuality.Common,
@@ -57,6 +61,7 @@ enum AmuletItem {
       attackType: AmuletAttackType.Arrow,
       actionFrame: 20,
       performDuration: 30,
+      id: 4,
   ),
   Holy_Bow(
       quality: AmuletItemQuality.Rare,
@@ -68,18 +73,21 @@ enum AmuletItem {
       attackType: AmuletAttackType.Arrow,
       actionFrame: 12,
       performDuration: 25,
+      id: 5,
   ),
   Steel_Helmet(
       quality: AmuletItemQuality.Common,
       type: ItemType.Helm,
       subType: HelmType.Steel,
       health: 10,
+      id: 6,
   ),
   Wizards_Hat(
       quality: AmuletItemQuality.Common,
       type: ItemType.Helm,
       subType: HelmType.Wizard_Hat,
       health: 10,
+      id: 7,
   ),
   Travellers_Pants(
       quality: AmuletItemQuality.Common,
@@ -87,18 +95,21 @@ enum AmuletItem {
       subType: LegType.Leather,
       health: 2,
       movement: 0.1,
+      id: 8,
   ),
   Gauntlet(
       quality: AmuletItemQuality.Common,
       type: ItemType.Hand,
       subType: HandType.Gauntlets,
       health: 2,
+      id: 9,
   ),
   Squires_Pants(
       quality: AmuletItemQuality.Common,
       type: ItemType.Legs,
       subType: LegType.Leather,
       health: 3,
+      id: 10,
   ),
   Knights_Pants(
       quality: AmuletItemQuality.Unique,
@@ -106,30 +117,35 @@ enum AmuletItem {
       subType: LegType.Leather,
       health: 5,
       movement: -0.1,
+    id: 11,
   ),
   Worn_Shirt_Blue (
       quality: AmuletItemQuality.Common,
       type: ItemType.Body,
       subType: BodyType.Shirt_Blue,
       health: 1,
+    id: 12,
   ),
   Basic_Leather_Armour (
       quality: AmuletItemQuality.Common,
       type: ItemType.Body,
       subType: BodyType.Leather_Armour,
       health: 5,
+    id: 13,
   ),
   Shoe_Leather_Boots (
       quality: AmuletItemQuality.Common,
       type: ItemType.Shoes,
       subType: ShoeType.Leather_Boots,
       health: 3,
+    id: 14,
   ),
   Shoe_Iron_Plates (
       quality: AmuletItemQuality.Common,
       type: ItemType.Shoes,
       subType: ShoeType.Iron_Plates,
       health: 6,
+    id: 15,
   ),
   Health_Potion(
       quality: AmuletItemQuality.Common,
@@ -137,6 +153,7 @@ enum AmuletItem {
       subType: ConsumableType.Health_Potion,
       health: 10,
       consumable: true,
+    id: 16,
   ),
   Treasure_Box(
     quality: AmuletItemQuality.Common,
@@ -144,6 +161,7 @@ enum AmuletItem {
     subType: ConsumableType.Treasure_Box,
     collectable: false,
     experience: 3,
+    id: 17,
   ),
   Meat_Drumstick(
       quality: AmuletItemQuality.Common,
@@ -151,18 +169,21 @@ enum AmuletItem {
       subType: ConsumableType.Meat_Drumstick,
       health: 4,
       collectable: false,
+    id: 18,
   ),
   Lost_Pendant_Of_Dreams(
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     health: 100,
+    id: 19,
   ),
   Sapphire_Pendant(
       quality: AmuletItemQuality.Rare,
       type: ItemType.Treasure,
       subType: TreasureType.Pendant_1,
       health: 5,
+    id: 20,
   );
 
   final int damage;
@@ -179,11 +200,13 @@ enum AmuletItem {
   final AmuletItemQuality quality;
   final int actionFrame;
   final int performDuration;
+  final int id;
 
   const AmuletItem({
     required this.type,
     required this.subType,
     required this.quality,
+    required this.id,
     this.cooldown = 0,
     this.damage = 0,
     this.range = 0,
@@ -233,6 +256,9 @@ enum AmuletItem {
 
   static AmuletItem getWeapon(int type) =>
       typeWeapons.firstWhere((element) => element.subType == type);
+
+  static AmuletItem findByName(String name) =>
+      values.firstWhere((element) => element.name == name);
 
   static AmuletItem getHand(int type) =>
       typeHands.firstWhere((element) => element.subType == type);

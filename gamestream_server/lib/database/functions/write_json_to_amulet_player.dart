@@ -49,12 +49,12 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     player.equipHandRight(null, force: true);
   }
 
-  final weapons = (json['weapons'] as List).cast<int>();
+  final weaponNames = (json['weapons'] as List).cast<String>();
 
-  for (var i = 0; i < weapons.length; i++){
-    final weaponType =  weapons[i];
-    if (weaponType != WeaponType.Unarmed){
-      player.weapons[i].item = AmuletItem.getWeapon(weapons[i]);
+  for (var i = 0; i < weaponNames.length; i++){
+    final weaponName =  weaponNames[i];
+    if (weaponName != '-'){
+      player.weapons[i].item = AmuletItem.findByName(weaponName);
     } else {
       player.weapons[i].item = null;
     }
