@@ -111,20 +111,6 @@ class IsometricUI with IsometricComponent {
                       ),
                     ),
                   ),
-                  height6,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      onPressed(
-                        action: isometric.player.persist,
-                        child: buildText('PERSIST', size: 20, color: Colors.white70),
-                      ),
-                      onPressed(
-                        action: isometric.player.persist,
-                        child: buildText('LOAD', size: 20, color: Colors.white70),
-                      ),
-                    ],
-                  ),
                   if (children != null)
                     height6,
                   if (children != null)
