@@ -682,14 +682,27 @@ class Connection with ByteReader {
       if (player is! AmuletPlayer) {
         throw Exception('player is not AmuletPlayer');
       }
-      player.characterCreated = true;
-      player.active = false;
-      final characterUuid = arguments[2];
-      server.database.getCharacter(characterUuid)
-          .then((json) => writeJsonToAmuletPlayer(json, player))
-          .catchError((error){
-            player.writeAmuletError(error.toString());
-          });
+
+      final idIndex = arguments.indexOf('--id');
+
+      if (idIndex != -1){
+
+        if (idIndex + 1 >= arguments.length){
+          throw Exception('id value required');
+        }
+
+        final characterId = arguments[idIndex + 1];
+        player.characterCreated = true;
+        player.active = false;
+        server.database.getCharacter(characterId)
+            .then((json) => writeJsonToAmuletPlayer(json, player))
+            .catchError((error){
+          player.writeAmuletError(error.toString());
+        });
+      }
+
+
+
     }
   }
 

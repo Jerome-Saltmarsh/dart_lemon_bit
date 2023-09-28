@@ -13,6 +13,10 @@ Widget buildContainerSelectCharacter(User user) =>
             action: user.refreshCharacterNames,
             child: buildText('CHARACTERS'),
           ),
+          onPressed(
+            action: user.createNewCharacter,
+            child: buildText('CREATE NEW', color: Colors.orange),
+          ),
           height12,
           buildWatch(
               user.characters,
@@ -20,7 +24,7 @@ Widget buildContainerSelectCharacter(User user) =>
                   children: characters
                       .map((character) => onPressed(
                             action: () =>
-                                user.loadCharacterByUUID(character['uuid']),
+                                user.loadCharacterById(character['uuid']),
                             child: buildText(character['name']),
                           ))
                       .toList(growable: false))),
