@@ -77,8 +77,12 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   }
 
   player.equippedWeaponIndex = json['equipped_weapon_index'] ?? 0;
+  player.gender = json['gender'] ?? 0;
+  player.hairType = json['hair_type'] ?? 0;
+  player.hairColor = json['hair_color'] ?? 0;
+  player.experience = json['experience'] ?? 0;
+  player.level = json['level'] ?? 0;
   player.healthBase = 100;
-  player.experience = 20;
   player.characterCreated = true;
   player.active = true;
   player.writePlayerHealth();
