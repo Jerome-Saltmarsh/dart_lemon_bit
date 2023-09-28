@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:gamestream_server/database/database.dart';
+import 'package:gamestream_server/database/classes/database.dart';
 import 'package:shelf/shelf.dart';
 
 Future<Response> handleRequest({

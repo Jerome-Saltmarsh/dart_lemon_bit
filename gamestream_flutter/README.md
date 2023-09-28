@@ -10,8 +10,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- http server
 - feature player persistence
+- render torso top and bottom separately
 - improve ai pathfinding
 - feature stash
 - feature store

@@ -43,6 +43,11 @@ class Connection with ByteReader {
     sink.done.then((value){
       final player = _player;
       if (player != null) {
+
+        if (player is IsometricPlayer && player.persistOnDisconnect){
+          server.database.persist(player);
+        }
+
         player.game.players.remove(player);
         player.game.removePlayer(player);
       }

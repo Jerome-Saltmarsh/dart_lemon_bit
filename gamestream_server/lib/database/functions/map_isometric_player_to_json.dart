@@ -18,11 +18,9 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
     json['equipped_helm'] = getSlotType(player.equippedHelm);
     json['equipped_body'] = getSlotType(player.equippedBody);
     json['equipped_legs'] = getSlotType(player.equippedLegs);
+    json['equipped_shoes'] = getSlotType(player.equippedShoe);
     json['complexion'] = player.complexion;
-
-    for (var i = 0; i < player.weapons.length; i++){
-      json['equipped_weapon_$i'] = getSlotType(player.weapons[i]);
-    }
+    json['weapons'] = player.weapons.map(getSlotType).toList(growable: false);
 
     json['equipped_weapon_index'] = player.equippedWeaponIndex;
   }

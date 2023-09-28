@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:gamestream_server/database/database.dart';
+import 'package:gamestream_server/database/classes/database.dart';
 import 'package:gamestream_server/isometric/isometric_player.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;

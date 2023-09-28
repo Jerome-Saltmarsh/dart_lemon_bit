@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
-import 'package:gamestream_server/database/database_local.dart';
+import 'package:gamestream_server/database/classes/database_local.dart';
 import 'package:gamestream_server/http_server/http_server.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_server/packages.dart';
@@ -10,7 +10,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../isometric.dart';
 import 'classes/src.dart';
-import '../database/database_firestore.dart';
+import '../database/classes/database_firestore.dart';
 import '../editor/isometric_editor.dart';
 
 class GamestreamServer {
