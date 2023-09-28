@@ -688,7 +688,7 @@ class Connection with ByteReader {
       if (idIndex != -1){
 
         if (idIndex + 1 >= arguments.length){
-          throw Exception('id value required');
+          throw Exception('id required');
         }
 
         final characterId = arguments[idIndex + 1];
@@ -699,10 +699,8 @@ class Connection with ByteReader {
             .catchError((error){
           player.writeAmuletError(error.toString());
         });
+        return;
       }
-
-
-
     }
   }
 

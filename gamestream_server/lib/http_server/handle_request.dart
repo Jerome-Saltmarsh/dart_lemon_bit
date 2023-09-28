@@ -10,9 +10,10 @@ Future<Response> handleRequest({
 }) async {
   switch (request.method){
     case 'GET':
+      final userId = request.requestedUri.pathSegments.last;
       return Response(
         200,
-        body: jsonEncode(await database.getUserCharacters('user_01')),
+        body: jsonEncode(await database.getUserCharacters(userId)),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
           HttpHeaders.accessControlAllowMethodsHeader: "POST, OPTIONS, GET",

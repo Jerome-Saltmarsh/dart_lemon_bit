@@ -7,9 +7,10 @@ Future<List<Json>> getUserCharacters({
   String scheme = 'http',
   required String host,
   required int port,
+  required String userId,
 }) async {
 
-  final url = Uri.parse('$scheme://$host:$port'); // Replace with your desired URL
+  final url = Uri.parse('$scheme://$host:$port/$userId'); // Replace with your desired URL
 
   // Send an HTTP GET request
   final response = await http.get(url).catchError((error){

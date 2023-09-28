@@ -7,7 +7,7 @@ import 'package:typedef/json.dart';
 import 'get_user_characters.dart';
 
 class User with IsometricComponent {
-  var id = '';
+  var id = 'user_01';
   var scheme = 'http';
   var host = 'localhost';
   var port = 8082;
@@ -23,13 +23,10 @@ class User with IsometricComponent {
         scheme: scheme,
         host: host,
         port: port,
+        userId: id,
       );
 
-  void createNewCharacter() async =>
-      network.connectToGame(GameType.Amulet, '--new $id');
-
   void loadCharacterById(String characterId) {
-    // network.connectToGame(GameType.Amulet, characterId);
     network.connectToGame(GameType.Amulet, '--id $characterId');
   }
 }
