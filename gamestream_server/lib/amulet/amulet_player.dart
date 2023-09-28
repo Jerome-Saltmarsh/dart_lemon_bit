@@ -744,8 +744,8 @@ class AmuletPlayer extends IsometricPlayer {
     bodyType = item.subType;
   }
 
-  void equipLegs(AmuletItem? item){
-    if (deadOrBusy)
+  void equipLegs(AmuletItem? item, {bool force = false}){
+    if (deadOrBusy && !force)
       return;
 
     if (equippedLegs.item == item)

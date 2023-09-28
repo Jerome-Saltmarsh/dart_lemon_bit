@@ -223,6 +223,7 @@ enum AmuletItem {
   static final typeShoes = values.where((element) => element.isShoes).toList(growable: false);
   static final typeWeapons = values.where((element) => element.isWeapon).toList(growable: false);
   static final typeHands = values.where((element) => element.isHand).toList(growable: false);
+  static final typeLegs = values.where((element) => element.isLegs).toList(growable: false);
 
   static AmuletItem getBody(int type) =>
       typeBodies.firstWhere((element) => element.subType == type);
@@ -238,6 +239,9 @@ enum AmuletItem {
 
   static AmuletItem getHelm(int type) =>
       typeHelms.firstWhere((element) => element.subType == type);
+
+  static AmuletItem getLegs(int type) =>
+      typeLegs.firstWhere((element) => element.subType == type);
 
   static List<AmuletItem> _findByQuality(AmuletItemQuality quality) =>
       values.where((item) => item.quality == quality).toList(growable: false);

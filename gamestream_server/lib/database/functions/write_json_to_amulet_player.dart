@@ -7,11 +7,25 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   player.uuid = json['uuid'];
   player.name = json['name'];
 
+  final equippedHelm = json['equipped_helm'] ?? 0;
+  if (equippedHelm != HelmType.None) {
+    player.equipHelm(AmuletItem.getHelm(equippedHelm), force: true);
+  } else {
+    player.equipHelm(null, force: true);
+  }
+
   final equippedBody = json['equipped_body'] ?? 0;
   if (equippedBody != BodyType.None){
     player.equipBody(AmuletItem.getBody(equippedBody), force: true);
   } else {
     player.equipBody(null, force: true);
+  }
+
+  final equippedLegs = json['equipped_legs'] ?? 0;
+  if (equippedLegs != LegType.None){
+    player.equipLegs(AmuletItem.getLegs(equippedLegs), force: true);
+  } else {
+    player.equipLegs(null, force: true);
   }
 
   final equippedShoes = json['equipped_shoes'] ?? 0;
@@ -33,13 +47,6 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     player.equipHandRight(AmuletItem.getHand(equippedHandRight), force: true);
   } else {
     player.equipHandRight(null, force: true);
-  }
-
-  final equippedHelm = json['equipped_helm'] ?? 0;
-  if (equippedHelm != HelmType.None) {
-    player.equipHelm(AmuletItem.getHelm(equippedHandRight), force: true);
-  } else {
-    player.equipHelm(null, force: true);
   }
 
   final weapons = (json['weapons'] as List).cast<int>();

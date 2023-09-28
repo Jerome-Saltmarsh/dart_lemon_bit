@@ -27,12 +27,12 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
     }
 
     json['name'] = player.name;
-    json['equipped_hand_left'] = getSlotType(player.equippedHandLeft);
-    json['equipped_hand_right'] = getSlotType(player.equippedHandRight);
     json['equipped_helm'] = getSlotType(player.equippedHelm);
     json['equipped_body'] = getSlotType(player.equippedBody);
     json['equipped_legs'] = getSlotType(player.equippedLegs);
     json['equipped_shoes'] = getSlotType(player.equippedShoe);
+    json['equipped_hand_left'] = getSlotType(player.equippedHandLeft);
+    json['equipped_hand_right'] = getSlotType(player.equippedHandRight);
     json['complexion'] = player.complexion;
     json['gender'] = player.gender;
     json['hair_type'] = player.hairType;
