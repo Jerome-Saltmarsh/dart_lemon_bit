@@ -10,8 +10,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- feature player persistence
-- fix torches not emitting
+- fix persist weapons
+- feature cloud persistence
 - render torso top and bottom separately
 - improve ai pathfinding
 - feature stash
@@ -27,6 +27,10 @@ ctrl + []               : move caret to code block
 - glove type silk
 - particle crow
 - particle chicken
+
+28.09.2023
+- feature player persistence
+- fix torches not emitting
 
 27.09.2023
 - fix set node light source refresh

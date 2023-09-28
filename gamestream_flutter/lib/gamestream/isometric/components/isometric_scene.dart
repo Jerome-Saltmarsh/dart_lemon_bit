@@ -712,13 +712,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     required Uint16List ambientStack,
     required int ambientStackIndex,
   }){
-    assert (index >= 0);
-    assert (index < totalNodes);
-
-    if (alpha < 0 || alpha > 255){
-      print('applyAmbient() invalid alpha: $alpha');
-    }
-
     final currentColor = nodeColors[index];
     final currentAlpha =  (currentColor & 0xFF000000) >> 24;
     if (currentAlpha <= alpha) {
@@ -730,20 +723,12 @@ class IsometricScene with IsometricComponent implements Updatable {
       final currentIntensity = (ambientAlpha - currentAlpha) / 128;
       final alphaBlend = 1.0 - currentIntensity;
       alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
-      if (alpha < 0 || alpha > 255){
-        print('applyAmbient() invalid alpha: $alpha');
-      }
       if (currentAlpha <= alpha) {
         return;
       }
     }
-
-    if (alpha < 0 || alpha > 255){
-      print('applyAmbient() invalid alpha: $alpha');
-    }
-
     ambientStack[ambientStackIndex] = index;
-    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
+    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha.clamp(0, 255));
   }
 
   void updateCharacterColors(){

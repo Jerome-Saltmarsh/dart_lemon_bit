@@ -171,38 +171,8 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabLighting() =>
       Column(
         children: [
-          height8,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // children: [
-            //   buildText('<-', onPressed: (){
-            //     scene.setInterpolationLength(scene.interpolationLength - 1);
-            //   }),
-            //   GSRefresh(() => buildText('light-size: ${scene.interpolationLength}')),
-            //   buildText('->', onPressed: (){
-            //     scene.setInterpolationLength(scene.interpolationLength + 1);
-            //   }),
-            // ],
-          ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     buildText('<-', onPressed: (){
-          //       final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
-          //       final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-          //       scene.interpolationEaseType.value = EaseType.values[indexNext];
-          //     }),
-          //     buildWatch(scene.interpolationEaseType, buildText),
-          //     buildText('->', onPressed: (){
-          //       final indexCurrent = EaseType.values.indexOf(scene.interpolationEaseType.value);
-          //       final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-          //       scene.interpolationEaseType.value = EaseType.values[indexNext];
-          //     }),
-          //   ],
-          // ),
-
-          height16,
           buildText('ambient-color'),
+          buildRowRefresh('bake-stack-recording', () => scene.bakeStackRecording),
           // ColorPicker(
           //   portraitOnly: true,
           //   pickerColor: HSVColor.fromAHSV(
