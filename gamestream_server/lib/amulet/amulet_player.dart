@@ -693,8 +693,8 @@ class AmuletPlayer extends IsometricPlayer {
      npcOptions[index].action();
   }
 
-  void equipHelm(AmuletItem? item){
-    if (deadOrBusy)
+  void equipHelm(AmuletItem? item, {bool force = false}){
+    if (deadOrBusy && !force)
       return;
 
     if (equippedHelm.item == item)

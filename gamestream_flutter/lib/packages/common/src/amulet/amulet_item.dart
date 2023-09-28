@@ -236,6 +236,9 @@ enum AmuletItem {
   static AmuletItem getHand(int type) =>
       typeHands.firstWhere((element) => element.subType == type);
 
+  static AmuletItem getHelm(int type) =>
+      typeHelms.firstWhere((element) => element.subType == type);
+
   static List<AmuletItem> _findByQuality(AmuletItemQuality quality) =>
       values.where((item) => item.quality == quality).toList(growable: false);
 
