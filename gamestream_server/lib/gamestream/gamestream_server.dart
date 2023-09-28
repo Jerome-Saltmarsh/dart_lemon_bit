@@ -20,7 +20,7 @@ class GamestreamServer {
 
   final games = <Game>[];
   final isometricScenes = Scenes();
-  final database = isLocalMachine ? DatabaseLocal() : DatabaseFirestore();
+  final database = isLocalMachine ? DatabaseLocal(path: Directory.current.path) : DatabaseFirestore();
   final connections = <Connection>[];
 
   var connectionsTotal = 0;

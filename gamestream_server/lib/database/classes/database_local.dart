@@ -11,10 +11,24 @@ import 'database.dart';
 
 class DatabaseLocal implements Database {
 
+  final String path;
   var value = 50;
 
-  final dbDirectory = Directory('${Directory.current.path}/database');
-  final dbPath = '${Directory.current.path}/database';
+  late final Directory dirCharacters;
+  late final Directory dirUsers;
+
+  DatabaseLocal({required this.path}){
+    dirCharacters = Directory('$path/database/characters');
+    dirUsers = Directory('$path/database/users');
+
+    if (!dirCharacters.existsSync()){
+      dirCharacters.createSync();
+    }
+
+    if (!dirUsers.existsSync()){
+      dirUsers.createSync();
+    }
+  }
 
   @override
   Future connect() => Future.delayed(const Duration(milliseconds: 100));
@@ -37,21 +51,21 @@ class DatabaseLocal implements Database {
     }
     writeJsonToFile(
       fileName: '$uuid.json',
-      directory: dbPath,
+      directory: dirCharacters.path,
       contents: json,
     );
   }
 
   @override
   Future<List<Json>> getUserCharacters(String userId) async {
-    final exists = await dbDirectory.exists();
+    final exists = await dirCharacters.exists();
     var characters = <Json>[];
 
     if (!exists){
       return [];
     }
 
-    final children = dbDirectory.listSync();
+    final children = dirCharacters.listSync();
     for (final entity in children){
       if (entity is! File) {
         continue;
@@ -65,13 +79,13 @@ class DatabaseLocal implements Database {
 
   @override
   Future<Json> getCharacter(String characterId) async {
-    final exists = await dbDirectory.exists();
+    final exists = await dirCharacters.exists();
 
     if (!exists){
       throw Exception('dbDirectory does not exist');
     }
 
-    final children = dbDirectory.listSync();
+    final children = dirCharacters.listSync();
     for (final entity in children){
       if (!entity.uri.pathSegments.last.contains(characterId)){
         continue;
