@@ -11,11 +11,9 @@ Map<String, dynamic> mapIsometricPlayerToJson(IsometricPlayer player){
     player.uuid = generateUUID();
   }
   json['uuid'] = player.uuid;
-  json['head_type'] = player.headType;
-  json['body_type'] = player.bodyType;
-  json['legs_type'] = player.legsType;
 
   if (player is AmuletPlayer) {
+    json['name'] = player.name;
     json['equipped_helm'] = getSlotType(player.equippedHelm);
     json['equipped_body'] = getSlotType(player.equippedBody);
     json['equipped_legs'] = getSlotType(player.equippedLegs);
@@ -25,6 +23,4 @@ Map<String, dynamic> mapIsometricPlayerToJson(IsometricPlayer player){
   return json;
 }
 
-int getSlotType(ItemSlot slot){
-  return slot.item?.subType ?? -1;
-}
+int getSlotType(ItemSlot slot) => slot.item?.subType ?? 0;

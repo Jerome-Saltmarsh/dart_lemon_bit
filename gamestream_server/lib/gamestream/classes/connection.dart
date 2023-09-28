@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/amulet.dart';
 import 'package:gamestream_server/editor/isometric_editor.dart';
+import 'package:gamestream_server/database/functions/write_json_to_amulet_player.dart';
 import 'package:gamestream_server/gamestream/src.dart';
 import 'package:gamestream_server/isometric/isometric_request_reader.dart';
 import 'package:gamestream_server/isometric/scene_reader.dart';
@@ -677,19 +678,11 @@ class Connection with ByteReader {
       }
 
       final characterUuid = arguments[2];
-      server.database.getCharacter(characterUuid).then((character) {
-        player.uuid = character['uuid'];
-
-        final bodyType = character['body_type'];
-        if (bodyType != BodyType.None){
-          player.equippedBody.item = AmuletItem.values.firstWhere((element) => element.isBody && element.subType == bodyType);
-        }
-
-        player.healthBase = 100;
-        player.experience = 20;
-      }).catchError((error){
-        player.writeAmuletError(error.toString());
-      });
+      server.database.getCharacter(characterUuid)
+          .then((json) => writeJsonToAmuletPlayer(json, player))
+          .catchError((error){
+            player.writeAmuletError(error.toString());
+          });
     }
   }
 

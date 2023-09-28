@@ -218,6 +218,12 @@ enum AmuletItem {
   static final valuesRare = _findByQuality(AmuletItemQuality.Rare);
   static final valuesMythical = _findByQuality(AmuletItemQuality.Mythical);
 
+  static final typeBodies = values.where((element) => element.isBody).toList(growable: false);
+  static final typeHelms = values.where((element) => element.isHelm).toList(growable: false);
+
+  static AmuletItem findBody(int type) =>
+      typeBodies.firstWhere((element) => element == type);
+
   static List<AmuletItem> _findByQuality(AmuletItemQuality quality) =>
       values.where((item) => item.quality == quality).toList(growable: false);
 
