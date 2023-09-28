@@ -11,6 +11,7 @@ ctrl + []               : move caret to code block
 
 [TODO]
 - feature player persistence
+- fix torches not emitting
 - render torso top and bottom separately
 - improve ai pathfinding
 - feature stash
