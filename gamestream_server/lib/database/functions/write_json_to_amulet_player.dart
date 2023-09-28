@@ -5,12 +5,13 @@ import 'package:typedef/json.dart';
 
 void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   player.uuid = json['uuid'];
+  player.name = json['name'];
 
   final bodyType = json['equipped_body'] ?? 0;
   if (bodyType != BodyType.None){
-    player.equipBody(AmuletItem.findBody(bodyType));
+    player.equipBody(AmuletItem.findBody(bodyType), force: true);
   } else {
-    player.equipBody(null);
+    player.equipBody(null, force: true);
   }
 
   player.healthBase = 100;

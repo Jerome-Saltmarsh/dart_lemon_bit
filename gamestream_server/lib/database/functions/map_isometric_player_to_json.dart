@@ -3,9 +3,10 @@
 import 'package:gamestream_server/amulet.dart';
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/packages/utils/generate_uuid.dart';
+import 'package:typedef/json.dart';
 
-Map<String, dynamic> mapIsometricPlayerToJson(IsometricPlayer player){
-  final json = Map<String, dynamic>();
+Json mapIsometricPlayerToJson(IsometricPlayer player){
+  final json = Json();
 
   if (player.uuid.isEmpty){
     player.uuid = generateUUID();
