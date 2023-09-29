@@ -19,6 +19,13 @@ Future<Response> handleRequest({
     HttpHeaders.accessControlAllowHeadersHeader: "*",
   };
 
+  const headersAcceptText = {
+    HttpHeaders.contentTypeHeader: "text/plain",
+    HttpHeaders.accessControlAllowMethodsHeader: "POST, OPTIONS, GET",
+    HttpHeaders.accessControlAllowOriginHeader: "*",
+    HttpHeaders.accessControlAllowHeadersHeader: "*",
+  };
+
 
   switch (request.method){
     case 'GET':
@@ -51,8 +58,8 @@ Future<Response> handleRequest({
 
       if (name.isEmpty){
         return Response.badRequest(
-          headers: headersAcceptJson,
-          body: jsonEncode({'reason': 'invalid_name'}),
+          headers: headersAcceptText,
+          body: 'Name Required',
         );
       }
 
