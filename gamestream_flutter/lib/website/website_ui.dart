@@ -1,20 +1,22 @@
 import 'dart:typed_data';
 
-import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/website/functions/build_container_select_character.dart';
-import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
+import 'package:gamestream_flutter/gamestream/ui/src.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 import 'package:gamestream_flutter/packages/utils.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
+import 'package:gamestream_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
-import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
-import 'package:gamestream_flutter/gamestream/operation_status.dart';
-import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+
+import 'functions/build_website_page_new_character.dart';
 
 extension WebsiteUI on WebsiteGame {
 
@@ -38,52 +40,17 @@ extension WebsiteUI on WebsiteGame {
           .toList());
 
   Widget buildPageWebsiteDesktop() => Center(
-      child: WatchBuilder(websitePage, (websitePage){
-        if (websitePage == WebsitePage.Region){
-          return buildSelectRegionColumn();
-        }
-        return WatchBuilder(options.region, (ConnectionRegion? region) {
-          if (region == null) return buildSelectRegionColumn();
-
-          final regionButton = onPressed(
-            action: showWebsitePageRegion,
-            child: Container(
-              color: Colors.white12,
-              alignment: Alignment.center,
-              padding: style.containerPadding,
-              child: Row(
-                children: [
-                  buildText(formatEnumName(region.name)),
-                ],
-              ),
-            ),
-          );
-
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 500,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildLogoGameStream(),
-                    // width32,
-                    regionButton,
-                  ],
-                ),
-              ),
-              height32,
-              buildRowSelectGame(),
-              buildContainerSelectCharacter(user),
-            ],
-          );
-        }
-        );
-      }),
+      child: WatchBuilder(websitePage, (websitePage) =>
+        switch (websitePage) {
+          WebsitePage.Select_Character => buildWebsitePageSelectCharacter(),
+          WebsitePage.New_Character => buildWebsitePageNewCharacter(user: user),
+          WebsitePage.Select_Region => buildWebsitePageSelectRegion(
+              options: options,
+              website: website,
+              engine: engine,
+            )
+        }),
     );
-
 
   void downloadImageTest(){
     final width = 100;
@@ -164,53 +131,6 @@ extension WebsiteUI on WebsiteGame {
       GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
-  Widget buildSelectRegionColumn() => SizedBox(
-      width: 300,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildText('Select Your Region', size: FontSize.large),
-          height16,
-          WatchBuilder(options.region, (activeRegion) {
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: (engine.isLocalHost ? ConnectionRegion.values : const [
-                  ConnectionRegion.America_North,
-                  ConnectionRegion.America_South,
-                  ConnectionRegion.Asia_North,
-                  ConnectionRegion.Asia_South,
-                  ConnectionRegion.Europe,
-                  ConnectionRegion.Oceania,
-                  ConnectionRegion.LocalHost,
-                ])
-                    .map((ConnectionRegion region) =>
-                    onPressed(
-                      action: () {
-                        options.region.value = region;
-                        website.websitePage.value = WebsitePage.Games;
-                      },
-                      child: MouseOver(builder: (bool mouseOver) {
-                        return Container(
-                          padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
-                          margin: const EdgeInsets.symmetric(vertical: 4),
-                          color: activeRegion == region ? Colors.greenAccent : mouseOver ? Colors.green : Colors.white10,
-                          child: buildText(
-                              '${region.name}',
-                              size: 24,
-                              color: mouseOver ? Colors.white : Colors.white60
-                          ),
-                        );
-                      }),
-                    ))
-                    .toList(),
-              ),
-            );
-          }),
-        ],
-      ),
-    );
 
   Widget buildErrorDialog(String message, {Widget? bottomRight}) => buildDialog(
         width: 200,
@@ -227,4 +147,67 @@ extension WebsiteUI on WebsiteGame {
         )
     );
 
+
+  Widget buildWebsitePageSelectCharacter() {
+    return WatchBuilder(options.region, (ConnectionRegion? region) {
+
+      if (region == null) {
+        this.websitePage.value = WebsitePage.Select_Region;
+      }
+
+      final regionButton = onPressed(
+        action: showWebsitePageRegion,
+        child: Container(
+          color: Colors.white12,
+          alignment: Alignment.center,
+          padding: style.containerPadding,
+          child: buildText(formatEnumName(region?.name ?? 'region')),
+        ),
+      );
+
+      return GSContainer(
+        width: 400,
+        height: 400 * goldenRatio_1381,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            regionButton,
+            height32,
+            buildWebsitePageSelectCharacter2(),
+          ],
+        ),
+      );
+    }
+    );
+  }
+
+  Widget buildWebsitePageSelectCharacter2() =>
+      GSContainer(
+        child: Column(
+          children: [
+            onPressed(
+              action: user.refreshCharacterNames,
+              child: buildText('CHARACTERS'),
+            ),
+            onPressed(
+              action: user.website.showPageNewCharacter,
+              child: buildText('NEW CHARACTER', color: Colors.orange),
+            ),
+            height12,
+            buildWatch(
+                user.characters,
+                    (characters) => Column(
+                    children: characters
+                        .map((character) => onPressed(
+                      action: () =>
+                          user.loadCharacterById(character['uuid']),
+                      child: buildText(character['name']),
+                    ))
+                        .toList(growable: false))),
+          ],
+        ),
+      );
+
 }
+

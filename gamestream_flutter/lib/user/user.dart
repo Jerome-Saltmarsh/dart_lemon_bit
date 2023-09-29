@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
+import 'package:http/http.dart' as http;
 
 import 'get_user_characters.dart';
 
@@ -29,4 +30,9 @@ class User with IsometricComponent {
   void loadCharacterById(String characterId) {
     network.connectToGame(GameType.Amulet, '--id $characterId');
   }
+
+  Future createNewCharacter({
+    required String characterName,
+  }) =>
+       http.post(Uri.parse('$scheme://$host:$port/new&characterName=$characterName'));
 }

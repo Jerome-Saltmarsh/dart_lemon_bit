@@ -1,4 +1,5 @@
 enum WebsitePage {
-  Games,
-  Region,
+  Select_Character,
+  Select_Region,
+  New_Character,
 }

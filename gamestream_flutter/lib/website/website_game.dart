@@ -24,7 +24,7 @@ class WebsiteGame extends Game {
 
   var imagesCached = false;
   final error = Watch<String?>(null);
-  final websitePage = Watch(WebsitePage.Region);
+  final websitePage = Watch(WebsitePage.Select_Region);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
@@ -97,16 +97,16 @@ class WebsiteGame extends Game {
 
   void toggleWebsitePage() =>
       websitePage.value =
-      websitePage.value == WebsitePage.Region
-          ? WebsitePage.Games
-          : WebsitePage.Region;
+      websitePage.value == WebsitePage.Select_Region
+          ? WebsitePage.Select_Character
+          : WebsitePage.Select_Region;
 
   void showWebsitePageRegion(){
-     websitePage.value = WebsitePage.Region;
+     websitePage.value = WebsitePage.Select_Region;
   }
 
   void showWebsitePageGames(){
-    websitePage.value = WebsitePage.Games;
+    websitePage.value = WebsitePage.Select_Character;
   }
 
   void openUrlYoutube() =>
@@ -199,4 +199,6 @@ class WebsiteGame extends Game {
   void loadCharacterByName(String characterName){
     network.connectToGame(GameType.Amulet, characterName);
   }
+
+  void showPageNewCharacter() => websitePage.value = WebsitePage.New_Character;
 }
