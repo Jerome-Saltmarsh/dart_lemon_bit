@@ -17,6 +17,7 @@ class DatabaseLocal implements Database {
   late final Directory dirUsers;
 
   DatabaseLocal({required this.path}){
+    print("DatabaseLocal(path: $path)");
     dirCharacters = Directory('$path/database/characters');
     dirUsers = Directory('$path/database/users');
 

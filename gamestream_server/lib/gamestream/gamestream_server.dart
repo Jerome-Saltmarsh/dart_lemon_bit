@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
+import 'package:gamestream_server/database/classes/database.dart';
 import 'package:gamestream_server/database/classes/database_local.dart';
 import 'package:gamestream_server/http_server/http_server.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -18,9 +19,10 @@ class GamestreamServer {
   static const Frames_Per_Second = 45;
   static const Fixed_Time = 50 / Frames_Per_Second;
 
+  final Database database;
+
   final games = <Game>[];
   final isometricScenes = Scenes();
-  final database = isLocalMachine ? DatabaseLocal(path: Directory.current.path) : DatabaseFirestore();
   final connections = <Connection>[];
 
   var connectionsTotal = 0;
@@ -29,7 +31,7 @@ class GamestreamServer {
 
   late final Timer updateTimer;
 
-  GamestreamServer(){
+  GamestreamServer({required this.database}){
     _construct();
   }
 
