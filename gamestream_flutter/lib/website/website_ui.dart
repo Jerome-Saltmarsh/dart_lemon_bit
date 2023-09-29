@@ -43,9 +43,7 @@ extension WebsiteUI on WebsiteGame {
       child: WatchBuilder(websitePage, (websitePage) =>
         switch (websitePage) {
           WebsitePage.Select_Character => buildWebsitePageSelectCharacter(),
-          WebsitePage.New_Character => DialogCreateCharacterComputer(
-            onStart: createNewCharacter,
-          ),
+          WebsitePage.New_Character => DialogCreateCharacterComputer(),
           WebsitePage.Select_Region => buildWebsitePageSelectRegion(
               options: options,
               website: website,

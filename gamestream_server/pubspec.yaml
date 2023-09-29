@@ -13,7 +13,7 @@ dependencies:
   shelf_router: ^1.1.2
   uuid: ^3.0.4
   http: ^0.13.5
-  typedef: ^1.0.8
+  typedef: ^1.0.11
   fast_noise: ^1.0.1
   googleapis: ^11.0.0
   googleapis_auth: ^1.4.0

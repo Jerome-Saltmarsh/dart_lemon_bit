@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
+import 'package:http/http.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 import 'package:http/http.dart' as http;
@@ -31,8 +34,24 @@ class User with IsometricComponent {
     network.connectToGame(GameType.Amulet, '--id $characterId');
   }
 
-  Future createNewCharacter({
-    required String characterName,
+  Future<Response> createNewCharacter({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
   }) =>
-       http.post(Uri.parse('$scheme://$host:$port/new&characterName=$characterName'));
+       http.post(Uri.parse('$scheme://$host:$port'),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'name': name,
+            'complexion': complexion,
+            'hairType': hairType,
+            'hairColor': hairColor,
+            'gender': gender,
+            'headType': headType,
+          }));
 }

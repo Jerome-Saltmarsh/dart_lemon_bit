@@ -120,4 +120,18 @@ class DatabaseLocal implements Database {
     }
     throw Exception('user could not be found $userId');
   }
+
+  @override
+  Future createCharacter({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
+  }) {
+    // TODO: implement createCharacter
+    throw UnimplementedError();
+  }
+
 }

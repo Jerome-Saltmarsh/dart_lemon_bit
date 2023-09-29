@@ -22,15 +22,13 @@ typedef OnStart = Function({required int complex});
 class DialogCreateCharacterComputer extends StatelessWidget {
 
   final row = Watch(0);
+  final name = Watch('');
   final complexion = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
   final gender = Watch(0);
   final headType = Watch(0);
-
-  final OnStart onStart;
-
-  DialogCreateCharacterComputer({super.key, required this.onStart});
+  final error = Watch('');
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +114,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                     ),
                   ],
                 ),
+                buildWatch(error, (error) => buildText(error, color: Colors.red)),
                 Expanded(child: const SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,7 +127,21 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                     ),
                     onPressed(
                       action: () {
-
+                        components.user.createNewCharacter(
+                          name: name.value,
+                          complexion: complexion.value,
+                          hairType: hairType.value,
+                          hairColor: hairColor.value,
+                          gender: gender.value,
+                          headType: headType.value,
+                        ).then((response) {
+                          if (response.statusCode == 200){
+                            return;
+                          }
+                          if (response.statusCode == 400){
+                              error.value = response.body;
+                          }
+                        });
                       },
                       child: buildText('START'),
                     ),

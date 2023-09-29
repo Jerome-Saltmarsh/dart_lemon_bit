@@ -75,4 +75,17 @@ class DatabaseFirestore implements Database {
     // TODO: implement getCharacter
     throw UnimplementedError();
   }
+
+  @override
+  Future createCharacter({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
+  }) async {
+    // TODO: implement createCharacter
+  }
+
 }
