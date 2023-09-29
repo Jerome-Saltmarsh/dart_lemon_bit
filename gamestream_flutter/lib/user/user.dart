@@ -27,7 +27,7 @@ class User with IsometricComponent {
         userId: id,
       );
 
-  void loadCharacterById(String characterId) {
+  void playCharacter(String characterId) {
     network.connectToGame(GameType.Amulet, '--id $characterId');
   }
 

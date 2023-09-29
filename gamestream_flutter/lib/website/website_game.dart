@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/user/get_user_characters.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';

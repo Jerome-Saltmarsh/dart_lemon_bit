@@ -201,7 +201,7 @@ extension WebsiteUI on WebsiteGame {
                     children: characters
                         .map((character) => onPressed(
                       action: () =>
-                          user.loadCharacterById(character['uuid']),
+                          user.playCharacter(character['uuid']),
                       child: buildText(character['name']),
                     ))
                         .toList(growable: false))),

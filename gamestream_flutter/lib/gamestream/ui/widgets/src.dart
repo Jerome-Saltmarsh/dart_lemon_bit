@@ -8,5 +8,6 @@ export 'build_layout.dart';
 export 'gs_button.dart';
 export 'gs_container.dart';
 export 'gs_refresh.dart';
+export 'gs_key_event_handler.dart';
 export 'mouse_over.dart';
 export 'stack_fullscreen.dart';
