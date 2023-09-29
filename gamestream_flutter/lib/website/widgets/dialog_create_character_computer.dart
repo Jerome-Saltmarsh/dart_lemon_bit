@@ -56,11 +56,12 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                       row.value = (row.value + 1) % 8;
                     },
                     child: Container(
-                      width: 120,
-                      height: 120 * goldenRatio_1381,
+                      width: 130,
+                      height: 130 * goldenRatio_1381,
                       alignment: Alignment.center,
                       color: Colors.black12,
                       child: Stack(
+                        alignment: Alignment.center,
                         children: [
                           Positioned(
                             top: 100,
