@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:gamestream_server/database/functions/map_isometric_player_to_json.dart';
 import 'package:gamestream_server/isometric/isometric_player.dart';
 import 'package:gamestream_server/packages.dart';
-import 'package:gamestream_server/packages/lemon_io/src/write_json_to_file.dart';
 import 'package:typedef/json.dart';
 
 import 'database.dart';
@@ -60,7 +59,7 @@ class DatabaseLocal implements Database {
   Future<List<Json>> getUserCharacters(String userId) async {
 
     final user = await findUser(userId);
-    final userCharacterIds = (user['characters'] as List).cast<String>();
+    final userCharacterIds = user.getList<String>('characters');
     final userCharacters = <Json>[];
 
     for (final userCharacterId in userCharacterIds){
@@ -69,18 +68,6 @@ class DatabaseLocal implements Database {
     }
 
     return userCharacters;
-    // final characters = <Json>[];
-    // final characterFiles = dirCharacters.listSync();
-    //
-    // for (final entity in characterFiles){
-    //   if (entity is! File) {
-    //     continue;
-    //   }
-    //   final fileEncoded = await entity.readAsString();
-    //   final character = jsonDecode(fileEncoded) as Json;
-    //   characters.add(character);
-    // }
-    // return characters;
   }
 
   @override
@@ -132,7 +119,16 @@ class DatabaseLocal implements Database {
     required int headType,
   }) async {
 
+    final user = await findUser(userId);
+    final userCharacters = user.getList<String>('characters');
     final characterId = generateUUID();
+    userCharacters.add(characterId);
+
+    final userFile = File('${dirUsers.path}/$userId.json');
+    userFile.writeAsString(jsonEncode({
+      'characters': userCharacters
+    }));
+
     final characterFile = File('${dirCharacters.path}/$characterId.json');
 
     characterFile.writeAsString(
