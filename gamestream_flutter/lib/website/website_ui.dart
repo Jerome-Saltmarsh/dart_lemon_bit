@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
@@ -189,27 +190,54 @@ extension WebsiteUI on WebsiteGame {
   Widget buildWebsitePageSelectCharacter2() =>
       GSContainer(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            onPressed(
-              action: user.refreshCharacterNames,
-              child: buildText('CHARACTERS'),
-            ),
-            onPressed(
-              action: user.website.showPageNewCharacter,
-              child: buildText('NEW CHARACTER', color: Colors.orange),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildText('CHARACTERS'),
+                width8,
+                onPressed(
+                  action: user.refreshCharacterNames,
+                  child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
+                ),
+              ],
             ),
             height12,
             buildWatch(
                 user.characters,
-                    (characters) => Column(
-                    children: characters
-                        .map((character) => onPressed(
-                      action: () =>
-                          user.playCharacter(character['uuid']),
-                      child: buildText(character['name']),
-                    ))
-                        .toList(growable: false))),
+                    (characters) => Container(
+                      height: 200,
+                      child: SingleChildScrollView(
+                        child: Column(
+                        children: characters
+                            .map((character) => onPressed(
+                          action: () =>
+                              user.playCharacter(character['uuid']),
+                          child: Container(
+                            alignment: Alignment.center,
+                              width: 200,
+                              color: Colors.white12,
+                              padding: const EdgeInsets.all(4),
+                              margin: const EdgeInsets.only(bottom: 4),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  buildText(character['name'], size: 22),
+                                  buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
+                                ],
+                              )),
+                        ))
+                            .toList(growable: false)),
+                      ),
+                    )),
+            onPressed(
+              action: user.website.showPageNewCharacter,
+              child: buildText('NEW CHARACTER', color: Colors.orange),
+            ),
           ],
+
         ),
       );
 
