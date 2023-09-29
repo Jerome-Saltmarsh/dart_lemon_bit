@@ -129,7 +129,7 @@ class DatabaseLocal implements Database {
     required int hairColor,
     required int gender,
     required int headType,
-  }) {
+  }) async {
     // TODO: implement createCharacter
     throw UnimplementedError();
   }

@@ -70,7 +70,12 @@ Future<Response> handleRequest({
         hairColor: hairColor,
         headType: headType,
         gender: gender,
-      );
+      ).catchError((error){
+        return Response.internalServerError(
+          headers: headersAcceptText,
+          body: error.toString(),
+        );
+      });
 
       return Response(
           200,

@@ -21,8 +21,10 @@ typedef OnStart = Function({required int complex});
 
 class DialogCreateCharacterComputer extends StatelessWidget {
 
+  final nameController = TextEditingController(
+      text: 'Anon${randomInt(9999, 99999).toString()}'
+  );
   final row = Watch(0);
-  final name = Watch('');
   final complexion = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
@@ -48,6 +50,12 @@ class DialogCreateCharacterComputer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                onPressed(
+                  action: () {
+                    components.website.websitePage.value = WebsitePage.Select_Character;
+                  },
+                  child: buildText('Back'),
+                ),
                 Center(
                   child: onPressed(
                     action: (){
@@ -118,11 +126,23 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    onPressed(
-                      action: () {
-                        components.website.websitePage.value = WebsitePage.Select_Character;
-                      },
-                      child: buildText('Back'),
+                    GSKeyEventHandler(
+                      child: Container(
+                          width: 200,
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.black12,
+                          child: TextField(
+                            autofocus: true,
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none
+                            ),
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 25,
+                            ),
+                          )
+                      ),
                     ),
                     Row(
                       children: [
@@ -131,7 +151,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         onPressed(
                           action: () {
                             components.user.createNewCharacter(
-                              name: name.value,
+                              name: nameController.text,
                               complexion: complexion.value,
                               hairType: hairType.value,
                               hairColor: hairColor.value,
@@ -141,12 +161,10 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               if (response.statusCode == 200){
                                 return;
                               }
-                              if (response.statusCode == 400){
-                                  error.value = response.body;
-                              }
+                              error.value = response.body;
                             });
                           },
-                          child: buildText('START'),
+                          child: buildText('START', size: 25, color: Colors.green),
                         ),
                       ],
                     ),
@@ -267,7 +285,7 @@ Widget buildColumn({
           buildText(title, color: Colors.white.withOpacity(0.8)),
           height8,
           Container(
-            height: 300,
+            height: 200,
             constraints: BoxConstraints(
               minWidth: 100,
             ),
