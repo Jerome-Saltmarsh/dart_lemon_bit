@@ -151,6 +151,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         onPressed(
                           action: () {
                             components.user.createNewCharacter(
+                              userId: components.user.id,
                               name: nameController.text,
                               complexion: complexion.value,
                               hairType: hairType.value,

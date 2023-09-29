@@ -123,6 +123,7 @@ class DatabaseLocal implements Database {
 
   @override
   Future createCharacter({
+    required String userId,
     required String name,
     required int complexion,
     required int hairType,
@@ -130,8 +131,44 @@ class DatabaseLocal implements Database {
     required int gender,
     required int headType,
   }) async {
-    // TODO: implement createCharacter
-    throw UnimplementedError();
+
+    final characterId = generateUUID();
+    final characterFile = File('${dirCharacters.path}/$characterId.json');
+
+    characterFile.writeAsString(
+      jsonEncode({
+        "uuid": characterId,
+        "name": name,
+        "equipped_helm": 0,
+        "equipped_body": 0,
+        "equipped_legs": 1,
+        "equipped_shoes": 1,
+        "equipped_hand_left": 0,
+        "equipped_hand_right": 1,
+        "weapons": [
+          "Old_Bow",
+          "Rusty_Old_Sword",
+          "-",
+          "-"
+        ],
+        "items": [
+          "Blink_Dagger",
+          "-",
+          "Staff_Of_Flames",
+          "Basic_Leather_Armour",
+          "-",
+          "-"
+        ],
+        "complexion": complexion,
+        "equipped_weapon_index": 0,
+        "gender": gender,
+        "hair_type": hairType,
+        "hair_color": hairColor,
+        "experience": 0,
+        "level": 1,
+      })
+    );
+    characterFile.createSync();
   }
 
 }

@@ -78,6 +78,7 @@ class DatabaseFirestore implements Database {
 
   @override
   Future createCharacter({
+    required String userId,
     required String name,
     required int complexion,
     required int hairType,

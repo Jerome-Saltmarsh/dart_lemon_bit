@@ -38,6 +38,7 @@ Future<Response> handleRequest({
     case 'POST':
       final requestBody = await getBody(request);
 
+      final userId = requestBody.tryGetString('userId');
       final name = requestBody.tryGetString('name');
       final complexion = requestBody.tryGetInt('complexion');
       final hairType = requestBody.tryGetInt('hairType');
@@ -46,6 +47,7 @@ Future<Response> handleRequest({
       final gender = requestBody.tryGetInt('gender');
 
       if (
+          userId == null ||
           name == null ||
           complexion == null ||
           hairType == null ||
@@ -64,6 +66,7 @@ Future<Response> handleRequest({
       }
 
       await database.createCharacter(
+        userId: userId,
         name: name,
         complexion: complexion,
         hairType: hairType,

@@ -35,6 +35,7 @@ class User with IsometricComponent {
   }
 
   Future<Response> createNewCharacter({
+    required String userId,
     required String name,
     required int complexion,
     required int hairType,
@@ -47,6 +48,7 @@ class User with IsometricComponent {
             'Content-Type': 'application/json',
           },
           body: jsonEncode(<String, dynamic>{
+            'userId': userId,
             'name': name,
             'complexion': complexion,
             'hairType': hairType,

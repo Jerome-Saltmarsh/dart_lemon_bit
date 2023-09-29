@@ -1,7 +1,7 @@
 {
-  "uuid": "d555a851-63b9-4bd9-af7d-80eafa259f74",
-  "name": "newb",
-  "equipped_helm": 1,
+  "uuid": "22952791-7d1c-4040-ab86-1f6f01788049",
+  "name": "Anon292103",
+  "equipped_helm": 0,
   "equipped_body": 0,
   "equipped_legs": 1,
   "equipped_shoes": 1,
@@ -11,21 +11,21 @@
     "Old_Bow",
     "Rusty_Old_Sword",
     "-",
-    "Staff_Of_Flames"
+    "-"
   ],
   "items": [
     "Blink_Dagger",
     "-",
-    "-",
+    "Staff_Of_Flames",
     "Basic_Leather_Armour",
-    "Old_Bow",
+    "-",
     "-"
   ],
-  "complexion": 63,
-  "equipped_weapon_index": 3,
-  "gender": 1,
+  "complexion": 0,
+  "equipped_weapon_index": 0,
+  "gender": 0,
   "hair_type": 0,
   "hair_color": 0,
-  "experience": 10,
-  "level": 3
+  "experience": 0,
+  "level": 1
 }
