@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/website/character_attributes.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';

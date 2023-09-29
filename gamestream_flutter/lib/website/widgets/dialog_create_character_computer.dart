@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_character_sprites.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:lemon_math/src.dart';
@@ -22,6 +21,7 @@ typedef OnStart = Function({required int complex});
 
 class DialogCreateCharacterComputer extends StatelessWidget {
 
+  final row = Watch(0);
   final complexion = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
@@ -39,15 +39,10 @@ class DialogCreateCharacterComputer extends StatelessWidget {
     final nameController = TextEditingController(text: randomName);
     final textSelection = TextSelection(baseOffset: 0, extentOffset: randomName.length);
     nameController.selection = textSelection;
-
-    final canvasFrame = ValueNotifier(0);
-
-    final updateTimer = Timer.periodic(const Duration(milliseconds: 50), (timer){
-      canvasFrame.value++;
-    });
-
     return IsometricBuilder(
       builder: (context, components) {
+        final palette = components.colors.palette;
+
         return GSContainer(
             width: width,
             height: width * goldenRatio_1381,
@@ -56,36 +51,50 @@ class DialogCreateCharacterComputer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: Container(
-                    width: 120,
-                    height: 120 * goldenRatio_1381,
-                    alignment: Alignment.center,
-                    color: Colors.black12,
-                    child: OnDisposed(
-                      action: (){
-                        canvasFrame.dispose();
-                        updateTimer.cancel();
-                      },
-                      child: CustomCanvas(
-                        frame: canvasFrame,
-                        paint: (canvas, size) =>
-                          renderCanvasCharacterSprites(
-                            canvas: canvas,
-                            sprites: components.images.kidCharacterSpritesFront,
-                            row: 0,
-                            column: 0,
-                            characterState: CharacterState.Idle,
-                            gender: gender.value,
-                            helmType: 0,
-                            headType: headType.value,
-                            bodyType: BodyType.Leather_Armour,
-                            shoeType: ShoeType.Leather_Boots,
-                            legsType: LegType.Leather,
-                            hairType: hairType.value,
-                            weaponType: 0,
-                            skinColor: components.colors.palette[complexion.value].value,
-                            hairColor: components.colors.palette[hairColor.value].value,
+                  child: onPressed(
+                    action: (){
+                      row.value = (row.value + 1) % 8;
+                    },
+                    child: Container(
+                      width: 120,
+                      height: 120 * goldenRatio_1381,
+                      alignment: Alignment.center,
+                      color: Colors.black12,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 100,
+                            child: CustomCanvas(
+                              paint: (canvas, size) =>
+                                renderCanvasCharacterSprites(
+                                  canvas: canvas,
+                                  sprites: components.images.kidCharacterSpritesFront,
+                                  row: row.value,
+                                  column: 0,
+                                  characterState: CharacterState.Idle,
+                                  gender: gender.value,
+                                  helmType: 0,
+                                  headType: headType.value,
+                                  bodyType: BodyType.Leather_Armour,
+                                  shoeType: ShoeType.Leather_Boots,
+                                  legsType: LegType.Leather,
+                                  hairType: hairType.value,
+                                  weaponType: 0,
+                                  skinColor: palette[complexion.value].value,
+                                  hairColor: palette[hairColor.value].value,
+                                ),
+                            ),
                           ),
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: MouseOver(builder: (mouseOver) => IsometricIcon(
+                              iconType: IconType.Turn_Right,
+                              scale: 0.2,
+                              color: mouseOver ? Colors.green.value : Colors.white38.value,
+                            )),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -97,9 +106,9 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildColumnComplexion(complexion, components.colors.palette),
+                        buildColumnComplexion(complexion, palette),
                         buildColumnHairStyle(hairType),
-                        buildColumnHairColor(hairColor, components.colors.palette),
+                        buildColumnHairColor(hairColor, palette),
                         buildColumnBodyShape(gender),
                         buildColumnHeadType(headType),
                       ],

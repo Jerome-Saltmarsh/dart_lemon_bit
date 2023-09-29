@@ -2,10 +2,8 @@
 import 'package:flutter/rendering.dart';
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
-import 'package:gamestream_flutter/packages/common/src/input_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/arm_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/gender.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/isometric_direction.dart';
 
 void renderCanvasCharacterSprites({
   required Canvas canvas,
@@ -46,14 +44,6 @@ void renderCanvasCharacterSprites({
       ?.fromCharacterState(characterState);
   final weapon = sprites.weapons[weaponType]
       ?.fromCharacterState(characterState);
-
-  final leftInFront = const [
-    InputDirection.Up_Left,
-    InputDirection.Left,
-    InputDirection.Down_Left,
-  ].contains(IsometricDirection.toInputDirection(column));
-
-
 
   renderCanvasSprite(
       sprite: torso,
