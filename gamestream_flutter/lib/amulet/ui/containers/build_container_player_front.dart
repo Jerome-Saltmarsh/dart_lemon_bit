@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/ui/dialogs/build_dialog_create_character_computer.dart';
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/character_state.dart';
+import 'package:gamestream_flutter/website/widgets/dialog_create_character_computer.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 

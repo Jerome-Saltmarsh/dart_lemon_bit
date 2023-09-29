@@ -17,6 +17,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'functions/build_website_page_new_character.dart';
+import 'widgets/dialog_create_character_computer.dart';
 
 extension WebsiteUI on WebsiteGame {
 
@@ -43,7 +44,9 @@ extension WebsiteUI on WebsiteGame {
       child: WatchBuilder(websitePage, (websitePage) =>
         switch (websitePage) {
           WebsitePage.Select_Character => buildWebsitePageSelectCharacter(),
-          WebsitePage.New_Character => buildWebsitePageNewCharacter(user: user),
+          WebsitePage.New_Character => DialogCreateCharacterComputer(
+            onStart: createNewCharacter,
+          ),
           WebsitePage.Select_Region => buildWebsitePageSelectRegion(
               options: options,
               website: website,
@@ -51,6 +54,10 @@ extension WebsiteUI on WebsiteGame {
             )
         }),
     );
+
+  void createNewCharacter({required int complex}){
+
+  }
 
   void downloadImageTest(){
     final width = 100;

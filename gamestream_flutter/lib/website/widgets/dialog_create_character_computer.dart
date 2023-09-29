@@ -1,7 +1,10 @@
-import 'package:gamestream_flutter/amulet/amulet.dart';
-import 'package:gamestream_flutter/amulet/ui/containers/build_container_player_front.dart';
+import 'dart:async';
+
+import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_character_sprites.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
+import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:lemon_math/src.dart';
 
 import 'package:flutter/material.dart';
@@ -11,92 +14,140 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../functions/render_canvas_sprite.dart';
+import '../../amulet/ui/functions/render_canvas_sprite.dart';
+import 'package:lemon_watch/src.dart';
 
-Widget buildDialogCreateCharacterComputer(Amulet amulet, {double width = 650}) {
-  final engine = amulet.engine;
-  final player = amulet.player;
-  final randomName = 'Anon${randomInt(99999, 999999)}';
-  final nameController = TextEditingController(text: randomName);
-  final textSelection = TextSelection(baseOffset: 0, extentOffset: randomName.length);
-  nameController.selection = textSelection;
-  engine.disableKeyEventHandler();
 
-  return OnDisposed(
-    action: engine.enableKeyEventHandler,
-    child: GSContainer(
-        width: width,
-        height: width * goldenRatio_1381,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildContainerPlayerFront(
-                player: player,
-                nameController: nameController,
-                height: 180,
-            ),
-            height32,
-            Column(
+typedef OnStart = Function({required int complex});
+
+class DialogCreateCharacterComputer extends StatelessWidget {
+
+  final complexion = Watch(0);
+  final hairType = Watch(0);
+  final hairColor = Watch(0);
+  final gender = Watch(0);
+  final headType = Watch(0);
+
+  final OnStart onStart;
+
+  DialogCreateCharacterComputer({super.key, required this.onStart});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = 550.0;
+    final randomName = 'Anon${randomInt(99999, 999999)}';
+    final nameController = TextEditingController(text: randomName);
+    final textSelection = TextSelection(baseOffset: 0, extentOffset: randomName.length);
+    nameController.selection = textSelection;
+
+    final canvasFrame = ValueNotifier(0);
+
+    final updateTimer = Timer.periodic(const Duration(milliseconds: 50), (timer){
+      canvasFrame.value++;
+    });
+
+    return IsometricBuilder(
+      builder: (context, components) {
+        return GSContainer(
+            width: width,
+            height: width * goldenRatio_1381,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: Container(
+                    width: 120,
+                    height: 120 * goldenRatio_1381,
+                    alignment: Alignment.center,
+                    color: Colors.black12,
+                    child: OnDisposed(
+                      action: (){
+                        canvasFrame.dispose();
+                        updateTimer.cancel();
+                      },
+                      child: CustomCanvas(
+                        frame: canvasFrame,
+                        paint: (canvas, size) =>
+                          renderCanvasCharacterSprites(
+                            canvas: canvas,
+                            sprites: components.images.kidCharacterSpritesFront,
+                            row: 0,
+                            column: 0,
+                            characterState: CharacterState.Idle,
+                            gender: gender.value,
+                            helmType: 0,
+                            headType: headType.value,
+                            bodyType: BodyType.Leather_Armour,
+                            shoeType: ShoeType.Leather_Boots,
+                            legsType: LegType.Leather,
+                            hairType: hairType.value,
+                            weaponType: 0,
+                            skinColor: components.colors.palette[complexion.value].value,
+                            hairColor: components.colors.palette[hairColor.value].value,
+                          ),
+                      ),
+                    ),
+                  ),
+                ),
+                height32,
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildColumnComplexion(complexion, components.colors.palette),
+                        buildColumnHairStyle(hairType),
+                        buildColumnHairColor(hairColor, components.colors.palette),
+                        buildColumnBodyShape(gender),
+                        buildColumnHeadType(headType),
+                      ],
+                    ),
+                  ],
+                ),
+                Expanded(child: const SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildColumnComplexion(player),
-                    buildColumnHairStyle(player),
-                    buildColumnHairColor(player),
-                    buildColumnBodyShape(player),
-                    buildColumnHeadType(player),
+                    onPressed(
+                      action: () {
+                        components.website.websitePage.value = WebsitePage.Select_Character;
+                      },
+                      child: buildText('Back'),
+                    ),
+                    onPressed(
+                      action: () {
+
+                      },
+                      child: buildText('START'),
+                    ),
                   ],
                 ),
               ],
-            ),
-            Expanded(child: const SizedBox()),
-            buildStartButton(amulet, nameController),
-          ],
-        )),
-  );
+            ));
+      }
+    );
+  }
 }
 
-
-
-Widget buildColumnHeadType(IsometricPlayer player) =>
-  buildWatch(player.headType, (playerHeadTye) => buildColumn(
+Widget buildColumnHeadType(Watch<int> headType) =>
+  buildWatch(headType, (activeHeadType) => buildColumn(
         title: 'HEAD SHAPE',
-        children: HeadType.values.map((headShape) =>
+        children: HeadType.values.map((value) =>
             onPressed(
-              action: () => player.setHeadType(headShape),
+              action: () => headType.value = value,
               child: AnimatedContainer(
                   duration: const Duration(milliseconds: 150),
                   width: 80,
                   height: 80 * goldenRatio_0618,
                   alignment: Alignment.center,
-                  color: headShape == playerHeadTye ? Colors.white24 : Colors.transparent,
+                  color: value == activeHeadType ? Colors.white24 : Colors.transparent,
                   padding: const EdgeInsets.all(4),
-                  child: buildText(HeadType.getName(headShape))),
+                  child: buildText(HeadType.getName(value))),
             ))
     ));
 
-
-Widget buildStartButton(Amulet amulet, TextEditingController nameController) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(),
-              onPressed(
-                  action: () {
-                    amulet.createPlayer(
-                      name: nameController.text,
-                    );
-                  },
-                  child: buildText('START',
-                      size: 48,
-                      bold: true,
-                      color: amulet.colors.teal_1,
-                  ),
-              ),
-            ],
-          );
 
 Widget buildControlName(TextEditingController nameController) =>
     Container(
@@ -118,62 +169,63 @@ Widget buildControlName(TextEditingController nameController) =>
       ),
     );
 
-Widget buildColumnBodyShape(IsometricPlayer player) => buildWatch(
-    player.gender,
-    (playerGender) =>
-         buildColumn(
-             title: 'BODY SHAPE',
-             children: Gender.values.map((gender) =>
-             onPressed(
-               action: () => player.setGender(gender),
-               child: AnimatedContainer(
-                   duration: const Duration(milliseconds: 150),
-                   width: 80,
-                   height: 80 * goldenRatio_0618,
-                   alignment: Alignment.center,
-                   color: playerGender == gender ? Colors.white24 : Colors.transparent,
-                   padding: const EdgeInsets.all(4),
-                   child: buildText(gender == Gender.male ? 'Square' : 'Curved'))),
-             )
-         )
-   );
+Widget buildColumnBodyShape(Watch<int> gender) =>
+    buildWatch(gender, (activeGender) =>
+      buildColumn(
+        title: 'BODY SHAPE',
+        children: Gender.values.map(
+          (value) => onPressed(
+              action: () => gender.value = value,
+              child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
+                  width: 80,
+                  height: 80 * goldenRatio_0618,
+                  alignment: Alignment.center,
+                  color: activeGender == value
+                      ? Colors.white24
+                      : Colors.transparent,
+                  padding: const EdgeInsets.all(4),
+                  child:
+                      buildText(value == Gender.male ? 'Square' : 'Curved'))),
+        )));
 
-Widget buildColumnHairColor(IsometricPlayer player) =>
-    buildWatch(player.hairColor, (playerHairColor) => buildColumn(
+Widget buildColumnHairColor(Watch<int> hairColor, List<Color> palette) =>
+    buildWatch(hairColor, (activeHairColor) => buildColumn(
         title: 'HAIR COLOR',
         children: [
           buildColorWheel(
-            colors: player.colors.palette,
-            onPickIndex: player.setHairColor,
-            currentIndex: playerHairColor,
+            colors: palette,
+            onPickIndex: hairColor.call,
+            currentIndex: activeHairColor,
           )
         ])
     );
 
-Widget buildColumnHairStyle(IsometricPlayer player) => buildWatch(player.hairType, (playerHairType) => buildColumn(
+Widget buildColumnHairStyle(Watch<int> hairType) =>
+    buildWatch(hairType, (activeHairType) => buildColumn(
       title: 'HAIR STYLE',
-      children: HairType.values.map((hairType) => onPressed(
-        action: () => player.setHairType(hairType),
+      children: HairType.values.map((type) => onPressed(
+        action: () => hairType.value = type,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           width: 80,
           height: 80 * goldenRatio_0618,
           alignment: Alignment.center,
-          color: hairType == playerHairType ? Colors.white24 : Colors.transparent,
+          color: type == activeHairType ? Colors.white24 : Colors.transparent,
           padding: const EdgeInsets.all(4),
-          child: buildText(HairType.getName(hairType)),
+          child: buildText(HairType.getName(type)),
         ),
       ))));
 
 
-Widget buildColumnComplexion(IsometricPlayer player) =>
-    buildWatch(player.complexion, (playerComplexion) => buildColumn(
+Widget buildColumnComplexion(Watch<int> complexion, List<Color> palette) =>
+    buildWatch(complexion, (activeComplexion) => buildColumn(
       title: 'COMPLEXION',
       children: [
         buildColorWheel(
-            colors: player.colors.palette,
-            onPickColor: player.setComplexion,
-            currentIndex: playerComplexion,
+            colors: palette,
+            onPickIndex: complexion.call,
+            currentIndex: activeComplexion,
         )
       ])
     );

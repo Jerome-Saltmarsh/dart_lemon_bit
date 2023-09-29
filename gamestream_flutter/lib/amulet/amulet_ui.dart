@@ -1,5 +1,3 @@
-import 'package:gamestream_flutter/amulet/ui/dialogs/build_dialog_create_character_computer.dart';
-
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
@@ -7,12 +5,10 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_ico
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'ui/containers/build_container_player_front.dart';
-import 'ui/dialogs/build_dialog_create_character_mobile.dart';
 import 'ui/src.dart';
 
 class AmuletUI {
@@ -27,9 +23,9 @@ class AmuletUI {
 
   AmuletUI(this.amulet);
 
-  Widget buildAmuletUI() => buildWatch(amulet.characterCreated, (t) => Stack(
+  Widget buildAmuletUI() => Stack(
       alignment: Alignment.center,
-      children: t ? [
+      children: [
         buildNpcText(),
         Positioned(
           bottom: margin1,
@@ -70,24 +66,8 @@ class AmuletUI {
             child: buildError(),
           ),
         ),
-      ] : [
-        Positioned(
-          top: 0,
-          left: 0,
-          child: Container(
-            width: amulet.engine.screen.width,
-            height: amulet.engine.screen.height,
-            alignment: Alignment.center,
-            child: buildWatch(
-                amulet.engine.deviceType,
-                (deviceType) => deviceType == DeviceType.Computer
-                  ? buildDialogCreateCharacterComputer(amulet)
-                  : buildDialogCreateCharacterMobile(amulet),
-            ),
-          ),
-        ),
       ]
-    ));
+  );
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
