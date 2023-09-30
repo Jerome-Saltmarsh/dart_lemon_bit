@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
-import 'package:gamestream_server/users/user_service.dart';
+import 'package:gamestream_server/users/classes/user_service.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_server/packages.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';

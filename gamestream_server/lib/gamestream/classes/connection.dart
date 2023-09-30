@@ -39,24 +39,26 @@ class Connection with ByteReader {
 
   Connection(this.webSocket, this.server){
     sink = webSocket.sink;
-
     sink.done.then((value){
-      final player = _player;
-      if (player != null) {
-
-        if (player is IsometricPlayer && player.persistOnDisconnect){
-          server.userService.saveIsometricPlayer(player);
-        }
-
-        player.game.players.remove(player);
-        player.game.removePlayer(player);
-      }
-      _player = null;
-      onDone?.call();
-      subscription.cancel();
+      onDisconnect();
     });
-
     subscription = webSocket.stream.listen(onData, onError: onStreamError);
+  }
+
+  void onDisconnect() {
+    final player = _player;
+    if (player != null) {
+
+      if (player is IsometricPlayer && player.persistOnDisconnect){
+        server.userService.saveIsometricPlayer(player);
+      }
+
+      player.game.players.remove(player);
+      player.game.removePlayer(player);
+    }
+    _player = null;
+    onDone?.call();
+    subscription.cancel();
   }
 
   void onStreamError(Object error, StackTrace stackTrace){

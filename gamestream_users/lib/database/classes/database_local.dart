@@ -18,22 +18,15 @@ class DatabaseLocal implements Database {
 
   DatabaseLocal({required this.path}){
     print('DatabaseLocal(path: "$path")');
+
     final pathDatabase = '$path/database';
     dirDatabase = Directory(pathDatabase);
     dirCharacters = Directory('$pathDatabase/characters');
     dirUsers = Directory('$pathDatabase/users');
 
-    if (!dirDatabase.existsSync()){
-      dirDatabase.createSync();
-    }
-
-    if (!dirCharacters.existsSync()){
-      dirCharacters.createSync();
-    }
-
-    if (!dirUsers.existsSync()){
-      dirUsers.createSync();
-    }
+    dirDatabase.createSync();
+    dirCharacters.createSync();
+    dirUsers.createSync();
   }
 
   @override
@@ -175,9 +168,13 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future saveCharacter(Json json) {
-    // TODO: implement saveCharacter
-    throw UnimplementedError();
+  Future saveCharacter(Json characterJson) {
+    final characterUuid = characterJson.getString('uuid');
+    final characterFile = File('${dirCharacters.path}/$characterUuid.json');
+    if (!characterFile.existsSync()){
+      characterFile.createSync();
+    }
+    return characterFile.writeAsString(jsonEncode(characterJson));
   }
 
 }

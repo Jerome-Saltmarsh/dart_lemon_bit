@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:gamestream_users/database/classes/database_firestore.dart';
 import 'package:gamestream_users/database/classes/database_local.dart';
-import 'package:gamestream_users/http/start_http_server.dart';
+import 'package:gamestream_users/http/functions/start_http_server.dart';
 
 const version = 1;
 final devMode = Platform.localHostname == "Jerome";

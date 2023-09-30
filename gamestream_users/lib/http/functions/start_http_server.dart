@@ -4,7 +4,7 @@ import 'package:gamestream_users/database/classes/database.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
-import 'handle_http_request.dart';
+import 'handle_request.dart';
 
 Future<HttpServer> startHttpServer({
   required Database database,
@@ -13,7 +13,7 @@ Future<HttpServer> startHttpServer({
   print("startServerHttp(port: $port)");
   final handler = const Pipeline()
       .addMiddleware(logRequests())
-      .addHandler((request) => handleHttpRequest(
+      .addHandler((request) => handleRequest(
         database: database,
         request: request,
       ));
