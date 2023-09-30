@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:intl/intl.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/website_dialog.dart';
@@ -88,6 +89,15 @@ class WebsiteGame extends Game {
       children: [
         buildWatch(options.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
+        Positioned(
+          top: 0,
+          left: 0,
+          child: Container(
+            width: engine.screen.width,
+            alignment: Alignment.center,
+            child: buildWatch(ui.dialog, (t) => t ?? nothing),
+          ),
+        ),
       ]);
   }
 

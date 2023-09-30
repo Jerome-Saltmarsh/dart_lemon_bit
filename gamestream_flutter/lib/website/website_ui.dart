@@ -179,6 +179,8 @@ extension WebsiteUI on WebsiteGame {
           children: [
             regionButton,
             height32,
+            buildContainerConnection(),
+            height12,
             buildContainerSelectCharacter(),
           ],
         ),
@@ -240,6 +242,34 @@ extension WebsiteUI on WebsiteGame {
 
         ),
       );
+
+
+  Widget buildContainerConnection() {
+    return GSContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          onPressed(
+              action: () => ui.showDialogGetString(onSelected: user.scheme.call),
+              child: buildWatch(user.scheme, buildText),
+          ),
+          onPressed(
+              action: () => ui.showDialogGetString(onSelected: user.host.call),
+              child: buildWatch(user.host, buildText),
+          ),
+          onPressed(
+              action: () => ui.showDialogGetInt(onSelected: user.port.call),
+              child: buildWatch(user.port, buildText),
+          ),
+          onPressed(
+            action: user.testConnection,
+            child: buildWatch(user.connected, (t) => buildText('connected: $t')),
+          ),
+          buildWatch(user.error, buildText),
+        ],
+      ),
+    );
+  }
 
 }
 

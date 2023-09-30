@@ -71,15 +71,15 @@ class IsometricGame extends Game {
           left: 16,
           child: debug.buildUI()
       ),
-      Positioned(
-        top: 0,
-        left: 0,
-        child: Container(
-            width: engine.screen.width,
-            alignment: Alignment.center,
-            child: buildWatch(ui.dialog, (t) => t ?? nothing),
-        ),
-      ),
+      // Positioned(
+      //   top: 0,
+      //   left: 0,
+      //   child: Container(
+      //       width: engine.screen.width,
+      //       alignment: Alignment.center,
+      //       child: buildWatch(ui.dialog, (t) => t ?? nothing),
+      //   ),
+      // ),
       Positioned(
           top: 16,
           right: 16,

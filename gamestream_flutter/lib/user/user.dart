@@ -12,29 +12,55 @@ import 'get_user_characters.dart';
 
 class User with IsometricComponent {
   var id = 'user_01';
-  var scheme = 'https';
-  var host = 'gamestream-http-osbmaezptq-uc.a.run.app';
-  var port = 8080;
+  final scheme = Watch('https');
+  final host = Watch('gamestream-http-osbmaezptq-uc.a.run.app');
+  final port = Watch(8080);
   // var scheme = 'http';
   // var host = 'localhost';
   // var port = 8082;
+  final connected = Watch(false);
+  final error = Watch('');
 
   final characters = Watch<List<Json>>([]);
 
+  String get endpoint => '${scheme.value}://${host.value}:${port.value}';
+
   User(){
-    refreshCharacterNames();
+    testConnection().then((value) {
+      if (value){
+        refreshCharacterNames();
+      }
+    });
   }
+
+  Future<bool> testConnection() {
+    return sendPing().then((value) {
+      connected.value = value;
+      return value;
+    });
+  }
+
 
   void refreshCharacterNames() async =>
       characters.value = await getUserCharacters(
-        scheme: scheme,
-        host: host,
-        port: port,
+        scheme: scheme.value,
+        host: host.value,
+        port: port.value,
         userId: id,
       );
 
   void playCharacter(String characterId) {
     network.connectToGame(GameType.Amulet, '--id $characterId');
+  }
+
+  Future<bool> sendPing() async {
+    try {
+      final response = await http.get(Uri.parse('$endpoint/ping'));
+      return response.statusCode == 200;
+    } catch (error){
+      this.error.value = error.toString();
+      return false;
+    }
   }
 
   Future<Response> createNewCharacter({
@@ -46,7 +72,7 @@ class User with IsometricComponent {
     required int gender,
     required int headType,
   }) =>
-       http.post(Uri.parse('$scheme://$host:$port'),
+       http.post(Uri.parse(endpoint),
           headers: {
             'Content-Type': 'application/json',
           },
