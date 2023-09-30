@@ -35,7 +35,7 @@ Future<Response> handleRequestPost(Request request, Database database) async {
     );
   }
 
-  await database.createCharacter(
+  final characterId = await database.createCharacter(
     userId: userId,
     name: name,
     complexion: complexion,
@@ -43,15 +43,11 @@ Future<Response> handleRequestPost(Request request, Database database) async {
     hairColor: hairColor,
     headType: headType,
     gender: gender,
-  ).catchError((error){
-    return Response.internalServerError(
-      headers: headersAcceptText,
-      body: error.toString(),
-    );
-  });
+  );
 
   return Response(
       200,
-      headers: headersAcceptJson
+      headers: headersAcceptText,
+      body: characterId,
   );
 }

@@ -9,7 +9,7 @@ abstract class Database {
   Future<Json> getCharacter(String characterId);
   Future saveCharacter(Json json);
 
-  Future createCharacter({
+  Future<String> createCharacter({
     required String userId,
     required String name,
     required int complexion,

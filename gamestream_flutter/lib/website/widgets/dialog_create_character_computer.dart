@@ -160,6 +160,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               headType: headType.value,
                             ).then((response) {
                               if (response.statusCode == 200){
+                                components.user.playCharacter(response.body);
                                 return;
                               }
                               error.value = response.body;

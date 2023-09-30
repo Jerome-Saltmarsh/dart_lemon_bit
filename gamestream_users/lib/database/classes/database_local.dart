@@ -109,7 +109,7 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future createCharacter({
+  Future<String> createCharacter({
     required String userId,
     required String name,
     required int complexion,
@@ -165,6 +165,7 @@ class DatabaseLocal implements Database {
       })
     );
     characterFile.createSync();
+    return characterId;
   }
 
   @override

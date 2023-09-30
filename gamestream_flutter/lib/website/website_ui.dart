@@ -179,7 +179,7 @@ extension WebsiteUI on WebsiteGame {
           children: [
             regionButton,
             height32,
-            buildWebsitePageSelectCharacter2(),
+            buildContainerSelectCharacter(),
           ],
         ),
       );
@@ -187,7 +187,7 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
-  Widget buildWebsitePageSelectCharacter2() =>
+  Widget buildContainerSelectCharacter() =>
       GSContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

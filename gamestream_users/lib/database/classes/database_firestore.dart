@@ -83,7 +83,7 @@ class DatabaseFirestore implements Database {
   }
 
   @override
-  Future createCharacter({
+  Future<String> createCharacter({
     required String userId,
     required String name,
     required int complexion,
@@ -104,7 +104,8 @@ class DatabaseFirestore implements Database {
        'gender': Value(integerValue: gender.toString()),
        'headType': Value(integerValue: headType.toString()),
     };
-    documents.createDocument(document, parentName, 'characters');
+    await documents.createDocument(document, parentName, 'characters');
+    return document.name ?? (throw Exception('name is null'));
   }
 
   @override

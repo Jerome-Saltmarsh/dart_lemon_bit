@@ -9,6 +9,17 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[DESIGN]
+- unlock additional amulet and weapon slots with level progression
+- unlock weapon slots 1 5 10 20 40 80
+- unlock amulet slots 3 7 15 20 30 60
+- elements
+  - earth is strong vs electricity and weak vs air 
+  - fire is strong vs air and weak vs water 
+  - water is strong vs fire and weak vs electricity
+  - air is strong vs earth and weak vs fire
+  - electricity is strong vs water and weak vs earth
+
 [TODO]
 - feature user
 - feature cloud persistence
