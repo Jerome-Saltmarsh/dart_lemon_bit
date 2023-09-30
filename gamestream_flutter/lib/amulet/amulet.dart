@@ -17,7 +17,6 @@ class Amulet extends IsometricGame {
 
   final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
-  final characterCreated = WatchBool(false);
 
   final slotContainerDefault = Container(
     color: Colors.black12,
@@ -70,15 +69,11 @@ class Amulet extends IsometricGame {
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     error.onChanged(onChangedError);
-    characterCreated.onChanged((characterCreated) {
-      render.drawCanvasEnabled = characterCreated;
-    });
   }
 
   @override
   void onComponentReady() {
     amuletUI = AmuletUI(this);
-    render.drawCanvasEnabled = false;
   }
 
   void onChangedError(String value){
@@ -180,10 +175,8 @@ class Amulet extends IsometricGame {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    if (characterCreated.value){
-      super.drawCanvas(canvas, size);
-      renderAmulet(canvas, size);
-    }
+    super.drawCanvas(canvas, size);
+    renderAmulet(canvas, size);
   }
 
   @override
@@ -263,13 +256,5 @@ class Amulet extends IsometricGame {
   void spawnRandomEnemy() =>
       network.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Spawn_Random_Enemy,
-      );
-
-  void createPlayer({
-    required String name,
-  }) =>
-      network.sendNetworkRequestAmulet(
-        NetworkRequestAmulet.Create_Player,
-        name,
       );
 }

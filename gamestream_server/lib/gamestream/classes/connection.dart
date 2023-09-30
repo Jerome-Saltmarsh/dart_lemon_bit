@@ -694,7 +694,6 @@ class Connection with ByteReader {
         }
 
         final characterId = arguments[idIndex + 1];
-        player.characterCreated = true;
         player.active = false;
         server.userService.findCharacterById(characterId)
             .then((json) => writeJsonToAmuletPlayer(json, player))
