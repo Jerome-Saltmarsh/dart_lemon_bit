@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:gamestream_users/database/classes/database.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;

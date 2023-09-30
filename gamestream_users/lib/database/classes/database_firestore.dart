@@ -11,7 +11,7 @@ import 'database.dart';
 
 class DatabaseFirestore implements Database {
 
-  static const collectionId = "highscore";
+  // static const collectionId = "highscore";
   static const projectId = "gogameserver";
   static const parentName = 'projects/$projectId/databases/(default)/documents';
 
@@ -27,9 +27,9 @@ class DatabaseFirestore implements Database {
     connect();
   }
 
-  Future<Document> get documentRecord =>  documents.get(
-      getDocumentName(collection: collectionId, value: 'record')
-  );
+  // Future<Document> get documentRecord =>  documents.get(
+  //     getDocumentName(collection: collectionId, value: 'record')
+  // );
 
   Future<Document> getUserDocument(String userId) {
     return documents.get(
@@ -46,17 +46,17 @@ class DatabaseFirestore implements Database {
 
   String buildParentName() => 'projects/$projectId/databases/(default)/documents';
 
-  @override
-  Future<int> getHighScore() async {
-    final documentHighScore = await documentRecord;
-    final fields = documentHighScore.fields;
-    if (fields == null) throw Exception('documentHighScore.fields is null');
-    final entryScore = fields['score'];
-    if (entryScore == null) throw Exception('entryScore is null');
-    final entryScoreValue = entryScore.integerValue;
-    if (entryScoreValue == null) throw Exception('entryScoreValue is null');
-    return int.parse(entryScoreValue);
-  }
+  // @override
+  // Future<int> getHighScore() async {
+  //   final documentHighScore = await documentRecord;
+  //   final fields = documentHighScore.fields;
+  //   if (fields == null) throw Exception('documentHighScore.fields is null');
+  //   final entryScore = fields['score'];
+  //   if (entryScore == null) throw Exception('entryScore is null');
+  //   final entryScoreValue = entryScore.integerValue;
+  //   if (entryScoreValue == null) throw Exception('entryScoreValue is null');
+  //   return int.parse(entryScoreValue);
+  // }
 
   String getDocumentName({required String collection, required String value}) =>
       '${buildDocumentName(collection: collection)}/$value';
@@ -69,16 +69,16 @@ class DatabaseFirestore implements Database {
     connecting.complete(true);
     print ('firestoreApi connected');
   }
-
-  @override
-  Future writeHighScore(int value) async {
-    print("writeHighScore($value");
-    final document = await documentRecord;
-    final documentFields = document.fields;
-    if (documentFields == null) throw Exception('documentFields == null');
-    documentFields['score'] = Value(integerValue: value.toString());
-    await documents.patch(document, document.name!);
-  }
+  //
+  // @override
+  // Future writeHighScore(int value) async {
+  //   print("writeHighScore($value");
+  //   final document = await documentRecord;
+  //   final documentFields = document.fields;
+  //   if (documentFields == null) throw Exception('documentFields == null');
+  //   documentFields['score'] = Value(integerValue: value.toString());
+  //   await documents.patch(document, document.name!);
+  // }
 
   @override
   Future<List<Json>> getUser(String userId) async {
@@ -128,7 +128,10 @@ class DatabaseFirestore implements Database {
        // 'headType': Value(integerValue: headType.toString()),
     };
     await documents.createDocument(
-        document, parentName, 'characters', documentId: documentId
+        document,
+        parentName,
+        'characters',
+        documentId: documentId,
     );
 
     return documentId;

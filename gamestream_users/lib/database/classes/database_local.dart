@@ -32,14 +32,6 @@ class DatabaseLocal implements Database {
   @override
   Future connect() => Future.delayed(const Duration(milliseconds: 100));
 
-  @override
-  Future<int> getHighScore() => Future.value(value);
-
-  @override
-  Future writeHighScore(int value) async {
-    this.value = value;
-  }
-
   // @override
   // void persist(IsometricPlayer player) {
   //

@@ -322,9 +322,8 @@ String buildDocumentName({
 String buildParentName({
   required String projectId,
   String databaseName = '(default)'
-}){
-  return 'projects/$projectId/databases/$databaseName/documents';
-}
+}) =>
+    'projects/$projectId/databases/$databaseName/documents';
 
 
 //   Future<String> _getProjectId() async {
