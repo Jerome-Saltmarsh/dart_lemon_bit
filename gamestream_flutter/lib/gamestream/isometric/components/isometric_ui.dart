@@ -427,6 +427,7 @@ class IsometricUI with IsometricComponent {
               height: 80,
               width: 150,
               child: TextField(
+                autofocus: true,
                 style: TextStyle(color: Colors.white70),
                 onChanged: (value) {
                   print('onChanged($value)');
@@ -434,13 +435,22 @@ class IsometricUI with IsometricComponent {
                 },
               ),
             ),
-            onPressed(
-              action: () {
-                onSelected(controller.text);
-                controller.dispose();
-                closeDialog();
-              },
-              child: buildText('OKAY'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                onPressed(
+                  action: closeDialog,
+                  child: buildText('Cancel'),
+                ),
+                onPressed(
+                  action: () {
+                    onSelected(controller.text);
+                    controller.dispose();
+                    closeDialog();
+                  },
+                  child: buildText('OKAY'),
+                ),
+              ],
             ),
           ],
         ),
@@ -466,6 +476,7 @@ class IsometricUI with IsometricComponent {
               height: 80,
               width: 150,
               child: TextField(
+                autofocus: true,
                 style: TextStyle(color: Colors.white70),
                 onChanged: (value) {
                   print('onChanged($value)');

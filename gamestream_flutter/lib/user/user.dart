@@ -13,8 +13,8 @@ import 'get_user_characters.dart';
 class User with IsometricComponent {
   var id = 'user_01';
   final scheme = Watch('https');
-  final host = Watch('gamestream-http-osbmaezptq-uc.a.run.app');
-  final port = Watch(8080);
+  final host = Watch('gamestream-users-osbmaezptq-uc.a.run.app');
+  final port = Watch(80);
   // var scheme = 'http';
   // var host = 'localhost';
   // var port = 8082;
@@ -23,7 +23,8 @@ class User with IsometricComponent {
 
   final characters = Watch<List<Json>>([]);
 
-  String get endpoint => '${scheme.value}://${host.value}:${port.value}';
+  // String get endpoint => '${scheme.value}://${host.value}:${port.value}';
+  String get endpoint => '${scheme.value}://${host.value}';
 
   User(){
     testConnection().then((value) {
@@ -55,7 +56,13 @@ class User with IsometricComponent {
 
   Future<bool> sendPing() async {
     try {
-      final response = await http.get(Uri.parse('$endpoint/ping'));
+      final endpointPing = '$endpoint/ping';
+      print('endpointPing: $endpointPing');
+      final response = await http.get(Uri.parse(endpointPing));
+      if (response.statusCode == 400){
+        error.value = response.body;
+        return false;
+      }
       return response.statusCode == 200;
     } catch (error){
       this.error.value = error.toString();

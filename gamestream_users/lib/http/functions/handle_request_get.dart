@@ -8,6 +8,14 @@ import '../consts/headers.dart';
 Future<Response> handleRequestGet(Request request, Database database) async {
   final pathSegments = request.requestedUri.pathSegments;
 
+  if (pathSegments.isEmpty) {
+    return Response(
+        200,
+        body: 'alive',
+        headers: headersAcceptText
+    );
+  }
+
   switch (pathSegments.first){
     case 'ping':
       return Response(
@@ -28,7 +36,10 @@ Future<Response> handleRequestGet(Request request, Database database) async {
           headers: headersAcceptJson
       );
     default:
-      return Response.badRequest();
+      return Response.badRequest(
+        headers: headersAcceptText,
+        body: pathSegments.first,
+      );
 
   }
 }

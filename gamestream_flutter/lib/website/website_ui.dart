@@ -171,8 +171,8 @@ extension WebsiteUI on WebsiteGame {
       );
 
       return GSContainer(
-        width: 400,
-        height: 400 * goldenRatio_1381,
+        width: 450,
+        height: 450 * goldenRatio_1381,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -266,6 +266,7 @@ extension WebsiteUI on WebsiteGame {
             child: buildWatch(user.connected, (t) => buildText('connected: $t')),
           ),
           buildWatch(user.error, buildText),
+          GSRefresh(() => buildText(user.endpoint)),
         ],
       ),
     );

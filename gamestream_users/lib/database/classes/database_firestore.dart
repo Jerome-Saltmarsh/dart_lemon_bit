@@ -15,15 +15,17 @@ class DatabaseFirestore implements Database {
   static const projectId = "gogameserver";
   static const parentName = 'projects/$projectId/databases/(default)/documents';
 
+  final connecting = Completer();
+  final uuid = UuidV4();
+
   late final FirestoreApi firestoreApi;
   late final ProjectsDatabasesDocumentsResource documents;
 
 
   DatabaseFirestore(){
     print('DatabaseFirestore()');
+    connect();
   }
-
-  final uuid = UuidV4();
 
   Future<Document> get documentRecord =>  documents.get(
       getDocumentName(collection: collectionId, value: 'record')
@@ -64,6 +66,7 @@ class DatabaseFirestore implements Database {
     final authClient = await auth.clientViaMetadataServer();
     firestoreApi = FirestoreApi(authClient);
     documents = firestoreApi.projects.databases.documents;
+    connecting.complete(true);
     print ('firestoreApi connected');
   }
 
@@ -99,10 +102,15 @@ class DatabaseFirestore implements Database {
     required int headType,
   }) async {
 
+    if (!connecting.isCompleted) {
+      await connecting;
+    }
+
     final document = Document();
-    document.name = uuid.generate();
+    final documentId = uuid.generate();
     document.fields = {
       'data': Value(stringValue: jsonEncode({
+        'uuid': documentId,
         'userId': userId,
         'name': name,
         'complexion': complexion,
@@ -119,8 +127,11 @@ class DatabaseFirestore implements Database {
        // 'gender': Value(integerValue: gender.toString()),
        // 'headType': Value(integerValue: headType.toString()),
     };
-    await documents.createDocument(document, parentName, 'characters');
-    return document.name ?? (throw Exception('name is null'));
+    await documents.createDocument(
+        document, parentName, 'characters', documentId: documentId
+    );
+
+    return documentId;
   }
 
   @override
