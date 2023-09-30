@@ -2,16 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
-import 'package:gamestream_server/database/classes/database.dart';
-import 'package:gamestream_server/database/classes/database_local.dart';
-import 'package:gamestream_server/http_server/http_server.dart';
+import 'package:gamestream_server/users/user_service.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_server/packages.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../isometric.dart';
 import 'classes/src.dart';
-import '../database/classes/database_firestore.dart';
 import '../editor/isometric_editor.dart';
 
 class GamestreamServer {
@@ -19,11 +16,10 @@ class GamestreamServer {
   static const Frames_Per_Second = 45;
   static const Fixed_Time = 50 / Frames_Per_Second;
 
-  final Database database;
-
   final games = <Game>[];
   final isometricScenes = Scenes();
   final connections = <Connection>[];
+  final UserService userService;
 
   var connectionsTotal = 0;
   var frame = 0;
@@ -31,7 +27,7 @@ class GamestreamServer {
 
   late final Timer updateTimer;
 
-  GamestreamServer({required this.database}){
+  GamestreamServer({required this.userService}){
     _construct();
   }
 
@@ -40,8 +36,6 @@ class GamestreamServer {
     await validate();
     await loadResources();
     _initializeUpdateTimer();
-
-    startServerHttp(port: 8082, database: database);
     startServerWebsocket(port: 8080);
   }
 

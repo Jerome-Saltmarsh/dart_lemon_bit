@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:gamestream_server/amulet.dart';
 import 'package:gamestream_server/editor/isometric_editor.dart';
-import 'package:gamestream_server/database/functions/write_json_to_amulet_player.dart';
+import 'package:gamestream_server/gamestream/functions/write_json_to_amulet_player.dart';
 import 'package:gamestream_server/gamestream/src.dart';
 import 'package:gamestream_server/isometric/isometric_request_reader.dart';
 import 'package:gamestream_server/isometric/scene_reader.dart';
@@ -45,7 +45,7 @@ class Connection with ByteReader {
       if (player != null) {
 
         if (player is IsometricPlayer && player.persistOnDisconnect){
-          server.database.persist(player);
+          server.userService.saveIsometricPlayer(player);
         }
 
         player.game.players.remove(player);
@@ -694,7 +694,7 @@ class Connection with ByteReader {
         final characterId = arguments[idIndex + 1];
         player.characterCreated = true;
         player.active = false;
-        server.database.getCharacter(characterId)
+        server.userService.findCharacterById(characterId)
             .then((json) => writeJsonToAmuletPlayer(json, player))
             .catchError((error){
           player.writeAmuletError(error.toString());
@@ -871,10 +871,6 @@ class Connection with ByteReader {
     switch (playerRequest) {
       case NetworkRequestPlayer.toggleGender:
         player.toggleGender();
-        break;
-
-      case NetworkRequestPlayer.persist:
-        server.database.persist(player);
         break;
 
       case NetworkRequestPlayer.setGender:

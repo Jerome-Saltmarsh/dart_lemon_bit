@@ -396,9 +396,4 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         NetworkRequestPlayer.setHeadType.index,
         value,
       );
-
-  void persist() => network.sendNetworkRequest(
-      NetworkRequest.Player,
-      NetworkRequestPlayer.persist.index,
-  );
 }

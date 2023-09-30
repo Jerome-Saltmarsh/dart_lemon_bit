@@ -1,15 +1,12 @@
-import 'dart:io';
 
-import 'package:gamestream_server/database/classes/database_local.dart';
 import 'package:gamestream_server/gamestream.dart';
-import 'package:gamestream_server/packages/utils/system.dart';
+import 'package:gamestream_server/users/user_service_http.dart';
 
-void main() {
-
-  GamestreamServer(
-     database: isLocalMachine
-         ? DatabaseLocal(path: Directory.current.path)
-         : DatabaseFirestore()
-  );
-}
+void main() => GamestreamServer(
+  userService: UserServiceHttp(
+    scheme: 'http',
+    host: 'localhost',
+    port: 8082,
+  ),
+);
 
