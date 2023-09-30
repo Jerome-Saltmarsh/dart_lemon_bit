@@ -4,8 +4,6 @@ import 'package:gamestream_server/packages/common.dart';
 import 'package:typedef/json.dart';
 
 void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
-  player.uuid = json['uuid'];
-  player.name = json['name'];
 
   final equippedHelm = json['equipped_helm'] ?? 0;
   if (equippedHelm != HelmType.None) {
@@ -69,6 +67,9 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     }
   }
 
+  player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
+  player.complexion = json['complexion'] ?? 0;
+  player.name = json['name'];
   player.equippedWeaponIndex = json['equipped_weapon_index'] ?? 0;
   player.gender = json['gender'] ?? 0;
   player.hairType = json['hair_type'] ?? 0;
