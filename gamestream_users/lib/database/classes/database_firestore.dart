@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
@@ -16,6 +17,11 @@ class DatabaseFirestore implements Database {
 
   late final FirestoreApi firestoreApi;
   late final ProjectsDatabasesDocumentsResource documents;
+
+
+  DatabaseFirestore(){
+    print('DatabaseFirestore()');
+  }
 
   final uuid = UuidV4();
 
@@ -96,21 +102,34 @@ class DatabaseFirestore implements Database {
     final document = Document();
     document.name = uuid.generate();
     document.fields = {
-       'userId': Value(stringValue: userId),
-       'name': Value(stringValue: userId),
-       'complexion': Value(integerValue: complexion.toString()),
-       'hairType': Value(integerValue: hairType.toString()),
-       'hairColor': Value(integerValue: hairColor.toString()),
-       'gender': Value(integerValue: gender.toString()),
-       'headType': Value(integerValue: headType.toString()),
+      'data': Value(stringValue: jsonEncode({
+        'userId': userId,
+        'name': name,
+        'complexion': complexion,
+        'hairType': hairType,
+        'hairColor': hairColor,
+        'gender': gender,
+        'headType': headType,
+      })),
+       // 'userId': Value(stringValue: userId),
+       // 'name': Value(stringValue: userId),
+       // 'complexion': Value(integerValue: complexion.toString()),
+       // 'hairType': Value(integerValue: hairType.toString()),
+       // 'hairColor': Value(integerValue: hairColor.toString()),
+       // 'gender': Value(integerValue: gender.toString()),
+       // 'headType': Value(integerValue: headType.toString()),
     };
     await documents.createDocument(document, parentName, 'characters');
     return document.name ?? (throw Exception('name is null'));
   }
 
   @override
-  Future saveCharacter(Json json) {
-    // TODO: implement saveCharacter
-    throw UnimplementedError();
+  Future saveCharacter(Json json) async {
+    final document = Document();
+    document.name = uuid.generate();
+    document.fields = {
+      'data': Value(stringValue: jsonEncode(json)),
+    };
+    await documents.patch(document, buildDocumentName(collection: 'characters'));
   }
 }

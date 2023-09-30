@@ -6,11 +6,12 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import 'handle_request.dart';
 
-Future<HttpServer> startHttpServer({
+void startHttpServer({
   required Database database,
-  int port = 8082,
-}) async {
+  required int port,
+})  {
   print("startServerHttp(port: $port)");
+
   final handler = const Pipeline()
       .addMiddleware(logRequests())
       .addHandler((request) => handleRequest(
@@ -18,6 +19,6 @@ Future<HttpServer> startHttpServer({
         request: request,
       ));
 
-  return await shelf_io.serve(handler, '0.0.0.0', port);
+  shelf_io.serve(handler, '0.0.0.0', port);
 }
 
