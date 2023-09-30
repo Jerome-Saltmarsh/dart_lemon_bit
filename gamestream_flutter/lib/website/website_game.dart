@@ -16,8 +16,6 @@ import 'enums/website_page.dart';
 class WebsiteGame extends Game {
 
   final gameTypes = [
-    // GameType.Capture_The_Flag,
-    // GameType.Moba,
     GameType.Amulet,
   ];
 

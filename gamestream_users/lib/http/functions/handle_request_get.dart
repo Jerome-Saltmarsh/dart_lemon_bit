@@ -8,13 +8,13 @@ import '../consts/headers.dart';
 Future<Response> handleRequestGet(Request request, Database database) async {
   final pathSegments = request.requestedUri.pathSegments;
 
-  if (pathSegments.length < 2){
-    return Response.badRequest();
-  }
-
-  final restMethod = pathSegments[pathSegments.length - 2];
-
-  switch (restMethod){
+  switch (pathSegments.first){
+    case 'ping':
+      return Response(
+          200,
+          body: 'pong',
+          headers: headersAcceptText
+      );
     case 'users':
       return Response(
           200,

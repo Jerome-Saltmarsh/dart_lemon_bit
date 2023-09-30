@@ -12,9 +12,12 @@ import 'get_user_characters.dart';
 
 class User with IsometricComponent {
   var id = 'user_01';
-  var scheme = 'http';
-  var host = 'localhost';
-  var port = 8082;
+  var scheme = 'https';
+  var host = 'gamestream-http-osbmaezptq-uc.a.run.app';
+  var port = 8080;
+  // var scheme = 'http';
+  // var host = 'localhost';
+  // var port = 8082;
 
   final characters = Watch<List<Json>>([]);
 
