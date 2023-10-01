@@ -90,4 +90,10 @@ abstract class UserServiceClient {
     final values = characterStrings.map(jsonDecode).toList(growable: false).cast<Json>();
     return values;
   }
+
+  static Future patchCharacter({
+    required String url,
+    required String userId,
+    required Json character,
+  }) => http.patch(Uri.parse('$url/users/$userId'), body: jsonEncode(character));
 }

@@ -25,6 +25,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   static const Cache_Length = 200;
 
   var persistOnDisconnect = true;
+  var userId = "";
   var uuid = "";
   var _playerMode = PlayerMode.playing;
   var _cacheAimTargetHealthPercentage = 0.0;

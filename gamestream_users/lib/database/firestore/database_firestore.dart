@@ -222,13 +222,48 @@ class DatabaseFirestore implements Database {
   }
 
   @override
-  Future saveCharacter(Json json) async {
-    final document = Document();
-    document.name = generateUuid();
-    document.fields = {
-      'data': Value(stringValue: jsonEncode(json)),
-    };
-    await documents.patch(document, buildDocumentName(collection: 'characters'));
+  Future saveCharacter(String userId, Json characterJson) async {
+    print('saveCharacter(userId: $userId)');
+    final userDocument = await getUserDocument(userId);
+    print('userFound: $userId');
+    final fields = userDocument.fields;
+    final characterId = characterJson.tryGetString('uuid');
+
+    if (characterId == null){
+      throw Exception('characterId == null');
+    }
+
+    if (fields == null){
+      throw Exception('fields == null');
+    }
+
+    final characters = fields['characters'];
+    if (characters == null){
+      throw Exception('characters == null');
+    }
+
+    final arrayValue = characters.arrayValue;
+    if (arrayValue == null){
+      throw Exception('arrayValue == null');
+    }
+
+    final values = arrayValue.values;
+
+    if (values == null){
+      throw Exception('values == null');
+    }
+
+    for (final character in values) {
+      final stringValue = character.stringValue;
+      if (stringValue != null && stringValue.contains(characterId)) {
+        character.stringValue = jsonEncode(characterJson);
+        break;
+      }
+    }
+
+    print("patching");
+    await documents.patch(userDocument, userDocument.name ?? buildDocumentName(collection: 'users'));
+    print("patching complete");
   }
 
   Future<Document> getUserDocument(String userId) async {
@@ -238,7 +273,10 @@ class DatabaseFirestore implements Database {
           collection: 'users',
           value: userId,
         )
-    );
+    ).catchError((error){
+      print("getUserDocument(userId: $userId) - FAILED");
+      throw error;
+    });
   }
 
   Future ensureConnected() async {

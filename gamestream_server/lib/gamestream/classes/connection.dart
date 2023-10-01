@@ -10,6 +10,7 @@ import 'package:gamestream_server/isometric/scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/packages.dart';
 import 'package:gamestream_server/packages/user_service_client/src/user_service_client.dart';
+import 'package:gamestream_server/users/functions/map_isometric_player_to_json.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -52,7 +53,12 @@ class Connection with ByteReader {
     if (player != null) {
 
       if (player is IsometricPlayer && player.persistOnDisconnect){
-        server.userService.saveIsometricPlayer(player);
+        final json = mapIsometricPlayerToJson(player);
+        UserServiceClient.patchCharacter(
+            url: server.userServiceUrl,
+            userId: player.userId,
+            character: json,
+        );
       }
 
       player.game.players.remove(player);
@@ -690,6 +696,7 @@ class Connection with ByteReader {
       final userId = arguments.getArg('--userId');
       final characterId = arguments.getArg('--characterId');
 
+
       if (userId == null){
         throw Exception('userId == null');
       }
@@ -698,6 +705,7 @@ class Connection with ByteReader {
         throw Exception('characterId == null');
       }
 
+      player.userId = userId;
       player.active = false;
       UserServiceClient.getUserCharacters(
         url: server.userServiceUrl,

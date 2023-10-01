@@ -128,7 +128,7 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future saveCharacter(Json characterJson) {
+  Future saveCharacter(String userId, Json characterJson) {
     final characterUuid = characterJson.getString('uuid');
     final characterFile = File('${dirCharacters.path}/$characterUuid.json');
     if (!characterFile.existsSync()){

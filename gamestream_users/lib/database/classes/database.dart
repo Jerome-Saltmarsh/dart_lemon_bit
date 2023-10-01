@@ -6,7 +6,7 @@ abstract class Database {
 
   Future<String> getCharacter(String characterId);
 
-  Future saveCharacter(Json json);
+  Future saveCharacter(String userId, Json json);
 
   Future<String> createUser({
     required String username,
