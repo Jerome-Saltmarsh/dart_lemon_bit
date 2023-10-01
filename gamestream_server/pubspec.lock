@@ -397,10 +397,10 @@ packages:
     dependency: "direct main"
     description:
       name: typedef
-      sha256: "94e5c842aa0bb20887ed0e07385393555b5bfc62747cd9875b53ac180934537f"
+      sha256: dc97dbc5a31aab8b30c4eff94b462b122b6122cbf71d4afc2842bec4178b6d1c
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.12"
+    version: "1.0.13"
   uuid:
     dependency: "direct main"
     description:

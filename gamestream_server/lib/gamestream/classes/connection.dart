@@ -13,6 +13,7 @@ import 'package:gamestream_server/packages/user_service_client/src/user_service_
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
+import 'package:typedef/json.dart';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -686,26 +687,32 @@ class Connection with ByteReader {
         throw Exception('player is not AmuletPlayer');
       }
 
-      final idIndex = arguments.indexOf('--id');
+      final userId = arguments.getArg('--userId');
+      final characterId = arguments.getArg('--characterId');
 
-      if (idIndex != -1){
-
-        if (idIndex + 1 >= arguments.length){
-          throw Exception('id required');
-        }
-
-        final characterId = arguments[idIndex + 1];
-        player.active = false;
-        UserServiceClient.findCharacterById(
-            url: server.userServiceUrl,
-            id: characterId,
-        )
-            .then((json) => writeJsonToAmuletPlayer(json, player))
-            .catchError((error){
-          player.writeAmuletError(error.toString());
-        });
-        return;
+      if (userId == null){
+        throw Exception('userId == null');
       }
+
+      if (characterId == null){
+        throw Exception('characterId == null');
+      }
+
+      player.active = false;
+      UserServiceClient.getUserCharacters(
+        url: server.userServiceUrl,
+        userId: userId,
+      ).then((characters) {
+        for (final character in characters) {
+          if (character.getString('uuid') != characterId) {
+            writeJsonToAmuletPlayer(character, player);
+            return;
+          }
+        }
+        throw Exception('could not find character $characterId');
+      }).catchError((error) {
+        player.writeAmuletError(error.toString());
+      });
     }
   }
 
@@ -924,5 +931,19 @@ class Connection with ByteReader {
         player.name = arguments[2];
         break;
     }
+  }
+}
+
+
+extension Args on List<String> {
+  String? getArg(String name){
+    final index = indexOf(name);
+    if (index == -1){
+      return null;
+    }
+    if (index >= length){
+      return null;
+    }
+    return this[index + 1];
   }
 }

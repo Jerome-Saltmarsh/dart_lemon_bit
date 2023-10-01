@@ -203,9 +203,5 @@ class WebsiteGame extends Game {
     // TODO: implement update
   }
 
-  void loadCharacterByName(String characterName){
-    network.connectToGame(GameType.Amulet, characterName);
-  }
-
   void showPageNewCharacter() => websitePage.value = WebsitePage.New_Character;
 }

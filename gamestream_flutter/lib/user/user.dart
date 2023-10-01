@@ -37,6 +37,6 @@ class User with IsometricComponent {
       );
 
   void playCharacter(String characterId) {
-    network.connectToGame(GameType.Amulet, '--id $characterId');
+    network.connectToGame(GameType.Amulet, '--userId ${id.value} --characterId $characterId');
   }
 }

@@ -90,13 +90,4 @@ abstract class UserServiceClient {
     final values = characterStrings.map(jsonDecode).toList(growable: false).cast<Json>();
     return values;
   }
-
-  static Future<Json> findCharacterById({
-    required String url,
-    required String id,
-  }) async {
-    final response = await http.get(Uri.parse('$url/characters/$id'));
-    return jsonDecode(response.body);
-  }
-
 }

@@ -21,7 +21,7 @@ class GamestreamServer {
   final connections = <Connection>[];
   final UserServiceHttp userService;
 
-  final userServiceUrl = 'https://gamestream-users-osbmaezptq-uc.a.run.app';
+  final userServiceUrl = 'https://gamestream-http-osbmaezptq-uc.a.run.app';
 
   var connectionsTotal = 0;
   var frame = 0;

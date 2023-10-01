@@ -123,6 +123,7 @@ class DatabaseFirestore implements Database {
       'hairColor': hairColor,
       'gender': gender,
       'headType': headType,
+      'level': 1,
     })));
 
     arrayValue.values = values;

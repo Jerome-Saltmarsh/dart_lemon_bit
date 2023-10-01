@@ -47,23 +47,28 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     player.equipHandRight(null, force: true);
   }
 
-  final weaponNames = (json['weapons'] as List).cast<String>();
-  for (var i = 0; i < weaponNames.length; i++){
-    final weaponName =  weaponNames[i];
-    if (weaponName != '-'){
-      player.weapons[i].item = AmuletItem.findByName(weaponName);
-    } else {
-      player.weapons[i].item = null;
+  final weaponNames = json.tryGetList<String>('weapons');
+  if (weaponNames != null){
+    for (var i = 0; i < weaponNames.length; i++){
+      final weaponName =  weaponNames[i];
+      if (weaponName != '-'){
+        player.weapons[i].item = AmuletItem.findByName(weaponName);
+      } else {
+        player.weapons[i].item = null;
+      }
     }
   }
 
-  final itemNames = (json['items'] as List).cast<String>();
-  for (var i = 0; i < itemNames.length; i++){
-    final itemName =  itemNames[i];
-    if (itemName != '-'){
-      player.items[i].item = AmuletItem.findByName(itemName);
-    } else {
-      player.items[i].item = null;
+
+  final itemNames = json.tryGetList<String>('items');
+  if (itemNames != null){
+    for (var i = 0; i < itemNames.length; i++){
+      final itemName =  itemNames[i];
+      if (itemName != '-'){
+        player.items[i].item = AmuletItem.findByName(itemName);
+      } else {
+        player.items[i].item = null;
+      }
     }
   }
 
