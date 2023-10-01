@@ -45,7 +45,26 @@ class DatabaseFirestore implements Database {
   @override
   Future<Json> getUser(String id) async {
     final document = await getUserDocument(id);
-    return document.toJson();
+    final fields = document.fields;
+    if (fields == null){
+      throw Exception('users[$id].fields == null');
+    }
+    final characters = fields['characters'];
+
+    if (characters == null){
+      throw Exception('users[$id].fields[characters] == null');
+    }
+
+    final arrayValue = characters.arrayValue;
+
+    if (arrayValue == null){
+      throw Exception('users[$id].fields[characters].arrayValue == null');
+    }
+
+    final values = arrayValue.values ?? [];
+    return {
+      'characters': values.map((character) => character.stringValue).toList(growable: false)
+    };
   }
 
   @override

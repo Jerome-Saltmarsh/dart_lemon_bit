@@ -85,7 +85,10 @@ abstract class UserServiceClient {
     final jsonResponse = response.body;
     print('Response: $jsonResponse');
     final responseJson =  jsonDecode(jsonResponse) as Json;
-    return responseJson.getList<Json>('characters');
+
+    final characterStrings =  responseJson.getList<String>('characters');
+    final values = characterStrings.map(jsonDecode).toList(growable: false).cast<Json>();
+    return values;
   }
 
   static Future<Json> findCharacterById({
