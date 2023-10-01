@@ -10,7 +10,7 @@ class User with IsometricComponent {
   final id = Watch('cef8dda2-5533-42be-bca3-1770314fdba3');
   final username = Watch('');
   final password = Watch('');
-  final userServiceUrl = Watch('gamestream-users-osbmaezptq-uc.a.run.app');
+  final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');
   final connected = Watch(false);
   final error = Watch('');
   final characters = Watch<List<Json>>([]);

@@ -75,17 +75,17 @@ abstract class UserServiceClient {
     required String userId,
   }) async {
 
-    final response = await http.get(Uri.parse('$url/users/$userId'));
+    final requestUrl = '$url/users/$userId';
+    final response = await http.get(Uri.parse(requestUrl));
 
-    if (response.statusCode == 200) {
-      final jsonResponse = response.body;
-      print('Response: $jsonResponse');
-    } else {
-      // If the server did not return a 200 OK response, throw an exception
+    if (response.statusCode != 200) {
       throw Exception('Failed to load data');
     }
 
-    return jsonDecode(response.body).cast<Json>();
+    final jsonResponse = response.body;
+    print('Response: $jsonResponse');
+    final responseJson =  jsonDecode(jsonResponse) as Json;
+    return responseJson.getList<Json>('characters');
   }
 
   static Future<Json> findCharacterById({

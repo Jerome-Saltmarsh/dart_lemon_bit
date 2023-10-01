@@ -77,50 +77,42 @@ class DatabaseFirestore implements Database {
   }) async {
 
     final userDocument = await getUserDocument(userId);
-    final characterDocumentId = generateUuid();
-    final characterDocument = Document();
 
-    characterDocument.fields = buildCharacterDocumentFields(
-        characterDocumentId,
-        userId,
-        name,
-        complexion,
-        hairType,
-        hairColor,
-        gender,
-        headType,
-    );
+    final userDocumentFields = userDocument.fields;
+    if (userDocumentFields == null){
+      throw Exception('userDocument.fields == null ($userId)');
+    }
 
-    await addCharacterIdToUserDocument(userDocument, characterDocumentId);
-    await createDocumentCharacters(characterDocument, characterDocumentId);
-    return characterDocumentId;
-  }
+    final characters = userDocumentFields['characters'];
+    if (characters == null){
+      throw Exception('userDocument.fields["characters"] == null ($userId)');
+    }
 
-  String generateUuid() => uuid.generate();
+    final arrayValue = characters.arrayValue;
+    if (arrayValue == null) {
+      throw Exception('arrayValue == null ($userId)');
+    }
 
-  Map<String, Value> buildCharacterDocumentFields(
-      String characterDocumentId,
-      String userId,
-      String name,
-      int complexion,
-      int hairType,
-      int hairColor,
-      int gender,
-      int headType,
-  ) {
-    return {
-    'data': Value(stringValue: jsonEncode({
-      'uuid': characterDocumentId,
-      'userId': userId,
+    final values = arrayValue.values ?? [];
+    final characterId = generateUuid();
+
+    values.add(Value(stringValue: jsonEncode({
+      'uuid': characterId,
       'name': name,
       'complexion': complexion,
       'hairType': hairType,
       'hairColor': hairColor,
       'gender': gender,
       'headType': headType,
-    })),
-  };
+    })));
+
+    arrayValue.values = values;
+
+    await patchUserDocument(userDocument, userId);
+    return characterId;
   }
+
+  String generateUuid() => uuid.generate();
 
   Future createDocumentCharacters(Document document, String documentId) async {
     await ensureConnected();
