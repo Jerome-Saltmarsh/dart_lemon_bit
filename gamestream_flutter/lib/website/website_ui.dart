@@ -17,6 +17,7 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'functions/build_website_page_new_user.dart';
 import 'widgets/dialog_create_character_computer.dart';
 
 extension WebsiteUI on WebsiteGame {
@@ -49,13 +50,10 @@ extension WebsiteUI on WebsiteGame {
               options: options,
               website: website,
               engine: engine,
-            )
+            ),
+          WebsitePage.New_User => buildWebsitePageNewUser(),
         }),
     );
-
-  void createNewCharacter({required int complex}){
-
-  }
 
   void downloadImageTest(){
     final width = 100;
@@ -173,16 +171,20 @@ extension WebsiteUI on WebsiteGame {
       return GSContainer(
         width: 450,
         height: 450 * goldenRatio_1381,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            regionButton,
-            height32,
-            buildContainerConnection(),
-            height12,
-            buildContainerSelectCharacter(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              regionButton,
+              height32,
+              buildWebsitePageNewUser(),
+              height32,
+              buildContainerConnection(),
+              height12,
+              buildContainerSelectCharacter(),
+            ],
+          ),
         ),
       );
     }
@@ -250,23 +252,14 @@ extension WebsiteUI on WebsiteGame {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           onPressed(
-              action: () => ui.showDialogGetString(onSelected: user.scheme.call),
-              child: buildWatch(user.scheme, buildText),
-          ),
-          onPressed(
-              action: () => ui.showDialogGetString(onSelected: user.host.call),
-              child: buildWatch(user.host, buildText),
-          ),
-          onPressed(
-              action: () => ui.showDialogGetInt(onSelected: user.port.call),
-              child: buildWatch(user.port, buildText),
+              action: () => ui.showDialogGetString(onSelected: user.userServiceUrl.call),
+              child: buildWatch(user.userServiceUrl, buildText),
           ),
           onPressed(
             action: user.testConnection,
             child: buildWatch(user.connected, (t) => buildText('connected: $t')),
           ),
           buildWatch(user.error, buildText),
-          GSRefresh(() => buildText(user.endpoint)),
         ],
       ),
     );

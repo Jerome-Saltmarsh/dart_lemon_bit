@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:user_service_client/src.dart';
 
 import '../../amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:lemon_watch/src.dart';
@@ -150,8 +151,11 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         width8,
                         onPressed(
                           action: () {
-                            components.user.createNewCharacter(
-                              userId: components.user.id,
+                            UserServiceClient.createCharacter(
+                              url: components.user.userServiceUrl.value,
+                              port: 8080,
+                              userId: components.user.id.value,
+                              password: components.user.password.value,
                               name: nameController.text,
                               complexion: complexion.value,
                               hairType: hairType.value,

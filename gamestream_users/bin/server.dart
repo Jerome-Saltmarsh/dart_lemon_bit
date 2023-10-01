@@ -1,12 +1,13 @@
 
 import 'dart:io';
 
-import 'package:gamestream_users/database/classes/database_firestore.dart';
+import 'package:gamestream_users/database/firestore/database_firestore.dart';
 import 'package:gamestream_users/database/classes/database_local.dart';
 import 'package:gamestream_users/http/functions/start_http_server.dart';
 
 void main(List<String> arguments) {
   print('main($arguments)');
+  print("version 2");
 
   final database = arguments.contains('--local')
       ? DatabaseLocal(path: Directory.current.path)

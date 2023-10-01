@@ -1,4 +1,5 @@
 import 'package:gamestream_users/database/classes/database.dart';
+import 'package:gamestream_users/http/consts/headers.dart';
 import 'package:shelf/shelf.dart';
 
 import 'handle_request_get.dart';
@@ -13,7 +14,7 @@ Future<Response> handleRequest({
   required Request request
 }) async {
 
-  switch (request.method){
+  switch (request.method) {
     case 'GET':
       return handleRequestGet(request, database);
     case 'PATCH':
@@ -23,7 +24,10 @@ Future<Response> handleRequest({
     case 'OPTIONS':
       return handleRequestOptions();
     default:
-      return Response.badRequest();
+      return Response.badRequest(
+        headers: headersAcceptText,
+        body: 'invalid request.method: ${request.method}',
+      );
   }
 }
 

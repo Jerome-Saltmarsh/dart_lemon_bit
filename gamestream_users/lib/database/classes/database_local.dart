@@ -30,62 +30,8 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future connect() => Future.delayed(const Duration(milliseconds: 100));
+  Future<Json> getUser(String userId) async {
 
-  // @override
-  // void persist(IsometricPlayer player) {
-  //
-  //   final json = mapIsometricPlayerToJson(player);
-  //   final uuid = json['uuid'];
-  //   if (uuid == null){
-  //     throw Exception('uuid is null');
-  //   }
-  //   writeJsonToFile(
-  //     fileName: '$uuid.json',
-  //     directory: dirCharacters.path,
-  //     contents: json,
-  //   );
-  // }
-
-  @override
-  Future<List<Json>> getUser(String userId) async {
-
-    final user = await findUser(userId);
-    final userCharacterIds = user.getList<String>('characters');
-    final userCharacters = <Json>[];
-
-    for (final userCharacterId in userCharacterIds){
-       final userCharacter = await getCharacter(userCharacterId);
-       userCharacters.add(userCharacter);
-    }
-
-    return userCharacters;
-  }
-
-  @override
-  Future<Json> getCharacter(String characterId) async {
-    final exists = await dirCharacters.exists();
-
-    if (!exists){
-      throw Exception('dbDirectory does not exist');
-    }
-
-    final children = dirCharacters.listSync();
-    for (final entity in children){
-      if (!entity.uri.pathSegments.last.contains(characterId)){
-        continue;
-      }
-      if (entity is! File) {
-        continue;
-      }
-      final fileEncoded = await entity.readAsString();
-      final fileJson = jsonDecode(fileEncoded) as Map<String, dynamic>;
-      return fileJson;
-    }
-    throw Exception('getCharacter($characterId) - could not be found');
-  }
-
-  Future<Json> findUser(String userId) async {
     final userFiles = dirUsers.listSync();
     for (final entity in userFiles){
       if (entity is! File) {
@@ -101,6 +47,27 @@ class DatabaseLocal implements Database {
   }
 
   @override
+  Future<String> getCharacter(String characterId) async {
+    final exists = await dirCharacters.exists();
+
+    if (!exists){
+      throw Exception('dbDirectory does not exist');
+    }
+
+    final children = dirCharacters.listSync();
+    for (final entity in children){
+      if (!entity.uri.pathSegments.last.contains(characterId)){
+        continue;
+      }
+      if (entity is! File) {
+        continue;
+      }
+      return await entity.readAsString();
+    }
+    throw Exception('getCharacter($characterId) - could not be found');
+  }
+
+  @override
   Future<String> createCharacter({
     required String userId,
     required String name,
@@ -111,7 +78,7 @@ class DatabaseLocal implements Database {
     required int headType,
   }) async {
 
-    final user = await findUser(userId);
+    final user = await getUser(userId);
     final userCharacters = user.getList<String>('characters');
     final characterId = uuid.generate();
     userCharacters.add(characterId);
@@ -170,4 +137,24 @@ class DatabaseLocal implements Database {
     return characterFile.writeAsString(jsonEncode(characterJson));
   }
 
+  @override
+  Future<String> createUser({required String username, required String password}) {
+    // TODO: implement createUser
+    throw UnimplementedError();
+  }
 }
+
+// @override
+// void persist(IsometricPlayer player) {
+//
+//   final json = mapIsometricPlayerToJson(player);
+//   final uuid = json['uuid'];
+//   if (uuid == null){
+//     throw Exception('uuid is null');
+//   }
+//   writeJsonToFile(
+//     fileName: '$uuid.json',
+//     directory: dirCharacters.path,
+//     contents: json,
+//   );
+// }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_server/amulet.dart';
-import 'package:gamestream_server/users/classes/user_service.dart';
+import 'package:gamestream_server/users/classes/user_service_http.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_server/packages.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -19,7 +19,9 @@ class GamestreamServer {
   final games = <Game>[];
   final isometricScenes = Scenes();
   final connections = <Connection>[];
-  final UserService userService;
+  final UserServiceHttp userService;
+
+  final userServiceUrl = 'https://gamestream-users-osbmaezptq-uc.a.run.app';
 
   var connectionsTotal = 0;
   var frame = 0;

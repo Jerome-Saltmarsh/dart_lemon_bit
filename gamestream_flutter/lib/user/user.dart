@@ -1,30 +1,19 @@
-import 'dart:convert';
-
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
-import 'package:http/http.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
-import 'package:http/http.dart' as http;
+import 'package:user_service_client/src.dart';
 
-import 'get_user_characters.dart';
 
 class User with IsometricComponent {
-  var id = 'user_01';
-  final scheme = Watch('https');
-  final host = Watch('gamestream-users-osbmaezptq-uc.a.run.app');
-  final port = Watch(80);
-  // var scheme = 'http';
-  // var host = 'localhost';
-  // var port = 8082;
+  final id = Watch('cef8dda2-5533-42be-bca3-1770314fdba3');
+  final username = Watch('');
+  final password = Watch('');
+  final userServiceUrl = Watch('gamestream-users-osbmaezptq-uc.a.run.app');
   final connected = Watch(false);
   final error = Watch('');
-
   final characters = Watch<List<Json>>([]);
-
-  // String get endpoint => '${scheme.value}://${host.value}:${port.value}';
-  String get endpoint => '${scheme.value}://${host.value}';
 
   User(){
     testConnection().then((value) {
@@ -35,61 +24,19 @@ class User with IsometricComponent {
   }
 
   Future<bool> testConnection() {
-    return sendPing().then((value) {
+    return UserServiceClient.ping(url: userServiceUrl.value).then((value) {
       connected.value = value;
       return value;
     });
   }
 
-
   void refreshCharacterNames() async =>
-      characters.value = await getUserCharacters(
-        scheme: scheme.value,
-        host: host.value,
-        port: port.value,
-        userId: id,
+      characters.value = await UserServiceClient.getUserCharacters(
+        url: userServiceUrl.value,
+        userId: id.value,
       );
 
   void playCharacter(String characterId) {
     network.connectToGame(GameType.Amulet, '--id $characterId');
   }
-
-  Future<bool> sendPing() async {
-    try {
-      final endpointPing = '$endpoint/ping';
-      print('endpointPing: $endpointPing');
-      final response = await http.get(Uri.parse(endpointPing));
-      if (response.statusCode == 400){
-        error.value = response.body;
-        return false;
-      }
-      return response.statusCode == 200;
-    } catch (error){
-      this.error.value = error.toString();
-      return false;
-    }
-  }
-
-  Future<Response> createNewCharacter({
-    required String userId,
-    required String name,
-    required int complexion,
-    required int hairType,
-    required int hairColor,
-    required int gender,
-    required int headType,
-  }) =>
-       http.post(Uri.parse(endpoint),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(<String, dynamic>{
-            'userId': userId,
-            'name': name,
-            'complexion': complexion,
-            'hairType': hairType,
-            'hairColor': hairColor,
-            'gender': gender,
-            'headType': headType,
-          }));
 }

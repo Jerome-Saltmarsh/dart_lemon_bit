@@ -32,7 +32,7 @@ Future<Response> handleRequestGet(Request request, Database database) async {
     case 'characters':
       return Response(
           200,
-          body: jsonEncode(await database.getCharacter(pathSegments.last)),
+          body: await database.getCharacter(pathSegments.last),
           headers: headersAcceptJson
       );
     default:

@@ -9,6 +9,7 @@ import 'package:gamestream_server/isometric/isometric_request_reader.dart';
 import 'package:gamestream_server/isometric/scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/packages.dart';
+import 'package:gamestream_server/packages/user_service_client/src/user_service_client.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -695,7 +696,10 @@ class Connection with ByteReader {
 
         final characterId = arguments[idIndex + 1];
         player.active = false;
-        server.userService.findCharacterById(characterId)
+        UserServiceClient.findCharacterById(
+            url: server.userServiceUrl,
+            id: characterId,
+        )
             .then((json) => writeJsonToAmuletPlayer(json, player))
             .catchError((error){
           player.writeAmuletError(error.toString());

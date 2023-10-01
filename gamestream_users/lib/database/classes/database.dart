@@ -2,12 +2,16 @@ import 'package:typedef/json.dart';
 
 abstract class Database {
 
-  Future connect();
-  // Future<int> getHighScore();
-  // Future writeHighScore(int value);
-  Future<List<Json>> getUser(String userId);
-  Future<Json> getCharacter(String characterId);
+  Future<Json> getUser(String userId);
+
+  Future<String> getCharacter(String characterId);
+
   Future saveCharacter(Json json);
+
+  Future<String> createUser({
+    required String username,
+    required String password,
+  });
 
   Future<String> createCharacter({
     required String userId,
