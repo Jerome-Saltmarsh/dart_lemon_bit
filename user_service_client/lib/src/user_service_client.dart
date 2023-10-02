@@ -82,7 +82,9 @@ abstract class UserServiceClient {
           'password': password,
         }),
     );
-    return response.body;
+    final body = response.body;
+    final body2 = body.replaceAll('\"', "");
+    return body2;
   }
 
   static Future<List<Json>> getUserCharacters({

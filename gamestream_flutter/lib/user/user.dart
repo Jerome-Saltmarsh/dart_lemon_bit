@@ -7,38 +7,36 @@ import 'package:user_service_client/src.dart';
 
 
 class User with IsometricComponent {
-  final id = Watch('cef8dda2-5533-42be-bca3-1770314fdba3');
+  final userId = Watch('cef8dda2-5533-42be-bca3-1770314fdba3');
   final username = Watch('');
   final password = Watch('');
   final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');
   final userServicePort = Watch(8080);
-  final connected = Watch(false);
   final error = Watch('');
   final characters = Watch<List<Json>>([]);
 
   User(){
-    testConnection().then((value) {
-      if (value){
-        refreshCharacterNames();
-      }
-    });
+    userId.onChanged(onChangedUserId);
   }
 
-  Future<bool> testConnection() {
-    return UserServiceClient.ping(url: userServiceUrl.value).then((value) {
-      connected.value = value;
-      return value;
-    });
+  void onChangedUserId(String value){
+    print('user.onChangedUserId($value)');
+    refreshCharacters();
   }
 
-  void refreshCharacterNames() async =>
+  void refreshCharacters() async {
+    if (userId.value.isNotEmpty){
       characters.value = await UserServiceClient.getUserCharacters(
         url: userServiceUrl.value,
-        userId: id.value,
+        userId: userId.value,
       );
+    } else {
+      characters.value = [];
+    }
+  }
 
   void playCharacter(String characterId) {
-    network.connectToGame(GameType.Amulet, '--userId ${id.value} --characterId $characterId');
+    network.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
   }
 
   void register({required String username, required String password}) async {
@@ -47,7 +45,7 @@ class User with IsometricComponent {
       username: username,
       password: password,
     );
-    this.id.value = userId;
+    this.userId.value = userId;
   }
 
   void login({required String username, required String password}) async {
@@ -56,8 +54,8 @@ class User with IsometricComponent {
       username: username,
       password: password,
     );
-    this.id.value = userId;
+    this.userId.value = userId;
   }
 
-  void logout() => id.value = '';
+  void logout() => userId.value = '';
 }

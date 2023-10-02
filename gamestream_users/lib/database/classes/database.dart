@@ -23,5 +23,5 @@ abstract class Database {
     required int headType,
   });
 
-  Future<Json?> findUserByUsernamePassword(String username, String password);
+  Future<String?> findUserByUsernamePassword(String username, String password);
 }

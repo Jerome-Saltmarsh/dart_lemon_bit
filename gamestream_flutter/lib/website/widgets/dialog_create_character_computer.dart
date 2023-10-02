@@ -154,7 +154,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                             UserServiceClient.createCharacter(
                               url: components.user.userServiceUrl.value,
                               port: 8080,
-                              userId: components.user.id.value,
+                              userId: components.user.userId.value,
                               password: components.user.password.value,
                               name: nameController.text,
                               complexion: complexion.value,

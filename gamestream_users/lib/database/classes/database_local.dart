@@ -144,7 +144,7 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future<Json?> findUserByUsernamePassword(String username, String password) {
+  Future<String?> findUserByUsernamePassword(String username, String password) {
     // TODO: implement findUserByUsernamePassword
     throw UnimplementedError();
   }

@@ -268,22 +268,11 @@ class DatabaseFirestore implements Database {
   }
 
   @override
-  Future<Json?> findUserByUsernamePassword(
+  Future<String?> findUserByUsernamePassword(
       String username,
       String password,
   ) async {
     await ensureConnected();
-
-    // final search = await documents.runQuery(
-    //     RunQueryRequest()
-    //       ..structuredQuery = (StructuredQuery()
-    //         ..from = [CollectionSelector()..collectionId = 'users']
-    //         ..where = (Filter()
-    //           ..fieldFilter = (FieldFilter()
-    //             ..field = (FieldReference()..fieldPath = 'username')
-    //             ..op = 'EQUAL'
-    //             ..value = (Value()..stringValue = username)))),
-    //     'projects/osapp/databases/(default)/documents');
 
     final query = RunQueryRequest(
         structuredQuery: StructuredQuery(
@@ -315,12 +304,15 @@ class DatabaseFirestore implements Database {
         )
     );
 
-
     final responses = await documents.runQuery(query, parentName);
     for (var response in responses.toList()) {
       final doc = response.document;
       if (doc == null) continue;
-      return mapUserDocumentToJson(doc);
+      final name = doc.name;
+      if (name == null){
+        throw Exception('name == null');
+      }
+      return name.split('/').last.replaceAll('\"', "");
     }
     return null;
   }

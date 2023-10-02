@@ -191,7 +191,7 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildContainerAuthentication(){
-    return buildWatch(user.id, (userId) {
+    return buildWatch(user.userId, (userId) {
         final authenticated = userId.isNotEmpty;
         if (authenticated) {
           return buildContainerAuthenticated();
@@ -210,7 +210,7 @@ extension WebsiteUI on WebsiteGame {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildWatch(user.id, buildText),
+                buildWatch(user.userId, buildText),
                 onPressed(
                   action: user.logout,
                   child: GSContainer(
@@ -229,7 +229,7 @@ extension WebsiteUI on WebsiteGame {
                 buildText('CHARACTERS'),
                 width8,
                 onPressed(
-                  action: user.refreshCharacterNames,
+                  action: user.refreshCharacters,
                   child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
                 ),
               ],
@@ -270,26 +270,5 @@ extension WebsiteUI on WebsiteGame {
 
         ),
       );
-
-
-  Widget buildContainerConnection() {
-    return GSContainer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          onPressed(
-              action: () => ui.showDialogGetString(onSelected: user.userServiceUrl.call),
-              child: buildWatch(user.userServiceUrl, buildText),
-          ),
-          onPressed(
-            action: user.testConnection,
-            child: buildWatch(user.connected, (t) => buildText('connected: $t')),
-          ),
-          buildWatch(user.error, buildText),
-        ],
-      ),
-    );
-  }
-
 }
 

@@ -8,7 +8,11 @@ import 'package:typedef/json.dart';
 
 import '../../utils/get_body.dart';
 
-Future<Response> handleRequestPostLogin(Request request, Database database) async {
+Future<Response> handleRequestPostLogin(
+    Request request,
+    Database database,
+) async {
+
   final requestBody = await getBody(request);
   final username = requestBody.tryGetString('username');
   final password = requestBody.tryGetString('password');
@@ -16,13 +20,14 @@ Future<Response> handleRequestPostLogin(Request request, Database database) asyn
   if (username == null) {
     return badRequest('username_required');
   }
+
   if (password == null){
     return badRequest('password_required');
   }
 
   return database
       .findUserByUsernamePassword(username, password)
-      .then((user) => user == null ?
+      .then((userId) => userId == null ?
           Response.notFound('login_failed', headers: headersAcceptText) :
-          Response.ok(jsonEncode(user), headers: headersAcceptJson));
+          Response.ok(jsonEncode(userId), headers: headersAcceptText));
 }
