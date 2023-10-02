@@ -1,28 +1,19 @@
 
+import 'package:gamestream_users/database/firestore/extensions/document_extensions.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:typedef/json.dart';
 
-Json mapUserDocumentToJson(Document document){
 
-  final fields = document.fields;
-  if (fields == null) {
-    throw Exception('fields == null');
-  }
+Json mapUserDocumentToJson(Document document) {
 
-  final characters = fields['characters'];
-  if (characters == null) {
-    throw Exception('fields[characters] == null');
-  }
+  final characters = (document.getFieldArrayValues('characters') ?? []);
 
-  final arrayValue = characters.arrayValue;
-  if (arrayValue == null) {
-    throw Exception('fields[characters].arrayValue == null');
-  }
-
-  final values = arrayValue.values ?? [];
   return {
-    'characters': values
-        .map((character) => character.stringValue)
+    'username' : document.getFieldString('username'),
+    'characters': characters
+        .map((field) => field.stringValue)
         .toList(growable: false)
   };
 }
+
+

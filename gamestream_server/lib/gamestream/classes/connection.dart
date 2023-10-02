@@ -707,10 +707,13 @@ class Connection with ByteReader {
 
       player.userId = userId;
       player.active = false;
-      UserServiceClient.getUserCharacters(
+      UserServiceClient.getUser(
         url: server.userServiceUrl,
         userId: userId,
-      ).then((characters) {
+      ).then((user) {
+
+        final characters = user.getList<Json>('characters');
+
         for (final character in characters) {
           if (character.getString('uuid') != characterId) {
             writeJsonToAmuletPlayer(character, player);

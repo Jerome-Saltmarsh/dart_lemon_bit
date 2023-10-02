@@ -86,7 +86,7 @@ abstract class UserServiceClient {
     return body2;
   }
 
-  static Future<List<Json>> getUserCharacters({
+  static Future<Json> getUser({
     required String url,
     required String userId,
   }) async {
@@ -99,12 +99,10 @@ abstract class UserServiceClient {
     }
 
     final jsonResponse = response.body;
-    print('Response: $jsonResponse');
-    final responseJson =  jsonDecode(jsonResponse) as Json;
-
-    final characterStrings =  responseJson.getList<String>('characters');
-    final values = characterStrings.map(jsonDecode).toList(growable: false).cast<Json>();
-    return values;
+    return jsonDecode(jsonResponse) as Json;
+    // final characterStrings =  responseJson.getList<Json>('characters');
+    // final values = characterStrings.map(jsonDecode).toList(growable: false).cast<Json>();
+    // return values;
   }
 
   static Future patchCharacter({

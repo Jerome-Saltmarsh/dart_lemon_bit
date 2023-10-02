@@ -8,14 +8,15 @@ import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
-import 'package:gamestream_flutter/packages/utils.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:gamestream_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
+import 'package:gamestream_flutter/website/widgets/gs_button_region.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:typedef/json.dart';
 
 import 'functions/build_website_page_new_user.dart';
 import 'widgets/dialog_create_character_computer.dart';
@@ -44,7 +45,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildPageWebsiteDesktop() => Center(
       child: WatchBuilder(websitePage, (websitePage) =>
         switch (websitePage) {
-          WebsitePage.Select_Character => buildWebsitePageSelectCharacter(),
+          WebsitePage.User => buildWebsitePageSelectCharacter(),
           WebsitePage.New_Character => DialogCreateCharacterComputer(),
           WebsitePage.Select_Region => buildWebsitePageSelectRegion(
               options: options,
@@ -157,16 +158,6 @@ extension WebsiteUI on WebsiteGame {
         this.websitePage.value = WebsitePage.Select_Region;
       }
 
-      final regionButton = onPressed(
-        action: showWebsitePageRegion,
-        child: Container(
-          color: Colors.white12,
-          alignment: Alignment.center,
-          padding: style.containerPadding,
-          child: buildText(formatEnumName(region?.name ?? 'region')),
-        ),
-      );
-
       return GSContainer(
         width: 450,
         height: 450 * goldenRatio_1381,
@@ -178,8 +169,6 @@ extension WebsiteUI on WebsiteGame {
             children: [
               buildText('AMULET', size: 80, family: 'REBUFFED'),
               height32,
-              regionButton,
-              height12,
               buildContainerAuthentication(),
               height12,
             ],
@@ -207,10 +196,12 @@ extension WebsiteUI on WebsiteGame {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            GSButtonRegion(),
+            height12,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildWatch(user.userId, buildText),
+                buildWatch(user.username, buildText),
                 onPressed(
                   action: user.logout,
                   child: GSContainer(
@@ -229,7 +220,7 @@ extension WebsiteUI on WebsiteGame {
                 buildText('CHARACTERS'),
                 width8,
                 onPressed(
-                  action: user.refreshCharacters,
+                  action: user.refreshUser,
                   child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
                 ),
               ],
@@ -237,31 +228,8 @@ extension WebsiteUI on WebsiteGame {
             height12,
             buildWatch(
                 user.characters,
-                    (characters) => Container(
-                      height: 200,
-                      child: SingleChildScrollView(
-                        child: Column(
-                        children: characters
-                            .map((character) => onPressed(
-                          action: () =>
-                              user.playCharacter(character['uuid']),
-                          child: Container(
-                            alignment: Alignment.center,
-                              width: 200,
-                              color: Colors.white12,
-                              padding: const EdgeInsets.all(4),
-                              margin: const EdgeInsets.only(bottom: 4),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  buildText(character['name'], size: 22),
-                                  buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
-                                ],
-                              )),
-                        ))
-                            .toList(growable: false)),
-                      ),
-                    )),
+                buildCharacters
+            ),
             onPressed(
               action: user.website.showPageNewCharacter,
               child: buildText('NEW CHARACTER', color: Colors.orange),
@@ -270,5 +238,36 @@ extension WebsiteUI on WebsiteGame {
 
         ),
       );
+
+  Widget buildCharacters(List<Json> characters){
+    return Container(
+      height: 200,
+      child: SingleChildScrollView(
+        child: Column(
+            children: characters
+                .map((character) {
+
+              return onPressed(
+                action: () =>
+                    user.playCharacter(character['uuid']),
+                child: Container(
+                    alignment: Alignment.center,
+                    width: 200,
+                    color: Colors.white12,
+                    padding: const EdgeInsets.all(4),
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildText(character['name'], size: 22),
+                        buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
+                      ],
+                    )),
+              );
+            })
+                .toList(growable: false)),
+      ),
+    );
+  }
 }
 

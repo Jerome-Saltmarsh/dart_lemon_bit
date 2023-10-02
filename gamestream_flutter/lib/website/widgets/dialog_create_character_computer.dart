@@ -53,7 +53,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
               children: [
                 onPressed(
                   action: () {
-                    components.website.websitePage.value = WebsitePage.Select_Character;
+                    components.website.websitePage.value = WebsitePage.User;
                   },
                   child: buildText('Back'),
                 ),

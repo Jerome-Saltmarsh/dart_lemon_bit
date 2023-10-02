@@ -22,7 +22,7 @@ class WebsiteGame extends Game {
 
   var imagesCached = false;
   final error = Watch<String?>(null);
-  final websitePage = Watch(WebsitePage.Select_Region);
+  final websitePage = Watch(WebsitePage.User);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
@@ -105,7 +105,7 @@ class WebsiteGame extends Game {
   void toggleWebsitePage() =>
       websitePage.value =
       websitePage.value == WebsitePage.Select_Region
-          ? WebsitePage.Select_Character
+          ? WebsitePage.User
           : WebsitePage.Select_Region;
 
   void showWebsitePageRegion(){
@@ -113,7 +113,7 @@ class WebsiteGame extends Game {
   }
 
   void showWebsitePageGames(){
-    websitePage.value = WebsitePage.Select_Character;
+    websitePage.value = WebsitePage.User;
   }
 
   void openUrlYoutube() =>

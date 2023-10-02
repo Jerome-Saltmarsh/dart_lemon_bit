@@ -1,0 +1,23 @@
+
+
+import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
+import 'package:gamestream_flutter/packages/utils/format_enum_name.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
+
+class GSButtonRegion extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) =>
+    IsometricBuilder(builder: (context, components) =>
+        buildWatch(components.options.region, (region) =>
+            onPressed(
+            action: components.website.showWebsitePageRegion,
+            child: Container(
+              color: Colors.white12,
+              alignment: Alignment.center,
+              padding: components.style.containerPadding,
+              child: buildText(formatEnumName(region?.name ?? 'region')),
+            ),
+        )));
+}

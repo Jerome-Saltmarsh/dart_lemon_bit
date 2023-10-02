@@ -1,5 +1,5 @@
 enum WebsitePage {
-  Select_Character,
+  User,
   Select_Region,
   New_Character,
 }

@@ -40,7 +40,7 @@ Widget buildWebsitePageSelectRegion({
                 onPressed(
                   action: () {
                     options.region.value = region;
-                    website.websitePage.value = WebsitePage.Select_Character;
+                    website.websitePage.value = WebsitePage.User;
                   },
                   child: MouseOver(builder: (bool mouseOver) {
                     return Container(
