@@ -39,4 +39,26 @@ class User with IsometricComponent {
   void playCharacter(String characterId) {
     network.connectToGame(GameType.Amulet, '--userId ${id.value} --characterId $characterId');
   }
+
+  void register({required String username, required String password}) async {
+    final userId = await UserServiceClient.createUser(
+      url: userServiceUrl.value,
+      port: 8080,
+      username: username,
+      password: password,
+    );
+    this.id.value = userId;
+  }
+
+  void login({required String username, required String password}) async {
+    final userId = await UserServiceClient.createUser(
+      url: userServiceUrl.value,
+      port: 8080,
+      username: username,
+      password: password,
+    );
+    this.id.value = userId;
+  }
+
+  void logout() => id.value = '';
 }

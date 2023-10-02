@@ -51,7 +51,6 @@ extension WebsiteUI on WebsiteGame {
               website: website,
               engine: engine,
             ),
-          WebsitePage.New_User => buildWebsitePageNewUser(),
         }),
     );
 
@@ -171,18 +170,18 @@ extension WebsiteUI on WebsiteGame {
       return GSContainer(
         width: 450,
         height: 450 * goldenRatio_1381,
+        color: Colors.transparent,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              buildText('AMULET', size: 80),
+              height32,
               regionButton,
-              height32,
-              buildWebsitePageNewUser(),
-              height32,
-              buildContainerConnection(),
               height12,
-              buildContainerSelectCharacter(),
+              buildContainerAuthentication(),
+              height12,
             ],
           ),
         ),
@@ -191,12 +190,39 @@ extension WebsiteUI on WebsiteGame {
     );
   }
 
-  Widget buildContainerSelectCharacter() =>
+  Widget buildContainerAuthentication(){
+    return buildWatch(user.id, (userId) {
+        final authenticated = userId.isNotEmpty;
+        if (authenticated) {
+          return buildContainerAuthenticated();
+        }
+        return buildContainerAuthenticate(user);
+    });
+  }
+
+  Widget buildContainerAuthenticated() =>
       GSContainer(
+        color: Colors.black12,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildWatch(user.id, buildText),
+                onPressed(
+                  action: user.logout,
+                  child: GSContainer(
+                    color: Colors.black12,
+                    child: buildText('Logout'),
+                    width: 100,
+                  ),
+                ),
+              ],
+            ),
+            height12,
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

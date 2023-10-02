@@ -1,5 +1,6 @@
 library src;
 
+export 'align.dart';
 export 'build_border.dart';
 export 'build_text.dart';
 export 'nothing.dart';
