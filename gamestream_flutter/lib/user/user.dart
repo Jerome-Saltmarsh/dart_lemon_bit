@@ -69,12 +69,17 @@ class User with IsometricComponent {
   }
 
   void login({required String username, required String password}) async {
-    final userId = await UserServiceClient.login(
+    final response = await UserServiceClient.login(
       url: userServiceUrl.value,
       username: username,
       password: password,
     );
-    this.userId.value = userId;
+
+    if (response.statusCode == 200){
+      userId.value = response.body.replaceAll('\"', '');
+    } else {
+      ui.error.value = response.body;
+    }
   }
 
   void logout() => userId.value = '';

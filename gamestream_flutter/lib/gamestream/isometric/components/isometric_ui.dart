@@ -58,12 +58,13 @@ class IsometricUI with IsometricComponent {
                        children: [
                          buildText(error, color: Colors.red),
                          height16,
-                         GSContainer(
-                           color: Colors.white12,
-                           width: 80,
-                           child: onPressed(
-                               action: () => this.error.value = null,
-                               child: buildText('Okay')),
+                         onPressed(
+                           action: () => this.error.value = null,
+                           child: GSContainer(
+                             color: Colors.white12,
+                             width: 80,
+                             child: buildText('Okay'),
+                           ),
                          )
                        ],
                      )),

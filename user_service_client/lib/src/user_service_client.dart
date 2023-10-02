@@ -68,12 +68,12 @@ abstract class UserServiceClient {
     // return response.body;
   }
 
-  static Future<String> login({
+  static Future<Response> login({
     required String url,
     required String username,
     required String password,
   }) async {
-    final response = await http.post(
+    return http.post(
         Uri.parse('$url/login'),
         headers: headersJson,
         body: jsonEncode({
@@ -81,9 +81,6 @@ abstract class UserServiceClient {
           'password': password,
         }),
     );
-    final body = response.body;
-    final body2 = body.replaceAll('\"', "");
-    return body2;
   }
 
   static Future<Json> getUser({
