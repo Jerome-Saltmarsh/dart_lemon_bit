@@ -176,7 +176,7 @@ extension WebsiteUI on WebsiteGame {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildText('AMULET', size: 80),
+              buildText('AMULET', size: 80, family: 'REBUFFED'),
               height32,
               regionButton,
               height12,

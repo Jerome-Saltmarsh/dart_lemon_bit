@@ -312,7 +312,7 @@ class DatabaseFirestore implements Database {
       if (name == null){
         throw Exception('name == null');
       }
-      return name.split('/').last.replaceAll('\"', "");
+      return name.split('/').last;
     }
     return null;
   }
