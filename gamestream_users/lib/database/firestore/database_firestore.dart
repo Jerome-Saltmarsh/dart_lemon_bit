@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:gamestream_users/database/firestore/functions/map_user_document_to_json.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:typedef/json.dart';
@@ -45,26 +46,7 @@ class DatabaseFirestore implements Database {
   @override
   Future<Json> getUser(String id) async {
     final document = await getUserDocument(id);
-    final fields = document.fields;
-    if (fields == null){
-      throw Exception('users[$id].fields == null');
-    }
-    final characters = fields['characters'];
-
-    if (characters == null){
-      throw Exception('users[$id].fields[characters] == null');
-    }
-
-    final arrayValue = characters.arrayValue;
-
-    if (arrayValue == null){
-      throw Exception('users[$id].fields[characters].arrayValue == null');
-    }
-
-    final values = arrayValue.values ?? [];
-    return {
-      'characters': values.map((character) => character.stringValue).toList(growable: false)
-    };
+    return mapUserDocumentToJson(document);
   }
 
   @override
@@ -285,7 +267,46 @@ class DatabaseFirestore implements Database {
     }
   }
 
+  @override
+  Future<Json?> findUserByUsernamePassword(
+      String username,
+      String password,
+  ) async {
 
+    final query = RunQueryRequest(
+        structuredQuery: StructuredQuery(
+            from: [
+              CollectionSelector(collectionId: 'users')
+            ],
+            where: Filter(
+                compositeFilter: CompositeFilter(
+                  filters: [
+                    Filter(
+                      fieldFilter: FieldFilter(
+                        field: FieldReference(fieldPath: 'username'),
+                        op: 'EQUAL',
+                        value: Value(stringValue: username),
+                      )
+                    ),
+                    Filter(
+                      fieldFilter: FieldFilter(
+                        field: FieldReference(fieldPath: 'password'),
+                        op: 'EQUAL',
+                        value: Value(stringValue: password),
+                      )
+                    ),
+                  ]
+                )            )
+        )
+    );
 
+    final responses = await documents.runQuery(query, parentName);
+    for (var response in responses.toList()) {
+      final doc = response.document;
+      if (doc == null) continue;
+      return mapUserDocumentToJson(doc);
+    }
+    return null;
+  }
 }
 

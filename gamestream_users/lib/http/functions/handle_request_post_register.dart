@@ -4,7 +4,7 @@ import 'package:gamestream_users/http/functions/bad_request.dart';
 import 'package:gamestream_users/utils/get_body.dart';
 import 'package:shelf/shelf.dart';
 
-Future<Response> handleRequestPostUser(Request request, Database database) async {
+Future<Response> handleRequestPostRegister(Request request, Database database) async {
 
   final bodyJson = await getBody(request);
   final username = bodyJson['username'];

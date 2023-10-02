@@ -40,7 +40,7 @@ abstract class UserServiceClient {
     required int headType,
   }) =>
       http.post(
-          Uri.parse('$url:$port/characters'),
+          Uri.parse('$url:$port/character'),
           headers: headersJson,
           body: jsonEncode({
             'userId': userId,
@@ -55,12 +55,27 @@ abstract class UserServiceClient {
 
   static Future<String> createUser({
     required String url,
-    required int port,
     required String username,
     required String password,
   }) async {
     final response = await http.post(
-        Uri.parse('$url:$port/users'),
+        Uri.parse('$url/register'),
+        headers: headersJson,
+        body: jsonEncode({
+          'username': username,
+          'password': password,
+        }),
+    );
+    return response.body;
+  }
+
+  static Future<String> login({
+    required String url,
+    required String username,
+    required String password,
+  }) async {
+    final response = await http.post(
+        Uri.parse('$url:login'),
         headers: headersJson,
         body: jsonEncode({
           'username': username,

@@ -11,6 +11,7 @@ class User with IsometricComponent {
   final username = Watch('');
   final password = Watch('');
   final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');
+  final userServicePort = Watch(8080);
   final connected = Watch(false);
   final error = Watch('');
   final characters = Watch<List<Json>>([]);
@@ -43,7 +44,6 @@ class User with IsometricComponent {
   void register({required String username, required String password}) async {
     final userId = await UserServiceClient.createUser(
       url: userServiceUrl.value,
-      port: 8080,
       username: username,
       password: password,
     );
@@ -51,9 +51,8 @@ class User with IsometricComponent {
   }
 
   void login({required String username, required String password}) async {
-    final userId = await UserServiceClient.createUser(
+    final userId = await UserServiceClient.login(
       url: userServiceUrl.value,
-      port: 8080,
       username: username,
       password: password,
     );

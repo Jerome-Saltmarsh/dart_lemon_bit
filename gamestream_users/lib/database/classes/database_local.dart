@@ -142,19 +142,10 @@ class DatabaseLocal implements Database {
     // TODO: implement createUser
     throw UnimplementedError();
   }
-}
 
-// @override
-// void persist(IsometricPlayer player) {
-//
-//   final json = mapIsometricPlayerToJson(player);
-//   final uuid = json['uuid'];
-//   if (uuid == null){
-//     throw Exception('uuid is null');
-//   }
-//   writeJsonToFile(
-//     fileName: '$uuid.json',
-//     directory: dirCharacters.path,
-//     contents: json,
-//   );
-// }
+  @override
+  Future<Json?> findUserByUsernamePassword(String username, String password) {
+    // TODO: implement findUserByUsernamePassword
+    throw UnimplementedError();
+  }
+}
