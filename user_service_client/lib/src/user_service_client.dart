@@ -75,7 +75,7 @@ abstract class UserServiceClient {
     required String password,
   }) async {
     final response = await http.post(
-        Uri.parse('$url:login'),
+        Uri.parse('$url/login'),
         headers: headersJson,
         body: jsonEncode({
           'username': username,

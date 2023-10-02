@@ -272,6 +272,18 @@ class DatabaseFirestore implements Database {
       String username,
       String password,
   ) async {
+    await ensureConnected();
+
+    // final search = await documents.runQuery(
+    //     RunQueryRequest()
+    //       ..structuredQuery = (StructuredQuery()
+    //         ..from = [CollectionSelector()..collectionId = 'users']
+    //         ..where = (Filter()
+    //           ..fieldFilter = (FieldFilter()
+    //             ..field = (FieldReference()..fieldPath = 'username')
+    //             ..op = 'EQUAL'
+    //             ..value = (Value()..stringValue = username)))),
+    //     'projects/osapp/databases/(default)/documents');
 
     final query = RunQueryRequest(
         structuredQuery: StructuredQuery(
@@ -280,6 +292,7 @@ class DatabaseFirestore implements Database {
             ],
             where: Filter(
                 compositeFilter: CompositeFilter(
+                  op: 'AND',
                   filters: [
                     Filter(
                       fieldFilter: FieldFilter(
@@ -296,9 +309,12 @@ class DatabaseFirestore implements Database {
                       )
                     ),
                   ]
-                )            )
+                ),
+
+            )
         )
     );
+
 
     final responses = await documents.runQuery(query, parentName);
     for (var response in responses.toList()) {
