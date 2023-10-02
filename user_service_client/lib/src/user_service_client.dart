@@ -29,7 +29,6 @@ abstract class UserServiceClient {
 
   static Future<Response> createCharacter({
     required String url,
-    required int port,
     required String userId,
     required String password,
     required String name,
@@ -40,7 +39,7 @@ abstract class UserServiceClient {
     required int headType,
   }) =>
       http.post(
-          Uri.parse('$url:$port/character'),
+          Uri.parse('$url/character'),
           headers: headersJson,
           body: jsonEncode({
             'userId': userId,
