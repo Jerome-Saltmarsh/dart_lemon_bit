@@ -81,11 +81,11 @@ class WebsiteGame extends Game {
   }
 
   @override
-  Widget buildUI(BuildContext context) => Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      buildWatch(options.operationStatus, buildOperationStatus),
-    ],
+  Widget buildUI(BuildContext context) => Container(
+    width: engine.screen.width,
+    height: engine.screen.height,
+    alignment: Alignment.center,
+    child: buildWatch(options.operationStatus, buildOperationStatus),
   );
 
 
