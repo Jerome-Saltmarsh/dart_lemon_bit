@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,58 @@ class IsometricUI with IsometricComponent {
   static const Icon_Scale = 1.5;
 
   final dialog = Watch<Widget?>(null);
+  final gameUI = Watch<WidgetBuilder?>(null);
+  final error = Watch<String?>(null);
+
+  @override
+  void onComponentReady() {
+    engine.buildUI = buildUI;
+    gameUI.value = website.buildUI;
+  }
+
+  Widget buildUI(BuildContext context) => Stack(
+      alignment: Alignment.center,
+      children: [
+           Positioned(
+               top: 0,
+               left: 0,
+               child: buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing)),
+           Positioned(
+               top: 0,
+               child: buildWatch(dialog, (dialog) => dialog ?? nothing)),
+           Positioned(
+             top: 0,
+             child: buildWatch(error, (error) => error == null
+                   ? nothing
+                   : Container(
+               width: engine.screen.width,
+               height: engine.screen.height,
+               alignment: Alignment.center,
+               child: buildBorder(
+                 color: style.containerColorDark,
+                 child: GSContainer(
+                     width: 350,
+                     height: 350 * goldenRatio_0618,
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.end,
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         buildText(error, color: Colors.red),
+                         height16,
+                         GSContainer(
+                           color: Colors.white12,
+                           width: 80,
+                           child: onPressed(
+                               action: () => this.error.value = null,
+                               child: buildText('Okay')),
+                         )
+                       ],
+                     )),
+               ),
+             ))
+           ),
+      ],
+    );
 
   void closeDialog() {
     dialog.value = null;

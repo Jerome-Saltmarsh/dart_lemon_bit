@@ -24,4 +24,6 @@ abstract class Database {
   });
 
   Future<String?> findUserByUsernamePassword(String username, String password);
+
+  Future<String?> findUserByUsername(String username);
 }

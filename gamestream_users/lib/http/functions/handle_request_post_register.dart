@@ -18,6 +18,16 @@ Future<Response> handleRequestPostRegister(Request request, Database database) a
     return badRequest('password_required');
   }
 
+  final existingUser = await database.findUserByUsername(username);
+
+  if (existingUser != null) {
+    return Response(
+        409,
+        headers: headersAcceptText,
+        body: 'A user with that username already exists',
+    );
+  }
+
   final userId = await database.createUser(
       username: username,
       password: password,

@@ -21,7 +21,6 @@ class WebsiteGame extends Game {
   ];
 
   var imagesCached = false;
-  final error = Watch<String?>(null);
   final websitePage = Watch(WebsitePage.User);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
@@ -36,7 +35,6 @@ class WebsiteGame extends Game {
   @override
   void onComponentReady() {
     print('isometric.website.onComponentsInitialized()');
-    engine.buildUI = buildUI;
     validateAtlases();
   }
 
@@ -51,7 +49,7 @@ class WebsiteGame extends Game {
       }
       for (final value in values){
         if (!atlas.containsKey(value)){
-          error.value = 'missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}';
+          ui.error.value = 'missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}';
           print('missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}');
         }
       }
@@ -79,27 +77,16 @@ class WebsiteGame extends Game {
   }
 
   void setError(String message){
-    website.error.value = message;
+    ui.error.value = message;
   }
 
   @override
-  Widget buildUI(BuildContext context) {
-
-    return Stack(
-      children: [
-        buildWatch(options.operationStatus, buildOperationStatus),
-        buildWatchErrorMessage(),
-        Positioned(
-          top: 0,
-          left: 0,
-          child: Container(
-            width: engine.screen.width,
-            alignment: Alignment.center,
-            child: buildWatch(ui.dialog, (t) => t ?? nothing),
-          ),
-        ),
-      ]);
-  }
+  Widget buildUI(BuildContext context) => Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      buildWatch(options.operationStatus, buildOperationStatus),
+    ],
+  );
 
 
   void toggleWebsitePage() =>
@@ -184,7 +171,7 @@ class WebsiteGame extends Game {
   }
 
   void closeErrorMessage(){
-    error.value = null;
+    ui.error.value = null;
   }
 
   void checkForLatestVersion() async {

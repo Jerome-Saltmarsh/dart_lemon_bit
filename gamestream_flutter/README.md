@@ -21,15 +21,16 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
-- feature user
-- feature cloud persistence
+- feature handle invalid username password 
+- feature delete character 
+- fix enter game on create character 
+- feature element system 
 - fix light flicker on rain changed
 - fix render front 
 - render torso top and bottom separately
 - improve ai pathfinding
 - feature stash
 - feature store
-- feature element water air fire stone
 - glove type leather
 - particle flame spark
 - particle wind animation
@@ -41,6 +42,9 @@ ctrl + []               : move caret to code block
 - glove type silk
 - particle crow
 - particle chicken
+
+02.10.2023
+- feature cloud persistence
 
 28.09.2023
 - feature player persistence

@@ -316,5 +316,36 @@ class DatabaseFirestore implements Database {
     }
     return null;
   }
+
+  @override
+  Future<String?> findUserByUsername(String username) async {
+    await ensureConnected();
+
+    final query = RunQueryRequest(
+        structuredQuery: StructuredQuery(
+            from: [
+              CollectionSelector(collectionId: 'users')
+            ],
+            where: Filter(
+                fieldFilter: FieldFilter(
+                  field: FieldReference(fieldPath: 'username'),
+                  op: 'EQUAL',
+                  value: Value(stringValue: username),
+                )
+            )        )
+    );
+
+    final responses = await documents.runQuery(query, parentName);
+    for (var response in responses.toList()) {
+      final doc = response.document;
+      if (doc == null) continue;
+      final name = doc.name;
+      if (name == null){
+        throw Exception('name == null');
+      }
+      return name.split('/').last;
+    }
+    return null;
+  }
 }
 

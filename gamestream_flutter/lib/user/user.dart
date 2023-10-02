@@ -52,13 +52,20 @@ class User with IsometricComponent {
     network.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
   }
 
-  void register({required String username, required String password}) async {
-    final userId = await UserServiceClient.createUser(
+  Future register({
+    required String username,
+    required String password,
+  }) async {
+    final response = await UserServiceClient.createUser(
       url: userServiceUrl.value,
       username: username,
       password: password,
     );
-    this.userId.value = userId;
+    if (response.statusCode == 200){
+      userId.value = response.body;
+    } else {
+      ui.error.value = response.body;
+    }
   }
 
   void login({required String username, required String password}) async {

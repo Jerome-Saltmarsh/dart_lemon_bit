@@ -36,7 +36,7 @@ class IsometricNetwork with IsometricComponent {
     }
     print(error.toString());
     print(stack);
-    website.error.value = error.toString();
+    ui.error.value = error.toString();
   }
 
   void sendIsometricRequestRevive() =>

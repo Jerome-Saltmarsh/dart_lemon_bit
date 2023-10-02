@@ -148,4 +148,10 @@ class DatabaseLocal implements Database {
     // TODO: implement findUserByUsernamePassword
     throw UnimplementedError();
   }
+
+  @override
+  Future<String?> findUserByUsername(String username) {
+    // TODO: implement findUserByUsername
+    throw UnimplementedError();
+  }
 }

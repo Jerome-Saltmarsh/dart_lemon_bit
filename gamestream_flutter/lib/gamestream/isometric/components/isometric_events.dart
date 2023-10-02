@@ -654,13 +654,13 @@ class IsometricEvents with IsometricComponent {
         audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
-        website.error.value = 'Failed to connect';
+        ui.error.value = 'Failed to connect';
         break;
       case ConnectionStatus.Invalid_Connection:
-        website.error.value = 'Invalid Connection';
+        ui.error.value = 'Invalid Connection';
         break;
       case ConnectionStatus.Error:
-        website.error.value = 'Connection Error';
+        ui.error.value = 'Connection Error';
         break;
       default:
         break;

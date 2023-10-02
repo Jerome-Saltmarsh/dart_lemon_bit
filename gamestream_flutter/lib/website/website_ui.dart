@@ -73,12 +73,6 @@ extension WebsiteUI on WebsiteGame {
     downloadBytes(bytes: png, name: 'test.png');
   }
 
-  Widget buildWatchErrorMessage() =>
-      WatchBuilder(website.error, (String? message) {
-        if (message == null) return nothing;
-        return buildErrorDialog(message);
-      });
-
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
@@ -133,23 +127,6 @@ extension WebsiteUI on WebsiteGame {
       GameType.Moba: 'images/website/game-isometric.png',
       GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
-
-
-  Widget buildErrorDialog(String message, {Widget? bottomRight}) => buildDialog(
-        width: 200,
-        height: 200 * goldenRatio_0618,
-        color: colors.brownDark,
-        borderColor: Colors.transparent,
-        child: buildLayout(
-            child: Center(
-              child: buildText(message, color: colors.white),
-            ),
-            bottomRight: onPressed(
-                action: () => website.error.value = null,
-                child: bottomRight ?? buildText('okay'))
-        )
-    );
-
 
   Widget buildWebsitePageSelectCharacter() {
     return WatchBuilder(options.region, (ConnectionRegion? region) {

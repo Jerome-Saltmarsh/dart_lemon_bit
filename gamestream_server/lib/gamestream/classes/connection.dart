@@ -9,7 +9,6 @@ import 'package:gamestream_server/isometric/isometric_request_reader.dart';
 import 'package:gamestream_server/isometric/scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/packages.dart';
-import 'package:gamestream_server/packages/user_service_client/src/user_service_client.dart';
 import 'package:gamestream_server/users/functions/map_isometric_player_to_json.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
