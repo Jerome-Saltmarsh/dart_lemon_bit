@@ -100,9 +100,6 @@ abstract class UserServiceClient {
 
     final jsonResponse = response.body;
     return jsonDecode(jsonResponse) as Json;
-    // final characterStrings =  responseJson.getList<Json>('characters');
-    // final values = characterStrings.map(jsonDecode).toList(growable: false).cast<Json>();
-    // return values;
   }
 
   static Future patchCharacter({

@@ -29,9 +29,7 @@ class User with IsometricComponent {
 
   void onChangedUserJson(Json userJson) {
     if (userJson.containsKey('characters')){
-      final characterStrings = userJson.getList<String>('characters');
-      final charactersDecoded =  characterStrings.map(jsonDecode).toList(growable: false);
-      characters.value = charactersDecoded.cast<Json>();
+      characters.value = userJson.getList<Json>('characters');;
     } else {
       characters.value = [];
     }
