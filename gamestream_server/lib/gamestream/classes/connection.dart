@@ -713,7 +713,8 @@ class Connection with ByteReader {
 
         final characters = user.getList<Json>('characters');
         for (final character in characters) {
-          if (character.getString('uuid') != characterId) {
+          final uuid = character.getString('uuid');
+          if (uuid == characterId) {
             writeJsonToAmuletPlayer(character, player);
             return;
           }
