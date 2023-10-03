@@ -690,11 +690,24 @@ class Connection with ByteReader {
 
     if (arguments.length > 2) {
       final userId = arguments.getArg('--userId');
-      final characterId = arguments.getArg('--characterId');
 
       if (userId == null){
-        throw Exception('userId == null');
+          _player = server.joinGameByType(gameType);
+          final player = _player;
+          if (player is! AmuletPlayer){
+            throw Exception('player is! AmuletPlayer');
+          }
+          player.name = arguments.getArg('--name') ?? 'anon${randomInt(9999, 99999)}';
+          player.complexion = arguments.getArgInt('--complexion') ?? 0;
+          player.hairType = arguments.getArgInt('--hairType') ?? 0;
+          player.hairColor = arguments.getArgInt('--hairColor') ?? 0;
+          player.gender = arguments.getArgInt('--gender') ?? 0;
+          player.headType = arguments.getArgInt('--headType') ?? 0;
+          player.active = true;
+          return;
       }
+
+      final characterId = arguments.getArg('--characterId');
 
       if (characterId == null){
         throw Exception('characterId == null');
@@ -968,5 +981,13 @@ extension Args on List<String> {
       return null;
     }
     return this[index + 1];
+  }
+
+  int? getArgInt(String name){
+     final arg = getArg(name);
+     if (arg == null){
+       return null;
+     }
+     return int.tryParse(arg);
   }
 }

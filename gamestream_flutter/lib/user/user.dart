@@ -52,6 +52,24 @@ class User with IsometricComponent {
     network.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
   }
 
+  void playCharacterCustom({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
+  }) {
+    network.connectToGame(GameType.Amulet,
+        '--name $name '
+        '--complexion $complexion '
+        '--hairType $hairType '
+        '--hairColor $hairColor '
+        '--gender $gender '
+        '--headType $headType'
+    );
+  }
+
   Future register({
     required String username,
     required String password,
@@ -115,6 +133,21 @@ class User with IsometricComponent {
     required int gender,
     required int headType,
 }) async {
+
+    if (userId.value.isEmpty){
+      playCharacterCustom(
+        name: name,
+        complexion: complexion,
+        hairType: hairType,
+        hairColor: hairColor,
+        gender: gender,
+        headType: headType,
+      );
+      website.websitePage.value = WebsitePage.User;
+      return;
+    }
+
+
     options.startOperation(OperationStatus.Creating_Character);
     website.websitePage.value = WebsitePage.User;
     try {
