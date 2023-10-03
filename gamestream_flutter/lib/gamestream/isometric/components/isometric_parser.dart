@@ -117,6 +117,7 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseDefault() {
     print('read error; index: $index');
     print(values);
+    ui.error.value = 'failed to parse response from server';
     network.websocket.disconnect();
   }
 
@@ -681,11 +682,19 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readNetworkResponseAmuletPlayer() {
-    // switch (readByte()) {
-    //   case NetworkResponseAmuletPlayer.Character_Created:
-    //     amulet.characterCreated.value = readBool();
-    //     break;
-    // }
+    final amulet = this.amulet;
+    switch (readByte()) {
+      case NetworkResponseAmuletPlayer.Elements:
+        amulet.elementFire.value = readByte();
+        amulet.elementWater.value = readByte();
+        amulet.elementWind.value = readByte();
+        amulet.elementEarth.value = readByte();
+        amulet.elementElectricity.value = readByte();
+        break;
+      case NetworkResponseAmuletPlayer.Element_Points:
+        amulet.elementPoints.value = readUInt16();
+        break;
+    }
   }
 
   void readNetworkServerError() {

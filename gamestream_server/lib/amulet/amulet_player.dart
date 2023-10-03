@@ -1,6 +1,7 @@
 
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/packages.dart';
+import 'package:gamestream_server/packages/common/src/amulet/amulet_element.dart';
 
 import 'item_slot.dart';
 import 'amulet_game.dart';
@@ -21,6 +22,12 @@ class AmuletPlayer extends IsometricPlayer {
   var npcOptions = <TalkOption>[];
   var performingActivePower = false;
 
+  var elementFire = 0;
+  var elementWater = 0;
+  var elementWind = 0;
+  var elementEarth = 0;
+  var elementElectricity = 0;
+
   final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot());
   final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot());
   final talents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
@@ -34,6 +41,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   late List<ItemSlot> items;
 
+  var _elementPoints = 0;
   var _inventoryOpen = false;
   var _skillsDialogOpen = false;
   var _experience = 0;
@@ -67,14 +75,17 @@ class AmuletPlayer extends IsometricPlayer {
 
     equipBody(AmuletItem.Basic_Leather_Armour);
     equipLegs(AmuletItem.Travellers_Pants);
-    // equipShoes(AmuletItem.Shoe_Leather_Boots);
-    // equipHandRight(AmuletItem.Gauntlet);
+
+    elementPoints = 1;
     health = maxHealth;
     equippedWeaponIndex = 0;
     active = false;
     equipmentDirty = true;
     complexion = ComplexionType.fair;
+    name = 'new_player';
 
+    writeAmuletElements();
+    writeElementPoints();
     writeActivatedPowerIndex();
     writeWeapons();
     writeTreasures();
@@ -87,7 +98,13 @@ class AmuletPlayer extends IsometricPlayer {
     writePlayerTalents();
     writeGender();
     writePlayerComplexion();
-    name = 'newb';
+  }
+
+  int get elementPoints => _elementPoints;
+
+  set elementPoints(int value){
+    _elementPoints = value;
+    writeElementPoints();
   }
 
   bool get activeAbilitySelected => activatedPowerIndex != -1;
@@ -1432,5 +1449,47 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     spawnItem(item);
     equipShoes(null);
+  }
+
+  void writeAmuletElements() {
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(NetworkResponseAmuletPlayer.Elements);
+    writeByte(elementFire);
+    writeByte(elementWater);
+    writeByte(elementWind);
+    writeByte(elementEarth);
+    writeByte(elementElectricity);
+  }
+
+  void writeElementPoints() {
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(NetworkResponseAmuletPlayer.Element_Points);
+    writeUInt16(elementPoints);
+  }
+
+  void upgradeAmuletElement(AmuletElement amuletElement) {
+    if (elementPoints <= 0){
+      writeGameError(GameError.Insufficient_Element_Points);
+      return;
+    }
+    elementPoints--;
+    switch (amuletElement) {
+      case AmuletElement.fire:
+        elementFire++;
+        break;
+      case AmuletElement.water:
+        elementWater++;
+        break;
+      case AmuletElement.wind:
+        elementWind++;
+        break;
+      case AmuletElement.earth:
+        elementEarth++;
+        break;
+      case AmuletElement.electricity:
+        elementElectricity++;
+        break;
+    }
+    writeAmuletElements();
   }
 }

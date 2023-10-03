@@ -521,7 +521,9 @@ class AmuletUI {
 
   Widget buildPlayerStatsRow() => Row(
       children: [
-        buildTalentPointsRemaining(),
+        buildElementPoints(),
+        width8,
+        buildAmuletElements(),
         width8,
         buildPlayerLevel(),
         width8,
@@ -709,4 +711,50 @@ class AmuletUI {
           : GSContainer(
         child: buildText(talentType.name),
       ));
+
+  Widget buildAmuletElements() => Row(
+        children: AmuletElement.values
+            .map(buildAmuletElement)
+            .toList(growable: false)
+    );
+
+  Widget buildAmuletElement(AmuletElement amuletElement) {
+
+    return buildWatch(amulet.elementPoints, (elementPoints) {
+      return onPressed(
+        action: elementPoints <= 0 ? null :(){
+          amulet.upgradeAmuletElement(amuletElement);
+        },
+        child: buildBorder(
+          color: getAmuletElementColor(amuletElement),
+          radius: BorderRadius.zero,
+          width: 2,
+          child: Container(
+            width: 50,
+            height: 50,
+            color: amulet.style.containerColor,
+            alignment: Alignment.center,
+            child: buildWatch(
+              amulet.getAmuletElementWatch(amuletElement),
+              buildText,
+            ),
+          ),
+        ),
+      );
+    });
+
+  }
+
+  Widget buildElementPoints() =>
+      GSContainer(
+          child: buildWatch(amulet.elementPoints, (t) => buildText('points: $t'))
+      );
 }
+
+Color getAmuletElementColor(AmuletElement amuletElement) => const {
+     AmuletElement.fire: Colors.red,
+     AmuletElement.water: Colors.blue,
+     AmuletElement.wind: Colors.greenAccent,
+     AmuletElement.earth: Colors.brown,
+     AmuletElement.electricity: Colors.yellow,
+   }[amuletElement] ?? (throw Exception('mapElementToColor($amuletElement)'));

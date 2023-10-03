@@ -9,4 +9,5 @@ enum NetworkRequestAmulet {
   Toggle_Inventory_Open,
   Upgrade_Talent,
   Spawn_Random_Enemy,
+  Upgrade_Element,
 }

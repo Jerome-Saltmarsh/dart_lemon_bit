@@ -680,11 +680,12 @@ class Connection with ByteReader {
       return;
     }
 
-    final gameTypeIndex = parse(arguments[1]);
+    final gameTypeIndex =  arguments.getArgInt('--gameType');
     if (gameTypeIndex == null || !isValidIndex(gameTypeIndex, GameType.values)){
       errorInvalidClientRequest();
       return;
     }
+
 
     final gameType = GameType.values[gameTypeIndex];
 

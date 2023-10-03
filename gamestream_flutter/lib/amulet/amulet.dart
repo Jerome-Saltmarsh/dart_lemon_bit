@@ -13,6 +13,13 @@ import 'amulet_render.dart';
 
 class Amulet extends IsometricGame {
 
+  final elementPoints = Watch(0);
+  final elementFire = Watch(0);
+  final elementWater = Watch(0);
+  final elementWind = Watch(0);
+  final elementEarth = Watch(0);
+  final elementElectricity = Watch(0);
+
   late final AmuletUI amuletUI;
 
   final dragging = Watch<ItemSlot?>(null);
@@ -256,5 +263,20 @@ class Amulet extends IsometricGame {
   void spawnRandomEnemy() =>
       network.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Spawn_Random_Enemy,
+      );
+
+  Watch<int> getAmuletElementWatch(AmuletElement amuletElement) =>
+      switch (amuletElement) {
+        AmuletElement.fire => elementFire,
+        AmuletElement.water => elementWater,
+        AmuletElement.wind => elementWind,
+        AmuletElement.earth => elementEarth,
+        AmuletElement.electricity => elementElectricity,
+      };
+
+  void upgradeAmuletElement(AmuletElement amuletElement) =>
+      network.sendNetworkRequestAmulet(
+        NetworkRequestAmulet.Upgrade_Element,
+        amuletElement.index,
       );
 }

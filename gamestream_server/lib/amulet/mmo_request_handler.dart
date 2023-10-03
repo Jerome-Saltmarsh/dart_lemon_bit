@@ -1,5 +1,6 @@
 import 'package:gamestream_server/gamestream/classes/connection.dart';
 import 'package:gamestream_server/packages.dart';
+import 'package:gamestream_server/packages/common/src/amulet/amulet_element.dart';
 
 import 'amulet_player.dart';
 
@@ -65,6 +66,16 @@ extension MMORequestHandler on Connection {
         }
         final mmoTalentType = AmuletTalentType.values[index];
         player.upgradeTalent(mmoTalentType);
+        break;
+      case NetworkRequestAmulet.Upgrade_Element:
+        final index = parseArg2(arguments);
+        if (index == null) return;
+        if (!isValidIndex(index, AmuletElement.values)){
+          errorInvalidClientRequest();
+          return;
+        }
+        final amuletElement = AmuletElement.values[index];
+        player.upgradeAmuletElement(amuletElement);
         break;
     }
   }
