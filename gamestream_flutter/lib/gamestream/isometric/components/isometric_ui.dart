@@ -667,4 +667,8 @@ class IsometricUI with IsometricComponent {
       child: child,
     );
   }
+
+  Future handleException(Object exception) async {
+    error.value = exception.toString();
+  }
 }

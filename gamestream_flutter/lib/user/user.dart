@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_cache.dart';
+import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 import 'package:user_service_client/src.dart';
@@ -36,13 +37,16 @@ class User with IsometricComponent {
     username.value = userJson.tryGetString('username') ?? '';
   }
 
-  Future refreshUser() async =>
-      userJson.value = userId.value.isEmpty
+  Future refreshUser() async {
+    options.startOperation(OperationStatus.Loading_User);
+    userJson.value = userId.value.isEmpty
           ? const {}
           : await UserServiceClient.getUser(
               url: userServiceUrl.value,
               userId: userId.value,
             );
+    options.operationDone();
+  }
 
   void playCharacter(String characterId) {
     network.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
@@ -91,10 +95,41 @@ class User with IsometricComponent {
         userId: user.userId.value,
         characterId: characterId,
       );
-    } catch(error) {
-      ui.error.value = error.toString();
+    } catch (error) {
+      ui.handleException(error);
     }
     await refreshUser();
     options.operationDone();
+  }
+
+  void createNewCharacter({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
+}) {
+    options.startOperation(OperationStatus.Creating_Character);
+    website.websitePage.value = WebsitePage.User;
+    UserServiceClient.createCharacter(
+      url: userServiceUrl.value,
+      userId: userId.value,
+      password: password.value,
+      name: name,
+      complexion: complexion,
+      hairType: hairType,
+      hairColor: hairColor,
+      gender: gender,
+      headType: headType,
+    ).then((response) {
+      options.operationDone();
+      user.refreshUser();
+      if (response.statusCode == 200){
+        playCharacter(response.body);
+        return;
+      }
+      ui.error.value = response.body;
+    });
   }
 }

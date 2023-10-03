@@ -150,27 +150,14 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         buildWatch(error, (error) => buildText(error, color: Colors.red)),
                         width8,
                         onPressed(
-                          action: () {
-                            components.website.websitePage.value = WebsitePage.User;
-                            UserServiceClient.createCharacter(
-                              url: components.user.userServiceUrl.value,
-                              userId: components.user.userId.value,
-                              password: components.user.password.value,
+                          action: () => components.user.createNewCharacter(
                               name: nameController.text,
                               complexion: complexion.value,
                               hairType: hairType.value,
                               hairColor: hairColor.value,
                               gender: gender.value,
                               headType: headType.value,
-                            ).then((response) {
-                              components.user.refreshUser();
-                              if (response.statusCode == 200){
-                                components.user.playCharacter(response.body);
-                                return;
-                              }
-                              error.value = response.body;
-                            });
-                          },
+                            ),
                           child: buildText('START', size: 25, color: Colors.green),
                         ),
                       ],

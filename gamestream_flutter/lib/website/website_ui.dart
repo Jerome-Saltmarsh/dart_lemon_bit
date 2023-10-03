@@ -189,6 +189,7 @@ extension WebsiteUI on WebsiteGame {
                 .map((character) {
 
               return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   onPressed(
                     action: () =>
@@ -207,7 +208,6 @@ extension WebsiteUI on WebsiteGame {
                           ],
                         )),
                   ),
-                  width8,
                   onPressed(
                       action: () => showDialogDeleteCharacter(character),
                       child: buildText('delete'),
