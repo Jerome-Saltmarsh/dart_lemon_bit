@@ -114,4 +114,14 @@ abstract class UserServiceClient {
 
      }));
   }
+
+  static Future<Response> deleteCharacter({
+    required String url,
+    required String userId,
+    required String characterId,
+  }) =>
+    http.delete(Uri.parse('$url/character'), body: jsonEncode({
+      'userId': userId,
+      'characterId': characterId,
+    }));
 }

@@ -552,6 +552,52 @@ class IsometricUI with IsometricComponent {
     ));
   }
 
+  void showDialogGetBool({
+    required Function(bool value) onSelected,
+    String text = '',
+  }) {
+    showDialog(
+      onOpen: engine.disableKeyEventHandler,
+      onClosed: engine.enableKeyEventHandler,
+      child: OnDisposed(
+      child: GSContainer(
+        width: 300,
+        height: 200,
+        child: Column(
+          children: [
+            buildText(text),
+            Container(
+              height: 80,
+              width: 150,
+              child: Row(
+                 children: [
+                   onPressed(
+                       action: () {
+                         closeDialog();
+                         onSelected(true);
+                       },
+                       child: buildText('YES'),
+                   ),
+                   onPressed(
+                       action: () {
+                         closeDialog();
+                         onSelected(false);
+                       },
+                       child: buildText('NO'),
+                   ),
+                 ],
+              ),
+            ),
+            onPressed(
+              action: closeDialog,
+              child: buildText('Cancel'),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+
   void showDialogGetHairType({
     required Function(int value) onSelected,
   }){

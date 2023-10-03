@@ -1,5 +1,6 @@
 import 'package:gamestream_users/database/classes/database.dart';
 import 'package:gamestream_users/http/consts/headers.dart';
+import 'package:gamestream_users/http/functions/handle_request_delete.dart';
 import 'package:shelf/shelf.dart';
 
 import 'handle_request_get.dart';
@@ -21,8 +22,11 @@ Future<Response> handleRequest({
       return handleRequestPatch(request, database);
     case 'POST':
       return handleRequestPost(request, database);
+    case 'DELETE':
+      return handleRequestDelete(request, database);
     case 'OPTIONS':
       return handleRequestOptions();
+
     default:
       return Response.badRequest(
         headers: headersAcceptText,

@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:gamestream_users/database/firestore/extensions/document_extensions.dart';
 import 'package:gamestream_users/database/firestore/functions/map_user_document_to_json.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
@@ -109,8 +110,7 @@ class DatabaseFirestore implements Database {
     })));
 
     arrayValue.values = values;
-
-    await patchUserDocument(userDocument, userId);
+    await patchUserDocument(userDocument);
     return characterId;
   }
 
@@ -164,16 +164,16 @@ class DatabaseFirestore implements Database {
     }
 
     userDocument.fields = fields;
-    final userId = userDocument.fields?['documentId']?.stringValue ?? (throw Exception());
-
-    await patchUserDocument(userDocument, userId);
+    // final userId = userDocument.fields?['documentId']?.stringValue ?? (throw Exception());
+    //
+    await patchUserDocument(userDocument);
   }
 
-  Future patchUserDocument(Document document, String documentId) async {
+  Future patchUserDocument(Document document) async {
     await ensureConnected();
-    documents.patch(
-        document,
-        getDocumentName(collection: 'users', value: documentId),
+    await documents.patch(
+      document,
+      document.name ?? buildDocumentName(collection: 'users'),
     );
   }
 
@@ -182,7 +182,7 @@ class DatabaseFirestore implements Database {
     required String username,
     required String password,
   }) async {
-
+    await ensureConnected();
     final documentId = generateUuid();
     // final encryptedPassword = sha256.convert(utf8.encode(password));
     // final decryptedPassword = sha256.convert(encryptedPassword.bytes);
@@ -207,7 +207,6 @@ class DatabaseFirestore implements Database {
   Future saveCharacter(String userId, Json characterJson) async {
     print('saveCharacter(userId: $userId)');
     final userDocument = await getUserDocument(userId);
-    print('userFound: $userId');
     final fields = userDocument.fields;
     final characterId = characterJson.tryGetString('uuid');
 
@@ -243,10 +242,9 @@ class DatabaseFirestore implements Database {
       }
     }
 
-    print("patching");
-    await documents.patch(userDocument, userDocument.name ?? buildDocumentName(collection: 'users'));
-    print("patching complete");
+    await patchUserDocument(userDocument);
   }
+
 
   Future<Document> getUserDocument(String userId) async {
     await ensureConnected();
@@ -259,12 +257,6 @@ class DatabaseFirestore implements Database {
       print("getUserDocument(userId: $userId) - FAILED");
       throw error;
     });
-  }
-
-  Future ensureConnected() async {
-    if (!connecting.isCompleted) {
-      await connecting;
-    }
   }
 
   @override
@@ -355,6 +347,45 @@ class DatabaseFirestore implements Database {
   }) {
     // TODO: implement setUserLocked
     throw UnimplementedError();
+  }
+
+  @override
+  Future deleteCharacter({
+    required String userId,
+    required String characterId,
+  }) async {
+    await ensureConnected();
+
+    final userDocument = await getUserDocument(userId);
+    final userJson = mapUserDocumentToJson(userDocument) ;
+    final userFieldCharacters = userDocument.getFieldArray('characters');
+
+    if (userFieldCharacters == null){
+      throw Exception('userCharacters == null');
+    }
+
+    final characterStrings = userJson.getList<String>('characters');
+    final characterJsons = characterStrings
+        .map(jsonDecode)
+        .toList(growable: false);
+
+    characterJsons.removeWhere((element) => element['uuid'] == characterId);
+
+    final characterStrings2 = characterJsons
+        .map(jsonEncode)
+        .toList(growable: false);
+
+    userFieldCharacters.values = characterStrings2
+        .map((e) => Value(stringValue: e))
+        .toList(growable: false);
+
+    await patchUserDocument(userDocument);
+  }
+
+  Future ensureConnected() async {
+    if (!connecting.isCompleted) {
+      await connecting;
+    }
   }
 }
 

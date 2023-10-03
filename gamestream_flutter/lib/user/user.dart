@@ -36,7 +36,7 @@ class User with IsometricComponent {
     username.value = userJson.tryGetString('username') ?? '';
   }
 
-  void refreshUser() async =>
+  Future refreshUser() async =>
       userJson.value = userId.value.isEmpty
           ? const {}
           : await UserServiceClient.getUser(
@@ -82,4 +82,15 @@ class User with IsometricComponent {
   }
 
   void logout() => userId.value = '';
+
+  void deleteCharacter(String characterId) async {
+    options.startOperation(OperationStatus.Deleting_Character);
+    await UserServiceClient.deleteCharacter(
+      url: user.userServiceUrl.value,
+      userId: user.userId.value,
+      characterId: characterId,
+    );
+    await refreshUser();
+    options.operationDone();
+  }
 }

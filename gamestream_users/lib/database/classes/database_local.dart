@@ -160,4 +160,10 @@ class DatabaseLocal implements Database {
     // TODO: implement setUserLocked
     throw UnimplementedError();
   }
+
+  @override
+  Future deleteCharacter({required String userId, required String characterId}) {
+    // TODO: implement deleteCharacter
+    throw UnimplementedError();
+  }
 }

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
@@ -12,12 +11,11 @@ import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:gamestream_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/website/widgets/gs_button_region.dart';
-import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
-import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';
+import 'package:user_service_client/src.dart';
 
 import 'functions/build_website_page_new_user.dart';
 import 'widgets/dialog_create_character_computer.dart';
@@ -190,22 +188,38 @@ extension WebsiteUI on WebsiteGame {
             children: characters
                 .map((character) {
 
-              return onPressed(
-                action: () =>
-                    user.playCharacter(character['uuid']),
-                child: Container(
-                    alignment: Alignment.center,
-                    width: 200,
-                    color: Colors.white12,
-                    padding: const EdgeInsets.all(4),
-                    margin: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildText(character['name'], size: 22),
-                        buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
-                      ],
-                    )),
+              return Row(
+                children: [
+                  onPressed(
+                    action: () =>
+                        user.playCharacter(character['uuid']),
+                    child: Container(
+                        alignment: Alignment.center,
+                        width: 200,
+                        color: Colors.white12,
+                        padding: const EdgeInsets.all(4),
+                        margin: const EdgeInsets.only(bottom: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildText(character['name'], size: 22),
+                            buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
+                          ],
+                        )),
+                  ),
+                  width8,
+                  onPressed(
+                      action: (){
+                        ui.showDialogGetBool(
+                            text: 'Are you sure you want to delete ${character['name']}?',
+                            onSelected: (bool value) async {
+                               if (value){
+                                 user.deleteCharacter(character['uuid']);
+                               }
+                            });
+                      },
+                      child: buildText('delete')),
+                ],
               );
             })
                 .toList(growable: false)),
