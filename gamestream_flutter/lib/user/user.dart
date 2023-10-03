@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
-import 'package:gamestream_flutter/website/website_ui.dart';
+import 'package:gamestream_flutter/packages/lemon_cache.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 import 'package:user_service_client/src.dart';
@@ -12,7 +10,7 @@ import 'package:user_service_client/src.dart';
 
 class User with IsometricComponent {
   final userJson = Watch<Json>({});
-  final userId = Watch('');
+  final userId = Cache(key: 'userId', value: '');
   final username = Watch('');
   final password = Watch('');
   final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');
