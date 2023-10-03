@@ -38,7 +38,7 @@ Widget buildContainerAuthenticate(User user){
                 action: (){
                   user.website.websitePage.value = WebsitePage.New_Character;
                 },
-                child: buildText('skip', color: Colors.white70, underline: true),
+                child: buildText('skip', color: Colors.orange, underline: true),
               ),
             ],
           ),

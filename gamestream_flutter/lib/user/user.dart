@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_cache.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
-import 'package:http/http.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 import 'package:user_service_client/src.dart';
@@ -115,27 +114,31 @@ class User with IsometricComponent {
     required int hairColor,
     required int gender,
     required int headType,
-}) {
+}) async {
     options.startOperation(OperationStatus.Creating_Character);
     website.websitePage.value = WebsitePage.User;
-    UserServiceClient.createCharacter(
-      url: userServiceUrl.value,
-      userId: userId.value,
-      password: password.value,
-      name: name,
-      complexion: complexion,
-      hairType: hairType,
-      hairColor: hairColor,
-      gender: gender,
-      headType: headType,
-    ).then((response) {
+    try {
+      final response = await UserServiceClient.createCharacter(
+        url: userServiceUrl.value,
+        userId: userId.value,
+        password: password.value,
+        name: name,
+        complexion: complexion,
+        hairType: hairType,
+        hairColor: hairColor,
+        gender: gender,
+        headType: headType,
+      );
       options.operationDone();
       user.refreshUser();
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         playCharacter(response.body);
-        return;
+      } else {
+        ui.error.value = response.body;
       }
-      ui.error.value = response.body;
-    });
+    } catch (error){
+      options.operationDone();
+      ui.handleException(error);
+    }
   }
 }
