@@ -190,34 +190,13 @@ extension WebsiteUI on WebsiteGame {
               ],
             ),
             height12,
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildText('CHARACTERS'),
-                width8,
-                onPressed(
-                  action: user.refreshUser,
-                  child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
-                ),
-              ],
-            ),
-            height12,
-            buildWatch(
-                user.characters,
-                buildCharacters
-            ),
-            onPressed(
-              action: user.website.showPageNewCharacter,
-              child: buildText('NEW CHARACTER', color: Colors.orange),
-            ),
+            buildContainerCharacters(),
           ],
-
         ),
       );
 
-  Widget buildCharacters(List<Json> characters){
-    return Container(
+  Widget buildCharacters(List<Json> characters) =>
+      Container(
       height: 200,
       child: SingleChildScrollView(
         child: Column(
@@ -245,6 +224,33 @@ extension WebsiteUI on WebsiteGame {
                 .toList(growable: false)),
       ),
     );
-  }
+
+  Widget buildContainerCharacters() => GSContainer(
+    color: Colors.black12,
+    child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildText('CHARACTERS'),
+              width8,
+              onPressed(
+                action: user.refreshUser,
+                child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
+              ),
+            ],
+          ),
+          height12,
+          buildWatch(
+              user.characters,
+              buildCharacters
+          ),
+          onPressed(
+            action: user.website.showPageNewCharacter,
+            child: buildText('NEW CHARACTER', color: Colors.orange),
+          ),
+        ],
+      ),
+  );
 }
 

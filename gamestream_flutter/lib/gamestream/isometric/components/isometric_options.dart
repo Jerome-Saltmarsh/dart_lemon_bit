@@ -200,4 +200,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
   void toggleRenderRainTwice() =>
       renderRainFallingTwice = !renderRainFallingTwice;
 
+  void operationDone(){
+    operationStatus.value = OperationStatus.None;
+  }
+
+  void startOperation(OperationStatus status){
+    operationStatus.value = status;
+  }
+
 }

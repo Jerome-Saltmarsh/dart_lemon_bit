@@ -101,6 +101,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Editor:
         readNetworkResponseEditor();
         break;
+      case NetworkResponse.Server_Error:
+        readNetworkServerError();
+        break;
       default:
         readNetworkResponseDefault();
         return;
@@ -683,5 +686,10 @@ class IsometricParser with ByteReader, IsometricComponent {
     //     amulet.characterCreated.value = readBool();
     //     break;
     // }
+  }
+
+  void readNetworkServerError() {
+    final message = readString();
+    ui.error.value = message;
   }
 }

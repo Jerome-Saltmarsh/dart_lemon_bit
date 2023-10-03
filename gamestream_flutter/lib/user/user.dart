@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/src.dart';
+import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
+import 'package:gamestream_flutter/website/website_ui.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 import 'package:user_service_client/src.dart';
@@ -52,11 +54,13 @@ class User with IsometricComponent {
     required String username,
     required String password,
   }) async {
+    options.startOperation(OperationStatus.Creating_Account);
     final response = await UserServiceClient.createUser(
       url: userServiceUrl.value,
       username: username,
       password: password,
     );
+    options.operationDone();
     if (response.statusCode == 200){
       userId.value = response.body;
     } else {
@@ -65,12 +69,13 @@ class User with IsometricComponent {
   }
 
   void login({required String username, required String password}) async {
+    options.startOperation(OperationStatus.Authenticating);
     final response = await UserServiceClient.login(
       url: userServiceUrl.value,
       username: username,
       password: password,
     );
-
+    options.operationDone();
     if (response.statusCode == 200){
       userId.value = response.body.replaceAll('\"', '');
     } else {

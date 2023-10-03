@@ -87,6 +87,10 @@ class Connection with ByteReader {
     sink.add(compiled);
   }
 
+  Future sendServerError(Object error) async {
+    sink.add([NetworkResponse.Server_Error, error.toString()]);
+  }
+
   void onData(dynamic args) {
     if (args is Uint8List) {
       if (args.isEmpty) return;
@@ -721,7 +725,7 @@ class Connection with ByteReader {
         }
         throw Exception('could not find character $characterId');
       }).catchError((error) {
-        sendGameError(GameError.Login_Error);
+        sendServerError(error);
         disconnect(
           closeCode: CloseCode.Character_Not_Found
         );
