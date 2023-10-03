@@ -1184,7 +1184,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   double getMouseAngle() => getAngleXY(mouseSceneX, mouseSceneY);
 
   @override
-  void handleRequestException(Object exception) {
+  void reportException(Object exception) {
     // TODO: implement writeError
   }
 

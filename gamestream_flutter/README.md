@@ -21,6 +21,7 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
+- feature prevent simultaneous sessions with same character 
 - feature handle invalid username password 
 - feature delete character 
 - fix enter game on create character 

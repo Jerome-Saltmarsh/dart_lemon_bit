@@ -52,7 +52,7 @@ abstract class Player with ByteWriter {
 
   Game get game;
 
-  void handleRequestException(Object exception) {}
+  void reportException(Object exception) {}
 
 }
 

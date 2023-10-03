@@ -1329,7 +1329,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   @override
-  void handleRequestException(Object exception) {
+  void reportException(Object exception) {
     writeAmuletError(exception.toString());
   }
 

@@ -154,4 +154,10 @@ class DatabaseLocal implements Database {
     // TODO: implement findUserByUsername
     throw UnimplementedError();
   }
+
+  @override
+  Future setUserLocked({required String userId, required bool locked}) {
+    // TODO: implement setUserLocked
+    throw UnimplementedError();
+  }
 }

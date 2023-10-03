@@ -104,4 +104,14 @@ abstract class UserServiceClient {
     required String userId,
     required Json character,
   }) => http.patch(Uri.parse('$url/users/$userId'), body: jsonEncode(character));
+
+  static Future setUserLocked({
+    required String url,
+    required String userId,
+    required bool locked,
+  }){
+     return http.patch(Uri.parse('$url/lock/$userId'), body: jsonEncode({
+
+     }));
+  }
 }

@@ -10,11 +10,10 @@ import 'package:user_service_client/src.dart';
 
 class User with IsometricComponent {
   final userJson = Watch<Json>({});
-  final userId = Watch('cef8dda2-5533-42be-bca3-1770314fdba3');
+  final userId = Watch('');
   final username = Watch('');
   final password = Watch('');
   final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');
-  final error = Watch('');
   final characters = Watch<List<Json>>([]);
 
   User(){

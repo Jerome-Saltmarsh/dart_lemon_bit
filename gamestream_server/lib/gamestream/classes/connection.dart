@@ -99,7 +99,7 @@ class Connection with ByteReader {
       try {
         return onDataStringArray(args.split(" "));
       } catch(error){
-        player?.handleRequestException(error);
+        player?.reportException(error);
       }
       return;
     }
@@ -683,18 +683,10 @@ class Connection with ByteReader {
     }
 
     final gameType = GameType.values[gameTypeIndex];
-    _player = server.joinGameByType(gameType);
 
-    if (arguments.length > 2){
-      final player = _player;
-
-      if (player is! AmuletPlayer) {
-        throw Exception('player is not AmuletPlayer');
-      }
-
+    if (arguments.length > 2) {
       final userId = arguments.getArg('--userId');
       final characterId = arguments.getArg('--characterId');
-
 
       if (userId == null){
         throw Exception('userId == null');
@@ -704,12 +696,20 @@ class Connection with ByteReader {
         throw Exception('characterId == null');
       }
 
-      player.userId = userId;
-      player.active = false;
       UserServiceClient.getUser(
         url: server.userServiceUrl,
         userId: userId,
       ).then((user) {
+
+        _player = server.joinGameByType(gameType);
+        final player = _player;
+
+        if (player is! AmuletPlayer){
+          throw Exception('player is! AmuletPlayer');
+        }
+
+        player.userId = userId;
+        player.active = false;
 
         final characters = user.getList<Json>('characters');
         for (final character in characters) {
@@ -721,8 +721,13 @@ class Connection with ByteReader {
         }
         throw Exception('could not find character $characterId');
       }).catchError((error) {
-        player.writeAmuletError(error.toString());
+        sendGameError(GameError.Login_Error);
+        disconnect(
+          closeCode: CloseCode.Character_Not_Found
+        );
       });
+    } else {
+      _player = server.joinGameByType(gameType);
     }
   }
 
@@ -941,6 +946,10 @@ class Connection with ByteReader {
         player.name = arguments[2];
         break;
     }
+  }
+
+  void disconnect({required int closeCode}) {
+    sink.close(closeCode);
   }
 }
 

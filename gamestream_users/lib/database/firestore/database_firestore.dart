@@ -347,5 +347,14 @@ class DatabaseFirestore implements Database {
     }
     return null;
   }
+
+  @override
+  Future setUserLocked({
+    required String userId,
+    required bool locked,
+  }) {
+    // TODO: implement setUserLocked
+    throw UnimplementedError();
+  }
 }
 
