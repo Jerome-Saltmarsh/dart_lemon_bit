@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_cache.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
+import 'package:http/http.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 import 'package:user_service_client/src.dart';
@@ -90,11 +91,16 @@ class User with IsometricComponent {
   void deleteCharacter(String characterId) async {
     options.startOperation(OperationStatus.Deleting_Character);
     try {
-      await UserServiceClient.deleteCharacter(
+      final response = await UserServiceClient.deleteCharacter(
         url: user.userServiceUrl.value,
         userId: user.userId.value,
         characterId: characterId,
       );
+
+      if (response.statusCode != 200) {
+        ui.error.value = response.body;
+      }
+
     } catch (error) {
       ui.handleException(error);
     }

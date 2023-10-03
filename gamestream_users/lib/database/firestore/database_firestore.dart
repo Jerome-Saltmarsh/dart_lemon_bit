@@ -364,11 +364,7 @@ class DatabaseFirestore implements Database {
       throw Exception('userCharacters == null');
     }
 
-    final characterStrings = userJson.getList<String>('characters');
-    final characterJsons = characterStrings
-        .map(jsonDecode)
-        .toList(growable: false);
-
+    final characterJsons = userJson.getList<Json>('characters');
     characterJsons.removeWhere((element) => element['uuid'] == characterId);
 
     final characterStrings2 = characterJsons

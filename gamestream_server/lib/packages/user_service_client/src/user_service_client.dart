@@ -120,8 +120,11 @@ abstract class UserServiceClient {
     required String userId,
     required String characterId,
   }) =>
-    http.delete(Uri.parse('$url/character'), body: jsonEncode({
-      'userId': userId,
-      'characterId': characterId,
-    }));
+    http.delete(Uri.parse('$url/character'),
+        headers: headersJson,
+        body: jsonEncode({
+          'userId': userId,
+          'characterId': characterId,
+        }),
+    );
 }

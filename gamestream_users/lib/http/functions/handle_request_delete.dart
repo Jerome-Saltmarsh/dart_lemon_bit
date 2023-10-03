@@ -19,7 +19,7 @@ Future<Response> handleRequestDelete(
   final method = pathSegments.first;
   switch (method) {
     case 'character':
-      return await handleRequestDeleteCharacter(request, database);
+      return handleRequestDeleteCharacter(request, database);
     default:
       return badRequest('invalid_post_method: $method');
   }

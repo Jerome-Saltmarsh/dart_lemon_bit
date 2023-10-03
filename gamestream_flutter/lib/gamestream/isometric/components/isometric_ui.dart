@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:http/http.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -669,6 +670,11 @@ class IsometricUI with IsometricComponent {
   }
 
   Future handleException(Object exception) async {
-    error.value = exception.toString();
+    if (exception is ClientException){
+      error.value = exception.message;
+    } else {
+      error.value = exception.toString();
+    }
+
   }
 }

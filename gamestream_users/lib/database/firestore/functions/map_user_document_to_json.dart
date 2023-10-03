@@ -5,14 +5,13 @@ import 'package:gamestream_users/database/firestore/extensions/document_extensio
 import 'package:googleapis/firestore/v1.dart';
 import 'package:typedef/json.dart';
 
+import 'get_characters_json_from_user_document.dart';
+
 
 Json mapUserDocumentToJson(Document document) => {
     'username' : document.getFieldString('username'),
-    'characters': (document.getFieldArrayValues('characters') ?? [])
-        .map((field) => field.stringValue)
-        .map((e) => e != null ? jsonDecode(e) : '')
-        .toList(growable: false)
-  };
+    'characters': getCharactersJsonFromUserDocument(document)
+};
 
 
 
