@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:gamestream_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/website/widgets/gs_button_region.dart';
+import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -45,7 +46,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildPageWebsiteDesktop() => Center(
       child: WatchBuilder(websitePage, (websitePage) =>
         switch (websitePage) {
-          WebsitePage.User => buildWebsitePageSelectCharacter(),
+          WebsitePage.User => buildWebsitePageUser(),
           WebsitePage.New_Character => DialogCreateCharacterComputer(),
           WebsitePage.Select_Region => buildWebsitePageSelectRegion(
               options: options,
@@ -128,28 +129,25 @@ extension WebsiteUI on WebsiteGame {
       GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
-  Widget buildWebsitePageSelectCharacter() {
+  Widget buildWebsitePageUser() {
     return WatchBuilder(options.region, (ConnectionRegion? region) {
 
       if (region == null) {
         this.websitePage.value = WebsitePage.Select_Region;
       }
 
-      return GSContainer(
+      return Container(
         width: 450,
         height: 450 * goldenRatio_1381,
-        color: Colors.transparent,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildText('AMULET', size: 80, family: 'REBUFFED'),
-              height32,
-              buildContainerAuthentication(),
-              height12,
-            ],
-          ),
+        color: Colors.red,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildText('AMULET', size: 80, family: 'REBUFFED'),
+            height32,
+            buildContainerAuthentication(),
+          ],
         ),
       );
     }
@@ -167,30 +165,36 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildContainerAuthenticated() =>
-      GSContainer(
-        color: Colors.black12,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      GSFullscreen(
+        child: Stack(
+          alignment: Alignment.topLeft,
           children: [
-            GSButtonRegion(),
-            height12,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildWatch(user.username, buildText),
-                onPressed(
-                  action: user.logout,
-                  child: GSContainer(
-                    color: Colors.black12,
-                    child: buildText('Logout'),
-                    width: 100,
+            // Positioned(child: GSButtonRegion(), top: 0, right: 0,),
+            Positioned(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  height12,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildWatch(user.username, buildText),
+                      onPressed(
+                        action: user.logout,
+                        child: GSContainer(
+                          color: Colors.black12,
+                          child: buildText('Logout'),
+                          width: 100,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  height12,
+                  buildContainerCharacters(),
+                ],
+              ),
             ),
-            height12,
-            buildContainerCharacters(),
           ],
         ),
       );

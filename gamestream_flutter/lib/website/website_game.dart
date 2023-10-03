@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
@@ -81,13 +82,9 @@ class WebsiteGame extends Game {
   }
 
   @override
-  Widget buildUI(BuildContext context) => Container(
-    width: engine.screen.width,
-    height: engine.screen.height,
-    alignment: Alignment.center,
-    child: buildWatch(options.operationStatus, buildOperationStatus),
-  );
-
+  Widget buildUI(BuildContext context) => GSFullscreen(
+        child: buildWatch(options.operationStatus, buildOperationStatus),
+      );
 
   void toggleWebsitePage() =>
       websitePage.value =

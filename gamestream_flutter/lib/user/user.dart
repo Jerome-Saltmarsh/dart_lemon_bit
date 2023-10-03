@@ -21,8 +21,8 @@ class User with IsometricComponent {
     userJson.onChanged(onChangedUserJson);
   }
 
-  void onChangedUserId(String value){
-    print('user.onChangedUserId($value)');
+  void onChangedUserId(String value) {
+    // print('user.onChangedUserId($value)');
     refreshUser();
   }
 
