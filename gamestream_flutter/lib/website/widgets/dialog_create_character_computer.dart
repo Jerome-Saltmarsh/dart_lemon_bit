@@ -1,9 +1,11 @@
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_character_sprites.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
+import 'package:gamestream_flutter/website/widgets/gs_button_region.dart';
 import 'package:lemon_math/src.dart';
 
 import 'package:flutter/material.dart';
@@ -48,120 +50,25 @@ class DialogCreateCharacterComputer extends StatelessWidget {
             width: width,
             height: width * goldenRatio_1381,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                onPressed(
-                  action: () {
-                    components.website.websitePage.value = WebsitePage.User;
-                  },
-                  child: buildText('Back'),
-                ),
-                Center(
-                  child: onPressed(
-                    action: (){
-                      row.value = (row.value + 1) % 8;
-                    },
-                    child: Container(
-                      width: 130,
-                      height: 130 * goldenRatio_1381,
-                      alignment: Alignment.center,
-                      color: Colors.black12,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            top: 100,
-                            child: CustomCanvas(
-                              paint: (canvas, size) =>
-                                renderCanvasCharacterSprites(
-                                  canvas: canvas,
-                                  sprites: components.images.kidCharacterSpritesFront,
-                                  row: row.value,
-                                  column: 0,
-                                  characterState: CharacterState.Idle,
-                                  gender: gender.value,
-                                  helmType: 0,
-                                  headType: headType.value,
-                                  bodyType: BodyType.Leather_Armour,
-                                  shoeType: ShoeType.Leather_Boots,
-                                  legsType: LegType.Leather,
-                                  hairType: hairType.value,
-                                  weaponType: 0,
-                                  skinColor: palette[complexion.value].value,
-                                  hairColor: palette[hairColor.value].value,
-                                ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: MouseOver(builder: (mouseOver) => IsometricIcon(
-                              iconType: IconType.Turn_Right,
-                              scale: 0.2,
-                              color: mouseOver ? Colors.green.value : Colors.white38.value,
-                            )),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                height32,
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildColumnComplexion(complexion, palette),
-                        buildColumnHairStyle(hairType),
-                        buildColumnHairColor(hairColor, palette),
-                        buildColumnBodyShape(gender),
-                        buildColumnHeadType(headType),
-                      ],
-                    ),
-                  ],
-                ),
-                Expanded(child: const SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GSKeyEventHandler(
-                      child: Container(
-                          width: 200,
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.black12,
-                          child: TextField(
-                            autofocus: true,
-                            controller: nameController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none
-                            ),
-                            style: TextStyle(
-                              color: Colors.orange,
-                              fontSize: 25,
-                            ),
-                          )
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        buildWatch(error, (error) => buildText(error, color: Colors.red)),
-                        width8,
-                        onPressed(
-                          action: () => components.user.createNewCharacter(
-                              name: nameController.text,
-                              complexion: complexion.value,
-                              hairType: hairType.value,
-                              hairColor: hairColor.value,
-                              gender: gender.value,
-                              headType: headType.value,
-                            ),
-                          child: buildText('START', size: 25, color: Colors.green),
-                        ),
-                      ],
-                    ),
+                    buildBackButton(components),
+                    GSButtonRegion(),
+                  ],
+                ),
+                buildCharacterCanvas(components, palette),
+                height32,
+                buildControls(palette),
+                Expanded(child: const SizedBox()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildControlName(nameController),
+                    buildButtonStart(components, nameController),
                   ],
                 ),
               ],
@@ -169,6 +76,121 @@ class DialogCreateCharacterComputer extends StatelessWidget {
       }
     );
   }
+
+  Widget buildButtonStart(IsometricComponents components,
+          TextEditingController nameController) =>
+      Row(
+        children: [
+          buildWatch(error, (error) => buildText(error, color: Colors.red)),
+          width8,
+          onPressed(
+            action: () => components.user.createNewCharacter(
+              name: nameController.text,
+              complexion: complexion.value,
+              hairType: hairType.value,
+              hairColor: hairColor.value,
+              gender: gender.value,
+              headType: headType.value,
+            ),
+            child: buildText('START', size: 25, color: Colors.green),
+          ),
+        ],
+      );
+
+  GSKeyEventHandler buildControlName(TextEditingController nameController) {
+    return GSKeyEventHandler(
+                    child: Container(
+                        width: 200,
+                        padding: const EdgeInsets.all(8),
+                        color: Colors.black12,
+                        child: TextField(
+                          autofocus: true,
+                          controller: nameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none
+                          ),
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 25,
+                          ),
+                        )
+                    ),
+                  );
+  }
+
+  Widget buildControls(List<Color> palette) => Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildColumnComplexion(complexion, palette),
+                      buildColumnHairStyle(hairType),
+                      buildColumnHairColor(hairColor, palette),
+                      buildColumnBodyShape(gender),
+                      buildColumnHeadType(headType),
+                    ],
+                  ),
+                ],
+              );
+
+  Widget buildCharacterCanvas(IsometricComponents components, List<Color> palette) {
+    return onPressed(
+                action: (){
+                  row.value = (row.value + 1) % 8;
+                },
+                child: Container(
+                  width: 130,
+                  height: 130 * goldenRatio_1381,
+                  alignment: Alignment.center,
+                  color: Colors.black12,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Positioned(
+                        top: 100,
+                        child: CustomCanvas(
+                          paint: (canvas, size) =>
+                            renderCanvasCharacterSprites(
+                              canvas: canvas,
+                              sprites: components.images.kidCharacterSpritesFront,
+                              row: row.value,
+                              column: 0,
+                              characterState: CharacterState.Idle,
+                              gender: gender.value,
+                              helmType: 0,
+                              headType: headType.value,
+                              bodyType: BodyType.Leather_Armour,
+                              shoeType: ShoeType.Leather_Boots,
+                              legsType: LegType.Leather,
+                              hairType: hairType.value,
+                              weaponType: 0,
+                              skinColor: palette[complexion.value].value,
+                              hairColor: palette[hairColor.value].value,
+                            ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: MouseOver(builder: (mouseOver) => IsometricIcon(
+                          iconType: IconType.Turn_Right,
+                          scale: 0.2,
+                          color: mouseOver ? Colors.green.value : Colors.white38.value,
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+  }
+
+  Widget buildBackButton(IsometricComponents components) => onPressed(
+                action: () {
+                  components.website.websitePage.value = WebsitePage.User;
+                },
+                child: buildText('Back'),
+              );
 }
 
 Widget buildColumnHeadType(Watch<int> headType) =>
