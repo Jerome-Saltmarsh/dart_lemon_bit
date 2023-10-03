@@ -20,10 +20,11 @@ class GSButtonRegion extends StatelessWidget {
                 children: [
                   buildText('Region'),
                   width8,
-                  GSContainer(
-                    padding: EdgeInsets.all(8),
-                    color: Colors.white12,
-                    child: buildText(formatEnumName(region?.name ?? 'select')),
+                  buildBorder(
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: buildText(formatEnumName(region?.name ?? 'select')),
+                    ),
                   ),
                 ],
               ),

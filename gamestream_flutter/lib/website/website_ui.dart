@@ -159,11 +159,9 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildContainerAuthenticated() =>
-      Container(
+      GSContainer(
         width: 400,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             height12,
             Row(
@@ -210,16 +208,30 @@ extension WebsiteUI on WebsiteGame {
     );
 
   Widget buildContainerCharacters() => GSContainer(
+    color: Colors.transparent,
     child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildText('CHARACTERS', size: 22, color: Colors.white70),
-              width8,
-              onPressed(
-                action: user.refreshUser,
-                child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
+              // width8,
+              // Tooltip(
+              //   message: 'Refresh',
+              //   child: onPressed(
+              //     action: user.refreshUser,
+              //     child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
+              //   ),
+              // ),
+              width16,
+              buildBorder(
+                color: Colors.orange,
+                child: onPressed(
+                  action: user.website.showPageNewCharacter,
+                  child: Container(
+                      padding: const EdgeInsets.all(4),
+                      child: buildText('CREATE NEW', color: Colors.orange)),
+                ),
               ),
             ],
           ),
@@ -227,10 +239,6 @@ extension WebsiteUI on WebsiteGame {
           buildWatch(
               user.characters,
               buildCharacters
-          ),
-          onPressed(
-            action: user.website.showPageNewCharacter,
-            child: buildText('NEW CHARACTER', color: Colors.orange),
           ),
         ],
       ),
