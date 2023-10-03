@@ -209,16 +209,9 @@ extension WebsiteUI on WebsiteGame {
                   ),
                   width8,
                   onPressed(
-                      action: (){
-                        ui.showDialogGetBool(
-                            text: 'Are you sure you want to delete ${character['name']}?',
-                            onSelected: (bool value) async {
-                               if (value){
-                                 user.deleteCharacter(character['uuid']);
-                               }
-                            });
-                      },
-                      child: buildText('delete')),
+                      action: () => showDialogDeleteCharacter(character),
+                      child: buildText('delete'),
+                  ),
                 ],
               );
             })
@@ -280,6 +273,19 @@ extension WebsiteUI on WebsiteGame {
     ],
   );
 
+  void showDialogDeleteCharacter(Json character) {
+    ui.showDialogGetBool(
+        text: 'Are you sure you want to delete ${character['name']}?',
+        textFalse: 'Cancel',
+        textTrue: 'CONFIRM',
+        onSelected: (bool value) async {
+          if (value){
+            user.deleteCharacter(character['uuid']);
+          }
+        });
+  }
+
 }
+
 
 

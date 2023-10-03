@@ -38,7 +38,10 @@ class IsometricUI with IsometricComponent {
                child: buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing)),
            Positioned(
                top: 0,
-               child: buildWatch(dialog, (dialog) => dialog ?? nothing)),
+               child: buildWatch(dialog, (dialog) => GSFullscreen(
+                   alignment: Alignment.center,
+                   child: dialog ?? nothing)),
+           ),
            Positioned(
              top: 0,
              child: buildError(),
@@ -555,47 +558,40 @@ class IsometricUI with IsometricComponent {
   void showDialogGetBool({
     required Function(bool value) onSelected,
     String text = '',
+    String textTrue = 'YES',
+    String textFalse = 'NO',
   }) {
     showDialog(
-      onOpen: engine.disableKeyEventHandler,
-      onClosed: engine.enableKeyEventHandler,
-      child: OnDisposed(
       child: GSContainer(
         width: 300,
         height: 200,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             buildText(text),
-            Container(
-              height: 80,
-              width: 150,
-              child: Row(
-                 children: [
-                   onPressed(
-                       action: () {
-                         closeDialog();
-                         onSelected(true);
-                       },
-                       child: buildText('YES'),
-                   ),
-                   onPressed(
-                       action: () {
-                         closeDialog();
-                         onSelected(false);
-                       },
-                       child: buildText('NO'),
-                   ),
-                 ],
-              ),
-            ),
-            onPressed(
-              action: closeDialog,
-              child: buildText('Cancel'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 onPressed(
+                     action: () {
+                       closeDialog();
+                       onSelected(true);
+                     },
+                     child: buildText(textTrue),
+                 ),
+                 width16,
+                 onPressed(
+                     action: () {
+                       closeDialog();
+                       onSelected(false);
+                     },
+                     child: buildText(textFalse),
+                 ),
+               ],
             ),
           ],
         ),
-      ),
-    ));
+      ));
   }
 
   void showDialogGetHairType({

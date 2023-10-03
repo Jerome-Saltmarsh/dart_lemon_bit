@@ -85,11 +85,15 @@ class User with IsometricComponent {
 
   void deleteCharacter(String characterId) async {
     options.startOperation(OperationStatus.Deleting_Character);
-    await UserServiceClient.deleteCharacter(
-      url: user.userServiceUrl.value,
-      userId: user.userId.value,
-      characterId: characterId,
-    );
+    try {
+      await UserServiceClient.deleteCharacter(
+        url: user.userServiceUrl.value,
+        userId: user.userId.value,
+        characterId: characterId,
+      );
+    } catch(error) {
+      ui.error.value = error.toString();
+    }
     await refreshUser();
     options.operationDone();
   }
