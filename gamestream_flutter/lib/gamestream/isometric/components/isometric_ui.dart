@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -30,7 +31,6 @@ class IsometricUI with IsometricComponent {
   }
 
   Widget buildUI(BuildContext context) => Stack(
-      alignment: Alignment.center,
       children: [
            Positioned(
                top: 0,
@@ -41,38 +41,38 @@ class IsometricUI with IsometricComponent {
                child: buildWatch(dialog, (dialog) => dialog ?? nothing)),
            Positioned(
              top: 0,
-             child: buildWatch(error, (error) => error == null
-                   ? nothing
-                   : Container(
-               width: engine.screen.width,
-               height: engine.screen.height,
-               alignment: Alignment.center,
-               child: buildBorder(
-                 color: style.containerColorDark,
-                 child: GSContainer(
-                     width: 350,
-                     height: 350 * goldenRatio_0618,
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.end,
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         buildText(error, color: Colors.red),
-                         height16,
-                         onPressed(
-                           action: () => this.error.value = null,
-                           child: GSContainer(
-                             color: Colors.white12,
-                             width: 80,
-                             child: buildText('Okay'),
-                           ),
-                         )
-                       ],
-                     )),
-               ),
-             ))
+             child: buildError(),
            ),
       ],
     );
+
+  Widget buildError() => buildWatch(error, (error) => error == null
+                 ? nothing
+                 : GSFullscreen(
+             alignment: Alignment.center,
+             child: buildBorder(
+               color: style.containerColorDark,
+               child: GSContainer(
+                   width: 350,
+                   height: 350 * goldenRatio_0618,
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.end,
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       buildText(error, color: Colors.red),
+                       height16,
+                       onPressed(
+                         action: () => this.error.value = null,
+                         child: GSContainer(
+                           color: Colors.white12,
+                           width: 80,
+                           child: buildText('Okay'),
+                         ),
+                       )
+                     ],
+                   )),
+             ),
+           ));
 
   void closeDialog() {
     dialog.value = null;

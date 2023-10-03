@@ -43,8 +43,8 @@ extension WebsiteUI on WebsiteGame {
       ))
           .toList());
 
-  Widget buildPageWebsiteDesktop() => Center(
-      child: WatchBuilder(websitePage, (websitePage) =>
+  Widget buildPageWebsiteDesktop() =>
+      WatchBuilder(websitePage, (websitePage) =>
         switch (websitePage) {
           WebsitePage.User => buildWebsitePageUser(),
           WebsitePage.New_Character => DialogCreateCharacterComputer(),
@@ -53,8 +53,7 @@ extension WebsiteUI on WebsiteGame {
               website: website,
               engine: engine,
             ),
-        }),
-    );
+        });
 
   void downloadImageTest(){
     final width = 100;
@@ -136,19 +135,14 @@ extension WebsiteUI on WebsiteGame {
         this.websitePage.value = WebsitePage.Select_Region;
       }
 
-      return Container(
-        width: 450,
-        height: 450 * goldenRatio_1381,
-        color: Colors.red,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            buildText('AMULET', size: 80, family: 'REBUFFED'),
-            height32,
-            buildContainerAuthentication(),
-          ],
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          buildText('AMULET', size: 80, family: 'REBUFFED'),
+          height32,
+          buildContainerAuthentication(),
+        ],
       );
     }
     );
@@ -165,36 +159,29 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildContainerAuthenticated() =>
-      GSFullscreen(
-        child: Stack(
-          alignment: Alignment.topLeft,
+      Container(
+        width: 400,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Positioned(child: GSButtonRegion(), top: 0, right: 0,),
-            Positioned(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  height12,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildWatch(user.username, buildText),
-                      onPressed(
-                        action: user.logout,
-                        child: GSContainer(
-                          color: Colors.black12,
-                          child: buildText('Logout'),
-                          width: 100,
-                        ),
-                      ),
-                    ],
+            height12,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildWatch(user.username, buildText),
+                onPressed(
+                  action: user.logout,
+                  child: GSContainer(
+                    color: Colors.black12,
+                    child: buildText('Logout'),
+                    width: 100,
                   ),
-                  height12,
-                  buildContainerCharacters(),
-                ],
-              ),
+                ),
+              ],
             ),
+            height12,
+            buildContainerCharacters(),
           ],
         ),
       );

@@ -11,47 +11,45 @@ import 'package:lemon_watch/src.dart';
 Widget buildContainerAuthenticate(User user){
   final loginPage = WatchBool(true);
   return GSKeyEventHandler(
-    child: buildBorder(
-      radius: BorderRadius.zero,
-      child: GSContainer(
-        child: buildWatch(
-            loginPage, (login) => Column(
-                children: [
-                  Row(
-                    children: [
-                      onPressed(
-                        action: loginPage.setTrue,
-                        child: GSContainer(
-                            color: login ? Colors.white24 : null,
-                            child: buildText('login'),
-                        ),
-                      ),
-                      width16,
-                      onPressed(
-                        action: loginPage.setFalse,
-                        child: GSContainer(
-                            color: !login ? Colors.white24 : null,
-                            child: buildText('register'),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      onPressed(
-                        action: (){
-                          user.website.websitePage.value = WebsitePage.New_Character;
-                        },
-                          child: buildText('skip', color: Colors.white70, underline: true),
-                      ),
-                    ],
-                  ),
-                  height16,
-                  login
-                      ? buildContainerLogin(user)
-                      : buildContainerRegister(user),
+    child: GSContainer(
+      width: 400,
+      child: buildWatch(
+          loginPage, (login) => Column(
+        children: [
+          Row(
+            children: [
+              onPressed(
+                action: loginPage.setTrue,
+                child: GSContainer(
+                  color: login ? Colors.white24 : null,
+                  child: buildText('login'),
+                ),
+              ),
+              width16,
+              onPressed(
+                action: loginPage.setFalse,
+                child: GSContainer(
+                  color: !login ? Colors.white24 : null,
+                  child: buildText('register'),
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+              onPressed(
+                action: (){
+                  user.website.websitePage.value = WebsitePage.New_Character;
+                },
+                child: buildText('skip', color: Colors.white70, underline: true),
+              ),
+            ],
+          ),
+          height16,
+          login
+              ? buildContainerLogin(user)
+              : buildContainerRegister(user),
 
-                  height16,
-                ],
-              )
-        ),
+          height16,
+        ],
+      )
       ),
     ),
   );
