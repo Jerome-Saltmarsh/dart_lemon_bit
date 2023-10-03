@@ -15,14 +15,14 @@ Widget buildWebsitePageSelectRegion({
   required IsometricOptions options,
   required WebsiteGame website,
   required Engine engine,
-}) => SizedBox(
-  width: 300,
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      buildText('Select Your Region', size: FontSize.large),
-      height16,
-      WatchBuilder(options.region, (activeRegion) {
+}) => Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    buildText('Select Your Region', size: FontSize.large),
+    height16,
+    Container(
+      width: 300,
+      child: WatchBuilder(options.region, (activeRegion) {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,6 +59,6 @@ Widget buildWebsitePageSelectRegion({
           ),
         );
       }),
-    ],
-  ),
+    ),
+  ],
 );

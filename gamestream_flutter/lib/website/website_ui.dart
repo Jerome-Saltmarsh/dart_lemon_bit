@@ -163,21 +163,14 @@ extension WebsiteUI on WebsiteGame {
         width: 400,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             height12,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildWatch(user.username, buildText),
-                onPressed(
-                  action: user.logout,
-                  child: GSContainer(
-                    color: Colors.black12,
-                    child: buildText('Logout'),
-                    width: 100,
-                  ),
-                ),
+                GSButtonRegion(),
+                buildControlUser(),
               ],
             ),
             height12,
@@ -217,13 +210,12 @@ extension WebsiteUI on WebsiteGame {
     );
 
   Widget buildContainerCharacters() => GSContainer(
-    color: Colors.black12,
     child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildText('CHARACTERS'),
+              buildText('CHARACTERS', size: 22, color: Colors.white70),
               width8,
               onPressed(
                 action: user.refreshUser,
@@ -243,5 +235,24 @@ extension WebsiteUI on WebsiteGame {
         ],
       ),
   );
+
+  Widget buildControlUser() => Row(
+    children: [
+      buildWatch(user.username, buildText),
+      width8,
+      buildBorder(
+        child: Container(
+          color: Colors.transparent,
+          padding: const EdgeInsets.all(4),
+          child: onPressed(
+            action: user.logout,
+            child: buildText('Logout'),
+          ),
+        ),
+      ),
+    ],
+  );
+
 }
+
 

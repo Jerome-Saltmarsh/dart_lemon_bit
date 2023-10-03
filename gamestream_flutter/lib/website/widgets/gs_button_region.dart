@@ -14,10 +14,17 @@ class GSButtonRegion extends StatelessWidget {
             onPressed(
             action: components.website.showWebsitePageRegion,
             child: Container(
-              color: Colors.white12,
-              alignment: Alignment.center,
-              padding: components.style.containerPadding,
-              child: buildText(formatEnumName(region?.name ?? 'region')),
+              child: Row(
+                children: [
+                  buildText('region'),
+                  width8,
+                  Container(
+                    color: Colors.white12,
+                    padding: components.style.containerPadding,
+                    child: buildText(formatEnumName(region?.name ?? 'region')),
+                  ),
+                ],
+              ),
             ),
         )));
 }
