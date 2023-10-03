@@ -38,7 +38,7 @@ class WebsocketClient {
   }
 
   void connect({required String uri, required dynamic message}) {
-    print('webSocket.connect($uri)');
+    print('websocket_client.connect($uri)');
     connectionStatus.value = ConnectionStatus.Connecting;
     try {
       webSocketChannel = WebSocketChannel.connect(

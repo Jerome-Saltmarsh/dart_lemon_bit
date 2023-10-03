@@ -151,6 +151,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         width8,
                         onPressed(
                           action: () {
+                            components.website.websitePage.value = WebsitePage.User;
                             UserServiceClient.createCharacter(
                               url: components.user.userServiceUrl.value,
                               userId: components.user.userId.value,
