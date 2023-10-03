@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'dart:ui';
 
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
@@ -30,17 +31,26 @@ class IsometricUI with IsometricComponent {
     gameUI.value = website.buildUI;
   }
 
-  Widget buildUI(BuildContext context) => Stack(
+  Widget buildUI(BuildContext context) {
+
+    final watchGameUI = buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing);
+
+    return Stack(
       children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              child: watchGameUI,
+            ),
            Positioned(
                top: 0,
-               left: 0,
-               child: buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing)),
-           Positioned(
-               top: 0,
-               child: buildWatch(dialog, (dialog) => GSFullscreen(
-                   alignment: Alignment.center,
-                   child: dialog ?? nothing)),
+               child: buildWatch(dialog, (dialog) => dialog == null
+                   ? nothing : GSFullscreen(
+                 child: dialog,
+                 alignment: Alignment.center,
+                 color: Colors.black38,
+               )
+               ),
            ),
            Positioned(
              top: 0,
@@ -48,6 +58,7 @@ class IsometricUI with IsometricComponent {
            ),
       ],
     );
+  }
 
   Widget buildError() => buildWatch(error, (error) => error == null
                  ? nothing

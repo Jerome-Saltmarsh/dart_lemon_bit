@@ -4,8 +4,9 @@ import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_bui
 class GSFullscreen extends StatelessWidget {
   final Widget child;
   final Alignment? alignment;
+  final Color? color;
 
-  const GSFullscreen({super.key, required this.child, this.alignment});
+  const GSFullscreen({super.key, required this.child, this.alignment, this.color});
 
   @override
   Widget build(BuildContext context) => IsometricBuilder(
@@ -14,5 +15,6 @@ class GSFullscreen extends StatelessWidget {
             height: components.engine.screen.height,
             alignment: alignment,
             child: child,
+            color: color,
           ));
 }
