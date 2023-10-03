@@ -163,6 +163,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               gender: gender.value,
                               headType: headType.value,
                             ).then((response) {
+                              components.user.refreshUser();
                               if (response.statusCode == 200){
                                 components.user.playCharacter(response.body);
                                 return;

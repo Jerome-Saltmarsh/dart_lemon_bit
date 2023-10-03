@@ -36,16 +36,13 @@ class User with IsometricComponent {
     username.value = userJson.tryGetString('username') ?? '';
   }
 
-  void refreshUser() async {
-    if (userId.value.isNotEmpty){
-      userJson.value = await UserServiceClient.getUser(
-        url: userServiceUrl.value,
-        userId: userId.value,
-      );
-    } else {
-      userJson.value = {};
-    }
-  }
+  void refreshUser() async =>
+      userJson.value = userId.value.isEmpty
+          ? const {}
+          : await UserServiceClient.getUser(
+              url: userServiceUrl.value,
+              userId: userId.value,
+            );
 
   void playCharacter(String characterId) {
     network.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
