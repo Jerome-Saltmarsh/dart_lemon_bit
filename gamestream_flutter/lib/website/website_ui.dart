@@ -161,14 +161,19 @@ extension WebsiteUI on WebsiteGame {
   Widget buildContainerAuthenticated() =>
       GSContainer(
         width: 400,
+        padding: EdgeInsets.zero,
         child: Column(
           children: [
-            height12,
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GSButtonRegion(),
-                buildControlUser(),
+                Container(
+                  padding: style.containerPadding,
+                    color: Colors.white12,
+                    child: buildControlUser(),
+                ),
               ],
             ),
             height12,
