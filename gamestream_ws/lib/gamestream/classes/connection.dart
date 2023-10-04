@@ -986,6 +986,22 @@ class Connection with ByteReader {
   void disconnect({required int closeCode}) {
     sink.close(closeCode);
   }
+
+  void performAutoSave() {
+    final player = this._player;
+    if (player is! AmuletPlayer){
+       return;
+    }
+
+    final characterJson = mapIsometricPlayerToJson(player);
+    characterJson['lock_date'] = getLockDate();
+    userService.saveUserCharacter(
+      userId: player.userId,
+      character: characterJson,
+    );
+  }
+
+  static String getLockDate() => DateTime.now().toUtc().toIso8601String();
 }
 
 

@@ -21,7 +21,7 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
-- character lock expiration 
+- implement job auto renew player character locks
 - spell lightning bolt with levels 
 - implement firebase authentication 
 - feature auth token 
@@ -46,6 +46,7 @@ ctrl + []               : move caret to code block
 - particle chicken
 
 04.10.2023
+- character lock expiration
 - feature prevent simultaneous sessions with same character
 - gamestream-ws access firestore directly
 - feature delete character

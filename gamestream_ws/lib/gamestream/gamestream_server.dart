@@ -27,6 +27,9 @@ class GamestreamServer {
   var _updateTimerInitialized = false;
 
   late final Timer updateTimer;
+  late final Timer timerRefreshUserCharacterLocks;
+
+  final timerRefreshUserCharacterLocksDuration = const Duration(minutes: 30);
 
   GamestreamServer({required this.userService}){
     _construct();
@@ -37,6 +40,7 @@ class GamestreamServer {
     await validate();
     await loadResources();
     _initializeUpdateTimer();
+    _initializeTimerAutoSave();
     startServerWebsocket(port: 8080);
   }
 
@@ -49,6 +53,21 @@ class GamestreamServer {
         Duration(milliseconds: 1000 ~/ Frames_Per_Second),
         _fixedUpdate,
     );
+  }
+
+  void _initializeTimerAutoSave() {
+    timerRefreshUserCharacterLocks = Timer.periodic(
+        timerRefreshUserCharacterLocksDuration,
+        applyAutoSave,
+    );
+  }
+
+  void applyAutoSave(_){
+    print('applyAutoSave()');
+    final connections = this.connections;
+    for (final connection in connections){
+      connection.performAutoSave();
+    }
   }
 
   void printSystemInformation() {
