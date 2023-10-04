@@ -207,6 +207,8 @@ extension WebsiteUI on WebsiteGame {
                           ],
                         )),
                   ),
+                  if (character.tryGetBool('locked') == true)
+                    buildText('LOCKED', color: Colors.red),
                   onPressed(
                       action: () => showDialogDeleteCharacter(character),
                       child: buildText('delete'),
