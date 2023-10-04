@@ -45,6 +45,7 @@ ctrl + []               : move caret to code block
 - particle chicken
 
 04.10.2023
+- import firestore into gamestream-ws
 - feature delete character
 
 02.10.2023

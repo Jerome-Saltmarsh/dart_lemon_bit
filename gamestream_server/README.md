@@ -15,3 +15,5 @@ mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 mklink /J math C:\Users\Jerome\github\bleed\dart-lemon-math\lib
 
 mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestream_http_client" "C:\Users\Jerome\github\bleed\gamestream_http_client\lib"
+
+mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestream_firestore" "C:\Users\Jerome\github\bleed\gamestream_firestore\lib"
