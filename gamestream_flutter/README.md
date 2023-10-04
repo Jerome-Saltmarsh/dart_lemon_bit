@@ -21,10 +21,11 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
+- character lock expiration 
+- spell lightning bolt with levels 
 - implement firebase authentication 
 - feature auth token 
 - feature user service encrypt passwords 
-- fix enter game on create character 
 - feature element system 
 - fix light flicker on rain changed
 - fix render front 

@@ -56,7 +56,7 @@ class Connection with ByteReader {
 
       if (player is IsometricPlayer && player.persistOnDisconnect){
         final character = mapIsometricPlayerToJson(player);
-        character['locked'] = false;
+        character.remove('lock_date');
         server.userService.saveUserCharacter(
             userId: player.userId,
             character: character,
@@ -732,15 +732,20 @@ class Connection with ByteReader {
         for (final character in characters) {
           final uuid = character.getString('uuid');
           if (uuid == characterId) {
-            final locked = character.tryGetBool('locked');
-            if (locked == true){
-              sendServerError('Character is already active in another session');
-              disconnect(
-                  closeCode: CloseCode.Character_Locked
-              );
-              return;
+            final nowUtc = DateTime.now().toUtc();
+            final lockDateIso8601String = character.tryGetString('lock_date');
+            if (lockDateIso8601String != null){
+              final lockDate = DateTime.parse(lockDateIso8601String);
+              final lockDuration = nowUtc.difference(lockDate);
+              if (lockDuration.inHours < 1){
+                sendServerError('Character is already active in another session');
+                disconnect(
+                    closeCode: CloseCode.Character_Locked
+                );
+                return;
+              }
             }
-            character['locked'] = true;
+            character['lock_date'] = nowUtc.toIso8601String();
             userService.saveUserCharacter(
                 userId: userId,
                 character: character,
