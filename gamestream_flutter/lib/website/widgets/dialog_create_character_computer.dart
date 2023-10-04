@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
-import 'package:user_service_client/src.dart';
 
 import '../../amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:lemon_watch/src.dart';

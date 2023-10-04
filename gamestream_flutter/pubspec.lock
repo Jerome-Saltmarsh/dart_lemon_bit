@@ -145,13 +145,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.5.0"
-  firestore_client:
-    dependency: "direct main"
-    description:
-      path: "../firestore-client"
-      relative: true
-    source: path
-    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -186,6 +179,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  gamestream_http_client:
+    dependency: "direct main"
+    description:
+      path: "../gamestream_http_client"
+      relative: true
+    source: path
+    version: "1.0.0"
   glob:
     dependency: transitive
     description:
@@ -810,13 +810,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
-  user_service_client:
-    dependency: "direct main"
-    description:
-      path: "../user_service_client"
-      relative: true
-    source: path
-    version: "1.0.0"
   uuid:
     dependency: transitive
     description:

@@ -15,7 +15,6 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';
-import 'package:user_service_client/src.dart';
 
 import 'functions/build_website_page_new_user.dart';
 import 'widgets/dialog_create_character_computer.dart';

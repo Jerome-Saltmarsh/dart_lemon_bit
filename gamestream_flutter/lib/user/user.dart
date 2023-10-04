@@ -4,9 +4,9 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_cache.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
+import 'package:gamestream_http_client/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
-import 'package:user_service_client/src.dart';
 
 
 class User with IsometricComponent {
@@ -41,7 +41,7 @@ class User with IsometricComponent {
     options.startOperation(OperationStatus.Loading_User);
     userJson.value = userId.value.isEmpty
           ? const {}
-          : await UserServiceClient.getUser(
+          : await GameStreamHttpClient.getUser(
               url: userServiceUrl.value,
               userId: userId.value,
             );
@@ -75,7 +75,7 @@ class User with IsometricComponent {
     required String password,
   }) async {
     options.startOperation(OperationStatus.Creating_Account);
-    final response = await UserServiceClient.createUser(
+    final response = await GameStreamHttpClient.createUser(
       url: userServiceUrl.value,
       username: username,
       password: password,
@@ -90,7 +90,7 @@ class User with IsometricComponent {
 
   void login({required String username, required String password}) async {
     options.startOperation(OperationStatus.Authenticating);
-    final response = await UserServiceClient.login(
+    final response = await GameStreamHttpClient.login(
       url: userServiceUrl.value,
       username: username,
       password: password,
@@ -108,7 +108,7 @@ class User with IsometricComponent {
   void deleteCharacter(String characterId) async {
     options.startOperation(OperationStatus.Deleting_Character);
     try {
-      final response = await UserServiceClient.deleteCharacter(
+      final response = await GameStreamHttpClient.deleteCharacter(
         url: user.userServiceUrl.value,
         userId: user.userId.value,
         characterId: characterId,
@@ -151,7 +151,7 @@ class User with IsometricComponent {
     options.startOperation(OperationStatus.Creating_Character);
     website.websitePage.value = WebsitePage.User;
     try {
-      final response = await UserServiceClient.createCharacter(
+      final response = await GameStreamHttpClient.createCharacter(
         url: userServiceUrl.value,
         userId: userId.value,
         password: password.value,

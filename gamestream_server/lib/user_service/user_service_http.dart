@@ -1,7 +1,8 @@
 
-import 'package:gamestream_server/packages/user_service_http_client/src/user_service_client.dart';
+import 'package:gamestream_server/packages.dart';
 import 'package:gamestream_server/user_service/user_service.dart';
 import 'package:typedef/json.dart';
+
 
 class UserServiceHttp implements UserService {
 
@@ -13,13 +14,13 @@ class UserServiceHttp implements UserService {
 
   @override
   Future<Json> getUser(String userId) =>
-      UserServiceHttpClient.getUser(url: url, userId: userId);
+      GameStreamHttpClient.getUser(url: url, userId: userId);
 
   @override
   Future saveUserCharacter({
     required String userId,
     required Json character,
-  }) => UserServiceHttpClient.patchCharacter(
+  }) => GameStreamHttpClient.patchCharacter(
       url: url,
       userId: userId,
       character: character,

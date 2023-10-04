@@ -35,10 +35,8 @@ dependencies:
     path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:
     path: ..\dart-lemon-engine
-  firestore_client:
-    path: ..\firestore-client
-  user_service_client:
-    path: ..\user_service_client
+  gamestream_http_client:
+    path: ..\gamestream_http_client
 
 dev_dependencies:
   test: ^1.16.0
