@@ -156,7 +156,7 @@ class DatabaseLocal implements Database {
   }
 
   @override
-  Future setUserLocked({required String userId, required bool locked}) {
+  Future setCharacterLocked({required String userId, required bool locked}) {
     // TODO: implement setUserLocked
     throw UnimplementedError();
   }

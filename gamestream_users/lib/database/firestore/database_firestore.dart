@@ -341,7 +341,7 @@ class DatabaseFirestore implements Database {
   }
 
   @override
-  Future setUserLocked({
+  Future setCharacterLocked({
     required String userId,
     required bool locked,
   }) {

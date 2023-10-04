@@ -1,7 +1,6 @@
 
 import 'package:gamestream_server/isometric.dart';
 import 'package:gamestream_server/packages.dart';
-import 'package:gamestream_server/packages/common/src/amulet/amulet_element.dart';
 
 import 'item_slot.dart';
 import 'amulet_game.dart';

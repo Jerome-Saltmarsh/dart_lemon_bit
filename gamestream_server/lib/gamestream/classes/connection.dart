@@ -9,6 +9,7 @@ import 'package:gamestream_server/isometric/isometric_request_reader.dart';
 import 'package:gamestream_server/isometric/scene_reader.dart';
 import 'package:gamestream_server/isometric/src.dart';
 import 'package:gamestream_server/packages.dart';
+import 'package:gamestream_server/user_service/user_service.dart';
 import 'package:gamestream_server/users/functions/map_isometric_player_to_json.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
@@ -39,6 +40,8 @@ class Connection with ByteReader {
 
   Player? get player => _player;
 
+  UserService get userService => server.userService;
+
   Connection(this.webSocket, this.server){
     sink = webSocket.sink;
     sink.done.then((value){
@@ -53,8 +56,7 @@ class Connection with ByteReader {
 
       if (player is IsometricPlayer && player.persistOnDisconnect){
         final json = mapIsometricPlayerToJson(player);
-        UserServiceClient.patchCharacter(
-            url: server.userServiceUrl,
+        server.userService.saveUserCharacter(
             userId: player.userId,
             character: json,
         );
@@ -714,10 +716,7 @@ class Connection with ByteReader {
         throw Exception('characterId == null');
       }
 
-      UserServiceClient.getUser(
-        url: server.userServiceUrl,
-        userId: userId,
-      ).then((user) {
+      userService.getUser(userId).then((user) {
 
         _player = server.joinGameByType(gameType);
         final player = _player;
@@ -733,6 +732,18 @@ class Connection with ByteReader {
         for (final character in characters) {
           final uuid = character.getString('uuid');
           if (uuid == characterId) {
+            final locked = character.tryGetBool('locked');
+            if (locked == true){
+              sendServerError('Character is already active in another session');
+              disconnect(
+                  closeCode: CloseCode.Character_Locked
+              );
+            }
+            // UserServiceClient.setUserLocked(
+            //     url: url,
+            //     userId: userId,
+            //     locked: locked,
+            // );
             writeJsonToAmuletPlayer(character, player);
             return;
           }

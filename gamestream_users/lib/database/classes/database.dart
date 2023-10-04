@@ -27,7 +27,11 @@ abstract class Database {
 
   Future<String?> findUserByUsername(String username);
 
-  Future setUserLocked({required String userId, required bool locked});
+  Future setCharacterLocked({
+    required String userId,
+    required String characterId,
+    required bool locked,
+  });
 
   Future deleteCharacter({required String userId, required String characterId});
 }

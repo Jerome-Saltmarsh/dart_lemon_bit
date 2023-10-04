@@ -8,7 +8,7 @@ import 'headers_json.dart';
 
 
 
-abstract class UserServiceClient {
+abstract class UserServiceHttpClient {
 
   static Future<bool> ping({
     required String url,

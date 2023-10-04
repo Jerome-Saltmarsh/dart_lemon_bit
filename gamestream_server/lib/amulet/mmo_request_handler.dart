@@ -1,6 +1,5 @@
 import 'package:gamestream_server/gamestream/classes/connection.dart';
 import 'package:gamestream_server/packages.dart';
-import 'package:gamestream_server/packages/common/src/amulet/amulet_element.dart';
 
 import 'amulet_player.dart';
 
