@@ -21,9 +21,9 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
+- implement firebase authentication 
+- feature auth token 
 - feature user service encrypt passwords 
-- feature prevent simultaneous sessions with same character 
-- feature handle invalid username password 
 - fix enter game on create character 
 - feature element system 
 - fix light flicker on rain changed
@@ -45,6 +45,7 @@ ctrl + []               : move caret to code block
 - particle chicken
 
 04.10.2023
+- feature prevent simultaneous sessions with same character
 - gamestream-ws access firestore directly
 - feature delete character
 
