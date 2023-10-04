@@ -21,9 +21,9 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
+- feature user service encrypt passwords 
 - feature prevent simultaneous sessions with same character 
 - feature handle invalid username password 
-- feature delete character 
 - fix enter game on create character 
 - feature element system 
 - fix light flicker on rain changed
@@ -43,6 +43,9 @@ ctrl + []               : move caret to code block
 - glove type silk
 - particle crow
 - particle chicken
+
+04.10.2023
+- feature delete character
 
 02.10.2023
 - feature cloud persistence

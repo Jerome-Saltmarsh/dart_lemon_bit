@@ -109,6 +109,10 @@ class IsometricOptions with IsometricComponent implements Updatable {
         ui.error.value = 'unable to join game';
         network.websocket.disconnect();
         break;
+      case GameError.PlayerNotFound:
+        ui.error.value = 'player character could not be found';
+        network.websocket.disconnect();
+        break;
       default:
         break;
     }

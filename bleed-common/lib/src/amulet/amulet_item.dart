@@ -2,6 +2,27 @@
 import '../../src.dart';
 import '../isometric/treasure_type.dart';
 
+// fire: 5
+
+
+const Levels_Blink_Dagger = [
+  {
+    AmuletElement.electricity: 2,
+    AmuletElement.earth: 1,
+  },
+  {
+    AmuletElement.electricity: 4,
+    AmuletElement.earth: 2,
+  },
+  {
+    AmuletElement.electricity: 8,
+    AmuletElement.earth: 4,
+  },
+  {
+    AmuletElement.electricity: 15,
+    AmuletElement.earth: 6,
+  },
+];
 
 enum AmuletItem {
   Blink_Dagger(
@@ -146,6 +167,20 @@ enum AmuletItem {
       subType: ShoeType.Iron_Plates,
       health: 6,
     id: 15,
+  ),
+  Ocean_Boots (
+      quality: AmuletItemQuality.Common,
+      type: ItemType.Shoes,
+      subType: ShoeType.Iron_Plates,
+      health: 6,
+    id: 15,
+  ),
+  Storm_Boots (
+      quality: AmuletItemQuality.Common,
+      type: ItemType.Shoes,
+      subType: ShoeType.Iron_Plates,
+      health: 6,
+      id: 15,
   ),
   Health_Potion(
       quality: AmuletItemQuality.Common,
