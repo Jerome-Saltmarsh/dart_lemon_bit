@@ -55,10 +55,11 @@ class Connection with ByteReader {
     if (player != null) {
 
       if (player is IsometricPlayer && player.persistOnDisconnect){
-        final json = mapIsometricPlayerToJson(player);
+        final character = mapIsometricPlayerToJson(player);
+        character['locked'] = false;
         server.userService.saveUserCharacter(
             userId: player.userId,
-            character: json,
+            character: character,
         );
       }
 
@@ -688,7 +689,6 @@ class Connection with ByteReader {
       return;
     }
 
-
     final gameType = GameType.values[gameTypeIndex];
 
     if (arguments.length > 2) {
@@ -738,12 +738,13 @@ class Connection with ByteReader {
               disconnect(
                   closeCode: CloseCode.Character_Locked
               );
+              return;
             }
-            // UserServiceClient.setUserLocked(
-            //     url: url,
-            //     userId: userId,
-            //     locked: locked,
-            // );
+            character['locked'] = true;
+            userService.saveUserCharacter(
+                userId: userId,
+                character: character,
+            );
             writeJsonToAmuletPlayer(character, player);
             return;
           }
