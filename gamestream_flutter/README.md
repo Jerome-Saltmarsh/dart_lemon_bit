@@ -28,6 +28,9 @@ ctrl + []               : move caret to code block
 - feature element system 
 - fix light flicker on rain changed
 - fix render front 
+- milestone character cell shading
+- milestone mobile compatibility
+- minor feature windows executable
 - render torso top and bottom separately
 - improve ai pathfinding
 - feature stash

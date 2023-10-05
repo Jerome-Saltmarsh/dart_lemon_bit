@@ -2,27 +2,7 @@
 import '../../src.dart';
 import '../isometric/treasure_type.dart';
 
-// fire: 5
 
-
-const Levels_Blink_Dagger = [
-  {
-    AmuletElement.electricity: 2,
-    AmuletElement.earth: 1,
-  },
-  {
-    AmuletElement.electricity: 4,
-    AmuletElement.earth: 2,
-  },
-  {
-    AmuletElement.electricity: 8,
-    AmuletElement.earth: 4,
-  },
-  {
-    AmuletElement.electricity: 15,
-    AmuletElement.earth: 6,
-  },
-];
 
 enum AmuletItem {
   Blink_Dagger(
@@ -224,19 +204,21 @@ enum AmuletItem {
     health: 100,
     id: 19,
   ),
+  Sapphire_Pendant(
+    quality: AmuletItemQuality.Rare,
+    type: ItemType.Treasure,
+    subType: TreasureType.Pendant_1,
+    health: 5,
+    id: 20,
+  ),
   Spell_Thunderbolt(
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Weapon,
     subType: WeaponType.Spell_Thunderbolt,
     id: 19,
-    attackType: AmuletAttackType.Lightning
-  ),
-  Sapphire_Pendant(
-      quality: AmuletItemQuality.Rare,
-      type: ItemType.Treasure,
-      subType: TreasureType.Pendant_1,
-      health: 5,
-    id: 20,
+    attackType: AmuletAttackType.Lightning,
+    cooldown: 10,
+    damage: 3,
   );
 
   final int damage;
@@ -365,4 +347,68 @@ enum AmuletItem {
 
   void validationError(String reason) =>
       print('validation_error: {name: $this, reason: $reason}');
+
+  int getLevel({
+    required int fire,
+    required int water,
+    required int wind,
+    required int earth,
+    required int electricity,
+  }) {
+
+    final table = upgradeTable[this];
+
+    if (table == null){
+      return -1;
+    }
+
+    for (var i = table.length - 1; i >= 0; i--){
+      final requirements = table[i];
+      if (requirements[0] > fire){
+        continue;
+      }
+      if (requirements[1] > water){
+        continue;
+      }
+      if (requirements[2] > wind){
+        continue;
+      }
+      if (requirements[3] > earth){
+        continue;
+      }
+      if (requirements[4] > electricity){
+        continue;
+      }
+      return i;
+    }
+    return -1;
+  }
+
+  static const upgradeTable = {
+    Spell_Thunderbolt: [
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 3],
+      [0, 0, 0, 0, 7],
+      [0, 0, 0, 0, 11]
+    ],
+  };
+
+
+  /// [fire, water, wind, earth, electricity]
+  List<int>? getAmuletItemUpgradeCost(int level) {
+    if (level < 0){
+      throw Exception('level < 0');
+    }
+    final table = upgradeTable[this];
+
+    if (table == null){
+      return null;
+    }
+
+    if (table.length >= level) {
+      return null;
+    }
+
+    return table[level];
+  }
 }

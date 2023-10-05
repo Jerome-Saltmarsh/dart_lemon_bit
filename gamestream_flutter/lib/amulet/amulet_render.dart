@@ -57,7 +57,13 @@ extension AmuletRender on Amulet {
     if (activatedPower == null)
       return;
 
+
     final mode = activatedPower.attackType?.mode;
+
+    if (mode == AmuletPowerMode.Self){
+      return;
+    }
+
     if (mode == AmuletPowerMode.Positional) {
       engine.color = Colors.white;
       render.circleOutlineAtPosition(

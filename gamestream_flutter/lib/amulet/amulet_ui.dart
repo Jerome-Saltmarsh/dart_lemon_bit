@@ -247,7 +247,8 @@ class AmuletUI {
     );
   }
 
-  buildItemHoverDialog({double edgePadding = 150}) => buildWatch(
+  buildItemHoverDialog({double edgePadding = 150}) {
+    return buildWatch(
       amulet.itemHover,
       (item) => item == null
           ? nothing
@@ -275,8 +276,16 @@ class AmuletUI {
                 buildItemRow('movement', item.movement * 10),
                 if (item.attackType != null)
                   buildItemRow('attack type', item.attackType!.name),
+                buildItemRow('level', item.getLevel(
+                    fire: amulet.elementFire.value,
+                    water: amulet.elementWater.value,
+                    wind: amulet.elementWind.value,
+                    earth: amulet.elementEarth.value,
+                    electricity: amulet.elementElectricity.value,
+                )),
               ],
             )));
+  }
 
   static Widget buildItemRow(String text, dynamic value){
      if (value == null || value == 0) return nothing;
