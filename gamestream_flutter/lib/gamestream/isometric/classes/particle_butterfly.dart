@@ -21,7 +21,7 @@ class ParticleButterfly extends ParticleRoam {
 
   var speed = 1.5;
   var moving = false;
-  var duration = 0;
+  var roamDuration = 0;
   var mode = ButterflyMode.flying;
 
   static const changeTargetRadius = 5.0;
@@ -37,7 +37,7 @@ class ParticleButterfly extends ParticleRoam {
     durationTotal = -1;
     nodeCollidable = false;
     active = true;
-    duration = randomInt(0, 500);
+    roamDuration = randomInt(0, 500);
     blownByWind = false;
   }
 
@@ -59,7 +59,7 @@ class ParticleButterfly extends ParticleRoam {
 
     switch (mode) {
       case ButterflyMode.flying:
-        if (duration-- <= 0){
+        if (roamDuration-- <= 0){
           mode = ButterflyMode.landing;
           vx = 0;
           vy = 0;
@@ -73,13 +73,13 @@ class ParticleButterfly extends ParticleRoam {
           z -= verticalSpeed;
         } else {
           mode = ButterflyMode.landed;
-          duration = randomInt(300, 500);
+          roamDuration = randomInt(300, 500);
           moving = false;
           stop();
         }
         break;
       case ButterflyMode.landed:
-        if (duration-- <= 0){
+        if (roamDuration-- <= 0){
           takeOff();
         } else {
           final scene = particles.scene;
@@ -98,7 +98,7 @@ class ParticleButterfly extends ParticleRoam {
           z += verticalSpeed;
         } else {
           mode = ButterflyMode.flying;
-          duration = randomInt(300, 500);
+          roamDuration = randomInt(300, 500);
           changeTarget();
         }
     }
@@ -134,7 +134,7 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void updateBatFlying(IsometricScene scene) {
-    if (duration-- <= 0){
+    if (roamDuration-- <= 0){
       setModeLanding(scene);
     } else if (closeToTarget){
       changeTarget();
@@ -198,7 +198,7 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void setRandomDuration(int min, int max) {
-    duration = randomInt(min, max);
+    roamDuration = randomInt(min, max);
   }
 
   void stop() {
@@ -208,7 +208,7 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void updateBatLanded() {
-     if (duration-- <= 0){
+     if (roamDuration-- <= 0){
        setBatModeFlying();
      }
   }

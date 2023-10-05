@@ -44,4 +44,5 @@ class GameEventType {
   static const Item_Landed              = 85;
   static const Bow_Drawn                = 86;
   static const Bow_Released             = 87;
+  static const Lightning_Bolt = 88;
 }

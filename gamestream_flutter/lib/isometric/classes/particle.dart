@@ -38,7 +38,7 @@ class Particle extends Position {
 
   int get direction => IsometricDirection.fromRadian(rotation);
 
-  double get duration01 => duration / durationTotal;
+  double get duration01 => durationTotal <= 0 ? 0 : duration / durationTotal;
 
   void setSpeed(double angle, double speed){
     vx = adj(angle, speed);
@@ -125,10 +125,7 @@ class Particle extends Position {
   }
 
   void update(IsometricParticles particles){
-    duration++;
-    if (durationTotal >= 0 && duration >= durationTotal) {
-      deactivate();
-    }
+
   }
 }
 

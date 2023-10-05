@@ -250,6 +250,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           angle: character.angle,
         );
         break;
+      case AmuletAttackType.Lightning:
+        var boltsRemaining = 3;
+        for (final otherCharacter in characters){
+          if (!character.active || !character.isEnemy(otherCharacter)) {
+            continue;
+          }
+          if (!character.withinRadiusPosition(otherCharacter, 300)){
+            continue;
+          }
+          dispatchGameEventPosition(GameEventType.Lightning_Bolt, otherCharacter);
+          applyHit(
+            srcCharacter: character,
+            target: otherCharacter,
+            damage: 3,
+          );
+          boltsRemaining--;
+          if (boltsRemaining <= 0) {
+            return;
+          }
+        }
+        break;
       default:
         throw Exception(item.attackType?.name);
     }

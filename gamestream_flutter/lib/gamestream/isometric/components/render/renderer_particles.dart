@@ -154,7 +154,8 @@ class RendererParticles extends RenderGroup {
           }
           break;
         case ParticleType.Trail:
-          final frame = getFrame(1.0 - particle.duration01, 7);
+          final duration01 = particle.duration01;
+          final frame = getFrame(duration01, 7);
           engine.renderSprite(
             image: images.atlas_nodes,
             dstX: dstX,
@@ -163,8 +164,7 @@ class RendererParticles extends RenderGroup {
             srcY: 1864 - (frame * 8),
             srcWidth: 8,
             srcHeight: 8,
-            scale: 0.5 * (1.0 - particle.duration01),
-            // color: colors.white.value,
+            scale: 0.5 * (duration01),
             color: particle.emissionColor,
           );
           break;
@@ -403,10 +403,6 @@ class RendererParticles extends RenderGroup {
           );
           return;
         case ParticleType.Bubble:
-          if (particle.duration > 26) {
-            particle.deactivate();
-            break;
-          }
           engine.renderSprite(
             image: images.atlas_gameobjects,
             dstX: dstX,
@@ -526,7 +522,7 @@ class RendererParticles extends RenderGroup {
   void renderSmoke() {
 
     final totalFrames = 8;
-    final frame = ((1.0 - particle.duration01) * totalFrames).round();
+    final frame = (particle.duration01 * totalFrames).round();
     const width = 32.0;
     const height = 32.0;
 

@@ -236,6 +236,11 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Bow_Released:
         audio.play(audio.bow_release, x, y, z);
         break;
+
+      case GameEventType.Lightning_Bolt:
+        particles.spawnLightningBolt(x, y, z);
+        audio.play(audio.thunder, x, y, z);
+        break;
     }
   }
 

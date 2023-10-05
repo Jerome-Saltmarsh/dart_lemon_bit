@@ -112,7 +112,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     particle.vz = zv;
     particle.weight = weight;
-    particle.duration = 0;
+    particle.duration = duration;
     particle.durationTotal = duration;
     particle.scale = scale;
     particle.scaleVelocity = scaleV;
@@ -963,16 +963,17 @@ class IsometricParticles with IsometricComponent implements Updatable {
       particle.emissionIntensity -= change;
       if (particle.emissionIntensity <= 0){
         particle.emissionIntensity = 0;
-        particle.duration = 0;
+        particle.deactivate();
       }
       return;
     }
 
-    if (particle.animation) {
-      if (particle.duration-- <= 0) {
+    if (particle.duration > 0) {
+      particle.duration--;
+      if (particle.duration == 0){
         particle.deactivate();
+        return;
       }
-      return;
     }
 
     assert (index >= 0);
@@ -1077,4 +1078,17 @@ class IsometricParticles with IsometricComponent implements Updatable {
          blownByWind: false,
      )..nodeCollidable = false
       ..emissionColor = color;
+
+  void spawnLightningBolt(double x, double y, double z) {
+    spawnParticle(
+        type: ParticleType.Lightning_Bolt,
+        x: x,
+        y: y,
+        z: z,
+        frictionAir: 0,
+        blownByWind: false,
+        animation: true,
+        duration: 20,
+    );
+  }
 }
