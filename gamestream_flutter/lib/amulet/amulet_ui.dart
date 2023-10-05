@@ -260,6 +260,19 @@ class AmuletUI {
         final level = amulet.getAmuletItemLevel(item);
         print('amulet.itemHover($item, level: $level)');
 
+
+        Widget? upgradeTableRow;
+
+        final upgradeTable = AmuletItem.upgradeTable[item];
+        if (upgradeTable != null){
+           if (level <= upgradeTable.length -1){
+              final row = upgradeTable[level + 1];
+              upgradeTableRow = Row(
+                  children: row.map(buildText).toList(growable: false),
+              );
+           }
+        }
+
         return GSContainer(
               width: 270,
               child: Column(
@@ -285,6 +298,8 @@ class AmuletUI {
                 buildItemRow('level', level + 1),
                 if (item.attackType != null)
                   buildItemRow('attack type', item.attackType!.name),
+                if (upgradeTableRow != null)
+                  upgradeTableRow,
 
               ],
             ));
