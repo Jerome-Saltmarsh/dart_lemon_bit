@@ -654,7 +654,7 @@ class IsometricRender with IsometricComponent {
       z: z,
       angle: 0,
       speed: 0,
-      duration: 1,
+      duration: 2,
       frictionAir: 1.0,
       blownByWind: false,
     );
