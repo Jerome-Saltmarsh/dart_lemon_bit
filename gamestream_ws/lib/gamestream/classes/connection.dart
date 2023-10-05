@@ -9,6 +9,7 @@ import 'package:gamestream_ws/isometric/isometric_request_reader.dart';
 import 'package:gamestream_ws/isometric/scene_reader.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:gamestream_ws/users/functions/map_isometric_player_to_json.dart';
 
@@ -86,12 +87,13 @@ class Connection with ByteReader {
   void sendGameError(GameError error) {
     errorWriter.writeByte(NetworkResponse.Game_Error);
     errorWriter.writeByte(error.index);
-    final compiled = errorWriter.compile();
-    sink.add(compiled);
+    sink.add(errorWriter.compile());
   }
 
-  Future sendServerError(Object error) async {
-    sink.add([NetworkResponse.Server_Error, error.toString()]);
+  Future sendServerError(dynamic error) async {
+    errorWriter.writeByte(NetworkResponse.Server_Error);
+    errorWriter.writeString(error.toString());
+    sink.add(errorWriter.compile());
   }
 
   void onData(dynamic args) {
@@ -737,10 +739,11 @@ class Connection with ByteReader {
             if (lockDateIso8601String != null){
               final lockDate = DateTime.parse(lockDateIso8601String);
               final lockDuration = nowUtc.difference(lockDate);
-              if (lockDuration.inHours < 1){
+              if (lockDuration.inSeconds < durationAutoSave.inSeconds){
                 sendServerError('Character is already active in another session');
                 disconnect(
-                    closeCode: CloseCode.Character_Locked
+                    closeCode: CloseCode.Character_Locked,
+                    reason: 'reason: CloseCode.Character_Locked',
                 );
                 return;
               }
@@ -758,7 +761,8 @@ class Connection with ByteReader {
       }).catchError((error) {
         sendServerError(error);
         disconnect(
-          closeCode: CloseCode.Character_Not_Found
+          closeCode: CloseCode.Character_Not_Found,
+          reason: 'reason: CloseCode.Character_Not_Found',
         );
       });
     } else {
@@ -983,8 +987,8 @@ class Connection with ByteReader {
     }
   }
 
-  void disconnect({required int closeCode}) {
-    sink.close(closeCode);
+  void disconnect({required int closeCode, String? reason}) {
+    sink.close(closeCode, reason);
   }
 
   void performAutoSave() {

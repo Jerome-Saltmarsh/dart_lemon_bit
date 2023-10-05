@@ -6,7 +6,6 @@ import 'connection_status.dart';
 
 class WebsocketClient {
   DateTime? connectionEstablished;
-  DateTime? timeConnectionEstablished;
 
   Function(String values) readString;
   Function(Uint8List values) readBytes;
@@ -33,8 +32,8 @@ class WebsocketClient {
   bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
 
   Duration? get connectionDuration {
-    if (timeConnectionEstablished == null) return null;
-    return DateTime.now().difference(timeConnectionEstablished!);
+    if (connectionEstablished == null) return null;
+    return DateTime.now().difference(connectionEstablished!);
   }
 
   void connect({required String uri, required dynamic message}) {
@@ -44,13 +43,19 @@ class WebsocketClient {
       webSocketChannel = WebSocketChannel.connect(
           Uri.parse(uri), protocols: ['gamestream.online']);
 
-      webSocketChannel.stream.listen(_onEvent, onError: onError, onDone: _onDone);
+      webSocketChannel.stream.listen(_onEvent,
+          onError: internalOnError,
+          onDone: _onDone,
+      );
       sink = webSocketChannel.sink;
-      connectionEstablished = DateTime.now();
       sink.add(message);
     } catch(e) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
     }
+  }
+
+  void internalOnError(Object error, StackTrace stack){
+     onError(error, stack);
   }
 
   void disconnect() {
@@ -62,8 +67,8 @@ class WebsocketClient {
 
   void _onEvent(dynamic response) {
     if (!connected) {
+      connectionEstablished = DateTime.now();
       connectionStatus.value = ConnectionStatus.Connected;
-      timeConnectionEstablished = DateTime.now();
     }
     if (response is Uint8List) {
       readBytes(response);
@@ -80,8 +85,8 @@ class WebsocketClient {
 
     if (connectionEstablished != null){
       final duration = DateTime.now().difference(connectionEstablished!);
+      connectionEstablished = null;
       print('websocket-connection-duration: ${duration.inSeconds} seconds');
-      timeConnectionEstablished = null;
     }
 
     if (connecting) {

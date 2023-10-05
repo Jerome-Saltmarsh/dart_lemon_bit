@@ -1,9 +1,9 @@
 
 import 'dart:typed_data';
 
-import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_byte/byte_reader.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'connection_status.dart';
@@ -116,6 +116,7 @@ abstract class WebsocketClientBuilder extends StatelessWidget with ByteReader  {
   }
 
   void _onDone() {
+    print('websocket_client_builder._onDone()');
 
     if (connectionEstablished != null){
       final duration = DateTime.now().difference(connectionEstablished!);

@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/network/enums/connection_region.da
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
@@ -207,7 +208,7 @@ extension WebsiteUI on WebsiteGame {
                           ],
                         )),
                   ),
-                  if (character.containsKey('lock_date'))
+                  if (characterIsLocked(character))
                     buildText('LOCKED', color: Colors.red),
                   onPressed(
                       action: () => showDialogDeleteCharacter(character),
@@ -219,6 +220,16 @@ extension WebsiteUI on WebsiteGame {
                 .toList(growable: false)),
       ),
     );
+
+  bool characterIsLocked(Json character){
+     final lockDateString = character.tryGetString('lock_date');
+     if (lockDateString == null){
+       return false;
+     }
+     final lockDate = DateTime.parse(lockDateString);
+     final lockDuration = DateTime.now().toUtc().difference(lockDate);
+     return lockDuration.inSeconds <= durationAutoSave.inSeconds;
+  }
 
   Widget buildContainerCharacters() => GSContainer(
     color: Colors.transparent,

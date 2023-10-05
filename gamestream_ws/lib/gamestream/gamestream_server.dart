@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_ws/amulet.dart';
+import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:gamestream_ws/packages.dart';
@@ -29,8 +30,6 @@ class GamestreamServer {
   late final Timer updateTimer;
   late final Timer timerRefreshUserCharacterLocks;
 
-  final timerRefreshUserCharacterLocksDuration = const Duration(minutes: 30);
-
   GamestreamServer({required this.userService}){
     _construct();
   }
@@ -57,7 +56,7 @@ class GamestreamServer {
 
   void _initializeTimerAutoSave() {
     timerRefreshUserCharacterLocks = Timer.periodic(
-        timerRefreshUserCharacterLocksDuration,
+        durationAutoSave,
         applyAutoSave,
     );
   }
