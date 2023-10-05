@@ -208,13 +208,11 @@ class AmuletUI {
       if (index != activatedPowerIndex)
         return nothing;
 
-      return Positioned(
-        child: GSContainer(
-          color: Colors.green,
-          width: size,
-          height: size,
-          rounded: true,
-        ),
+      return GSContainer(
+        color: Colors.green,
+        width: size,
+        height: size,
+        rounded: true,
       );
     });
 
@@ -225,7 +223,12 @@ class AmuletUI {
         children: [
           backgroundSelectedWeapon,
           backgroundActivePower,
-          Positioned(child: buildItemSlot(amulet.weapons[index], color: Colors.transparent)),
+          Positioned(
+              child: buildItemSlot(
+                  amulet.weapons[index],
+                  color: Colors.transparent
+              )
+          ),
           Positioned(
               top: 8,
               left: 8,

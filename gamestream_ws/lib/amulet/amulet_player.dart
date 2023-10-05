@@ -1372,7 +1372,8 @@ class AmuletPlayer extends IsometricPlayer {
 
     switch (slotType){
       case SlotType.Weapons:
-        equippedWeaponIndex = index;
+        selectWeapon(index);
+        // equippedWeaponIndex = index;
         return;
 
       case SlotType.Items:
