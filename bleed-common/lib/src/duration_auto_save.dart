@@ -1,3 +1,3 @@
 
 
-const durationAutoSave = Duration(minutes: 1);
+const durationAutoSave = Duration(minutes: 30);

@@ -13,6 +13,7 @@ enum AmuletAttackType {
   Fire_Ball(AmuletPowerMode.Equip),
   Freeze_Circle(AmuletPowerMode.Positional),
   Blink(AmuletPowerMode.Positional),
+  Lightning(AmuletPowerMode.Self),
   Heal(AmuletPowerMode.Targeted_Ally);
 
   const AmuletAttackType(this.mode);

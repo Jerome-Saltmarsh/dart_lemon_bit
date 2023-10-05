@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart'
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -541,7 +542,6 @@ extension isometricDebugUI on IsometricDebug {
           ),
           buildRowMapped('helm type', player.helmType, HelmType.getName),
           buildRowMapped('hand type left', player.handTypeLeft, HandType.getName),
-          buildRowMapped('hand type right', player.handTypeRight, HandType.getName),
           onPressed(
             action: player.showDialogChangeComplexion,
             child: buildRowWatch('complexion', player.complexion, (complexion) => Container(
@@ -559,6 +559,48 @@ extension isometricDebugUI on IsometricDebug {
                   child: buildText(value));
             }),
           ),
+          onPressed(
+              action: (){
+                ui.showDialog(child: GSContainer(
+                  width: 400,
+                  height: 400 * goldenRatio_1381,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildText('Acquire Item'),
+                          onPressed(
+                              action: ui.closeDialog,
+                              child: buildText('Close'),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 300,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children:
+                              AmuletItem.values.map((e) {
+                                return onPressed(
+                                  action: (){
+                                    amulet.requestAcquireAmuletItem(e);
+                                  },
+                                  child: GSContainer(
+                                      color: Colors.green,
+                                      margin: const EdgeInsets.only(bottom: 4),
+                                      child: buildText(e.name)),
+                                );
+                              }).toList(growable: false)
+                            ,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ));
+              },
+              child: buildText('acquire item')),
         ],
       );
 

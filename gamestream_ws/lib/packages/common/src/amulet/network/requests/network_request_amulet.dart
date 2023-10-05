@@ -10,4 +10,5 @@ enum NetworkRequestAmulet {
   Upgrade_Talent,
   Spawn_Random_Enemy,
   Upgrade_Element,
+  Acquire_Amulet_Item,
 }

@@ -36,6 +36,17 @@ enum AmuletItem {
     performDuration: 20,
     id: 21,
   ),
+  Lightning_Rod(
+    quality: AmuletItemQuality.Rare,
+    type: ItemType.Weapon,
+    subType: WeaponType.Staff,
+    cooldown: 40,
+    range: 180,
+    attackType: AmuletAttackType.Lightning,
+    actionFrame: 15,
+    performDuration: 20,
+    id: 21,
+  ),
   Rusty_Old_Sword(
       quality: AmuletItemQuality.Common,
       type: ItemType.Weapon,

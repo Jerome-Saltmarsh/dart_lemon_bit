@@ -27,6 +27,15 @@ extension MMORequestHandler on Connection {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amulet.spawnRandomEnemy();
         break;
+      case NetworkRequestAmulet.Acquire_Amulet_Item:
+        final amuletItemIndex = arguments.getArgInt('--index');
+        final amuletItem = AmuletItem.values.tryGet(amuletItemIndex);
+        if (amuletItem == null){
+          sendServerError('invalid amulet item index');
+          return;
+        }
+        player.addItem(amuletItem);
+        break;
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;
@@ -78,4 +87,15 @@ extension MMORequestHandler on Connection {
         break;
     }
   }
+}
+
+
+extension ListExtensions<T> on List<T> {
+
+  T? tryGet(int? index) =>
+      index == null ||
+      index < 0 ||
+      index >= length
+        ? null
+        : this[index];
 }

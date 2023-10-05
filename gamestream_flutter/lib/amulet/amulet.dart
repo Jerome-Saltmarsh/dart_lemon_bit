@@ -279,4 +279,11 @@ class Amulet extends IsometricGame {
         NetworkRequestAmulet.Upgrade_Element,
         amuletElement.index,
       );
+
+  void requestAcquireAmuletItem(AmuletItem amuletItem) {
+    network.sendNetworkRequestAmulet(
+      NetworkRequestAmulet.Acquire_Amulet_Item,
+      '--index ${amuletItem.index}',
+    );
+  }
 }
