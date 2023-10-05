@@ -195,16 +195,14 @@ class AmuletUI {
 
     final backgroundSelectedWeapon = buildWatch(
         amulet.equippedWeaponIndex,
-        (equippedWeaponIndex) => Positioned(
-              child: GSContainer(
-                color: index == equippedWeaponIndex
-                    ? Colors.white12
-                    : Colors.black12,
-                width: size,
-                height: size,
-                rounded: true,
-              ),
-            ));
+        (equippedWeaponIndex) => GSContainer(
+          color: index == equippedWeaponIndex
+              ? Colors.white12
+              : Colors.black12,
+          width: size,
+          height: size,
+          rounded: true,
+        ));
 
     final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
       if (index != activatedPowerIndex)
