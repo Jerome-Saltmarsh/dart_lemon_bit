@@ -1,3 +1,22 @@
+
+import 'package:gamestream_flutter/packages/common/src/isometric/weapon_type.dart';
+
+const atlasSrcWeapons = <int, List<double>>{
+  WeaponType.Unarmed : AtlasSrcWeapons.Unarmed,
+  WeaponType.Sword : AtlasSrcWeapons.Sword,
+  WeaponType.Bow : AtlasSrcWeapons.Bow,
+  WeaponType.Grenade : AtlasSrcWeapons.Grenade,
+  WeaponType.Crossbow : AtlasSrcWeapons.Crossbow,
+  WeaponType.Staff : AtlasSrcWeapons.Staff,
+  WeaponType.Musket : AtlasSrcWeapons.Musket,
+  WeaponType.Revolver : AtlasSrcWeapons.Revolver,
+  WeaponType.Hammer : AtlasSrcWeapons.Hammer,
+  WeaponType.Pickaxe : AtlasSrcWeapons.Pickaxe,
+  WeaponType.Knife : AtlasSrcWeapons.Knife,
+  WeaponType.Axe : AtlasSrcWeapons.Axe,
+  WeaponType.Spell_Thunderbolt: [1, 1, 30, 30, 1, 0.5]
+};
+
 class AtlasSrcWeapons {
   static const Handgun = <double> [
     0,  // x

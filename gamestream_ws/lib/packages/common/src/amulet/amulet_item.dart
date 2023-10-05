@@ -39,7 +39,7 @@ enum AmuletItem {
   Lightning_Rod(
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
-    subType: WeaponType.Staff,
+    subType: WeaponType.Spell_Thunderbolt,
     cooldown: 40,
     range: 180,
     attackType: AmuletAttackType.Lightning,
@@ -223,6 +223,13 @@ enum AmuletItem {
     subType: TreasureType.Pendant_1,
     health: 100,
     id: 19,
+  ),
+  Spell_Thunderbolt(
+    quality: AmuletItemQuality.Mythical,
+    type: ItemType.Weapon,
+    subType: WeaponType.Spell_Thunderbolt,
+    id: 19,
+    attackType: AmuletAttackType.Lightning
   ),
   Sapphire_Pendant(
       quality: AmuletItemQuality.Rare,

@@ -393,14 +393,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     WeaponType.Unarmed: 25,
     WeaponType.Sword: 35,
     WeaponType.Bow: 30,
-    WeaponType.Machine_Gun: 5,
   }[character.weaponType] ?? 15;
 
   int getDefaultWeaponActionFrame(Character character) => const {
     WeaponType.Unarmed: 15,
     WeaponType.Sword: 10,
     WeaponType.Bow: 10,
-    WeaponType.Machine_Gun: 2,
   }[character.weaponType] ?? 1;
 
   void characterTeleport({
@@ -1479,21 +1477,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         character.z,
       );
       spawnProjectileArrow(
-        src: character,
-        damage: character.weaponDamage,
-        range: character.weaponRange,
-        angle: character.angle,
-      );
-      return;
-    }
-
-    if (weaponType == WeaponType.Shotgun) {
-      characterFireShotgun(character, character.angle);
-      return;
-    }
-
-    if (WeaponType.isFirearm(weaponType)) {
-      spawnProjectileBullet(
         src: character,
         damage: character.weaponDamage,
         range: character.weaponRange,

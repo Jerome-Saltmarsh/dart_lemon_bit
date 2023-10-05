@@ -15,9 +15,6 @@ class IsometricEvents with IsometricComponent {
     switch (attackType) {
       case WeaponType.Sword:
         audio.play(audio.sword_unsheathe, x, y, z);
-      case WeaponType.Shotgun:
-        audio.play(audio.cock_shotgun_3, x, y, z);
-        break;
       case WeaponType.Bow:
         audio.play(audio.bow_draw, x, y, z);
         break;
@@ -322,20 +319,6 @@ class IsometricEvents with IsometricComponent {
       return;
     }
 
-    if (attackType == WeaponType.Flame_Thrower) return;
-
-    const gun_distance = 50.0;
-    final gunX = x - adj(angle, gun_distance);
-    final gunY = y - opp(angle, gun_distance);
-
-    if (WeaponType.isFirearm(attackType)){
-      particles.emitSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
-      particles.spawnParticleShell(gunX, gunY, z);
-    }
-    if (WeaponType.Firearms_Automatic.contains(attackType)){
-      particles.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
-      return;
-    }
     particles.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
@@ -372,9 +355,6 @@ class IsometricEvents with IsometricComponent {
         break;
       case PlayerEvent.Reloading:
         switch (player.weaponType.value){
-          case WeaponType.Handgun:
-            audio.reload_6();
-            break;
           default:
             audio.reload_6();
         }
@@ -495,20 +475,8 @@ class IsometricEvents with IsometricComponent {
     if (weaponType == WeaponType.Unarmed) return;
 
     switch (weaponType) {
-      case WeaponType.Plasma_Rifle:
-        audio.gun_pickup_01();
-        break;
-      case WeaponType.Plasma_Pistol:
-        audio.revolver_reload_1();
-        break;
       case WeaponType.Revolver:
         audio.revolver_reload_1();
-        break;
-      case WeaponType.Handgun:
-        audio.reload_6();
-        break;
-      case WeaponType.Shotgun:
-        audio.cock_shotgun_3();
         break;
       case WeaponType.Sword:
         audio.sword_unsheathe();
@@ -528,20 +496,8 @@ class IsometricEvents with IsometricComponent {
     if (itemType == WeaponType.Unarmed) return;
 
     switch (itemType) {
-      case WeaponType.Plasma_Rifle:
-        audio.gun_pickup_01();
-        break;
-      case WeaponType.Plasma_Pistol:
-        audio.revolver_reload_1();
-        break;
       case WeaponType.Revolver:
         audio.revolver_reload_1();
-        break;
-      case WeaponType.Handgun:
-        audio.reload_6();
-        break;
-      case WeaponType.Shotgun:
-        audio.cock_shotgun_3();
         break;
       case WeaponType.Sword:
         audio.sword_unsheathe();

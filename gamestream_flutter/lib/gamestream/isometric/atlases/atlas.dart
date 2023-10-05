@@ -14,34 +14,6 @@ class Atlas {
 
   static const Collection_Nothing = <int, List<double>>{};
 
-  static const Collection_Weapons = <int, List<double>>{
-    WeaponType.Handgun : AtlasSrcWeapons.Handgun,
-    WeaponType.Shotgun : AtlasSrcWeapons.Shotgun,
-    WeaponType.Sniper_Rifle : AtlasSrcWeapons.Sniper_Rifle,
-    WeaponType.Unarmed : AtlasSrcWeapons.Unarmed,
-    WeaponType.Smg : AtlasSrcWeapons.Smg,
-    WeaponType.Machine_Gun : AtlasSrcWeapons.Machine_Gun,
-    WeaponType.Sword : AtlasSrcWeapons.Sword,
-    WeaponType.Bow : AtlasSrcWeapons.Bow,
-    WeaponType.Plasma_Pistol : AtlasSrcWeapons.Plasma_Pistol,
-    WeaponType.Crowbar : AtlasSrcWeapons.Crowbar,
-    WeaponType.Grenade : AtlasSrcWeapons.Grenade,
-    WeaponType.Flame_Thrower : AtlasSrcWeapons.Flame_Thrower,
-    WeaponType.Bazooka : AtlasSrcWeapons.Bazooka,
-    WeaponType.Minigun : AtlasSrcWeapons.Minigun,
-    WeaponType.Crossbow : AtlasSrcWeapons.Crossbow,
-    WeaponType.Staff : AtlasSrcWeapons.Staff,
-    WeaponType.Musket : AtlasSrcWeapons.Musket,
-    WeaponType.Revolver : AtlasSrcWeapons.Revolver,
-    WeaponType.Pistol : AtlasSrcWeapons.Pistol,
-    WeaponType.Plasma_Rifle : AtlasSrcWeapons.Plasma_Rifle,
-    WeaponType.Hammer : AtlasSrcWeapons.Hammer,
-    WeaponType.Pickaxe : AtlasSrcWeapons.Pickaxe,
-    WeaponType.Knife : AtlasSrcWeapons.Knife,
-    WeaponType.Axe : AtlasSrcWeapons.Axe,
-    WeaponType.Rifle : AtlasSrcWeapons.Rifle,
-  };
-
   static const Collection_Legs = <int, List<double>> {
     LegType.None: AtlasSrcLegs.None,
     LegType.Leather: AtlasSrcLegs.Red,
@@ -97,7 +69,7 @@ class Atlas {
   };
 
   static const SrcCollection = <int, Map<int, List<double>>>{
-    ItemType.Weapon: Collection_Weapons,
+    ItemType.Weapon: atlasSrcWeapons,
     ItemType.Legs: Collection_Legs,
     ItemType.Body: atlasSrcBodyType,
     ItemType.Helm: Collection_Helm,
