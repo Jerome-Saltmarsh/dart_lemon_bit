@@ -45,16 +45,13 @@ class Connection with ByteReader {
 
   Connection(this.webSocket, this.server){
     sink = webSocket.sink;
-    sink.done.then((value){
-      onDisconnect();
-    });
+    sink.done.then(onDisconnect);
     subscription = webSocket.stream.listen(onData, onError: onStreamError);
   }
 
-  void onDisconnect() {
+  void onDisconnect(dynamic value) {
     final player = _player;
     if (player != null) {
-
       if (player is IsometricPlayer && player.persistOnDisconnect){
         final character = mapIsometricPlayerToJson(player);
         character.remove('lock_date');
@@ -63,10 +60,10 @@ class Connection with ByteReader {
             character: character,
         );
       }
-
       player.game.players.remove(player);
       player.game.removePlayer(player);
     }
+
     _player = null;
     onDone?.call();
     subscription.cancel();

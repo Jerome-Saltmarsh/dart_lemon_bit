@@ -176,8 +176,10 @@ class GamestreamServer {
   }
 
   void onConnectionDone(Connection connection){
-    connections.remove(connection);
-    print("Connection Done. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
+    if (connections.remove(connection)){
+      print('gamestream_server - connection removed');
+      print("Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
+    }
   }
 
   void sendResponseToClients(){
