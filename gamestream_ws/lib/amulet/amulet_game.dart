@@ -191,7 +191,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     character.actionFrame = -1;
 
-    if (character.performingActivePower){
+    if (character.activeAbilitySelected){
       character.applyPerformingActivePower();
       return;
     }
@@ -251,30 +251,46 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         break;
       case AmuletAttackType.Lightning:
-        var boltsRemaining = 3;
-        for (final otherCharacter in characters){
-          if (!character.active || !character.isEnemy(otherCharacter)) {
-            continue;
-          }
-          if (!character.withinRadiusPosition(otherCharacter, 300)){
-            continue;
-          }
-          dispatchGameEventPosition(GameEventType.Lightning_Bolt, otherCharacter);
-          applyHit(
-            srcCharacter: character,
-            target: otherCharacter,
-            damage: 3,
-          );
-          boltsRemaining--;
-          if (boltsRemaining <= 0) {
-            return;
-          }
-        }
+        performAmuletAttackLightning(character);
+        break;
+      case AmuletAttackType.Blink:
+        performAmuletAttackBlink(character);
         break;
       default:
         throw Exception(item.attackType?.name);
     }
 
+  }
+
+  void performAmuletAttackBlink(AmuletPlayer player){
+    dispatchGameEventPosition(GameEventType.Blink_Depart, player);
+    player.x = player.activePowerX;
+    player.y = player.activePowerY;
+    player.z = player.activePowerZ;
+    dispatchGameEventPosition(GameEventType.Blink_Arrive, player);
+  }
+
+  void performAmuletAttackLightning(Character character){
+    var boltsRemaining = 3;
+    final characters = this.characters;
+    for (final otherCharacter in characters){
+      if (!character.active || !character.isEnemy(otherCharacter)) {
+        continue;
+      }
+      if (!character.withinRadiusPosition(otherCharacter, 300)){
+        continue;
+      }
+      dispatchGameEventPosition(GameEventType.Lightning_Bolt, otherCharacter);
+      applyHit(
+        srcCharacter: character,
+        target: otherCharacter,
+        damage: 3,
+      );
+      boltsRemaining--;
+      if (boltsRemaining <= 0) {
+        return;
+      }
+    }
   }
 
   AmuletItemQuality? getRandomItemQuality({

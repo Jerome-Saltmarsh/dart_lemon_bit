@@ -28,8 +28,12 @@ class RendererParticles extends RenderGroup {
     final dstY = particle.renderY;
 
     assert(particle.active);
-    assert(particle.delay <= 0);
     assert(particle.onscreen);
+
+    if (particle.delay > 0){
+      return;
+    }
+
     // assert(dstX > engine.Screen_Left - 50);
     // assert(dstX < engine.Screen_Right + 50);
     // assert(dstY > engine.Screen_Top - 50);

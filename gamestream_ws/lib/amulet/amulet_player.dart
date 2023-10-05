@@ -19,7 +19,6 @@ class AmuletPlayer extends IsometricPlayer {
   var healthBase = 10;
   var npcText = '';
   var npcOptions = <TalkOption>[];
-  var performingActivePower = false;
 
   var elementFire = 0;
   var elementWater = 0;
@@ -586,7 +585,11 @@ class AmuletPlayer extends IsometricPlayer {
         activatedPowerIndex = index;
         break;
       case AmuletPowerMode.Self:
-        // TODO CASTE STRAIGHT AWAY
+        activatedPowerIndex = index;
+        setCharacterStateStriking(
+            duration: 20,
+            actionFrame: 10,
+        );
         break;
     }
 
@@ -594,7 +597,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void deselectActivatedPower() {
-    performingActivePower = false;
+    // performingActivePower = false;
     activatedPowerIndex = -1;
   }
 
@@ -1145,16 +1148,11 @@ class AmuletPlayer extends IsometricPlayer {
         );
         break;
       case AmuletPowerMode.Positional:
-        // weaponState = WeaponState.Performing;
         setCharacterStateStriking(
             duration: item.performDuration,
             actionFrame: item.actionFrame,
         );
-        // actionFrame = item.actionFrame;
         weaponType = item.subType;
-        performingActivePower = true;
-        // weaponStateDuration = 0;
-        // weaponStateDurationTotal = item.performDuration;
         break;
     }
   }
@@ -1185,11 +1183,10 @@ class AmuletPlayer extends IsometricPlayer {
 
       switch (attackType) {
         case AmuletAttackType.Blink:
-          game.dispatchGameEvent(GameEventType.Blink_Depart, x, y, z);
-          x = activePowerX;
-          y = activePowerY;
-          z = activePowerZ;
-          game.dispatchGameEvent(GameEventType.Blink_Arrive, x, y, z);
+          game.performAmuletAttackBlink(this);
+          break;
+        case AmuletAttackType.Lightning:
+          game.performAmuletAttackLightning(this);
           break;
         default:
           throw Exception("Power Not Implemented $attackType");
