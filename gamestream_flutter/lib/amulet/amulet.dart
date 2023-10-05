@@ -286,4 +286,13 @@ class Amulet extends IsometricGame {
       '--index ${amuletItem.index}',
     );
   }
+
+  int getAmuletItemLevel(AmuletItem amuletItem) =>
+      amuletItem.getLevel(
+        fire: elementFire.value,
+        water: elementWater.value,
+        wind: elementWind.value,
+        earth: elementEarth.value,
+        electricity: elementElectricity.value,
+    );
 }

@@ -384,18 +384,8 @@ enum AmuletItem {
     return -1;
   }
 
-  static const upgradeTable = {
-    Spell_Thunderbolt: [
-      [0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 3],
-      [0, 0, 0, 0, 7],
-      [0, 0, 0, 0, 11]
-    ],
-  };
-
-
   /// [fire, water, wind, earth, electricity]
-  List<int>? getAmuletItemUpgradeCost(int level) {
+  List<int>? getUpgradeCost(int level) {
     if (level < 0){
       throw Exception('level < 0');
     }
@@ -411,4 +401,14 @@ enum AmuletItem {
 
     return table[level];
   }
+
+  /// [fire, water, wind, earth, electricity]
+  static const upgradeTable = {
+    Spell_Thunderbolt: [
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 3],
+      [0, 0, 0, 0, 7],
+      [0, 0, 0, 0, 11]
+    ],
+  };
 }

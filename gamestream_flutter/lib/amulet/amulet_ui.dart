@@ -250,9 +250,17 @@ class AmuletUI {
   buildItemHoverDialog({double edgePadding = 150}) {
     return buildWatch(
       amulet.itemHover,
-      (item) => item == null
-          ? nothing
-          : GSContainer(
+      (item) {
+
+
+        if (item == null) {
+          return nothing;
+        }
+
+        final level = amulet.getAmuletItemLevel(item);
+        print('amulet.itemHover($item, level: $level)');
+
+        return GSContainer(
               width: 270,
               child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -274,17 +282,13 @@ class AmuletUI {
                 buildItemRow('range', item.range),
                 buildItemRow('health', item.health),
                 buildItemRow('movement', item.movement * 10),
+                buildItemRow('level', level + 1),
                 if (item.attackType != null)
                   buildItemRow('attack type', item.attackType!.name),
-                buildItemRow('level', item.getLevel(
-                    fire: amulet.elementFire.value,
-                    water: amulet.elementWater.value,
-                    wind: amulet.elementWind.value,
-                    earth: amulet.elementEarth.value,
-                    electricity: amulet.elementElectricity.value,
-                )),
+
               ],
-            )));
+            ));
+      });
   }
 
   static Widget buildItemRow(String text, dynamic value){
