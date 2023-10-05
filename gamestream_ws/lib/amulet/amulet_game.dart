@@ -191,8 +191,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     character.actionFrame = -1;
 
-    if (character.activeAbilitySelected){
-      character.applyPerformingActivePower();
+    if (character.powerActivated) {
+      character.performActivatedPower();
       return;
     }
 

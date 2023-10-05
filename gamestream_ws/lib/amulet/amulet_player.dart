@@ -106,7 +106,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeElementPoints();
   }
 
-  bool get activeAbilitySelected => activatedPowerIndex != -1;
+  bool get powerActivated => activatedPowerIndex != -1;
 
   int get equippedWeaponType {
     final weapon = equippedWeapon;
@@ -1158,7 +1158,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   /// Gets called once the animation to perform the power strikes the perform state
-  void applyPerformingActivePower() {
+  void performActivatedPower() {
       if (activatedPowerIndex == -1)
         throw Exception();
 
@@ -1223,7 +1223,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void updateActiveAbility() {
-    if (!activeAbilitySelected)
+    if (!powerActivated)
       return;
 
     final activeAbility = getWeaponAtIndex(activatedPowerIndex) ;
@@ -1373,7 +1373,6 @@ class AmuletPlayer extends IsometricPlayer {
     switch (slotType){
       case SlotType.Weapons:
         selectWeapon(index);
-        // equippedWeaponIndex = index;
         return;
 
       case SlotType.Items:

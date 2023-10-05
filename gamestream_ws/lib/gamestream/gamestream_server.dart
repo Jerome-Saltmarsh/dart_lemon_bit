@@ -156,7 +156,6 @@ class GamestreamServer {
     var handler = webSocketHandler(
       onConnection,
       protocols: ['gamestream.online'],
-      pingInterval: const Duration(seconds: 30),
     );
 
     shelf_io.serve(handler, '0.0.0.0', port).then((server) {
