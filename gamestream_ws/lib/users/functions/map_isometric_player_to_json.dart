@@ -27,19 +27,19 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
     }
 
     json['name'] = player.name;
-    json['equipped_helm'] = getSlotType(player.equippedHelm);
-    json['equipped_body'] = getSlotType(player.equippedBody);
-    json['equipped_legs'] = getSlotType(player.equippedLegs);
-    json['equipped_shoes'] = getSlotType(player.equippedShoe);
-    json['equipped_hand_left'] = getSlotType(player.equippedHandLeft);
-    json['equipped_hand_right'] = getSlotType(player.equippedHandRight);
+    json['equippedHelm'] = getSlotType(player.equippedHelm);
+    json['equippedBody'] = getSlotType(player.equippedBody);
+    json['equippedLegs'] = getSlotType(player.equippedLegs);
+    json['equippedShoe'] = getSlotType(player.equippedShoe);
+    json['equippedHandLeft'] = getSlotType(player.equippedHandLeft);
+    json['equippedHandRight'] = getSlotType(player.equippedHandRight);
     json['weapons'] = getSlotTypeNames(player.weapons);
     json['items'] = getSlotTypeNames(player.items);
     json['complexion'] = player.complexion;
-    json['equipped_weapon_index'] = player.equippedWeaponIndex;
+    json['equippedWeaponIndex'] = player.equippedWeaponIndex;
     json['gender'] = player.gender;
-    json['hair_type'] = player.hairType;
-    json['hair_color'] = player.hairColor;
+    json['hairType'] = player.hairType;
+    json['hairColor'] = player.hairColor;
     json['experience'] = player.experience;
     json['level'] = player.level;
   }

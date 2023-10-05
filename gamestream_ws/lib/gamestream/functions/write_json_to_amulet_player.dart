@@ -5,42 +5,42 @@ import 'package:typedef/json.dart';
 
 void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
 
-  final equippedHelm = json['equipped_helm'] ?? 0;
+  final equippedHelm = json['equippedHelm'] ?? 0;
   if (equippedHelm != HelmType.None) {
     player.equipHelm(AmuletItem.getHelm(equippedHelm), force: true);
   } else {
     player.equipHelm(null, force: true);
   }
 
-  final equippedBody = json['equipped_body'] ?? 0;
+  final equippedBody = json['equippedBody'] ?? 0;
   if (equippedBody != BodyType.None){
     player.equipBody(AmuletItem.getBody(equippedBody), force: true);
   } else {
     player.equipBody(null, force: true);
   }
 
-  final equippedLegs = json['equipped_legs'] ?? 0;
+  final equippedLegs = json['equippedLegs'] ?? 0;
   if (equippedLegs != LegType.None){
     player.equipLegs(AmuletItem.getLegs(equippedLegs), force: true);
   } else {
     player.equipLegs(null, force: true);
   }
 
-  final equippedShoes = json['equipped_shoes'] ?? 0;
-  if (equippedShoes != BodyType.None) {
-    player.equipShoes(AmuletItem.getShoe(equippedShoes), force: true);
+  final equippedShoe = json['equippedShoe'] ?? 0;
+  if (equippedShoe != BodyType.None) {
+    player.equipShoes(AmuletItem.getShoe(equippedShoe), force: true);
   } else {
     player.equipShoes(null, force: true);
   }
 
-  final equippedHandLeft = json['equipped_hand_left'] ?? 0;
+  final equippedHandLeft = json['equippedHandLeft'] ?? 0;
   if (equippedHandLeft != HandType.None) {
     player.equipHandLeft(AmuletItem.getHand(equippedHandLeft), force: true);
   } else {
     player.equipHandLeft(null, force: true);
   }
 
-  final equippedHandRight = json['equipped_hand_right'] ?? 0;
+  final equippedHandRight = json['equippedHandRight'] ?? 0;
   if (equippedHandRight != HandType.None) {
     player.equipHandRight(AmuletItem.getHand(equippedHandRight), force: true);
   } else {
@@ -75,10 +75,10 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
   player.name = json['name'];
-  player.equippedWeaponIndex = json['equipped_weapon_index'] ?? 0;
+  player.equippedWeaponIndex = json['equippedWeaponIndex'] ?? 0;
   player.gender = json['gender'] ?? 0;
-  player.hairType = json['hair_type'] ?? 0;
-  player.hairColor = json['hair_color'] ?? 0;
+  player.hairType = json['hairType'] ?? 0;
+  player.hairColor = json['hairColor'] ?? 0;
   player.experience = json['experience'] ?? 0;
   player.level = json['level'] ?? 0;
   player.healthBase = 100;

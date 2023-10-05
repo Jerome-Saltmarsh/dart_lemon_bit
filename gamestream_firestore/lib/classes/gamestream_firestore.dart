@@ -99,6 +99,7 @@ class GamestreamFirestore {
       'hairColor': hairColor,
       'gender': gender,
       'headType': headType,
+      'equipped_body': 1,
       'level': 1,
     })));
 
