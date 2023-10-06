@@ -51,11 +51,9 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   if (weaponNames != null){
     for (var i = 0; i < weaponNames.length; i++){
       final weaponName =  weaponNames[i];
-      if (weaponName != '-'){
-        player.weapons[i].item = AmuletItem.findByName(weaponName);
-      } else {
-        player.weapons[i].item = null;
-      }
+      player.weapons[i].item = weaponName == '-'
+          ? null
+          : AmuletItem.findByName(weaponName);
     }
   }
 

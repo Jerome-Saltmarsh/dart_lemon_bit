@@ -380,8 +380,14 @@ enum AmuletItem {
   static AmuletItem getWeapon(int type) =>
       typeWeapons.firstWhere((element) => element.subType == type);
 
-  static AmuletItem findByName(String name) =>
-      values.firstWhere((element) => element.name == name);
+  static AmuletItem? findByName(String name) {
+     for (final value in values){
+       if (value.name == name) {
+         return value;
+       }
+     }
+     return null;
+  }
 
   static AmuletItem getHand(int type) =>
       typeHands.firstWhere((element) => element.subType == type);
