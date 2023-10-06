@@ -1,5 +1,4 @@
 import '../src.dart';
-import 'treasure_type.dart';
 
 class ItemType {
   static const Weapon = 1;
@@ -11,6 +10,7 @@ class ItemType {
   static const Hand = 7;
   static const Treasure = 8;
   static const Shoes = 9;
+  static const Spell = 10;
 
   static const collections = {
     Weapon: WeaponType.values,

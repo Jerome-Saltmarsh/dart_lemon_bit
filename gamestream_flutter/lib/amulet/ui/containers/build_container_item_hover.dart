@@ -67,8 +67,6 @@ Widget buildContainerAmuletItemHoverCurrent(AmuletItem item, int level) =>
                   buildTableRow('range', item.range),
                   buildTableRow('health', item.health),
                   buildTableRow('movement', item.movement * 10),
-                  if (item.attackType != null)
-                    buildTableRow('attack type', item.attackType?.name),
                 ],
               ));
 

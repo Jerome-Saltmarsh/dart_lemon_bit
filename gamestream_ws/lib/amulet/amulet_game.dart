@@ -3,6 +3,7 @@ import 'package:gamestream_ws/isometric.dart';
 
 import 'package:gamestream_ws/packages.dart';
 
+import 'item_slot.dart';
 import 'talk_option.dart';
 import 'mmo_gameobject.dart';
 import 'mmo_npc.dart';
@@ -190,76 +191,76 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     character.actionFrame = -1;
+    ItemSlot? activeSlot;
 
     if (character.powerActivated) {
-      character.performActivatedPower();
+      activeSlot = character.weapons[character.activatedPowerIndex];
+    } else {
+      activeSlot = character.equippedWeapon;
+    }
+
+    if (activeSlot == null)
+      return;
+
+    final activeSlotItem = activeSlot.item;
+
+    if (activeSlotItem == null){
       return;
     }
 
-    final weapon = character.equippedWeapon;
-
-    if (weapon == null)
-      return;
-
-    final item = weapon.item;
-
-    if (item == null)
-      return;
-
-    switch (item.attackType) {
-      case AmuletAttackType.Fire_Ball:
-        spawnProjectileFireball(
-          src: character,
-          damage: item.damage,
-          range: item.range,
-          angle: character.angle,
-        );
-        break;
-      case AmuletAttackType.Melee:
-        applyAttackTypeMelee(character);
-        break;
-      case AmuletAttackType.Arrow:
-        dispatchGameEvent(
-          GameEventType.Bow_Released,
-          character.x,
-          character.y,
-          character.z,
-        );
-        spawnProjectileArrow(
-          src: character,
-          damage: item.damage,
-          range: item.range,
-          angle: character.angle,
-        );
-        break;
-      case AmuletAttackType.Bullet:
-        spawnProjectile(
-          src: character,
-          damage: item.damage,
-          range: item.range,
-          projectileType: ProjectileType.Bullet,
-          angle: character.angle,
-        );
-        break;
-      case AmuletAttackType.Frost_Ball:
-        spawnProjectile(
-          src: character,
-          damage: item.damage,
-          range: item.range,
-          projectileType: ProjectileType.FrostBall,
-          angle: character.angle,
-        );
-        break;
-      case AmuletAttackType.Lightning:
+    switch (activeSlotItem) {
+      case AmuletItem.Spell_Thunderbolt:
         performAmuletAttackLightning(character);
         break;
-      case AmuletAttackType.Blink:
+      case AmuletItem.Spell_Blink:
         performAmuletAttackBlink(character);
         break;
+      case AmuletItem.Blink_Dagger:
+        performAmuletAttackBlink(character);
+        break;
+      case AmuletItem.Rusty_Old_Sword:
+        applyAttackTypeMelee(character);
+        break;
+      case AmuletItem.Old_Bow:
+        performFireArrow(character, damage: 1, range: 50);
+        break;
+      case AmuletItem.Holy_Bow:
+        performFireArrow(character, damage: 1, range: 50);
+        break;
+      case AmuletItem.Staff_Of_Frozen_Lake:
+        casteFrostBall(character, damage: 1, range: 50);
+        break;
       default:
-        throw Exception(item.attackType?.name);
+        throw Exception('amulet.PerformCharacterAction($activeSlotItem)');
     }
+  }
 
+  void casteFrostBall(AmuletPlayer character, {required int damage, required double range}) {
+     spawnProjectile(
+      src: character,
+      damage: damage,
+      range: range,
+      projectileType: ProjectileType.FrostBall,
+      angle: character.angle,
+    );
+  }
+
+  void performFireArrow(AmuletPlayer character, {
+    required int damage,
+    required double range,
+  }) {
+     dispatchGameEvent(
+      GameEventType.Bow_Released,
+      character.x,
+      character.y,
+      character.z,
+    );
+    spawnProjectileArrow(
+      src: character,
+      damage: damage,
+      range: range,
+      angle: character.angle,
+    );
   }
 
   void performAmuletAttackBlink(AmuletPlayer player){

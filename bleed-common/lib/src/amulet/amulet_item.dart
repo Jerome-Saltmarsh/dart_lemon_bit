@@ -1,100 +1,86 @@
 
 import '../../src.dart';
-import '../isometric/treasure_type.dart';
-
-
 
 enum AmuletItem {
   Blink_Dagger(
+    powerMode: AmuletPowerMode.Positional,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
     cooldown: 40,
     range: 180,
-    attackType: AmuletAttackType.Blink,
     actionFrame: 15,
     performDuration: 20,
     id: 21,
     level1: ItemStat(information: 'Teleports a short distance'),
   ),
-  Lightning_Rod(
-    quality: AmuletItemQuality.Rare,
-    type: ItemType.Weapon,
-    subType: WeaponType.Spell_Thunderbolt,
-    cooldown: 40,
-    range: 180,
-    attackType: AmuletAttackType.Lightning,
-    actionFrame: 15,
-    performDuration: 20,
-    id: 500,
-    level1: ItemStat(information: 'Teleports a short distance'),
-  ),
   Rusty_Old_Sword(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
     cooldown: 40,
     damage: 2,
     range: 80,
-    attackType: AmuletAttackType.Melee,
     actionFrame: 20,
     performDuration: 25,
     id: 1,
     level1: ItemStat(information: 'An old blunt sword'),
   ),
   Staff_Of_Flames(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Unique,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     cooldown: 40,
     damage: 2,
     range: 180,
-    attackType: AmuletAttackType.Fire_Ball,
     actionFrame: 20,
     performDuration: 25,
     id: 2,
     level1: ItemStat(information: 'An old blunt sword'),
   ),
   Staff_Of_Frozen_Lake(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     cooldown: 40,
     damage: 2,
     range: 180,
-    attackType: AmuletAttackType.Frost_Ball,
     actionFrame: 15,
     performDuration: 20,
     id: 3,
     level1: ItemStat(information: 'A powerful staff that eliminates cold'),
   ),
   Old_Bow(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     cooldown: 40,
     damage: 1,
     range: 200,
-    attackType: AmuletAttackType.Arrow,
     actionFrame: 20,
     performDuration: 30,
     id: 4,
     level1: ItemStat(information: 'A worn out bow'),
   ),
   Holy_Bow(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     cooldown: 20,
     damage: 100,
     range: 300,
-    attackType: AmuletAttackType.Arrow,
     actionFrame: 12,
     performDuration: 25,
     id: 5,
     level1: ItemStat(information: 'A mythical bow which does a lot of damage'),
   ),
   Steel_Helmet(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Steel,
@@ -103,6 +89,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A common steel helmet'),
   ),
   Wizards_Hat(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Wizard_Hat,
@@ -111,6 +98,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A hat commonly worn by students of magic school'),
   ),
   Travellers_Pants(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
@@ -120,6 +108,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common pants'),
   ),
   Gauntlet(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
@@ -128,6 +117,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common gauntlets'),
   ),
   Squires_Pants(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
@@ -136,6 +126,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common pants'),
   ),
   Knights_Pants(
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Unique,
     type: ItemType.Legs,
     subType: LegType.Leather,
@@ -145,6 +136,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Pants of higher quality'),
   ),
   Worn_Shirt_Blue (
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
@@ -153,6 +145,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A common blue shirt'),
   ),
   Basic_Leather_Armour (
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
@@ -161,6 +154,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common armour'),
   ),
   Shoe_Leather_Boots (
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
@@ -169,6 +163,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A common leather boots'),
   ),
   Shoe_Iron_Plates (
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
@@ -177,6 +172,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Heavy boots which provide good defense'),
   ),
   Ocean_Boots (
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
@@ -185,6 +181,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Commonly worn by water mages'),
   ),
   Storm_Boots (
+    powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
@@ -193,6 +190,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'commonly worn by electric mages'),
   ),
   Health_Potion(
+    powerMode: AmuletPowerMode.Self,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Health_Potion,
@@ -202,6 +200,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Replenishes health'),
   ),
   Treasure_Box(
+    powerMode: AmuletPowerMode.Self,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Treasure_Box,
@@ -211,6 +210,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'increases experience'),
   ),
   Meat_Drumstick(
+    powerMode: AmuletPowerMode.Self,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Meat_Drumstick,
@@ -220,6 +220,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'replenishes health'),
   ),
   Lost_Pendant_Of_Dreams(
+    powerMode: AmuletPowerMode.None,
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
@@ -228,6 +229,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'increases stats'),
   ),
   Sapphire_Pendant(
+    powerMode: AmuletPowerMode.None,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
@@ -239,13 +241,11 @@ enum AmuletItem {
     ),
   ),
   Spell_Thunderbolt(
+    powerMode: AmuletPowerMode.Self,
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Weapon,
     subType: WeaponType.Spell_Thunderbolt,
     id: 19,
-    attackType: AmuletAttackType.Lightning,
-    cooldown: 10,
-    damage: 3,
     level1: ItemStat(
       damage: 3,
       cooldown: 30,
@@ -266,8 +266,28 @@ enum AmuletItem {
       electricity: 6,
       fire: 2,
     ),
+  ),
+  Spell_Blink(
+    powerMode: AmuletPowerMode.Positional,
+    quality: AmuletItemQuality.Mythical,
+    type: ItemType.Spell,
+    subType: SpellType.Blink,
+    id: 100,
+    level1: ItemStat(
+      cooldown: 30,
+      information: 'teleports a short distance',
+      air: 2,
+      range: 50,
+    ),
+    level2: ItemStat(
+      cooldown: 28,
+      information: 'teleports a short distance',
+      air: 4,
+      range: 60,
+    ),
   );
 
+  final AmuletPowerMode powerMode;
   final int damage;
   final int type;
   final int subType;
@@ -278,7 +298,7 @@ enum AmuletItem {
   final bool consumable;
   final double range;
   final double movement;
-  final AmuletAttackType? attackType;
+  // final AmuletAttackType? attackType;
   final AmuletItemQuality quality;
   final int actionFrame;
   final int performDuration;
@@ -294,6 +314,7 @@ enum AmuletItem {
     required this.subType,
     required this.quality,
     required this.id,
+    required this.powerMode,
     required this.level1,
     this.level2,
     this.level3,
@@ -309,7 +330,6 @@ enum AmuletItem {
     this.experience = 0,
     this.actionFrame = -1,
     this.performDuration = -1,
-    this.attackType,
   });
 
   ItemStat? getItemStatsForLevel(int level) {
@@ -394,22 +414,6 @@ enum AmuletItem {
   void validate(){
     if (actionFrame > performDuration){
       validationError('performFrame cannot be greater than performDuration');
-    }
-
-    if (attackType != null && performDuration < 0){
-      validationError('performDuration cannot be less than 0');
-    }
-
-    if (attackType != null && actionFrame < 0){
-      validationError('performFrame cannot be less than 0');
-    }
-
-    if (attackType != null && actionFrame >= performDuration){
-      validationError('performFrame $actionFrame cannot be less than performDuration $performDuration');
-    }
-
-    if (attackType != null && range <= 0) {
-      validationError('range must be greater than 0');
     }
   }
 
@@ -501,6 +505,7 @@ enum AmuletItem {
 
 class ItemStat {
   final int damage;
+  final int range;
   final int cooldown;
   final int fire;
   final int water;
@@ -512,6 +517,7 @@ class ItemStat {
   const ItemStat({
     required this.information,
     this.damage = 0,
+    this.range = 0,
     this.cooldown = 0,
     this.fire = 0,
     this.water = 0,

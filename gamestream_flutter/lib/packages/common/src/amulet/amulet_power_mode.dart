@@ -4,4 +4,5 @@ enum AmuletPowerMode {
   Positional,
   Targeted_Enemy,
   Targeted_Ally,
+  None,
 }

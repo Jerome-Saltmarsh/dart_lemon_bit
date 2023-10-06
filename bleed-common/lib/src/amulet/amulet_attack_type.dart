@@ -1,6 +1,7 @@
 import 'amulet_power_mode.dart';
 
 enum AmuletAttackType {
+  Caste(AmuletPowerMode.Equip),
   Melee(AmuletPowerMode.Equip),
   Arrow(AmuletPowerMode.Equip),
   Fire_Arrow(AmuletPowerMode.Equip),

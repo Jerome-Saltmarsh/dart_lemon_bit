@@ -65,7 +65,6 @@ class AmuletPlayer extends IsometricPlayer {
     addItem(AmuletItem.Sapphire_Pendant);
     addItem(AmuletItem.Steel_Helmet);
     addItem(AmuletItem.Shoe_Leather_Boots);
-    addItem(AmuletItem.Lightning_Rod);
 
     addItemToEmptyWeaponSlot(AmuletItem.Rusty_Old_Sword);
     addItemToEmptyWeaponSlot(AmuletItem.Staff_Of_Frozen_Lake);
@@ -540,22 +539,21 @@ class AmuletPlayer extends IsometricPlayer {
     final slot = weapons[index];
     final weapon = slot.item;
 
-    if (weapon == null)
-      return;
-
-    final attackType = weapon.attackType;
-
-    if (attackType == null) {
-      writeAmuletError('selected weapon attack type is null ($index)');
+    if (weapon == null){
       return;
     }
+
+    // if (attackType == null) {
+    //   writeAmuletError('selected weapon attack type is null ($index)');
+    //   return;
+    // }
 
     if (slot.cooldown > 0) {
       writeAmuletError('${slot.item?.name} is cooling down');
       return;
     }
 
-    switch (attackType.mode) {
+    switch (weapon.powerMode) {
       case AmuletPowerMode.Equip:
         equippedWeaponIndex = index;
         deselectActivatedPower();
@@ -591,9 +589,10 @@ class AmuletPlayer extends IsometricPlayer {
             actionFrame: 10,
         );
         break;
+      case AmuletPowerMode.None:
+        // TODO: Handle this case.
+        break;
     }
-
-
   }
 
   void deselectActivatedPower() {
@@ -1102,22 +1101,16 @@ class AmuletPlayer extends IsometricPlayer {
       return;
 
     if (!isValidWeaponIndex(_activatedPowerIndex))
-      throw Exception();
+      throw Exception('invalid weapon index: $_activatedPowerIndex');
 
     final weapon = weapons[_activatedPowerIndex];
-
     final item = weapon.item;
 
     if (item == null){
       throw Exception();
     }
 
-    final attackType = item.attackType;
-
-    if (attackType == null)
-      throw Exception();
-
-    switch (attackType.mode) {
+    switch (item.powerMode) {
       case AmuletPowerMode.Equip:
         throw Exception();
       case AmuletPowerMode.Self:
@@ -1154,50 +1147,52 @@ class AmuletPlayer extends IsometricPlayer {
         );
         weaponType = item.subType;
         break;
+      case AmuletPowerMode.None:
+        // TODO: Handle this case.
     }
   }
 
   /// Gets called once the animation to perform the power strikes the perform state
-  void performActivatedPower() {
-      if (activatedPowerIndex == -1)
-        throw Exception();
-
-      if (!isValidWeaponIndex(activatedPowerIndex)){
-        throw Exception();
-      }
-
-      final weapon = weapons[activatedPowerIndex];
-
-      final item = weapon.item;
-
-      if (item == null)
-        throw Exception();
-
-      weapon.cooldown = item.cooldown;
-
-      final attackType = item.attackType;
-
-      if (attackType == null){
-        throw Exception();
-      }
-
-      switch (attackType) {
-        case AmuletAttackType.Blink:
-          game.performAmuletAttackBlink(this);
-          break;
-        case AmuletAttackType.Lightning:
-          game.performAmuletAttackLightning(this);
-          break;
-        default:
-          throw Exception("Power Not Implemented $attackType");
-      }
-
-      assignWeaponTypeToEquippedWeapon();
-      deselectActivatedPower();
-      setCharacterStateIdle();
-      setDestinationToCurrentPosition();
-      clearPath();
-  }
+  // void performActivatedPower() {
+  //     if (activatedPowerIndex == -1)
+  //       throw Exception();
+  //
+  //     if (!isValidWeaponIndex(activatedPowerIndex)){
+  //       throw Exception();
+  //     }
+  //
+  //     final weapon = weapons[activatedPowerIndex];
+  //
+  //     final item = weapon.item;
+  //
+  //     if (item == null)
+  //       throw Exception();
+  //
+  //     weapon.cooldown = item.cooldown;
+  //
+  //     final attackType = item.attackType;
+  //
+  //     if (attackType == null){
+  //       throw Exception();
+  //     }
+  //
+  //     switch (attackType) {
+  //       case AmuletAttackType.Blink:
+  //         game.performAmuletAttackBlink(this);
+  //         break;
+  //       case AmuletAttackType.Lightning:
+  //         game.performAmuletAttackLightning(this);
+  //         break;
+  //       default:
+  //         throw Exception("Power Not Implemented $attackType");
+  //     }
+  //
+  //     assignWeaponTypeToEquippedWeapon();
+  //     deselectActivatedPower();
+  //     setCharacterStateIdle();
+  //     setDestinationToCurrentPosition();
+  //     clearPath();
+  // }
 
   void assignWeaponTypeToEquippedWeapon() =>
       weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
@@ -1231,12 +1226,11 @@ class AmuletPlayer extends IsometricPlayer {
     if (activeAbility == null)
       return;
 
-    final attackType = activeAbility.attackType;
+    // final attackType = activeAbility.attackType;
 
-    if (attackType == null)
-      return;
+    final powerMode = activeAbility.powerMode;
 
-    if (attackType.mode == AmuletPowerMode.Positional) {
+    if (powerMode == AmuletPowerMode.Positional) {
       final mouseDistance = getMouseDistance();
       final maxRange = activeAbility.range;
       if (mouseDistance <= maxRange){
