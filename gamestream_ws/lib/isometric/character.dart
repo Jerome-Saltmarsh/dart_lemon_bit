@@ -248,16 +248,16 @@ class Character extends Collider {
   void set angle(double value) =>
       _angle = value % pi2;
 
-  void setCharacterStateStriking({
-    required int duration,
-    required int actionFrame,
-  }){
-    assert (active);
-    assert (alive);
-    this.actionFrame = actionFrame;
-    setDestinationToCurrentPosition();
-    setCharacterState(value: CharacterState.Strike, duration: duration);
-  }
+  // void setCharacterStateStriking({
+  //   required int duration,
+  //   required int actionFrame,
+  // }){
+  //   assert (active);
+  //   assert (alive);
+  //   this.actionFrame = actionFrame;
+  //   setDestinationToCurrentPosition();
+  //   setCharacterState(value: CharacterState.Strike, duration: duration);
+  // }
 
   void setCharacterStateFire({
     required int duration,

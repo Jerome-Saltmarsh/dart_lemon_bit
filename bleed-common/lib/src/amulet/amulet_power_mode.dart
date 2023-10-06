@@ -1,8 +1,9 @@
-enum AmuletPowerMode {
+enum AmuletSelectAction {
   Equip,
-  Self,
+  Instant,
+  Caste,
   Positional,
   Targeted_Enemy,
   Targeted_Ally,
-  None,
+  None, Consume,
 }

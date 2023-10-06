@@ -6,6 +6,8 @@ import 'package:gamestream_ws/packages.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'environment.dart';
+import 'functions/set_character_state_striking.dart';
+import 'functions/use_activated_power.dart';
 import 'gameobject.dart';
 import 'physics.dart';
 import 'isometric_player.dart';
@@ -285,7 +287,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player is AmuletPlayer &&
         player.activatedPowerIndex != -1
     ) {
-      AmuletPlayer.useActivatedPower(player);
+      useActivatedPower(player);
       player.mouseLeftDownIgnore = true;
       return;
     }
@@ -498,7 +500,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final performZ = character.z;
 
     // character.weaponState = WeaponState.Performing;
-    character.setCharacterStateStriking(
+    setCharacterStateStriking(
+        character: character,
         duration: character.attackDuration,
         actionFrame: character.attackActionFrame,
     );
@@ -2700,7 +2703,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         actionFrame: character.attackActionFrame,
       );
     } else {
-      character.setCharacterStateStriking(
+      setCharacterStateStriking(
+        character: character,
         duration: character.attackDuration,
         actionFrame: character.attackActionFrame,
       );
