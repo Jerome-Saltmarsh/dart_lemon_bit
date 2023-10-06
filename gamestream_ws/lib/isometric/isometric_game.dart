@@ -514,7 +514,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  void applyAttackTypeMelee(Character character){
+  void performAbilityMelee(Character character){
 
     final target = character.target;
 
@@ -1465,7 +1465,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         }
         return;
       }
-      applyAttackTypeMelee(character);
+      performAbilityMelee(character);
       return;
     }
 

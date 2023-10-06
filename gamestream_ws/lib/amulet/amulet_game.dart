@@ -203,34 +203,61 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       throw Exception('activeSlotItem == null');
     }
 
+    final level = activeSlotItem.getLevel(
+        fire: character.elementFire,
+        water: character.elementWater,
+        wind: character.elementWind,
+        earth: character.elementEarth,
+        electricity: character.elementElectricity,
+    );
+
+    if (level == -1){
+      character.writeGameError(GameError.Insufficient_Elements);
+      return;
+    }
+
+    final stats = activeSlotItem.getStatsForLevel(level);
+
+    if (stats == null){
+      throw Exception('stats == null');
+    }
+
     switch (activeSlotItem) {
       case AmuletItem.Spell_Thunderbolt:
-        performAmuletAttackLightning(character);
+        performAbilityLightning(character);
         break;
       case AmuletItem.Spell_Blink:
-        performAmuletAttackBlink(character);
+        performAbilityBlink(character);
         break;
       case AmuletItem.Blink_Dagger:
-        performAmuletAttackBlink(character);
+        performAbilityBlink(character);
         break;
       case AmuletItem.Rusty_Old_Sword:
-        applyAttackTypeMelee(character);
+        performAbilityMelee(character);
         break;
       case AmuletItem.Old_Bow:
-        performFireArrow(character, damage: 1, range: 50);
+        performAbilityArrow(
+            character: character,
+            damage: stats.damage,
+            range: stats.range,
+        );
         break;
       case AmuletItem.Holy_Bow:
-        performFireArrow(character, damage: 1, range: 50);
+        performAbilityArrow(
+          character: character,
+          damage: stats.damage,
+          range: stats.range,
+        );
         break;
       case AmuletItem.Staff_Of_Frozen_Lake:
-        casteFrostBall(character, damage: 1, range: 50);
+        performAbilityFrostBall(character, damage: 1, range: 50);
         break;
       default:
         throw Exception('amulet.PerformCharacterAction($activeSlotItem)');
     }
   }
 
-  void casteFrostBall(AmuletPlayer character, {required int damage, required double range}) {
+  void performAbilityFrostBall(AmuletPlayer character, {required int damage, required double range}) {
      spawnProjectile(
       src: character,
       damage: damage,
@@ -240,7 +267,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void performFireArrow(AmuletPlayer character, {
+  void performAbilityArrow({
+    required Character character,
     required int damage,
     required double range,
   }) {
@@ -258,7 +286,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void performAmuletAttackBlink(AmuletPlayer player){
+  void performAbilityBlink(AmuletPlayer player){
     dispatchGameEventPosition(GameEventType.Blink_Depart, player);
     player.x = player.activePowerX;
     player.y = player.activePowerY;
@@ -266,7 +294,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchGameEventPosition(GameEventType.Blink_Arrive, player);
   }
 
-  void performAmuletAttackLightning(Character character){
+  void performAbilityLightning(Character character){
     var boltsRemaining = 3;
     final characters = this.characters;
     for (final otherCharacter in characters){

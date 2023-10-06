@@ -12,7 +12,14 @@ enum AmuletItem {
     actionFrame: 15,
     performDuration: 20,
     id: 21,
-    level1: ItemStat(information: 'Teleports a short distance'),
+    level1: ItemStat(
+        air: 5,
+        information: 'Teleports a short distance',
+    ),
+    level2: ItemStat(
+        air: 10,
+        information: 'teleport slightly further',
+    )
   ),
   Rusty_Old_Sword(
     powerMode: AmuletPowerMode.Equip,
@@ -332,7 +339,7 @@ enum AmuletItem {
     this.performDuration = -1,
   });
 
-  ItemStat? getItemStatsForLevel(int level) {
+  ItemStat? getStatsForLevel(int level) {
     switch (level){
       case 1:
         return level1;
@@ -511,7 +518,7 @@ enum AmuletItem {
 
 class ItemStat {
   final int damage;
-  final int range;
+  final double range;
   final int cooldown;
   final int fire;
   final int water;

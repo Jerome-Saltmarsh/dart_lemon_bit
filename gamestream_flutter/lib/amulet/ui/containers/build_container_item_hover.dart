@@ -20,14 +20,14 @@ Widget buildContainerAmuletItemHover({
         final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
         print('amulet.itemHover($item, level: $levelCurrent)');
 
-        final statsCurrent = item.getItemStatsForLevel(levelCurrent);
+        final statsCurrent = item.getStatsForLevel(levelCurrent);
 
         if (statsCurrent == null){
           throw Exception('invalid amulet item level: $levelCurrent, item: $item');
         }
 
         final levelNext = levelCurrent + 1;
-        final statsNext = item.getItemStatsForLevel(levelNext);
+        final statsNext = item.getStatsForLevel(levelNext);
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
