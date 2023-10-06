@@ -17,27 +17,36 @@ Widget buildContainerAmuletItemHover({
 
   return buildWatchNullable(
       amulet.itemHover, (item) {
-        final level = amulet.getAmuletPlayerItemLevel(item);
-        print('amulet.itemHover($item, level: $level)');
+        final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
+        print('amulet.itemHover($item, level: $levelCurrent)');
 
-        final statsCurrent = item.getItemStatsForLevel(level);
+        final statsCurrent = item.getItemStatsForLevel(levelCurrent);
 
         if (statsCurrent == null){
-          throw Exception('invalid amulet item level: $level, item: $item');
+          throw Exception('invalid amulet item level: $levelCurrent, item: $item');
         }
 
-        final levelNext = level + 1;
+        final levelNext = levelCurrent + 1;
         final statsNext = item.getItemStatsForLevel(levelNext);
 
-        return Row(
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildContainerAmuletItemHoverCurrent(item, level),
-            if (statsNext != null)
-             Container(
-                 margin: const EdgeInsets.only(left: 32),
-                 child: buildContainerItemStats(statsNext, levelNext),
-             ),
+            buildAmuletItemIcon(item),
+            height8,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // buildContainerAmuletItemHoverCurrent(item, levelCurrent),
+                buildContainerItemStats(statsCurrent, levelCurrent),
+                if (statsNext != null)
+                 Container(
+                     margin: const EdgeInsets.only(left: 32),
+                     child: buildContainerItemStats(statsNext, levelNext),
+                 ),
+              ],
+            ),
           ],
         );
       });
@@ -50,16 +59,7 @@ Widget buildContainerAmuletItemHoverCurrent(AmuletItem item, int level) =>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FittedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
-                        width8,
-                        MMOItemImage(item: item, size: 64),
-                      ],
-                    ),
-                  ),
+                  buildAmuletItemIcon(item),
                   buildTableRow('lvl', level + 1),
                   height16,
                   buildTableRow('damage', item.damage),
@@ -71,6 +71,21 @@ Widget buildContainerAmuletItemHoverCurrent(AmuletItem item, int level) =>
                     buildTableRow('attack type', item.attackType?.name),
                 ],
               ));
+
+Widget buildAmuletItemIcon(AmuletItem item) => GSContainer(
+  padding: const EdgeInsets.all(6),
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildText(item.name.replaceAll('_', ' '),
+                size: 26, color: Colors.white.withOpacity(0.8)),
+            width8,
+            MMOItemImage(item: item, size: 64),
+          ],
+        ),
+      ),
+    );
 
 Widget buildContainerItemStats(ItemStat itemStats, int level) =>
     IsometricBuilder(builder: (context, components) =>
