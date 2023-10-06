@@ -298,6 +298,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.8"
+  just_audio_windows:
+    dependency: "direct main"
+    description:
+      name: just_audio_windows
+      sha256: "7b8801f3987e98a2002cd23b5600b2daf162248ff1413266fb44c84448c1c0d3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   lemon_byte:
     dependency: "direct main"
     description:
@@ -311,7 +319,7 @@ packages:
       path: "../dart-lemon-engine"
       relative: true
     source: path
-    version: "0.4.1"
+    version: "0.5.0"
   lemon_math:
     dependency: "direct main"
     description:

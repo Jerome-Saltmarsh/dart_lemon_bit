@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
@@ -7,6 +8,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:lemon_watch/src.dart';
 
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/src.dart';
@@ -248,6 +250,84 @@ class AmuletUI {
   }
 
   buildItemHoverDialog({double edgePadding = 150}) {
+
+    final upgradeFire = Watch(0);
+    final upgradeWater = Watch(0);
+    final upgradeWind = Watch(0);
+    final upgradeEarth = Watch(0);
+    final upgradeElectricity = Watch(0);
+
+
+    final upgradeFireWatch = WatchBuilder(upgradeFire, (cost) {
+        if (cost <= 0) {
+          return nothing;
+        }
+        return Column(
+          children: [
+            buildText('Fire'),
+            buildText(cost),
+          ],
+        );
+    });
+
+    final upgradeCostWater = WatchBuilder(upgradeWater, (cost) {
+        if (cost <= amulet.elementWater.value){
+          return nothing;
+        }
+        return Column(
+          children: [
+            buildText('Water'),
+            buildText(cost),
+          ],
+        );
+    });
+
+    final upgradeCostWind = WatchBuilder(upgradeWind, (cost) {
+        if (cost <= amulet.elementWind.value){
+          return nothing;
+        }
+        return Column(
+          children: [
+            buildText('Wind'),
+            buildText(cost),
+          ],
+        );
+    });
+
+    final upgradeCostEarth = WatchBuilder(upgradeEarth, (cost) {
+        if (cost <= amulet.elementEarth.value){
+          return nothing;
+        }
+        return Column(
+          children: [
+            buildText('Earth'),
+            buildText(cost),
+          ],
+        );
+    });
+
+    final upgradeCostElectricity = WatchBuilder(upgradeElectricity, (cost) {
+        if (cost <= amulet.elementElectricity.value){
+          return nothing;
+        }
+        return Column(
+          children: [
+            buildText('Electricity'),
+            buildText(cost),
+          ],
+        );
+    });
+
+    final upgradeRow = Row(
+      children: [
+        upgradeFireWatch,
+        upgradeCostWater,
+        upgradeCostWind,
+        upgradeCostEarth,
+        upgradeCostElectricity,
+      ],
+    );
+
     return buildWatch(
       amulet.itemHover,
       (item) {
@@ -267,9 +347,11 @@ class AmuletUI {
         if (upgradeTable != null){
            if (level <= upgradeTable.length -1){
               final row = upgradeTable[level + 1];
-              upgradeTableRow = Row(
-                  children: row.map(buildText).toList(growable: false),
-              );
+              upgradeFire.value = row[0];
+              upgradeWater.value = row[1];
+              upgradeWind.value = row[2];
+              upgradeEarth.value = row[3];
+              upgradeElectricity.value = row[4];
            }
         }
 
@@ -296,10 +378,16 @@ class AmuletUI {
                 buildItemRow('health', item.health),
                 buildItemRow('movement', item.movement * 10),
                 buildItemRow('level', level + 1),
+                upgradeRow,
                 if (item.attackType != null)
                   buildItemRow('attack type', item.attackType!.name),
                 if (upgradeTableRow != null)
-                  upgradeTableRow,
+                  Column(
+                    children: [
+                      buildText('level ${level + 2}'),
+                      upgradeTableRow,
+                    ],
+                  ),
 
               ],
             ));
