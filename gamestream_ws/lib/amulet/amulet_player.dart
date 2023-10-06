@@ -132,14 +132,67 @@ class AmuletPlayer extends IsometricPlayer {
 
   bool get inventoryOpen => _inventoryOpen;
 
+  int get equippedWeaponLevel {
+    final weapon = equippedWeapon;
+    if (weapon == null){
+       return -1;
+    };
+    final item = weapon.item;
+
+    if (item == null){
+      throw Exception('item == null');
+    }
+
+    return getLevelForAmuletItem(item);
+  }
+
+
+  ItemStat? getStatsForItemSlot(ItemSlot itemSlot) {
+    final item = itemSlot.item;
+    if (item == null){
+      return null;
+    }
+    return getStatsForAmuletItem(item);
+  }
+
+
+  ItemStat? getStatsForAmuletItem(AmuletItem amuletItem) =>
+      amuletItem.getStatsForLevel(
+          getLevelForAmuletItem(amuletItem)
+      );
+
+  int getLevelForAmuletItem(AmuletItem amuletItem) =>
+      amuletItem.getLevel(
+        fire: elementFire,
+        water: elementWater,
+        wind: elementWind,
+        earth: elementEarth,
+        electricity: elementElectricity,
+      );
+
   @override
   int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
 
-  @override
-  int get weaponDamage => equippedWeapon?.item?.damage ?? 1;
+  ItemStat? get equippedWeaponItemStat {
+    final weapon = equippedWeapon;
+
+    if (weapon == null) {
+      return null;
+    }
+
+    final item = weapon.item;
+    if (item == null){
+      throw Exception('item == null');
+    }
+
+    return getStatsForAmuletItem(item);
+  }
 
   @override
-  double get weaponRange => equippedWeapon?.item?.range ?? 30;
+  int get weaponDamage => equippedWeaponItemStat?.damage ?? 1;
+
+  @override
+  double get weaponRange => equippedWeaponItemStat?.range ?? 25;
 
   @override
   int get helmType => equippedHelm.item?.subType ?? HelmType.None;
@@ -160,26 +213,23 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   int get maxHealth {
     var health = healthBase;
-    health += equippedHelm.health;
-    health += equippedBody.health;
-    health += equippedLegs.health;
+    health += getStatsForItemSlot(equippedHelm)?.health ?? 0;
+    health += getStatsForItemSlot(equippedBody)?.health ?? 0;
+    health += getStatsForItemSlot(equippedLegs)?.health ?? 0;
 
     for (final treasure in treasures){
-      health += treasure.health;
+      health += getStatsForItemSlot(treasure)?.health ?? 0;
     }
 
-    final talentHealthLevel = talents[AmuletTalentType.Healthy.index];
-    health += talentHealthLevel * AmuletTalentType.Healthy_Health_Per_Level;
     return health;
   }
 
   @override
   double get runSpeed {
     var base = 1.0;
-
-    base += equippedHelm.movement;
-    base += equippedBody.movement;
-    base += equippedLegs.movement;
+    base += getStatsForItemSlot(equippedHelm)?.movement ?? 0;
+    base += getStatsForItemSlot(equippedBody)?.movement ?? 0;
+    base += getStatsForItemSlot(equippedLegs)?.movement ?? 0;
     return base;
   }
 
@@ -653,7 +703,7 @@ class AmuletPlayer extends IsometricPlayer {
           setWeapon(
               index: emptyWeaponIndex,
               item: item,
-              cooldown: item.cooldown,
+              cooldown: selected.cooldown,
           );
           clearItem(index);
           setCharacterStateChanging();
@@ -726,7 +776,7 @@ class AmuletPlayer extends IsometricPlayer {
     setSlot(
       slot: equippedHelm,
       item: item,
-      cooldown: item.cooldown,
+      cooldown: 0,
     );
 
     helmType = item.subType;
@@ -752,7 +802,7 @@ class AmuletPlayer extends IsometricPlayer {
     setSlot(
       slot: equippedBody,
       item: item,
-      cooldown: item.cooldown,
+      cooldown: 0,
     );
 
     bodyType = item.subType;
@@ -777,7 +827,7 @@ class AmuletPlayer extends IsometricPlayer {
     setSlot(
         slot: equippedLegs,
         item: item,
-        cooldown: item.cooldown,
+        cooldown: 0,
     );
     legsType = item.subType;
   }
@@ -801,7 +851,7 @@ class AmuletPlayer extends IsometricPlayer {
     setSlot(
       slot: equippedHandLeft,
       item: item,
-      cooldown: item.cooldown,
+      cooldown: 0,
     );
 
     handTypeLeft = item.subType;
@@ -826,7 +876,7 @@ class AmuletPlayer extends IsometricPlayer {
     setSlot(
       slot: equippedHandRight,
       item: item,
-      cooldown: item.cooldown,
+      cooldown: 0,
     );
 
     handTypeRight = item.subType;
@@ -851,7 +901,7 @@ class AmuletPlayer extends IsometricPlayer {
     setSlot(
       slot: equippedShoe,
       item: item,
-      cooldown: item.cooldown,
+      cooldown: 0,
     );
 
     shoeType = item.subType;
@@ -859,15 +909,21 @@ class AmuletPlayer extends IsometricPlayer {
 
   void pickupItem(AmuletItem item) {
 
-    if (item.health > 0){
-      health += item.health;
+    final stats = getStatsForAmuletItem(item);
+
+    if (stats == null){
+      return;
+    }
+
+    if (stats.health > 0){
+      health += stats.health;
       writePlayerEvent(PlayerEvent.Eat);
     }
 
-    if (item.experience > 0){
-      experience += item.experience;
-      writePlayerEvent(PlayerEvent.Experience_Collected);
-    }
+    // if (item.experience > 0){
+    //   experience += item.experience;
+    //   writePlayerEvent(PlayerEvent.Experience_Collected);
+    // }
   }
 
   void cleanEquipment(){
@@ -1232,18 +1288,23 @@ class AmuletPlayer extends IsometricPlayer {
     if (!powerActivated)
       return;
 
-    final activeAbility = getWeaponAtIndex(activatedPowerIndex) ;
+    final activeAbility = getWeaponAtIndex(activatedPowerIndex);
 
     if (activeAbility == null)
       return;
 
-    // final attackType = activeAbility.attackType;
+    final activeAbilityStats = getStatsForAmuletItem(activeAbility);
+
+    if (activeAbilityStats == null){
+      writeGameError(GameError.Insufficient_Elements);
+      return;
+    }
 
     final powerMode = activeAbility.powerMode;
 
     if (powerMode == AmuletPowerMode.Positional) {
       final mouseDistance = getMouseDistance();
-      final maxRange = activeAbility.range;
+      final maxRange = activeAbilityStats.range;
       if (mouseDistance <= maxRange){
         activePowerX = mouseSceneX;
         activePowerY = mouseSceneY;

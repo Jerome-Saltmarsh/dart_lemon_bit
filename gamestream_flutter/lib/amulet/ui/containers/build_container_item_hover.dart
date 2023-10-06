@@ -69,23 +69,6 @@ Widget buildContainerAmuletItemHover({
       });
 }
 
-Widget buildContainerAmuletItemHoverCurrent(AmuletItem item, int level) =>
-    GSContainer(
-              width: 270,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  buildAmuletItemIcon(item),
-                  buildTableRow('lvl', level + 1),
-                  height16,
-                  buildTableRow('damage', item.damage),
-                  buildTableRow('cooldown', item.cooldown),
-                  buildTableRow('range', item.range),
-                  buildTableRow('health', item.health),
-                  buildTableRow('movement', item.movement * 10),
-                ],
-              ));
 
 Widget buildAmuletItemIcon(AmuletItem item) => GSContainer(
   padding: const EdgeInsets.all(6),

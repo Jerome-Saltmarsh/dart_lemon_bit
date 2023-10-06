@@ -7,8 +7,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    cooldown: 40,
-    range: 180,
     actionFrame: 15,
     performDuration: 20,
     id: 21,
@@ -26,9 +24,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    cooldown: 40,
-    damage: 2,
-    range: 80,
     actionFrame: 20,
     performDuration: 25,
     id: 1,
@@ -39,9 +34,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Unique,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    cooldown: 40,
-    damage: 2,
-    range: 180,
     actionFrame: 20,
     performDuration: 25,
     id: 2,
@@ -52,9 +44,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    cooldown: 40,
-    damage: 2,
-    range: 180,
     actionFrame: 15,
     performDuration: 20,
     id: 3,
@@ -65,9 +54,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    cooldown: 40,
-    damage: 1,
-    range: 200,
     actionFrame: 20,
     performDuration: 30,
     id: 4,
@@ -78,20 +64,35 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    cooldown: 20,
-    damage: 100,
-    range: 300,
     actionFrame: 12,
     performDuration: 25,
     id: 5,
-    level1: ItemStat(information: 'A mythical bow which does a lot of damage'),
+    level1: ItemStat(
+        range: 150,
+        damage: 5,
+        cooldown: 40,
+        information: 'A mythical bow which does a lot of damage'),
+    level2: ItemStat(
+        air: 1,
+        range: 160,
+        damage: 8,
+        cooldown: 38,
+        information: 'A mythical bow which does a lot of damage',
+    ),
+    level3: ItemStat(
+        air: 2,
+        range: 170,
+        damage: 12,
+        cooldown: 36,
+        information: 'A mythical bow which does a lot of damage',
+    ),
+
   ),
   Steel_Helmet(
     powerMode: AmuletPowerMode.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Steel,
-    health: 10,
     id: 6,
     level1: ItemStat(information: 'A common steel helmet'),
   ),
@@ -100,7 +101,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Wizard_Hat,
-    health: 10,
     id: 7,
     level1: ItemStat(information: 'A hat commonly worn by students of magic school'),
   ),
@@ -109,8 +109,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    health: 2,
-    movement: 0.1,
     id: 8,
     level1: ItemStat(information: 'Common pants'),
   ),
@@ -119,7 +117,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
-    health: 2,
     id: 9,
     level1: ItemStat(information: 'Common gauntlets'),
   ),
@@ -128,7 +125,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    health: 3,
     id: 10,
     level1: ItemStat(information: 'Common pants'),
   ),
@@ -137,8 +133,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Unique,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    health: 5,
-    movement: -0.1,
     id: 11,
     level1: ItemStat(information: 'Pants of higher quality'),
   ),
@@ -147,7 +141,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
-    health: 1,
     id: 12,
     level1: ItemStat(information: 'A common blue shirt'),
   ),
@@ -156,7 +149,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
-    health: 5,
     id: 13,
     level1: ItemStat(information: 'Common armour'),
   ),
@@ -165,7 +157,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
-    health: 3,
     id: 14,
     level1: ItemStat(information: 'A common leather boots'),
   ),
@@ -174,7 +165,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
-    health: 6,
     id: 15,
     level1: ItemStat(information: 'Heavy boots which provide good defense'),
   ),
@@ -183,7 +173,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
-    health: 6,
     id: 15,
     level1: ItemStat(information: 'Commonly worn by water mages'),
   ),
@@ -192,7 +181,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
-    health: 6,
     id: 15,
     level1: ItemStat(information: 'commonly worn by electric mages'),
   ),
@@ -201,7 +189,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Health_Potion,
-    health: 10,
     consumable: true,
     id: 16,
     level1: ItemStat(information: 'Replenishes health'),
@@ -212,7 +199,6 @@ enum AmuletItem {
     type: ItemType.Consumable,
     subType: ConsumableType.Treasure_Box,
     collectable: false,
-    experience: 3,
     id: 17,
     level1: ItemStat(information: 'increases experience'),
   ),
@@ -221,7 +207,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Meat_Drumstick,
-    health: 4,
     collectable: false,
     id: 18,
     level1: ItemStat(information: 'replenishes health'),
@@ -231,7 +216,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
-    health: 100,
     id: 19,
     level1: ItemStat(information: 'increases stats'),
   ),
@@ -240,7 +224,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
-    health: 5,
     id: 20,
     level1: ItemStat(
       information: 'strikes a random nearby enemy with lightning',
@@ -295,17 +278,10 @@ enum AmuletItem {
   );
 
   final AmuletPowerMode powerMode;
-  final int damage;
   final int type;
   final int subType;
-  final int cooldown;
-  final int health;
-  final int experience;
   final bool collectable;
   final bool consumable;
-  final double range;
-  final double movement;
-  // final AmuletAttackType? attackType;
   final AmuletItemQuality quality;
   final int actionFrame;
   final int performDuration;
@@ -327,28 +303,19 @@ enum AmuletItem {
     this.level3,
     this.level4,
     this.level5,
-    this.cooldown = 0,
-    this.damage = 0,
-    this.range = 0,
-    this.health = 0,
     this.collectable = true,
-    this.movement = 0,
     this.consumable = false,
-    this.experience = 0,
     this.actionFrame = -1,
     this.performDuration = -1,
   });
 
-  ItemStat? getStatsForLevel(int level) {
-    switch (level){
-      case 1:
-        return level1;
-      case 2:
-        return level2;
-      case 3:
-        return level3;
+  ItemStat? getStatsForLevel(int level) =>
+      switch (level){
+        1 => level1,
+        2 => level2,
+        3 => level3,
+        _ => null
      };
-  }
 
   bool get isWeapon => type == ItemType.Weapon;
 
@@ -518,18 +485,21 @@ enum AmuletItem {
 
 class ItemStat {
   final int damage;
-  final double range;
   final int cooldown;
   final int fire;
   final int water;
   final int air;
   final int earth;
   final int electricity;
+  final int health;
+  final double range;
+  final double movement;
   final String information;
 
   const ItemStat({
     required this.information,
     this.damage = 0,
+    this.health = 0,
     this.range = 0,
     this.cooldown = 0,
     this.fire = 0,
@@ -537,5 +507,6 @@ class ItemStat {
     this.air = 0,
     this.earth = 0,
     this.electricity = 0,
+    this.movement = 0,
   });
 }

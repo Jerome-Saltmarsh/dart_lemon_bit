@@ -37,13 +37,22 @@ extension AmuletRender on Amulet {
   }
 
   void renderPlayerItemRange(AmuletItem item) {
-    if (item.range <= 0) return;
+    final level = amulet.getAmuletPlayerItemLevel(item);
+    final stats = item.getStatsForLevel(level);
+
+    if (stats == null){
+      return;
+    }
+
+    final range = stats.range;
+
+    if (range <= 0) return;
     engine.color = Colors.white;
     render.circleOutline(
         x: player.x,
         y: player.y,
         z: player.z,
-        radius: item.range,
+        radius: range,
         sections: 20
     );
   }
@@ -73,7 +82,15 @@ extension AmuletRender on Amulet {
     }
 
     engine.color = rangeColor;
-    renderCircleAroundPlayer(radius: activatedPower.range);
+
+    final level = amulet.getAmuletPlayerItemLevel(activatedPower);
+    final stats = activatedPower.getStatsForLevel(level);
+
+    if (stats == null){
+      return;
+    }
+
+    renderCircleAroundPlayer(radius: stats.range);
   }
 
   void renderCircleAroundPlayer({required double radius}) =>
