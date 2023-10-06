@@ -8,8 +8,8 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
-import 'package:lemon_watch/src.dart';
 
+import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/src.dart';
 
@@ -43,7 +43,7 @@ class AmuletUI {
         Positioned(
           top: margin1,
           left: margin3 + 50,
-          child: buildItemHoverDialog(),
+          child: buildContainerAmuletItemHover(amulet: amulet),
         ),
         Positioned(
             bottom: margin2,
@@ -249,150 +249,150 @@ class AmuletUI {
     );
   }
 
-  buildItemHoverDialog({double edgePadding = 150}) {
-
-    final upgradeFire = Watch(0);
-    final upgradeWater = Watch(0);
-    final upgradeWind = Watch(0);
-    final upgradeEarth = Watch(0);
-    final upgradeElectricity = Watch(0);
-
-
-    final upgradeFireWatch = WatchBuilder(upgradeFire, (cost) {
-        if (cost <= 0) {
-          return nothing;
-        }
-        return Column(
-          children: [
-            buildText('Fire'),
-            buildText(cost),
-          ],
-        );
-    });
-
-    final upgradeCostWater = WatchBuilder(upgradeWater, (cost) {
-        if (cost <= amulet.elementWater.value){
-          return nothing;
-        }
-        return Column(
-          children: [
-            buildText('Water'),
-            buildText(cost),
-          ],
-        );
-    });
-
-    final upgradeCostWind = WatchBuilder(upgradeWind, (cost) {
-        if (cost <= amulet.elementWind.value){
-          return nothing;
-        }
-        return Column(
-          children: [
-            buildText('Wind'),
-            buildText(cost),
-          ],
-        );
-    });
-
-    final upgradeCostEarth = WatchBuilder(upgradeEarth, (cost) {
-        if (cost <= amulet.elementEarth.value){
-          return nothing;
-        }
-        return Column(
-          children: [
-            buildText('Earth'),
-            buildText(cost),
-          ],
-        );
-    });
-
-    final upgradeCostElectricity = WatchBuilder(upgradeElectricity, (cost) {
-        if (cost <= amulet.elementElectricity.value){
-          return nothing;
-        }
-        return Column(
-          children: [
-            buildText('Electricity'),
-            buildText(cost),
-          ],
-        );
-    });
-
-    final upgradeRow = Row(
-      children: [
-        upgradeFireWatch,
-        upgradeCostWater,
-        upgradeCostWind,
-        upgradeCostEarth,
-        upgradeCostElectricity,
-      ],
-    );
-
-    return buildWatch(
-      amulet.itemHover,
-      (item) {
-
-
-        if (item == null) {
-          return nothing;
-        }
-
-        final level = amulet.getAmuletItemLevel(item);
-        print('amulet.itemHover($item, level: $level)');
-
-
-        Widget? upgradeTableRow;
-
-        final upgradeTable = AmuletItem.upgradeTable[item];
-        if (upgradeTable != null){
-           if (level <= upgradeTable.length -1){
-              final row = upgradeTable[level + 1];
-              upgradeFire.value = row[0];
-              upgradeWater.value = row[1];
-              upgradeWind.value = row[2];
-              upgradeEarth.value = row[3];
-              upgradeElectricity.value = row[4];
-           }
-        }
-
-        return GSContainer(
-              width: 270,
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                FittedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
-                      width8,
-                      MMOItemImage(item: item, size: 64),
-                    ],
-                  ),
-                ),
-                height16,
-                buildItemRow('damage', item.damage),
-                buildItemRow('cooldown', item.cooldown),
-                buildItemRow('range', item.range),
-                buildItemRow('health', item.health),
-                buildItemRow('movement', item.movement * 10),
-                buildItemRow('level', level + 1),
-                upgradeRow,
-                if (item.attackType != null)
-                  buildItemRow('attack type', item.attackType!.name),
-                if (upgradeTableRow != null)
-                  Column(
-                    children: [
-                      buildText('level ${level + 2}'),
-                      upgradeTableRow,
-                    ],
-                  ),
-
-              ],
-            ));
-      });
-  }
+  // Widget buildItemHoverDialog({double edgePadding = 150}) {
+  //
+  //   final upgradeFire = Watch(0);
+  //   final upgradeWater = Watch(0);
+  //   final upgradeWind = Watch(0);
+  //   final upgradeEarth = Watch(0);
+  //   final upgradeElectricity = Watch(0);
+  //
+  //
+  //   final upgradeFireWatch = WatchBuilder(upgradeFire, (cost) {
+  //       if (cost <= 0) {
+  //         return nothing;
+  //       }
+  //       return Column(
+  //         children: [
+  //           buildText('Fire'),
+  //           buildText(cost),
+  //         ],
+  //       );
+  //   });
+  //
+  //   final upgradeCostWater = WatchBuilder(upgradeWater, (cost) {
+  //       if (cost <= amulet.elementWater.value){
+  //         return nothing;
+  //       }
+  //       return Column(
+  //         children: [
+  //           buildText('Water'),
+  //           buildText(cost),
+  //         ],
+  //       );
+  //   });
+  //
+  //   final upgradeCostWind = WatchBuilder(upgradeWind, (cost) {
+  //       if (cost <= amulet.elementWind.value){
+  //         return nothing;
+  //       }
+  //       return Column(
+  //         children: [
+  //           buildText('Wind'),
+  //           buildText(cost),
+  //         ],
+  //       );
+  //   });
+  //
+  //   final upgradeCostEarth = WatchBuilder(upgradeEarth, (cost) {
+  //       if (cost <= amulet.elementEarth.value){
+  //         return nothing;
+  //       }
+  //       return Column(
+  //         children: [
+  //           buildText('Earth'),
+  //           buildText(cost),
+  //         ],
+  //       );
+  //   });
+  //
+  //   final upgradeCostElectricity = WatchBuilder(upgradeElectricity, (cost) {
+  //       if (cost <= amulet.elementElectricity.value){
+  //         return nothing;
+  //       }
+  //       return Column(
+  //         children: [
+  //           buildText('Electricity'),
+  //           buildText(cost),
+  //         ],
+  //       );
+  //   });
+  //
+  //   final upgradeRow = Row(
+  //     children: [
+  //       upgradeFireWatch,
+  //       upgradeCostWater,
+  //       upgradeCostWind,
+  //       upgradeCostEarth,
+  //       upgradeCostElectricity,
+  //     ],
+  //   );
+  //
+  //   return buildWatch(
+  //     amulet.itemHover,
+  //     (item) {
+  //
+  //
+  //       if (item == null) {
+  //         return nothing;
+  //       }
+  //
+  //       final level = amulet.getAmuletItemLevel(item);
+  //       print('amulet.itemHover($item, level: $level)');
+  //
+  //
+  //       Widget? upgradeTableRow;
+  //
+  //       final upgradeTable = AmuletItem.upgradeTable[item];
+  //       if (upgradeTable != null){
+  //          if (level <= upgradeTable.length -1){
+  //             final row = upgradeTable[level + 1];
+  //             upgradeFire.value = row[0];
+  //             upgradeWater.value = row[1];
+  //             upgradeWind.value = row[2];
+  //             upgradeEarth.value = row[3];
+  //             upgradeElectricity.value = row[4];
+  //          }
+  //       }
+  //
+  //       return GSContainer(
+  //             width: 270,
+  //             child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.start,
+  //             crossAxisAlignment: CrossAxisAlignment.stretch,
+  //             children: [
+  //               FittedBox(
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
+  //                     width8,
+  //                     MMOItemImage(item: item, size: 64),
+  //                   ],
+  //                 ),
+  //               ),
+  //               height16,
+  //               buildItemRow('damage', item.damage),
+  //               buildItemRow('cooldown', item.cooldown),
+  //               buildItemRow('range', item.range),
+  //               buildItemRow('health', item.health),
+  //               buildItemRow('movement', item.movement * 10),
+  //               buildItemRow('level', level + 1),
+  //               upgradeRow,
+  //               if (item.attackType != null)
+  //                 buildItemRow('attack type', item.attackType!.name),
+  //               if (upgradeTableRow != null)
+  //                 Column(
+  //                   children: [
+  //                     buildText('level ${level + 2}'),
+  //                     upgradeTableRow,
+  //                   ],
+  //                 ),
+  //
+  //             ],
+  //           ));
+  //     });
+  // }
 
   static Widget buildItemRow(String text, dynamic value){
      if (value == null || value == 0) return nothing;
