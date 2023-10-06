@@ -1,16 +1,16 @@
 import 'dart:math';
 import 'package:gamestream_ws/amulet/amulet_player.dart';
+import 'package:gamestream_ws/amulet/functions/amulet_player/use_activated_power.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'character.dart';
 import 'collider.dart';
 import 'environment.dart';
-import 'functions/set_character_state_fire.dart';
-import 'functions/set_character_state_idle.dart';
-import 'functions/set_character_state_running.dart';
-import 'functions/set_character_state_striking.dart';
-import 'functions/use_activated_power.dart';
+import 'functions/character/set_character_state_fire.dart';
+import 'functions/character/set_character_state_idle.dart';
+import 'functions/character/set_character_state_running.dart';
+import 'functions/character/set_character_state_striking.dart';
 import 'gameobject.dart';
 import 'physics.dart';
 import 'isometric_player.dart';
@@ -502,7 +502,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
 
-    // character.weaponState = WeaponState.Performing;
     setCharacterStateStriking(
         character: character,
         duration: character.attackDuration,
@@ -2521,7 +2520,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterActionRunToDestination(Character character) {
     character.action = CharacterAction.Run_To_Destination;
     character.faceRunDestination();
-    character.setCharacterStateRunning();
+    setCharacterStateRunning(character);
   }
 
   bool characterShouldRunToTarget(Character character) {

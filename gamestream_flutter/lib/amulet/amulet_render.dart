@@ -67,13 +67,13 @@ extension AmuletRender on Amulet {
       return;
 
 
-    final powerMode = activatedPower.powerMode;
+    final powerMode = activatedPower.selectAction;
 
-    if (powerMode == AmuletPowerMode.Self){
+    if (powerMode == AmuletItemSelectAction.Instant){
       return;
     }
 
-    if (powerMode == AmuletPowerMode.Positional) {
+    if (powerMode == AmuletItemSelectAction.Positional) {
       engine.color = Colors.white;
       render.circleOutlineAtPosition(
         position: activePowerPosition,

@@ -4,8 +4,8 @@ import 'package:gamestream_ws/isometric/isometric_game.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
-import 'functions/set_character_state.dart';
-import 'functions/set_character_state_idle.dart';
+import 'functions/character/set_character_state_idle.dart';
+import 'functions/character/set_character_state_running.dart';
 import 'isometric_settings.dart';
 import 'position.dart';
 
@@ -349,13 +349,6 @@ class Character extends Collider {
   double getAngleXY(double x, double y) =>
       angleBetween(this.x, this.y, x, y);
 
-  void setCharacterStateRunning()=>
-      setCharacterState(
-          character: this,
-          value: CharacterState.Running,
-          duration: 0,
-      );
-
   void update() {
     const change = 0.01;
 
@@ -397,7 +390,7 @@ class Character extends Collider {
 
   void runToDestination(){
     faceRunDestination();
-    setCharacterStateRunning();
+    setCharacterStateRunning(this);
   }
 
   void faceRunDestination() {

@@ -1,8 +1,9 @@
 
 import 'package:gamestream_ws/isometric.dart';
-import 'package:gamestream_ws/isometric/functions/set_character_state_striking.dart';
 import 'package:gamestream_ws/packages.dart';
 
+import '../isometric/functions/character/set_character_state_striking.dart';
+import 'getters/get_player_level_for_amulet_item.dart';
 import 'item_slot.dart';
 import 'amulet_game.dart';
 import 'mmo_npc.dart';
@@ -142,7 +143,7 @@ class AmuletPlayer extends IsometricPlayer {
       throw Exception('item == null');
     }
 
-    return getLevelForAmuletItem(item);
+    return getLevelForAmuletItem(this, item);
   }
 
 
@@ -157,17 +158,17 @@ class AmuletPlayer extends IsometricPlayer {
 
   ItemStat? getStatsForAmuletItem(AmuletItem amuletItem) =>
       amuletItem.getStatsForLevel(
-          getLevelForAmuletItem(amuletItem)
+          getLevelForAmuletItem(this, amuletItem)
       );
 
-  int getLevelForAmuletItem(AmuletItem amuletItem) =>
-      amuletItem.getLevel(
-        fire: elementFire,
-        water: elementWater,
-        wind: elementWind,
-        earth: elementEarth,
-        electricity: elementElectricity,
-      );
+  // int getLevelForAmuletItem(AmuletItem amuletItem) =>
+  //     amuletItem.getLevel(
+  //       fire: elementFire,
+  //       water: elementWater,
+  //       wind: elementWind,
+  //       earth: elementEarth,
+  //       electricity: elementElectricity,
+  //     );
 
   @override
   int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
@@ -609,35 +610,35 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     switch (weapon.selectAction) {
-      case AmuletSelectAction.Equip:
+      case AmuletItemSelectAction.Equip:
         equippedWeaponIndex = index;
         deselectActivatedPower();
         if (!controlsCanTargetEnemies){
           // useEquippedWeapon();
         }
         break;
-      case AmuletSelectAction.Positional:
+      case AmuletItemSelectAction.Positional:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case AmuletSelectAction.Targeted_Ally:
+      case AmuletItemSelectAction.Targeted_Ally:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case AmuletSelectAction.Targeted_Enemy:
+      case AmuletItemSelectAction.Targeted_Enemy:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case AmuletSelectAction.Caste:
+      case AmuletItemSelectAction.Caste:
         activatedPowerIndex = index;
         setCharacterStateStriking(
             character: this,
@@ -645,12 +646,12 @@ class AmuletPlayer extends IsometricPlayer {
             actionFrame: 10,
         );
         break;
-      case AmuletSelectAction.Instant:
+      case AmuletItemSelectAction.Instant:
         break;
-      case AmuletSelectAction.None:
+      case AmuletItemSelectAction.None:
         // TODO: Handle this case.
         break;
-      case AmuletSelectAction.Consume:
+      case AmuletItemSelectAction.Consume:
         // TODO: Handle this case.
         break;
     }
@@ -1329,7 +1330,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     final powerMode = activeAbility.selectAction;
 
-    if (powerMode == AmuletSelectAction.Positional) {
+    if (powerMode == AmuletItemSelectAction.Positional) {
       final mouseDistance = getMouseDistance();
       final maxRange = activeAbilityStats.range;
       if (mouseDistance <= maxRange){
