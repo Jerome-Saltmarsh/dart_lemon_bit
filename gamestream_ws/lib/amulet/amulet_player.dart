@@ -84,7 +84,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     writeAmuletElements();
     writeElementPoints();
-    writeActivatedPowerIndex();
+    writeActivatedPowerIndex(_activatedPowerIndex);
     writeWeapons();
     writeTreasures();
     writeInteracting();
@@ -104,8 +104,6 @@ class AmuletPlayer extends IsometricPlayer {
     _elementPoints = value;
     writeElementPoints();
   }
-
-  bool get powerActivated => activatedPowerIndex != -1;
 
   int get equippedWeaponType {
     final weapon = equippedWeapon;
@@ -288,7 +286,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
 
     _activatedPowerIndex = value;
-    writeActivatedPowerIndex();
+    writeActivatedPowerIndex(_activatedPowerIndex);
   }
 
   int get equippedWeaponIndex => _equippedWeaponIndex;
@@ -1157,20 +1155,27 @@ class AmuletPlayer extends IsometricPlayer {
     setCharacterStateChanging();
   }
 
-  void writeActivatedPowerIndex() {
+  void writeActivatedPowerIndex(int activatedPowerIndex) {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Activated_Power_Index);
-    writeInt8(_activatedPowerIndex);
+    writeInt8(activatedPowerIndex);
   }
 
-  void useActivatedPower(){
-    if (_activatedPowerIndex == -1)
-      return;
+  static void useActivatedPower(AmuletPlayer player){
 
-    if (!isValidWeaponIndex(_activatedPowerIndex))
-      throw Exception('invalid weapon index: $_activatedPowerIndex');
+    final activatedPowerIndex = player.activatedPowerIndex;
+    if (activatedPowerIndex < 0) {
+      throw Exception('activatedPowerIndex < 0 : $activatedPowerIndex < 0');
+    }
 
-    final weapon = weapons[_activatedPowerIndex];
+
+    final weapons = player.weapons;
+
+    if (activatedPowerIndex >= weapons.length) {
+      throw Exception('invalid weapon index: $activatedPowerIndex');
+    }
+
+    final weapon = weapons[activatedPowerIndex];
     final item = weapon.item;
 
     if (item == null){
@@ -1181,43 +1186,110 @@ class AmuletPlayer extends IsometricPlayer {
       case AmuletPowerMode.Equip:
         throw Exception();
       case AmuletPowerMode.Self:
-        setCharacterStateStriking(
+        if (item.actionFrame >= 0) {
+          throw Exception('item.actionFrame >= 0');
+        }
+        if (item.performDuration >= 0) {
+          throw Exception('item.performDuration >= 0');
+        }
+        player.setCharacterStateStriking(
             actionFrame: item.actionFrame,
             duration: item.performDuration,
         );
         break;
       case AmuletPowerMode.Targeted_Enemy:
-        if (target == null) {
-          deselectActivatedPower();
+        if (player.target == null) {
+          player.deselectActivatedPower();
           return;
         }
-        actionFrame = item.actionFrame;
-        setCharacterStateStriking(
+        player.actionFrame = item.actionFrame;
+        player.setCharacterStateStriking(
             actionFrame: item.actionFrame,
             duration: item.performDuration,
         );
         break;
       case AmuletPowerMode.Targeted_Ally:
-        if (target == null) {
-          deselectActivatedPower();
+        if (player.target == null) {
+          player.deselectActivatedPower();
           return;
         }
-        setCharacterStateStriking(
+        player.setCharacterStateStriking(
           actionFrame: item.actionFrame,
           duration: item.performDuration,
         );
         break;
       case AmuletPowerMode.Positional:
-        setCharacterStateStriking(
+        player.setCharacterStateStriking(
             duration: item.performDuration,
             actionFrame: item.actionFrame,
         );
-        weaponType = item.subType;
+        player.weaponType = item.subType;
         break;
       case AmuletPowerMode.None:
         // TODO: Handle this case.
     }
   }
+  // void useActivatedPower(int activatedPowerIndex){
+  //   if (activatedPowerIndex == -1)
+  //     return;
+  //
+  //   if (!isValidWeaponIndex(activatedPowerIndex))
+  //     throw Exception('invalid weapon index: $activatedPowerIndex');
+  //
+  //   final weapon = weapons[activatedPowerIndex];
+  //   final item = weapon.item;
+  //
+  //   if (item == null){
+  //     throw Exception();
+  //   }
+  //
+  //   switch (item.powerMode) {
+  //     case AmuletPowerMode.Equip:
+  //       throw Exception();
+  //     case AmuletPowerMode.Self:
+  //       if (item.actionFrame >= 0) {
+  //         throw Exception('item.actionFrame >= 0');
+  //       }
+  //       if (item.performDuration >= 0) {
+  //         throw Exception('item.performDuration >= 0');
+  //       }
+  //       setCharacterStateStriking(
+  //           actionFrame: item.actionFrame,
+  //           duration: item.performDuration,
+  //       );
+  //       break;
+  //     case AmuletPowerMode.Targeted_Enemy:
+  //       if (target == null) {
+  //         deselectActivatedPower();
+  //         return;
+  //       }
+  //       actionFrame = item.actionFrame;
+  //       setCharacterStateStriking(
+  //           actionFrame: item.actionFrame,
+  //           duration: item.performDuration,
+  //       );
+  //       break;
+  //     case AmuletPowerMode.Targeted_Ally:
+  //       if (target == null) {
+  //         deselectActivatedPower();
+  //         return;
+  //       }
+  //       setCharacterStateStriking(
+  //         actionFrame: item.actionFrame,
+  //         duration: item.performDuration,
+  //       );
+  //       break;
+  //     case AmuletPowerMode.Positional:
+  //       setCharacterStateStriking(
+  //           duration: item.performDuration,
+  //           actionFrame: item.actionFrame,
+  //       );
+  //       weaponType = item.subType;
+  //       break;
+  //     case AmuletPowerMode.None:
+  //       // TODO: Handle this case.
+  //   }
+  // }
 
   /// Gets called once the animation to perform the power strikes the perform state
   // void performActivatedPower() {
@@ -1281,17 +1353,37 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   void update() {
     super.update();
-    updateActiveAbility();
+    updateThisActivatedPowerIndex();
   }
 
-  void updateActiveAbility() {
-    if (!powerActivated)
+  void updateThisActivatedPowerIndex() {
+    updateActiveAbility(
+        activatedPowerIndex: this._activatedPowerIndex,
+        weapons: this.weapons,
+    );
+  }
+
+  void updateActiveAbility({
+    required int activatedPowerIndex,
+    required List<ItemSlot> weapons,
+  }) {
+
+    if (activatedPowerIndex < 0){
       return;
+    }
+
+    if (activatedPowerIndex >= weapons.length){
+      throw Exception(
+          '_activatedPowerIndex: $activatedPowerIndex'
+          ' >= weapons.length: ${weapons.length}'
+      );
+    };
 
     final activeAbility = getWeaponAtIndex(activatedPowerIndex);
 
-    if (activeAbility == null)
+    if (activeAbility == null){
       return;
+    }
 
     final activeAbilityStats = getStatsForAmuletItem(activeAbility);
 
