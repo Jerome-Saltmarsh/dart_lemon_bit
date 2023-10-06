@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dar
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/common/src/amulet/amulet_item.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 
@@ -27,7 +26,8 @@ Widget buildContainerAmuletItemHover({
           throw Exception('invalid amulet item level: $level, item: $item');
         }
 
-        final statsNext = item.getItemStatsForLevel(level + 1);
+        final levelNext = level + 1;
+        final statsNext = item.getItemStatsForLevel(levelNext);
 
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +36,7 @@ Widget buildContainerAmuletItemHover({
             if (statsNext != null)
              Container(
                  margin: const EdgeInsets.only(left: 32),
-                 child: buildContainerItemStats(statsNext),
+                 child: buildContainerItemStats(statsNext, levelNext),
              ),
           ],
         );
@@ -72,7 +72,7 @@ Widget buildContainerAmuletItemHoverCurrent(AmuletItem item, int level) =>
                 ],
               ));
 
-Widget buildContainerItemStats(ItemStat itemStats) =>
+Widget buildContainerItemStats(ItemStat itemStats, int level) =>
     IsometricBuilder(builder: (context, components) =>
         GSContainer(
           width: 270,
@@ -85,6 +85,7 @@ Widget buildContainerItemStats(ItemStat itemStats) =>
                 color: Colors.white12,
               ),
               height4,
+              buildTableRow('lvl', level),
               if (itemStats.damage != 0)
                 buildTableRow('damage', itemStats.damage),
               if (itemStats.cooldown != 0)
@@ -106,13 +107,6 @@ Widget buildContainerItemStats(ItemStat itemStats) =>
             ],
           ),
         ));
-
-Widget buildStatColumn(String name, int amount)=> Column(
-    children: [
-      buildText(name),
-      buildText(amount) ,
-    ],
-  );
 
 Widget buildStatColumn2(
     AmuletElement amuletElement,
