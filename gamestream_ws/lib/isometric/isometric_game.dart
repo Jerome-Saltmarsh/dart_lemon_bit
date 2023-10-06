@@ -6,6 +6,7 @@ import 'package:gamestream_ws/packages.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'environment.dart';
+import 'functions/set_character_state_fire.dart';
 import 'functions/set_character_state_running.dart';
 import 'functions/set_character_state_striking.dart';
 import 'functions/use_activated_power.dart';
@@ -2697,7 +2698,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterAttack(Character character) {
     if (character.weaponType == WeaponType.Bow) {
-      character.setCharacterStateFire(
+      setCharacterStateFire(
+        character: character,
         duration: character.attackDuration,
         actionFrame: character.attackActionFrame,
       );

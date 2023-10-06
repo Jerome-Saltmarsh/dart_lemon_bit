@@ -260,23 +260,6 @@ class Character extends Collider {
   //   setCharacterState(value: CharacterState.Strike, duration: duration);
   // }
 
-  void setCharacterStateFire({
-    required int duration,
-    required int actionFrame,
-  }){
-    assert (active);
-    assert (alive);
-    assert (duration > 0);
-    assert (actionFrame < duration);
-
-    this.actionFrame = actionFrame;
-    setDestinationToCurrentPosition();
-    setCharacterState(
-        character: this,
-        value: CharacterState.Fire,
-        duration: duration,
-    );
-  }
 
   void setCharacterStateSpawning({int duration = 40}){
     if (state == CharacterState.Spawning)
