@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/mmo_item_image.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common/src/amulet/amulet_item.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -69,39 +70,41 @@ Widget buildContainerAmuletItemHoverCurrent(AmuletItem item, int level) =>
               ));
 
 Widget buildContainerItemStats(ItemStat itemStats) =>
-    GSContainer(
-      width: 270,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GSContainer(
-            padding: const EdgeInsets.all(6),
-            child: buildText(itemStats.information), color: Colors.white12,
+    IsometricBuilder(builder: (context, components) =>
+        GSContainer(
+          width: 270,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              GSContainer(
+                padding: const EdgeInsets.all(6),
+                child: buildText(itemStats.information, color: Colors.white70, align: TextAlign.center),
+                color: Colors.white12,
+              ),
+              height4,
+              buildTableRow('damage', itemStats.damage),
+              buildTableRow('fire', itemStats.fire),
+              buildTableRow('electricity', itemStats.electricity),
+              GSContainer(
+                color: Colors.black12,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if (itemStats.fire > 0)
+                        buildStatColumn('fire', itemStats.fire),
+                      if (itemStats.water > 0)
+                        buildStatColumn('water', itemStats.water),
+                      if (itemStats.air > 0)
+                        buildStatColumn('air', itemStats.air),
+                      if (itemStats.earth > 0)
+                        buildStatColumn('earth', itemStats.earth),
+                      if (itemStats.electricity > 0)
+                        buildStatColumn('electricity', itemStats.electricity),
+                    ]),
+              )
+            ],
           ),
-          height4,
-          buildTableRow('damage', itemStats.damage),
-          buildTableRow('fire', itemStats.fire),
-          buildTableRow('electricity', itemStats.electricity),
-          GSContainer(
-            color: Colors.black12,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-              if (itemStats.fire > 0)
-                buildStatColumn('fire', itemStats.fire),
-              if (itemStats.water > 0)
-                buildStatColumn('water', itemStats.water),
-              if (itemStats.air > 0)
-                buildStatColumn('air', itemStats.air),
-              if (itemStats.earth > 0)
-                buildStatColumn('earth', itemStats.earth),
-              if (itemStats.electricity > 0)
-                buildStatColumn('electricity', itemStats.electricity),
-            ]),
-          )
-        ],
-      ),
-  );
+        ));
 
 Widget buildStatColumn(String name, int amount)=> Column(
     children: [
