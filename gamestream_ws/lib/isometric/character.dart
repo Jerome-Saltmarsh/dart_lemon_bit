@@ -4,6 +4,7 @@ import 'package:gamestream_ws/isometric/isometric_game.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
+import 'functions/set_character_state.dart';
 import 'isometric_settings.dart';
 import 'position.dart';
 
@@ -270,7 +271,11 @@ class Character extends Collider {
 
     this.actionFrame = actionFrame;
     setDestinationToCurrentPosition();
-    setCharacterState(value: CharacterState.Fire, duration: duration);
+    setCharacterState(
+        character: this,
+        value: CharacterState.Fire,
+        duration: duration,
+    );
   }
 
   void setCharacterStateSpawning({int duration = 40}){
@@ -311,20 +316,13 @@ class Character extends Collider {
     if (deadOrBusy || characterStateIdle)
       return;
 
-    setCharacterState(value: CharacterState.Idle, duration: duration);
+    setCharacterState(
+        character: this,
+        value: CharacterState.Idle,
+        duration: duration,
+    );
   }
 
-  void setCharacterState({required int value, required int duration}) {
-    assert (duration >= 0);
-    assert (value != CharacterState.Dead); // use game.setCharacterStateDead
-    assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
-    if (state == value || deadOrBusy)
-      return;
-
-    state = value;
-    frame = 0;
-    actionDuration = duration;
-  }
 
   bool withinInteractRange(Position target){
     if ((target.z - z).abs() > Character_Height)
@@ -378,7 +376,11 @@ class Character extends Collider {
       angleBetween(this.x, this.y, x, y);
 
   void setCharacterStateRunning()=>
-      setCharacterState(value: CharacterState.Running, duration: 0);
+      setCharacterState(
+          character: this,
+          value: CharacterState.Running,
+          duration: 0,
+      );
 
   void update() {
     const change = 0.01;

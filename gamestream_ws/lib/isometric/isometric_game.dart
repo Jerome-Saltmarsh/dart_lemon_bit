@@ -6,6 +6,7 @@ import 'package:gamestream_ws/packages.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'environment.dart';
+import 'functions/set_character_state_running.dart';
 import 'functions/set_character_state_striking.dart';
 import 'functions/use_activated_power.dart';
 import 'gameobject.dart';
@@ -1312,9 +1313,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.setCharacterStateSpawning();
   }
 
-  void setCharacterStateRunning(Character character) {
-    character.setCharacterState(value: CharacterState.Running, duration: 0);
-  }
+
 
   void checkProjectileCollision(List<Collider> colliders) {
     for (var i = 0; i < projectiles.length; i++) {
