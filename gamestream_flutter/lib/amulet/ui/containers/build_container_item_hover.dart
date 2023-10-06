@@ -1,9 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/amulet/functions/get_amulet_element_colofr.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/mmo_item_image.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/amulet/amulet_item.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -82,26 +85,24 @@ Widget buildContainerItemStats(ItemStat itemStats) =>
                 color: Colors.white12,
               ),
               height4,
-              buildTableRow('damage', itemStats.damage),
-              buildTableRow('fire', itemStats.fire),
-              buildTableRow('electricity', itemStats.electricity),
-              GSContainer(
-                color: Colors.black12,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if (itemStats.fire > 0)
-                        buildStatColumn('fire', itemStats.fire),
-                      if (itemStats.water > 0)
-                        buildStatColumn('water', itemStats.water),
-                      if (itemStats.air > 0)
-                        buildStatColumn('air', itemStats.air),
-                      if (itemStats.earth > 0)
-                        buildStatColumn('earth', itemStats.earth),
-                      if (itemStats.electricity > 0)
-                        buildStatColumn('electricity', itemStats.electricity),
-                    ]),
-              )
+              if (itemStats.damage != 0)
+                buildTableRow('damage', itemStats.damage),
+              if (itemStats.cooldown != 0)
+                buildTableRow('cooldown', itemStats.cooldown),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (itemStats.fire > 0)
+                      buildStatColumn2(AmuletElement.fire, itemStats.fire, components),
+                    if (itemStats.water > 0)
+                      buildStatColumn2(AmuletElement.water, itemStats.water, components),
+                    if (itemStats.air > 0)
+                      buildStatColumn2(AmuletElement.wind, itemStats.air, components),
+                    if (itemStats.earth > 0)
+                      buildStatColumn2(AmuletElement.earth, itemStats.earth, components),
+                    if (itemStats.electricity > 0)
+                      buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
+                  ])
             ],
           ),
         ));
@@ -112,3 +113,24 @@ Widget buildStatColumn(String name, int amount)=> Column(
       buildText(amount) ,
     ],
   );
+
+Widget buildStatColumn2(
+    AmuletElement amuletElement,
+    int amount,
+    IsometricComponents components,
+) =>
+    buildBorder(
+      color: getAmuletElementColor(amuletElement),
+      radius: BorderRadius.zero,
+      width: 2,
+      child: Container(
+        width: 50,
+        height: 50,
+        alignment: Alignment.center,
+        color: Colors.black26,
+        child: buildText(amount, color: components.mmo.getAmuletElementWatch(amuletElement).value >= amount
+            ? Colors.green
+            : Colors.red),
+
+      ),
+    );

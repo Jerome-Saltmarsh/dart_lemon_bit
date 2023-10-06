@@ -9,6 +9,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'functions/get_amulet_element_colofr.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/src.dart';
@@ -865,13 +866,6 @@ class AmuletUI {
   Widget buildElementPoints() =>
       GSContainer(
           child: buildWatch(amulet.elementPoints, (t) => buildText('points: $t'))
+
       );
 }
-
-Color getAmuletElementColor(AmuletElement amuletElement) => const {
-     AmuletElement.fire: Colors.red,
-     AmuletElement.water: Colors.blue,
-     AmuletElement.wind: Colors.greenAccent,
-     AmuletElement.earth: Colors.brown,
-     AmuletElement.electricity: Colors.yellow,
-   }[amuletElement] ?? (throw Exception('mapElementToColor($amuletElement)'));
