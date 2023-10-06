@@ -5,6 +5,7 @@ import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
 import 'functions/set_character_state.dart';
+import 'functions/set_character_state_idle.dart';
 import 'isometric_settings.dart';
 import 'position.dart';
 
@@ -295,16 +296,6 @@ class Character extends Collider {
     actionDuration = duration;
   }
 
-  void setCharacterStateIdle({int duration = 0}){
-    if (deadOrBusy || characterStateIdle)
-      return;
-
-    setCharacterState(
-        character: this,
-        value: CharacterState.Idle,
-        duration: duration,
-    );
-  }
 
 
   bool withinInteractRange(Position target){
@@ -427,7 +418,7 @@ class Character extends Collider {
     clearTarget();
     clearPath();
     setDestinationToCurrentPosition();
-    setCharacterStateIdle();
+    setCharacterStateIdle(this);
   }
 
   /// throws an exception if target is null
@@ -454,23 +445,23 @@ class Character extends Collider {
 
   void attackTargetEnemy(IsometricGame game){
     final target = this.target;
-    if (target == null) return;
-    setDestinationToCurrentPosition();
-    clearPath();
-    idle();
+    if (target == null) {
+      throw Exception('target == null');
+    }
     faceTarget();
     game.characterAttack(this);
   }
 
   void idle() {
-    setCharacterStateIdle();
+    setCharacterStateIdle(this);
     setDestinationToCurrentPosition();
   }
 
   void faceTarget() {
     final target = this.target;
-    if (target == null)
+    if (target == null) {
       throw Exception('target is null');
+    }
     face(target);
     lookAt(target);
   }

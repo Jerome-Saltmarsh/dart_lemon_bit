@@ -7,6 +7,7 @@ import 'character.dart';
 import 'collider.dart';
 import 'environment.dart';
 import 'functions/set_character_state_fire.dart';
+import 'functions/set_character_state_idle.dart';
 import 'functions/set_character_state_running.dart';
 import 'functions/set_character_state_striking.dart';
 import 'functions/use_activated_power.dart';
@@ -372,7 +373,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterRunInDirection(Character character, int direction) {
     if (direction == IsometricDirection.None && character.target == null) {
-      character.setCharacterStateIdle();
+      setCharacterStateIdle(character);
       return;
     }
 
@@ -381,11 +382,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         return;
       }
       clearCharacterTarget(character);
-      character.setCharacterStateIdle();
+      setCharacterStateIdle(character);
       return;
     } else if (direction == IsometricDirection.None) {
       clearCharacterTarget(character);
-      character.setCharacterStateIdle();
+      setCharacterStateIdle(character);
       return;
     }
     character.direction = direction;
@@ -2079,7 +2080,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void clearCharacterTarget(Character character) {
     if (character.target == null) return;
     character.target = null;
-    character.setCharacterStateIdle();
+    setCharacterStateIdle(character);
   }
 
   /// WARNING EXPENSIVE OPERATION
@@ -2627,7 +2628,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final target = character.target;
 
     if (character.interacting) {
-      character.setCharacterStateIdle();
+      setCharacterStateIdle(character);
       character.setDestinationToCurrentPosition();
       return;
     }
@@ -2638,7 +2639,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.targetWithinRadius(IsometricSettings.Interact_Radius)){
         customOnInteraction(character, target);
-        character.setCharacterStateIdle();
+        setCharacterStateIdle(character);
         character.setDestinationToCurrentPosition();
         return;
     }
@@ -2689,14 +2690,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  void setCharacterStateIdle(Character character, {int duration = 0}) {
-    character.setCharacterStateIdle(duration: duration);
-    character.setDestinationToCurrentPosition();
-    character.clearPath();
-    character.clearTarget();
-  }
+  // void setCharacterStateIdle(Character character, {int duration = 0}) {
+  //   character.setCharacterStateIdle(duration: duration);
+  //   character.setDestinationToCurrentPosition();
+  //   character.clearPath();
+  //   character.clearTarget();
+  // }
 
   void characterAttack(Character character) {
+    character.clearPath();
+
     if (character.weaponType == WeaponType.Bow) {
       setCharacterStateFire(
         character: character,
