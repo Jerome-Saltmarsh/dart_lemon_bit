@@ -20,6 +20,24 @@ Widget buildContainerAmuletItemHover({
         final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
         print('amulet.itemHover($item, level: $levelCurrent)');
 
+        if (levelCurrent == -1){
+          final stats1 = item.getStatsForLevel(1);
+
+          if (stats1 == null){
+            throw Exception('stats1 == null');
+          }
+
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildAmuletItemIcon(item),
+              height8,
+              buildContainerItemStats(stats1, 1),
+            ],
+          );
+        }
+
         final statsCurrent = item.getStatsForLevel(levelCurrent);
 
         if (statsCurrent == null){
@@ -38,7 +56,6 @@ Widget buildContainerAmuletItemHover({
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // buildContainerAmuletItemHoverCurrent(item, levelCurrent),
                 buildContainerItemStats(statsCurrent, levelCurrent),
                 if (statsNext != null)
                  Container(
