@@ -3,6 +3,7 @@ import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import '../isometric/functions/character/set_character_state_striking.dart';
+import 'setters/amulet_player/swap_item_slots.dart';
 import 'getters/get_player_level_for_amulet_item.dart';
 import 'item_slot.dart';
 import 'amulet_game.dart';
@@ -725,19 +726,19 @@ class AmuletPlayer extends IsometricPlayer {
         }
         break;
       case ItemType.Helm:
-        swap(equippedHelm, selected);
+        swapItemSlots(this, equippedHelm, selected);
         break;
       case ItemType.Body:
-        swap(equippedBody, selected);
+        swapItemSlots(this, equippedBody, selected);
         break;
       case ItemType.Legs:
-        swap(equippedLegs, selected);
+        swapItemSlots(this, equippedLegs, selected);
         break;
       case ItemType.Hand:
         if (equippedHandLeft.item == null){
-          swap(equippedHandLeft, selected);
+          swapItemSlots(this, equippedHandLeft, selected);
         } else {
-          swap(equippedHandRight, selected);
+          swapItemSlots(this, equippedHandRight, selected);
         }
         break;
     }
@@ -1370,7 +1371,7 @@ class AmuletPlayer extends IsometricPlayer {
       writeAmuletError("Treasure slots full");
       return;
     }
-    swap(slot, emptyTreasureSlot);
+    swapItemSlots(this, slot, emptyTreasureSlot);
   }
 
   void swapWithAvailableItemSlot(ItemSlot slot){
@@ -1382,7 +1383,7 @@ class AmuletPlayer extends IsometricPlayer {
       reportInventoryFull();
       return;
     }
-    swap(availableItemSlot, slot);
+    swapItemSlots(this, availableItemSlot, slot);
   }
 
   ItemSlot? getEmptyItemSlot() => getEmptySlot(items);
@@ -1403,19 +1404,6 @@ class AmuletPlayer extends IsometricPlayer {
     notifyEquipmentDirty();
   }
 
-  void swap(ItemSlot a, ItemSlot b){
-     final aItem = a.item;
-     final aCooldown = a.cooldown;
-     final bItem = b.item;
-     final bCooldown = b.cooldown;
-     a.item = bItem;
-     a.cooldown = bCooldown;
-     b.item = aItem;
-     b.cooldown = aCooldown;
-     a.validate();
-     b.validate();
-     notifyEquipmentDirty();
-  }
 
   void notifyEquipmentDirty(){
     if (equipmentDirty)
