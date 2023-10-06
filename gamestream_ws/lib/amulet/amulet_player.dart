@@ -146,6 +146,17 @@ class AmuletPlayer extends IsometricPlayer {
 
   int get activatedPowerIndex => _activatedPowerIndex;
 
+  ItemSlot? get activeItemSlot {
+    if (activatedPowerIndex != -1) {
+      return weapons[activatedPowerIndex];
+    }
+    if (_equippedWeaponIndex != -1){
+      return weapons[_equippedWeaponIndex];
+    }
+
+    return null;
+  }
+
   @override
   int get maxHealth {
     var health = healthBase;
