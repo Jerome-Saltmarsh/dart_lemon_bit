@@ -287,7 +287,7 @@ class Amulet extends IsometricGame {
     );
   }
 
-  int getAmuletItemLevel(AmuletItem amuletItem) =>
+  int getAmuletPlayerItemLevel(AmuletItem amuletItem) =>
       amuletItem.getLevel(
         fire: elementFire.value,
         water: elementWater.value,

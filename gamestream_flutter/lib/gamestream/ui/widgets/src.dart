@@ -11,3 +11,4 @@ export 'gs_refresh.dart';
 export 'gs_key_event_handler.dart';
 export 'mouse_over.dart';
 export 'stack_fullscreen.dart';
+export 'gs_table_row.dart';
