@@ -465,7 +465,14 @@ class AmuletUI {
             scale: 1,
           ),
         )),
-        buildItemSlot(amulet.equippedLegs),
+        buildItemSlot(amulet.equippedLegs, onEmpty: Tooltip(
+          message: 'empty legs slot',
+          child: IsometricIcon(
+            iconType: IconType.Inventory_Legs,
+            color: Colors.black12.value,
+            scale: 0.6,
+          ),
+        )),
         buildItemSlot(amulet.equippedHandLeft),
         buildItemSlot(amulet.equippedHandRight),
         buildItemSlot(amulet.equippedShoes),
