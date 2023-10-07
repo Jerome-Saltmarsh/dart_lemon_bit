@@ -454,7 +454,11 @@ class AmuletUI {
           color: Colors.black12.value,
           scale: 0.3,
         )),
-        buildItemSlot(amulet.equippedBody),
+        buildItemSlot(amulet.equippedBody, onEmpty: IsometricIcon(
+          iconType: IconType.Inventory_Armour,
+          color: Colors.black12.value,
+          scale: 1,
+        )),
         buildItemSlot(amulet.equippedLegs),
         buildItemSlot(amulet.equippedHandLeft),
         buildItemSlot(amulet.equippedHandRight),
