@@ -481,43 +481,43 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return false;
   }
 
-  void characterAttackMelee(Character character) {
-    assert (character.active);
-    assert (character.alive);
-    assert (character.weaponDamage >= 0);
-    assert (character.weaponRange >= 0);
-
-    if (character.deadOrBusy)
-        return;
-
-    final angle = character.angle;
-    final attackRadius = character.weaponRange;
-
-    if (attackRadius <= 0) {
-      throw Exception();
-    }
-
-    final attackRadiusHalf = attackRadius * 0.5;
-    final performX = character.x + adj(angle, attackRadiusHalf);
-    final performY = character.y + opp(angle, attackRadiusHalf);
-    final performZ = character.z;
-
-    setCharacterStateStriking(
-        character: character,
-        duration: character.attackDuration,
-        actionFrame: character.attackActionFrame,
-    );
-
-    character.setDestinationToCurrentPosition();
-
-    dispatchMeleeAttackPerformed(
-      character.weaponType,
-      performX,
-      performY,
-      performZ,
-      angle,
-    );
-  }
+  // void characterAttackMelee(Character character) {
+  //   assert (character.active);
+  //   assert (character.alive);
+  //   assert (character.weaponDamage >= 0);
+  //   assert (character.weaponRange >= 0);
+  //
+  //   if (character.deadOrBusy)
+  //       return;
+  //
+  //   final angle = character.angle;
+  //   final attackRadius = character.weaponRange;
+  //
+  //   if (attackRadius <= 0) {
+  //     throw Exception();
+  //   }
+  //
+  //   final attackRadiusHalf = attackRadius * 0.5;
+  //   final performX = character.x + adj(angle, attackRadiusHalf);
+  //   final performY = character.y + opp(angle, attackRadiusHalf);
+  //   final performZ = character.z;
+  //
+  //   setCharacterStateStriking(
+  //       character: character,
+  //       duration: character.attackDuration,
+  //       actionFrame: character.attackActionFrame,
+  //   );
+  //
+  //   character.setDestinationToCurrentPosition();
+  //
+  //   dispatchMeleeAttackPerformed(
+  //     character.weaponType,
+  //     performX,
+  //     performY,
+  //     performZ,
+  //     angle,
+  //   );
+  // }
 
   void performAbilityMelee(Character character){
 

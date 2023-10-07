@@ -192,11 +192,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     character.actionFrame = -1;
     final activeItemSlot = character.activeItemSlot;
-    clearActivatedPowerIndex(character);
 
     if (activeItemSlot == null) {
-      throw Exception('activeItemSlot is null');
+      return;
+      // throw Exception('activeItemSlot is null');
     }
+
+    clearActivatedPowerIndex(character);
 
     final amuletItem = activeItemSlot.item;
 

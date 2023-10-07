@@ -471,19 +471,19 @@ class AmuletPlayer extends IsometricPlayer {
     clearTarget();
   }
 
-  void dropWeapon(int index){
-    if (!isValidWeaponIndex(index)) {
-      return;
-    }
-    final item = weapons[index].item;
-
-    if (item == null) {
-      return;
-    }
-
-    clearWeapon(index);
-    spawnItem(item);
-  }
+  // void dropWeapon(int index){
+  //   if (!isValidWeaponIndex(index)) {
+  //     return;
+  //   }
+  //   final item = weapons[index].item;
+  //
+  //   if (item == null) {
+  //     return;
+  //   }
+  //
+  //   clearWeapon(index);
+  //   spawnItem(item);
+  // }
 
   void dropTreasure(int index){
     if (!isValidIndexTreasure(index)) {
@@ -498,64 +498,64 @@ class AmuletPlayer extends IsometricPlayer {
     spawnItem(item);
   }
 
-  void dropEquippedHelm(){
+  // void dropEquippedHelm(){
+  //
+  //   final equippedHeadItem = equippedHelm.item;
+  //
+  //   if (equippedHeadItem == null)
+  //     return;
+  //
+  //   spawnItem(equippedHeadItem);
+  //   equipHelm(null);
+  // }
 
-    final equippedHeadItem = equippedHelm.item;
+  // void dropEquippedBody(){
+  //
+  //   final item = equippedBody.item;
+  //
+  //   if (item == null)
+  //     return;
+  //
+  //   spawnItem(item);
+  //   equipBody(null);
+  // }
 
-    if (equippedHeadItem == null)
-      return;
+  // void dropEquippedLegs(){
+  //   final item = equippedLegs.item;
+  //   if (item == null)
+  //     return;
+  //   spawnItem(item);
+  //   equipLegs(null);
+  // }
 
-    spawnItem(equippedHeadItem);
-    equipHelm(null);
-  }
+  // void dropEquippedHandLeft(){
+  //   final item = equippedHandLeft.item;
+  //   if (item == null)
+  //     return;
+  //   spawnItem(item);
+  //   equipHandLeft(null);
+  // }
 
-  void dropEquippedBody(){
+  // void dropEquippedHandRight(){
+  //   final item = equippedHandRight.item;
+  //   if (item == null)
+  //     return;
+  //   spawnItem(item);
+  //   equipHandRight(null);
+  // }
 
-    final item = equippedBody.item;
-
-    if (item == null)
-      return;
-
-    spawnItem(item);
-    equipBody(null);
-  }
-
-  void dropEquippedLegs(){
-    final item = equippedLegs.item;
-    if (item == null)
-      return;
-    spawnItem(item);
-    equipLegs(null);
-  }
-
-  void dropEquippedHandLeft(){
-    final item = equippedHandLeft.item;
-    if (item == null)
-      return;
-    spawnItem(item);
-    equipHandLeft(null);
-  }
-
-  void dropEquippedHandRight(){
-    final item = equippedHandRight.item;
-    if (item == null)
-      return;
-    spawnItem(item);
-    equipHandRight(null);
-  }
-
-  void dropItem(int index){
-    if (!isValidItemIndex(index)) {
-      return;
-    }
-    final item = items[index].item;
-    if (item == null) {
-      return;
-    }
-
-    clearItem(index);
-    spawnItem(item);
-  }
+  // void dropItem(int index){
+  //   if (!isValidItemIndex(index)) {
+  //     return;
+  //   }
+  //   final item = items[index].item;
+  //   if (item == null) {
+  //     return;
+  //   }
+  //
+  //   clearItem(index);
+  //   spawnItem(item);
+  // }
 
   void spawnItem(AmuletItem item){
     const spawnDistance = 40.0;
@@ -764,8 +764,9 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void equipHelm(AmuletItem? item, {bool force = false}){
-    if (deadOrBusy && !force)
+    if (deadOrBusy && !force) {
       return;
+    }
 
     if (equippedHelm.item == item){
       return;
@@ -773,12 +774,13 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedHelm);
-      helmType = HelmType.None;
+      // helmType = HelmType.None;
       return;
     }
 
-    if (!item.isHelm)
+    if (!item.isHelm) {
       throw Exception();
+    }
 
     setSlot(
       slot: equippedHelm,
@@ -786,7 +788,8 @@ class AmuletPlayer extends IsometricPlayer {
       cooldown: 0,
     );
 
-    helmType = item.subType;
+    // notifyEquipmentDirty();
+    // helmType = item.subType;
   }
 
   void equipBody(AmuletItem? item, {bool force = false}){
@@ -952,6 +955,10 @@ class AmuletPlayer extends IsometricPlayer {
     handTypeLeft = equippedHandLeft.item?.subType ?? HandType.None;
     handTypeRight = equippedHandRight.item?.subType ?? HandType.None;
     shoeType = equippedShoe.item?.subType ?? HandType.None;
+
+    if (equippedWeapon?.item?.selectAction != AmuletItemAction.Equip){
+       equippedWeaponIndex = -1;
+    }
 
     writeEquipped();
     writePlayerHealth();
@@ -1510,28 +1517,48 @@ class AmuletPlayer extends IsometricPlayer {
       }
   }
 
-  void inventoryDrop(SlotType slotType, int index) {
+  void dropItemSlotItem(ItemSlot itemSlot){
+    final item = itemSlot.item;
+
+    if (item == null){
+      return;
+    }
+
+    spawnItem(item);
+    itemSlot.item = null;
+    itemSlot.cooldown = 0;
+    notifyEquipmentDirty();
+  }
+
+  void inventoryDropSlotType(SlotType slotType, int index) {
     switch (slotType) {
       case SlotType.Items:
-        dropItem(index);
+        dropItemSlotItem(items[index]);
+        // dropItem(index);
         break;
       case SlotType.Equipped_Helm:
-        dropEquippedHelm();
+        dropItemSlotItem(equippedHelm);
+        // dropEquippedHelm();
         break;
       case SlotType.Equipped_Body:
-        dropEquippedBody();
+        dropItemSlotItem(equippedBody);
+        // dropEquippedBody();
         break;
       case SlotType.Equipped_Legs:
-        dropEquippedLegs();
+        // dropEquippedLegs();
+        dropItemSlotItem(equippedLegs);
         break;
       case SlotType.Equipped_Hand_Left:
-        dropEquippedHandLeft();
+        dropItemSlotItem(equippedHandLeft);
+        // dropEquippedHandLeft();
         break;
       case SlotType.Equipped_Hand_Right:
-        dropEquippedHandRight();
+        dropItemSlotItem(equippedHandRight);
+        // dropEquippedHandRight();
         break;
       case SlotType.Weapons:
-        dropWeapon(index);
+        // dropWeapon(index);
+        dropItemSlotItem(weapons[index]);
         break;
       case SlotType.Treasures:
         dropTreasure(index);

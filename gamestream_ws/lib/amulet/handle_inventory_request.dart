@@ -53,7 +53,7 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
     case NetworkRequestInventory.Drop:
       final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
-      player.inventoryDrop(SlotType.values[slotTypeIndex], srcIndex);
+      player.inventoryDropSlotType(SlotType.values[slotTypeIndex], srcIndex);
       break;
   }
 }
