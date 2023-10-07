@@ -762,8 +762,9 @@ class AmuletPlayer extends IsometricPlayer {
     if (deadOrBusy && !force)
       return;
 
-    if (equippedHelm.item == item)
+    if (equippedHelm.item == item){
       return;
+    }
 
     if (item == null){
       clearSlot(equippedHelm);
@@ -1452,6 +1453,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
 
     switch (slotType){
+
       case SlotType.Weapons:
         selectWeapon(index);
         return;
@@ -1463,8 +1465,20 @@ class AmuletPlayer extends IsometricPlayer {
         final inventorySlot = items[index];
         final item = inventorySlot.item;
 
-        if (item == null)
+        if (item == null) {
           return;
+        }
+
+        if (item.isHelm){
+          final currentHelmItem = equippedHelm.item;
+          final currentCooldown = equippedHelm.cooldown;
+          equipHelm(item);
+          setItem(
+              index: index,
+              item: currentHelmItem,
+              cooldown: currentCooldown,
+          );
+        }
 
         if (item.isConsumable){
           final consumableType = item.subType;

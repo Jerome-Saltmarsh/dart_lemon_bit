@@ -436,15 +436,6 @@ class AmuletUI {
     )
   );
 
-  Widget buildInventorySlot({required Widget child}) => Container(
-        color: Colors.black12,
-        alignment: Alignment.center,
-        margin: const EdgeInsets.all(2),
-        width: 64,
-        height: 64,
-        child: child,
-    );
-
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
         padding: const EdgeInsets.all(2),
@@ -713,7 +704,7 @@ class AmuletUI {
                     child: onPressed(
                       onRightClick: () =>
                           amulet.dropItemSlot(slot),
-                      action: () => amulet.reportItemSlotLeftClicked(slot),
+                      action: () => amulet.useItemSlot(slot),
                       child: MMOItemImage(item: item, size: 64),
                     ),
                   ),

@@ -34,7 +34,12 @@ enum AmuletItem {
     actionFrame: 20,
     performDuration: 25,
     id: 1,
-    level1: ItemStat(information: 'An old blunt sword'),
+    level1: ItemStat(
+        damage: 1,
+        range: 60,
+        cooldown: 20,
+        information: 'An old blunt sword',
+    ),
   ),
   Staff_Of_Flames(
     selectAction: AmuletItemAction.Equip,

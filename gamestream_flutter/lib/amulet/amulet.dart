@@ -235,7 +235,7 @@ class Amulet extends IsometricGame {
       '${target.index}'
     );
 
-  void reportItemSlotLeftClicked(ItemSlot itemSlot) =>
+  void useItemSlot(ItemSlot itemSlot) =>
     network.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${NetworkRequestInventory.Use.index} '
