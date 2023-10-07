@@ -39,4 +39,5 @@ enum IconType {
   Inventory_Glove_Left,
   Inventory_Glove_Right,
   Inventory_Shoes,
+  Inventory_Treasure,
 }

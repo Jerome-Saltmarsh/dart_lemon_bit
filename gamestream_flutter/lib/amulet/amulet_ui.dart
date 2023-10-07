@@ -142,7 +142,15 @@ class AmuletUI {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
                 amulet.treasures.length,
-                (i) => buildItemSlot(amulet.treasures[i])
+                (i) => buildItemSlot(amulet.treasures[i], onEmpty: Tooltip(
+                  message: 'empty amulet slot',
+                  child: IsometricIcon(
+                    iconType: IconType.Inventory_Treasure,
+                    color: Colors.black12.value,
+                    scale: 1,
+                  ),
+                )
+                )
             )
         ),
       );
