@@ -41,11 +41,14 @@ class AmuletUI {
           child: buildDialogPlayerInventory(),
         ),
         buildPlayerAimTarget(),
-        Positioned(
-          top: margin1,
-          left: margin3 + 50,
-          child: buildContainerAmuletItemHover(amulet: amulet),
-        ),
+        buildWatch(amulet.playerInventoryOpen, (inventoryOpen) {
+          return Positioned(
+            top: inventoryOpen ? margin1 : null,
+            bottom: inventoryOpen ? null : margin2,
+            left: inventoryOpen ? margin4 + 50 : margin1,
+            child: buildContainerAmuletItemHover(amulet: amulet),
+          );
+        }),
         Positioned(
             bottom: margin2,
             right: margin1,
