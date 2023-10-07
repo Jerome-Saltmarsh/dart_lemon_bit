@@ -449,15 +449,21 @@ class AmuletUI {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildItemSlot(amulet.equippedHelm, onEmpty: IsometricIcon(
-          iconType: IconType.Inventory_Helm,
-          color: Colors.black12.value,
-          scale: 0.3,
+        buildItemSlot(amulet.equippedHelm, onEmpty: Tooltip(
+          message: 'empty helm slot',
+          child: IsometricIcon(
+            iconType: IconType.Inventory_Helm,
+            color: Colors.black12.value,
+            scale: 0.3,
+          ),
         )),
-        buildItemSlot(amulet.equippedBody, onEmpty: IsometricIcon(
-          iconType: IconType.Inventory_Armour,
-          color: Colors.black12.value,
-          scale: 1,
+        buildItemSlot(amulet.equippedBody, onEmpty: Tooltip(
+          message: 'empty armour slot',
+          child: IsometricIcon(
+            iconType: IconType.Inventory_Armour,
+            color: Colors.black12.value,
+            scale: 1,
+          ),
         )),
         buildItemSlot(amulet.equippedLegs),
         buildItemSlot(amulet.equippedHandLeft),
