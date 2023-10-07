@@ -733,7 +733,7 @@ class AmuletUI {
 
     final dialog = GSContainer(
       rounded: true,
-      width: 700,
+      width: 400,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -747,26 +747,22 @@ class AmuletUI {
               buildButtonClose(action: amulet.network.sendAmuletRequest.toggleInventoryOpen),
             ],
           ),
-          height16,
-          height16,
+          height32,
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildInventoryEquipped(),
               width16,
               Column(
                 children: [
                   buildPlayerTreasures(),
-                  buildInventoryItems(),
+                  Row(
+                    children: [
+                      buildInventoryPlayerFront(),
+                      buildInventoryItems(),
+                    ],
+                  ),
                 ],
-              ),
-              Container(
-                width: 180 * goldenRatio_0618,
-                height: 180,
-                child: buildContainerPlayerFront(
-                    player: amulet.player,
-                    height: 180,
-                    borderColor: Colors.transparent,
-                ),
               ),
             ],
           )
@@ -778,6 +774,16 @@ class AmuletUI {
     return buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
     inventoryOpen ? dialog : inventoryButton);
   }
+
+  Widget buildInventoryPlayerFront() => Container(
+              width: 180 * goldenRatio_0618,
+              height: 180,
+              child: buildContainerPlayerFront(
+                  player: amulet.player,
+                  height: 180,
+                  borderColor: Colors.transparent,
+              ),
+            );
 
   Widget buildDialogPlayerTalents() {
     return buildWatch(
