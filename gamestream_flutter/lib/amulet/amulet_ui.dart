@@ -447,7 +447,7 @@ class AmuletUI {
   Widget buildInventoryEquipped() => buildInventoryContainer(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         buildItemSlot(amulet.equippedHelm, onEmpty: Tooltip(
           message: 'empty helm slot',
@@ -457,39 +457,49 @@ class AmuletUI {
             scale: 0.3,
           ),
         )),
-        buildItemSlot(amulet.equippedBody, onEmpty: Tooltip(
-          message: 'empty armour slot',
-          child: IsometricIcon(
-            iconType: IconType.Inventory_Armour,
-            color: Colors.black12.value,
-            scale: 1,
-          ),
-        )),
-        buildItemSlot(amulet.equippedLegs, onEmpty: Tooltip(
-          message: 'empty legs slot',
-          child: IsometricIcon(
-            iconType: IconType.Inventory_Legs,
-            color: Colors.black12.value,
-            scale: 0.6,
-          ),
-        )),
-        buildItemSlot(amulet.equippedHandLeft, onEmpty: Tooltip(
-          message: 'empty left glove slot',
-          child: IsometricIcon(
-            iconType: IconType.Inventory_Glove_Left,
-            color: Colors.black12.value,
-            scale: 0.6,
-          ),
-        )),
-        buildItemSlot(amulet.equippedHandRight, onEmpty: Tooltip(
-          message: 'empty right glove slot',
-          child: IsometricIcon(
-            iconType: IconType.Inventory_Glove_Right,
-            color: Colors.black12.value,
-            scale: 0.6,
-          ),
-        )
+        Row(
+          children: [
+            buildItemSlot(amulet.equippedHandLeft, onEmpty: Tooltip(
+              message: 'empty left glove slot',
+              child: IsometricIcon(
+                iconType: IconType.Inventory_Glove_Left,
+                color: Colors.black12.value,
+                scale: 0.6,
+              ),
+            )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildItemSlot(amulet.equippedBody, onEmpty: Tooltip(
+                  message: 'empty armour slot',
+                  child: IsometricIcon(
+                    iconType: IconType.Inventory_Armour,
+                    color: Colors.black12.value,
+                    scale: 1,
+                  ),
+                )),
+                buildItemSlot(amulet.equippedLegs, onEmpty: Tooltip(
+                  message: 'empty legs slot',
+                  child: IsometricIcon(
+                    iconType: IconType.Inventory_Legs,
+                    color: Colors.black12.value,
+                    scale: 0.6,
+                  ),
+                )),
+              ],
+            ),
+            buildItemSlot(amulet.equippedHandRight, onEmpty: Tooltip(
+              message: 'empty right glove slot',
+              child: IsometricIcon(
+                iconType: IconType.Inventory_Glove_Right,
+                color: Colors.black12.value,
+                scale: 0.6,
+              ),
+            )
+            ),
+          ],
         ),
+
         buildItemSlot(amulet.equippedShoes, onEmpty: Tooltip(
           message: 'empty shoes slot',
           child: IsometricIcon(
@@ -778,7 +788,7 @@ class AmuletUI {
 
     final dialog = GSContainer(
       rounded: true,
-      width: 400,
+      width: 550,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
