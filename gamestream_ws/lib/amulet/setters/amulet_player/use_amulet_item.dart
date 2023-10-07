@@ -26,7 +26,6 @@ void useAmuletItem(AmuletPlayer player, AmuletItem item) {
         player.deselectActivatedPower();
         return;
       }
-      player.actionFrame = item.actionFrame;
       setCharacterStateStriking(
         character: player,
         actionFrame: item.actionFrame,
@@ -50,7 +49,6 @@ void useAmuletItem(AmuletPlayer player, AmuletItem item) {
         duration: item.performDuration,
         actionFrame: item.actionFrame,
       );
-      player.weaponType = item.subType;
       break;
     case AmuletItemAction.None:
 // TODO: Handle this case.
