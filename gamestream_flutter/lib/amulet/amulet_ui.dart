@@ -127,13 +127,14 @@ class AmuletUI {
   }
 
   Widget buildPlayerWeapons() => GSContainer(
+    padding: const EdgeInsets.all(4),
     rounded: true,
     child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: List.generate(amulet.weapons.length, buildWeaponSlotAtIndex),
         ),
-      );
+  );
 
   Widget buildPlayerTreasures() => buildInventoryContainer(
         child: Row(
@@ -200,8 +201,10 @@ class AmuletUI {
         amulet.equippedWeaponIndex,
         (equippedWeaponIndex) => GSContainer(
           color: index == equippedWeaponIndex
-              ? Colors.white12
-              : Colors.black12,
+              ? Colors.green
+              : Colors.white12,
+              // ? Colors.white12
+              // : Colors.black12,
           width: size,
           height: size,
           rounded: true,
@@ -212,7 +215,7 @@ class AmuletUI {
         return nothing;
 
       return GSContainer(
-        color: Colors.green,
+        color: Colors.green.withOpacity(0.5),
         width: size,
         height: size,
         rounded: true,
