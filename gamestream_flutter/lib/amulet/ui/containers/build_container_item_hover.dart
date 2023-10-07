@@ -103,6 +103,8 @@ Widget buildContainerItemStats(ItemStat itemStats, int level) =>
                 buildTableRow('damage', itemStats.damage),
               if (itemStats.cooldown != 0)
                 buildTableRow('cooldown', itemStats.cooldown),
+              if (itemStats.range != 0)
+                buildTableRow('range', itemStats.range),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

@@ -290,7 +290,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player is AmuletPlayer &&
         player.activatedPowerIndex != -1
     ) {
-      useActivatedPower(player);
+      amuletPlayerUseActivatedPower(player);
       player.mouseLeftDownIgnore = true;
       return;
     }

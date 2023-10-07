@@ -11,20 +11,23 @@ enum AmuletItem {
     performDuration: 20,
     id: 21,
     level1: ItemStat(
+        cooldown: 25,
         range: 150,
         air: 0,
         information: 'Teleports a short distance',
     ),
     level2: ItemStat(
+        cooldown: 23,
         range: 160,
         air: 1,
         information: 'teleport slightly further',
     ),
     level3: ItemStat(
+      cooldown: 21,
       range: 170,
       air: 2,
-      information: 'teleport slightly further',
-    )
+      information: 'teleports a short distance',
+    ),
   ),
   Rusty_Old_Sword(
     selectAction: AmuletItemAction.Equip,
@@ -287,6 +290,24 @@ enum AmuletItem {
       air: 4,
       range: 60,
     ),
+    level3: ItemStat(
+      cooldown: 26,
+      information: 'teleports a short distance',
+      air: 7,
+      range: 70,
+    ),
+    level4: ItemStat(
+      cooldown: 26,
+      information: 'teleports a short distance',
+      air: 8,
+      range: 70,
+    ),
+    level5: ItemStat(
+      cooldown: 24,
+      information: 'teleports a short distance',
+      air: 16,
+      range: 80,
+    )
   );
 
   final AmuletItemAction selectAction;

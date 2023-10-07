@@ -4,6 +4,7 @@ import 'package:gamestream_ws/packages/common/src.dart';
 import '../../../isometric/functions/character/set_character_state_striking.dart';
 
 void useAmuletItem(AmuletPlayer player, AmuletItem item) {
+
   switch (item.selectAction) {
     case AmuletItemAction.Equip:
       throw Exception();

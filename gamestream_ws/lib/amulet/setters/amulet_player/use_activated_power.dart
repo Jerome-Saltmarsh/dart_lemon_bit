@@ -1,7 +1,7 @@
 import 'package:gamestream_ws/amulet/amulet_player.dart';
 import 'use_amulet_item.dart';
 
-void useActivatedPower(AmuletPlayer player) {
+void amuletPlayerUseActivatedPower(AmuletPlayer player) {
   final activatedPowerIndex = player.activatedPowerIndex;
   if (activatedPowerIndex < 0) {
     throw Exception('activatedPowerIndex < 0 : $activatedPowerIndex < 0');
@@ -13,12 +13,16 @@ void useActivatedPower(AmuletPlayer player) {
     throw Exception('invalid weapon index: $activatedPowerIndex');
   }
 
-  final weapon = weapons[activatedPowerIndex];
-  final item = weapon.item;
+  final itemSlot = weapons[activatedPowerIndex];
+  final item = itemSlot.item;
 
   if (item == null) {
     throw Exception();
   }
 
+  final stats = player.getStatsForAmuletItem(item);
+  if (stats != null) {
+    itemSlot.cooldown = stats.cooldown;
+  }
   useAmuletItem(player, item);
 }
