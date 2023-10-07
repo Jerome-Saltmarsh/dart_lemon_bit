@@ -28,16 +28,16 @@ class AmuletPlayer extends IsometricPlayer {
   var elementEarth = 0;
   var elementElectricity = 0;
 
-  final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot());
-  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot());
+  final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot(slotType: SlotType.Weapons));
+  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(slotType: SlotType.Treasures));
   final talents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
 
-  final equippedHelm = ItemSlot();
-  final equippedBody = ItemSlot();
-  final equippedLegs = ItemSlot();
-  final equippedHandLeft = ItemSlot();
-  final equippedHandRight = ItemSlot();
-  final equippedShoe = ItemSlot();
+  final equippedHelm = ItemSlot(slotType: SlotType.Equipped_Helm);
+  final equippedBody = ItemSlot(slotType: SlotType.Equipped_Body);
+  final equippedLegs = ItemSlot(slotType: SlotType.Equipped_Legs);
+  final equippedHandLeft = ItemSlot(slotType: SlotType.Equipped_Hand_Left);
+  final equippedHandRight = ItemSlot(slotType: SlotType.Equipped_Hand_Right);
+  final equippedShoe = ItemSlot(slotType: SlotType.Equipped_Shoes);
 
   late List<ItemSlot> items;
 
@@ -341,7 +341,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void setItemsLength(int value){
-    items = List.generate(value, (index) => ItemSlot());
+    items = List.generate(value, (index) => ItemSlot(slotType: SlotType.Items));
     writeItemLength(value);
   }
 
@@ -1470,14 +1470,15 @@ class AmuletPlayer extends IsometricPlayer {
         }
 
         if (item.isHelm){
-          final currentHelmItem = equippedHelm.item;
-          final currentCooldown = equippedHelm.cooldown;
-          equipHelm(item);
-          setItem(
-              index: index,
-              item: currentHelmItem,
-              cooldown: currentCooldown,
-          );
+          swapItemSlots(this, inventorySlot, equippedHelm);
+          // final currentHelmItem = equippedHelm.item;
+          // final currentCooldown = equippedHelm.cooldown;
+          // equipHelm(item);
+          // setItem(
+          //     index: index,
+          //     item: currentHelmItem,
+          //     cooldown: currentCooldown,
+          // );
         }
 
         if (item.isConsumable){
@@ -1613,4 +1614,5 @@ class AmuletPlayer extends IsometricPlayer {
     super.clearAction();
     activatedPowerIndex = - 1;
   }
+
 }

@@ -4,7 +4,6 @@ import 'package:gamestream_ws/isometric.dart';
 
 import 'package:gamestream_ws/packages.dart';
 
-import 'item_slot.dart';
 import 'talk_option.dart';
 import 'mmo_gameobject.dart';
 import 'mmo_npc.dart';
