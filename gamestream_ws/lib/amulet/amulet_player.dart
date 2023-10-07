@@ -1213,6 +1213,8 @@ class AmuletPlayer extends IsometricPlayer {
 
   ItemSlot? getEmptyItemSlot() => getEmptySlot(items);
 
+  ItemSlot? getEmptyTreasureSlot() => getEmptySlot(treasures);
+
 
   void clearSlot(ItemSlot slot){
     slot.clear();
@@ -1293,6 +1295,12 @@ class AmuletPlayer extends IsometricPlayer {
           return;
         }
 
+        if (item.isTreasure) {
+          final emptyTreasureSlot = getEmptyTreasureSlot();
+          if (emptyTreasureSlot != null){
+            swapItemSlots(this, inventorySlot, emptyTreasureSlot);
+          }
+        } else
         if (item.isHelm){
           swapItemSlots(this, inventorySlot, equippedHelm);
         } else
