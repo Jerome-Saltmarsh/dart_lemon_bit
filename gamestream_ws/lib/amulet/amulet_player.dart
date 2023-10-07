@@ -597,25 +597,28 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    final slot = weapons[index];
-    final weapon = slot.item;
+    final itemSlot = weapons[index];
+    final weapon = itemSlot.item;
 
     if (weapon == null){
       return;
     }
 
-    if (slot.cooldown > 0) {
-      writeAmuletError('${slot.item?.name} is cooling down');
+    if (itemSlot.cooldown > 0) {
+      writeAmuletError('${itemSlot.item?.name} is cooling down');
       return;
+    }
+
+    final weaponStats = getStatsForAmuletItem(weapon);
+
+    if (weaponStats == null){
+      throw Exception('weaponStats == null');
     }
 
     switch (weapon.selectAction) {
       case AmuletItemAction.Equip:
         equippedWeaponIndex = index;
         deselectActivatedPower();
-        if (!controlsCanTargetEnemies){
-          // useEquippedWeapon();
-        }
         break;
       case AmuletItemAction.Positional:
         if (activatedPowerIndex == index){
@@ -645,8 +648,10 @@ class AmuletPlayer extends IsometricPlayer {
             duration: 20,
             actionFrame: 10,
         );
+        itemSlot.cooldown = weaponStats.cooldown;
         break;
       case AmuletItemAction.Instant:
+        itemSlot.cooldown = weaponStats.cooldown;
         break;
       case AmuletItemAction.None:
         // TODO: Handle this case.

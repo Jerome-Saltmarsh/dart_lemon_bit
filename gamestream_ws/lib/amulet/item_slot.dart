@@ -7,12 +7,11 @@ class ItemSlot {
   @override
   String toString() => '{item: $item, cooldown: $cooldown}';
 
+}
+
+extension ItemSlotExtension on ItemSlot {
   void clear(){
     item = null;
     cooldown = 0;
-  }
-
-  void validate(){
-      assert (item == null || cooldown <= 0);
   }
 }
