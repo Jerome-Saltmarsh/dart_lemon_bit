@@ -1304,6 +1304,8 @@ class AmuletPlayer extends IsometricPlayer {
             if (equippedWeaponIndex == -1){
               equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
             }
+          } else {
+            writeGameError(GameError.Weapon_Rack_Full);
           }
         } else
         if (item.isTreasure) {
