@@ -18,7 +18,6 @@ Widget buildContainerAmuletItemHover({
   return buildWatchNullable(
       amulet.itemHover, (item) {
         final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
-        print('amulet.itemHover($item, level: $levelCurrent)');
 
         if (levelCurrent == -1){
           final stats1 = item.getStatsForLevel(1);

@@ -449,7 +449,11 @@ class AmuletUI {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildItemSlot(amulet.equippedHelm),
+        buildItemSlot(amulet.equippedHelm, onEmpty: IsometricIcon(
+          iconType: IconType.Inventory_Helm,
+          color: Colors.black12.value,
+          scale: 0.3,
+        )),
         buildItemSlot(amulet.equippedBody),
         buildItemSlot(amulet.equippedLegs),
         buildItemSlot(amulet.equippedHandLeft),
@@ -672,49 +676,50 @@ class AmuletUI {
     );
   }
 
-  Widget buildItemSlot(ItemSlot slot, {Color? color}) => Container(
+  Widget buildItemSlot(ItemSlot itemSlot, {Color? color, Widget? onEmpty}) {
+    return Container(
     margin: const EdgeInsets.all(2),
-    child: buildWatch(
-        slot.item,
-        (item) =>
-            buildWatch(amulet.dragging, (dragging) => DragTarget(
+    child: buildWatch(itemSlot.item, (item) {
+      return buildWatch(amulet.dragging, (dragging) => DragTarget(
               onWillAccept: (value) => true,
               onAccept: (value) {
                 if (value is! ItemSlot) return;
-                amulet.reportItemSlotDragged(src: value, target: slot);
+                amulet.reportItemSlotDragged(src: value, target: itemSlot);
               },
               builder: (context, data, rejectData) => Container(
                   width: 64.0,
                   height: 64.0,
-                  color: dragging != null && slot.acceptsDragFrom(dragging)
+                  color: dragging != null && itemSlot.acceptsDragFrom(dragging)
                       ? amulet.colors.teal_4
                       : (color ?? amulet.colors.brown_3),
                   alignment: Alignment.center,
                   child: item == null
-                      ? nothing
+                      ? (onEmpty ?? nothing)
                       : Draggable(
-                    data: slot,
+                    data: itemSlot,
                     feedback: MMOItemImage(item: item, size: 64),
                     onDragStarted: () {
-                      this.amulet.dragging.value = slot;
+                      this.amulet.dragging.value = itemSlot;
                     },
                     onDragEnd: (details) {
                       if (amulet.engine.mouseOverCanvas){
-                        amulet.dropItemSlot(slot);
+                        amulet.dropItemSlot(itemSlot);
                       }
                       this.amulet.dragging.value = null;
                     },
                     child: onPressed(
                       onRightClick: () =>
-                          amulet.dropItemSlot(slot),
-                      action: () => amulet.useItemSlot(slot),
+                          amulet.dropItemSlot(itemSlot),
+                      action: () => amulet.useItemSlot(itemSlot),
                       child: MMOItemImage(item: item, size: 64),
                     ),
                   ),
                 ),
-            ))
+            ));
+    }
            ),
   );
+  }
 
 
   Widget buildButtonClose({required Function action}) => onPressed(child: Container(
