@@ -1471,14 +1471,15 @@ class AmuletPlayer extends IsometricPlayer {
 
         if (item.isHelm){
           swapItemSlots(this, inventorySlot, equippedHelm);
-          // final currentHelmItem = equippedHelm.item;
-          // final currentCooldown = equippedHelm.cooldown;
-          // equipHelm(item);
-          // setItem(
-          //     index: index,
-          //     item: currentHelmItem,
-          //     cooldown: currentCooldown,
-          // );
+        } else
+        if (item.isLegs){
+          swapItemSlots(this, inventorySlot, equippedLegs);
+        } else
+        if (item.isBody){
+          swapItemSlots(this, inventorySlot, equippedBody);
+        } else
+        if (item.isShoes){
+          swapItemSlots(this, inventorySlot, equippedShoe);
         }
 
         if (item.isConsumable){

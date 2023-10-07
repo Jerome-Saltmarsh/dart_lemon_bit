@@ -8,10 +8,8 @@ void swapItemSlots(AmuletPlayer player, ItemSlot a, ItemSlot b){
   final aCooldown = a.cooldown;
   final bItem = b.item;
   final bCooldown = b.cooldown;
-  setItemSlotValue(player, a, bItem, bCooldown);
-  setItemSlotValue(player, b, aItem, aCooldown);
-  a.validate();
-  b.validate();
+  setItemSlotValue(a, bItem, bCooldown);
+  setItemSlotValue(b, aItem, aCooldown);
   player.notifyEquipmentDirty();
 }
 
