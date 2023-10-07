@@ -473,8 +473,23 @@ class AmuletUI {
             scale: 0.6,
           ),
         )),
-        buildItemSlot(amulet.equippedHandLeft),
-        buildItemSlot(amulet.equippedHandRight),
+        buildItemSlot(amulet.equippedHandLeft, onEmpty: Tooltip(
+          message: 'empty left glove slot',
+          child: IsometricIcon(
+            iconType: IconType.Inventory_Glove_Left,
+            color: Colors.black12.value,
+            scale: 0.6,
+          ),
+        )),
+        buildItemSlot(amulet.equippedHandRight, onEmpty: Tooltip(
+          message: 'empty right glove slot',
+          child: IsometricIcon(
+            iconType: IconType.Inventory_Glove_Right,
+            color: Colors.black12.value,
+            scale: 0.6,
+          ),
+        )
+        ),
         buildItemSlot(amulet.equippedShoes),
       ],),
   );
