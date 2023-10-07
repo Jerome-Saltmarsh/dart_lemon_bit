@@ -490,7 +490,15 @@ class AmuletUI {
           ),
         )
         ),
-        buildItemSlot(amulet.equippedShoes),
+        buildItemSlot(amulet.equippedShoes, onEmpty: Tooltip(
+          message: 'empty shoes slot',
+          child: IsometricIcon(
+            iconType: IconType.Inventory_Shoes,
+            color: Colors.black12.value,
+            scale: 0.6,
+          ),
+        )
+        ),
       ],),
   );
 
