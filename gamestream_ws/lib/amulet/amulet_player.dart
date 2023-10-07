@@ -471,20 +471,6 @@ class AmuletPlayer extends IsometricPlayer {
     clearTarget();
   }
 
-  // void dropWeapon(int index){
-  //   if (!isValidWeaponIndex(index)) {
-  //     return;
-  //   }
-  //   final item = weapons[index].item;
-  //
-  //   if (item == null) {
-  //     return;
-  //   }
-  //
-  //   clearWeapon(index);
-  //   spawnItem(item);
-  // }
-
   void dropTreasure(int index){
     if (!isValidIndexTreasure(index)) {
       return;
@@ -497,65 +483,6 @@ class AmuletPlayer extends IsometricPlayer {
     clearTreasure(index);
     spawnItem(item);
   }
-
-  // void dropEquippedHelm(){
-  //
-  //   final equippedHeadItem = equippedHelm.item;
-  //
-  //   if (equippedHeadItem == null)
-  //     return;
-  //
-  //   spawnItem(equippedHeadItem);
-  //   equipHelm(null);
-  // }
-
-  // void dropEquippedBody(){
-  //
-  //   final item = equippedBody.item;
-  //
-  //   if (item == null)
-  //     return;
-  //
-  //   spawnItem(item);
-  //   equipBody(null);
-  // }
-
-  // void dropEquippedLegs(){
-  //   final item = equippedLegs.item;
-  //   if (item == null)
-  //     return;
-  //   spawnItem(item);
-  //   equipLegs(null);
-  // }
-
-  // void dropEquippedHandLeft(){
-  //   final item = equippedHandLeft.item;
-  //   if (item == null)
-  //     return;
-  //   spawnItem(item);
-  //   equipHandLeft(null);
-  // }
-
-  // void dropEquippedHandRight(){
-  //   final item = equippedHandRight.item;
-  //   if (item == null)
-  //     return;
-  //   spawnItem(item);
-  //   equipHandRight(null);
-  // }
-
-  // void dropItem(int index){
-  //   if (!isValidItemIndex(index)) {
-  //     return;
-  //   }
-  //   final item = items[index].item;
-  //   if (item == null) {
-  //     return;
-  //   }
-  //
-  //   clearItem(index);
-  //   spawnItem(item);
-  // }
 
   void spawnItem(AmuletItem item){
     const spawnDistance = 40.0;
@@ -774,7 +701,6 @@ class AmuletPlayer extends IsometricPlayer {
 
     if (item == null){
       clearSlot(equippedHelm);
-      // helmType = HelmType.None;
       return;
     }
 
@@ -787,9 +713,6 @@ class AmuletPlayer extends IsometricPlayer {
       item: item,
       cooldown: 0,
     );
-
-    // notifyEquipmentDirty();
-    // helmType = item.subType;
   }
 
   void equipBody(AmuletItem? item, {bool force = false}){
@@ -929,11 +852,6 @@ class AmuletPlayer extends IsometricPlayer {
       health += stats.health;
       writePlayerEvent(PlayerEvent.Eat);
     }
-
-    // if (item.experience > 0){
-    //   experience += item.experience;
-    //   writePlayerEvent(PlayerEvent.Experience_Collected);
-    // }
   }
 
   void cleanEquipment(){
@@ -1176,111 +1094,6 @@ class AmuletPlayer extends IsometricPlayer {
     writeByte(NetworkResponseAmulet.Activated_Power_Index);
     writeInt8(activatedPowerIndex);
   }
-
-
-  // void useActivatedPower(int activatedPowerIndex){
-  //   if (activatedPowerIndex == -1)
-  //     return;
-  //
-  //   if (!isValidWeaponIndex(activatedPowerIndex))
-  //     throw Exception('invalid weapon index: $activatedPowerIndex');
-  //
-  //   final weapon = weapons[activatedPowerIndex];
-  //   final item = weapon.item;
-  //
-  //   if (item == null){
-  //     throw Exception();
-  //   }
-  //
-  //   switch (item.powerMode) {
-  //     case AmuletPowerMode.Equip:
-  //       throw Exception();
-  //     case AmuletPowerMode.Self:
-  //       if (item.actionFrame >= 0) {
-  //         throw Exception('item.actionFrame >= 0');
-  //       }
-  //       if (item.performDuration >= 0) {
-  //         throw Exception('item.performDuration >= 0');
-  //       }
-  //       setCharacterStateStriking(
-  //           actionFrame: item.actionFrame,
-  //           duration: item.performDuration,
-  //       );
-  //       break;
-  //     case AmuletPowerMode.Targeted_Enemy:
-  //       if (target == null) {
-  //         deselectActivatedPower();
-  //         return;
-  //       }
-  //       actionFrame = item.actionFrame;
-  //       setCharacterStateStriking(
-  //           actionFrame: item.actionFrame,
-  //           duration: item.performDuration,
-  //       );
-  //       break;
-  //     case AmuletPowerMode.Targeted_Ally:
-  //       if (target == null) {
-  //         deselectActivatedPower();
-  //         return;
-  //       }
-  //       setCharacterStateStriking(
-  //         actionFrame: item.actionFrame,
-  //         duration: item.performDuration,
-  //       );
-  //       break;
-  //     case AmuletPowerMode.Positional:
-  //       setCharacterStateStriking(
-  //           duration: item.performDuration,
-  //           actionFrame: item.actionFrame,
-  //       );
-  //       weaponType = item.subType;
-  //       break;
-  //     case AmuletPowerMode.None:
-  //       // TODO: Handle this case.
-  //   }
-  // }
-
-  /// Gets called once the animation to perform the power strikes the perform state
-  // void performActivatedPower() {
-  //     if (activatedPowerIndex == -1)
-  //       throw Exception();
-  //
-  //     if (!isValidWeaponIndex(activatedPowerIndex)){
-  //       throw Exception();
-  //     }
-  //
-  //     final weapon = weapons[activatedPowerIndex];
-  //
-  //     final item = weapon.item;
-  //
-  //     if (item == null)
-  //       throw Exception();
-  //
-  //     weapon.cooldown = item.cooldown;
-  //
-  //     final attackType = item.attackType;
-  //
-  //     if (attackType == null){
-  //       throw Exception();
-  //     }
-  //
-  //     switch (attackType) {
-  //       case AmuletAttackType.Blink:
-  //         game.performAmuletAttackBlink(this);
-  //         break;
-  //       case AmuletAttackType.Lightning:
-  //         game.performAmuletAttackLightning(this);
-  //         break;
-  //       default:
-  //         throw Exception("Power Not Implemented $attackType");
-  //     }
-  //
-  //     assignWeaponTypeToEquippedWeapon();
-  //     deselectActivatedPower();
-  //     setCharacterStateIdle();
-  //     setDestinationToCurrentPosition();
-  //     clearPath();
-  // }
 
   void assignWeaponTypeToEquippedWeapon() =>
       weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
@@ -1530,44 +1343,21 @@ class AmuletPlayer extends IsometricPlayer {
     notifyEquipmentDirty();
   }
 
-  void inventoryDropSlotType(SlotType slotType, int index) {
+  ItemSlot getItemSlot(SlotType slotType, int index) =>
     switch (slotType) {
-      case SlotType.Items:
-        dropItemSlotItem(items[index]);
-        // dropItem(index);
-        break;
-      case SlotType.Equipped_Helm:
-        dropItemSlotItem(equippedHelm);
-        // dropEquippedHelm();
-        break;
-      case SlotType.Equipped_Body:
-        dropItemSlotItem(equippedBody);
-        // dropEquippedBody();
-        break;
-      case SlotType.Equipped_Legs:
-        // dropEquippedLegs();
-        dropItemSlotItem(equippedLegs);
-        break;
-      case SlotType.Equipped_Hand_Left:
-        dropItemSlotItem(equippedHandLeft);
-        // dropEquippedHandLeft();
-        break;
-      case SlotType.Equipped_Hand_Right:
-        dropItemSlotItem(equippedHandRight);
-        // dropEquippedHandRight();
-        break;
-      case SlotType.Weapons:
-        // dropWeapon(index);
-        dropItemSlotItem(weapons[index]);
-        break;
-      case SlotType.Treasures:
-        dropTreasure(index);
-        break;
-      case SlotType.Equipped_Shoes:
-        dropEquippedShoes(index);
-        break;
-    }
-  }
+      SlotType.Items => items[index],
+      SlotType.Equipped_Helm => equippedHelm,
+      SlotType.Equipped_Body => equippedBody,
+      SlotType.Equipped_Legs => equippedLegs,
+      SlotType.Equipped_Hand_Left => equippedHandLeft,
+      SlotType.Equipped_Hand_Right => equippedHandRight,
+      SlotType.Weapons => weapons[index],
+      SlotType.Treasures => treasures[index],
+      SlotType.Equipped_Shoes => equippedShoe
+    };
+
+  void inventoryDropSlotType(SlotType slotType, int index) =>
+      dropItemSlotItem(getItemSlot(slotType, index));
 
   void dropEquippedShoes(int index) {
     final item = equippedShoe.item;
