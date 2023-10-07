@@ -24,16 +24,23 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       final srcSlotType = slotTypes[srcSlotTypeIndex];
       final targetSlotType = slotTypes[targetSlotTypeIndex];
 
+
       final srcItemObject =
           player.getItemObjectAtSlotType(srcSlotType, srcIndex);
       final targetItemObject =
           player.getItemObjectAtSlotType(targetSlotType, targetIndex);
 
+
       final srcItem = srcItemObject.item;
       final targetItem = targetItemObject.item;
 
-      if (srcItem == null)
+      if (srcItem == null) {
         return;
+      }
+
+      if (targetItem != null && !srcSlotType.supportsItemType(targetItem.type)){
+        return;
+      }
 
       if (!targetSlotType.supportsItemType(srcItem.type)) {
         return;
