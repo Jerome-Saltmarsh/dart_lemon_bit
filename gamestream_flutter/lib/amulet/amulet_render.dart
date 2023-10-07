@@ -69,11 +69,11 @@ extension AmuletRender on Amulet {
 
     final powerMode = activatedPower.selectAction;
 
-    if (powerMode == AmuletItemSelectAction.Instant){
+    if (powerMode == AmuletItemAction.Instant){
       return;
     }
 
-    if (powerMode == AmuletItemSelectAction.Positional) {
+    if (powerMode == AmuletItemAction.Positional) {
       engine.color = Colors.white;
       render.circleOutlineAtPosition(
         position: activePowerPosition,

@@ -250,18 +250,6 @@ class Character extends Collider {
   void set angle(double value) =>
       _angle = value % pi2;
 
-  // void setCharacterStateStriking({
-  //   required int duration,
-  //   required int actionFrame,
-  // }){
-  //   assert (active);
-  //   assert (alive);
-  //   this.actionFrame = actionFrame;
-  //   setDestinationToCurrentPosition();
-  //   setCharacterState(value: CharacterState.Strike, duration: duration);
-  // }
-
-
   void setCharacterStateSpawning({int duration = 40}){
     if (state == CharacterState.Spawning)
       return;
@@ -364,19 +352,6 @@ class Character extends Collider {
        setDestinationToCurrentPosition();
     }
 
-    // if (weaponStateDuration < weaponStateDurationTotal) {
-    //   weaponStateDuration++;
-    //   if (weaponStateDuration >= weaponStateDurationTotal) {
-    //
-    //     if (weaponStatePerforming && WeaponType.isFirearm(weaponType)){
-    //       weaponState = WeaponState.Aiming;
-    //       weaponStateDurationTotal = 10;
-    //     } else {
-    //       weaponState = WeaponState.Idle;
-    //       weaponStateDurationTotal = 0;
-    //     }
-    //   }
-    // }
   }
 
   void runStraightToTarget(){

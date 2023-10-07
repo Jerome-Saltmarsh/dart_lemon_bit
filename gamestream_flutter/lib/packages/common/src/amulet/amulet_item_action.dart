@@ -1,4 +1,4 @@
-enum AmuletItemSelectAction {
+enum AmuletItemAction {
   Equip,
   Instant,
   Caste,

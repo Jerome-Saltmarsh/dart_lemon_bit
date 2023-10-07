@@ -3,7 +3,7 @@ import '../../src.dart';
 
 enum AmuletItem {
   Blink_Dagger(
-    selectAction: AmuletItemSelectAction.Positional,
+    selectAction: AmuletItemAction.Positional,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
@@ -11,16 +11,23 @@ enum AmuletItem {
     performDuration: 20,
     id: 21,
     level1: ItemStat(
-        air: 5,
+        range: 150,
+        air: 0,
         information: 'Teleports a short distance',
     ),
     level2: ItemStat(
-        air: 10,
+        range: 160,
+        air: 1,
         information: 'teleport slightly further',
+    ),
+    level3: ItemStat(
+      range: 170,
+      air: 2,
+      information: 'teleport slightly further',
     )
   ),
   Rusty_Old_Sword(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
@@ -30,7 +37,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'An old blunt sword'),
   ),
   Staff_Of_Flames(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Unique,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
@@ -40,7 +47,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'An old blunt sword'),
   ),
   Staff_Of_Frozen_Lake(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
@@ -50,7 +57,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A powerful staff that eliminates cold'),
   ),
   Old_Bow(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
@@ -60,7 +67,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A worn out bow'),
   ),
   Holy_Bow(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
@@ -89,7 +96,7 @@ enum AmuletItem {
 
   ),
   Steel_Helmet(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Steel,
@@ -97,7 +104,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A common steel helmet'),
   ),
   Wizards_Hat(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Wizard_Hat,
@@ -105,7 +112,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A hat commonly worn by students of magic school'),
   ),
   Travellers_Pants(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
@@ -113,7 +120,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common pants'),
   ),
   Gauntlet(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
@@ -121,7 +128,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common gauntlets'),
   ),
   Squires_Pants(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
@@ -129,7 +136,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common pants'),
   ),
   Knights_Pants(
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Unique,
     type: ItemType.Legs,
     subType: LegType.Leather,
@@ -137,7 +144,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Pants of higher quality'),
   ),
   Worn_Shirt_Blue (
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
@@ -145,7 +152,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A common blue shirt'),
   ),
   Basic_Leather_Armour (
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
@@ -153,7 +160,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Common armour'),
   ),
   Shoe_Leather_Boots (
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
@@ -161,7 +168,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'A common leather boots'),
   ),
   Shoe_Iron_Plates (
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
@@ -169,7 +176,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Heavy boots which provide good defense'),
   ),
   Ocean_Boots (
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
@@ -177,7 +184,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Commonly worn by water mages'),
   ),
   Storm_Boots (
-    selectAction: AmuletItemSelectAction.Equip,
+    selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
@@ -185,7 +192,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'commonly worn by electric mages'),
   ),
   Health_Potion(
-    selectAction: AmuletItemSelectAction.Consume,
+    selectAction: AmuletItemAction.Consume,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Health_Potion,
@@ -194,7 +201,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'Replenishes health'),
   ),
   Treasure_Box(
-    selectAction: AmuletItemSelectAction.Consume,
+    selectAction: AmuletItemAction.Consume,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Treasure_Box,
@@ -203,7 +210,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'increases experience'),
   ),
   Meat_Drumstick(
-    selectAction: AmuletItemSelectAction.Consume,
+    selectAction: AmuletItemAction.Consume,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
     subType: ConsumableType.Meat_Drumstick,
@@ -212,7 +219,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'replenishes health'),
   ),
   Lost_Pendant_Of_Dreams(
-    selectAction: AmuletItemSelectAction.None,
+    selectAction: AmuletItemAction.None,
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
@@ -220,7 +227,7 @@ enum AmuletItem {
     level1: ItemStat(information: 'increases stats'),
   ),
   Sapphire_Pendant(
-    selectAction: AmuletItemSelectAction.None,
+    selectAction: AmuletItemAction.None,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
@@ -231,7 +238,7 @@ enum AmuletItem {
     ),
   ),
   Spell_Thunderbolt(
-    selectAction: AmuletItemSelectAction.Caste,
+    selectAction: AmuletItemAction.Caste,
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Weapon,
     subType: WeaponType.Spell_Thunderbolt,
@@ -258,7 +265,7 @@ enum AmuletItem {
     ),
   ),
   Spell_Blink(
-    selectAction: AmuletItemSelectAction.Positional,
+    selectAction: AmuletItemAction.Positional,
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Spell,
     subType: SpellType.Blink,
@@ -277,7 +284,7 @@ enum AmuletItem {
     ),
   );
 
-  final AmuletItemSelectAction selectAction;
+  final AmuletItemAction selectAction;
   final int type;
   final int subType;
   final bool collectable;

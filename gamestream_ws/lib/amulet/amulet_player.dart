@@ -2,7 +2,6 @@
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import '../isometric/functions/character/set_character_state_striking.dart';
 import 'setters/amulet_player/swap_item_slots.dart';
 import 'getters/get_player_level_for_amulet_item.dart';
 import 'item_slot.dart';
@@ -611,35 +610,35 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     switch (weapon.selectAction) {
-      case AmuletItemSelectAction.Equip:
+      case AmuletItemAction.Equip:
         equippedWeaponIndex = index;
         deselectActivatedPower();
         if (!controlsCanTargetEnemies){
           // useEquippedWeapon();
         }
         break;
-      case AmuletItemSelectAction.Positional:
+      case AmuletItemAction.Positional:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case AmuletItemSelectAction.Targeted_Ally:
+      case AmuletItemAction.Targeted_Ally:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case AmuletItemSelectAction.Targeted_Enemy:
+      case AmuletItemAction.Targeted_Enemy:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
         }
         activatedPowerIndex = index;
         break;
-      case AmuletItemSelectAction.Caste:
+      case AmuletItemAction.Caste:
         activatedPowerIndex = index;
         setCharacterStateStriking(
             character: this,
@@ -647,12 +646,12 @@ class AmuletPlayer extends IsometricPlayer {
             actionFrame: 10,
         );
         break;
-      case AmuletItemSelectAction.Instant:
+      case AmuletItemAction.Instant:
         break;
-      case AmuletItemSelectAction.None:
+      case AmuletItemAction.None:
         // TODO: Handle this case.
         break;
-      case AmuletItemSelectAction.Consume:
+      case AmuletItemAction.Consume:
         // TODO: Handle this case.
         break;
     }
@@ -1331,7 +1330,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     final powerMode = activeAbility.selectAction;
 
-    if (powerMode == AmuletItemSelectAction.Positional) {
+    if (powerMode == AmuletItemAction.Positional) {
       final mouseDistance = getMouseDistance();
       final maxRange = activeAbilityStats.range;
       if (mouseDistance <= maxRange){

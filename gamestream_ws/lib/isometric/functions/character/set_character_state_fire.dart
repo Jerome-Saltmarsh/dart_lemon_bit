@@ -1,8 +1,6 @@
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages/common/src/isometric/character_state.dart';
 
-import 'set_character_state.dart';
-
 
 void setCharacterStateFire({
   required Character character,

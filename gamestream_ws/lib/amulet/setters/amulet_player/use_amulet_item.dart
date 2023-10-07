@@ -1,14 +1,13 @@
 import 'package:gamestream_ws/amulet/amulet_player.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_power_mode.dart';
+import 'package:gamestream_ws/packages/common/src.dart';
 
 import '../../../isometric/functions/character/set_character_state_striking.dart';
 
 void useAmuletItem(AmuletPlayer player, AmuletItem item) {
   switch (item.selectAction) {
-    case AmuletItemSelectAction.Equip:
+    case AmuletItemAction.Equip:
       throw Exception();
-    case AmuletItemSelectAction.Caste:
+    case AmuletItemAction.Caste:
       if (item.actionFrame < 0) {
         throw Exception('item.actionFrame < 0');
       }
@@ -21,7 +20,7 @@ void useAmuletItem(AmuletPlayer player, AmuletItem item) {
         duration: item.performDuration,
       );
       break;
-    case AmuletItemSelectAction.Targeted_Enemy:
+    case AmuletItemAction.Targeted_Enemy:
       if (player.target == null) {
         player.deselectActivatedPower();
         return;
@@ -33,7 +32,7 @@ void useAmuletItem(AmuletPlayer player, AmuletItem item) {
         duration: item.performDuration,
       );
       break;
-    case AmuletItemSelectAction.Targeted_Ally:
+    case AmuletItemAction.Targeted_Ally:
       if (player.target == null) {
         player.deselectActivatedPower();
         return;
@@ -44,7 +43,7 @@ void useAmuletItem(AmuletPlayer player, AmuletItem item) {
         duration: item.performDuration,
       );
       break;
-    case AmuletItemSelectAction.Positional:
+    case AmuletItemAction.Positional:
       setCharacterStateStriking(
         character: player,
         duration: item.performDuration,
@@ -52,11 +51,11 @@ void useAmuletItem(AmuletPlayer player, AmuletItem item) {
       );
       player.weaponType = item.subType;
       break;
-    case AmuletItemSelectAction.None:
+    case AmuletItemAction.None:
 // TODO: Handle this case.
-    case AmuletItemSelectAction.Instant:
+    case AmuletItemAction.Instant:
       // TODO: Handle this case.
-    case AmuletItemSelectAction.Consume:
+    case AmuletItemAction.Consume:
       // TODO: Handle this case.
   }
 }
