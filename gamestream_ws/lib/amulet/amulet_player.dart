@@ -1306,6 +1306,13 @@ class AmuletPlayer extends IsometricPlayer {
         if (item.isShoes){
           swapItemSlots(this, inventorySlot, equippedShoe);
         }
+        if (item.isHand){
+          if (equippedHandLeft.item == null){
+            swapItemSlots(this, inventorySlot, equippedHandLeft);
+          } else {
+            swapItemSlots(this, inventorySlot, equippedHandRight);
+          }
+        }
 
         if (item.isConsumable){
           final consumableType = item.subType;
@@ -1358,14 +1365,6 @@ class AmuletPlayer extends IsometricPlayer {
 
   void inventoryDropSlotType(SlotType slotType, int index) =>
       dropItemSlotItem(getItemSlot(slotType, index));
-
-  void dropEquippedShoes(int index) {
-    final item = equippedShoe.item;
-    if (item == null)
-      return;
-    spawnItem(item);
-    equipShoes(null);
-  }
 
   void writeAmuletElements() {
     writeByte(NetworkResponse.Amulet_Player);
