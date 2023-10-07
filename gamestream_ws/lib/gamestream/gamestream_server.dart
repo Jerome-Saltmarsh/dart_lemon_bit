@@ -23,6 +23,8 @@ class GamestreamServer {
   final UserService userService;
   final userServiceUrl = 'https://gamestream-http-osbmaezptq-uc.a.run.app';
 
+  final bool admin;
+
   var connectionsTotal = 0;
   var frame = 0;
   var _updateTimerInitialized = false;
@@ -30,7 +32,7 @@ class GamestreamServer {
   late final Timer updateTimer;
   late final Timer timerRefreshUserCharacterLocks;
 
-  GamestreamServer({required this.userService}){
+  GamestreamServer({required this.userService, this.admin = false}){
     _construct();
   }
 

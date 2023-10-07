@@ -733,7 +733,7 @@ class Connection with ByteReader {
           if (uuid == characterId) {
             final nowUtc = DateTime.now().toUtc();
             final lockDateIso8601String = character.tryGetString('lock_date');
-            if (lockDateIso8601String != null){
+            if (lockDateIso8601String != null && !server.admin){
               final lockDate = DateTime.parse(lockDateIso8601String);
               final lockDuration = nowUtc.difference(lockDate);
               if (lockDuration.inSeconds < durationAutoSave.inSeconds){

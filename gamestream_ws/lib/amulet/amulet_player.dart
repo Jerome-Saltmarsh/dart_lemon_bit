@@ -1594,6 +1594,9 @@ class AmuletPlayer extends IsometricPlayer {
   //   useAmuletItem(player, item);
   // }
 
-
-
+  @override
+  void clearAction() {
+    super.clearAction();
+    activatedPowerIndex = - 1;
+  }
 }

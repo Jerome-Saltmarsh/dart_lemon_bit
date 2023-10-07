@@ -8,6 +8,7 @@ import 'package:gamestream_ws/user_service/user_service_local.dart';
 void main(List<String> arguments) {
   GamestreamServer(
     userService: getUserService(arguments),
+    admin: arguments.contains('--admin'),
   );
 }
 

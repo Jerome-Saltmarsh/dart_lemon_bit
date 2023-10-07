@@ -1,3 +1,4 @@
+import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
 import 'package:gamestream_ws/gamestream/gamestream_server.dart';
 import 'package:gamestream_ws/isometric.dart';
 
@@ -191,19 +192,20 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     character.actionFrame = -1;
-    ItemSlot? activeSlot = character.activeItemSlot;
+    final activeItemSlot = character.activeItemSlot;
+    clearActivatedPowerIndex(character);
 
-    if (activeSlot == null) {
-      throw Exception('activeSlot is null');
+    if (activeItemSlot == null) {
+      throw Exception('activeItemSlot is null');
     }
 
-    final activeSlotItem = activeSlot.item;
+    final amuletItem = activeItemSlot.item;
 
-    if (activeSlotItem == null){
+    if (amuletItem == null){
       throw Exception('activeSlotItem == null');
     }
 
-    final level = activeSlotItem.getLevel(
+    final level = amuletItem.getLevel(
         fire: character.elementFire,
         water: character.elementWater,
         wind: character.elementWind,
@@ -216,13 +218,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    final stats = activeSlotItem.getStatsForLevel(level);
+    final stats = amuletItem.getStatsForLevel(level);
 
     if (stats == null){
       throw Exception('stats == null');
     }
 
-    switch (activeSlotItem) {
+    switch (amuletItem) {
       case AmuletItem.Spell_Thunderbolt:
         performAbilityLightning(character);
         break;
@@ -253,7 +255,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         performAbilityFrostBall(character, damage: 1, range: 50);
         break;
       default:
-        throw Exception('amulet.PerformCharacterAction($activeSlotItem)');
+        throw Exception('amulet.PerformCharacterAction($amuletItem)');
     }
   }
 
