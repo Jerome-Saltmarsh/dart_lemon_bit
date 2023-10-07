@@ -1282,7 +1282,6 @@ class AmuletPlayer extends IsometricPlayer {
       case SlotType.Weapons:
         selectWeapon(index);
         return;
-
       case SlotType.Items:
         if (index >= items.length)
           return;
@@ -1324,6 +1323,7 @@ class AmuletPlayer extends IsometricPlayer {
         break;
 
       default:
+        swapWithAvailableItemSlot(getItemSlot(slotType, index));
         break;
     }
   }
