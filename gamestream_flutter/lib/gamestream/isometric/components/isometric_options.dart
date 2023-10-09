@@ -56,6 +56,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     messageStatus.onChanged(_onChangedMessageStatus);
     error.onChanged(_onChangedGameError);
     rendersSinceUpdate.onChanged(_onChangedRendersSinceUpdate);
+    sceneName.onChanged((t) {print('scene.name = $t');});
   }
 
   bool get playMode => !editMode;

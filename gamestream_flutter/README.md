@@ -21,6 +21,7 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
+- implement item slot quantity
 - spell lightning bolt with levels 
 - implement firebase authentication 
 - feature auth token 

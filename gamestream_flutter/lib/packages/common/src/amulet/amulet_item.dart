@@ -15,18 +15,21 @@ enum AmuletItem {
         range: 150,
         air: 0,
         information: 'Teleports a short distance',
+        quantity: 2,
     ),
     level2: ItemStat(
         cooldown: 23,
         range: 160,
         air: 1,
         information: 'teleport slightly further',
+        quantity: 3,
     ),
     level3: ItemStat(
       cooldown: 21,
       range: 170,
       air: 2,
       information: 'teleports a short distance',
+      quantity: 4,
     ),
   ),
   Rusty_Old_Sword(
@@ -347,8 +350,17 @@ enum AmuletItem {
         1 => level1,
         2 => level2,
         3 => level3,
+        4 => level4,
+        5 => level5,
         _ => null
      };
+
+  int get totalLevels =>
+      level5 != null ? 5 :
+      level4 != null ? 4 :
+      level3 != null ? 3 :
+      level2 != null ? 2 :
+      1;
 
   bool get isWeapon => type == ItemType.Weapon;
 
@@ -525,6 +537,7 @@ class ItemStat {
   final int earth;
   final int electricity;
   final int health;
+  final int quantity;
   final double range;
   final double movement;
   final String information;
@@ -541,5 +554,6 @@ class ItemStat {
     this.earth = 0,
     this.electricity = 0,
     this.movement = 0,
+    this.quantity = 0,
   });
 }

@@ -233,35 +233,62 @@ class AmuletUI {
       );
     });
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      child: Stack(
-        alignment: Alignment.center,
+    final weapons = amulet.weapons;
+    final itemSlotWeapon = weapons[index];
+
+    return buildWatchNullable(itemSlotWeapon.item, (AmuletItem amuletItem) {
+
+      final levelCurrent = amulet.getAmuletPlayerItemLevel(amuletItem);
+      final totalLevels = amuletItem.totalLevels;
+
+      return Column(
         children: [
-          backgroundSelectedWeapon,
-          backgroundActivePower,
-          Positioned(
-              child: buildItemSlot(
-                  amulet.weapons[index],
-                  color: Colors.transparent
-              )
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                backgroundSelectedWeapon,
+                backgroundActivePower,
+                Positioned(
+                    child: buildItemSlot(
+                        amulet.weapons[index],
+                        color: Colors.transparent
+                    )
+                ),
+                Positioned(
+                    top: 8,
+                    left: 8,
+                    child: buildText(
+                      const['A', 'S', 'D', 'F'][index],
+                      color: Colors.white70,
+                    )
+                ),
+                Positioned(
+                    bottom: 8,
+                    right: 8,
+                    child: buildWatch(amulet.weapons[index].cooldown, (cooldown) => cooldown <= 0 ? nothing: buildText(cooldown, color: Colors.red))
+                )
+              ],
+            ),
           ),
-          Positioned(
-              top: 8,
-              left: 8,
-              child: buildText(
-                  const['A', 'S', 'D', 'F'][index],
-                  color: Colors.white70,
-              )
-          ),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            child: buildWatch(amulet.weapons[index].cooldown, (cooldown) => cooldown <= 0 ? nothing: buildText(cooldown, color: Colors.red))
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(width: 8, height: 8, color: Colors.white,),
+              width4,
+              Container(width: 8, height: 8, color: Colors.white,),
+              width4,
+              Container(width: 8, height: 8, color: Colors.white38,),
+            ],
           )
         ],
-      ),
-    );
+      );
+
+
+    });
+
+
   }
 
   // Widget buildItemHoverDialog({double edgePadding = 150}) {

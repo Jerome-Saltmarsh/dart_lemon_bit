@@ -530,7 +530,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readNetworkResponseGameProperties() {
     scene.sceneEditable.value = readBool();
-    options.sceneName.value = readString();
+    // options.sceneName.value = readString();
     options.gameRunning.value = readBool();
   }
 
@@ -658,7 +658,14 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponseScene.Download_Scene:
         readDownloadScene();
         break;
+      case NetworkResponseScene.Name:
+        readSceneName();
+        break;
     }
+  }
+
+  void readSceneName() {
+    options.sceneName.value = readString();
   }
 
   void readMarks() {
