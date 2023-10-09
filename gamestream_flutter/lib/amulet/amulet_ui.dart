@@ -31,9 +31,19 @@ class AmuletUI {
       children: [
         buildNpcText(),
         Positioned(
-          bottom: margin1,
-          left: margin1,
-          child: buildPlayerWeapons(),
+          bottom: 8,
+          left: 0,
+          child: Container(
+            width: amulet.engine.screen.width,
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildPlayerWeapons(),
+              ],
+            ),
+          ),
         ),
         Positioned(
           top: margin1,
@@ -41,29 +51,12 @@ class AmuletUI {
           child: buildDialogPlayerInventory(),
         ),
         buildPlayerAimTarget(),
-        buildWatch(amulet.playerInventoryOpen, (inventoryOpen) {
-          return Positioned(
-            top: inventoryOpen ? margin1 : null,
-            bottom: inventoryOpen ? null : margin2,
-            left: inventoryOpen ? margin4 + 50 : margin1,
-            child: buildContainerAmuletItemHover(amulet: amulet),
-          );
-        }),
-        Positioned(
-            bottom: margin2,
-            right: margin1,
-            child: buildDialogPlayerTalents()
-        ),
-        Positioned(
-            bottom: margin2,
-            right: margin4,
-            child: buildTalentHoverDialog()
-        ),
-        Positioned(
-          bottom: margin1,
-          right: margin1,
-          child: buildPlayerStatsRow(),
-        ),
+        buildPositionedAmuletItemHover(),
+        // Positioned(
+        //   bottom: margin1,
+        //   right: margin1,
+        //   child: buildPlayerStatsRow(),
+        // ),
         Positioned(
           bottom: margin2,
           child: Container(
@@ -74,6 +67,20 @@ class AmuletUI {
         ),
       ]
   );
+
+  Widget buildPositionedAmuletItemHover() => Builder(
+        builder: (context) {
+          final child = buildContainerAmuletItemHover(amulet: amulet);
+          return buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
+              Positioned(
+                top: inventoryOpen ? margin1 : null,
+                bottom: inventoryOpen ? null : margin2,
+                left: inventoryOpen ? margin4 + 50 : margin1,
+                child: child,
+              )
+          );
+        }
+      );
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
