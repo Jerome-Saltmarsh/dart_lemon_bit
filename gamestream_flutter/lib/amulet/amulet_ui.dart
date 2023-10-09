@@ -877,8 +877,12 @@ class AmuletUI {
 
     final inventoryButton = buildInventoryButton();
 
-    return buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
-    inventoryOpen ? dialog : inventoryButton);
+    return MouseRegion(
+      onEnter: (_) => amulet.setInventoryOpen(true),
+      onExit: (_) => amulet.setInventoryOpen(false),
+      child: buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
+      inventoryOpen ? dialog : inventoryButton),
+    );
   }
 
   Widget buildInventoryPlayerFront() => Container(

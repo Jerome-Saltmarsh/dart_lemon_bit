@@ -1025,4 +1025,12 @@ extension Args on List<String> {
      }
      return int.tryParse(arg);
   }
+
+  bool? getArgBool(String name){
+     final arg = getArg(name);
+     if (arg == null){
+       return null;
+     }
+     return bool.tryParse(arg);
+  }
 }

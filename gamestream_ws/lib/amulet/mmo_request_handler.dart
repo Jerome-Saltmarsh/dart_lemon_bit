@@ -15,6 +15,12 @@ extension MMORequestHandler on Connection {
 
     final amulet = player.game;
 
+    final inventoryOpen = arguments.getArgBool('--inventory');
+    if (inventoryOpen != null) {
+      player.inventoryOpen = inventoryOpen;
+      return;
+    }
+
     final requestIndex = parseArg1(arguments);
     if (requestIndex == null) return;
     if (!isValidIndex(requestIndex, NetworkRequestAmulet.values)){
@@ -22,6 +28,8 @@ extension MMORequestHandler on Connection {
       return;
     }
     final mmoRequest = NetworkRequestAmulet.values[requestIndex];
+
+
 
     switch (mmoRequest){
       case NetworkRequestAmulet.Spawn_Random_Enemy:
@@ -85,6 +93,8 @@ extension MMORequestHandler on Connection {
         final amuletElement = AmuletElement.values[index];
         player.upgradeAmuletElement(amuletElement);
         break;
+      case NetworkRequestAmulet.Set_Inventory_Open:
+        // TODO: Handle this case.
     }
   }
 }

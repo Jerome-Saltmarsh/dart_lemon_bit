@@ -295,4 +295,17 @@ class Amulet extends IsometricGame {
         earth: elementEarth.value,
         electricity: elementElectricity.value,
     );
+
+  void toggleInventoryOpen() =>
+      network.sendNetworkRequest(
+          NetworkRequest.Amulet,
+          NetworkRequestAmulet.Toggle_Inventory_Open.index,
+      );
+
+  void setInventoryOpen(bool value) =>
+      network.sendNetworkRequest(
+          NetworkRequest.Amulet,
+          '--inventory',
+          value
+      );
 }

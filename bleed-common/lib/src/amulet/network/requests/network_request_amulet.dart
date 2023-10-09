@@ -11,4 +11,5 @@ enum NetworkRequestAmulet {
   Spawn_Random_Enemy,
   Upgrade_Element,
   Acquire_Amulet_Item,
+  Set_Inventory_Open,
 }
