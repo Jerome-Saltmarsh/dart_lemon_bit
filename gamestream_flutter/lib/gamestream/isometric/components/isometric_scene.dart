@@ -80,7 +80,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   final marksChangedNotifier = Watch(0);
   final interpolationEaseType = Watch(EaseType.In_Quad);
-  final sceneEditable = Watch(false);
+  final editEnabled = Watch(false);
   final nodesChangedNotifier = Watch(0);
   final characters = <Character>[];
   final gameObjects = <GameObject>[];

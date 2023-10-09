@@ -4,7 +4,6 @@ class NetworkResponse {
   static const Player_Event = 03;
   static const Game_Time = 04;
   static const Game_Type = 05;
-  static const Game = 12;
   static const GameObject = 17;
   static const Environment = 18;
   static const Game_Error = 19;

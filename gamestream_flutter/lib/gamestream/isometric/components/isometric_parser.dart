@@ -80,9 +80,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Environment:
         readNetworkResponseEnvironment();
         break;
-      case NetworkResponse.Game:
-        readNetworkResponseGame();
-        break;
       case NetworkResponse.Amulet:
         readNetworkResponseAmulet();
         break;
@@ -155,6 +152,10 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readNetworkResponseIsometric() {
     switch (readByte()) {
+
+      case NetworkResponseIsometric.Edit_Enabled:
+        readEditEnabled();
+        break;
 
       case NetworkResponseIsometric.Selected_Collider:
         readSelectedCollider();
@@ -536,8 +537,8 @@ class IsometricParser with ByteReader, IsometricComponent {
     player.npcTalkOptions.value = options;
   }
 
-  void readNetworkResponseGame() {
-    scene.sceneEditable.value = readBool();
+  void readEditEnabled() {
+    scene.editEnabled.value = readBool();
   }
 
   void readNetworkResponseWeather() {

@@ -140,7 +140,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
       io.enabledMouseClick = true;
       action.cameraTargetPlayer();
       editor.deselectGameObject();
-      if (scene.sceneEditable.value){
+      if (scene.editEnabled.value){
         player.message.value = 'press tab to edit';
       }
     }

@@ -610,7 +610,7 @@ class IsometricEvents with IsometricComponent {
         action.clear();
         action.clean();
         scene.gameObjects.clear();
-        scene.sceneEditable.value = false;
+        scene.editEnabled.value = false;
         options.gameType.value = GameType.Website;
         audio.enabledSound.value = false;
         break;

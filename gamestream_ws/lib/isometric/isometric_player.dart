@@ -539,7 +539,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeGameType();
     writeGameTime();
     writePlayerTeam();
-    writeGameProperties();
+    writeEditEnabled();
     writeScene();
     writeWeather();
     writeGameObjects();
@@ -823,10 +823,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeDouble(radians * radiansToDegrees);
   }
 
-  void writeGameProperties() {
-    writeByte(NetworkResponse.Game);
+  void writeEditEnabled() {
+    writeByte(NetworkResponse.Isometric);
+    writeByte(NetworkResponseIsometric.Edit_Enabled);
     writeBool((game is IsometricEditor || isLocalMachine));
-    // writeBool(game.running);
   }
 
   void writeEditorGameObjectSelected() {
