@@ -53,6 +53,10 @@ class AmuletUI {
           ),
         ),
         Positioned(
+            top: 4,
+            left: 4,
+            child: buildPlayerStatsRow()),
+        Positioned(
           bottom: margin1,
           left: margin1,
           child: buildDialogPlayerInventory(),
@@ -159,13 +163,10 @@ class AmuletUI {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
                 amulet.treasures.length,
-                (i) => buildItemSlot(amulet.treasures[i], onEmpty: Tooltip(
-                  message: 'empty amulet slot',
-                  child: IsometricIcon(
-                    iconType: IconType.Inventory_Treasure,
-                    color: Colors.black12.value,
-                    scale: 1,
-                  ),
+                (i) => buildItemSlot(amulet.treasures[i], onEmpty: IsometricIcon(
+                  iconType: IconType.Inventory_Treasure,
+                  color: Colors.black12.value,
+                  scale: 1,
                 )
                 )
             )
@@ -501,64 +502,46 @@ class AmuletUI {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildItemSlot(amulet.equippedHelm, onEmpty: Tooltip(
-          message: 'empty helm slot',
-          child: IsometricIcon(
-            iconType: IconType.Inventory_Helm,
-            color: Colors.black12.value,
-            scale: 0.3,
-          ),
+        buildItemSlot(amulet.equippedHelm, onEmpty: IsometricIcon(
+          iconType: IconType.Inventory_Helm,
+          color: Colors.black12.value,
+          scale: 0.3,
         )),
         Row(
           children: [
-            buildItemSlot(amulet.equippedHandLeft, onEmpty: Tooltip(
-              message: 'empty left glove slot',
-              child: IsometricIcon(
-                iconType: IconType.Inventory_Glove_Left,
-                color: Colors.black12.value,
-                scale: 0.6,
-              ),
+            buildItemSlot(amulet.equippedHandLeft, onEmpty: IsometricIcon(
+              iconType: IconType.Inventory_Glove_Left,
+              color: Colors.black12.value,
+              scale: 0.6,
             )),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildItemSlot(amulet.equippedBody, onEmpty: Tooltip(
-                  message: 'empty armour slot',
-                  child: IsometricIcon(
-                    iconType: IconType.Inventory_Armour,
-                    color: Colors.black12.value,
-                    scale: 1,
-                  ),
+                buildItemSlot(amulet.equippedBody, onEmpty: IsometricIcon(
+                  iconType: IconType.Inventory_Armour,
+                  color: Colors.black12.value,
+                  scale: 1,
                 )),
-                buildItemSlot(amulet.equippedLegs, onEmpty: Tooltip(
-                  message: 'empty legs slot',
-                  child: IsometricIcon(
-                    iconType: IconType.Inventory_Legs,
-                    color: Colors.black12.value,
-                    scale: 0.6,
-                  ),
+                buildItemSlot(amulet.equippedLegs, onEmpty: IsometricIcon(
+                  iconType: IconType.Inventory_Legs,
+                  color: Colors.black12.value,
+                  scale: 0.6,
                 )),
               ],
             ),
-            buildItemSlot(amulet.equippedHandRight, onEmpty: Tooltip(
-              message: 'empty right glove slot',
-              child: IsometricIcon(
-                iconType: IconType.Inventory_Glove_Right,
-                color: Colors.black12.value,
-                scale: 0.6,
-              ),
+            buildItemSlot(amulet.equippedHandRight, onEmpty: IsometricIcon(
+              iconType: IconType.Inventory_Glove_Right,
+              color: Colors.black12.value,
+              scale: 0.6,
             )
             ),
           ],
         ),
 
-        buildItemSlot(amulet.equippedShoes, onEmpty: Tooltip(
-          message: 'empty shoes slot',
-          child: IsometricIcon(
-            iconType: IconType.Inventory_Shoes,
-            color: Colors.black12.value,
-            scale: 0.6,
-          ),
+        buildItemSlot(amulet.equippedShoes, onEmpty: IsometricIcon(
+          iconType: IconType.Inventory_Shoes,
+          color: Colors.black12.value,
+          scale: 0.6,
         )
         ),
       ],),
@@ -609,40 +592,41 @@ class AmuletUI {
      );
   }
 
-  Widget buildPlayerLevel({double size = 50}) =>
+  Widget buildPlayerLevel({double size = 25}) =>
       GSContainer(
-        width: size * goldenRatio_1618,
+        padding: const EdgeInsets.all(4),
+        width: size * goldenRatio_1618 * goldenRatio_1381,
         height: size,
         rounded: true,
         child: buildWatch(amulet.playerLevel, (level) => buildText('Lvl $level', color: Colors.white70))
       );
 
-  Widget buildPlayerExperienceBar({double width = 150, double height = 30}) => Tooltip(
-    message: 'Experience',
-    child: buildBorder(
-          width: 2,
-          color: Colors.white,
+  Widget buildPlayerExperienceBar({double height = 10}) {
+    final width = 200.0;
+    return buildBorder(
+        width: 2,
+        color: Colors.white70,
+        child: Container(
+          width: width,
+          height: height,
+          alignment: Alignment.centerLeft,
           child: Container(
-            width: width,
-            height: height,
-            alignment: Alignment.centerLeft,
-            child: Container(
-              color: Colors.transparent,
-              child: buildWatch(
-                  amulet.playerExperienceRequired,
-                      (experienceRequired) =>
-                          buildWatch(amulet.playerExperience, (experience) {
-                            if (experienceRequired <= 0) return nothing;
+            color: Colors.transparent,
+            child: buildWatch(
+                amulet.playerExperienceRequired,
+                    (experienceRequired) =>
+                        buildWatch(amulet.playerExperience, (experience) {
+                          if (experienceRequired <= 0) return nothing;
 
-                            final percentage =
-                                clamp(experience / experienceRequired, 0, 1);
-                            return Container(
-                                color: Colors.white,
-                                width: width * percentage, height: height);
-                          })))
-        )
-        ),
-  );
+                          final percentage =
+                              clamp(experience / experienceRequired, 0, 1);
+                          return Container(
+                              color: Colors.white70,
+                              width: width * percentage, height: height);
+                        })))
+      )
+      );
+  }
 
   Widget buildTalent(AmuletTalentType talentType){
     final currentLevel = amulet.getTalentLevel(talentType);
@@ -736,19 +720,19 @@ class AmuletUI {
     );
   }
 
-  Widget buildPlayerStatsRow() => Row(
-      children: [
-        buildElementPoints(),
-        width8,
-        buildAmuletElements(),
-        width8,
-        buildPlayerLevel(),
-        width8,
-        buildPlayerExperienceBar(),
-        width8,
-        buildPlayerHealthBar(),
-      ],
-    );
+  Widget buildPlayerStatsRow() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          buildPlayerLevel(),
+          width8,
+          buildPlayerExperienceBar(),
+        ],
+      ),
+      buildAmuletElements(),
+    ],
+  );
 
   Widget buildInventoryButton() {
     const scale = 1.8;
@@ -960,7 +944,10 @@ class AmuletUI {
           child: Container(
             width: 50,
             height: 50,
-            color: amulet.style.containerColor,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: amulet.style.containerColor,
+            ),
             alignment: Alignment.center,
             child: buildWatch(
               amulet.getAmuletElementWatch(amuletElement),
