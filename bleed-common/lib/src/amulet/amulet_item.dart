@@ -9,7 +9,6 @@ enum AmuletItem {
     subType: WeaponType.Sword,
     actionFrame: 15,
     performDuration: 20,
-    id: 21,
     level1: ItemStat(
         cooldown: 25,
         range: 150,
@@ -39,7 +38,6 @@ enum AmuletItem {
     subType: WeaponType.Sword,
     actionFrame: 20,
     performDuration: 25,
-    id: 1,
     level1: ItemStat(
         damage: 1,
         range: 60,
@@ -54,7 +52,6 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     actionFrame: 20,
     performDuration: 25,
-    id: 2,
     level1: ItemStat(information: 'An old blunt sword'),
   ),
   Staff_Of_Frozen_Lake(
@@ -64,7 +61,6 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     actionFrame: 15,
     performDuration: 20,
-    id: 3,
     level1: ItemStat(information: 'A powerful staff that eliminates cold'),
   ),
   Old_Bow(
@@ -74,7 +70,6 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     actionFrame: 20,
     performDuration: 30,
-    id: 4,
     level1: ItemStat(information: 'A worn out bow'),
   ),
   Holy_Bow(
@@ -84,7 +79,6 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     actionFrame: 12,
     performDuration: 25,
-    id: 5,
     level1: ItemStat(
         range: 150,
         damage: 5,
@@ -111,7 +105,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Steel,
-    id: 6,
     level1: ItemStat(information: 'A common steel helmet'),
   ),
   Wizards_Hat(
@@ -119,7 +112,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Wizard_Hat,
-    id: 7,
     level1: ItemStat(information: 'A hat commonly worn by students of magic school'),
   ),
   Travellers_Pants(
@@ -127,7 +119,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    id: 8,
     level1: ItemStat(information: 'Common pants'),
   ),
   Gauntlet(
@@ -135,7 +126,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
-    id: 9,
     level1: ItemStat(information: 'Common gauntlets'),
   ),
   Squires_Pants(
@@ -143,7 +133,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    id: 10,
     level1: ItemStat(information: 'Common pants'),
   ),
   Knights_Pants(
@@ -151,7 +140,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Unique,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    id: 11,
     level1: ItemStat(information: 'Pants of higher quality'),
   ),
   Worn_Shirt_Blue (
@@ -159,7 +147,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
-    id: 12,
     level1: ItemStat(information: 'A common blue shirt'),
   ),
   Basic_Leather_Armour (
@@ -167,7 +154,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
-    id: 13,
     level1: ItemStat(information: 'Common armour'),
   ),
   Shoe_Leather_Boots (
@@ -175,7 +161,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
-    id: 14,
     level1: ItemStat(information: 'A common leather boots'),
   ),
   Shoe_Iron_Plates (
@@ -183,7 +168,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
-    id: 15,
     level1: ItemStat(information: 'Heavy boots which provide good defense'),
   ),
   Ocean_Boots (
@@ -191,7 +175,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
-    id: 15,
     level1: ItemStat(information: 'Commonly worn by water mages'),
   ),
   Storm_Boots (
@@ -199,7 +182,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
-    id: 15,
     level1: ItemStat(information: 'commonly worn by electric mages'),
   ),
   Health_Potion(
@@ -208,7 +190,6 @@ enum AmuletItem {
     type: ItemType.Consumable,
     subType: ConsumableType.Health_Potion,
     consumable: true,
-    id: 16,
     level1: ItemStat(information: 'Replenishes health'),
   ),
   Treasure_Box(
@@ -217,7 +198,6 @@ enum AmuletItem {
     type: ItemType.Consumable,
     subType: ConsumableType.Treasure_Box,
     collectable: false,
-    id: 17,
     level1: ItemStat(information: 'increases experience'),
   ),
   Meat_Drumstick(
@@ -226,7 +206,6 @@ enum AmuletItem {
     type: ItemType.Consumable,
     subType: ConsumableType.Meat_Drumstick,
     collectable: false,
-    id: 18,
     level1: ItemStat(information: 'replenishes health'),
   ),
   Lost_Pendant_Of_Dreams(
@@ -234,7 +213,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
-    id: 19,
     level1: ItemStat(information: 'increases stats'),
   ),
   Sapphire_Pendant(
@@ -242,7 +220,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
-    id: 20,
     level1: ItemStat(
       information: 'strikes a random nearby enemy with lightning',
       electricity: 0,
@@ -253,7 +230,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Weapon,
     subType: WeaponType.Spell_Thunderbolt,
-    id: 19,
     level1: ItemStat(
       damage: 3,
       cooldown: 30,
@@ -280,7 +256,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Spell,
     subType: SpellType.Blink,
-    id: 100,
     level1: ItemStat(
       cooldown: 30,
       information: 'teleports a short distance',
@@ -311,6 +286,42 @@ enum AmuletItem {
       air: 16,
       range: 80,
     )
+  ),
+  Spell_Heal(
+    selectAction: AmuletItemAction.Caste,
+    quality: AmuletItemQuality.Mythical,
+    type: ItemType.Spell,
+    subType: SpellType.Heal,
+    level1: ItemStat(
+      cooldown: 30,
+      information: 'heals a small amount of health',
+      health: 5,
+      water: 2,
+    ),
+    level2: ItemStat(
+      cooldown: 28,
+      information: 'teleports a short distance',
+      health: 7,
+      water: 4,
+    ),
+    level3: ItemStat(
+      cooldown: 26,
+      information: 'teleports a short distance',
+      health: 7,
+      water: 7,
+    ),
+    level4: ItemStat(
+      cooldown: 26,
+      information: 'teleports a short distance',
+      health: 7,
+      water: 8,
+    ),
+    level5: ItemStat(
+      cooldown: 24,
+      information: 'teleports a short distance',
+      health: 7,
+      water: 16,
+    )
   );
 
   final AmuletItemAction selectAction;
@@ -321,7 +332,6 @@ enum AmuletItem {
   final AmuletItemQuality quality;
   final int actionFrame;
   final int performDuration;
-  final int id;
   final ItemStat level1;
   final ItemStat? level2;
   final ItemStat? level3;
@@ -332,7 +342,6 @@ enum AmuletItem {
     required this.type,
     required this.subType,
     required this.quality,
-    required this.id,
     required this.selectAction,
     required this.level1,
     this.level2,
