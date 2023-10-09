@@ -31,7 +31,7 @@ class AmuletUI {
       children: [
         buildNpcText(),
         Positioned(
-          bottom: 8,
+          bottom: 4,
           left: 0,
           child: Container(
             width: amulet.engine.screen.width,
@@ -40,7 +40,14 @@ class AmuletUI {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildPlayerWeapons(),
+                Column(
+                  children: [
+                    buildPlayerHealthBar(),
+                    height4,
+                    buildPlayerWeapons(),
+                    // buildPlayerExperienceBar(),
+                  ],
+                ),
               ],
             ),
           ),
@@ -567,10 +574,9 @@ class AmuletUI {
                   color: skillPoints > 0 ? Colors.green : Colors.white70))));
 
   Widget buildPlayerHealthBar(){
-    const width = 200.0;
-    const height = 40.0;
-     return Tooltip(
-       message: 'Health',
+    const width = 240.0;
+    const height = 20.0;
+     return IgnorePointer(
        child: buildWatch(amulet.player.maxHealth, (maxHealth) {
          if (maxHealth == 0) return nothing;
          return buildWatch(amulet.player.health, (health) {
@@ -587,7 +593,7 @@ class AmuletUI {
                  Container(
                    width: width * (health / maxHealth),
                    height: height,
-                   color: Colors.green,
+                   color: Color.lerp(Colors.red, Colors.green, (health / maxHealth)),
                  ),
                  Container(
                      width: width,
