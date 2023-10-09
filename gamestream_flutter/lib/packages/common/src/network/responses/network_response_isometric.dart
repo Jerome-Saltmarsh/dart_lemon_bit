@@ -10,4 +10,5 @@ class NetworkResponseIsometric {
  static const Player_Initialized = 8;
  static const Player_Aim_Target = 9;
  static const Player_Controls = 10;
+ static const Game_Running = 11;
 }

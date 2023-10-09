@@ -59,7 +59,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (_running == value) return;
     _running = value;
     for (final player in players) {
-      player.writeGameProperties();
+      player.writeGameRunning();
     }
   }
 
