@@ -53,7 +53,7 @@ class AmuletUI {
           ),
         ),
         Positioned(
-          top: margin1,
+          bottom: margin1,
           left: margin1,
           child: buildDialogPlayerInventory(),
         ),
@@ -250,10 +250,10 @@ class AmuletUI {
     final weapons = amulet.weapons;
     final itemSlotWeapon = weapons[index];
 
-    return buildWatchNullable(itemSlotWeapon.item, (AmuletItem amuletItem) {
+    return buildWatch(itemSlotWeapon.item, (AmuletItem? amuletItem) {
 
-      final levelCurrent = amulet.getAmuletPlayerItemLevel(amuletItem);
-      final totalLevels = amuletItem.totalLevels;
+      // final levelCurrent = amulet.getAmuletPlayerItemLevel(amuletItem);
+      // final totalLevels = amuletItem.totalLevels;
 
       return Column(
         children: [
