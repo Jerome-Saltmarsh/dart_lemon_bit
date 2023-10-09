@@ -1,4 +1,5 @@
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -79,6 +80,15 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   IsometricPlayer() {
     legsType.onChanged((t) {
       print('player.legsType(${LegType.getName(t)})');
+    });
+
+    aimTargetSet.onChanged((aimTargetSet) {
+      if (aimTargetSet){
+        ui.cursor.value = SystemMouseCursors.grab;
+      } else {
+        ui.cursor.value = SystemMouseCursors.basic;
+        // engine.setCursorCrosshair();
+      }
     });
   }
 

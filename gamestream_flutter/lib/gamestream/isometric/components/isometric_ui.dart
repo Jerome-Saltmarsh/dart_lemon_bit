@@ -25,6 +25,7 @@ class IsometricUI with IsometricComponent {
   final dialog = Watch<Widget?>(null);
   final gameUI = Watch<WidgetBuilder?>(null);
   final error = Watch<String?>(null);
+  final cursor = Watch( SystemMouseCursors.basic);
 
   @override
   void onComponentReady() {
@@ -36,8 +37,30 @@ class IsometricUI with IsometricComponent {
 
     final watchGameUI = buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing);
 
+    final grab = MouseRegion(
+      cursor: SystemMouseCursors.grab,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );;
+
+    final basic = MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );;
+
     return Stack(
       children: [
+            buildWatch(cursor, (cursor){
+              if (cursor == SystemMouseCursors.grab){
+                return grab;
+              }
+              if (cursor == SystemMouseCursors.basic){
+                return basic;
+              }
+              return MouseRegion(
+                cursor: cursor,
+                hitTestBehavior: HitTestBehavior.translucent,
+              );
+            }),
             Positioned(
               top: 0,
               left: 0,

@@ -158,7 +158,7 @@ class AmuletUI {
   );
 
   Widget buildPlayerTreasures() => buildInventoryContainer(
-        child: Row(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
@@ -821,9 +821,11 @@ class AmuletUI {
 
   Widget buildDialogPlayerInventory(){
 
+    final stash = buildInventoryItems();
+
     final dialog = GSContainer(
       rounded: true,
-      width: 550,
+      width: 450,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -833,27 +835,17 @@ class AmuletUI {
             children: [
               Container(
                   margin: const EdgeInsets.only(left: 5),
-                  child: buildDialogTitle('INVENTORY')),
+                  child: buildDialogTitle('EQUIPPED')),
               buildButtonClose(action: amulet.network.sendAmuletRequest.toggleInventoryOpen),
             ],
           ),
           height32,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               buildInventoryEquipped(),
-              width16,
-              Column(
-                children: [
-                  buildPlayerTreasures(),
-                  Row(
-                    children: [
-                      buildInventoryPlayerFront(),
-                      buildInventoryItems(),
-                    ],
-                  ),
-                ],
-              ),
+              buildInventoryPlayerFront(),
+              buildPlayerTreasures(),
             ],
           )
         ],),
@@ -865,7 +857,14 @@ class AmuletUI {
       onEnter: (_) => amulet.setInventoryOpen(true),
       onExit: (_) => amulet.setInventoryOpen(false),
       child: buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
-      inventoryOpen ? dialog : inventoryButton),
+      inventoryOpen ? Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          stash,
+          height8,
+          dialog,
+        ],
+      ) : inventoryButton),
     );
   }
 
@@ -933,26 +932,24 @@ class AmuletUI {
   Widget buildAmuletElement(AmuletElement amuletElement) {
 
     return buildWatch(amulet.elementPoints, (elementPoints) {
+      const size = 40.0;
       return onPressed(
         action: elementPoints <= 0 ? null :(){
           amulet.upgradeAmuletElement(amuletElement);
         },
-        child: buildBorder(
-          color: getAmuletElementColor(amuletElement),
-          radius: BorderRadius.zero,
-          width: 2,
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: amulet.style.containerColor,
-            ),
-            alignment: Alignment.center,
-            child: buildWatch(
-              amulet.getAmuletElementWatch(amuletElement),
-              buildText,
-            ),
+        child: Container(
+          width: size,
+          height: size,
+          margin: const EdgeInsets.only(right: 4),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: amulet.style.containerColor,
+            border: Border.all(color: getAmuletElementColor(amuletElement), width: 1),
+          ),
+          alignment: Alignment.center,
+          child: buildWatch(
+            amulet.getAmuletElementWatch(amuletElement),
+            buildText,
           ),
         ),
       );

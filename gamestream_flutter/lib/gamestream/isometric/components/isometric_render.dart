@@ -166,7 +166,7 @@ class IsometricRender with IsometricComponent {
     if (!network.websocket.connected)
       return;
 
-    renderCursor(canvas);
+    // renderCursor(canvas);
     renderPlayerAimTargetNameText();
 
     // if (io.inputModeTouch) {

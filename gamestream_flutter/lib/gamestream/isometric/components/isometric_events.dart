@@ -589,7 +589,7 @@ class IsometricEvents with IsometricComponent {
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        engine.cursorType.value = CursorType.None;
+        // engine.cursorType.value = CursorType.None;
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
