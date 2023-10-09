@@ -21,33 +21,38 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
-- implement item slot quantity
-- spell lightning bolt with levels 
-- implement firebase authentication 
-- feature auth token 
-- feature user service encrypt passwords 
-- feature element system 
 - fix light flicker on rain changed
 - fix render front 
-- milestone character cell shading
-- milestone mobile compatibility
-- minor feature windows executable
-- render torso top and bottom separately
-- improve ai pathfinding
+- fix render torso top and bottom separately
+- feature item slot charges
+- feature auth token
+- feature spell lightning bolt with levels
+- feature firebase authentication
+- feature user service encrypt passwords
+- feature element system
+- feature character cell shading
+- feature mobile compatibility
+- feature dynamic wind
+- feature windows executable
 - feature stash
 - feature store
-- glove type leather
-- particle flame spark
-- particle wind animation
-- character wolf
-- character floating flaming skull
-- character witch
-- body type chain mail
-- helm type hoodie
-- glove type silk
-- particle crow
-- particle chicken
+- improve ai pathfinding
+- feature glove type leather
+- feature particle flame spark
+- feature particle wind animation
+- feature character wolf
+- feature character floating flaming skull
+- feature character witch
+- feature body type chain mail
+- feature helm type hoodie
+- feature glove type silk
+- feature particle crow
+- feature particle chicken
 
+09.10.2023
+- centered abilities ui
+- fix pick up item when inventory full
+  
 04.10.2023
 - implement job auto renew player character locks
 - character lock expiration

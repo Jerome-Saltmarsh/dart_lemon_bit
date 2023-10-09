@@ -2455,6 +2455,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.action = CharacterAction.Collect_Target;
     onCharacterCollectedGameObject(character, target);
     characterActionIdle(character);
+    clearCharacterTarget(character);
   }
 
   void onCharacterCollectedGameObject(Character character, GameObject gameObject){
