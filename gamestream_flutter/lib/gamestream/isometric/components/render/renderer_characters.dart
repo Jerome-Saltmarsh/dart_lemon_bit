@@ -226,9 +226,12 @@ class RendererCharacters extends RenderGroup {
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
 
+    final characterIndex = scene.getIndexPosition(character);
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toInputDirection(character.direction);
     final color = character.color;
+    final colorWest = scene.colorWest(characterIndex);
+    final colorSouth = scene.colorSouth(characterIndex);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -237,28 +240,28 @@ class RendererCharacters extends RenderGroup {
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
 
-    final sprites = images.kidCharacterSpritesIsometric;
-    final atlasHandsLeft = sprites.handLeft[character.handTypeLeft] ?? (throw Exception());
-    final atlasHandsRight = sprites.handRight[character.handTypeRight] ?? (throw Exception());
-    final atlasHelm = sprites.helm[character.helmType] ?? (throw Exception());
-    final atlasLegs =  sprites.legs[character.legType] ?? (throw Exception());
-    final bodySprite = character.gender == Gender.male ? sprites.bodyMale : sprites.bodyFemale;
+    final spritesSouth = images.kidCharacterSpritesIsometricSouth;
+    final spritesWest = images.kidCharacterSpritesIsometricWest;
+    final atlasHandsLeft = spritesSouth.handLeft[character.handTypeLeft] ?? (throw Exception());
+    final atlasHandsRight = spritesSouth.handRight[character.handTypeRight] ?? (throw Exception());
+    final atlasHelm = spritesSouth.helm[character.helmType] ?? (throw Exception());
+    final atlasLegs =  spritesSouth.legs[character.legType] ?? (throw Exception());
+    final bodySprite = character.gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;
     final atlasBody = bodySprite[character.bodyType] ?? (throw Exception());
-    final atlasWeapon = sprites.weapons[character.weaponType]
-        ?? sprites.weapons[WeaponType.Unarmed] ?? (throw Exception());
-    // final atlasWeapon = sprites.weapons[character.weaponType] ??
-    //     (throw Exception('images.spriteGroupWeapons[${WeaponType.getName(character.weaponType)}] is null'));
-    final atlasBodyArm = sprites.bodyArms[character.bodyType] ?? (throw Exception());
-    final atlasArmLeft = sprites.armLeft[ArmType.regular] ?? (throw Exception());
-    final atlasArmRight = sprites.armRight[ArmType.regular] ?? (throw Exception());
-    final atlasHead = sprites.head[character.headType] ?? (throw Exception());
-    final atlasTorso = sprites.torso[character.gender] ?? (throw Exception());
-    final atlasShadow = sprites.shadow[ShadowType.regular] ?? (throw Exception());
-    final atlasHairFront = sprites.hairFront[character.hairType] ?? (throw Exception());
-    final atlasHairBack = sprites.hairBack[character.hairType] ?? (throw Exception());
-    final atlasHairTop = sprites.hairTop[character.hairType] ?? (throw Exception());
-    final atlasShoesLeft = sprites.shoesLeft[character.shoeType] ?? (throw Exception());
-    final atlasShoesRight = sprites.shoesRight[character.shoeType] ?? (throw Exception());
+    final atlasWeapon = spritesSouth.weapons[character.weaponType]
+        ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
+    final atlasBodyArm = spritesSouth.bodyArms[character.bodyType] ?? (throw Exception());
+    final atlasArmLeft = spritesSouth.armLeft[ArmType.regular] ?? (throw Exception());
+    final atlasArmRight = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
+    final atlasHead = spritesSouth.head[character.headType] ?? (throw Exception());
+    final atlasTorsoSouth = spritesSouth.torso[character.gender] ?? (throw Exception());
+    final atlasTorsoWest = spritesWest.torso[character.gender] ?? (throw Exception());
+    final atlasShadow = spritesSouth.shadow[ShadowType.regular] ?? (throw Exception());
+    final atlasHairFront = spritesSouth.hairFront[character.hairType] ?? (throw Exception());
+    final atlasHairBack = spritesSouth.hairBack[character.hairType] ?? (throw Exception());
+    final atlasHairTop = spritesSouth.hairTop[character.hairType] ?? (throw Exception());
+    final atlasShoesLeft = spritesSouth.shoesLeft[character.shoeType] ?? (throw Exception());
+    final atlasShoesRight = spritesSouth.shoesRight[character.shoeType] ?? (throw Exception());
 
     final spriteWeapon = atlasWeapon.fromCharacterState(characterState);
     final spriteHelm = atlasHelm.fromCharacterState(characterState);
@@ -267,7 +270,8 @@ class RendererCharacters extends RenderGroup {
     final spriteHead = atlasHead.fromCharacterState(characterState);
     final spriteArmLeft = atlasArmLeft.fromCharacterState(characterState);
     final spriteArmRight = atlasArmRight.fromCharacterState(characterState);
-    final spriteTorso = atlasTorso.fromCharacterState(characterState);
+    final spriteTorsoSouth = atlasTorsoSouth.fromCharacterState(characterState);
+    final spriteTorsoWest = atlasTorsoWest.fromCharacterState(characterState);
     final spriteLegs = atlasLegs.fromCharacterState(characterState);
     final spriteHandsLeft = atlasHandsLeft.fromCharacterState(characterState);
     final spriteHandsRight = atlasHandsRight.fromCharacterState(characterState);
@@ -347,12 +351,25 @@ class RendererCharacters extends RenderGroup {
       );
 
       modulate(
-        sprite: spriteTorso,
+        sprite: spriteTorsoSouth,
         frame: completingAction
-            ? spriteTorso.getFramePercentage(row, actionComplete)
-            : spriteTorso.getFrame(column: animationFrame, row: row),
+            ? spriteTorsoSouth.getFramePercentage(row, actionComplete)
+            : spriteTorsoSouth.getFrame(column: animationFrame, row: row),
         color1: colorSkin,
-        color2: color,
+        color2: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      modulate(
+        sprite: spriteTorsoWest,
+        frame: completingAction
+            ? spriteTorsoWest.getFramePercentage(row, actionComplete)
+            : spriteTorsoWest.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorWest,
         scale: scale,
         dstX: dstX,
         dstY: dstY,
@@ -438,8 +455,6 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    var weaponRendered = false;
-
     if (spriteHandsRight != spriteHandFront){
       renderSprite(
         sprite: spriteWeapon,
@@ -452,7 +467,6 @@ class RendererCharacters extends RenderGroup {
         dstY: dstY,
         anchorY: anchorY,
       );
-      weaponRendered = true;
     }
 
     final bodyFirst = const [

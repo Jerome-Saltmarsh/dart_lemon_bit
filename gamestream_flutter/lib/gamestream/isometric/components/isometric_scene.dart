@@ -2100,6 +2100,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nearestIndex;
   }
 
+  // TODO EXPENSIVE
   int colorAbove(int index){
     final nodeAboveIndex = index + area;
     if (nodeAboveIndex >= totalNodes)
@@ -2108,6 +2109,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[nodeAboveIndex];
   }
 
+  // TODO EXPENSIVE
   int colorWest(int index){
     final column = getColumn(index);
     if (column + 1 >= totalColumns){
@@ -2116,6 +2118,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[index + 1];
   }
 
+  // TODO EXPENSIVE
   int colorSouth(int index){
     final row = getRow(index);
     if (row + 1 >= totalRows) {
@@ -2126,8 +2129,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   bool nodeTypeBelowIs(int index, int value) => nodeType(index) == value;
 
+  // TODO EXPENSIVE
   int nodeTypeBelow(int index) => nodeType(index - area);
 
+  // TODO EXPENSIVE
   int nodeType(int i) {
     if (i < 0){
       return NodeType.Boundary;
