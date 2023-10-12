@@ -27,7 +27,7 @@ Widget buildApp(){
 
   final engine = Engine(
     init: (_){},
-    update: () {},
+    update: (delta) {},
     render: (canvas, size) {}, // overridden when components are ready
     onDrawForeground: (canvas, size) {}, // overridden when components are ready
     title: 'AMULET',
