@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dar
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
@@ -231,8 +230,8 @@ class RendererCharacters extends RenderGroup {
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toInputDirection(character.direction);
     final color = character.color;
-    final colorN = scene.colorNorth(characterIndex);
-    final colorE = scene.colorEast(characterIndex);
+    // final colorN = scene.colorNorth(characterIndex);
+    // final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
     final colorW = scene.colorWest(characterIndex);
     final colorWest = colorW;
@@ -746,7 +745,7 @@ class RendererCharacters extends RenderGroup {
           ? spriteHeadSouth.getFramePercentage(row, actionComplete)
           : spriteHeadSouth.getFrame(row: row, column: animationFrame),
       color1: colorSkin,
-      color2: color,
+      color2: colorSouth,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -759,7 +758,7 @@ class RendererCharacters extends RenderGroup {
           ? spriteHeadWest.getFramePercentage(row, actionComplete)
           : spriteHeadWest.getFrame(row: row, column: animationFrame),
       color1: colorSkin,
-      color2: color,
+      color2: colorWest,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -866,17 +865,38 @@ class RendererCharacters extends RenderGroup {
   }
 }
 
-int mergeColors(int a, int b){
-  final aRed = getRed(a);
-  final aBlue = getBlue(a);
-  final aGreen = getGreen(a);
-  final bRed = getRed(b);
-  final bBlue = getBlue(b);
-  final bGreen = getGreen(b);
-  return rgba(
-      r: (aRed + bRed) ~/ 2,
-      g: (aGreen + bGreen) ~/ 2,
-      b: (aBlue + bBlue) ~/ 2,
-      a: 255
-  );
+// int mergeColors(int a, int b){
+//   final aRed = getRed(a);
+//   final aBlue = getBlue(a);
+//   final aGreen = getGreen(a);
+//   final bRed = getRed(b);
+//   final bBlue = getBlue(b);
+//   final bGreen = getGreen(b);
+//   return rgba(
+//       r: (aRed + bRed) ~/ 2,
+//       g: (aGreen + bGreen) ~/ 2,
+//       b: (aBlue + bBlue) ~/ 2,
+//       a: 255
+//   );
+// }
+
+int mergeColors(int a, int b) {
+  // Extract the red, green, and blue components of each color
+  int aRed = (a >> 16) & 0xFF;
+  int aGreen = (a >> 8) & 0xFF;
+  int aBlue = a & 0xFF;
+
+  int bRed = (b >> 16) & 0xFF;
+  int bGreen = (b >> 8) & 0xFF;
+  int bBlue = b & 0xFF;
+
+  // Calculate the average of the color components
+  int mergedRed = (aRed + bRed) ~/ 2;
+  int mergedGreen = (aGreen + bGreen) ~/ 2;
+  int mergedBlue = (aBlue + bBlue) ~/ 2;
+
+  // Combine the color components into a single integer
+  int mergedColor = (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
+
+  return mergedColor;
 }
