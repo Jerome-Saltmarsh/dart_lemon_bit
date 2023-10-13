@@ -18,11 +18,11 @@ Uint16List buildDstFromSrcAbs(Uint16List srcAbs){
     final width = srcRight - srcLeft;
     final height = srcBottom - srcTop;
 
-    if (width <= 0){
-      throw Exception('buildDstFromSrcAbs - width <= 0');
+    if (width < 0){
+      throw Exception('buildDstFromSrcAbs - width < 0');
     }
-    if (height <= 0){
-      throw Exception('buildDstFromSrcAbs - height <= 0');
+    if (height < 0){
+      throw Exception('buildDstFromSrcAbs - height < 0');
     }
 
     maxHeight = max(maxHeight, height);

@@ -1,35 +1,31 @@
 import bpy
 
-# Specify the name of your material and the node to change
-material_name = "cell_shade"
-node_name_to_change = "Greater Than"
 
-# Get the material
-material = bpy.data.materials.get(material_name)
+def assign_method_west():
+    assign_method('LESS_THAN')
 
-# Check if the material exists
-if material is not None:
-    # Access the material's node tree
-    node_tree = material.node_tree
 
-    # Iterate through all the nodes in the node tree
-    for node in node_tree.nodes:
-        # Check if the node is the one you want to change
-        if node.type == 'MATH' and node.operation == 'GREATER_THAN':
-            # Change the operation to Less Than
-            node.operation = 'LESS_THAN'
-            node.name = node_name_to_change  # Optional: Change the node's name
+def assign_method_south():
+    assign_method('GREATER_THAN')
 
-        if node.type == 'MATH' and node.operation == 'LESS_THAN':
-            # Change the operation to Less Than
-            node.operation = 'GREATER_THAN'
-            node.name = node_name_to_change  # Optional: Change the node's name
 
-    # Update the material to reflect the changes
-#    material.update()
+def assign_method(operation):
+    material = bpy.data.materials.get("cell_shade")
 
-    # Save the changes
-#    bpy.data.materials.update()
+    if material is None:
+        raise ValueError('failed to set material property')
 
-else:
-    print("Material '{}' not found.".format(material_name))
+    nodes = material.node_tree.nodes
+
+    for node in nodes:
+        if not node.type == 'MATH':
+            continue
+
+        if node.operation == operation:
+            return
+
+        if node.operation == 'GREATER_THAN' or node.operation == 'LESS_THAN':
+            node.operation = operation
+            return
+
+    raise ValueError('could not find math node')

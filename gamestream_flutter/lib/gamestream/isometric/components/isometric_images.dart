@@ -531,6 +531,7 @@ class IsometricImages with IsometricComponent {
 
    Future<Image> loadImage(String fileName) async {
      totalImages.value++;
+
      final image = await loadImageAsset('images/$fileName');
      values.add(image);
      totalImagesLoaded.value++;

@@ -21,7 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'render/renderer_editor.dart';
 
 mixin IsometricComponent implements Component {
-  late final Engine engine;
+  late final LemonEngine engine;
   late final IsometricAnimation animation;
   late final IsometricNetwork network;
   late final IsometricParticles particles;

@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/engine.dart';
 import 'package:gamestream_flutter/user/user.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
@@ -22,7 +23,7 @@ import 'ui/game_isometric_minimap.dart';
 
 
 class IsometricComponents extends ComponentContainer {
-  final Engine engine;
+  final AppleEngine engine;
   final WebsiteGame website;
   final Amulet mmo;
   final IsometricRender render;

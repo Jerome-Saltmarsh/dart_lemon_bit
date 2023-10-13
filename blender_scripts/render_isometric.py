@@ -175,11 +175,17 @@ def enable_animation_tracks_by_name(name):
             animation_track.mute = animation_track.name != name
 
 
-def render_camera_track(camera_track):
+def render_camera_track(camera_track, direction):
     print(f'render_camera_track({camera_track.name})')
     armature_kid_animation_tracks = get_animation_tracks_rig_kid()
     mute_animation_tracks("rotation")
     camera_track.mute = False
+
+    if direction == 'west':
+        assign_method_west()
+
+    if direction == 'south':
+        assign_method_south()
 
     if camera_track.name == 'front':
         set_render_frames(1, 8)
@@ -225,11 +231,17 @@ def render_camera_track(camera_track):
                     render_enabled_meshes.append(obj)
                     obj.hide_render = True
 
+            print('<render_enabled_meshes>')
+            for obj in render_enabled_meshes:
+                print(obj.name)
+
+            print('</render_enabled_meshes>')
+
             for obj in render_enabled_meshes:
                 obj.hide_render = False
                 object_name = obj.name.replace(active_export.name + "_", "")
                 mesh_directory = os.path.join(
-                    get_render_directory(camera_track) + "/kid/",
+                    get_render_directory(camera_track) + "/kid/" + direction + "/",
                     active_export.name, object_name, armature_kid_animation_track.name
                 )
                 os.makedirs(mesh_directory, exist_ok=True)
@@ -252,40 +264,34 @@ def render_camera_track(camera_track):
         armature_kid_animation_track.mute = False
 
 
-def render_south():
-    print('render_south')
+def assign_method_west():
+    assign_method('LESS_THAN')
 
 
-def render_west():
-    print('render_west')
-    # Specify the name of your material and the node to change
-    material_name = "cell_shade"
-    node_name_to_change = "Greater Than"
+def assign_method_south():
+    assign_method('GREATER_THAN')
 
-    # Get the material
-    material = bpy.data.materials.get(material_name)
 
-    # Check if the material exists
-    if material is not None:
-        # Access the material's node tree
-        node_tree = material.node_tree
+def assign_method(operation):
+    material = bpy.data.materials.get("cell_shade")
 
-        # Iterate through all the nodes in the node tree
-        for node in node_tree.nodes:
-            # Check if the node is the one you want to change
-            if node.type == 'MATH' and node.operation == 'GREATER_THAN':
-                # Change the operation to Less Than
-                node.operation = 'LESS_THAN'
-                node.name = node_name_to_change  # Optional: Change the node's name
+    if material is None:
+        raise ValueError('failed to set material property')
 
-        # Update the material to reflect the changes
-        material.update()
+    nodes = material.node_tree.nodes
 
-        # Save the changes
-        bpy.data.materials.update()
+    for node in nodes:
+        if not node.type == 'MATH':
+            continue
 
-    else:
-        print("Material '{}' not found.".format(material_name))
+        if node.operation == operation:
+            return
+
+        if node.operation == 'GREATER_THAN' or node.operation == 'LESS_THAN':
+            node.operation = operation
+            return
+
+    raise ValueError('could not find math node')
 
 
 def render_unmuted_rotation_tracks():
@@ -299,8 +305,11 @@ def render_unmuted_rotation_tracks():
 
     for unmuted_camera_track in unmuted_camera_tracks:
         unmuted_camera_track.mute = True
+
     for unmuted_camera_track in unmuted_camera_tracks:
-        render_camera_track(unmuted_camera_track)
+        render_camera_track(unmuted_camera_track, 'west')
+        # render_camera_track(unmuted_camera_track, 'south')
+
     for unmuted_camera_track in unmuted_camera_tracks:
         unmuted_camera_track.mute = False
 

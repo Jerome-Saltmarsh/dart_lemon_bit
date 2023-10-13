@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/engine.dart';
 import 'package:gamestream_flutter/user/user.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_environment.dart';
@@ -14,9 +15,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/render/render
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/game_isometric_minimap.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'gamestream/isometric/src.dart';
 import 'gamestream/isometric/ui/isometric_colors.dart';
 
@@ -24,18 +23,7 @@ Widget buildApp(){
   print('buildApp()');
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  final engine = Engine(
-    init: (_){},
-    update: (delta) {},
-    render: (canvas, size) {}, // overridden when components are ready
-    onDrawForeground: (canvas, size) {}, // overridden when components are ready
-    title: 'AMULET',
-    themeData: ThemeData(fontFamily: 'VT323-Regular'),
-    backgroundColor: IsometricColors.Black,
-    buildUI: (context) => LoadingPage(),
-    buildLoadingScreen: (context) => LoadingPage(),
-  );
+  final engine = AppleEngine();
 
   final components = IsometricComponents(
       images: IsometricImages(),
