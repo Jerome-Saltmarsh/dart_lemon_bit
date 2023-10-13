@@ -63,6 +63,7 @@ Widget buildApp(){
       engine: engine,
   );
 
+  engine.components = components;
   return Provider<IsometricComponents>(
     create: (context) => components,
     child: engine,

@@ -22,12 +22,6 @@ class IsometricRender with IsometricComponent {
   late final List<Sprite> _flames ;
 
   @override
-  Future onComponentInit(sharedPreferences) async {
-    engine.onDrawCanvas = drawCanvas;
-    engine.onDrawForeground = drawForeground;
-  }
-
-  @override
   void onComponentReady() {
     _flames = [
       images.flame0,

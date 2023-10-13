@@ -308,7 +308,7 @@ def render_unmuted_rotation_tracks():
 
     for unmuted_camera_track in unmuted_camera_tracks:
         render_camera_track(unmuted_camera_track, 'west')
-        # render_camera_track(unmuted_camera_track, 'south')
+        render_camera_track(unmuted_camera_track, 'south')
 
     for unmuted_camera_track in unmuted_camera_tracks:
         unmuted_camera_track.mute = False

@@ -272,8 +272,10 @@ class RendererCharacters extends RenderGroup {
     final atlasHairFront = spritesSouth.hairFront[character.hairType] ?? (throw Exception());
     final atlasHairBack = spritesSouth.hairBack[character.hairType] ?? (throw Exception());
     final atlasHairTop = spritesSouth.hairTop[character.hairType] ?? (throw Exception());
-    final atlasShoesLeft = spritesSouth.shoesLeft[character.shoeType] ?? (throw Exception());
-    final atlasShoesRight = spritesSouth.shoesRight[character.shoeType] ?? (throw Exception());
+    final atlasShoesLeftSouth = spritesSouth.shoesLeft[character.shoeType] ?? (throw Exception());
+    final atlasShoesLeftWest = spritesWest.shoesLeft[character.shoeType] ?? (throw Exception());
+    final atlasShoesRightSouth = spritesSouth.shoesRight[character.shoeType] ?? (throw Exception());
+    final atlasShoesRightWest = spritesWest.shoesRight[character.shoeType] ?? (throw Exception());
 
     final spriteWeaponSouth = atlasWeaponSouth.fromCharacterState(characterState);
     final spriteWeaponWest = atlasWeaponWest.fromCharacterState(characterState);
@@ -300,8 +302,10 @@ class RendererCharacters extends RenderGroup {
     final spriteShadow = atlasShadow.fromCharacterState(characterState);
     final spriteHairFront = atlasHairFront.fromCharacterState(characterState);
     final spriteHairBack = atlasHairBack.fromCharacterState(characterState);
-    final spriteShoesLeft = atlasShoesLeft.fromCharacterState(characterState);
-    final spriteShoesRight = atlasShoesRight.fromCharacterState(characterState);
+    final spriteShoesLeftSouth = atlasShoesLeftSouth.fromCharacterState(characterState);
+    final spriteShoesLeftWest = atlasShoesLeftWest.fromCharacterState(characterState);
+    final spriteShoesRightSouth = atlasShoesRightSouth.fromCharacterState(characterState);
+    final spriteShoesRightWest = atlasShoesRightWest.fromCharacterState(characterState);
     final spriteHairTop = atlasHairTop.fromCharacterState(characterState);
 
     final Sprite spriteHairInFront;
@@ -314,8 +318,10 @@ class RendererCharacters extends RenderGroup {
     final Sprite spriteArmFrontWest;
     final Sprite spriteArmBehindSouth;
     final Sprite spriteArmBehindWest;
-    final Sprite spriteShoesFront;
-    final Sprite spriteShoesBehind;
+    final Sprite spriteShoesFrontSouth;
+    final Sprite spriteShoesFrontWest;
+    final Sprite spriteShoesBehindSouth;
+    final Sprite spriteShoesBehindWest;
 
     final palette = colors.palette;
     final colorSkin = palette[character.complexion].value;
@@ -352,8 +358,10 @@ class RendererCharacters extends RenderGroup {
       spriteArmFrontWest = spriteArmLeftWest;
       spriteArmBehindSouth = spriteArmRightSouth;
       spriteArmBehindWest = spriteArmRightWest;
-      spriteShoesFront = spriteShoesLeft;
-      spriteShoesBehind = spriteShoesRight;
+      spriteShoesFrontSouth = spriteShoesLeftSouth;
+      spriteShoesFrontWest = spriteShoesLeftWest;
+      spriteShoesBehindSouth = spriteShoesRightSouth;
+      spriteShoesBehindWest = spriteShoesRightWest;
     } else {
       spriteHandFrontSouth = spriteHandsRightSouth;
       spriteHandFrontWest = spriteHandsRightSouth;
@@ -363,8 +371,10 @@ class RendererCharacters extends RenderGroup {
       spriteArmFrontWest = spriteArmRightSouth; // spriteArmRight
       spriteArmBehindSouth = spriteArmLeftSouth;
       spriteArmBehindWest = spriteArmLeftWest;
-      spriteShoesFront = spriteShoesRight;
-      spriteShoesBehind = spriteShoesLeft;
+      spriteShoesFrontSouth = spriteShoesRightSouth;
+      spriteShoesFrontWest = spriteShoesRightWest;
+      spriteShoesBehindSouth = spriteShoesLeftSouth;
+      spriteShoesBehindWest = spriteShoesLeftWest;
     }
 
     final renderSprite = render.sprite;
@@ -435,10 +445,10 @@ class RendererCharacters extends RenderGroup {
       );
 
       renderSprite(
-        sprite: spriteShoesBehind,
+        sprite: spriteShoesBehindSouth,
         frame: completingAction
-            ? spriteShoesBehind.getFramePercentage(row, actionComplete)
-            : spriteShoesBehind.getFrame(row: row, column: animationFrame),
+            ? spriteShoesBehindSouth.getFramePercentage(row, actionComplete)
+            : spriteShoesBehindSouth.getFrame(row: row, column: animationFrame),
         color: colorWest,
         scale: scale,
         dstX: dstX,
@@ -447,10 +457,21 @@ class RendererCharacters extends RenderGroup {
       );
 
       renderSprite(
-        sprite: spriteShoesFront,
+        sprite: spriteShoesFrontSouth,
         frame: completingAction
-            ? spriteShoesFront.getFramePercentage(row, actionComplete)
-            : spriteShoesFront.getFrame(row: row, column: animationFrame),
+            ? spriteShoesFrontSouth.getFramePercentage(row, actionComplete)
+            : spriteShoesFrontSouth.getFrame(row: row, column: animationFrame),
+        color: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+      renderSprite(
+        sprite: spriteShoesFrontWest,
+        frame: completingAction
+            ? spriteShoesFrontWest.getFramePercentage(row, actionComplete)
+            : spriteShoesFrontWest.getFrame(row: row, column: animationFrame),
         color: colorWest,
         scale: scale,
         dstX: dstX,

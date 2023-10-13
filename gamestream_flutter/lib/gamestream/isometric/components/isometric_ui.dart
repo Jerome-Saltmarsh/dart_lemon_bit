@@ -29,7 +29,6 @@ class IsometricUI with IsometricComponent {
 
   @override
   void onComponentReady() {
-    engine.buildUI = buildUI;
     gameUI.value = website.buildUI;
   }
 

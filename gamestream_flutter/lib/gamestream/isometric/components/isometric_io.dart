@@ -50,7 +50,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   Future onComponentInit(sharedPreferences) async {
     touchController = TouchController();
     engine.deviceType.onChanged(onDeviceTypeChanged);
-    engine.onScreenSizeChanged = onScreenSizeChanged;
+    // engine.onScreenSizeChanged = onScreenSizeChanged;
   }
 
   @override
@@ -143,7 +143,8 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   int getDirection() => inputModeKeyboard ? getInputDirectionKeyboard() : getDirectionTouchScreen();
 
   int getDirectionTouchScreen() {
-    return touchController.getDirection();
+    // return touchController.getDirection();
+    return 0;
   }
 
   int getInputDirectionKeyboard() {

@@ -68,8 +68,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
     game = Watch<Game>(website, onChanged: _onChangedGame);
-    engine.onMouseEnterCanvas = onMouseEnterCanvas;
-    engine.onMouseExitCanvas = onMouseExitCanvas;
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
   }
@@ -121,9 +119,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void _onChangedGame(Game game) {
     ui.gameUI.value = game.buildUI;
-    engine.onLeftClicked = game.onLeftClicked;
-    engine.onRightClicked = game.onRightClicked;
-    engine.onKeyPressed = game.onKeyPressed;
     game.onActivated();
   }
 

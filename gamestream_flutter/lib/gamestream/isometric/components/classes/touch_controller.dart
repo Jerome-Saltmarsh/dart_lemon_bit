@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:lemon_math/src.dart';
 
@@ -24,8 +23,8 @@ class TouchController with IsometricComponent {
     joystickY = joystickCenterY;
   }
 
-  int getDirection() =>
-      engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
+  // int getDirection() =>
+  //     engine.touches == 0 ? IsometricDirection.None : IsometricDirection.fromRadian(angle);
 
   void onMouseMoved(double x, double y){
     joystickX = engine.mousePositionX;
@@ -33,14 +32,14 @@ class TouchController with IsometricComponent {
   }
 
   void drawCanvas(Canvas canvas){
-    if (engine.touches == 0) return;
-
-    if (engine.watchMouseLeftDown.value) {
-      if (dis > maxDistance) {
-        final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
-        joystickCenterX = joystickX - adj(radian, maxDistance);
-        joystickCenterY = joystickY - opp(radian, maxDistance);
-      }
-    }
+    // if (engine.touches == 0) return;
+    //
+    // if (engine.watchMouseLeftDown.value) {
+    //   if (dis > maxDistance) {
+    //     final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
+    //     joystickCenterX = joystickX - adj(radian, maxDistance);
+    //     joystickCenterY = joystickY - opp(radian, maxDistance);
+    //   }
+    // }
   }
 }

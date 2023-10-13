@@ -26,7 +26,6 @@ class ComponentContainer {
   }
 
   void update(double delta) {
-    // print('delta: $delta');
     for (final updatable in updatable) {
       updatable.onComponentUpdate();
     }
