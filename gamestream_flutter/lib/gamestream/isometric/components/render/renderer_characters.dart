@@ -230,14 +230,14 @@ class RendererCharacters extends RenderGroup {
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toInputDirection(character.direction);
     final color = character.color;
-    // final colorN = scene.colorNorth(characterIndex);
-    // final colorE = scene.colorEast(characterIndex);
+    final colorN = scene.colorNorth(characterIndex);
+    final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
     final colorW = scene.colorWest(characterIndex);
-    final colorWest = colorW;
-    final colorSouth = colorS;
-    // final colorWest = mergeColors(colorN, colorW);
-    // final colorSouth = mergeColors(colorS, colorE);
+    // final colorWest = colorW;
+    // final colorSouth = colorS;
+    final colorWest = mergeColors(colorN, colorW);
+    final colorSouth = mergeColors(colorS, colorE);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -865,38 +865,27 @@ class RendererCharacters extends RenderGroup {
   }
 }
 
-// int mergeColors(int a, int b){
-//   final aRed = getRed(a);
-//   final aBlue = getBlue(a);
-//   final aGreen = getGreen(a);
-//   final bRed = getRed(b);
-//   final bBlue = getBlue(b);
-//   final bGreen = getGreen(b);
-//   return rgba(
-//       r: (aRed + bRed) ~/ 2,
-//       g: (aGreen + bGreen) ~/ 2,
-//       b: (aBlue + bBlue) ~/ 2,
-//       a: 255
-//   );
-// }
 
 int mergeColors(int a, int b) {
-  // Extract the red, green, and blue components of each color
-  int aRed = (a >> 16) & 0xFF;
-  int aGreen = (a >> 8) & 0xFF;
-  int aBlue = a & 0xFF;
+  // Extract the alpha, red, green, and blue components from both colors.
+  int alphaA = (a >> 24) & 0xFF;
+  int redA = (a >> 16) & 0xFF;
+  int greenA = (a >> 8) & 0xFF;
+  int blueA = a & 0xFF;
 
-  int bRed = (b >> 16) & 0xFF;
-  int bGreen = (b >> 8) & 0xFF;
-  int bBlue = b & 0xFF;
+  int alphaB = (b >> 24) & 0xFF;
+  int redB = (b >> 16) & 0xFF;
+  int greenB = (b >> 8) & 0xFF;
+  int blueB = b & 0xFF;
 
-  // Calculate the average of the color components
-  int mergedRed = (aRed + bRed) ~/ 2;
-  int mergedGreen = (aGreen + bGreen) ~/ 2;
-  int mergedBlue = (aBlue + bBlue) ~/ 2;
+  // Calculate the merged color components.
+  int mergedAlpha = (alphaA + alphaB) ~/ 2; // Average the alpha values.
+  int mergedRed = (redA + redB) ~/ 2; // Average the red values.
+  int mergedGreen = (greenA + greenB) ~/ 2; // Average the green values.
+  int mergedBlue = (blueA + blueB) ~/ 2; // Average the blue values.
 
-  // Combine the color components into a single integer
-  int mergedColor = (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
+  // Combine the components to create the merged 32-bit color.
+  int mergedColor = (mergedAlpha << 24) | (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
 
   return mergedColor;
 }
