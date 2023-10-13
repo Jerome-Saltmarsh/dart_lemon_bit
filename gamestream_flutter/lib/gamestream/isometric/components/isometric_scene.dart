@@ -2118,7 +2118,23 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[index + 1];
   }
 
+  int colorEast(int index){
+    final column = getColumn(index);
+    if (column - 1 < 0){
+      return ambientColor;
+    }
+    return nodeColors[index - 1];
+  }
+
   // TODO EXPENSIVE
+  int colorNorth(int index){
+    final row = getRow(index);
+    if (row - 1 < 0) {
+      return ambientColor;
+    }
+    return nodeColors[index - totalColumns];
+  }
+
   int colorSouth(int index){
     final row = getRow(index);
     if (row + 1 >= totalRows) {

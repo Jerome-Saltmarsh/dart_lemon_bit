@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dar
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
@@ -230,8 +231,14 @@ class RendererCharacters extends RenderGroup {
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toInputDirection(character.direction);
     final color = character.color;
-    final colorWest = scene.colorWest(characterIndex);
-    final colorSouth = scene.colorSouth(characterIndex);
+    final colorN = scene.colorNorth(characterIndex);
+    final colorE = scene.colorEast(characterIndex);
+    final colorS = scene.colorSouth(characterIndex);
+    final colorW = scene.colorWest(characterIndex);
+    final colorWest = colorW;
+    final colorSouth = colorS;
+    // final colorWest = mergeColors(colorN, colorW);
+    // final colorSouth = mergeColors(colorS, colorE);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -857,4 +864,19 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
   }
+}
+
+int mergeColors(int a, int b){
+  final aRed = getRed(a);
+  final aBlue = getBlue(a);
+  final aGreen = getGreen(a);
+  final bRed = getRed(b);
+  final bBlue = getBlue(b);
+  final bGreen = getGreen(b);
+  return rgba(
+      r: (aRed + bRed) ~/ 2,
+      g: (aGreen + bGreen) ~/ 2,
+      b: (aBlue + bBlue) ~/ 2,
+      a: 255
+  );
 }
