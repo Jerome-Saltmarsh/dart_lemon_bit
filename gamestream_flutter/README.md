@@ -21,21 +21,20 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
+- feature cell shade skeleton
+- feature cell shade fallen
 - fix light flicker on rain changed
 - fix render front 
-- fix render torso top and bottom separately
 - feature item slot charges
 - feature auth token
 - feature spell lightning bolt with levels
 - feature firebase authentication
 - feature user service encrypt passwords
-- feature element system
 - feature mobile compatibility
 - feature dynamic wind
 - feature windows executable
 - feature stash
 - feature store
-- improve ai pathfinding
 - feature glove type leather
 - feature particle flame spark
 - feature particle wind animation
@@ -47,6 +46,11 @@ ctrl + []               : move caret to code block
 - feature glove type silk
 - feature particle crow
 - feature particle chicken
+- improve ai pathfinding
+
+14.10.2023
+- fix cell shade tearing
+- fix render torso top and bottom separately
 
 13.10.2023
 - feature character cell shading

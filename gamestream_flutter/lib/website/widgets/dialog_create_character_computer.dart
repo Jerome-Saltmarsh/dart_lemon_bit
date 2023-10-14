@@ -330,7 +330,8 @@ CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
         final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
         final body = bodySprite[player.bodyType.value]
             ?.fromCharacterState(characterState);
-        final torso = sprites.torso[gender]?.fromCharacterState(characterState);
+        final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState);
+        final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState);
         final armsLeft = sprites.armLeft[ArmType.regular]
             ?.fromCharacterState(characterState);
         final armsRight = sprites.armRight[ArmType.regular]
@@ -347,7 +348,7 @@ CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
         final hairColor = player.colors.palette[player.hairColor.value].value;
 
         renderCanvasSprite(
-            sprite: torso,
+            sprite: torsoTop,
             canvas: canvas,
             row: row,
             column: column,

@@ -29,7 +29,8 @@ void renderCanvasCharacterSprites({
   final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
   final body = bodySprite[bodyType]
       ?.fromCharacterState(characterState);
-  final torso = sprites.torso[gender]?.fromCharacterState(characterState);
+  final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState);
+  final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState);
   final armsLeft = sprites.armLeft[ArmType.regular]
       ?.fromCharacterState(characterState);
   final armsRight = sprites.armRight[ArmType.regular]
@@ -46,7 +47,7 @@ void renderCanvasCharacterSprites({
       ?.fromCharacterState(characterState);
 
   renderCanvasSprite(
-      sprite: torso,
+      sprite: torsoTop,
       canvas: canvas,
       row: row,
       column: column,

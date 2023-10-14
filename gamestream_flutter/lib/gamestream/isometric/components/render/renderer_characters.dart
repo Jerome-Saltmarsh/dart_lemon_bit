@@ -272,8 +272,10 @@ class RendererCharacters extends RenderGroup {
     final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
     final atlasHeadSouth = spritesSouth.head[character.headType] ?? (throw Exception());
     final atlasHeadWest = spritesWest.head[character.headType] ?? (throw Exception());
-    final atlasTorsoSouth = spritesSouth.torso[character.gender] ?? (throw Exception());
-    final atlasTorsoWest = spritesWest.torso[character.gender] ?? (throw Exception());
+    final atlasTorsoTopSouth = spritesSouth.torsoTop[character.gender] ?? (throw Exception());
+    final atlasTorsoTopWest = spritesWest.torsoTop[character.gender] ?? (throw Exception());
+    final atlasTorsoBottomSouth = spritesSouth.torsoBottom[character.gender] ?? (throw Exception());
+    final atlasTorsoBottomWest = spritesWest.torsoBottom[character.gender] ?? (throw Exception());
     final atlasShadow = spritesSouth.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHairFront = spritesSouth.hairFront[character.hairType] ?? (throw Exception());
     final atlasHairBack = spritesSouth.hairBack[character.hairType] ?? (throw Exception());
@@ -297,8 +299,10 @@ class RendererCharacters extends RenderGroup {
     final spriteArmLeftWest = atlasArmLeftWest.fromCharacterState(characterState);
     final spriteArmRightSouth = atlasArmRightSouth.fromCharacterState(characterState);
     final spriteArmRightWest = atlasArmRightWest.fromCharacterState(characterState);
-    final spriteTorsoSouth = atlasTorsoSouth.fromCharacterState(characterState);
-    final spriteTorsoWest = atlasTorsoWest.fromCharacterState(characterState);
+    final spriteTorsoTopSouth = atlasTorsoTopSouth.fromCharacterState(characterState);
+    final spriteTorsoTopWest = atlasTorsoTopWest.fromCharacterState(characterState);
+    final spriteTorsoBottomSouth = atlasTorsoBottomSouth.fromCharacterState(characterState);
+    final spriteTorsoBottomWest = atlasTorsoBottomWest.fromCharacterState(characterState);
     final spriteLegsSouth = atlasLegsSouth.fromCharacterState(characterState);
     final spriteLegsWest = atlasLegsWest.fromCharacterState(characterState);
     final spriteHandsLeftSouth = atlasHandsLeftSouth.fromCharacterState(characterState);
@@ -401,10 +405,10 @@ class RendererCharacters extends RenderGroup {
       );
 
       modulate(
-        sprite: spriteTorsoSouth,
+        sprite: spriteTorsoBottomSouth,
         frame: completingAction
-            ? spriteTorsoSouth.getFramePercentage(row, actionComplete)
-            : spriteTorsoSouth.getFrame(column: animationFrame, row: row),
+            ? spriteTorsoBottomSouth.getFramePercentage(row, actionComplete)
+            : spriteTorsoBottomSouth.getFrame(column: animationFrame, row: row),
         color1: colorSkin,
         color2: colorSouth,
         scale: scale,
@@ -414,10 +418,10 @@ class RendererCharacters extends RenderGroup {
       );
 
       modulate(
-        sprite: spriteTorsoWest,
+        sprite: spriteTorsoBottomWest,
         frame: completingAction
-            ? spriteTorsoWest.getFramePercentage(row, actionComplete)
-            : spriteTorsoWest.getFrame(column: animationFrame, row: row),
+            ? spriteTorsoBottomWest.getFramePercentage(row, actionComplete)
+            : spriteTorsoBottomWest.getFrame(column: animationFrame, row: row),
         color1: colorSkin,
         color2: colorWest,
         scale: scale,
@@ -591,6 +595,33 @@ class RendererCharacters extends RenderGroup {
     // render.textPosition(character, bodyFirst, offsetY: -100);
 
     if (bodyFirst){
+
+      modulate(
+        sprite: spriteTorsoTopSouth,
+        frame: completingAction
+            ? spriteTorsoTopSouth.getFramePercentage(row, actionComplete)
+            : spriteTorsoTopSouth.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      modulate(
+        sprite: spriteTorsoTopWest,
+        frame: completingAction
+            ? spriteTorsoTopWest.getFramePercentage(row, actionComplete)
+            : spriteTorsoTopWest.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorWest,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
       renderSprite(
         sprite: spriteBodySouth,
         frame: completingAction
@@ -602,6 +633,7 @@ class RendererCharacters extends RenderGroup {
         dstY: dstY,
         anchorY: anchorY,
       );
+
       renderSprite(
         sprite: spriteBodyWest,
         frame: completingAction
@@ -690,6 +722,33 @@ class RendererCharacters extends RenderGroup {
     );
 
     if (!bodyFirst){
+
+      modulate(
+        sprite: spriteTorsoTopSouth,
+        frame: completingAction
+            ? spriteTorsoTopSouth.getFramePercentage(row, actionComplete)
+            : spriteTorsoTopSouth.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      modulate(
+        sprite: spriteTorsoTopWest,
+        frame: completingAction
+            ? spriteTorsoTopWest.getFramePercentage(row, actionComplete)
+            : spriteTorsoTopWest.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorWest,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
       renderSprite(
         sprite: spriteBodySouth,
         frame: completingAction
