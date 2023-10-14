@@ -19,7 +19,7 @@ class SyncUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    refreshSyncJobs();
+    // refreshSyncJobs();
     return MaterialApp(
       title: 'RENDERS SYNC',
       theme: ThemeData(
@@ -32,6 +32,13 @@ class SyncUI extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('RENDERS SYNC'),
           actions: [
+            onPressed(
+              action: loadFiles,
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: buildText('LOAD'),
+              ),
+            ),
             onPressed(
               action: refreshSyncJobs,
               child: Container(
@@ -96,4 +103,9 @@ class SyncUI extends StatelessWidget {
 
   void refreshSyncJobs() =>
       syncJobs.value = findSyncJobs(Directory(dirRenders));
+
+
+  void loadFiles(){
+
+  }
 }

@@ -885,12 +885,42 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
-    final sprite = images.spriteGroupFallen.fromCharacterState(character.state);
+    final spriteWest = images.spriteGroupFallenWest.fromCharacterState(character.state);
+    final spriteSouth = images.spriteGroupFallenSouth.fromCharacterState(character.state);
+    final spriteShadow = images.spriteGroupFallenShadow.fromCharacterState(character.state);
+    final characterIndex = scene.getIndexPosition(character);
+    final color = character.color;
+    final colorN = scene.colorNorth(characterIndex);
+    final colorE = scene.colorEast(characterIndex);
+    final colorS = scene.colorSouth(characterIndex);
+    final colorW = scene.colorWest(characterIndex);
+    final colorWest = merge32BitsColors3(colorN, colorW, color);
+    final colorSouth = merge32BitsColors3(colorS, colorE, color);
 
     render.sprite(
-      sprite: sprite,
-      frame: sprite.getFrame(row: row, column: column),
+      sprite: spriteShadow,
+      frame: spriteShadow.getFrame(row: row, column: column),
       color: character.color,
+      scale: scale,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteWest,
+      frame: spriteWest.getFrame(row: row, column: column),
+      color: colorWest,
+      scale: scale,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteSouth,
+      frame: spriteSouth.getFrame(row: row, column: column),
+      color: colorSouth,
       scale: scale,
       dstX: character.renderX,
       dstY: character.renderY,

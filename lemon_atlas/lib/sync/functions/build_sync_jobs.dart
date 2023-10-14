@@ -9,16 +9,18 @@ List<SyncJob> findSyncJobs(Directory directory) {
   final children = directory.listSync();
 
   for (final child in children){
+    if (child is Directory) {
+      jobs.addAll(findSyncJobs(child));
+    }
+  }
+
+  for (final child in children){
     if (child is File) {
       final job = buildSyncJob(child);
       if (job != null){
         jobs.add(job);
       }
       return jobs;
-    }
-
-    if (child is Directory) {
-      jobs.addAll(findSyncJobs(child));
     }
   }
 

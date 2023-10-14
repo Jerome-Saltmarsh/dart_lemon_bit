@@ -21,9 +21,8 @@ ctrl + []               : move caret to code block
   - electricity is strong vs water and weak vs earth
 
 [TODO]
-- feature cell shade skeleton
 - feature cell shade fallen
-- fix light flicker on rain changed
+- feature cell shade skeleton
 - fix render front 
 - feature item slot charges
 - feature auth token

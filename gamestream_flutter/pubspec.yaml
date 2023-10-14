@@ -144,6 +144,11 @@ flutter:
     - sprites/front/kid/shoes_left/leather_boots/
     - sprites/front/kid/shoes_right/iron_plates/
     - sprites/front/kid/shoes_right/leather_boots/
+    - sprites/isometric/fallen/dead/
+    - sprites/isometric/fallen/hurt/
+    - sprites/isometric/fallen/idle/
+    - sprites/isometric/fallen/running/
+    - sprites/isometric/fallen/strike/
     - sprites/isometric/fallen/
     - sprites/isometric/skeleton/
     - sprites/isometric/butterfly/
