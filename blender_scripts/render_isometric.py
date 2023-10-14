@@ -182,10 +182,10 @@ def render_camera_track(camera_track, direction):
     camera_track.mute = False
 
     if direction == 'west':
-        assign_method_west()
+        assign_cell_shade_operation_west()
 
     if direction == 'south':
-        assign_method_south()
+        assign_cell_shade_operation_south()
 
     if camera_track.name == 'front':
         set_render_frames(1, 8)
@@ -264,19 +264,19 @@ def render_camera_track(camera_track, direction):
         armature_kid_animation_track.mute = False
 
 
-def assign_method_west():
-    assign_method('LESS_THAN')
+def assign_cell_shade_operation_west():
+    assign_cell_shade_operation('LESS_THAN')
 
 
-def assign_method_south():
-    assign_method('GREATER_THAN')
+def assign_cell_shade_operation_south():
+    assign_cell_shade_operation('GREATER_THAN')
 
 
-def assign_method(operation):
+def assign_cell_shade_operation(operation):
     material = bpy.data.materials.get("cell_shade")
 
     if material is None:
-        raise ValueError('failed to set material property')
+        raise ValueError('failed to set material cell_shade')
 
     nodes = material.node_tree.nodes
 
@@ -284,11 +284,14 @@ def assign_method(operation):
         if not node.type == 'MATH':
             continue
 
-        if node.operation == operation:
+        if node.operation == 'GREATER_THAN':
+            node.operation = operation
+            node.inputs[1].default_value = 0.15
             return
 
-        if node.operation == 'GREATER_THAN' or node.operation == 'LESS_THAN':
+        if node.operation == 'LESS_THAN':
             node.operation = operation
+            node.inputs[1].default_value = -0.15
             return
 
     raise ValueError('could not find math node')
