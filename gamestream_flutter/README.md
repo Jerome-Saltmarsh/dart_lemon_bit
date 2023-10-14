@@ -30,7 +30,6 @@ ctrl + []               : move caret to code block
 - feature firebase authentication
 - feature user service encrypt passwords
 - feature element system
-- feature character cell shading
 - feature mobile compatibility
 - feature dynamic wind
 - feature windows executable
@@ -48,6 +47,9 @@ ctrl + []               : move caret to code block
 - feature glove type silk
 - feature particle crow
 - feature particle chicken
+
+13.10.2023
+- feature character cell shading
 
 09.10.2023
 - centered abilities ui

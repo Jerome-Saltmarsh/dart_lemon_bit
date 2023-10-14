@@ -236,8 +236,8 @@ class RendererCharacters extends RenderGroup {
     final colorW = scene.colorWest(characterIndex);
     // final colorWest = colorW;
     // final colorSouth = colorS;
-    final colorWest = mergeColors(colorN, colorW);
-    final colorSouth = mergeColors(colorS, colorE);
+    final colorWest = merge32BitsColors3(colorN, colorW, color);
+    final colorSouth = merge32BitsColors3(colorS, colorE, color);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -886,6 +886,34 @@ int mergeColors(int a, int b) {
 
   // Combine the components to create the merged 32-bit color.
   int mergedColor = (mergedAlpha << 24) | (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
+
+  return mergedColor;
+}
+
+int merge32BitsColors3(int a, int b, int c) {
+  // Extract the alpha, red, green, and blue components of each color.
+  int alphaA = (a >> 24) & 0xFF;
+  int redA = (a >> 16) & 0xFF;
+  int greenA = (a >> 8) & 0xFF;
+  int blueA = a & 0xFF;
+
+  int alphaB = (b >> 24) & 0xFF;
+  int redB = (b >> 16) & 0xFF;
+  int greenB = (b >> 8) & 0xFF;
+  int blueB = b & 0xFF;
+
+  int alphaC = (c >> 24) & 0xFF;
+  int redC = (c >> 16) & 0xFF;
+  int greenC = (c >> 8) & 0xFF;
+  int blueC = c & 0xFF;
+
+  // Merge the components into a single color.
+  int mergedColor = 0;
+
+  mergedColor |= ((alphaA + alphaB + alphaC) ~/ 3) << 24;
+  mergedColor |= ((redA + redB + redC) ~/ 3) << 16;
+  mergedColor |= ((greenA + greenB + greenC) ~/ 3) << 8;
+  mergedColor |= ((blueA + blueB + blueC) ~/ 3);
 
   return mergedColor;
 }
