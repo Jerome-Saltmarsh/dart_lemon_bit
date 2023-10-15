@@ -947,8 +947,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
     writeInt16(weapon.index);
-    writeUInt16(slot.cooldown);
-    writeUInt16(slot.cooldownDuration);
+    writePercentage(slot.cooldownPercentage);
     writeUInt16(slot.charges);
     writeUInt16(slot.max);
   }
@@ -1247,13 +1246,15 @@ class AmuletPlayer extends IsometricPlayer {
     equipmentDirty = true;
   }
 
-  void reduceCooldown() {
-     for (var i = 0; i < weapons.length; i++) {
+  void incrementWeaponCooldowns() {
+    final length = weapons.length;
+     for (var i = 0; i < length; i++) {
        final weapon = weapons[i];
-       if (weapon.cooldown <= 0)
+
+       if (weapon.charges >= weapon.max)
          continue;
 
-       weapon.cooldown--;
+       weapon.incrementCooldown();
        writePlayerWeapon(i);
      }
   }

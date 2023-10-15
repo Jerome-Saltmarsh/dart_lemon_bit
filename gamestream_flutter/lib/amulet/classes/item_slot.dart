@@ -6,8 +6,7 @@ class ItemSlot {
   final int index;
   final SlotType slotType;
   final amuletItem = Watch<AmuletItem?>(null);
-  final cooldown = Watch(0);
-  final cooldownDuration = Watch(0);
+  final cooldownPercentage = Watch(0.0);
   final charges = Watch(0);
   final max = Watch(0);
 

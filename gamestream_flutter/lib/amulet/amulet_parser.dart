@@ -97,19 +97,26 @@ extension AmuletParser on IsometricParser {
     final type = readInt16();
 
     if (type == -1){
-      amulet.setWeapon(index: index, item: null, cooldown: 0);
+      amulet.setWeapon(
+        index: index,
+        item: null,
+        cooldownPercentage: 0,
+        charges: 0,
+        max: 0,
+      );
       return;
     }
 
-    final cooldown = readUInt16();
-    final cooldownDuration = readUInt16();
+    final cooldownPercentage = readPercentage();
     final charges = readUInt16();
     final max = readUInt16();
-    final item = type != -1 ? AmuletItem.values[type] : null;
+    final item = AmuletItem.values[type];
     amulet.setWeapon(
-        index: index,
-        item: item,
-        cooldown: cooldown,
+      index: index,
+      item: item,
+      cooldownPercentage: cooldownPercentage,
+      charges: charges,
+      max: max,
     );
   }
 }

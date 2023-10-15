@@ -282,7 +282,10 @@ class AmuletUI {
                 Positioned(
                     bottom: 8,
                     right: 8,
-                    child: buildWatch(amulet.weapons[index].cooldown, (cooldown) => cooldown <= 0 ? nothing: buildText(cooldown, color: Colors.red))
+                    child: buildWatch(
+                        amulet.weapons[index].cooldownPercentage,
+                            (cooldownPercentage) => cooldownPercentage <= 0 ? nothing: buildText(cooldownPercentage, color: Colors.red)
+                    )
                 )
               ],
             ),

@@ -94,7 +94,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     cooldownTimer = GamestreamServer.Frames_Per_Second;
     for (final player in players) {
-      player.reduceCooldown();
+      player.incrementWeaponCooldowns();
     }
   }
 

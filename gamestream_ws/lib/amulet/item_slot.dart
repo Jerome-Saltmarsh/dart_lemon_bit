@@ -7,6 +7,8 @@ class ItemSlot {
   var charges = 0;
   var max = 0;
 
+  double get cooldownPercentage => cooldown / cooldownDuration;
+
   @override
   String toString() => '{'
       'item: $amuletItem, '
@@ -15,6 +17,15 @@ class ItemSlot {
       'charges: $charges, '
       'max: $max '
   '}';
+
+  void incrementCooldown(){
+    assert (charges < max);
+    cooldown++;
+    if (cooldown < cooldownDuration)
+      return;
+    charges++;
+    cooldown = 0;
+  }
 }
 
 extension ItemSlotExtension on ItemSlot {
