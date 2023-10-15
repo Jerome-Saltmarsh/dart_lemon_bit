@@ -149,8 +149,8 @@ flutter:
     - sprites/isometric/fallen/idle/
     - sprites/isometric/fallen/running/
     - sprites/isometric/fallen/strike/
-    - sprites/isometric/fallen/
-    - sprites/isometric/skeleton/
+    - sprites/isometric/skeleton/south/
+    - sprites/isometric/skeleton/west/
     - sprites/isometric/butterfly/
     - sprites/isometric/bat/
     - audio/

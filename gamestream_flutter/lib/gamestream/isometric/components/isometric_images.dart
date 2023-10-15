@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:gamestream_flutter/packages/utils/parse.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/gamestream/sprites/character_sprites.dart';
+import 'package:gamestream_flutter/gamestream/sprites/character_sprite_group.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -41,10 +41,13 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
 
   late final CharacterSpriteGroup spriteGroupKidShadow;
+
   late final CharacterSpriteGroup spriteGroupFallenWest;
   late final CharacterSpriteGroup spriteGroupFallenSouth;
   late final CharacterSpriteGroup spriteGroupFallenShadow;
-  late final CharacterSpriteGroup spriteGroupSkeleton;
+
+  late final CharacterSpriteGroup spriteGroupSkeletonWest;
+  late final CharacterSpriteGroup spriteGroupSkeletonSouth;
 
   late final Sprite flame0;
   late final Sprite flame1;
@@ -437,13 +440,23 @@ class IsometricImages with IsometricComponent {
       change: emptySprite,
     );
 
-    spriteGroupSkeleton = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/skeleton/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/skeleton/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/skeleton/dead', mode: AnimationMode.single),
-      strike: await loadSprite(name: 'sprites/isometric/skeleton/fire', mode: AnimationMode.single),
-      hurt: await loadSprite(name: 'sprites/isometric/skeleton/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'sprites/isometric/skeleton/fire', mode: AnimationMode.single),
+    spriteGroupSkeletonWest = CharacterSpriteGroup(
+      idle: await loadSprite(name: 'sprites/isometric/skeleton/west/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'sprites/isometric/skeleton/west/walk', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'sprites/isometric/skeleton/west/dead', mode: AnimationMode.single),
+      strike: await loadSprite(name: 'sprites/isometric/skeleton/west/fire', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'sprites/isometric/skeleton/west/hurt', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'sprites/isometric/skeleton/west/fire', mode: AnimationMode.single),
+      change: emptySprite,
+    );
+
+    spriteGroupSkeletonSouth = CharacterSpriteGroup(
+      idle: await loadSprite(name: 'sprites/isometric/skeleton/south/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'sprites/isometric/skeleton/south/walk', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'sprites/isometric/skeleton/south/dead', mode: AnimationMode.single),
+      strike: await loadSprite(name: 'sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'sprites/isometric/skeleton/south/hurt', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
       change: emptySprite,
     );
 
