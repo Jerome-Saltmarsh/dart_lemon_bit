@@ -253,9 +253,6 @@ class AmuletUI {
 
     return buildWatch(itemSlotWeapon.amuletItem, (AmuletItem? amuletItem) {
 
-      // final levelCurrent = amulet.getAmuletPlayerItemLevel(amuletItem);
-      // final totalLevels = amuletItem.totalLevels;
-
       return Column(
         children: [
           Container(
@@ -286,20 +283,34 @@ class AmuletUI {
                         amulet.weapons[index].cooldownPercentage,
                             (cooldownPercentage) => cooldownPercentage <= 0 ? nothing: buildText(cooldownPercentage, color: Colors.red)
                     )
+                ),
+                Positioned(
+                    bottom: 8,
+                    left: 8,
+                    child: buildWatch(
+                        amulet.weapons[index].charges, buildText
+                    )
+                ),
+                Positioned(
+                    top: 8,
+                    right: 8,
+                    child: buildWatch(
+                        amulet.weapons[index].max, buildText
+                    )
                 )
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(width: 8, height: 8, color: Colors.white,),
-              width4,
-              Container(width: 8, height: 8, color: Colors.white,),
-              width4,
-              Container(width: 8, height: 8, color: Colors.white38,),
-            ],
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Container(width: 8, height: 8, color: Colors.white,),
+          //     width4,
+          //     Container(width: 8, height: 8, color: Colors.white,),
+          //     width4,
+          //     Container(width: 8, height: 8, color: Colors.white38,),
+          //   ],
+          // )
         ],
       );
 

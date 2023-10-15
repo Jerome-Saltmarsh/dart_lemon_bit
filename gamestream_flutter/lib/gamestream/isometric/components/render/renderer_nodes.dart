@@ -54,7 +54,6 @@ class RendererNodes extends RenderGroup {
   var plainIndex = 0;
   var totalPlains = 0;
   var orderShiftY = 13.0;
-  var renderRainFalling = true;
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
   var indexShow = 0;
@@ -116,7 +115,6 @@ class RendererNodes extends RenderGroup {
     final rainType = this.rainType;
     final windType = this.windType;
     final animationFrame1 = this.animation.frame1;
-    final renderRainFalling = this.renderRainFalling;
     final screenLeft = this.screenLeft; // cache in cpu
     final screenTop = this.screenTop; // cache in cpu
     final screenRight = this.screenRight; // cache in cpu
@@ -636,7 +634,6 @@ class RendererNodes extends RenderGroup {
   @override
   void reset() {
     totalSkipped = 0;
-    renderRainFalling = options.renderRainFallingTwice;
     rainType = environment.rainType.value;
     windType = environment.wind.value;
     final scene = this.scene;

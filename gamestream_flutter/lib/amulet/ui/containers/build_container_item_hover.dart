@@ -103,7 +103,7 @@ Widget buildContainerItemStats(ItemStat itemStats, int level) =>
               if (itemStats.charges != 0)
                 buildTableRow('charges', itemStats.charges),
               if (itemStats.cooldown != 0)
-                buildTableRow('chargesReplenishDuration', itemStats.cooldown),
+                buildTableRow('cooldown', itemStats.cooldown),
               if (itemStats.range != 0)
                 buildTableRow('range', itemStats.range),
               Row(

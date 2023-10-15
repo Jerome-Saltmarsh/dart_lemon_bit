@@ -47,6 +47,14 @@ enum AmuletItem {
       charges: 5,
       information: 'An old blunt sword',
     ),
+    level2: ItemStat(
+      damage: 2,
+      range: 60,
+      cooldown: 20,
+      charges: 7,
+      information: 'An old blunt sword',
+      earth: 5,
+    ),
   ),
   Staff_Of_Flames(
     selectAction: AmuletItemAction.Equip,

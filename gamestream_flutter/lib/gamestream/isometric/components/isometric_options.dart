@@ -18,7 +18,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var renderRunLine = false;
   var renderVisibilityBeams = false;
   var renderHeightMap = false;
-  var renderRainFallingTwice = true;
   var renderCharacterAnimationFrame = false;
   var characterRenderScale = 0.35;
   var characterShadowColor = Colors.black38;
@@ -196,9 +195,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleRenderCharacterAnimationFrame() =>
       renderCharacterAnimationFrame = !renderCharacterAnimationFrame;
-
-  void toggleRenderRainTwice() =>
-      renderRainFallingTwice = !renderRainFallingTwice;
 
   void operationDone(){
     operationStatus.value = OperationStatus.None;

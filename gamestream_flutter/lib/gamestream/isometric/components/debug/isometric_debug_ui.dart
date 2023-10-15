@@ -673,11 +673,6 @@ extension isometricDebugUI on IsometricDebug {
              action: options.toggleRenderCharacterAnimationFrame,
              value: () => options.renderCharacterAnimationFrame,
           ),
-          buildRowToggle(
-             text: 'render rain twice',
-             action: options.toggleRenderRainTwice,
-             value: () => options.renderRainFallingTwice,
-          ),
         ],
       );
 
