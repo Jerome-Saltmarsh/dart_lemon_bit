@@ -61,7 +61,7 @@ extension AmuletRender on Amulet {
     if (activatedPowerIndex.value == -1)
       return;
 
-    final activatedPower = weapons[activatedPowerIndex.value].item.value;
+    final activatedPower = weapons[activatedPowerIndex.value].amuletItem.value;
 
     if (activatedPower == null)
       return;

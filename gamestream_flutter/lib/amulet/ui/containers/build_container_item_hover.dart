@@ -100,8 +100,10 @@ Widget buildContainerItemStats(ItemStat itemStats, int level) =>
               buildTableRow('lvl', level),
               if (itemStats.damage != 0)
                 buildTableRow('damage', itemStats.damage),
+              if (itemStats.charges != 0)
+                buildTableRow('charges', itemStats.charges),
               if (itemStats.cooldown != 0)
-                buildTableRow('cooldown', itemStats.cooldown),
+                buildTableRow('chargesReplenishDuration', itemStats.cooldown),
               if (itemStats.range != 0)
                 buildTableRow('range', itemStats.range),
               Row(

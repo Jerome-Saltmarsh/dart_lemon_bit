@@ -31,8 +31,8 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
           player.getItemObjectAtSlotType(targetSlotType, targetIndex);
 
 
-      final srcItem = srcItemObject.item;
-      final targetItem = targetItemObject.item;
+      final srcItem = srcItemObject.amuletItem;
+      final targetItem = targetItemObject.amuletItem;
 
       if (srcItem == null) {
         return;
@@ -46,8 +46,8 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
         return;
       }
 
-      targetItemObject.item = srcItem;
-      srcItemObject.item = targetItem;
+      targetItemObject.amuletItem = srcItem;
+      srcItemObject.amuletItem = targetItem;
       player.notifyEquipmentDirty();
       break;
 

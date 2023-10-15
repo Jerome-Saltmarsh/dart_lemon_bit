@@ -5,16 +5,19 @@ import 'package:lemon_watch/src.dart';
 class ItemSlot {
   final int index;
   final SlotType slotType;
-  final item = Watch<AmuletItem?>(null);
+  final amuletItem = Watch<AmuletItem?>(null);
   final cooldown = Watch(0);
+  final cooldownDuration = Watch(0);
+  final charges = Watch(0);
+  final max = Watch(0);
 
   ItemSlot({required this.slotType, required this.index});
 
-  bool get isEmpty => item.value != null;
+  bool get isEmpty => amuletItem.value != null;
 
   bool acceptsDragFrom(ItemSlot src){
 
-    final srcItem = src.item.value;
+    final srcItem = src.amuletItem.value;
 
     if (srcItem == null)
       return false;

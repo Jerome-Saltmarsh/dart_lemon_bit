@@ -6,7 +6,7 @@ void setItemSlotValue(
     AmuletItem? amuletItem,
     int cooldown,
 ) {
-  itemSlot.item = amuletItem;
+  itemSlot.amuletItem = amuletItem;
   itemSlot.cooldown = cooldown;
 }
 

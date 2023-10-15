@@ -1,19 +1,28 @@
 import 'package:gamestream_ws/packages/common.dart';
 
 class ItemSlot {
-  AmuletItem? item;
+  AmuletItem? amuletItem;
   var cooldown = 0;
-  var quantity = 0;
+  var cooldownDuration = 0;
+  var charges = 0;
+  var max = 0;
 
   @override
-  String toString() => '{item: $item, cooldown: $cooldown, quantity: $quantity}';
-
+  String toString() => '{'
+      'item: $amuletItem, '
+      'cooldown: $cooldown, '
+      'cooldownDuration: $cooldownDuration, '
+      'charges: $charges, '
+      'max: $max '
+  '}';
 }
 
 extension ItemSlotExtension on ItemSlot {
   void clear(){
-    item = null;
+    amuletItem = null;
     cooldown = 0;
-    quantity = 0;
+    cooldownDuration = 0;
+    charges = 0;
+    max = 0;
   }
 }

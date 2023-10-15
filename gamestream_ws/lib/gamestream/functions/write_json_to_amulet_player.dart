@@ -51,7 +51,7 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   if (weaponNames != null){
     for (var i = 0; i < weaponNames.length; i++){
       final weaponName =  weaponNames[i];
-      player.weapons[i].item = weaponName == '-'
+      player.weapons[i].amuletItem = weaponName == '-'
           ? null
           : AmuletItem.findByName(weaponName);
     }
@@ -63,9 +63,9 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     for (var i = 0; i < itemNames.length; i++){
       final itemName =  itemNames[i];
       if (itemName != '-'){
-        player.items[i].item = AmuletItem.findByName(itemName);
+        player.items[i].amuletItem = AmuletItem.findByName(itemName);
       } else {
-        player.items[i].item = null;
+        player.items[i].amuletItem = null;
       }
     }
   }

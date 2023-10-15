@@ -113,16 +113,16 @@ class Amulet extends IsometricGame {
     required int cooldown,
   }){
     final slot = weapons[index];
-    slot.item.value = item;
+    slot.amuletItem.value = item;
     slot.cooldown.value = cooldown;
   }
 
   void setTreasure({required int index, required AmuletItem? item}){
-    treasures[index].item.value = item;
+    treasures[index].amuletItem.value = item;
   }
 
   void setItem({required int index, required AmuletItem? item}){
-    items[index].item.value = item;
+    items[index].amuletItem.value = item;
   }
 
   void setItemLength(int length){

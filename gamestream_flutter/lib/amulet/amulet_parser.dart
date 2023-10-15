@@ -29,11 +29,7 @@ extension AmuletParser on IsometricParser {
          amulet.setItem(index: index, item: item);
          break;
        case NetworkResponseAmulet.Player_Weapon:
-         final index = readUInt16();
-         final type = readInt16();
-         final cooldown = type != -1 ? readUInt16() : 0;
-         final item = type != -1 ? AmuletItem.values[type] : null;
-         amulet.setWeapon(index: index, item: item, cooldown: cooldown);
+         readPlayerWeapon();
          break;
        case NetworkResponseAmulet.Player_Treasure:
          final index = readUInt16();
@@ -45,12 +41,12 @@ extension AmuletParser on IsometricParser {
          amulet.equippedWeaponIndex.value = readInt16();
          break;
        case NetworkResponseAmulet.Player_Equipped:
-         amulet.equippedHelm.item.value = readMMOItem();
-         amulet.equippedBody.item.value = readMMOItem();
-         amulet.equippedLegs.item.value = readMMOItem();
-         amulet.equippedHandLeft.item.value = readMMOItem();
-         amulet.equippedHandRight.item.value = readMMOItem();
-         amulet.equippedShoes.item.value = readMMOItem();
+         amulet.equippedHelm.amuletItem.value = readMMOItem();
+         amulet.equippedBody.amuletItem.value = readMMOItem();
+         amulet.equippedLegs.amuletItem.value = readMMOItem();
+         amulet.equippedHandLeft.amuletItem.value = readMMOItem();
+         amulet.equippedHandRight.amuletItem.value = readMMOItem();
+         amulet.equippedShoes.amuletItem.value = readMMOItem();
          break;
        case NetworkResponseAmulet.Player_Experience:
          amulet.playerExperience.value = readUInt24();
@@ -95,4 +91,26 @@ extension AmuletParser on IsometricParser {
     final mmoItemIndex = readInt16();
     return mmoItemIndex == -1 ? null : AmuletItem.values[mmoItemIndex];
   }
+
+  void readPlayerWeapon() {
+    final index = readUInt16();
+    final type = readInt16();
+
+    if (type == -1){
+      amulet.setWeapon(index: index, item: null, cooldown: 0);
+      return;
+    }
+
+    final cooldown = readUInt16();
+    final cooldownDuration = readUInt16();
+    final charges = readUInt16();
+    final max = readUInt16();
+    final item = type != -1 ? AmuletItem.values[type] : null;
+    amulet.setWeapon(
+        index: index,
+        item: item,
+        cooldown: cooldown,
+    );
+  }
 }
+

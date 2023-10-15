@@ -112,7 +112,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (weapon == null)
       return WeaponType.Unarmed;
 
-    final item = weapon.item;
+    final item = weapon.amuletItem;
 
     if (item == null)
       return WeaponType.Unarmed;
@@ -137,7 +137,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (weapon == null){
        return -1;
     };
-    final item = weapon.item;
+    final item = weapon.amuletItem;
 
     if (item == null){
       throw Exception('item == null');
@@ -148,7 +148,7 @@ class AmuletPlayer extends IsometricPlayer {
 
 
   ItemStat? getStatsForItemSlot(ItemSlot itemSlot) {
-    final item = itemSlot.item;
+    final item = itemSlot.amuletItem;
     if (item == null){
       return null;
     }
@@ -180,7 +180,7 @@ class AmuletPlayer extends IsometricPlayer {
       return null;
     }
 
-    final item = weapon.item;
+    final item = weapon.amuletItem;
     if (item == null){
       throw Exception('item == null');
     }
@@ -195,7 +195,7 @@ class AmuletPlayer extends IsometricPlayer {
   double get weaponRange => equippedWeaponItemStat?.range ?? 25;
 
   @override
-  int get helmType => equippedHelm.item?.subType ?? HelmType.None;
+  int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;
 
   int get activatedPowerIndex => _activatedPowerIndex;
 
@@ -313,7 +313,7 @@ class AmuletPlayer extends IsometricPlayer {
     }
     final weapon = weapons[value];
 
-    final item = weapon.item;
+    final item = weapon.amuletItem;
 
     if (item == null || item.type != ItemType.Weapon){
       return;
@@ -369,7 +369,7 @@ class AmuletPlayer extends IsometricPlayer {
       return false;
     }
 
-    emptyItemSlot.item = item;
+    emptyItemSlot.amuletItem = item;
     emptyItemSlot.cooldown = 0;
     notifyEquipmentDirty();
     return true;
@@ -393,7 +393,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (item != null && !item.isWeapon)
       return;
 
-    weapons[index].item = item;
+    weapons[index].amuletItem = item;
     weapons[index].cooldown = cooldown;
     writePlayerWeapon(index);
   }
@@ -409,7 +409,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (item != null && !item.isTreasure)
       return;
 
-    treasures[index].item = item;
+    treasures[index].amuletItem = item;
     writePlayerTreasure(index);
     notifyEquipmentDirty();
   }
@@ -424,7 +424,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
     final slot = items[index];
-    slot.item = item;
+    slot.amuletItem = item;
     slot.cooldown = cooldown;
     notifyEquipmentDirty();
     setCharacterStateChanging();
@@ -475,7 +475,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (!isValidIndexTreasure(index)) {
       return;
     }
-    final item = treasures[index].item;
+    final item = treasures[index].amuletItem;
     if (item == null) {
       return;
     }
@@ -525,14 +525,14 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     final itemSlot = weapons[index];
-    final weapon = itemSlot.item;
+    final weapon = itemSlot.amuletItem;
 
     if (weapon == null){
       return;
     }
 
     if (itemSlot.cooldown > 0) {
-      writeAmuletError('${itemSlot.item?.name} is cooling down');
+      writeAmuletError('${itemSlot.amuletItem?.name} is cooling down');
       return;
     }
 
@@ -604,7 +604,7 @@ class AmuletPlayer extends IsometricPlayer {
 
     final selected = items[index];
 
-    final item = items[index].item;
+    final item = items[index].amuletItem;
 
     if (item == null)
       return;
@@ -650,7 +650,7 @@ class AmuletPlayer extends IsometricPlayer {
           );
           setItem(
               index: index,
-              item: currentWeapon?.item,
+              item: currentWeapon?.amuletItem,
               cooldown: currentCooldown,
           );
           setCharacterStateChanging();
@@ -666,7 +666,7 @@ class AmuletPlayer extends IsometricPlayer {
         swapItemSlots(this, equippedLegs, selected);
         break;
       case ItemType.Hand:
-        if (equippedHandLeft.item == null){
+        if (equippedHandLeft.amuletItem == null){
           swapItemSlots(this, equippedHandLeft, selected);
         } else {
           swapItemSlots(this, equippedHandRight, selected);
@@ -695,7 +695,7 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    if (equippedHelm.item == item){
+    if (equippedHelm.amuletItem == item){
       return;
     }
 
@@ -745,7 +745,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (deadOrBusy && !force)
       return;
 
-    if (equippedLegs.item == item)
+    if (equippedLegs.amuletItem == item)
       return;
 
     if (item == null){
@@ -769,7 +769,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (deadOrBusy && !force)
       return;
 
-    if (equippedHandLeft.item == item)
+    if (equippedHandLeft.amuletItem == item)
       return;
 
     if (item == null){
@@ -794,7 +794,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (deadOrBusy && !force)
       return;
 
-    if (equippedHandRight.item == item)
+    if (equippedHandRight.amuletItem == item)
       return;
 
     if (item == null){
@@ -819,7 +819,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (deadOrBusy && !force)
       return;
 
-    if (equippedShoe.item == item)
+    if (equippedShoe.amuletItem == item)
       return;
 
     if (item == null){
@@ -858,23 +858,23 @@ class AmuletPlayer extends IsometricPlayer {
     if (!equipmentDirty)
       return;
 
-    assert (equippedHelm.item?.isHelm ?? true);
-    assert (equippedBody.item?.isBody ?? true);
-    assert (equippedLegs.item?.isLegs ?? true);
-    assert (equippedWeapon?.item?.isWeapon ?? true);
-    assert (equippedShoe.item?.isShoes ?? true);
+    assert (equippedHelm.amuletItem?.isHelm ?? true);
+    assert (equippedBody.amuletItem?.isBody ?? true);
+    assert (equippedLegs.amuletItem?.isLegs ?? true);
+    assert (equippedWeapon?.amuletItem?.isWeapon ?? true);
+    assert (equippedShoe.amuletItem?.isShoes ?? true);
 
     health = clamp(health, 0, maxHealth);
-    weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
+    weaponType = equippedWeapon?.amuletItem?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
-    helmType = equippedHelm.item?.subType ?? HelmType.None;
-    bodyType = equippedBody.item?.subType ?? BodyType.None;
-    legsType = equippedLegs.item?.subType ?? LegType.None;
-    handTypeLeft = equippedHandLeft.item?.subType ?? HandType.None;
-    handTypeRight = equippedHandRight.item?.subType ?? HandType.None;
-    shoeType = equippedShoe.item?.subType ?? HandType.None;
+    helmType = equippedHelm.amuletItem?.subType ?? HelmType.None;
+    bodyType = equippedBody.amuletItem?.subType ?? BodyType.None;
+    legsType = equippedLegs.amuletItem?.subType ?? LegType.None;
+    handTypeLeft = equippedHandLeft.amuletItem?.subType ?? HandType.None;
+    handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;
+    shoeType = equippedShoe.amuletItem?.subType ?? HandType.None;
 
-    if (equippedWeapon?.item?.selectAction != AmuletItemAction.Equip){
+    if (equippedWeapon?.amuletItem?.selectAction != AmuletItemAction.Equip){
        equippedWeaponIndex = -1;
     }
 
@@ -887,19 +887,19 @@ class AmuletPlayer extends IsometricPlayer {
 
   void writeItems() {
      for (var i = 0; i < items.length; i++){
-       writePlayerItem(i, items[i].item);
+       writePlayerItem(i, items[i].amuletItem);
      }
   }
 
   void writeEquipped(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped);
-    writeAmuletItem(equippedHelm.item);
-    writeAmuletItem(equippedBody.item);
-    writeAmuletItem(equippedLegs.item);
-    writeAmuletItem(equippedHandLeft.item);
-    writeAmuletItem(equippedHandRight.item);
-    writeAmuletItem(equippedShoe.item);
+    writeAmuletItem(equippedHelm.amuletItem);
+    writeAmuletItem(equippedBody.amuletItem);
+    writeAmuletItem(equippedLegs.amuletItem);
+    writeAmuletItem(equippedHandLeft.amuletItem);
+    writeAmuletItem(equippedHandRight.amuletItem);
+    writeAmuletItem(equippedShoe.amuletItem);
   }
 
   void writeAmuletItem(AmuletItem? value){
@@ -911,13 +911,15 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void writeWeapons() {
-    for (var i = 0; i < weapons.length; i++){
+    final length = weapons.length;
+    for (var i = 0; i < length; i++){
       writePlayerWeapon(i);
     }
   }
 
   void writeTreasures() {
-    for (var i = 0; i < treasures.length; i++){
+    final length = treasures.length;
+    for (var i = 0; i < length; i++){
       writePlayerTreasure(i);
     }
   }
@@ -939,20 +941,23 @@ class AmuletPlayer extends IsometricPlayer {
     writeByte(NetworkResponseAmulet.Player_Weapon);
     writeUInt16(index);
     final slot = weapons[index];
-    final weapon = slot.item;
+    final weapon = slot.amuletItem;
     if (weapon == null){
       writeInt16(-1);
       return;
     }
     writeInt16(weapon.index);
     writeUInt16(slot.cooldown);
+    writeUInt16(slot.cooldownDuration);
+    writeUInt16(slot.charges);
+    writeUInt16(slot.max);
   }
 
   void writePlayerTreasure(int index) {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Treasure);
     writeUInt16(index);
-    final treasure = treasures[index].item;
+    final treasure = treasures[index].amuletItem;
     if (treasure == null){
       writeInt16(-1);
       return;
@@ -1029,7 +1034,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   static ItemSlot? getEmptySlot(List<ItemSlot> items){
     for (final item in items) {
-      if (item.item == null)
+      if (item.amuletItem == null)
         return item;
     }
     return null;
@@ -1037,7 +1042,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   static int getEmptyIndex(List<ItemSlot> items){
     for (var i = 0; i < items.length; i++){
-      if (items[i].item == null)
+      if (items[i].amuletItem == null)
         return i;
     }
     return -1;
@@ -1096,7 +1101,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void assignWeaponTypeToEquippedWeapon() =>
-      weaponType = equippedWeapon?.item?.subType ?? WeaponType.Unarmed;
+      weaponType = equippedWeapon?.amuletItem?.subType ?? WeaponType.Unarmed;
 
   void unequipHead() =>
       swapWithAvailableItemSlot(equippedHelm);
@@ -1182,11 +1187,11 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   AmuletItem? getWeaponAtIndex(int index) =>
-      isValidIndex(index, weapons) ? weapons[index].item : null;
+      isValidIndex(index, weapons) ? weapons[index].amuletItem : null;
 
 
   void addToEmptyTreasureSlot(ItemSlot slot){
-    final item = slot.item;
+    final item = slot.amuletItem;
 
     if (item == null || !item.isTreasure)
       throw Exception();
@@ -1200,7 +1205,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void swapWithAvailableItemSlot(ItemSlot slot){
-    if (slot.item == null)
+    if (slot.amuletItem == null)
       return;
 
     final availableItemSlot = getEmptyItemSlot();
@@ -1228,7 +1233,7 @@ class AmuletPlayer extends IsometricPlayer {
     required AmuletItem? item,
     required int cooldown,
   }) {
-    slot.item = item;
+    slot.amuletItem = item;
     slot.cooldown = cooldown;
     notifyEquipmentDirty();
   }
@@ -1291,7 +1296,7 @@ class AmuletPlayer extends IsometricPlayer {
           return;
 
         final inventorySlot = items[index];
-        final item = inventorySlot.item;
+        final item = inventorySlot.amuletItem;
 
         if (item == null) {
           return;
@@ -1327,7 +1332,7 @@ class AmuletPlayer extends IsometricPlayer {
           swapItemSlots(this, inventorySlot, equippedShoe);
         }
         if (item.isHand){
-          if (equippedHandLeft.item == null){
+          if (equippedHandLeft.amuletItem == null){
             swapItemSlots(this, inventorySlot, equippedHandLeft);
           } else {
             swapItemSlots(this, inventorySlot, equippedHandRight);
@@ -1359,14 +1364,14 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void dropItemSlotItem(ItemSlot itemSlot){
-    final item = itemSlot.item;
+    final item = itemSlot.amuletItem;
 
     if (item == null){
       return;
     }
 
     spawnItem(item);
-    itemSlot.item = null;
+    itemSlot.amuletItem = null;
     itemSlot.cooldown = 0;
     notifyEquipmentDirty();
   }

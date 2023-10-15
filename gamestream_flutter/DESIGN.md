@@ -138,3 +138,12 @@
         - or damage
         - some provide bonus elements
         - for example five fire elements added  
+
+- spell types
+  - charges allow a spell to be used multiple times
+  - attribute the higher a charge is the more damage it does
+  - charge spell 
+  - when selected a charge spell begins charging, 
+    - it can be released any time
+    - its effectiveness is determined by its charge percentage 
+  - ultimate can only be used once it is fully charge and it gets fully depleted on use 

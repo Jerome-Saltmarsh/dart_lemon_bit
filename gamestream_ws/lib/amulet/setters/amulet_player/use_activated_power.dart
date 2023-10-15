@@ -14,7 +14,7 @@ void amuletPlayerUseActivatedPower(AmuletPlayer player) {
   }
 
   final itemSlot = weapons[activatedPowerIndex];
-  final item = itemSlot.item;
+  final item = itemSlot.amuletItem;
 
   if (item == null) {
     throw Exception();

@@ -251,7 +251,7 @@ class AmuletUI {
     final weapons = amulet.weapons;
     final itemSlotWeapon = weapons[index];
 
-    return buildWatch(itemSlotWeapon.item, (AmuletItem? amuletItem) {
+    return buildWatch(itemSlotWeapon.amuletItem, (AmuletItem? amuletItem) {
 
       // final levelCurrent = amulet.getAmuletPlayerItemLevel(amuletItem);
       // final totalLevels = amuletItem.totalLevels;
@@ -764,7 +764,7 @@ class AmuletUI {
   Widget buildItemSlot(ItemSlot itemSlot, {Color? color, Widget? onEmpty}) {
     return Container(
     margin: const EdgeInsets.all(2),
-    child: buildWatch(itemSlot.item, (item) {
+    child: buildWatch(itemSlot.amuletItem, (item) {
       return buildWatch(amulet.dragging, (dragging) => DragTarget(
               onWillAccept: (value) => true,
               onAccept: (value) {
