@@ -459,6 +459,18 @@ class RendererCharacters extends RenderGroup {
         frame: completingAction
             ? spriteShoesBehindSouth.getFramePercentage(row, actionComplete)
             : spriteShoesBehindSouth.getFrame(row: row, column: animationFrame),
+        color: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      renderSprite(
+        sprite: spriteShoesBehindWest,
+        frame: completingAction
+            ? spriteShoesBehindWest.getFramePercentage(row, actionComplete)
+            : spriteShoesBehindWest.getFrame(row: row, column: animationFrame),
         color: colorWest,
         scale: scale,
         dstX: dstX,
@@ -940,6 +952,7 @@ class RendererCharacters extends RenderGroup {
 
     final row = character.renderDirection;
     final column = character.animationFrame;
+    final spriteShadow = images.spriteGroupSkeletonShadow.fromCharacterState(character.state);
     final spriteWest = images.spriteGroupSkeletonWest.fromCharacterState(character.state);
     final spriteSouth = images.spriteGroupSkeletonSouth.fromCharacterState(character.state);
 
@@ -951,6 +964,16 @@ class RendererCharacters extends RenderGroup {
     final colorW = scene.colorWest(characterIndex);
     final colorWest = merge32BitsColors3(colorN, colorW, color);
     final colorSouth = merge32BitsColors3(colorS, colorE, color);
+
+    render.sprite(
+      sprite: spriteShadow,
+      frame: spriteShadow.getFrame(row: row, column: column),
+      color: color,
+      scale: scale,
+      dstX: character.renderX,
+      dstY: character.renderY,
+      anchorY: anchorY,
+    );
 
     render.sprite(
       sprite: spriteWest,

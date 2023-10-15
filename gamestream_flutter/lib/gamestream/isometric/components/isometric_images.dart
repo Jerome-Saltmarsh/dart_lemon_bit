@@ -48,6 +48,7 @@ class IsometricImages with IsometricComponent {
 
   late final CharacterSpriteGroup spriteGroupSkeletonWest;
   late final CharacterSpriteGroup spriteGroupSkeletonSouth;
+  late final CharacterSpriteGroup spriteGroupSkeletonShadow;
 
   late final Sprite flame0;
   late final Sprite flame1;
@@ -457,6 +458,16 @@ class IsometricImages with IsometricComponent {
       strike: await loadSprite(name: 'sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
       hurt: await loadSprite(name: 'sprites/isometric/skeleton/south/hurt', mode: AnimationMode.single),
       fire: await loadSprite(name: 'sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
+      change: emptySprite,
+    );
+
+    spriteGroupSkeletonShadow = CharacterSpriteGroup(
+      idle: await loadSprite(name: 'sprites/isometric/skeleton/shadow/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'sprites/isometric/skeleton/shadow/walk', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'sprites/isometric/skeleton/shadow/dead', mode: AnimationMode.single),
+      strike: await loadSprite(name: 'sprites/isometric/skeleton/shadow/fire', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'sprites/isometric/skeleton/shadow/hurt', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'sprites/isometric/skeleton/shadow/fire', mode: AnimationMode.single),
       change: emptySprite,
     );
 
