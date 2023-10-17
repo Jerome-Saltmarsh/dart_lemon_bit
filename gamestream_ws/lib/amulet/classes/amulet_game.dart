@@ -7,6 +7,11 @@ import 'package:gamestream_ws/packages.dart';
 
 import '../functions/item_slot/item_slot_reduce_charge.dart';
 
+enum FiendType {
+  Fallen_01,
+  Skeleton_01,
+}
+
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   AmuletGame? gameNorth;
@@ -15,78 +20,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   AmuletGame? gameWest;
 
   final String name;
-
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
   final enemyRespawnDuration = 30; // in seconds
-
-  final playerSpawnX = 2030.0;
-  final playerSpawnY = 2040.0;
-  final playerSpawnZ = 25.0;
-
   var cooldownTimer = 0;
-
-  late AmuletNpc npcGuard;
 
   AmuletGame({
     required super.scene,
     required super.time,
     required super.environment,
     required this.name,
-    this.gameNorth,
-    this.gameEast,
-    this.gameSouth,
-    this.gameWest,
   }) : super(gameType: GameType.Amulet) {
-
     spawnMonstersAtSpawnNodes();
-    characters.add(AmuletNpc(
-      characterType: CharacterType.Kid,
-      x: 2010,
-      y: 1760,
-      z: 24,
-      health: 50,
-      team: AmuletTeam.Human,
-      weaponType: WeaponType.Unarmed,
-      weaponDamage: 1,
-      weaponRange: 200,
-      weaponCooldown: 30,
-      name: "Sybil",
-      interact: (player) {
-        player.talk("Hello there", options: [
-          TalkOption("Goodbye", player.endInteraction),
-          TalkOption("Buy", player.endInteraction),
-        ]);
-      }
-    )..invincible = true
-        ..helmType = HelmType.None
-        ..bodyType = BodyType.Leather_Armour
-        ..legsType = LegType.Leather
-        ..complexion = ComplexionType.fair
-    );
-
-    npcGuard = AmuletNpc(
-      characterType: CharacterType.Kid,
-      x: 2416,
-      y: 1851,
-      z: 24,
-      health: 200,
-      weaponType: WeaponType.Bow,
-      weaponRange: 200,
-      weaponDamage: 1,
-      weaponCooldown: 30,
-      team: AmuletTeam.Human,
-      name: "Guard",
-    )
-      ..invincible = true
-      ..helmType = HelmType.Steel
-      ..bodyType = BodyType.Leather_Armour
-      ..legsType = LegType.Leather
-      ..attackDuration = 30
-      ..attackActionFrame = 20
-      ..complexion = ComplexionType.fair;
-
-    characters.add(npcGuard);
   }
 
   @override
@@ -151,16 +96,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.incrementWeaponCooldowns();
     }
   }
-
-  // @override
-  // void endCharacterAction(Character character) {
-  //   if (character.characterTypeZombie){
-  //     setCharacterStateIdle(character, duration: randomInt(50, 250));
-  //     return;
-  //   }
-  //
-  //   super.endCharacterAction(character);
-  // }
 
   static void validate() => AmuletItem.values.forEach((item) => item.validate());
 
@@ -490,18 +425,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  AmuletPlayer buildPlayer() => AmuletPlayer(
-      amulet: this,
-      itemLength: 6,
-      x: playerSpawnX,
-      y: playerSpawnY,
-      z: playerSpawnZ,
-  )..level = 1
-   ..experience = 0
-   ..complexion = ComplexionType.fair
-   ..experienceRequired = getExperienceRequiredForLevel(2);
-
-  @override
   void onCharacterCollectedGameObject(
       Character character,
       GameObject gameObject,
@@ -623,5 +546,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     itemSlot.charges = max;
     itemSlot.cooldown = 0;
     itemSlot.cooldownDuration = itemStats.cooldown;
+  }
+
+  @override
+  AmuletPlayer buildPlayer() {
+    // TODO: implement buildPlayer
+    throw UnimplementedError();
   }
 }

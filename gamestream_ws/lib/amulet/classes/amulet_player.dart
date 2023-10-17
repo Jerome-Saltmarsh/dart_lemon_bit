@@ -1,8 +1,5 @@
 
 import 'package:gamestream_ws/isometric.dart';
-import 'package:gamestream_ws/isometric/position.dart';
-import 'package:gamestream_ws/isometric/position.dart';
-import 'package:gamestream_ws/isometric/position.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import '../functions/player_swap_item_slots.dart';
