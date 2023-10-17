@@ -100,7 +100,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void updatePlayers() {
-    const padding = 50.0;
+    const padding = 25.0;
     final characters = this.characters;
     final gameNorth = this.gameNorth;
     var length = characters.length;
@@ -116,6 +116,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           src: this,
           target: gameNorth,
         );
+        character.x = gameNorth.scene.rowLength - 50;
+        character.y = character.y.clamp(0, gameNorth.scene.columnLength);
         i--;
         length = characters.length;
         continue;
