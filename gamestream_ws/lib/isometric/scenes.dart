@@ -13,10 +13,12 @@ class Scenes {
   late Scene moba;
   late Scene mmoTown;
   late Scene road01;
+  late Scene road02;
 
   Future load() async {
       mmoTown = await readSceneFromFile('mmo');
       road01 = await readSceneFromFile('road_01');
+      road02 = await readSceneFromFile('road_02');
   }
 
   Future<Scene> readSceneFromFile(String sceneName) async {

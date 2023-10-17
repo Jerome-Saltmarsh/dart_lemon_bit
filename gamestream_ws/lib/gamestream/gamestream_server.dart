@@ -28,6 +28,7 @@ class GamestreamServer {
 
   late final AmuletGame amuletGameTown;
   late final AmuletGame amuletRoad01;
+  late final AmuletGame amuletRoad02;
 
   final bool admin;
 
@@ -69,11 +70,24 @@ class GamestreamServer {
         name: 'road 1',
     );
 
-    amuletGameTown.gameNorth = amuletRoad01;
-    amuletRoad01.gameSouth = amuletGameTown;
+    amuletRoad02 = AmuletGame(
+        scene: scenes.road02,
+        time: amuletTime,
+        environment: amuletEnvironment,
+        name: 'road 2',
+    );
 
     games.add(amuletGameTown);
     games.add(amuletRoad01);
+    games.add(amuletRoad02);
+
+    connectNorthSouth(amuletGameTown, amuletRoad01);
+    connectNorthSouth(amuletRoad01, amuletRoad02);
+  }
+
+  void connectNorthSouth(AmuletGame a, AmuletGame b){
+    a.gameNorth = b;
+    b.gameSouth = a;
   }
 
   void _initializeUpdateTimer() {
