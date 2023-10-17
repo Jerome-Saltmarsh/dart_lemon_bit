@@ -1,12 +1,6 @@
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/packages.dart';
 
-
-enum FiendType {
-  Fallen_01,
-  Skeleton_01,
-}
-
 class AmuletGameTown extends AmuletGame {
 
   final chanceOfDropItemOnGrassCut = 0.25;
@@ -26,9 +20,10 @@ class AmuletGameTown extends AmuletGame {
     required super.time,
     required super.environment,
     required super.name,
+    required super.fiendTypes,
   }) {
 
-    spawnMonstersAtSpawnNodes();
+    spawnFiendsAtSpawnNodes();
     characters.add(AmuletNpc(
         characterType: CharacterType.Kid,
         x: 2010,

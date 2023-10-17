@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_town.dart';
+import 'package:gamestream_ws/amulet/classes/fiend_type.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -60,14 +61,20 @@ class GamestreamServer {
       scene: scenes.mmoTown,
       time: amuletTime,
       environment: amuletEnvironment,
+      fiendTypes: [
+        FiendType.Fallen_01,
+      ],
       name: 'town',
     );
 
     amuletRoad01 = AmuletGame(
-        scene: scenes.road01,
-        time: amuletTime,
-        environment: amuletEnvironment,
-        name: 'road 1',
+      scene: scenes.road01,
+      time: amuletTime,
+      environment: amuletEnvironment,
+      name: 'road 1',
+      fiendTypes: [
+        FiendType.Fallen_01,
+      ],
     );
 
     amuletRoad02 = AmuletGame(
@@ -75,6 +82,10 @@ class GamestreamServer {
         time: amuletTime,
         environment: amuletEnvironment,
         name: 'road 2',
+        fiendTypes: [
+          FiendType.Fallen_01,
+          FiendType.Skeleton_01,
+        ],
     );
 
     games.add(amuletGameTown);

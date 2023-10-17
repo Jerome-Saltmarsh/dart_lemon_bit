@@ -6,11 +6,8 @@ import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import '../functions/item_slot/item_slot_reduce_charge.dart';
+import 'fiend_type.dart';
 
-enum FiendType {
-  Fallen_01,
-  Skeleton_01,
-}
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
@@ -19,6 +16,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   AmuletGame? gameEast;
   AmuletGame? gameWest;
 
+  final List<FiendType> fiendTypes;
   final String name;
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
@@ -30,8 +28,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.time,
     required super.environment,
     required this.name,
+    required this.fiendTypes,
   }) : super(gameType: GameType.Amulet) {
-    spawnMonstersAtSpawnNodes();
+    spawnFiendsAtSpawnNodes();
   }
 
   @override
@@ -99,23 +98,23 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   static void validate() => AmuletItem.values.forEach((item) => item.validate());
 
-  void spawnMonstersAtSpawnNodes() {
+  void spawnFiendsAtSpawnNodes() {
     final marks = scene.marks;
     final length = marks.length;
-    for (var i = 0; i < length; i++){
+    for (var i = 0; i < length; i++) {
       final markValue = marks[i];
       final markType = MarkType.getType(markValue);
-      if (markType != MarkType.Spawn_Fallen)
-         continue;
-
+      if (markType != MarkType.Spawn_Fallen){
+        continue;
+      }
       final markIndex = MarkType.getIndex(markValue);
-       for (var j = 0; j < 3; j++){
-         if (randomBool()){
-           spawnFallenAtIndex(markIndex);
-         } else {
-           spawnSkeletonArcherAtIndex(markIndex);
-         }
-       }
+      for (var j = 0; j < 3; j++) {
+        if (randomBool()) {
+          spawnFallenAtIndex(markIndex);
+        } else {
+          spawnSkeletonArcherAtIndex(markIndex);
+        }
+      }
     }
   }
 
