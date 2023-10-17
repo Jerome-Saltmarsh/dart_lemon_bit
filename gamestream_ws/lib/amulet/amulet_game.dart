@@ -1,13 +1,11 @@
+import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
 import 'package:gamestream_ws/gamestream/gamestream_server.dart';
 import 'package:gamestream_ws/isometric.dart';
-
 import 'package:gamestream_ws/packages.dart';
 
-import 'talk_option.dart';
-import 'mmo_gameobject.dart';
-import 'mmo_npc.dart';
-import 'amulet_player.dart';
+import 'functions/item_slot/item_slot_reduce_charge.dart';
+import 'functions/item_slot/item_slot_set_charges_max.dart';
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
@@ -195,7 +193,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (activeItemSlot == null) {
       return;
-      // throw Exception('activeItemSlot is null');
     }
 
     clearActivatedPowerIndex(character);
@@ -512,5 +509,63 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final markValue = randomItem(spawnFallens.toList());
     final index = MarkType.getIndex(markValue);
     spawnFallenAtIndex(index);
+  }
+
+  @override
+  void characterAttack(Character character) {
+    if (character is AmuletPlayer){
+      final equippedWeaponIndex = character.equippedWeaponIndex;
+      final weapons = character.weapons;
+      final equippedWeapon = weapons[equippedWeaponIndex];
+
+      if (!itemSlotChargesRemaining(equippedWeapon)) {
+        character.writeGameError(GameError.Insufficient_Weapon_Charges);
+        return;
+      }
+
+      itemSlotReduceCharge(equippedWeapon);
+    }
+    super.characterAttack(character);
+  }
+
+  bool itemSlotChargesRemaining(ItemSlot itemSlot) => itemSlot.charges > 0;
+
+  void onPlayerLoaded(AmuletPlayer player) {
+    playerRefillItemSlots(
+        player: player,
+        itemSlots: player.weapons,
+    );
+  }
+
+  void playerRefillItemSlots({
+    required AmuletPlayer player,
+    required List<ItemSlot> itemSlots,
+  }){
+    for (final itemSlot in itemSlots) {
+      playerRefillItemSlot(
+          player: player,
+          itemSlot: itemSlot,
+      );
+    }
+    player.writeWeapons();
+  }
+
+  void playerRefillItemSlot({
+    required AmuletPlayer player,
+    required ItemSlot itemSlot,
+  }){
+    final amuletItem = itemSlot.amuletItem;
+    if (amuletItem == null) {
+      return;
+    }
+    final itemStats = player.getItemStatsForItemSlot(itemSlot);
+    if (itemStats == null) {
+      throw Exception('itemStats == null');
+    }
+    final max = itemStats.charges;
+    itemSlot.max = max;
+    itemSlot.charges = max;
+    itemSlot.cooldown = 0;
+    itemSlot.cooldownDuration = itemStats.cooldown;
   }
 }

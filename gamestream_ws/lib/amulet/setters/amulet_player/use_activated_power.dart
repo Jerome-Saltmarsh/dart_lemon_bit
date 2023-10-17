@@ -1,5 +1,5 @@
 import 'package:gamestream_ws/amulet/amulet_player.dart';
-import 'use_amulet_item.dart';
+import '../../functions/player_use_amulet_item.dart';
 
 void amuletPlayerUseActivatedPower(AmuletPlayer player) {
   final activatedPowerIndex = player.activatedPowerIndex;
@@ -24,5 +24,5 @@ void amuletPlayerUseActivatedPower(AmuletPlayer player) {
   if (stats != null) {
     itemSlot.cooldown = stats.cooldown;
   }
-  useAmuletItem(player, item);
+  playerUseAmuletItem(player, item);
 }

@@ -58,7 +58,7 @@ class Character extends Collider {
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
   var _goal = CharacterGoal.Idle;
-  var forceShot = false;
+  var forceAttack = false;
 
   int get goal => _goal;
 

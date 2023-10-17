@@ -751,6 +751,7 @@ class Connection with ByteReader {
                 character: character,
             );
             writeJsonToAmuletPlayer(character, player);
+            player.game.onPlayerLoaded(player);
             return;
           }
         }

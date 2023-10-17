@@ -265,7 +265,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
           player.lookAtMouse();
-          player.forceShot = true;
+          player.forceAttack = true;
           return;
         } else {
           player.deselectActivatedPower();
@@ -301,7 +301,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
           player.lookAtMouse();
-          player.forceShot = true;
+          player.forceAttack = true;
           return;
         } else {
           player.setDestinationToMouse();
@@ -1015,6 +1015,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateCharacters() {
+    final characters = this.characters;
     for (var i = 0; i < characters.length; i++) {
       updateCharacter(characters[i]);
     }
@@ -2366,8 +2367,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (character.forceShot){
-      characterGoalForceShot(character);
+    if (character.forceAttack){
+      characterGoalForceAttack(character);
       return;
     }
 
@@ -2407,11 +2408,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void characterGoalForceShot(Character character) {
-    character.goal = CharacterGoal.Force_Shot;
+  void characterGoalForceAttack(Character character) {
+    character.goal = CharacterGoal.Force_Attack;
     character.lookAtTarget();
     characterAttack(character);
-    character.forceShot = false;
+    character.forceAttack = false;
   }
 
   void characterActionIdle(Character character) {
@@ -2689,13 +2690,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       type: NodeType.Empty,
     );
   }
-
-  // void setCharacterStateIdle(Character character, {int duration = 0}) {
-  //   character.setCharacterStateIdle(duration: duration);
-  //   character.setDestinationToCurrentPosition();
-  //   character.clearPath();
-  //   character.clearTarget();
-  // }
 
   void characterAttack(Character character) {
     character.clearPath();

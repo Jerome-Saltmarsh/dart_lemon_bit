@@ -1,9 +1,9 @@
 
 import 'package:gamestream_ws/amulet.dart';
 
-import 'set_item_slot_value.dart';
+import '../setters/amulet_player/set_item_slot_value.dart';
 
-void swapItemSlots(AmuletPlayer player, ItemSlot a, ItemSlot b){
+void playerSwapItemSlots(AmuletPlayer player, ItemSlot a, ItemSlot b){
   final aItem = a.amuletItem;
   final aCooldown = a.cooldown;
   final bItem = b.amuletItem;

@@ -1,9 +1,9 @@
 import 'package:gamestream_ws/amulet/amulet_player.dart';
 import 'package:gamestream_ws/packages/common/src.dart';
 
-import '../../../isometric/functions/character/set_character_state_striking.dart';
+import '../../isometric/functions/character/set_character_state_striking.dart';
 
-void useAmuletItem(AmuletPlayer player, AmuletItem item) {
+void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
 
   switch (item.selectAction) {
     case AmuletItemAction.Equip:

@@ -2,7 +2,7 @@
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import 'setters/amulet_player/swap_item_slots.dart';
+import 'functions/player_swap_item_slots.dart';
 import 'getters/get_player_level_for_amulet_item.dart';
 import 'item_slot.dart';
 import 'amulet_game.dart';
@@ -62,27 +62,11 @@ class AmuletPlayer extends IsometricPlayer {
     characterType = CharacterType.Kid;
     hurtable = false;
     hurtStateBusy = false;
-    setItemsLength(itemLength);
-    addItem(AmuletItem.Health_Potion);
-    addItem(AmuletItem.Sapphire_Pendant);
-    addItem(AmuletItem.Steel_Helmet);
-    addItem(AmuletItem.Shoe_Leather_Boots);
-
-    addItemToEmptyWeaponSlot(AmuletItem.Rusty_Old_Sword);
-    addItemToEmptyWeaponSlot(AmuletItem.Staff_Of_Frozen_Lake);
-    addItemToEmptyWeaponSlot(AmuletItem.Holy_Bow);
-    addItemToEmptyWeaponSlot(AmuletItem.Blink_Dagger);
-
-    equipBody(AmuletItem.Basic_Leather_Armour);
-    equipLegs(AmuletItem.Travellers_Pants);
-
-    elementPoints = 1;
     health = maxHealth;
     equippedWeaponIndex = 0;
     active = false;
     equipmentDirty = true;
-    complexion = ComplexionType.fair;
-    name = 'new_player';
+    setItemsLength(itemLength);
 
     writeAmuletElements();
     writeElementPoints();
@@ -147,12 +131,12 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
 
-  ItemStat? getStatsForItemSlot(ItemSlot itemSlot) {
-    final item = itemSlot.amuletItem;
-    if (item == null){
+  ItemStat? getItemStatsForItemSlot(ItemSlot itemSlot) {
+    final amuletItem = itemSlot.amuletItem;
+    if (amuletItem == null){
       return null;
     }
-    return getStatsForAmuletItem(item);
+    return getStatsForAmuletItem(amuletItem);
   }
 
 
@@ -213,12 +197,12 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   int get maxHealth {
     var health = healthBase;
-    health += getStatsForItemSlot(equippedHelm)?.health ?? 0;
-    health += getStatsForItemSlot(equippedBody)?.health ?? 0;
-    health += getStatsForItemSlot(equippedLegs)?.health ?? 0;
+    health += getItemStatsForItemSlot(equippedHelm)?.health ?? 0;
+    health += getItemStatsForItemSlot(equippedBody)?.health ?? 0;
+    health += getItemStatsForItemSlot(equippedLegs)?.health ?? 0;
 
     for (final treasure in treasures){
-      health += getStatsForItemSlot(treasure)?.health ?? 0;
+      health += getItemStatsForItemSlot(treasure)?.health ?? 0;
     }
 
     return health;
@@ -227,9 +211,9 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   double get runSpeed {
     var base = 1.0;
-    base += getStatsForItemSlot(equippedHelm)?.movement ?? 0;
-    base += getStatsForItemSlot(equippedBody)?.movement ?? 0;
-    base += getStatsForItemSlot(equippedLegs)?.movement ?? 0;
+    base += getItemStatsForItemSlot(equippedHelm)?.movement ?? 0;
+    base += getItemStatsForItemSlot(equippedBody)?.movement ?? 0;
+    base += getItemStatsForItemSlot(equippedLegs)?.movement ?? 0;
     return base;
   }
 
@@ -531,8 +515,13 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    if (itemSlot.cooldown > 0) {
-      writeAmuletError('${itemSlot.amuletItem?.name} is cooling down');
+    // if (itemSlot.cooldown > 0) {
+    //   writeAmuletError('${itemSlot.amuletItem?.name} is cooling down');
+    //   return;
+    // }
+
+    if (itemSlot.charges <= 0) {
+      writeAmuletError('${itemSlot.amuletItem?.name} has no charges');
       return;
     }
 
@@ -657,19 +646,19 @@ class AmuletPlayer extends IsometricPlayer {
         }
         break;
       case ItemType.Helm:
-        swapItemSlots(this, equippedHelm, selected);
+        playerSwapItemSlots(this, equippedHelm, selected);
         break;
       case ItemType.Body:
-        swapItemSlots(this, equippedBody, selected);
+        playerSwapItemSlots(this, equippedBody, selected);
         break;
       case ItemType.Legs:
-        swapItemSlots(this, equippedLegs, selected);
+        playerSwapItemSlots(this, equippedLegs, selected);
         break;
       case ItemType.Hand:
         if (equippedHandLeft.amuletItem == null){
-          swapItemSlots(this, equippedHandLeft, selected);
+          playerSwapItemSlots(this, equippedHandLeft, selected);
         } else {
-          swapItemSlots(this, equippedHandRight, selected);
+          playerSwapItemSlots(this, equippedHandRight, selected);
         }
         break;
     }
@@ -1200,7 +1189,7 @@ class AmuletPlayer extends IsometricPlayer {
       writeAmuletError("Treasure slots full");
       return;
     }
-    swapItemSlots(this, slot, emptyTreasureSlot);
+    playerSwapItemSlots(this, slot, emptyTreasureSlot);
   }
 
   void swapWithAvailableItemSlot(ItemSlot slot){
@@ -1212,7 +1201,7 @@ class AmuletPlayer extends IsometricPlayer {
       reportInventoryFull();
       return;
     }
-    swapItemSlots(this, availableItemSlot, slot);
+    playerSwapItemSlots(this, availableItemSlot, slot);
   }
 
   ItemSlot? getEmptyItemSlot() => getEmptySlot(items);
@@ -1283,77 +1272,6 @@ class AmuletPlayer extends IsometricPlayer {
       SlotType.Weapons => weapons[index]
     };
 
-  void useInventorySlot(SlotType slotType, int index) {
-    if (index < 0)
-      return;
-
-    switch (slotType){
-
-      case SlotType.Weapons:
-        selectWeapon(index);
-        return;
-      case SlotType.Items:
-        if (index >= items.length)
-          return;
-
-        final inventorySlot = items[index];
-        final item = inventorySlot.amuletItem;
-
-        if (item == null) {
-          return;
-        }
-
-        if (item.isWeapon) {
-          final emptyWeaponSlot = getEmptyWeaponSlot();
-          if (emptyWeaponSlot != null){
-            swapItemSlots(this, inventorySlot, emptyWeaponSlot);
-            if (equippedWeaponIndex == -1){
-              equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
-            }
-          } else {
-            writeGameError(GameError.Weapon_Rack_Full);
-          }
-        } else
-        if (item.isTreasure) {
-          final emptyTreasureSlot = getEmptyTreasureSlot();
-          if (emptyTreasureSlot != null){
-            swapItemSlots(this, inventorySlot, emptyTreasureSlot);
-          }
-        } else
-        if (item.isHelm){
-          swapItemSlots(this, inventorySlot, equippedHelm);
-        } else
-        if (item.isLegs){
-          swapItemSlots(this, inventorySlot, equippedLegs);
-        } else
-        if (item.isBody){
-          swapItemSlots(this, inventorySlot, equippedBody);
-        } else
-        if (item.isShoes){
-          swapItemSlots(this, inventorySlot, equippedShoe);
-        }
-        if (item.isHand){
-          if (equippedHandLeft.amuletItem == null){
-            swapItemSlots(this, inventorySlot, equippedHandLeft);
-          } else {
-            swapItemSlots(this, inventorySlot, equippedHandRight);
-          }
-        }
-
-        if (item.isConsumable){
-          final consumableType = item.subType;
-          consumeItem(consumableType);
-          clearSlot(inventorySlot);
-          writePlayerEventItemTypeConsumed(consumableType);
-          return;
-        }
-        break;
-
-      default:
-        swapWithAvailableItemSlot(getItemSlot(slotType, index));
-        break;
-    }
-  }
 
   void consumeItem(int consumableType) {
       switch (consumableType) {

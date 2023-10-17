@@ -1,6 +1,7 @@
 import 'package:gamestream_ws/packages.dart';
 
 import 'amulet_player.dart';
+import 'functions/player_use_inventory_slot.dart';
 
 void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
   if (arguments.isEmpty) return;
@@ -54,7 +55,7 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
     case NetworkRequestInventory.Use:
       final slotTypeIndex = arguments[2];
       final srcIndex = arguments[3];
-      player.useInventorySlot(SlotType.values[slotTypeIndex], srcIndex);
+      playerUseInventorySlot(player, SlotType.values[slotTypeIndex], srcIndex);
       break;
 
     case NetworkRequestInventory.Drop:

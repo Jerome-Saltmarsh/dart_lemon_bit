@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
-import 'package:gamestream_flutter/amulet/classes/item_slot.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -10,6 +9,8 @@ import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'functions/get_amulet_element_colofr.dart';
+import 'ui/builders/build_item_slot.dart';
+import 'ui/builders/build_weapon_slot_at_index.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/src.dart';
@@ -153,7 +154,7 @@ class AmuletUI {
     child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(amulet.weapons.length, buildWeaponSlotAtIndex),
+          children: List.generate(amulet.weapons.length, (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
         ),
   );
 
@@ -163,11 +164,14 @@ class AmuletUI {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
                 amulet.treasures.length,
-                (i) => buildItemSlot(amulet.treasures[i], onEmpty: IsometricIcon(
-                  iconType: IconType.Inventory_Treasure,
-                  color: Colors.black12.value,
-                  scale: 1,
-                )
+                (i) => buildItemSlot(
+                    amulet.treasures[i],
+                    amulet: amulet,
+                    onEmpty: IsometricIcon(
+                      iconType: IconType.Inventory_Treasure,
+                      color: Colors.black12.value,
+                      scale: 1,
+                    )
                 )
             )
         ),
@@ -221,104 +225,6 @@ class AmuletUI {
         ));
   }
 
-  Widget buildWeaponSlotAtIndex(int index, {double size = 64}) {
-
-    final backgroundSelectedWeapon = buildWatch(
-        amulet.equippedWeaponIndex,
-        (equippedWeaponIndex) => GSContainer(
-          color: index == equippedWeaponIndex
-              ? Colors.green
-              : Colors.white12,
-              // ? Colors.white12
-              // : Colors.black12,
-          width: size,
-          height: size,
-          rounded: true,
-        ));
-
-    final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
-      if (index != activatedPowerIndex)
-        return nothing;
-
-      return GSContainer(
-        color: Colors.green.withOpacity(0.5),
-        width: size,
-        height: size,
-        rounded: true,
-      );
-    });
-
-    final weapons = amulet.weapons;
-    final itemSlotWeapon = weapons[index];
-
-    return buildWatch(itemSlotWeapon.amuletItem, (AmuletItem? amuletItem) {
-
-      return Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                backgroundSelectedWeapon,
-                backgroundActivePower,
-                Positioned(
-                    child: buildItemSlot(
-                        amulet.weapons[index],
-                        color: Colors.transparent
-                    )
-                ),
-                Positioned(
-                    top: 8,
-                    left: 8,
-                    child: buildText(
-                      const['A', 'S', 'D', 'F'][index],
-                      color: Colors.white70,
-                    )
-                ),
-                Positioned(
-                    bottom: 8,
-                    right: 8,
-                    child: buildWatch(
-                        amulet.weapons[index].cooldownPercentage,
-                            (cooldownPercentage) => cooldownPercentage <= 0 ? nothing: buildText(cooldownPercentage, color: Colors.red)
-                    )
-                ),
-                Positioned(
-                    bottom: 8,
-                    left: 8,
-                    child: buildWatch(
-                        amulet.weapons[index].charges, buildText
-                    )
-                ),
-                Positioned(
-                    top: 8,
-                    right: 8,
-                    child: buildWatch(
-                        amulet.weapons[index].max, buildText
-                    )
-                )
-              ],
-            ),
-          ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Container(width: 8, height: 8, color: Colors.white,),
-          //     width4,
-          //     Container(width: 8, height: 8, color: Colors.white,),
-          //     width4,
-          //     Container(width: 8, height: 8, color: Colors.white38,),
-          //   ],
-          // )
-        ],
-      );
-
-
-    });
-
-
-  }
 
   // Widget buildItemHoverDialog({double edgePadding = 150}) {
   //
@@ -494,12 +400,12 @@ class AmuletUI {
       children: [
         Column(
             children: List.generate(
-                amulet.items.length ~/ 2, (index) => buildItemSlot(amulet.items[index]),
+                amulet.items.length ~/ 2, (index) => buildItemSlot(amulet.items[index], amulet: amulet),
                 growable: false)
         ),
         Column(
             children: List.generate(
-                amulet.items.length ~/ 2, (index) => buildItemSlot(amulet.items[index + (amulet.items.length ~/ 2)]),
+                amulet.items.length ~/ 2, (index) => buildItemSlot(amulet.items[index + (amulet.items.length ~/ 2)], amulet: amulet),
                 growable: false)
         ),
       ],
@@ -516,34 +422,49 @@ class AmuletUI {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildItemSlot(amulet.equippedHelm, onEmpty: IsometricIcon(
-          iconType: IconType.Inventory_Helm,
-          color: Colors.black12.value,
-          scale: 0.3,
-        )),
+        buildItemSlot(
+            amulet.equippedHelm,
+            amulet: amulet,
+            onEmpty: IsometricIcon(
+              iconType: IconType.Inventory_Helm,
+              color: Colors.black12.value,
+              scale: 0.3,
+            )
+        ),
         Row(
           children: [
-            buildItemSlot(amulet.equippedHandLeft, onEmpty: IsometricIcon(
-              iconType: IconType.Inventory_Glove_Left,
-              color: Colors.black12.value,
-              scale: 0.6,
-            )),
+            buildItemSlot(
+                amulet.equippedHandLeft,
+                amulet: amulet,
+                onEmpty: IsometricIcon(
+                  iconType: IconType.Inventory_Glove_Left,
+                  color: Colors.black12.value,
+                  scale: 0.6,
+                )
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildItemSlot(amulet.equippedBody, onEmpty: IsometricIcon(
+                buildItemSlot(amulet.equippedBody,
+                    amulet: amulet,
+                    onEmpty: IsometricIcon(
+
                   iconType: IconType.Inventory_Armour,
                   color: Colors.black12.value,
                   scale: 1,
                 )),
-                buildItemSlot(amulet.equippedLegs, onEmpty: IsometricIcon(
+                buildItemSlot(amulet.equippedLegs,
+                    amulet: amulet,
+                    onEmpty: IsometricIcon(
                   iconType: IconType.Inventory_Legs,
                   color: Colors.black12.value,
                   scale: 0.6,
                 )),
               ],
             ),
-            buildItemSlot(amulet.equippedHandRight, onEmpty: IsometricIcon(
+            buildItemSlot(amulet.equippedHandRight,
+                amulet: amulet,
+                onEmpty: IsometricIcon(
               iconType: IconType.Inventory_Glove_Right,
               color: Colors.black12.value,
               scale: 0.6,
@@ -552,7 +473,9 @@ class AmuletUI {
           ],
         ),
 
-        buildItemSlot(amulet.equippedShoes, onEmpty: IsometricIcon(
+        buildItemSlot(amulet.equippedShoes,
+            amulet: amulet,
+            onEmpty: IsometricIcon(
           iconType: IconType.Inventory_Shoes,
           color: Colors.black12.value,
           scale: 0.6,
@@ -774,52 +697,6 @@ class AmuletUI {
         )
     );
   }
-
-  Widget buildItemSlot(ItemSlot itemSlot, {Color? color, Widget? onEmpty}) {
-    return Container(
-    margin: const EdgeInsets.all(2),
-    child: buildWatch(itemSlot.amuletItem, (item) {
-      return buildWatch(amulet.dragging, (dragging) => DragTarget(
-              onWillAccept: (value) => true,
-              onAccept: (value) {
-                if (value is! ItemSlot) return;
-                amulet.reportItemSlotDragged(src: value, target: itemSlot);
-              },
-              builder: (context, data, rejectData) => Container(
-                  width: 64.0,
-                  height: 64.0,
-                  color: dragging != null && itemSlot.acceptsDragFrom(dragging)
-                      ? amulet.colors.teal_4
-                      : (color ?? amulet.colors.brown_3),
-                  alignment: Alignment.center,
-                  child: item == null
-                      ? (onEmpty ?? nothing)
-                      : Draggable(
-                    data: itemSlot,
-                    feedback: MMOItemImage(item: item, size: 64),
-                    onDragStarted: () {
-                      this.amulet.dragging.value = itemSlot;
-                    },
-                    onDragEnd: (details) {
-                      if (amulet.engine.mouseOverCanvas){
-                        amulet.dropItemSlot(itemSlot);
-                      }
-                      this.amulet.dragging.value = null;
-                    },
-                    child: onPressed(
-                      onRightClick: () =>
-                          amulet.dropItemSlot(itemSlot),
-                      action: () => amulet.useItemSlot(itemSlot),
-                      child: MMOItemImage(item: item, size: 64),
-                    ),
-                  ),
-                ),
-            ));
-    }
-           ),
-  );
-  }
-
 
   Widget buildButtonClose({required Function action}) => onPressed(child: Container(
       width: 80,
