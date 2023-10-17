@@ -103,7 +103,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     const padding = 25.0;
     final characters = this.characters;
     final gameNorth = this.gameNorth;
+    final gameSouth = this.gameSouth;
     var length = characters.length;
+
+    final maxX = scene.rowLength - padding;
+
     for (var i = 0; i < length; i++){
       final character = characters[i];
       if (character is! AmuletPlayer){
@@ -121,6 +125,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         i--;
         length = characters.length;
         continue;
+      }
+
+      if (x > maxX && gameSouth != null){
+        playerChangeGame(
+          player: character,
+          src: this,
+          target: gameSouth,
+        );
+        character.x = padding + 25;
+        character.y = character.y.clamp(0, gameSouth.scene.columnLength);
+        i--;
+        length = characters.length;
       }
     }
 
