@@ -10,6 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
+- initialize new players with armour and weapons
 - fix render front
 - feature separate regions 
 - feature item slot charges

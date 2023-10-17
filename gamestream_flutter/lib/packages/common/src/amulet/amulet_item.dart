@@ -33,7 +33,7 @@ enum AmuletItem {
       quantity: 4,
     ),
   ),
-  Rusty_Old_Sword(
+  Weapon_Rusty_Old_Sword(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
@@ -56,7 +56,7 @@ enum AmuletItem {
       earth: 5,
     ),
   ),
-  Staff_Of_Flames(
+  Weapon_Staff_Of_Flames(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Unique,
     type: ItemType.Weapon,
@@ -65,7 +65,7 @@ enum AmuletItem {
     performDuration: 25,
     level1: ItemStat(information: 'An old blunt sword'),
   ),
-  Staff_Of_Frozen_Lake(
+  Weapon_Staff_Of_Frozen_Lake(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
@@ -74,7 +74,7 @@ enum AmuletItem {
     performDuration: 20,
     level1: ItemStat(information: 'A powerful staff that eliminates cold'),
   ),
-  Old_Bow(
+  Weapon_Old_Bow(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
@@ -100,7 +100,7 @@ enum AmuletItem {
       cooldown: 3,
     ),
   ),
-  Holy_Bow(
+  Weapon_Holy_Bow(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
@@ -131,14 +131,14 @@ enum AmuletItem {
       information: 'A mythical bow which does a lot of damage',
     ),
   ),
-  Steel_Helmet(
+  Helm_Steel(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
     subType: HelmType.Steel,
     level1: ItemStat(information: 'A common steel helmet'),
   ),
-  Wizards_Hat(
+  Helm_Wizards_Hat(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Helm,
@@ -146,12 +146,26 @@ enum AmuletItem {
     level1: ItemStat(
         information: 'A hat commonly worn by students of magic school'),
   ),
-  Travellers_Pants(
+  Pants_Travellers(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Legs,
     subType: LegType.Leather,
     level1: ItemStat(information: 'Common pants'),
+  ),
+  Pants_Squires(
+    selectAction: AmuletItemAction.Equip,
+    quality: AmuletItemQuality.Common,
+    type: ItemType.Legs,
+    subType: LegType.Leather,
+    level1: ItemStat(information: 'Common pants'),
+  ),
+  Pants_Plated(
+    selectAction: AmuletItemAction.Equip,
+    quality: AmuletItemQuality.Unique,
+    type: ItemType.Legs,
+    subType: LegType.Leather,
+    level1: ItemStat(information: 'Pants of higher quality'),
   ),
   Gauntlet(
     selectAction: AmuletItemAction.Equip,
@@ -160,28 +174,14 @@ enum AmuletItem {
     subType: HandType.Gauntlets,
     level1: ItemStat(information: 'Common gauntlets'),
   ),
-  Squires_Pants(
-    selectAction: AmuletItemAction.Equip,
-    quality: AmuletItemQuality.Common,
-    type: ItemType.Legs,
-    subType: LegType.Leather,
-    level1: ItemStat(information: 'Common pants'),
-  ),
-  Knights_Pants(
-    selectAction: AmuletItemAction.Equip,
-    quality: AmuletItemQuality.Unique,
-    type: ItemType.Legs,
-    subType: LegType.Leather,
-    level1: ItemStat(information: 'Pants of higher quality'),
-  ),
-  Worn_Shirt_Blue(
+  Armor_Shirt_Blue_Worn(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
     level1: ItemStat(information: 'A common blue shirt'),
   ),
-  Basic_Leather_Armour(
+  Armor_Leather_Basic(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
@@ -202,14 +202,14 @@ enum AmuletItem {
     subType: ShoeType.Iron_Plates,
     level1: ItemStat(information: 'Heavy boots which provide good defense'),
   ),
-  Ocean_Boots(
+  Shoe_Ocean_Boots(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     level1: ItemStat(information: 'Commonly worn by water mages'),
   ),
-  Storm_Boots(
+  Shoe_Storm_Boots(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Shoes,

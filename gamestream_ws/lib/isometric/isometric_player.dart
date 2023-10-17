@@ -6,6 +6,7 @@ import 'package:gamestream_ws/editor/isometric_editor.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'package:lemon_byte/byte_writer.dart';
+import 'package:typedef/json.dart';
 
 
 import 'collider.dart';
@@ -24,6 +25,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   static const Cache_Length = 200;
 
+  final data = Json();
   var persistOnDisconnect = true;
   var userId = "";
   var uuid = "";

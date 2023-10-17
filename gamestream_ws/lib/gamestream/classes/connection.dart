@@ -55,7 +55,7 @@ class Connection with ByteReader {
     if (player != null) {
       if (player is IsometricPlayer && player.persistOnDisconnect){
         final character = mapIsometricPlayerToJson(player);
-        character.remove('lock_date');
+        character.remove('auto_save');
         server.userService.saveUserCharacter(
             userId: player.userId,
             character: character,
@@ -658,12 +658,11 @@ class Connection with ByteReader {
     joinGame(game);
   }
 
-  Player joinGame(Game game){
+  void joinGame(Game game){
     final player = game.createPlayer();
+    _player = player;
     game.players.add(player);
-    _player = _player = player;
     player.writeGameType();
-    return player;
   }
 
   void errorInsufficientResources(){
@@ -736,7 +735,7 @@ class Connection with ByteReader {
           final uuid = character.getString('uuid');
           if (uuid == characterId) {
             final nowUtc = DateTime.now().toUtc();
-            final lockDateIso8601String = character.tryGetString('lock_date');
+            final lockDateIso8601String = character.tryGetString('auto_save');
             if (lockDateIso8601String != null && !server.admin){
               final lockDate = DateTime.parse(lockDateIso8601String);
               final lockDuration = nowUtc.difference(lockDate);
@@ -749,7 +748,7 @@ class Connection with ByteReader {
                 return;
               }
             }
-            character['lock_date'] = nowUtc.toIso8601String();
+            character['auto_save'] = nowUtc.toIso8601String();
             userService.saveUserCharacter(
                 userId: userId,
                 character: character,
@@ -773,7 +772,7 @@ class Connection with ByteReader {
   }
 
   void playerJoinAmuletTown() {
-    _player = joinGame(server.amuletGameTown);
+    joinGame(server.amuletGameTown);
   }
 
   void cancelSubscription() {
@@ -1004,14 +1003,12 @@ class Connection with ByteReader {
     }
 
     final characterJson = mapIsometricPlayerToJson(player);
-    characterJson['lock_date'] = getLockDate();
+    characterJson['auto_save'] = DateTime.now().toUtc().toIso8601String();
     userService.saveUserCharacter(
       userId: player.userId,
       character: characterJson,
     );
   }
-
-  static String getLockDate() => DateTime.now().toUtc().toIso8601String();
 
   void handleEditorRequestNewScene(List<String> arguments) {
     leaveCurrentGame();

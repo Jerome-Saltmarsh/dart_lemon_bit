@@ -13,8 +13,6 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
   }
   json['uuid'] = player.uuid;
 
-
-
   if (player is AmuletPlayer) {
 
     final items = [];
@@ -42,6 +40,7 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
     json['hairColor'] = player.hairColor;
     json['experience'] = player.experience;
     json['level'] = player.level;
+    json['initialized'] = player.initialized;
   }
 
   return json;

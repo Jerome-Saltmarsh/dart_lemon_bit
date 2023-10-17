@@ -48,6 +48,7 @@ class AmuletPlayer extends IsometricPlayer {
   var _equippedWeaponIndex = -1;
   var _activatedPowerIndex = -1;
   var _skillPoints = 1;
+  var _initialized = false;
 
   AmuletPlayer({
     required this.amulet,

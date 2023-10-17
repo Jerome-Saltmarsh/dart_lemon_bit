@@ -232,24 +232,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Blink_Dagger:
         performAbilityBlink(character);
         break;
-      case AmuletItem.Rusty_Old_Sword:
+      case AmuletItem.Weapon_Rusty_Old_Sword:
         performAbilityMelee(character);
         break;
-      case AmuletItem.Old_Bow:
+      case AmuletItem.Weapon_Old_Bow:
         performAbilityArrow(
             character: character,
             damage: stats.damage,
             range: stats.range,
         );
         break;
-      case AmuletItem.Holy_Bow:
+      case AmuletItem.Weapon_Holy_Bow:
         performAbilityArrow(
           character: character,
           damage: stats.damage,
           range: stats.range,
         );
         break;
-      case AmuletItem.Staff_Of_Frozen_Lake:
+      case AmuletItem.Weapon_Staff_Of_Frozen_Lake:
         performAbilityFrostBall(character, damage: 1, range: 50);
         break;
       default:
@@ -503,6 +503,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void characterAttack(Character character) {
     if (character is AmuletPlayer){
       final equippedWeaponIndex = character.equippedWeaponIndex;
+
+      if (equippedWeaponIndex == -1){
+        character.writeGameError(GameError.No_Weapon_Equipped);
+        return;
+      }
+
       final weapons = character.weapons;
       final equippedWeapon = weapons[equippedWeaponIndex];
 
@@ -519,11 +525,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   bool itemSlotChargesRemaining(ItemSlot itemSlot) => itemSlot.charges > 0;
 
   void onPlayerLoaded(AmuletPlayer player) {
+
+    if (playerNeedsToBeInitialized(player)){
+      initializedPlayer(player);
+    }
+
     playerRefillItemSlots(
         player: player,
         itemSlots: player.weapons,
     );
   }
+
+  bool playerNeedsToBeInitialized(AmuletPlayer player) => !player.initialized;
 
   void playerRefillItemSlots({
     required AmuletPlayer player,
@@ -561,5 +574,30 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   AmuletPlayer buildPlayer() {
     // TODO: implement buildPlayer
     throw UnimplementedError();
+  }
+
+  void initializedPlayer(AmuletPlayer player) {
+    player.initialized = true;
+    assignDefaultEquipmentToPlayer(player);
+  }
+
+  void assignDefaultEquipmentToPlayer(AmuletPlayer player) {
+    player.setWeapon(
+      item: AmuletItem.Weapon_Rusty_Old_Sword,
+      index: 0,
+      cooldown: 0,
+    );
+    player.setWeapon(
+      item: AmuletItem.Weapon_Old_Bow,
+      index: 1,
+      cooldown: 0,
+    );
+    player.setWeapon(
+      item: AmuletItem.Weapon_Staff_Of_Flames,
+      index: 2,
+      cooldown: 0,
+    );
+    player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
+    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
   }
 }
