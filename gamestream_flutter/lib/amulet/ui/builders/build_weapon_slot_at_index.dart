@@ -66,6 +66,7 @@ Widget buildWeaponSlotAtIndex(int index, {
                     color: Colors.white70,
                   )
               ),
+              if (amuletItem != null)
               Positioned(
                   bottom: 8,
                   right: 8,
@@ -74,11 +75,13 @@ Widget buildWeaponSlotAtIndex(int index, {
                       buildTextPercentage,
                   )
               ),
+              if (amuletItem != null)
               Positioned(
                   bottom: 8,
                   left: 8,
                   child: buildWatch(weapons[index].charges, buildText)
               ),
+              if (amuletItem != null)
               Positioned(
                   top: 8,
                   right: 8,

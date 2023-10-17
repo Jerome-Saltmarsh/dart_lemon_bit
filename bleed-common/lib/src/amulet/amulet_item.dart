@@ -265,12 +265,14 @@ enum AmuletItem {
     level1: ItemStat(
       damage: 3,
       cooldown: 30,
+      charges: 2,
       information: 'strikes one random nearby enemy with lightning',
       electricity: 0,
     ),
     level2: ItemStat(
       damage: 4,
       cooldown: 28,
+      charges: 2,
       information: 'strikes two random nearby enemies with lightning',
       electricity: 3,
       fire: 1,
@@ -278,6 +280,7 @@ enum AmuletItem {
     level3: ItemStat(
       damage: 5,
       cooldown: 26,
+      charges: 2,
       information: 'strikes three random nearby enemies with lightning',
       electricity: 6,
       fire: 2,
