@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gamestream_ws/gamestream/gamestream_server.dart';
+import 'package:gamestream_ws/gamestream/amulet_engine.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'character.dart';
@@ -107,16 +107,16 @@ abstract class Collider extends Position {
     if (fixed) return;
 
 
-    x += (velocityX * GamestreamServer.Fixed_Time);
-    y += (velocityY * GamestreamServer.Fixed_Time);
-    z += (velocityZ * GamestreamServer.Fixed_Time);
+    x += (velocityX * AmuletEngine.Fixed_Time);
+    y += (velocityY * AmuletEngine.Fixed_Time);
+    z += (velocityZ * AmuletEngine.Fixed_Time);
     velocityX *= friction;
     velocityY *= friction;
 
     if (gravity) {
-      velocityZ -= Physics.Gravity * GamestreamServer.Fixed_Time;
+      velocityZ -= Physics.Gravity * AmuletEngine.Fixed_Time;
       if (velocityZ < -Physics.Max_Fall_Velocity) {
-        velocityZ = -Physics.Max_Fall_Velocity * GamestreamServer.Fixed_Time;
+        velocityZ = -Physics.Max_Fall_Velocity * AmuletEngine.Fixed_Time;
       }
     }
   }

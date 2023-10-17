@@ -6,7 +6,7 @@ import 'package:gamestream_ws/packages.dart';
 
 import 'character.dart';
 import 'collider.dart';
-import 'environment.dart';
+import 'isometric_environment.dart';
 import 'functions/character/set_character_state_fire.dart';
 import 'functions/character/set_character_state_idle.dart';
 import 'functions/character/set_character_state_running.dart';
@@ -24,7 +24,7 @@ import 'isometric_time.dart';
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   Scene scene;
-  Environment environment;
+  IsometricEnvironment environment;
   IsometricTime time;
   var timerUpdateAITargets = 0;
   var frame = 0;

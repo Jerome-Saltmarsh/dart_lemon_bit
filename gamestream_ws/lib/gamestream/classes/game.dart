@@ -1,4 +1,4 @@
-import 'package:gamestream_ws/gamestream/gamestream_server.dart';
+import 'package:gamestream_ws/gamestream/amulet_engine.dart';
 import 'package:gamestream_ws/packages/common/src/game_type.dart';
 
 import 'job.dart';
@@ -13,7 +13,7 @@ abstract class Game <T extends Player> {
   int get maxPlayers;
   bool get isFull => players.length >= maxPlayers;
 
-  int get fps => GamestreamServer.Frames_Per_Second;
+  int get fps => AmuletEngine.Frames_Per_Second;
 
   var _id = 0;
 

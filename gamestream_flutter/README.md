@@ -10,7 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- initialize new players with armour and weapons
+- tutorial game
 - fix render front
 - feature separate regions 
 - feature item slot charges
@@ -35,6 +35,9 @@ ctrl + []               : move caret to code block
 - feature particle crow
 - feature particle chicken
 - improve ai pathfinding 
+
+17.10.2023
+- initialize new players with armour and weapons
 
 15.10.2023
 - feature cell shade skeleton

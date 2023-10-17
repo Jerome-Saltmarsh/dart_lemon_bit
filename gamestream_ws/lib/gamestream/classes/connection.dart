@@ -23,7 +23,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Connection with ByteReader {
 
-  final GamestreamServer server;
+  final AmuletEngine server;
   final errorWriter = ByteWriter();
   final started = DateTime.now();
 
@@ -710,6 +710,7 @@ class Connection with ByteReader {
           player.gender = arguments.getArgInt('--gender') ?? 0;
           player.headType = arguments.getArgInt('--headType') ?? 0;
           player.active = true;
+          onPlayerLoaded(player);
           return;
       }
 
@@ -754,7 +755,7 @@ class Connection with ByteReader {
                 character: character,
             );
             writeJsonToAmuletPlayer(character, player);
-            player.amulet.onPlayerLoaded(player);
+            onPlayerLoaded(player);
             return;
           }
         }
@@ -1026,6 +1027,78 @@ class Connection with ByteReader {
       game.onPlayerRemoved(player);
     }
     _player = null;
+  }
+
+  void onPlayerLoaded(AmuletPlayer player) {
+
+    if (playerNeedsToBeInitialized(player)){
+      initializedPlayer(player);
+    }
+
+    playerRefillItemSlots(
+      player: player,
+      itemSlots: player.weapons,
+    );
+  }
+
+  bool playerNeedsToBeInitialized(AmuletPlayer player) => !player.initialized;
+
+  void initializedPlayer(AmuletPlayer player) {
+    player.initialized = true;
+    assignDefaultEquipmentToPlayer(player);
+    server.playerStartTutorial(player);
+  }
+
+  void assignDefaultEquipmentToPlayer(AmuletPlayer player) {
+    player.setWeapon(
+      item: AmuletItem.Weapon_Rusty_Old_Sword,
+      index: 0,
+      cooldown: 0,
+    );
+    player.setWeapon(
+      item: AmuletItem.Weapon_Old_Bow,
+      index: 1,
+      cooldown: 0,
+    );
+    player.setWeapon(
+      item: AmuletItem.Weapon_Staff_Of_Flames,
+      index: 2,
+      cooldown: 0,
+    );
+    player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
+    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
+  }
+
+  void playerRefillItemSlots({
+    required AmuletPlayer player,
+    required List<ItemSlot> itemSlots,
+  }){
+    for (final itemSlot in itemSlots) {
+      playerRefillItemSlot(
+        player: player,
+        itemSlot: itemSlot,
+      );
+    }
+    player.writeWeapons();
+  }
+
+  void playerRefillItemSlot({
+    required AmuletPlayer player,
+    required ItemSlot itemSlot,
+  }){
+    final amuletItem = itemSlot.amuletItem;
+    if (amuletItem == null) {
+      return;
+    }
+    final itemStats = player.getItemStatsForItemSlot(itemSlot);
+    if (itemStats == null) {
+      throw Exception('itemStats == null');
+    }
+    final max = itemStats.charges;
+    itemSlot.max = max;
+    itemSlot.charges = max;
+    itemSlot.cooldown = 0;
+    itemSlot.cooldownDuration = itemStats.cooldown;
   }
 }
 

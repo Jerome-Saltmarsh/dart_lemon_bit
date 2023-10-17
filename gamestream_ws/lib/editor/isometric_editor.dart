@@ -6,7 +6,7 @@ class IsometricEditor extends IsometricGame {
 
   IsometricEditor({Scene? scene}) : super(
       scene: scene ?? generateEmptyScene(),
-      environment: Environment(),
+      environment: IsometricEnvironment(),
       time: IsometricTime(),
       gameType: GameType.Editor,
   );

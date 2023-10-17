@@ -7,7 +7,7 @@ import 'package:gamestream_ws/user_service/user_service_http.dart';
 import 'package:gamestream_ws/user_service/user_service_local.dart';
 
 void main(List<String> arguments) {
-  GamestreamServer(
+  AmuletEngine(
     userService: getUserService(arguments),
     admin: arguments.contains('--admin'),
   );

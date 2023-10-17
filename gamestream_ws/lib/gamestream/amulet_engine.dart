@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_town.dart';
+import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/amulet/classes/fiend_type.dart';
+import 'package:gamestream_ws/amulet/functions/player/player_change_game.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -14,7 +16,7 @@ import '../isometric.dart';
 import 'classes/src.dart';
 import '../editor/isometric_editor.dart';
 
-class GamestreamServer {
+class AmuletEngine {
 
   static const Frames_Per_Second = 45;
   static const Fixed_Time = 50 / Frames_Per_Second;
@@ -26,7 +28,7 @@ class GamestreamServer {
   final userServiceUrl = 'https://gamestream-http-osbmaezptq-uc.a.run.app';
 
   final amuletTime = IsometricTime();
-  final amuletEnvironment = Environment();
+  final amuletEnvironment = IsometricEnvironment();
 
   late final AmuletGame amuletGameTown;
   late final AmuletGame amuletRoad01;
@@ -41,7 +43,7 @@ class GamestreamServer {
   late final Timer updateTimer;
   late final Timer timerRefreshUserCharacterLocks;
 
-  GamestreamServer({required this.userService, this.admin = false}){
+  AmuletEngine({required this.userService, this.admin = false}){
     _construct();
   }
 
@@ -137,6 +139,18 @@ class GamestreamServer {
     }
   }
 
+  AmuletGameTutorial buildAmuletGameTutorial(){
+    final game = AmuletGameTutorial(
+        scene: scenes.tutorial,
+        time: IsometricTime(),
+        environment: IsometricEnvironment(),
+        name: 'tutorial',
+        fiendTypes: [],
+    );
+    games.add(game);
+    return game;
+  }
+
   Future loadResources() async {
     await scenes.load();
   }
@@ -226,9 +240,16 @@ class GamestreamServer {
   }
 
   void addGame(IsometricEditor game) {
-    if (games.contains(game)){
-      return;
+    if (!games.contains(game)){
+      games.add(game);
     }
-    games.add(game);
+  }
+
+  void playerStartTutorial(AmuletPlayer player) {
+    playerChangeGame(
+      player: player,
+      src: player.amulet,
+      target: buildAmuletGameTutorial(),
+    );
   }
 }

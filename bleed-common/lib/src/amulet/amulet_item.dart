@@ -63,7 +63,11 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     actionFrame: 20,
     performDuration: 25,
-    level1: ItemStat(information: 'An old blunt sword'),
+    level1: ItemStat(
+        range: 100,
+        damage: 1,
+        information: 'An old blunt sword',
+    ),
   ),
   Weapon_Staff_Of_Frozen_Lake(
     selectAction: AmuletItemAction.Equip,
@@ -72,7 +76,11 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     actionFrame: 15,
     performDuration: 20,
-    level1: ItemStat(information: 'A powerful staff that eliminates cold'),
+    level1: ItemStat(
+        range: 100,
+        damage: 1,
+        information: 'A powerful staff that eliminates cold',
+    ),
   ),
   Weapon_Old_Bow(
     selectAction: AmuletItemAction.Equip,
@@ -86,18 +94,21 @@ enum AmuletItem {
       damage: 1,
       charges: 5,
       cooldown: 4,
+      range: 30,
     ),
     level2: ItemStat(
       information: 'A worn out bow',
       damage: 2,
       charges: 6,
       cooldown: 4,
+      range: 35,
     ),
     level3: ItemStat(
       information: 'A worn out bow',
       damage: 3,
       charges: 6,
       cooldown: 3,
+      range: 40,
     ),
   ),
   Weapon_Holy_Bow(
@@ -268,6 +279,7 @@ enum AmuletItem {
       charges: 2,
       information: 'strikes one random nearby enemy with lightning',
       electricity: 0,
+      range: 100,
     ),
     level2: ItemStat(
       damage: 4,
@@ -276,6 +288,7 @@ enum AmuletItem {
       information: 'strikes two random nearby enemies with lightning',
       electricity: 3,
       fire: 1,
+      range: 150,
     ),
     level3: ItemStat(
       damage: 5,
@@ -284,6 +297,7 @@ enum AmuletItem {
       information: 'strikes three random nearby enemies with lightning',
       electricity: 6,
       fire: 2,
+      range: 200,
     ),
   ),
   Spell_Blink(
@@ -487,12 +501,34 @@ enum AmuletItem {
 
   void validate() {
     if (actionFrame > performDuration) {
-      validationError('performFrame cannot be greater than performDuration');
+      throw Exception('performFrame cannot be greater than performDuration');
     }
-  }
 
-  void validationError(String reason) =>
-      print('validation_error: {name: $this, reason: $reason}');
+    if (isWeapon) {
+      if (level1.range <= 0) {
+        throw Exception('$name: "isWeapon && level1.range <= 0"');
+      }
+      final lvl2Range = level2?.range;
+      if (lvl2Range != null && lvl2Range <= 0) {
+        throw Exception('$name: "isWeapon and lvl2Range != null && lvl2Range <= 0"');
+      }
+      final lvl3Range = level3?.range;
+      if (lvl3Range != null && lvl3Range <= 0) {
+        throw Exception('$name: "isWeapon and lvl3Range != null && lvl3Range <= 0"');
+      }
+      final lvl4Range = level4?.range;
+      if (lvl4Range != null && lvl4Range <= 0) {
+        throw Exception('$name: "isWeapon and lvl4Range != null && lvl4Range <= 0"');
+      }
+      final lvl5ange = level5?.range;
+      if (lvl5ange != null && lvl5ange <= 0) {
+        throw Exception('$name: "isWeapon and lvl5ange != null && lvl5ange <= 0"');
+      }
+    }
+
+
+
+  }
 
   static bool statsSupport({
     required ItemStat? stat,
@@ -573,4 +609,5 @@ enum AmuletItem {
 
     return -1;
   }
+
 }

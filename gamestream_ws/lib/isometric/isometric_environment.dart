@@ -1,6 +1,6 @@
 import 'package:gamestream_ws/packages.dart';
 
-class Environment {
+class IsometricEnvironment {
 
   static const Lightning_Flash_Duration_Total = 9;
 

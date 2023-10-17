@@ -3,7 +3,7 @@ library isometric;
 export 'handle_request_modify_canvas_size.dart';
 export 'character.dart';
 export 'collider.dart';
-export 'environment.dart';
+export 'isometric_environment.dart';
 export 'isometric_game.dart';
 export 'gameobject.dart';
 export 'hit_type.dart';
