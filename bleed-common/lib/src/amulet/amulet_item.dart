@@ -43,14 +43,14 @@ enum AmuletItem {
     level1: ItemStat(
       damage: 1,
       range: 60,
-      cooldown: 20,
+      cooldown: 5,
       charges: 5,
       information: 'An old blunt sword',
     ),
     level2: ItemStat(
       damage: 2,
       range: 60,
-      cooldown: 20,
+      cooldown: 5,
       charges: 7,
       information: 'An old blunt sword',
       earth: 5,
@@ -110,13 +110,16 @@ enum AmuletItem {
     level1: ItemStat(
         range: 150,
         damage: 5,
-        cooldown: 40,
-        information: 'A mythical bow which does a lot of damage'),
+        cooldown: 15,
+        charges: 3,
+        information: 'A mythical bow which does a lot of damage',
+    ),
     level2: ItemStat(
       air: 1,
       range: 160,
       damage: 8,
       cooldown: 38,
+      charges: 3,
       information: 'A mythical bow which does a lot of damage',
     ),
     level3: ItemStat(
@@ -124,6 +127,7 @@ enum AmuletItem {
       range: 170,
       damage: 12,
       cooldown: 36,
+      charges: 3,
       information: 'A mythical bow which does a lot of damage',
     ),
   ),
