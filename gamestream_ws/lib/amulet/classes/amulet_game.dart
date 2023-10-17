@@ -107,14 +107,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (markType != MarkType.Spawn_Fallen){
         continue;
       }
-      final markIndex = MarkType.getIndex(markValue);
-      for (var j = 0; j < 3; j++) {
-        if (randomBool()) {
-          spawnFallenAtIndex(markIndex);
-        } else {
-          spawnSkeletonArcherAtIndex(markIndex);
-        }
-      }
+      spawnFiendTypeAtIndex(
+          fiendType: randomItem(fiendTypes),
+          index: MarkType.getIndex(markValue),
+      );
+    }
+  }
+
+  void spawnFiendTypeAtIndex({
+    required FiendType fiendType,
+    required int index,
+  }) {
+    switch (fiendType){
+      case FiendType.Fallen_01:
+        spawnFallenAtIndex(index);
+        break;
+      case FiendType.Skeleton_01:
+        spawnSkeletonArcherAtIndex(index);
+        break;
     }
   }
 
