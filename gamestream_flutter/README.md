@@ -10,7 +10,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
-- fix render front 
+- fix render front
+- feature separate regions 
 - feature item slot charges
 - feature auth token
 - feature spell lightning bolt with levels

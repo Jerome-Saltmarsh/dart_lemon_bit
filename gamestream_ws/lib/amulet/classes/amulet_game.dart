@@ -4,8 +4,7 @@ import 'package:gamestream_ws/gamestream/gamestream_server.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import 'functions/item_slot/item_slot_reduce_charge.dart';
-import 'functions/item_slot/item_slot_set_charges_max.dart';
+import '../functions/item_slot/item_slot_reduce_charge.dart';
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
@@ -19,7 +18,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   var cooldownTimer = 0;
 
-  late MMONpc npcGuard;
+  late AmuletNpc npcGuard;
 
   AmuletGame({
     required super.scene,
@@ -28,7 +27,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }) : super(gameType: GameType.Amulet) {
 
     spawnMonstersAtSpawnNodes();
-    characters.add(MMONpc(
+    characters.add(AmuletNpc(
       characterType: CharacterType.Kid,
       x: 2010,
       y: 1760,
@@ -53,7 +52,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         ..complexion = ComplexionType.fair
     );
 
-    npcGuard = MMONpc(
+    npcGuard = AmuletNpc(
       characterType: CharacterType.Kid,
       x: 2416,
       y: 1851,
@@ -415,7 +414,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double z,
     required AmuletItem item,
   }) {
-    gameObjects.add(MMOGameObject(
+    gameObjects.add(AmuletGameObject(
       x: x,
       y: y,
       z: z,
@@ -452,7 +451,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ) {
     if (character is! AmuletPlayer)
       return;
-    if (gameObject is MMOGameObject) {
+    if (gameObject is AmuletGameObject) {
       if (character.addItem(gameObject.item)){
         super.onCharacterCollectedGameObject(character, gameObject);
       }
@@ -472,7 +471,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(AmuletPlayer player, GameObject gameObject) {
-    if (gameObject is! MMOGameObject || gameObject.item.collectable)
+    if (gameObject is! AmuletGameObject || gameObject.item.collectable)
       return;
 
     final duration = frame - gameObject.frameSpawned;
@@ -488,7 +487,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void customOnInteraction(Character character, Character target) {
     super.customOnInteraction(character, target);
 
-    if (character is AmuletPlayer && target is MMONpc){
+    if (character is AmuletPlayer && target is AmuletNpc){
        character.interacting = true;
        target.interact?.call(character);
     }

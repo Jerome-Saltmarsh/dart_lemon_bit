@@ -16,4 +16,5 @@ enum EditorRequest {
    Mark_Delete,
    Mark_Select,
    Mark_Set_Type,
+   New_Scene,
 }

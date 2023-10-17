@@ -1,14 +1,13 @@
 library src;
 
-export 'amulet_player.dart';
-export 'amulet_game.dart';
-export 'mmo_gameobject.dart';
-export 'item_slot.dart';
-export 'mmo_npc.dart';
-export 'mmo_request_handler.dart';
-export 'handle_inventory_request.dart';
-export 'mmo_skill.dart';
-export 'talk_option.dart';
+export 'classes/amulet_player.dart';
+export 'classes/amulet_game.dart';
+export 'classes/amulet_gameobject.dart';
+export 'classes/item_slot.dart';
+export 'classes/amulet_npc.dart';
+export 'amulet_request_handler.dart';
+export 'functions/handle_inventory_request.dart';
+export 'classes/talk_option.dart';
 
 
 

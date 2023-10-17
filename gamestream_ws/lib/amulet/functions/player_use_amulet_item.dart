@@ -1,4 +1,4 @@
-import 'package:gamestream_ws/amulet/amulet_player.dart';
+import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/packages/common/src.dart';
 
 import '../../isometric/functions/character/set_character_state_striking.dart';

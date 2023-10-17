@@ -3,11 +3,11 @@ import 'package:gamestream_ws/isometric.dart';
 
 import 'amulet_player.dart';
 
-class MMONpc extends Character {
+class AmuletNpc extends Character {
 
   Function(AmuletPlayer player)? interact;
 
-  MMONpc({
+  AmuletNpc({
     required super.characterType,
     required super.health,
     required super.weaponType,

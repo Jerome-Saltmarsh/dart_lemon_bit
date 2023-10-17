@@ -1,7 +1,7 @@
 import 'package:gamestream_ws/packages.dart';
 
-import 'amulet_player.dart';
-import 'functions/player_use_inventory_slot.dart';
+import '../classes/amulet_player.dart';
+import 'player_use_inventory_slot.dart';
 
 void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
   if (arguments.isEmpty) return;

@@ -1,5 +1,6 @@
 library src;
 
+export 'args.dart';
 export 'change_notifier.dart';
 export 'generate_random_name.dart';
 export 'generate_uuid.dart';

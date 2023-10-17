@@ -2,11 +2,11 @@
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import 'functions/player_swap_item_slots.dart';
-import 'getters/get_player_level_for_amulet_item.dart';
+import '../functions/player_swap_item_slots.dart';
+import '../getters/get_player_level_for_amulet_item.dart';
 import 'item_slot.dart';
 import 'amulet_game.dart';
-import 'mmo_npc.dart';
+import 'amulet_npc.dart';
 import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer {
@@ -429,7 +429,7 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     if (isAlly(value)) {
-      if (value is MMONpc && value.interact != null) {
+      if (value is AmuletNpc && value.interact != null) {
         return TargetAction.Talk;
       }
     }

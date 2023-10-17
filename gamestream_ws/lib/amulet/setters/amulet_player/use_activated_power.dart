@@ -1,4 +1,4 @@
-import 'package:gamestream_ws/amulet/amulet_player.dart';
+import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import '../../functions/player_use_amulet_item.dart';
 
 void amuletPlayerUseActivatedPower(AmuletPlayer player) {

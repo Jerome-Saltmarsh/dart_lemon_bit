@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:gamestream_ws/amulet/amulet_player.dart';
+import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/use_activated_power.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/packages.dart';
@@ -1864,7 +1864,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void removePlayer(IsometricPlayer player) {
+  void onPlayerRemoved(IsometricPlayer player) {
     if (!players.remove(player));
     characters.remove(player);
     customOnPlayerDisconnected(player);

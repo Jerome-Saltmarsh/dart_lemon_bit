@@ -1,12 +1,12 @@
 import 'package:gamestream_ws/packages/common.dart';
 import 'package:gamestream_ws/isometric.dart';
 
-class MMOGameObject extends GameObject {
+class AmuletGameObject extends GameObject {
 
   final int frameSpawned;
   final AmuletItem item;
 
-  MMOGameObject({
+  AmuletGameObject({
     required super.x,
     required super.y,
     required super.z,

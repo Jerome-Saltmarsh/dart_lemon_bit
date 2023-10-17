@@ -1,10 +1,11 @@
+import 'package:gamestream_ws/isometric/functions/generate_empty_scene.dart';
 import 'package:gamestream_ws/packages/common.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 
 class IsometricEditor extends IsometricGame {
 
   IsometricEditor({Scene? scene}) : super(
-      scene: scene ?? SceneGenerator.generateEmptyScene(),
+      scene: scene ?? generateEmptyScene(),
       environment: Environment(),
       time: IsometricTime(),
       gameType: GameType.Editor,

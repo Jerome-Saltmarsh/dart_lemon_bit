@@ -5,6 +5,7 @@ import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/editor/isometric_editor.dart';
 import 'package:gamestream_ws/gamestream/functions/write_json_to_amulet_player.dart';
 import 'package:gamestream_ws/gamestream/src.dart';
+import 'package:gamestream_ws/isometric/functions/generate_empty_scene.dart';
 import 'package:gamestream_ws/isometric/isometric_request_reader.dart';
 import 'package:gamestream_ws/isometric/scene_reader.dart';
 import 'package:gamestream_ws/isometric/src.dart';
@@ -60,8 +61,8 @@ class Connection with ByteReader {
             character: character,
         );
       }
-      player.game.players.remove(player);
-      player.game.removePlayer(player);
+      leaveCurrentGame();
+
     }
 
     _player = null;
@@ -171,6 +172,9 @@ class Connection with ByteReader {
         final editor = player.editor;
 
         switch (isometricEditorRequest){
+          case EditorRequest.New_Scene:
+            handleEditorRequestNewScene(arguments);
+            break;
           case EditorRequest.GameObject:
             handleIsometricEditorRequestGameObject(arguments);
             break;
@@ -649,7 +653,9 @@ class Connection with ByteReader {
   }
 
   Future joinGameEditorScene(Scene scene) async {
-    joinGame(IsometricEditor(scene: scene));
+    final game = IsometricEditor(scene: scene);
+    server.addGame(game);
+    joinGame(game);
   }
 
   void joinGame(Game game){
@@ -1004,34 +1010,24 @@ class Connection with ByteReader {
   }
 
   static String getLockDate() => DateTime.now().toUtc().toIso8601String();
+
+  void handleEditorRequestNewScene(List<String> arguments) {
+    leaveCurrentGame();
+    joinGameEditorScene(generateEmptyScene());
+  }
+
+  void leaveCurrentGame(){
+    final player = _player;
+
+    if (player == null){
+      return;
+    }
+    final game = player.game;
+    if (game.players.remove(player)){
+      game.onPlayerRemoved(player);
+    }
+    _player = null;
+  }
 }
 
 
-extension Args on List<String> {
-  String? getArg(String name){
-    final index = indexOf(name);
-    if (index == -1){
-      return null;
-    }
-    if (index >= length){
-      return null;
-    }
-    return this[index + 1];
-  }
-
-  int? getArgInt(String name){
-     final arg = getArg(name);
-     if (arg == null){
-       return null;
-     }
-     return int.tryParse(arg);
-  }
-
-  bool? getArgBool(String name){
-     final arg = getArg(name);
-     if (arg == null){
-       return null;
-     }
-     return bool.tryParse(arg);
-  }
-}

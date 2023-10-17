@@ -190,5 +190,10 @@ class GamestreamServer {
     }
   }
 
-
+  void addGame(IsometricEditor game) {
+    if (games.contains(game)){
+      return;
+    }
+    games.add(game);
+  }
 }

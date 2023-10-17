@@ -178,12 +178,13 @@ extension IsometricEditorUI on IsometricEditor {
         ),
       if (activeEditTab == EditorTab.File)
         Positioned(
-            top: 50,
+            top: 100,
             left: 0,
             child: Container(
               alignment: Alignment.center,
               child: buildColumnFile(),
-            )),
+            ),
+        ),
       Positioned(
         left: 0,
         top: 0,
@@ -195,12 +196,12 @@ extension IsometricEditorUI on IsometricEditor {
     ],
   );
 
-  Column buildColumnFile() {
-    return Column(
+  Widget buildColumnFile() => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         buildButton(child: 'DOWNLOAD', action: downloadScene),
+        buildButton(child: 'NEW', action: newScene),
         buildButton(child: 'LOAD', action: uploadScene),
         buildButton(child: 'EDIT', action: toggleWindowEnabledScene),
         buildButton(child: 'MAP SIZE', action: toggleWindowEnabledCanvasSize),
@@ -209,7 +210,6 @@ extension IsometricEditorUI on IsometricEditor {
           buildButton(child: 'SAVE', action: saveScene),
       ],
     );
-  }
 
   Widget buildWindowEditCanvasSize() => Center(
     child: GSContainer(
