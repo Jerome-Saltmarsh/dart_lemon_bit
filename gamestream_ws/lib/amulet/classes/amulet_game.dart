@@ -101,50 +101,43 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void updatePlayers() {
     const padding = 25.0;
-    final characters = this.characters;
+    final players = this.players;
     final gameNorth = this.gameNorth;
     final gameSouth = this.gameSouth;
-    var length = characters.length;
-
     final maxX = scene.rowLength - padding;
 
+    var length = players.length;
+
     for (var i = 0; i < length; i++){
-      final character = characters[i];
-      if (character is! AmuletPlayer){
-        continue;
-      }
-      final x = character.x;
+      final player = players[i];
+      final x = player.x;
       if (x < padding && gameNorth != null) {
         playerChangeGame(
-          player: character,
+          player: player,
           src: this,
           target: gameNorth,
         );
-        character.x = gameNorth.scene.rowLength - 50;
-        character.y = character.y.clamp(0, gameNorth.scene.columnLength);
+        player.x = gameNorth.scene.rowLength - 50;
+        player.y = player.y.clamp(0, gameNorth.scene.columnLength);
+        player.writePlayerPosition();
+        player.writePlayerEvent(PlayerEvent.Player_Moved);
         i--;
-        length = characters.length;
+        length = players.length;
         continue;
       }
 
       if (x > maxX && gameSouth != null){
         playerChangeGame(
-          player: character,
+          player: player,
           src: this,
           target: gameSouth,
         );
-        character.x = padding + 25;
-        character.y = character.y.clamp(0, gameSouth.scene.columnLength);
+        player.x = padding + 25;
+        player.y = player.y.clamp(0, gameSouth.scene.columnLength);
+        player.writePlayerPosition();
+        player.writePlayerEvent(PlayerEvent.Player_Moved);
         i--;
-        length = characters.length;
-      }
-    }
-
-    if (gameNorth != null){
-      for (final character in characters) {
-        if (character.x < 50){
-
-        }
+        length = players.length;
       }
     }
   }

@@ -400,6 +400,7 @@ class IsometricEvents with IsometricComponent {
         editor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
+        print('PlayerEvent.Player_Moved');
         if (options.gameType.value == GameType.Editor){
           editor.row = player.indexRow;
           editor.column = player.indexColumn;

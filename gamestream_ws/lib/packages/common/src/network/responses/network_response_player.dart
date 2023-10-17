@@ -32,4 +32,6 @@ class NetworkResponsePlayer {
   static const Arrived_At_Destination = 29;
   static const Run_To_Destination_Enabled = 30;
   static const Debugging = 31;
+  static const Position = 32;
+
 }

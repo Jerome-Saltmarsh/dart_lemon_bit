@@ -1,5 +1,8 @@
 
 import 'package:gamestream_ws/isometric.dart';
+import 'package:gamestream_ws/isometric/position.dart';
+import 'package:gamestream_ws/isometric/position.dart';
+import 'package:gamestream_ws/isometric/position.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import '../functions/player_swap_item_slots.dart';
@@ -1378,6 +1381,14 @@ class AmuletPlayer extends IsometricPlayer {
   void clearAction() {
     super.clearAction();
     activatedPowerIndex = - 1;
+  }
+
+  void writePlayerPosition() {
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Position);
+    writeInt16(x.toInt());
+    writeInt16(y.toInt());
+    writeInt16(z.toInt());
   }
 
 }

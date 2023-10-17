@@ -265,6 +265,12 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case NetworkResponsePlayer.Team:
         player.team.value = parser.readByte();
         break;
+      case NetworkResponsePlayer.Position:
+        final position = player.position;
+        position.x = parser.readInt16().toDouble();
+        position.y = parser.readInt16().toDouble();
+        position.z = parser.readInt16().toDouble();
+        break;
       case NetworkResponsePlayer.Destination:
         player.runX = parser.readDouble();
         player.runY = parser.readDouble();

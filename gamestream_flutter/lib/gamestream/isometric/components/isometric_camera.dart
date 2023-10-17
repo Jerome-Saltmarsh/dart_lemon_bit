@@ -14,8 +14,10 @@ class IsometricCamera with IsometricComponent {
   Position? target;
 
   void centerOnChaseTarget() {
+    print('centerOnChaseTarget()');
+    final target = this.target;
     if (target != null){
-      centerOnV3(target!);
+      centerOnV3(target);
     }
   }
 
