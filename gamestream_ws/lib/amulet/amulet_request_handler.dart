@@ -13,7 +13,7 @@ extension AmuletRequestHandler on Connection {
       return;
     }
 
-    final amulet = player.game;
+    final amulet = player.amulet;
 
     final inventoryOpen = arguments.getArgBool('--inventory');
     if (inventoryOpen != null) {

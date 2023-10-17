@@ -296,7 +296,7 @@ class Connection with ByteReader {
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
             }
-            server.isometricScenes.saveSceneToFile(game.scene);
+            server.scenes.saveSceneToFile(game.scene);
             break;
 
           case EditorRequest.Modify_Canvas_Size:
@@ -658,11 +658,12 @@ class Connection with ByteReader {
     joinGame(game);
   }
 
-  void joinGame(Game game){
+  Player joinGame(Game game){
     final player = game.createPlayer();
     game.players.add(player);
     _player = _player = player;
     player.writeGameType();
+    return player;
   }
 
   void errorInsufficientResources(){
@@ -694,13 +695,11 @@ class Connection with ByteReader {
       return;
     }
 
-    final gameType = GameType.values[gameTypeIndex];
-
     if (arguments.length > 2) {
       final userId = arguments.getArg('--userId');
 
       if (userId == null){
-          _player = server.joinGameByType(gameType);
+          playerJoinAmuletTown();
           final player = _player;
           if (player is! AmuletPlayer){
             throw Exception('player is! AmuletPlayer');
@@ -722,8 +721,7 @@ class Connection with ByteReader {
       }
 
       userService.getUser(userId).then((user) {
-
-        _player = server.joinGameByType(gameType);
+        playerJoinAmuletTown();
         final player = _player;
 
         if (player is! AmuletPlayer){
@@ -757,7 +755,7 @@ class Connection with ByteReader {
                 character: character,
             );
             writeJsonToAmuletPlayer(character, player);
-            player.game.onPlayerLoaded(player);
+            player.amulet.onPlayerLoaded(player);
             return;
           }
         }
@@ -770,8 +768,12 @@ class Connection with ByteReader {
         );
       });
     } else {
-      _player = server.joinGameByType(gameType);
+      playerJoinAmuletTown();
     }
+  }
+
+  void playerJoinAmuletTown() {
+    _player = joinGame(server.amuletGameTown);
   }
 
   void cancelSubscription() {

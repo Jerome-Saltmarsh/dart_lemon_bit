@@ -1,4 +1,5 @@
 import 'package:gamestream_ws/amulet.dart';
+import 'package:gamestream_ws/amulet/functions/player/player_change_game.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
 import 'package:gamestream_ws/gamestream/gamestream_server.dart';
 import 'package:gamestream_ws/isometric.dart';
@@ -7,6 +8,13 @@ import 'package:gamestream_ws/packages.dart';
 import '../functions/item_slot/item_slot_reduce_charge.dart';
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
+
+  AmuletGame? gameNorth;
+  AmuletGame? gameSouth;
+  AmuletGame? gameEast;
+  AmuletGame? gameWest;
+
+  final String name;
 
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
@@ -24,6 +32,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.scene,
     required super.time,
     required super.environment,
+    required this.name,
+    this.gameNorth,
+    this.gameEast,
+    this.gameSouth,
+    this.gameWest,
   }) : super(gameType: GameType.Amulet) {
 
     spawnMonstersAtSpawnNodes();
@@ -83,6 +96,39 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void update() {
     super.update();
     updateCooldownTimer();
+    updatePlayers();
+  }
+
+  void updatePlayers() {
+    const padding = 50.0;
+    final characters = this.characters;
+    final gameNorth = this.gameNorth;
+    var length = characters.length;
+    for (var i = 0; i < length; i++){
+      final character = characters[i];
+      if (character is! AmuletPlayer){
+        continue;
+      }
+      final x = character.x;
+      if (x < padding && gameNorth != null) {
+        playerChangeGame(
+          player: character,
+          src: this,
+          target: gameNorth,
+        );
+        i--;
+        length = characters.length;
+        continue;
+      }
+    }
+
+    if (gameNorth != null){
+      for (final character in characters) {
+        if (character.x < 50){
+
+        }
+      }
+    }
   }
 
   void updateCooldownTimer() {
@@ -434,7 +480,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   AmuletPlayer buildPlayer() => AmuletPlayer(
-      game: this,
+      amulet: this,
       itemLength: 6,
       x: playerSpawnX,
       y: playerSpawnY,

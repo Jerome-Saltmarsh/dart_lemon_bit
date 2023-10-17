@@ -18,10 +18,16 @@ class GamestreamServer {
   static const Fixed_Time = 50 / Frames_Per_Second;
 
   final games = <Game>[];
-  final isometricScenes = Scenes();
+  final scenes = Scenes();
   final connections = <Connection>[];
   final UserService userService;
   final userServiceUrl = 'https://gamestream-http-osbmaezptq-uc.a.run.app';
+
+  final amuletTime = IsometricTime();
+  final amuletEnvironment = Environment();
+
+  late final AmuletGame amuletGameTown;
+  late final AmuletGame amuletRoad01;
 
   final bool admin;
 
@@ -42,7 +48,32 @@ class GamestreamServer {
     await loadResources();
     _initializeUpdateTimer();
     _initializeTimerAutoSave();
+    _initializeGames();
     startServerWebsocket(port: 8080);
+
+  }
+
+  void _initializeGames() {
+
+    amuletGameTown = AmuletGame(
+      scene: scenes.mmoTown,
+      time: amuletTime,
+      environment: amuletEnvironment,
+      name: 'town',
+    );
+
+    amuletRoad01 = AmuletGame(
+        scene: scenes.road01,
+        time: amuletTime,
+        environment: amuletEnvironment,
+        name: 'road 1',
+    );
+
+    amuletGameTown.gameNorth = amuletRoad01;
+    amuletRoad01.gameSouth = amuletGameTown;
+
+    games.add(amuletGameTown);
+    games.add(amuletRoad01);
   }
 
   void _initializeUpdateTimer() {
@@ -82,16 +113,16 @@ class GamestreamServer {
   }
 
   Future loadResources() async {
-    await isometricScenes.load();
+    await scenes.load();
   }
 
   Future validate() async {
     AmuletGame.validate();
 
-    final sceneDirectoryExists = await isometricScenes.sceneDirectory.exists();
+    final sceneDirectoryExists = await scenes.sceneDirectory.exists();
 
     if (!sceneDirectoryExists) {
-      throw Exception('could not find scenes directory: ${isometricScenes
+      throw Exception('could not find scenes directory: ${scenes
           .sceneDirectoryPath}');
     }
 
@@ -100,15 +131,19 @@ class GamestreamServer {
   void _fixedUpdate(Timer timer) {
     frame++;
 
-    if (frame % 100 == 0) {
-      removeEmptyGames();
-    }
+    // if (frame % 100 == 0) {
+    //   removeEmptyGames();
+    // }
+    updateGames();
+    sendResponseToClients();
+  }
+
+  void updateGames() {
     for (final game in games) {
       game.updateJobs();
       game.update();
       game.writePlayerResponses();
     }
-    sendResponseToClients();
   }
 
   void removeEmptyGames() {
@@ -119,31 +154,6 @@ class GamestreamServer {
       i--;
     }
   }
-
-  Player joinGameByType(GameType gameType) => joinGame(findGameByGameType(gameType));
-
-  Game findGameByGameType(GameType gameType){
-    for (final game in games) {
-      if (game.isFull) continue;
-      if (game.gameType != gameType) continue;
-      return game;
-    }
-    final newInstance = createNewGameByType(gameType);
-    games.add(newInstance);
-    return newInstance;
-  }
-
-  Game createNewGameByType(GameType gameType) => switch (gameType){
-      GameType.Amulet => buildGameMMO(),
-      GameType.Editor => IsometricEditor(),
-      _ => (throw Exception('gamestream.createNewGameByType(${gameType})'))
-  };
-
-  Game buildGameMMO() => AmuletGame(
-      scene: isometricScenes.mmoTown,
-      time: IsometricTime(enabled: true, hour: 14),
-      environment: Environment(),
-    );
 
   Player joinGame(Game game) {
     final player = game.createPlayer();

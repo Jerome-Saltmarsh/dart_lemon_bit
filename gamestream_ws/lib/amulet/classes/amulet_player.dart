@@ -10,9 +10,7 @@ import 'amulet_npc.dart';
 import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer {
-
-  final AmuletGame game;
-
+  AmuletGame amulet;
   var equipmentDirty = true;
   var activePowerX = 0.0;
   var activePowerY = 0.0;
@@ -52,12 +50,12 @@ class AmuletPlayer extends IsometricPlayer {
   var _skillPoints = 1;
 
   AmuletPlayer({
-    required this.game,
+    required this.amulet,
     required int itemLength,
     required super.x,
     required super.y,
     required super.z,
-  }) : super(game: game, health: 10, team: AmuletTeam.Human) {
+  }) : super(game: amulet, health: 10, team: AmuletTeam.Human) {
     controlsCanTargetEnemies = true;
     characterType = CharacterType.Kid;
     hurtable = false;
@@ -471,7 +469,7 @@ class AmuletPlayer extends IsometricPlayer {
   void spawnItem(AmuletItem item){
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
-    game.spawnLoot(
+    amulet.spawnLoot(
       x: x + adj(spawnAngle, spawnDistance),
       y: y + opp(spawnAngle, spawnDistance),
       z: z,

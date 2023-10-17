@@ -297,6 +297,7 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readScene() {
+    print('readScene()');
     final scenePart = readByte(); /// DO NOT DELETE
 
     final scene = this.scene;

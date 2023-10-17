@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
+import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/use_activated_power.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/packages.dart';
@@ -67,15 +67,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void add(Collider value){
     if (value is Character){
        characters.add(value);
-       return;
     }
     if (value is GameObject){
        gameObjects.add(value);
-       return;
     }
     if (value is Projectile){
       projectiles.add(value);
-      return;
+    }
+    if (value is T) {
+      players.add(value);
+      value.game = this;
+      value.sceneDownloaded = false;
+      value.downloadScene();
     }
   }
 
