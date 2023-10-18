@@ -1393,15 +1393,15 @@ class AmuletPlayer extends IsometricPlayer {
     writeByte(NetworkResponsePlayer.Cache_Cleared);
   }
 
-  // void writePlayerPosition() {
-  //   positionCacheX = x.toInt();
-  //   positionCacheY = y.toInt();
-  //   positionCacheZ = z.toInt();
-  //   writeByte(NetworkResponse.Player);
-  //   writeByte(NetworkResponsePlayer.Position);
-  //   writeInt16(x.toInt());
-  //   writeInt16(y.toInt());
-  //   writeInt16(z.toInt());
-  // }
+  void writePlayerPosition() {
+    positionCacheX = x.toInt();
+    positionCacheY = y.toInt();
+    positionCacheZ = z.toInt();
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Position);
+    writeInt16(x.toInt());
+    writeInt16(y.toInt());
+    writeInt16(z.toInt());
+  }
 
 }

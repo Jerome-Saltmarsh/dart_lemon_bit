@@ -288,6 +288,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case NetworkResponsePlayer.Cache_Cleared:
         clearCache();
         break;
+      case NetworkResponsePlayer.Position:
+        parser.readIsometricPosition(position);
+        break;
     }
   }
 
