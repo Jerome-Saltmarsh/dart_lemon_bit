@@ -48,6 +48,7 @@ class AmuletGameTutorial extends AmuletGame {
               amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
               cooldown: 0,
           );
+          player.endInteraction();
         }),
         TalkOption('Skip Tutorial', (){
             amulet.movePlayerToTown(player);
@@ -58,13 +59,14 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (!data.containsKey('weapon_accepted')){
       player.talk('Did you change your mind?', options: [
-        TalkOption('Accept Sword', (){
+        TalkOption('Accept Sword', () {
           data['weapon_accepted'] = true;
           player.setWeapon(
             index: 0,
             amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
             cooldown: 0,
           );
+          player.endInteraction();
         }),
         TalkOption('Skip Tutorial', (){
           amulet.movePlayerToTown(player);
@@ -75,7 +77,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     player.talk('Kill those creatures for me please',
       options: [
-        TalkOption('Skip Tutorial', (){
+        TalkOption('Skip Tutorial', () {
           amulet.movePlayerToTown(player);
         })
       ]);

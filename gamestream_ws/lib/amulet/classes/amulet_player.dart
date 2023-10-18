@@ -450,6 +450,8 @@ class AmuletPlayer extends IsometricPlayer {
     if (!interacting) return;
     interacting = false;
     talk('');
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(NetworkResponseAmuletPlayer.End_Interaction);
     clearTarget();
   }
 

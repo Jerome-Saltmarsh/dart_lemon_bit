@@ -146,8 +146,8 @@ class Amulet {
     final game = AmuletGameTutorial(
       amulet: this,
       scene: scenes.tutorial,
-      time: IsometricTime(),
-      environment: IsometricEnvironment(),
+      time: IsometricTime(hour: 24, enabled: false),
+      environment: IsometricEnvironment(enabled: false),
       name: 'tutorial',
       fiendTypes: [],
     );
@@ -202,6 +202,7 @@ class Amulet {
     if (player.amuletGame == target){
       throw Exception();
     }
+    player.endInteraction();
     player.clearPath();
     player.clearTarget();
     src.remove(player);

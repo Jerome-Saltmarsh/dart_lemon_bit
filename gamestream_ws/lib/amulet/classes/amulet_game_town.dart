@@ -83,7 +83,6 @@ class AmuletGameTown extends AmuletGame {
     z: playerSpawnZ,
   )..level = 1
     ..experience = 0
-    ..complexion = ComplexionType.fair
-    ..experienceRequired = getExperienceRequiredForLevel(2);
+    ..complexion = ComplexionType.fair;
 
 }

@@ -327,4 +327,10 @@ class Amulet extends IsometricGame {
     messageIndex.value = -1;
     messages.clear();
   }
+
+  void endInteraction() {
+    npcOptions.clear();
+    npcText.value = '';
+    npcOptionsReads.value++;
+  }
 }

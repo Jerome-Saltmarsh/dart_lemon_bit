@@ -29,6 +29,9 @@ class IsometricEnvironment {
   var nextLightningFlash = 0;
   var lightningFlashDuration = 0;
   var onChanged = false;
+  var enabled = true;
+
+  IsometricEnvironment({this.enabled = true});
 
   int get mystType => _mystType;
 
@@ -90,6 +93,9 @@ class IsometricEnvironment {
   }
 
   void update(){
+    if (!enabled){
+      return;
+    }
     updateRain();
     updateLightning();
     updateBreeze();

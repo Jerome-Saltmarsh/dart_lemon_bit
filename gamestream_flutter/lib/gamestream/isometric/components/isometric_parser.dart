@@ -673,6 +673,9 @@ class IsometricParser with ByteReader, IsometricComponent {
         amulet.messages.removeWhere((element) => element.isEmpty);
         amulet.messageIndex.value = 0;
         break;
+      case NetworkResponseAmuletPlayer.End_Interaction:
+        amulet.endInteraction();
+        break;
     }
   }
 
