@@ -57,7 +57,6 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     }
   }
 
-
   final itemNames = json.tryGetList<String>('items');
   if (itemNames != null){
     for (var i = 0; i < itemNames.length; i++){
@@ -70,6 +69,7 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     }
   }
 
+  player.data = json['data'] ?? Json();
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
   player.name = json['name'];

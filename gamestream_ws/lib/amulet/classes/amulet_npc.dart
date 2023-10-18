@@ -19,6 +19,7 @@ class AmuletNpc extends Character {
     required super.y,
     required super.z,
     required super.name,
+    super.invincible = false,
     this.interact,
   }) {
     clearTargetOnPerformAction = false;

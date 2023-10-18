@@ -457,14 +457,6 @@ class IsometricEvents with IsometricComponent {
     audio.play(randomItem(audio.zombie_deaths), x, y, z);
   }
 
-  void onChangedPlayerMessage(String value){
-    if (value.isNotEmpty) {
-      player.messageTimer = 200;
-    } else {
-      player.messageTimer = 0;
-    }
-  }
-
   void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
       camera.centerOnChaseTarget();

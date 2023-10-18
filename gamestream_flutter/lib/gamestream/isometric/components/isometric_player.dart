@@ -3,18 +3,16 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 import '../enums/game_dialog.dart';
 import '../../../isometric/classes/position.dart';
 
-class IsometricPlayer with IsometricComponent implements Updatable {
+class IsometricPlayer with IsometricComponent {
 
   var energyPercentage = 0.0;
   var runningToTarget = false;
   var aimTargetType = 0;
   var aimTargetQuantity = 0;
-  var messageTimer = 0;
   var mouseAngle = 0.0;
   var indexZ = 0;
   var indexRow = 0;
@@ -32,11 +30,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final aimTargetName = Watch('');
   final aimTargetHealthPercentage = Watch(0.0);
   final aimTargetAction = Watch(TargetAction.Run);
-  final npcTalk = Watch('');
   final aimTargetPosition = Position();
   final targetPosition = Position();
   final position = Position();
-  final npcTalkOptions = Watch<List<String>>([]);
   final aimTargetChanged = Watch(0);
   final id = Watch(0);
   final team = Watch(0);
@@ -68,7 +64,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
   final controlsCanTargetEnemies = Watch(false);
   final controlsRunInDirectionEnabled = Watch(false);
 
-  late final message = Watch('');
   late final gameDialog = Watch<GameDialog?>(
       null, onChanged: onChangedGameDialog);
   late final active = Watch(false);
@@ -132,19 +127,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       return true;
     }
     return false;
-  }
-
-  void onComponentUpdate() {
-    updateMessageTimer();
-  }
-
-  void updateMessageTimer() {
-    if (messageTimer <= 0)
-      return;
-    messageTimer--;
-    if (messageTimer > 0)
-      return;
-    message.value = '';
   }
 
   void savePositionPrevious() {
@@ -239,9 +221,6 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         break;
       case NetworkResponsePlayer.Aim_Angle:
         mouseAngle = parser.readAngle();
-        break;
-      case NetworkResponsePlayer.Message:
-        message.value = parser.readString();
         break;
       case NetworkResponsePlayer.Aim_Target_Type:
         aimTargetType = parser.readUInt16();

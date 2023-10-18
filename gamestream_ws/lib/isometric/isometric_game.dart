@@ -63,7 +63,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-
   void add(Collider value){
     if (value is Character){
        characters.add(value);
@@ -79,6 +78,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       value.game = this;
       value.sceneDownloaded = false;
       value.downloadScene();
+      onPlayerJoined(value);
     }
   }
 

@@ -106,6 +106,7 @@ class Character extends Collider {
     this.runSpeed = 1.0,
     this.doesWander = false,
     this.actionFrame = -1,
+    this.invincible = false,
   }) : super(
     radius: CharacterType.getRadius(characterType),
   ) {

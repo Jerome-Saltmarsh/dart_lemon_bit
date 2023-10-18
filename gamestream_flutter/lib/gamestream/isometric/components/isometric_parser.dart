@@ -520,16 +520,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readNetworkResponseNpcTalk() {
-    player.npcTalk.value = readString();
-    final totalOptions = readByte();
-    final options = <String>[];
-    for (var i = 0; i < totalOptions; i++) {
-      options.add(readString());
-    }
-    player.npcTalkOptions.value = options;
-  }
-
   void readEditEnabled() {
     scene.editEnabled.value = readBool();
   }
@@ -700,6 +690,11 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case NetworkResponseAmuletPlayer.Element_Points:
         amulet.elementPoints.value = readUInt16();
+        break;
+      case NetworkResponseAmuletPlayer.Message:
+        amulet.clearMessage();
+        amulet.messages.addAll(readString().split('.'));
+        amulet.messageIndex.value = 0;
         break;
     }
   }

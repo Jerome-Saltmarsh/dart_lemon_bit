@@ -44,6 +44,8 @@ class Amulet extends IsometricGame {
   var errorTimer = 0;
   var items = <ItemSlot>[];
 
+  final messages = <String>[];
+  final messageIndex = Watch(-1);
   final talentHover = Watch<AmuletTalentType?>(null);
   final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
@@ -312,4 +314,17 @@ class Amulet extends IsometricGame {
           '--inventory',
           value
       );
+
+  void messageNext(){
+    if (messageIndex.value + 1 >= messages.length){
+      clearMessage();
+    } else {
+      messageIndex.value++;
+    }
+  }
+
+  void clearMessage() {
+    messageIndex.value = -1;
+    messages.clear();
+  }
 }

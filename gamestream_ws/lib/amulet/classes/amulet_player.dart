@@ -48,7 +48,6 @@ class AmuletPlayer extends IsometricPlayer {
   var _equippedWeaponIndex = -1;
   var _activatedPowerIndex = -1;
   var _skillPoints = 1;
-  var _initialized = false;
 
   AmuletPlayer({
     required this.amulet,
@@ -336,7 +335,7 @@ class AmuletPlayer extends IsometricPlayer {
     }
     setWeapon(
       index: emptyIndex,
-      item: item,
+      amuletItem: item,
       cooldown: 0,
     );
   }
@@ -366,17 +365,17 @@ class AmuletPlayer extends IsometricPlayer {
 
   void setWeapon({
     required int index,
-    required AmuletItem? item,
-    required int cooldown,
+    required AmuletItem? amuletItem,
+    int cooldown = 0,
   }){
     if (!isValidWeaponIndex(index)) {
       writeAmuletError('Invalid weapon index $index');
       return;
     }
-    if (item != null && !item.isWeapon)
+    if (amuletItem != null && !amuletItem.isWeapon)
       return;
 
-    weapons[index].amuletItem = item;
+    weapons[index].amuletItem = amuletItem;
     weapons[index].cooldown = cooldown;
     writePlayerWeapon(index);
   }
@@ -480,7 +479,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   void clearWeapon(int index) => setWeapon(
       index: index,
-      item: null,
+      amuletItem: null,
       cooldown: 0,
   );
 
@@ -623,7 +622,7 @@ class AmuletPlayer extends IsometricPlayer {
         if (emptyWeaponIndex != -1){
           setWeapon(
               index: emptyWeaponIndex,
-              item: item,
+              amuletItem: item,
               cooldown: selected.cooldown,
           );
           clearItem(index);
@@ -633,7 +632,7 @@ class AmuletPlayer extends IsometricPlayer {
           final currentCooldown = equippedWeapon?.cooldown ?? 0;
           setWeapon(
               index: _equippedWeaponIndex,
-              item: item,
+              amuletItem: item,
               cooldown: items[index].cooldown,
           );
           setItem(
@@ -1404,4 +1403,23 @@ class AmuletPlayer extends IsometricPlayer {
     writeInt16(z.toInt());
   }
 
+  void writeMessage(String message){
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(NetworkResponseAmuletPlayer.Message);
+    writeString(message);
+  }
+
+  void setPosition({double? x, double? y, double? z}){
+    if (x != null){
+      this.x = x;
+    }
+    if (y != null){
+      this.y = y;
+    }
+    if (z != null){
+      this.z = z;
+    }
+    writePlayerPosition();
+    writePlayerEvent(PlayerEvent.Player_Moved);
+  }
 }

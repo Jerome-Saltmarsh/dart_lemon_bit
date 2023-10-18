@@ -127,11 +127,12 @@ class IsometricEditor with IsometricComponent {
   }
 
   void refreshSelectedMarkListValue() {
-    if (selectedMarkListIndex.value >= 0){
-      selectedMarkListValue.value = scene.marks[selectedMarkListIndex.value];
-    } else {
-      selectedMarkListValue.value = -1;
-    }
+    final index = selectedMarkListIndex.value;
+    final marks = scene.marks;
+    selectedMarkListValue.value =
+      index >= 0 && index < marks.length
+        ? marks[index]
+        : -1;
   }
 
   double get posX => row * Node_Size + Node_Size_Half;

@@ -25,7 +25,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   static const Cache_Length = 200;
 
-  final data = Json();
   var persistOnDisconnect = true;
   var userId = "";
   var uuid = "";
@@ -66,6 +65,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   late final editor = EditorState(this);
 
+  var data = Json();
   final cacheStateB = Uint8List(Cache_Length);
   final cacheStateA = Uint32List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);
@@ -709,12 +709,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writePlayerMoved(){
     writeIsometricPlayer();
     writePlayerEvent(PlayerEvent.Player_Moved);
-  }
-
-  void writePlayerMessage(String message){
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Message);
-    writeString(message);
   }
 
   void writeGameTime(){

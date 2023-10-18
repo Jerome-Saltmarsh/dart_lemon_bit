@@ -24,6 +24,7 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
       });
     }
 
+    json['data'] = player.data;
     json['name'] = player.name;
     json['equippedHelm'] = getSlotType(player.equippedHelm);
     json['equippedBody'] = getSlotType(player.equippedBody);

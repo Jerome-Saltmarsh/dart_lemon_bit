@@ -663,6 +663,7 @@ class Connection with ByteReader {
     _player = player;
     game.players.add(player);
     player.writeGameType();
+    game.onPlayerJoined(player);
   }
 
   void errorInsufficientResources(){
@@ -1043,32 +1044,6 @@ class Connection with ByteReader {
 
   bool playerNeedsToBeInitialized(AmuletPlayer player) => !player.initialized;
 
-  void initializedPlayer(AmuletPlayer player) {
-    player.initialized = true;
-    assignDefaultEquipmentToPlayer(player);
-    nerve.amulet.playerStartTutorial(player);
-  }
-
-  void assignDefaultEquipmentToPlayer(AmuletPlayer player) {
-    player.setWeapon(
-      item: AmuletItem.Weapon_Rusty_Old_Sword,
-      index: 0,
-      cooldown: 0,
-    );
-    player.setWeapon(
-      item: AmuletItem.Weapon_Old_Bow,
-      index: 1,
-      cooldown: 0,
-    );
-    player.setWeapon(
-      item: AmuletItem.Weapon_Staff_Of_Flames,
-      index: 2,
-      cooldown: 0,
-    );
-    player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
-    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
-  }
-
   void playerRefillItemSlots({
     required AmuletPlayer player,
     required List<ItemSlot> itemSlots,
@@ -1099,6 +1074,11 @@ class Connection with ByteReader {
     itemSlot.charges = max;
     itemSlot.cooldown = 0;
     itemSlot.cooldownDuration = itemStats.cooldown;
+  }
+
+  void initializedPlayer(AmuletPlayer player) {
+    player.initialized = true;
+    nerve.amulet.playerStartTutorial(player);
   }
 }
 

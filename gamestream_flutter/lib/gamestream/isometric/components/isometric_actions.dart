@@ -163,7 +163,6 @@ class IsometricActions with IsometricComponent {
     player.position.y = 0;
     player.position.z = 0;
     player.gameDialog.value = null;
-    player.npcTalkOptions.value = [];
     scene.totalProjectiles = 0;
     particles.children.clear();
     engine.zoom = 1;

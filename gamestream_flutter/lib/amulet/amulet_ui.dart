@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -46,7 +47,6 @@ class AmuletUI {
                     buildPlayerHealthBar(),
                     height4,
                     buildPlayerWeapons(),
-                    // buildPlayerExperienceBar(),
                   ],
                 ),
               ],
@@ -64,11 +64,7 @@ class AmuletUI {
         ),
         buildPlayerAimTarget(),
         buildPositionedAmuletItemHover(),
-        // Positioned(
-        //   bottom: margin1,
-        //   right: margin1,
-        //   child: buildPlayerStatsRow(),
-        // ),
+        buildPositionedMessage(),
         Positioned(
           bottom: margin2,
           child: Container(
@@ -79,6 +75,40 @@ class AmuletUI {
         ),
       ]
   );
+
+  Positioned buildPositionedMessage() => Positioned(
+        top: 0,
+        left: 0,
+        child: buildWatch(amulet.messageIndex, (int messageIndex) {
+          if (messageIndex == -1){
+            return nothing;
+          }
+          final messages = amulet.messages;
+          return GSFullscreen(
+            alignment: Alignment.center,
+            child: GSContainer(
+              width: 400,
+              height: 400 * goldenRatio_0618,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: Center(child: buildText(messages[messageIndex], color: Colors.white70))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      onPressed(
+                        action: amulet.messageNext,
+                        child: buildText(messageIndex + 1 >= messages.length ? 'Okay' : 'Next'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        })
+      );
 
   Widget buildPositionedAmuletItemHover() => Builder(
         builder: (context) {
@@ -115,7 +145,7 @@ class AmuletUI {
         ));
 
     return Positioned(
-      bottom: margin1,
+      bottom: margin2,
       child:
       buildWatch(amulet.playerInteracting, (interacting) => !interacting ? nothing :
       buildWatch(amulet.npcText, (npcText) => npcText.isEmpty ? nothing :

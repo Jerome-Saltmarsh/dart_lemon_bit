@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_icon_type.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:lemon_watch/src.dart';
@@ -39,6 +40,13 @@ class WebsiteGame extends Game {
   }
 
   void validateAtlases(){
+
+    for (final iconType in IconType.values){
+       if (!atlasSrcIconType.containsKey(iconType)){
+         print('atlasSrcIconType does not contain $iconType');
+       }
+    }
+
     for (final entry in ItemType.collections.entries){
       final type = entry.key;
       final values = entry.value;
