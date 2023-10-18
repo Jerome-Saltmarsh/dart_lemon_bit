@@ -285,6 +285,9 @@ class IsometricPlayer with IsometricComponent implements Updatable {
       case NetworkResponsePlayer.Debugging:
         player.debugging.value = parser.readBool();
         break;
+      case NetworkResponsePlayer.Cache_Cleared:
+        clearCache();
+        break;
     }
   }
 
@@ -411,4 +414,8 @@ class IsometricPlayer with IsometricComponent implements Updatable {
         NetworkRequestPlayer.setHeadType.index,
         value,
       );
+
+  void clearCache() {
+    scene.clear();
+  }
 }

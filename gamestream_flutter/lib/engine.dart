@@ -35,7 +35,7 @@ class AppleEngine extends LemonEngine {
 
   @override
   void onDrawForeground(Canvas canvas, Size size) {
-    components.render.drawForeground(canvas, size);
+    // components.render.drawForeground(canvas, size);
   }
 
   @override

@@ -65,6 +65,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var positionCacheZ = 0;
 
   late final editor = EditorState(this);
+
   final cacheStateB = Uint8List(Cache_Length);
   final cacheStateA = Uint32List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);

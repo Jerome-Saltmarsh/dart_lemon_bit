@@ -98,6 +98,7 @@ class WebsocketClient {
     }
 
     sink.close();
+
     this.onDone?.call();
   }
 

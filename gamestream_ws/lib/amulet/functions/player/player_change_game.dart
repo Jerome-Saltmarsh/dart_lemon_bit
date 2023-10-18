@@ -11,5 +11,6 @@ void playerChangeGame({
   player.clearTarget();
   src.remove(player);
   target.add(player);
+  player.clearCache();
   player.setDestinationToCurrentPosition();
 }

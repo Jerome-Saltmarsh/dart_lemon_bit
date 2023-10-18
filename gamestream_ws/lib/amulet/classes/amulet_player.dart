@@ -1381,6 +1381,18 @@ class AmuletPlayer extends IsometricPlayer {
     activatedPowerIndex = - 1;
   }
 
+  void clearCache() {
+    cacheTemplateA.fillRange(0, cacheTemplateA.length, 0);
+    cacheTemplateB.fillRange(0, cacheTemplateB.length, 0);
+    cachePositionX.fillRange(0, cachePositionX.length, 0);
+    cachePositionY.fillRange(0, cachePositionY.length, 0);
+    cachePositionZ.fillRange(0, cachePositionZ.length, 0);
+    cacheStateA.fillRange(0, cacheStateA.length, 0);
+    cacheStateB.fillRange(0, cacheStateB.length, 0);
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Cache_Cleared);
+  }
+
   // void writePlayerPosition() {
   //   positionCacheX = x.toInt();
   //   positionCacheY = y.toInt();
