@@ -1,5 +1,5 @@
+import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/packages/common.dart';
-import 'package:gamestream_ws/gamestream/amulet_engine.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 import 'game.dart';
@@ -70,6 +70,6 @@ extension PlayerExtension on Player {
 
   void writeFPS() {
     writeByte(NetworkResponse.FPS);
-    writeUInt16(AmuletEngine.Frames_Per_Second);
+    writeUInt16(Amulet.Frames_Per_Second);
   }
 }

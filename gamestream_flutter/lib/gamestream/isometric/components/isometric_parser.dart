@@ -392,14 +392,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     readIsometricPosition(gameObject);
   }
 
-  void readNetworkResponseApiPlayer() {
-    final apiPlayer = readByte();
-    switch (apiPlayer) {
-      default:
-        throw Exception('Cannot parse apiPlayer $apiPlayer');
-    }
-  }
-
   void readMap(Map<int, int> map){
     final length = readUInt16();
     map.clear();

@@ -11,7 +11,6 @@ import 'package:gamestream_ws/isometric/scene_reader.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
-import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:gamestream_ws/users/functions/map_isometric_player_to_json.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
@@ -23,7 +22,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Connection with ByteReader {
 
-  final AmuletEngine server;
+  final Nerve nerve;
   final errorWriter = ByteWriter();
   final started = DateTime.now();
 
@@ -42,9 +41,10 @@ class Connection with ByteReader {
 
   Player? get player => _player;
 
-  UserService get userService => server.userService;
-
-  Connection(this.webSocket, this.server){
+  Connection({
+    required this.webSocket,
+    required this.nerve,
+  }){
     sink = webSocket.sink;
     sink.done.then(onDisconnect);
     subscription = webSocket.stream.listen(onData, onError: onStreamError);
@@ -56,7 +56,7 @@ class Connection with ByteReader {
       if (player is IsometricPlayer && player.persistOnDisconnect){
         final character = mapIsometricPlayerToJson(player);
         character.remove('auto_save');
-        server.userService.saveUserCharacter(
+        nerve.userService.saveUserCharacter(
             userId: player.userId,
             character: character,
         );
@@ -296,7 +296,7 @@ class Connection with ByteReader {
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
             }
-            server.scenes.saveSceneToFile(game.scene);
+            nerve.amulet.scenes.saveSceneToFile(game.scene);
             break;
 
           case EditorRequest.Modify_Canvas_Size:
@@ -654,7 +654,7 @@ class Connection with ByteReader {
 
   Future joinGameEditorScene(Scene scene) async {
     final game = IsometricEditor(scene: scene);
-    server.addGame(game);
+    nerve.amulet.addGame(game);
     joinGame(game);
   }
 
@@ -720,7 +720,7 @@ class Connection with ByteReader {
         throw Exception('characterId == null');
       }
 
-      userService.getUser(userId).then((user) {
+      nerve.userService.getUser(userId).then((user) {
         playerJoinAmuletTown();
         final player = _player;
 
@@ -737,7 +737,7 @@ class Connection with ByteReader {
           if (uuid == characterId) {
             final nowUtc = DateTime.now().toUtc();
             final lockDateIso8601String = character.tryGetString('auto_save');
-            if (lockDateIso8601String != null && !server.admin){
+            if (lockDateIso8601String != null && !nerve.admin){
               final lockDate = DateTime.parse(lockDateIso8601String);
               final lockDuration = nowUtc.difference(lockDate);
               if (lockDuration.inSeconds < durationAutoSave.inSeconds){
@@ -750,7 +750,7 @@ class Connection with ByteReader {
               }
             }
             character['auto_save'] = nowUtc.toIso8601String();
-            userService.saveUserCharacter(
+            nerve.userService.saveUserCharacter(
                 userId: userId,
                 character: character,
             );
@@ -773,7 +773,7 @@ class Connection with ByteReader {
   }
 
   void playerJoinAmuletTown() {
-    joinGame(server.amuletGameTown);
+    joinGame(nerve.amulet.amuletGameTown);
   }
 
   void cancelSubscription() {
@@ -1005,7 +1005,7 @@ class Connection with ByteReader {
 
     final characterJson = mapIsometricPlayerToJson(player);
     characterJson['auto_save'] = DateTime.now().toUtc().toIso8601String();
-    userService.saveUserCharacter(
+    nerve.userService.saveUserCharacter(
       userId: player.userId,
       character: characterJson,
     );
@@ -1046,7 +1046,7 @@ class Connection with ByteReader {
   void initializedPlayer(AmuletPlayer player) {
     player.initialized = true;
     assignDefaultEquipmentToPlayer(player);
-    server.playerStartTutorial(player);
+    nerve.amulet.playerStartTutorial(player);
   }
 
   void assignDefaultEquipmentToPlayer(AmuletPlayer player) {

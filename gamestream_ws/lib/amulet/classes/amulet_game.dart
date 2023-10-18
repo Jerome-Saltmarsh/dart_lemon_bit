@@ -1,7 +1,7 @@
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/functions/player/player_change_game.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
-import 'package:gamestream_ws/gamestream/amulet_engine.dart';
+import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
@@ -90,13 +90,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (cooldownTimer-- > 0)
       return;
 
-    cooldownTimer = AmuletEngine.Frames_Per_Second;
+    cooldownTimer = Amulet.Frames_Per_Second;
     for (final player in players) {
       player.incrementWeaponCooldowns();
     }
   }
-
-  static void validate() => AmuletItem.values.forEach((item) => item.validate());
 
   void spawnFiendsAtSpawnNodes() {
     final marks = scene.marks;
@@ -465,7 +463,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     final duration = frame - gameObject.frameSpawned;
 
-    if (duration < AmuletEngine.Frames_Per_Second * 1)
+    if (duration < Amulet.Frames_Per_Second * 1)
       return;
 
     player.pickupItem(gameObject.item);
