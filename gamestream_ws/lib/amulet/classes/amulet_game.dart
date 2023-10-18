@@ -63,7 +63,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         player.x = gameNorth.scene.rowLength - 50;
         player.y = player.y.clamp(0, gameNorth.scene.columnLength);
-        player.writePlayerPosition();
+        // player.writePlayerPosition();
         player.writePlayerEvent(PlayerEvent.Player_Moved);
         i--;
         length = players.length;
@@ -78,7 +78,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         player.x = padding + 25;
         player.y = player.y.clamp(0, gameSouth.scene.columnLength);
-        player.writePlayerPosition();
+        // player.writePlayerPosition();
         player.writePlayerEvent(PlayerEvent.Player_Moved);
         i--;
         length = players.length;

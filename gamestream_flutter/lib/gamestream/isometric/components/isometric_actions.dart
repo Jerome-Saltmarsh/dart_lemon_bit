@@ -153,16 +153,15 @@ class IsometricActions with IsometricComponent {
         ..emissionIntensity = 0.5
   ;
 
-
-
   void clean() {
     scene.colorStackIndex = -1;
     scene.ambientStackIndex = -1;
   }
 
   void clear() {
-    player.position.x = -1;
-    player.position.y = -1;
+    player.position.x = 0;
+    player.position.y = 0;
+    player.position.z = 0;
     player.gameDialog.value = null;
     player.npcTalkOptions.value = [];
     scene.totalProjectiles = 0;

@@ -14,12 +14,14 @@ class WebsocketClient {
   late WebSocketSink sink;
 
   final Function(Object error, StackTrace stack) onError;
+  final Function()? onDone;
   final connectionStatus = Watch(ConnectionStatus.None);
 
   WebsocketClient({
     required this.readString,
     required this.readBytes,
     required this.onError,
+    this.onDone,
     Function(ConnectionStatus connectionStatus)? onConnectionStatusChanged
   }) {
     if (onConnectionStatusChanged != null){
@@ -94,7 +96,9 @@ class WebsocketClient {
     } else {
       connectionStatus.value = ConnectionStatus.Done;
     }
+
     sink.close();
+    this.onDone?.call();
   }
 
   void send(dynamic message) {

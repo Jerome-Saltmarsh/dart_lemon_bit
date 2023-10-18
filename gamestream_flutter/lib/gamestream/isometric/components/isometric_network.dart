@@ -22,6 +22,18 @@ class IsometricNetwork with IsometricComponent {
       readString: parser.readServerResponseString,
       readBytes: parser.parseBytes,
       onError: onNetworkError,
+      onDone: () {
+        print('onDone()');
+        player.position.x = 0;
+        player.position.y = 0;
+        player.position.z = 0;
+        scene.totalCharacters = 0;
+        scene.totalProjectiles = 0;
+        scene.characters.clear();
+        scene.gameObjects.clear();
+        scene.projectiles.clear();
+        particles.children.clear();
+      }
     );
   }
 

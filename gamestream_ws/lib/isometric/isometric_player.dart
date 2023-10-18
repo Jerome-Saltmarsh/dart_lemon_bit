@@ -288,13 +288,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writeIsometricPlayer(){
-    // final weaponDurationPercentage = this.weaponDurationPercentage;
-    // if (weaponDurationPercentagePrevious != weaponDurationPercentage){
-    //   weaponDurationPercentagePrevious = weaponDurationPercentage;
-    //   writeByte(NetworkResponse.Isometric);
-    //   writeByte(NetworkResponseIsometric.Player_Weapon_Duration_Percentage);
-    //   writePercentage(weaponDurationPercentage);
-    // }
 
     if (weaponAccuracy != accuracyPrevious){
       accuracyPrevious = weaponAccuracy;
@@ -311,7 +304,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
     if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ.abs() < 126){
       writeByte(NetworkResponse.Isometric);
-      writeByte(NetworkResponseIsometric.Player_Position_Change);
+      writeByte(NetworkResponseIsometric.Player_Position_Delta);
       writeInt8(diffX);
       writeInt8(diffY);
       writeInt8(diffZ);

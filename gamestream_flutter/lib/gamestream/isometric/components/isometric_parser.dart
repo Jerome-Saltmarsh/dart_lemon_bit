@@ -177,7 +177,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         readPlayerAimTarget();
         break;
 
-      case NetworkResponseIsometric.Player_Position_Change:
+      case NetworkResponseIsometric.Player_Position_Delta:
         final position = player.position;
         player.savePositionPrevious();
         final changeX = readInt8().toDouble();
