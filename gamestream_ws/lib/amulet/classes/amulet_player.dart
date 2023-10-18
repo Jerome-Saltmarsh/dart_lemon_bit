@@ -10,7 +10,7 @@ import 'amulet_npc.dart';
 import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer {
-  AmuletGame amulet;
+  AmuletGame amuletGame;
   var equipmentDirty = true;
   var activePowerX = 0.0;
   var activePowerY = 0.0;
@@ -50,12 +50,12 @@ class AmuletPlayer extends IsometricPlayer {
   var _skillPoints = 1;
 
   AmuletPlayer({
-    required this.amulet,
+    required this.amuletGame,
     required int itemLength,
     required super.x,
     required super.y,
     required super.z,
-  }) : super(game: amulet, health: 10, team: AmuletTeam.Human) {
+  }) : super(game: amuletGame, health: 10, team: AmuletTeam.Human) {
     controlsCanTargetEnemies = true;
     characterType = CharacterType.Kid;
     hurtable = false;
@@ -469,7 +469,7 @@ class AmuletPlayer extends IsometricPlayer {
   void spawnItem(AmuletItem item){
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
-    amulet.spawnLoot(
+    amuletGame.spawnLoot(
       x: x + adj(spawnAngle, spawnDistance),
       y: y + opp(spawnAngle, spawnDistance),
       z: z,
@@ -1392,17 +1392,6 @@ class AmuletPlayer extends IsometricPlayer {
     writeByte(NetworkResponsePlayer.Cache_Cleared);
   }
 
-  void writePlayerPosition() {
-    positionCacheX = x.toInt();
-    positionCacheY = y.toInt();
-    positionCacheZ = z.toInt();
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Position);
-    writeInt16(x.toInt());
-    writeInt16(y.toInt());
-    writeInt16(z.toInt());
-  }
-
   void writeMessage(String message){
     writeByte(NetworkResponse.Amulet_Player);
     writeByte(NetworkResponseAmuletPlayer.Message);
@@ -1419,7 +1408,15 @@ class AmuletPlayer extends IsometricPlayer {
     if (z != null){
       this.z = z;
     }
-    writePlayerPosition();
+    writePlayerPositionAbsolute();
     writePlayerEvent(PlayerEvent.Player_Moved);
+  }
+
+  bool flag(String name){
+    if (!data.containsKey(name)){
+      data[name] = true;
+      return true;
+    }
+    return false;
   }
 }

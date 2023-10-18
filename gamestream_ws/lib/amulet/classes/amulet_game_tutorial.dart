@@ -8,6 +8,7 @@ class AmuletGameTutorial extends AmuletGame {
   late final Character ox;
 
   AmuletGameTutorial({
+    required super.amulet,
     required super.scene,
     required super.time,
     required super.environment,
@@ -48,8 +49,8 @@ class AmuletGameTutorial extends AmuletGame {
               cooldown: 0,
           );
         }),
-        TalkOption('Sorry I cannot help', (){
-
+        TalkOption('Skip Tutorial', (){
+            amulet.movePlayerToTown(player);
         }),
       ]);
       return;
@@ -65,28 +66,40 @@ class AmuletGameTutorial extends AmuletGame {
             cooldown: 0,
           );
         }),
-        TalkOption('No sorry', (){
-
+        TalkOption('Skip Tutorial', (){
+          amulet.movePlayerToTown(player);
         }),
       ]);
       return;
     }
 
-    player.talk('Kill those creatures for me please');
+    player.talk('Kill those creatures for me please',
+      options: [
+        TalkOption('Skip Tutorial', (){
+          amulet.movePlayerToTown(player);
+        })
+      ]);
   }
 
   @override
   void onPlayerJoined(AmuletPlayer player) {
-    player.writeMessage('Hello and welcome to Amulet. Using the mouse left click on the screen to move to that position.');
-    assignDefaultEquipmentToPlayer(player);
+
+    if (player.flag('initialized')) {
+      player.writeMessage('Hello and welcome to Amulet. Using the mouse left click on the screen to move to that position.');
+      initializeNewPlayer(player);
+    }
+
     player.setPosition(
       x: 1600,
       y: 1515,
       z: 25,
     );
+
+    player.writePlayerPositionAbsolute();
   }
 
-  void assignDefaultEquipmentToPlayer(AmuletPlayer player) {
+
+  void initializeNewPlayer(AmuletPlayer player) {
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
     }

@@ -7,7 +7,6 @@ import 'package:gamestream_ws/amulet/classes/amulet_game_town.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/amulet/classes/fiend_type.dart';
-import 'package:gamestream_ws/amulet/functions/player/player_change_game.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric/isometric_environment.dart';
 import 'package:gamestream_ws/isometric/isometric_time.dart';
@@ -60,6 +59,7 @@ class Amulet {
   void _initializeGames() {
 
     amuletGameTown = AmuletGameTown(
+      amulet: this,
       scene: scenes.mmoTown,
       time: amuletTime,
       environment: amuletEnvironment,
@@ -70,6 +70,7 @@ class Amulet {
     );
 
     amuletRoad01 = AmuletGame(
+      amulet: this,
       scene: scenes.road01,
       time: amuletTime,
       environment: amuletEnvironment,
@@ -80,6 +81,7 @@ class Amulet {
     );
 
     amuletRoad02 = AmuletGame(
+      amulet: this,
       scene: scenes.road02,
       time: amuletTime,
       environment: amuletEnvironment,
@@ -142,6 +144,7 @@ class Amulet {
 
   AmuletGameTutorial buildAmuletGameTutorial(){
     final game = AmuletGameTutorial(
+      amulet: this,
       scene: scenes.tutorial,
       time: IsometricTime(),
       environment: IsometricEnvironment(),
@@ -178,8 +181,33 @@ class Amulet {
   void playerStartTutorial(AmuletPlayer player) {
     playerChangeGame(
       player: player,
-      src: player.amulet,
+      src: player.amuletGame,
       target: buildAmuletGameTutorial(),
     );
+  }
+
+  void movePlayerToTown(AmuletPlayer player) {
+    playerChangeGame(
+      player: player,
+      src: player.amuletGame,
+      target: amuletGameTown,
+    );
+  }
+
+  void playerChangeGame({
+    required AmuletPlayer player,
+    required AmuletGame src,
+    required AmuletGame target,
+  }){
+    if (player.amuletGame == target){
+      throw Exception();
+    }
+    player.clearPath();
+    player.clearTarget();
+    src.remove(player);
+    target.add(player);
+    player.clearCache();
+    player.setDestinationToCurrentPosition();
+    player.amuletGame = target;
   }
 }

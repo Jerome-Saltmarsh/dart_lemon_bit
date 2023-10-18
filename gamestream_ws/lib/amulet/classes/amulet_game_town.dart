@@ -16,6 +16,7 @@ class AmuletGameTown extends AmuletGame {
   late AmuletNpc npcGuard;
 
   AmuletGameTown({
+    required super.amulet,
     required super.scene,
     required super.time,
     required super.environment,
@@ -75,7 +76,7 @@ class AmuletGameTown extends AmuletGame {
 
   @override
   AmuletPlayer buildPlayer() => AmuletPlayer(
-    amulet: this,
+    amuletGame: this,
     itemLength: 6,
     x: playerSpawnX,
     y: playerSpawnY,

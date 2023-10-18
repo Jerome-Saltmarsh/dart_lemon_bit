@@ -169,27 +169,8 @@ class IsometricParser with ByteReader, IsometricComponent {
         readGameRunning();
         break;
 
-      case NetworkResponseIsometric.Player_Position:
-        readIsometricPlayerPosition();
-        break;
-
       case NetworkResponseIsometric.Player_Aim_Target:
         readPlayerAimTarget();
-        break;
-
-      case NetworkResponseIsometric.Player_Position_Delta:
-        final position = player.position;
-        player.savePositionPrevious();
-        final changeX = readInt8().toDouble();
-        final changeY = readInt8().toDouble();
-        final changeZ = readInt8().toDouble();
-        position.x += changeX;
-        position.y += changeY;
-        position.z += changeZ;
-        player.indexColumn = position.indexColumn;
-        player.indexRow = position.indexRow;
-        player.indexZ = position.indexZ;
-        player.nodeIndex = scene.getIndexPosition(position);
         break;
 
       case NetworkResponseIsometric.Player_Accuracy:
@@ -204,9 +185,9 @@ class IsometricParser with ByteReader, IsometricComponent {
         scene.gameObjects.clear();
         break;
 
-      case NetworkResponseIsometric.Player_Initialized:
-        player.onPlayerInitialized();
-        break;
+      // case NetworkResponseIsometric.Player_Initialized:
+      //   player.onPlayerInitialized();
+      //   break;
 
       case NetworkResponseIsometric.Player_Controls:
         player.controlsCanTargetEnemies.value = readBool();
@@ -326,16 +307,11 @@ class IsometricParser with ByteReader, IsometricComponent {
     io.recenterCursor();
   }
 
-  void readIsometricPlayerPosition() {
-    final position = player.position;
-    player.savePositionPrevious();
-    readIsometricPosition(position);
-    player.indexColumn = position.indexColumn;
-    player.indexRow = position.indexRow;
-    player.indexZ = position.indexZ;
-    player.nodeIndex = scene.getIndexPosition(position);
-    player.areaNodeIndex = (position.indexRow * scene.totalColumns) + position.indexColumn;
-  }
+  // void readIsometricPlayerPosition() {
+  //   final position = player.position;
+  //   readIsometricPosition(position);
+  //   player.updateIndexes();
+  // }
 
   void readPlayerAimTarget() {
     final aimTargetSet = readBool();
@@ -693,7 +669,8 @@ class IsometricParser with ByteReader, IsometricComponent {
         break;
       case NetworkResponseAmuletPlayer.Message:
         amulet.clearMessage();
-        amulet.messages.addAll(readString().split('.'));
+        amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));
+        amulet.messages.removeWhere((element) => element.isEmpty);
         amulet.messageIndex.value = 0;
         break;
     }

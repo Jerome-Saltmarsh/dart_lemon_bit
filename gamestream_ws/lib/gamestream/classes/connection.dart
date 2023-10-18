@@ -1032,8 +1032,8 @@ class Connection with ByteReader {
 
   void onPlayerLoaded(AmuletPlayer player) {
 
-    if (playerNeedsToBeInitialized(player)){
-      initializedPlayer(player);
+    if (!player.data.containsKey('tutorial_completed')){
+      nerve.amulet.playerStartTutorial(player);
     }
 
     playerRefillItemSlots(
@@ -1076,10 +1076,6 @@ class Connection with ByteReader {
     itemSlot.cooldownDuration = itemStats.cooldown;
   }
 
-  void initializedPlayer(AmuletPlayer player) {
-    player.initialized = true;
-    nerve.amulet.playerStartTutorial(player);
-  }
 }
 
 

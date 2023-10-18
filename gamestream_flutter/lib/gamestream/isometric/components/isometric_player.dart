@@ -47,7 +47,7 @@ class IsometricPlayer with IsometricComponent {
   final handTypeLeft = Watch(0);
   final handTypeRight = Watch(0);
   final complexion = Watch(0);
-  final previousPosition = Position();
+  // final previousPosition = Position();
   final accuracy = Watch(1.0);
   final energy = Watch(0);
   final energyMax = Watch(0);
@@ -129,11 +129,11 @@ class IsometricPlayer with IsometricComponent {
     return false;
   }
 
-  void savePositionPrevious() {
-    previousPosition.x = position.x;
-    previousPosition.y = position.y;
-    previousPosition.z = position.z;
-  }
+  // void savePositionPrevious() {
+  //   previousPosition.x = position.x;
+  //   previousPosition.y = position.y;
+  //   previousPosition.z = position.z;
+  // }
 
   void onChangedDebugging(bool debugging) {
     if (!debugging) {
@@ -146,16 +146,24 @@ class IsometricPlayer with IsometricComponent {
           NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies
       );
 
+  void setPosition({double? x, double? y, double? z}){
+    if (x != null){
+      position.x = x;
+    }
+    if (y != null){
+      position.y = y;
+    }
+    if (z != null){
+      position.z = z;
+    }
+  }
+
   void onPlayerInitialized() {
-    position.x = 0;
-    position.y = 0;
-    position.z = 0;
-    previousPosition.x = 0;
-    previousPosition.y = 0;
-    previousPosition.z = 0;
-    indexZ = 0;
-    indexRow = 0;
-    indexColumn = 0;
+    print('onPlayerInitialized()');
+    // setPosition(x: 0, y: 0, z: 0);
+    // indexZ = 0;
+    // indexRow = 0;
+    // indexColumn = 0;
     scene.characters.clear();
     scene.projectiles.clear();
     scene.gameObjects.clear();
@@ -165,6 +173,12 @@ class IsometricPlayer with IsometricComponent {
 
   void readNetworkResponsePlayer() {
     switch (parser.readByte()) {
+      case NetworkResponsePlayer.Position_Delta:
+        readPlayerPositionDelta();
+        break;
+      case NetworkResponsePlayer.Position_Absolute:
+        readPlayerPositionAbsolute();
+        break;
       case NetworkResponsePlayer.HeadType:
         readHeadType();
         break;
@@ -244,12 +258,6 @@ class IsometricPlayer with IsometricComponent {
       case NetworkResponsePlayer.Team:
         player.team.value = parser.readByte();
         break;
-      // case NetworkResponsePlayer.Position:
-      //   final position = player.position;
-      //   position.x = parser.readInt16().toDouble();
-      //   position.y = parser.readInt16().toDouble();
-      //   position.z = parser.readInt16().toDouble();
-      //   break;
       case NetworkResponsePlayer.Destination:
         player.runX = parser.readDouble();
         player.runY = parser.readDouble();
@@ -267,10 +275,23 @@ class IsometricPlayer with IsometricComponent {
       case NetworkResponsePlayer.Cache_Cleared:
         clearCache();
         break;
-      case NetworkResponsePlayer.Position:
-        parser.readIsometricPosition(position);
-        break;
     }
+  }
+
+  void readPlayerPositionDelta() {
+    final position = player.position;
+    final changeX = parser.readInt8().toDouble();
+    final changeY = parser.readInt8().toDouble();
+    final changeZ = parser.readInt8().toDouble();
+    position.x += changeX;
+    position.y += changeY;
+    position.z += changeZ;
+    player.updateIndexes();
+  }
+
+  void readPlayerPositionAbsolute() {
+    parser.readIsometricPosition(position);
+    updateIndexes();
   }
 
   void readHandTypeRight() {
@@ -399,5 +420,13 @@ class IsometricPlayer with IsometricComponent {
 
   void clearCache() {
     scene.clear();
+  }
+
+  void updateIndexes(){
+    indexColumn = position.indexColumn;
+    indexRow = position.indexRow;
+    indexZ = position.indexZ;
+    nodeIndex = scene.getIndexPosition(position);
+    areaNodeIndex = (position.indexRow * scene.totalColumns) + position.indexColumn;
   }
 }

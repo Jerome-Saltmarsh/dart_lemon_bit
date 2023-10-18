@@ -301,19 +301,16 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     final diffY = -(positionCacheY - y.toInt()).toInt();
     final diffZ = -(positionCacheZ - z.toInt()).toInt();
 
-    if (diffX == 0 && diffY == 0 && diffZ == 0) return;
+    if (diffX == 0 && diffY == 0 && diffZ == 0) {
+      return;
+    }
 
     if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ.abs() < 126){
-      writeByte(NetworkResponse.Isometric);
-      writeByte(NetworkResponseIsometric.Player_Position_Delta);
-      writeInt8(diffX);
-      writeInt8(diffY);
-      writeInt8(diffZ);
+      writePlayerPositionDelta(diffX, diffY, diffZ);
     } else {
-      writeByte(NetworkResponse.Isometric);
-      writeByte(NetworkResponseIsometric.Player_Position);
-      writeIsometricPosition(this);
+      writePlayerPositionAbsolute();
     }
+
     positionCacheX = x.toInt();
     positionCacheY = y.toInt();
     positionCacheZ = z.toInt();
@@ -355,7 +352,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
     if (!initialized) {
       initialized = true;
-      writePlayerInitialized();
+      // writePlayerInitialized();
       game.customInitPlayer(this);
       writeIsometricPlayer();
       writePlayerHealth();
@@ -1106,10 +1103,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeString(aimTarget!.name);
   }
 
-  void writePlayerInitialized() {
-    writeByte(NetworkResponse.Isometric);
-    writeByte(NetworkResponseIsometric.Player_Initialized);
-  }
+  // void writePlayerInitialized() {
+  //   writeByte(NetworkResponse.Isometric);
+  //   writeByte(NetworkResponseIsometric.Player_Initialized);
+  // }
 
   void performPrimaryAction() {
     if (deadOrBusy)
@@ -1289,4 +1286,24 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void toggleGender() =>
     gender = gender == Gender.male ? Gender.female : Gender.male;
+
+  void writePlayerPositionDelta(int diffX, int diffY, int diffZ) {
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Position_Delta);
+    writeInt8(diffX);
+    writeInt8(diffY);
+    writeInt8(diffZ);
+  }
+
+  void writePlayerPositionAbsolute() {
+    positionCacheX = x.toInt();
+    positionCacheY = y.toInt();
+    positionCacheZ = z.toInt();
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Position_Absolute);
+    writeInt16(x.toInt());
+    writeInt16(y.toInt());
+    writeInt16(z.toInt());
+  }
+
 }

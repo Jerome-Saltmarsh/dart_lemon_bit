@@ -1,5 +1,4 @@
 import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/amulet/functions/player/player_change_game.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
 import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
@@ -10,6 +9,8 @@ import 'fiend_type.dart';
 
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
+
+  final Amulet amulet;
 
   AmuletGame? gameNorth;
   AmuletGame? gameSouth;
@@ -24,6 +25,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   var cooldownTimer = 0;
 
   AmuletGame({
+    required this.amulet,
     required super.scene,
     required super.time,
     required super.environment,
@@ -56,14 +58,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       final player = players[i];
       final x = player.x;
       if (x < padding && gameNorth != null) {
-        playerChangeGame(
+        amulet.playerChangeGame(
           player: player,
           src: this,
           target: gameNorth,
         );
         player.x = gameNorth.scene.rowLength - 50;
         player.y = player.y.clamp(0, gameNorth.scene.columnLength);
-        player.writePlayerPosition();
+        player.writePlayerPositionAbsolute();
         player.writePlayerEvent(PlayerEvent.Player_Moved);
         i--;
         length = players.length;
@@ -71,14 +73,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       }
 
       if (x > maxX && gameSouth != null){
-        playerChangeGame(
+        amulet.playerChangeGame(
           player: player,
           src: this,
           target: gameSouth,
         );
         player.x = padding + 25;
         player.y = player.y.clamp(0, gameSouth.scene.columnLength);
-        player.writePlayerPosition();
+        player.writePlayerPositionAbsolute();
         player.writePlayerEvent(PlayerEvent.Player_Moved);
         i--;
         length = players.length;
