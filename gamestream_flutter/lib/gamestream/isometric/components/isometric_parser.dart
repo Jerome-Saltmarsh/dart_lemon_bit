@@ -298,6 +298,10 @@ class IsometricParser with ByteReader, IsometricComponent {
     scene.marks = marks;
     scene.marksChangedNotifier.value++;
 
+    final scenePartKeys = readByte(); /// DO NOT DELETE
+    readNetworkResponseSceneKeys();
+
+
     final decoder = ZLibDecoder();
     scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
     scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));

@@ -76,10 +76,22 @@ class SceneWriter extends ByteWriter {
     writeUint32List(scene.marks);
   }
 
+  void writeKeys(Map<String, int> keys){
+    final length = keys.length;
+    writeByte(ScenePart.Keys);
+    writeUInt16(length);
+    final entries = keys.entries;
+    for (final entry in entries){
+      writeString(entry.key);
+      writeUInt16(entry.value);
+    }
+  }
+
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
     clear();
     writeNodes(scene);
     writeMarks(scene);
+    writeKeys(scene.keys);
     if (gameObjects) {
       writeGameObjects(scene.gameObjects);
       writeByte(ScenePart.End);

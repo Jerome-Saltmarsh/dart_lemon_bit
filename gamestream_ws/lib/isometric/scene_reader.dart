@@ -21,6 +21,7 @@ class SceneReader extends ByteReader {
   var playerSpawnPoints = Uint16List(0);
   var spawnPoints = Uint16List(0);
   var marks = <int>[];
+  var keys = <String, int> {};
   var gameObjects = <GameObject>[];
 
   static Scene readScene(Uint8List bytes, {int startIndex = 0}) =>
@@ -48,7 +49,7 @@ class SceneReader extends ByteReader {
       columns: totalColumns,
       gameObjects: gameObjects,
       marks: marks,
-    );
+    )..keys = keys;
   }
 
   void readLoop() {
@@ -63,6 +64,9 @@ class SceneReader extends ByteReader {
           break;
         case ScenePart.Marks:
           readMarks();
+          break;
+        case ScenePart.Keys:
+          readKeys();
           break;
         case ScenePart.End:
           return;
@@ -120,6 +124,16 @@ class SceneReader extends ByteReader {
   void readMarks(){
     final length = readUInt16();
     marks = readUint32List(length).toList(growable: true);
+  }
+
+  void readKeys(){
+    final length = readUInt16();
+    keys.clear();
+    for (var i = 0; i < length; i++){
+      final name = readString();
+      final index = readUInt16();
+      keys[name] = index;
+    }
   }
 
   void readNodes() {
