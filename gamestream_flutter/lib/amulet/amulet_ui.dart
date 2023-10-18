@@ -31,7 +31,7 @@ class AmuletUI {
   Widget buildAmuletUI() => Stack(
       alignment: Alignment.center,
       children: [
-        buildNpcText(),
+        buildPositionedNpcText(),
         Positioned(
           bottom: 4,
           left: 0,
@@ -129,7 +129,7 @@ class AmuletUI {
     return IgnorePointer(child: buildWatch(amulet.error, (error) => buildText(error, color: color)));
   }
 
-  Positioned buildNpcText() {
+  Positioned buildPositionedNpcText() {
 
     const width = 300.0;
     const height = width * goldenRatio_0618;
@@ -152,25 +152,16 @@ class AmuletUI {
       GSContainer(
         width: width,
         height: height,
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Positioned(
-              top: 8,
-              child: buildText(npcText, color: Colors.white70),
-            ),
-            Positioned(
-              bottom: 8,
-              child: options,
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: onPressed(
-                  action: amulet.network.sendAmuletRequest.endInteraction,
-                  child: buildText('x', size: 25),
-              ),
-            ),
+            alignRight(child: onPressed(
+              action: amulet.network.sendAmuletRequest.endInteraction,
+              child: buildText('x', size: 25),
+            )),
+            Expanded(child: buildText(npcText, color: Colors.white70)),
+            options,
           ],
         ),
       )),
@@ -884,3 +875,10 @@ class AmuletUI {
 
       );
 }
+
+Widget alignRight({required Widget child})=> Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      child
+    ],
+  );

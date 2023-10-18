@@ -10,10 +10,13 @@ class Scene {
 
   /// The first 2 bytes are use for the index, the other 6 store its information
   var marks = <int>[];
+  var keys = <String, int>{};
 
   Uint8List types;
   Uint8List shapes;
   Uint8List? compiled;
+
+
 
   /// used for pathfinding to contains the the index of a previous path
   Int32List path = Int32List(0);
@@ -537,5 +540,9 @@ class Scene {
       throw Exception('invalid index');
     }
     marks.add(MarkType.build(index: index, type: markType));
+  }
+
+  void addKey(String name, int value){
+    keys[name] = value;
   }
 }

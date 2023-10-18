@@ -7,8 +7,10 @@ Widget buildBorder({
   double width = 1,
   BorderRadius radius = const BorderRadius.all(Radius.circular(4)),
   Color fillColor = Colors.transparent,
+  EdgeInsets? padding,
 }) {
   return Container(
+    padding: padding,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       border: Border.all(color: color, width: width),

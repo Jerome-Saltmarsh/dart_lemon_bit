@@ -172,6 +172,9 @@ class Connection with ByteReader {
         final editor = player.editor;
 
         switch (isometricEditorRequest){
+          case EditorRequest.Add_Key:
+            handleEditorRequestAddKey(arguments);
+            break;
           case EditorRequest.New_Scene:
             handleEditorRequestNewScene(arguments);
             break;
@@ -1076,6 +1079,28 @@ class Connection with ByteReader {
     itemSlot.cooldownDuration = itemStats.cooldown;
   }
 
+  void handleEditorRequestAddKey(List<String> arguments) {
+    if (arguments.length < 3){
+      throw Exception('arguments.length < 3');
+    }
+
+    final player = _player;
+
+    if (player is! AmuletPlayer){
+      return;
+    }
+
+    final game = player.game;
+    final scene = game.scene;
+    final name = arguments[2];
+    final index = arg3;
+
+    if (index == null){
+      throw Exception('index == null');
+    }
+    scene.addKey(name, index);
+    game.notifyPlayersSceneKeysChanged();
+  }
 }
 
 

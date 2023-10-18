@@ -99,6 +99,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void spawnFiendsAtSpawnNodes() {
+    if (fiendTypes.isEmpty){
+      return;
+    }
     final marks = scene.marks;
     final length = marks.length;
     for (var i = 0; i < length; i++) {

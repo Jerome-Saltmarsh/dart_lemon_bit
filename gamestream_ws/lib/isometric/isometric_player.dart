@@ -537,6 +537,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeWeather();
     writeGameObjects();
     writeFPS();
+    writeSceneKeys();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -1304,6 +1305,19 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeInt16(x.toInt());
     writeInt16(y.toInt());
     writeInt16(z.toInt());
+  }
+
+  void writeSceneKeys() {
+    final keys = scene.keys;
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Keys);
+    writeUInt16(keys.length);
+
+    final entries = keys.entries;
+    for (final entry in entries) {
+       writeString(entry.key);
+       writeUInt16(entry.value);
+    }
   }
 
 }

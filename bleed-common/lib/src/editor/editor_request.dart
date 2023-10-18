@@ -17,4 +17,5 @@ enum EditorRequest {
    Mark_Select,
    Mark_Set_Type,
    New_Scene,
+   Add_Key,
 }

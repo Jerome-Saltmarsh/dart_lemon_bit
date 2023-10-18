@@ -27,6 +27,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   var _ambientAlpha = 0;
 
+  final keys = <String, int>{};
+  final keysChangedNotifier = Watch(0);
   var marks = Uint32List(0);
   var interpolationPadding = 0.0;
   var nextLightingUpdate = 0;

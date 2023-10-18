@@ -185,6 +185,8 @@ extension IsometricEditorUI on IsometricEditor {
               child: buildColumnFile(),
             ),
         ),
+      if (activeEditTab == EditorTab.Keys)
+        buildEditorTabKeys(),
       Positioned(
         left: 0,
         top: 0,
@@ -1575,7 +1577,57 @@ extension IsometricEditorUI on IsometricEditor {
     //   opacity: interpolate(ambientAlpha, gameObject.emissionAlp, gameObject.emissionIntensity).toInt(),
     // );
   }
+
+  Positioned buildEditorTabKeys() => Positioned(
+    top: 100,
+    left: 0,
+    child: GSContainer(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              buildText('KEYS'),
+              width8,
+              onPressed(
+                action: (){
+                  ui.showDialogGetString(onSelected: (name) {
+                    network.sendNetworkRequest(
+                        NetworkRequest.Editor_Request,
+                        EditorRequest.Add_Key.index,
+                        name,
+                        editor.nodeSelectedIndex.value
+                    );
+                    // send request to add key
+                  });
+                },
+                child: buildBorder(
+                  padding: const EdgeInsets.all(4),
+                  child: buildText('ADD'),
+                ),
+              ),
+            ],
+          ),
+              buildWatch(
+                  scene.keysChangedNotifier,
+                  (t) => Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: scene.keys.entries
+                            .map((entry) => Row(
+                                  children: [
+                                    buildText(entry.key),
+                                    width8,
+                                    buildText(entry.value),
+                                  ],
+                                ))
+                            .toList(growable: false),
+                      ))
+            ],
+          ),
+    ),
+  );
 }
+
 
 
 

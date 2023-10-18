@@ -7,4 +7,5 @@ class NetworkResponseScene {
   static const Sort_GameObjects = 3;
   static const Download_Scene = 4;
   static const Name = 5;
+  static const Keys = 6;
 }

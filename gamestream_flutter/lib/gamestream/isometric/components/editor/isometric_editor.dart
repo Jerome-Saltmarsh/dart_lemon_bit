@@ -480,6 +480,8 @@ class IsometricEditor with IsometricComponent {
       case EditorTab.Marks:
         selectMouseMark();
         break;
+      case EditorTab.Keys:
+        break;
     }
   }
 

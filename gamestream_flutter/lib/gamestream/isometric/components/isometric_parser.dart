@@ -627,6 +627,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponseScene.Name:
         readSceneName();
         break;
+      case NetworkResponseScene.Keys:
+        readNetworkResponseSceneKeys();
+        break;
     }
   }
 
@@ -682,5 +685,18 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkServerError() {
     final message = readString();
     ui.error.value = message;
+  }
+
+  void readNetworkResponseSceneKeys() {
+    final length = readUInt16();
+    final keys = scene.keys;
+    keys.clear();
+
+    for (var i = 0; i < length; i++){
+       final name = readString();
+       final index = readUInt16();
+       keys[name] = index;
+    }
+    scene.keysChangedNotifier.value++;
   }
 }

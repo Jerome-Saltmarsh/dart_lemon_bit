@@ -148,8 +148,8 @@ class IsometricNetwork with IsometricComponent {
   void sendNetworkRequestAmulet(NetworkRequestAmulet request, [dynamic message]) =>
       sendNetworkRequest(NetworkRequest.Amulet, '${request.index} $message');
 
-  void sendNetworkRequest(int networkRequest, [dynamic arg1, dynamic arg2]) =>
-      websocket.send('${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""}'.trim());
+  void sendNetworkRequest(int networkRequest, [dynamic arg1, dynamic arg2, dynamic arg3]) =>
+      websocket.send('${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
 
 }
 

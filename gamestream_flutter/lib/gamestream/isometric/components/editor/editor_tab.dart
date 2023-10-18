@@ -3,4 +3,5 @@ enum EditorTab {
   Grid,
   Objects,
   Marks,
+  Keys,
 }

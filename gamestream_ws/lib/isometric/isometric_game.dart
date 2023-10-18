@@ -2718,4 +2718,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.downloadSceneMarks();
     }
   }
+
+  void notifyPlayersSceneKeysChanged() {
+    for (final player in players){
+      player.writeSceneKeys();
+    }
+  }
 }
