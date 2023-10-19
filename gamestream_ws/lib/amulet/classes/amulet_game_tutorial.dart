@@ -3,6 +3,8 @@ import 'package:gamestream_ws/amulet/src.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 
+import 'fiend_type.dart';
+
 class AmuletGameTutorial extends AmuletGame {
 
   late final Character ox;
@@ -115,8 +117,11 @@ class AmuletGameTutorial extends AmuletGame {
         nodeOrientation: NodeOrientation.Half_West,
       );
     }
-    
-    spawnFallenAtIndex(getKey('creep01'));
+
+    spawnFiendTypeAtIndex(
+        fiendType: FiendType.Fallen_01,
+        index: getKey('creep01'),
+    )..respawnDurationTotal = -1;
 
     player.writePlayerPositionAbsolute();
   }

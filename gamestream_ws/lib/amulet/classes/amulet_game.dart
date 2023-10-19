@@ -21,7 +21,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final String name;
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
-  final enemyRespawnDuration = 30; // in seconds
   var cooldownTimer = 0;
 
   AmuletGame({
@@ -117,26 +116,42 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  void spawnFiendTypeAtIndex({
+  Character spawnFiendTypeAtIndex({
     required FiendType fiendType,
     required int index,
   }) {
     switch (fiendType){
       case FiendType.Fallen_01:
-        spawnFallenAtIndex(index);
-        break;
+        return spawnCharacterAtIndex(index)
+          ..health = 2
+          ..name = 'Fallen'
+          ..characterType = CharacterType.Fallen;
       case FiendType.Skeleton_01:
-        spawnSkeletonArcherAtIndex(index);
-        break;
+        return spawnCharacterAtIndex(index)
+          ..health = 5
+          ..name = 'Skeleton'
+          ..characterType = CharacterType.Skeleton;
     }
+    throw Exception();
   }
 
-  void spawnFallenAtIndex(int index) {
-    characters.add(Character(
-      team: AmuletTeam.Monsters,
+  Character spawnCharacterAtIndex(int index) =>
+    spawnCharacterAtXYZ(
       x: scene.getIndexX(index),
       y: scene.getIndexY(index),
       z: scene.getIndexZ(index),
+    );
+
+  Character spawnCharacterAtXYZ({
+    required double x,
+    required double y,
+    required double z,
+  }) {
+    final character = Character(
+      team: AmuletTeam.Monsters,
+      x: x,
+      y: y,
+      z: z,
       health: 7,
       weaponDamage: 1,
       characterType: CharacterType.Fallen,
@@ -150,8 +165,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     )
       ..weaponHitForce = 2
       ..attackDuration = 20
-      ..attackActionFrame = 12
-    );
+      ..attackActionFrame = 12;
+
+    characters.add(character);
+    return character;
   }
 
   void spawnSkeletonArcherAtIndex(int index) {
@@ -351,17 +368,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnCharacterKilled(Character target, src) {
-    if (target.characterType == CharacterType.Fallen) {
 
+    if (target.spawnLootOnDeath){
       final itemQuality = getRandomItemQuality();
-
       if (itemQuality != null){
         spawnRandomLootAtPosition(target, itemQuality);
       }
+    }
 
-       addJob(seconds: enemyRespawnDuration, action: () {
-         setCharacterStateSpawning(target);
-       });
+    if (target.respawnDurationTotal > 0){
+      addJob(seconds: target.respawnDurationTotal, action: () {
+        setCharacterStateSpawning(target);
+      });
     }
 
     if (src is AmuletPlayer) {
@@ -499,7 +517,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     final markValue = randomItem(spawnFallens.toList());
     final index = MarkType.getIndex(markValue);
-    spawnFallenAtIndex(index);
+    spawnCharacterAtIndex(index);
   }
 
   @override
