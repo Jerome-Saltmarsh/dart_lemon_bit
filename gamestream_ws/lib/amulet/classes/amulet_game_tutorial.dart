@@ -185,14 +185,28 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onAmuletItemUsed(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {
-    if (amuletItem == AmuletItem.Spell_Heal &&
-        amuletPlayer.flag('use_spell_heal')) {
+    if (
+      amuletItem == AmuletItem.Spell_Heal &&
+      amuletPlayer.flag('use_spell_heal')
+    ) {
+
+      final fiend02Index = getKey('fiend02');
+      for (var i = 0; i < 2; i++) {
+        const shiftRadius = 10;
+        spawnFiendTypeAtIndex(
+          fiendType: FiendType.Fallen_01,
+          index: fiend02Index,
+        )
+          ..x += giveOrTake(shiftRadius)
+          ..y += giveOrTake(shiftRadius);
+      }
+
       addJob(
           seconds: 3,
-          action: () {
-            final door02Index = getKey('door02');
-            setNodeEmpty(door02Index);
-          });
+          action: clearDoor02,
+      );
     }
   }
+
+  void clearDoor02() => setNodeEmpty(getKey('door02'));
 }
