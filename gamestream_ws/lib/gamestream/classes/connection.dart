@@ -1038,46 +1038,42 @@ class Connection with ByteReader {
     if (!player.data.containsKey('tutorial_completed')){
       nerve.amulet.playerStartTutorial(player);
     }
-
-    playerRefillItemSlots(
-      player: player,
-      itemSlots: player.weapons,
-    );
+    player.refillItemSlotsWeapons();
   }
 
   bool playerNeedsToBeInitialized(AmuletPlayer player) => !player.initialized;
 
-  void playerRefillItemSlots({
-    required AmuletPlayer player,
-    required List<ItemSlot> itemSlots,
-  }){
-    for (final itemSlot in itemSlots) {
-      playerRefillItemSlot(
-        player: player,
-        itemSlot: itemSlot,
-      );
-    }
-    player.writeWeapons();
-  }
+  // void playerRefillItemSlots({
+  //   required AmuletPlayer player,
+  //   required List<ItemSlot> itemSlots,
+  // }){
+  //   for (final itemSlot in itemSlots) {
+  //     playerRefillItemSlot(
+  //       player: player,
+  //       itemSlot: itemSlot,
+  //     );
+  //   }
+  //   player.writeWeapons();
+  // }
 
-  void playerRefillItemSlot({
-    required AmuletPlayer player,
-    required ItemSlot itemSlot,
-  }){
-    final amuletItem = itemSlot.amuletItem;
-    if (amuletItem == null) {
-      return;
-    }
-    final itemStats = player.getItemStatsForItemSlot(itemSlot);
-    if (itemStats == null) {
-      throw Exception('itemStats == null');
-    }
-    final max = itemStats.charges;
-    itemSlot.max = max;
-    itemSlot.charges = max;
-    itemSlot.cooldown = 0;
-    itemSlot.cooldownDuration = itemStats.cooldown;
-  }
+  // void playerRefillItemSlot({
+  //   required AmuletPlayer player,
+  //   required ItemSlot itemSlot,
+  // }){
+  //   final amuletItem = itemSlot.amuletItem;
+  //   if (amuletItem == null) {
+  //     return;
+  //   }
+  //   final itemStats = player.getItemStatsForItemSlot(itemSlot);
+  //   if (itemStats == null) {
+  //     throw Exception('itemStats == null');
+  //   }
+  //   final max = itemStats.charges;
+  //   itemSlot.max = max;
+  //   itemSlot.charges = max;
+  //   itemSlot.cooldown = 0;
+  //   itemSlot.cooldownDuration = itemStats.cooldown;
+  // }
 
   void handleEditorRequestAddKey(List<String> arguments) {
     if (arguments.length < 3){

@@ -53,7 +53,8 @@ class Amulet extends IsometricGame {
   final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasures));
   final error = Watch('');
   final playerInteracting = Watch(false);
-  final npcText = Watch('');
+  final npcTextIndex = Watch(-1);
+  final npcText = <String>[];
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
@@ -328,9 +329,17 @@ class Amulet extends IsometricGame {
     messages.clear();
   }
 
+  void nextNpcText(){
+    npcTextIndex.value++;
+    if (npcTextIndex.value >= npcText.length){
+      endInteraction();
+    }
+  }
+
   void endInteraction() {
     npcOptions.clear();
-    npcText.value = '';
+    npcText.clear();
+    npcTextIndex.value = -1;
     npcOptionsReads.value++;
   }
 }

@@ -59,6 +59,8 @@ class AmuletGameTutorial extends AmuletGame {
       amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
       cooldown: 0,
     );
+    player.equippedWeaponIndex = 0;
+    player.refillItemSlotsWeapons();
     player.endInteraction();
   }
 
@@ -70,13 +72,12 @@ class AmuletGameTutorial extends AmuletGame {
 
     final data = player.data;
 
-    if (!data.containsKey('ox_met')){
-      data['ox_met'] = true;
-      player.talk('Oh what a fright you gave me. I thought you were one of those creatures. They are lurking about in that room but I have not the courage to face them. Would you do it? Here take this, it is rather blunt but it should be enough to do the job',
+    if (player.flag('ox_met')){
+      player.talk('Argh! Oh, you are not one of them. Such a fright you did give me. I did think it would be one of those awful creatures. They do lurk in that room there yonder but I have not the courage to face them. Perhaps you could do it. Here take this, it is rather blunt but it should be enough to do the job',
           options: [
             talkOptionAcceptSword,
-            talkOptionSkipTutorial,
-            talkOptionsGoodbye,
+            // talkOptionSkipTutorial,
+            // talkOptionsGoodbye,
           ]
       );
       return;
@@ -102,7 +103,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onPlayerJoined(AmuletPlayer player) {
 
     if (player.flag('initialized')) {
-      player.writeMessage('Hello and welcome to Amulet. Using the mouse left click on the screen to move to that position.');
+      player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move.');
       initializeNewPlayer(player);
     }
 

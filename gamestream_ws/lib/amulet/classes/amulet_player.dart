@@ -1353,29 +1353,6 @@ class AmuletPlayer extends IsometricPlayer {
     writeAmuletElements();
   }
 
-  // static void useActivatedPower(AmuletPlayer player){
-  //
-  //   final activatedPowerIndex = player.activatedPowerIndex;
-  //   if (activatedPowerIndex < 0) {
-  //     throw Exception('activatedPowerIndex < 0 : $activatedPowerIndex < 0');
-  //   }
-  //
-  //   final weapons = player.weapons;
-  //
-  //   if (activatedPowerIndex >= weapons.length) {
-  //     throw Exception('invalid weapon index: $activatedPowerIndex');
-  //   }
-  //
-  //   final weapon = weapons[activatedPowerIndex];
-  //   final item = weapon.item;
-  //
-  //   if (item == null){
-  //     throw Exception();
-  //   }
-  //
-  //   useAmuletItem(player, item);
-  // }
-
   @override
   void clearAction() {
     super.clearAction();
@@ -1420,5 +1397,37 @@ class AmuletPlayer extends IsometricPlayer {
       return true;
     }
     return false;
+  }
+
+  void refillItemSlotsWeapons(){
+    refillItemSlots(weapons);
+  }
+
+  void refillItemSlots(List<ItemSlot> itemSlots){
+
+    for (final itemSlot in itemSlots) {
+      refillItemSlot(
+        itemSlot: itemSlot,
+      );
+    }
+    this.writeWeapons();
+  }
+
+  void refillItemSlot({
+    required ItemSlot itemSlot,
+  }){
+    final amuletItem = itemSlot.amuletItem;
+    if (amuletItem == null) {
+      return;
+    }
+    final itemStats = getItemStatsForItemSlot(itemSlot);
+    if (itemStats == null) {
+      throw Exception('itemStats == null');
+    }
+    final max = itemStats.charges;
+    itemSlot.max = max;
+    itemSlot.charges = max;
+    itemSlot.cooldown = 0;
+    itemSlot.cooldownDuration = itemStats.cooldown;
   }
 }

@@ -4,13 +4,16 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_par
 
 extension AmuletParser on IsometricParser {
 
+  static final _regex = RegExp(r'[.!]');
+
   void readNetworkResponseAmulet(){
      switch (readByte()){
        case NetworkResponseAmulet.Player_Interacting:
          amulet.playerInteracting.value = readBool();
          break;
        case NetworkResponseAmulet.Npc_Talk:
-         amulet.npcText.value = readString();
+         amulet.npcText.addAll(readString().split(_regex).map((e) => e.trim()).toList(growable: false));
+         amulet.npcTextIndex.value = 0;
          final length = readByte();
          final options = amulet.npcOptions;
          options.clear();

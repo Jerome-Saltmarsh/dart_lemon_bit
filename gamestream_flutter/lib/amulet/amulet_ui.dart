@@ -134,21 +134,29 @@ class AmuletUI {
     const width = 300.0;
     const height = width * goldenRatio_0618;
 
+    final npcOptions = amulet.npcOptions;
+    final npcText = amulet.npcText;
+
     final options = buildWatch(amulet.npcOptionsReads, (t) =>
         Container(
           width: width,
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: amulet.npcOptions.map((option)=> onPressed(
-                action: () => amulet.network.sendAmuletRequest.selectTalkOption(amulet.npcOptions.indexOf(option)),
+              children: npcOptions.map((option)=> onPressed(
+                action: () => amulet.network.sendAmuletRequest.selectTalkOption(npcOptions.indexOf(option)),
                 child: buildText(option))).toList(growable: false)),
         ));
+
+    final optionsNext = onPressed(
+        action: amulet.nextNpcText,
+        child: buildText('next')
+    );
 
     return Positioned(
       bottom: margin2,
       child:
       buildWatch(amulet.playerInteracting, (interacting) => !interacting ? nothing :
-      buildWatch(amulet.npcText, (npcText) => npcText.isEmpty ? nothing :
+      buildWatch(amulet.npcTextIndex, (npcTextIndex) => npcTextIndex < 0 ? nothing :
       GSContainer(
         width: width,
         height: height,
@@ -160,8 +168,11 @@ class AmuletUI {
             //   action: amulet.network.sendAmuletRequest.endInteraction,
             //   child: buildText('x', size: 25),
             // )),
-            Expanded(child: Center(child: buildText(npcText, color: Colors.white70))),
-            options,
+            Expanded(child: Center(child: buildText(npcText[npcTextIndex], color: Colors.white70))),
+            if (npcTextIndex + 1 < npcText.length)
+              optionsNext,
+            if (npcTextIndex + 1 >= npcText.length)
+              options,
           ],
         ),
       )),
