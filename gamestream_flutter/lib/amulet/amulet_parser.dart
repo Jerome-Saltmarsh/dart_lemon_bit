@@ -12,6 +12,7 @@ extension AmuletParser on IsometricParser {
          amulet.playerInteracting.value = readBool();
          break;
        case NetworkResponseAmulet.Npc_Talk:
+         amulet.npcText.clear();
          amulet.npcText.addAll(readString().split(_regex).map((e) => e.trim()).toList(growable: false));
          amulet.npcTextIndex.value = 0;
          final length = readByte();

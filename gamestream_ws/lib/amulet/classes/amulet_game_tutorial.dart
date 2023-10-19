@@ -54,14 +54,9 @@ class AmuletGameTutorial extends AmuletGame {
     final doorIndex = getKey('door');
     scene.setNodeEmpty(doorIndex);
     onNodeChanged(doorIndex);
-    player.setWeapon(
-      index: 0,
-      amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
-      cooldown: 0,
-    );
-    player.equippedWeaponIndex = 0;
-    player.refillItemSlotsWeapons();
-    player.endInteraction();
+    player.acquireAmuletItem(AmuletItem.Weapon_Rusty_Old_Sword);
+    player.talk("it is rather blunt, but should do the job");
+    // player.endInteraction();
   }
 
   late final talkOptionAcceptSword = TalkOption('Accept Sword', onAcceptSword);
@@ -73,7 +68,7 @@ class AmuletGameTutorial extends AmuletGame {
     final data = player.data;
 
     if (player.flag('ox_met')){
-      player.talk('Argh! Oh, you are not one of them. Such a fright you did give me. I did think it would be one of those awful creatures. They do lurk in that room there yonder but I have not the courage to face them. Perhaps you could do it. Here take this, it is rather blunt but it should be enough to do the job',
+      player.talk('Argh! Oh, you are not one of them. Such a fright one did give me. I did think it would be one of the awful creatures. They do lurk in that room there yonder but this one has not the courage to face them. Perhaps you could do it. Here take this sword',
           options: [
             talkOptionAcceptSword,
             // talkOptionSkipTutorial,

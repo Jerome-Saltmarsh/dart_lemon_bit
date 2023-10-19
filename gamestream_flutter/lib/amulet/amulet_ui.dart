@@ -137,20 +137,32 @@ class AmuletUI {
     final npcOptions = amulet.npcOptions;
     final npcText = amulet.npcText;
 
-    final options = buildWatch(amulet.npcOptionsReads, (t) =>
-        Container(
+
+    final optionsClose = onPressed(
+        action: amulet.nextNpcText,
+        child: buildText('close')
+    );
+
+    final optionsNext = onPressed(
+        action: amulet.nextNpcText,
+        child: buildText('next')
+    );
+
+    final options = buildWatch(amulet.npcOptionsReads, (t) {
+
+      if (npcOptions.isEmpty){
+        return optionsClose;
+      }
+
+      return Container(
           width: width,
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: npcOptions.map((option)=> onPressed(
                 action: () => amulet.network.sendAmuletRequest.selectTalkOption(npcOptions.indexOf(option)),
                 child: buildText(option))).toList(growable: false)),
-        ));
-
-    final optionsNext = onPressed(
-        action: amulet.nextNpcText,
-        child: buildText('next')
-    );
+        );
+    });
 
     return Positioned(
       bottom: margin2,

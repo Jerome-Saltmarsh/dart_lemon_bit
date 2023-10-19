@@ -1430,4 +1430,22 @@ class AmuletPlayer extends IsometricPlayer {
     itemSlot.cooldown = 0;
     itemSlot.cooldownDuration = itemStats.cooldown;
   }
+
+  void acquireAmuletItem(AmuletItem amuletItem) {
+    if (amuletItem.isWeapon){
+      final availableWeaponSlot = getEmptyWeaponSlot();
+      if (availableWeaponSlot != null){
+        availableWeaponSlot.amuletItem = amuletItem;
+        refillItemSlot(itemSlot: availableWeaponSlot);
+        if (equippedWeaponIndex == -1){
+          equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
+        }
+        notifyEquipmentDirty();
+        return;
+      } else {
+        // TODO ADD TO STASH
+      }
+    }
+    throw Exception('amuletPlayer.acquireAmuletItem($amuletItem)');
+  }
 }
