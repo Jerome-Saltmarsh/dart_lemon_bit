@@ -42,6 +42,7 @@ class AmuletGameTutorial extends AmuletGame {
     invincible: true,
   )
 
+    ..complexion = 20
     ..legsType = LegType.Leather
     ..bodyType = BodyType.Leather_Armour;
 
@@ -157,11 +158,8 @@ class AmuletGameTutorial extends AmuletGame {
       initializeNewPlayer(player);
     }
 
-    player.setPosition(
-      x: 1600,
-      y: 1515,
-      z: 25,
-    );
+    final playerSpawn01 = scene.getKey('player_spawn[0]');
+    movePositionToIndex(player, playerSpawn01);
 
     if (!player.data.containsKey('weapon_accepted')){
       setNode(

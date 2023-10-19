@@ -1447,5 +1447,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     itemSlot.cooldownDuration = itemStats.cooldown;
   }
 
+  int getInt(String name) {
+    return data[name] as int;
+  }
+
 
 }

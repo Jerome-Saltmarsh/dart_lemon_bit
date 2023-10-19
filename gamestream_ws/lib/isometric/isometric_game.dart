@@ -1721,7 +1721,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return projectile;
   }
 
-  void moveToIndex(Position position, int index) {
+  void movePositionToIndex(Position position, int index) {
+    final scene = this.scene;
     position.x = scene.getIndexX(index);
     position.y = scene.getIndexY(index);
     position.z = scene.getIndexZ(index);

@@ -551,4 +551,12 @@ class Scene {
   void addKey(String name, int value){
     keys[name] = value;
   }
+
+  int getKey(String name) {
+    final value = keys[name];
+    if (value == null){
+      throw Exception('scene.getKey($name) - not found');
+    }
+    return value;
+  }
 }
