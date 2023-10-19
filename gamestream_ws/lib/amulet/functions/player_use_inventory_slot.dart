@@ -15,7 +15,7 @@ void playerUseInventorySlot(
   switch (slotType){
 
     case SlotType.Weapons:
-      player.selectWeapon(index);
+      player.selectWeaponAtIndex(index);
       return;
     case SlotType.Items:
       final items = player.items;

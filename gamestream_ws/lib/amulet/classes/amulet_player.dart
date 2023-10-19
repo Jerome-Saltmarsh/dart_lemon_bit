@@ -514,7 +514,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   bool isValidIndexTreasure(int index) => index >= 0 && index < treasures.length;
 
-  void selectWeapon(int index) {
+  void selectWeaponAtIndex(int index) {
      if (deadOrBusy)
        return;
 
@@ -524,9 +524,9 @@ class AmuletPlayer extends IsometricPlayer {
     }
 
     final itemSlot = weapons[index];
-    final weapon = itemSlot.amuletItem;
+    final amuletItem = itemSlot.amuletItem;
 
-    if (weapon == null){
+    if (amuletItem == null) {
       return;
     }
 
@@ -535,14 +535,14 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    final weaponStats = getStatsForAmuletItem(weapon);
+    final itemStats = getStatsForAmuletItem(amuletItem);
 
-    if (weaponStats == null){
+    if (itemStats == null){
       writeGameError(GameError.Insufficient_Elements);
       return;
     }
 
-    switch (weapon.selectAction) {
+    switch (amuletItem.selectAction) {
       case AmuletItemAction.Equip:
         equippedWeaponIndex = index;
         deselectActivatedPower();
@@ -573,14 +573,15 @@ class AmuletPlayer extends IsometricPlayer {
         activatedPowerIndex = index;
         setCharacterStateStriking(
             character: this,
-            duration: weaponStats.performDuration,
-            actionFrame: weaponStats.performActionFrame,
+            duration: itemStats.performDuration,
+            actionFrame: itemStats.performActionFrame,
         );
-        itemSlot.cooldown = weaponStats.cooldown;
+        itemSlot.cooldown = itemStats.cooldown;
+        writePlayerWeapon(index);
         break;
       case AmuletItemAction.Instant:
         itemSlotReduceCharge(itemSlot);
-        itemSlot.cooldown = weaponStats.cooldown;
+        itemSlot.cooldown = itemStats.cooldown;
         break;
       case AmuletItemAction.None:
         // TODO: Handle this case.

@@ -60,7 +60,7 @@ extension AmuletRequestHandler on Connection {
       case NetworkRequestAmulet.Select_Weapon:
         final index = parseArg2(arguments);
         if (index == null) return;
-        player.selectWeapon(index);
+        player.selectWeaponAtIndex(index);
         break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);
