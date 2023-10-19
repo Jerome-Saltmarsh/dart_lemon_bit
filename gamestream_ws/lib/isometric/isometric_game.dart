@@ -1167,12 +1167,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void setCharacterStateChanging(Character character) {
     if (!character.canChangeEquipment) return;
-    character.state = CharacterState.Changing;
+    character.characterState = CharacterState.Changing;
     dispatchGameEventPosition(GameEventType.Character_Changing, character);
   }
 
   void setCharacterStateDead(Character character) {
-    if (character.state == CharacterState.Dead) return;
+    if (character.characterState == CharacterState.Dead) return;
 
     for (final otherCharacter in characters){
       if (otherCharacter.target == character)
@@ -1181,7 +1181,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
-    character.state = CharacterState.Dead;
+    character.characterState = CharacterState.Dead;
     character.actionDuration = 0;
     character.frame = 0;
     character.physical = false;
@@ -1721,7 +1721,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return projectile;
   }
 
-  void movePositionToIndex(Position position, int index) {
+  void actionMovePositionToIndex(Position position, int index) {
     final scene = this.scene;
     position.x = scene.getIndexX(index);
     position.y = scene.getIndexY(index);

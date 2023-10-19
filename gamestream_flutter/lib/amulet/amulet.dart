@@ -94,6 +94,8 @@ class Amulet extends IsometricGame {
     errorTimer = 70;
   }
 
+  var cameraZoom = 0;
+
   @override
   void update() {
     super.update();
@@ -104,6 +106,15 @@ class Amulet extends IsometricGame {
         clearError();
       }
     }
+
+    // double zoomTarget;
+    // if (player.characterState == CharacterState.Running){
+    //   zoomTarget = 1.0;
+    // } else {
+    //   zoomTarget = 2.0;
+    //
+    // }
+    // engine.zoom += (zoomTarget - engine.zoom) * 0.025;
   }
 
   void clearError() {

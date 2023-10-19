@@ -152,35 +152,75 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onPlayerJoined(AmuletPlayer player) {
+    refreshPlayerGameState(player);
+  }
+
+  void resetGameState(){
+
+  }
+
+  void refreshPlayerGameState(AmuletPlayer player) {
+
+    resetGameState();
 
     if (player.readFlag('initialized')) {
-      player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move. Scroll the mouse wheel to zoom the camera in and out');
-      initializeNewPlayer(player);
+      actionInitializeNewPlayer(player);
     }
 
-    final playerSpawn01 = scene.getKey('player_spawn[0]');
-    movePositionToIndex(player, playerSpawn01);
-
-    if (!player.data.containsKey('weapon_accepted')){
-      setNode(
-        nodeIndex: getKey('door'),
-        nodeType: NodeType.Wood,
-        nodeOrientation: NodeOrientation.Half_West,
-      );
+    if (player.readFlag('introduction')){
+      actionMovePlayerToSpawn01(player);
+      return;
     }
 
+
+    if (player.readFlag('show_welcome_message')) {
+      actionWriteWelcomeMessage(player);
+    }
+
+    actionMovePlayerToSpawn01(player);
+
+    if (player.hasNotKey('weapon_accepted')){
+      actionSetDoorEnabled();
+    } else {
+      actionSetDoorDisabled();
+    }
+
+    actionInstantiateFiend01();
+  }
+
+  void actionWritePlayerPositionAbsolute(AmuletPlayer player) {
+    player.writePlayerPositionAbsolute();
+  }
+
+  void actionWriteWelcomeMessage(AmuletPlayer player) {
+    player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move. Scroll the mouse wheel to zoom the camera in and out');
+  }
+
+  void actionInstantiateFiend01() {
     fiend01 = spawnFiendTypeAtIndex(
         fiendType: FiendType.Fallen_01,
         index: getKey('creep01'),
     )
       ..spawnLootOnDeath = false
       ..respawnDurationTotal = -1;
+  }
 
-    player.writePlayerPositionAbsolute();
+  void actionSetDoorEnabled() {
+     setNode(
+      nodeIndex: getKey('door'),
+      nodeType: NodeType.Wood,
+      nodeOrientation: NodeOrientation.Half_West,
+    );
+  }
+
+  void actionMovePlayerToSpawn01(AmuletPlayer player) {
+    final playerSpawn01 = scene.getKey('player_spawn[0]');
+    actionMovePositionToIndex(player, playerSpawn01);
+    actionWritePlayerPositionAbsolute(player);
   }
 
 
-  void initializeNewPlayer(AmuletPlayer player) {
+  void actionInitializeNewPlayer(AmuletPlayer player) {
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
     }
@@ -216,4 +256,11 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void clearDoor02() => setNodeEmpty(getKey('door02'));
+
+  void refreshSceneState(){
+
+  }
+
+  void actionSetDoorDisabled() =>
+      setNodeEmpty(getKey('door'));
 }

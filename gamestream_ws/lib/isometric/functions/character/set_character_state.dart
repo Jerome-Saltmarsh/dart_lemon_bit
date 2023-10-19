@@ -11,11 +11,11 @@ void setCharacterState({
   assert (value != CharacterState.Dead); // use game.setCharacterStateDead
   assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
 
-  if (character.state == value || character.deadOrBusy) {
+  if (character.characterState == value || character.deadOrBusy) {
     return;
   }
 
-  character.state = value;
+  character.characterState = value;
   character.frame = 0;
   character.actionDuration = duration;
 }

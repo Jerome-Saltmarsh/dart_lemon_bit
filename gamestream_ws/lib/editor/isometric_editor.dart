@@ -20,7 +20,7 @@ class IsometricEditor extends IsometricGame {
   void customOnPlayerRevived(IsometricPlayer player) {
      if (isSafeToRevive(25, 25)) {
        IsometricGame.setGridPosition(position: player, z: 1, row: 25, column: 25);
-       player.state = CharacterState.Idle;
+       player.characterState = CharacterState.Idle;
        player.writePlayerMoved();
        return;
      }

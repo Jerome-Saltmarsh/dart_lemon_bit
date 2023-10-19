@@ -50,7 +50,7 @@ class Character extends Collider {
   var weaponDamage = 1;
   var weaponRange = 20.0;
   var weaponCooldown = 0;
-  var state = CharacterState.Idle;
+  var characterState = CharacterState.Idle;
   var frame = 0;
   var runSpeed = 1.0;
   var name = "";
@@ -146,7 +146,7 @@ class Character extends Collider {
 
   int get compressedState => compressBytesToUInt32(
     characterType,
-    state,
+    characterState,
     team,
     (healthPercentage * 255).toInt(),
   );
@@ -187,7 +187,7 @@ class Character extends Collider {
   bool get characterTypeTemplate =>
       characterType == CharacterType.Kid;
 
-  bool get dead => state == CharacterState.Dead;
+  bool get dead => characterState == CharacterState.Dead;
 
   bool get deadOrInactive => dead || !active;
 
@@ -197,19 +197,19 @@ class Character extends Collider {
 
   bool get targetIsAlly => target == null ? false : isAlly(target);
 
-  bool get running => state == CharacterState.Running;
+  bool get running => characterState == CharacterState.Running;
 
-  bool get firing => state == CharacterState.Fire;
+  bool get firing => characterState == CharacterState.Fire;
 
-  bool get striking => state == CharacterState.Strike;
+  bool get striking => characterState == CharacterState.Strike;
 
-  bool get idling => state == CharacterState.Idle;
+  bool get idling => characterState == CharacterState.Idle;
 
-  bool get characterStateIdle => state == CharacterState.Idle;
+  bool get characterStateIdle => characterState == CharacterState.Idle;
 
-  bool get characterStateHurt => state == CharacterState.Hurt;
+  bool get characterStateHurt => characterState == CharacterState.Hurt;
 
-  bool get characterStateChanging => state == CharacterState.Changing;
+  bool get characterStateChanging => characterState == CharacterState.Changing;
 
   bool get busy =>
       actionDuration > 0 &&
@@ -254,7 +254,7 @@ class Character extends Collider {
       _angle = value % pi2;
 
   void setCharacterStateSpawning({int duration = 40}){
-    if (state == CharacterState.Spawning)
+    if (characterState == CharacterState.Spawning)
       return;
 
     x = startX;
@@ -264,7 +264,7 @@ class Character extends Collider {
     health = maxHealth;
     physical = true;
     hitable = true;
-    state = CharacterState.Spawning;
+    characterState = CharacterState.Spawning;
     frame = 0;
     actionDuration = duration;
   }
@@ -273,16 +273,16 @@ class Character extends Collider {
     if (deadOrBusy)
       return;
 
-    state = CharacterState.Changing;
+    characterState = CharacterState.Changing;
     frame = 0;
     actionDuration = duration;
   }
 
   void setCharacterStateHurt({int duration = 10}){
-    if (dead || state == CharacterState.Hurt || !hurtable)
+    if (dead || characterState == CharacterState.Hurt || !hurtable)
       return;
 
-    state = CharacterState.Hurt;
+    characterState = CharacterState.Hurt;
     frame = 0;
     actionDuration = duration;
   }
@@ -460,7 +460,7 @@ class Character extends Collider {
     if (dead)
       return;
 
-    state = CharacterState.Idle;
+    characterState = CharacterState.Idle;
     frame = 0;
     actionDuration = -1;
   }

@@ -372,6 +372,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writePlayerAimTargetAction();
     writePlayerDestination();
 
+    writePlayerCharacterState();
     writeSelectedCollider();
 
     writeProjectiles();
@@ -467,7 +468,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
       if (stateAChanged){
         writeByte(character.characterType);
-        writeByte(character.state);
+        writeByte(character.characterState);
         writeByte(character.team);
         writePercentage(character.healthPercentage);
         cacheStateA[cacheIndex] = compressedState;
@@ -515,7 +516,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (const [
         CharacterState.Fire,
         CharacterState.Strike,
-      ].contains(character.state)
+      ].contains(character.characterState)
       ){
         writePercentage(character.actionCompletionPercentage);
       }
@@ -1009,7 +1010,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeCharacterPath(character);
 
       writeByte(character.characterType);
-      writeByte(character.state);
+      writeByte(character.characterState);
       writeByte(character.complexion);
       writeClampUInt16(character.actionDuration);
       writeClampUInt16(character.frame);
@@ -1323,5 +1324,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
+  bool hasNotKey(String name) => !hasKey(name);
+
   bool hasKey(String name) => data.containsKey(name);
+
+  void writePlayerCharacterState() {
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Character_State);
+    writeByte(characterState);
+  }
 }

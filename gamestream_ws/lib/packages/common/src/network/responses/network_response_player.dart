@@ -34,4 +34,5 @@ class NetworkResponsePlayer {
   static const Cache_Cleared = 32;
   static const Position_Absolute = 33;
   static const Position_Delta = 34;
+  static const Character_State = 35;
 }

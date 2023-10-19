@@ -22,6 +22,7 @@ class IsometricPlayer with IsometricComponent {
   var runY = 0.0;
   var runZ = 0.0;
   var areaNodeIndex = 0;
+  var characterState = 0;
 
   final name = Watch('');
   final runToDestinationEnabled = Watch(false);
@@ -178,6 +179,9 @@ class IsometricPlayer with IsometricComponent {
         break;
       case NetworkResponsePlayer.Position_Absolute:
         readPlayerPositionAbsolute();
+        break;
+      case NetworkResponsePlayer.Character_State:
+        characterState = parser.readByte();
         break;
       case NetworkResponsePlayer.HeadType:
         readHeadType();

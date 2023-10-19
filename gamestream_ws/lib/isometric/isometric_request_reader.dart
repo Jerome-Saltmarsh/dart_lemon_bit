@@ -29,7 +29,7 @@ extension IsometricRequestReader on Connection {
         player.x = player.mouseSceneX;
         player.y = player.mouseSceneY;
         player.health = player.maxHealth;
-        player.state = CharacterState.Idle;
+        player.characterState = CharacterState.Idle;
         player.active = true;
         break;
 
