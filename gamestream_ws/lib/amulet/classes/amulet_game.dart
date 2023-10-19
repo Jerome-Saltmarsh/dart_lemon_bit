@@ -271,6 +271,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Weapon_Staff_Of_Frozen_Lake:
         performAbilityFrostBall(character, damage: 1, range: 50);
         break;
+      case AmuletItem.Spell_Heal:
+        useAmuletItemSpellHeal(character);
+        break;
       default:
         throw Exception('amulet.PerformCharacterAction($amuletItem)');
     }
@@ -558,4 +561,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void endPlayerInteraction(AmuletPlayer player) =>
       player.endInteraction();
+
+  void useAmuletItemSpellHeal(AmuletPlayer character) {
+
+    final stats = character.getStatsForAmuletItem(AmuletItem.Spell_Heal);
+    if (stats == null) {
+      character.writeGameError(GameError.Insufficient_Elements);
+      return;
+    }
+
+    character.health += stats.health;
+
+    dispatchGameEventPosition(GameEventType.Spell_Used, character);
+    dispatchByte(SpellType.Heal);
+  }
 }

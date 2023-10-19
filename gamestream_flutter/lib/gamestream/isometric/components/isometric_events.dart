@@ -238,6 +238,16 @@ class IsometricEvents with IsometricComponent {
         particles.spawnLightningBolt(x, y, z);
         audio.play(audio.thunder, x, y, z);
         break;
+
+      case GameEventType.Spell_Used:
+        final spellType = parser.readByte();
+        switch (spellType){
+          case SpellType.Heal:
+            audio.buff_1.play();
+            particles.spawnParticleConfetti(x, y, z);
+            break;
+        }
+        break;
     }
   }
 

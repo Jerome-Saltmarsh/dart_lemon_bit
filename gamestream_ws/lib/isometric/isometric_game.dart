@@ -1789,6 +1789,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return instance;
   }
 
+  void dispatchByte(int byte){
+    if (byte < 0 || byte > 255){
+      throw Exception('dispatchByte($byte)');
+    }
+
+    for (final player in players) {
+      player.writeByte(byte);
+    }
+  }
+
   void dispatchGameEventPosition(int gameEventType, Position position, {double angle = 0}) =>
       dispatchGameEvent(gameEventType, position.x, position.y, position.z, angle);
 

@@ -45,4 +45,5 @@ class GameEventType {
   static const Bow_Drawn                = 86;
   static const Bow_Released             = 87;
   static const Lightning_Bolt = 88;
+  static const Spell_Used = 89;
 }

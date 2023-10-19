@@ -1445,4 +1445,5 @@ class AmuletPlayer extends IsometricPlayer {
     itemSlot.cooldownDuration = itemStats.cooldown;
   }
 
+
 }
