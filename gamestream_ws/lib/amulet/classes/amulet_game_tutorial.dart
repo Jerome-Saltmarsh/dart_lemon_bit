@@ -57,8 +57,19 @@ class AmuletGameTutorial extends AmuletGame {
     scene.setNodeEmpty(doorIndex);
     onNodeChanged(doorIndex);
     player.acquireAmuletItem(AmuletItem.Weapon_Rusty_Old_Sword);
-    player.talk("it is rather blunt, but should do the job");
-    // player.endInteraction();
+    player.endInteraction();
+    player.writeMessage(''
+        'You have acquired a sword.'
+        'The boxes at the bottom of the screen represent your weapons.'
+        'The green box indicates what is currently equipped.'
+        'Left click and enemy to attack it.'
+        'Right click to attack the air.'
+        'Each item has a limited number of charges.'
+        'Each time an attack is performed the charges are reduced.'
+        'If the item runs out of charges it cannot be used again.'
+        'An item recharges automatically over time.'
+        'Hover the mouse over an item to see its statistics.'
+    );
   }
 
   late final talkOptionAcceptSword = TalkOption('Accept Sword', onAcceptSword);
@@ -94,6 +105,23 @@ class AmuletGameTutorial extends AmuletGame {
         talkOptionSkipTutorial,
         talkOptionsGoodbye,
       ]);
+  }
+
+  @override
+  void customOnCharacterKilled(Character target, src) {
+    super.customOnCharacterKilled(target, src);
+
+    if (src is AmuletPlayer){
+       if (src.flag('enemy_killed')){
+         src.writeMessage(
+             'You defeated the enemy.'
+             'Experience is gained for each enemy defeated.'
+             'Experience is indicated by the white bar at the top left side of the screen.'
+             'When the bar is full a level is gained.'
+             'Try to kill a few more creates to reach the next level.'
+         );
+       }
+    }
   }
 
   @override
