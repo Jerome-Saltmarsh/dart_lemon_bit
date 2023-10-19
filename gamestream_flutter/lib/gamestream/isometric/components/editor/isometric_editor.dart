@@ -247,6 +247,9 @@ class IsometricEditor with IsometricComponent {
   }
 
   void refreshNodeSelectedIndex() {
+    if (nodeSelectedIndex.value >= scene.nodeTypes.length){
+      return;
+    }
     nodeSelectedType.value = scene.nodeTypes[nodeSelectedIndex.value];
     nodeSelectedOrientation.value =
       scene.nodeOrientations[nodeSelectedIndex.value];

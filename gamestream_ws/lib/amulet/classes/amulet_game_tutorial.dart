@@ -22,24 +22,28 @@ class AmuletGameTutorial extends AmuletGame {
     required super.name,
     required super.fiendTypes,
   }) {
-    ox = AmuletNpc(
-      name: 'Ox',
-      interact: onInteractedWithOx,
-      x: 1000,
-      y: 1400,
-      z: 25,
-      team: AmuletTeam.Human,
-      characterType: CharacterType.Kid,
-      health: 50,
-      weaponType: WeaponType.Unarmed,
-      weaponDamage: 1,
-      weaponRange: 50,
-      weaponCooldown: 50,
-      invincible: true,
-    );
-
+    ox = buildAmuletNpcOx();
     add(ox);
   }
+
+  AmuletNpc buildAmuletNpcOx() => AmuletNpc(
+    name: 'Ox',
+    interact: onInteractedWithOx,
+    x: 1000,
+    y: 1400,
+    z: 25,
+    team: AmuletTeam.Human,
+    characterType: CharacterType.Kid,
+    health: 50,
+    weaponType: WeaponType.Unarmed,
+    weaponDamage: 1,
+    weaponRange: 50,
+    weaponCooldown: 50,
+    invincible: true,
+  )
+
+    ..legsType = LegType.Leather
+    ..bodyType = BodyType.Leather_Armour;
 
   int getKey(String name) =>
       scene.keys[name] ?? (throw Exception('amuletGameTutorial.getKey("$name") is null'));

@@ -47,9 +47,9 @@ Json mapIsometricPlayerToJson(IsometricPlayer player){
   return json;
 }
 
-List<int> getSlotTypes(List<ItemSlot> slots) => slots.map(getSlotType).toList(growable: false);
+List<int> getSlotTypes(List<AmuletItemSlot> slots) => slots.map(getSlotType).toList(growable: false);
 
-int getSlotType(ItemSlot slot) => slot.amuletItem?.subType ?? 0;
+int getSlotType(AmuletItemSlot slot) => slot.amuletItem?.subType ?? 0;
 
-List<String> getSlotTypeNames(List<ItemSlot> slots) =>
+List<String> getSlotTypeNames(List<AmuletItemSlot> slots) =>
     slots.map((slotItem) => slotItem.amuletItem?.name ?? '-').toList(growable: false);

@@ -1,16 +1,17 @@
 
+import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
 import 'package:gamestream_ws/amulet/functions/item_slot/item_slot_reduce_charge.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import '../functions/player_swap_item_slots.dart';
 import '../getters/get_player_level_for_amulet_item.dart';
-import 'item_slot.dart';
+import 'amulet_item_slot.dart';
 import 'amulet_game.dart';
 import 'amulet_npc.dart';
 import 'talk_option.dart';
 
-class AmuletPlayer extends IsometricPlayer {
+class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   AmuletGame amuletGame;
   var equipmentDirty = true;
   var activePowerX = 0.0;
@@ -27,18 +28,11 @@ class AmuletPlayer extends IsometricPlayer {
   var elementEarth = 0;
   var elementElectricity = 0;
 
-  final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot());
-  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot());
+  final weapons = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
+  final treasures = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
   final talents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
 
-  final equippedHelm = ItemSlot();
-  final equippedBody = ItemSlot();
-  final equippedLegs = ItemSlot();
-  final equippedHandLeft = ItemSlot();
-  final equippedHandRight = ItemSlot();
-  final equippedShoe = ItemSlot();
-
-  late List<ItemSlot> items;
+  late List<AmuletItemSlot> items;
 
   var _elementPoints = 0;
   var _inventoryOpen = false;
@@ -131,7 +125,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
 
-  AmuletItemLevel? getAmuletItemLevelsForItemSlot(ItemSlot itemSlot) {
+  AmuletItemLevel? getAmuletItemLevelsForItemSlot(AmuletItemSlot itemSlot) {
     final amuletItem = itemSlot.amuletItem;
     if (amuletItem == null){
       return null;
@@ -183,7 +177,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   int get activatedPowerIndex => _activatedPowerIndex;
 
-  ItemSlot? get activeItemSlot {
+  AmuletItemSlot? get activeItemSlot {
     if (activatedPowerIndex != -1) {
       return weapons[activatedPowerIndex];
     }
@@ -216,7 +210,7 @@ class AmuletPlayer extends IsometricPlayer {
     return base;
   }
 
-  ItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+  AmuletItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
   set experience(int value){
     _experience = value;
@@ -324,7 +318,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void setItemsLength(int value){
-    items = List.generate(value, (index) => ItemSlot());
+    items = List.generate(value, (index) => AmuletItemSlot());
     writeItemLength(value);
   }
 
@@ -1038,7 +1032,7 @@ class AmuletPlayer extends IsometricPlayer {
     talentDialogOpen = !talentDialogOpen;
   }
 
-  static ItemSlot? getEmptySlot(List<ItemSlot> items){
+  static AmuletItemSlot? getEmptySlot(List<AmuletItemSlot> items){
     for (final item in items) {
       if (item.amuletItem == null)
         return item;
@@ -1046,7 +1040,7 @@ class AmuletPlayer extends IsometricPlayer {
     return null;
   }
 
-  static int getEmptyIndex(List<ItemSlot> items){
+  static int getEmptyIndex(List<AmuletItemSlot> items){
     for (var i = 0; i < items.length; i++){
       if (items[i].amuletItem == null)
         return i;
@@ -1138,7 +1132,7 @@ class AmuletPlayer extends IsometricPlayer {
 
   void updateActiveAbility({
     required int activatedPowerIndex,
-    required List<ItemSlot> weapons,
+    required List<AmuletItemSlot> weapons,
   }) {
 
     if (activatedPowerIndex < 0){
@@ -1196,7 +1190,7 @@ class AmuletPlayer extends IsometricPlayer {
       isValidIndex(index, weapons) ? weapons[index].amuletItem : null;
 
 
-  void addToEmptyTreasureSlot(ItemSlot slot){
+  void addToEmptyTreasureSlot(AmuletItemSlot slot){
     final item = slot.amuletItem;
 
     if (item == null || !item.isTreasure)
@@ -1210,7 +1204,7 @@ class AmuletPlayer extends IsometricPlayer {
     playerSwapItemSlots(this, slot, emptyTreasureSlot);
   }
 
-  void swapWithAvailableItemSlot(ItemSlot slot){
+  void swapWithAvailableItemSlot(AmuletItemSlot slot){
     if (slot.amuletItem == null)
       return;
 
@@ -1222,20 +1216,20 @@ class AmuletPlayer extends IsometricPlayer {
     playerSwapItemSlots(this, availableItemSlot, slot);
   }
 
-  ItemSlot? getEmptyItemSlot() => getEmptySlot(items);
+  AmuletItemSlot? getEmptyItemSlot() => getEmptySlot(items);
 
-  ItemSlot? getEmptyTreasureSlot() => getEmptySlot(treasures);
+  AmuletItemSlot? getEmptyTreasureSlot() => getEmptySlot(treasures);
 
-  ItemSlot? getEmptyWeaponSlot() => getEmptySlot(weapons);
+  AmuletItemSlot? getEmptyWeaponSlot() => getEmptySlot(weapons);
 
 
-  void clearSlot(ItemSlot slot){
+  void clearSlot(AmuletItemSlot slot){
     slot.clear();
     notifyEquipmentDirty();
   }
 
   void setSlot({
-    required ItemSlot slot,
+    required AmuletItemSlot slot,
     required AmuletItem? item,
     required int cooldown,
   }) {
@@ -1277,7 +1271,7 @@ class AmuletPlayer extends IsometricPlayer {
     writeString(error);
   }
 
-  ItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
+  AmuletItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
     switch (slotType) {
       SlotType.Equipped_Hand_Left => equippedHandLeft,
       SlotType.Equipped_Hand_Right => equippedHandRight,
@@ -1300,7 +1294,7 @@ class AmuletPlayer extends IsometricPlayer {
       }
   }
 
-  void dropItemSlotItem(ItemSlot itemSlot){
+  void dropItemSlotItem(AmuletItemSlot itemSlot){
     final item = itemSlot.amuletItem;
 
     if (item == null){
@@ -1313,7 +1307,7 @@ class AmuletPlayer extends IsometricPlayer {
     notifyEquipmentDirty();
   }
 
-  ItemSlot getItemSlot(SlotType slotType, int index) =>
+  AmuletItemSlot getItemSlot(SlotType slotType, int index) =>
     switch (slotType) {
       SlotType.Items => items[index],
       SlotType.Equipped_Helm => equippedHelm,
@@ -1425,7 +1419,7 @@ class AmuletPlayer extends IsometricPlayer {
     refillItemSlots(weapons);
   }
 
-  void refillItemSlots(List<ItemSlot> itemSlots){
+  void refillItemSlots(List<AmuletItemSlot> itemSlots){
 
     for (final itemSlot in itemSlots) {
       refillItemSlot(
@@ -1436,7 +1430,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   void refillItemSlot({
-    required ItemSlot itemSlot,
+    required AmuletItemSlot itemSlot,
   }){
     final amuletItem = itemSlot.amuletItem;
     if (amuletItem == null) {

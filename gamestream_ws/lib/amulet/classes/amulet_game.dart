@@ -551,7 +551,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.characterAttack(character);
   }
 
-  bool itemSlotChargesRemaining(ItemSlot itemSlot) => itemSlot.charges > 0;
+  bool itemSlotChargesRemaining(AmuletItemSlot itemSlot) => itemSlot.charges > 0;
 
   @override
   AmuletPlayer buildPlayer() {

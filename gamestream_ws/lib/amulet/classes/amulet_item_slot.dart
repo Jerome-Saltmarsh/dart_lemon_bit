@@ -1,6 +1,6 @@
 import 'package:gamestream_ws/packages/common.dart';
 
-class ItemSlot {
+class AmuletItemSlot {
   AmuletItem? amuletItem;
   var cooldown = 0;
   var cooldownDuration = 0;
@@ -28,7 +28,7 @@ class ItemSlot {
   }
 }
 
-extension ItemSlotExtension on ItemSlot {
+extension ItemSlotExtension on AmuletItemSlot {
   void clear(){
     amuletItem = null;
     cooldown = 0;

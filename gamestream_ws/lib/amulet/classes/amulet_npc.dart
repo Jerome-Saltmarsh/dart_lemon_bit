@@ -1,9 +1,10 @@
 
+import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
 import 'package:gamestream_ws/isometric.dart';
 
 import 'amulet_player.dart';
 
-class AmuletNpc extends Character {
+class AmuletNpc extends Character with AmuletCharacter {
 
   Function(AmuletPlayer player)? interact;
 
