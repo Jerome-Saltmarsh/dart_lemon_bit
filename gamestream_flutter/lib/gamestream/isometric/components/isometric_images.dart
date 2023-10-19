@@ -82,6 +82,7 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_treasures;
   late final Image atlas_nodes_mini;
   late final Image atlas_weapons;
+  late final Image atlas_spells;
   late final Image atlas_talents;
   late final Image sprite_stars;
   late final Image sprite_shield;
@@ -112,6 +113,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_icons').then((value) => atlas_icons = value);
     loadPng('atlas_consumables').then((value) => atlas_consumables = value);
     loadPng('atlas_treasures').then((value) => atlas_treasures = value);
+    loadPng('atlas_spells').then((value) => atlas_spells = value);
     loadPng('atlas_helms').then((value) => atlas_helms = value);
     loadPng('atlas_hands').then((value) => atlas_hands = value);
     loadPng('atlas_body').then((value) => atlas_body = value);
@@ -409,6 +411,7 @@ class IsometricImages with IsometricComponent {
       ItemType.Consumable: atlas_consumables,
       ItemType.Hand: atlas_hands,
       ItemType.Treasure: atlas_treasures,
+      ItemType.Spell: atlas_spells,
     };
 
     spriteGroupFallenWest = CharacterSpriteGroup(

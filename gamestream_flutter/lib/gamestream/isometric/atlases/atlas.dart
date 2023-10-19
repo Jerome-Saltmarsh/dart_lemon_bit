@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_spells.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/src.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'atlas_src_hands.dart';
@@ -78,6 +79,7 @@ class Atlas {
     ItemType.Consumable: atlasSrcConsumables,
     ItemType.Treasure: atlasSrcTreasures,
     ItemType.Shoes: atlasSrcShoes,
+    ItemType.Spell: atlasSrcSpells,
   };
 
   static List<double> getSrc(int type, int subType) =>

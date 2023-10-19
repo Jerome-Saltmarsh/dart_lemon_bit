@@ -416,38 +416,41 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double y,
     required double z,
     required AmuletItemQuality quality,
-  }) => spawnLoot(
+  }) => spawnAmuletItem(
       x: x,
       y: y,
       z: z,
       item: randomItem(AmuletItem.findByQuality(quality)),
   );
 
-  void spawnLootAtIndex({required int index, required AmuletItem item}) => spawnLoot(
+  void spawnLootAtIndex({required int index, required AmuletItem item}) => spawnAmuletItem(
     x: scene.getIndexX(index),
     y: scene.getIndexY(index),
     z: scene.getIndexZ(index),
     item: item,
   );
 
-  void spawnLoot({
+  AmuletGameObject spawnAmuletItem({
+    required AmuletItem item,
     required double x,
     required double y,
     required double z,
-    required AmuletItem item,
+    int? deactivationTimer
   }) {
-    gameObjects.add(AmuletGameObject(
+    final amuletGameObject = AmuletGameObject(
       x: x,
       y: y,
       z: z,
       item: item,
       id: generateId(),
       frameSpawned: frame,
-      deactivationTimer: gameObjectDeactivationTimer,
+      deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
     )
       ..velocityZ = 10
-      ..setVelocity(randomAngle(), 1.0)
-    );
+      ..setVelocity(randomAngle(), 1.0);
+
+    add(amuletGameObject);
+    return amuletGameObject;
   }
 
   int getExperienceRequiredForLevel(int level){

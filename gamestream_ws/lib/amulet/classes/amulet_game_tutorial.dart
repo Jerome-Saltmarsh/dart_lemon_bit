@@ -7,7 +7,12 @@ import 'fiend_type.dart';
 
 class AmuletGameTutorial extends AmuletGame {
 
+  late final talkOptionAcceptSword = TalkOption('Accept Sword', onAcceptSword);
+  late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
+  late final talkOptionsGoodbye = TalkOption('Goodbye', endPlayerInteraction);
+
   late final Character ox;
+  Character? fiend01;
 
   AmuletGameTutorial({
     required super.amulet,
@@ -72,10 +77,6 @@ class AmuletGameTutorial extends AmuletGame {
     );
   }
 
-  late final talkOptionAcceptSword = TalkOption('Accept Sword', onAcceptSword);
-  late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
-  late final talkOptionsGoodbye = TalkOption('Goodbye', endPlayerInteraction);
-
   void onInteractedWithOx(AmuletPlayer player){
 
     final data = player.data;
@@ -110,6 +111,16 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void customOnCharacterKilled(Character target, src) {
     super.customOnCharacterKilled(target, src);
+
+    if (target == fiend01) {
+      spawnAmuletItem(
+          item: AmuletItem.Spell_Heal,
+          x: target.x,
+          y: target.y,
+          z: target.z,
+          deactivationTimer: -1,
+      );
+    }
 
     if (src is AmuletPlayer){
        if (src.flag('enemy_killed')){
@@ -146,10 +157,12 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    spawnFiendTypeAtIndex(
+    fiend01 = spawnFiendTypeAtIndex(
         fiendType: FiendType.Fallen_01,
         index: getKey('creep01'),
-    )..respawnDurationTotal = -1;
+    )
+      ..spawnLootOnDeath = false
+      ..respawnDurationTotal = -1;
 
     player.writePlayerPositionAbsolute();
   }

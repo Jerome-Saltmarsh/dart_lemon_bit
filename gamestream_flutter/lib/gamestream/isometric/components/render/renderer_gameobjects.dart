@@ -30,6 +30,7 @@ class RendererGameObjects extends RenderGroup {
       ItemType.Body,
       ItemType.Legs,
       ItemType.Consumable,
+      ItemType.Spell,
     ].contains(type);
 
     if (isCollectable){

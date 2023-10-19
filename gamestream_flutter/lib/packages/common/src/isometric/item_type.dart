@@ -21,6 +21,7 @@ class ItemType {
     Object: ObjectType.values,
     Consumable: ConsumableType.values,
     Treasure: TreasureType.values,
+    Spell: SpellType.values,
   };
 
   static String getName(int value) => const {
@@ -32,6 +33,7 @@ class ItemType {
       Object: 'Object',
       Consumable: 'Consumable',
       Shoes: 'Shoes',
+      Spell: 'Spell',
   }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {
@@ -44,6 +46,7 @@ class ItemType {
       Consumable => ConsumableType.getName(subType),
       Treasure => TreasureType.getName(subType),
       Shoes => ShoeType.getName(subType),
+      Spell => SpellType.getName(subType),
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 
