@@ -1,4 +1,4 @@
-class ItemStat {
+class AmuletItemLevel {
   final int damage;
   final int fire;
   final int water;
@@ -15,7 +15,7 @@ class ItemStat {
   final int performDuration;
   final int performActionFrame;
 
-  const ItemStat({
+  const AmuletItemLevel({
     required this.information,
     this.damage = 0,
     this.health = 0,

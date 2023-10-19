@@ -84,7 +84,7 @@ Widget buildAmuletItemIcon(AmuletItem item) => GSContainer(
       ),
     );
 
-Widget buildContainerItemStats(ItemStat itemStats, int level) =>
+Widget buildContainerItemStats(AmuletItemLevel itemStats, int level) =>
     IsometricBuilder(builder: (context, components) =>
         GSContainer(
           width: 270,

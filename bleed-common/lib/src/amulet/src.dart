@@ -10,4 +10,4 @@ export 'amulet_item_action.dart';
 export 'network/requests/network_request_amulet.dart';
 export 'network/responses/network_response_amulet.dart';
 export 'network/responses/network_response_amulet_player.dart';
-export 'item_stat.dart';
+export 'amulet_item_level.dart';

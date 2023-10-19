@@ -1323,4 +1323,5 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
+  bool hasKey(String name) => data.containsKey(name);
 }

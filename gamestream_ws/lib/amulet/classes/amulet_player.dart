@@ -131,7 +131,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
 
-  ItemStat? getItemStatsForItemSlot(ItemSlot itemSlot) {
+  AmuletItemLevel? getAmuletItemLevelsForItemSlot(ItemSlot itemSlot) {
     final amuletItem = itemSlot.amuletItem;
     if (amuletItem == null){
       return null;
@@ -140,7 +140,7 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
 
-  ItemStat? getStatsForAmuletItem(AmuletItem amuletItem) =>
+  AmuletItemLevel? getStatsForAmuletItem(AmuletItem amuletItem) =>
       amuletItem.getStatsForLevel(
           getLevelForAmuletItem(this, amuletItem)
       );
@@ -157,7 +157,7 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
 
-  ItemStat? get equippedWeaponItemStat {
+  AmuletItemLevel? get equippedWeaponAmuletItemLevel {
     final weapon = equippedWeapon;
 
     if (weapon == null) {
@@ -173,10 +173,10 @@ class AmuletPlayer extends IsometricPlayer {
   }
 
   @override
-  int get weaponDamage => equippedWeaponItemStat?.damage ?? 1;
+  int get weaponDamage => equippedWeaponAmuletItemLevel?.damage ?? 1;
 
   @override
-  double get weaponRange => equippedWeaponItemStat?.range ?? 25;
+  double get weaponRange => equippedWeaponAmuletItemLevel?.range ?? 25;
 
   @override
   int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;
@@ -197,22 +197,22 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   int get maxHealth {
     var health = healthBase;
-    health += getItemStatsForItemSlot(equippedHandLeft)?.health ?? 0;
-    health += getItemStatsForItemSlot(equippedHandRight)?.health ?? 0;
-    health += getItemStatsForItemSlot(equippedHelm)?.health ?? 0;
-    health += getItemStatsForItemSlot(equippedBody)?.health ?? 0;
-    health += getItemStatsForItemSlot(equippedLegs)?.health ?? 0;
+    health += getAmuletItemLevelsForItemSlot(equippedHandLeft)?.health ?? 0;
+    health += getAmuletItemLevelsForItemSlot(equippedHandRight)?.health ?? 0;
+    health += getAmuletItemLevelsForItemSlot(equippedHelm)?.health ?? 0;
+    health += getAmuletItemLevelsForItemSlot(equippedBody)?.health ?? 0;
+    health += getAmuletItemLevelsForItemSlot(equippedLegs)?.health ?? 0;
     return health;
   }
 
   @override
   double get runSpeed {
     var base = 1.0;
-    base += getItemStatsForItemSlot(equippedHandLeft)?.movement ?? 0;
-    base += getItemStatsForItemSlot(equippedHandRight)?.movement ?? 0;
-    base += getItemStatsForItemSlot(equippedHelm)?.movement ?? 0;
-    base += getItemStatsForItemSlot(equippedBody)?.movement ?? 0;
-    base += getItemStatsForItemSlot(equippedLegs)?.movement ?? 0;
+    base += getAmuletItemLevelsForItemSlot(equippedHandLeft)?.movement ?? 0;
+    base += getAmuletItemLevelsForItemSlot(equippedHandRight)?.movement ?? 0;
+    base += getAmuletItemLevelsForItemSlot(equippedHelm)?.movement ?? 0;
+    base += getAmuletItemLevelsForItemSlot(equippedBody)?.movement ?? 0;
+    base += getAmuletItemLevelsForItemSlot(equippedLegs)?.movement ?? 0;
     return base;
   }
 
@@ -1409,7 +1409,11 @@ class AmuletPlayer extends IsometricPlayer {
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
-  bool flag(String name){
+  /// to run a piece of code only a single time
+  /// the first time a flag name is entered it will return true
+  /// however any time after that if the same flag name is entered
+  /// the return will be false
+  bool readFlag(String name){
     if (!data.containsKey(name)){
       data[name] = true;
       return true;
@@ -1438,7 +1442,7 @@ class AmuletPlayer extends IsometricPlayer {
     if (amuletItem == null) {
       return;
     }
-    final itemStats = getItemStatsForItemSlot(itemSlot);
+    final itemStats = getAmuletItemLevelsForItemSlot(itemSlot);
     if (itemStats == null) {
       throw Exception('itemStats == null');
     }

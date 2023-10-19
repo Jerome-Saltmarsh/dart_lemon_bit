@@ -7,7 +7,7 @@ import 'fiend_type.dart';
 
 class AmuletGameTutorial extends AmuletGame {
 
-  late final talkOptionAcceptSword = TalkOption('Accept Sword', onAcceptSword);
+  late final talkOptionAcceptSword = TalkOption('Accept Sword', onObjectiveAccomplishedAcceptSword);
   late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
   late final talkOptionsGoodbye = TalkOption('Goodbye', endPlayerInteraction);
 
@@ -56,7 +56,48 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void onAcceptSword(AmuletPlayer player) {
+  void onInteractedWithOx(AmuletPlayer player){
+
+    if (objectiveActiveSpeakToOz(player)) {
+      objectiveApplySpeakToOx(player);
+      return;
+    }
+
+    if (!player.hasKey('weapon_accepted')){
+      player.talk('Did you change your mind?', options: [
+        talkOptionAcceptSword,
+        talkOptionSkipTutorial,
+        talkOptionsGoodbye,
+      ]);
+      return;
+    }
+
+    player.talk('Kill those creatures for me please',
+      options: [
+        talkOptionSkipTutorial,
+        talkOptionsGoodbye,
+      ]);
+  }
+
+  bool objectiveActiveSpeakToOz(AmuletPlayer player) => player.readFlag('ox_met');
+
+  void objectiveApplySpeakToOx(AmuletPlayer player){
+    player.talk(
+        'Argh! Oh, you are not one of them.'
+        'Such a fright one did give me. '
+        'I did think it would be one of the awful creatures.'
+        'Those do lurk in that room there yonder'
+        'This one has not the courage to face those.'
+        'Perhaps another could do it. '
+        'Here take this sword'
+        'Please dispatch of those creatures',
+        options: [
+          talkOptionAcceptSword,
+        ]
+    );
+  }
+
+  void onObjectiveAccomplishedAcceptSword(AmuletPlayer player) {
     player.data['weapon_accepted'] = true;
     final doorIndex = getKey('door');
     scene.setNodeEmpty(doorIndex);
@@ -77,42 +118,6 @@ class AmuletGameTutorial extends AmuletGame {
     );
   }
 
-  void onInteractedWithOx(AmuletPlayer player){
-
-    final data = player.data;
-
-    if (player.flag('ox_met')){
-      player.talk('Argh! Oh, you are not one of them.'
-          'Such a fright one did give me. '
-          'I did think it would be one of the awful creatures.'
-          'Those do lurk in that room there yonder'
-          'This one has not the courage to face those.'
-          'Perhaps another could do it. '
-          'Here take this sword'
-          'Please dispatch of those creatures',
-          options: [
-            talkOptionAcceptSword,
-          ]
-      );
-      return;
-    }
-
-    if (!data.containsKey('weapon_accepted')){
-      player.talk('Did you change your mind?', options: [
-        talkOptionAcceptSword,
-        talkOptionSkipTutorial,
-        talkOptionsGoodbye,
-      ]);
-      return;
-    }
-
-    player.talk('Kill those creatures for me please',
-      options: [
-        talkOptionSkipTutorial,
-        talkOptionsGoodbye,
-      ]);
-  }
-
   @override
   void customOnCharacterKilled(Character target, src) {
     super.customOnCharacterKilled(target, src);
@@ -128,7 +133,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (src is AmuletPlayer){
-       if (src.flag('enemy_killed')){
+       if (src.readFlag('enemy_killed')){
          src.writeMessage(
              'You defeated the enemy.'
              'Experience is gained for each enemy defeated.'
@@ -143,8 +148,8 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onPlayerJoined(AmuletPlayer player) {
 
-    if (player.flag('initialized')) {
-      player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move.');
+    if (player.readFlag('initialized')) {
+      player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move. Scroll the mouse wheel to zoom the camera in and out');
       initializeNewPlayer(player);
     }
 
@@ -187,7 +192,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemUsed(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {
     if (
       amuletItem == AmuletItem.Spell_Heal &&
-      amuletPlayer.flag('use_spell_heal')
+      amuletPlayer.readFlag('use_spell_heal')
     ) {
 
       final fiend02Index = getKey('fiend02');
