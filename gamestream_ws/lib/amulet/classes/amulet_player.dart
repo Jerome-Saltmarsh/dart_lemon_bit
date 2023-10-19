@@ -195,20 +195,19 @@ class AmuletPlayer extends IsometricPlayer {
   @override
   int get maxHealth {
     var health = healthBase;
+    health += getItemStatsForItemSlot(equippedHandLeft)?.health ?? 0;
+    health += getItemStatsForItemSlot(equippedHandRight)?.health ?? 0;
     health += getItemStatsForItemSlot(equippedHelm)?.health ?? 0;
     health += getItemStatsForItemSlot(equippedBody)?.health ?? 0;
     health += getItemStatsForItemSlot(equippedLegs)?.health ?? 0;
-
-    for (final treasure in treasures){
-      health += getItemStatsForItemSlot(treasure)?.health ?? 0;
-    }
-
     return health;
   }
 
   @override
   double get runSpeed {
     var base = 1.0;
+    base += getItemStatsForItemSlot(equippedHandLeft)?.movement ?? 0;
+    base += getItemStatsForItemSlot(equippedHandRight)?.movement ?? 0;
     base += getItemStatsForItemSlot(equippedHelm)?.movement ?? 0;
     base += getItemStatsForItemSlot(equippedBody)?.movement ?? 0;
     base += getItemStatsForItemSlot(equippedLegs)?.movement ?? 0;

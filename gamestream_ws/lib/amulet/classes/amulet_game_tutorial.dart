@@ -108,6 +108,16 @@ class AmuletGameTutorial extends AmuletGame {
       z: 25,
     );
 
+    if (!player.data.containsKey('weapon_accepted')){
+      setNode(
+        nodeIndex: getKey('door'),
+        nodeType: NodeType.Wood,
+        nodeOrientation: NodeOrientation.Half_West,
+      );
+    }
+    
+    spawnFallenAtIndex(getKey('creep01'));
+
     player.writePlayerPositionAbsolute();
   }
 
@@ -116,7 +126,9 @@ class AmuletGameTutorial extends AmuletGame {
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
     }
+    player.healthBase = 15;
     player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
+    player.health = player.maxHealth;
   }
 }
