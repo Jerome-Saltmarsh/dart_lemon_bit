@@ -579,6 +579,7 @@ class AmuletPlayer extends IsometricPlayer {
         itemSlot.cooldown = 0;
         itemSlot.cooldownDuration = itemStats.cooldown;
         writePlayerWeapon(index);
+        amuletGame.onAmuletItemUsed(this, amuletItem);
         break;
       case AmuletItemAction.Instant:
         itemSlotReduceCharge(itemSlot);

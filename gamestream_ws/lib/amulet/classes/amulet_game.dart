@@ -575,4 +575,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchGameEventPosition(GameEventType.Spell_Used, character);
     dispatchByte(SpellType.Heal);
   }
+
+  void onAmuletItemUsed(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}
 }

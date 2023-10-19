@@ -2059,6 +2059,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
+  void setNodeEmpty(int index) =>
+    setNode(
+      nodeIndex: index,
+      nodeType: NodeType.Empty,
+      nodeOrientation: NodeOrientation.None,
+    );
+
   void setNode({
     required int nodeIndex,
     required int nodeType,

@@ -182,4 +182,17 @@ class AmuletGameTutorial extends AmuletGame {
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     player.health = player.maxHealth;
   }
+
+  @override
+  void onAmuletItemUsed(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {
+    if (amuletItem == AmuletItem.Spell_Heal &&
+        amuletPlayer.flag('use_spell_heal')) {
+      addJob(
+          seconds: 3,
+          action: () {
+            final door02Index = getKey('door02');
+            setNodeEmpty(door02Index);
+          });
+    }
+  }
 }
