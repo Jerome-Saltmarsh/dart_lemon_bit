@@ -271,8 +271,8 @@ enum AmuletItem {
   Spell_Thunderbolt(
     selectAction: AmuletItemAction.Caste,
     quality: AmuletItemQuality.Mythical,
-    type: ItemType.Weapon,
-    subType: WeaponType.Spell_Thunderbolt,
+    type: ItemType.Spell,
+    subType: SpellType.Thunderbolt,
     level1: ItemStat(
       damage: 3,
       cooldown: 30,
@@ -421,6 +421,8 @@ enum AmuletItem {
                   : 1;
 
   bool get isWeapon => type == ItemType.Weapon;
+
+  bool get isSpell => type == ItemType.Spell;
 
   bool get isShoes => type == ItemType.Shoes;
 

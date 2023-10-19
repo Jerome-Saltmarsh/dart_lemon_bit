@@ -20,7 +20,7 @@ enum SlotType {
         Equipped_Hand_Left => itemType == ItemType.Hand,
         Equipped_Hand_Right => itemType == ItemType.Hand,
         Treasures => itemType == ItemType.Treasure,
-        Weapons => itemType == ItemType.Weapon,
+        Weapons => const [ItemType.Weapon, ItemType.Spell].contains(itemType),
         Equipped_Shoes => itemType == ItemType.Shoes,
         Items => true
       };

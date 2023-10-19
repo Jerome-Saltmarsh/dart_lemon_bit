@@ -340,10 +340,24 @@ class AmuletPlayer extends IsometricPlayer {
     );
   }
 
-  bool addItem(AmuletItem item){
+
+  bool acquireAmuletItem(AmuletItem amuletItem){
 
     if (deadOrBusy)
       return false;
+
+    if (amuletItem.isWeapon || amuletItem.isSpell){
+      final availableWeaponSlot = getEmptyWeaponSlot();
+      if (availableWeaponSlot != null) {
+        availableWeaponSlot.amuletItem = amuletItem;
+        refillItemSlot(itemSlot: availableWeaponSlot);
+        if (equippedWeaponIndex == -1){
+          equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
+        }
+        notifyEquipmentDirty();
+        return true;
+      }
+    }
 
     final emptyItemSlot = getEmptyItemSlot();
     if (emptyItemSlot == null) {
@@ -351,7 +365,7 @@ class AmuletPlayer extends IsometricPlayer {
       return false;
     }
 
-    emptyItemSlot.amuletItem = item;
+    emptyItemSlot.amuletItem = amuletItem;
     emptyItemSlot.cooldown = 0;
     notifyEquipmentDirty();
     return true;
@@ -1431,21 +1445,4 @@ class AmuletPlayer extends IsometricPlayer {
     itemSlot.cooldownDuration = itemStats.cooldown;
   }
 
-  void acquireAmuletItem(AmuletItem amuletItem) {
-    if (amuletItem.isWeapon){
-      final availableWeaponSlot = getEmptyWeaponSlot();
-      if (availableWeaponSlot != null){
-        availableWeaponSlot.amuletItem = amuletItem;
-        refillItemSlot(itemSlot: availableWeaponSlot);
-        if (equippedWeaponIndex == -1){
-          equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
-        }
-        notifyEquipmentDirty();
-        return;
-      } else {
-        // TODO ADD TO STASH
-      }
-    }
-    throw Exception('amuletPlayer.acquireAmuletItem($amuletItem)');
-  }
 }

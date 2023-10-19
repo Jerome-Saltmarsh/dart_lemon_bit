@@ -132,7 +132,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           ..name = 'Skeleton'
           ..characterType = CharacterType.Skeleton;
     }
-    throw Exception();
   }
 
   Character spawnCharacterAtIndex(int index) =>
@@ -459,15 +458,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void onCharacterCollectedGameObject(
-      Character character,
-      GameObject gameObject,
-      ) {
-    if (character is! AmuletPlayer)
-      return;
-    if (gameObject is AmuletGameObject) {
-      if (character.addItem(gameObject.item)){
-        super.onCharacterCollectedGameObject(character, gameObject);
-      }
+    Character character,
+    GameObject gameObject,
+  ) {
+
+    if (
+      character is! AmuletPlayer ||
+      gameObject is! AmuletGameObject
+    ) return;
+
+
+    if (character.acquireAmuletItem(gameObject.item)) {
+      super.onCharacterCollectedGameObject(character, gameObject);
     }
   }
 

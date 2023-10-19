@@ -5,5 +5,6 @@ enum AmuletItemAction {
   Positional,
   Targeted_Enemy,
   Targeted_Ally,
-  None, Consume,
+  None,
+  Consume,
 }

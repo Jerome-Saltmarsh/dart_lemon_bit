@@ -42,7 +42,7 @@ extension AmuletRequestHandler on Connection {
           sendServerError('invalid amulet item index');
           return;
         }
-        player.addItem(amuletItem);
+        player.acquireAmuletItem(amuletItem);
         break;
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
