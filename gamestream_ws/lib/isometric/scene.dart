@@ -88,16 +88,22 @@ class Scene {
 
   bool inboundsV3(Position v3) => inboundsXYZ(v3.x, v3.y, v3.z);
 
-  void setNode(int z, int row, int column, int type, int orientation) {
+  void setNodeZRC(int z, int row, int column, int type, int orientation) {
     if (outOfBounds(z, row, column)) return;
     final index = getIndex(z, row, column);
-    final currentType = types[index];
-    final currentOrientation = shapes[index];
-    if (currentType == type && currentOrientation == orientation) {
-      return;
+    setNode(index, type, orientation);
+  }
+
+  void setNodeEmpty(int index) =>
+      setNode(index, NodeType.Empty, NodeOrientation.None);
+
+  void setNode(int index, int type, int orientation) {
+    if (index < 0 || index >= volume){
+      throw Exception('scene.setNode(index: $index, type: $type, orientation: $orientation)\n\tthrew: "invalid index"');
     }
     types[index] = type;
     shapes[index] = orientation;
+    compiled = null;
   }
 
   int getTypeXYZ(double x, double y, double z) =>

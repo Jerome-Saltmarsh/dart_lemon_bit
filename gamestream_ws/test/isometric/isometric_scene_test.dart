@@ -52,8 +52,8 @@ void main() {
     final scene = createScene(height: height, rows: rows, columns: columns);
 
     assignGrassFloor(scene);
-    scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
 
     testFindPath(
         scene: scene,
@@ -72,17 +72,17 @@ void main() {
 
     assignGrassFloor(scene);
 
-    scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 4, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 4, 2, NodeType.Grass, NodeOrientation.Solid);
 
-    scene.setNode(1, 2, 3, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 3, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 4, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 4, 3, NodeType.Grass, NodeOrientation.Solid);
 
-    scene.setNode(1, 2, 4, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 4, NodeType.Grass, NodeOrientation.Slope_East);
-    scene.setNode(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 4, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 4, NodeType.Grass, NodeOrientation.Slope_East);
+    scene.setNodeZRC(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
 
     testFindPath(
         scene: scene,
@@ -100,17 +100,17 @@ void main() {
 
     assignGrassFloor(scene);
 
-    scene.setNode(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 4, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 2, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 4, 2, NodeType.Grass, NodeOrientation.Solid);
 
-    scene.setNode(1, 2, 3, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 3, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 4, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 3, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 4, 3, NodeType.Grass, NodeOrientation.Solid);
 
-    scene.setNode(1, 2, 4, NodeType.Grass, NodeOrientation.Solid);
-    scene.setNode(1, 3, 4, NodeType.Grass, NodeOrientation.Slope_East);
-    scene.setNode(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 2, 4, NodeType.Grass, NodeOrientation.Solid);
+    scene.setNodeZRC(1, 3, 4, NodeType.Grass, NodeOrientation.Slope_East);
+    scene.setNodeZRC(1, 4, 4, NodeType.Grass, NodeOrientation.Solid);
 
     testFindPath(
         scene: scene,
@@ -123,7 +123,7 @@ void main() {
 void assignGrassFloor(Scene scene) {
   for (var row = 0; row < scene.rows; row++){
     for (var column = 0; column < scene.columns; column++){
-      scene.setNode(0, row, column, NodeType.Grass, NodeOrientation.Solid);
+      scene.setNodeZRC(0, row, column, NodeType.Grass, NodeOrientation.Solid);
     }
   }
 }

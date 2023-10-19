@@ -537,7 +537,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeWeather();
     writeGameObjects();
     writeFPS();
-    writeSceneKeys();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -868,14 +867,18 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writePercentage(game.environment.lightningFlash01);
   }
 
-  void writeNode(int index){
+  void writeNode({
+    required int index,
+    required int type,
+    required int shape,
+  }){
     assert (index >= 0);
     assert (index < scene.volume);
     writeByte(NetworkResponse.Scene);
     writeByte(NetworkResponseScene.Node);
     writeUInt24(index);
-    writeByte(scene.types[index]);
-    writeByte(scene.shapes[index]);
+    writeByte(type);
+    writeByte(shape);
   }
 
   void writeDouble(double value){

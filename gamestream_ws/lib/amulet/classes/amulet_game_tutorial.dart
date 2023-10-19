@@ -34,52 +34,67 @@ class AmuletGameTutorial extends AmuletGame {
     add(ox);
   }
 
+  int getKey(String name) =>
+      scene.keys[name] ?? (throw Exception('amuletGameTutorial.getKey("$name") is null'));
+
+  void onNodeChanged(int index){
+    final players = this.players;
+    final scene = this.scene;
+    for (final player in players) {
+      player.writeNode(
+        index: index,
+        type: scene.types[index],
+        shape: scene.shapes[index],
+      );
+    }
+  }
+
+  void onAcceptSword(AmuletPlayer player) {
+    player.data['weapon_accepted'] = true;
+    final doorIndex = getKey('door');
+    scene.setNodeEmpty(doorIndex);
+    onNodeChanged(doorIndex);
+    player.setWeapon(
+      index: 0,
+      amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
+      cooldown: 0,
+    );
+    player.endInteraction();
+  }
+
+  late final talkOptionAcceptSword = TalkOption('Accept Sword', onAcceptSword);
+  late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
+  late final talkOptionsGoodbye = TalkOption('Goodbye', endPlayerInteraction);
+
   void onInteractedWithOx(AmuletPlayer player){
 
     final data = player.data;
 
     if (!data.containsKey('ox_met')){
       data['ox_met'] = true;
-      player.talk('Oh what a fright you gave me. I thought you were one of those creatures. They are lurking about in that room but I have not the courage to face them. Would you do it? Here take this, it is rather blunt but it should be enough to do the job', options: [
-        TalkOption('Accept Sword', (){
-          data['weapon_accepted'] = true;
-          player.setWeapon(
-              index: 0,
-              amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
-              cooldown: 0,
-          );
-          player.endInteraction();
-        }),
-        TalkOption('Skip Tutorial', (){
-            amulet.movePlayerToTown(player);
-        }),
-      ]);
+      player.talk('Oh what a fright you gave me. I thought you were one of those creatures. They are lurking about in that room but I have not the courage to face them. Would you do it? Here take this, it is rather blunt but it should be enough to do the job',
+          options: [
+            talkOptionAcceptSword,
+            talkOptionSkipTutorial,
+            talkOptionsGoodbye,
+          ]
+      );
       return;
     }
 
     if (!data.containsKey('weapon_accepted')){
       player.talk('Did you change your mind?', options: [
-        TalkOption('Accept Sword', () {
-          data['weapon_accepted'] = true;
-          player.setWeapon(
-            index: 0,
-            amuletItem: AmuletItem.Weapon_Rusty_Old_Sword,
-            cooldown: 0,
-          );
-          player.endInteraction();
-        }),
-        TalkOption('Skip Tutorial', (){
-          amulet.movePlayerToTown(player);
-        }),
+        talkOptionAcceptSword,
+        talkOptionSkipTutorial,
+        talkOptionsGoodbye,
       ]);
       return;
     }
 
     player.talk('Kill those creatures for me please',
       options: [
-        TalkOption('Skip Tutorial', () {
-          amulet.movePlayerToTown(player);
-        })
+        talkOptionSkipTutorial,
+        talkOptionsGoodbye,
       ]);
   }
 

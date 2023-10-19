@@ -39,8 +39,8 @@ class AmuletGameTown extends AmuletGame {
         name: "Sybil",
         interact: (player) {
           player.talk("Hello there", options: [
-            TalkOption("Goodbye", player.endInteraction),
-            TalkOption("Buy", player.endInteraction),
+            TalkOption("Goodbye", endPlayerInteraction),
+            TalkOption("Buy", endPlayerInteraction),
           ]);
         }
     )..invincible = true

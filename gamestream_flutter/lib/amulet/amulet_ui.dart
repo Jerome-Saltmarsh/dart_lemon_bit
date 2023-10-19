@@ -156,11 +156,11 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            alignRight(child: onPressed(
-              action: amulet.network.sendAmuletRequest.endInteraction,
-              child: buildText('x', size: 25),
-            )),
-            Expanded(child: buildText(npcText, color: Colors.white70)),
+            // alignRight(child: onPressed(
+            //   action: amulet.network.sendAmuletRequest.endInteraction,
+            //   child: buildText('x', size: 25),
+            // )),
+            Expanded(child: Center(child: buildText(npcText, color: Colors.white70))),
             options,
           ],
         ),

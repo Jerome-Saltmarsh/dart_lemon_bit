@@ -676,7 +676,7 @@ class AmuletPlayer extends IsometricPlayer {
        writeAmuletError('Invalid talk option index $index');
        return;
      }
-     npcOptions[index].action();
+     npcOptions[index].action(this);
   }
 
   void equipHelm(AmuletItem? item, {bool force = false}){

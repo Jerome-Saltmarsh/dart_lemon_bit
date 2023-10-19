@@ -1,5 +1,7 @@
+import 'package:gamestream_ws/amulet.dart';
+
 class TalkOption {
   final String text;
-  final Function action;
-  TalkOption(this.text, this.action);
+  final Function(AmuletPlayer player) action;
+  const TalkOption(this.text, this.action);
 }

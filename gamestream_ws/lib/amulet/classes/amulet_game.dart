@@ -532,4 +532,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     // TODO: implement buildPlayer
     throw UnimplementedError();
   }
+
+  void endPlayerInteraction(AmuletPlayer player) =>
+      player.endInteraction();
 }
