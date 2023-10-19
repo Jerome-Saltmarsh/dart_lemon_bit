@@ -12,6 +12,8 @@ class ItemStat {
   final double range;
   final double movement;
   final String information;
+  final int performDuration;
+  final int performActionFrame;
 
   const ItemStat({
     required this.information,
@@ -27,5 +29,7 @@ class ItemStat {
     this.quantity = 0,
     this.charges = 0,
     this.cooldown = 0,
+    this.performDuration = 0,
+    this.performActionFrame = 0,
   });
 }

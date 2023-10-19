@@ -15,6 +15,8 @@ enum AmuletItem {
       air: 0,
       information: 'Teleports a short distance',
       quantity: 2,
+      performDuration: 16,
+      performActionFrame: 8,
     ),
     level2: ItemStat(
       charges: 2,
@@ -23,6 +25,8 @@ enum AmuletItem {
       air: 1,
       information: 'teleport slightly further',
       quantity: 3,
+      performDuration: 16,
+      performActionFrame: 8,
     ),
     level3: ItemStat(
       charges: 2,
@@ -31,6 +35,8 @@ enum AmuletItem {
       air: 2,
       information: 'teleports a short distance',
       quantity: 4,
+      performDuration: 16,
+      performActionFrame: 8,
     ),
   ),
   Weapon_Rusty_Old_Sword(
@@ -46,6 +52,8 @@ enum AmuletItem {
       cooldown: 5,
       charges: 5,
       information: 'An old blunt sword',
+      performDuration: 30,
+      performActionFrame: 20,
     ),
     level2: ItemStat(
       damage: 2,
@@ -54,6 +62,8 @@ enum AmuletItem {
       charges: 7,
       information: 'An old blunt sword',
       earth: 5,
+      performDuration: 30,
+      performActionFrame: 20,
     ),
   ),
   Weapon_Staff_Of_Flames(
@@ -345,30 +355,40 @@ enum AmuletItem {
         charges: 1,
         cooldown: 30,
         health: 3,
+        performDuration: 25,
+        performActionFrame: 20,
       ),
       level2: ItemStat(
         cooldown: 28,
         information: 'heals a small amount of health',
         health: 5,
         water: 1,
+        performDuration: 25,
+        performActionFrame: 20,
       ),
       level3: ItemStat(
         cooldown: 26,
         information: 'heals a small amount of health',
         health: 7,
         water: 5,
+        performDuration: 25,
+        performActionFrame: 20,
       ),
       level4: ItemStat(
         cooldown: 25,
         information: 'heals a small amount of health',
         health: 12,
         water: 8,
+        performDuration: 25,
+        performActionFrame: 20,
       ),
       level5: ItemStat(
         cooldown: 24,
         information: 'heals a small amount of health',
         health: 7,
         water: 16,
+        performDuration: 25,
+        performActionFrame: 20,
       ));
 
   final AmuletItemAction selectAction;

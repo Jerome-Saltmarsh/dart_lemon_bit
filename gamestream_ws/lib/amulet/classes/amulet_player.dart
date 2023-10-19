@@ -1,4 +1,5 @@
 
+import 'package:gamestream_ws/amulet/functions/item_slot/item_slot_reduce_charge.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
@@ -529,11 +530,6 @@ class AmuletPlayer extends IsometricPlayer {
       return;
     }
 
-    // if (itemSlot.cooldown > 0) {
-    //   writeAmuletError('${itemSlot.amuletItem?.name} is cooling down');
-    //   return;
-    // }
-
     if (itemSlot.charges <= 0) {
       writeAmuletError('${itemSlot.amuletItem?.name} has no charges');
       return;
@@ -542,7 +538,8 @@ class AmuletPlayer extends IsometricPlayer {
     final weaponStats = getStatsForAmuletItem(weapon);
 
     if (weaponStats == null){
-      throw Exception('weaponStats == null');
+      writeGameError(GameError.Insufficient_Elements);
+      return;
     }
 
     switch (weapon.selectAction) {
@@ -572,15 +569,17 @@ class AmuletPlayer extends IsometricPlayer {
         activatedPowerIndex = index;
         break;
       case AmuletItemAction.Caste:
+        itemSlotReduceCharge(itemSlot);
         activatedPowerIndex = index;
         setCharacterStateStriking(
             character: this,
-            duration: 20,
-            actionFrame: 10,
+            duration: weaponStats.performDuration,
+            actionFrame: weaponStats.performActionFrame,
         );
         itemSlot.cooldown = weaponStats.cooldown;
         break;
       case AmuletItemAction.Instant:
+        itemSlotReduceCharge(itemSlot);
         itemSlot.cooldown = weaponStats.cooldown;
         break;
       case AmuletItemAction.None:
