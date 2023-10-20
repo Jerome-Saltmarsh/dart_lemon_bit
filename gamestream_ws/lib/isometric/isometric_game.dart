@@ -249,8 +249,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required bool keyDownShift
   }) {
 
-    if (player.deadOrBusy || !player.active || player.debugging)
-      return;
+    if (
+      player.deadOrBusy ||
+      !player.active ||
+      player.debugging ||
+      !player.controlsEnabled
+    ) return;
+
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;

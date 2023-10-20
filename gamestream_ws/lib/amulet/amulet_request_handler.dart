@@ -29,8 +29,6 @@ extension AmuletRequestHandler on Connection {
     }
     final mmoRequest = NetworkRequestAmulet.values[requestIndex];
 
-
-
     switch (mmoRequest){
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amulet.spawnRandomEnemy();

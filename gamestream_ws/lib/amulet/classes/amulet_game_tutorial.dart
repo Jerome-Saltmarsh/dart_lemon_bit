@@ -169,6 +169,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (player.readFlag('introduction')){
+      actionPlayerControlsDisabled(player);
       actionMovePlayerToSpawn01(player);
       actionMoveGuideToGuideSpawn0();
       actionFaceOneAnother(player, ox);
@@ -180,8 +181,11 @@ class AmuletGameTutorial extends AmuletGame {
             'press the left mouse button to move.'
         );
 
-        player.onInteractionOver = (){
-          addJob(seconds: 1, action: actionMoveGuideToGuideSpawn1);
+        player.onInteractionOver = () {
+          addJob(seconds: 1, action: () {
+            actionMoveGuideToGuideSpawn1();
+            actionPlayerControlsEnabled(player);
+          });
         };
       });
       return;
@@ -297,5 +301,13 @@ class AmuletGameTutorial extends AmuletGame {
   void actionFaceOneAnother(Character a, Character b) {
      a.face(b);
      b.face(a);
+  }
+
+  void actionPlayerControlsDisabled(AmuletPlayer player) {
+     player.controlsEnabled = false;
+  }
+
+  void actionPlayerControlsEnabled(AmuletPlayer player) {
+     player.controlsEnabled = true;
   }
 }
