@@ -27,7 +27,7 @@ class IsometricEditor with IsometricComponent {
   final selectedMarkListIndex = Watch(0);
   final selectedMarkType = Watch(0);
 
-  final selectedKeyName = Watch<MapEntry<String, int>?>(null);
+  final selectedKeyEntry = Watch<MapEntry<String, int>?>(null);
 
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<GameObject?>(null);
@@ -68,7 +68,7 @@ class IsometricEditor with IsometricComponent {
   }, onChanged: onChangedSelectedNodeIndex);
 
   IsometricEditor(){
-    selectedKeyName.onChanged(onChangedSelectedKeyEntryIndex);
+    selectedKeyEntry.onChanged(onChangedSelectedKeyEntryIndex);
   }
 
   int get z => scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);

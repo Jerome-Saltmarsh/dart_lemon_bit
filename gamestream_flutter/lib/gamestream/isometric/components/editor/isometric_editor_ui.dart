@@ -1582,6 +1582,7 @@ extension IsometricEditorUI on IsometricEditor {
     top: 100,
     left: 0,
     child: GSContainer(
+      height: 300,
       child: Column(
         children: [
           Row(
@@ -1609,24 +1610,33 @@ extension IsometricEditorUI on IsometricEditor {
           ),
               buildWatch(
                   scene.keysChangedNotifier,
-                  (t) => Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: scene.keys.entries
-                            .map((entry) => onPressed(
-                          action: () => onPressedKeyEntry(entry),
-                                child: buildText(entry.key)
-                              )
-                            )
-                            .toList(growable: false),
-                      ))
+                  (t) => SingleChildScrollView(
+                    child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: scene.keys.entries
+                              .map(buildKeyEntry)
+                              .toList(growable: false),
+                        ),
+                  ))
             ],
           ),
     ),
   );
 
+  Widget buildKeyEntry(MapEntry<String, int> entry) =>
+      buildWatch(selectedKeyEntry, (selectedEntry) =>
+        onPressed(
+        action: () => onPressedKeyEntry(entry),
+        child: buildBorder(
+          padding: const EdgeInsets.all(4),
+          color: selectedEntry?.key == entry.key ? Colors.white70 : Colors.transparent,
+          child: buildText(entry.key),
+        ),
+      ));
+
   void onPressedKeyEntry(MapEntry<String, int> keyEntry) {
-    selectedKeyName.value = keyEntry;
+    selectedKeyEntry.value = keyEntry;
   }
 }
 
