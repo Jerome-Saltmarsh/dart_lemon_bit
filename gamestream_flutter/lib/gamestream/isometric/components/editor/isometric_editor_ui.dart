@@ -1590,6 +1590,8 @@ extension IsometricEditorUI on IsometricEditor {
               buildButtonAddKey(),
               width8,
               buildButtonDeleteKey(),
+              width8,
+              buildButtonRenameKey(),
             ],
           ),
               buildWatch(
@@ -1635,9 +1637,9 @@ extension IsometricEditorUI on IsometricEditor {
           // send request to add key
         });
       },
-      child: buildBorder(
-        padding: const EdgeInsets.all(4),
-        child: buildText('ADD'),
+      child: GSContainer(
+          color: Colors.black12,
+          child: buildText('ADD')
       ),
     );
 
@@ -1645,14 +1647,36 @@ extension IsometricEditorUI on IsometricEditor {
     return buildWatch(selectedKeyEntry, (selectedKeyEntry) {
       return onPressed(
         action: selectedKeyEntry == null ? null : deleteSelectedKeyEntry,
-        child: buildText(
-            'DELETE',
-            color: selectedKeyEntry == null
-                ? Colors.white38
-                : Colors.white),
+        child: GSContainer(
+          color: Colors.black12,
+          child: buildText(
+              'DELETE',
+              color: selectedKeyEntry == null
+                  ? Colors.white38
+                  : Colors.white),
+        ),
       );
     });
+  }
 
+  Widget buildButtonRenameKey() =>
+      buildWatch(selectedKeyEntry, (t) => onPressed(
+        action: t == null ? null : onButtonPressedRenameKey,
+        child: GSContainer(
+            color: Colors.black12,
+            child: buildText('RENAME', color: t == null ? Colors.white54 : Colors.white)),
+      ));
+
+  void onButtonPressedRenameKey(){
+    final selectedKey = selectedKeyEntry.value;
+    if (selectedKey == null){
+      return;
+    }
+
+    ui.showDialogGetString(
+        text: selectedKeyEntry.value?.key,
+        onSelected: (text) => renameKey(from: selectedKey.key, to: text),
+    );
   }
 }
 

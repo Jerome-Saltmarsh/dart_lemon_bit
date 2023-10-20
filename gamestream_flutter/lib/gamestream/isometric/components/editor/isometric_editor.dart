@@ -759,4 +759,12 @@ class IsometricEditor with IsometricComponent {
       '--name $name --index $index',
     );
   }
+
+  void renameKey({required String from, required String to}){
+    network.sendNetworkRequest(
+      NetworkRequest.Editor_Request,
+      EditorRequest.Rename_Key.index,
+      '--from $from --to $to',
+    );
+  }
 }

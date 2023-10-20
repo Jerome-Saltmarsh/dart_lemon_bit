@@ -181,6 +181,9 @@ class Connection with ByteReader {
           case EditorRequest.Move_Key:
             handleEditorRequestMoveKey(arguments);
             break;
+          case EditorRequest.Rename_Key:
+            handleEditorRequestRenameKey(arguments);
+            break;
           case EditorRequest.New_Scene:
             handleEditorRequestNewScene(arguments);
             break;
@@ -1155,6 +1158,46 @@ class Connection with ByteReader {
     }
 
     scene.keys[name] = index;
+    game.notifyPlayersSceneKeysChanged();
+  }
+
+  void handleEditorRequestRenameKey(List<String> arguments) {
+    final player = _player;
+    if (player is! AmuletPlayer){
+      sendServerError('player is! AmuletPlayer');
+      return;
+    }
+
+    final from = arguments.getArg('--from');
+    final to = arguments.getArg('--to');
+
+    if (from == null){
+      sendServerError('--from required');
+      return;
+    }
+
+    if (to == null){
+      sendServerError('--to required');
+      return;
+    }
+
+    final game = player.game;
+    final scene = game.scene;
+    final keys = scene.keys;
+
+    if (keys.containsKey(to)){
+      sendServerError('rename_key_error: "$to" already exists');
+      return;
+    }
+
+    final index = keys[from];
+    if (index == null) {
+      sendServerError('rename_key_error: "$from" could not be found');
+      return;
+    }
+
+    scene.keys[to] = index;
+    scene.keys.remove(from);
     game.notifyPlayersSceneKeysChanged();
   }
 }

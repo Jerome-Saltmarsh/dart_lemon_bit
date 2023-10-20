@@ -20,4 +20,5 @@ enum EditorRequest {
    Add_Key,
    Delete_Key,
    Move_Key,
+   Rename_Key,
 }

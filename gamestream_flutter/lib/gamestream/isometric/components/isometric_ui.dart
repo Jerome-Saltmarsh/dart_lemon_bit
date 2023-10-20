@@ -502,7 +502,7 @@ class IsometricUI with IsometricComponent {
 
   void showDialogGetString({
     required Function(String value) onSelected,
-    String text = '',
+    String? text = '',
   }) {
     final controller = TextEditingController(text: text);
     showDialog(
