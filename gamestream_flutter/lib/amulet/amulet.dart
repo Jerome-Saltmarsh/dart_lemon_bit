@@ -13,6 +13,9 @@ import 'amulet_render.dart';
 
 class Amulet extends IsometricGame {
 
+  final cameraTargetSet = Watch(false);
+  final cameraTarget = Position();
+
   final elementPoints = Watch(0);
   final elementFire = Watch(0);
   final elementWater = Watch(0);
@@ -81,6 +84,7 @@ class Amulet extends IsometricGame {
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
+    cameraTargetSet.onChanged(onChangedCameraTargetSet);
   }
 
   @override
@@ -365,6 +369,14 @@ class Amulet extends IsometricGame {
   void onChangedNpcTextIndex(int value) {
     if (value >= npcText.length) {
       endInteraction();
+    }
+  }
+
+  void onChangedCameraTargetSet(bool cameraTargetSet) {
+    if (cameraTargetSet){
+      camera.target = player.position;
+    } else {
+      camera.target = cameraTarget;
     }
   }
 }

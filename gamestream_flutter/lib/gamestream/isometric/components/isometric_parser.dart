@@ -682,6 +682,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponseAmuletPlayer.End_Interaction:
         amulet.endInteraction();
         break;
+      case NetworkResponseAmuletPlayer.Camera_Target:
+        readCameraTarget();
+        break;
     }
   }
 
@@ -701,5 +704,16 @@ class IsometricParser with ByteReader, IsometricComponent {
        keys[name] = index;
     }
     scene.keysChangedNotifier.value++;
+  }
+
+  void readCameraTarget() {
+    final cameraTargetSet = readBool();
+    amulet.cameraTargetSet.value = cameraTargetSet;
+    if (cameraTargetSet) {
+      readIsometricPosition(amulet.cameraTarget);
+      camera.target = amulet.cameraTarget;
+    } else {
+      camera.target = player.position;
+    }
   }
 }

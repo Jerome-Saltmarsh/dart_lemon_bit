@@ -12,6 +12,9 @@ import 'amulet_npc.dart';
 import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
+
+  Position? cameraTarget;
+
   AmuletGame amuletGame;
   var equipmentDirty = true;
   var activePowerX = 0.0;
@@ -321,6 +324,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   @override
   void writePlayerGame() {
     cleanEquipment();
+    writeCameraTarget();
     super.writePlayerGame();
   }
 
@@ -1459,6 +1463,21 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   int getInt(String name) {
     return data[name] as int;
+  }
+
+  void writeCameraTarget() {
+    writeByte(NetworkResponse.Amulet_Player);
+    writeByte(NetworkResponseAmuletPlayer.Camera_Target);
+
+    final cameraTarget = this.cameraTarget;
+
+    if (cameraTarget == null){
+      writeBool(false);
+      return;
+    }
+
+    writeBool(true);
+    writePosition(cameraTarget);
   }
 
 

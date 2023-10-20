@@ -175,6 +175,8 @@ class AmuletGameTutorial extends AmuletGame {
       actionFaceOneAnother(player, ox);
 
       addJob(seconds: 2, action: () {
+        actionSetCameraTarget(player, ox);
+
         player.talk(
             'greetings other.'
             'one is here to guide another.'
@@ -185,6 +187,7 @@ class AmuletGameTutorial extends AmuletGame {
           addJob(seconds: 1, action: () {
             actionMoveGuideToGuideSpawn1();
             actionPlayerControlsEnabled(player);
+            actionClearCameraTarget(player);
           });
         };
       });
@@ -309,5 +312,13 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionPlayerControlsEnabled(AmuletPlayer player) {
      player.controlsEnabled = true;
+  }
+
+  void actionClearCameraTarget(AmuletPlayer player){
+    actionSetCameraTarget(player, null);
+  }
+
+  void actionSetCameraTarget(AmuletPlayer player, Position? target) {
+      player.cameraTarget = target;
   }
 }
