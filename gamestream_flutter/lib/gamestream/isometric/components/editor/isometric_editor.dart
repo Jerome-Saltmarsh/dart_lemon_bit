@@ -27,6 +27,8 @@ class IsometricEditor with IsometricComponent {
   final selectedMarkListIndex = Watch(0);
   final selectedMarkType = Watch(0);
 
+  final selectedKeyName = Watch<MapEntry<String, int>?>(null);
+
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<GameObject?>(null);
   final gameObjectSelected = Watch(false);
@@ -64,6 +66,10 @@ class IsometricEditor with IsometricComponent {
     if (value >= scene.totalNodes) return scene.totalNodes - 1;
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
+
+  IsometricEditor(){
+    selectedKeyName.onChanged(onChangedSelectedKeyEntryIndex);
+  }
 
   int get z => scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
 
@@ -157,7 +163,7 @@ class IsometricEditor with IsometricComponent {
         if (gameObjectSelected.value) {
           sendGameObjectRequestMoveToMouse();
         } else {
-          camera.cameraSetPositionGrid(row, column, z);
+          cameraCenterOnNodeSelectedIndex();
         }
         break;
       case KeyCode.R:
@@ -690,5 +696,18 @@ class IsometricEditor with IsometricComponent {
     if (nearestIndex != -1) {
       markSelect(nearestIndex);
     }
+  }
+
+  void onChangedSelectedKeyEntryIndex(MapEntry<String, int>? keyEntry) {
+    print('onChangedSelectedKeyEntryIndex($keyEntry)');
+    if (keyEntry == null){
+      return;
+    }
+    nodeSelectedIndex.value = keyEntry.value;
+    cameraCenterOnNodeSelectedIndex();
+  }
+
+  void cameraCenterOnNodeSelectedIndex() {
+    camera.cameraSetPositionGrid(row, column, z);
   }
 }

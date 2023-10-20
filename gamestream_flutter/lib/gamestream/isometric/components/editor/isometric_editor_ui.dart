@@ -1613,19 +1613,21 @@ extension IsometricEditorUI on IsometricEditor {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: scene.keys.entries
-                            .map((entry) => Row(
-                                  children: [
-                                    buildText(entry.key),
-                                    width8,
-                                    buildText(entry.value),
-                                  ],
-                                ))
+                            .map((entry) => onPressed(
+                          action: () => onPressedKeyEntry(entry),
+                                child: buildText(entry.key)
+                              )
+                            )
                             .toList(growable: false),
                       ))
             ],
           ),
     ),
   );
+
+  void onPressedKeyEntry(MapEntry<String, int> keyEntry) {
+    selectedKeyName.value = keyEntry;
+  }
 }
 
 
