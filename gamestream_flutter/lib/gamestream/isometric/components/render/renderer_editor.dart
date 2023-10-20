@@ -142,9 +142,8 @@ class RendererEditor extends RenderGroup {
     final keyIndex = keyEntry.value;
     final keyName = keyEntry.key;
     engine.color = Colors.white;
-    render.circleOutlineAtIndex(index: keyIndex, radius: 100.0);
+    // render.circleOutlineAtIndex(index: keyIndex, radius: 100.0);
     render.textIndex(keyName, keyIndex);
+    render.wireFrameWhite(keyIndex);
   }
-
-
 }

@@ -224,6 +224,23 @@ class IsometricRender with IsometricComponent {
     return;
   }
 
+  void wireFrameWhite(int index) {
+    final row = scene.getRow(index);
+    final column = scene.getColumn(index);
+    final z = scene.getIndexZ(index);
+    engine.renderSprite(
+      image: images.atlas_nodes,
+      dstX: getRenderXOfRowAndColumn(row, column),
+      dstY: getRenderYOfRowColumnZ(row, column, z),
+      srcX: 96,
+      srcY: 1640,
+      srcWidth: 48,
+      srcHeight: 72,
+      anchorY: IsometricConstants.Sprite_Anchor_Y,
+    );
+    return;
+  }
+
   void wireFrameRed(int row, int column, int z) {
     engine.renderSprite(
       image: images.atlas_nodes,
