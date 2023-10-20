@@ -67,7 +67,7 @@ extension IsometricEditorUI on IsometricEditor {
 
 
   Widget buildEditor(){
-    return buildWatch(editTab, buildUI);
+    return buildWatch(editorTab, buildUI);
   }
 
   Widget buildPage({required List<Widget> children}) =>
@@ -1146,7 +1146,7 @@ extension IsometricEditorUI on IsometricEditor {
         color: activeEditTab == editTab
             ? colors.brownDark
             : colors.brownLight,
-        action: () => this.editTab.value = editTab,
+        action: () => this.editorTab.value = editTab,
       ))
           .toList(),
     ),

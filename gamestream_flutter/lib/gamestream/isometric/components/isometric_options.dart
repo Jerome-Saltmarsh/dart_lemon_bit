@@ -125,7 +125,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void _onChangedEdit(bool value) {
     if (value) {
-      io.enabledMouseClick = editor.editTab.value != EditorTab.Marks;
+      io.enabledMouseClick = editor.editorTab.value != EditorTab.Marks;
       camera.target = null;
       editor.cursorSetToPlayer();
     } else {

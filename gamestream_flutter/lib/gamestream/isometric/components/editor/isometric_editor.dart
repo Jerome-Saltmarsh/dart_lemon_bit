@@ -51,7 +51,7 @@ class IsometricEditor with IsometricComponent {
 
   late final editorDialog = Watch<EditorDialog?>(
       null, onChanged: onChangedEditorDialog);
-  late final editTab = Watch(
+  late final editorTab = Watch(
       EditorTab.Grid, onChanged: onChangedEditTab);
   late final nodeSelectedType = Watch<int>(
       0, onChanged: onChangedSelectedNodeType);
@@ -337,7 +337,7 @@ class IsometricEditor with IsometricComponent {
       return;
     }
 
-    if (editTab.value == EditorTab.Marks){
+    if (editorTab.value == EditorTab.Marks){
       markDelete();
       return;
     }
@@ -453,7 +453,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void setTabGrid() {
-    editTab.value = EditorTab.Grid;
+    editorTab.value = EditorTab.Grid;
   }
 
   // EVENTS
@@ -468,7 +468,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void onMouseLeftClicked() {
-    switch (editTab.value) {
+    switch (editorTab.value) {
       case EditorTab.File:
         setTabGrid();
         selectMouseBlock();
