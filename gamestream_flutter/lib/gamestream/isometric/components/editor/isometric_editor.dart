@@ -161,6 +161,11 @@ class IsometricEditor with IsometricComponent {
         break;
       case KeyCode.G:
 
+        if (!engine.keyPressedShiftLeft){
+          cameraCenterOnNodeSelectedIndex();
+          return;
+        }
+
         switch (editorTab.value){
           case EditorTab.Keys:
             final selectedKey = selectedKeyEntry.value;
