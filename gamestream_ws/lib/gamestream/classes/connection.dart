@@ -175,6 +175,9 @@ class Connection with ByteReader {
           case EditorRequest.Add_Key:
             handleEditorRequestAddKey(arguments);
             break;
+          case EditorRequest.Delete_Key:
+            handleEditorRequestDeleteKey(arguments);
+            break;
           case EditorRequest.New_Scene:
             handleEditorRequestNewScene(arguments);
             break;
@@ -1096,6 +1099,20 @@ class Connection with ByteReader {
     }
     scene.addKey(name, index);
     game.notifyPlayersSceneKeysChanged();
+  }
+
+  void handleEditorRequestDeleteKey(List<String> arguments) {
+     final name = arguments[2];
+     final player = _player;
+
+     if (player is! AmuletPlayer){
+       return;
+     }
+
+     final game = player.game;
+     final scene = game.scene;
+     scene.keys.remove(name);
+     game.notifyPlayersSceneKeysChanged();
   }
 }
 

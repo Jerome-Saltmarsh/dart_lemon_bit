@@ -710,4 +710,21 @@ class IsometricEditor with IsometricComponent {
   void cameraCenterOnNodeSelectedIndex() {
     camera.cameraSetPositionGrid(row, column, z);
   }
+
+  void deleteSelectedKeyEntry(){
+     final selected = selectedKeyEntry.value;
+     if (selected == null){
+       return;
+     }
+     deleteKeyByName(selected.key);
+     selectedKeyEntry.value = null;
+  }
+
+  void deleteKeyByName(String name){
+      network.sendNetworkRequest(
+          NetworkRequest.Editor_Request,
+          EditorRequest.Delete_Key.index,
+          name,
+      );
+  }
 }

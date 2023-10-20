@@ -1587,25 +1587,9 @@ extension IsometricEditorUI on IsometricEditor {
         children: [
           Row(
             children: [
-              buildText('KEYS'),
+              buildButtonAddKey(),
               width8,
-              onPressed(
-                action: (){
-                  ui.showDialogGetString(onSelected: (name) {
-                    network.sendNetworkRequest(
-                        NetworkRequest.Editor_Request,
-                        EditorRequest.Add_Key.index,
-                        name,
-                        editor.nodeSelectedIndex.value
-                    );
-                    // send request to add key
-                  });
-                },
-                child: buildBorder(
-                  padding: const EdgeInsets.all(4),
-                  child: buildText('ADD'),
-                ),
-              ),
+              buildButtonDeleteKey(),
             ],
           ),
               buildWatch(
@@ -1638,7 +1622,40 @@ extension IsometricEditorUI on IsometricEditor {
   void onPressedKeyEntry(MapEntry<String, int> keyEntry) {
     selectedKeyEntry.value = keyEntry;
   }
+
+  Widget buildButtonAddKey() => onPressed(
+      action: (){
+        ui.showDialogGetString(onSelected: (name) {
+          network.sendNetworkRequest(
+              NetworkRequest.Editor_Request,
+              EditorRequest.Add_Key.index,
+              name,
+              editor.nodeSelectedIndex.value
+          );
+          // send request to add key
+        });
+      },
+      child: buildBorder(
+        padding: const EdgeInsets.all(4),
+        child: buildText('ADD'),
+      ),
+    );
+
+  Widget buildButtonDeleteKey() {
+    return buildWatch(selectedKeyEntry, (selectedKeyEntry) {
+      return onPressed(
+        action: selectedKeyEntry == null ? null : deleteSelectedKeyEntry,
+        child: buildText(
+            'DELETE',
+            color: selectedKeyEntry == null
+                ? Colors.white38
+                : Colors.white),
+      );
+    });
+
+  }
 }
+
 
 
 
