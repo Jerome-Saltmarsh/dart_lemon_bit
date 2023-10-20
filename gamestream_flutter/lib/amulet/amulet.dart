@@ -379,9 +379,9 @@ class Amulet extends IsometricGame {
     }
 
     if (cameraTargetSet){
-      camera.target = player.position;
+      options.cameraPlay = player.position;
     } else {
-      camera.target = cameraTarget;
+      options.cameraPlay = cameraTarget;
     }
   }
 }

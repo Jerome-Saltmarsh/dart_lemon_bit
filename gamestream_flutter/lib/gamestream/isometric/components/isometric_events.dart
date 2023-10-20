@@ -596,6 +596,9 @@ class IsometricEvents with IsometricComponent {
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
         audio.enabledSound.value = true;
+        options.edit.value = false;
+        options.cameraPlay = player.position;
+        camera.target = options.cameraPlay;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();
         }
@@ -614,7 +617,6 @@ class IsometricEvents with IsometricComponent {
         scene.gameObjects.clear();
         scene.editEnabled.value = false;
         options.gameType.value = GameType.Website;
-        options.edit.value = false;
         audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
