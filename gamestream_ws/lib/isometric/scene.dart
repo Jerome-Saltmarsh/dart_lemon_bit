@@ -559,4 +559,10 @@ class Scene {
     }
     return value;
   }
+
+  void movePositionToIndex(Position position, int nodeIndex) {
+    position.x = getIndexX(nodeIndex);
+    position.y = getIndexY(nodeIndex);
+    position.z = getIndexZ(nodeIndex);
+  }
 }

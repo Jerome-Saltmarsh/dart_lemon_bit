@@ -5,7 +5,14 @@ import 'package:gamestream_ws/packages.dart';
 
 import 'fiend_type.dart';
 
+
 class AmuletGameTutorial extends AmuletGame {
+
+  static const keysGuideSpawn0 = 'guide_spawn_0';
+  static const keysGuideSpawn1 = 'guide_spawn_1';
+  static const keysPlayerSpawn = 'player_spawn_00';
+  static const keysDoor = 'door';
+  static const keysCreep01 = 'creep01';
 
   late final talkOptionAcceptSword = TalkOption('Accept Sword', onObjectiveAccomplishedAcceptSword);
   late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
@@ -46,7 +53,7 @@ class AmuletGameTutorial extends AmuletGame {
     ..legsType = LegType.Leather
     ..bodyType = BodyType.Leather_Armour;
 
-  int getKey(String name) =>
+  int getSceneKey(String name) =>
       scene.keys[name] ?? (throw Exception('amuletGameTutorial.getKey("$name") is null'));
 
   void onNodeChanged(int index){
@@ -104,7 +111,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void onObjectiveAccomplishedAcceptSword(AmuletPlayer player) {
     player.data['weapon_accepted'] = true;
-    final doorIndex = getKey('door');
+    final doorIndex = getSceneKey(keysDoor);
     scene.setNodeEmpty(doorIndex);
     onNodeChanged(doorIndex);
     player.acquireAmuletItem(AmuletItem.Weapon_Rusty_Old_Sword);
@@ -155,13 +162,7 @@ class AmuletGameTutorial extends AmuletGame {
     refreshPlayerGameState(player);
   }
 
-  void resetGameState(){
-
-  }
-
   void refreshPlayerGameState(AmuletPlayer player) {
-
-    resetGameState();
 
     if (player.readFlag('initialized')) {
       actionInitializeNewPlayer(player);
@@ -169,37 +170,66 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (player.readFlag('introduction')){
       actionMovePlayerToSpawn01(player);
+      actionMoveGuideToGuideSpawn0();
+      actionFaceOneAnother(player, ox);
+
+      addJob(seconds: 2, action: () {
+        player.talk(
+            'greetings other.'
+            'one is here to guide another.'
+            'press the left mouse button to move.'
+        );
+
+        player.onInteractionOver = (){
+          addJob(seconds: 1, action: actionMoveGuideToGuideSpawn1);
+        };
+      });
       return;
     }
 
+    // if (player.readFlag('show_welcome_message')) {
+    //   actionWriteWelcomeMessage(player);
+    // }
 
-    if (player.readFlag('show_welcome_message')) {
-      actionWriteWelcomeMessage(player);
-    }
+    // actionMovePlayerToSpawn01(player);
 
-    actionMovePlayerToSpawn01(player);
+    // if (player.hasNotKey('weapon_accepted')){
+    //   actionSetDoorEnabled();
+    // } else {
+    //   actionSetDoorDisabled();
+    // }
 
-    if (player.hasNotKey('weapon_accepted')){
-      actionSetDoorEnabled();
-    } else {
-      actionSetDoorDisabled();
-    }
+    // actionInstantiateFiend01();
+  }
 
-    actionInstantiateFiend01();
+  void actionMoveGuideToGuideSpawn0() {
+    actionMoveOxToSceneKey(keysGuideSpawn0);
+  }
+
+  void actionMoveGuideToGuideSpawn1() {
+    actionMoveOxToSceneKey(keysGuideSpawn1);
+  }
+
+  void actionMoveOxToSceneKey(String sceneKey){
+    actionMovePositionToSceneKey(ox, sceneKey);
+  }
+
+  void actionMovePositionToSceneKey(Position position, String sceneKey){
+    movePositionToIndex(position, getSceneKey(sceneKey));
   }
 
   void actionWritePlayerPositionAbsolute(AmuletPlayer player) {
     player.writePlayerPositionAbsolute();
   }
 
-  void actionWriteWelcomeMessage(AmuletPlayer player) {
-    player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move. Scroll the mouse wheel to zoom the camera in and out');
-  }
+  // void actionWriteWelcomeMessage(AmuletPlayer player) {
+  //   player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move. Scroll the mouse wheel to zoom the camera in and out');
+  // }
 
   void actionInstantiateFiend01() {
     fiend01 = spawnFiendTypeAtIndex(
         fiendType: FiendType.Fallen_01,
-        index: getKey('creep01'),
+        index: getSceneKey(keysCreep01),
     )
       ..spawnLootOnDeath = false
       ..respawnDurationTotal = -1;
@@ -207,14 +237,14 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSetDoorEnabled() {
      setNode(
-      nodeIndex: getKey('door'),
+      nodeIndex: getSceneKey(keysDoor),
       nodeType: NodeType.Wood,
       nodeOrientation: NodeOrientation.Half_West,
     );
   }
 
   void actionMovePlayerToSpawn01(AmuletPlayer player) {
-    final playerSpawn01 = scene.getKey('player_spawn[0]');
+    final playerSpawn01 = scene.getKey(keysPlayerSpawn);
     actionMovePositionToIndex(player, playerSpawn01);
     actionWritePlayerPositionAbsolute(player);
   }
@@ -237,7 +267,7 @@ class AmuletGameTutorial extends AmuletGame {
       amuletPlayer.readFlag('use_spell_heal')
     ) {
 
-      final fiend02Index = getKey('fiend02');
+      final fiend02Index = getSceneKey('fiend02');
       for (var i = 0; i < 2; i++) {
         const shiftRadius = 10;
         spawnFiendTypeAtIndex(
@@ -255,12 +285,17 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void clearDoor02() => setNodeEmpty(getKey('door02'));
+  void clearDoor02() => setNodeEmpty(getSceneKey('door02'));
 
   void refreshSceneState(){
 
   }
 
   void actionSetDoorDisabled() =>
-      setNodeEmpty(getKey('door'));
+      setNodeEmpty(getSceneKey('door'));
+
+  void actionFaceOneAnother(Character a, Character b) {
+     a.face(b);
+     b.face(a);
+  }
 }

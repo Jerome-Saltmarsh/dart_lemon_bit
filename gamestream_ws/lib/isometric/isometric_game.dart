@@ -219,11 +219,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// ACTIONS
 
-  void moveV3ToNodeIndex(Position vector3, int nodeIndex) {
-    vector3.x = scene.getIndexX(nodeIndex);
-    vector3.y = scene.getIndexY(nodeIndex);
-    vector3.z = scene.getIndexZ(nodeIndex);
-  }
+  void movePositionToIndex(Position position, int index) =>
+      scene.movePositionToIndex(position, index);
 
   void move(Position value, double angle, double distance) {
     value.x += adj(angle, distance);

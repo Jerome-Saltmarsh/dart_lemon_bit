@@ -21,6 +21,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var healthBase = 10;
   var npcText = '';
   var npcOptions = <TalkOption>[];
+  Function? onInteractionOver;
 
   var elementFire = 0;
   var elementWater = 0;
@@ -257,6 +258,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (super.interacting == value)
       return;
     super.interacting = value;
+
+    if (!value){
+      onInteractionOver?.call();
+      onInteractionOver = null;
+    }
+
     writeInteracting();
   }
 
@@ -446,6 +453,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   }
 
   void talk(String text, {List<TalkOption>? options}) {
+    if (text.isNotEmpty){
+      interacting = true;
+    }
      npcText = text;
      if (options != null){
        this.npcOptions = options;
