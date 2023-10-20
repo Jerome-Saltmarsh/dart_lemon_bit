@@ -1479,6 +1479,4 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeBool(true);
     writePosition(cameraTarget);
   }
-
-
 }

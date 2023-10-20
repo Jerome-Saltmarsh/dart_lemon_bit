@@ -93,19 +93,17 @@ class AmuletGameTutorial extends AmuletGame {
 
   bool objectiveActiveSpeakToOz(AmuletPlayer player) => player.readFlag('ox_met');
 
-  void objectiveApplySpeakToOx(AmuletPlayer player){
-    player.talk(
-        'Argh! Oh, you are not one of them.'
-        'Such a fright one did give me. '
-        'I did think it would be one of the awful creatures.'
-        'Those do lurk in that room there yonder'
-        'This one has not the courage to face those.'
-        'Perhaps another could do it. '
-        'Here take this sword'
-        'Please dispatch of those creatures',
-        options: [
-          talkOptionAcceptSword,
-        ]
+  void objectiveApplySpeakToOx(AmuletPlayer player) {
+    player.talk('one will need this for what lies what ahead');
+    player.onInteractionOver = actionOxSpawnWeapon;
+  }
+
+  void actionOxSpawnWeapon() {
+    spawnAmuletItem(
+        item: AmuletItem.Weapon_Rusty_Old_Sword,
+        x: ox.x,
+        y: ox.y,
+        z: ox.z,
     );
   }
 
@@ -176,11 +174,10 @@ class AmuletGameTutorial extends AmuletGame {
 
       addJob(seconds: 2, action: () {
         actionSetCameraTarget(player, ox);
-
         player.talk(
-            'greetings other.'
-            'one is here to guide another.'
-            'press the left mouse button to move.'
+          'greetings other one.'
+          'one is here to guide another.'
+          'one does press the left mouse button to move.'
         );
 
         player.onInteractionOver = () {
