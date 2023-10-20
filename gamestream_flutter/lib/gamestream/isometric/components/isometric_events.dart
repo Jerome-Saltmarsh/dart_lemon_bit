@@ -592,7 +592,6 @@ class IsometricEvents with IsometricComponent {
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        // engine.cursorType.value = CursorType.None;
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
@@ -615,6 +614,7 @@ class IsometricEvents with IsometricComponent {
         scene.gameObjects.clear();
         scene.editEnabled.value = false;
         options.gameType.value = GameType.Website;
+        options.edit.value = false;
         audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
