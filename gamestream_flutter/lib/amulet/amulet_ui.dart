@@ -168,26 +168,32 @@ class AmuletUI {
       bottom: margin2,
       child:
       buildWatch(amulet.playerInteracting, (interacting) => !interacting ? nothing :
-      buildWatch(amulet.npcTextIndex, (npcTextIndex) => npcTextIndex < 0 ? nothing :
-      GSContainer(
-        width: width,
-        height: height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // alignRight(child: onPressed(
-            //   action: amulet.network.sendAmuletRequest.endInteraction,
-            //   child: buildText('x', size: 25),
-            // )),
-            Expanded(child: Center(child: buildText(npcText[npcTextIndex], color: Colors.white70))),
-            if (npcTextIndex + 1 < npcText.length)
-              optionsNext,
-            if (npcTextIndex + 1 >= npcText.length)
-              options,
-          ],
-        ),
-      )),
+      buildWatch(amulet.npcTextIndex, (npcTextIndex) {
+
+        if (npcTextIndex < 0){
+          return nothing;
+        }
+
+        if (npcTextIndex >= npcText.length){
+          return nothing;
+        }
+
+        return GSContainer(
+          width: width,
+          height: height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: Center(child: buildText(npcText[npcTextIndex], color: Colors.white70))),
+              if (npcTextIndex + 1 < npcText.length)
+                optionsNext,
+              if (npcTextIndex + 1 >= npcText.length)
+                options,
+            ],
+          ),
+        );
+      }),
     )
     );
   }

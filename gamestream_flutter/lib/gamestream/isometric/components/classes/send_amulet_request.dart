@@ -14,9 +14,6 @@ class SendAmuletRequest {
   void selectTalkOption(int index) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Talk_Option, index);
 
-  void endInteraction() =>
-      sendAmuletRequest(NetworkRequestAmulet.End_Interaction);
-
   void toggleTalentsDialog() =>
       sendAmuletRequest(NetworkRequestAmulet.Toggle_Skills_Dialog);
 

@@ -78,6 +78,8 @@ class Amulet extends IsometricGame {
     print('MmoGame()');
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
     playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
+    playerInteracting.onChanged(onChangedPlayerInteracting);
+    npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
   }
 
@@ -342,15 +344,27 @@ class Amulet extends IsometricGame {
 
   void nextNpcText(){
     npcTextIndex.value++;
-    if (npcTextIndex.value >= npcText.length){
-      endInteraction();
-    }
   }
 
   void endInteraction() {
-    npcOptions.clear();
-    npcText.clear();
-    npcTextIndex.value = -1;
-    npcOptionsReads.value++;
+    network.sendNetworkRequest(
+        NetworkRequest.Amulet,
+        NetworkRequestAmulet.End_Interaction.index,
+    );
+  }
+
+  void onChangedPlayerInteracting(bool t) {
+    if (!t){
+      npcOptions.clear();
+      npcText.clear();
+      npcTextIndex.value = -1;
+      npcOptionsReads.value++;
+    }
+  }
+
+  void onChangedNpcTextIndex(int value) {
+    if (value >= npcText.length) {
+      endInteraction();
+    }
   }
 }
